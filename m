@@ -1,121 +1,109 @@
-From: Scott Ehrlich <scott@ehrlichtronics.com>
-Subject: Re: =?iso-8859-1?B?UmWg?= =?iso-8859-1?Q?=3A?= Help, not rudeness,
- requested
-Date: Tue, 4 Nov 2003 14:20:51 -0500 (EST)
+From: "Jean-Luc Coulon (f5ibh)" <jean-luc.coulon@wanadoo.fr>
+Subject: =?iso-8859-1?B?UmWgOiBSZaA=?=
+	=?iso-8859-1?Q?=3A?= Help, not rudeness, requested
+Date: Tue, 4 Nov 2003 20:32:56 +0100
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <Pine.LNX.4.58.0311041419190.22150@debian.ehrlichtronics.com>
-References: <Pine.LNX.4.58.0311040841580.19958@debian.ehrlichtronics.com>
- <20031104140305.GE1477@tangerine.coulon.evette>
+Message-ID: <20031104193256.GG11010@tangerine.coulon.evette>
+References: <Pine.LNX.4.58.0311040841580.19958@debian.ehrlichtronics.com> <20031104140305.GE1477@tangerine.coulon.evette> <Pine.LNX.4.58.0311041419190.22150@debian.ehrlichtronics.com>
 Mime-Version: 1.0
 Content-Transfer-Encoding: QUOTED-PRINTABLE
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <20031104140305.GE1477@tangerine.coulon.evette>
+Content-Disposition: inline
+In-Reply-To: <Pine.LNX.4.58.0311041419190.22150@debian.ehrlichtronics.com> (from scott@ehrlichtronics.com on mar, nov 04, 2003 at 20:20:51 +0100)
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: TEXT/PLAIN; charset="iso-8859-1"
-To: "Jean-Luc Coulon (f5ibh)" <jean-luc.coulon@wanadoo.fr>
+Content-Type: text/plain; charset="iso-8859-1"; format="Flowed	DelSp=Yes"
+To: Scott Ehrlich <scott@ehrlichtronics.com>
 Cc: linux-hams@vger.kernel.org
 
-Greetings:
+There _is_ a support in the kernel 2.4.22 but I think it is better to =20
+use the userland soundmodem from Thomas Sailer.
 
-Well aware of the dev drivers :-)
-
-I neglected to say I had enabled them during make menuconfig, but still
-saw no sign of soundmodem support in Amateur Radio support.  I'll check
-out the baycom stuff when I get back home.
-
-Thanks.
-
-Scott
+Here is a copy of the ax25 support I get (sorry for the bad looking =20
+screen)
 
 
-On Tue, 4 Nov 2003, Jean-Luc Coulon (f5ibh) wrote:
+Linux Kernel v2.4.22 Configuration
+ =20
+qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq=
+qqqqqqq
+  lqqqqqqqqqqqqqqqqqqqqq AX.25 network device drivers =20
+qqqqqqqqqqqqqqqqqqqqqqk
+  x  Arrow keys navigate the menu.  <Enter> selects submenus --->.     =
+     =20
+x
+  x  Highlighted letters are hotkeys.  Pressing <Y> includes, <N> =20
+excludes, x
+  x  <M> modularizes features.  Press <Esc><Esc> to exit, <?> for Help.=
+     =20
+x
+  x  Legend: [*] built-in  [ ] excluded  <M> module  < > module capable=
+     =20
+x
+  x lqqqq^(-)=20
+qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqk x
+  x x    < > High-speed (DMA) SCC driver for AX.25                     =
+   =20
+x x
+  x x    <M> Z8530 SCC driver                                          =
+   =20
+x x
+  x x    [ ]   additional delay for PA0HZP OptoSCC compatible boards   =
+   =20
+x x
+  x x    [ ]   support for TRX that feedback the tx signal to rx       =
+   =20
+x x
+  x x    <M> BAYCOM ser12 fullduplex driver for AX.25                  =
+   =20
+x x
+  x x    < > BAYCOM ser12 halfduplex driver for AX.25                  =
+   =20
+x x
+  x x    < > BAYCOM picpar and par96 driver for AX.25                  =
+   =20
+x x
+  x x    < > BAYCOM epp driver for AX.25                               =
+   =20
+x x
+  x x    < > Soundcard modem driver                                    =
+   =20
+x x
+  x x    < > YAM driver for AX.25                                      =
+   =20
+x x
+  x =20
+mqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqj=
+ =20
+x
+  =20
+tqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq=
+qqqu
+  x                    <Select>    < Exit >    < Help >                =
+     =20
+x
+  =20
+mqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq=
+qqqj
 
-> The options "hidden" by menuconfig predepends on other options.
-> Generally you have first to enable :
-> From "main menu"
->  Code maturity level options  --->
-> [*] Prompt for development and/or incomplete code/drivers
->
-> --
-> Regards and 73
-> 		- f5ibh - Jean-Luc
->
-> Le 04.11.2003 14:53, Scott Ehrlich a =E9crit=A0:
-> > My last round of messages to this list asking for help compiling
-> > ax25/soundcard support for the kernel was met with some unwarranted
-> > hostility.
-> >
-> > Here are the facts, as opposed to assumptions based on
-> > misinterpretation
-> > of my emails.
-> >
-> > I downloaded the 2.4.22 kernel from kernel.org.
-> >
-> > I had an ssh session open to the Debian woody box since it was
-> > running
-> > an
-> > older kernel to at least get it up and running.  In a web browser, =
-I
-> > had
-> > several pages open to show me how to compile in ax25 sound support.
-> >
-> > I configured the kernel (I've compiled and patched many kernels ove=
-r
-> > the
-> > years, so I am a veteran) and looked for all the kernel options the
-> > respective web pages showed.  Some of those options just were not
-> > listed,
-> > and I could find none mentioning anything about patches that might =
-be
-> > needed.
-> >
-> > I then dove into the .config directly and found some compile option=
-s
-> > never
-> > shown under make menuconfig, and toggled those manually.   I did ge=
-t
-> > further, but eventually gave up and reinstalled Win98.  I really
-> > wanted
-> > Linux so I could monitor activity remotely from work.   I've now go=
-ne
-> > back
-> > to Linux.
-> >
-> > The intention of an email list is to foster support and help for li=
-st
-> > members.  If this were a development or hackers list, then it might
-> > be
-> > wiser to direct me to a "help" or "general" or "discussion" version
-> > of
-> > the
-> > list.  But the list name says linux-hams, and that is exactly what =
-my
-> > catagory is.
-> >
-> > I don't expect any apologies for those who flamed me.  But what I
-> > would at
-> > least appreciate are .config files from version 2.4.22 kernels for
-> > those
-> > who have successfully done the trick of ax25 with soundcard stuff a=
-ll
-> > working under Debian woody.
-> >
-> > Thanks.
-> >
-> > Scott, WY1Z
-> > -
-> > To unsubscribe from this list: send the line "unsubscribe linux-ham=
-s"
-> > in
-> > the body of a message to majordomo@vger.kernel.org
-> > More majordomo info at  http://vger.kernel.org/majordomo-info.html
-> >
-> -
-> To unsubscribe from this list: send the line "unsubscribe linux-hams"=
- in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at  http://vger.kernel.org/majordomo-info.html
->
+
+--
+			- f5ibh - Jean-Luc
+Le 04.11.2003 20:20, Scott Ehrlich a =E9crit=A0:
+> Greetings:
+>=20
+> Well aware of the dev drivers :-)
+>=20
+> I neglected to say I had enabled them during make menuconfig, but
+> still
+> saw no sign of soundmodem support in Amateur Radio support.  I'll
+> check
+> out the baycom stuff when I get back home.
+>=20
+> Thanks.
+>=20
+> Scott
+>=20
+>=20
 -
 To unsubscribe from this list: send the line "unsubscribe linux-hams" i=
 n
