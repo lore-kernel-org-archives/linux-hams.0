@@ -1,30 +1,33 @@
-From: Mike Murphree <mike@tropo.org>
+From: "Curt Mills, WE7U" <hacker@tc.fluke.com>
 Subject: Re: ax25/netrom/rose patch for kernel 2.4.22 - need testers
-Date: Thu, 30 Oct 2003 09:10:36 -0600
+Date: Thu, 30 Oct 2003 07:34:07 -0800 (PST)
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <20031030151036.GA2967@Infinity.homeunix.com>
-References: <20461@9A0TCP> <bnq1ok$vbt$1@dl8fbh.ampr.org>
+Message-ID: <Pine.LNX.4.33.0310300732210.12192-100000@wapiti.tc.fluke.com>
+References: <20031030151036.GA2967@Infinity.homeunix.com>
 Mime-Version: 1.0
 Return-path: <linux-hams-owner@vger.kernel.org>
-Content-Disposition: inline
-In-Reply-To: <bnq1ok$vbt$1@dl8fbh.ampr.org>
+In-Reply-To: <20031030151036.GA2967@Infinity.homeunix.com>
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"
+Content-Type: TEXT/PLAIN; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
-To: linux-hams@vger.kernel.org
+To: Mike Murphree <mike@tropo.org>
+Cc: linux-hams@vger.kernel.org
 
-On Thu, Oct 30, 2003 at 04:49:40AM +0100, Michael Wuensche wrote:
-> Tihomir Heidelberg <9a4gl@9a0tcp.ampr.org> wrote:
-> 
-> > currently, it works fine without crashes on 9A0TCP gateway where
-> > vanilla 2.4.22 crashs few times per week... but, I use just ax25
-> 
-> I've never had a crash with 2.4.22 and ax25. Machine is running 24/7.
-> 
+On Thu, 30 Oct 2003, Mike Murphree wrote:
 
-Has anyone ever tried running the AX25 / soundmodem code on Mac PPC
-machines?
+> Has anyone ever tried running the AX25 / soundmodem code on Mac PPC
+> machines?
 
-TIA,
-Mike W4LNA
+I know of one Xastir user that is running the soundmodem stuff on a
+Solaris box.  Surprised the heck out of me.  Didn't know it could be
+done until he reported it working.  There are other users that are
+running AGWPE on Windows boxes, connecting Xastir (running on the
+same box or on a different Linux box) to it for packet data.
+
+-- 
+Curt Mills, WE7U                    hacker_NO_SPAM_@tc.fluke.com
+Senior Methods Engineer/SysAdmin
+"Lotto:    A tax on people who are bad at math!"
+"Windows:  Microsoft's tax on computer illiterates!" -- WE7U
+"The world DOES revolve around me:  I picked the coordinate system!"
 
