@@ -1,36 +1,32 @@
 From: Tomi Manninen OH2BNS <tpm@prkele.tky.hut.fi>
 Subject: Re: Status of AX.25 in 2.5 / 2.6
-Date: Tue, 30 Jul 2002 12:38:51 +0300 (EETDST)
+Date: Tue, 30 Jul 2002 12:44:23 +0300 (EETDST)
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <Pine.HPX.4.10.10207301220190.2883-100000@saturn.trs.ntc.nokia.com>
-References: <3D464AF2.8040506@btinternet.com>
+Message-ID: <Pine.HPX.4.10.10207301239530.2883-100000@saturn.trs.ntc.nokia.com>
+References: <20020729185037.GA684@columbia.g7iii.bogus>
 Reply-To: tpm@prkele.tky.hut.fi
 Mime-Version: 1.0
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <3D464AF2.8040506@btinternet.com>
+In-Reply-To: <20020729185037.GA684@columbia.g7iii.bogus>
 List-Id: <linux-hams.vger.kernel.org>
 Content-Type: TEXT/PLAIN; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
-To: Jason Flynn G7OCD <jason.flynn@btinternet.com>
+To: Iain Young - G7III <g7iii@g7iii.demon.co.uk>
 Cc: linux-hams@vger.kernel.org
 
-On Tue, 30 Jul 2002, Jason Flynn G7OCD wrote:
+On Mon, 29 Jul 2002, Iain Young - G7III wrote:
 
->   I'm aware fully of the reasons behind this, but when you are running
-> a system with 13 AX25 ports you start running out of SSIDs for your
-> services. I've had to start naming services with names that aren't
-> valid callsigns like 'MARTCONV' and 'SDGBBS' because before long I'm
-> going to have used all the SSIDs for ports...
+> Currently (IIRC), the patch routes all IP traffic destined for radio
+> links (44/8) down the ipax0 device, and then decides the best layer 2
+> (AX25) interface to throw it out.
+> 
+> I _personally_ believe that this is not the way it should be, I don't
+> actually like this, but unfortunatley the ipax0 device actually
+> encapsulates the IP packet, and puts the AX25 header on etc..
 
-Yep, this is definitely a problem.
-
-We should try to get rid of the need for an unique callsign-ssid for each
-AX.25 interface. In fact it might be possible already (with SO_BINDTODEV).
-
-However I still strongly believe that we need (want) a separate callsign
-for the L3 traffic. Ultimately it might be possible to use one callsign
-for all L3 protocol traffic (NET/ROM, ROSE, IP). Then a typical system
-could run with a minimum of two callsigns.
+Out of curiosity (and without having any strong personal opinion of my
+own) why do you think this not the way to go? I know it breaks ARP but I
+suppose that could be corrected somehow.
 
 -- 
 Tomi Manninen           Internet:  oh2bns@sral.fi
