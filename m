@@ -1,38 +1,46 @@
-From: "Riley Williams" <Riley@Williams.Name>
-Subject: Re: Zipham
-Date: Sun, 20 Jul 2003 12:03:29 +0100
+From: "Janusz Przybylski - SP1LOP" <sp1lop@sp1lop.szczecin.pl>
+Subject: encap.txt ????
+Date: Sun, 20 Jul 2003 13:28:51 +0200
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <BKEGKPICNAKILKJKMHCAMEIEEPAA.Riley@Williams.Name>
-References: <200307201211.15813.pa3gcu@zeelandnet.nl>
+Message-ID: <001101c34eb2$18d281a0$6400000a@sp1lop.szczecin.pl>
+Reply-To: "Janusz Przybylski - SP1LOP" <sp1lop@sp1lop.szczecin.pl>
 Mime-Version: 1.0
 Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <200307201211.15813.pa3gcu@zeelandnet.nl>
 List-Id: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
-To: pa3gcu@zeelandnet.nl, Cees Tool <c.tool@quicknet.nl>, 'David Munn' <djmunn@bigpond.com>, 'Linux-hams' <linux-hams@vger.kernel.org>
+To: linux-hams@vger.kernel.org
 
-Hi.
+Hi 
+What it is from encap.txt whether someone can it knows ???
+All the time is from 06 Jul 2003 !!!
 
- >>> found......have searched the web for another site that might
- >>> have the Zipham files but to no avail ...always sends me back
- >>> to the zipham.free.fr site.....
+I ask write New Entry: 
+44.165.2.0 / 28 encap 213.25.77.73 
+and Delete Entry:
+44.165.41.53/32 encap 213.25.77.73 
 
- >> The URL you are using is wrong, try :
- >> http://zipham.free.fr    (so without the www)
 
- > But that URL is also broken, most links do not work.
+        greeting  73 de Janusz SP1LOP
+====================================
+Coordinator Polish AmprNet 44.165/16
+====================================
+Inet:      sp1lop@sp1lop.szczecin.pl
+AmprNet:    sp1lop@szczecin.ampr.org
+AX25:      sp1lop @ sr1bsz.sz.pol.eu
+====================================
+Sysop: SR1BSZ and szczecin.ampr.org
 
-I don't know about the rest of the site, but the subsection at
-http://zipham.free.fr/loophame.htm appears to work, and LoopHam
-is apparently the new name for what used to be called ZipHam.
 
-Best wishes from Riley.
+
+
+
 ---
- * Nothing as pretty as a smile, nothing as ugly as a frown.
+avast! Antivirus: Outbound message clean.
+Virus Database (VPS): 2003-07-17
+Tested on: 2003-07-20 13:28:53
+avast! is copyright (c) 2000-2003 ALWIL Software.
+http://www.avast.com
 
----
-Outgoing mail is certified Virus Free.
-Checked by AVG anti-virus system (http://www.grisoft.com).
-Version: 6.0.502 / Virus Database: 300 - Release Date: 18-Jul-2003
+
 
