@@ -1,87 +1,107 @@
-From: Rodolfo Brasnarof <rodob@datafull.com>
-Subject: Re: linux crashes
-Date: Mon, 10 Jan 2005 11:11:32 -0300
-Message-ID: <20050110111132.718a2f53.rodob@datafull.com>
-References: <000501c4f68e$5457b6c0$3d4689d8@oem7paq6co5hph>
- <opskcy9egselwowa@post.demon.co.uk>
+From: Wilbert Knol <w.knol@niwa.co.nz>
+Subject: [ANN] qle-0.0.3 GUI logger/log editor released.
+Date: Fri, 14 Jan 2005 09:16:47 +1300
+Message-ID: <200501140916.47627.w.knol@niwa.co.nz>
+References: <000501c4f68e$5457b6c0$3d4689d8@oem7paq6co5hph> <opskcy9egselwowa@post.demon.co.uk> <20050110111132.718a2f53.rodob@datafull.com>
+Reply-To: w.knol@niwa.co.nz
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7BIT
-Return-path: <linux-hams-owner@vger.kernel.org>
-In-reply-to: <opskcy9egselwowa@post.demon.co.uk>
-Sender: linux-hams-owner@vger.kernel.org
+Content-Transfer-Encoding: 7bit
+Return-path: <hamlib-developer-admin@lists.sourceforge.net>
+In-Reply-To: <20050110111132.718a2f53.rodob@datafull.com>
+Content-Disposition: inline
+Sender: hamlib-developer-admin@lists.sourceforge.net
+Errors-To: hamlib-developer-admin@lists.sourceforge.net
+List-Unsubscribe: <https://lists.sourceforge.net/lists/listinfo/hamlib-developer>,
+	<mailto:hamlib-developer-request@lists.sourceforge.net?subject=unsubscribe>
 List-Id: <linux-hams.vger.kernel.org>
+List-Post: <mailto:hamlib-developer@lists.sourceforge.net>
+List-Help: <mailto:hamlib-developer-request@lists.sourceforge.net?subject=help>
+List-Subscribe: <https://lists.sourceforge.net/lists/listinfo/hamlib-developer>,
+	<mailto:hamlib-developer-request@lists.sourceforge.net?subject=subscribe>
+List-Archive: <http://sourceforge.net/mailarchive/forum.php?forum=hamlib-developer>
 Content-Type: text/plain; charset="us-ascii"
 To: linux-hams@vger.kernel.org
+Cc: hamlib-developer@lists.sourceforge.net
 
-On Sun, 09 Jan 2005 23:23:28 -0000
-Ian Haver wrote:
+GPL 2 or later applies. Download the 82 kbyte archive from:
 
-> On Sun, 9 Jan 2005 20:59:51 -0000, Tom Vavra <wb8zrl@avalon.net>
-> wrote:
-> 
-> > In mid December I replaced my DOS based packetcluster system with a
-> > Linux based DXSpider system.  Since that time I have had 5 system
-> > crashes.  I think all are the same.  Enclosed at the end is the
-> > transcribed crash screen.  I tried to proof it, but I would not bet
-> > too much that I got it correct.
-> >
-> > I am running RedHat 9.0 with a 2.4.20 kernel.  The netrom/ax25
-> > packages  are:
-> >
-> >   ax25-apps-0.0.6
-> >   ax25-tools-0.0.8
-> >   libax25-0.0.11
-> >   node-0.3.1
-> >
-> > I am using three serial ports to drive tncs.  Two of the tncs are
-> > tapr-2(MFJ-1270b) with BPQKISS eproms, and the other tnc is a two
-> > port  KPC-9612,
-> > using both ports.  So I am driving all three ports with mkiss,
-> > followed  by
-> > kissattach.  Two netrom ports are defined.  And I am running
-> > mheardd.
-> >
-> > The cpu is a 450mhz pentium that idles at less than 2%, and there is
-> >  
-> > 256Mb
-> > of memory so swap is almost nonexistant.
-> >
-> > Anyone have any ideas about what I need to do to eliminate the
-> > crashes?
-> >
-> >              Tom  WB8ZRL
-> >
-> 
-> HI Tom
-> I had similar problem with my suse distro.
-> I had to download a new kernel and patch it up.
-> The files can be found on my server here at YFS but i dont have the  
-> fastest ADSL link.
-> You are more than welcome to download them.
-> they can be found at:
-> http://gb7yfs.org.uk/public/linux/new_kernel_bits/
-> 
-> also in that directory is all the ax25 bits i used here.
-> When i was running 2.4.20 i could average around 10 days uptime, since
-> i  upgraded it runs and runs and runs till i reboot it. LOL
-> 
-> Hope this helps a little
+    http://www.qsl.net/zl2arn/qle-0.0.3.tar.gz
 
-You can still set your system to automatically reboot in case of a
-kernel panic. Of course is better to fix the problem, but for an
-unattended system this setting can be useful.
+Copy to your home directory, and unzip as a non-root user with:
 
-You can do this by adding a line
+    tar xvzf qle-0.0.3.tar.gz
 
-	echo 1 > /proc/sys/kernel/panic
+Read the README.
 
-to your startup scripts (maybe rc.local)
+Requirements:
+--------------------
 
-or adding a line
+    Perl/Tk
+    Hamlib 1.2.3 (highly recommended)
+    cwdaemon (optional)
+    A reasonably quick machine with a 1024x768 px (or better) screen.
 
-	kernel.panic = 1
+A clipping from the README follows - use a fixed font. Have fun.
 
-to sysctl.conf
+Wilbert, ZL2BSJ
 
-The 1 means the number of seconds to wait for reboot after a kernel
-panic. 0 means no reboot.
+----- cut here ------
+
+1. Introduction.
+----------------
+
+The qle-package contains the program qle.pl: a graphic QSO log viewer,
+log editor and QSO logger for amateur radio operators.
+
+"qle.pl" stands for QSO Logger and Editor. It is a Perl/Tk script that
+logs and modifies QSOs directly to a fast and light-weight SQLite
+database.
+
+Intended use: casual logging of rag-chew and contest QSOs. The logger
+caters for CW operators. See 'Features' list below.
+
+Table headings, fonts, colours and other attributes are set in a
+user-editable configuration file. The SQLite log schema supplied may
+be altered to suit your taste, provided the configuration file is
+updated accordingly (untested).
+
+If you are looking for a performance contest logger, consider using
+TLF by PA0R. Similarly,  XLOG (PG4I) and KLOG (EA4TV) are very good
+general-purpose loggers that are more intuitive to configure and use.
+
+
+2. Features.
+------------
+
+1. Hamlib rig control. A Hamlib-interfaced radio is higly recommended,
+   unless you are fond of manually keeping track of band and mode info.
+
+2. For contesters: computer-generated CW with 'cwdaemon'.
+
+3. The provided (and recommended) database schema logs the following
+   items:
+
+   day, month, year, UTC, call, RST sent, serial number sent, RST
+   received, serial number received, frequency, mode, operator, QTH,
+   my power, his power, QSL sent, QSL received, comment
+
+4. On-the-fly dupe checking by band/mode for contesters.
+
+5. Real-time and delayed (post-QSO) data entry.
+
+6. Built-in log searching and log editing.
+
+7. Complete lack of documentation other than the README and the
+   commented configuration file.
+
+8. The logger does not track scores and has no band-map or DX-cluster
+   support. There is no voice keyer support. Casual logging and DX-ing
+   only.
+
+<EOF>
+
+
+-------------------------------------------------------
+The SF.Net email is sponsored by: Beat the post-holiday blues
+Get a FREE limited edition SourceForge.net t-shirt from ThinkGeek.
+It's fun and FREE -- well, almost....http://www.thinkgeek.com/sfshirt
