@@ -1,56 +1,25 @@
-From: James Cutler <jwc@stanford.edu>
-Subject: Re: Baypac and kernel crashes
-Date: Wed, 24 Apr 2002 17:54:52 -0700 (PDT)
+From: Hamish Moffatt <hamish@cloud.net.au>
+Subject: Re: ANNOUNCE: gMFSK v0.4.1
+Date: Thu, 25 Apr 2002 12:39:50 +1000
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <Pine.GSO.4.44.0204241748560.7938-100000@rescomp.Stanford.EDU>
-References: <20020423080237.A213@jeroen.pe1rxq.ampr.org>
+Message-ID: <20020425123950.A16507@silly.cloud.net.au>
+References: <Pine.LNX.4.33.0204242047010.11663-100000@oh2bns.ampr.org>
 Mime-Version: 1.0
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <20020423080237.A213@jeroen.pe1rxq.ampr.org>
+Content-Disposition: inline
+In-Reply-To: <Pine.LNX.4.33.0204242047010.11663-100000@oh2bns.ampr.org>; from tpm@prkele.tky.hut.fi on Wed, Apr 24, 2002 at 10:11:06PM +0300
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: TEXT/PLAIN; charset="us-ascii"
+Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
-To: Jeroen Vreeken <pe1rxq@amsat.org>
-Cc: linux-hams@vger.kernel.org
+To: linux-hams@vger.kernel.org
 
+On Wed, Apr 24, 2002 at 10:11:06PM +0300, Tomi Manninen wrote:
+> I just uploaded gMFSK v0.4.1 to hes.iki.fi. For those who don't know,
+> gMFSK is a MFSK16, RTTY and THROB soundcard terminal program for Linux
+> (using the Gnome libraries).
 
-Is there anything special that needs to be done to configure for the
-2.4.18 kernel?  I'm using the following commands to configure it and it
-doesn't seem to be doing the trick (though they work under 2.4.17)
+New Debian package 0.4.1-1 has been uploaded to the official archive.
 
-insmod parport
-insmod parport_pc io=0x378 irq=7
-modprobe baycom_par mode="picpar" iobase=0x378
-sethdlc -i bcp0 -p mode "picpar" io 0x378
-axparms -setcall bcp0 kf6rfx-1
-ifconfig bcp0 192.168.2.2 up
-
-
-
-On Tue, 23 Apr 2002, Jeroen Vreeken wrote:
-
-> On 2002.04.23 06:04:32 +0200 James Cutler wrote:
-> > We're having some problems using a BayPac 9600 with Linux 2.4.17.
-> >
-> > On one machine it works just fine until we start X.  As soon as we
-> > start X, the machine will crash as soon as we send an AX.25 packet
-> > (we were testing with "beacon").  The only way to recover from the
-> > crash is to power cycle or press the reset button.  This is
-> > repeatable.  We beacon, we work, we start X, we beacon, we crash.
-> > It does output the packet before it crashes.
-> >
-> > On a second machine that doesn't (can't) run X, we've noticed a
-> > similar crash.  It's a small embedded 486 (the Prometheus).  After
-> > several beacons, from 5-20, it will crash in the same hard manner.
-> > Only a power cycle will fix it.
-> >
-> > Has anyone else seen similar behavior?  Any ideas?
->
-> Every 2.4.x kernel up to 2.4.18 has this problem, it should be fixed now...
-> It was a problem with ax25 not using sock_orphan()
->
-> Jeroen
->
->
->
-
+Hamish
+-- 
+Hamish Moffatt VK3SB <hamish@debian.org> <hamish@cloud.net.au>
