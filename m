@@ -1,47 +1,51 @@
 From: M Taylor <mctylr@privacy.nb.ca>
-Subject: Re: Problem...
-Date: Wed, 26 Mar 2003 00:46:33 +0000
+Subject: Re: Kenwood TR-7950 Crashing Computer?
+Date: Wed, 26 Mar 2003 00:57:21 +0000
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <20030326004633.A5531@pull.privacy.nb.ca>
-References: <GMEHKCCPLOCMPOLBMKICCEJNDOAA.hremijn@zeelandnet.nl> <3E8086E6.3000709@ccr.jussieu.fr>
+Message-ID: <20030326005721.B5531@pull.privacy.nb.ca>
+References: <1048639171.16852.34.camel@bobcp4.lingpgmr.com>
 Mime-Version: 1.0
 Return-path: <linux-hams-owner@vger.kernel.org>
 Content-Disposition: inline
-In-Reply-To: <3E8086E6.3000709@ccr.jussieu.fr>; from pidoux@ccr.jussieu.fr on Tue, Mar 25, 2003 at 05:42:14PM +0100
+In-Reply-To: <1048639171.16852.34.camel@bobcp4.lingpgmr.com>; from cochranb@speakeasy.net on Tue, Mar 25, 2003 at 07:39:30PM -0500
 List-Id: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
-To: bernard pidoux <pidoux@ccr.jussieu.fr>
-Cc: linux-hams@vger.kernel.org
+To: Robert L Cochran <cochranb@speakeasy.net>
+Cc: Linux-Hams <linux-hams@vger.kernel.org>
 
-On Tue, Mar 25, 2003 at 05:42:14PM +0100, bernard pidoux wrote:
+On Tue, Mar 25, 2003 at 07:39:30PM -0500, Robert L Cochran wrote:
+> Hi,
 > 
-> I was not able to achieve a normal functionning of Linux as soon as AX25 
-> was set up with mkiss connexions with any of 2.4.xx kernels. And I tried 
-> with different PCs.
-> In 2.4 kernel, there are major problems with interruptions (and kernel 
-> panics after a few minutes or hours) that should be corrected in kernel 
-> version under development (actually around 2.5.65) leading to a possible 
-> return to correct functionning (I hope) in [2.6.x -ve1mct] kernel.
+> Last week, after transmitting several times on a Kenwood TR-7950
+> connected to my KPC-3 Plus and my (practically brand new) computer, my
+> Red Hat Linux installation simply froze and crashed on me. The hard
+> drive developed all sorts of never before seen (to me at least!) bad
+> blocks and inode issues which e2fsck couldn't cure. I was left realizing
+> I had no choice but to reinstall Red Hat 8. I was getting issues like
+> the 'diff' program suddenly becoming a symlink pointing at 'cut'.
 
-Bugs can only be fixed if people take the time to make a bug report.
+Disconnect and power down the radio, and boot the machine in single
+user mode ('linux single initrd=' at the LILO prompt), and do a complete 
+file system check, 'e2fsck' of all the drives. If you are seeing errors
+to the console or syslog (typically in /var/log/messages on RH) about
+an 'Unrecoverable error hdx' where hdx is your harddrive in question (e.g.
+hda, hdb) then you have a disk failure and you should contact your vendor.
 
-There are developers here willing to help you if you need assistance
-with finding the cause of the problem. (Myself included, though I am
-not a kernel developer)
+If you feel up to it, while reinstalling, tell it to check for bad
+blocks, and if it takes a *very* long time or has a lot of unrecoverable
+errors (check virtual console 2,3,4 (Alt-Fx), not sure which), then contact 
+your computer vendor about a disk failure.
 
-One thing I would really like to know is if certain protocols cause
-problems, i.e. does plain AX.25 cause problem, or NetRom traffic,
-what about AXIP traffic? Did you have a large route table (that is,
-are your an AMPRnet gateway)? Any idea of the CPU load when the kernel
-panic occured? Was there multiple connections/traffic on different or 
-same RF ports? Error messages in the syslog or messages file relating
-to networking or amateur radio stuff?
+> Although an friend of mine thinks it is not possible, I'm wondering if
+> transmitting with this model of Kenwood (which is about 20 years old, I
+> would say) only about 1 foot from my computer and 3 feet from the
+> antenna, caused the system to crash? Perhaps the antenna is simply too
 
-The problems that exist in the 2.4 kernel also exist in the 2.2 kernel,
-it is just that there are harder to trigger. They will become worst in
-2.5/2.6 unless they are fixed, so the best time is now, while 2.5 is
-still a development kernel.
+My guess is that the radio itself is not causing the problem, and without
+mentioning the effective radiated power output (W) from the radio/antenna
+I am not certain, but I suspect it is not an EMC/EMI issue. Rule out a
+disk failure before investigating a EMC / EM interference issue.
 
-Thank you,
+Good luck
 ve1mct
