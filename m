@@ -1,31 +1,40 @@
-From: Hamish Moffatt <hamish@cloud.net.au>
-Subject: Re: old 8-bit card for soundmodem?
-Date: Sun, 1 Feb 2004 22:51:43 +1100
+From: Mike Markowski <mm@UDel.Edu>
+Subject: PTT with soundmodem
+Date: Sun, 1 Feb 2004 16:55:30 -0500
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <20040201115143.GA11950@cloud.net.au>
-References: <401CE3C0.3030101@cs.unibo.it>
+Message-ID: <20040201215530.GA572@strauss.udel.edu>
 Mime-Version: 1.0
 Return-path: <linux-hams-owner@vger.kernel.org>
 Content-Disposition: inline
-In-Reply-To: <401CE3C0.3030101@cs.unibo.it>
 List-Id: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
-To: Linux-Hams@vger.kernel.org
+To: Linux Hams <linux-hams@vger.kernel.org>
 
-On Sun, Feb 01, 2004 at 12:32:16PM +0100, Andrea Borgia wrote:
-> I have an old 8-bit soundcard that I would like to use with the 
-> soundmodem to receive a 1200bps cluster. From the docs and from googling 
-> the archives (and the 'Net at large), I haven't been able to find any 
-> comment either for or against such cards.
-> 
-> Has anyone here tried the soundmodem with 8-bits-per-sample soundcards? 
-> Can such old cards do 1200? What about 9600?
+Hi all,
 
-I'm running the kernel soundmodem (linux 2.2) with an SB Pro, which is
-8-bit stereo IIRC. It works fine at 1200 baud. I have not tried 9600,
-nor the more recent user-space soundmodem.
+I'm thiiis close to having my packet set up working in kernel 2.4.24
+(currently unpatched).  I'm using the user space soundmodem to create
+interface ax0 -- so I assume I don't need to do a kissattach.  When I
+use soundmodemconfig to test the setup, I can successfully use the
+PTT gui button to get my rig to transmit (and also have no problem
+with PTT when using Tomi's great gMFSK!).  However, while i can
+receive APRS packets while running xastir, when it tries to transmit,
+soundmodem complains after the xastir info:
 
-Hamish
--- 
-Hamish Moffatt VK3SB <hamish@debian.org> <hamish@cloud.net.au>
+   Tx: fm AB3AP-0 to APX121-0 via RELAY-0,WIDE-0 UI^ pid=F0
+   =/:B7_;?z&y ab3ap@arrl.net, Avondale PA (XASTIR-Linux)
+ 
+   sm[15891]: ioctl: SNDCTL_DSP_SYNC: Device or resource busy (16)
+
+I see the LED on my PTT interface briefly light, but not long
+enough to activate the rig itself before the error above is
+printed.
+
+I use the same HW addr (AB3AP-1) in my soundmodem.conf as in my
+/etc/ax25/axports file.  Anyone spot what I'm doing wrong?  I haven't
+included any .conf files since I'm not at that machine now and am
+hoping the above description is enough to indicate my mistake, but
+I'll be happy to go get those if needed.  Thanks for any ideas!
+
+Mike  AB3AP
