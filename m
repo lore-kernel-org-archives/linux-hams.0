@@ -1,37 +1,36 @@
-From: Jeroen Vreeken <pe1rxq@amsat.org>
-Subject: Re: Sun Sparc questions....
-Date: Sun, 25 Jan 2004 22:37:25 +0100
+From: James Washer <washer@trlp.com>
+Subject: Re: packet/soundmodem questions
+Date: Sun, 25 Jan 2004 15:08:15 -0800
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <20040125223725.I713@jeroen.pe1rxq.ampr.org>
-References: <5A0E3EAA-4F77-11D8-AFA8-000A95DB9E94@pocketdvm.com>
+Message-ID: <20040125150815.09c02009.washer@trlp.com>
+References: <200401251159.28252.n7bfs@qwest.net>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7BIT
+Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <5A0E3EAA-4F77-11D8-AFA8-000A95DB9E94@pocketdvm.com>; from acierno@pocketdvm.com on Sun, Jan 25, 2004 at 21:45:03 +0100
+In-Reply-To: <200401251159.28252.n7bfs@qwest.net>
 List-Id: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
-To: Mark Acierno <acierno@pocketdvm.com>
+To: n7bfs@qwest.net
 Cc: linux-hams@vger.kernel.org
 
-On 2004.01.25 21:45:03 +0100 Mark Acierno wrote:
-> I have two Suns that I have recently "acquired" one is a Sparc 20 the 
-> other an ultrasparc 2 creator. I have gotten Debian linux up and 
-> running on both but I have questions about using one (either) for 
-> packet work.... after lurking here  for the past few weeks it seems as 
-> though most users here have PCs running linux. Is anyone here familiar 
-> with the Sparcstation??
+I've been working on this very issue for a couple of days on my IBM X600 thinkpad, and will give it a shot soon on my T21.
 
-I once made a quick hack to the scc driver to use it on the scc chip in a
-sparc xterminal... I don't know about the sparc 20 but if it is a sun4m
-architecture you probably could do the same.
+So far, the receive is fine, but I'm not transmitting yet. The soundcard is only producing what sounds like framing bits.. No data yet.
 
-As for the ultra 2 I don't know, my ultra 10 doesn't have an scc chip for
-the serial port (atleast not that I know of) but it does have onboard
-sound.
-You might be able to use soundmodem on it.
+If you installed the AX.25 tools package, just do 'man -k AX.25' to see a list of tools that were installed.
 
-Ofcourse both will probably just work fine if you use a tnc in kiss mode or
-any of the tunneling protocols. (axip, bpq)
+Keep in touch with how things are going on your T23.
 
-Jeroen
+ - jim
 
+On Sun, 25 Jan 2004 11:59:28 -0800
+"Douglas Cole" <n7bfs@qwest.net> wrote:
+
+> Have been following the list for a while now and got interested in the 
+> soundmodem thread...
+> 
+> I too would like to get soundmodem up and running so as to be able to run 1200 
+> baud packet from my laptop (IBM thinkpad T23) and have done a small amount of 
+> searching but have not found any documentation on soundmodem, or at least so 
+> little that it leaves me wondering how to make things work...
+> 
