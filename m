@@ -1,7 +1,7 @@
-From: Mike Markowski <mm@UDel.Edu>
+From: Jeff Camp <jcamp2@cox.net>
 Subject: Re: soundmodem and fedora c3
-Date: Tue, 08 Mar 2005 12:44:34 -0500
-Message-ID: <422DE482.6030800@udel.edu>
+Date: Tue, 08 Mar 2005 12:20:03 -0600
+Message-ID: <422DECD3.3050901@cox.net>
 References: <BAY104-F33C8680A7BC732DF8330068B500@phx.gbl>
 Mime-Version: 1.0
 Content-Transfer-Encoding: 7bit
@@ -9,17 +9,20 @@ In-Reply-To: <BAY104-F33C8680A7BC732DF8330068B500@phx.gbl>
 Sender: linux-hams-owner@vger.kernel.org
 List-Id: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"; format="flowed"
-To: linux-hams@vger.kernel.org
+To: 
+Cc: linux-hams@vger.kernel.org
 
-Just as a sanity check, did you remember to run soundmodemconfig so that 
-it creates interface sm0?  And similarly, remember to actually run 
-soundmodem before starting xastir.  :-)  I know you probably did, but 
-just making sure all bases are covered!  After running soundmodem, make 
-sure an "ifconfig" shows that sm0 is up before starting xastir.
+Ron, I had the same problem with FC3 and soundmodem.  I solved it by 
+enabling MKISS support (CONFIG_MKISS) and rebuilding the kernel.  The 
+AX25 stuff was already there, but MKISS was not enabled by default.  It 
+works great now.
 
-Mike  AB3AP
+73,
+Jeff
+N0WJP
 
-Ron- VE3DTT wrote on 03/08/05 12:35 ET:
+
+Ron- VE3DTT wrote:
 > Thanks to all who responded to my query.
 > 
 > I am aware that 'soundmodem' is usermode software but I tried loading 
@@ -65,4 +68,6 @@ Ron- VE3DTT wrote on 03/08/05 12:35 ET:
 > To unsubscribe from this list: send the line "unsubscribe linux-hams" in
 > the body of a message to majordomo@vger.kernel.org
 > More majordomo info at  http://vger.kernel.org/majordomo-info.html
+> 
+> 
 
