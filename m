@@ -1,90 +1,65 @@
-From: Chuck Gelm <nc8q@gelm.net>
-Subject: Re: Status of AX.25 in 2.5 / 2.6
-Date: Mon, 29 Jul 2002 16:52:35 -0400
+From: Stewart Wilkinson <g0lgs@gb7lgs.co.uk>
+Subject: RE: Status of AX.25 in 2.5 / 2.6
+Date: Mon, 29 Jul 2002 23:44:03 +0000 (GMT)
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <3D45AB13.820F803E@gelm.net>
-References: <000001c2370f$242f6c40$e239832c@jrws2>
+Message-ID: <Pine.LNX.4.10.10207292343130.24073-100000@linux-gb7lgs.ampr.org>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset="us-ascii"
 Return-path: <linux-hams-owner@vger.kernel.org>
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 7bit
 To: linux-hams@vger.kernel.org
 
-ditto on the note from Robert Jenkins  :-)
-...
-and use the same keyword|token|name for the same thing
-in all configuration files:
 
-An excerpt from a message dated 3/12/02 8:56 AM
-"  What I noticed was the different token names.  
-Many applications and 'man' pages refer to the same thing, 
-but use a different token 'name'.
+On Mon, 29 Jul 2002, Tomi Manninen wrote:
 
- To make it easier for newbies, wouldn't it be great if all
-applications, documentation, and configuration files all
-used the same token name for the same thing?
+> On Mon, 29 Jul 2002, Robert Jenkins wrote:
+> 
+> > My only thought re. the problem you mention with the SABM frame not
+> > having a protocol ID is that surely this applies equally to IP via ax25
+> > etc.? 
+> 
+> Yes. That is why you should not have any user services (that are called
+> with plain AX.25) like LinuxNode or a BBS using the same callsign as you 
+> have in ifconfig/axports.
 
-Token name      Place where used
------           ----
-name            man axports
-port            man kissattach
-<port_name>     AX25-HOWTO/x1474.html
-portname        AX25-HOWTO/x495.html#AEN1143
-Port Name       man ax25d
------           ----
+Other Programs such as BPQ and PZT's Xrouter manage to do AX25, NETROM,
+TCP/IP (and now APRS) using the same callsign on ALL Radio Ports and if I
+am not mistaken JNOS & TNOS do too.
 
- It seems to me that "<port_name>", "portname", and "Port Name" 
-are close enough, but "port" (kissattach) and "name" ('axports')
-are too dissimilar to tell that they both refer to the same thing.
-:-|
-Chuck nc8q
-Espouse Elucidation, Eschew Obfuscation."
+Surley if they can do it, then with the correct programming it could also
+be done in Linux ?
 
-Robert Jenkins wrote:
-> 
-> Hi,
-> 
-> Another couple of points with the present AX25 which I (and I believe
-> others) find annoying:-
-> 
-> 1: The insistance on a separate call+ssid for each port.
-> 
-> Every port is allocated a unique name in axports anyway, so why the need
-> for the unique call as well???
-> 
-> (This is WAY more annoying to me than the requirement for an IP address
-> - at least it will accept the same IP on multiple ports!)
-> 
-> It certainly does not seem to be a requirement for AX25, as the Dos BPQ
-> node works fine with one call for the whole system. Being able to use
-> the same callsign/ssid for multiple ports would greatly simplify some
-> more comnplex configs.
-> 
-> As far as I know, the callsigns / aliases that the AX25 code uses for
-> incoming connects are the ones set in ax25d.conf and have no connection
-> to the 'axports' callsigns; these are used for outgoing connects only.
-> 
-> 2: The apparent requirement for two or more Netrom ports / aliases for
-> the Netrom system to work correctly? Most of the docs on setting up
-> netrom say separate ports are needed for incoming and outgoing connects.
-> Why???
-> Again, it's not a fundamental requirement for Netrom, it's an oddity in
-> the Linux implementation.
-> 
-> One other request to anyone doing updates; please keep adding comments &
-> useage notes to the sources!
-> 
-> Some functions do have brief descriptions, others have 'to do' notes or
-> nothing at all. It makes it hard to do anything productive with the code
-> when you can only spend short periods of time on it, and spend most of
-> that time just trying to refresh your memory of what does what.
-> 
-> Regards,
-> 
-> Robert Jenkins.
-> 
-> -
-> To unsubscribe from this list: send the line "unsubscribe linux-hams" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at  http://vger.kernel.org/majordomo-info.html
+I seem to recall seeing a flow diagram that described how one of those
+other programs managed to cope with such things, I don't remember which
+one, or the full details.
+
+As I recall its starts something like this:
+
+	Station A wants to send some as yet unknown Frame Type to (or via)
+	Station B:
+
+	Station A sends AX25 SABM request to Station B
+
+	Station B responds with an AX25 UA and waits for further frames
+	from Station A.
+
+	Station A sends a Frame with L4:
+	
+		Oh we know how to handle that.
+
+	Station A sends a Fram with IP:
+
+		Oh we can handle that too.
+
+	Station A sends a Frame with just AX25 Data:
+
+		We can handle that too.
+
+Now I don't (at 01.30) see any problem ?
+
+---
+Stewart G0LGS
+g0lgs@gb7lgs.co.uk
+
+
