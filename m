@@ -1,27 +1,27 @@
-From: Arnaldo Carvalho de Melo <acme@conectiva.com.br>
+From: Francois Romieu <romieu@fr.zoreil.com>
 Subject: Re: [PATCH] (10/11) netrom - convert /proc interface to seq_file
-Date: Fri, 15 Aug 2003 18:12:17 -0300
-Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <20030815211217.GL1564@conectiva.com.br>
-References: <20030813154635.376df59b.shemminger@osdl.org> <20030814172539.GD1785@conectiva.com.br> <20030814113025.2b40be14.shemminger@osdl.org>
+Date: Fri, 15 Aug 2003 23:47:42 +0200
+Sender: netdev-bounce@oss.sgi.com
+Message-ID: <20030815234742.A31946@electric-eye.fr.zoreil.com>
+References: <20030813154635.376df59b.shemminger@osdl.org> <20030814172539.GD1785@conectiva.com.br> <20030814113025.2b40be14.shemminger@osdl.org> <20030815211217.GL1564@conectiva.com.br>
 Mime-Version: 1.0
-Return-path: <linux-hams-owner@vger.kernel.org>
+Return-path: <netdev-bounce@oss.sgi.com>
 Content-Disposition: inline
-In-Reply-To: <20030814113025.2b40be14.shemminger@osdl.org>
+In-Reply-To: <20030815211217.GL1564@conectiva.com.br>; from acme@conectiva.com.br on Fri, Aug 15, 2003 at 06:12:17PM -0300
+Errors-to: netdev-bounce@oss.sgi.com
 List-Id: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
-To: Stephen Hemminger <shemminger@osdl.org>
-Cc: "David S. Miller" <davem@redhat.com>, Jeroen Vreeken <pe1rxq@amsat.org>, linux-hams@vger.kernel.org, netdev@oss.sgi.com
+To: Arnaldo Carvalho de Melo <acme@conectiva.com.br>
+Cc: Stephen Hemminger <shemminger@osdl.org>, "David S. Miller" <davem@redhat.com>, Jeroen Vreeken <pe1rxq@amsat.org>, linux-hams@vger.kernel.org, netdev@oss.sgi.com
 
-Em Thu, Aug 14, 2003 at 11:30:25AM -0700, Stephen Hemminger escreveu:
-> On Thu, 14 Aug 2003 14:25:39 -0300
-> Arnaldo Carvalho de Melo <acme@conectiva.com.br> wrote:
-> > <nitpick> why not just one seq_printf call? </nitpick>
-> 
-> ax2asc() returns a pointer to static buffer.
+Arnaldo Carvalho de Melo <acme@conectiva.com.br> :
+[ax2asc and the static buffer from hell]
+> argh :-\ Even if only for correctness shouldn't it receive a buffer, like
+> snprintf, etc?
 
-argh :-\ Even if only for correctness shouldn't it receive a buffer, like
-snprintf, etc?
+Then its name would be "ax2asc2".
 
-- Arnaldo
+--
+Ueimor
+
