@@ -1,31 +1,39 @@
 From: Tomi Manninen <tpm@prkele.tky.hut.fi>
-Subject: Re: colrconv-0.99.2.tar.gz
-Date: Wed, 25 Dec 2002 22:50:38 +0200 (EET)
+Subject: Re: FBB...
+Date: Wed, 25 Dec 2002 23:18:59 +0200 (EET)
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <Pine.LNX.4.44.0212252248280.1449-100000@oh2bns.ampr.org>
-References: <5.1.1.6.0.20021225200342.00b5bc58@pop-026.luukku.com>
+Message-ID: <Pine.LNX.4.44.0212252258010.1449-100000@oh2bns.ampr.org>
+References: <Pine.LNX.4.44.0212250010050.17537-100000@jeeves.mvw.net>
 Reply-To: tpm@prkele.tky.hut.fi
 Mime-Version: 1.0
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <5.1.1.6.0.20021225200342.00b5bc58@pop-026.luukku.com>
+In-Reply-To: <Pine.LNX.4.44.0212250010050.17537-100000@jeeves.mvw.net>
 List-Id: <linux-hams.vger.kernel.org>
 Content-Type: TEXT/PLAIN; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
-To: linux-hams@vger.kernel.org
+To: mvw@mvw.net
+Cc: linux-hams@vger.kernel.org
 
-On Wed, 25 Dec 2002, Tapio Sokura wrote:
+On Wed, 25 Dec 2002 mvw@mvw.net wrote:
 
-> At 19:22 25.12.2002, you wrote:
-> >Is there another mirror site for this app? This link is unreachable to me
-> >for some reason;
-> >
-> >ftp://ftp.oh2rba.ampr.org/pub/ham/unix/convers
-> 
-> There's no oh2rba.ampr.org, you probably meant oh7rba.ampr.org. Anyway I 
-> think the amprnet services running at oh7rba have largely been shut down, 
-> the same archives seem to be available at ftp://ftp.hes.iki.fi/ .
+> OK, pity, but FBB is deleted. I have never seen a worse install in my
+> life, of any software! Apart from the edits needed before it will even
+> compile, there are no instructions (the README just says to 'make' and
+> enjoy), and the scripts included give nothing but fatal errors. Plus the
 
-Yes, hes.iki.fi is the "official" site for colrconv.
+FBB is not the easiest software to set up, I admit. Most of 
+the documentation at http://www.f6fbb.org/fbbdoc/doc.htm still applies to 
+the latest version but the Linux specific stuff is not well documented.
+
+You should read all the doc files from the source package: README, INFO, 
+FBBTREE and especially CHANGES!
+
+> English is bad, but that is not the author's fault, and the licensing is 
+> odd (not GPL: it asks not to make changes)..
+
+It has been changed to real GPL some time ago. See the COPYING file 
+included in the source. Unfortunately there are references to the old 
+licence here and there...
 
 -- 
 Tomi Manninen           Internet:  oh2bns@sral.fi
