@@ -1,42 +1,35 @@
-From: pa3gcu <pa3gcu@zeelandnet.nl>
-Subject: Re: shared IP
-Date: Tue, 10 Dec 2002 21:21:50 +0000
+From: mvw@mvw.net
+Subject: Re: Canot get serial card working: It worked ONCE.
+Date: Tue, 10 Dec 2002 16:41:23 -0500 (EST)
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <02121021215000.00388@unix.pa3gcu>
-References: <20021210220622.5b72434c.eb3czs@qsl.net>
-Reply-To: pa3gcu@zeelandnet.nl
+Message-ID: <Pine.LNX.4.44.0212101638340.1255-100000@jeeves.mvw.net>
+References: <E18Lpdw-0002aB-00@yagi.h-net.msu.edu>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7BIT
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <20021210220622.5b72434c.eb3czs@qsl.net>
+In-Reply-To: <E18Lpdw-0002aB-00@yagi.h-net.msu.edu>
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"
-To: EB3CZS Xavier Crehueras <eb3czs@qsl.net>, linux-hams@vger.kernel.org
+Content-Type: TEXT/PLAIN; charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+To: Linux-Hams@vger.kernel.org
 
-On Tuesday 10 December 2002 21:06, EB3CZS Xavier Crehueras wrote:
-> I read in the AX25-HOWTO that it is possible to have the same IP address in
-> all the radio ports but routing must be carefully configured. I have a
-> machine with 4 radio ports sharing an IP address. Has anyone tried
-> something like this? Can anyone give me some advice to configure routing?
->
-> Thank you
+Hi all,
 
-I never have used more than one IP on my machine, all interfaces ececpt one 
-have my 44.ampr.org address, one nic gets assigned via dhcp.
+I give up: your sugestions were all helpful but all checked out. Dead 
+port I still suspects, so I moved the effort to a difefrent machine. 
+Recompiled the kernel, install libax25/ax25-tools/ax25-apps, and added 
+/etc/ax25/axports and rc.ax25 with kissattach and routes: hey presto.
 
-Examples for routing, that is not a wise thing to do without knowing what you 
-want, however lets say you have 2 different subnets on 2 different interfaces.
+For those of you in the GTA, I will soon have this up as another gateway 
+for the Toronto area (Oakville, Ontario, near the lake).
 
-ax0 = 44.111.123.0
-ax1 = 44.111.321.0
+One small question: in my logs I see that when I start mheardd, I get a 
+message as follows:
 
-route add -net 44.111.123.0 netmask 255.255.255.0 ax0
-route add -net 44.111.321.0 netmask 255.255.255.0 ax1
+	kernel: mheardd uses obsolete (PF_INET,SOCK_PACKET)
 
-Take a look at my web site, there are some example there i am sure could help.
+...is that anything to worry about?
 
--- 
-Regards Richard
-pa3gcu@zeelandnet.nl
-http://people.zeelandnet.nl/pa3gcu/
+Michael
+
+
 
