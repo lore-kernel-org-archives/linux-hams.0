@@ -1,51 +1,50 @@
-From: Richard Stearn <richard@rns-stearn.demon.co.uk>
-Subject: Re: Packet at the physical level
-Date: Fri, 19 Sep 2003 10:25:48 +0100
+From: Tim Neu <tim@tneu.visi.com>
+Subject: Re: A Terminal emulator
+Date: Fri, 19 Sep 2003 08:00:34 -0500
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <3F6ACB9C.7020008@rns-stearn.demon.co.uk>
-References: <memo.20030919071047.57493A@rovoreed.compulink.co.uk>
+Message-ID: <20030919130034.GA16581@leo.tneu.visi.com>
+References: <3F69D3C5.30104@home.se> <20030918172907.GA15989@leo.tneu.visi.com> <3F69F549.2000802@home.se>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
+Content-Disposition: inline
+In-Reply-To: <3F69F549.2000802@home.se>
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"; format="flowed"
-To: linux-hams@vger.kernel.org
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+To: Per Crusefalk <perpetum@home.se>
+Cc: linux-hams@vger.kernel.org
 
-Mike Davies wrote:
-> 	Thanks for all the replies (so far). A little bit of fiddling here 
-> has confirmed that valid packets can start with either tone. You learn 
-> something every day.
+On Thu, Sep 18, 2003 at 08:11:21PM +0200, Per Crusefalk wrote:
+> Tim Neu wrote:
 > 
-> 	By the way, VHF amateur packet is not Bell202 compatible. I've 
-> seen this mentioned before, but I've got the source code for a Bell202 
-> modem which I know works, and that simply uses a 1300Hz tone for high bit 
-> and a 2100Hz tone for a low bit. So not only does it use different tones 
-> it doesn't do the NRZ modulation.
-> 
-> 	Hopefully in the next day or two I'll be able to transmit a few 
-> test packets, and then I'll be able to determine the CRC polynomial if 
-> nothing turns up before.
+> >
+> >Please forgive if this is a dumb question - but I notice the morse
+> >option on the menu.  Does this program actually decode morse, or is 
+> >it
+> >just communicating with the TNC so it decodes morse? 
+> >
+> >I've had a hard time finding any decent morse decoding programs 
+> >(similar
+> >to cwget) for linux.  
+> >
+> > 
+> >
+> No, sri but that gets the TNC into morse mode only (sends "Morse" 
+> command for a PK-232).
+> The tnc does all decoding.  There are a few decoders here:
+> http://radio.linux.org.au/?sectpat=morse&ordpat=title
 
-Mike
+morsetree is not really a morse decoder.  It gets letters from
+tty input (like _ .... .. ...)
 
-The Z80-SIO-0's in my homebrewed 4-port sync serial card are set to:
+I think I have tried RSCW too - and it has rudimentery abilities,
+but wasn't a finished program.   I'll double check though. 
 
-	HDLC
-	CRC16
-
-CRC16 is:
-	x16+x15+x2+1
-the CRC generator is preset to 0's (non-HDLC)
-
-Info from Zilog comps databook 1983 and the source code for my 4-port sync 
-serial card from about 1987 (still the mainstay of my packet system).
+Thanks. 
 
 -- 
-Regards
-	Richard
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-Amateur radio callsign: G1SOG         Home BBS: G1SOG@GB7GLO.#46.GBR.EU
-                 Amprnet co-ordinator for Wiltshire
-Unix is user friendly.        Just rather selective about it's friends.
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+______         _ __                          Military Intelligence
+  /           ' )  )        -KC0LQL-         Honest Politician
+ / o ______    /  / _  . .                   Intellectual Property  
+/ <_/ / / <   /  (_</_(_/_  -- tneu@visi.com / http://www.visi.com/~tneu --
