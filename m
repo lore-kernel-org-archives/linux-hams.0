@@ -1,52 +1,57 @@
-From: Ted <ted@trufflesdad.plus.com>
-Subject: Re: G-DIGITAL
-Date: Wed, 25 Feb 2004 19:48:57 +0000
+From: Ruben Navarro Huedo <eb5esx@eb5esx.ampr.org>
+Subject: DX Spider and Kernel > 2.6.1
+Date: Fri, 27 Feb 2004 00:23:02 +0100
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <200402251948.57413.ted@trufflesdad.plus.com>
-References: <200402250828.31639.ted@trufflesdad.plus.com> <Pine.LNX.4.58.0402251150530.5216@server.palaemon.co.uk>
+Message-ID: <200402270023.02872@www.cabodesantapola.org>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 7BIT
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <Pine.LNX.4.58.0402251150530.5216@server.palaemon.co.uk>
+Content-Description: clearsigned data
 Content-Disposition: inline
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"
-To: Geoff Blake <geoff@palaemon.co.uk>
-Cc: Linux Ham Radio <linux-hams@vger.kernel.org>
+Content-Type: Text/Plain; charset="us-ascii"
+To: linux-hams@vger.kernel.org
 
-On Wednesday 25 February 2004 11:56 am, Geoff Blake wrote:
-> On Wed, 25 Feb 2004, Ted wrote:
-> >   A query for G-land.... I am considering a return to maateur radio but
-> > am only interested in digi modes...Many years ago I ran a packet station
-> > on 2m and 70cm but never ventured onto hf...I am now retired and
-> > considering an hf radio but do not know as yet what to buy.....I have
-> > looked at the ft817 and the new qrp Icom also the cheaper hf icom...The
-> > main difference between the Icom and the 817 seems to be the 817 covers
-> > 2m and 70 cm....Is there much activity on these bands in the uk on the
-> > digi modes and what comments on my proposed choice of radios ??
->
-> Hi Ted,
->
-> Regards VHF/UHF digital modes, things like packet has reduced
-> significantly. This, I believe is due to the Internet and the undoubtedly
-> agressive censorship applied at certain packet nodes. OTOH APRS and modes
-> like PSK31/63 and similar seem to be growing in interest.
->
-> For my money I would be inclined to go for an older HF rig, like an Icom
-> 735 or one of the vast range of similar models, and if you want to use
-> VHF/UHF, use a seperate rig.
->
-> HTH
->
-> Geoff
-Thanks for the reply Geoff.....I am just knocking up and rx to have a listen
-round before I take the plunge....I am limited as the the pwr output and the 
-antenna  as tvi is a great problem which is why I thought abt the qrp rigs
-...XYL is buying it as a belated retirement present and she insists it should 
-be new .....Will take her to the local emporium and see if I can change her 
-mind...
--- 
-Regards
-  Ted Wager
-    Using Libranet Linux
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+Hello friends:
+We are running Dx-Spider:
+DX Spider Cluster version 1.51 (build 57.263) on Linux
+Under Debian Woody with:
+ii  ax25-apps      0.0.6-1        Applications for AX25
+ii  ax25-tools     0.0.8-2        AX-25 Tools
+ii  libax25        0.0.10-1       ax25 libraries for hamradio applications
+ii  libax25-dev    0.0.10-1       ax25 library development files
+
+Spider is running OK with 2.6.1 but with 2.6.2 or 2.6.3 it doesn't accept ax25
+connections.
+With 2.6.2,3 ax25d runs Ok becouse we can connect to node.
+Trying to connect to Spider we can see the conection but inmediatly it
+disconects us:
+
+EB5ESX de EA5ELX-5 26-Feb-2004 2258Z >
+EA5RM connect <-This
+EA5RM disconect  <-And this
+
+We can only see this in the logs:
+1077836333^DXCommand^EA5RM connected from 127.0.0.1
+1077836334^DXCommand^EA5RM disconnected
+
+What could be happening?
+is anybody having this problem?
+
+Thank's.
+
+- -- 
+Ruben Navarro Huedo
+eb5esx (arroba) eb5esx.ampr.org
+http://www.cabodesantapola.org
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.2.1 (GNU/Linux)
+
+iD8DBQFAPn/W0S5G8AO3zN8RAm2DAJ4jkinoToAyr3CV2ll66FWhr6Q0QwCeMQ/Y
+PqZ3k+auLQrooqwKQuMFwi0=
+=hf07
+-----END PGP SIGNATURE-----
 
