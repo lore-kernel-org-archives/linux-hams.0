@@ -1,58 +1,61 @@
-From: "Wilson G. Hein" <wilson.hein@verizon.net>
-Subject: RE: Messages
-Date: Sun, 7 Jul 2002 16:19:42 -0400
+From: Nuno Miguel Fernandes Sucena Almeida <slug@aeminium.org>
+Subject: ppdev0: claim the port first // Device "/dev/parport0" neither
+ parport nor serport PATCH
+Date: Mon, 8 Jul 2002 07:40:27 +0100 (WEST)
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <NCBBKBAJDJIPKFIAFBKLIENOEFAC.wilson.hein@verizon.net>
-References: <20020707165727.13342.qmail@email.com>
-Reply-To: <wghein@ptd.net>
+Message-ID: <Pine.LNX.4.21.0207080731370.1481-100000@aeminium.aeminium.pt>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <20020707165727.13342.qmail@email.com>
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"
-To: barry winch <barry@email.com>, linux-hams@vger.kernel.org
+Content-Type: TEXT/PLAIN; charset="iso-8859-1"
+To: Linux-Hams <linux-hams@vger.kernel.org>
 
-The message made it to the list. However I find that some of the emails
-posted here come through with no sender email address. Not even anything
-from the listserver itself. Maybe the server doesn't like Outlook:-)
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Wilson
-WJ3G
+Hello,
+	i'm trying to use the soundmodem-0.6 with linux kernel 2.4.16
+and PTT with parport.
+I'm getting the following error from kernel log:
 
------Original Message-----
-From: linux-hams-owner@vger.kernel.org
-[mailto:linux-hams-owner@vger.kernel.org]On Behalf Of barry winch
-Sent: Sunday, July 07, 2002 12:57 PM
-To: linux-hams@vger.kernel.org
-Subject: Messages
+	ppdev0: claim the port first
+
+and the following output from soundmodem:
+
+sbin/soundmodem=20
+sm[3171]: Device "/dev/parport0" neither parport nor serport
+sm[3171]: cannot start PTT output
 
 
-Hi, looking for some advice on posting messages to this list
 
-I used to be able to send messages to the list, but no longer can. I
-unsubscribed (successfully), in case I had got bumped off the list for some
-reason, and re-subscribed (successfully), using a different e-mail address.
+	After a quick look at soundcard/ptt.c
 
-So far I have received nothing on the list since 29/06.
+i changed line 90 from
 
-This message has been sent by logging onto to a web based email site, and if
-you read this then obviously it worked, but from home using outlook (plain
-text format), the message does NOT get posted. If I request a delivery
-receipt then one is sent showing all is well
+} else if (!ioctl(fd, PPRDATA, &x)) {
 
-Any ideas please
+to=20
 
-Barry
-ve3nav
-barry@email.com
---
-__________________________________________________________ Sign-up for your
-own FREE Personalized E-mail at Mail.com http://www.mail.com/?sr=signup
-Save up to $160 by signing up for NetZero Platinum Internet service.
-http://www.netzero.net/?refcd=N2P0602NEP8
+} else if ((!ioctl(fd,PPCLAIM))&&(!ioctl(fd, PPRDATA, &x))) {
+
+and the errors no longer occur.
+
+			Cheers,
+					Nuno Sucena Almeida
+- --
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.0.6 (GNU/Linux)
+Comment: Para mais informa=E7=F5es veja http://www.gnupg.org
+
+iD8DBQE9KTPi8HEhaPSUrLkRAnmGAKC0KekSTL5eDAsltppkZbJwB7oVjwCeKvTx
+KB0HoMoiBpaWi22vAzJBzzA=3D
+=3DM8EW
+-----END PGP SIGNATURE-----
+
+
 -
-To unsubscribe from this list: send the line "unsubscribe linux-hams" in
+To unsubscribe from this list: send the line "unsubscribe linux-hams" i=
+n
 the body of a message to majordomo@vger.kernel.org
 More majordomo info at  http://vger.kernel.org/majordomo-info.html
-
