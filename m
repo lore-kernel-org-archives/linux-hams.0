@@ -1,43 +1,29 @@
-From: "Jean-Luc Coulon (f5ibh)" <jean-luc.coulon@wanadoo.fr>
-Subject: lsof said that /prox/ax25 has unsupported format
-Date: Sat, 24 Jan 2004 08:39:09 +0100
+From: "Heinz Landherr" <dj8qz@call2surf.net>
+Subject: Route from the Internet to the Ham-Net 44.x.x.x.
+Date: Sat, 24 Jan 2004 12:40:59 +0100
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <20040124073909.GA3160@tangerine.coulon.evette>
+Message-ID: <00a701c3e26f$1348ef20$c586e195@dj8qz>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=PGP-SHA1;
-	protocol="application/pgp-signature"; boundary="azLHFNyN32YCQGCU"
+Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
-Content-Disposition: inline
 List-Id: <linux-hams.vger.kernel.org>
+Content-Type: text/plain; charset="us-ascii"
 To: linux-hams@vger.kernel.org
 
+Hi...
 
---azLHFNyN32YCQGCU
-Content-Type: text/plain; Format=Flowed; DelSp=Yes; charset=ISO-8859-15
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+I want to route from the Internet to the Ham-Net 44.x.x.x.
+But here is no router to realize this.
 
-Hi,
+I'm using Linux-Redhat 7.1 with the ax25 utils.
 
-The commad lsof report this warning message. This is mostly harmless =20
-[tm] but maybe this should be fixed?
+My IP is 44.130.56.117 <dj8qz.ampr.org>
 
-lsof: WARNING: unsupported format: /proc/net/ax25
+What must I do ?
+
+Many thanks in advance !
 
 
---
-Regards and 73
-			- Jean-Luc
---azLHFNyN32YCQGCU
-Content-Type: application/pgp-signature
-Content-Disposition: inline
+Heinz
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.2.4 (GNU/Linux)
 
-iD8DBQBAEiEdUdGGXzzGnNARAs3+AJ0fXOQVQ7hsXMmgg54wKPlR4yfZGQCdFIoQ
-tb6TffGAcecfSLyc3nzpa8o=
-=qkQ2
------END PGP SIGNATURE-----
-
---azLHFNyN32YCQGCU--
