@@ -1,39 +1,48 @@
-From: <ravioli@softhome.net>
+From: Hamish Moffatt <hamish@cloud.net.au>
 Subject: Re: soundmodem / "SIOCSIFFLAGS no such device"
-Date: Thu, 20 Feb 2003 22:48:29 +0100
+Date: Fri, 21 Feb 2003 08:50:08 +1100
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <b33hs1$okf$1@main.gmane.org>
-References: <b2veij$79l$1@main.gmane.org> <20030220135358.58791.qmail@web9602.mail.yahoo.com>
+Message-ID: <20030220215008.GA1876@silly.cloud.net.au>
+References: <b2veij$79l$1@main.gmane.org> <20030220120526.GA28160@silly.cloud.net.au> <b33hmu$nsm$1@main.gmane.org>
 Mime-Version: 1.0
-Content-Transfer-Encoding: QUOTED-PRINTABLE
 Return-path: <linux-hams-owner@vger.kernel.org>
+Content-Disposition: inline
+In-Reply-To: <b33hmu$nsm$1@main.gmane.org>
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: TEXT/PLAIN; charset="iso-8859-1"
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 7bit
 To: linux-hams@vger.kernel.org
 
+On Thu, Feb 20, 2003 at 10:41:11PM +0100, linux-hams-owner@vger.kernel.org wrote:
+> > > ifconfig sm0 hw ax25 X1ABC up
+> >
+> > Should also assign a dummy IP address.
+> So, I typed :
+> ifconfig sm0 hw ax25 X870 192.3.1.2
+> ===>>> SIOCSIFFLAGS: No such device
 
-ariel mastracchio <ari197516@yahoo.com> a =E9crit dans le message :
-20030220135358.58791.qmail@web9602.mail.yahoo.com...
+Check the messages from the kernel with 'dmesg'. It may give you some
+extra information - is it the sound card it can't find or is it the
+serial port etc.
 
-Hi Ariel,
+> > Is your sound card SB-compatible?
+> How can I know that, please ?
 
->    I think you have to install the sound blaster
-> module first, then uninstall, and then all the
-> soundmodem stuff, it is for init the sound card...
-Do you mean :
-rmmod sb
+Google?
 
-But I do not have the 'sb' module, but rather sound-card-fm801
+> Maybe I rmmod'ed too many modules ?
 
-Thanks anyway !
+Unlikely.
 
-RC
+> > You could also try the user-space (non kernel) soundmodem driver. It
+> > uses your existing sound card drivers although not all cards are
+> supported.
+> Great ! Where is it ? What is its name ?
+
+http://www.baycom.org/~tom/ham/soundmodem/
 
 
-
-
--
-To unsubscribe from this list: send the line "unsubscribe linux-hams" i=
-n
-the body of a message to majordomo@vger.kernel.org
-More majordomo info at  http://vger.kernel.org/majordomo-info.html
+73
+Hamish
+-- 
+Hamish Moffatt VK3SB <hamish@debian.org> <hamish@cloud.net.au>
