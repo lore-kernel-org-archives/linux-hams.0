@@ -1,55 +1,59 @@
-From: M Taylor <mctylr@privacy.nb.ca>
-Subject: Re: RedHat 7.3 and AX25
-Date: Sat, 7 Sep 2002 16:24:04 +0100
+From: Vivi Kusumo <vivi_ksm@yahoo.com>
+Subject: Option in kernel compilation
+Date: Mon, 9 Sep 2002 06:16:04 -0700 (PDT)
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <20020907162404.A19510@pull.privacy.nb.ca>
-References: <Pine.LNX.4.33.0209070059470.137-100000@gb7lgs.ampr.org>
+Message-ID: <20020909131604.45705.qmail@web14401.mail.yahoo.com>
+References: <5.1.0.14.0.20020907072816.00aaaec0@pop.freeserve.net>
 Mime-Version: 1.0
 Return-path: <linux-hams-owner@vger.kernel.org>
-Content-Disposition: inline
-In-Reply-To: <Pine.LNX.4.33.0209070059470.137-100000@gb7lgs.ampr.org>; from g0lgs@gb7lgs.co.uk on Sat, Sep 07, 2002 at 01:03:43AM +0000
+In-Reply-To: <5.1.0.14.0.20020907072816.00aaaec0@pop.freeserve.net>
 List-Id: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
-To: Stewart Wilkinson <g0lgs@gb7lgs.co.uk>
-Cc: linux-hams@vger.kernel.org
+To: linux-hams@vger.kernel.org
 
-On Sat, Sep 07, 2002 at 01:03:43AM +0000, Stewart Wilkinson wrote:
-> Hi,
-> 
-> I seem to have a problem using kissattach with the 2.4.18-3 kernel. I have
-> rebuilt a kernel with MKISS support on (ie: CONFIG_MKISS=y in .config),
-> yet when I try to run kissattach I get:
-> 
-> kissattach: Error setting line discipline: TIOCSETD: Invalid argument
-> Are you sure you have enabled MKISS support in the kernel
-> or, if you made it a module, that the module is loaded?
-> 
-> Any Idea's ??
+Hi all,
 
-This won't work well without AX.25 also being in the kernel. BUT it is 
-much much better to use KISS as a module (CONFIG_MKISS=m) instead.
+I have problem to choose <module> during make xconfig
+# cd /usr/src/linux-2.4.19
+# make xconfig
+--- Amateur Radio support
+<*>y  <>-  <>n   Amateur Radio support
+--- Packet Radio protocols
+<*>y  <>m  <>n   Amateur Radio AX.25 Level 2 protocol
+--- AX.25 network device drivers
+<>y  <*>m   <>n  Soundcard modem driver
+<*>y  <>-  <>n  soundmodem support for Soundblaster
+and compatible 
+cards
+ <>y  <>-  <*>n  soundmodem support for WSS and
+Crystal cards
+<*>y  <>-  <>n  soundmodem support for 1200 baud AFSK
+modulation
+ <>y  <>-  <*>n  soundmodem support for 2400 baud AFSK
+modulation (7.3728MHz crystal)
+ <>y  <>-  <*>n  soundmodem support for 2400 baud AFSK
+modulation (8MHz crystal)
+ <>y  <>-  <*>n  soundmodem support for 2666 baud AFSK
+modulation
+ <>y  <>-  <*>n  soundmodem support for 4800 baud
+HAPN-1 modulation
+ <>y  <>-  <*>n  soundmodem support for 4800 baud PSK
+modulation
+ <>y  <>-  <*>n  soundmodem support for 9600 baud FSK
+G3RUH modulation
 
-mv .config .config.old
-sed 's/CONFIG_MKISS=y/CONFIG_MKISS=m/' <.config.old >.config
-make modules
-make modules-install
-make bzImage (only needed to rebuild kernel without mkiss in it)
-...whatever steps you use to install new kernel 
-...and update MBR (i.e. run lilo)
+I can not choose/click module for "soundmodem support
+for Soundblaster and compatible cards" and "soundmodem
+support for 1200 baud AFSK modulation". I can only
+click yes or no, I don't know why?
 
-reboot
+Thanks for any help.
 
-depmod -a
+Vivi 
 
-/sbin/modprobe ax25
-/sbin/modprobe mkiss
-kissattach ...
 
-I would recommend building a kernel from generic 2.4.19 sources 
-(www.us.kernel.org) rather than RedHat's kernel source rpm unless you need to 
-use RedHat's patches for some non-standard reason. 2.4.19 has some fixes
-for amateur radio.
-
-I hope that helps,
--ve1mct
+__________________________________________________
+Do You Yahoo!?
+Yahoo! Finance - Get real-time stock quotes
+http://finance.yahoo.com
