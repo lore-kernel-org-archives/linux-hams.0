@@ -1,83 +1,60 @@
-From: "Jim Johnson - KC4HW" <jim@kc4hw.net>
+From: M Taylor <mctylr@privacy.nb.ca>
 Subject: Re: How Do I Get Packets To Show On My Terminal Window?
-Date: Tue, 18 Mar 2003 21:10:31 -0500
+Date: Wed, 19 Mar 2003 04:01:57 +0000
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <200303190209.h2J29p14011976@ms-smtp-01.tampabay.rr.com>
-References: <1047953104.1472.10.camel@bobcp4.lingpgmr.com>; from cochranb@speakeasy.net on Mon, Mar 17, 2003 at 09:05:04PM -0500
-Reply-To: jim@kc4hw.net
+Message-ID: <20030319040157.A26641@pull.privacy.nb.ca>
+References: <1047953104.1472.10.camel@bobcp4.lingpgmr.com>; <20030318025824.B20480@pull.privacy.nb.ca> <200303190209.h2J29p14011976@ms-smtp-01.tampabay.rr.com>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7BIT
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-reply-to: <20030318025824.B20480@pull.privacy.nb.ca>
+Content-Disposition: inline
+In-Reply-To: <200303190209.h2J29p14011976@ms-smtp-01.tampabay.rr.com>; from jim@kc4hw.net on Tue, Mar 18, 2003 at 09:10:31PM -0500
 List-Id: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
-To: M Taylor <mctylr@privacy.nb.ca>
-Cc: linux-hams <linux-hams@vger.kernel.org>
-
-I am using red hat 7.2 and kernel 2.4.18 with DXSpider.  I use the listen 
-command to see what is going on with the TNC...  Within a new terminal 
-window and to see both received and transmitted packet: listen -ap 
-<portname> 
-
-Hopefully this will help...  
-
-On 18 Mar 03, at 2:58, M Taylor wrote:
-
-> On Mon, Mar 17, 2003 at 09:05:04PM -0500, Robert L Cochran wrote:
-> > Hello,
-> > 
-> > I'm a new ham and I'm trying to set up packet radio on Linux. I have a
-> > Kenwood TR-7950 connected to a new KPC-3 Plus. After 2 attempts at
-> > resoldering the radio port cable to the connectors, I now beleive the
-> > KPC-3 is recieving packets because I can see the 'Rcv' light turn on now
-> > and then, sometimes for long periods. It goes on and off and seems very
-> > active.
-> > 
-> > I am using Red Hat 8. Connected to the KPC-3 Plus using minicom. I have a
-> > 'cmd:' prompt on my minicom window, and the KPC-3 responds to my
-> > commands. MONITOR is on. ABAUD is set to 9600. The KPC-3 has my call sign
-> > in it (KB3JCM).
-> > 
-> > My problem is, when the KPC-3 recieves packets (as evidenced by the lit
-> > Rcv LED) the packets do not show up on my Minicom terminal window. I'm
-> > anxious to see packets at last!
-> > 
-> > Can anyone help me solve this problem? Is there a minicom setting I need
-> > to invoke?
-> 
-> Minicom should be configured for 9600 8N1 connection, and if you
-> are seeing the cmd: and when you hit 'enter' it take you to a new
-> line with another cmd: prompt then Minicom should be configured okay.
-> 
-> (the first two are optional)
-> 
-> cmd: RESET
-> cmd: MYCALL KB3JCM
-> cmd: MONITOR ON
-> cmd: MCon OFF
-> cmd: MCom ON
-> cmd: MResp ON
-> 
-> ...wait some time...
-> 
-> cmd: MHeard L
-> 
-> If you are still having problem, check the HBaud is 1200, and CD is
-> INTERNAL.
-> 
-> I hope this helps,
-> 
-> ve1mct
-> -
-> To unsubscribe from this list: send the line "unsubscribe linux-hams" in
-> the body of a message to majordomo@vger.kernel.org More majordomo info at 
-> http://vger.kernel.org/majordomo-info.html
-> 
+Content-Transfer-Encoding: 7bit
+To: linux-hams <linux-hams@vger.kernel.org>
 
 
+The 'listen' command will work wonderfully if your TNC is in KISS mode,
+like yours and mine is, but Robert's TNC appears to be in TERMINAL or NEWUSER
+(a limited subset of the commands in TERMINAL) mode.
 
-Jim Johnson, KC4HW
-Melbourne, Florida
-http://www.kc4hw.net
-DXCluster RF Connection: 144.95
-Telnet://kc4hw.homelinux.net:8000
+Of course, I think Robert should take baby steps and make sure things
+are working with his computer and TNC setup in TERMINAL mode before
+trying to setup a AX25 station using KISS mode, IMHO.
+
+I'm out of ideas as to why things aren't working, assuming that Robert
+checked that his HBAUD setting is 1200 (not 300), and that the Carrier
+Detect ('CD') is INTERNAL (or SOFTWARE, but INTERNAL is default afaik).
+Does 'MHeard' suggest that the TNC is decoding any packets? Does listening
+to the audio from the transceiver sound loud and "squaky" rather than
+quiet hissing like? 
+
+
+Cheers,
+ -ve1mct
+
+On Tue, Mar 18, 2003 at 09:10:31PM -0500, Jim Johnson - KC4HW wrote:
+> I am using red hat 7.2 and kernel 2.4.18 with DXSpider.  I use the listen 
+> command to see what is going on with the TNC...  Within a new terminal 
+> window and to see both received and transmitted packet: listen -ap 
+> <portname> 
+> 
+> Hopefully this will help...  
+> 
+> On 18 Mar 03, at 2:58, M Taylor wrote:
+> 
+> > On Mon, Mar 17, 2003 at 09:05:04PM -0500, Robert L Cochran wrote:
+> > > Hello,
+> > > 
+> > > I'm a new ham and I'm trying to set up packet radio on Linux. I have a
+> > > Kenwood TR-7950 connected to a new KPC-3 Plus. After 2 attempts at
+> > > resoldering the radio port cable to the connectors, I now beleive the
+> > > KPC-3 is recieving packets because I can see the 'Rcv' light turn on now
+> > > and then, sometimes for long periods. It goes on and off and seems very
+> > > active.
+> > > 
+> > > I am using Red Hat 8. Connected to the KPC-3 Plus using minicom. I have a
+> > > 'cmd:' prompt on my minicom window, and the KPC-3 responds to my
+> > > commands. MONITOR is on. ABAUD is set to 9600. The KPC-3 has my call sign
+> > > in it (KB3JCM).
+...
