@@ -1,62 +1,28 @@
-From: Riley Williams <rhw@MemAlpha.cx>
-Subject: Re: about ax25ipd
-Date: Fri, 19 Apr 2002 18:44:41 +0100 (BST)
+From: Chuck Gelm <nc8q@gelm.net>
+Subject: ? wireless 802.11b, D-Link DWL-520
+Date: Sat, 20 Apr 2002 11:52:59 -0400
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <Pine.LNX.4.21.0204191836480.22444-100000@Consulate.UFP.CX>
-References: <Pine.LNX.4.33.0204190135420.2514-100000@localhost.localdomain>
-Reply-To: Riley Williams <rhw@InfraDead.Org>
+Message-ID: <3CC18EDB.8551499D@gelm.net>
+References: <F182IyDPxcgiKMXNaGf0001b276@hotmail.com> <3CBD9E75.1030802@lvcm.com>
 Mime-Version: 1.0
-Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <Pine.LNX.4.33.0204190135420.2514-100000@localhost.localdomain>
-List-Id: <linux-hams.vger.kernel.org>
-Content-Type: TEXT/PLAIN; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
-To: Ricardo Saiz Villoria <ea1apm@amsat.org>
-Cc: Linux Ham Radio <linux-hams@vger.kernel.org>
+Return-path: <linux-hams-owner@vger.kernel.org>
+List-Id: <linux-hams.vger.kernel.org>
+Content-Type: text/plain; charset="us-ascii"
+To: nc8q@gelm.net
 
-Hi Ricardo.
+Howdy, Ladies and Gentlemen newbie guru's"
 
-> I will try and see the packets with tcpdump. But linux itself can
-> snnif all the traffic in the network, not just that from other
-> computers but also his own packets. I don't think a tcpdump
-> equivalent is needed in the other computers.
+ I'd would like a wireless (802.11b) link between two hosts:
+kernel-2.2.19 (Slackware-7.1) k6-266 
+kernel-2.4.17 (Slackware-8.0) 80586x120
 
-Whilst in theory Linux can do just that, in practice it doesn't always
-do so. However, from a diagnostics viewpoint, the tcpdump wants to be
-running on a machine other than the two having the problem, as one can
-then guarantee that it sees everything on the network, including the
-results of hardware problems on the ethernet adapters in the two
-machines (something that will NEVER show up to the machines themselves).
+ I am installing D-Link DWL-520 PCI cards.
 
-To localise the problem as much as possible, I'd start by filling in a
-table stating exactly which machine can connect to which other
-machine. Something along the lines of the following:
+How do I configure the cards, /usr/src/linux/.config ?
 
- A. Does LINUX connect to MSDOS ?             Yes  /  No
- B. Does LINUX connect to WIN2K ?             Yes  /  No
- C. Does LINUX connect to WIN9X ?             Yes  /  No
+How do I set them up for an 'ad-hoc' network?
 
- D. Does MSDOS connect to LINUX ?             Yes  /  No
- E. Does MSDOS connect to WIN2K ?             Yes  /  No
- F. Does MSDOS connect to WIN9X ?             Yes  /  No
+How do I configure the cards to use one channel among 1 through 6?
 
- G. Does WIN2K connect to LINUX ?             Yes  /  No
- H. Does WIN2K connect to MSDOS ?             Yes  /  No
- I. Does WIN2K connect to WIN9X ?             Yes  /  No
-
- J. Does WIN9X connect to LINUX ?             Yes  /  No
- K. Does WIN9X connect to MSDOS ?             Yes  /  No
- L. Does WIN9X connect to WIN2K ?             Yes  /  No
-
-Also, don't assume that because A can connect to B, it automatically
-means that B can connect to A as that often isn't the case. That's why
-there are 12 tests above.
-
-> The problems seems to be either the ms-dos card driver or flexnet
-> axip driver not accepting the packets for some reason.
-
-It's also possible that there's a hardware problem with one of the
-cards, in which case the above should show it up.
-
-Best wishes from Riley.
-
+Kindest regards, Chuck
