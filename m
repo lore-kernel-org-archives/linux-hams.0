@@ -1,33 +1,64 @@
-From: Tomi Manninen OH2BNS <tpm@prkele.tky.hut.fi>
+From: Bob Nielsen <nielsen@oz.net>
 Subject: Re: ld - RH8 - config - Help!
-Date: Wed, 9 Apr 2003 19:45:31 +0300 (EETDST)
+Date: Wed, 9 Apr 2003 10:18:51 -0700
 Sender: linux-hams-owner@localhost
-Message-ID: <Pine.HPX.4.10.10304091941360.2329-100000@saturn.trs.ntc.nokia.com>
+Message-ID: <20030409171851.GB8440@n7xy.net>
 References: <200304090833.24832.KB7NO@worldnet.att.net>
-Reply-To: tpm@prkele.tky.hut.fi
 Mime-Version: 1.0
 Return-path: <linux-hams-owner@vger.kernel.org>
+Content-Disposition: inline
 In-Reply-To: <200304090833.24832.KB7NO@worldnet.att.net>
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: TEXT/PLAIN; charset="us-ascii"
+Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
-To: linux-hams@vger.kernel.org
+To: Jack Heller <KB7NO@worldnet.att.net>
+Cc: linux-hams@vger.kernel.org
 
-On Wed, 9 Apr 2003, Jack Heller wrote:
+Jack,
 
->         I installed two log programs, TWLog and TLF, with their
-> required libraries.  I find neither able to boot due to "error while
-> loading shared libraries."
+The command you are looking for is 'ldconfig' not 'ldconfigure'.  See
+'man ldconfig' and 'man ldd' for more information.
 
-Partly guessing here (more detailed error messages, if available, always
-help), but possibly the libraries are installed in /usr/local/lib and that
-is not in the library search path.
+73,
+Bob N7XY
 
-Check /etc/ld.so.conf and add /usr/local/lib in there if it's missing.
-Then run 'ldconfig' and you should be all set.
-
--- 
-Tomi Manninen           Internet:  oh2bns@sral.fi
-OH2BNS                  AX.25:     oh2bns@oh2rbi.fin.eu
-KP20ME04                Amprnet:   oh2bns@oh2rbi.ampr.org
-
+On Wed, Apr 09, 2003 at 08:33:24AM -0700, Jack Heller wrote:
+> Hello,
+>         I am still new to Linux. And problems arise that are a bit tough on 
+> the aging 
+> brain.
+> 
+>         I installed two log programs, TWLog and TLF, with their required 
+> libraries.  
+> I find neither able to boot due to "error while loading shared libraries."
+> 
+>         It took a bit of research and finally found reference to running 
+> "ldconfigure."  Then found that does not exist in Red Hat 8.
+> 
+>         More reading -- Found ld exists -- 30 page manual in RH relates almost 
+> entirely to programmers intending to make program work when installed in RH.  
+> Other reading not so informative.  Finally came up with the following command 
+> line that comes somewhat close, but no cigar.
+> 
+>         ld -o twlog /lib/libXbae.so.4.0.8 libXbae.so
+> 
+>         Tried many configurations of the above, but have to ask for help.  In 
+> the 
+> /usr/local/lib the folowing 3 files exist:
+> 
+>         libXbae.so
+>         libXbae.so.4
+>         libXbae.so.4.0.8
+> 
+>         And -- Think I found the problem with these files.  They are empty!
+> 
+> And the hamlib files (for TLF) seem to be intact with data present.  Must be a 
+> failure in the Xbae install.
+> 
+>         Now the question is: would the command line above work, and how should 
+> it be 
+> configured to boot the other program (TLF) -- It is much more complex. (many 
+> lib files)
+> 
+> TIA for your patience --  Jack   KB7NO
+> 
