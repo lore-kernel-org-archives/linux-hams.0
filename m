@@ -1,42 +1,34 @@
-From: "Jose A. Amador" <co2ja01@fastmail.fm>
-Subject: Re: Doubts on modems utilization
-Date: Sat, 05 Apr 2003 18:00:04 -0800
+From: Marco Calistri <ik5bcu@tin.it>
+Subject: RE: Doubts on modems utilization
+Date: Sun, 06 Apr 2003 22:37:13 +0200 (CEST)
 Sender: linux-hams-owner@localhost
-Message-ID: <20030406020004.BB4762EA96@www.fastmail.fm>
-References: <20030405150229.7107.qmail@linux.ik5bcu.ampr.org>
+Message-ID: <20030406203713.7483.qmail@linux.ik5bcu.ampr.org>
+References: <000001c2fbc2$5ade9900$8c01a8c0@HP713A>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 7BIT
 Return-path: <linux-hams-owner@vger.kernel.org>
-Content-Disposition: inline
-In-Reply-To: <20030405150229.7107.qmail@linux.ik5bcu.ampr.org>
+In-Reply-To: <000001c2fbc2$5ade9900$8c01a8c0@HP713A>
 List-Id: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
-To: Marco Calistri <ik5bcu@tin.it>, Linux Hams <linux-hams@vger.kernel.org>
+To: Dexter N Muir <dexy@ihug.co.nz>
+Cc: linux-hams@vger.kernel.org
 
 
-On Sat, 05 Apr 2003 17:02:29 +0200 (CEST), "Marco Calistri"
-<ik5bcu@tin.it> said:
-> Hello and sorry for this silly question:
+On 05-Apr-2003 Dexter N Muir wrote:
+> Hi Marco and Matti and all
 > 
-> I wonder if are there any chances to interface a simple modem to linux
-> and be able to use it under applications running kiss mode.
+>   Check out SCC and ESCC and PCI-SCC cards - simple modems and stunning
+> performance!  I'm in process of setting up my old trusty PA0HZP
+> OptoPCSCC Card under Mandrake 9.0 at present (thanks to list and Wilbert
+> for ax25 so far).
 > 
-> Until now I always used TNCs to do this.
-> 
-> Many thanks,73's
-> 
-> Marco IK5BCU
+> Cheers
+> Dex ZL2DEX
 
-Marco:
+Oh in that case I know that I could use many modems (up to 4 or 6) for
+different baud rates...so it will be a very good solution.
 
-It seems to me that it is a job suited for a baycom interface, where your 
-computer does the job of the missing TNC (and some more....)
+Thank you Dex and all the best.
 
-73 de Jose, CO2JA
+Marco IK5BCU
 
--- 
-  Jose A. Amador
-  co2ja01@fastmail.fm
-
--- 
-http://www.fastmail.fm - Choose from over 50 domains or use your own
