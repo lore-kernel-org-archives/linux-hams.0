@@ -1,42 +1,34 @@
-From: Tomi Manninen <oh2bns@sral.fi>
-Subject: Re: gMFSK/hamlib/parport
-Date: Thu, 19 Feb 2004 19:28:56 +0200
+From: Jeroen Vreeken <pe1rxq@amsat.org>
+Subject: Re: Linux 2.6.3 ... Where are mkiss and 6pack?
+Date: Thu, 19 Feb 2004 20:44:55 +0100
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <1077211736.1283.1.camel@oh2bns.ampr.org>
-References: <20040218152745.GD16991@strauss.udel.edu>
-	 <1077135120.1270.67.camel@oh2bns.ampr.org>
-	 <20040219165856.GD14329@strauss.udel.edu>
+Message-ID: <20040219204455.A231@jeroen.pe1rxq.ampr.org>
+References: <200402182229.30123@www.cabodesantapola.org> <20040219003515.K231@jeroen.pe1rxq.ampr.org> <4034B26B.3010903@ccr.jussieu.fr>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 7BIT
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <20040219165856.GD14329@strauss.udel.edu>
+In-Reply-To: <4034B26B.3010903@ccr.jussieu.fr>; from pidoux@ccr.jussieu.fr on Thu, Feb 19, 2004 at 13:56:11 +0100
 List-Id: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
-To: Mike Markowski <mm@UDel.Edu>
-Cc: Linux-hams List <linux-hams@vger.kernel.org>
+To: Bernard Pidoux <pidoux@ccr.jussieu.fr>
+Cc: Ruben Navarro Huedo <eb5esx@eb5esx.ampr.org>, Linux-hams List <linux-hams@vger.kernel.org>
 
-On Thu, 2004-02-19 at 18:58, Mike Markowski wrote:
-
-> On Wed 18-Feb-04 at 1512 EST, Tomi Manninen wrote:
-> > On Wed, 2004-02-18 at 17:27, Mike Markowski wrote:
-> > 
-> > > 	Feature request:
-> > > 	- Are there any patches that allow gMFSK to use
-> > > 	  a parport for PTT?  If not, I'll be glad to look into
-> > > 	  possibly re-using the parport code from soundmodem-0.7.
-> > 
-> > There is no direct support available. Like Stephane said, hamlib
-> > can control PTT through the parport.
+On 2004.02.19 13:56:11 +0100 Bernard Pidoux wrote:
+> Hi,
 > 
-> As far as I know (which isn't much!), there isn't a hamlib config
-> file.  It seems that rigctl lets you test hamlib but doesn't let
-> you create a permanent file with settings.  If that's true, I need to
-> set the PTT device in gMFSK.
+> In my experience mkiss works very fine with kernel 2.6 !
+> Could you explain what is SMP ?
 
-Umm... You're right. There is no support in gMFSK for setting the
-required hamlib options for this. I should have engaged my brain 
-before posting...
+As long as you use a single processor system they indeed work fine....
+And the nasty thing is that they will probably appear to work fine on an
+multiprocessor system to. Except for the fact that it will probably have
+some misterious lockup once every few weeks :)
 
--- 
-Tomi Manninen / OH2BNS / KP20ME04
+Somebody has looked at the code and decided that it probably has some race
+conditions. (which might go wrong or might go right depending on the phase
+of the moon)
+Someone would have to go over the code and make sure it uses the propper
+locking mechanisms.
+
+Jeroen
 
