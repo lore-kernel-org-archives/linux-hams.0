@@ -1,18 +1,28 @@
-From: =?iso-8859-15?q?G=FCnther=20Montag?= <Safari.Doktor@addcom.de>
-Subject: new release HF-0.4.3  (pactor-rtty prog) !
-Date: Tue, 11 Nov 2003 19:26:30 +0100
+From: Aleksandar Ilic <ailic@gmx.net>
+Subject: qtel (svxlink) Echolink client
+Date: Thu, 13 Nov 2003 01:32:34 +0100
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <200311111926.30582.Safari.Doktor@addcom.de>
+Message-ID: <200311130131.12262.ailic@gmx.net>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
+Content-Disposition: inline
 List-Id: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
-To: Thomas Sailer <sailer@scs.ch>, hfterm-hackers@lists.sourceforge.net, suse-ham-e@suse.com, suse-ham@suse.com, linux hams <linux-hams@vger.kernel.org>
+To: linux-hams@vger.kernel.org
 
-on http://hfterm.sourceforge.net!
-some bugfixes, improved startscripts & docs!
-Read README first.
-welcome!
+Hello,
 
-dl4mge@darc.de
+I am trying this Echolink client (http://sourceforge.net/projects/svxlink/), 
+and over and over I can't produce sound output ("transmitting" works). It 
+repeats with two different soundcards, and with both OSS and ALSA drivers.
+
+I wonder, did anybody managed to have qtel working? It will be very nice if 
+somebody with better knowledge of KDE/Qt/C++ programming than me could check 
+that out.
+
+regards,
+Alek
+-- 
+  73 de YU1IS  -=-  ICQ# 62419462
+
