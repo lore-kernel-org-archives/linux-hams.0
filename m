@@ -1,42 +1,31 @@
-From: "Robin Gilks" <robin@gilks.org>
+From: rovoreed@cix.co.uk (Mike Davies)
 Subject: Re: Packet at the physical level
-Date: Fri, 19 Sep 2003 10:37:40 +1200 (NZST)
+Date: Fri, 19 Sep 2003 07:10 +0000 (Greenwich Standard Time)
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <53174.202.37.96.11.1063924660.squirrel@server>
-References: <20030918190546.GB3466@n7xy.net>
-        <memo.20030918184842.4613A@rovoreed.compulink.co.uk>
-        <E1A04H7-0008Ka-00@yagi.h-net.msu.edu>
-Reply-To: robin@gilks.org
+Message-ID: <memo.20030919071047.57493A@rovoreed.compulink.co.uk>
+References: <E1A04H7-0008Ka-00@yagi.h-net.msu.edu>
+Reply-To: rovoreed@cix.co.uk
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7BIT
+Content-Type: text/plain; charset="us-ascii"
 Return-path: <linux-hams-owner@vger.kernel.org>
 In-Reply-To: <E1A04H7-0008Ka-00@yagi.h-net.msu.edu>
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 7bit
 To: linux-hams@vger.kernel.org
+Cc: rovoreed@cix.co.uk
 
-Greetings
+	Thanks for all the replies (so far). A little bit of fiddling here 
+has confirmed that valid packets can start with either tone. You learn 
+something every day.
 
-To get a view of the physical layer just above the tones themselves, take
-a look at the bit-bashing in the TVIPUG (Thames Valley IP User Group) 9k6
-modem. This does all the NRZ/NRZI conversion, the CRC generation and
-checking, the bit stuffing and stripping on a bit level (makes it a bit
-clearer than byte level I think!!). Its also independent of the speed and
-avoids the pitfall of thinking all packet being at 1200bps :-))
+	By the way, VHF amateur packet is not Bell202 compatible. I've 
+seen this mentioned before, but I've got the source code for a Bell202 
+modem which I know works, and that simply uses a 1300Hz tone for high bit 
+and a 2100Hz tone for a low bit. So not only does it use different tones 
+it doesn't do the NRZ modulation.
 
-http://www.tvipug.org/download/ipri-1.00.tar.gz
+	Hopefully in the next day or two I'll be able to transmit a few 
+test packets, and then I'll be able to determine the CRC polynomial if 
+nothing turns up before.
 
-
-> I'm trying to find out what happens at the physical level with
-> Ax25 packet. I've tried looking at the source code but either I'm
-> looking  in the wrong place, or I don't understand.
->
-
-
--- 
-Robin Gilks
-Internet: robin@gilks.org    http://www.gilks.org
-Tel:      (+64) (3) 357 9383
-
-
-
+Mike
