@@ -1,30 +1,35 @@
-From: Chuck Hast <wchast@gmail.com>
-Subject: Re: Run app on login
-Date: Sun, 14 Nov 2004 15:53:42 -0800
-Message-ID: <620c905704111415532b703c30@mail.gmail.com>
-References: <Pine.LNX.4.44.0411131952180.1435-100000@wapiti>
-	 <20041114184424.66418.qmail@web60610.mail.yahoo.com>
-Reply-To: Chuck Hast <wchast@gmail.com>
+From: David <djmunn@bigpond.com>
+Subject: QSSTV-5.2d compiling
+Date: Mon, 15 Nov 2004 16:07:21 +1000
+Message-ID: <41984799.9020305@bigpond.com>
 Mime-Version: 1.0
 Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <20041114184424.66418.qmail@web60610.mail.yahoo.com>
 Sender: linux-hams-owner@vger.kernel.org
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"
-To: Linux-hams List <linux-hams@vger.kernel.org>
+Content-Type: text/plain; charset="us-ascii"; format="flowed"
+To: linux-hams@vger.kernel.org
 
-On Sun, 14 Nov 2004 10:44:24 -0800 (PST), Jim Bayer <kc9aop@yahoo.com> wrote:
-> Curt,
-> 
-> You will also need to change /etc/shells to include the new login script or the "radio" user may
-> not be able to log in.  It will not be able to ftp for certain.
-> 
-> '73
+Hi All...have had great problems with compiling QSSTV-5.2d on Fedora 
+Core 2 and Mandrake 9.2 or 10......I found it wouldnt compile at 
+"sstvparam.ccp"...found the alternate copy of this on the net and 
+overwrote the origional.....that compiled ok.....the next problem was 
+with 'zoomform.cpp'....chased all over the net and finally found a 
+qsstv-5.2d.diff.gz file used in Debian for QSSTV.......noted that there 
+was mention of using 'touch' on the 'zoomform.ui' file .....patched the 
+origional qsstv-5.2d.tar.gz after untaring.....still no joy......then 
+went and had a look in the '/debian/rules' file and saw the lines under 
+build.....used the following command in the qsstv-5.2d dir after 
+untaring it.....
+touch qsstv/configform.ui qsstv/ftpform.ui qsstvrecform.ui 
+qsstv/zoomform.ui qsstv/freqform.ui qsstv/posform.ui qsstv/textselect.ui
+then ./configure && make  no more error problems...su then make install....
+great now i have QSSTV up and running.....
 
-I made the app the shell and as soon as the user drops out of it they
-are logged out, that
-was my original worry when they were logging in as they got a command
-prompt then
-they had to start the app. Now the login starts the app as the shell
-and it is done.
+Hope this helps anyone who has had problems......the touch command could 
+be written into the configure system somewhere but i dont know how to do 
+it....
+
+best 73's
+David Munn
+VK4BDJ
