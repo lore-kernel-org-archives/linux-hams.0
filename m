@@ -1,44 +1,36 @@
-From: Riley Williams <rhw@InfraDead.Org>
-Subject: Re: Linux LSR Safety Check
-Date: Sun, 23 Jun 2002 07:43:07 +0100 (BST)
+From: Arno Verhoeven <pe1icq@pi8zaa.ampr.org>
+Subject: Re: ax25 and 2.4.x
+Date: Sun, 23 Jun 2002 15:08:02 +0200 (CEST)
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <Pine.LNX.4.21.0206230738170.15173-100000@Consulate.UFP.CX>
-References: <3D153227.8334EEDC@increa.com>
-Reply-To: Riley Williams <rhw@InfraDead.Org>
+Message-ID: <Pine.LNX.4.33.0206231503360.4441-100000@zoef.pe1icq.ampr.org>
+References: <4.3.2.7.0.20020622134909.02544100@globalnet.hn>
 Mime-Version: 1.0
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <3D153227.8334EEDC@increa.com>
+In-Reply-To: <4.3.2.7.0.20020622134909.02544100@globalnet.hn>
 List-Id: <linux-hams.vger.kernel.org>
 Content-Type: TEXT/PLAIN; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
-To: Brian Mork <deusenet@increa.com>
-Cc: Linux Ham Radio <linux-hams@vger.kernel.org>
+To: Ricardo Denis <r_denis@globalnet.hn>
+Cc: linux-hams@vger.kernel.org
 
-Hi Brian.
+On Sat, 22 Jun 2002, Ricardo Denis wrote:
 
->> I'm trying to upgrade my kernel from 2.2.16 to 2.4.2 but I'm having
->> problems with my serial ports. Basically, none of them seem to work,
->> and this includes my mouse on /dev/ttyS0 !
->>
->> What happens is that I get a message "LSR safety check engaged!".
->> I've had a glance at the source code to see if I can work out what
->> it's trying to do, but no joy.
->>
->> Has anyone else had this problem, or know how to solve it ?
-
-> I have the same problem with Mandrake Linux v8.0.
+> hi all,
 >
-> The mouse works fine during the install. When XF86 runs, the mouse
-> locks up. I get an LSR Safety Check on ttyS0.
->
-> Did you ever discover how to fix this?
+> what is the status of the ax25 for the 2.4.x kernels? does the ax25 work? i
+> want to try out the latest slackware distro which comes with 2.4.18 but
+> only if the ax25 stuff works as well as with the 2.2.x series...i have
+> enough gray hair already :-) thanks for any guidance.
 
-Which kernel does Mandrake 8.0 use?
+I'm using those packages :-) with kernel 2.4. And also with 2.2.x on
+another computer.
 
-As a data point, I have Red Hat 7.3 on one of my systems, which runs
-kernel 2.4.18, and no such problem occurs on that system. Admittedly,
-the mouse is on ttyS1 rather than ttyS0 but from the above comments,
-that wouldn't make the slightest difference.
+But it's recommended to use the latest 2.4.19preX kernel. As of pre2 some
+fixes were included.
 
-Best wishes from Riley G7GOD / KB8PPG
+73, PE1ICQ  Arno Verhoeven
+--------------------------------
+AX.25  pe1icq@pi8zaa.#nbo.nld.eu
+smtp   pe1icq@pi8zaa.ampr.org
+inet   pe1icq@amsat.org
 
