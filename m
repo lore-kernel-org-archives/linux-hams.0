@@ -1,43 +1,46 @@
-From: Bob Nielsen <nielsen@oz.net>
-Subject: Re: ax25apps
-Date: Sun, 29 Aug 2004 09:15:15 -0700
+From: =?iso-8859-1?Q?G=E9rard?= Parat / F6FGZ <f6fgz@free.fr>
+Subject: Strange error
+Date: Mon, 30 Aug 2004 23:26:59 +0200
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <20040829161515.GA22887@office.n7xy.net>
-References: <4131A0BC.3080205@urbakken.dk>
+Message-ID: <41339BA3.F1F7850A@free.fr>
 Mime-Version: 1.0
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 Return-path: <linux-hams-owner@vger.kernel.org>
-Content-Disposition: inline
-In-Reply-To: <4131A0BC.3080205@urbakken.dk>
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-To: linux-hams@vger.kernel.org
+Content-Type: text/plain; charset="iso-8859-1"
+To: Linux-Hams <linux-hams@vger.kernel.org>
 
-ax25-apps IS the normal name.
+Hello,
 
-73,
-Bob, N7XY
+I use a pseudo tty pipe between Xnet 1.36 and DXCLuster CLX. The proble=
+m is
+when someone connect to CLX from Xnet network. I get an endless loop of=
+ REJ
+frame with the following message into syslog file:
+kernel: mkiss: ax4: truncating oversized transmit packet!
 
-On Sun, Aug 29, 2004 at 11:24:12AM +0200, Erik Jakobsen wrote:
-> Hi.
-> 
-> I use SuSE 9.1.
-> 
-> I have recongized, that the ax25apps doesn't ahve the same name in my 9.1.
-> 
-> #rpm -q ax25apps
-> package ax25apps is not installed
-> 
-> # rpm -q ax25-apps
-> ax25-apps-0.0.6-178
-> 
-> What does that mean ?.
-> 
-> Yesterday I installed a xfbb system here, and have difficulties in 
-> getting it all to work.
-> 
-> Something with connecting to the console.
-> 
-> Could that be a reason, that my ax25apps doesn't have the normal name ?.
-> 
-> 73 de Erik OZ4KK
+Config is:
+libax25-0.0.11
+ax25-tools-0.0.8
+ax25-apps-0.0.6
+kernel 2.4.18
+
+It occurs ONLY from an incoming outside connection (i.e from the Xnet n=
+etwork).
+If I use call from the machine, all is OK. If somebody have an idea of =
+what's
+going on ?
+BTW, I use socat over a WiFi link to transport AX25 frames over a TCP/I=
+P layer.
+Maybe the cause with improper buffer size?
+
+--
+73 G=E9rard F6FGZ
+
+
+
+-
+To unsubscribe from this list: send the line "unsubscribe linux-hams" i=
+n
+the body of a message to majordomo@vger.kernel.org
+More majordomo info at  http://vger.kernel.org/majordomo-info.html
