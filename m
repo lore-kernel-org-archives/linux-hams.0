@@ -1,31 +1,27 @@
-From: Arno Verhoeven <pe1icq@pi8zaa.ampr.org>
-Subject: /dev/parport and soundmodem
-Date: Mon, 20 May 2002 23:55:13 +0200
+From: Edson Pereira <edson@fe.xdsl.ne.jp>
+Subject: ANNOUNCING PetitTrack 1.0.0
+Date: Tue, 21 May 2002 20:50:25 +0900 (JST)
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <3CE970C1.3060900@pi8zaa.ampr.org>
+Message-ID: <Pine.LNX.4.44.0205212032040.1485-100000@sys09.localnet>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"; format="flowed"
+Content-Type: TEXT/PLAIN; charset="us-ascii"
+Content-Transfer-Encoding: 7bit
 To: linux-hams@vger.kernel.org
 
-Hi,
 
-I'm going to try-out Thomas' soundmodem program, but I lack the parport 
-devices in /dev.
+PetitTrack is a satellite tracker software for the Sharp Zaurus SL-5000D 
+or SL-5500 Linux PDA.
 
-Are these the correct major,minor numbers for these devices?
+Screenshots and binary/source distribuition can be found at
 
-crw-rw----    1 root     root      99,   0 May 20 23:35 parport0
-crw-rw----    1 root     root      99,   1 May 20 23:36 parport1
-crw-rw----    1 root     root      99,   2 May 20 23:36 parport2
-crw-rw----    1 root     root      99,   3 May 20 23:36 parport3
+http://www.qsl.net/n1vtn/
 
--- 
-73, PE1ICQ  Arno Verhoeven
---------------------------------
-AX.25  pe1icq@pi8zaa.#nbo.nld.eu
-smtp   pe1icq@pi8zaa.ampr.org
-inet   pe1icq@amsat.org
+Feedback and bug reports are welcome.
+
+73,
+
+-- Edson, pu1jte, n1vtn, 7n4ncl
+
 
