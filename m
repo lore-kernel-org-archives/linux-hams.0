@@ -1,40 +1,38 @@
-From: John Ackermann N8UR <jra@febo.com>
+From: "Curt Mills, WE7U" <hacker@tc.fluke.com>
 Subject: Re: Tracking down a Linux crash
-Date: Wed, 16 Oct 2002 11:55:55 -0400
+Date: Wed, 16 Oct 2002 09:35:51 -0700 (PDT)
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <13050125.1034769354@WUSJA129861-8HP>
-References: <200210161440.g9GEeZD02068@hartford-hwp.com>
+Message-ID: <Pine.LNX.4.33.0210160934340.29585-100000@wapiti.tc.fluke.com>
+References: <1034776364.2114.12.camel@perpetum.flitt.d2g.com>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <200210161440.g9GEeZD02068@hartford-hwp.com>
-Content-Disposition: inline
+In-Reply-To: <1034776364.2114.12.camel@perpetum.flitt.d2g.com>
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"; format="flowed"
-To: Haines Brown <brownh@hartford-hwp.com>
-Cc: kelly.black@penguinpackets.com, linux@lists.tapr.org, linux-hams@vger.kernel.org
+Content-Type: TEXT/PLAIN; charset="iso-8859-1"
+To: =?ISO-8859-1?Q?P=E4r?= Flitt <perpetum@home.se>
+Cc: linux-hams <linux-hams@vger.kernel.org>
 
---On Wednesday, October 16, 2002 10:40 AM -0400 Haines Brown 
-<brownh@hartford-hwp.com> wrote:
+On 16 Oct 2002, [ISO-8859-1] P=E4r Flitt wrote:
 
+> I've had a similar problem and it completely vanished when I replaced
+> the graphics adapter. I only saw the problem when in X, mostly when
+> surfing the web.
 
-> It would help to define just what happens to your system. If you
-> really mean "crash," in that the screen goes black, and your drive
-> access stops, and a reboot begins, etc., then the usual culprit may be
-> flakey RAM.
+Roger on that one.  I had one machine (dual-boot Win95/SuSE Linux)
+that was exhibiting similar problems.  I tracked it down to both the
+video adapter _and_ a bad bank of memory.  Darned-near replaced
+every piece of that computer before I found the two problems.
 
-Good point -- this may be more of a "freeze" than a "crash" -- the system 
-does not reboot, and remains minimally responsive (eg, you can ping it). 
-My original message describes the damage in more detail.
+--=20
+Curt Mills, WE7U                    hacker_NO_SPAM_@tc.fluke.com
+Senior Methods Engineer/SysAdmin
+"Lotto:    A tax on people who are bad at math!"
+"Windows:  Microsoft's tax on computer illiterates!" -- WE7U
+"The world DOES revolve around me:  I picked the coordinate system!"
 
-Thanks to all for the replies.  First, I'm going to do some memory tests 
-and then possibly try swapping out the video (as I have a spare card I can 
-plug in).  After that, I'm not sure...
-
-73,
-John
-
-----
-John Ackermann    N8UR         jra@febo.com     http://www.febo.com
-President, TAPR                n8ur@tapr.org    http://www.tapr.org
-
+-
+To unsubscribe from this list: send the line "unsubscribe linux-hams" i=
+n
+the body of a message to majordomo@vger.kernel.org
+More majordomo info at  http://vger.kernel.org/majordomo-info.html
