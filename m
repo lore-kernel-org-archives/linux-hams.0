@@ -1,27 +1,29 @@
-From: Antonio Esposito <anespo1@virgilio.it>
-Subject: Kenwood TH-D7E
-Date: Sat, 12 Mar 2005 15:01:53 +0100
-Message-ID: <200503121501.53994.anespo1@virgilio.it>
-Reply-To: anespo1@virgilio.it
+From: Curt Mills <archer@eskimo.com>
+Subject: Re: Kenwood TH-D7E
+Date: Sat, 12 Mar 2005 08:49:09 -0800 (PST)
+Message-ID: <Pine.LNX.4.58.0503120836300.670@wapiti.we7u.net>
+References: <200503121501.53994.anespo1@virgilio.it>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
-Content-Disposition: inline
+In-Reply-To: <200503121501.53994.anespo1@virgilio.it>
 Sender: linux-hams-owner@vger.kernel.org
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"
-To: linux-hams@vger.kernel.org
-Cc: xfbb@f6fbb.org
+Content-Type: TEXT/PLAIN; charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+To: Antonio Esposito <anespo1@virgilio.it>
+Cc: linux-hams@vger.kernel.org, xfbb@f6fbb.org
 
-Hi All!
-someone use the kenwood TH-D7E on Linux (I use Slackware 9,1) and how? Is this 
-working on xfbb too?
-Best regards
+On Sat, 12 Mar 2005, Antonio Esposito wrote:
+
+> someone use the kenwood TH-D7E on Linux (I use Slackware 9,1) and how?
+
+I know people are using the TH-D7A and D7E with Xastir on various
+Linux/Unix boxes.  It has some severe limitations with respect to
+KISS mode, so if you're considering doing TCP/IP with it, you might
+want to read what Henk de Groot wrote about that on TAPR's APRSSIG.
+
 -- 
-
-73 de Antonio, IW2OAZ
-http://www.arilimbiate.org ARI Limbiate Portal
-SySop of IW2OAZ-8, VHF Access 144.925 Mhz 1200 Bd
-Telnet access telnet iw2oaz.dyndns.org 3200
-DxCluster IW2OAZ-6 VHF 144.925 Mhz 1200 Bd
-Telnet access: telnet iw2oaz.dyndns.org 7300
-
+Curt, WE7U.				archer at eskimo dot com
+http://www.eskimo.com/~archer
+  Lotto:  A tax on people who are bad at math. - unknown
+Windows:  Microsoft's tax on computer illiterates. - WE7U.
+The world DOES revolve around me:  I picked the coordinate system!"
