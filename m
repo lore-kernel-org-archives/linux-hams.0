@@ -1,26 +1,25 @@
-From: Jeroen Vreeken <pe1rxq@amsat.org>
-Subject: Re: Linux kernel 2.6.1-rc1 and USCC>4/ISA
-Date: Sun, 4 Jan 2004 18:08:45 +0100
+From: sp2ong@geofizyka.pl
+Subject: Re: Linux kernel 2.6rc1 and USCC>4/ISA
+Date: Sun, 04 Jan 2004 18:04:24 +0100
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <20040104180845.C5056@jeroen.pe1rxq.ampr.org>
-References: <3FF6A1CA.9060003@geofizyka.pl> <20040103174125.A211@jeroen.pe1rxq.ampr.org> <3FF6F7C8.9000006@geofizyka.pl> <20040103202602.C211@jeroen.pe1rxq.ampr.org> <3FF7271D.2070103@geofizyka.pl> <20040104172838.A5056@jeroen.pe1rxq.ampr.org> <3FF842A1.7070300@geofizyka.pl>
+Message-ID: <3FF84798.3080506@geofizyka.pl>
+References: <3FF6A1CA.9060003@geofizyka.pl> <20040103174125.A211@jeroen.pe1rxq.ampr.org> <3FF6F7C8.9000006@geofizyka.pl> <20040103202602.C211@jeroen.pe1rxq.ampr.org> <3FF7271D.2070103@geofizyka.pl> <20040104172838.A5056@jeroen.pe1rxq.ampr.org>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7BIT
+Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <3FF842A1.7070300@geofizyka.pl>; from sp2ong@geofizyka.pl on Sun, Jan 04, 2004 at 17:43:13 +0100
+In-Reply-To: <20040104172838.A5056@jeroen.pe1rxq.ampr.org>
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"
-To: sp2ong@geofizyka.pl
-Cc: Jeroen Vreeken <pe1rxq@amsat.org>, linux-hams@vger.kernel.org
+Content-Type: text/plain; charset="us-ascii"; format="flowed"
+To: Jeroen Vreeken <pe1rxq@amsat.org>
+Cc: linux-hams@vger.kernel.org
 
-On 2004.01.04 17:43:13 +0100 sp2ong@geofizyka.pl wrote:
-> 
-> Yes, I have applied these patches because without them I can't init USCC 
-> card. After recompile new kernel 2.6.1.-rc1 with patches I can init USCC 
-> card but in log I have some warnings about timer.
+Hi Jeroen,
 
-That's what the second patch is for :)
-It should talk the warnings away.
+I did not notice attached new patch, sorry.
 
-Jeroen
+Now I have applied last your patch scc-linux-2.6.0.rxq2.diff I have not 
+wornings in log about timers.
 
+Thank you for very good support.
+
+Waldek
