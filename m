@@ -1,51 +1,31 @@
-From: =?iso-8859-1?q?=D8yvind=20Hanssen?= <oyvind@cs.uit.no>
-Subject: AX.25 kernel module development
-Date: Tue, 8 Apr 2003 14:36:15 +0200
+From: M Taylor <mctylr@privacy.nb.ca>
+Subject: Re: KDE EchoLinux client development started
+Date: Tue, 8 Apr 2003 14:19:09 +0100
 Sender: linux-hams-owner@localhost
-Message-ID: <200304081436.15919.oyvind@cs.uit.no>
+Message-ID: <20030408141909.A30053@pull.privacy.nb.ca>
+References: <200304072004.55533.ve3mtm@rac.ca>
 Mime-Version: 1.0
-Content-Transfer-Encoding: QUOTED-PRINTABLE
 Return-path: <linux-hams-owner@vger.kernel.org>
 Content-Disposition: inline
+In-Reply-To: <200304072004.55533.ve3mtm@rac.ca>; from ve3mtm@rac.ca on Mon, Apr 07, 2003 at 08:04:49PM +0000
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="iso-8859-1"
-To: linux-hams@vger.kernel.org
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+To: Michael Melanson <ve3mtm@rac.ca>
+Cc: Linux-Hams <linux-hams@vger.kernel.org>
 
-Please excuse me if this has been discussed before..=20
+On Mon, Apr 07, 2003 at 08:04:49PM +0000, Michael Melanson wrote:
+> Hi everyone
+> 
+> In light of the fact that there is no good GUI client for EchoLinux, the Linux 
+> implementation of EchoLink, I am starting work on a KDE/Qt client called (you 
+> guessed it) KEchoLink and any help would be appreciated. Anyone with 
 
-There are some talk here about that the AX.25 Linux kernel code is brok=
-en.=20
-There has been attempts to create patches for the kernel; some are good=
- but
-arent (yet) included in the mainstream kernel, and there has been a ser=
-ious=20
-attempt to rewrite the kernel stack as well (?) And it seems to be some=
-=20
-uncertainty wrt. what is happening in Linux 2.5 (?)
+Have you really started writing KEchoLink program, or have you just
+created a sourceforge project? I don't see any source code at
+the sourceforge.net/projects/kecholink page, either as a download or
+via CVS.
 
-It seem complicated to maintain patches for the Linux kernel the=20
-way it has been done, and I notice that someone has even suggested to=20
-implement the whole thing in userspace instead, at least to make it eas=
-ier
-to develop new protocols and drivers...=20
+Is the Echolink protocol documented and available?
 
-What about keeping the core AX.25 stuff and drivers in kernel but split=
- it
-out from the mainstream Linux codebase and do the development in a sepa=
-rate
-project instead; like e.g. the ALSA project has done until now? I guess=
-=20
-that it would be easier to compile, maintain and add features to such=20
-a package than getting patches accepted for the mainstream Linux kernel=
-=2E=20
-
-It is possible that a small part must remain in the kernel (socket API?=
-), but
-we shouldnt need to change this part too often.=20
-
-73 de LA7ECA, =D8yvind
--
-To unsubscribe from this list: send the line "unsubscribe linux-hams" i=
-n
-the body of a message to majordomo@vger.kernel.org
-More majordomo info at  http://vger.kernel.org/majordomo-info.html
+-ve1mct
