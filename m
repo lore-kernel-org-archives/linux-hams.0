@@ -1,45 +1,24 @@
-From: Sriram Chadalavada <swenggsri@yahoo.com>
+From: Ralf Baechle DL5RB <ralf@linux-mips.org>
 Subject: Re: Kernel panic on use of ping - over a kiss AX.25 interface
-Date: Sun, 30 Jan 2005 15:22:10 -0800 (PST)
-Message-ID: <20050130232211.90107.qmail@web21604.mail.yahoo.com>
-References: <200501300345.j0U3jjTn006925@p-chan.krl.com>
+Date: Mon, 31 Jan 2005 00:14:08 +0000
+Message-ID: <20050131001408.GA7252@linux-mips.org>
+References: <200501300345.j0U3jjTn006925@p-chan.krl.com> <20050130232211.90107.qmail@web21604.mail.yahoo.com>
 Mime-Version: 1.0
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <200501300345.j0U3jjTn006925@p-chan.krl.com>
+Content-Disposition: inline
+In-Reply-To: <20050130232211.90107.qmail@web21604.mail.yahoo.com>
 Sender: linux-hams-owner@vger.kernel.org
 List-Id: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
-To: Linux-Hams@vger.kernel.org
+To: Sriram Chadalavada <swenggsri@yahoo.com>
+Cc: Linux-Hams@vger.kernel.org
 
-Dan,
-  
-  The kernel version is 2.4.24. 
+On Sun, Jan 30, 2005 at 03:22:10PM -0800, Sriram Chadalavada wrote:
 
-Cheers,
-Sriram 
+>   The kernel version is 2.4.24. 
 
---- Don Koch <aardvark@krl.com> wrote:
+And seems to be uclinux, unlike what probably most of us are using, so
+you're probably on your own.
 
-> 
-> swenggsri@yahoo.com said:
-> > Relevant kernel configuration is: 
-> 
-> You left out an important part: which version of the
-> kernel?
-> 
-> -- 
-> Don Koch
-> http://www.krl.com/
-> 
-
-> 
-> 
-
-
-
-		
-__________________________________ 
-Do you Yahoo!? 
-Yahoo! Mail - now with 250MB free storage. Learn more.
-http://info.mail.yahoo.com/mail_250
+  Ralf
