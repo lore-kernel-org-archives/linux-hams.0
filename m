@@ -1,40 +1,35 @@
-From: Stephane Fillod <f8cfe@free.fr>
-Subject: Re: gMFSK/hamlib/parport
-Date: Wed, 18 Feb 2004 20:42:50 +0100
+From: Ruben Navarro Huedo <eb5esx@eb5esx.ampr.org>
+Subject: Linux 2.6.3 ... Where are mkiss and 6pack?
+Date: Wed, 18 Feb 2004 22:29:29 +0100
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <20040218194250.GL24918@charybde.local>
-References: <20040218152745.GD16991@strauss.udel.edu>
+Message-ID: <200402182229.30123@www.cabodesantapola.org>
 Mime-Version: 1.0
+Content-Transfer-Encoding: 8BIT
 Return-path: <linux-hams-owner@vger.kernel.org>
+Content-Description: clearsigned data
 Content-Disposition: inline
-In-Reply-To: <20040218152745.GD16991@strauss.udel.edu>
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-To: Linux HAMs <Linux-hams@vger.kernel.org>
+Content-Type: Text/Plain; charset="us-ascii"
+To: Linux-hams List <linux-hams@vger.kernel.org>
 
-On Wed, Feb 18, 2004, Mike Markowski wrote:
-> A couple questions about the excellent gMFSK 0.6beta2:
-> 
-> 	Feature request:
-> 	- Are there any patches that allow gMFSK to use
-> 	  a parport for PTT?  If not, I'll be glad to look into
-> 	  possibly re-using the parport code from soundmodem-0.7.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-	FYI, Hamlib can also control PTT through the parport.
+Hello friends:
+linux-2.6.3 has been released, but...Where are 6pack and mkiss?
+I don't find them...
+I can see bpq, Baycom...etc... but not 6pack or mkiss.
 
-> 	Bug report (but maybe in hamlib):
-> 	- I'm using an ICOM 706 MkIIg with hamlib on ttyS0 and
-> 	  PTT to "none" in gMFSK just for the sake of seeing how
-> 	  gMFSK uses hamlib.  When I rotate the rig's tuning knob,
-> 	  gMFSK works for a bit nicely updating the spectrum freqs,
-> 	  but then I get a "Protocol error" and hamlib is disabled.
+Thank's.
+- -- 
+Ruben Navarro Huedo
+eb5esx (arroba) eb5esx.ampr.org
+http://www.cabodesantapola.org
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.2.1 (GNU/Linux)
 
-	Traces would be interesting in this case.
-	Latest Hamlib version 1.2.0 has retry support for the icom
-	backend. This is much useful since the CI-V is a half-duplex bus.
+iD8DBQFAM9k50S5G8AO3zN8RApwlAJ9XDOWUd6MrLjfYnMOnBOlOFDx0xACfcUc4
+vrYn91xyt4x4DVyVwhF7a00=
+=ZOyp
+-----END PGP SIGNATURE-----
 
-
-Have fun,
-
-Stephane - F8CFE
