@@ -1,30 +1,40 @@
-From: Ana Maria Grilo Moreira <ct1drb@vizzavi.pt>
-Subject: Abt SuSE 8.2.
-Date: Mon, 19 May 2003 22:21:28 +0100
+From: Phil <phil@spiderweb.com.au>
+Subject: LinWSJT question
+Date: Sat, 24 May 2003 12:15:21 +1000
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <3EC94AD8.4030600@vizzavi.pt>
+Message-ID: <200305241215.21073.phil@spiderweb.com.au>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7BIT
+Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
+Content-Disposition: inline
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"; format="flowed"
-To: linux-hams@vger.kernel.org
+Content-Type: text/plain; charset="us-ascii"
+To: Linux Hams <linux-hams@vger.kernel.org>
 
-73 to all.
+Hello All,
 
-First of all excuse me abt my ask, it is not concern abt ham but is around.
+I originally sent this message to Jonathan Naylor but it appears that his 
+e-mail address has changed.
 
-I use SuSE 8.1 but now there is version 8.2. Here in Portugal price is 
-vy high to me, so I ask if any ham has SuSE 8.2 can do copy of the 5 
-cd's and send them to me. Of course i pay mail transportation (inside EU 
-is cheap).
+I'm keen to try my hand at a little long range DX, unfortunately I've run into 
+a problem trying to compile LinWSJT. Could this be a Mandrake 9.1 
+specific problem or have I not done something that I should have?
 
-I know that subject of my mail is not exactly concern to ham radio, so 
-my apologies, but new version of gmfsk only compiles under SuSE 8.2, so 
-this is my ask.
+[root@localhost LinWSJT-0.4.5]# make
+make -C fsk441gui
+make[1]: Entering directory `/usr/local/src/LinWSJT-0.4.5/fsk441gui'
+c++ -O2 -Wall -I.. -I/usr/local/lib/wx/include/x11univd-2.4 -D__WXDEBUG__ 
+-D__WXUNIVERSAL__ -D__WXX11__ -I/usr/X11R6/include -D_FILE_OFFSET_BITS=64 
+-D_LARGE_FILES -c FSK441Frame.cpp
+FSK441Frame.cpp:64: `EVT_TOGGLEBUTTON' was not declared in this scope
+FSK441Frame.cpp:65: parse error before `(' token
+FSK441Frame.cpp:65: parse error before `)' token
+make[1]: *** [FSK441Frame.o] Error 1
+make[1]: Leaving directory `/usr/local/src/LinWSJT-0.4.5/fsk441gui'
+make: *** [fsk441gui/fsk441gui.a] Error 2
 
-Best 73 to all and agn my apologies.
-
-CT1DRB
-David Quental
+-- 
+Regards,
+Phil
+phil@spiderweb.com.au
 
