@@ -1,41 +1,46 @@
-From: mvw@mvw.net
+From: Tomi Manninen <tpm@prkele.tky.hut.fi>
 Subject: Re: Simple BBS, again, sorry for asking twice.
-Date: Tue, 24 Dec 2002 16:43:33 -0500 (EST)
+Date: Wed, 25 Dec 2002 04:11:45 +0200 (EET)
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <Pine.LNX.4.44.0212241637400.15792-100000@jeeves.mvw.net>
-References: <Pine.LNX.4.44.0212241945580.2791-100000@zl2bsj.ampr.org>
+Message-ID: <Pine.LNX.4.44.0212250359470.1372-100000@oh2bns.ampr.org>
+References: <Pine.LNX.4.44.0212240010320.10548-100000@jeeves.mvw.net>
+Reply-To: tpm@prkele.tky.hut.fi
 Mime-Version: 1.0
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <Pine.LNX.4.44.0212241945580.2791-100000@zl2bsj.ampr.org>
+In-Reply-To: <Pine.LNX.4.44.0212240010320.10548-100000@jeeves.mvw.net>
 List-Id: <linux-hams.vger.kernel.org>
 Content-Type: TEXT/PLAIN; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
-To: linux-hams@vger.kernel.org
+To: mvw@mvw.net
+Cc: linux-hams@vger.kernel.org
 
-Hello again all,
+On Tue, 24 Dec 2002 mvw@mvw.net wrote:
 
-> > b) I use tcp/ip for mail etc. But apart from that I would like to set up a 
-> > simple messaging system/bbs, to use when someone goes to this system using 
-> > ax25. I do not need "do it all" systems, just a simple bbs 
-> 
-> Consider using 'ax25d' to start up the 'mail' program, allowing people 
-> to send and receive local E-mail.
+> a) I should know this, but how can I get telnet to only work on the radio 
+> ports and not on the ethernet port? I.e. telnet (unencrypted) only from 
+> the ax25 ports.
 
-Mmm... perhaps, though maybe 'mail' is a bit TOO simple, as it requires a
-bit of user knowledge, and machine-level user accounts (AFAIK) for all
-users.
+RH uses by default xinetd so this should be easy. The directory 
+/etc/xinetd.d/ has all the config stuff. Creative use of the "bind" and 
+"only_from" keywords should solve this for you.
 
-Anyone ever use the other BBS- (not smtp-) type message systems? I see all
-sorts here and there but have no idea which ones are simple and still
-work. I suppose I can try them all out, but that will no doubt require a
-lot of hours spent.
+Just as an example I have on our club BBS a setup where a telnet to one of
+amprnet IP's assigned to that box goes to LinuxNode and another to the FBB
+BBS. A telnet to the "commercial" IP address goes to a regular Linux login
+(well, would go if it were enabled -- of course only SSH is allowed over
+the Net). And these are all at the default telnet port (23).
 
-(I seem to be less than stellarly successful with this. E.g. I cannot even
-get _local_ "talk" working: enabled it in xinetd but still refuses
-connections. Let alone do it from ax25. ALso, how do I create some 
-loopback link for testing?).
+> b) I use tcp/ip for mail etc. But apart from that I would like to set up a 
+> simple messaging system/bbs, to use when someone goes to this system using 
+> ax25. I do not need "do it all" systems, just a simple bbs (and it's a 
+> 1200 bps port, so a simple one with little text would be great). 
+> Suggestions, all?
 
-73, Merry Christmas all,
+Other than a full FBB BBS, not really. Hessu started writing something to 
+this extent but I think that was never finished.
 
-Michael
+-- 
+Tomi Manninen           Internet:  oh2bns@sral.fi
+OH2BNS                  AX.25:     oh2bns@oh2rbi.fin.eu
+KP20ME04                Amprnet:   oh2bns@oh2rbi.ampr.org
 
