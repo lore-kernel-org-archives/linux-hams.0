@@ -1,23 +1,32 @@
-From: "Colin Harris" <chedward@tiscali.co.uk>
-Subject: Re: Testing Distro
-Date: Sun, 21 Sep 2003 21:42:26 -0000
-Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <000c01c38089$632463f0$32000a0a@xp1700>
-References: <000501c37db8$ef5bc850$32000a0a@xp1700> <3F6D2B30.3178.348C3@localhost>
+From: Thomas Sailer <t.sailer@alumni.ethz.ch>
+Subject: Re: [PATCH] (1/4) Update baycom drivers for 2.6
+Date: 22 Sep 2003 15:55:44 +0200
+Sender: netdev-bounce@oss.sgi.com
+Message-ID: <1064238944.31276.9.camel@kronenbourg.scs.ch>
+References: <20030919133750.4053f72c.shemminger@osdl.org>
+	 <3F6CA3E3.9060909@pobox.com>  <20030920144812.0c587a12.shemminger@osdl.org>
 Mime-Version: 1.0
 Content-Transfer-Encoding: 7bit
-Return-path: <linux-hams-owner@vger.kernel.org>
+Return-path: <netdev-bounce@oss.sgi.com>
+In-Reply-To: <20030920144812.0c587a12.shemminger@osdl.org>
+Errors-to: netdev-bounce@oss.sgi.com
 List-Id: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
-To: Rodolfo Brasnarof <rodob@ciudad.com.ar>, linux-hams@vger.kernel.org
-Cc: pa3gcu@zeelandnet.nl
+To: Stephen Hemminger <shemminger@osdl.org>
+Cc: Jeff Garzik <jgarzik@pobox.com>, linux-hams@vger.kernel.org, netdev@oss.sgi.com
 
-Rodolpho ,
+On Sat, 2003-09-20 at 23:48, Stephen Hemminger wrote:
 
-I had been unsubscribed mainly because a lightning strike some months ago
-kept me off line and I had been busy with other things. Richard said this is
-very likely to happen after only a couple of weeks. Re-subscribing solved it
-as you found.
+Patch 1-3 look good.
 
-- Regards Colin
+> patch 4 was replacing local random with get_random_bytes.
+> Probably not a good idea since people seem to be paranoid
+> about losing entropy ...
+
+Yes, IMO not a good idea to use entropy for such a simple task.
+The random numbers are used for the channel access algorithm, and
+nothing bad happens if they are predictable.
+
+Tom
+
 
