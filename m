@@ -1,36 +1,51 @@
-From: John Walsh <radio@freedigitals.com>
-Subject: Australia, your website has been added...
-Date: Sun, 20 Feb 2005 22:35:52 -0600
-Message-ID: <E1D35IW-0001AS-3j@p8.ich-4.com>
+From: =?ISO-8859-1?Q?P=E4r_Crusefalk?= <perpetum@home.se>
+Subject: Re: Linux based Propagation Map (grey line)?
+Date: Mon, 21 Feb 2005 10:52:27 +0100
+Message-ID: <4219AF5B.2050400@home.se>
+References: <000001c516e5$da632660$07001aac@adminxp>
+Mime-Version: 1.0
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+In-Reply-To: <000001c516e5$da632660$07001aac@adminxp>
 Sender: linux-hams-owner@vger.kernel.org
 List-Id: <linux-hams.vger.kernel.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-To: linux-hams@vger.kernel.org
+Content-Type: text/plain; charset="iso-8859-1"; format="flowed"
+To: John AA6QN <aa6qn@pacbell.net>
+Cc: 'Linux-Hams-Owner' <linux-hams@vger.kernel.org>
 
-Dear Australia Linux,
+kworldclock ?
+" Displays where in the world it is light and dark depending on time, a=
+s=20
+well as offering the time in all of the major cities of the world. This=
+=20
+can be run standalone, as an applet in the KDE panel or as a desktop=20
+background."
 
-I'm the webmaster of a Radio Directory website at http://www.handicappingclub.com.
+=46or propagation I use a homemade version of minimuf
+that I've not released. A native Asaps or Ioncap would be nice.
 
-I've collected quality links to other Radio resources
-on the Internet on my links page.
+73's de P=E4r / sm0rwo
 
-I came across your site and feel that it'd make perfectly fit in my Directory of quality links about Radio.
 
-I've already placed a link to your web site along with a description at http://www.handicappingclub.com/radiosoftware
-.
+John AA6QN wrote:
 
-I'd appreciate if you'd place a link back to my site using the following link and description:
+>Is there a Linux based HF propagation and grey line applications (a Li=
+nux
+>based Geoclock?).
+>Just wondering. Thank you in advance!
+>73, AA6QN
+>
+>-
+>To unsubscribe from this list: send the line "unsubscribe linux-hams" =
+in
+>the body of a message to majordomo@vger.kernel.org
+>More majordomo info at  http://vger.kernel.org/majordomo-info.html
+>
+>
+> =20
+>
 
-http://www.http://www.freedigitals.com/radio/radio/
-"Everything Radio"
-
-If you'd like the description of your site modified or if you have any other cross-promotion
-ideas just drop me a line.
-
-Best regards,
-
-John Walsh
-
-http://www.handicappingclub.com
+-
+To unsubscribe from this list: send the line "unsubscribe linux-hams" i=
+n
+the body of a message to majordomo@vger.kernel.org
+More majordomo info at  http://vger.kernel.org/majordomo-info.html
