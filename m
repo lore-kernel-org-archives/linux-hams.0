@@ -1,34 +1,38 @@
-From: Matti Aarnio <matti.aarnio@zmailer.org>
+From: John@man.ac.uk
 Subject: Re: installing Predict on a RedHat 7.3 box , no go :^(
-Date: Mon, 16 Dec 2002 12:26:30 +0200
+Date: Mon, 16 Dec 2002 17:24:29 +0000 (GMT)
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <20021216102630.GR32122@mea-ext.zmailer.org>
-References: <200212151628.02870.n7bfs@qwest.net>
+Message-ID: <E18Nz1e-00050R-00@probity.mcc.ac.uk>
+References: <Pine.OSX.4.50.0212152001270.8533-100000@lesleyanne.i8u.org>
 Mime-Version: 1.0
 Return-path: <linux-hams-owner@vger.kernel.org>
-Content-Disposition: inline
-In-Reply-To: <200212151628.02870.n7bfs@qwest.net>
+In-Reply-To: <Pine.OSX.4.50.0212152001270.8533-100000@lesleyanne.i8u.org>
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"
+Content-Type: TEXT/plain; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
-To: Douglas Cole <n7bfs@qwest.net>
+To: htodd@twofifty.com
 Cc: linux-hams@vger.kernel.org
 
-On Sun, Dec 15, 2002 at 04:28:02PM -0800, Douglas Cole wrote:
-...
-> BUT , it will not even begin to install :^(
-> here is what I get when I try to run ./configure on the RedHat box...
-> 
-> [root@n7bfs predict-2.2.1]# ./configure
-> One moment please... installer.c:16:20: curses.h: No such file or directory
-> Compilation failed.  Are you sure you have a C compiler (gcc) installed?
-> [root@n7bfs predict-2.2.1]#
+On 15 Dec, Hisashi T Fujinaka wrote:
+> Predict isn't all that hard to get going. I even got it going on a NetBSD
+> box.
 
-  You do need   ncurses-devel  package.
+I have it running on several SuSE systems, CygWIN on Windows and on IRIX
+6.5 on an ancient SGI Challenge S...
 
-...
-> tia for any input!
-> -- 
-> Douglas Cole   N7BFS
+See my Predict 2.2.1 mods at:
 
-73 de Matti Aarnio, OH1MQK
+	http://voyager.mcc.ac.uk/Predict/
+or
+	http://cumin.mcc.ac.uk/Predict/
+
+John
+-- 
+  John Heaton, G1YYH
+  Manchester Computing, Kilburn Building.
+  The University of Manchester, Oxford Road, Manchester, England, M13-9PL
+  pstn://+44-161-275-6011/Hello/Is.Dat-U?
+  fax://+44-161-275-6040/screech/warble/ssshhh/beepbeep
+
+
+
