@@ -1,51 +1,31 @@
-From: 240231@msn.com
-Subject: The 30 Hour Wonder!      931399795
-Date: Fri, 31 Oct 2003 03:18:22 -0500
+From: Phil <phil@spiderweb.com.au>
+Subject: HF packet question
+Date: Mon, 3 Nov 2003 09:48:32 +1000
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <S263102AbTJaI1R/20031031082718Z+24663@vger.kernel.org>
-Reply-To: 240231@bigfoot.com
+Message-ID: <200311011742.04127.phil@spiderweb.com.au>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7BIT
+Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
+Content-Disposition: inline
 List-Id: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
 To: linux-hams@vger.kernel.org
 
-Cyalus comes in smaller doses and produces fewer side effects. 
-Cyalus also works much faster than Sildenafil-based medications. 
-In clinical trials, the majority of men who took the drug were able to 
-engage in sexual intercourse within 30 minutes or less. 
-The studies also indicated that Cyalus stays in the system 
-for up to 30 hours. That's 26 hours longer than the traditional 
-Sildenafil-based medications treatment. 
+Hello Everyone,
 
-Test results showed that out of 700 participants at least 88 percent of men experienced improvement with their erections. 
+The recent soundmodem thread prompts a question. Occasionally my interest 
+turns to HF packet, this time in the form of HF APRS. However this interest is 
+often short lived due to the frustration experienced in trying to get 
+soundmodem or my Baycom style modem, built around a World Modem chip, 
+to decode anything. Receiver tuning is extremely critical and invariably I 
+give up in disgust.
 
-More info http://www.hostvy.com/
+What I need is an application such as gmfsk or kpsk that uses a waterfall 
+display. Are there any similar applications for HF packet? How about just an 
+on-screen tuning aid?
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-         
-11C135F4-74F93059-528D8FA5-7474C0E1-3351B81C
-         
-16FFD8F9-433C0795-6F0FE662-1DBABD2B-12E00C71
-             
-191C50F5-722C9A02-13D7EE9-6813E12E-5BFB1B22
-                
+-- 
+Regards,
+Phil.
 
 
