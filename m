@@ -1,76 +1,33 @@
-From: "John Feist" <aa6qn@pacbell.net>
-Subject: RE: transparent internet via radio
-Date: Tue, 26 Aug 2003 07:18:43 -0700
+From: Tomi Manninen <oh2bns@sral.fi>
+Subject: IMPORTANT: LinuxNode v0.3.2
+Date: Tue, 26 Aug 2003 21:45:47 +0300
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <EEEFIEMENNJDPDJAIOOLMEBFCCAA.aa6qn@pacbell.net>
-References: <20030825025838.GC9693@n7xy.net>
-Reply-To: <aa6qn@pacbell.net>
+Message-ID: <1061923547.1292.66.camel@oh2bns.ampr.org>
 Mime-Version: 1.0
 Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <20030825025838.GC9693@n7xy.net>
 List-Id: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
 To: linux-hams@vger.kernel.org
 
-Yup, we have 56k here in San Diego on 70cm, been up for several years 25
-miles point-to-point. Some folks up North are using 802.11b 6-7 miles at 6~7
-Mbit.
+Hello all,
 
-John
+I just uploaded a new version of LinuxNode to:
 
------Original Message-----
-From: linux-hams-owner@vger.kernel.org
-[mailto:linux-hams-owner@vger.kernel.org]On Behalf Of Bob Nielsen
-Sent: Sunday, August 24, 2003 7:59 PM
-To: linux-hams@vger.kernel.org
-Subject: Re: transparent internet via radio
+  http://hes.iki.fi/pub/ham/unix/linux/ax25/
 
+You'll find a source tar.gz, a source RPM and a binary RPM
+(compiled on RedHat 9).
 
-See the AX25-HOWTO for information on tcp/ip over AX.25.
+This version contains fixes for *SERIOUS* security flaws (read
+"remote root"). Upgrading all systems immediately is highly
+recommended!!!
 
-The WA4DSY modem will do 56 kbps (http://www.paccomm.com).  It operates
-at 29 MHz and must be used with a transverter for the appropriate band.
-Some hams in Slovenia have designed high speed equipment, see
-http://hamradio.si/hid.html for some links.
+Thanks to Morgan, SM6TKY for pointing out the flaws and helping
+in fixing them!
 
-
-On Sun, Aug 24, 2003 at 04:56:49PM -0700, A Gilmore wrote:
-> Having always had high-speed internet available, I have never looked
-> into radio technology before.  However, I have been asked recently if
-> providing internet to a number of locations (varying between 10-50km
-> away from central computer lab) is possible.  Neither dial-up or
-> broadband is accessible in these locations.
->
-> So I started looking into radio.  I will have one LAN with broadband
-> internet, and remote LANs without any internet access.  The idea is to
-> put a TNC equipped linux gateway at each remote location, to tunnel
-> TCP/IP over AX.25 to the central LAN with broadband, and route the
-> TCP/IP from there.
->
-> Is this feasible?  Can speed be in the 28kbps or better range?
-> Generally how much would the radio equipment cost?  Is providing
-> transparent internet by these means difficult, regarding routing and
-> interfacing the protocols?
->
-> Sorry if these questions are vague or overly simple, Id just like to
-> know if this is possible before I spend the next several days
-> researching it.  Most of the information I have found so far, has been
-> out-dated, and mostly focused on using TCP/IP to carry AX.25, rather
-> then the vice-versa.
-> Adrien
->
-> -
-> To unsubscribe from this list: send the line "unsubscribe linux-hams" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at  http://vger.kernel.org/majordomo-info.html
-
---
-Bob Nielsen, N7XY                          n7xy (at) n7xy.net
-Bainbridge Island, WA                      http://www.n7xy.net
-
--
-To unsubscribe from this list: send the line "unsubscribe linux-hams" in
-the body of a message to majordomo@vger.kernel.org
-More majordomo info at  http://vger.kernel.org/majordomo-info.html
+-- 
+Tomi Manninen           Internet:  oh2bns@sral.fi
+OH2BNS                  AX.25:     oh2bns@oh2rbi.fin.eu
+KP20ME04                Amprnet:   oh2bns@oh2rbi.ampr.org
 
