@@ -1,109 +1,158 @@
-From: Chuck Gelm <nc8q@gelm.net>
-Subject: Re: Need Help With AX25/NETROM/ROSE!
-Date: Tue, 01 Oct 2002 17:42:22 -0400
+From: Bill Walton <kj6eo@kj6eo.com>
+Subject: nrattach "Cannot find free NET/ROM device" error!
+Date: Wed, 02 Oct 2002 13:31:26 -0700
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <3D9A16BE.7547D3BE@gelm.net>
-References: <3D99DE7E.691A0B24@kj6eo.com>
+Message-ID: <3D9B579E.A91FC4A3@kj6eo.com>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
+Content-Type: multipart/mixed;
+ boundary="------------683786222DE8632E4CE4DC24"
 Return-path: <linux-hams-owner@vger.kernel.org>
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"
-To: linux-hams@vger.kernel.org
+To: LINUX HAMS MAILING LIST <linux-hams@vger.kernel.org>
 
-Hi, Bill:
+This is a multi-part message in MIME format.
+--------------683786222DE8632E4CE4DC24
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
 
- If you were not using ROSE before, you may not need ROSE now.
-It might simplify things if you did not include ROSE.
-HTH, Chuck nc8q
+Hello -
+
+I am still having some difficulties regarding getting my NETROM device "nr0"
+attached.  The instructions are simple:
+
+Edit "nrports" file
+
+Edit "nrbroadcast" file
+
+Run "nrattach netrom" to create the device "nr0"
+
+Sounds easy but it doesn't work.  Here is what I get when I enter in the
+"nrattach netrom" command:
+
+nrattach: SIOCGIFFLAGS: no such device
+nrattach: cannot find free NET/ROM device
+
+Copies of the following files are attached:
+
+axports
+nrports
+nrbroadcast
+rc.local
+output (from ifconfig command)
+
+Any help that you could offer would be appreciated!  I am running RedHat 7.2 with
+the 2.4.18 kernel (ax25 enabled, libs,tools, apps all installed).  Am I making an error
+in these simple files? or is there a greater evil lurking somewhere?  I will be running 7
+or 8 ports in the finished configuration.  But for now I am just trying to get it all to
+work in its simplest form.
+
+Regards,
+
+Bill KJ6EO
+
+--------------683786222DE8632E4CE4DC24
+Content-Type: text/plain; charset=us-ascii;
+ name="output"
+Content-Transfer-Encoding: 7bit
+Content-Disposition: inline;
+ filename="output"
+
+ax0       Link encap:AMPR AX.25  HWaddr KJ6EO-15  
+          inet addr:44.16.2.102  Mask:255.0.0.0
+          UP RUNNING  MTU:256  Metric:1
+          RX packets:0 errors:0 dropped:0 overruns:0 frame:0
+          TX packets:0 errors:0 dropped:0 overruns:0 carrier:0
+          collisions:0 
+          RX bytes:0 (0.0 b)  TX bytes:0 (0.0 b)
+
+eth0      Link encap:Ethernet  HWaddr 00:04:5A:76:37:16  
+          inet addr:64.174.110.108  Bcast:64.174.110.255  Mask:255.255.255.0
+          UP BROADCAST RUNNING MULTICAST  MTU:1500  Metric:1
+          RX packets:1101 errors:0 dropped:0 overruns:0 frame:0
+          TX packets:314 errors:0 dropped:0 overruns:0 carrier:0
+          collisions:0 
+          RX bytes:119405 (116.6 Kb)  TX bytes:37380 (36.5 Kb)
+
+eth1      Link encap:Ethernet  HWaddr 00:50:BA:C0:54:A8  
+          inet addr:192.168.1.3  Bcast:192.168.1.255  Mask:255.255.255.0
+          UP BROADCAST RUNNING MULTICAST  MTU:1500  Metric:1
+          RX packets:471 errors:0 dropped:0 overruns:0 frame:0
+          TX packets:478 errors:0 dropped:0 overruns:0 carrier:0
+          collisions:0 
+          RX bytes:61992 (60.5 Kb)  TX bytes:84023 (82.0 Kb)
+
+lo        Link encap:Local Loopback  
+          inet addr:127.0.0.1  Mask:255.0.0.0
+          UP LOOPBACK RUNNING  MTU:16436  Metric:1
+          RX packets:90 errors:0 dropped:0 overruns:0 frame:0
+          TX packets:90 errors:0 dropped:0 overruns:0 carrier:0
+          collisions:0 
+          RX bytes:6887 (6.7 Kb)  TX bytes:6887 (6.7 Kb)
 
 
-Bill Walton wrote:
-> 
-> Hello -
-> 
-> Thank you for reading my message.  I am trying to get AX25/NETROM/ROSE
-> going on my prototype system (RedHat 7.2 with a 2.4.18 kernel).  I am using
-> Jeff Tranter's (VE3ICH) guide to help me get all this stuff working.  You can access
-> the guide at:
-> 
-> http://www.tldp.org/HOWTO/AX25-HOWTO/
-> 
-> The guide is version 2.0, 19 September 2001.
-> 
-> My goal is to replace my two DOSFBB/BPQ BBS's that have been on the air
-> for years with XFBB/AX25/NETROM/ROSE.  I needed a BBS program so I
-> choose XFBB, and I need a NODE so I choose the AX25/NETROM/ROSE
-> package.
-> 
-> WHERE I CURRENTLY STAND:
-> 
-> 1)    My kernel (2.4.18) is compiled and working with the Amateur AX25 stuff
->         enabled and installed. (Step #4 in guide).
-> 
-> 2)    All the AX25 libs, tools, and applications have been installed (no errors).  I
->         also installed all the configuration files ie "make installconf". (Step #4 in guide)
-> 
-> WHERE THE PROBLEM EXISTS:
-> 
-> Refer to Section 5.2 of the guide (Run time configurable parameters).  The guide
-> says "Take a look at the.....(gives paths and filenames) ie:
-> 
-> /proc/sys/net       /proc/sys/net/ax25/portname/      /proc/sys/net/netrom
-> 
-> This is a summary of the subdirectories that I have in /proc/sys/net:
-> 
-> 802    appletalk    ax25    core    ethernet    ipv4    ipx    token-ring    unix
-> 
-> This is a summary of the subdirectories that I have in /proc/sys/net/ax25/portname/
-> 
-> A problem exists here ( I have no files in the ax25 subdirectory, furthermore I
-> have no portname subdirectory off of ax25.
-> 
-> Also there is no netrom subdirectory off of /proc/sys/net
-> 
-> WHERE TO GO FROM HERE?
-> 
-> I have located the AX25 and NETROM directories at the following paths:
-> 
-> /root/linux/net
-> 
-> However the files contained in the AX25 and NETROM subdirectories in no way
-> shape or form resemble the structure outlined in section 5.2 of the guide.
-> 
-> CLOSING COMMENTS:
-> 
-> So as you can see, right now I find myself up that famous creek without a paddle.
-> I need to unravel this mess and try to figure out what is going on between my
-> system and this guide.  It is clear to me, very clear, that without the help of others
-> such as yourself, my XFBB and AX25/NETROM/ROSE project is doomed.
-> Obviously there are many of you that are successfully running this stuff.  I need to
-> figure out how you did it, and where the information exists that can lead me to
-> a successful resolution regarding this AX25 hell that I find myself in.
-> 
-> I am running my own domain along with a TNOS system so that will give you an
-> idea of my background.  I have also been running a packet bbs since the
-> WA7MBL days so that should tell you how long I have been in the packet
-> business.
-> 
-> Would someone be kind enough to help me figure what is going wrong with
-> my AX25 stuff?  If the guide that I am using is outdated then please direct me
-> to the correct one.  If I have configured my system incorrectly then any help
-> that you could provide that would point me in the right direction would be
-> greatly appreciated.  I really don't need to run AXIP....I basically need the
-> XFBB software and something that will give me a software node like the
-> DOS BPQ that I am running with my radio ports.
-> 
-> Regards,
-> 
-> Bill Walton KJ6EO
-> 
-> ax25:    kj6eo@kj6eo.#sca.ca.usa.noam
-> AxIP:    kj6eo@kj6eo.ampr.org
-> Email:    kj6eo@kj6eo.com
-> Url:        http://www.kj6eo.com
-> 
-> -
-> To unsubscribe from this list: send the line "unsubscribe linux-hams" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at  http://vger.kernel.org/majordomo-info.html
+--------------683786222DE8632E4CE4DC24
+Content-Type: text/plain; charset=us-ascii;
+ name="nrbroadcast"
+Content-Transfer-Encoding: 7bit
+Content-Disposition: inline;
+ filename="nrbroadcast"
+
+# /etc/ax25/nrbroadcast
+#
+# The format of this file is:
+#
+# ax25_name min_obs def_qual worst_qual verbose
+#
+radio	1	192	100	1
+
+--------------683786222DE8632E4CE4DC24
+Content-Type: text/plain; charset=us-ascii;
+ name="nrports"
+Content-Transfer-Encoding: 7bit
+Content-Disposition: inline;
+ filename="nrports"
+
+# /etc/ax25/nrports
+#
+# The format of this file is:
+#
+# name callsign alias paclen description
+#
+netrom  KJ6EO-7	SCV   236    Linux Switch Port
+
+--------------683786222DE8632E4CE4DC24
+Content-Type: text/plain; charset=us-ascii;
+ name="axports"
+Content-Transfer-Encoding: 7bit
+Content-Disposition: inline;
+ filename="axports"
+
+# /etc/ax25/axports
+#
+# The format of this file is:
+#
+# name callsign speed paclen window description
+#
+radio	KJ6EO-15	4800	256	2	145.050 1200 Baud
+
+
+--------------683786222DE8632E4CE4DC24
+Content-Type: application/x-unknown-content-type-local_auto_file;
+ name="rc.local"
+Content-Transfer-Encoding: base64
+Content-Disposition: inline;
+ filename="rc.local"
+
+IyEvYmluL3NoCiMKIyAvZXRjL3JjLmQvaW5pdC5kL3JjLmxvY2FsCUN1c3RvbWl6ZWQgZm9y
+IGxpbml4LmtqNmVvLmFtcHIub3JnIChTZXB0LiAyMDAyKQojCnRvdWNoIC92YXIvbG9jay9z
+dWJzeXMvbG9jYWwKIwojIEVuYWJsZSBpcHY0IHBhY2tldCBmb3J3YXJkaW5nCiNlY2hvIDEg
+PiBwcm9jL3N5cy9uZXQvaXB2NC9pcF9mb3J3YXJkCiMKI1N0YXJ0IFNhbWJhIFNlcnZlcgov
+ZXRjL3JjLmQvaW5pdC5kL3NtYiBzdGFydAojCiMgU3RhcnQgRE5TIFNlcnZlcgovZXRjL3Jj
+LmQvaW5pdC5kL25hbWVkIHN0YXJ0CiMKZWNobyAiU3RhcnRpbmcgUG9ydCBTZW50cnkiIC4u
+Li4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLlsgT0sgXQovZXRjL3JjLmQv
+aW5pdC5kLy4vcG9ydHNlbnRyeSBzdGFydApzbGVlcCAyCiMKZWNobyAiQXR0YWNoaW5nIEtJ
+U1MgTmV0d29yayBEZXZpY2UgInJhZGlvIiB0byBheDAiIC4uLi4uLi4uLi4uLi4uLlsgT0sg
+XQovdXNyL3NiaW4va2lzc2F0dGFjaCAvZGV2L3R0eVMwIHJhZGlvIDQ0LjE2LjIuMTAyCnNs
+ZWVwIDIKIwo=
+--------------683786222DE8632E4CE4DC24--
+
