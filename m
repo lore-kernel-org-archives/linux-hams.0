@@ -1,33 +1,39 @@
-From: <Morgan.Wemanis@mark.se>
-Subject: RE: Convers Setup
-Date: Mon, 25 Oct 2004 22:32:29 +0200
+From: Tomi Manninen <oh2bns@sral.fi>
+Subject: Re: Convers Setup
+Date: Tue, 26 Oct 2004 10:53:44 +0300 (EEST)
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <04Oct25.223344cest.332298@gateway.mark.se>
+Message-ID: <Pine.GSO.4.58.0410261050550.8969@kuori.saunalahti.fi>
+References: <417D35BD.9020709@utoronto.ca> <200410252219.53207.robert@steinhaeusser.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 8BIT
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 Return-path: <linux-hams-owner@vger.kernel.org>
-Content-class: urn:content-classes:message
+In-Reply-To: <200410252219.53207.robert@steinhaeusser.com>
 List-Id: <linux-hams.vger.kernel.org>
-To: drb@msu.edu, linux-hams@vger.kernel.org
+Content-Type: TEXT/PLAIN; charset="iso-8859-1"
+To: linux-hams@vger.kernel.org
 
-Hi all,
+On Mon, 25 Oct 2004, Robert [iso-8859-1] Steinh=E4u=DFer wrote:
 
-I did some simple 'security tests' with a couple of different conversd
-packages, and what I found wasn't funny. I posted [1] a note to
-linux-hams, but it was so much so I did only a 'Design problem in
-convers daemon" mail.
-(I would not run any of these conversd packages even as UID guest)
+> as far as I remember, Dieter Deyke DK5?? wrote the first implementati=
+on for
+> WAMPES, also the first networking version. ppconvers split off and ve=
+rsion
+> 3.12 was integrated into TNN (and later XNet). There was also a port =
+for
+> PC/FlexNet (on DOS). At some point, tppconvers was split off ppconver=
+s and
+> was released in conjunction with TNOS. Even later, htppconvers (?by T=
+omi
+> Manninen OH2BNS?) was made from tppconvers.
 
-But,
-Thomas have done a great job to fix up the security with the
-conversd-saupp code, so I recommend strongly all to use conversd-saupp
-instead of any other package.
+No, HTPP was done by Hessu OH7LZB, although I had some part in it too.
+It's still available at http://he.fi/, but I guess saupp would be the
+way to go nowadays (I haven't tested it).
 
-I saw that Thomas view-CVS site wasn't working. I have noticed him about
-that.
-
-[1] http://he.fi/archive/linux-hams/200308/0086.html
-
-73 de Morgan, sm6tky
-
+--=20
+Tomi Manninen / OH2BNS / KP20ME04
+-
+To unsubscribe from this list: send the line "unsubscribe linux-hams" i=
+n
+the body of a message to majordomo@vger.kernel.org
+More majordomo info at  http://vger.kernel.org/majordomo-info.html
