@@ -1,36 +1,35 @@
-From: pa3gcu <pa3gcu@zeelandnet.nl>
-Subject: Re: shutdown script
-Date: Thu, 9 Jan 2003 06:16:51 +0000
+From: Wilbert Knol <zl2bsj@zl2tze.ath.cx>
+Subject: Re: PIC programming question
+Date: Thu, 9 Jan 2003 22:38:50 +1300 (NZDT)
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <03010906165101.26408@unix.pa3gcu>
-References: <NCBBKBAJDJIPKFIAFBKLOEFBEHAC.vze2b869@verizon.net>
-Reply-To: pa3gcu@zeelandnet.nl
+Message-ID: <Pine.LNX.4.44.0301092229290.3773-100000@zl2bsj.ampr.org>
+References: <200301062005.06383.phil@spiderweb.com.au>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7BIT
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <NCBBKBAJDJIPKFIAFBKLOEFBEHAC.vze2b869@verizon.net>
+In-Reply-To: <200301062005.06383.phil@spiderweb.com.au>
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"
-To: whein3@earthlink.net, "Wilson G. Hein" <vze2b869@verizon.net>, Linux-Hams Mailing List <linux-hams@vger.kernel.org>
-
-On Wednesday 08 January 2003 20:06, Wilson G. Hein wrote:
-> I'm wondering if someone has a script to close ax25 and netrom, etc
-> interfaces. I would presume it would have something to look at the pid's
-> and then kill the process. I wnat to plug it into
-> /etc/sysconfig/network-scripts to automate startup and close through the
-> normal init scripts.
->
-> TIA,
->
-> Regards,
->
-> Willie, WJ3G
+Content-Type: TEXT/PLAIN; charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+To: Phil <phil@spiderweb.com.au>
+Cc: linux-hams@vger.kernel.org
 
 
-http://people.zeelandnet.nl/pa3gcu/description.htm
+On Tue, 7 Jan 2003, Phil wrote:
+> An Internet search didn't reveal very many programmers for Linux. One 
 
--- 
-Regards Richard
-pa3gcu@zeelandnet.nl
-http://people.zeelandnet.nl/pa3gcu/
+
+A programmer for DOS will likely run in an XDOS box. With FreeDOS, you 
+don't even need a MS copy of DOS....
+
+The same applies for Windows apps under the Wine emulator (although 
+the results can be a bit less predictable here). Again: you don't 
+even need to own Windows.
+
+A collegue of mine uses a programmer bought at Dick Smith's, which, he 
+says, is one of the better ones. No doubt you can get them in Oz, too.
+
+
+Wilbert, ZL2BSJ
+
+
 
