@@ -1,64 +1,50 @@
-From: Jonathan Naylor <jonathan.naylor@ggaweb.ch>
-Subject: ANNOUNCE: UKW Tools 0.02 released
-Date: Wed, 11 Dec 2002 09:05:58 +0100
+From: Tomi Manninen OH2BNS <tpm@prkele.tky.hut.fi>
+Subject: Re: ax25 kernel problem sometimes accur
+Date: Wed, 11 Dec 2002 12:29:12 +0200 (EET)
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <200212110905.58203.jonathan.naylor@ggaweb.ch>
-Reply-To: g4klx@qsl.net
+Message-ID: <Pine.HPX.4.10.10212111219220.22086-100000@saturn.trs.ntc.nokia.com>
+References: <20021211024019.A28178@linux-mips.org>
+Reply-To: tpm@prkele.tky.hut.fi
 Mime-Version: 1.0
-Content-Transfer-Encoding: 8bit
 Return-path: <linux-hams-owner@vger.kernel.org>
+In-Reply-To: <20021211024019.A28178@linux-mips.org>
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"
-To: linux-hams@vger.kernel.org
+Content-Type: TEXT/PLAIN; charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+To: Ralf Baechle DO1GRB <ralf@linux-mips.org>
+Cc: linux-hams@vger.kernel.org
 
-Hi Folks
+On Wed, 11 Dec 2002, Ralf Baechle DO1GRB wrote:
 
-The G4KLX software foundry is happy to announce that UKW Tools 0.02 has 
-been released. So what is UKW Tools ?
+> On Tue, Dec 10, 2002 at 04:09:20PM +0200, Tomi Manninen OH2BNS wrote:
+> 
+> > > I consider everything I'm currently working on as pure bug fix.  As such
+> > > they're not affected by the feature freeze.
+> > 
+> > Agreed.
+> > 
+> > Anyway, what is the situation now? Are there still lots of known races
+> > unfixed in your tree?
+> 
+> The whole job is much bigger than you may assume.  I've removed
+> SOCKOPS_WRAP which so far was forcing single threaded execution of most of
+> the AX.25 code.  I did that because for 2.5 the removal of SOCKOPS_WRAP
+> the entire kernel was on the agenda.  This didn't happen yet but I'm
+> removed it's use from AX.25 & Co. anyway.  As the result the entire locking
+> work isn't just plugging a few holes which would have been bad enough, it's
+> completly redoing the locking stuff from scratch.
 
-UKW Tools is a kind of Goegraphic Information System (GIS) for radio 
-amateurs. Taking elevation data that is freely available on the 
-Internet, the program includes a suite of different funtions that allow 
-you to visualise radio paths and locations.
+Ok, I understand. Anyway some kind of progress report would be nice. Even
+something like: "don't hold your breath", if that is appropriate... :-)
 
-I suggest that you look on my web site http://www.qsl.net/g4klx under 
-Software and have a look at screen shots for more information, but 
-briefly, the current functions are:
+I have gotten surprisingly many private queries about this lately, so to
+recap what I have understood so far: the 2.4 code is bad, full of races,
+works only if treated nicely. Your SOCKOPS_WRAP removal obviously makes
+things even worse until you redo the locking stuff. When that is done we
+have a perfect ax.25 stack again. Right? ;-)
 
-3D Map: Produces a map centred on a location that shows the topography 
-around it. The colours may be changed, the viewing angle may be changed 
-as can the type of projection used.
-
-Horizon View: Plots the elevations of the surrounding obstacles as 
-viewed from a site, an indication of their elevations and distance is 
-given.
-
-Show Map: Displays a map centred on a location with different colours 
-used to denote heights. Moving the mouse over the map will result in 
-information about the location below the mouse (locator and elevation). 
-The colours may be changed.
-
-Terrain: Given two locations the program will show the line of sight 
-path between them. In many ways this is the most interesting function. 
-The K (essentially the tropo conditions) value may be changed and when 
-the mouse is over the disgram some data about the location pointed to 
-will be shown.
-
-There are two functions, Local Map and View which have not been 
-implemented yet.
-
-UKW Tools 0.01 was released a little while ago but not announced because 
-it was a premature release to allow some operators to check their 
-sites.
-
-UKW Tools is written in C++ and makes use of the platform independent 
-wxWindows toolkit and it is possible that it could be built on Windows 
-as well as Linux.
-
-Jonathan  G4KLX (HB9DRD until February 2003)
-
-PS An article about the DSP functions used and the implementation of 
-LinWSJT is to be published in DUBUS 4/2002, and it can also be 
-downloaded from the Software page also. Warning, it is in Word 2000 
-format.
+-- 
+Tomi Manninen           Internet:  oh2bns@sral.fi
+OH2BNS                  AX.25:     oh2bns@oh2rbi.fin.eu
+KP20ME04                Amprnet:   oh2bns@oh2rbi.ampr.org
 
