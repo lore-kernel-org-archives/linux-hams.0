@@ -1,58 +1,34 @@
-From: cyberdoc@matrix.subsolar.com
+From: Margaret Leber <maggie@voicenet.com>
 Subject: Re: Success! TWO questions remain
-Date: Thu, 12 Dec 2002 08:09:25 -0600 (CST)
+Date: Thu, 12 Dec 2002 10:25:31 -0500
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <Pine.LNX.4.44.0212120806220.11889-100000@matrix>
-References: <Pine.LNX.4.44.0212120813300.5835-100000@jeeves.mvw.net>
+Message-ID: <3DF8AA6B.6000303@voicenet.com>
+References: <Pine.LNX.4.44.0212111645150.1297-100000@jeeves.mvw.net> <Pine.LNX.4.44.0212120813300.5835-100000@jeeves.mvw.net> <20021212132801.GA9699@silly.cloud.net.au>
 Mime-Version: 1.0
-Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <Pine.LNX.4.44.0212120813300.5835-100000@jeeves.mvw.net>
-List-Id: <linux-hams.vger.kernel.org>
-Content-Type: TEXT/PLAIN; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
-To: mvw@mvw.net
+Return-path: <linux-hams-owner@vger.kernel.org>
+List-Id: <linux-hams.vger.kernel.org>
+Content-Type: text/plain; charset="us-ascii"; format="flowed"
+To: Hamish Moffatt <hamish@cloud.net.au>
 Cc: linux-hams@vger.kernel.org
 
+Hamish Moffatt wrote:
 
-Hello,
+> Compression is still hiding the data and I would say breaks the rules.
+> Better solution: use SSH. You can have public key authentication (no
+> cleartext passwords) without any encryption or compression.
 
-You can firewall off port 23 on your internet interface... telnet won't be 
-disabled, but the packets will never reach the daemon (service) for 
-processing.  Turn off port 23 on all LAN based connections, and keep it 
-open on the ax interfaces.
+Is encrypting even a password permitted outside of control of space 
+stations?
 
-This means you need to run either ipchains or iptables.  I can help you 
-with either if you wish.
+  73 de Maggie K3XS
 
-Christian
+-- 
+-----/___.   _)   Margaret Stephanie Leber    / "The art of progress  /
+----/(, /|  /| http://voicenet.com/~maggie   / consists of preserving/
+---/   / | / |  _   _   _    `  _AOPA 925383/ order amid change and /
+--/ ) /  |/  |_(_(_(_/_(_/__(__(/_  FN20hd / change amid order."   /
+-/ (_/   '  K3XS  .-/ .-/    ARRL 39280   /___ --A.N.Whitehead ___/
+/____ICQ 7161096_(_/_(_/__AMSAT 32844____/ <maggie@voicenet.com>
 
-
-On Thu, 12 Dec 2002 mvw@mvw.net wrote:
-
-> Hello all,
-> 
-> Wonder if anyone saw my previous message?
-> 
-> In any case, another question. I want to be able to telnet into one
-> machine from another using radio. Encryption is forbidden for amateur use
-> so this means clear passwords. Not good. (Even though I will not use root, 
-> of course).
-> 
-> BUT, compression _is_ allowed. How can I get the tcp/ip content to be 
-> compressed, so it is at least not easily readable?
-> 
-> Thanks,
-> Michael
-> 
-> PS plus, how can I get telnet to accept connections only on its radio 
-> port? This is a generalLinux question but if anyone happens to know the 
-> answer?
-> 
-> 
-> 
-> -
-> To unsubscribe from this list: send the line "unsubscribe linux-hams" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at  http://vger.kernel.org/majordomo-info.html
-> 
 
