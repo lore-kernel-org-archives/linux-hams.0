@@ -1,22 +1,37 @@
-From: "David S. Miller" <davem@redhat.com>
-Subject: Re: [PATCH] set socket owner (ax25, rose, netrom)
-Date: Sat, 30 Aug 2003 19:08:36 -0700
+From: terry <wd0fpc@aniota.com>
+Subject: Re: kernel 2.4.21 and AX25 & netrom
+Date: Mon, 1 Sep 2003 01:08:08 -0700 (PDT)
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <20030830190836.41064340.davem@redhat.com>
-References: <20030829114208.40f10cca.shemminger@osdl.org>
+Message-ID: <Pine.LNX.4.50.0309010101460.13869-100000@yossarian.aniota.net>
+References: <Pine.LNX.4.51.0308301247010.32430@lnx.lfc.mat.br>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <20030829114208.40f10cca.shemminger@osdl.org>
+In-Reply-To: <Pine.LNX.4.51.0308301247010.32430@lnx.lfc.mat.br>
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"
-To: Stephen Hemminger <shemminger@osdl.org>
-Cc: ralf@linux-mips.org, linux-hams@vger.kernel.org, netdev@oss.sgi.com
+Content-Type: TEXT/PLAIN; charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+To: Luiz Catalan <catalan@lnx.lfc.mat.br>
+Cc: linux-hams@vger.kernel.org
 
-On Fri, 29 Aug 2003 11:42:08 -0700
-Stephen Hemminger <shemminger@osdl.org> wrote:
+On Sat, 30 Aug 2003, Luiz Catalan wrote:
 
-> AX25, NETROM, ROSE all need to set the socket owner field, otherwise it is possible
-> to remove the module when there are orphaned sockets.
+> kernel 2.4.21
 
-Applied, thanks.
+... ciao:
+
+    first, 2.4.22 is out, and can be found at kernel.org.  i would suggest
+that, as some of the latest security issues have involved lesser versions.
+
+> upgrade to 2.6.0-testX
+
+    just as a matter of principle, going to the 'bleeding edge' of
+technology might not solve as many problems as it introduces.
+
+
+    perhaps it just my reading, but i am not sure you've actually isolated
+the problem.  is it the kernel, or ax25 ...
+
+
+-- 
+73 , de WD0FPC		Pacific Nowthwest 2M Repeaters
+    aka: terry 		http://www.aniota.com/~wd0fpc
