@@ -1,32 +1,44 @@
-From: Hamish Moffatt <hamish@cloud.net.au>
-Subject: Re: Linux Newbie with Compiling Problems...
-Date: Mon, 3 Mar 2003 08:32:58 +1100
+From: Ray Heasman <ray@isdmg.com>
+Subject: RE: Linux Newbie with Compiling Problems...
+Date: 02 Mar 2003 13:33:31 -0800
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <20030302213258.GA20727@silly.cloud.net.au>
-References: <01C2E0CD.FDFF9C20.wb9mjn@wb9mjn-11.ampr.org>
+Message-ID: <1046640812.1846.23.camel@maze.mythral.org>
+References: <01C2E0AD.C6D4E400.wb9mjn@wb9mjn-11.ampr.org>
 Mime-Version: 1.0
+Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
-Content-Disposition: inline
-In-Reply-To: <01C2E0CD.FDFF9C20.wb9mjn@wb9mjn-11.ampr.org>
+In-Reply-To: <01C2E0AD.C6D4E400.wb9mjn@wb9mjn-11.ampr.org>
 List-Id: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-To: Linux Hams mailing list <linux-hams@vger.kernel.org>
+To: "wb9mjn@wb9mjn-11.ampr.org" <wb9mjn@wb9mjn-11.ampr.org>
+Cc: Linux Hams mailing list <linux-hams@vger.kernel.org>
 
-On Sun, Mar 02, 2003 at 03:11:24PM -0600, wb9mjn wrote:
->           I think I may have found a workaround. With allot of looking, I 
-> found that as86 is a part of a package that does the same thing as dev86 
->  (real mode assembly). So, I started looking around in the directories that 
-> dev86 deposits its files. No, 'as86' (or 'as') was not part of dev86 
-> itself. But, the system had installed a program called 'as' in /usr/bin/ 
-> directory. I did a 'as --help' command and the result made it clear that 
-> this was indeed an assembler program. So, made a copy of 'as' renamed to 
-> 'as86' and did
+Hi Don,
 
-as isn't as86, so the result probably won't work. as is the standard
-assembler, not the real mode assembler.
+On Sun, 2003-03-02 at 09:20, wb9mjn wrote:
+> 
+> 
+> Hi Kelly, Jean and Bernard,
+> 
+>     I am stuck again. Cannot find the bin86 package in the collection of 
+> Mandrake 7.2 disks here. Did find dev86, which I installed, but it had no 
+> effect on the compilation. It still wants as86.
+> 
+>     Does anybody know which package in Mandrake 7.2 one can find the as86 
+> assembler program?
+> 
+
+It's been a while since I used Mandrake, but there are two commands you
+may find very useful: "rpm" and "rpmdrake". You can use "man rpm" to
+find out more about rpm.
+
+RPMDrake specifically allows you to search your Mandrake disks for the
+RPM containing a specific file.
+
+Rpm itself has some useful tools, like, to find out what rpm provided a
+particular file, do "rpm -qa --whatprovides /path/to/file".
+
+Hope this helps,
+Ray
 
 
-Hamish
--- 
-Hamish Moffatt VK3SB <hamish@debian.org> <hamish@cloud.net.au>
