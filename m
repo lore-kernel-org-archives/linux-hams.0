@@ -1,53 +1,61 @@
-From: "Wilson G. Hein" <wilson.hein@verizon.net>
-Subject: RE: ax25 Questions
-Date: Sat, 5 Jun 2004 21:00:46 -0400
+From: "Janusz Przybylski - SP1LOP" <janusz@sp1lop.szczecin.pl>
+Subject: New Polish APRS Server
+Date: Sun, 6 Jun 2004 10:16:12 +0200
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <NCBBKBAJDJIPKFIAFBKLOEEOFAAC.wilson.hein@verizon.net>
-References: <200406042119.14847.oyvind@cs.uit.no>
+Message-ID: <001c01c44b9e$880b1480$64c9a8c0@sp1lop.szczecin.pl>
+Reply-To: "Janusz Przybylski - SP1LOP" <janusz@sp1lop.szczecin.pl>
 Mime-Version: 1.0
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <200406042119.14847.oyvind@cs.uit.no>
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="iso-8859-1"
-To: Linux-Hams Mailing List <linux-hams@vger.kernel.org>
+Content-Type: text/plain; charset="us-ascii"
+To: Linux-Hams <Linux-Hams@vger.kernel.org>
+
+Hi All
+
+I inform that he was started, Poland Server APRS:
+aprs.atr.bygdoszcz.pl    IP 212.122.192.50 
+
+Available Ports 
+--------------------------------------------------------
+Port Number   Description 
+--------------------------------------------------------- 
+10152         Full APRS - IS Feed 
+14579         Poland Feed 
+14580         User - defined Filter Feed 
+1314           Message Feed 
+----------------------------------------------------------
+ 
+This accessible Server is from also 44-net:
+aprs-pl.ampr.org    IP 44.165.38.250 
+
+We invite the, every bit of it, which use from NOSaprs 
+and problems have with meeting to IP Internet,
+and only after 44-net addresses.
 
 
 
-> -----Original Message-----
-> From: linux-hams-owner@vger.kernel.org
-> [mailto:linux-hams-owner@vger.kernel.org]On Behalf Of =D8yvind Hansse=
-n
-> Sent: Friday, June 04, 2004 3:19 PM
-> To: linux-hams@vger.kernel.org
-> Subject: Re: ax25 Questions
->
-> Another question btw. It seems that the SOCK_PACKET type of socket is
-> the typical way to access raw AX.25 packets in Linux, but the doc
-> says that this
-> type of socket should be avoided (obsolete) and that the
-> AF_PACKET/SOCK_RAW
-> type should be used instead. I this equivalent, is this supported
-> for AX.25?
->
 
-SOCK_PACKET as I remember it is going to be phased out, and was kept so=
-lely
-till older apps could be upgraded to work with libax25, or something li=
-ke
-that. I would recommend use of AF_PACKET/SOCK_RAW to be forward compati=
-ble.
+                          73 de Janusz SP1LOP
+==================================
+Co-ordinator Polish AmprNet 44.165/16
+http://www.szczecin.ampr.org/44-net
+==================================
+Inet:            janusz@sp1lop.szczecin.pl
+AmprNet: sp1lop@szczecin.ampr.org
+AX25:     SP1LOP @ SR1BSZ.SZ.POL.EU
+====================================
+I'm Sysop: SR1BSZ & szczecin.ampr.org
+ 
 
-73,
 
-Wilson, WJ3G
----
-Outgoing mail is certified Virus Free.
-Checked by AVG anti-virus system (http://www.grisoft.com).
-Version: 6.0.692 / Virus Database: 453 - Release Date: 5/28/2004
+-----------------
+avast! antywirus: Outbound [Wychodzaca] 
+Inbound message clean [wiadomosc czysta].
+Virus Datebase [baza sygnatur wirusow] (VPS): 0423-2, 04.06.2004
+Tested on [przetestowano]: 2004-06-06 10:16:15
+avast! - Copyright (c) 2000-2003 ALWIL Software.
+http://www.avast.com
 
--
-To unsubscribe from this list: send the line "unsubscribe linux-hams" i=
-n
-the body of a message to majordomo@vger.kernel.org
-More majordomo info at  http://vger.kernel.org/majordomo-info.html
+
+
