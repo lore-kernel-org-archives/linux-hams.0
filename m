@@ -1,47 +1,144 @@
-From: "Curt, WE7U" <archer@eskimo.com>
+From: Jeff Camp <jcamp2@cox.net>
 Subject: Re: soundmodem and fedora c3
-Date: Tue, 8 Mar 2005 12:35:28 -0800 (PST)
-Message-ID: <Pine.SUN.4.58.0503081230000.6489@eskimo.com>
-References: <BAY104-F33C8680A7BC732DF8330068B500@phx.gbl> <422DECD3.3050901@cox.net>
- <200503082107.02361.pa3gcu@zeelandnet.nl> <200503082113.38755.luc2@lx2gt.lu>
-Reply-To: "Curt Mills, WE7U" <archer@eskimo.com>
+Date: Tue, 08 Mar 2005 15:25:54 -0600
+Message-ID: <422E1862.9030708@cox.net>
+References: <BAY104-F33C8680A7BC732DF8330068B500@phx.gbl> <422DECD3.3050901@cox.net> <200503082107.02361.pa3gcu@zeelandnet.nl>
 Mime-Version: 1.0
-In-Reply-To: <200503082113.38755.luc2@lx2gt.lu>
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+In-Reply-To: <200503082107.02361.pa3gcu@zeelandnet.nl>
 Sender: linux-hams-owner@vger.kernel.org
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: TEXT/PLAIN; charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-To: Luc Langehegermann <luc2@lx2gt.lu>
-Cc: pa3gcu@zeelandnet.nl, Jeff Camp <jcamp2@cox.net>, linux-hams@vger.kernel.org
+Content-Type: text/plain; charset="iso-8859-1"; format="flowed"
+To: 
+Cc: linux-hams@vger.kernel.org
 
-On Tue, 8 Mar 2005, Luc Langehegermann wrote:
+You're right.  I went through my original .config and it didn't have an=
+y=20
+hamradio support enabled.  I must have turned it on when I went to set=20
+the CONFIG_MKISS support.
 
-> Well, for soundmodem to work, you do not really need k-ax25. It is all in user
-> space. You can see the soundmodem as an KISS-TNC, but with all in Software.
-> Using an pipe, (pty/tty pair) you should be able to use it without the kernel
-> ax25 support!
->
-> So, Xastir <--> soundmodem should NOT need an running k-ax25
+At any rate, this was a difference I noticed moving from RedHat 9 to=20
+=46edora C3.
 
-Correct, and I set it up that way last night.  I do however have
-AX.25 capability in the kernel on that system, and have used it
-before, but in this instance I did it all without any kernel AX.25
-support.  All user-space stuff, and Xastir connects directly to
-/dev/soundmodem0 with a Serial KISS Interface (Xastir's name for
-it).
+73,
+Jeff
 
-The downside of doing it this way is that you have one TNC dedicated
-to one application.  Sure, you can chain other APRS applications off
-of Xastir, but if you want to run other types of software, you'd
-have to stop the Xastir interface and then connect a different app
-up to /dev/soundmodem0.
 
-If you set up AX.25 networking, lots of apps can share the same TNC
-at one time, plus you can route TCP/IP packets just like you do with
-ethernet.
+Richard Adams wrote:
+> On Tuesday 08 March 2005 19:20, Jeff Camp wrote:
+>=20
+>>Ron, I had the same problem with FC3 and soundmodem.  I solved it by
+>>enabling MKISS support (CONFIG_MKISS) and rebuilding the kernel.  The
+>>AX25 stuff was already there, but MKISS was not enabled by default.  =
+It
+>>works great now.
+>=20
+>=20
+> I dont want to be a wet ass, however my fedora core kernel has=20
+> # CONFIG_HAMRADIO is not set
+> which in turn means that there is no support for hamradio in fedora k=
+ernels at=20
+> all, that is if i see it correctly.
+>=20
+> To make it clear, my kernel is 2.6.9-1.681_FC3 which i do belive was =
+updated=20
+> by up2date.
+>=20
+> Futher more i can see no support for AX25 in other kernels from fedor=
+a.
+>=20
+> On another note if i am correct, to configure mkiss in =B4make menuco=
+nfig=B4 one=20
+> needs to check the box
+>  Device Drivers
+> -> Networing Support
+> Then check
+>  [ ] Amateur Radio support  --->=20
+>=20
+> Considering my .config file did not include an asterisk in that box i=
+ presume=20
+> that Fedore does not supply kernels with AX25 at all.
+>=20
+> Or am i incorrect in saying this.???
+>=20
+> Also to make it quite clear i dont use a soundmodem so i cannot reall=
+y=20
+> conribute anything else to this thread, i just thought it worth menti=
+oning.
+> Hope you dont mind.
+>=20
+>=20
+>>73,
+>>Jeff
+>>N0WJP
+>>
+>>Ron- VE3DTT wrote:
+>>
+>>>Thanks to all who responded to my query.
+>>>
+>>>I am aware that 'soundmodem' is usermode software but I tried loadin=
+g
+>>>the modules anyway, out of desperation.
+>>>
+>>>'make menuconfig' suggests that ax.25 is hard coded in my kernel.
+>>>
+>>>I have this sample of an 'axport' file which addresses 'sm0':
+>>>
+>>>"sm0 KA1FSB-8 1200 255 2 145.630 Mhz "Wellesley, MA" 1200
+>>>bps soundmodem"
+>>>
+>>>but it doesn't help.  I've tried many variations on sample
+>>>configurations with negative results.
+>>>
+>>>'xastir' will allow me to bring up a 'kiss' device on any port I cho=
+ose
+>>>but none communicate with soundmodem. The xastir manual tells me to =
+use
+>>>ax25.
+>>>
+>>>'Listen' informs me that my ax25 ports aren't active.
+>>>
+>>>--
+>>>"Windows:  Microsoft's tax on computer illiterates." -- WE7U
+>>>
+>>>I, reluctantly, must include myself among the computer illiterate an=
+d
+>>>when I discovered that 'soundmodem' is available for windows  I
+>>>downloaded 'soundmodem', 'flexnet32' and 'paxon' and was decoding
+>>>packets within 15 minutes start to finish. In view of the time it ta=
+kes
+>>>to get anything up and running with Linux, I'm inclined to counter t=
+hat,
+>>>perhaps,
+>>>
+>>>Linux is Life's tax on those of us who don't have one.
+>>>
+>>>It has to be it's own reward. I'll keep trying things until somethin=
+g
+>>>works.
+>>>
+>>>Thanks again,
+>>>Ron
+>>>73 VE3DTT
+>>>
+>>>
+>>>-
+>>>To unsubscribe from this list: send the line "unsubscribe linux-hams=
+" in
+>>>the body of a message to majordomo@vger.kernel.org
+>>>More majordomo info at  http://vger.kernel.org/majordomo-info.html
+>>
+>>-
+>>To unsubscribe from this list: send the line "unsubscribe linux-hams"=
+ in
+>>the body of a message to majordomo@vger.kernel.org
+>>More majordomo info at  http://vger.kernel.org/majordomo-info.html
+>=20
+>=20
+>=20
 
---
-Curt, WE7U.   APRS Client Comparisons: http://www.eskimo.com/~archer
-"Lotto:    A tax on people who are bad at math." -- unknown
-"Windows:  Microsoft's tax on computer illiterates." -- WE7U
-"The world DOES revolve around me:  I picked the coordinate system!"
+-
+To unsubscribe from this list: send the line "unsubscribe linux-hams" i=
+n
+the body of a message to majordomo@vger.kernel.org
+More majordomo info at  http://vger.kernel.org/majordomo-info.html
