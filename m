@@ -1,45 +1,51 @@
 From: "AE5PL Lists" <HamLists@ametx.com>
-Subject: ax25 Questions
-Date: Thu, 3 Jun 2004 22:40:03 -0500
+Subject: RE: ax25 Questions
+Date: Fri, 4 Jun 2004 13:12:12 -0500
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <478F6623898BBC4DBD692A223D28298A05A626@amewebsrvr.webametx.local>
+Message-ID: <478F6623898BBC4DBD692A223D28298A05A630@amewebsrvr.webametx.local>
 Mime-Version: 1.0
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Content-Transfer-Encoding: 8BIT
 Return-path: <linux-hams-owner@vger.kernel.org>
 Content-class: urn:content-classes:message
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="iso-8859-1"
+Content-Type: text/plain; charset="us-ascii"
 To: linux-hams@vger.kernel.org
 
-I have gone through the archives using Google and I am not finding what=
- I need to know.  I am a newbie to Linux although not to Unix so I am f=
-amiliar with many of the standard tools.
+Well, I have got the answers, sort of.
 
-I have install Linux 2.6.6 and am working with =D8yvind Hanssen on gett=
-ing javax25 to work with ax25 sockets.  We are doing well but I am seei=
-ng 3 problems that may or may not be due to the Linux ax25 support.
+> -----Original Message-----
+> From: AE5PL Lists
+> Posted At: Thursday, June 03, 2004 10:40 PM
+> Subject: ax25 Questions
+> 
+> recvfrom may be returning the size of the longest packet 
+> received instead of the current packet length.  I suspect 
+> this problem is in the javax25 native code, but I figured I 
+> would throw it out anyway.
 
-recvfrom may be returning the size of the longest packet received inste=
-ad of the current packet length.  I suspect this problem is in the java=
-x25 native code, but I figured I would throw it out anyway.
+As I suspected, this was in the javax25 native C code and has been
+corrected.
 
-sendto seems to wait for the socket to become free if a recvfrom is pen=
-ding.  The idea is to be able to have one thread wait for an incoming p=
-acket while another thread can send a packet(s) based on a timer.
+> sendto seems to wait for the socket to become free if a 
+> recvfrom is pending.  The idea is to be able to have one 
+> thread wait for an incoming packet while another thread can 
+> send a packet(s) based on a timer.
 
-Using a Paccom TNC in KISS mode, it appears that sendto eventually does=
- key the transmitter, but only syncs go out.  No actual packet.
+This seems to be due to the fact that the socket is opened in blocking
+mode.  I was able to circumvent this problem by opening a socket for
+receive and another socket to the same port for transmit.  Works fine.
 
-Thanks in advance for the help.  I have created an IGate adjunct to jav=
-APRSSrvr which is working very well with AGWPE and KipSS.  I would like=
- to extend this to working with the ax25 support in Linux.
+I have added jaAPRSIGate as an adjunct to javAPRSSrvr over the last two
+weeks.  It is a full featured IGate which works in conjunction with
+javAPRSSrvr.  javAPRSSrvr and javAPRSIGate run on virtually any machine
+with a 1.1.4 JVM or higher.  There are TNC interfaces for javAPRSIGate
+for KipSS (Windows), AGWPE (Windows), KISS TNC's (Windows and Linux),
+and now ax25 (Linux).
+
+For those Java developers out there, javax25 (on sourceforge.net) is a
+nice tool for ax25 socket work.
 
 73,
 
 Pete Loveall AE5PL
 mailto:pete@ae5pl.net
--
-To unsubscribe from this list: send the line "unsubscribe linux-hams" i=
-n
-the body of a message to majordomo@vger.kernel.org
-More majordomo info at  http://vger.kernel.org/majordomo-info.html
