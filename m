@@ -1,42 +1,54 @@
-From: Kelly Black <kelly.black@penguinpackets.com>
-Subject: Re: Writing AX.25 Server Progie
-Date: 05 Jan 2003 21:39:40 -0600
+From: "jbennett" <jbennett@insightbb.com>
+Subject: Re: Wx stations and aprs
+Date: Sun, 5 Jan 2003 22:55:19 -0600
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <1041824383.26767.7.camel@edith>
-References: <1041142023.32767.8.camel@edith>   
-	<E18VNX8-00050N-00@yagi.h-net.msu.edu>
+Message-ID: <056001c2b53f$d03708f0$0701a8c0@lz130>
+References: <Pine.LNX.4.44.0301052055090.6293-100000@jeeves.mvw.net>
 Mime-Version: 1.0
 Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <E18VNX8-00050N-00@yagi.h-net.msu.edu>
 List-Id: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
-To: Dennis Boone <drb@msu.edu>
-Cc: Linux Hams mailing list <linux-hams@vger.kernel.org>
+To: mvw@mvw.net, LINUX HAMS MAILING LIST <linux-hams@vger.kernel.org>
 
-On Sun, 2003-01-05 at 21:02, Dennis Boone wrote:
->  > Replacement of ARES/Data program used for the Twin Cities Marathon in
->  > Minnesota.
-> 
-> Kelly:
-> 
-> Strange coincidences.  I recently built a perl database server similar
-> to ARESDATA for Linux.  I've just returned from holiday travels, so
-> much of what I would have said has already been discussed, but I
-> thought I would offer a few thoughts.
-> 
-Dennis,
+You might be interested in what I am currently working on. It is in the beta
+stages of development, but I believe you can get a good idea of what is to
+come:
 
-Thanks for the pointer and the code sample.  After some initial fun
-using ax25d, I am plowing ahead with C socket programming.  I know it is
-probably not the way I should go, but have read a bit about socket
-programming and wish to try and go ahead.
+http://home.insightbb.com/~n4xi/
 
-I know a tiny bit of Perl, so I will give it a look see.  I thank you
-again for the code sample.  I was wondering what license you would be
-putting your code under?
+73, John Bennett
+n4xi
 
-Kelly
-KB0GBJ
+----- Original Message -----
+From: <mvw@mvw.net>
+To: "LINUX HAMS MAILING LIST" <linux-hams@vger.kernel.org>
+Sent: Sunday, January 05, 2003 7:58 PM
+Subject: Wx stations and aprs
 
+
+> Hello all,
+>
+> Xmas was good in terms of spare time. I am still working on my active
+> home. I now have x10 installed and fbb running (basically: though it's
+> local; unless you log in via ax25 it still does not get/send mail or
+> bulletins from the outside world).
+>
+> Anyway - two different questions this time.
+>
+> a) APRS! Any recommendations for both Linux software and maps?
+>
+> b) Weather stations - I would love broadcast my local Wx status on APRS,
+> but before I spend money unwisely, what weather stations (and associated
+> software) has worked for any of you?
+>
+> Best,
+> Michael VA3MVW
+>
+>
+> -
+> To unsubscribe from this list: send the line "unsubscribe linux-hams" in
+> the body of a message to majordomo@vger.kernel.org
+> More majordomo info at  http://vger.kernel.org/majordomo-info.html
+>
 
