@@ -1,42 +1,32 @@
-From: Jonathan Naylor <jonathan.naylor@ggaweb.ch>
-Subject: Re: wxGTK-2.4.0
-Date: Tue, 14 Jan 2003 22:04:38 +0100
+From: Phil <phil@spiderweb.com.au>
+Subject: Re: Odd soundmodem problem
+Date: Wed, 15 Jan 2003 10:55:49 +1000
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <200301142203.56076.jonathan.naylor@ggaweb.ch>
-Reply-To: g4klx@qsl.net
+Message-ID: <200301151055.49095.phil@spiderweb.com.au>
+References: <200301132113.48039.phil@spiderweb.com.au> <200301141331.39794.vk3bvp@qsl.net>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7BIT
 Return-path: <linux-hams-owner@vger.kernel.org>
+In-Reply-To: <200301141331.39794.vk3bvp@qsl.net>
 List-Id: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
-To: Linux Hams <linux-hams@vger.kernel.org>
+To: linux-hams@vger.kernel.org
 
-Hi Wilbert
+On Tue, 14 Jan 2003 12:31 pm, Shane Deering wrote:
+> On Mon, 13 Jan 2003 22:43, Phil wrote:
+> > Hello All,
+> >
+> > Can anyone offer a suggestion as to why the following text is transmitted
+> > every thirty seconds? Also, receive no longer works and the PTT function
+> > doesn't work either.
 
-I too am having the same fun !
+Thank you for the replies.
 
-My development is done with wxGTK-2.3.3 and it is perfectly happy with a 
-standard installation of GTK+ 1.2.10, but with the latest wxGTK you 
-need this pkg-config. So you can try downloading and building 
-pkg-config and seeing what happens, they claim that wxGTK-2.4.0 is 
-compatible with that version. Pkg-config is at 
-http://www.freedesktop.org/software/pkgconfig/ once I have installed 
-it, I found that it had identified my GTK+ 1.2.10 and had included it 
-in its list of packages.
+Samba was the cause of the odd text and it looks like the newer kernel version 
+might be the reason that the receive function no longer works.
 
-I would not recommend trying LinWSJT (now at 0.4.2 BTW) with wxGTK 2.4.0 
-yet as there are some incompatibilities :-( Nothing too serious, just a 
-few hours of sorting some arguments out. I have gone the whole way and 
-installed GTK+ 2.2.0 and the rest of the libraries, something I 
-wouldn't recommend unless you have a few hours of free time. Try and 
-get hold of wxGTK 2.3.3 and use that to build LinWSJT. I will release a 
-wxGTK 2.4.0 compatible LinWSJT soon.
-
-I have to say that I am not too happy in the way that they have moved to 
-pkg-config, I though the existing framework of gtk-config was perfectly 
-adequate.
-
-Such is life.
-
-Jonathan  HB9DRD/G4KLX
+-- 
+Regards,
+Phil
+phil@spiderweb.com.au
 
