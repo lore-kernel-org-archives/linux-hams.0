@@ -1,37 +1,43 @@
 From: "Douglas Cole" <n7bfs@qwest.net>
-Subject: xfbbd crashing, why ?
-Date: Sat, 9 Oct 2004 08:55:37 -0700
+Subject: Re: xfbbd crashing, why ?
+Date: Sat, 9 Oct 2004 10:51:33 -0700
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <200410090855.37618.n7bfs@qwest.net>
+Message-ID: <200410091051.33420.n7bfs@qwest.net>
+References: <200410090855.37618.n7bfs@qwest.net> <6.1.1.1.2.20041009105040.03412b50@mail.sasktel.net>
 Reply-To: n7bfs@qwest.net
 Mime-Version: 1.0
 Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
+In-Reply-To: <6.1.1.1.2.20041009105040.03412b50@mail.sasktel.net>
 Content-Disposition: inline
 List-Id: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
-To: linux-hams@vger.kernel.org
+To: Doug <appld@sasktel.net>
+Cc: linux-hams@vger.kernel.org
 
-We have recently setup FBB on a SuSE linux 8.2 box, and it works great for 
-most of the day but then for some reason at 3am it loads the screen with the 
-error "select: bad file descriptor" and crashes.
+On Saturday 09 October 2004 09:53, you wrote:
+> Doug mine did that only at 02:00 every nite. The problem was in the
+> housekeeping
+> routine. The problem was because the system was not started properly. When
+> I started it with the fbb command, it was fine. I use RH8.0 here. Not sure
+> how you are supposed to start yours, but there are different ways...
+>
+> Cheers
+> Doug VE5DA
+Thanks for the reply Doug, you bring up a good point, that I may not be 
+starting FBB "properly", but I am not sure what "properly" would be, I know 
+that we start FBB from the command line by entering "xfbbd" and hitting 
+return, and then much info wizzes past on the screen and all is running...
 
-I have googled some, but have not found any "smoking gun" that would help me 
-clear this up, so I am at a loss as to what would cause this type of error, 
-or what the file descriptor error could actually mean, I looked into the 
-port.sys file thinking I had something wrong there, but it seems ok...
+I will go back to the documentation and see where I am messing up, but so far 
+am puzzled.
 
-I am very new with FBB and so am sure that I probably have something setup 
-wrong, but would appreciate any input/help in making it work, as we just got 
-our 9.6k backbone up and running on our local node and have the bbs (FBB) on 
-it as well, and it works very nice (when its working)...
-I can post config files if that would help...
+Thanks for the input :)
 
-Thanks in advance for any help :)
+
 
 Douglas Cole   N7BFS
 AMSAT#26182 , K2 # 544
 http://www.users.qwest.net/~cdoug3
 Registered Linux user # 188922
-
 
