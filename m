@@ -1,42 +1,29 @@
-From: Margaret Leber <maggie@voicenet.com>
-Subject: Re: KDE EchoLinux client project
-Date: Tue, 08 Apr 2003 11:52:39 -0400
+From: Bob Nielsen <nielsen@oz.net>
+Subject: Conversd?
+Date: Tue, 8 Apr 2003 10:57:57 -0700
 Sender: linux-hams-owner@localhost
-Message-ID: <3E92F047.4060605@voicenet.com>
-References: <E192r69-000HrJ-KE@probity.mcc.ac.uk> <200304080725.16056.w9ya@arrl.net> <20030408133905.GA23255@silly.cloud.net.au> <20030408142024.GA3921@leo.tneu.visi.com>
+Message-ID: <20030408175757.GA5695@n7xy.net>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
+Content-Disposition: inline
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"; format="flowed"
-To: Tim Neu <tim@tneu.visi.com>
-Cc: linux-hams@vger.kernel.org
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+To: linux-hams@vger.kernel.org
 
-Tim Neu wrote:
+I haven't used convers in a long time and thought I'd try running
+conversd on my system.  I found several versions around and wondered
+which is preferred?
 
-> I'd say most of us Linux folks would just be happy with something that
-> works!    
+I looked at conversd-saupp-1.122, htpp-1.22 and htppu-1.5 and they all
+compile without problems but experience the same strange behavior when
+I run them.
 
-Me too. I currently have EchoLinux (and EchoGUI, a sample client written 
-in Xforms) installed on my 2.4.3-12 Red Hat system. Everything seem so 
-work fine, except that I can't get any audio to transmit; receiveing 
-works fine. The microphone otherwise works correctly. Linux audio is 
-still a bit of a black art.
+I edited conversd.conf to test it locally without any links, set up
+127.0.0.1 as a USER and ran the daemon, but when I telnet to port
+3600, I get the conversd.issue message, but nothing else.  The only
+command which appears to work is /bye.  Does anyone know what I am
+missing here (probably something obvious)?
 
-> Is the source code (or specifications) for Echolink available?    
-
-My understanding is that there's not a lot of additional protocol 
-layered on top of an H.323 core; the EchoLinux is built on the 
-SpeakFreely project.
-
-  73 de Maggie K3XS
-
--- 
------/___.   _)   Margaret Stephanie Leber    / "The art of progress  /
-----/(, /|  /| http://voicenet.com/~maggie   / consists of preserving/
----/   / | / |  _   _   _    `  _AOPA 925383/ order amid change and /
---/ ) /  |/  |_(_(_(_/_(_/__(__(/_  FN20hd / change amid order."   /
--/ (_/   '  K3XS  .-/ .-/    ARRL 39280   /___ --A.N.Whitehead ___/
-/____ICQ 7161096_(_/_(_/__AMSAT 32844____/ <maggie@voicenet.com>
-
-
+73,
+Bob, N7XY
