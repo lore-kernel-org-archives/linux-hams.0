@@ -1,29 +1,46 @@
-From: Curt Mills <archer@eskimo.com>
-Subject: Re: Kenwood TH-D7E
-Date: Sat, 12 Mar 2005 08:49:09 -0800 (PST)
-Message-ID: <Pine.LNX.4.58.0503120836300.670@wapiti.we7u.net>
-References: <200503121501.53994.anespo1@virgilio.it>
+From: =?iso-8859-1?q?G=FCnther_Montag?= <Safari.Doktor@addcom.de>
+Subject: elbug  - electronic key program
+Date: Sat, 12 Mar 2005 21:40:52 +0100
+Message-ID: <200503122140.53323.Safari.Doktor@addcom.de>
 Mime-Version: 1.0
-In-Reply-To: <200503121501.53994.anespo1@virgilio.it>
-Sender: linux-hams-owner@vger.kernel.org
+Content-Transfer-Encoding: Quoted-Printable
+Content-Disposition: inline
+Sender: hfterm-hackers-admin@lists.sourceforge.net
+Errors-To: hfterm-hackers-admin@lists.sourceforge.net
+List-Unsubscribe: <https://lists.sourceforge.net/lists/listinfo/hfterm-hackers>,
+	<mailto:hfterm-hackers-request@lists.sourceforge.net?subject=unsubscribe>
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: TEXT/PLAIN; charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-To: Antonio Esposito <anespo1@virgilio.it>
-Cc: linux-hams@vger.kernel.org, xfbb@f6fbb.org
+List-Post: <mailto:hfterm-hackers@lists.sourceforge.net>
+List-Help: <mailto:hfterm-hackers-request@lists.sourceforge.net?subject=help>
+List-Subscribe: <https://lists.sourceforge.net/lists/listinfo/hfterm-hackers>,
+	<mailto:hfterm-hackers-request@lists.sourceforge.net?subject=subscribe>
+List-Archive: <http://sourceforge.net/mailarchive/forum.php?forum=hfterm-hackers>
+Content-Type: text/plain; charset="iso-8859-1"
+To: hfterm-hackers@lists.sourceforge.net
+Cc: linux-hams@vger.kernel.org
 
-On Sat, 12 Mar 2005, Antonio Esposito wrote:
+I made a little console program
+"elbug"
+which is an electronic key for an elbug which you can build easy=20
+(one resistor, one 9 V battery, a serial plug, 2 srews and a peace of met=
+al).
+Short building instruction included.
+You can download it as binary and as sourch elbug.c.
+It works without soundcard, only with serial connected to ptt or key inpu=
+t.
+It is planned to make this a part of the hf package in future.
+via
+http://hfterm.sf.net
 
-> someone use the kenwood TH-D7E on Linux (I use Slackware 9,1) and how?
+have fun...
+73 de dl4mge
+--=20
+G=FCnther Montag
+Safari.Doktor@addcom.de
 
-I know people are using the TH-D7A and D7E with Xastir on various
-Linux/Unix boxes.  It has some severe limitations with respect to
-KISS mode, so if you're considering doing TCP/IP with it, you might
-want to read what Henk de Groot wrote about that on TAPR's APRSSIG.
 
--- 
-Curt, WE7U.				archer at eskimo dot com
-http://www.eskimo.com/~archer
-  Lotto:  A tax on people who are bad at math. - unknown
-Windows:  Microsoft's tax on computer illiterates. - WE7U.
-The world DOES revolve around me:  I picked the coordinate system!"
+-------------------------------------------------------
+SF email is sponsored by - The IT Product Guide
+Read honest & candid reviews on hundreds of IT Products from real users.
+Discover which products truly live up to the hype. Start reading now.
+http://ads.osdn.com/?ad_id=6595&alloc_id=14396&op=click
