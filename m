@@ -1,35 +1,36 @@
-From: George Lloyd <g.lloyd@btinternet.com>
-Subject: Crashes
-Date: Fri, 4 Jul 2003 13:15:26 +0100
+From: Arno Verhoeven <pe1icq@pi8zaa.ampr.org>
+Subject: Re: Crashes
+Date: Sat, 5 Jul 2003 12:12:30 +0200 (CEST)
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <03070413152600.01306@localhost.localdomain>
-Reply-To: g.lloyd@essexpkt.co.uk
+Message-ID: <Pine.LNX.4.33.0307051209290.27213-100000@zoef.pe1icq.ampr.org>
+References: <03070413152600.01306@localhost.localdomain>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7BIT
 Return-path: <linux-hams-owner@vger.kernel.org>
+In-Reply-To: <03070413152600.01306@localhost.localdomain>
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"
-To: linux-hams@vger.kernel.org
+Content-Type: TEXT/PLAIN; charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+To: g.lloyd@essexpkt.co.uk
+Cc: linux-hams@vger.kernel.org
 
-Hi Folks,
+On Fri, 4 Jul 2003, George Lloyd wrote:
 
-Can someone please help me from tearing my hair out please.
+> Hi Folks,
+>
+> Can someone please help me from tearing my hair out please.
+>
+> I'm running Redhat 7.1 with Kernel 2.4.18, libax25-0.0.11,  ax25-tools-0.0.8,
+>  ax25-apps-0.0.6 and node--.0.3.1.
+>
 
-I'm running Redhat 7.1 with Kernel 2.4.18, libax25-0.0.11,  ax25-tools-0.0.8, 
- ax25-apps-0.0.6 and node--.0.3.1.
+Are these netrom connects that lock-up the system upon disconnect?
+If so, then I would suggest to try again with a newer kernel.
+IIRC there is a fix in kernel 2.4.19 and later, that has something to do
+with netrom.
 
-The problem I have is if anyone connects to the node or any other ax25 
-application (Spider) via another node (BPQ or Xrouter) sometimes when they 
-disconnect the whole system locks up. I've checked the logs but cannot see 
-any indication of what has happened. Sometimes it crashes straight away and 
-other times after a couple of  minutes.
+73, PE1ICQ  Arno Verhoeven
+--------------------------------
+AX.25  pe1icq@pi8zaa.#nbo.nld.eu
+smtp   pe1icq@pi8zaa.ampr.org
+inet   pe1icq@amsat.org
 
-Anyone else having this problem or an idea what might be causing it. I have 
-all the AX25 stuff compiled in the kernel.
-
-
--- 
-G.B. Lloyd
-g.lloyd@essexpkt.co.uk
-www.essexpkt.co.uk 
-For the home of NNA BBS software
