@@ -1,32 +1,24 @@
-From: "Jami Coffer" <tabathaflennikengvsp@mundivox.com>
-Subject: massive price reduction for v.iagara
-Date: Mon, 01 Nov 2004 09:30:00 +0100
-Message-ID: <C6A3E6A5.9664BCD@mundivox.com>
+From: "David S. Miller" <davem@davemloft.net>
+Subject: Re: [2.6 patch] ax25_route.c: remove an unused function
+Date: Mon, 1 Nov 2004 16:29:46 -0800
+Message-ID: <20041101162946.19b3869e.davem@davemloft.net>
+References: <20041028230032.GU3207@stusta.de>
+	<20041029002045.GO29142@stusta.de>
 Mime-Version: 1.0
 Content-Transfer-Encoding: 7bit
-Return-path: <linux-hams-owner@vger.kernel.org>
-Sender: linux-hams-owner@vger.kernel.org
+Return-path: <netdev-bounce@oss.sgi.com>
+In-Reply-To: <20041029002045.GO29142@stusta.de>
+Sender: netdev-bounce@oss.sgi.com
+Errors-to: netdev-bounce@oss.sgi.com
 List-Id: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
-To: linux-hams <linux-hams@vger.kernel.org>
+To: Adrian Bunk <bunk@stusta.de>
+Cc: ralf@linux-mips.org, linux-hams@vger.kernel.org, netdev@oss.sgi.com, linux-kernel@vger.kernel.org
 
-It contains the exact same ingredients as regular viaggra, except that you
-pay much, much less.
+On Fri, 29 Oct 2004 02:20:45 +0200
+Adrian Bunk <bunk@stusta.de> wrote:
 
-It makes sexual intercourse much more enjoyable.
+> The patch below removes an unused function from net/ax25/ax25_route.c
 
-Pay for your order by credit card online.
-
-Lakisha Schmucker
-
-http://Qwbn.licensedmeds.com/?Eoh/Jamgq
-
-
-
-
-
-
-If you are not interested in this, go here:
-http://K470858.licensedmeds.com/?Rmv/Unavbf
-m5Gocpa
+Applied, thanks Adrian.
 
