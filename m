@@ -1,31 +1,57 @@
-From: Iain Young - G7III <g7iii@g7iii.demon.co.uk>
-Subject: IPv6 Amateur Allocation ?
-Date: Mon, 29 Jul 2002 20:38:53 +0100
+From: Chuck Gelm <nc8q@gelm.net>
+Subject: Re: Status of AX.25 in 2.5 / 2.6
+Date: Mon, 29 Jul 2002 16:43:20 -0400
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <20020729193853.GA842@columbia.g7iii.bogus>
+Message-ID: <3D45A8E8.7FF854CE@gelm.net>
+References: <Pine.HPX.4.10.10207291502190.25868-100000@saturn.trs.ntc.nokia.com>
 Mime-Version: 1.0
+Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
-Content-Disposition: inline
 List-Id: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-To: linux-hams@vger.kernel.org
+To: tpm@prkele.tky.hut.fi
+Cc: linux-hams@vger.kernel.org
 
-Hi Everyone,
+Dear Sirs:
+ The eth1 device associated with my pppoe modem
+had no IP address, yet is is displayed with
+root@firewall:/# ifconfig
+command. Somehow my smtp, pop, web browser,
+ftp, ... all seem to find it.
+:-|
+Chuck nc8q
 
-I know Amateur Radio has a IPv4 alllocation (44/8). Does Anyone know
-if we have an IPv6 allocation ? And if so, what it is ?
-
-Is it sub-divided as with 44/8 into geographical areas ? Are there
-reserved areas for Testing and/or OSCAR ? (Im thinking of the equiv
-of 44.128/16 and 44.130/16 [iirc] here)
-
-I tried searching out on the web, but unfortunatley almost every
-page I found had Amateur Radio and IPv6 mentioned, but seperatley.
-
-
-Best Regards
-
-Iain.
-
-
+Tomi Manninen OH2BNS wrote:
+> 
+> On Mon, 29 Jul 2002, Craig Small wrote:
+> 
+> > If you're looking for something later, you may want to solve the
+> > ancient "why does an AX.25 interface need an IP address" question.
+> > The answer used to be "because it does", I'm not sure if that is still
+> > the case, I've got ports sitting on a Linux computer over *there*
+> > (points to rowlf) that don't have IP addresses or have 0.0.0.0
+> 
+> I think it's still the case. If an interface doesn't have an IP address,
+> it won't show up in the "list of known interfaces" from the kernel
+> (SIOCGIFCONF I think). So the utils/apps will never find it...
+> 
+> I did some digging a couple of years ago and also did a patch (with code
+> mostly stolen from Matt's/Jens' new-ax.25). See:
+> 
+>  http://hes.iki.fi/archive/dev-hams/2000/0055.html
+> 
+> I never got an answer.
+> 
+> Oh, by the way. Has anyone done anything with the NEW-AX.25 patch lately?
+> I think it has some potential but unfortunately seems it's now completely
+> unmaintained.
+> 
+> --
+> Tomi Manninen           Internet:  oh2bns@sral.fi
+> OH2BNS                  AX.25:     oh2bns@oh2rbi.fin.eu
+> KP20ME04                Amprnet:   oh2bns@oh2rbi.ampr.org
+> 
+> -
+> To unsubscribe from this list: send the line "unsubscribe linux-hams" in
+> the body of a message to majordomo@vger.kernel.org
+> More majordomo info at  http://vger.kernel.org/majordomo-info.html
