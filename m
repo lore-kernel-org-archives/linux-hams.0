@@ -1,61 +1,25 @@
-From: John Ackermann N8UR <jra@febo.com>
-Subject: Re: Slightly OT: Perl question
-Date: Sat, 15 Mar 2003 17:54:18 -0500
+From: csmall@enc.com.au (Craig Small)
+Subject: libax25 0.0.11 released
+Date: Mon, 17 Mar 2003 08:33:44 +1100
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <34100000.1047768858@[192.168.1.1]>
-References: <28850000.1047756287@[192.168.1.1]>
- <20030315224604.GA18830@silly.cloud.net.au>
+Message-ID: <20030316213344.GA13936@enc.com.au>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <20030315224604.GA18830@silly.cloud.net.au>
 Content-Disposition: inline
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"; format="flowed"
-To: Hamish Moffatt <hamish@cloud.net.au>
-Cc: linux-hams@vger.kernel.org
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+To: linux-hams@vger.kernel.org
 
-Thanks, Hamish.  I don't know why it didn't work when I tried something 
-similar to that before.  I'll give it another go.
+The ax25 library, libax25 has been released and is now available on
+sourceforge.  Version 0.0.11 is available at 
+http://sourceforge.net/project/showfiles.php?group_id=24545
 
-73,
-John
+It is a bugfix for the blocking/non-blocking io problem that affects
+node and other similar programs, nothing else was changed.
 
---On Sunday, March 16, 2003 09:46:04 +1100 Hamish Moffatt 
-<hamish@cloud.net.au> wrote:
-
-> On Sat, Mar 15, 2003 at 02:24:47PM -0500, John Ackermann N8UR wrote:
->> I need to:
->>
->> (a) test whether one bit of a byte is set or not (e..g, is bit 5 of
->> $myvar  a 1 or a 0);
->>
->> and
->>
->> (b) do a binary AND of two bytes (in other words, apply a bitmask).
->
-> Binary AND is the "&" operator as in C. So
->
-> $c = $a & $b;
-> $y = $x & 0xFF;
->
-> etc achieves (b), and similarly for (a),
->
-> if ($myvar & 0x20) {
->     ....
-> }
->
-> or perhaps more readably:
->
-> if ($myvar & (1 << 5)) {
->     ....
-> }
->
->
-> Hamish
-> --
-> Hamish Moffatt VK3SB <hamish@debian.org> <hamish@cloud.net.au>
->
->
-
-
+  - Craig
+-- 
+Craig Small VK2XLZ  GnuPG:1C1B D893 1418 2AF4 45EE  95CB C76C E5AC 12CA DFA5
+Eye-Net Consulting http://www.enc.com.au/                <csmall@enc.com.au>
+MIEEE <csmall@ieee.org>                 Debian developer <csmall@debian.org>
