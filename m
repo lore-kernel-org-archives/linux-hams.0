@@ -1,56 +1,41 @@
-From: Arno Verhoeven <pe1icq@pi8zaa.ampr.org>
-Subject: soundmodem, Cannot open PTT device "/dev/parport0"
-Date: Sat, 05 Oct 2002 22:22:07 +0200
+From: Tomi Manninen <tpm@prkele.tky.hut.fi>
+Subject: Re: The Sudden Death XFBB "Unknown return value 127" Error!
+Date: Sat, 5 Oct 2002 23:47:32 +0300 (EEST)
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <3D9F49EF.8080405@pi8zaa.ampr.org>
+Message-ID: <Pine.LNX.4.44.0210052320130.16344-100000@oh2bns.ampr.org>
+References: <3D9F494D.4003D9E6@kj6eo.com>
+Reply-To: tpm@prkele.tky.hut.fi
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
+In-Reply-To: <3D9F494D.4003D9E6@kj6eo.com>
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"; format="flowed"
-To: linux-hams@vger.kernel.org
+Content-Type: TEXT/PLAIN; charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+To: Bill Walton <kj6eo@kj6eo.com>
+Cc: LINUX HAMS MAILING LIST <linux-hams@vger.kernel.org>
 
-Hi,
+On Sat, 5 Oct 2002, Bill Walton wrote:
 
-I'm trying Thomas' userspace soundmodem but I have problem with PTT 
-operation via the parport.
+> with.  I am getting the sudden death XFBB error from hell "Unknown
+> return value 127"!.  I have edited all the files that I consider to be
+> important...especially:
 
-I'm using...
-  soundmodem-0.6
-  kernel 2.4.20-pre9
+I'm not sure but I think the return value 127 is not really a return value
+from the xfbbd binary (indicating an error in xfbbd configuration) but a
+"pseudo return value" from the shell script that is trying to execute the
+binary. This would mean that it's a problem in starting xfbbd, not in
+running xfbbd.
 
-I've loaded the parport and parport_pc kernel modules.
+Have you tried running the xfbbd binary directly? I think by default it's 
+/usr/sbin/xfbbd. Does that give any errors? And what if you try
+'ldd /usr/sbin/xfbbd' ? Does that give any "not found" errors?
 
-When I start soundmodem I get the following error.
-
-sm[3429]: Cannot open PTT device "/dev/parport0"
-sm[3429]: cannot start PTT output
-
-This is my soundmodem.conf
-
-<?xml version="1.0"?>
-<modem>
-   <configuration name="config0">
-     <channel name="Channel 0">
-       <mod mode="afsk" bps="1200" f0="1200" f1="2200"/>
-       <demod mode="afsk" bps="1200" f0="1200" f1="2200"/>
-       <pkt mode="MKISS" ifname="sm0" hwaddr="PE1ICQ-1" ip="10.0.0.1" 
-netmask="255.255.255.0" broadcast="10.0.0.255" file="/dev/soundmodem0" 
-unlink="1"/>
-     </channel>
-     <chaccess txdelay="150" slottime="100" ppersist="40" fulldup="0" 
-txtail="10"/>
-     <audio type="soundcard" device="/dev/dsp" halfdup="1"/>
-     <ptt file="/dev/parport0"/>
-   </configuration>
-</modem>
-
-Can anybody help point me in the right direction?
+How did you install FBB? Did you compile from source or did you install a 
+pre-compiled package?
 
 -- 
-73, PE1ICQ  Arno Verhoeven
---------------------------------
-AX.25  pe1icq@pi8zaa.#nbo.nld.eu
-smtp   pe1icq@pi8zaa.ampr.org
-inet   pe1icq@amsat.org
+Tomi Manninen           Internet:  oh2bns@sral.fi
+OH2BNS                  AX.25:     oh2bns@oh2rbi.fin.eu
+KP20ME04                Amprnet:   oh2bns@oh2rbi.ampr.org
+
 
