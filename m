@@ -1,58 +1,45 @@
 From: Tomi Manninen <oh2bns@sral.fi>
-Subject: Re: ANN: mt63lx version 0.5
-Date: Thu, 15 Jul 2004 17:05:19 +0300
+Subject: ANN: gMFSK v0.6 released
+Date: Thu, 15 Jul 2004 19:24:04 +0300
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <1089900318.1286.21.camel@oh2bns.ampr.org>
-References: <20040715035315.28315.qmail@radagast.org>
-	 <40F612A9.2060903@gelm.net>
+Message-ID: <1089908644.1286.53.camel@oh2bns.ampr.org>
 Mime-Version: 1.0
 Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <40F612A9.2060903@gelm.net>
 List-Id: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
-To: Linux-hams List <linux-hams@vger.kernel.org>
+To: Linux-hams List <linux-hams@vger.kernel.org>, MFSK List <MFSK@yahoogroups.com>, MT63 List <MT63@yahoogroups.com>
 
-Chuck,
+Hi all,
 
->   Is 'MT63' a development project or is it really ready for
-> 'user' deployment?  i.e. Is it 'alpha', 'beta', or
-> stable release?
+I have just released version 0.6 final of gMFSK, the multimode 
+HF terminal program for Linux and other unix-like operating systems.
 
-MT63 is an 'advanced' HF modulation method for keyboard to
-keyboard QSOs, devised by Pawel SP9VRC some eight, nine years 
-ago. I'm not sure what constitutes stable release but the mode
-has been in use in this form for years. Look for MT63 signals
-on 14.109.5 MHz USB. For more information about MT63 go to
+This is a major release. New features added since version 0.5
+include at least:
 
- http://www.qsl.net/zl1bpu/MT63/MT63.html
+ - Hellschreiber transmit
+ - MFSK picture support
+ - Waterfall improvements
+ - Hamlib support
+ - CWirc support
+ - Configuration druid
+ - New mode: PSK63
+ - Parallel port PTT
+ - Samplerate conversion
 
-There is also a YahooGroups group for MT63.
+In addition to that there are numerous smaller additions and bug
+fixes. See the file ChangeLog for details.
 
-The MT63lx package I announced is a text mode modem/terminal for
-MT63, written by Pawel himself, and like I said it's the 
-base for most of the other programs out there that support MT63.
-
-For end users, on Linux, I'd recommend my gMFSK which also has
-an MT63 modem built in. Go to:
+You can download gMFSK from the home page
 
  http://gmfsk.connect.fi/
 
-Software dependencies of gMFSK are hopefully detailed clear enough
-there. Apart from Gnome libs and FFTW there aren't any special
-needs. All modern Linux distributions, FreeBSD, OpenBSD and
-possibly others should work without big problems.
+The Freshmeat project page (not yet updated) is at
 
-I started coding gMFSK on a 120 MHz Pentium, but it has grown a
-lot since. I don't have a low end PC to test with so I don't dare
-to give a minimum required CPU limit. My 900 MHz Duron mostly
-twiddles it's thumbs when decoding any of the supported modes...
+ http://freshmeat.net/projects/gmfsk/
 
-As to connecting to your radio, whatever works for PSK31, works
-for MT63. There should be plenty of info about interfacing
-sound card digital modes on the Net. Level adjustment is quite
-critical with MT63 as the mode has a rather high peak to average
-power ratio.
+Have fun!
 
 -- 
 Tomi Manninen / OH2BNS / KP20ME04
