@@ -1,34 +1,43 @@
-From: Arno Verhoeven <pe1icq@pi8zaa.ampr.org>
+From: John Hurst <jhurst@utac.net>
 Subject: Re: Split screen telnet client?
-Date: Mon, 7 Jul 2003 16:56:54 +0200 (CEST)
+Date: Mon, 07 Jul 2003 09:10:00 -0700
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <Pine.LNX.4.33.0307071655440.8255-100000@zoef.pe1icq.ampr.org>
-References: <3104.44.140.19.34.1057579396.squirrel@ax25.org>
+Message-ID: <5.1.1.6.0.20030707090958.021b9ec0@popmail.utac.net>
 Mime-Version: 1.0
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <3104.44.140.19.34.1057579396.squirrel@ax25.org>
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: TEXT/PLAIN; charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-To: Pontus Falk <pfalk@ax25.org>
-Cc: linux-hams@vger.kernel.org
+Content-Type: text/plain; charset="iso-8859-1"
+To: Pontus Falk <pfalk@ax25.org>, linux-hams@vger.kernel.org
 
-On Mon, 7 Jul 2003, Pontus Falk wrote:
-
-> Hi!
+At 02:03 PM 7/7/03 +0200, Pontus Falk wrote:
+>Hi!
 >
-> Can someone recommend a telnet client using split screen that is not for X
-> Windows?
+>Can someone recommend a telnet client using split screen that is not f=
+or X
+>Windows?
 >
-> I tried to find one, but the all seems to be for X - I don't have X on my
-> server...
+>I tried to find one, but the all seems to be for X - I don't have X on=
+ my
+>server...
+
+use "screen" (`man screen` for more info)
+
+-jh
+
+
+
+>73 de Pontus/SM=D8RUX
 >
+>
+>-
+>To unsubscribe from this list: send the line "unsubscribe linux-hams" =
+in
+>the body of a message to majordomo@vger.kernel.org
+>More majordomo info at  http://vger.kernel.org/majordomo-info.html
 
-How about colrconv or colorconv?
-
-73, PE1ICQ  Arno Verhoeven
---------------------------------
-AX.25  pe1icq@pi8zaa.#nbo.nld.eu
-smtp   pe1icq@pi8zaa.ampr.org
-inet   pe1icq@amsat.org
-
+-
+To unsubscribe from this list: send the line "unsubscribe linux-hams" i=
+n
+the body of a message to majordomo@vger.kernel.org
+More majordomo info at  http://vger.kernel.org/majordomo-info.html
