@@ -1,40 +1,84 @@
-From: Tomi Manninen <tpm@prkele.tky.hut.fi>
-Subject: Re: wxGTK-2.4.0
-Date: Tue, 14 Jan 2003 14:19:53 +0200 (EET)
+From: Erik Jakobsen <eja@urbakken.dk>
+Subject: fbb.
+Date: Tue, 14 Jan 2003 17:23:49 +0100
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <Pine.LNX.4.44.0301141412310.1410-100000@oh2bns.ampr.org>
-References: <Pine.LNX.4.44.0301142218550.7507-100000@zl2bsj.ampr.org>
-Reply-To: tpm@prkele.tky.hut.fi
+Message-ID: <20030114172349.68ee4def.eja@urbakken.dk>
 Mime-Version: 1.0
-Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <Pine.LNX.4.44.0301142218550.7507-100000@zl2bsj.ampr.org>
-List-Id: <linux-hams.vger.kernel.org>
-Content-Type: TEXT/PLAIN; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
-To: Wilbert Knol <zl2bsj@zl2tze.ath.cx>
-Cc: linux-hams@vger.kernel.org
+Return-path: <linux-hams-owner@vger.kernel.org>
+List-Id: <linux-hams.vger.kernel.org>
+Content-Type: text/plain; charset="us-ascii"
+To: linux-hams@vger.kernel.org
 
-On Tue, 14 Jan 2003, Wilbert Knol wrote:
+Hi.
 
-> configure:12357: checking for GTK+ - version >= 2.0.0
-> configure:12511: gcc -o conftest    -D_FILE_OFFSET_BITS=64 
-> -D_LARGE_FILES  conftest.c   1>&5
-> configure:12503:21: gtk/gtk.h: No such file or directory
+On my SuSE 8.1 system, I try to install fbb7.04h, but there seems to be 
+something, that I have not seen before. I have an fbb7.04h install on an
+old SuSE 7.2 computer.
 
-I looks like maybe GTK really is incorrectly installed.
+I got to the /src directory, and type make with a Makfile that has been
+modified according to the problems a year ago or so.
 
-Does pkg-config give the correct cflags and libs? On my RH8 box it gives:
+Here's what I get running make:
 
- $ pkg-config --cflags gtk+-2.0
- -I/usr/include/gtk-2.0 -I/usr/lib/gtk-2.0/include -I/usr/include/atk-1.0 
- -I/usr/include/pango-1.0 -I/usr/include/Xft2 -I/usr/include/freetype2 
- -I/usr/X11R6/include -I/usr/include/glib-2.0 -I/usr/lib/glib-2.0/include
- $ pkg-config --libs gtk+-2.0
- -lgtk-x11-2.0 -lgdk-x11-2.0 -latk-1.0 -lgdk_pixbuf-2.0 -lm -lpangoxft-1.0 
- -lpangox-1.0 -lpango-1.0 -lgobject-2.0 -lgmodule-2.0 -ldl -lglib-2.0
+
+eurit:/opt/fbbsrc.704h/src # make
+gcc -Wall -Wstrict-prototypes -O2 -g -funsigned-char  -D__LINUX__ -DPROTOTYPES -I../include -I/usr/include/netax25 -DUSE_NCURSES   -c -o arbre.o arbre.c
+In file included from ../include/serv.h:97,
+                 from arbre.c:32:
+../include/fbb_serv.h:41:24: linux/ax25.h: No such file or directory
+In file included from ../include/fbb_serv.h:42,
+                 from ../include/serv.h:97,
+                 from arbre.c:32:
+/usr/include/linux/netrom.h:24: parse error before "ax25_address"
+/usr/include/linux/netrom.h:28: parse error before "neighbour"
+/usr/include/linux/netrom.h:31: parse error before "digipeaters"
+/usr/include/linux/netrom.h:31: `AX25_MAX_DIGIS' undeclared here (not in a function)
+/usr/include/linux/netrom.h:32: parse error before '}' token
+In file included from ../include/fbb_serv.h:43,
+                 from ../include/serv.h:97,
+                 from arbre.c:32:
+/usr/include/linux/rose.h:49: parse error before "ax25_address"
+/usr/include/linux/rose.h:51: parse error before "srose_digi"
+/usr/include/linux/rose.h:57: parse error before "ax25_address"
+/usr/include/linux/rose.h:58: conflicting types for `srose_ndigis'
+/usr/include/linux/rose.h:50: previous declaration of `srose_ndigis'
+/usr/include/linux/rose.h:59: parse error before "srose_digis"
+/usr/include/linux/rose.h:60: parse error before '}' token
+/usr/include/linux/rose.h:65: parse error before "ax25_address"
+/usr/include/linux/rose.h:67: conflicting types for `ndigis'
+/usr/include/linux/netrom.h:30: previous declaration of `ndigis'
+/usr/include/linux/rose.h:68: parse error before "digipeaters"
+/usr/include/linux/rose.h:68: `AX25_MAX_DIGIS' undeclared here (not in a function)
+/usr/include/linux/rose.h:68: conflicting types for `digipeaters'
+/usr/include/linux/netrom.h:31: previous declaration of `digipeaters'
+/usr/include/linux/rose.h:69: parse error before '}' token
+/usr/include/linux/rose.h:78: parse error before "ax25_address"
+/usr/include/linux/rose.h:80: parse error before "source_digis"
+/usr/include/linux/rose.h:81: parse error before "dest_digis"
+/usr/include/linux/rose.h:84: parse error before "fail_call"
+In file included from ../include/fbb_serv.h:47,
+                 from ../include/serv.h:97,
+                 from arbre.c:32:
+/usr/include/netax25/axlib.h:28:26: netax25/ax25.h: No such file or directory
+/usr/include/netax25/axlib.h:29:26: netrose/rose.h: No such file or directory
+In file included from ../include/fbb_serv.h:47,
+                 from ../include/serv.h:97,
+                 from arbre.c:32:
+/usr/include/netax25/axlib.h:52: parse error before "null_ax25_address"
+/usr/include/netax25/axlib.h:91: parse error before '*' token
+/usr/include/netax25/axlib.h:104: parse error before '*' token
+In file included from ../include/fbb_serv.h:157,
+                 from ../include/serv.h:97,
+                 from arbre.c:32:
+/usr/include/stdlib.h:446: `rand' redeclared as different kind of symbol
+/usr/include/linux/rose.h:82: previous declaration of `rand'
+/usr/include/linux/rose.h:68: storage size of `digipeaters' isn't known
+make: *** [arbre.o] Error 1
+
+
+What is the problem, and what can I do about it ?.
 
 -- 
-Tomi Manninen           Internet:  oh2bns@sral.fi
-OH2BNS                  AX.25:     oh2bns@oh2rbi.fin.eu
-KP20ME04                Amprnet:   oh2bns@oh2rbi.ampr.org
+<mvh Erik Jakobsen> vy 73 de OZ4KK.
 
