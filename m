@@ -1,27 +1,31 @@
-From: "Dr. med. =?iso-8859-15?q?G=FCnther?= Montag" <Safari.Doktor@addcom.de>
-Subject: hf-0.4.2, pactor/rtty program
-Date: Thu, 9 Oct 2003 17:55:54 +0200
-Message-ID: <200310091755.54297.Safari.Doktor@addcom.de>
+From: "David S. Miller" <davem@redhat.com>
+Subject: Re: [PATCH] (resend) fix sock_raw behaviour
+Date: Thu, 9 Oct 2003 23:53:38 -0700
+Sender: netdev-bounce@oss.sgi.com
+Message-ID: <20031009235338.7335b635.davem@redhat.com>
+References: <20031008235150.A207@jeroen.pe1rxq.ampr.org>
 Mime-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-Return-path: <suse-ham-e-return-165-suse-ham-e=m.gmane.org@suse.com>
-List-Post: <mailto:suse-ham-e@suse.com>
-List-Help: <mailto:suse-ham-e-help@suse.com>
-List-Unsubscribe: <mailto:suse-ham-e-unsubscribe-suse-ham-e=m.gmane.org@suse.com>
-List-Subscribe: <mailto:suse-ham-e-subscribe@suse.com>
+Content-Transfer-Encoding: 7bit
+Return-path: <netdev-bounce@oss.sgi.com>
+In-Reply-To: <20031008235150.A207@jeroen.pe1rxq.ampr.org>
+Errors-to: netdev-bounce@oss.sgi.com
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="iso-8859-1"
-To: linux-hams@vger.kernel.org, suse-ham-e@suse.com
+Content-Type: text/plain; charset="us-ascii"
+To: Jeroen Vreeken <pe1rxq@amsat.org>
+Cc: linux-hams@vger.kernel.org, netdev@oss.sgi.com
 
-which was made original by Tom Sailer for OSS sound drivers,  now we made s=
-ome=20
-improvements in GUI (like log, help) and had some progress in making it run=
-=20
-with new linux sound architecture ALSA-0.9.7.
-It is on the homepage
-https://hfterm.sourceforge.net,
-there is also a link to a mailing list there.
-I welcome all users and all help in further developing it!
+On Wed, 8 Oct 2003 23:51:50 +0200
+Jeroen Vreeken <pe1rxq@amsat.org> wrote:
 
-73 de G=FCnther Montag
-dl4mge@darc.de
+> This is a resend of a patch from some weeks ago that doesn't appear to have
+> made it in yet...
+
+It doesn't apply, that's why.  You patch ax25.h twice the same
+exact way which causes the patch to not apply.
+
+While we're talking about this, who is going to maintain AX25
+in 2.6.x?  I don't want to be taking bug fixes and other changes
+to AX25 from random people, I'd like to have a single contact
+that will review the AX25 patches from other people and then
+forward them off to me.
+
