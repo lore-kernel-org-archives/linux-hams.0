@@ -1,65 +1,68 @@
-From: pa3gcu <pa3gcu@zeelandnet.nl>
-Subject: Re: hamlib not compiling well
-Date: Thu, 8 Jul 2004 08:11:05 +0200
+From: Niall Parker <niall@ve7hex.ampr.org>
+Subject: ancient history ...
+Date: Wed, 07 Jul 2004 23:53:30 -0700
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <200407080811.05522.pa3gcu@zeelandnet.nl>
-References: <1223.192.168.1.117.1089178842.squirrel@gateway> <200407071710.47138.pa3gcu@zeelandnet.nl> <2498.192.168.1.117.1089215964.squirrel@gateway>
-Reply-To: pa3gcu@zeelandnet.nl
+Message-ID: <40ECEF6A.1070202@ve7hex.ampr.org>
 Mime-Version: 1.0
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <2498.192.168.1.117.1089215964.squirrel@gateway>
-Content-Disposition: inline
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="iso-8859-1"
-To: w9ya@arrl.net
-Cc: linux-hams@vger.kernel.org
+Content-Type: text/plain; charset="us-ascii"; format="flowed"
+To: linux-hams@vger.kernel.org
 
-On Wednesday 07 July 2004 17:59, w9ya@arrl.net wrote:
-> >> I am running into a problem that I have not seen before. There are
-> >> files being created but they are without the ".so"in the file name=
-, I
-> >> tried adding "--enable-shared" to the configure, but this did not
-> >> work, nor have I ever required this.
-> >
-> > After installing libs one needs to use 'ldconfig' to configure dyna=
-mic
-> > linker =A0run time bindings, as show in the manual page of ldconfig=
-=2E
-> > I presume this is your problem.
->
-> Um, perhaps I was not clear about this. If that is my fault, I am sor=
-ry.
->
-> This is prior to installing the libs.
+Hello,
 
-Whatever, but i have just retrived hamlib-1.1.4.tar.bz2 decompressed it=
- and=20
-simply did;
+I'm trying to get an old machine I had running years ago back online and I'm 
+running into problems, maybe someone here with a good memory can help me.
 
-=2E/configure
-make
-make install
+The system is running kernel 2.0.37 with ax.25 compiled in (no modules) and 
+using the ax25-utils-2.0.12. I've managed to get the system running and hearing 
+traffic but when I try to connect using call I get
 
-Things look ok to me. .so files do get created in subdirs, make install=
-=20
-installs everything in /usr/local/lib and seeminly links things as well=
-=2E
+---
 
-> Bob
-> w9ya
+[niall@ve7hexgw /tmp]$ call lsp spr
+GW4PTS AX.25 Connect v1.11
+*** Connected to spr
+Error opening terminal: xterm.
+[niall@ve7hexgw /tmp]$
 
---=20
-If the Linux community is a bunch of thieves because they
-try to imitate windows programs, then the Windows community
-is built on organized crime.
+----
 
-Regards Richard
-pa3gcu@zeelandnet.nl
-http://people.zeelandnet.nl/pa3gcu/
+the trace of packets going back and forth for this
 
--
-To unsubscribe from this list: send the line "unsubscribe linux-hams" i=
-n
-the body of a message to majordomo@vger.kernel.org
-More majordomo info at  http://vger.kernel.org/majordomo-info.html
+----
+
+[Thu Jul  8 02:57:34 2004]
+Port lsp: AX25: VE7SPR-8->ID <UI C> pid=Text
+0000  TheNet Plus 2.08 (SPR).
+
+[Thu Jul  8 03:07:03 2004]
+Port lsp: AX25: VE7HEX->SPR <C C P>
+
+[Thu Jul  8 03:07:05 2004]
+Port lsp: AX25: SPR->VE7HEX <UA R F>
+
+[Thu Jul  8 03:07:05 2004]
+Port lsp: AX25: VE7HEX->SPR <D C P>
+
+[Thu Jul  8 03:07:06 2004]
+Port lsp: AX25: SPR->VE7HEX <UA R F>
+
+----
+
+It appears my system is dropping the connection as soon as it gets an 
+acknowledgement. Any ideas what is configured wrong ? The system worked fine 
+when I was using it 4 years ago, though I mainly used it for tcp/ip stuff and 
+didn't do much with ax.25/netrom etc.
+
+The error message above is not within the call executable, nor can I find it in 
+the ax25-utils source anywhere. The system is very limited for debugging, no 
+strace/gdb etc (it was stripped down to run in 2 MB RAM) and short of rebuilding 
+another box with the old distribution CDs I no longer have anything this old 
+running.
+
+Any ideas appreciated.
+
+						... Niall (VE7HEX)
+
