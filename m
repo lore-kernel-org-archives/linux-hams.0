@@ -1,57 +1,33 @@
-From: Mike Markowski <mm@UDel.Edu>
-Subject: Re: QSSTV-5.2d compiling
-Date: Tue, 16 Nov 2004 14:42:37 -0500
-Message-ID: <20041116194237.GA20427@strauss.udel.edu>
-References: <41984799.9020305@bigpond.com> <1030.65.166.80.196.1100566712.squirrel@w9ya0.pointclark.net>
+From: Chuck Hast <wchast@gmail.com>
+Subject: 6pack trying to resynch TNC message
+Date: Tue, 16 Nov 2004 14:37:46 -0800
+Message-ID: <620c9057041116143746a5aa47@mail.gmail.com>
+Reply-To: Chuck Hast <wchast@gmail.com>
 Mime-Version: 1.0
+Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
-Content-Disposition: inline
-In-Reply-To: <1030.65.166.80.196.1100566712.squirrel@w9ya0.pointclark.net>
 Sender: linux-hams-owner@vger.kernel.org
 List-Id: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-To: linux-hams@vger.kernel.org
+To: Linux-hams List <linux-hams@vger.kernel.org>
 
-Thanks, David, you were a great help.  I had just downloaded qsstv
-when your note came through.  To summarize for others, using David's
-info to get qsstv running:
+I see this message if the TNC gets turned off or the RS-232 cable gets
+pulled. Even though all has been restored it is to no avail, it still sets
+there and sends the trying to resynch message. Is there a workaround
+or just keep the power on the TNC and make sure the Rs-232 does not
+get interrupted?
 
-   - Go to http://eu.hurd.gnuab.org/pub/debian/pool/main/q/qsstv/
+Seriously, 6pack is indeed a much better solution than KISS. I just ran
+into this problem when the TNC got powered down and back up,
 
-   - Download qsstv_5.2d.orig.tar.gz and qsstv_5.2d-8+cfg.diff.gz
+I guess that the computer is trying to do what the message says but it
+is not working.
 
-   - After untarring/gzipping, patch -p 0 < qsstv_5.2d-8+cfg.diff
+Any idea of what I can do to make sure that the tnc does get re-synched?
 
-   - touch qsstv/configform.ui qsstv/ftpform.ui qsstvrecform.ui \
-     qsstv/zoomform.ui qsstv/freqform.ui qsstv/posform.ui \
-     qsstv/textselect.ui
-
-   - And you're all set to configure, make, & install.
-
-73,
-Mike  AB3AP
-
-> Hi All...have had great problems with compiling QSSTV-5.2d on Fedora
-> Core 2 and Mandrake 9.2 or 10......I found it wouldnt compile at
-> "sstvparam.ccp"...found the alternate copy of this on the net and
-> overwrote the origional.....that compiled ok.....the next problem was
-> with 'zoomform.cpp'....chased all over the net and finally found a
-> qsstv-5.2d.diff.gz file used in Debian for QSSTV.......noted that there
-> was mention of using 'touch' on the 'zoomform.ui' file .....patched the
-> origional qsstv-5.2d.tar.gz after untaring.....still no joy......then
-> went and had a look in the '/debian/rules' file and saw the lines under
-> build.....used the following command in the qsstv-5.2d dir after
-> untaring it.....
-> touch qsstv/configform.ui qsstv/ftpform.ui qsstvrecform.ui
-> qsstv/zoomform.ui qsstv/freqform.ui qsstv/posform.ui qsstv/textselect.ui
-> then ./configure && make  no more error problems...su then make
-> install.... great now i have QSSTV up and running.....
->
-> Hope this helps anyone who has had problems......the touch command could
->  be written into the configure system somewhere but i dont know how to
-> do  it....
->
-> best 73's
-> David Munn
-> VK4BDJ
+-- 
+Chuck Hast 
+To paraphrase my flight instructor;
+"the only dumb question is the one you DID NOT ask resulting in my going
+out and having to identify your bits and pieces in the midst of torn
+and twisted metal."
