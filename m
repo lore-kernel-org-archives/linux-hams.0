@@ -1,37 +1,32 @@
-From: "AE5PL Lists" <HamLists@ametx.com>
-Subject: RE: aprsd setup
-Date: Mon, 8 Nov 2004 15:55:52 -0600
-Message-ID: <478F6623898BBC4DBD692A223D28298A0EF85C@amewebsrvr.webametx.local>
+From: Ralf Baechle DL5RB <ralf@linux-mips.org>
+Subject: Re: help xastir and mandrake (how to compile ax25 support ?)
+Date: Tue, 9 Nov 2004 02:27:50 +0100
+Message-ID: <20041109012750.GA10725@linux-mips.org>
+References: <1099943984.418fd03081dd7@imp4-q.free.fr>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 8BIT
 Return-path: <linux-hams-owner@vger.kernel.org>
-Content-class: urn:content-classes:message
+Content-Disposition: inline
+In-Reply-To: <1099943984.418fd03081dd7@imp4-q.free.fr>
 Sender: linux-hams-owner@vger.kernel.org
 List-Id: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
-To: linux-hams@vger.kernel.org
+Content-Transfer-Encoding: 7bit
+To: ph.ttv@free.fr
+Cc: linux-hams@vger.kernel.org
 
-> -----Original Message-----
-> From: Hamish Moffatt
-> Posted At: Monday, November 08, 2004 3:47 PM
-> Subject: Re: aprsd setup
+On Mon, Nov 08, 2004 at 08:59:44PM +0100, ph.ttv@free.fr wrote:
+
+> who uses xastir on Mandrake ?
 > 
-> How do you access the kernel AX.25 from Java?
+> I don't know how to compile xastir with ax25 support on my mdk 9.2 :-(
+> 
+> (ax25 works fine ever on my computer)
 
-Using javAX25.
+You can find Xastir and the various other packages it depends on my
+machine at bacchus.net.dhis.org.  The packages were built for Fedora Core 2
+so may or may not work or install on Mandrake.
 
-> Is it open source?
+73 de DL5RB op Ralf
 
-javAX25 is open source and hosted on sourceforge.net.
-
-javAPRSSrvr is not open source, but is free for amateur radio use.
-javAPRSSrvr is fully supported and maintained.  It provides open
-interfaces for anyone to write IGate or server adjunct functions.
-Currently, there are open source (to users of javAPRSSrvr) interfaces
-for AGWPE, KipSS, and Linux ax25.  javAPRSFilter (Roger Bille, SM5NRK),
-javAPRSDB, javAPRSIGate, and javAPRSDigi are supported adjuncts.
-
-73,
-
-Pete Loveall AE5PL
-mailto:pete@ae5pl.net 
+--
+Loc. JN47BS / CQ 14 / ITU 28 / DOK A21
