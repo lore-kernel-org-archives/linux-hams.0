@@ -1,23 +1,32 @@
-From: Stephen Hemminger <shemminger@osdl.org>
+From: Jeroen Vreeken <pe1rxq@amsat.org>
 Subject: Re: [PATCH] ax25 & netrom fixes for 2.6
-Date: Tue, 12 Aug 2003 13:56:55 -0700
+Date: Tue, 12 Aug 2003 22:59:12 +0200
 Sender: netdev-bounce@oss.sgi.com
-Message-ID: <20030812135655.7334887b.shemminger@osdl.org>
-References: <20030812194653.A28977@jeroen.pe1rxq.ampr.org>
+Message-ID: <20030812225912.C28977@jeroen.pe1rxq.ampr.org>
+References: <20030812194653.A28977@jeroen.pe1rxq.ampr.org> <20030812124820.2ab57161.shemminger@osdl.org>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 Return-path: <netdev-bounce@oss.sgi.com>
-In-Reply-To: <20030812194653.A28977@jeroen.pe1rxq.ampr.org>
+In-Reply-To: <20030812124820.2ab57161.shemminger@osdl.org>; from shemminger@osdl.org on Tue, Aug 12, 2003 at 21:48:20 +0200
 Errors-to: netdev-bounce@oss.sgi.com
 List-Id: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
-To: Jeroen Vreeken <pe1rxq@amsat.org>
-Cc: linux-hams@vger.kernel.org, ralf@linux-mips.org, davem@redhat.com, netdev@oss.sgi.com
+To: Stephen Hemminger <shemminger@osdl.org>
+Cc: linux-hams@vger.kernel.org, netdev@oss.sgi.com
 
-It looks like af_x25 is advertising itself as a new style protocol, yet if
-I walk the receive path:
-	ax25_kiss_rcv -> ax25_rcv -> ax25_addr_parse
-there is no place that checks that the address portion of the buffer isn't fragmented
-into a non_linear skb.
+On 2003.08.12 21:48:20 +0200 Stephen Hemminger wrote:
+> You lost a critical fix to ax25;  it oop's if I bring up any device
+> then do "ifconfig -a" due to use after free.
+> 
+> PLEASE do some debugging with some of the kernel debugging options
+> enabled!
+
+Which fix exactly did I miss? the only thing I see in your patch is the
+change to use sock_put in ax25_destroy_sock() and that was in my original
+patch...
+
+btw, I do have debugging enabled...
+
+Jeroen
 
 
