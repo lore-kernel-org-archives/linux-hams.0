@@ -1,44 +1,58 @@
-From: M Taylor <mctylr@privacy.nb.ca>
-Subject: Re: Responses to my Kenwood D7 question
-Date: Sun, 4 Aug 2002 17:27:00 +0100
+From: Milan <milank@merck.cz>
+Subject: Re: Using Kenwood D7 with Linux AX.25
+Date: Mon, 05 Aug 2002 07:41:34 +0200
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <20020804172700.A30218@pull.privacy.nb.ca>
-References: <348173000.1028364467@[192.168.1.4]>
+Message-ID: <3D4E100E.4020702@merck.cz>
+References: <310796010.1028327096@[192.168.1.4]>
 Mime-Version: 1.0
-Return-path: <linux-hams-owner@vger.kernel.org>
-Content-Disposition: inline
-In-Reply-To: <348173000.1028364467@[192.168.1.4]>; from jra@febo.com on Sat, Aug 03, 2002 at 08:47:47AM -0400
-List-Id: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
-To: John Ackermann N8UR <jra@febo.com>
-Cc: linux-hams@vger.kernel.org
+Return-path: <linux-hams-owner@vger.kernel.org>
+List-Id: <linux-hams.vger.kernel.org>
+Content-Type: text/plain; charset="us-ascii"; format="flowed"
+To: linux-hams@vger.kernel.org
 
-On Sat, Aug 03, 2002 at 08:47:47AM -0400, John Ackermann N8UR wrote:
-> I've had a couple of responses to my posting about using the Kenwood TH-D7 
-> in KISS mode.  Unfortunately, they both confirm that the radio just doesn't 
-> work properly in KISS.  That's a real bummer.
+John,
+
+last week, I bought the TH-D7E(G) with the new firmware (v. 2).
+I succeeded to configure it with mkiss and kissattach (no success with kissattach alone), RX and TX functional on 9k6.
+Small problem - it just receives two frames at once, the third one is rejected.
+I have still to play a bit with setup of USB-RS232 converter, which I believe, has the problem.
+Everything on Mandrake 8.2, kernel 2.4.18, newest libs/tools/apps.
+
+73,
+Milan OK1XH
+
+John Ackermann N8UR wrote:
+> I'm trying to use my Kenwood TH-D7A(g) handy-talkie for some packet 
+> demos and am having real problems.  My basic AX25 configuration is OK as 
+> I can hook up to a TNC-2 clone with KISS chip and it works fine.
 > 
-> Cees, by the way -- my D7 is a relatively early one, but I had it upgraded 
-> by Kenwood to the (g) version at Dayton Hamvention a couple of years ago, 
-> so I think I have the latest firmware and that apparently doesn't touch 
-> this problem.
+> I put the D7 in KISS mode at 9600 baud (which it seems to drop out of on 
+> every power cycle, grrrr) and hook it up to the known-working linux 
+> setup. The D7 receives OK but seems to transmit only preamble flags; 
+> when you listen to a packet, there's just flags with no evidence of a 
+> data portion and nothing decodes at the other end.  No data comes out of 
+> the thing, no matter how long I program the TXD.
+> 
+> I understand that the D7 has KISS limitations due to buffer size, but 
+> I'm not even getting the basic function to work, and that doesn't seem 
+> right.
+> 
+> Anyone got a D7 working with kernel AX.25, and have any suggestions for 
+> me? (As a data point, when the D7 is in normal packet mode using minicom 
+> as a terminal program it transmits just fine, so the hbaud, etc. are set 
+> correctly.)
+> 
+> Thanks,
+> 
+> John
+> 
+> ----
+> John Ackermann   N8UR      jra@febo.com              http://www.febo.com
+> President, TAPR            n8ur@tapr.org             http://www.tapr.org -
+> To unsubscribe from this list: send the line "unsubscribe linux-hams" in
+> the body of a message to majordomo@vger.kernel.org
+> More majordomo info at  http://vger.kernel.org/majordomo-info.html
+> 
 
-From linux-hams
-<http://www.mctaylor.com/ve1mct/0119.html>
-It has been explained that a proper KISS mode won't fit in the single ROM
-that is in the TH-D7.
-
-
-> My goal is a portable demo station to show off Linux AX25 (and Xastir in 
-> particular).  I guess my options are to use the soundcard drivers, or my 
-> ancient Heathkit cigarette-sized TNC (made by Tasco) which does have a 
-> firmware upgrade that includes KISS.
-
-It's been a couple of years since I played with Xastir, but you can use
-a "serial TNC" mode rather than "AX.25 TNC". I suspect this might work well 
-enough with the TH-D7 if the APRS traffic is 7-bit clean.
-
-I bought the TH-D7e MkII expressly for it's built-in TNC with KISS support,
-so I know how bad you feel.
 
