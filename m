@@ -1,40 +1,30 @@
-From: Tomi Manninen <oh2bns@sral.fi>
-Subject: Re: Problem with GMFSK.
-Date: 02 Jul 2003 01:12:05 +0300
+From: Nuno Sucena Almeida <slug@aeminium.org>
+Subject: Re: DXCluster and HTPP (Convers) Link
+Date: Wed, 2 Jul 2003 11:59:22 +0100
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <1057097525.2866.15.camel@oh2bns.ampr.org>
-References: <3F02027D.2040405@vizzavi.pt>
+Message-ID: <20030702105922.GB14778@freebsd.aeminium.pt>
+References: <20030630140110.GA8649@freebsd.aeminium.pt>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <3F02027D.2040405@vizzavi.pt>
+Content-Disposition: inline
+In-Reply-To: <20030630140110.GA8649@freebsd.aeminium.pt>
 List-Id: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
-To: Ana Maria Grilo Moreira <ct1drb@vizzavi.pt>
-Cc: Linux Hams <linux-hams@vger.kernel.org>
+Content-Transfer-Encoding: 7bit
+To: Linux Hams <linux-hams@vger.kernel.org>
 
-Hi David,
 
-> I want to use the first one to ham comms so i configured GMFSK to use 
-> /dev/dsp0. When it starts is all fine, i starts with mode MFSK16 and has 
-> reception, but when i change mode to, ie rtty, GMFSK changes to PAUSED 
-> and stops to work. This behavior does not happen all the times but it is 
-> seldom.
+Hello!
 
-What version of gMFSK and what distribution/kernel are you using?
+	Thank you for all for possible link connections you where able
+to provide me. In the meanwhile I've contacted national nodes and connected
+my dxlcluster and convers server to them.
 
-Are you starting gMFSK from an xterm or similar, do you see any
-error/warning messages in that xterm?
-
-Does the application lock up completely? If you move another window
-on top of it and then away, is the gMFSK window re-painted or left
-gray? Can you restart the modem by pressing the green lightning bolt?
-
-Does this bug happen only when you have two soundcards or is that
-not relevant? Could you send me the output of: ls -l /dev/dsp*
+		Cheers,
+				Nuno
 
 -- 
-Tomi Manninen           Internet:  oh2bns@sral.fi
-OH2BNS                  AX.25:     oh2bns@oh2rbi.fin.eu
-KP20ME04                Amprnet:   oh2bns@oh2rbi.ampr.org
+CT1FOX - http://aeminium.org/slug
+
+D30B 54C0 40A7 7D61 C44F  4BA4 F071 2168 F494 ACB9
 
