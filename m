@@ -1,61 +1,79 @@
-From: Nuno Miguel Fernandes Sucena Almeida <slug@aeminium.org>
-Subject: ppdev0: claim the port first // Device "/dev/parport0" neither
- parport nor serport PATCH
-Date: Mon, 8 Jul 2002 07:40:27 +0100 (WEST)
+From: "John A. Magliacane" <kd2bd@yahoo.com>
+Subject: Announcing PREDICT Version 2.1.6
+Date: Mon, 8 Jul 2002 08:57:51 -0700 (PDT)
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <Pine.LNX.4.21.0207080731370.1481-100000@aeminium.aeminium.pt>
+Message-ID: <20020708155751.11207.qmail@web12207.mail.yahoo.com>
 Mime-Version: 1.0
-Content-Transfer-Encoding: QUOTED-PRINTABLE
 Return-path: <linux-hams-owner@vger.kernel.org>
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: TEXT/PLAIN; charset="iso-8859-1"
-To: Linux-Hams <linux-hams@vger.kernel.org>
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+To: linux-hams@vger.kernel.org
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Hello Everyone.
 
-Hello,
-	i'm trying to use the soundmodem-0.6 with linux kernel 2.4.16
-and PTT with parport.
-I'm getting the following error from kernel log:
+A new version of PREDICT, a satellite tracking/orbital prediction program
+for Linux has been released.  The major changes in the new release include:
 
-	ppdev0: claim the port first
+* Buffering added to I/O functions in the vocalizer utility
+  for better efficiency and less CPU load.
 
-and the following output from soundmodem:
+* Fixed errors in main() (predict.c) that prevented the
+  vocalizer utility from ever being invoked by PREDICT.
 
-sbin/soundmodem=20
-sm[3171]: Device "/dev/parport0" neither parport nor serport
-sm[3171]: cannot start PTT output
+* Modified the earthtrack utility for compatibility with
+  versions of xplanet more recent than 0.82.
+
+* Serial port configuration for antenna rotator interface control
+  is now automatically set within PREDICT to the EasyComm 2 protocol
+  standard (9600 bps, 8N1, no handshaking) when the -a or -a1
+  command-line options are invoked.
+
+* -a1 command-line option added.  It works like the -a option, except
+  it sends tracking data to the specified serial port at least once
+  per second, whether the data has changed since the last transmission
+  or not.  These "keepalives" are required for interfaces such as the
+  ones by Suding Associates, Inc. that throttle back to manual mode if
+  updates aren't received on a regular and frequent basis.
+ 
+* "gsat" by Xavier Crehueras, EB3CZS, has been updated to version 1.0.0.
+  The new version adds Doppler control for beacon frequencies, support
+  for a satellite frequency database, and automatic frequency selection.
+  In addition, an azimuth/elevation graphic window is now included,
+  and automatic rotator control via plugins is now supported.
+
+* The destination directory for PREDICT's executables may now be
+  specified to something other than the regular default (/usr/local/bin)
+  when ./configure is invoked.  See the README file for details.
+
+* Main menu option [I] (Program Information) was changed to provide
+  information about which files were loaded by PREDICT, if a soundcard
+  is present, if network server mode is enabled, if rotator AutoTracking
+  is enabled, and if so, what serial port is used, how often is data sent,
+  etc.
+
+* The documentation was updated, and several other small coding
+  changes were made.
+
+Further information on PREDICT is available at:
+
+	http://www.qsl.net/kd2bd/predict.html
 
 
-
-	After a quick look at soundcard/ptt.c
-
-i changed line 90 from
-
-} else if (!ioctl(fd, PPRDATA, &x)) {
-
-to=20
-
-} else if ((!ioctl(fd,PPCLAIM))&&(!ioctl(fd, PPRDATA, &x))) {
-
-and the errors no longer occur.
-
-			Cheers,
-					Nuno Sucena Almeida
-- --
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.0.6 (GNU/Linux)
-Comment: Para mais informa=E7=F5es veja http://www.gnupg.org
-
-iD8DBQE9KTPi8HEhaPSUrLkRAnmGAKC0KekSTL5eDAsltppkZbJwB7oVjwCeKvTx
-KB0HoMoiBpaWi22vAzJBzzA=3D
-=3DM8EW
------END PGP SIGNATURE-----
+Enjoy the program.
 
 
--
-To unsubscribe from this list: send the line "unsubscribe linux-hams" i=
-n
-the body of a message to majordomo@vger.kernel.org
-More majordomo info at  http://vger.kernel.org/majordomo-info.html
+73, de John, KD2BD
+
+
+=====
+-=-=-=-=-=-=-=-=- John A. Magliacane, KD2BD -=-=-=-=-=-=-=-=-=-=-=-=-=-
+   Internet  : kd2bd@amsat.org  |  Video : 426.250 MHz/439.250 MHz
+   Satellite : KITSAT-OSCAR-25  |  Morse : -.-  -..  ..---  -...  -..
+   Voice     : +1.732.224.2948  |  WWW   : http://www.qsl.net/kd2bd/
+-=-=-=-=-=-=-=-= Linux Doesn't Cost.  It Pays. =-=-=-=-=-=-=-=-=-=-=-=-
+
+__________________________________________________
+Do You Yahoo!?
+Sign up for SBC Yahoo! Dial - First Month Free
+http://sbc.yahoo.com
