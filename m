@@ -1,43 +1,29 @@
-From: Bob Nielsen <nielsen@oz.net>
+From: Tomi Manninen <tpm@prkele.tky.hut.fi>
 Subject: Re: KISS mode
-Date: Fri, 26 Apr 2002 15:27:48 -0700
+Date: Sat, 27 Apr 2002 02:28:51 +0300 (EEST)
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <20020426222748.GB3430@oz.net>
-References: <3CC9C750.1050107@ptcnh.net>
+Message-ID: <Pine.LNX.4.33.0204270228050.20910-100000@oh2bns.ampr.org>
+References: <20020426222748.GB3430@oz.net>
+Reply-To: <tpm@prkele.tky.hut.fi>
 Mime-Version: 1.0
 Return-path: <linux-hams-owner@vger.kernel.org>
-Content-Disposition: inline
-In-Reply-To: <3CC9C750.1050107@ptcnh.net>
+In-Reply-To: <20020426222748.GB3430@oz.net>
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"
+Content-Type: TEXT/PLAIN; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
 To: linux-hams@vger.kernel.org
 
-It depends somewhat on the TNC.  For TAPR clones, the following
-applies: 
+On Fri, 26 Apr 2002, Bob Nielsen wrote:
 
-You get into KISS mode with
+> To get out of KISS mode is a bit more complicated.  You need to send
+> the three bytes $C0, $FF, $C0 (192, 255, 192) to the TNC to restore
+> normal operation.  I've seen DOS programs to do this, but haven't run
+> across anything for Linux.
 
-KISS ON
-RESTART
+kissparms -x
 
-To get out of KISS mode is a bit more complicated.  You need to send
-the three bytes $C0, $FF, $C0 (192, 255, 192) to the TNC to restore
-normal operation.  I've seen DOS programs to do this, but haven't run
-across anything for Linux.  It shouldn't be too hard to write code to
-to do it, however.  You can, of course, reset the TNC completely by
-disconnecting the battery for several minutes.
+-- 
+Tomi Manninen           Internet:  oh2bns@sral.fi
+OH2BNS                  AX.25:     oh2bns@oh2rbi.fin.eu
+KP20ME04                Amprnet:   oh2bns@oh2rbi.ampr.org
 
-Some firmware versions have a tendency to drop out of KISS mode.  I
-prefer to use a KISS-only EPROM, such as the JKISS image from the
-G8BPQ package.  These only exist for TAPR clones, unfortunately.
-
-Bob, N7XY
-
-On Fri, Apr 26, 2002 at 05:32:00PM -0400, charlie carroll wrote:
-> Can someone point me to the commands to put an external TNC into and
-> out of KISS mode?
-> 
-> Thanks
-> 
-> Charlie, k1xx
