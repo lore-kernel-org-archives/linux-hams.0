@@ -1,60 +1,53 @@
-From: =?ISO-8859-1?Q?P=E4r?= <perpetum@home.se>
-Subject: Re: spread spectrum and broadband
-Date: Mon, 18 Nov 2002 12:22:41 +0100
+From: Jorge Matias <martin@andorinha.ist.utl.pt>
+Subject: Re: Protocol error
+Date: Mon, 18 Nov 2002 11:27:42 +0000 (WET)
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <3DD8CD81.3040406@home.se>
-References: <200211172241.gAHMf4C31685@hartford-hwp.com>
+Message-ID: <Pine.LNX.4.33.0211181122520.5266-100000@andorinha.ist.utl.pt>
+References: <3DD8D4BF.27441.288F6F3@localhost>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <200211172241.gAHMf4C31685@hartford-hwp.com>
+In-Reply-To: <3DD8D4BF.27441.288F6F3@localhost>
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"; format="flowed"
-To: linux-hams@vger.kernel.org
+Content-Type: TEXT/PLAIN; charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+To: Demetre Valaris <sv1uy@bbs.sv1uy.ampr.org>
+Cc: linux-hams <linux-hams@vger.kernel.org>
 
-Spread spectrum and the ionosphere doesn't mix very well.
-A skywave path might support only a portion of the spread
-and I have only seen one attempt at a SS-system for hf. That
-system used a 1 MHz spread but was later scrapped as the
-performance was too bad.
+On Mon, 18 Nov 2002, Demetre Valaris wrote:
 
-You'll probably get better results with a 3 or 6 kHz wide system
-such as any MIL-STD-188-110A/B compatible modem.
-The Harris RF5710a boasts a 12800 bps max datarate and I've
-tried 4800 & 9600 with these and on a fine day it really did
-work. There are only two problems with these modems: price
-and bandwidth. I don't know the current price but I'm guessing
-somewhere around 5000$. Bandwidth is minimum 3 kHz (not
-2.4 kHz).
-
-73's de sm0rwo/per
-
-
-Haines Brown wrote:
-
->This is OT, but my question was stimulated by an article in Linux
->Journal regarding a WAN in Guinea.
->
->If one sets up a HF WAN that uses TCP/IP protocol, a distinct
->disadvantage is lack of bandwidth. In one case, the RF modem was
->capable of 1200 baud, and in practice that amounted to about 300 baud.  
->
->That's ok for e-mail, but not much more. 
->
->So I wondered about the potential of spread spectrum for increasing
->bandwidth from, say, 1200 baud to 56 Kbaud. I'd appreciate someone's
->input on the relation of information bandwidth and RF spectrum
->bandwidth when using spread spectrum. Does spread spectrum offer any
->potential at all for increasing signal bandwidth of a TCP/IP HF WAN?
->
->Haines Brown KG1GRM 
->-
->To unsubscribe from this list: send the line "unsubscribe linux-hams" in
->the body of a message to majordomo@vger.kernel.org
->More majordomo info at  http://vger.kernel.org/majordomo-info.html
 >
 >
->  
+> On 18 Nov 2002 at 0:40, Jorge Matias wrote:
 >
+> > On Sun, 17 Nov 2002, Demetre Valaris wrote:
+> >
+> >   Hi Demetre,
+> >
+> >   I have the same problem for a loooong time. I also have lots af messages like
+> > this one in my /var/log/messages:
+> >
+> > Nov 18 00:34:36 hamradio kernel: NET: 8 messages suppressed.
+> >
+> >   These messages arrive with a pace of 1 message every +-4 secs.
+> >   I suppose that the fact that I have all the traffic passing trough
+> > linuxnet makes this messages lots of times. (about one error for each
+> > frame received/sent).
+> >
+> > 73,
+> > Jorge Matias
+> > CT2HBZ
+>
+> Hi Jorge Matias,
+>
+> Thanks for reply. I wonder if this causes any problems. At this end when I had
+> a P133 AMD with 32MB RAm, sometimes my radio would key the TNC and TX nothing.
 
+ I also have that TX problem too with my USCC modems.
+ All these problem occured to me when I had P133 with 64MB (Kernel
+2.2.14). Now I have a PII/366 with 128MB and kernel 2.4.18 and the problem
+still exists but I think it doesn't affect the radio applications.
+
+73,
+Jorge
+CT2HBZ
 
