@@ -1,46 +1,38 @@
-From: =?iso-8859-1?Q?G=E9rard?= Parat / F6FGZ <f6fgz@free.fr>
-Subject: Conflicting node name for services
-Date: Sat, 21 Dec 2002 09:56:01 +0100
+From: Tomi Manninen <tpm@prkele.tky.hut.fi>
+Subject: Re: Conflicting node name for services
+Date: Sun, 22 Dec 2002 01:41:41 +0200 (EET)
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <3E042CA1.640F51D6@free.fr>
+Message-ID: <Pine.LNX.4.44.0212220138420.3171-100000@oh2bns.ampr.org>
+References: <3E042CA1.640F51D6@free.fr>
+Reply-To: tpm@prkele.tky.hut.fi
 Mime-Version: 1.0
 Content-Transfer-Encoding: QUOTED-PRINTABLE
 Return-path: <linux-hams-owner@vger.kernel.org>
+In-Reply-To: <3E042CA1.640F51D6@free.fr>
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="iso-8859-1"
-To: Linux-Hams <linux-hams@vger.kernel.org>
+Content-Type: TEXT/PLAIN; charset="iso-8859-1"
+To: =?iso-8859-1?Q?G=E9rard?= Parat / F6FGZ <f6fgz@free.fr>
+Cc: Linux-Hams <linux-hams@vger.kernel.org>
 
-Hello,
+Hi G=E9rard,
 
-At least I understood a problem using telnet on node software by OH2BNS=
-=2E There
-was a name conflict using node which may be a generic word. So I change=
-d the
-following and eveything is working fine now.
+> At least I understood a problem using telnet on node software by OH2B=
+NS. There
+> was a name conflict using node which may be a generic word. So I chan=
+ged the
+> following and eveything is working fine now.
+>=20
+> In /etc/services use the following line:
+> netrom          3694/tcp                        # OH2BNS's node softw=
+are
 
-In /etc/services use the following line:
-netrom          3694/tcp                        # OH2BNS's node softwar=
-e
+Ok, good to know. But just out of curiosity, what service did conflict
+with "node" ? My /etc/services from RH8 doesn't show any conflicts...
 
-And use the following etc/xinetd.d/node file:
-service netrom
-{
- socket_type  =3D stream
- protocol  =3D tcp
- wait   =3D no
- user   =3D root
- server   =3D /usr/sbin/node
- server_args  =3D node
- disable   =3D no
-}
-
-Don't forget to do a "killall -USR2 xinetd" and enjoy.
-
-
---
-73 G=E9rard F6FGZ
-
-
+--=20
+Tomi Manninen           Internet:  oh2bns@sral.fi
+OH2BNS                  AX.25:     oh2bns@oh2rbi.fin.eu
+KP20ME04                Amprnet:   oh2bns@oh2rbi.ampr.org
 
 -
 To unsubscribe from this list: send the line "unsubscribe linux-hams" i=
