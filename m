@@ -1,93 +1,431 @@
-From: Bernard Pidoux <pidoux@ccr.jussieu.fr>
-Subject: AX25 udev pseudo tty support
-Date: Mon, 21 Mar 2005 00:38:14 +0100
-Message-ID: <423E0966.4050702@ccr.jussieu.fr>
-References: <000601c4c852$79768360$07001aac@adminqn> <4234CBD4.3010600@ccr.jussieu.fr>
+From: Ralf Baechle DL5RB <ralf@linux-mips.org>
+Subject: [PATCH] Get rid of sk_protinfo use in netrom
+Date: Mon, 21 Mar 2005 09:49:05 +0000
+Message-ID: <20050321094905.GA10022@linux-mips.org>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
-In-Reply-To: <4234CBD4.3010600@ccr.jussieu.fr>
-Sender: linux-hams-owner@vger.kernel.org
+Content-Disposition: inline
+Sender: netdev-bounce@oss.sgi.com
+Errors-to: netdev-bounce@oss.sgi.com
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"; format="flowed"
-To: 
-Cc: linux-hams@vger.kernel.org, List for LINUX ROSE/FPAC network switch <fpac@f6fbb.org>
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+To: netdev@oss.sgi.com, linux-hams@vger.kernel.org
+Cc: "David S. Miller" <davem@davemloft.net>
 
-Hi,
+Below patch puts struct sock into nr_cb to get rid of the need for the
+use of sk_protinfo in nr_sk().  While we're touching the data structure
+convert it from a typedef into a struct.
 
-I have simplified usage of AX25 udev support by mkiss, kissattach and 
-ax25ipd applications and tools for AX25.
+Index: bk-afu/net/netrom/nr_timer.c
+===================================================================
+--- bk-afu.orig/net/netrom/nr_timer.c	2005-03-17 23:54:00.000000000 +0000
++++ bk-afu/net/netrom/nr_timer.c	2005-03-20 10:40:08.000000000 +0000
+@@ -38,7 +38,7 @@
+ 
+ void nr_init_timers(struct sock *sk)
+ {
+-	nr_cb *nr = nr_sk(sk);
++	struct nr_sock *nr = nr_sk(sk);
+ 
+ 	init_timer(&nr->t1timer);
+ 	nr->t1timer.data     = (unsigned long)sk;
+@@ -63,28 +63,28 @@
+ 
+ void nr_start_t1timer(struct sock *sk)
+ {
+-	nr_cb *nr = nr_sk(sk);
++	struct nr_sock *nr = nr_sk(sk);
+ 
+ 	mod_timer(&nr->t1timer, jiffies + nr->t1);
+ }
+ 
+ void nr_start_t2timer(struct sock *sk)
+ {
+-	nr_cb *nr = nr_sk(sk);
++	struct nr_sock *nr = nr_sk(sk);
+ 
+ 	mod_timer(&nr->t2timer, jiffies + nr->t2);
+ }
+ 
+ void nr_start_t4timer(struct sock *sk)
+ {
+-	nr_cb *nr = nr_sk(sk);
++	struct nr_sock *nr = nr_sk(sk);
+ 
+ 	mod_timer(&nr->t4timer, jiffies + nr->t4);
+ }
+ 
+ void nr_start_idletimer(struct sock *sk)
+ {
+-	nr_cb *nr = nr_sk(sk);
++	struct nr_sock *nr = nr_sk(sk);
+ 
+ 	if (nr->idle > 0)
+ 		mod_timer(&nr->idletimer, jiffies + nr->idle);
+@@ -128,7 +128,7 @@
+ static void nr_heartbeat_expiry(unsigned long param)
+ {
+ 	struct sock *sk = (struct sock *)param;
+-	nr_cb *nr = nr_sk(sk);
++	struct nr_sock *nr = nr_sk(sk);
+ 
+ 	bh_lock_sock(sk);
+ 	switch (nr->state) {
+@@ -167,7 +167,7 @@
+ static void nr_t2timer_expiry(unsigned long param)
+ {
+ 	struct sock *sk = (struct sock *)param;
+-	nr_cb *nr = nr_sk(sk);
++	struct nr_sock *nr = nr_sk(sk);
+ 
+ 	bh_lock_sock(sk);
+ 	if (nr->condition & NR_COND_ACK_PENDING) {
+@@ -189,7 +189,7 @@
+ static void nr_idletimer_expiry(unsigned long param)
+ {
+ 	struct sock *sk = (struct sock *)param;
+-	nr_cb *nr = nr_sk(sk);
++	struct nr_sock *nr = nr_sk(sk);
+ 
+ 	bh_lock_sock(sk);
+ 
+@@ -217,7 +217,7 @@
+ static void nr_t1timer_expiry(unsigned long param)
+ {
+ 	struct sock *sk = (struct sock *)param;
+-	nr_cb *nr = nr_sk(sk);
++	struct nr_sock *nr = nr_sk(sk);
+ 
+ 	bh_lock_sock(sk);
+ 	switch (nr->state) {
+Index: bk-afu/include/net/netrom.h
+===================================================================
+--- bk-afu.orig/include/net/netrom.h	2005-03-19 20:00:15.000000000 +0000
++++ bk-afu/include/net/netrom.h	2005-03-20 10:36:50.000000000 +0000
+@@ -55,7 +55,8 @@
+ #define NR_MAX_WINDOW_SIZE		127			/* Maximum Window Allowable - 127 */
+ #define	NR_MAX_PACKET_SIZE		236			/* Maximum Packet Length - 236 */
+ 
+-typedef struct {
++struct nr_sock {
++	struct sock		sock;
+ 	ax25_address		user_addr, source_addr, dest_addr;
+ 	struct net_device		*device;
+ 	unsigned char		my_index,   my_id;
+@@ -72,10 +73,9 @@
+ 	struct sk_buff_head	ack_queue;
+ 	struct sk_buff_head	reseq_queue;
+ 	struct sk_buff_head	frag_queue;
+-	struct sock		*sk;		/* Backlink to socket */
+-} nr_cb;
++};
+ 
+-#define nr_sk(__sk) ((nr_cb *)(__sk)->sk_protinfo)
++#define nr_sk(sk) ((struct nr_sock *)(sk))
+ 
+ struct nr_neigh {
+ 	struct hlist_node	neigh_node;
+Index: bk-afu/net/netrom/af_netrom.c
+===================================================================
+--- bk-afu.orig/net/netrom/af_netrom.c	2005-03-19 20:00:13.000000000 +0000
++++ bk-afu/net/netrom/af_netrom.c	2005-03-20 10:44:54.000000000 +0000
+@@ -66,24 +66,7 @@
+ 
+ static struct sock *nr_alloc_sock(void)
+ {
+-	nr_cb *nr;
+-	struct sock *sk = sk_alloc(PF_NETROM, GFP_ATOMIC, 1, NULL);
+-
+-	if (!sk)
+-		goto out;
+-
+-	nr = sk->sk_protinfo = kmalloc(sizeof(*nr), GFP_ATOMIC);
+-	if (!nr)
+-		goto frees;
+-
+-	memset(nr, 0x00, sizeof(*nr));
+-	nr->sk = sk;
+-out:
+-	return sk;
+-frees:
+-	sk_free(sk);
+-	sk = NULL;
+-	goto out;
++	return  sk_alloc(PF_NETROM, GFP_ATOMIC, sizeof(struct nr_sock), NULL);
+ }
+ 
+ /*
+@@ -169,7 +152,7 @@
+ 
+ 	spin_lock_bh(&nr_list_lock);
+ 	sk_for_each(s, node, &nr_list) {
+-		nr_cb *nr = nr_sk(s);
++		struct nr_sock *nr = nr_sk(s);
+ 		
+ 		if (nr->my_index == index && nr->my_id == id) {
+ 			bh_lock_sock(s);
+@@ -193,7 +176,7 @@
+ 
+ 	spin_lock_bh(&nr_list_lock);
+ 	sk_for_each(s, node, &nr_list) {
+-		nr_cb *nr = nr_sk(s);
++		struct nr_sock *nr = nr_sk(s);
+ 		
+ 		if (nr->your_index == index && nr->your_id == id &&
+ 		    !ax25cmp(&nr->dest_addr, dest)) {
+@@ -300,7 +283,7 @@
+ 	char __user *optval, int optlen)
+ {
+ 	struct sock *sk = sock->sk;
+-	nr_cb *nr = nr_sk(sk);
++	struct nr_sock *nr = nr_sk(sk);
+ 	int opt;
+ 
+ 	if (level != SOL_NETROM)
+@@ -352,7 +335,7 @@
+ 	char __user *optval, int __user *optlen)
+ {
+ 	struct sock *sk = sock->sk;
+-	nr_cb *nr = nr_sk(sk);
++	struct nr_sock *nr = nr_sk(sk);
+ 	int val = 0;
+ 	int len; 
+ 
+@@ -418,7 +401,7 @@
+ static int nr_create(struct socket *sock, int protocol)
+ {
+ 	struct sock *sk;
+-	nr_cb *nr;
++	struct nr_sock *nr;
+ 
+ 	if (sock->type != SOCK_SEQPACKET || protocol != 0)
+ 		return -ESOCKTNOSUPPORT;
+@@ -456,7 +439,7 @@
+ static struct sock *nr_make_new(struct sock *osk)
+ {
+ 	struct sock *sk;
+-	nr_cb *nr, *onr;
++	struct nr_sock *nr, *onr;
+ 
+ 	if (osk->sk_type != SOCK_SEQPACKET)
+ 		return NULL;
+@@ -508,7 +491,7 @@
+ static int nr_release(struct socket *sock)
+ {
+ 	struct sock *sk = sock->sk;
+-	nr_cb *nr;
++	struct nr_sock *nr;
+ 
+ 	if (sk == NULL) return 0;
+ 
+@@ -556,7 +539,7 @@
+ static int nr_bind(struct socket *sock, struct sockaddr *uaddr, int addr_len)
+ {
+ 	struct sock *sk = sock->sk;
+-	nr_cb *nr = nr_sk(sk);
++	struct nr_sock *nr = nr_sk(sk);
+ 	struct full_sockaddr_ax25 *addr = (struct full_sockaddr_ax25 *)uaddr;
+ 	struct net_device *dev;
+ 	ax25_address *user, *source;
+@@ -625,7 +608,7 @@
+ 	int addr_len, int flags)
+ {
+ 	struct sock *sk = sock->sk;
+-	nr_cb *nr = nr_sk(sk);
++	struct nr_sock *nr = nr_sk(sk);
+ 	struct sockaddr_ax25 *addr = (struct sockaddr_ax25 *)uaddr;
+ 	ax25_address *user, *source = NULL;
+ 	struct net_device *dev;
+@@ -822,7 +805,7 @@
+ {
+ 	struct full_sockaddr_ax25 *sax = (struct full_sockaddr_ax25 *)uaddr;
+ 	struct sock *sk = sock->sk;
+-	nr_cb *nr = nr_sk(sk);
++	struct nr_sock *nr = nr_sk(sk);
+ 
+ 	lock_sock(sk);
+ 	if (peer != 0) {
+@@ -850,7 +833,7 @@
+ {
+ 	struct sock *sk;
+ 	struct sock *make;	
+-	nr_cb *nr_make;
++	struct nr_sock *nr_make;
+ 	ax25_address *src, *dest, *user;
+ 	unsigned short circuit_index, circuit_id;
+ 	unsigned short peer_circuit_index, peer_circuit_id;
+@@ -1015,7 +998,7 @@
+ 		      struct msghdr *msg, size_t len)
+ {
+ 	struct sock *sk = sock->sk;
+-	nr_cb *nr = nr_sk(sk);
++	struct nr_sock *nr = nr_sk(sk);
+ 	struct sockaddr_ax25 *usax = (struct sockaddr_ax25 *)msg->msg_name;
+ 	int err;
+ 	struct sockaddr_ax25 sax;
+@@ -1273,7 +1256,7 @@
+ {
+ 	struct sock *s = v;
+ 	struct net_device *dev;
+-	nr_cb *nr;
++	struct nr_sock *nr;
+ 	const char *devname;
+ 
+ 	if (v == SEQ_START_TOKEN)
+Index: bk-afu/net/netrom/nr_in.c
+===================================================================
+--- bk-afu.orig/net/netrom/nr_in.c	2005-03-17 23:53:59.000000000 +0000
++++ bk-afu/net/netrom/nr_in.c	2005-03-20 10:38:57.000000000 +0000
+@@ -34,7 +34,7 @@
+ static int nr_queue_rx_frame(struct sock *sk, struct sk_buff *skb, int more)
+ {
+ 	struct sk_buff *skbo, *skbn = skb;
+-	nr_cb *nr = nr_sk(sk);
++	struct nr_sock *nr = nr_sk(sk);
+ 
+ 	skb_pull(skb, NR_NETWORK_LEN + NR_TRANSPORT_LEN);
+ 
+@@ -76,7 +76,7 @@
+ {
+ 	switch (frametype) {
+ 	case NR_CONNACK: {
+-		nr_cb *nr = nr_sk(sk);
++		struct nr_sock *nr = nr_sk(sk);
+ 
+ 		nr_stop_t1timer(sk);
+ 		nr_start_idletimer(sk);
+@@ -138,7 +138,7 @@
+  */
+ static int nr_state3_machine(struct sock *sk, struct sk_buff *skb, int frametype)
+ {
+-	nr_cb *nrom = nr_sk(sk);
++	struct nr_sock *nrom = nr_sk(sk);
+ 	struct sk_buff_head temp_queue;
+ 	struct sk_buff *skbn;
+ 	unsigned short save_vr;
+@@ -264,7 +264,7 @@
+ /* Higher level upcall for a LAPB frame - called with sk locked */
+ int nr_process_rx_frame(struct sock *sk, struct sk_buff *skb)
+ {
+-	nr_cb *nr = nr_sk(sk);
++	struct nr_sock *nr = nr_sk(sk);
+ 	int queued = 0, frametype;
+ 
+ 	if (nr->state == NR_STATE_0)
+Index: bk-afu/net/netrom/nr_subr.c
+===================================================================
+--- bk-afu.orig/net/netrom/nr_subr.c	2005-03-17 23:54:00.000000000 +0000
++++ bk-afu/net/netrom/nr_subr.c	2005-03-20 10:39:42.000000000 +0000
+@@ -34,7 +34,7 @@
+  */
+ void nr_clear_queues(struct sock *sk)
+ {
+-	nr_cb *nr = nr_sk(sk);
++	struct nr_sock *nr = nr_sk(sk);
+ 
+ 	skb_queue_purge(&sk->sk_write_queue);
+ 	skb_queue_purge(&nr->ack_queue);
+@@ -49,7 +49,7 @@
+  */
+ void nr_frames_acked(struct sock *sk, unsigned short nr)
+ {
+-	nr_cb *nrom = nr_sk(sk);
++	struct nr_sock *nrom = nr_sk(sk);
+ 	struct sk_buff *skb;
+ 
+ 	/*
+@@ -88,7 +88,7 @@
+  */
+ int nr_validate_nr(struct sock *sk, unsigned short nr)
+ {
+-	nr_cb *nrom = nr_sk(sk);
++	struct nr_sock *nrom = nr_sk(sk);
+ 	unsigned short vc = nrom->va;
+ 
+ 	while (vc != nrom->vs) {
+@@ -104,7 +104,7 @@
+  */
+ int nr_in_rx_window(struct sock *sk, unsigned short ns)
+ {
+-	nr_cb *nr = nr_sk(sk);
++	struct nr_sock *nr = nr_sk(sk);
+ 	unsigned short vc = nr->vr;
+ 	unsigned short vt = (nr->vl + nr->window) % NR_MODULUS;
+ 
+@@ -122,7 +122,7 @@
+  */
+ void nr_write_internal(struct sock *sk, int frametype)
+ {
+-	nr_cb *nr = nr_sk(sk);
++	struct nr_sock *nr = nr_sk(sk);
+ 	struct sk_buff *skb;
+ 	unsigned char  *dptr;
+ 	int len, timeout;
+Index: bk-afu/net/netrom/nr_out.c
+===================================================================
+--- bk-afu.orig/net/netrom/nr_out.c	2005-03-17 23:53:59.000000000 +0000
++++ bk-afu/net/netrom/nr_out.c	2005-03-20 10:39:20.000000000 +0000
+@@ -82,7 +82,7 @@
+  */
+ static void nr_send_iframe(struct sock *sk, struct sk_buff *skb)
+ {
+-	nr_cb *nr = nr_sk(sk);
++	struct nr_sock *nr = nr_sk(sk);
+ 
+ 	if (skb == NULL)
+ 		return;
+@@ -101,7 +101,7 @@
+ void nr_send_nak_frame(struct sock *sk)
+ {
+ 	struct sk_buff *skb, *skbn;
+-	nr_cb *nr = nr_sk(sk);
++	struct nr_sock *nr = nr_sk(sk);
+ 
+ 	if ((skb = skb_peek(&nr->ack_queue)) == NULL)
+ 		return;
+@@ -125,7 +125,7 @@
+ 
+ void nr_kick(struct sock *sk)
+ {
+-	nr_cb *nr = nr_sk(sk);
++	struct nr_sock *nr = nr_sk(sk);
+ 	struct sk_buff *skb, *skbn;
+ 	unsigned short start, end;
+ 
+@@ -188,7 +188,7 @@
+ 
+ void nr_transmit_buffer(struct sock *sk, struct sk_buff *skb)
+ {
+-	nr_cb *nr = nr_sk(sk);
++	struct nr_sock *nr = nr_sk(sk);
+ 	unsigned char *dptr;
+ 
+ 	/*
+@@ -223,7 +223,7 @@
+ 
+ void nr_establish_data_link(struct sock *sk)
+ {
+-	nr_cb *nr = nr_sk(sk);
++	struct nr_sock *nr = nr_sk(sk);
+ 
+ 	nr->condition = 0x00;
+ 	nr->n2count   = 0;
+@@ -241,7 +241,7 @@
+  */
+ void nr_enquiry_response(struct sock *sk)
+ {
+-	nr_cb *nr = nr_sk(sk);
++	struct nr_sock *nr = nr_sk(sk);
+ 	int frametype = NR_INFOACK;
+ 
+ 	if (nr->condition & NR_COND_OWN_RX_BUSY) {
+@@ -259,7 +259,7 @@
+ 
+ void nr_check_iframes_acked(struct sock *sk, unsigned short nr)
+ {
+-	nr_cb *nrom = nr_sk(sk);
++	struct nr_sock *nrom = nr_sk(sk);
+ 
+ 	if (nrom->vs == nr) {
+ 		nr_frames_acked(sk, nr);
 
-There is no more need to specify full slave pseudo tty device names.
-kissattach command line now only refers to /dev/pts, and the program 
-will find itself the slave pseudo tty related to the master.
-The same for ax25ipd in ax25ipd.conf.
-
-Please have a look at the following script including some comments.
-If you need help or have any questions, please do not hesitate to mail me.
-
-Of course, my modifications are backward compatible with previous
-usage of devfs pseudo ttys (which is much more complicated).
-
-I have checked that it works with kernels 2.2.26 and 2.6.11.
-
-
-  #!/bin/sh
-  #
-  # This is a sample script to demonstrate the use of udev
-  # Unix98 master-slave pseudo tty device pairs for AX25
-  # on Linux kernel = and > 2.2.
-  #
-  # Udev system usage is much more simple than former devfs.
-  # There is a unique master pseudo tty, and a corresponding
-  # slave pseudo tty is automatically created when opening
-  # the master tty. Both are tunneled.
-  #
-  # AX25 ports 0 and 1 are declared in /etc/ax25/axport file
-  #
-  # In file /etc/ax25/ax25ipd.conf is declared a slave pseudo tty
-  # device /dev/pts
-  # to make a tunnel link with master /dev/ptmx opened by the
-  # command line kissattach /dev/ptmx
-  #
-  # The following files have been modified to accept
-  # /dev/ptmx - /dev/pts request :
-  # ax25-apps-0.0.6/ax25ipd/io.c
-  # ax25-tools-0.0.8/kiss/mkiss.c and kissattach.c
-  #
-  # The patched files can be downloaded from :
-  # http://f6bvp.free.fr/logiciels/Unix98-pseudo-tty/
-  #
-  # Bernard Pidoux f6bvp@amsat.org
-  #
-  echo 1 > /proc/sys/net/ipv4/ip_forward
-  # load ax25 packet radio, rose and mkiss modules
-  /sbin/modprobe ax25
-  /sbin/modprobe rose
-  /sbin/modprobe mkiss
-  /bin/sleep 4
-  # mkiss opens two master pseudo ttys connected to serial port ttyS0
-  /usr/local/sbin/mkiss -s 38400 -l /dev/ttyS0 /dev/ptmx /dev/ptmx
-  /bin/sleep 4
-  # kissattach links a slave pseudo tty to ax25 port 0
-  /usr/local/sbin/kissattach /dev/pts 0 44.151.75.150
-  # kissattach links a second slave pseudo tty to ax25 port 1
-  /usr/local/sbin/kissattach /dev/pts 1 44.151.75.150
-  # kissattach attachs a master pseudo tty to ax25 port 2
-  # and creates a slave tty, making a tunnel between them
-  /usr/local/sbin/kissattach -l -m 256 /dev/ptmx 2 44.151.75.150
-  /bin/sleep 4
-  # ax25ipd links slave pseudo tty to UDP port declared in ax25ipd.conf
-  /usr/local/sbin/ax25ipd -l4
-  /bin/sleep 4
-  # start ROSE / FPAC AX25 level 3 packet switch application
-  /usr/local/sbin/fpac/fpac.sh
-  /bin/sleep 4
-  # starts Dx cluster application using level 3 ROSE/FPAC routing
-  /usr/local/sbin/dxnet/dxnet.sh &
-  /bin/sleep 4
-  # start mheardd daemon
-  /usr/local/sbin/mheardd
-  #
-
-
-73 de Bernard, f6bvp.
