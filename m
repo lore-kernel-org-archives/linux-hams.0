@@ -1,115 +1,47 @@
-From: "ravioli@softhome.net" <ravioli@softhome.net>
-Subject: Compile warnings on hfterm with Mandrake
-Date: Tue, 09 Mar 2004 22:11:12 +0100
+From: braddock@braddock.com
+Subject: Re: user soundmodem problems on Inspiron 8200 i810 chipset...
+Date: Tue, 9 Mar 2004 15:35:42 -0600
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <404E32F0.80308@softhome.net>
+Message-ID: <20040309213542.GA27566@braddock.com>
 References: <20040309022333.GA4377@braddock.com> <1078861838.2336.1.camel@law3lz8h11.lib.loc.gov>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
+Content-Disposition: inline
 In-Reply-To: <1078861838.2336.1.camel@law3lz8h11.lib.loc.gov>
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"; format="flowed"
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 7bit
 To: Linux-Hams@vger.kernel.org
+Cc: Patrick Ouellette <kb8pym@vzavenue.net>, t.sailer@alumni.ethz.ch
 
-A lot of warnings in the last release of hfterm-0.5 can be removed by 
-applying this diff.
-More information on request.
-Remi F4ECW
+On Tue, Mar 09, 2004 at 02:50:38PM -0500, Patrick Ouellette wrote:
+> Have you tried muting the microphone input?  I had problems a few years
 
-diff --recursive hf-0.5/dcf77/audioin.c hf-0.5.ORG/dcf77/audioin.c
-38d37
-< #include <stdlib.h>
-diff --recursive hf-0.5/dcf77/audioout.c hf-0.5.ORG/dcf77/audioout.c
-36d35
-< #include <stdlib.h>
-diff --recursive hf-0.5/dcf77/calccorr.c hf-0.5.ORG/dcf77/calccorr.c
-33c33
-< #include <stdlib.h>
----
- >
-35d34
-< #include <sys/time.h>
-diff --recursive hf-0.5/dcf77/dcfdemod.c hf-0.5.ORG/dcf77/dcfdemod.c
-33d32
-< #include <stdlib.h>
-diff --recursive hf-0.5/dcf77/dcfdemodpn.c hf-0.5.ORG/dcf77/dcfdemodpn.c
-32d31
-< #include <stdlib.h>
-diff --recursive hf-0.5/dcf77/hbgdemod.c hf-0.5.ORG/dcf77/hbgdemod.c
-32d31
-< #include <stdlib.h>
-diff --recursive hf-0.5/dcf77/xgintf.c hf-0.5.ORG/dcf77/xgintf.c
-33d32
-< #include <stdlib.h>
-diff --recursive hf-0.5/hfterm/src/spectrum.c 
-hf-0.5.ORG/hfterm/src/spectrum.c
-31d30
-< #include <string.h>
-diff --recursive hf-0.5/l1/user/oss.c hf-0.5.ORG/l1/user/oss.c
-38d37
-< #include <stdlib.h>
-172,175c171
-<         struct timespec my_time_spec_nano ;
-<         my_time_spec_nano.tv_sec  =   0 ; /* Seconds */
-<         my_time_spec_nano.tv_nsec = 100 ; /* Nanoseconds */
-<         nanosleep( &my_time_spec_nano /* 100 */ , NULL);
----
- >         nanosleep(100, NULL);
-302c298
-<     void * m = NULL;
----
- >     void * m;
-525c521
-<     void *m = NULL;
----
- >     void *m;
-646c642
-<                 if ( (!fragptr) && ( m!= NULL) ) free(m);
----
- >                 if (!fragptr) free(m);
-diff --recursive hf-0.5/l1/user/refclock.c hf-0.5.ORG/l1/user/refclock.c
-35c35
-< #include <stdlib.h>
----
- >
-diff --recursive hf-0.5/os/msg.c hf-0.5.ORG/os/msg.c
-307c307
-<     /* unsigned int err = ntohl(msg->hdr.err); */
----
- >     unsigned int err = ntohl(msg->hdr.err);
-diff --recursive hf-0.5/proto/amtor.c hf-0.5.ORG/proto/amtor.c
-31d30
-< #include <stdlib.h>
-diff --recursive hf-0.5/proto/mkgtortables.c hf-0.5.ORG/proto/mkgtortables.c
-213,216c213
-<     int i, j;
-< #ifdef PARANOID
-<     int k ;
-< #endif
----
- >     int i, j, k;
-diff --recursive hf-0.5/proto/pactor.c hf-0.5.ORG/proto/pactor.c
-1020c1020
-< #endif /* MARQ_BAD_CRC_GETOUT */
----
- > #endif MARQ_BAD_CRC_GETOUT
-1764,1765d1763
-< #if 0
-<     /* Please see '#if 0' in this function... */
-1767d1764
-< #endif
-diff --recursive hf-0.5/test/testcos.c hf-0.5.ORG/test/testcos.c
-31d30
-< #include <stdlib.h>
-diff --recursive hf-0.5/test/testgettimeofday.c 
-hf-0.5.ORG/test/testgettimeofday.c
-8d7
-< #include <stdlib.h>
-diff --recursive hf-0.5/test/testoss.c hf-0.5.ORG/test/testoss.c
-5d4
-< #include <stdlib.h>
-diff --recursive hf-0.5/test/testpoly.c hf-0.5.ORG/test/testpoly.c
-5d4
-< #include <stdlib.h>
+I have tried muting it (as well as using the mic-in jack directly
+instead of the line-in jack).
 
+I did notice one anomaly that occurred frequently on the soundmodem
+diagnostic scope that I'm thinking might be signs of trouble.  In the
+capture, the line traced on the scope would occasionally draw a
+straight horizontal line within the signal at random places (both
+horizontally and vertically).  This "dead spot" seems to be uniformly
+about 4 1200 Hz cycles (~3 ms).  This does not seem to be clipping
+because it occurs at random levels.
+
+Here is an excellent screen shot of the scope showing two instances of
+this anomaly in an otherwise pretty clean looking signal:
+
+http://braddock.com/soundmodem.png
+
+I'm wondering if this is a sampling problem with the ALSA i810 driver?
+If anyone could take a look at that scope image and let me know if
+that's normal behavior within the scope or a sound capture problem it
+would help us narrow this down.  It occurs at all sound levels AFAIK.
+
+Also, I tried running soundmodem on a desktop system (vs my Inspiron
+laptop) that also has the Intel i810 sound chipset and ALSA drivers,
+with the exact same results.
+
+All help much appreciated!
+
+	-Braddock Gaskill
