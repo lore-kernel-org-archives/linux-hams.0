@@ -1,44 +1,46 @@
-From: Tomi Manninen OH2BNS <tpm@prkele.tky.hut.fi>
-Subject: Re: Beginner questions about soundmodem and others
-Date: Fri, 10 Jan 2003 10:11:01 +0200 (EET)
+From: =?iso-8859-1?Q?G=E9rard?= Parat / F6FGZ <f6fgz@free.fr>
+Subject: Fragmentation
+Date: Fri, 10 Jan 2003 22:08:55 +0100
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <Pine.HPX.4.10.10301101003520.8319-100000@saturn.trs.ntc.nokia.com>
-References: <20030109175607.0c94ab8f.washer@trlp.com>
-Reply-To: tpm@prkele.tky.hut.fi
+Message-ID: <3E1F3667.C25ABB5B@free.fr>
 Mime-Version: 1.0
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <20030109175607.0c94ab8f.washer@trlp.com>
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: TEXT/PLAIN; charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-To: James Washer <washer@trlp.com>
-Cc: linux-hams@vger.kernel.org
+Content-Type: text/plain; charset="iso-8859-1"
+To: Linux-Hams <linux-hams@vger.kernel.org>
 
-On Thu, 9 Jan 2003, James Washer wrote:
+Hello,
 
-> 1)I'm confused by this whole AX.25 kernel thing... I had assumed that
-> (most) TNCs handled the AX.25 protocol themselves. I understand that
-> with a soundmodem, the linux system would have to do the AX.25, but
-> what about if I use an off-the-shelf TNC ( kpc3 for example ). Does
-> linux arrange to turn the AX.25 handling OFF in the TNC and do it in
-> software?
+I am wondering how to tweak mss/mtu/window/packet lenght etc ... to avo=
+id
+TCP/IP fragmentation for a 1200 bds link. I am trying to send 256 byte =
+size
+AX25 packet, here an example:
 
-Yes, typically the TNC is put to a so called KISS mode (6PACK is another
-alternative). In KISS mode the TNC only handles modulation and
-demodulation, HDLC en/decoding (bit stuffing and framing that is) and
-AX.25 CRC checking. Everything else is left to the PC.
+vhf: fm F6FGZ-4 to F6KBS-1 ctl I37^ pid=3D8(segment) len 255 22:05:44 F=
+irst seg;
+remain 1
+IP: len 328 44.151.78.19->44.151.91.49 ihl 20 ttl 64 DF prot TCP
+TCP: 46755->http Seq x74f3e657 Ack x86439001 ACK PSH Wnd 472 Data 213
+0000  GET / HTTP/1.0M.Connection: Keep-AliveM.User-Agent: Mozilla/4.78
+0040   [fr] (X11; U; Linux 2.4.18 i686)M.Host: f6bgr.ampr.orgM.Accept:
+0080   image/gif, image/x-xbitmap, image/jpeg, image/pjpeg, image/png,
+00C0   */*M.Accept-Encoding
+vhf: fm F6FGZ-4 to F6KBS-1 ctl I30^ pid=3D8(segment) len 76 22:05:45 re=
+main 0
+0000  : gzipM.Accept-Language: fr, en, zhM.Accept-Charset: iso-8859-1,
+0040  *,utf-8M.M.
 
-This is basically the only sane way to be able to support higher level
-protocols on top of AX.25. Also it makes the simple text mode support much
-more flexible.
+Data are splitted ...
 
-> 2) Can I put more than one sound card in my linux box.. One for music,
-> the other, perhaps multiple soundcards, for packet?
+--
+73 G=E9rard F6FGZ
 
-Yes.
 
--- 
-Tomi Manninen           Internet:  oh2bns@sral.fi
-OH2BNS                  AX.25:     oh2bns@oh2rbi.fin.eu
-KP20ME04                Amprnet:   oh2bns@oh2rbi.ampr.org
 
+-
+To unsubscribe from this list: send the line "unsubscribe linux-hams" i=
+n
+the body of a message to majordomo@vger.kernel.org
+More majordomo info at  http://vger.kernel.org/majordomo-info.html
