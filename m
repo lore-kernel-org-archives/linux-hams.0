@@ -1,50 +1,31 @@
-From: "Robert Jenkins" <raj@jrw.co.uk>
+From: Tomi Manninen <tpm@prkele.tky.hut.fi>
 Subject: RE: Status of AX.25 in 2.5 / 2.6
-Date: Mon, 29 Jul 2002 18:45:20 +0100
+Date: Mon, 29 Jul 2002 21:07:01 +0300 (EEST)
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <000001c23727$b5a18970$e239832c@jrws2>
-References: <Pine.HPX.4.10.10207291757180.25868-100000@saturn.trs.ntc.nokia.com>
+Message-ID: <Pine.LNX.4.44.0207292101070.5578-100000@oh2bns.ampr.org>
+References: <000001c23727$b5a18970$e239832c@jrws2>
+Reply-To: tpm@prkele.tky.hut.fi
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <Pine.HPX.4.10.10207291757180.25868-100000@saturn.trs.ntc.nokia.com>
+In-Reply-To: <000001c23727$b5a18970$e239832c@jrws2>
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"
-To: tpm@prkele.tky.hut.fi, linux-hams@vger.kernel.org
+Content-Type: TEXT/PLAIN; charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+To: Robert Jenkins <raj@jrw.co.uk>
+Cc: linux-hams@vger.kernel.org
 
-Hi Tomi,
+On Mon, 29 Jul 2002, Robert Jenkins wrote:
 
-Thanks for the info on callsign useage and the netrom 'oddities'.
+> My only thought re. the problem you mention with the SABM frame not
+> having a protocol ID is that surely this applies equally to IP via ax25
+> etc.? 
 
-I must admit that I'm not that well up on the details of netrom
-encapsulation.
+Yes. That is why you should not have any user services (that are called
+with plain AX.25) like LinuxNode or a BBS using the same callsign as you 
+have in ifconfig/axports.
 
-My only thought re. the problem you mention with the SABM frame not
-having a protocol ID is that surely this applies equally to IP via ax25
-etc.? 
-
-Is there no mechanism here that can be duplicated for Netrom? 
-(And apologies in advance if I'm talking total rubbish :)
-
-
-
-
-Ps. One mod to the utils which I'm in the process of implementing
-myself, if it is of interest to anyone else:
-
-An addition to mheardd / mheard, in combination with the 'distance.c'
-code from DigiNed by Henk, PE1DNN, to give distance & bearing to any
-station with recognisable location info in it's beacon.
-
-This is a feature I saw in a demo of the Dos PZT Node software by Paula,
-G8PZT. I thought it was a rather neat idea & worth adding to the Linux
-utils.
-
-
-Regards,
-
-Robert Jenkins, G8TBF.
-
-
-
+-- 
+Tomi Manninen           Internet:  oh2bns@sral.fi
+OH2BNS                  AX.25:     oh2bns@oh2rbi.fin.eu
+KP20ME04                Amprnet:   oh2bns@oh2rbi.ampr.org
 
