@@ -1,93 +1,66 @@
-From: <w9ya@arrl.net>
-Subject: Re: hamlib not compiling well
-Date: Thu, 8 Jul 2004 02:43:19 -0500 (EST)
+From: Niall Parker <niall@ve7hex.ampr.org>
+Subject: Re: ancient history ...
+Date: Thu, 08 Jul 2004 09:47:57 -0700
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <3626.192.168.1.117.1089272599.squirrel@gateway>
-References: <1223.192.168.1.117.1089178842.squirrel@gateway>
-        <200407071710.47138.pa3gcu@zeelandnet.nl>
-        <2498.192.168.1.117.1089215964.squirrel@gateway>
-        <200407080811.05522.pa3gcu@zeelandnet.nl>
+Message-ID: <40ED7ABD.4010103@ve7hex.ampr.org>
+References: <40ECEF6A.1070202@ve7hex.ampr.org> <001a01c464dc$01673420$b1123c0a@magic875>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7BIT
+Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <200407080811.05522.pa3gcu@zeelandnet.nl>
+In-Reply-To: <001a01c464dc$01673420$b1123c0a@magic875>
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"
+Content-Type: text/plain; charset="us-ascii"; format="flowed"
 To: linux-hams@vger.kernel.org
 
-> On Wednesday 07 July 2004 17:59, w9ya@arrl.net wrote:
->> >> I am running into a problem that I have not seen before. There are
->> files being created but they are without the ".so"in the file name,
->> I tried adding "--enable-shared" to the configure, but this did not
->> work, nor have I ever required this.
->> >
->> > After installing libs one needs to use 'ldconfig' to configure
->> dynamic linker  run time bindings, as show in the manual page of
->> ldconfig. I presume this is your problem.
+Willy & Linda Peake wrote:
+> ---- Original Message ----- 
+> From: "Niall Parker" <niall@ve7hex.ampr.org>
+> To: <linux-hams@vger.kernel.org>
+> Sent: Thursday, July 08, 2004 6:53 AM
+> Subject: ancient history ...
+> 
+> 
+> 
+>>Hello,
 >>
->> Um, perhaps I was not clear about this. If that is my fault, I am
->> sorry.
+>>I'm trying to get an old machine I had running years ago back online and
+> 
+> I'm
+> 
+>>running into problems, maybe someone here with a good memory can help me.
 >>
->> This is prior to installing the libs.
->
-> Whatever, but i have just retrived hamlib-1.1.4.tar.bz2 decompressed it
-> and  simply did;
->
-> ./configure
-> make
-> make install
->
-> Things look ok to me. .so files do get created in subdirs, make install
-> installs everything in /usr/local/lib and seeminly links things as well.
+>>The system is running kernel 2.0.37 with ax.25 compiled in (no modules)
+> 
+> and
+> 
+>>using the ax25-utils-2.0.12. I've managed to get the system running and
+> 
+> hearing
+> 
+>>traffic but when I try to connect using call I get
+>>
+>>---
+>>
+>>[niall@ve7hexgw /tmp]$ call lsp spr
+>>GW4PTS AX.25 Connect v1.11
+>>*** Connected to spr
+>>Error opening terminal: xterm.
+>>[niall@ve7hexgw /tmp]$
+>>
+> 
+> 
+> Looks to me like it couldn't open an x-terminal session at either at your
+> box or at spr..
 
-Hey Richard;
+ From what I recall of using it before, call was a completely command line app 
+that didn't do anything fancy with X ... just as I am typing though I'm 
+wondering if it may be a terminal type issue ... after some more experimentation 
+I find I can get it to fail similarly with TERM=xterm or vt100 or linux (ie the 
+"xterm" in the error line above is actually the variable TERM in the shell)
 
-And well they might seem o.k. for you.
+More fiddling ... or perhaps I should update everything a bit ... has anyone 
+recommendations for minimal boot/rescue distributions using more modern kernels 
+? (the system above was based on a cramdisk image)
 
-I was making rpms for Mandrake, which entails a different approach.
-
-1 - /usr/local is off limits.
-2 - File permissions and ownership issues may be present.
-3 - Extraneous files may have to noticed and removed.
-4 - ALL files must be accounted for.
-5 - Various other distribution specific issues in many other areas often
-need to be attended to. (And these can be many.)
-
-But I definitely can say this; even with your approach, if you had tried
-to do a simple compile on a Mandrake 10.0 Official machine you would have
-run into the same problems I had.
-
-BTW I reported the fix yesterday or the day before for this, so the
-problem is solved; it appears to be a versioning issue with
-libtool/libtldl.
-
-Finally IMHO it is a really bad idea to just compile, even into
-/usr/local, on a system (like mandrake, debian, red hat, suse, and many
-other "distros") that uses a file tracking package management system. You
-run the risk of system instability or worse.
-
-Thanks for the concerns es vy 73;
-
-Bob
-w9ya
-
->
->> Bob
->> w9ya
->
-> --
-> If the Linux community is a bunch of thieves because they
-> try to imitate windows programs, then the Windows community
-> is built on organized crime.
->
-> Regards Richard
-> pa3gcu@zeelandnet.nl
-> http://people.zeelandnet.nl/pa3gcu/
->
-> -
-> To unsubscribe from this list: send the line "unsubscribe linux-hams" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at  http://vger.kernel.org/majordomo-info.html
-
-
+					... Niall
 
