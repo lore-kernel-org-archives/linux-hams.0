@@ -1,44 +1,56 @@
-From: Jorge Matias <martin@andorinha.ist.utl.pt>
-Subject: messages supressed [Was: Protocol error]
-Date: Tue, 19 Nov 2002 10:16:22 +0000 (WET)
+From: =?iso-8859-1?q?Evandro=20Eduardo=20Seron=20Ruiz?= 
+	<evandro_ruiz@yahoo.com.br>
+Subject: installing packet
+Date: Wed, 20 Nov 2002 08:58:55 -0300 (ART)
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <Pine.LNX.4.33.0211191012120.31130-100000@andorinha.ist.utl.pt>
-References: <3DD88922.CFBA65F1@free.fr>
+Message-ID: <20021120115855.36875.qmail@web20511.mail.yahoo.com>
 Mime-Version: 1.0
 Content-Transfer-Encoding: QUOTED-PRINTABLE
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <3DD88922.CFBA65F1@free.fr>
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: TEXT/PLAIN; charset="iso-8859-1"
-To: =?iso-8859-1?Q?G=E9rard?= Parat / F6FGZ <f6fgz@free.fr>
-Cc: Linux-Ham Mailing List <linux-hams@vger.kernel.org>
+Content-Type: text/plain; charset="iso-8859-1"
+To: linux-hams@vger.kernel.org
 
-On Mon, 18 Nov 2002, G=E9rard Parat / F6FGZ wrote:
 
-> Jorge Matias a =E9crit :
->
-> > On Sun, 17 Nov 2002, Demetre Valaris wrote:
-> >
-> >   Hi Demetre,
-> >
-> >   I have the same problem for a loooong time. I also have lots af m=
-essages
-> > like this one in my /var/log/messages:
-> >
-> > Nov 18 00:34:36 hamradio kernel: NET: 8 messages suppressed.
->
-> This kind of messages occurs with Xnet v1.30 when updating routing ta=
-ble (poll).
+ Hello,
 
-Well, I have XNet running. Is there a way to eliminate these messages?
+ In order to have a packet system installed I have
+ downloaded the following packages:
 
-73,
-Jorge
-CT2HBZ
+ ibax25-0.0.10.tar.gz
+ ax25-tools-0.0.8.tar.gz
+ ax25-apps-0.0.6.tar.gz    l
 
-> --
-> 73 G=E9rard F6FGZ
+ The first two the instalation succeeded, but when it
+ came to the last one I got the following error
+message
+ after the make install
 
+gcc -DHAVE_CONFIG_H -I. -I. -I..     -g -O2 -Wall -c
+call.c
+call.c:38:20: curses.h: Arquivo ou diret=F3rio n=E3o
+encontrado
+make[1]: ** [call.o] Erro 1
+make[1]: Saindo do diret=F3rio
+`/usr/src/ax25-apps-0.0.6/call'
+make: ** [install-recursive] Erro 1
+
+ Could anyone help me solve this.
+
+ Yours,
+ Evandro
+
+
+=3D=3D=3D=3D=3D
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D
+ Evandro Eduardo Seron Ruiz               PY2PCY
+
+_______________________________________________________________________
+Yahoo! GeoCities
+Tudo para criar o seu site: ferramentas f=E1ceis de usar, espa=E7o de s=
+obra e acess=F3rios.
+http://br.geocities.yahoo.com/
 -
 To unsubscribe from this list: send the line "unsubscribe linux-hams" i=
 n
