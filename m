@@ -1,54 +1,49 @@
-From: Adrian Bunk <bunk@fs.tum.de>
-Subject: [2.6 patch] remove kernel 2.2 code from drivers/net/hamradio/dmascc.c
-Date: Sat, 7 Feb 2004 21:45:38 +0100
-Sender: linux-kernel-owner@vger.kernel.org
-Message-ID: <20040207204538.GD7388@fs.tum.de>
+From: "Douglas Cole" <n7bfs@qwest.net>
+Subject: soundmodem ptt troubles
+Date: Mon, 9 Feb 2004 22:25:29 -0800
+Sender: linux-hams-owner@vger.kernel.org
+Message-ID: <200402092225.29942.n7bfs@qwest.net>
+Reply-To: n7bfs@qwest.net
 Mime-Version: 1.0
-Return-path: <linux-kernel-owner+linux-kernel=40quimby.gnus.org@vger.kernel.org>
+Content-Transfer-Encoding: 7bit
+Return-path: <linux-hams-owner@vger.kernel.org>
 Content-Disposition: inline
 List-Id: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-To: klaus.kudielka@ieee.org
-Cc: linux-hams@vger.kernel.org, linux-kernel@vger.kernel.org
+To: Linux Hams <linux-hams@vger.kernel.org>
 
-The patch below removes some #ifdef'd kernel 2.2 code from 
-drivers/net/hamradio/dmascc.c .
+Well, I have gotten soundmodem working as far as audio is concerned (receives 
+packet no prob, makes noise out of sound card when tx) but when I try to 
+setup soundmodem.conf for /dev/parport0 it complains "sm[15680]: 
+Device"/dev/parport0" neither parport nor serport" and then goes on its merry 
+way, does the same thing if I try /dev/lp0 as well...
 
-cu
-Adrian
+Now I have not measured to see if any of the parallel ports pins go hi when I 
+tx but as I don't know which pin to look at I am unclear on this one.
+It does not complain when I change the config to /dev/ttyS0, but I would like 
+to use the parallel port, so I can save the serial port for other things.
+I also shutdown "lp" as I assumed that it would try and occupy the parallel 
+port, but no change.
 
---- linux-2.6.2-mm1/drivers/net/hamradio/dmascc.c.old	2004-02-07 21:39:39.000000000 +0100
-+++ linux-2.6.2-mm1/drivers/net/hamradio/dmascc.c	2004-02-07 21:39:58.000000000 +0100
-@@ -48,21 +48,6 @@
- #include "z8530.h"
- 
- 
--/* Linux 2.2 and 2.3 compatibility */
--
--#if LINUX_VERSION_CODE < KERNEL_VERSION(2,3,14)
--#define net_device device
--#endif
--#if LINUX_VERSION_CODE < KERNEL_VERSION(2,3,43)
--#define netif_start_queue(dev) { dev->tbusy = 0; }
--#define netif_stop_queue(dev) { dev->tbusy = 1; }
--#define netif_wake_queue(dev) { dev->tbusy = 0; mark_bh(NET_BH); }
--#endif
--#if LINUX_VERSION_CODE < KERNEL_VERSION(2,3,47)
--#define netif_running(dev) (dev->flags & IFF_UP)
--#endif
--
--
- /* Number of buffers per channel */
- 
- #define NUM_TX_BUF      2          /* NUM_TX_BUF >= 1 (min. 2 recommended) */
-@@ -210,9 +195,6 @@
- };
- 
- struct scc_priv {
--#if LINUX_VERSION_CODE < KERNEL_VERSION(2,4,0)
--  char name[IFNAMSIZ];
--#endif
-   int type;
-   int chip;
-   struct net_device *dev;
+I am using the soundmodem version supplied/installed by SuSE 8.2 (rpm, no 
+compiling involved), and running Linpac as a client.
+
+Tried to find documentation on soundmodem but did not find anything but a very 
+very small man page, googled "soundmodem" and "soundmodem parport" to no 
+avail...
+This happens on three very different pc boxen (two desktops and one laptop) 
+with the same distro' installed on all three...
+
+Sorry if most of this is obvious to those with the magic keys to making this 
+stuff work, but I am still not certain where the room full of keys lie ;^}
+
+If someone could point me in the direction of documentation that could help me 
+make the parallel port do ptt I would surely appreciate the assistance.
+
+73
+
+Douglas Cole   N7BFS
+AMSAT#26182 , K2 # 544
+http://www.users.qwest.net/~cdoug3
+Registered Linux user # 188922
+
