@@ -1,72 +1,41 @@
-From: pa3gcu <pa3gcu@zeelandnet.nl>
-Subject: Re: OE5DXL driver ?
-Date: Tue, 24 Dec 2002 13:30:26 +0000
+From: mvw@mvw.net
+Subject: Re: Simple BBS, again, sorry for asking twice.
+Date: Tue, 24 Dec 2002 16:43:33 -0500 (EST)
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <02122413302600.12936@unix.pa3gcu>
-References: <1717384414.20021222232719@sma.spb.ru>
-Reply-To: pa3gcu@zeelandnet.nl
+Message-ID: <Pine.LNX.4.44.0212241637400.15792-100000@jeeves.mvw.net>
+References: <Pine.LNX.4.44.0212241945580.2791-100000@zl2bsj.ampr.org>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7BIT
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <1717384414.20021222232719@sma.spb.ru>
+In-Reply-To: <Pine.LNX.4.44.0212241945580.2791-100000@zl2bsj.ampr.org>
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"
-To: "Andrew B." <ua1cam@sma.spb.ru>, linux-hams@vger.kernel.org
+Content-Type: TEXT/PLAIN; charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+To: linux-hams@vger.kernel.org
 
-On Sunday 22 December 2002 20:27, Andrew B. wrote:
-> Hello Friends,
->
-> Anybody can help me find driver for OE5DXL-9k6modem for kernel above
-> 2.0.x !? I'll be happy,if it will for 2.2.x or 2.4.x!
->
-> I'm not familiar in programming, but seems that adaptation of sources
-> for newer kernel are possible. Maybe anybody of programmers will help?
+Hello again all,
 
-Compiles here on 2.2.19
+> > b) I use tcp/ip for mail etc. But apart from that I would like to set up a 
+> > simple messaging system/bbs, to use when someone goes to this system using 
+> > ax25. I do not need "do it all" systems, just a simple bbs 
+> 
+> Consider using 'ax25d' to start up the 'mail' program, allowing people 
+> to send and receive local E-mail.
 
->
-> Source i get there:
-> http://www2.cddc.vt.edu/linux/apps/ham/drivers/dxlmodem-2a.tar.gz For now,
-> when i try to compile this sources ,i get errors like this:
-> -----------------
-> [root@linux dxlmodem-2a]# make
-> gcc -I/usr/src/linux/include -Wall -Wstrict-prototypes -O2 -m486 -pipe
-> -D__KERNEL__ -fomit-frame-pointer -DMODULE -DEXPORT_SYMTAB -DMODVERSIONS
-> -include /usr/include/linux/modversions.h -DNOAX25_H -c dxlmodem.c -o
-> dxlmodem.o In file included from dxlmodem.c:0:
-> /usr/include/linux/modversions.h:1:2: #error Modules should never use
-> kernel-headers system headers, /usr/include/linux/modversions.h:2:2: #error
-> but headers from an appropriate kernel-source {standard input}: Assembler
-> messages:
-> {standard input}:9: Warning: Ignoring changed section attributes for
-> .modinfo make: *** [dxlmodem.o] Error 1
+Mmm... perhaps, though maybe 'mail' is a bit TOO simple, as it requires a
+bit of user knowledge, and machine-level user accounts (AFAIK) for all
+users.
 
-You need to install the kernel source properly.
+Anyone ever use the other BBS- (not smtp-) type message systems? I see all
+sorts here and there but have no idea which ones are simple and still
+work. I suppose I can try them all out, but that will no doubt require a
+lot of hours spent.
 
-uname -r shows the kernel version, i will use 2.2.19 as an example.
+(I seem to be less than stellarly successful with this. E.g. I cannot even
+get _local_ "talk" working: enabled it in xinetd but still refuses
+connections. Let alone do it from ax25. ALso, how do I create some 
+loopback link for testing?).
 
-uname -r 
-2.2.19
+73, Merry Christmas all,
 
-goto www.kernel.org retrive linux-2.2.19.tar.gz (or bzip file).
-follow the Kernel-HOWTO as far as installing the sources.
-Do not forget to do;
-make mrproper
-in /usr/src/linux after installing the source.
-Then goto the directory containing the dxlmodem source;
-make 
-You will possably get something like;
-{standard input}: Assembler messages:
-{standard input}:9: Warning: Ignoring changed section attributes for .modinfo
-But you should then have a file called dxlmodem.o
-insmod dxlmodem.o to load the module, note, you WILL need to load other 
-modules first, ie ax25 (possably mkiss) and certainly hdlcdrv.o IIRC.
-
-> Best regards,
-> Andrew                          mailto:ua1camATsma.spb.ru
-
--- 
-Regards Richard
-pa3gcu@zeelandnet.nl
-http://people.zeelandnet.nl/pa3gcu/
+Michael
 
