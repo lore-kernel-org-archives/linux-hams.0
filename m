@@ -1,46 +1,47 @@
-From: Martin Ewing <martin@aa6e.net>
-Subject: Re: newbie question - hamlib and gMFSK
-Date: Sat, 01 May 2004 13:58:33 -0400
-Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <4093E549.2090001@aa6e.net>
-References: <1083420366.4194.8.camel@dhcppc3> <4093B61F.6090305@aa6e.net> <4093C38B.3040303@cs.unibo.it>
+From: "T + J Williams" <wa0eir@mchsi.com>
+Subject: twcw version 1.2
+Date: Sat, 1 May 2004 18:41:01 -0500
+Message-ID: <000901c42fd5$c2f9b220$6501a8c0@wa0eir>
 Mime-Version: 1.0
 Content-Transfer-Encoding: 7bit
-Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <4093C38B.3040303@cs.unibo.it>
+Return-path: <bounce-debian-hams=debian-hams=m.gmane.org@lists.debian.org>
+Resent-Message-ID: <wKBHTC.A.N-B.rfDlAB@murphy>
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"; format="flowed"
-To: Andrea Borgia <borgia@cs.unibo.it>, linux-hams@vger.kernel.org
+List-Post: <mailto:debian-hams@lists.debian.org>
+List-Help: <mailto:debian-hams-request@lists.debian.org?subject=help>
+List-Subscribe: <mailto:debian-hams-request@lists.debian.org?subject=subscribe>
+List-Unsubscribe: <mailto:debian-hams-request@lists.debian.org?subject=unsubscribe>
+List-Archive: <http://lists.debian.org/debian-hams/>
+Content-Type: text/plain; charset="us-ascii"
+To: debian-hams@lists.debian.org, Linux Hams <linux-hams@vger.kernel.org>
 
-Sorry! I wasn't aware of that option in gMFSK. (It's nice to read the 
-freq., but not essential.) Hamlib 2.3 apparently doesn't have Orion 
-support, which is what I need. I took a quick look at the code to see 
-what to do to add a new rig, but it's not completely trivial. I wonder 
-if it wouldn't have been possible to implement most of a rig's 
-personality in a higher-level way -- in table- or rule-driven form. 
-(Like sendmail -- not! :-)
 
-The hamlib / gMFSK / xlog philosophy looks like a good one, as long as 
-we are in the "Unix" world. One might wish for a true cross-platform 
-solution, but that's harder.
 
-Cheers,
-Martin
+Hi,
 
-Andrea Borgia wrote:
+I have just released a new version of TWCW.
+Here are the new features in this version:
 
-> Martin Ewing wrote:
->
->
->> I have been using KPSK and gMFSK with some success, and also jLog 
->> software (Java). These are all self-contained packages with their own 
->> audio and/or rig interfaces -- no relationship to hamlib.
->
->
-> Hold it, timeout ;-)
->
-> gMFSK does indeed use hamlib to display true frequencies in the 
-> waterfall display and to send accurate qso data to xlog, that also 
-> supports hamlib.
->
+ ** You can run twcw as a keyer extension for Xchat/CWirc to send morse
+over the internet.  Join the #cw channel on the FreeNode server.
+
+ ** Audio is sent via your soundcard or PC speaker.
+
+ ** A new Practice mode sends random 5 letter groups.
+
+ ** A Farnsworth control allows you to adjust the characters and words,
+like many morse test are nowadays.
+
+ ** The Linux Real Time Clock device is now used for code timing.
+
+
+For a more complete description, screenshots, Source code and 
+statically linked executables, pls go to:
+
+http://wa0eir.ham.org
+
+
+Enjoy es 73
+
+Ted - wa0eir
 
