@@ -1,48 +1,52 @@
-From: Tim Neu <tim@tneu.visi.com>
-Subject: FBB and ax25
-Date: Tue, 25 Feb 2003 09:57:32 -0600
+From: "Pontus Falk" <pfalk@ax25.org>
+Subject: RE: Linux Newbie with Compiling Problems...
+Date: Tue, 25 Feb 2003 20:09:35 +0100 (CET)
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <20030225155732.GA2719@leo.tneu.visi.com>
-References: <20030218233527.K507@jeroen.pe1rxq.ampr.org> <Pine.LNX.4.44.0302190033590.14956-200000@oh2bns.ampr.org> <20030221103751.GA16223@enc.com.au> <20030221165337.A3524@jeroen.pe1rxq.ampr.org> <20030222110955.GA3467@enc.com.au>
+Message-ID: <3748.213.66.253.108.1046200175.squirrel@www.ax25.org>
+References: <01C2DC36.D1A6A7E0.wb9mjn@wb9mjn-11.ampr.org>
 Mime-Version: 1.0
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 Return-path: <linux-hams-owner@vger.kernel.org>
-Content-Disposition: inline
-In-Reply-To: <20030222110955.GA3467@enc.com.au>
+In-Reply-To: <01C2DC36.D1A6A7E0.wb9mjn@wb9mjn-11.ampr.org>
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-To: Linux Hams <linux-hams@vger.kernel.org>
+Content-Type: text/plain; charset="iso-8859-1"
+To: linux-hams@vger.kernel.org
 
-I have set up FBB on my linux box, listening at KC0LQL-3, and have NODE
-also running on KC0LQL-5.     I use FBB for mail and conference, and
-NODE for a database gateway (amoung other things). 
+Hi!
 
-I want to be able to access either from a command prompt on the system,
-however currently I can only get to "node" via "telnet localhost node".
+>        I used 'make xconfig' . It had many many options for IDE devic=
+es.
+>
+> The kernel put on the disk by the Linux install did not include a con=
+fig
+>  file. So, I had no "blueprint" to tweak. This meant I had to guess a=
+t
+> the  configuration settings to use. I may have guessed wrong, or the
+> compiler  may have a bug, or ?, or ? or ?
 
-I would like to be able to get to FBB the same way, but it does not
-appear to have the same archietecture. (it runs as a daemon rather than
-using ax25d.conf, and I do not see any listening TCP/IP ports).  How can
-I get to FBB directly? Getting to it is possibe by using "call" to
-digipeat to my host via a local digipeater, but that is a needless waste
-of bandwidth. 
+I'm not so experienced, but I would try the following.
 
-Finally, if I do digi through somewhere else and try to connect, my
-connection is failing if there is already someone connected.  i.e. only
-one person appears to be allowed on at a time.  I think I have something
-set up incorrectly to prevent FBB from allowing multiple connections. 
+make mrproper
+make menuconfig (mark the options as mentioned in AX25-HOWTO)
+make dep
+make clean
 
-I want to be able to have more than one connection active at a time (for
-"conference" mode, and trivialnetdb access at least). 
+make the changes in the Makefile file
 
-Another alternative would be to ditch FBB in favor of some other
-conference & email program. 
+make bzImage
+make modules
+make modules_install
+make install
 
-Any advice will be appreciated. 
+reboot and try the new kernel
 
--- 
-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
-______         _ __                          Military Intelligence
-  /           ' )  )        -KC0LQL-         Honest Politician
- / o ______    /  / _  . .                   Intellectual Property  
-/ <_/ / / <   /  (_</_(_/_  -- tneu@visi.com / http://www.visi.com/~tneu --
+Regards,
+
+Pontus/SM=D8RUX
+
+
+-
+To unsubscribe from this list: send the line "unsubscribe linux-hams" i=
+n
+the body of a message to majordomo@vger.kernel.org
+More majordomo info at  http://vger.kernel.org/majordomo-info.html
