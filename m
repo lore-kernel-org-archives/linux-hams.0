@@ -1,45 +1,63 @@
-From: Tomi Manninen <tpm@prkele.tky.hut.fi>
-Subject: Re: ax25d and STDIN
-Date: Sun, 29 Sep 2002 21:26:51 +0300 (EEST)
+From: barry <barry_linux@rogers.com>
+Subject: Unwanted Broadcast
+Date: Sat, 28 Sep 2002 21:05:37 -0400
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <Pine.LNX.4.44.0209292103580.13963-100000@oh2bns.ampr.org>
-References: <1033190393.2665.53.camel@ben>
-Reply-To: tpm@prkele.tky.hut.fi
+Message-ID: <200209282105.37374.barry_linux@rogers.com>
+Reply-To: barry_linux@rogers.com
 Mime-Version: 1.0
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <1033190393.2665.53.camel@ben>
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: TEXT/PLAIN; charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-To: Ben Gelb <ben@gelbnet.com>
-Cc: linux-hams@vger.kernel.org
+Content-Type: text/plain; charset="iso-8859-1"
+To: linux-hams@vger.kernel.org
 
-On 28 Sep 2002, Ben Gelb wrote:
+Hi, I have installed ax25-apps-0.0.6 axt25-tools-0.0.8 and libax25-0.0.=
+10 on=20
+kernel 2.4.19 (manfrake 9.0 install)
 
-> Using fread with a large length doesn't work, because EOF is never found
-> in stdin. So it just keeps waiting for the number of bytes specified.
+Ihave FBB,NODE,CLX and CONVERS all running OK.
 
-Actually I Don't think it's EOF that is missed. You would expect to see
-EOF only when the user disconnects. It's probably that the io stream is
-fully buffered. Playing with the setbuf() family of functions (if 
-available in php, perl or whatever you use, I don't know) might be a 
-solution.
+There are two TNC's connected, one on port AX0 the other on AX1.
 
-> I don't really understand why this works with the SEQPACKET
-> consideration. I am definitely not getting the whole packet at once,
-> yet, as I said, it does work.
+Port AX0 rgularly send broadcasts (see below) AX1 does not. As far as I=
+ can=20
+see both AX0 and AX1 have been defined the same. Any suggestions how to=
+=20
+prevent this. They are only short packets (except when I restart the ma=
+chine,=20
+especially after a few hours of it being down), but they shouldn't be t=
+here
 
-Your code (which I believe in some form uses the libc stdio library)
-buffers the reads and the actual low level read() is called with a buffer
-larger than what you specify. The default is probably the machine page
-size. I think that's why it works.
+Thanks=20
 
-I have found that the safest option is to directly use a low level read() 
-call and handle any buffering my self. I don't know if that is an option 
-for you however. So after all your hack might the best solution.
+Barry
 
--- 
-Tomi Manninen           Internet:  oh2bns@sral.fi
-OH2BNS                  AX.25:     oh2bns@oh2rbi.fin.eu
-KP20ME04                Amprnet:   oh2bns@oh2rbi.ampr.org
 
+ax0: fm VE3NAV to VE3PZ ctl SABM+
+ax0: fm VE3NAV to VE3PZ ctl SABM+
+ax0: fm VE3NAV-4 to QST ctl UI pid=3DCC(IP) len 251
+IP: len 251 44.135.97.17->44.255.255.255 ihl 20 ttl 64 DF prot UDP
+UDP: len 231 netbios-dgm->netbios-dgm Data 223
+0000  ..'=B2,.a....=D1.. EMEJEOFFFICACACACACACACACACACAAA. ENEEELEHFCEP=
+=46FF
+0040  ACACACACACACACABO.=FFSMB%..............................7.........=
+=2E
+0080  .........7.V.........H.\MAILSLOT\BROWSE..m.=FC..LINUX............=
+=2E
+00C0  ......U=AASamba Server 2.2.6pre2.
+ax0: fm VE3NAV-4 to QST ctl UI pid=3DCC(IP) len 234
+IP: len 234 44.135.97.17->44.255.255.255 ihl 20 ttl 64 DF prot UDP
+UDP: len 214 netbios-dgm->netbios-dgm Data 206
+0000  ..'=B3,.a....=C0.. EMEJEOFFFICACACACACACACACACACAAA. ABACFPFPENFD=
+ECF
+0040  CEPFHFDEFFPFPACAB.=FFSMB%..............................&.........=
+=2E
+0080  .........&.V.........7.\MAILSLOT\BROWSE..m.=FC..MDKGROUP.........=
+=2E
+00C0  ......U=AALINUX.
+ax0: fm VE3NAV to VE3PZ ctl SABM+ =20
+-
+To unsubscribe from this list: send the line "unsubscribe linux-hams" i=
+n
+the body of a message to majordomo@vger.kernel.org
+More majordomo info at  http://vger.kernel.org/majordomo-info.html
