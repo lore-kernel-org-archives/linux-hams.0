@@ -1,42 +1,66 @@
-From: Bernard Pidoux <pidoux@ccr.jussieu.fr>
-Subject: Release of SATDOC 2.8.1
-Date: Thu, 18 Nov 2004 18:17:06 +0100
-Message-ID: <419CD912.4070305@ccr.jussieu.fr>
-References: <00e901c489d8$c3bfba80$c100a8c0@mezmdea3a4qs02>
+From: Stephane Fillod <f8cfe@free.fr>
+Subject: [ANN] Hamlib 1.2.3 released
+Date: Fri, 19 Nov 2004 23:16:18 +0100
+Message-ID: <20041119221617.GE3052@charybde.local>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
-Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <00e901c489d8$c3bfba80$c100a8c0@mezmdea3a4qs02>
-Sender: linux-hams-owner@vger.kernel.org
+Return-path: <hamlib-developer-admin@lists.sourceforge.net>
+Content-Disposition: inline
+Sender: hamlib-developer-admin@lists.sourceforge.net
+Errors-To: hamlib-developer-admin@lists.sourceforge.net
+List-Unsubscribe: <https://lists.sourceforge.net/lists/listinfo/hamlib-developer>,
+	<mailto:hamlib-developer-request@lists.sourceforge.net?subject=unsubscribe>
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"; format="flowed"
-To: AMSAT bb <amsat-bb@AMSAT.Org>, linux-hams <linux-hams@vger.kernel.org>
+List-Post: <mailto:hamlib-developer@lists.sourceforge.net>
+List-Help: <mailto:hamlib-developer-request@lists.sourceforge.net?subject=help>
+List-Subscribe: <https://lists.sourceforge.net/lists/listinfo/hamlib-developer>,
+	<mailto:hamlib-developer-request@lists.sourceforge.net?subject=subscribe>
+List-Archive: <http://sourceforge.net/mailarchive/forum.php?forum=hamlib-developer>
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+To: Hamlib developers <hamlib-developer@lists.sourceforge.net>
+Cc: Linux HAMs <Linux-hams@vger.kernel.org>
 
-Hi,
+Good news everyone!
 
-I have published an update for SATDOC utility software.
+Hamlib-1.2.3 has been released.
 
-SATDOC was primarily designed as an utility for F6FBB's AX25 BBS 
-application.
+Hamlib provides a unified environment for the development of radio and
+rotator control applications. Release 1.2.3 includes many fixes since
+last official version. A strong emphasis has been put on backend
+addition and fixes.  
+ 
+ 
+Check it out at http://hamlib.org !  
+ 
+New in 1.2.3:  
+* frontend API: LEVEL_SQLSTAT marked as deprecated 
+* new backends: Racal, V4L radio cards, Watkins-Johnson 8888 
+* new models: IC-78, IC-7800, IC-R20, IC-756PROIII 
+* fixes: AOR 5k&8k: added S-Meter, 7030: fixed freq, 
+         IC-R8500: calibrated S-Meter, legacy Jupiter and many others.. 
+* port: mingw32 dist with gcc 3.4 version, and stdcall interface
+        to prepare for VisualBasic support. 
+ 
+Download pages are accessible at http://sourceforge.net/projects/hamlib  
+i386 rpms and .deb coming soon. Win32 DLL's are already available.  
+ 
+ 
+Please, test it out and report to hamlib-developer@lists.sourceforge.net
+Developers are also invited to join the Hamlib team by subscribing to
+this mailing list. If your favorite rig is not in the supported list,
+feel free to ask.
+  
 
-However it can be used independantly to create individual satellite 
-characteristics documentation files by splitting AMSAT NEWS SERVICE 
-bulletins.
+Many thanks to all the developers and testers who participated
+in this release.
 
-Version 2.8.1 corrects a bug and adds an option -i for creating a set of
-documentation files named after satellites names instead of
-International Object Numbers (NASA).
-For example AO-7.sat is 7530.sat and ARISS.sat is 25544.sat
-The files with full names are easier to consult localy, while NASA
-number files are suited for F6FBB BBS users.
+Have fun and let us know!  
+  
+73's de Stephane - F8CFE / the Hamlib team
 
-The different versions of SATDOC for DOS, Win32, Linux
-are available in english and french here :
 
-http://f6bvp.free.fr/logiciels/satdoc/2.8.1/
-
-Installation documentation is provided (satdoc.txt) together with
-ans.txt a sample ANS bulletin for test purpose.
-
-73's de Bernard, f6bvp
-
+-------------------------------------------------------
+This SF.Net email is sponsored by: InterSystems CACHE
+FREE OODBMS DOWNLOAD - A multidimensional database that combines
+robust object and relational technologies, making it a perfect match
+for Java, C++,COM, XML, ODBC and JDBC. www.intersystems.com/match8
