@@ -1,57 +1,62 @@
-From: Gavin Rogers <grogers@vk6hgr.echidna.id.au>
-Subject: annoying ax25ipd problem
-Date: Mon, 14 Apr 2003 16:04:53 +0800
+From: "Rodolfo Brasnarof" <rodob@ciudad.com.ar>
+Subject: Re: Soundmodem && SBLive!
+Date: Tue, 15 Apr 2003 20:24:39 -0300
 Sender: linux-hams-owner@localhost
-Message-ID: <5.1.0.14.2.20030414155514.01a782f0@202.74.170.196>
+Message-ID: <3E9C6A87.22232.37320@localhost>
+References: <3E9A1E49.14409.BE2D@localhost>
 Mime-Version: 1.0
+Content-Transfer-Encoding: 7BIT
 Return-path: <linux-hams-owner@vger.kernel.org>
+In-reply-to: <200304140816.37438.rdmartinml@infinito.it>
+Content-description: Mail message body
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"; format="flowed"
-Content-Transfer-Encoding: 7bit
-To: linux-hams@vger.kernel.org
+Content-Type: text/plain; charset="us-ascii"
+To: rdmartinml@infinito.it
+Cc: linux-hams@vger.kernel.org
 
-Hi All.
+---
+On 14 Apr 2003 at 8:16, Giuseppe Martino wrote:
 
-I'm having a problem with ax25ipd which I'm hoping someone can help me with.
+> Il Monday 14 April 2003 07:34, Rodolfo Brasnarof ha scritto:
+> > So, try the user-space one, which should work with ANY
+> > soundcard supported by OSS. Is your card working with OSS?
+> 
+> Yes,  It is.
+> 
+> > Then it should work with the user-space soundmodem.
+> 
+> But Is soundmodem kernel-space no longer mantained?
 
-A few of my AXUDP partners are on dial up links and their connections go 
-down every so often. I have scripts in place on my gateway to make sure 
-that the UDP packets destined for these people ends up in the right place.
+I don't know, but the user-space soundmodem is easier to 
+configure, more flexible, and works with virtually any 
+soundcard supported by the kernel.
 
-The problem is, that the scripts are only run every few minutes and their 
-dyndns.org (etc) entries take time to update, so there are times where my 
-system does not know the correct IP for the AXUDP system.
+The kernel soundmodem only works with soundblaster or 
+windows sound system compatible cards. Those include 
+SoundBlaster, SBPro, SB16, AWE32, AWE64, and many 
+compatibles, for example those with Crystal chipsets (I have 
+one with this chip and made it work with the kernel module, 
+in both SB and WSS mode). Those are mainly isa cards. Sound 
+Blaster PCI cards (like mine PCI128) don't work with this, 
+and perhaps no pci card would work. This is a restriction 
+the other soundmodem doesn't have (and an important one if 
+your card is not supported).
 
-In the mean time, the IP address that used to be allocated to that amateur 
-is taken by someone else. This tickles a bug in AX25ipd - if, while sending 
-AXUDP packets, the response is "connection refused", then ax25ipd will 
-crash completely. This, in turn, exposes a bug in FBB, which will crash as 
-it tries to open the now non-existent axip port.
+Other thing is flexibility. When you configure the user 
+soundmodem, for example in afsk modulation, you can choose 
+the tones you want to use. This is not posible with the 
+kernes soundmodem. A friend and I are using 2400bps afsk 
+with custom tones (we choosed the tones which worked best).
 
-I'm using ax25ipd version:
+Other thing is that when I tried the kernel soundmodem, I 
+had problems unloading the module (the module gives a 
+segmentation fault).
 
-starbase:/etc# /usr/sbin/ax25ipd -v
+And finaly, there's the mixer. You can use the usual mixer 
+to change audio levels. I use aumix in command line mode 
+from within a script, but you can use what you like.
 
-ax25ipd Version 1.0.2 / 0.0.6
-Copyright 1991, Michael Westerhof, Sun Microsystems, Inc.
-This software may be freely used, distributed, or modified, providing
-this header is not removed
-
-Apart from writing a hack script to ensure that ax25ipd is always running 
-(and restart it if it isn't), does anyone know how I can get around this 
-problem?
-
-Many thanks.
-
-
-Regards,
-Gavin Rogers
-
--- 
-Amateur radio station VK6HGR
-http://vk6hgr.ampr.org/
-
-Email : grogers@vk6hgr.echidna.id.au
-Ampr  : grogers@vk6hgr.ampr.org
-Packet: vk6hgr@vk6hgr.#per.#wa.aus.oc
+One bad thing is that if you want to use the configuration 
+utility you need X. But you can take a sample configuration 
+file and edit it yourself.
 
