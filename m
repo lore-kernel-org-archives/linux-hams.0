@@ -1,46 +1,43 @@
-From: M Taylor <mctylr@privacy.nb.ca>
-Subject: Re: request for AX25 help
-Date: Fri, 23 Jan 2004 03:15:26 +0000
+From: James Washer <washer@trlp.com>
+Subject: soundmodem on laptop.. receive working, xmit not working.
+Date: Thu, 22 Jan 2004 20:57:31 -0800
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <20040123031526.A7617@pull.privacy.nb.ca>
-References: <001601c3e125$b93e4010$554689d8@oem7paq6co5hph>
+Message-ID: <20040122205731.5638d4df.washer@trlp.com>
 Mime-Version: 1.0
+Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
-Content-Disposition: inline
-In-Reply-To: <001601c3e125$b93e4010$554689d8@oem7paq6co5hph>; from wb8zrl@avalon.net on Thu, Jan 22, 2004 at 08:23:22PM -0000
 List-Id: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-To: Tom Vavra <wb8zrl@avalon.net>
-Cc: Linux-Hams <linux-hams@vger.kernel.org>
+To: linux-hams@vger.kernel.org
 
-On Thu, Jan 22, 2004 at 08:23:22PM -0000, Tom Vavra wrote:
-> I'm trying to get AX25 working on a RedHat 7.3 system.  The following
-> packages are on the system.
-> 
-> ax25 is not compiled into the kernel so I insmod   ax25.o and   netrom.o
-> 
-> I'm only trying to drive a kiss tnc, and provide ax25 and netrom.  When
-> trying to run kissattach i get
-> 
-> # /usr/sbin/kissattach /dev/ttyS1 port1 44.1.1.1
-> kissattach: Error setting line discipline: TIOCSETD: Invalid argument
-> Are you sure you have enabled MKISS support in the kernel
-> or, if you made it a module, that the module is loaded?
-> 
-> Any idea what I'm doing wrong?
-> Are the kernel and packages a good match?
+I've tried a new kernel (2.4.24 from kernel.org) but my soundcard modem is still not producing reasonable sounds. Receive works just fine.
 
-You need the mkiss module loaded as well,
-	modprobe mkiss
+If I select the PTT button from soundmodemconfig, it makes a lot of 'noise' but this sounds to me to be quite a bit higher frequency that the 'hiss' sound of normal 1200baud AFSK.
 
-The mkiss module is not included with Red Hat Linux if I recall correctly,
-so you will have to rebuild your kernel. There is a Kernel-HOWTO avalilable
-to help guide your through the process if you are not familiar with it.
+If I use the beacon command, or some other AX.25 commandline tool to 'send' a packet, the speaker just makes a clicking sound.
 
-I will note that Red Hat Linux 7.3 is beyond the "end-of-life" support
-from Red Hat Inc., you might want to consider Red Hat Linux 9 or Fedora
-core 1 as possible replaces in the near future.
+If I stop soundmodem, and use the linux play command to play a simple music wave file, all sounds well.
 
-Good luck, and I hope that helps,
--ve3tix
+
+Any ideas? I'm in the process of building a soundmodem system on a desktop PC (as opposed to the laptop). I just want to check whether I get different results on a full PC than I do on the laptop.
+
+
+My /etc/ax25/soundmodem.conf is included below.
+
+thanks
+
+ - jim 
+
+<?xml version="1.0"?>
+<modem>
+  <configuration name="config0">
+    <channel name="Channel 0">
+      <mod mode="afsk" bps="1200" f0="1200" f1="2200"/>
+      <demod mode="afsk" bps="1200" f0="1200" f1="2200"/>
+      <pkt mode="MKISS" ifname="sm0" hwaddr="KG7HH-2" ip="10.0.0.1" netmask="255.255.255.0" broadcast="10.0.0.255" file="/dev/soundmodem0" unlink="1"/>
+    </channel>
+    <chaccess txdelay="400" slottime="100" ppersist="40" fulldup="1" txtail="10"/>
+    <audio type="soundcard" device="/dev/dsp" halfdup="1"/>
+    <ptt file="none"/>
+  </configuration>
+</modem>
