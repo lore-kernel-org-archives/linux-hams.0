@@ -1,61 +1,49 @@
-From: Ruben Navarro Huedo <eb5esx@eb5esx.ampr.org>
+From: M Taylor <mctylr@privacy.nb.ca>
 Subject: Re: kernel 2.4.23 problem
-Date: Thu, 1 Jan 2004 23:22:18 +0100
+Date: Thu, 1 Jan 2004 23:13:18 +0000
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <200401012322.19813.eb5esx@eb5esx.ampr.org>
-References: <3FF444C3.9040306@schonfeld.eu.org> <1072974983.1182.27.camel@tux.home.rpz>
+Message-ID: <20040101231318.A19167@pull.privacy.nb.ca>
+References: <3FF444C3.9040306@schonfeld.eu.org>
 Mime-Version: 1.0
-Content-Transfer-Encoding: QUOTED-PRINTABLE
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <1072974983.1182.27.camel@tux.home.rpz>
-Content-Description: clearsigned data
 Content-Disposition: inline
+In-Reply-To: <3FF444C3.9040306@schonfeld.eu.org>; from tony-no-spam@schonfeld.eu.org on Thu, Jan 01, 2004 at 05:03:15PM +0100
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: Text/Plain; charset="iso-8859-1"
-To: "Lars E. Pettersson" <sm6rpz@home.se>, Tony Schonfeld <tony@schonfeld.eu.org>
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+To: Tony Schonfeld <tony@schonfeld.eu.org>
 Cc: linux-hams@vger.kernel.org
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On Thu, Jan 01, 2004 at 05:03:15PM +0100, Tony Schonfeld wrote:
+> 
+> Since i've upgrade kernel 2.4.22 to 2.4.23 my system is unstable
+> under debian sid like this message:
+ 
+> Without ax25 running, everything is fine.
+> 
+> i' haven't check 2.4.23 without ax25 but 2.4.22 run fine here.
+ 
+> Do you know the fix for this problem ?
+> the only way is it upgrade to kernel 2.6 ?
 
-The same problem was here.
-After apply the patch , we have now an uptime of 23 days.
+The best long term fix is to upgrade to 2.6.0 (or newer), as the 2.6.x
+kernel has numerous bug fixes. No offense to 9a4gl but as far as I know
+his patch does not fix everything that Ralf and Joeron (sp?) have been
+working on. 
 
-Thank's 9a4gl :)
+The reason it is flakey under 2.4.x (for some people) is that some
+basic or fundemental assumptions changed between 2.2.x and 2.4.x and
+at the time no one made the necessary changes to AX.25 and the device
+drivers. So some people will be bit by these bugs while others get
+luckily and don't see them (faster, more complex setups, especially
+gateways seem to be affected the most).
 
-El Jueves, 1 de Enero de 2004 17:36, Lars E. Pettersson escribi=F3:
-> On Thu, 2004-01-01 at 17:03, Tony Schonfeld wrote:
-> > i' haven't check 2.4.23 without ax25 but 2.4.22 run fine here.
-> > i've also look a currious swap problem with 2.4.23 and ax25.
->
-> Running Fedora Core 1 here with the 2.4.23 kernel and the ax25-patche=
-s
-> from:
-> ftp://ham2.cc.fer.hr/pub/users/9a4gl/9a4gl-ax25-2423-20031210.patch
->
-> Without these patches netrom hanged the system frequently (on previou=
-s
-> versions of the 2.4-kernel.) So try to apply this patch and see if th=
-at
-> helps.
->
-> 73 de Lars, sm6rpz
+I believe that Debian 3.0 'testing' or 'unstable' both support the  2.6.x
+kernel. (RedHat Linux 9 + module-init-util, or Fedora core 1 also support
+2.6 AFAIK)
 
-- --=20
-Ruben Navarro Huedo
-email: eb5esx@eb5esx.ampr.org
-ax25: eb5esx@ea5rke.eaa.esp.eu
-http://www.cabodesantapola.org
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.2.1 (GNU/Linux)
+There is a 2.6.0 HOWTO at <http://www.kerneltrap.com/>
 
-iD8DBQE/9J2a0S5G8AO3zN8RAifmAKCnCizX0k+L2hrWk6X+QSqKISbozQCeMhtC
-G4FELZMCcn1qQ4z7bAKGpXc=3D
-=3DnMF/
------END PGP SIGNATURE-----
+Hope that helps,
 
--
-To unsubscribe from this list: send the line "unsubscribe linux-hams" i=
-n
-the body of a message to majordomo@vger.kernel.org
-More majordomo info at  http://vger.kernel.org/majordomo-info.html
+-ve3tix (ex. ve1mct)
