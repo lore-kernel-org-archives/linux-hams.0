@@ -1,47 +1,34 @@
 From: Arno Verhoeven <pe1icq@pi8zaa.ampr.org>
-Subject: Re: ANNOUNCE: gMFSK v0.5
-Date: Fri, 11 Jul 2003 23:50:30 +0200
+Subject: PROBLEM: gMFSK v0.5 locks up.
+Date: Sat, 12 Jul 2003 10:04:13 +0200
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <3F0F3126.8030403@pi8zaa.ampr.org>
-References: <Pine.LNX.4.44.0304192044470.6051-100000@oh2bns.ampr.org> <20030420023708.GA22988@silly.cloud.net.au> <3F0F1E43.9030500@pi8zaa.ampr.org> <200307112325.24591.ailic@gmx.net>
+Message-ID: <3F0FC0FD.5060307@pi8zaa.ampr.org>
+References: <Pine.LNX.4.44.0304192044470.6051-100000@oh2bns.ampr.org> <20030420023708.GA22988@silly.cloud.net.au> <3F0F1E43.9030500@pi8zaa.ampr.org> <200307112325.24591.ailic@gmx.net> <3F0F3126.8030403@pi8zaa.ampr.org>
 Mime-Version: 1.0
 Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <200307112325.24591.ailic@gmx.net>
+In-Reply-To: <3F0F3126.8030403@pi8zaa.ampr.org>
 List-Id: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"; format="flowed"
-To: Aleksandar Ilic <ailic@gmx.net>
-Cc: linux-hams@vger.kernel.org
+To: linux-hams@vger.kernel.org
 
-Aleksandar Ilic wrote:
+Hi,
 
->On Friday 11 July 2003 22:29, Arno Verhoeven wrote:
->  
->
->>>Neat! Compiled easily on Debian and I'll upload the package shortly.
->>>      
->>>
->>It doesn't on my machine (Slackware 9.0). If tried with both fftw-3.0 and
->>2.1.5 but in both cases configure gives an error.
->>
->>configure: error: FFTW libraries not found!!!
->>
->>Does anybody know a way how to solve this?
->>    
->>
->
->It works here on Slack 9.
->Grep your /etc/ld.so.cache to be sure libfft is in it.
->When I compiled fft-2.1.3, it was necessary to :
->./configure --enable-shared
->or libraries was not cached.
->  
->
+Now that I've got gmfsk to compile, I run into another problem.
 
-Adding --enable-shared did the trick.
-(I should have noticed that the .so files were not there....)
+Until now I didn't get it to produce any sound yet. (sound works on that 
+system. Other applications can use the sound card)
 
-Thanks.
+There are 2 ways that I can make gmfsk lock up.
+
+1. click the "Abort transmission immediately" button.
+2. click the "Mode" pull-down menu and try to select another mode.
+
+There are no messages in /var/log/syslog and /var/log/messages
+I'm using fftw-2.1.5, kernel 2.4.21 glibc-2.3.1 and all were compiled 
+with gcc-3.2.3.
+
+Any ideas? Can somebody point me in the right direction?
 
 -- 
 73, PE1ICQ  Arno Verhoeven
