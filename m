@@ -1,32 +1,35 @@
-From: terry <wd0fpc@aniota.com>
-Subject: Re: Yamaha YMF-724 Soundcard
-Date: Sat, 1 Mar 2003 19:02:37 -0800 (PST)
+From: Kelly Black <kelly.black@penguinpackets.com>
+Subject: RE: Linux Newbie with Compiling Problems...
+Date: 01 Mar 2003 23:23:06 -0600
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <Pine.LNX.4.50.0303011859380.8601-100000@yossarian.aniota.net>
-References: <1046393844.10993.18.camel@bobcp4.lingpgmr.com>
+Message-ID: <1046582586.8275.30.camel@pokey.penguinpackets.com>
+References: <01C2E024.91E147E0.wb9mjn@wb9mjn-11.ampr.org>
 Mime-Version: 1.0
-Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <1046393844.10993.18.camel@bobcp4.lingpgmr.com>
-List-Id: <linux-hams.vger.kernel.org>
-Content-Type: TEXT/PLAIN; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
-To: Robert L Cochran <cochranb@speakeasy.net>
-Cc: linux-hams <linux-hams@vger.kernel.org>
+Return-path: <linux-hams-owner@vger.kernel.org>
+In-Reply-To: <01C2E024.91E147E0.wb9mjn@wb9mjn-11.ampr.org>
+List-Id: <linux-hams.vger.kernel.org>
+Content-Type: text/plain; charset="us-ascii"
+To: "wb9mjn@wb9mjn-11.ampr.org" <wb9mjn@wb9mjn-11.ampr.org>
+Cc: Linux Hams mailing list <linux-hams@vger.kernel.org>
 
-On Thu, 27 Feb 2003, Robert L Cochran wrote:
+On Sat, 2003-03-01 at 18:58, wb9mjn wrote:
+>     Hi All,
+> 
+>       Does anybody know what package the command 'as86' is part of ?
+> 
+>     73, Don...
+> 
 
-> Does the Yamaha YMF-724 soundcard (which is integrated into my Dell XPS
-> T550's motherboard) qualify as a soundcard modem?
+It is in package bin86 under Debian if that helps.
 
-> How about an onboard Realtek ALC650 Codec which is on another machine?
+Debian description:
 
-... you might want to read the 'Hardware-HOWTO' for starters.  in
-addition, any application using hardware, might actually 'document' what
-it supports.
-
-    RTFM ...
-
+This is the as86 and ld86 distribution written by Bruce Evans. It's a
+complete 8086 assembler and loader which can make 32-bit code for the
+386+ processors (under Linux it's used only to create the 16-bit boot
+sector and setup binaries).
 
 -- 
-73 , de WD0FPC		Pacific Nowthwest 2M Repeaters
-    aka: terry 		http://www.aniota.com/~wd0fpc
+Kelly Black <kelly.black@penguinpackets.com>
+
