@@ -1,8 +1,8 @@
 From: Luc Langehegermann <lx2gt@gmx.net>
-Subject: Fodtrack under linux with Predict
-Date: Mon, 25 Nov 2002 11:34:37 +0100
+Subject: New version of KTrack released
+Date: Sat, 30 Nov 2002 16:11:14 +0100
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <200211251134.37943.lx2gt@gmx.net>
+Message-ID: <200211301611.14733.lx2gt@gmx.net>
 Mime-Version: 1.0
 Content-Transfer-Encoding: 8BIT
 Return-path: <linux-hams-owner@vger.kernel.org>
@@ -12,11 +12,10 @@ To: amsat-bb@amsat.org, linux-hams@vger.kernel.org
 
 Hello,
 
-Over the weekend I wrote a small tool, that will emulate an easytrack rotor 
-interface using an pseudo terminal device. It will allow you to use predict 
-with the fodtrack rotor interface to point your antennas to any satellite.
+I have just finished a new release of my satellite prediction Program for 
+Linux / KDE3. The most important change, is that is now uses hamlib to 
+control the transceiver, so supports a lot of rigs.
 
-You can get the archive at http://www.qsl.net/lx2gt/fodtrack/
+More informations at http://ktrack.sourceforge.net
 
-Luc
-
+73, LX2GT, Luc
