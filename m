@@ -1,45 +1,32 @@
-From: "Wilson G. Hein" <wilson.hein@verizon.net>
-Subject: HELP PMS
-Date: Sat, 1 May 2004 09:33:22 -0400
+From: N5NW Marty <n5nw@n5nw.org>
+Subject: newbie question - hamlib and gMFSK
+Date: Sat, 01 May 2004 10:06:12 -0400
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <NCBBKBAJDJIPKFIAFBKLKEOKEOAC.wilson.hein@verizon.net>
+Message-ID: <1083420366.4194.8.camel@dhcppc3>
+Reply-To: n5nw@n5nw.org
 Mime-Version: 1.0
 Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
 List-Id: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
-To: Linux-Hams Mailing List <linux-hams@vger.kernel.org>
-Cc: dcb@vectorbd.com, terry@perf.no.itg.telecom.com.au
+To: linux-hams@vger.kernel.org
 
-Greetings!
+I have finally successfully installed gMFSK and hamlib, but gMFSK
+doesn't seem to recognize that hamlib exists.  No options for
+configuration under preferences.
 
-Here is a blast from the past. I'm looking to compile pms from the "old"
-ax25-utils-2.1.42a. I initially got this error:
+Hamlib works, as I can use rigctl and query the TS-570DG and get
+frequency and mode.
 
-$ make all
-Makefile:10: ../Makefile.include: No such file or directory
-make: *** No rule to make target `../Makefile.include'.  Stop.
+Any thoughts?  I'm trying to move completely away from the Microsoft
+environment in the shack, and this seems like a critical step.  I am
+very much the newbie with linux - not much beyond the
+./configure|make|make install stage.  I'm using Mandrake 9.2 in a triple
+boot environment (DOS/Win98/Linux).
 
-Since there is no Makefile.include in the pms directory I removed the
-relevent code from the Makefile, just to see what would happen.
+If there is a more appropriate forum for the question, please advise.
 
-$ make all
-gcc -Wall -Wstrict-prototypes -O2 -I../lib -c axcalluser.c
-axcalluser.c:6:20: config.h: No such file or directory
-make: *** [axcalluser.o] Error 1
+de N5NW (Marty)
+Bellbrook (Dayton), Ohio
 
-Now apparently I'm also missing a config.h file.
-
-Any help in locating the missing files, or suggestions on how I can make
-this program work would be greatly appreciated.
-
-Regards,
-
-Wilson, WJ3G
-
-
----
-Outgoing mail is certified Virus Free.
-Checked by AVG anti-virus system (http://www.grisoft.com).
-Version: 6.0.657 / Virus Database: 422 - Release Date: 4/13/2004
 
