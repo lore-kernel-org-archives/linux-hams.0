@@ -1,40 +1,43 @@
 From: Dave Platt <dplatt@radagast.org>
-Subject: Re[2]: ax25 with digipeaters
-Date: Tue, 27 Jul 2004 10:45:09 -0700 (PDT)
+Subject: Re: Usermode Soundmodem
+Date: Tue, 27 Jul 2004 10:54:06 -0700 (PDT)
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <20040727174510.4335.qmail@radagast.org>
-References: <003101c473b5$d2254830$050010ac@tokland>
+Message-ID: <20040727175406.4373.qmail@radagast.org>
+References: <1090949358.1278.29.camel@oh2bns.ampr.org>
 Mime-Version: 1.0
-Content-Transfer-Encoding: QUOTED-PRINTABLE
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <003101c473b5$d2254830$050010ac@tokland>
+In-Reply-To: <1090949358.1278.29.camel@oh2bns.ampr.org>
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="iso-8859-1"
-To: arnau@gbt.tfo.upm.es
-Cc: linux-hams@vger.kernel.org
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+To: Linux-hams List <linux-hams@vger.kernel.org>
 
-Arnau S=E1nchez <arnau@gbt.tfo.upm.es> wrote:
-> >I could not get axdigi working, but I'm using digi_ned=20
-> >instead, which works fine.
->=20
-> I did't know about "digi_ned"... does it work well with ax25?=20
+Tomi Manninen <oh2bns@sral.fi> wrote:
+> On Tue, 2004-07-27 at 18:04, Andrea Borgia wrote:
+> 
+> > Unfortunately, I am not really a DSP expert, so there might be deeper 
+> > reasons why the soundmodem is using a specific sample rate rather than 
+> > the one most convenient to the hardware, especially considering that 
+> > quite a few recent chipsets only offer a limited selection of rates.
+> 
+> I think most modems (but not all!) in soundmodem should work with
+> any sample rate (above some minimum). Soundmodem requests the rate
+> that best suits whatever modem is in use and then settles for
+> whatever it gets (calculating stuff respectively).
 
-It has worked well for me, in the simple testing I have done,
-on a Debian Linux system ("stable" distribution) and a single
-KISS-mode TNC.
+As I understand it, part of the problem is that the ALSA OSS layer
+tries to be very accommodating of the application's desires.
+If the application requests a rate of 9600 samples/second, and
+the sound card can't come close to this, the normal behavior of
+the ALSA OSS plugin is to say "Sure, this rate is available!" and
+activate its own internal sample-rate converter.  It looks to me
+as if it's difficult (or perhaps even impossible?) for the soundmodem
+to "know" what the underlying card's native sample rates are, and
+what rates are available only via ALSA sample-rate conversion.
 
-It's a very flexible, highly-configurable package, with a lot
-of "smarts" about how and what it digipeats, and how it
-alters the packets' digipeating path when it does so.  Think of
-it as a "sendmail for digipeating" (and if that isn't enough
-to make the hair stand up on the back of your neck, go for it!)
+If you disable the OSS emulator's sample rate converter, then
+the rate conversion won't happen, and the ALSA driver will
+pass through one of the native (non-converted) sample rates.
+This will then let the soundmodem adjust itself accordingly,
+and I suspect that it will produce rather better results.
 
-=46ortunately it's not difficult to create a "cut-down" version
-of the configuration, which does the simple sort of straightforward
-digipeating you're interested in.  A suitable sample configuration
-is provided with the software.
--
-To unsubscribe from this list: send the line "unsubscribe linux-hams" i=
-n
-the body of a message to majordomo@vger.kernel.org
-More majordomo info at  http://vger.kernel.org/majordomo-info.html
