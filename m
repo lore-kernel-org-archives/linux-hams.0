@@ -1,32 +1,56 @@
-From: Shane Deering <vk3bvp@qsl.net>
-Subject: Redhat 7.2 + kernel 2.4.19
-Date: Sun, 27 Apr 2003 15:30:47 +1000
+From: Stephane Fillod <f8cfe@free.fr>
+Subject: [ANN] Hamlib 1.1.4 released
+Date: Mon, 28 Apr 2003 20:47:52 +0200
 Sender: linux-hams-owner@localhost
-Message-ID: <200304271530.47582.vk3bvp@qsl.net>
-Reply-To: vk3bvp@qsl.net
+Message-ID: <20030428184751.GX29558@charybde.local>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 8bit
 Return-path: <linux-hams-owner@vger.kernel.org>
+Content-Disposition: inline
 List-Id: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
-To: linux-hams@vger.kernel.org
+Content-Transfer-Encoding: 7bit
+To: Hamlib developers <hamlib-developer@lists.sourceforge.net>
+Cc: Linux HAMs <Linux-hams@vger.kernel.org>, sdrwg@arrl.org, GNU Radio mailing list <discuss-gnuradio@gnu.org>
 
-Hello people.
-I have been using a 2.2 kernel (nice and stable) for packet on my RH7.2 box.
-I'm using RH7.2 as it seems to be the newest version that runs OK with the FBB 
-RPM.
-I want to put my internet connection on that box and would like a newer kernel 
-(iptables).
-I can see 2 ways that I could go here. Either get a 2.4.19(20) kernel to 
-compile on the Redhat box or get fbb (GUI client) to compile with a newer 
-distro (MDK9.0 would be nice).
 
-I haven't been able to get anywhere with either option above.
-Has anyone been able to do either or have a better idea?
+Good news everyone!
 
--- 
-Shane Deering                   Sent using Kmail v1.4.3
-vk3bvp@qsl.net                  on Mandrake Linux, the Desktop OS
-vk3bvp@vk3bvp.#sev.vic.aus.oc   MDK9.0 Up 7 hours and 13 minutes 
-http://www.qsl.net/vk3bvp/      RH7.2 Up 3 days, 20 hours and 4 minutes 
+Hamlib-1.1.4 has finally been released.
 
+Hamlib provides a unified environment for the development of radio 
+and rotator control applications. Release 1.1.4 includes improved 
+rotator support, important build fixes for gcc-3.x, *BSD, Mac OS X,
+and Cygwin(win32) platforms. Besides improvements and bug fixes, 
+some experimental work has been started on SDR, stay tuned. 
+ 
+Check it out at http://hamlib.org ! 
+  
+New in 1.1.4: 
+* new backends: Drake (R8B), GNU Radio (experimental), 
+		microtune, and many new rig models 
+* new rotator backends: fodtrack, rotorez 
+* better doxygenized documentation 
+* reworked perl and tcl bindings using swig 
+* vfo_t rework 
+* gcc-3.x compilance 
+   
+Note: Kylix binding may not be uptodate. 
+    
+Download pages are accessible at http://sourceforge.net/projects/hamlib 
+i386 rpms and .deb coming soon. DLL and VisualBasic wrapper are planned. 
+     
+Plan for 1.1.5: 
+* add support for the SDR-1000 
+* develop further the gnuradio backend 
+* complete the port to mingw(win32) environement 
+* enter more models of supported backends 
+* add Python and Java bindings 
+* etc. (any wishes?) 
+      
+Please, test it out and report to hamlib-developer@lists.sourceforge.net 
+Developers are also invited to join the Hamlib team by subscribing to this 
+mailing list. 
+       
+Have fun and let us know! 
+        
+73's de Stephane - F8CFE / the Hamlib team
