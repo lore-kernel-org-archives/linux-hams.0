@@ -1,38 +1,39 @@
-From: M Taylor <mctylr@privacy.nb.ca>
-Subject: Re: Dekoding encap.txt to routing for JNOS
-Date: Sun, 23 Mar 2003 17:04:40 +0000
+From: Wilbert Knol <zl2bsj@zl2tze.ath.cx>
+Subject: Re: 6pack problem
+Date: Mon, 24 Mar 2003 07:21:51 +1200 (NZST)
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <20030323170440.A24193@pull.privacy.nb.ca>
-References: <000901c2f0a6$c71402d0$6400000a@gw.sp1lop.szczecin.pl>
+Message-ID: <Pine.LNX.4.21.0303240716290.1056-100000@zl2bsj.ampr.org>
+References: <1048413846.30392.25.camel@atlantic>
 Mime-Version: 1.0
 Return-path: <linux-hams-owner@vger.kernel.org>
-Content-Disposition: inline
-In-Reply-To: <000901c2f0a6$c71402d0$6400000a@gw.sp1lop.szczecin.pl>; from sp1lop@gw.sp1lop.szczecin.pl on Sat, Mar 22, 2003 at 08:10:54PM +0100
+In-Reply-To: <1048413846.30392.25.camel@atlantic>
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"
+Content-Type: TEXT/PLAIN; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
-To: Janusz Przybylski - SP1LOP <sp1lop@gw.sp1lop.szczecin.pl>
+To: "B. Stienstra" <b.stienstra@xs4all.nl>
 Cc: linux-hams@vger.kernel.org
 
-On Sat, Mar 22, 2003 at 08:10:54PM +0100, Janusz Przybylski - SP1LOP wrote:
-> 
-> Routingu used in encap format.txt it is not peaceable with my format
-> routingu
-> and then example:
-> encap.txt
-> route addprivate 44.165.25/24 encap 80.48.10 5.183
-> 
-> and this routing:
-> ip route add 44.165.25/25 via 80.48.10 5.183 dev tunl0 onlink
-> 
-> this exemplifies from utilization my data.
 
-If I understand your request correctly, you wish to use the encap.txt
-file for building IPIP encapsulation routes under Linux using iproute2.
+Hi Ben,
 
-If so, then I have some scripts that should help you.
-http://www.mctaylor.com/ve1mct/ampr_gateways.tar.gz
+> option. The problem is that the tnc stops running after a long while,
+
+<snip>
+
+> After i disconnect the 12volt from the tnc and then reconnect it with
+> 12v the /var/log/messages says:
+> Mar 23 10:06:18 atlantic kernel: 6pack: TNC found.
+> 
+> And the tnc is up and running. Does anyone know what the problem could
+
+I had exactly the same problem with a TNC2 (Tiny-2). It turned out to be a
+hardware problem. I ended up re-flowing every joint on the board. The
+problem went away for a few months.
  
-I hope that is useful for you.
+Eventually, I replaced the MAX231 RS232<>TTL converter, which cured it.
 
--ve1mct
+
+Wilbert.
+
+
+
