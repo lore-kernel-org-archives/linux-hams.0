@@ -1,24 +1,31 @@
-From: "John Montanez" <jemontanez@knology.net>
-Subject: Just installed RedHat 9
-Date: Wed, 7 Jul 2004 12:58:47 -0500
+From: "Lakisha Walson" <lakishawalsonvcfdgwb@usa.com>
+Subject: Keep it up
+Date: Thu, 08 Jul 2004 05:03:05 +0200
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <002801c4644c$0f62ecd0$6401a8c0@jeremiel>
-References: <1223.192.168.1.117.1089178842.squirrel@gateway>        <200407071710.47138.pa3gcu@zeelandnet.nl> <2498.192.168.1.117.1089215964.squirrel@gateway>
+Message-ID: <764e01c46498$16ceba70$b1047fba@cpgvcuvusuyxl>
+Reply-To: "Lakisha Walson" <lakishawalsonvcfdgwb@usa.com>
 Mime-Version: 1.0
 Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
 List-Id: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
-To: linux-hams@vger.kernel.org
+To: linux-hams <linux-hams@vger.kernel.org>
 
-Hello,
+Effectively, it is identical to Pfzier Viarga but much less in price.
 
-I just installed RedHat 9, and am trying to recompile the kernel to include
-support for amateur radio.  I get a message telling me that the kernel is to
-big to be able to make a boot disk.  Can anyone tell me what sort of things
-I can safely leave out when I configure the kernel to make it smaller.  It's
-probably obvious but I'm a newbie at linux.
+Each order includes specific usage instructions to ensure your safety.
 
-John / KC4TXC
+Check out the site below to learn more today:
+
+Tanisha Jeppson
+
+http://Gumaqlvkg.affordableonlinegenerics.com?Awoekyq
 
 
+
+
+
+
+This is where you can be taken off the database:
+http://W374427.affordableonlinegenerics.com?Yelmfwypb
+y1Qdauxqwkj
