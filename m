@@ -1,45 +1,38 @@
-From: =?iso-8859-1?Q?G=E9rard?= Parat / F6FGZ <f6fgz@free.fr>
-Subject: Re: Conflicting node name for services
-Date: Sun, 22 Dec 2002 09:09:05 +0100
+From: John Ackermann N8UR <jra@febo.com>
+Subject: OT:  Help using a analog-to-digital converter board under Linux
+Date: Sun, 22 Dec 2002 10:44:51 -0500
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <3E057320.EDFC92A7@free.fr>
-References: <Pine.LNX.4.44.0212220138420.3171-100000@oh2bns.ampr.org>
+Message-ID: <1450000.1040571891@[192.168.1.222]>
 Mime-Version: 1.0
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
+Content-Disposition: inline
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="iso-8859-1"
-To: Linux-Hams <linux-hams@vger.kernel.org>
+Content-Type: text/plain; charset="us-ascii"; format="flowed"
+To: linux-hams@vger.kernel.org
 
-Tomi Manninen wrote :
+I wonder if someone here would be willing to work with me off-list to see 
+if I can make use of an analog-to-digital converter board under Linux.
 
-> > In /etc/services use the following line:
-> > netrom          3694/tcp                        # OH2BNS's node sof=
-tware
->
-> Ok, good to know. But just out of curiosity, what service did conflic=
-t
-> with "node" ? My /etc/services from RH8 doesn't show any conflicts...
+I have an ADAC 5500MF data acquisition board that has 8 channels of 12 bit 
+ADC (as well as some DAC channels and timers, but I'm not really interested 
+in those).  It has DOS and Windows software which frankly I'm not thrilled 
+with, even if you leave the OS aside!
 
-Hi Tomi,
+It appears that the board only uses some memory ports and doesn't use IRQs 
+or DMA.  I have the I/O memory map, and some sample program fragments from 
+the manual in several different languages.  I just don't know enough about 
+Linux programming at the hardware level to know how to begin writing my own 
+program.
 
-I use a Mandrake 8.1 distribution and the /etc/services file belonging =
-to
-setup-2.2.0-12mdk package includes the following line :
-hp-managed-node 382/tcp    hp performance data managed node
+If someone has that skill and would be willing to help me out off-line, I'd 
+really appreciate it.  I can scan the relevant pages from the manual and 
+make them available.  My goal is to find a way to do this in perl, but if 
+we need to stick with C, that's OK.
 
-So when I telneted localhost on port node (telnet localhost node) it wo=
-rked but it
-was 382 instead of 3694. BTW, telnet on numeric 3694 port didn't worked=
-=2E
+Thanks to anyone who can help!
 
---
-73 G=E9rard F6FGZ
+73,
+John N8UR
+jra@febo.com
 
-
-
--
-To unsubscribe from this list: send the line "unsubscribe linux-hams" i=
-n
-the body of a message to majordomo@vger.kernel.org
-More majordomo info at  http://vger.kernel.org/majordomo-info.html
