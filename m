@@ -1,37 +1,30 @@
-From: Ruben Navarro Huedo <eb5esx@eb5esx.ampr.org>
-Subject: saupp + irc
-Date: Wed, 10 Dec 2003 23:23:06 +0100
-Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <200312102323.06952.eb5esx@eb5esx.ampr.org>
+From: "David S. Miller" <davem@redhat.com>
+Subject: Re: [PATCH] use after free in AF_ROSE
+Date: Wed, 10 Dec 2003 14:53:26 -0800
+Sender: netdev-bounce@oss.sgi.com
+Message-ID: <20031210145326.6d1d9b81.davem@redhat.com>
+References: <20031210100851.4b4a6927.shemminger@osdl.org>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 8BIT
-Return-path: <linux-hams-owner@vger.kernel.org>
-Content-Description: clearsigned data
-Content-Disposition: inline
+Content-Transfer-Encoding: 7bit
+Return-path: <netdev-bounce@oss.sgi.com>
+In-Reply-To: <20031210100851.4b4a6927.shemminger@osdl.org>
+Errors-to: netdev-bounce@oss.sgi.com
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: Text/Plain; charset="us-ascii"
-To: linux-hams@vger.kernel.org
+Content-Type: text/plain; charset="us-ascii"
+To: Stephen Hemminger <shemminger@osdl.org>
+Cc: ralf@linux-mips.org, netdev@oss.sgi.com, linux-hams@vger.kernel.org
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On Wed, 10 Dec 2003 10:08:51 -0800
+Stephen Hemminger <shemminger@osdl.org> wrote:
 
-Hello :
-I have installed last version of saupp convers server.
-How could i enable the irc server of saupp?
-I am looking for it in the documentation but...i don't find it.
+> Doing multiple protocol testing and get crashes with simple
+> socket/close combo with AF_ROSE.  The problem is that it
+> dereferences the socket in rose_release after it has already been
+> freed by rose_destroy_socket.
+> 
+> This patch fixes that problem, and also uses sock_put to handle the
+> case where rose_destroy_socket is called with sk_refcnt > 1 which
+> might be possible if data comes in during close.
 
-Thank's.
-
-- -- 
-Ruben Navarro Huedo
-email: eb5esx@eb5esx.ampr.org
-ax25: eb5esx@ea5rke.eaa.esp.eu
-http://www.cabodesantapola.org
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.2.1 (GNU/Linux)
-
-iD8DBQE/15zK0S5G8AO3zN8RAs6kAKDAf5+nU5yC8zKvg/B3mP4r6bkbHwCfTrNH
-QzCgqghGd56NmtlYW35B3sQ=
-=sWkD
------END PGP SIGNATURE-----
+Applied, thanks a lot Stephen.
 
