@@ -1,48 +1,96 @@
-From: M Taylor <mctylr@privacy.nb.ca>
-Subject: Re: ax25/baycom/kernel(?) problem.
-Date: Tue, 25 Mar 2003 14:12:54 +0000
+From: bernard pidoux <pidoux@ccr.jussieu.fr>
+Subject: Re: Problem...
+Date: Tue, 25 Mar 2003 17:42:14 +0100
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <20030325141254.A3089@pull.privacy.nb.ca>
-References: <1F55F6582266314A85A55F6241509B670395F455@Esealnt863.al.sw.ericsson.se>
+Message-ID: <3E8086E6.3000709@ccr.jussieu.fr>
+References: <GMEHKCCPLOCMPOLBMKICCEJNDOAA.hremijn@zeelandnet.nl>
 Mime-Version: 1.0
-Return-path: <linux-hams-owner@vger.kernel.org>
-Content-Disposition: inline
-In-Reply-To: <1F55F6582266314A85A55F6241509B670395F455@Esealnt863.al.sw.ericsson.se>; from Gunnar.Widell@ese.ericsson.se on Tue, Mar 25, 2003 at 08:34:59AM +0100
-List-Id: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
-To: "Gunnar Widell (ESE)" <Gunnar.Widell@ese.ericsson.se>
-Cc: linux-hams@vger.kernel.org
+Return-path: <linux-hams-owner@vger.kernel.org>
+In-Reply-To: <GMEHKCCPLOCMPOLBMKICCEJNDOAA.hremijn@zeelandnet.nl>
+List-Id: <linux-hams.vger.kernel.org>
+Content-Type: text/plain; charset="us-ascii"; format="flowed"
+To: Henk Remijn <hremijn@zeelandnet.nl>
+Cc: Pontus Falk <pfalk@ax25.org>, linux-hams@vger.kernel.org
 
-On Tue, Mar 25, 2003 at 08:34:59AM +0100, Gunnar Widell (ESE) wrote:
-> > Something like this-
-> > <0>Kernel panic: Aiee, killing interupt handler!
-> > In interrupt handler - not syncing
-> 
-> Yes, this is what I get.
-> At the last stop last nigth it happened when I did:
-> 
-> ifconfig bcsf0 down
-> 
-> So, why are some 2.4.19 or 2.4.20 kernels working fine?
-> Maybe I have too much junk compiled into it...
+Henk Remijn wrote:
 
-Unfortunately only your computer knows, and unless you can help
-us by giving us more details, all we can do is guess.
+>Pontus,
+>
+>With lsmod you can check if modules are loaded.
+>
+>1. I would not use 2.4.18, this was is buggy. Try a later kernel.
+>But this has nothing to do with your problem now.
+>
+>2. Try to build as much drivers as modules, especially the ham radio ones.
+>
+>If nothing is going to work, you might consider switching to debian. This
+>distro has ham-radio enabled by default. No kernel recompiling necessary.
+>
+>73, Henk PA5KT
+>
+>  
+>
+>>-----Original Message-----
+>>From: linux-hams-owner@vger.kernel.org
+>>[mailto:linux-hams-owner@vger.kernel.org]On Behalf Of pa3gcu
+>>Sent: dinsdag 18 maart 2003 16:50
+>>To: Pontus Falk
+>>Cc: linux-hams@vger.kernel.org
+>>Subject: Re: Problem...
+>>
+>>
+>>On Monday 17 March 2003 22:09, Pontus Falk wrote:
+>>
+>>    
+>>
+>>>>cat /usr/src/linux/.config | grep MKISS
+>>>>You should get CONFIG_MKISS=m or CONFIG_MKISS=y if you get
+>>>># CONFIG_MKISS is not set
+>>>>that means you dont have mkiss at all.
+>>>>        
+>>>>
+>>>Yes, I have CONFIG_MKISS=y in /usr/src/linux/.config. But, I have
+>>>CONFIG_HAMRADIO=m if that is any problem. I don't know where to set this
+>>>to y in menuconfig... When I try to set it manually and recompile the
+>>>kernel I get an error message...
+>>>      
+>>>
+>>Why not do it the other way round, compile tham all as modules.
+>>
+>>    
+>>
+>>>Pontus
+>>>
+>>>      
+>>>
+>>--
+>>Regards Richard
+>>pa3gcu@zeelandnet.nl
+>>http://people.zeelandnet.nl/pa3gcu/
+>>
+>>    
+>>
 
-Excerpt from the linux kernel mailing list FAQ
-<http://www.tux.org/lkml/#s4-3> read
-"# How do I post an Oops?"
-"I think I found a bug, how do I report it?"
-and "What information should go in a bug report?"
-and in your linux kernel source:
-Documentation/oops-tracing.txt
-REPORTING-BUGS
+Here is my own experience (using Linux and AX25 applications for 3 years 
+since kernel 2.0.19).
+I was not able to achieve a normal functionning of Linux as soon as AX25 
+was set up with mkiss connexions with any of 2.4.xx kernels. And I tried 
+with different PCs.
+In 2.4 kernel, there are major problems with interruptions (and kernel 
+panics after a few minutes or hours) that should be corrected in kernel 
+version under development (actually around 2.5.65) leading to a possible 
+return to correct functionning (I hope) in 2.2.6 kernel.
+I strongly suggest you use kernel 2.2.x (with x greater than 19, last is 
+2.2.25) for AX25 purpose.
+Thats what I am using without any serious problem with AX25 applications 
+(two mkiss serial port handling 9600 and 1200 bauds links each, plus an 
+ethernet 10 Mb LAN).
+For example,  install Mandrake Linux distro 7.2, then update with 7.2 
+update (february 2003 delivery or so) that can be found on any Linux 
+distro mirror.
+Then install (optionally) the last 2.2 kernel if you want.
 
-You should also test your system, by running that linux kernel
-withOUT AX.25 loaded for a period of time under normal use
-conditions, so that you are confident that the problem is AX.25 related
-and not a) bad hardware, b) other kernel/userland software problems.
+Bernard Pidoux, F6BVP
 
-I hope this helps
-ve1mct
+
