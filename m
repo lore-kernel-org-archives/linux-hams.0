@@ -1,58 +1,34 @@
-From: Nate Bargmann <n0nb@networksplus.net>
-Subject: Re: AO-40 Transponder Operation
-Date: Mon, 7 Oct 2002 20:57:23 -0500
+From: M Taylor <mctylr@privacy.nb.ca>
+Subject: AX.25 in kernel 2.5 status?
+Date: Thu, 10 Oct 2002 03:57:03 +0100
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <20021008015723.GO13150@localhost>
-References: <Pine.LNX.4.33.0210070943250.8646-100000@wapiti.tc.fluke.com> <3DA1FF75.ABA47ABF@gelm.net>
+Message-ID: <20021010035703.B8136@pull.privacy.nb.ca>
 Mime-Version: 1.0
 Return-path: <linux-hams-owner@vger.kernel.org>
 Content-Disposition: inline
-In-Reply-To: <3DA1FF75.ABA47ABF@gelm.net>
 List-Id: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
 To: linux-hams@vger.kernel.org
 
-* Chuck Gelm <nc8q@gelm.net> [2002 Oct 07 19:33 -0500]:
-> Thanks.
-> 
->  I wish software developers and web sites would post or link to
-> a 'linux software map' or 'system requirements' on the first page.
-> :-|
 
-The official Linux radio apps site and replacement for the HAM-HOWTO is:
+A while back (a few months ago) a couple of developers/hams (Ralf and others) 
+mentioned that work needed to be done in the 2.5 linux kernel due to changes
+(I believe relating cli()/sti() plus other things).
 
-http://radio.linux.org.au
+Has there been any progress? There appears to be some patches included
+in 2.5.37 from Ralf and David Miller. Does include all the changes we 
+_need_ to make? (that is for when cli()/sti() and such calls go away)
 
-I think you'll find most things there, although there is the odd app that
-isn't listed there, they are few.  Sometimes a Google search will reveal
-a new or obscure app and at times http://freshmeat.net will have gems as
-well.
+I guess I am asking what needs to be done before users can "safely" use
+2.5.x kernels for amateur radio stuff.
 
->  I am assuming that any software package whose name starts with an
-> "x" or "X" requires a GUI, specifically Xwindows.
+Should the http://sourceforge.net/projects/ax25 Bug tracking, Support
+Requests / Patches / Feature Requires be used for the AX.25 (et all)
+kernel as well as the userland libraries, tools, and apps?
 
-As a rule that works.  XMLog is a notable exception.  Some older X + 
-Motif apps used the xm prefix so a Windows app borrowing it seems odd.
-I'm sure there's a good reason for the name.
+Oh, and can a non-kernel programmer help? (I'm not familiar with kernel
+programming, but I can program, can I be of assistance?)
 
->  Some applications have required a specific
-> GUI, but it is not mentioned early on. :-|
-
-In general, Linux GUI apps that start with an X will work with any
-window manager/desktop.  A lot of KDE apps start with a K and likewise
-with GNOME apps starting with a G.  Fortunately, KDE and GNOME apps can
-mostly be run outside of their environments as long as the library
-dependencies are met.  As an example, I use PAN a GNOME newsreader, but
-am not running GNOME or KDE.  A distribution that does a good job of
-managing dependecies with make those "desktop" based apps nearly
-transparent.
-
-73, de Nate >> 
-
--- 
- Wireless | Amateur Radio Station N0NB          | "We have awakened a
- Internet | n0nb@networksplus.net               | sleeping giant and
- Location | Bremen, Kansas USA EM19ov           | have instilled in him
-  Amateur radio exams; ham radio; Linux info @  | a terrible resolve".
-             http://www.qsl.net/n0nb/           | - Admiral Yamomoto
+Thanks,
+-ve1mct
