@@ -1,53 +1,29 @@
-From: John Magliacane <kd2bd@yahoo.com>
-Subject: Announcing SPLAT! version 1.1.0
-Date: Thu, 29 Jan 2004 13:43:02 -0800 (PST)
+From: Andrea Borgia <borgia@cs.unibo.it>
+Subject: old 8-bit card for soundmodem?
+Date: Sun, 01 Feb 2004 12:32:16 +0100
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <20040129214302.28508.qmail@web12205.mail.yahoo.com>
+Message-ID: <401CE3C0.3030101@cs.unibo.it>
 Mime-Version: 1.0
+Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-To: linux-hams@vger.kernel.org
+Content-Type: text/plain; charset="us-ascii"; format="flowed"
+To: Linux-Hams@vger.kernel.org
 
-SPLAT!, a terrain and RF path analysis application for Linux/Unix,
-has been extensively modified by J. D. McDonald in January 2004 to
-include the Longley-Rice propagation model using C++ code from NTIA/ITS.
+Hello.
 
-In addition to analyzing line-of-sight propagation paths, SPLAT! now
-generates multi-color maps illustrating predicted signal strengths
-(path loss), path loss graphs, path loss reports, and terrain height
-graphs.  The default Earth radius as well as the default line-of-sight
-and path loss analysis range used by SPLAT! may also be modified using
-new command-line options.
+I have an old 8-bit soundcard that I would like to use with the 
+soundmodem to receive a 1200bps cluster. From the docs and from googling 
+the archives (and the 'Net at large), I haven't been able to find any 
+comment either for or against such cards.
 
-splat.c was renamed to splat.cpp to reflect changes necessary to merge
-with Longley-Rice C++ code.  A C++ compiler (gcc/g++) is now required
-to compile SPLAT!.
+Has anyone here tried the soundmodem with 8-bits-per-sample soundcards? 
+Can such old cards do 1200? What about 9600?
 
-This new release supercedes the older 1.0.3 version of SPLAT!
+B73 & TIA,
+Andrea.
 
-For futher information, please see the SPLAT! web site at:
+-- 
+Homepage: http://andrea.borgia.bo.it     /    Amateur radio: IZ4FHT
+Key fingerprint: 4037 9711 85C6 F9F9 A505  FA0A BB62 3A3C F7BA 9B13
 
-	http://www.qsl.net/kd2bd/splat.html
-
-Until its release is made available through ibiblio.org and
-its mirrors, SPLAT! may be downloaded via http at:
-
-	http://www.qsl.net/kd2bd/splat-1.1.0.tar.gz
-
-Happy SPLATting!  :-)
-
-
-73, de John, KD2BD
-
-
-=====
-Visit John on the Web at:
-
-	http://www.qsl.net/kd2bd/
-
-__________________________________
-Do you Yahoo!?
-Yahoo! SiteBuilder - Free web site building tool. Try it!
-http://webhosting.yahoo.com/ps/sb/
