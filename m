@@ -1,35 +1,44 @@
-From: Phil <phil@spiderweb.com.au>
-Subject: gmfsk sound error
-Date: Tue, 29 Mar 2005 18:56:10 +1000
-Message-ID: <200503291856.10875.phil@spiderweb.com.au>
+From: Luc Langehegermann <luc2@lx2gt.lu>
+Subject: Re: gmfsk sound error
+Date: Fri, 1 Apr 2005 12:57:06 +0200
+Message-ID: <200504011257.06489.luc2@lx2gt.lu>
+References: <200503291856.10875.phil@spiderweb.com.au>
 Mime-Version: 1.0
 Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
+In-Reply-To: <200503291856.10875.phil@spiderweb.com.au>
 Content-Disposition: inline
 Sender: linux-hams-owner@vger.kernel.org
 List-Id: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
-To: Linux Hams <linux-hams@vger.kernel.org>
+To: Phil <phil@spiderweb.com.au>
+Cc: Linux Hams <linux-hams@vger.kernel.org>
 
-Hello,
+> Hello,
 
-I recently installed Mandrake 10.1 on my Asus laptop and although almost 
-everything works under Linux (except for the in-built wireless link and the 
-in-built camera) none of the Amateur Radio applications that use the sound 
-system work.
+Hello Phil,
 
-This is the error message from gMFSK for instance:
-*** opensnd: open: /dev/dsp: Device or resource busy ***
+>
+> I recently installed Mandrake 10.1 on my Asus laptop and although almost
+> everything works under Linux (except for the in-built wireless link and the
+> in-built camera) none of the Amateur Radio applications that use the sound
+> system work.
+>
+> This is the error message from gMFSK for instance:
+> *** opensnd: open: /dev/dsp: Device or resource busy ***
+>
+> Is there a way to overcome this problem?
 
-Is there a way to overcome this problem?
+This sounds, as if there is another process using the sound device, probably 
+an sound daemon (such as artsd)
 
-Soundmodem doesn't produce an error message and appears to function except 
-that no sound is generated.
+To find it out, try the following as root: lsof |grep dsp
 
-I probably shouldn't mention this; the equivalent Microsoft Windows 
-application works without any problems at all. Still, I would prefer to use 
-the Linux Amateur Radio applications since I use Linux for everything else.
+>
+> Soundmodem doesn't produce an error message and appears to function except
+> that no sound is generated.
 
--- 
-Regards,
-Phil.
+Nevery had really success with soundmodem... Latency of the OSS alsa emulation 
+seems too slow for soundmodem at 9k6. 1k2 works fine though.
+
+73, Luc, LX2GT
