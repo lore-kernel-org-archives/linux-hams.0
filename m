@@ -1,38 +1,24 @@
-From: "AE5PL Lists" <HamLists@ametx.com>
-Subject: RE: aprsd setup
-Date: Mon, 8 Nov 2004 13:48:42 -0600
-Message-ID: <478F6623898BBC4DBD692A223D28298A0EF85A@amewebsrvr.webametx.local>
+From: ph.ttv@free.fr
+Subject: help xastir and mandrake (how to compile ax25 support ?)
+Date: Mon,  8 Nov 2004 20:59:44 +0100
+Message-ID: <1099943984.418fd03081dd7@imp4-q.free.fr>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 8BIT
+Content-Transfer-Encoding: 7BIT
 Return-path: <linux-hams-owner@vger.kernel.org>
-Content-class: urn:content-classes:message
 Sender: linux-hams-owner@vger.kernel.org
 List-Id: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
 To: linux-hams@vger.kernel.org
 
-There is another option: javAPRSSrvr.  javAPRSSrvr is a multi-platform
-APRS server application with full featured IGate and APRS digipeater
-capabilities.  javAPRSSrvr is used on all of the core servers as well as
-all of the aprs2.net servers.  There are over 100 installations
-world-wide.  More information can be found at
-http://www.aprs-is.net/javaprssrvr
+Hi all !
 
-If you are interested in javAPRSSrvr, contact me directly at
-pete@ae5pl.net  javAPRSSrvr is free for amateur radio use and supports
-the Linux ax25 kernel features.
+who uses xastir on Mandrake ?
 
-73,
+I don't know how to compile xastir with ax25 support on my mdk 9.2 :-(
 
-Pete Loveall AE5PL
-mailto:pete@ae5pl.net 
+(ax25 works fine ever on my computer)
 
-> -----Original Message-----
-> From: Thomas - OZ2AFO
-> Posted At: Saturday, November 06, 2004 7:34 PM
-> Subject: aprsd setup
-> 
->  I'm trying to setup an aprs station, supporting both 
-> digipeating and i-gate. So far I have found that there is two 
-> packages : aprsdigi, and aprsd. Each does one of the wanted 
-> things, but not the other. Am I correct?
+Thanks
+
+Philippe, f5rvx
+
