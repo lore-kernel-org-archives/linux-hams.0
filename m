@@ -1,50 +1,30 @@
-From: pa3gcu <pa3gcu@zeelandnet.nl>
-Subject: Re: AX 25 , xcall, and unknown file
-Date: Sun, 25 Jul 2004 22:01:02 +0200
+From: Tapio Sokura <oh2kku@iki.fi>
+Subject: Re: Announcing Portable PREDICT Plus!
+Date: Sun, 25 Jul 2004 23:02:50 +0300
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <200407252201.02598.pa3gcu@zeelandnet.nl>
-References: <2021.192.168.1.117.1090778243.squirrel@gateway>
-Reply-To: pa3gcu@zeelandnet.nl
+Message-ID: <410411EA.30709@iki.fi>
+References: <20040725183329.90335.qmail@web52604.mail.yahoo.com>
 Mime-Version: 1.0
 Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <2021.192.168.1.117.1090778243.squirrel@gateway>
-Content-Disposition: inline
+In-Reply-To: <20040725183329.90335.qmail@web52604.mail.yahoo.com>
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"
-To: w9ya@arrl.net
-Cc: linux-hams@vger.kernel.org
+Content-Type: text/plain; charset="us-ascii"; format="flowed"
+To: linux-hams@vger.kernel.org
 
-On Sunday 25 July 2004 19:57, w9ya@arrl.net wrote:
-> Hey Gang;
->
-> Um, I am working on packaging up a bunch of ham radio/linux programs for
-> Mandrake.
->
-> I was working with xcall and it starts up looking for the
-> /etc/ax25/axports file.
->
-> Anyone know what this is about ?
+John Magliacane wrote:
+> Portable PREDICT Plus boots from a pair of floppy disks and runs
+> entirely in RAM.  There's no need to download huge CDROM images,
 
-/etc/ax25 directory holds the key(s) to mostly all ax25 and netrom aplication 
-configuration files, in otherwords, the heart of the ax25/netrom system.
-They are all AFAIK mentioned in the AX25-HOWTO found on most systems under
-/usr/share/doc/*HOWTO's or /usr/doc/*HOWTO's. 
-Or online to be found at;
-http://www.tldp.org/HOWTO/AX25-HOWTO
+But what about small bootable CD-ROM images? In this day and age, floppy 
+drives are getting rare, especially on laptops. I realize that updating 
+the keplerian elements and storing the configuration would not be as 
+easy or possible at all when using a CD (maybe a USB flash memory could 
+be used?), but at least it would make a nice demo environment. I'm not 
+saying that a customized floppy distribution is bad, on the contrary, I 
+find it admirable that there are people that have knowledge as well as 
+energy to develop these systems. And espcially write the documents (= 
+instructions) !
 
-> TIA for your time es vy 73;
->
-> Bob Finch
-> w9ya
->
-
--- 
-If the Linux community is a bunch of thieves because they
-try to imitate windows programs, then the Windows community
-is built on organized crime.
-
-Regards Richard
-pa3gcu@zeelandnet.nl
-http://people.zeelandnet.nl/pa3gcu/
+   Tapio
 
