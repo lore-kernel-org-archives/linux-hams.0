@@ -1,40 +1,53 @@
-From: Wilbert Knol <zl2bsj@zl2tze.ath.cx>
-Subject: Re: Kissattach and pseudoterminals
-Date: Thu, 20 Feb 2003 21:03:24 +1300 (NZDT)
+From: Hamish Moffatt <hamish@cloud.net.au>
+Subject: Re: soundmodem / "SIOCSIFFLAGS no such device"
+Date: Thu, 20 Feb 2003 23:05:26 +1100
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <Pine.LNX.4.21.0302202046210.1186-100000@localhost.localdomain>
-References: <Pine.LNX.4.44.0302131901220.4132-100000@localhost.localdomain>
+Message-ID: <20030220120526.GA28160@silly.cloud.net.au>
+References: <b2veij$79l$1@main.gmane.org>
 Mime-Version: 1.0
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <Pine.LNX.4.44.0302131901220.4132-100000@localhost.localdomain>
+Content-Disposition: inline
+In-Reply-To: <b2veij$79l$1@main.gmane.org>
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: TEXT/PLAIN; charset="us-ascii"
+Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
-To: James Cutler <jwc@stanford.edu>
-Cc: linux-hams@vger.kernel.org
+To: linux-hams@vger.kernel.org
 
+On Wed, Feb 19, 2003 at 09:29:42AM +0100, linux-hams-owner@vger.kernel.org wrote:
+> For the setup, I first do a 'rmmod' of all modules related to the sound
+> card.
+> Then setserial /dev/ttyS0 uart none port 0 irq 0
 
-On Thu, 13 Feb 2003, James Cutler wrote:
+Looks good. Only 'uart none' is needed btw.
 
-> I'd like to write and test AX25 code on my laptop using KISS devices.  On 
-> my desktop, which has two physical serial ports
+> To find the irq and dma parameters of the sound card :
+> modprobe -c | grep irq
 
-Sorry, I can't offer any assistance with the PTTY's.
+Didn't know that.
 
-However, an (easier) alternative for testing AX25 code, is AXIP.
-It carries AX25 traffic over IP.
+> modprobe hdlcdrv
+> insmod soundmodem mode="sbc:afsk1200" iobase=0x220 irq=7 dma=1
+> sethdlc -p -i sm0 mode sbc:afsk1200 io 0x200 irq 7 dma 1 serio 0x3f8
 
-AXIP becomes available as a network interface ax[0-9], and you can access
-it through an AX25 port, mapped to the interface through the usual axports
-file.
+Two things. Firstly no need to provide the same information twice
+(module parameters AND sethdlc); I just use sethdlc. Secondly the
+address you have to sethdlc is different - 0x200 vs 0x220. Could be your
+problem.
 
-It is really handy for testing your own set-up, if you route it over your
-loopback network. See the AX25-Howto for details.
+> And the final :
+> ifconfig sm0 hw ax25 X1ABC up
 
-HTH...
+Should also assign a dummy IP address.
 
+> And it tells me :
+> "SIOCSIFFLAGS: No such device"
 
-Wilbert, ZL2BSJ
+Is your sound card SB-compatible?
 
+You could also try the user-space (non kernel) soundmodem driver. It
+uses your existing sound card drivers although not all cards are
+supported.
 
-
+Hamish
+-- 
+Hamish Moffatt VK3SB <hamish@debian.org> <hamish@cloud.net.au>
