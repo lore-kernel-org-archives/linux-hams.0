@@ -1,35 +1,33 @@
-From: Stephen Hemminger <shemminger@osdl.org>
-Subject: Re: [PATCH] (10/11) netrom - convert /proc interface to seq_file
-Date: Thu, 14 Aug 2003 11:30:25 -0700
+From: "David S. Miller" <davem@redhat.com>
+Subject: Re: [PATCH] (0/11) Netrom patches
+Date: Thu, 14 Aug 2003 21:13:47 -0700
 Sender: netdev-bounce@oss.sgi.com
-Message-ID: <20030814113025.2b40be14.shemminger@osdl.org>
-References: <20030813154635.376df59b.shemminger@osdl.org>
-	<20030814172539.GD1785@conectiva.com.br>
+Message-ID: <20030814211347.0259a2fc.davem@redhat.com>
+References: <20030812194653.A28977@jeroen.pe1rxq.ampr.org>
+	<20030812135655.7334887b.shemminger@osdl.org>
+	<20030812230951.E28977@jeroen.pe1rxq.ampr.org>
+	<20030812153901.6e700dcb.shemminger@osdl.org>
+	<20030813010301.K28977@jeroen.pe1rxq.ampr.org>
+	<20030812172151.7de0c950.shemminger@osdl.org>
+	<20030813031159.6c6c9629.davem@redhat.com>
+	<20030813173446.A2604@jeroen.pe1rxq.ampr.org>
+	<20030813084252.7b667fb8.davem@redhat.com>
+	<20030813153526.2e74e008.shemminger@osdl.org>
 Mime-Version: 1.0
 Content-Transfer-Encoding: 7bit
 Return-path: <netdev-bounce@oss.sgi.com>
-In-Reply-To: <20030814172539.GD1785@conectiva.com.br>
+In-Reply-To: <20030813153526.2e74e008.shemminger@osdl.org>
 Errors-to: netdev-bounce@oss.sgi.com
 List-Id: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
-To: Arnaldo Carvalho de Melo <acme@conectiva.com.br>
-Cc: "David S. Miller" <davem@redhat.com>, Jeroen Vreeken <pe1rxq@amsat.org>, linux-hams@vger.kernel.org, netdev@oss.sgi.com
+To: Stephen Hemminger <shemminger@osdl.org>
+Cc: pe1rxq@amsat.org, netdev@oss.sgi.com, linux-hams@vger.kernel.org, ralf@linux-mips.org
 
-On Thu, 14 Aug 2003 14:25:39 -0300
-Arnaldo Carvalho de Melo <acme@conectiva.com.br> wrote:
+On Wed, 13 Aug 2003 15:35:26 -0700
+Stephen Hemminger <shemminger@osdl.org> wrote:
 
-> Em Wed, Aug 13, 2003 at 03:46:35PM -0700, Stephen Hemminger escreveu:
-> > Convert netrom /proc interface to seq_file.
-> > 
-> > diff -Nru a/include/net/netrom.h b/include/net/netrom.h
-> > --- a/include/net/netrom.h	Wed Aug 13 13:54:19 2003
-> > +++ b/include/net/netrom.h	Wed Aug 13 13:54:19 2003
-> > +		seq_printf(seq, "%-9s ", ax2asc(&nr->user_addr));
-> > +		seq_printf(seq, "%-9s ", ax2asc(&nr->dest_addr));
-> > +		seq_printf(seq, 
-> > +"%-9s %-3s  %02X/%02X %02X/%02X %2d %3d %3d %3d %3lu/%03lu %2lu/%02lu %3lu/%03lu %3lu/%03lu %2d/%02d %3d %5d %5d %ld\n",
-> 
-> <nitpick> why not just one seq_printf call? </nitpick>
+> The following set of patches breaks out Jeroen's work (1-7) and adds
+> several updates from me.
 
-ax2asc() returns a pointer to static buffer.
+I've applied all of these NETROM patches, thanks.
 
