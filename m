@@ -1,43 +1,40 @@
 From: Jeroen Vreeken <pe1rxq@amsat.org>
-Subject: [PATCH] ax25 Locking fix
-Date: Fri, 13 Feb 2004 23:48:06 +0100
+Subject: Re: [PATCH] FBB & linux 2.6
+Date: Sat, 14 Feb 2004 00:02:33 +0100
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <20040213234806.J220@jeroen.pe1rxq.ampr.org>
+Message-ID: <20040214000233.L220@jeroen.pe1rxq.ampr.org>
+References: <20040213202807.F220@jeroen.pe1rxq.ampr.org> <20040213215430.H220@jeroen.pe1rxq.ampr.org> <1076705415.1298.68.camel@oh2bns.ampr.org> <200402132336.10230.eb5esx@eb5esx.ampr.org>
 Mime-Version: 1.0
-Content-Type: multipart/mixed; boundary="+fexcqMh/evT6CrY"
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7BIT
 Return-path: <linux-hams-owner@vger.kernel.org>
+In-Reply-To: <200402132336.10230.eb5esx@eb5esx.ampr.org>; from eb5esx@eb5esx.ampr.org on Fri, Feb 13, 2004 at 23:36:09 +0100
 List-Id: <linux-hams.vger.kernel.org>
-To: davem@redhat.com
-Cc: linux-hams@vger.kernel.org, ralf@linux-mips.org
+Content-Type: text/plain; charset="us-ascii"
+To: Ruben Navarro Huedo <eb5esx@eb5esx.ampr.org>
+Cc: Tomi Manninen <oh2bns@sral.fi>, Linux-hams List <linux-hams@vger.kernel.org>, Linux FBB List <xfbb@f6fbb.org>
 
+On 2004.02.13 23:36:09 +0100 Ruben Navarro Huedo wrote:
+> -----BEGIN PGP SIGNED MESSAGE-----
+> Hash: SHA1
+> 
+> Trying to apli the patch here:
+> 
+> linux:/usr/src# patch -p0 <./fbb703.linux2.6.diff
+> patching file fbbsrc.703c/src/console.c
+> Hunk #1 FAILED at 893.
+> Hunk #2 FAILED at 929.
+> 2 out of 2 hunks FAILED -- saving rejects to file 
+> fbbsrc.703c/src/console.c.rej
+> linux:/usr/src# ls -l fbbsrc.70
+> fbbsrc.703c  fbbsrc.704j
+> linux:/usr/src# ls -l fbbsrc.703c
+> lrwxr-xr-x    1 root     src            13 feb 13 20:54 fbbsrc.703c -> 
+> ./fbbsrc.704j
+> linux:/usr/src#
+> 
+> How have you applied it?
 
---+fexcqMh/evT6CrY
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 8bit
-
-Hi,
-
-This is a oneliner for 2.6 changing an unlock into a lock.
-This prevents an oops on removal of the ax25 module.
+Go into the tree you want to patch and use -p1 instead of -p0
 
 Jeroen
-
---+fexcqMh/evT6CrY
-Content-Type: application/octet-stream; charset=us-ascii
-Content-Disposition: attachment; filename="ax25.2.6.1.rxq3.diff"
-
---- linux-2.6.1.org/net/ax25/ax25_route.c	2004-01-09 07:59:46.000000000 +0100
-+++ linux-2.6.1-rxq3/net/ax25/ax25_route.c	2004-02-12 20:14:31.000000000 +0100
-@@ -535,7 +535,7 @@
- {
- 	ax25_route *s, *ax25_rt = ax25_route_list;
- 
--	write_unlock(&ax25_route_lock);
-+	write_lock(&ax25_route_lock);
- 	while (ax25_rt != NULL) {
- 		s       = ax25_rt;
- 		ax25_rt = ax25_rt->next;
-
---+fexcqMh/evT6CrY--
 
