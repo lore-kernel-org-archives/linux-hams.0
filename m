@@ -1,42 +1,60 @@
-From: jarmo <oh1mrr@nic.fi>
-Subject: Re: Protocol error
-Date: Mon, 18 Nov 2002 13:58:08 +0200
+From: Matti Aarnio <matti.aarnio@zmailer.org>
+Subject: Re: spread spectrum and broadband
+Date: Mon, 18 Nov 2002 13:55:43 +0200
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <200211181358.08540.oh1mrr@nic.fi>
-References: <3DD7E005.25470.636F19D@localhost> <3DD8D4BF.27441.288F6F3@localhost>
+Message-ID: <20021118115543.GD1099@mea-ext.zmailer.org>
+References: <200211172241.gAHMf4C31685@hartford-hwp.com>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7BIT
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <3DD8D4BF.27441.288F6F3@localhost>
+Content-Disposition: inline
+In-Reply-To: <200211172241.gAHMf4C31685@hartford-hwp.com>
 List-Id: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
-To: linux-hams <linux-hams@vger.kernel.org>
+Content-Transfer-Encoding: 7bit
+To: Haines Brown <brownh@hartford-hwp.com>
+Cc: linux-hams@vger.kernel.org
 
-On Monday 18 November 2002 11:53, Demetre Valaris wrote:
+On Sun, Nov 17, 2002 at 05:41:04PM -0500, Haines Brown wrote:
+> So I wondered about the potential of spread spectrum for increasing
+> bandwidth from, say, 1200 baud to 56 Kbaud. I'd appreciate someone's
+> input on the relation of information bandwidth and RF spectrum
+> bandwidth when using spread spectrum. Does spread spectrum offer any
+> potential at all for increasing signal bandwidth of a TCP/IP HF WAN?
 
->
-> Thanks for reply. I wonder if this causes any problems. At this end when I
-> had a P133 AMD with 32MB RAm, sometimes my radio would key the TNC and TX
-> nothing. Now I am not sure whether this is a TNC or computer problem.
-> Eversince I upgraded my hardware to a faster PC (P433 Celeron with 128MB
-> RAM) I have not observed this problem although the "protocol 0000 is buggy,
-> dev ax0) is still there. I am not sure what caused the problem though,
-> although it seems that the old slower PC with the 32MB RAM was at fault,
-> but this problem was not persistent!!
+  In theory the best signal/power (and likely best working HF-) solution 
+  would be M-ary-FSK.   It is being used quite successfully in various
+  forms of QRP QSO communication, but nothing (in theory) prevents its
+  use for some other purposes.  For a long time various forms of it
+  have been used in commercial RTTY-like communciations. (Piccolo, et.al.)
 
-Hi
+  You _will_ need special radios, if you aim to reach for more than
+  3 kHz RF bandwidth.
 
-We have here in OH1RCF 4 tnc's and only one is giving protocol is buggy
-info...Same as bad checsum messages...
-I myself have only one tnc and i get every now and then bad checksum but no
-protocol buggy.
-We are using 6pack in tnc's...And now we have started thinking that errormsg's
-migth come because of bad groundings..ie. Tnc's cases are grounded too lightly
-and RF could cause some weird things...
+  Take 32-ary-FSK-at-100 baud:
 
-PC is something 333MHz and 64M ram in oh1rcf...I have amd xp-1700+ with
-512M ram...
+  - Send 5 bits per baud (half of them FEC, or 3/4..)
+  - 100 baud -> tone separation _at_least_ 100 Hz -> 3 200 Hz total BW.
+  - BARELY doable with SSB radio!
 
-73 de Jarmo,OH1MRR
+  With that you get 500 bps datastream, of which perhaps 130 bps is 
+  payload.  There are a number of reasons why going beyond 32-ary is
+  probably not usefull, so your only way to increase the throughput
+  is to increase baud-rate --> increase total signal bandwidth.
+  Tradeoff (like with ary-ness increase) is in the noise-margin, and
+  transmitter power.  At HF even 16-ary (at high speed) is tough.
 
+  If you want 32000 bps datastream with 3/4 FEC, you need around 128 000
+  bps raw stream, and with 16-ary (4 bit) that means around 32000 baud,
+  and similarly >= 32000 kHz tone separation, and >= 0.512 MHz total 
+  bandwidth.  Quite spread-spectrum already...
 
+  At microwave frequencies (up from VHF) that is no problem at all, but at
+  HF it is unacceptable, and likely will encounter differing propagation
+  delays.
+
+  Pure BPSK has troubles with HF propagation, as the phase has a tendency
+  to flip around in ionosphere.
+
+> Haines Brown KG1GRM 
+
+/Matti Aarnio, OH1MQK
