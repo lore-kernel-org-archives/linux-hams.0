@@ -1,49 +1,65 @@
-From: "Robert Jenkins" <raj@jrw.co.uk>
-Subject: RE: FBB + Kernel 2.6
-Date: Wed, 11 Feb 2004 20:38:32 -0000
+From: Jeroen Vreeken <pe1rxq@amsat.org>
+Subject: [PATCH] 6pack reinit bug
+Date: Wed, 11 Feb 2004 23:25:58 +0100
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <E1Ar182-0002be-KJ@ptb-relay01.plus.net>
-References: <402A94F2.5040007@ccr.jussieu.fr>
+Message-ID: <20040211232558.C200@jeroen.pe1rxq.ampr.org>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
+Content-Type: multipart/mixed; boundary="AWniW0JNca5xppdA"
+Content-Transfer-Encoding: 8bit
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <402A94F2.5040007@ccr.jussieu.fr>
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"
-To: 'Bernard Pidoux' <pidoux@ccr.jussieu.fr>, 'Ruben Navarro Huedo' <eb5esx@eb5esx.ampr.org>
+To: jgarzik@pobox.com
 Cc: linux-hams@vger.kernel.org
+
+
+--AWniW0JNca5xppdA
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 8bit
 
 Hi,
 
-My FBB BBS + Node system is VERY stable - it runs for months at a time.
+This patch is the same as to mkiss a while ago, the current code triggers a
+bug when reattaching a network device.
 
-It uses:
-Redhat 7.2
-Kernel 2.4.18-RC4 plus the Netrom patch (by Tomi Manninen?? - it's a long
-time ago, I can't remember where it was from!)
+Please apply.
 
-Libax25-0.0.10
-Ax25-apps-0.0.6
-Ax25-tools-0.0.8
-Node-0.3.0
-Fbb704h
+Thanks,
+Jeroen
 
-It had severe problems until libax25-0.0.10 was released; the run time was
-typically 2 - 3 days on 0.0.9
+--AWniW0JNca5xppdA
+Content-Type: application/octet-stream; charset=us-ascii
+Content-Disposition: attachment; filename="hamradio.2.6.1.rxq3.diff"
 
-Since installing 0.0.10 (and recompiling ALL the other AX25 related stuff),
-it appears bombproof - the only reason it gets rebooted is when I am working
-on the house & need to turn the power off! The longest is around six months.
+--- linux-2.6.1-rxq2/drivers/net/hamradio/6pack.c	2004-01-21 20:47:09.000000000 +0100
++++ linux-2.6.1-rxq3/drivers/net/hamradio/6pack.c	2004-02-06 19:32:46.000000000 +0100
+@@ -178,17 +178,17 @@
+ 	    (sixpack_ctrls[i] = (sixpack_ctrl_t *)kmalloc(sizeof(sixpack_ctrl_t),
+ 						    GFP_KERNEL)) != NULL) {
+ 		spp = sixpack_ctrls[i];
+-		memset(spp, 0, sizeof(sixpack_ctrl_t));
+-
+-		/* Initialize channel control data */
+-		set_bit(SIXPF_INUSE, &spp->ctrl.flags);
+-		spp->ctrl.tty         = NULL;
+-		sprintf(spp->dev.name, "sp%d", i);
+-		spp->dev.base_addr    = i;
+-		spp->dev.priv         = (void *) &spp->ctrl;
+-		spp->dev.next         = NULL;
+-		spp->dev.init         = sixpack_init;
+ 	}
++	memset(spp, 0, sizeof(sixpack_ctrl_t));
++
++	/* Initialize channel control data */
++	set_bit(SIXPF_INUSE, &spp->ctrl.flags);
++	spp->ctrl.tty         = NULL;
++	sprintf(spp->dev.name, "sp%d", i);
++	spp->dev.base_addr    = i;
++	spp->dev.priv         = (void *) &spp->ctrl;
++	spp->dev.next         = NULL;
++	spp->dev.init         = sixpack_init;
+ 
+ 	if (spp != NULL) {
+ 		/* register device so that it can be ifconfig'ed       */
 
-(The radio interface is multiple serial ports with one KISS tnc per port).
-
-I know RH7.2 is rather old, but the system works so well I've been avoiding
-doing any changes...
-
-
-Regards,
-Robert Jenkins.
-
-
-
+--AWniW0JNca5xppdA--
 
