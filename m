@@ -1,27 +1,21 @@
-From: Edson Pereira <edson@fe.xdsl.ne.jp>
-Subject: ANNOUNCING PetitTrack 1.0.0
-Date: Tue, 21 May 2002 20:50:25 +0900 (JST)
+From: "Wilson G. Hein" <wilson.hein@verizon.net>
+Subject: patch
+Date: Wed, 22 May 2002 11:04:52 -0400
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <Pine.LNX.4.44.0205212032040.1485-100000@sys09.localnet>
+Message-ID: <NCBBKBAJDJIPKFIAFBKLCEJBEFAC.wilson.hein@verizon.net>
+Reply-To: <whein3@earthlink.net>
 Mime-Version: 1.0
+Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: TEXT/PLAIN; charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-To: linux-hams@vger.kernel.org
+Content-Type: text/plain; charset="us-ascii"
+To: Linux-Hams Mailing List <linux-hams@vger.kernel.org>
 
+Hi,
 
-PetitTrack is a satellite tracker software for the Sharp Zaurus SL-5000D 
-or SL-5500 Linux PDA.
+Trying to patch kerbel 2.4.18 with patch 2.4.19-pre2. Can someone tell me in
+what RedHat package the patch command is in. Apparently I don't have it
+installed:-)
 
-Screenshots and binary/source distribuition can be found at
-
-http://www.qsl.net/n1vtn/
-
-Feedback and bug reports are welcome.
-
-73,
-
--- Edson, pu1jte, n1vtn, 7n4ncl
-
+Wilson, WJ3G
 
