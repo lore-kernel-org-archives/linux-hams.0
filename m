@@ -1,74 +1,56 @@
 From: =?iso-8859-1?q?G=FCnther=20Montag=20?= <dl4mge@darc.de>
 Subject: Re: usage of f6fbb via telnet port
-Date: Mon, 26 Apr 2004 13:20:48 +0200
+Date: Tue, 27 Apr 2004 16:26:28 +0200
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <200404261320.48683.dl4mge@darc.de>
-References: <200404221549.53649.dl4mge@darc.de> <20040422123757.3d4249a9.john@jcoppens.com>
+Message-ID: <200404271626.28270.dl4mge@darc.de>
+References: <200404221549.53649.dl4mge@darc.de> <200404261320.48683.dl4mge@darc.de> <20040426163020.0c79a7af.john@jcoppens.com>
 Mime-Version: 1.0
 Content-Transfer-Encoding: QUOTED-PRINTABLE
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <20040422123757.3d4249a9.john@jcoppens.com>
+In-Reply-To: <20040426163020.0c79a7af.john@jcoppens.com>
 List-Id: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="iso-8859-1"
 To: John Coppens <john@jcoppens.com>
-Cc: -HFTERMHACKERS- <hfterm-hackers@lists.sourceforge.net>, linux hams <linux-hams@vger.kernel.org>
+Cc: linux hams <linux-hams@vger.kernel.org>
 
-Am Donnerstag 22 April 2004 17:37 schrieben Sie:
-> On Thu, 22 Apr 2004 15:49:53 +0200
+Am Montag 26 April 2004 21:30 schrieben Sie:
+> Hallo G=FCnter
 >
-> G=FCnther Montag  <dl4mge@darc.de> wrote:
-> > 3286
+> Ich glaube Du mu=DFt jede 'user' pers=F6nlich zu R/W Zugang editieren=
+ (Ich
+> habe es aber nie versucht):
 >
-> Hi Gunter
+> EU callsign :
+>  Edits the main parameters of a user. The user's parameters are first
+> displayed, then a string of options will allow you to edit the variou=
+s
+> parameters. A "return" terminates the edit. Most of fields can be cle=
+ared
+> with a point. A user can be edited while connected and then action is
+> immediate. Flags are :
 >
-> This is what I found out:
+>   R : All mail (included personal) can be read
+>   P : Paging validated
+>   B : BBS
+>   S : Sysop
+>   X : Expert
+>   L : Local (Allowed to all commands on guest access).
+>   E : Excluded (cannot connect to the BBS)
+>   M : Modem access            <=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+>   U : Unproto (Allows unproto list requests).
+>   I : Give list of new messages on logon.
+>   F : PMS forwarding (allows forward but texts are like normal user).
 >
-> That port (3286) is open normally, but it is formatted to be used wit=
-h the
-> xfbbC terminal program. The username and password are made into a key=
- to
-> be sent to that port, to get actual access.
+> Entschuldigung f=FCrs schlechte Deutsch ;-)
 >
-> According to 18.23 of the FBB manual:
+> Tsch=FA=DF
 >
-> The address to use may be 189C (189C hex =3D 6300 decimal).
->
-> But, it=B4s also possible to define another port address,
-> for example if you want Telnet access to LinFBB on port 23,
-> (port 23 is standard for Telnet, but 23 is also used by inetd in Linu=
-x!)
-> then change the =B4address=B4 of COM2 to 17 (hex 17 =3D 23 decimalt)
->
-> Tip:
-> You may put the R letter (Read only default access) which gives a
-> read-only if the user is unknown or not authorized for Modem/Telnet (=
-M
-> Flag in EU command).
->
->
-> <Image>Example of PORT.SYS for LinFBB
->
-> Standard PORT.SYS with 1 TNC (COM1) with WA8DED-hostmode,
-> 4 channels, 1 channel for outgoing forward,
-> and one Telnet interface listening on port 6300,
-> 8 channels, 1 channel for outgoing forward.
->
-> #
-> #Ports TNCs
-> 2      2
-> #
-> #Com Interface Address (device)   Baud
-> 1    9         /dev/cua0          9600
-> 2    9         189C               0		<=3D=3D=3D the telnet port at 63=
-00
-> #
->
-> 73,
 > John
-> ON6JC/LW3HAZ
-
-tnx!
-How it i do want that access is read/write?
+>
+Hallo John!
+Dein Deutsch ist gro=DFartig!!
+Wie komm ich zu diesem EU-Men=FC =FCberhaupt hin?
 
 --=20
 73 de
