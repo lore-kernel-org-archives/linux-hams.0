@@ -1,36 +1,48 @@
-From: Jeroen Vreeken <pe1rxq@amsat.org>
-Subject: Re: [PATCH] ax25 & netrom fixes for 2.6
-Date: Tue, 12 Aug 2003 23:09:51 +0200
+From: Stephen Hemminger <shemminger@osdl.org>
+Subject: [PATCH] bpqether add rcu_read_lock
+Date: Tue, 12 Aug 2003 15:33:12 -0700
 Sender: netdev-bounce@oss.sgi.com
-Message-ID: <20030812230951.E28977@jeroen.pe1rxq.ampr.org>
-References: <20030812194653.A28977@jeroen.pe1rxq.ampr.org> <20030812135655.7334887b.shemminger@osdl.org>
+Message-ID: <20030812153312.0e762cf3.shemminger@osdl.org>
+References: <20030811162205.78b2029f.shemminger@osdl.org>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
 Return-path: <netdev-bounce@oss.sgi.com>
-In-Reply-To: <20030812135655.7334887b.shemminger@osdl.org>; from shemminger@osdl.org on Tue, Aug 12, 2003 at 22:56:55 +0200
+In-Reply-To: <20030811162205.78b2029f.shemminger@osdl.org>
 Errors-to: netdev-bounce@oss.sgi.com
 List-Id: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
 To: Stephen Hemminger <shemminger@osdl.org>
-Cc: Jeroen Vreeken <pe1rxq@amsat.org>, linux-hams@vger.kernel.org, ralf@linux-mips.org, davem@redhat.com, netdev@oss.sgi.com
+Cc: "David S. Miller" <davem@redhat.com>, Joerg Reuter <jreuter@yaina.de>, linux-hams@vger.kernel.org, netdev@oss.sgi.com
 
-On 2003.08.12 22:56:55 +0200 Stephen Hemminger wrote:
-> It looks like af_x25 is advertising itself as a new style protocol, yet
-> if
-> I walk the receive path:
-> 	ax25_kiss_rcv -> ax25_rcv -> ax25_addr_parse
-> there is no place that checks that the address portion of the buffer
-> isn't fragmented
-> into a non_linear skb.
+Fix one comment and add rcu_read_lock/rcu_read_unlock in the net_device_notifier.
+Preemption is almost certainly already disabled there, but be safe.
 
-Since at the moment the only zero-copy path I can imagine is from packets
-over a bpq ethernet device wouldn't it be the easiest to just check at
-ax25_rcv() for non-linear packets and call skb_linearize() for them? That
-way we would be safe untill we can make sure that the whole of the ax25
-stack is non-linear safe?
-Should I make a new patch with this included? (and possibly the ifconfig
-problem you mentioned?)
-
-Jeroen
-
+diff -Nru a/drivers/net/hamradio/bpqether.c b/drivers/net/hamradio/bpqether.c
+--- a/drivers/net/hamradio/bpqether.c	Tue Aug 12 11:37:28 2003
++++ b/drivers/net/hamradio/bpqether.c	Tue Aug 12 11:37:28 2003
+@@ -141,7 +141,6 @@
+ 
+ /*
+  *	Get the BPQ device for the ethernet device
+- * need to hold bqp_lock at least for read
+  */
+ static inline struct net_device *bpq_get_ax25_dev(struct net_device *dev)
+ {
+@@ -564,6 +563,8 @@
+ 	if (!dev_is_ethdev(dev))
+ 		return NOTIFY_DONE;
+ 
++	rcu_read_lock();
++
+ 	switch (event) {
+ 	case NETDEV_UP:		/* new ethernet device -> new BPQ interface */
+ 		if (bpq_get_ax25_dev(dev) == NULL)
+@@ -582,6 +583,7 @@
+ 	default:
+ 		break;
+ 	}
++	rcu_read_unlock();
+ 
+ 	return NOTIFY_DONE;
+ }
 
