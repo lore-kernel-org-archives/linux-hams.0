@@ -1,45 +1,29 @@
-From: Bob Nielsen <nielsen@oz.net>
+From: =?ISO-8859-1?Q?G=FCnther_Montag?= <Safari.Doktor@addcom.de>
 Subject: Re: new release of pactor amtor rtty mt63 prog & mailbox hf-0.7.2
-Date: Thu, 17 Feb 2005 11:49:55 -0800
-Message-ID: <20050217194955.GA17215@n7xy.net>
-References: <4214F39D.1050900@addcom.de>
+Date: Thu, 17 Feb 2005 20:55:28 +0100
+Message-ID: <4214F6B0.4080504@addcom.de>
+References: <4214F39D.1050900@addcom.de> <20050217194955.GA17215@n7xy.net>
+Reply-To: Safari.Doktor@addcom.de
 Mime-Version: 1.0
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Content-Disposition: inline
-In-Reply-To: <4214F39D.1050900@addcom.de>
+In-Reply-To: <20050217194955.GA17215@n7xy.net>
 Sender: linux-hams-owner@vger.kernel.org
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="iso-8859-1"
-To: =?iso-8859-1?Q?G=FCnther?= Montag <Safari.Doktor@addcom.de>
-Cc: Linlink@wetnet.net, linux-hams@vger.kernel.org
+Content-Type: text/plain; charset="iso-8859-1"; format="flowed"
+To: Bob Nielsen <nielsen@oz.net>
+Cc: xfbb@f6fbb.org, "Linlink@wetnet.net" <Linlink@wetnet.net>, linux-hams@vger.kernel.org
 
-Is there a URL for this?
+Bob Nielsen schrieb:
+> Is there a URL for this?
+>=20
+> 73,
+> Bob, N7XY
+>=20
+Oh sorry, of course
+always I forgot it
+http://hfterm.sourceforge.net
 
-73,
-Bob, N7XY
-
-On Thu, Feb 17, 2005 at 08:42:21PM +0100, G=FCnther Montag wrote:
-> Hello friends
->=20
-> new release with many fixes & improvements,
-> many testers wanted especially for the inbuilt TCP-IP interface to be=
-=20
-> used with F6FBB or any mailbox program, e.g. as automatic Pactor1 mai=
-lbox.
->=20
-> MT63 (FEC) is included, also Pawel's original MT63 console programs f=
-or=20
-> tests.
-> At the time MT63-ARQ is thought about and being developed, discussion=
-=20
-> about this in linlink mailing list, I hope and plan to include this a=
-lso=20
-> in future, to make mt63-ARQ mailbox possible.
->=20
-> Thanks for testing and reports via the hfterm mailinglist!
->=20
-> 73 de
-> G=FCnther Montag dl4mge
+73 ! G=FCnther
 -
 To unsubscribe from this list: send the line "unsubscribe linux-hams" i=
 n
