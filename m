@@ -1,62 +1,59 @@
-From: <Morgan.Wemanis@mark.se>
-Subject: RE: kenwood radio & numeric data
-Date: Tue, 12 Oct 2004 21:14:16 +0200
+From: Ron <ve1aic@yahoo.com>
+Subject: Re: Trying to get Ax25 running.
+Date: Tue, 12 Oct 2004 19:40:40 -0700 (PDT)
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <04Oct12.211649cest.332295@gateway.mark.se>
+Message-ID: <20041013024040.43747.qmail@web40829.mail.yahoo.com>
+Reply-To: ve1aic@yahoo.com
 Mime-Version: 1.0
-Content-Transfer-Encoding: QUOTED-PRINTABLE
 Return-path: <linux-hams-owner@vger.kernel.org>
-Content-class: urn:content-classes:message
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="iso-8859-1"
-To: alexandre.chappaz@data-tools.com, linux-hams@vger.kernel.org
-Cc: andre@data-tools.com
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+To: Linux-Hams@vger.kernel.org
 
-Hi Alex,
+Chuck we need some basic background info about your
+setup first.
+1. What ax25 rpms have you installed?
+2. What are your attach commands?
+3. What are you trying to accomplish?..setup for
+LinFBB?
 
-Have a look at radiometrix stuff.
-http://www.radiometrix.co.uk/
+FYI here is the first part of my startup script for
+ax25 call fbb_start in /etc/ax25 along with other ax25
+files:
 
-73 de Morgan, sm6tky
+/usr/sbin/kissattach /dev/ttyS0 vhf xxx.xxx.xxx.xxx
 
------Original Message-----
-=46rom: linux-hams-owner@vger.kernel.org [mailto:linux-hams-owner@vger.=
-kernel.org] On Behalf Of chappaz alexandre
-Sent: Tuesday, October 12, 2004 5:15 PM
-To: linux-hams@vger.kernel.org
-Cc: Andr=E9 HONIG
-Subject: kenwood radio & numeric data
+Where xxx=my ip address, with MFJ tnc in kiss mode on
+com1. See also com port speed in axports.
 
-Hi guy
+ Check your ax25 device with 'ifconfig' and you should
+see ax0.
 
-I've got a new question for U if you've got time to thing of it.....I w=
-rote=20
-yesterday to get informations about the Kenwood tm700... radio & Tnc...=
-=2E Well=20
-I think I wont manage to achieve what I want using the internal TNC....=
-=2E.=20
-That's why I write again to ask if anyone could give a little help for=20
-choosing a nice modem (either hardware or software with a sound card) t=
-o=20
-transmit numeric data over radio with the smallest delay possible......=
-=2E The=20
-"packet radio" protocol limits the use I want to have because the goal =
-for me=20
-would be to have a constant data stream over the radio. So if someone k=
-nows=20
-what kind of material i should use it would be really helpful.....
+Be sure to read ax25-how-to at:
 
-Thanks a lot
+http://www.tldp.org/HOWTO/AX25-HOWTO/
 
-Alex
 
--
-To unsubscribe from this list: send the line "unsubscribe linux-hams" i=
-n
-the body of a message to majordomo@vger.kernel.org
-More majordomo info at  http://vger.kernel.org/majordomo-info.html
--
-To unsubscribe from this list: send the line "unsubscribe linux-hams" i=
-n
-the body of a message to majordomo@vger.kernel.org
-More majordomo info at  http://vger.kernel.org/majordomo-info.html
+73, Ron
+
+Chuck Hast wrote:
+> Folks,
+> I am a bit new to this. I am running SuSE 9.1 I have
+installed the AX25
+> stuff, and when I set up the port I have a KISS TNC
+on I see the commands
+> being sent to it.
+> When I run call, and it appears that the connection
+is established the whole
+> thing locks up. Not just that screen, but X,
+Keyboard and all. At that point
+> I end up hitting the power button in order to get
+out of it. 
+
+
+		
+__________________________________
+Do you Yahoo!?
+Read only the mail you want - Yahoo! Mail SpamGuard.
+http://promotions.yahoo.com/new_mail 
