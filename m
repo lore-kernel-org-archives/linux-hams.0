@@ -1,33 +1,33 @@
-From: Tomi Manninen <tpm@prkele.tky.hut.fi>
+From: Aleksandar Ilic <ailic@gmx.net>
 Subject: Re: ANN: gMFSK v0.4
-Date: Mon, 8 Apr 2002 18:32:40 +0300 (EEST)
+Date: Tue, 9 Apr 2002 00:18:18 +0200
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <Pine.LNX.4.33.0204081822410.15167-100000@oh2bns.ampr.org>
-References: <3CB1CD09.12082.1950EDB@localhost>
-Reply-To: <tpm@prkele.tky.hut.fi>
+Message-ID: <02040823481500.00477@bcat>
+References: <Pine.LNX.4.33.0204081351140.31031-100000@oh2bns.ampr.org>
 Mime-Version: 1.0
-In-Reply-To: <3CB1CD09.12082.1950EDB@localhost>
+Content-Transfer-Encoding: 7BIT
+In-Reply-To: <Pine.LNX.4.33.0204081351140.31031-100000@oh2bns.ampr.org>
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: TEXT/PLAIN; charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-To: Wilbert Knol <w.knol@niwa.cri.nz>
+Content-Type: text/plain; charset="us-ascii"
+To: Tomi Manninen <tpm@prkele.tky.hut.fi>
 Cc: linux-hams@vger.kernel.org
 
-On Mon, 8 Apr 2002, Wilbert Knol wrote:
+On Monday 08 April 2002 12:57, Tomi Manninen wrote:
+> I could not reproduce this with KDE but I found another possible cause for
+> it. Can you check if you have NumLock (or CapsLock or ScrollLock) on when
+> this happens.
+> It seems that shortly before releasing 0.4 I added a bug that makes the TX
+> window ignore keyboard input when any modifiers are on. In fact you can't
+> even type in CAPITAL letters...
 
-> A question: I would like to extract PTT from a USB serial adapter, but the 
-> device file for it doesn't show up in the pick list of gMFSK. Can I safely 
-> add a symlink to the USB device file and call it, say /dev/ttyS99?
+Yes, that's right indeed ! By accident, NumLock in GNOME was off, for I rare 
+use it. KDE is my default, and NumLock is always set on in it.
 
-You can type whatever filename you want in the PTT text entry box. It
-doesn't need to be from the list.
+> Oh well, I will release 0.4.1 soon with this and another small bug fixed.
 
-I don't have any USB serial converters here but I suppose you could just
-type /dev/ttyUSB0 or /dev/usb/ttyUSB or whatever there. If the USB serial
-driver implements the necessary ioctls it should work.
+I'm glad if I help to exterminate this bug, even with such confusing report :)
 
+Kindly,
+Alek
 -- 
-Tomi Manninen           Internet:  oh2bns@sral.fi
-OH2BNS                  AX.25:     oh2bns@oh2rbi.fin.eu
-KP20ME04                Amprnet:   oh2bns@oh2rbi.ampr.org
-
+  73 de YU1IS  -=-  ailic at ptt dot yu  -=-  ICQ#:62419462
