@@ -1,71 +1,38 @@
-From: John Ackermann N8UR <jra@febo.com>
-Subject: RE: Icom programming software?
-Date: Thu, 11 Sep 2003 18:52:19 -0400
+From: Nate Bargmann <n0nb@networksplus.net>
+Subject: Re: Icom programming software?
+Date: Thu, 11 Sep 2003 18:26:06 -0500
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <2120000.1063320739@flob>
-References: <000001c378a9$de9579d0$6401a8c0@wa0eir>
+Message-ID: <20030911232606.GK24202@localhost>
+References: <000001c378a9$de9579d0$6401a8c0@wa0eir> <2120000.1063320739@flob>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <000001c378a9$de9579d0$6401a8c0@wa0eir>
 Content-Disposition: inline
+In-Reply-To: <2120000.1063320739@flob>
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"; format="flowed"
-To: T + J Williams <wa0eir@mchsi.com>, linux-hams@vger.kernel.org
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+To: linux-hams@vger.kernel.org
 
-Thanks, but there's nothing there for the T90 -- closest is a couple of 
-programs for the IC-Q7, but I don't know if the two radios use the same 
-interface.
+* John Ackermann N8UR <jra@febo.com> [2003 Sep 11 18:00 -0500]:
+> Thanks, but there's nothing there for the T90 -- closest is a couple of 
+> programs for the IC-Q7, but I don't know if the two radios use the same 
+> interface.
 
-73,
-John
+John, part of the problem is whether or not the protocol is documented.
+In many cases it seems the HTs and what not probably just do a memory
+dump and the proprietary software is written to handle the specific
+model.  If there are no rig control programming specs, there is little
+that can be done unless someone wants to engage in a fair amount of
+reverse engineering, I would assume.
 
---On Thursday, September 11, 2003 16:15:45 -0500 T + J Williams 
-<wa0eir@mchsi.com> wrote:
+Of course, the manufacturers can't be bothered to offer anything except
+some one-off program for That Proprietary OS...
 
->
-> John,
->
-> You may want to check at:
-> http://radio.linux.org.au
-> In the rig control software section.
->
-> 73,
-> Ted - wa0eir
->
->
->> -----Original Message-----
->> From: linux-hams-owner@vger.kernel.org
->> [mailto:linux-hams-owner@vger.kernel.org] On Behalf Of John
->> Ackermann N8UR
->> Sent: Thursday, September 11, 2003 4:07 PM
->> To: linux-hams@vger.kernel.org
->> Subject: Icom programming software?
->>
->>
->> Sorry if I'm missing something obvious, but a google search
->> didn't turn
->> anything up.
->>
->> Is there a Linux tool available for programming an Icom T-90 HT?
->>
->> Thanks,
->>
->> John N8UR
->> jra@febo.com
->>
->> -
->> To unsubscribe from this list: send the line "unsubscribe
->> linux-hams" in
->> the body of a message to majordomo@vger.kernel.org
->> More majordomo info at  http://vger.kernel.org/majordomo-info.html
->>
->
-> -
-> To unsubscribe from this list: send the line "unsubscribe linux-hams" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at  http://vger.kernel.org/majordomo-info.html
->
->
+73, de Nate >>
 
-
+-- 
+ Wireless | Amateur Radio Station N0NB          | "We have awakened a
+ Internet | n0nb@networksplus.net               | sleeping giant and
+ Location | Bremen, Kansas USA EM19ov           | have instilled in him
+  Amateur radio exams; ham radio; Linux info @  | a terrible resolve".
+             http://www.qsl.net/n0nb/           | - Admiral Yamamoto
