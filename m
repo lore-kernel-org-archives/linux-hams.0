@@ -1,29 +1,31 @@
-From: Jeroen Vreeken <pe1rxq@amsat.org>
-Subject: Re: Trying to get Ax25 running.
-Date: Tue, 12 Oct 2004 15:41:45 +0200
+From: chappaz alexandre <alexandre.chappaz@data-tools.com>
+Subject: kenwood radio & numeric data
+Date: Tue, 12 Oct 2004 17:14:52 +0200
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <416BDF19.5060902@amsat.org>
-References: <620c905704101206324b957deb@mail.gmail.com>
+Message-ID: <200410121714.52100.alexandre.chappaz@data-tools.com>
+Reply-To: alexandre.chappaz@data-tools.com
 Mime-Version: 1.0
 Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <620c905704101206324b957deb@mail.gmail.com>
+Content-Disposition: inline
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"; format="flowed"
-To: Chuck Hast <wchast@gmail.com>, linux-hams@vger.kernel.org
+Content-Type: text/plain; charset="us-ascii"
+To: linux-hams@vger.kernel.org
+Cc: =?iso-8859-1?q?Andr=E9_HONIG?= <andre@data-tools.com>
 
-Chuck Hast wrote:
-> Folks,
-> I am a bit new to this. I am running SuSE 9.1 I have installed the AX25
-> stuff, and when I set up the port I have a KISS TNC on I see the commands
-> being sent to it.
-> When I run call, and it appears that the connection is established the whole
-> thing locks up. Not just that screen, but X, Keyboard and all. At that point
-> I end up hitting the power button in order to get out of it.
+Hi guy
 
-What kernel are you using? 2.4? if so try 2.6.
-Try it without X, with any luck you will atleast catch an oops printed 
-to the console that could help us further.
+I've got a new question for U if you've got time to thing of it.....I wrote 
+yesterday to get informations about the Kenwood tm700... radio & Tnc.... Well 
+I think I wont manage to achieve what I want using the internal TNC...... 
+That's why I write again to ask if anyone could give a little help for 
+choosing a nice modem (either hardware or software with a sound card) to 
+transmit numeric data over radio with the smallest delay possible....... The 
+"packet radio" protocol limits the use I want to have because the goal for me 
+would be to have a constant data stream over the radio. So if someone knows 
+what kind of material i should use it would be really helpful.....
 
-Jeroen
+Thanks a lot
+
+Alex
 
