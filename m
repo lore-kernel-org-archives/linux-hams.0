@@ -1,34 +1,39 @@
-From: Marco Calistri <ik5bcu@tin.it>
-Subject: RE: Doubts on modems utilization
-Date: Sun, 06 Apr 2003 22:37:13 +0200 (CEST)
+From: Phil <phil@spiderweb.com.au>
+Subject: Hamlib question
+Date: Mon, 7 Apr 2003 10:56:10 +1000
 Sender: linux-hams-owner@localhost
-Message-ID: <20030406203713.7483.qmail@linux.ik5bcu.ampr.org>
-References: <000001c2fbc2$5ade9900$8c01a8c0@HP713A>
+Message-ID: <200304071056.10318.phil@spiderweb.com.au>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7BIT
+Content-Transfer-Encoding: 8bit
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <000001c2fbc2$5ade9900$8c01a8c0@HP713A>
 List-Id: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
-To: Dexter N Muir <dexy@ihug.co.nz>
-Cc: linux-hams@vger.kernel.org
+To: linux-hams@vger.kernel.org
 
 
-On 05-Apr-2003 Dexter N Muir wrote:
-> Hi Marco and Matti and all
-> 
->   Check out SCC and ESCC and PCI-SCC cards - simple modems and stunning
-> performance!  I'm in process of setting up my old trusty PA0HZP
-> OptoPCSCC Card under Mandrake 9.0 at present (thanks to list and Wilbert
-> for ax25 so far).
-> 
-> Cheers
-> Dex ZL2DEX
+Hello,
 
-Oh in that case I know that I could use many modems (up to 4 or 6) for
-different baud rates...so it will be a very good solution.
+I have attempted to have this question answered through the hamlib list but, 
+not being a list member, my question was rejected. I have also tried to 
+contact a list member who also has used this list but his e-mail address is 
+no longer valid. Anyway, onto the question. 
 
-Thank you Dex and all the best.
+During the compiling process I get a lot of "given / after" errors, such as 
+the following. How might I best correct this?
 
-Marco IK5BCU
+rigclass.cc:624: default argument given for parameter 2 of `void 
+Rig::setMem(int, int = 0)'
+../include/hamlib/rigclass.h:122: after previous specification in `void 
+Rig::setMem(int, int = 0)'
+rigclass.cc:629: default argument given for parameter 1 of `int 
+Rig::getMem(int = 0)'
+../include/hamlib/rigclass.h:123: after previous specification in `int 
+Rig::getMem(int = 0)'
+m
+
+
+-- 
+Regards,
+Phil
+phil@spiderweb.com.au
 
