@@ -1,56 +1,28 @@
-From: Gervase Chavasse <g_chavasse@onetel.com>
-Subject: gmfsk and SuSE 9.1
-Date: Thu, 9 Dec 2004 19:26:05 +0000
-Message-ID: <200412091926.06125.g_chavasse@onetel.com>
+From: Tomi Manninen <oh2bns@sral.fi>
+Subject: Re: gmfsk and SuSE 9.1
+Date: Thu, 09 Dec 2004 21:35:58 +0200
+Message-ID: <1102620958.1217.15.camel@oh2bns.ampr.org>
+References: <200412091926.06125.g_chavasse@onetel.com>
 Mime-Version: 1.0
 Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
-Content-Disposition: inline
+In-Reply-To: <200412091926.06125.g_chavasse@onetel.com>
 Sender: linux-hams-owner@vger.kernel.org
 List-Id: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
-To: linux-hams@vger.kernel.org
+To: Gervase Chavasse <g_chavasse@onetel.com>
+Cc: Linux-hams List <linux-hams@vger.kernel.org>
 
-Hi everyone
+On Thu, 2004-12-09 at 21:26, Gervase Chavasse wrote:
 
-Has anyone succeeded in getting gmfsk-0.6 to work with SUSE 9.1?
+> I have overcome a number of error messages in the ./configure and make 
+> processes, but under "make install" I now get the following message:
 
-I have overcome a number of error messages in the ./configure and make 
-processes, but under "make install" I now get the following message:
+> ../../depcomp: line 414: exec: g++: not found
 
-extract begins
-Making install in mt63
-make[2]: Entering directory `/usr/local/gmfsk-0.6/src/mt63'
-source='dsp.cc' object='dsp.o' libtool=no \
-depfile='.deps/dsp.Po' tmpdepfile='.deps/dsp.TPo' \
-depmode=none /bin/sh ../../depcomp \
-g++ -DHAVE_CONFIG_H -I. -I. -I../.. -DPACKAGE_DATA_DIR=\""/usr/share"\" 
--DPACKAGE_LOCALE_DIR=\""/usr//locale"\" -DORBIT2=1 -pthread 
--I/opt/gnome/include/libgnomeui-2.0 -I/opt/gnome/include/libgnome-2.0 
--I/opt/gnome/include/libgnomecanvas-2.0 -I/opt/gnome/include/gtk-2.0 
--I/usr/include/libart-2.0 -I/opt/gnome/include/gconf/2 
--I/opt/gnome/include/libbonoboui-2.0 -I/opt/gnome/include/glib-2.0 
--I/opt/gnome/lib/glib-2.0/include -I/opt/gnome/include/orbit-2.0 
--I/opt/gnome/include/libbonobo-2.0 -I/opt/gnome/include/gnome-vfs-2.0 
--I/opt/gnome/lib/gnome-vfs-2.0/include 
--I/opt/gnome/include/bonobo-activation-2.0 -I/opt/gnome/include/pango-1.0 
--I/usr/include/freetype2 -I/opt/gnome/lib/gtk-2.0/include 
--I/opt/gnome/include/atk-1.0 -I/usr/X11R6/include 
--I/usr/include/freetype2/config -I/usr/include/libxml2 -I../../src 
--I../../src/misc     -c -o dsp.o `test -f 'dsp.cc' || echo './'`dsp.cc
-../../depcomp: line 414: exec: g++: not found
-make[2]: *** [dsp.o] Error 127
-make[2]: Leaving directory `/usr/local/gmfsk-0.6/src/mt63'
-make[1]: *** [install-recursive] Error 1
-make[1]: Leaving directory `/usr/local/gmfsk-0.6/src'
-make: *** [install-recursive] Error 1
-linux:/usr/local/gmfsk-0.6 #               
+You don't seem to have the C++ compiler installed. On my Red Hat the
+package is called "gcc-c++".
 
-extract ends
+-- 
+Tomi Manninen / OH2BNS / KP20ME04
 
-Line 414 of ../../depcomp is:
- exec "$@"
-
-This has stumped me. Can anyone help?
-
-Gervase GW4URJ
