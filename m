@@ -1,24 +1,35 @@
-From: ph.ttv@free.fr
-Subject: help xastir and mandrake (how to compile ax25 support ?)
-Date: Mon,  8 Nov 2004 20:59:44 +0100
-Message-ID: <1099943984.418fd03081dd7@imp4-q.free.fr>
+From: Hamish Moffatt <hamish@cloud.net.au>
+Subject: Re: aprsd setup
+Date: Tue, 9 Nov 2004 08:46:20 +1100
+Message-ID: <20041108214620.GA17099@cloud.net.au>
+References: <478F6623898BBC4DBD692A223D28298A0EF85A@amewebsrvr.webametx.local>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7BIT
 Return-path: <linux-hams-owner@vger.kernel.org>
+Content-Disposition: inline
+In-Reply-To: <478F6623898BBC4DBD692A223D28298A0EF85A@amewebsrvr.webametx.local>
 Sender: linux-hams-owner@vger.kernel.org
 List-Id: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 7bit
 To: linux-hams@vger.kernel.org
 
-Hi all !
+On Mon, Nov 08, 2004 at 01:48:42PM -0600, AE5PL Lists wrote:
+> There is another option: javAPRSSrvr.  javAPRSSrvr is a multi-platform
+> APRS server application with full featured IGate and APRS digipeater
+> capabilities.  javAPRSSrvr is used on all of the core servers as well as
+> all of the aprs2.net servers.  There are over 100 installations
+> world-wide.  More information can be found at
+> http://www.aprs-is.net/javaprssrvr
+> 
+> If you are interested in javAPRSSrvr, contact me directly at
+> pete@ae5pl.net  javAPRSSrvr is free for amateur radio use and supports
+> the Linux ax25 kernel features.
 
-who uses xastir on Mandrake ?
+How do you access the kernel AX.25 from Java?
 
-I don't know how to compile xastir with ax25 support on my mdk 9.2 :-(
+Is it open source?
 
-(ax25 works fine ever on my computer)
 
-Thanks
-
-Philippe, f5rvx
-
+Hamish
+-- 
+Hamish Moffatt VK3SB <hamish@debian.org> <hamish@cloud.net.au>
