@@ -1,44 +1,28 @@
-From: "Curt Mills, WE7U" <hacker@tc.fluke.com>
-Subject: Re: ax25/aprs with perln
-Date: Thu, 15 Aug 2002 09:44:50 -0700 (PDT)
+From: Jason Flynn G7OCD <jason.flynn@btinternet.com>
+Subject: Re: JT44 on Linux
+Date: Fri, 16 Aug 2002 07:27:44 +0100
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <Pine.GSO.4.44.0208150941110.20993-100000@dogbert.tc.fluke.com>
-References: <20020814204516.A7335@goliath.geekthing.com>
+Message-ID: <3D5C9B60.4000405@btinternet.com>
+References: <Pine.HPX.4.10.10208141518580.21861-100000@saturn.trs.ntc.nokia.com> <02081415053208.00798@g4klx>
 Mime-Version: 1.0
-Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <20020814204516.A7335@goliath.geekthing.com>
-List-Id: <linux-hams.vger.kernel.org>
-Content-Type: TEXT/PLAIN; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
-To: Rob Fugina <robf@geekthing.com>
-Cc: linux-hams@vger.kernel.org
+Return-path: <linux-hams-owner@vger.kernel.org>
+List-Id: <linux-hams.vger.kernel.org>
+Content-Type: text/plain; charset="us-ascii"; format="flowed"
+To: g4klx@qsl.net
+Cc: Tomi Manninen OH2BNS <tpm@prkele.tky.hut.fi>, linux-hams@vger.kernel.org
 
-On Wed, 14 Aug 2002, Rob Fugina wrote:
+> I have a friend who has JT44 receive capability who is over a 
+> variable 250kms 23cms path which would be an interesting test. 
 
-> Does anybody have any AX25 socket programming examples in perl?
->
-> Has anybody every seen an APRS perl module (or set of modules)?
-> I'm looking for something that can be used to both encode and decode
-> APRS packets.  If I can't find one, I'll be forced to write it myself...
+We've been doing similar tests here, trying all the 'new' data
+and weak signal modes. They're designed for EME or MS etc, and
+don't cope very well with scintilations introduded by long
+atmospheric distortion. They work, but if you do a waterfall,
+you can see the signal spread is at least one tone wide so a
+system for tropo would probably work better with less tones.
+So we're thinking about a new system specifically for tropo
+contacts, your ideas would be appreciated...
 
-I wrote aprsd.pl, which is a minimal subset of aprsd written in
-Perl.  I spawns off child processes for each connection, whether it
-be a child connection or a server.  Handles multiple connections of
-each type.  That might be a good place to look at normal socket
-programming, but not AX25 sockets.  I haven't done anything with
-AX25 sockets in Perl yet.
-
-Ian wrote a Perl APRS decoder while he was editing the APRS spec for
-release.  It helped him to figure out how to write the spec
-properly.  That would be a great starting point for your decoding.
-I think he posted it to the aprsspec and/or aprssig list a while
-back.
-
-aprsd.pl is at ftp://ftp.eskimo.com/u/a/archer somewhere, probably
-under the aprs or xastir directories.  Haven't looked recently.
-
-Curt Mills, WE7U                         hacker.NO_*SPAM@tc.fluke.com
-Senior Methods Engineer/SysAdmin
-"Lotto:    A tax on people who are bad at math." -- unknown
-"Windows:  Microsoft's tax on computer illiterates." -- WE7U
+	Jason
 
