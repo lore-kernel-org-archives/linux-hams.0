@@ -1,40 +1,59 @@
-From: "Steve Fraser" <sfraser@sierra.apana.org.au>
-Subject: Re: Simple BBS, again, sorry for asking twice.
-Date: Wed, 25 Dec 2002 16:02:26 +1030
+From: Vivi Kusumo <vivi_ksm@yahoo.com>
+Subject: Kernel compile option?
+Date: Wed, 25 Dec 2002 00:43:05 -0800 (PST)
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <001c01c2abd7$02e251a0$04590cca@apana.org.au>
+Message-ID: <20021225084305.55963.qmail@web14407.mail.yahoo.com>
 References: <Pine.LNX.4.44.0212250359470.1372-100000@oh2bns.ampr.org>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
+In-Reply-To: <Pine.LNX.4.44.0212250359470.1372-100000@oh2bns.ampr.org>
 List-Id: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
-To: mvw@mvw.net
-Cc: linux-hams@vger.kernel.org
+Content-Transfer-Encoding: 7bit
+To: linux-hams@vger.kernel.org
 
-Hi All
+Hi all,
 
- mvw@mvw.net wrote:
+I am compiling the kernel and using sound card
+CMI8738, before that I need a confirmation for the
+kernel compile option.
 
->I would like to set up a
-> > simple messaging system/bbs, to use when someone goes to this system
-using
-> > ax25. I do not need "do it all" systems, just a simple bbs (and it's a
-> > 1200 bps port, so a simple one with little text would be great).
-> > Suggestions, all?
->
-and Tomi responded:
+According <http://tldp.org/HOWTO/AX25-HOWTO/x495.html>
+6.1.6. Creating a user-mode Soundmodem device
+..
+Thomas Sailer has written a sound modem driver that
+runs in user-mode using the kernel sound drivers, so
+it should work with any sound card supported under
+Linux.
+..
+The driver is implemented as the user-mode program
+soundmodem. The graphical soundmodemconfig program
+allows configuring and testing the soundmodem driver.
+As well as kernel sound support you need the kernel
+AX.25 mkiss driver.
+..
 
-> Other than a full FBB BBS, not really. Hessu started writing something to
-> this extent but I think that was never finished.
->
-I havent used it myself, but awznode by Stefano Noferi  IZ5AWZ  seemed to
-have simple mail capability, passwords etc. It grew out of the normal "node"
-program so should be fairly familiar.
+Should I do the following for the kernel compile
+option?:
+SOUND
+  (*)y  ( )m  ( )n  Sound card support
+  ..
+  ..
+  ( )y  (*)m  ( )n  C-Media PCI (CMI8338/8738)
+  ..
+  ..
+  (* )y  ( )m  ( )n  Support CMI8738 based audio card
+  ..
+  ..
+Or any other option is better?
 
-The reference I found was  ftp://ftp.funet.fi/pub/ham/packet/linux/awznode/
+Many thanks for any assistance.
+Vivi
 
-73 and Merry Xmas to all
 
-Steve, vk5asf
 
+
+__________________________________________________
+Do you Yahoo!?
+Yahoo! Mail Plus - Powerful. Affordable. Sign up now.
+http://mailplus.yahoo.com
