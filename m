@@ -1,39 +1,33 @@
-From: Tomi Manninen <oh2bns@sral.fi>
+From: Rodolfo Brasnarof <rodob@datafull.com>
 Subject: Re: Convers Setup
-Date: Tue, 26 Oct 2004 10:53:44 +0300 (EEST)
+Date: Tue, 26 Oct 2004 13:22:37 -0300
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <Pine.GSO.4.58.0410261050550.8969@kuori.saunalahti.fi>
-References: <417D35BD.9020709@utoronto.ca> <200410252219.53207.robert@steinhaeusser.com>
+Message-ID: <20041026132237.18a4c960.rodob@datafull.com>
+References: <417D35BD.9020709@utoronto.ca>
+ <200410251818.i9PIIfks003119@yagi.h-net.msu.edu> <417D45FF.5060600@utoronto.ca>
 Mime-Version: 1.0
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Content-Transfer-Encoding: 7BIT
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <200410252219.53207.robert@steinhaeusser.com>
+In-reply-to: <417D45FF.5060600@utoronto.ca>
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: TEXT/PLAIN; charset="iso-8859-1"
+Content-Type: text/plain; charset="us-ascii"
 To: linux-hams@vger.kernel.org
 
-On Mon, 25 Oct 2004, Robert [iso-8859-1] Steinh=E4u=DFer wrote:
+On Mon, 25 Oct 2004 14:29:19 -0400
+Dave Stubbs <dave.stubbs@utoronto.ca> wrote:
 
-> as far as I remember, Dieter Deyke DK5?? wrote the first implementati=
-on for
-> WAMPES, also the first networking version. ppconvers split off and ve=
-rsion
-> 3.12 was integrated into TNN (and later XNet). There was also a port =
-for
-> PC/FlexNet (on DOS). At some point, tppconvers was split off ppconver=
-s and
-> was released in conjunction with TNOS. Even later, htppconvers (?by T=
-omi
-> Manninen OH2BNS?) was made from tppconvers.
+> I'm looking to *primarily* service AX.25 callers, since this is for
+> ARES use.
 
-No, HTPP was done by Hessu OH7LZB, although I had some part in it too.
-It's still available at http://he.fi/, but I guess saupp would be the
-way to go nowadays (I haven't tested it).
+conversd-saupp can accept ax25 connections by itself, but you need to
+loguin with/n your_call. I've setup it listening only on port 3600 tcp,
+and ax25 connections are handled by ax25d and axconv, which connects to
+de conversd on tcp/ip, logs you automatically, and even can issue some
+commands like a /w after connection, all automatically.
 
---=20
-Tomi Manninen / OH2BNS / KP20ME04
--
-To unsubscribe from this list: send the line "unsubscribe linux-hams" i=
-n
-the body of a message to majordomo@vger.kernel.org
-More majordomo info at  http://vger.kernel.org/majordomo-info.html
+> Interesting - the coversd-saupp download links are all broken...
+
+If you still can't download it, I can send it to you.
+
+conversd-saupp.tar.gz  260610 bytes
+axconv.c.gz  2563 bytes
