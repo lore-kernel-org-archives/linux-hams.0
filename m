@@ -1,37 +1,32 @@
-From: "Riley Williams" <Riley@Williams.Name>
-Subject: RE: Kenwood TR-7950 Crashing Computer?
-Date: Thu, 27 Mar 2003 02:09:10 -0000
+From: terry <wd0fpc@aniota.com>
+Subject: Re: Kenwood TR-7950 Crashing Computer?
+Date: Wed, 26 Mar 2003 18:32:54 -0800 (PST)
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <BKEGKPICNAKILKJKMHCAKEMHCDAA.Riley@Williams.Name>
-References: <1048730075.9678.6.camel@nacho>
+Message-ID: <Pine.LNX.4.50.0303261829340.13420-100000@yossarian.aniota.net>
+References: <1048639171.16852.34.camel@bobcp4.lingpgmr.com> 
+ <20030326005721.B5531@pull.privacy.nb.ca> <1048651217.1254.26.camel@bobcp4.lingpgmr.com>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <1048730075.9678.6.camel@nacho>
+In-Reply-To: <1048651217.1254.26.camel@bobcp4.lingpgmr.com>
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"
-To: Linux Ham Radio List <linux-hams@vger.kernel.org>, Cranz Nichols <cnichols@centramedia.net>
+Content-Type: TEXT/PLAIN; charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+To: linux-hams <linux-hams@vger.kernel.org>
 
-Hi Cranz.
+On Tue, 25 Mar 2003, Robert L Cochran wrote:
 
- >> Last week, after transmitting several times on a Kenwood
- >> TR-7950 connected to my KPC-3 Plus and my (practically
- >> brand new) computer, my Red Hat Linux installation simply
- >> froze and crashed on me.
+> Another suspect on my list is my Ximian Evolution email client. I had
+> accumulated about 30,000 emails, maybe more, at the time of the crash
+> and when it did crash I was using Evolution. Maybe it was really
+> Evolution's fault?
 
- > FWIW, I have a 7930 about 14 inches away from my Compaq
- > DeskPro running RH 8.0. No problems that I am aware of.
- >
- > Just another data point.
+... ciao:
 
-To flesh out that data point, what power level do you run?
+    that rings a bell.  as of late, there have been numerous mentions of
+'evolution' on 'securityfocus.com' and 'bugtraq'.  i would
+suggest a search of 'securityfocus.com' and see what's what ...
 
-Best wishes from Riley.
----
- * Nothing as pretty as a smile, nothing as ugly as a frown.
 
----
-Outgoing mail is certified Virus Free.
-Checked by AVG anti-virus system (http://www.grisoft.com).
-Version: 6.0.463 / Virus Database: 262 - Release Date: 17-Mar-2003
-
+-- 
+73 , de WD0FPC		Pacific Nowthwest 2M Repeaters
+    aka: terry 		http://www.aniota.com/~wd0fpc
