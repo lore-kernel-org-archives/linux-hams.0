@@ -1,31 +1,39 @@
-From: csmall@enc.com.au (Craig Small)
-Subject: Re: [PATCH] node and libax25io nonblocking
-Date: Sat, 22 Feb 2003 22:09:55 +1100
+From: Tomi Manninen <tpm@prkele.tky.hut.fi>
+Subject: Re: node "Connection refused"
+Date: Sat, 22 Feb 2003 19:33:31 +0200 (EET)
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <20030222110955.GA3467@enc.com.au>
-References: <20030218233527.K507@jeroen.pe1rxq.ampr.org> <Pine.LNX.4.44.0302190033590.14956-200000@oh2bns.ampr.org> <20030221103751.GA16223@enc.com.au> <20030221165337.A3524@jeroen.pe1rxq.ampr.org>
+Message-ID: <Pine.LNX.4.44.0302221930190.1426-100000@oh2bns.ampr.org>
+References: <3E57535F.38EE1D24@free.fr>
+Reply-To: tpm@prkele.tky.hut.fi
 Mime-Version: 1.0
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 Return-path: <linux-hams-owner@vger.kernel.org>
-Content-Disposition: inline
-In-Reply-To: <20030221165337.A3524@jeroen.pe1rxq.ampr.org>
+In-Reply-To: <3E57535F.38EE1D24@free.fr>
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-To: Jeroen Vreeken <pe1rxq@amsat.org>
-Cc: Linux Hams <linux-hams@vger.kernel.org>, Tomi Manninen <tpm@prkele.tky.hut.fi>
+Content-Type: TEXT/PLAIN; charset="iso-8859-1"
+To: =?iso-8859-1?Q?G=E9rard?= Parat / F6FGZ <f6fgz@free.fr>
+Cc: Linux-Hams <linux-hams@vger.kernel.org>
 
-On Fri, Feb 21, 2003 at 04:53:37PM +0100, Jeroen Vreeken wrote:
-> As far as I know only a few node programs use it.
-> Fore node a patch is in the making so that won't be a show stopper.
-> I believe there are a few node forks (flexnode, awznode) that will probably
-> need fixing, but I think they can use the patch for node once its out.
+On Sat, 22 Feb 2003, G=E9rard Parat / F6FGZ wrote:
 
-Great, I'll leave it a week, very early March release the new library
-to fix that brokeness.
+> uhf2: fm F4BWT-10 to F6FGZ-12 ctl I32^ pid=3DCF(NET/ROM) len 20 11:33=
+:38
+> NET/ROM: F4BWT-10->F6FGZ-12 ttl 15
+>          conn ack: ur ckt 01/07 my ckt 00/00 wnd 4 CHOKE
 
-  - Craig
+=464BWT-10 responds with "CONN ACK / CHOKE" which is the NET/ROM equiva=
+lent=20
+for "connection refused". So I think your node works just fine.
 
--- 
-Craig Small VK2XLZ  GnuPG:1C1B D893 1418 2AF4 45EE  95CB C76C E5AC 12CA DFA5
-Eye-Net Consulting http://www.enc.com.au/                <csmall@enc.com.au>
-MIEEE <csmall@ieee.org>                 Debian developer <csmall@debian.org>
+Are you sure F4BWT-10 should answer?
+
+--=20
+Tomi Manninen           Internet:  oh2bns@sral.fi
+OH2BNS                  AX.25:     oh2bns@oh2rbi.fin.eu
+KP20ME04                Amprnet:   oh2bns@oh2rbi.ampr.org
+
+-
+To unsubscribe from this list: send the line "unsubscribe linux-hams" i=
+n
+the body of a message to majordomo@vger.kernel.org
+More majordomo info at  http://vger.kernel.org/majordomo-info.html
