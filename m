@@ -1,43 +1,23 @@
-From: "Steve Fraser" <sfraser@sierra.apana.org.au>
-Subject: Re: Packet Problem
-Date: Tue, 16 Sep 2003 11:11:34 +0930
+From: "Rodolfo Brasnarof" <rodob@ciudad.com.ar>
+Subject: ax.25 digipeater and axdi
+Date: Mon, 15 Sep 2003 23:01:10 -0300
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <005a01c37bf3$aa325300$03590cca@apana.org.au>
-References: <20030916012317.GA9420@leo.tneu.visi.com>
+Message-ID: <3F6644B6.18089.C3CF1@localhost>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 7BIT
 Return-path: <linux-hams-owner@vger.kernel.org>
+Content-description: Mail message body
 List-Id: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
-To: linux-hams@vger.kernel.org, Tim Neu <tim@tneu.visi.com>
+To: linux-hams@vger.kernel.org
 
-Hi Tim, etc
+Hello. I've been using linux ax.25 for some time, with 
+LinPac terminal, and now I have some interest in setting it 
+as a digipeater. I found axdigi program. Tryed to compile 
+it, but gives a lot of errors. It has not configuration 
+script neither makefile. It's just one .c file.
 
-> I have a VERY bizzare problem on Linux with AX.25.  ......
-(details omitted)
-> I'm stumped.  It _should_ be working!  Any ideas?   It's driving me
-> crazy.
->
-Well we cant allow crazy people on the list, so I'll have a go.
-
-I'd check the baud rate to the TNC (axports or command line setting) - make
-sure it matches what mincom says.
-
-I'd also check /proc/interrupts and proc/ioports to make sure that the IRQ's
-arent being grabbed by something else.
-
-Are you using modules - what does lsmod say?
-
-Any error messages from kissattach (or elsewhere)?
-
-The "listen" command doesnt necessarily tell you what the kernel drivers are
-seeing, so take it with a grain of salt.
-
-What does ifconfig show for the AX25 ports?
-
-HTH
-
-Steve
-
-
+I'm using Mandrake 9.0 with kernel 2.4.19. Is there a way to 
+make it work with my system? Or is it there another way to 
+enable digipeating?
 
