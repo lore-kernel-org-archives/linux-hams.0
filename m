@@ -1,29 +1,48 @@
-From: Shane Deering <vk3bvp@qsl.net>
-Subject: JNOS <> Leafnode
-Date: Wed, 24 Apr 2002 00:55:37 +1000
+From: Mike Studer <ab6cv@earthlink.net>
+Subject: Re: packet terminal programm
+Date: Tue, 23 Apr 2002 08:58:33 -0700 (PDT)
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <200204231454.g3NEssX01833@msv02-kent-syd.comindico.com.au>
-Reply-To: vk3bvp@qsl.net
+Message-ID: <Pine.LNX.4.33.0204230853490.17144-100000@localhost.localdomain>
+References: <Pine.HPX.4.10.10204231455580.18972-100000@saturn.trs.ntc.nokia.com>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7BIT
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 Return-path: <linux-hams-owner@vger.kernel.org>
+In-Reply-To: <Pine.HPX.4.10.10204231455580.18972-100000@saturn.trs.ntc.nokia.com>
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"
+Content-Type: TEXT/PLAIN; charset="iso-8859-1"
 To: linux-hams@vger.kernel.org
 
-I've spent the last couple of days setting up my linux computer for packet.
-So far FBB and JNOS are set up OK and seem to be working fine. I've got it  
-forwarding on air with one forward partner. A little bit of fine tuning 
-wouldn't go astray :-)
-Bulletins <> news groups work OK and Knode <> JNOS works OK.
-I can get Leafnode to get news article from JNOS and read them from Leafnode 
-with Knode, but I can't get Leafnode to send them to Leafnode. 
+No versions of linkt compile on RedHat 7.2.  I tried Qt 2.3.1 and 2.3.2=
+=2E =20
 
-Has anyone got Leafnode and JNOS to talk to each other OK?
+Too bad because it looks like a good program.
 
--- 
-Shane Deering
-vk3bvp@vk3bvp.#sev.vic.aus.oc / vk3bvp@qsl.net
-http://www.qsl.net/vk3bvp/
-Sent with KMail v1.3.2 on Wed Apr 24 00:43:16 EST 2002
+I got linpac to work though.
 
+Mike AB6CV
+
+On Tue, 23 Apr 2002, Tomi Manninen OH2BNS wrote:
+
+> On Tue, 23 Apr 2002, Juraj Buliscak wrote:
+>=20
+> >       I=B4m looking for some terminal program for packet radio unde=
+r linux (
+> > Xwindow ). Could someone tell me which are most used, and where is =
+it
+> > possible to obtain.
+> >       Now I am using Xpr from OK1ZIA, but I want to try something e=
+lse.
+>=20
+> LinKT is pretty nice IMHO. See
+> http://www.1409.org/projects/linkt/index.html
+>=20
+> See also radio.linux.org.au, there might be other alternatives as wel=
+l.
+>=20
+>=20
+
+-
+To unsubscribe from this list: send the line "unsubscribe linux-hams" i=
+n
+the body of a message to majordomo@vger.kernel.org
+More majordomo info at  http://vger.kernel.org/majordomo-info.html
