@@ -1,53 +1,50 @@
-From: "Steve Fraser" <sfraser@sierra.apana.org.au>
-Subject: Re: axip
-Date: Mon, 26 Aug 2002 21:52:52 +0930
+From: pa3gcu <pa3gcu@zeelandnet.nl>
+Subject: Re: ax25
+Date: Mon, 26 Aug 2002 13:12:55 +0000
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <001601c24cfb$4df99620$04590cca@apana.org.au>
-References: <Pine.LNX.4.33.0208260433330.2303-100000@n1uan.ampr.org>
+Message-ID: <02082613125506.02211@unix.pa3gcu>
+References: <Pine.LNX.4.33.0208252310120.1012-100000@n1uan.ampr.org> <02082606171202.02211@unix.pa3gcu> <05f301c24cd4$401e4ae0$0500a8c0@terrigal.net.au>
+Reply-To: pa3gcu@zeelandnet.nl
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 7BIT
 Return-path: <linux-hams-owner@vger.kernel.org>
+In-Reply-To: <05f301c24cd4$401e4ae0$0500a8c0@terrigal.net.au>
 List-Id: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
-To: N1UAN Bob <bobbru@chartertn.net>, linux-hams@vger.kernel.org
+To: Michael Hart <mhart@terrigal.net.au>, linux-hams@vger.kernel.org
 
-Hi Bob,
-
-> Well it seems i got the attachs done for the ax25ipd at least they took
-> i have  ptyp0 in the ax25ipd.conf and ttyp0 and when i do an mheard to
-> check it anything is listed there it does sy port axip with so many
-> packets but  it never makes the connect  either way any idea why
-> Bob
+On Monday 26 August 2002 07:43, Michael Hart wrote:
+> Hi everyone,
 >
-A couple of things that may help:
+> I have RedHat 7.3 and the kernel version is 2.4.18
+>
+> Could someone tell me what version of the ax25 tools/utilities and libs
+> will compile and install successfully on this system.  I have 006 tools and
+> they will not compile.
 
-The "master" end of a pseudo tty (ptyXX) must be opened first, so it may be
-better to kissattach to that and then start the ax25ipd daemon second (ie
-swap ptyp0 and ttyp0 in the above). That way you're not relying on the
-daemon to get started and running before you get to the kissattach if you do
-it in a system startup script.
+Some has told you which files you need, i will add a somewhat important note 
+about kernel 2.4.18.
+Basicly the advice is dont use it with ax25 as it will hang your machine if 
+you try and down interfaces which use 'mkiss'.
+Upgrade to 2.4.19 where i belive that problem has been solved.
 
-You need routes in ax25ipd.conf for the station you're connecting to. These
-use the IP number of that station, and you must have a TCP/IP route to them.
+Now kernel 2.4.19 is far to big to send you in a mail, patch-2.4.19.bz2 is 
+4591 Kb IMHO also too large for a mail.
 
-The other station must have an ax25ipd.conf route back to you (if linux).
-(Note: JNOS people use totally different setup and terms, but it still
-works)
+>
+> Given that I am unable to download stuff from sourceforge for some reason I
+> would also appreciate an offer to email me the latest version.
+>
+> I know this is not the first time I have requested this information.
+>
+> I would appreciate help getting onto packet!
+>
+> Michael Hart
+> VK2JXI
+>
 
-Earlier versions of ax25ipd didnt route correctly if you tried to use
-different SSID's on one callsign to select different routes - the default of
-SSID zero was used. The latest version fixes that.
-
-You can use "listen" on the ax25 port specified in the kissattach to see
-what packets are getting to you from the far end. They can do the same.
-
-The far end MUST have a process to connect to (like FBB, node etc). So if
-you want connects from the far end to you, you must used ax25d (or FBB etc)
-to recognise that incoming connect and do something with it.
-
-Hope something in this helps :-)
-
-cheers
-Steve
-
+-- 
+Regards Richard
+pa3gcu@zeelandnet.nl
+http://people.zeelandnet.nl/pa3gcu/
 
