@@ -1,34 +1,31 @@
 From: pa3gcu <pa3gcu@zeelandnet.nl>
-Subject: Re: Packet Problem
-Date: Tue, 16 Sep 2003 09:33:10 +0200
+Subject: Re: ax.25 digipeater and axdi
+Date: Tue, 16 Sep 2003 09:22:24 +0200
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <200309160933.10609.pa3gcu@zeelandnet.nl>
-References: <20030916012317.GA9420@leo.tneu.visi.com>
+Message-ID: <200309160922.24603.pa3gcu@zeelandnet.nl>
+References: <3F6644B6.18089.C3CF1@localhost>
 Reply-To: pa3gcu@zeelandnet.nl
 Mime-Version: 1.0
 Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <20030916012317.GA9420@leo.tneu.visi.com>
+In-Reply-To: <3F6644B6.18089.C3CF1@localhost>
 Content-Disposition: inline
 List-Id: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
-To: Tim Neu <tim@tneu.visi.com>, linux-hams@vger.kernel.org
+To: Rodolfo Brasnarof <rodob@ciudad.com.ar>, linux-hams@vger.kernel.org
 
-On Tuesday 16 September 2003 03:23, Tim Neu wrote:
-> Hello!
+On Tuesday 16 September 2003 04:01, Rodolfo Brasnarof wrote:
+> Hello. I've been using linux ax.25 for some time, with
+> LinPac terminal, and now I have some interest in setting it
+> as a digipeater. I found axdigi program. Tryed to compile
+> it, but gives a lot of errors. It has not configuration
+> script neither makefile. It's just one .c file.
 >
-> I have a VERY bizzare problem on Linux with AX.25.  I can usually
-> handle linux problems on my own, but this one I'm going to need to
-> see if anyone else can help...
+> I'm using Mandrake 9.0 with kernel 2.4.19. Is there a way to
+> make it work with my system? Or is it there another way to
+> enable digipeating?
 
-To do that one would need to know a lot more than you have supplied.
-No mention of kernel version, let alone distro name and version.
-No mention of libax25 ax25-apps ax25-tools versions.
-No mention of how you configure your ax25 system.
-
-It would be a lot easier if one knew some if not all of the above.
-
-You did say i have tryed them all, that is really no use at all.
+The program rxecho.?
 
 -- 
 If the Linux community is a bunch of theives because they
