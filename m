@@ -1,46 +1,35 @@
-From: Arno Verhoeven <pe1icq@pi8zaa.ampr.org>
-Subject: Re: ANN: gMFSK v0.6 released
-Date: Sun, 18 Jul 2004 19:29:53 +0200
+From: =?iso-8859-1?Q?Arnau_S=E1nchez?= <arnau@gbt.tfo.upm.es>
+Subject: Re: ax25 with digipeaters
+Date: Mon, 19 Jul 2004 14:01:09 +0200
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <40FAB391.6090400@pi8zaa.ampr.org>
-References: <1089908644.1286.53.camel@oh2bns.ampr.org>
+Message-ID: <00b301c46d88$14f8b540$050010ac@tokland>
+References: <Pine.LNX.4.44.0407152121160.30845-100000@wapiti>
 Mime-Version: 1.0
 Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <1089908644.1286.53.camel@oh2bns.ampr.org>
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"; format="flowed"
-To: Tomi Manninen <oh2bns@sral.fi>, Linux-hams List <linux-hams@vger.kernel.org>, MFSK List <MFSK@yahoogroups.com>, MT63 List <MT63@yahoogroups.com>
+Content-Type: text/plain; charset="us-ascii"
+To: linux-hams@vger.kernel.org
 
-Tomi Manninen wrote:
-> Hi all,
+> Make sure the syntax is proper for your command.  I don't recall
+> whether spaces are needed or commas between stations.
 > 
-> I have just released version 0.6 final of gMFSK, the multimode 
-> HF terminal program for Linux and other unix-like operating systems.
-> 
-> This is a major release. New features added since version 0.5
-> include at least:
-> 
->  - Hellschreiber transmit
->  - MFSK picture support
->  - Waterfall improvements
->  - Hamlib support
->  - CWirc support
->  - Configuration druid
->  - New mode: PSK63
->  - Parallel port PTT
->  - Samplerate conversion
+> Yes, there are parameters on the intermediate stations that would
+> need to be set to use it as a digipeater.  Something like "MRPT
+> ON"???  Can't recall the exact commands, and they may change based
+> on the TNC or the software involved.
+
+Syntax is correct, as listen shows:
+
+vhf: EAX25: fm ORIG to DEST via DIGI ctl SABME+ 07:00:58
+
+but DIGI does not retransmit the packet.
 
 
-Hi,
+> Something like "MRPT ON"??? 
 
-A pre-compiled binary package for Slackware-10 is available from 
-http://sharon.esrac.ele.tue.nl/pub/slackware/slackware-current_ham_updates/extra/ham/
+I forgot to mention, I am not using a TNC but soundmodem.
 
+any ideas?
+arnau
 
--- 
-73, PE1ICQ  Arno Verhoeven
---------------------------------
-AX.25  pe1icq@pi8zaa.#nbo.nld.eu
-smtp   pe1icq@pi8zaa.ampr.org
-inet   pe1icq@amsat.org
