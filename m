@@ -1,66 +1,62 @@
-From: Bill Walton <kj6eo@kj6eo.com>
-Subject: Re: Tracking down a Linux crash
-Date: Thu, 17 Oct 2002 13:17:13 -0700
+From: John Ackermann N8UR <jra@febo.com>
+Subject: Re: Tracking down a Linux crash (update)
+Date: Fri, 18 Oct 2002 09:02:02 -0400
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <3DAF1AC9.91BA36B8@kj6eo.com>
-References: <3031448.1034759336@WUSJA129861-8HP> <3DAE5AD6.5CE83E7F@kj6eo.com> <200210171202.g9HC2KD08295@hartford-hwp.com>
+Message-ID: <3489387.1034931722@WUSJA129861-8HP>
+References: <200210160935.19272.w9ya@amsat.org>
 Mime-Version: 1.0
 Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
+In-Reply-To: <200210160935.19272.w9ya@amsat.org>
+Content-Disposition: inline
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"
-To: Haines Brown <brownh@hartford-hwp.com>
-Cc: linux-hams@vger.kernel.org
+Content-Type: text/plain; charset="us-ascii"; format="flowed"
+To: linux@lists.tapr.org, linux-hams@vger.kernel.org
 
-Hi Haines -
+Hi --
 
-I was using a temperature probe wrapped around the bottom of the CPU
-cooling fan.  The probe plugs into a Digital Volt Meter that I bought down
-at Sears.  I put the system into a "kernel compile" then slowed down the
-speed of the CPU cooling fan via the adjustable power supply.  When the
-CPU would reach 60C (plus or minus a degree sometimes), it would just
-sieze up "freeze".  The CPU would not recover so I would have to cool it off
-and do a cold boot on the entire system.  During this test I would spray some
-"component cooler" (freeze spray) lightly on the motherboard to keep it
-cool.  You can get the freeze spray at almost any electronics store.  You can
-also turn those cans of "compressed air" into freeze spray by holding them
-upside down while spraying them.  Be advised that some of the compressed
-air (canned) stuff is flammable.  Should you spray it into say some high
-voltage it will ignite (you may have known that already).
+Thanks to all for the many responses to my plea for help about my crashing 
+Linux box.  I set off quite a discussion.
 
-Since I determined the sieze up temperature of the CPU all I had to do was
-to stop cooling down the motherboard with the freeze spray.  And sure
-enough at around 50 to 51C the system hung up.  I went down to the local
-computer store and exchanged the motherboard....problem resolved.
+The majority of responses pointed the finger at a hardware problem, mainly 
+faulty memory or possibly CPU overheating.  Tomi suggested "cerberus" which 
+is a burn-in testing tool that VA-Linux used on their hardware products. 
+It's available at http://sourceforge.net/projects/va-ctcs/ .  It does a 
+pretty extreme job of exercising the CPU, memory, and hard disk, and since 
+it runs under Linux, it can find some kernel instabilities as well.  I've 
+been running it for about 24 hours now, and have had no failures.  I also 
+checked the CPU temperature, and got 44 degrees C with both the CPU and the 
+case fan apparently working properly, but the CPU not working very hard. 
+That's way under the 90 degree maximum rating for the Athlon XP.  So, I 
+don't think there's a CPU or memory problem.
 
-In my opinion nobody should intentionally overheat their CPU.  In my case
-the CPU was "inexpensive".  Furthermore I asked my friends down at the
-computer store what type of heat the "Duron" could take before it would
-sieze.  I work in the electronics industry, I own a small business and we
-service high resolution X-Ray equipment down to component level.  I can't
-begin to tell you how many electronics problems I have isolated by
-cooling suspected components down with freeze spray (>:  It's just a trick
-of the trade.
+(One note about cerberus -- under 2.4.x kernels, the memory test requires 
+swap space of 2.5 to 4 times the physical memory.  When I tried to test my 
+512MB of RAM with 1GB of swap, things crashed in a very ugly way.  But 
+testing each 256MB stick separately works just fine.)
 
-Regards,
+Right now I'm suspecting a video driver problem.  The S3 ProSavage chip on 
+the motherboard is a relatively new one, and the XFree86-4 driver for it is 
+quite new (it's not even included in the Debian xfree-server package).  I'm 
+going to install an outboard AGP video card to see what difference that 
+might make.
 
-Bill KJ6EO
+A couple of people have suggested trouble with AMD chipsets, and that might 
+be the case, but changing mobos is kind of a last resort... I'll go there 
+if nothing else works.
 
-Haines Brown wrote:
+I had one suggestion that there's a bug in Mozilla when it encounters Flash 
+pages and accesses the sound card.  I haven't been able to track down 
+anything definitive about that, so I'm not sure if that bug causes a full 
+system freeze like I'm seeing, or just a Mozilla crash.
 
-> > I put a variable powersupply on the CPU fan and slowly starved it
-> > for air to see if I could duplicate the problem that I was having.
-> > The Duron 1300 locked up at 60 degrees C.  Even on the hottest days
-> > I was not exceeding a CPU temperature of 50 degrees C max.  To make
-> > a long story short, my problem was due to a motherboard failure.  I
-> > traced it down by using some component cooler.  I replaced the MB
-> > .... problem solved.
->
-> Bill,
->
-> Could I ask for a little more detail? How were you measuring CPU
-> temperature? What do you mean by a "component cooler?" Did you select
-> areas of the MB to cool and then await the result?
->
-> Haines Brown KB1GRM
+Finally, one suggestion was to turn off the artsd sound server in KDE. 
+I'll give that a try as well; the sound server doesn't really do any good 
+for the applications I'm using, anyway.
+
+Thanks to all for the suggestions; if I ever find out what's going on, I'll 
+let you know.
+
+73,
+John
 
