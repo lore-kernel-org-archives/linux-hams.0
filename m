@@ -1,48 +1,39 @@
-From: "gel2256@dnaco" <gelmce@dnaco.net>
-Subject: Re: ? wireless 802.11b, D-Link DWL-520
-Date: Mon, 22 Apr 2002 14:42:20 -0400
+From: James Cutler <jwc@stanford.edu>
+Subject: Baypac and kernel crashes
+Date: Mon, 22 Apr 2002 21:04:32 -0700 (PDT)
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <aa1lr4$utt$2@main.gmane.org>
-References: <F182IyDPxcgiKMXNaGf0001b276@hotmail.com> <02042107041801.00604@unix.pa3gcu> <3CC2F39D.AC66E99C@gelm.net> <02042119580302.00604@unix.pa3gcu>
-Reply-To: nc8q@gelm.net
+Message-ID: <Pine.GSO.4.44.0204222103400.21272-100000@rescomp.Stanford.EDU>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"
-To: chuck@gelm.net
+Content-Type: TEXT/PLAIN; charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+To: linux-hams@vger.kernel.org
 
-11 megabit radio modem, $100USD
+We're having some problems using a BayPac 9600 with Linux 2.4.17.
 
-> > http://www.linux-wlan.org/ and linux driver
-> > ftp://ftp.linux-wlan.org/pub/linux-wlan-ng/ \
-> > linux-wlan-ng-0.1.14-pre2.tar.gz
+On one machine it works just fine until we start X.  As soon as we
+start X, the machine will crash as soon as we send an AX.25 packet
+(we were testing with "beacon").  The only way to recover from the
+crash is to power cycle or press the reset button.  This is
+repeatable.  We beacon, we work, we start X, we beacon, we crash.
+It does output the packet before it crashes.
 
-I've gotten it working with a K6/266 MB and
-a K6-2/500 MB:
+On a second machine that doesn't (can't) run X, we've noticed a
+similar crash.  It's a small embedded 486 (the Prometheus).  After
+several beacons, from 5-20, it will crash in the same hard manner.
+Only a power cycle will fix it.
 
- I edited wlan.conf (adhoc=y) and moved it to
-/etc/wlan.conf
- and moved rc.wlan to
-/etc/rc.d/rc.wlan
- The 'make install' didn't place them for me, as advertised. :-|
+Has anyone else seen similar behavior?  Any ideas?
 
- Ran
-#modprobe prism2_pci
-#ifconfig wlan0 up
-#/etc/rc.d/rc.wlan start
-#ifconfig wlan0 192.168.1.1
-/* I'm not to sure of the order :-| */
+On a side note, is anyone using the Baypac and linux on a regular reliable
+basis?
 
- I pinged this host from a Win2kpro host:
-c:\> ping -n 99 -l 32760 192.168.1.1
- and it indicated an 11 Megabit link with
- ~65k bytes/second.
+Thanks.
 
- I'm wanting to create a community wireless LAN using a water tower
-as a passive reflector and hoping for ~5 mile radius of the water
-tower.  I am also wanting to use the minimum CPU horsepower for the
-wireless<>internet gateway. This is why I'm trying to get a wireless
-device working in my old 80586x120. ;-)
+--Jamie
+jwc@stanford.edu
 
-Chuck nc8q
+
+
+
