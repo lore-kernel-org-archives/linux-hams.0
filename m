@@ -1,31 +1,35 @@
-From: Bob Nielsen <nielsen@oz.net>
-Subject: Re: frame buffer cards....
-Date: Mon, 23 Aug 2004 16:14:52 -0700
+From: Erik Jakobsen <eja@urbakken.dk>
+Subject: ax25apps
+Date: Sun, 29 Aug 2004 11:24:12 +0200
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <20040823231452.GA9450@office.n7xy.net>
-References: <620A0B98-F54E-11D8-B460-000A95DB9E94@pocketdvm.com>
+Message-ID: <4131A0BC.3080205@urbakken.dk>
 Mime-Version: 1.0
-Return-path: <linux-hams-owner@vger.kernel.org>
-Content-Disposition: inline
-In-Reply-To: <620A0B98-F54E-11D8-B460-000A95DB9E94@pocketdvm.com>
-List-Id: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
-To: Linux HAMs <linux-hams@vger.kernel.org>
+Return-path: <linux-hams-owner@vger.kernel.org>
+List-Id: <linux-hams.vger.kernel.org>
+Content-Type: text/plain; charset="us-ascii"; format="flowed"
+To: linux-hams@vger.kernel.org
 
-On Mon, Aug 23, 2004 at 05:50:00PM -0400, Mark Acierno wrote:
-> could someone point me to  a good resource for frame-buffer cards. 
-> specifically I am an trying to determine the capacities of my 
-> Ultrasparc creator (stock video card).
+Hi.
 
-The Framebuffer-HOWTO <http://www.tldp.org/Framebuffer-HOWTO.html>
+I use SuSE 9.1.
 
-> 
-> Also, once installed is there an easy way to change the video card 
-> information when I installed Debian? I believe I have it set 
-> incorrectly
+I have recongized, that the ax25apps doesn't ahve the same name in my 9.1.
 
-dpkg-reconfigure xserver-xfree86 (or whatever package is appropriate 
-for Sparc).
+#rpm -q ax25apps
+package ax25apps is not installed
 
-73, Bob N7XY
+# rpm -q ax25-apps
+ax25-apps-0.0.6-178
+
+What does that mean ?.
+
+Yesterday I installed a xfbb system here, and have difficulties in 
+getting it all to work.
+
+Something with connecting to the console.
+
+Could that be a reason, that my ax25apps doesn't have the normal name ?.
+
+73 de Erik OZ4KK
+
