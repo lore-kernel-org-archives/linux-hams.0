@@ -1,31 +1,72 @@
-From: Jonathan Naylor <jonathan@mechserv.demon.co.uk>
-Subject: Interesting web sites
-Date: Tue, 24 Dec 2002 13:28:33 +0000
+From: pa3gcu <pa3gcu@zeelandnet.nl>
+Subject: Re: OE5DXL driver ?
+Date: Tue, 24 Dec 2002 13:30:26 +0000
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <aSqXogABEGC+Ewzx@mechserv.demon.co.uk>
+Message-ID: <02122413302600.12936@unix.pa3gcu>
+References: <1717384414.20021222232719@sma.spb.ru>
+Reply-To: pa3gcu@zeelandnet.nl
 Mime-Version: 1.0
+Content-Transfer-Encoding: 7BIT
 Return-path: <linux-hams-owner@vger.kernel.org>
+In-Reply-To: <1717384414.20021222232719@sma.spb.ru>
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"; format="flowed"
-Content-Transfer-Encoding: 7bit
-To: linux-hams@vger.kernel.org
+Content-Type: text/plain; charset="us-ascii"
+To: "Andrew B." <ua1cam@sma.spb.ru>, linux-hams@vger.kernel.org
 
-Merry Xmas to all, etc.
+On Sunday 22 December 2002 20:27, Andrew B. wrote:
+> Hello Friends,
+>
+> Anybody can help me find driver for OE5DXL-9k6modem for kernel above
+> 2.0.x !? I'll be happy,if it will for 2.2.x or 2.4.x!
+>
+> I'm not familiar in programming, but seems that adaptation of sources
+> for newer kernel are possible. Maybe anybody of programmers will help?
 
-In my searches on the Internet I have come across an interesting web 
-site dedicated to advanced amateur radio. By advanced I mean it covers 
-topics such as microwaves, propagation, DSP, software defined radio and 
-of course Linux in amateur radio. It is a site based on Slash code (I 
-think) and is found at http://www.neoamateur.org it appears a little 
-under used and it would be a shame if it died due to neglect. It is a 
-refreshing change from the appliance operator mentality to be found in 
-most parts of amateur radio these days.
+Compiles here on 2.2.19
 
-Another web page that I have just discovered is http://www.dspguru.com 
-which as you can guess specialises in DSP software and hardware. A very 
-interesting resource, and one I could have done with a while ago when I 
-started on LinWSJT.
+>
+> Source i get there:
+> http://www2.cddc.vt.edu/linux/apps/ham/drivers/dxlmodem-2a.tar.gz For now,
+> when i try to compile this sources ,i get errors like this:
+> -----------------
+> [root@linux dxlmodem-2a]# make
+> gcc -I/usr/src/linux/include -Wall -Wstrict-prototypes -O2 -m486 -pipe
+> -D__KERNEL__ -fomit-frame-pointer -DMODULE -DEXPORT_SYMTAB -DMODVERSIONS
+> -include /usr/include/linux/modversions.h -DNOAX25_H -c dxlmodem.c -o
+> dxlmodem.o In file included from dxlmodem.c:0:
+> /usr/include/linux/modversions.h:1:2: #error Modules should never use
+> kernel-headers system headers, /usr/include/linux/modversions.h:2:2: #error
+> but headers from an appropriate kernel-source {standard input}: Assembler
+> messages:
+> {standard input}:9: Warning: Ignoring changed section attributes for
+> .modinfo make: *** [dxlmodem.o] Error 1
 
-Have a good time and don't eat too much Turkey.
+You need to install the kernel source properly.
 
-Jonathan  HB9DRD/G4KLX
+uname -r shows the kernel version, i will use 2.2.19 as an example.
+
+uname -r 
+2.2.19
+
+goto www.kernel.org retrive linux-2.2.19.tar.gz (or bzip file).
+follow the Kernel-HOWTO as far as installing the sources.
+Do not forget to do;
+make mrproper
+in /usr/src/linux after installing the source.
+Then goto the directory containing the dxlmodem source;
+make 
+You will possably get something like;
+{standard input}: Assembler messages:
+{standard input}:9: Warning: Ignoring changed section attributes for .modinfo
+But you should then have a file called dxlmodem.o
+insmod dxlmodem.o to load the module, note, you WILL need to load other 
+modules first, ie ax25 (possably mkiss) and certainly hdlcdrv.o IIRC.
+
+> Best regards,
+> Andrew                          mailto:ua1camATsma.spb.ru
+
+-- 
+Regards Richard
+pa3gcu@zeelandnet.nl
+http://people.zeelandnet.nl/pa3gcu/
+
