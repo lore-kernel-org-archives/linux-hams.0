@@ -1,31 +1,21 @@
-From: Hamish Moffatt <hamish@cloud.net.au>
-Subject: Re: soundmodem support for HF modes?
-Date: Mon, 26 Jan 2004 14:48:36 +1100
+From: Adi Linden <adil@adis.on.ca>
+Subject: ax25 support in aprsd
+Date: Mon, 26 Jan 2004 00:25:42 -0600 (CST)
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <20040126034836.GD19534@cloud.net.au>
-References: <20040125193512.055d315e.washer@trlp.com>
+Message-ID: <Pine.LNX.4.44.0401260023590.3685-100000@mobile.adis.ca>
 Mime-Version: 1.0
 Return-path: <linux-hams-owner@vger.kernel.org>
-Content-Disposition: inline
-In-Reply-To: <20040125193512.055d315e.washer@trlp.com>
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"
+Content-Type: TEXT/PLAIN; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
 To: linux-hams@vger.kernel.org
 
-On Sun, Jan 25, 2004 at 07:35:12PM -0800, James Washer wrote:
-> Any linux soundmodem support for HF digital modes?
+I am trying to get aprsd to work with ax25 support. But documentations 
+seems to be non existant. Any pointers on how to do it?
 
-There's a separate program which implements q15x25 (newqpsk) using the
-same structure as the user-space soundmodem.
+I'd like to eventually run digi_ned as digi and aprsd as igate on the same 
+machine.
 
-Other than there's gMFSK which is a GNOME program which does PSK31,
-RTTY, FeldHell, MT63 and MFSK. Those aren't packet radio modes so not
-suitable for inclusion in the soundmodem.
+Thanks,
+Adi
 
-
-73
-
-Hamish
--- 
-Hamish Moffatt VK3SB <hamish@debian.org> <hamish@cloud.net.au>
