@@ -1,48 +1,53 @@
-From: "Wilbert Knol" <w.knol@niwa.cri.nz>
-Subject: FETCHMAIL over AX25?
-Date: Wed, 1 May 2002 10:41:35 +1200
+From: "Toussaint OTTAVI (TK1BI)" <t_ottavi@club-internet.fr>
+Subject: 802.11b wireless lan equipment and ham radio ?
+Date: Wed, 01 May 2002 13:22:23 +0200
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <3CCFC65F.13679.2E7BEDD9@localhost>
-Reply-To: w.knol@niwa.cri.nz
+Message-ID: <3CCFCFEF.2385E8F4@club-internet.fr>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7BIT
+Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
 List-Id: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
-To: linux-hams@vger.kernel.org
+To: linux-hams <linux-hams@vger.kernel.org>
 
+Hi list,
 
-Thanks for reading this. At home, I get my E-mail via packet radio from a 
-remote POP3 host with the fetchmail client. It's done with TCP/IP over 
-AX25.
+A few days ago, I saw a message about configuring a 802.11b network
+adapter under Linux.
 
-The POP3 server hangs off a (remote) XROUTER node, on a LAN, and I 
-am using that node as my gateway to the POP3 mail host.
+For those who don't know, 802.11b (also called 'WiFi') is a wireless lan 
+protocol, to connect 'remote' computers to Ethernet networks via a
+radio link. 802.11b equipments (network adapters, access points, bridges) 
+are becoming more and more popular, and prices are very affordable.
 
-The TCP/IP doesn't seem to work particularly well over this path, which is 
-a combination of 1k2 AX25 and Ethernet. I have done some extensive 
-tweaking at my end, and I have finally decided it's a lost cause.
+These equipments are using freqencies over 2400 MHz. The exact
+frequency coverage depends on country regulations, ie in France, only
+4 channels are allowed, around 2450 to 2480 (not sure about the exact
+values). Maximum throughput is 11 Mbits with high efficiency modulation
+techniques.
 
-The plan now is, to open a plain AX25 session to the XROUTER node, 
-and, from there, telnet straight into the POP3 server. 
+PURPOSE:
+--------
 
-Fetchmail allows the use of a 'plugin', and I have played with various 
-Expect scripts, and also with the call program, to try and present 
-Fetchmail with an open connection to the POP3 server.
+Does someone think it would be technically possible to modify the
+radio part of such a network adapter, in order to work on the amateur
+radio 2.4 GHz frequencies (2350-2400) ?
 
-The trouble is, that fetchmail doesn't like the link status messages that the 
-call program throws up. As soon as it gets to see anything other than a 
-valid POP3 prompt, it aborts the operation.
+I presume this is not so easy ;-) This would anyway allow great 
+capabilities for high rate TCP/IP packet-radio links for affordable 
+prices.
 
-I have butchered the call.c code with some degree of success to stop it 
-from writing to STDOUT until it sees the "+OK" from the POP3 server.
+Could some specialists of SHF and/or digital modulation techniques give
+us their point of view about the feasibility of such modifications on
+commercial 802.11b equipments ?
 
-But I am having trouble faking the "telnet <pop3host> 110" command. 
-The call.c code waits for a keyboard hit before it sends the hard-coded 
-"telnet" string, which never comes.
+(sorry for my poor english which may be inaccurate ;-)
 
-I was wondering if anyone else has managed to do this, or has 
-suggestions on how to go about it.
+Thanks for comments & best 73,
+Toussaint.
 
-Wilbert, ZL2BSJ
-
+-- 
+ >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>   <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+ Toussaint OTTAVI (TK1BI)            WWW   : http://kalliste.fr.fm
+ Phone : (+33) 6.10.28.41.72 (GSM)   Email : t_ottavi@club-internet.fr
+ Mail  : B.P. 223, F-20179 AJACCIO   Packet: TK1BI@TK5KP.FCOR.FRA.EU
