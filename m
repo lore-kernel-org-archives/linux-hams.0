@@ -1,45 +1,54 @@
-From: Tomi Manninen <tpm@prkele.tky.hut.fi>
-Subject: Re: soundmodem/ax25 newbie questions.
-Date: Tue, 1 Apr 2003 00:41:56 +0300 (EEST)
+From: M Taylor <mctylr@privacy.nb.ca>
+Subject: Re: Is there an "IPTABLES" expert on the list?
+Date: Tue, 1 Apr 2003 02:22:50 +0100
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <Pine.LNX.4.44.0304010034500.1411-100000@oh2bns.ampr.org>
-References: <03033119574904.04308@unix.pa3gcu>
-Reply-To: tpm@prkele.tky.hut.fi
+Message-ID: <20030401022250.A13143@pull.privacy.nb.ca>
+References: <3E87A396.6030105@kj6eo.com>
 Mime-Version: 1.0
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <03033119574904.04308@unix.pa3gcu>
+Content-Disposition: inline
+In-Reply-To: <3E87A396.6030105@kj6eo.com>; from kj6eo@kj6eo.com on Sun, Mar 30, 2003 at 06:10:30PM -0800
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: TEXT/PLAIN; charset="us-ascii"
+Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
-To: Linux Hams <linux-hams@vger.kernel.org>
+To: Bill Walton <kj6eo@kj6eo.com>
+Cc: LINUX HAMS MAILING LIST <linux-hams@vger.kernel.org>
 
-On Mon, 31 Mar 2003, pa3gcu wrote:
-
-> On Sunday 30 March 2003 09:18, Aaron May wrote:
-
-> > sm[1187]: ioctl: TIOCSETD: Invalid argument (22).
+On Sun, Mar 30, 2003 at 06:10:30PM -0800, Bill Walton wrote:
+> Hello List -
 > 
-> I did not reply to this one because i dont use a soundcard at all for packet, 
-> however considering i've seen no replys i will tell you what,
-> "ioctl: TIOCSETD" normally means, it means that at the time you gave the 
-> command no mkiss was found in your kernel or no mkiss module was loaded.
-> I hope i am correct here as i dont know what "Invalid argument (22)" is, i 
-> did a quick search in the kernel source but it showed nothing.
+> Is there an "IPTABLES" expert on the list?  I telnet to my TNOS box from 
+> a Windoze
+> box on my LAN.  After I replaced my "ipchains" firewall with a new 
+> "iptables" firewall
+> I can no longer telnet to my TNOS box using my terminal program "putty". 
+d>  What is
+> interesting is that if I shell out to DOS on the Windoze box I can 
+> "ping" the TNOS
+> box and "telnet" to it using the DOS "telnet 44.16.2.100" command.  I 
 
-22 is the error number for EINVAL or "Invalid argument" (in i386 anyway).
-See the "errno" manual page and /usr/include/asm/errno.h.
+To clarify a few points,
 
-Anyway Richard's diagnose is probably right.
+PuTTY [1] is a free telnet/ssh client for Windows (32bit).
+[1] <http://www.chiark.greenend.org.uk/~sgtatham/putty/>
 
-> If your mkiss support is in module form then you need to have the following 
-> in your /etc/modules.conf file.
-> 
-> alias tty-ldisc-5 mkiss 
+You tcpdumps were too terse to give me a clue to figure out the
+problem. Without even the SYN, ACK, FIN, RST it is hard to tell 
+what is happening, and it would nice to see the data payload.
 
-Also Aaron could try to load it explicitly with "modprobe mkiss".
+'tcpdump -Xn -i eth1' would easiler to see what is going on.
 
--- 
-Tomi Manninen           Internet:  oh2bns@sral.fi
-OH2BNS                  AX.25:     oh2bns@oh2rbi.fin.eu
-KP20ME04                Amprnet:   oh2bns@oh2rbi.ampr.org
+What is the network layout? Are all the machines we are interested in
+on a LAN (private IP address 192.168.x.x and 44.16.2.x), off either 
+a hub or switch? No routers, firewalls, cable/DSL modems?
+
+Internet<--->modem<--->firewall/router/gateway
+                           |
+                          hub
+                         |   |
+                   Windows   TNOS
+
+My first guess is that you have something configured wrong with
+your PuTTY configuration for the TNOS machine. Check every option
+for your TNOS settings.
 
