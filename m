@@ -1,22 +1,32 @@
-From: "Phil Maley" <phil@wotech.com.au>
-Subject: RE: man listen
-Date: Sun, 29 Jun 2003 16:06:13 +0800
+From: Matti Aarnio <matti.aarnio@zmailer.org>
+Subject: Re: List problems
+Date: Sun, 29 Jun 2003 13:52:25 +0300
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <NCEPJGLIJIFOHBPEAAAOGEJGFCAA.phil@wotech.com.au>
-References: <BKEGKPICNAKILKJKMHCAEEPDEHAA.Riley@Williams.Name>
-Reply-To: <phil@wotech.com.au>
+Message-ID: <20030629105225.GV28900@mea-ext.zmailer.org>
+References: <200306290928.34069.pa3gcu@zeelandnet.nl> <NCEPJGLIJIFOHBPEAAAOKEJFFCAA.phil@wotech.com.au>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <BKEGKPICNAKILKJKMHCAEEPDEHAA.Riley@Williams.Name>
+Content-Disposition: inline
+In-Reply-To: <NCEPJGLIJIFOHBPEAAAOKEJFFCAA.phil@wotech.com.au>
 List-Id: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
-To: Riley Williams <Riley@Williams.Name>, Linux Hams <linux-hams@vger.kernel.org>
+Content-Transfer-Encoding: 7bit
+To: Phil Maley <phil@wotech.com.au>
+Cc: Linux Hams <linux-hams@vger.kernel.org>
 
-Hi Riley
+On Sun, Jun 29, 2003 at 03:39:39PM +0800, Phil Maley wrote:
+> Thanks Richard
+...
+> Also, the VGER majordomo web site says the official archives are at
+> the locations I mentioned previously. No mention there of Heikki's
+> site. Maybe the confusing and contradictory data is designed to keep
+> non hard-core operators away.
 
-Many thanks. It makes a lot more sense now.
+  Or more like nobody made me aware of Heikki's archive.
+  I will add it to VGER's list of known archives.
 
-73
-Phil vk6ad
+> 73
+> Phil
 
+73 de Matti, OH2MQK
+ (a.k.a.  co-postmaster of vger.kernel.org)
