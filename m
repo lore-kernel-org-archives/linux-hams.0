@@ -1,50 +1,34 @@
-From: "John Williams" <vk5zty@bigpond.com>
+From: Adi Linden <adil@adis.on.ca>
 Subject: Re: ax25 support in aprsd
-Date: Tue, 27 Jan 2004 14:38:16 +1030
+Date: Mon, 26 Jan 2004 22:44:28 -0600 (CST)
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <401677D8.2498.30119B@localhost>
-References: <401561ED.23331.F6ED65@localhost>
-Reply-To: vk5zty@bigpond.com
+Message-ID: <Pine.LNX.4.44.0401262237430.11381-100000@mobile.adis.ca>
+References: <401677D8.2498.30119B@localhost>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7BIT
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-reply-to: <Pine.LNX.4.44.0401260942550.26203-100000@adibox.knet.ca>
-Content-description: Mail message body
+In-Reply-To: <401677D8.2498.30119B@localhost>
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"
-To: linux-hams@vger.kernel.org
+Content-Type: TEXT/PLAIN; charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+To: John Williams <vk5zty@bigpond.com>
+Cc: linux-hams@vger.kernel.org
 
-On 26 Jan 2004 at 9:51, Adi Linden wrote:
+If I understand this correct, I can connect to a filtered port on my 
+upstream (so to speak) and only receive the packets that pass through the 
+filter and still send all my traffic heard on RF to the APRS-IS?
 
-You can connect to another igate. Depending on how this is setup
-You will get all traffic or filtered traffic. You can also setup your own filters.
+I am still unsure about all the aprsd ports and which port(s) I need to 
+connect to to get my packets to the APRS-IS. In my aprsd.conf I have:
 
-Have a look at these links.
+    #
+    Server second.aprs.net 23 hub-sr
+    Server first.aprs.net 23 hub-sr
+    Server third.aprs.net 10152 hub-sr
+    Server fourth.aprs.net 23 hub-sr
+    #
 
-http://aprs.net.au:14501/
-http://www.aprs-is.net/javAPRSSrvr/javaprsfilter.htm
+This worked but I really don't know why this work. It did result in a fair 
+amount traffic (unnecessary traffic).
 
-You just need to find a suitable igate hub (maybe someone from that part of the world can help 
-with a hostname).
-
-So you can have a world feed or just local areas. 
-There are 2 things to consider. Your internet bandwidth (you may need to share with other 
-services) and what your local RF will take. If you run at 1200 bps you will want to limit this to a 
-maximum of 100 frames to RF per 10 minutes. This includes all local traffic.
-
-Cheers
-
-John
-VK5ZTY
-
-  
-
-
-> I have a question about gating to rf, now that it has been mentioned. Is 
-> it possible to gate packets that were gated to TCP/IP by another specific 
-> igate? There is another igate about 100km away and out of RF reach. 
-> 
-> Thanks,
-> Adi
-> 
+Adi
 
