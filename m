@@ -1,90 +1,55 @@
-From: =?iso-8859-1?q?=D8yvind=20Hanssen?= <oyvind@cs.uit.no>
-Subject: Patch to mheardd
-Date: Sun, 16 Nov 2003 22:22:06 +0100
+From: "Rodolfo Brasnarof" <rodob@ciudad.com.ar>
+Subject: Re: CF Speicherkarte
+Date: Sun, 16 Nov 2003 23:14:43 -0300
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <200311162222.06965.oyvind@cs.uit.no>
+Message-ID: <3FB804E3.30052.2A5404@localhost>
+References: <07be01c3aac8$a417f340$6400a8c0@DELL1>
 Mime-Version: 1.0
-Content-Type: Multipart/Mixed;
-  boundary="Boundary-00=_+p+t/EMDR/UPiHI"
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 Return-path: <linux-hams-owner@vger.kernel.org>
+In-reply-to: <07be01c3aac8$a417f340$6400a8c0@DELL1>
+Content-description: Mail message body
 List-Id: <linux-hams.vger.kernel.org>
-To: linux-hams@vger.kernel.org
-
-
---Boundary-00=_+p+t/EMDR/UPiHI
 Content-Type: text/plain; charset="iso-8859-1"
-Content-Transfer-Encoding: quoted-printable
-Content-Disposition: inline
+To: Klaus Heintzenberg <dj6rx@t-online.de>
+Cc: linux-hams@vger.kernel.org
 
-There was a problem with invalid packets: Especially, corrupted digipeater =
-fields=20
-may lead to overwriting of memory far beyond the record in question. This m=
-ay have
-security implications. In my case it led to denial of service because file-=
-record
-locations were overwritten with garbage and the daemon attempted to write
-to these locations.=20
 
-Now, with a sanity check of the digipeater field, the daemon now works corr=
-ectly=20
-though the USCC card here generates many bad packets.=20
+---
+On 14 Nov 2003 at 16:01, Klaus Heintzenberg wrote:
 
-73 de LA7ECA, Oyvind
---=20
-Computer Science dept. University of Troms=F8,  ohanssen@acm.org,  Cell: +4=
-7 9511 7457
+> Ich habe es geschafft, mir den vollen Zugriff auf die
+> CompactFlash-Karte  zu verbauen.
+>=20
+> Als User kann ich zwar Daten von der Karte lesen, kann aber nicht
+> darauf schreiben (l=F6schen)
+>=20
+> Als root jedoch lassen sich die Karten lesen und schreiben.
+>=20
+>=20
+>=20
+> Linux:/etc # ls /dev/sda1 -l
+>=20
+> brwxrwxrw-    1 root     disk       8,   1 2003-09-23 17:59
+> /dev/sda1
+>=20
+>=20
+>=20
+> Was muss ich tun, um das zu reparieren?
 
---Boundary-00=_+p+t/EMDR/UPiHI
-Content-Type: text/x-diff;
-  charset="us-ascii";
-  name="mheardd.diff"
-Content-Transfer-Encoding: 7bit
-Content-Disposition: attachment;
-	filename="mheardd.diff"
+Klaus, unfortunately some of us don't understand too much of=20
+German, and then we can't give any help. I't already a great=20
+effort for me to read and try to write in english, But I=20
+think it's the most international language nowadays. German=20
+is too difficult to me. Sorry.
 
---- mheardd.orig.c	2003-11-16 21:52:10.000000000 +0100
-+++ mheardd.c	2003-11-16 22:01:03.000000000 +0100
-@@ -228,14 +228,14 @@
- 				syslog(LOG_WARNING, "packet too short\n");
- 			continue;
- 		}
+I'm sorry if you don't speak english. But try to do your=20
+best.
+
+Best wishes.
+
 -
--		mheard = findentry((ax25_address *)(data + AXLEN), port);
--
-+		
- 		if (!ax25_validate(data + 0) || !ax25_validate(data + AXLEN)) {
- 			if (logging)
- 				syslog(LOG_WARNING, "invalid callsign on port %s\n", port);
- 			continue;
- 		}
-+		
-+		mheard = findentry((ax25_address *)(data + AXLEN), port);
- 
- 		memcpy(&mheard->entry.from_call, data + AXLEN, sizeof(ax25_address));
- 		memcpy(&mheard->entry.to_call,   data + 0,     sizeof(ax25_address));
-@@ -248,7 +248,7 @@
- 		data += (AXLEN + AXLEN);
- 		size -= (AXLEN + AXLEN);
- 
--		while (!end) {
-+		while (!end && mheard->entry.ndigis <= 7 && ax25_validate(data) ) {
- 			memcpy(&mheard->entry.digis[mheard->entry.ndigis], data, sizeof(ax25_address));
- 			mheard->entry.ndigis++;
- 			
-@@ -257,7 +257,12 @@
- 			data += AXLEN;
- 			size -= AXLEN;
- 		}
--
-+		if (!end) {
-+		    if (logging)
-+		        syslog(LOG_WARNING, "invalid digipeater field\n");
-+                    continue; 
-+		}
-+		    
- 		if (size == 0) {
- 			if (logging)
- 				syslog(LOG_WARNING, "packet too short\n");
-
---Boundary-00=_+p+t/EMDR/UPiHI--
-
+To unsubscribe from this list: send the line "unsubscribe linux-hams" i=
+n
+the body of a message to majordomo@vger.kernel.org
+More majordomo info at  http://vger.kernel.org/majordomo-info.html
