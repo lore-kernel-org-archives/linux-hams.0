@@ -1,45 +1,43 @@
-From: Margaret Leber <maggie@voicenet.com>
-Subject: Re: Software defined radio
-Date: Wed, 19 Feb 2003 12:24:44 -0500
+From: =?ISO-8859-1?Q?=22R=E9mi?= Chateauneu" <ravioli@softhome.net>
+Subject: soundmodem / "SIOCSIFFLAGS no such device"
+Date: Wed, 19 Feb 2003 09:29:42 +0100
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <3E53BDDC.1040908@voicenet.com>
-References: <200302191812.09807.jonathan.naylor@ggaweb.ch>
-Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
+Message-ID: <b2veij$79l$1@main.gmane.org>
 Return-path: <linux-hams-owner@vger.kernel.org>
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"; format="flowed"
-To: g4klx@qsl.net
-Cc: Linux Hams <linux-hams@vger.kernel.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+To: linux-hams@vger.kernel.org
 
-Hello, Jonathan!
+Hi All !
 
-Jonathan Naylor wrote:
+My config is :
+Linux Mandrake 8.2
+Soundcard VIA FM801
+RPM ax25-tools 0.0.8 and ax25-apps.0.0.6
 
-> I came across the SDR-14 software defined receiver whilst trawling the 
-> web. It looks very interesting for a number of uses. The supported 
-> software is Windows based but if they release the specs then everything 
-> should be alright.
+For the setup, I first do a 'rmmod' of all modules related to the sound
+card.
+Then setserial /dev/ttyS0 uart none port 0 irq 0
 
-RFSpace is an enterprise of Pieter Ibelings N4IP, who's very active in 
-amateur radio satellite work. Pieter is very hip technically about RF 
-hardware. (I had the honor of having an audio recording of me working 
-Pieter on AO-40's first day of operation on the ARRL website.) Moe 
-Wheatley, AE4JY--also a satellite op--is responsible for the 
-Windows-based DSP software.
+To find the irq and dma parameters of the sound card :
+modprobe -c | grep irq
 
-The RFSpace website says they have a Linux driver for the SDR-14 
-already, so it looks like they're quite sensitive to the needs of The 
-Penguin. :-)
+Then:
+modprobe hdlcdrv
+insmod soundmodem mode="sbc:afsk1200" iobase=0x220 irq=7 dma=1
+sethdlc -p -i sm0 mode sbc:afsk1200 io 0x200 irq 7 dma 1 serio 0x3f8
 
-  73 de Maggie K3XS
+And the final :
+ifconfig sm0 hw ax25 X1ABC up
 
--- 
------/___.   _)   Margaret Stephanie Leber    / "The art of progress  /
-----/(, /|  /| http://voicenet.com/~maggie   / consists of preserving/
----/   / | / |  _   _   _    `  _AOPA 925383/ order amid change and /
---/ ) /  |/  |_(_(_(_/_(_/__(__(/_  FN20hd / change amid order."   /
--/ (_/   '  K3XS  .-/ .-/    ARRL 39280   /___ --A.N.Whitehead ___/
-/____ICQ 7161096_(_/_(_/__AMSAT 32844____/ <maggie@voicenet.com>
+And it tells me :
+"SIOCSIFFLAGS: No such device"
+
+Any idea will be extremely cheerfully welcomed !
+
+
+
 
 
