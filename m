@@ -1,24 +1,28 @@
-From: T + J Williams <wa0eir@comcast.net>
-Subject: twcw - linux program to send CW
-Date: Sun, 09 Mar 2003 11:28:10 -0500
+From: Jorge Matias <martin@andorinha.ist.utl.pt>
+Subject: DAMA Efficiency
+Date: Fri, 14 Mar 2003 18:56:38 +0000 (WET)
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <000001c2e658$e0aa6890$6401a8c0@adubn1.nj.home.com>
+Message-ID: <Pine.LNX.4.33.0303141847120.16987-100000@andorinha.ist.utl.pt>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7BIT
 Return-path: <linux-hams-owner@vger.kernel.org>
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"
-To: 'Linux Hams' <linux-hams@vger.kernel.org>
+Content-Type: TEXT/PLAIN; charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+To: Linux-Ham Mailing List <linux-hams@vger.kernel.org>
 
-Hi,
-I just finished updating TWCW, a linux program to send CW. In addition
-to
-bug fixes, there is also a statically linked version. You just untar and
-install - no need to download libraries or compile.
-You can find all the tw programs at http://wa0eir.ham.org
-BTW - I am also working on a version that "has ears". Right now, it can
-copy W1AW code practice at 35 wpm.
+
+  Hi Everyone,
+
+  I'd would to know if there is any chance of Linux to have, in the
+future, DAMA Master capabilities?
+  And for those who have tried DAMA in other systems, how efficient can
+be the frequency being controlled by a DAMA Master Node?
+  I ask this because I have tried to put LinuXnet as a DAMA Master Node,
+but after almost one year I have found that Linux AX.25 implementation
+doesn't give to the applications the access to "read"
+the DCD status needed for being a DAMA controller.
+
 73,
-Ted - wa0eir
-wa0eir@comcast.net
+Jorge Matias
+CT2HBZ
 
