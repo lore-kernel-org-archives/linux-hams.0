@@ -1,36 +1,34 @@
-From: Arnaldo Carvalho de Melo <acme@conectiva.com.br>
-Subject: Re: [PATCH] ax25_cb refcounting & waitqueue usage
-Date: Mon, 7 Jul 2003 10:37:10 -0300
+From: Arno Verhoeven <pe1icq@pi8zaa.ampr.org>
+Subject: Re: Split screen telnet client?
+Date: Mon, 7 Jul 2003 16:56:54 +0200 (CEST)
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <20030707133710.GJ1820@conectiva.com.br>
-References: <20030706192734.E4454@jeroen.pe1rxq.ampr.org>
+Message-ID: <Pine.LNX.4.33.0307071655440.8255-100000@zoef.pe1icq.ampr.org>
+References: <3104.44.140.19.34.1057579396.squirrel@ax25.org>
 Mime-Version: 1.0
 Return-path: <linux-hams-owner@vger.kernel.org>
-Content-Disposition: inline
-In-Reply-To: <20030706192734.E4454@jeroen.pe1rxq.ampr.org>
+In-Reply-To: <3104.44.140.19.34.1057579396.squirrel@ax25.org>
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"
+Content-Type: TEXT/PLAIN; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
-To: Jeroen Vreeken <pe1rxq@amsat.org>
-Cc: linux-hams@vger.kernel.org, ralf@linux-mips.org
+To: Pontus Falk <pfalk@ax25.org>
+Cc: linux-hams@vger.kernel.org
 
-Em Sun, Jul 06, 2003 at 07:27:34PM +0200, Jeroen Vreeken escreveu:
-> Hi,
-> 
-> Second patch for this weekend...
-> This patch does two things, it adds reference counting to the ax25_cb
-> structure (until now only the ax25_cb list was protected, not the parts
-> using it) and it fixes an oops on interrupted socket syscalls. (e.g.
-> pressing Ctrl-C while in the connect function) The waitqueue was not
-> removed from the list and caused an oops in the socket release.
-> 
-> I have had only a quick look at Steven's patch but I don't think the two
-> will clash...
+On Mon, 7 Jul 2003, Pontus Falk wrote:
 
-Hey, why not use sk->refcnt by means of sock_hold/sock_put? Current sources
-even do that implicitely when you do a sk_add_node (sock_hold) and a
-sk_del_node{_init} (sock_put)... Now it is just a matter of doing a sock_hold
-when searching in some list and then dropping the refcnt when done using the
-sock returned by the search function.
+> Hi!
+>
+> Can someone recommend a telnet client using split screen that is not for X
+> Windows?
+>
+> I tried to find one, but the all seems to be for X - I don't have X on my
+> server...
+>
 
-- Arnaldo
+How about colrconv or colorconv?
+
+73, PE1ICQ  Arno Verhoeven
+--------------------------------
+AX.25  pe1icq@pi8zaa.#nbo.nld.eu
+smtp   pe1icq@pi8zaa.ampr.org
+inet   pe1icq@amsat.org
+
