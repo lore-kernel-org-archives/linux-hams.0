@@ -1,22 +1,21 @@
-From: Jarmo <oh1mrr@nic.fi>
-Subject: AX25-tools-0.0.8
-Date: Fri, 21 May 2004 08:08:55 +0300
+From: "Gale D. Wilkinson" <gdwrbw@ftc-i.net>
+Subject: Configuring SoundModem with a PCI sound card
+Date: Sat, 22 May 2004 21:14:53 -0400
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <200405210808.55928.oh1mrr@nic.fi>
+Message-ID: <40AFFB0D.3010101@ftc-i.net>
 Mime-Version: 1.0
 Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
-Content-Disposition: inline
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"
-To: linux-hams@vger.kernel.org
+Content-Type: text/plain; charset="us-ascii"; format="flowed"
+To: linux hams news group <linux-hams@vger.kernel.org>
 
-Second try.
+I have been looking at the info in the AX25 HowTo for setting up a sound 
+card modem but am running into problems as the documentation seems to 
+only cover the old ISA sound cards. setcrystal in particular is where I 
+am having problems.  Are there any newer docs/howto's that would give 
+the proper setup procedures for configuring soundmodem with these newer 
+cards?
 
-Solved!
-
-Made google and found missing sounmodem.h file.
-Installed it into /usr/include/linux and voila',got
-tools compiled...
-
-Jarmo McGyver ;-D
+  Gale
+   KC4PL
