@@ -1,44 +1,48 @@
-From: Richard Adams <pa3gcu@zeelandnet.nl>
-Subject: Re: DRSI configuration
-Date: Sun, 14 Apr 2002 10:15:09 +0000
+From: Shane Deering <sdeering@dodo.com.au>
+Subject: Re: netrom
+Date: Sun, 14 Apr 2002 22:45:22 +1000
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <0204141015090W.00302@unix.pa3gcu>
-References: <ICENJPNBBIBGNDMIANCPMEBCCCAA.john.buttery@btinternet.com>
-Reply-To: pa3gcu@zeelandnet.nl
+Message-ID: <200204141244.g3ECitX01075@msv02-kent-syd.comindico.com.au>
+References: <200204140557.g3E5vZX11801@msv02-kent-syd.comindico.com.au> <0204141011070V.00302@unix.pa3gcu>
+Reply-To: sdeering@dodo.com.au
 Mime-Version: 1.0
 Content-Transfer-Encoding: 7BIT
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <ICENJPNBBIBGNDMIANCPMEBCCCAA.john.buttery@btinternet.com>
+In-Reply-To: <0204141011070V.00302@unix.pa3gcu>
 List-Id: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
-To: John Buttery <john.buttery@btinternet.com>, Linux-Hams <linux-hams@vger.kernel.org>
+To: pa3gcu@zeelandnet.nl, linux-hams@vger.kernel.org
 
-On Sunday 14 April 2002 09:52, John Buttery wrote:
-> Hi All
+On Sunday 14 April 2002 20:11, Richard Adams wrote:
+> On Sunday 14 April 2002 05:58, Shane Deering wrote:
+> > G'day all.
+> > Wonder if someone can help me out.
+> > I've just set up my good computer (this one) for packet.
+> > Using kernel 2.4.9-31 and the latest libs, tools and apps.
+> > AX25 seems to work ok on the 2 test ports I've set up (call, mheard).
+> > But i'm having problems setting up netrom. Doing what the ax25 how-to say
+> > to do (I think), but I get the following-
+> >
+> > [root@vk3bvp-6 root]# nrattach netrom
+> > NET/ROM port netrom bound to device nr0
+> > [root@vk3bvp-6 root]# /usr/sbin/netromd -i
+> > nrconfig: port netrom not active
+> > netromd: no NET/ROM ports defined
 >
-> I'm new on this list, so my question may have been answered previously.
->
-> I am trying to set up DRSI boards on a RH 7.2 kernel 2.4.7-10 installation.
-> I have z8530drv-utils-3.0.3 and have set the configuration as in the
-> documentation.  I have installed the files but, when I run sccinit, I get
-> the error message:
->     'SIOCSCCINI: : Invalid argument'
-> What causes this error, and how do I sort it?
+> Have you tryed.
+> nrattach [-i inetaddr] [-m mtu] [-v] port
 
-SIOSCCINI is i belive;
-The kernel is saying it cant find you card,
-Either the irq is wrong on the irq is in use.
-Or the port addresses are wrong.
-If you use IRQ 7 for example make sure your kernel does not have any printer 
-modules loaded.
+I found something like that on a web site including an example and that got 
+got me going. 
 
->
-> Regards
->
-> John, G7OPJ, SysOp GB7WDX
+My Winfbb has done a netrom connect to my Linfbb and forwarded about 600
+messages to date. Everything seems to be working OK so far.
+I'm now writing a simple startup script before I forget everything. I'll 
+refine it at a later date.
 
 -- 
-Regards Richard
-pa3gcu@zeelandnet.nl
-http://people.zeelandnet.nl/pa3gcu/
+Shane Deering
+vk3bvp@vk3bvp.#sev.vic.aus.oc / vk3bvp@qsl.net
+http://www.qsl.net/vk3bvp/
+Sent with KMail v1.3.2 on Sun Apr 14 22:35:38 EST 2002
 
