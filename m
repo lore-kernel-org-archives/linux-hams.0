@@ -1,29 +1,46 @@
-From: "Rodolfo Brasnarof" <rodob@ciudad.com.ar>
-Subject: Re: man listen
-Date: Mon, 30 Jun 2003 14:59:13 -0300
+From: Tomohiro Nishikawa <jn3aou@jarl.com>
+Subject: Re: DXCluster and HTPP (Convers) Link
+Date: Tue, 01 Jul 2003 05:40:43 +0900
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <3F005041.11037.1EF86@localhost>
-References: <NCEPJGLIJIFOHBPEAAAOAEJFFCAA.phil@wotech.com.au>
+Message-ID: <20030701053848.31A4.JN3AOU@jarl.com>
+References: <20030630140110.GA8649@freebsd.aeminium.pt>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7BIT
+Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-reply-to: <1056895450.1397.11.camel@oh2bns.ampr.org>
-Content-description: Mail message body
+In-Reply-To: <20030630140110.GA8649@freebsd.aeminium.pt>
 List-Id: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
-To: Linux Hams <linux-hams@vger.kernel.org>
+To: jn3aou@jarl.com
+Cc: Linux Hams <linux-hams@vger.kernel.org>
 
----
-On 29 Jun 2003 at 17:04, Tomi Manninen wrote:
+Hello,
 
+-----------------------------------------------------
+About htpp:
 
-> In my opinion the old xNOS style AX.25 dump was much more
-> readable _and_ consistent with the other protocol dumps in
-> listen. But that's just me...
+As far as I know that you can connect 
+Lurpac_UK,London_UK,Ma_US_Hub and so on.
+Probaby,they are famous.
 
+I defined as follows:
+====================================================
+Link    Lurpac_UK       lurpac.lancs.ac.uk:3600
+Link    London_UK       80.71.0.50:3600 Lurpac_UK
+Link    Ma_US_Hub       64.51.9.103:3600 London_UK
+====================================================
+Of course,there are many conversd else.
+-----------------------------------------------------
+About DXCluster
 
-Fortunately, listen is opensource, and can be modified. I 
-changed it a little to make it display the timestamp at the 
-begining of the line, instead of the end. I made no other 
-changes, but of course it's possible.
+I know two nodes in Portugal.
+CS1SEL-5 hamradio.isel.ipl.pt:41112
+CT2GWY-5 217.129.65.194:8181
+
+Please contact either one.
+-----------------------------------------------------
+
+I hope this help you.
+Best 73s,Tom/JN3AOU
+-- 
+Tomohiro Nishikawa JN3AOU <jn3aou@jarl.com>
 
