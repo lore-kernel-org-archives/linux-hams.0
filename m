@@ -1,21 +1,19 @@
-From: Wilbert Knol <zl2bsj@zl2tze.ath.cx>
+From: Bob Nielsen <nielsen@oz.net>
 Subject: Re: tcp.ip over ax25, when sent?
-Date: Mon, 30 Dec 2002 18:28:35 +1300 (NZDT)
+Date: Sun, 29 Dec 2002 22:12:31 -0800
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <Pine.LNX.4.44.0212301815320.6319-100000@zl2bsj.ampr.org>
-References: <Pine.LNX.4.44.0212292214080.20843-100000@jeeves.mvw.net>
+Message-ID: <20021230061231.GA7702@n7xy.net>
+References: <Pine.LNX.4.44.0212272203520.1392-100000@oh2bns.ampr.org> <Pine.LNX.4.44.0212292214080.20843-100000@jeeves.mvw.net>
 Mime-Version: 1.0
 Return-path: <linux-hams-owner@vger.kernel.org>
+Content-Disposition: inline
 In-Reply-To: <Pine.LNX.4.44.0212292214080.20843-100000@jeeves.mvw.net>
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: TEXT/PLAIN; charset="us-ascii"
+Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
-To: mvw@mvw.net
-Cc: linux-hams@vger.kernel.org
+To: linux-hams@vger.kernel.org
 
-
-On Sun, 29 Dec 2002 mvw@mvw.net wrote:
-
+On Sun, Dec 29, 2002 at 10:18:51PM -0500, mvw@mvw.net wrote:
 > Hello all,
 > 
 > When I use tcp/ip over ax25, I notice that packets are sent very
@@ -27,32 +25,15 @@ On Sun, 29 Dec 2002 mvw@mvw.net wrote:
 > radio traffic. Right now, a 10-letter word can generate 5-10 packets, when 
 > one would be enough.
 > 
-
 > I am sure I am overlooking this, but can I set this? How? 
-
-Once your telnet client connects, hit the escape sequence (typically
-Control-] ). At the prompt, type 'mode line' to put your client in
-line mode.
-
-
 > 
 > I have of course read the HOWTO etc but no doubt skipped over this. Many
 > thanks for pointing me in the right direction.
 
-I don't think it's mentioned anywhere. Perhaps a useful addition to 
-the HOWTO?
+It's been a long while since I have used it, but I recall that using
+splitscreen instead of telnet (specifying port 23) would give you line
+mode in addition to the split screen feature.  Possibly this could also
+be done with colrconv, although I haven't tried it.
 
-Incidentally, I had a play with the telnetd server and line mode, some
-time ago, but found that the line mode option wasn't compiled in. (a
-pre-compiled binary...) I never got round to getting the sources, but
-I reckon it would be worth a try to get the daemon to default to line
-mode as well, for the reasons you mentioned. Anyway, have a look at
-'man telnetd' and look for the -k option (from memory).
-
-Hope this helps...
-
-
-Wilbert, ZL2BSJ
-
-
-
+73,
+Bob N7XY
