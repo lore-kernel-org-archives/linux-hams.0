@@ -1,30 +1,26 @@
-From: Tomi Manninen <tpm@prkele.tky.hut.fi>
-Subject: Re: packet terminal programm
-Date: Tue, 23 Apr 2002 23:10:45 +0300 (EEST)
+From: Hans-Peter Zorn <hp@1409.org>
+Subject: Linkt instalation ?
+Date: 24 Apr 2002 01:55:54 +0200
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <Pine.LNX.4.33.0204232308090.28499-100000@oh2bns.ampr.org>
-References: <Pine.LNX.4.33.0204230853490.17144-100000@localhost.localdomain>
-Reply-To: <tpm@prkele.tky.hut.fi>
+Message-ID: <1019606154.754.27.camel@rsh-356>
 Mime-Version: 1.0
-Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <Pine.LNX.4.33.0204230853490.17144-100000@localhost.localdomain>
-List-Id: <linux-hams.vger.kernel.org>
-Content-Type: TEXT/PLAIN; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
-To: Mike Studer <ab6cv@earthlink.net>
-Cc: linux-hams@vger.kernel.org
+Return-path: <linux-hams-owner@vger.kernel.org>
+List-Id: <linux-hams.vger.kernel.org>
+Content-Type: text/plain; charset="us-ascii"
+To: linux-hams@vger.kernel.org
 
-On Tue, 23 Apr 2002, Mike Studer wrote:
 
-> No versions of linkt compile on RedHat 7.2.  I tried Qt 2.3.1 and 2.3.2.  
-> Too bad because it looks like a good program.
+Hi!
+The RPMs are for SuSE Linux, I don't think they will work with RedHat.
+(SuSE 7.3 and 8.0 are shipping with LinKT 0.6.99)
+Likely you need to compile from source. It is not that hard. There
+are currently two versions of LinKT: 0.6.2 for KDE/Qt 1.x and 0.6.99
+for KDE2/Qt2.x. I think RH7.2 ships with kde2, so you should try 0.6.99.
+The CVS Version is currently broken. Jochen, Rob and me will meet in
+Berlin next weekend and hopefully the result will be a final (and
+probably last) 1.0 version for KDE3. 
 
-Hmm... I use RH7.2 and I run LinKT from time to time... I need to check, 
-it may be that it needed some massaging to compile... I'll report to you a 
-bit later...
+73s hp
 
--- 
-Tomi Manninen           Internet:  oh2bns@sral.fi
-OH2BNS                  AX.25:     oh2bns@oh2rbi.fin.eu
-KP20ME04                Amprnet:   oh2bns@oh2rbi.ampr.org
 
