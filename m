@@ -1,35 +1,50 @@
-From: Scott Ehrlich <scott@ehrlichtronics.com>
-Subject: [HELP] Sound card as TNC, Kernel 2.4.22, Intel board
-Date: Wed, 29 Oct 2003 05:20:49 -0500 (EST)
+From: =?iso-8859-1?q?=D8yvind=20Hanssen?= <oyvind@cs.uit.no>
+Subject: Baycom USCC noise
+Date: Wed, 29 Oct 2003 11:50:12 +0100
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <Pine.LNX.4.58.0310290510560.20216@debian.ehrlichtronics.com>
+Message-ID: <200310291150.12893.oyvind@cs.uit.no>
 Mime-Version: 1.0
-Return-path: <linux-hams-owner@vger.kernel.org>
-List-Id: <linux-hams.vger.kernel.org>
-Content-Type: TEXT/PLAIN; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
+Return-path: <linux-hams-owner@vger.kernel.org>
+Content-Disposition: inline
+List-Id: <linux-hams.vger.kernel.org>
+Content-Type: text/plain; charset="us-ascii"
 To: linux-hams@vger.kernel.org
 
-I have an Intel Pentium 3 board with Debian Woody, Kernel 2.4.22, and am
-trying to get the motherboard sound to act as my TNC.   I want to
-experiment with packet and APRS using the sound card.
+We are using a Baycom USCC card with DF9IC modem with
+a T7F radio. It works ok, but since the radio is not squelched
+there is a high number of rx interrupts and error rx packets. 
 
-I've compiled a static kernel with AX.25 support, /sbin/ifconfig -a shows
-AX.25 ports exist.   I run Xastir, Configure > Interfaces > Add > AX25 TNC
-> OK and get an error window popping up:
+Also, some bad packets seems to slip through. Much garbage is 
+seen in the mheard list. 
 
-"Interface error! Error opening interface 0 Hard Fail"
+Is this normal? Is there a way to workaround this? 
 
-and the xterm from which I typed xastir offers:
+73 de LA7ECA
 
-axconfig: port 1 not active
-axconfig: port 2 not active
-ERROR: problem with axports file
+The sccstat returns (for instance): 
+speed       : 9600 baud
+txdelay     : 5
+persist     : 64
+slottime    : 8
+txtail      : 8
+fulldup     : 0
+waittime    : 2
+mintime     : 3 sec
+maxkeyup    : 7 sec
+idletime    : 3 sec
+maxdefer    : 120 sec
+group       : 0x00
+txoff       : off
+softdcd     : off
 
+Status:
 
+HDLC                  Z8530           Interrupts         Buffers
+-----------------------------------------------------------------------
+Sent       :  147746  RxOver :     0  RxInts : 30689899  Size    :  384
+Received   :  212184  TxUnder:     0  TxInts :  4982360  NoSpace :    0
+RxErrors   : 1804229                  ExInts :  7823901
+TxErrors   :       0                  SpInts :  1006105
+Tx State   :    busy
 
-What am I missing?
-
-Thanks in advance.
-
-Scott, WY1Z
