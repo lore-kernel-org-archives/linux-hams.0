@@ -1,47 +1,79 @@
-From: Shane Deering <vk3bvp@qsl.net>
-Subject: Re: netrom
-Date: Mon, 15 Apr 2002 11:16:57 +1000
+From: Ricardo Saiz Villoria <ea1apm@amsat.org>
+Subject: trouble with ax25ipd
+Date: Mon, 15 Apr 2002 19:27:41 +0200 (CEST)
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <200204150116.g3F1GRX18550@msv02-kent-syd.comindico.com.au>
-References: <200204140557.g3E5vZX11801@msv02-kent-syd.comindico.com.au> <20020414230644.A1802@pull.privacy.nb.ca>
-Reply-To: vk3bvp@qsl.net
+Message-ID: <Pine.LNX.4.33.0204151837460.2097-100000@localhost.localdomain>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7BIT
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <20020414230644.A1802@pull.privacy.nb.ca>
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"
-To: M Taylor <mctylr@privacy.nb.ca>
-Cc: linux-hams@vger.kernel.org
+Content-Type: TEXT/PLAIN; charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+To: linux-hams <linux-hams@vger.kernel.org>
 
-On Monday 15 April 2002 08:06, M Taylor wrote:
-> On Sun, Apr 14, 2002 at 03:58:02PM +1000, Shane Deering wrote:
-> > The kissatach commands and responses have scrolled off my xterm but from
-> > history I used these to create ax0 and ax1 -
-> > [root@vk3bvp-6 root]# /usr/sbin/kissattach /dev/ttyS0 vhf 44.135.96.242
-> > [root@vk3bvp-6 root]# /usr/sbin/kissattach /dev/ttyS1 win 44.135.96.241
-> >
-> > Don't worry about the IP addresses , they are just for testing.
->
-> Please do not randomly used a 44. address without allocation.
+Hello
 
+I'm trying to set up a link between a linux machine and another one
+running flexnet. The system is RedHat 7.2 with the following utilities
+installed:
 
-> 44.135.96/24  is Ottawa, Ontario, Canada (ve3), so I
-> suspect that you do not have it allocated to you (having a vk
-> callsign I assume you are not operating in Canada).
->
-> Use a non-routable Private IP (RFC 1918) such as 10.0.0.1.
+ax25-tools-0.0.6-13
+ax25-apps-0.0.4-9
+libax25-devel-0.0.7-7
+libax25-0.0.7-7
 
-Every IP address is unroutable from here.
-There is no IP network here.
-My allocated addresses are in use on my perminent packet computer.
+The axports file is:
+radio   EA1RCT-1        9600    255     7       Puerto 1200bps
+axip    EA1RCT-2        38400   255     7       Red local
 
-I understand where you're coming from, but at this point in time it is rather 
-trivial.
+("radio" is a kiss tnc which works fine).
 
--- 
-Shane Deering
-vk3bvp@vk3bvp.#sev.vic.aus.oc / vk3bvp@qsl.net
-http://www.qsl.net/vk3bvp/
-Sent with KMail v1.3.2 on Mon Apr 15 10:42:39 EST 2002
+The ax25ipd.conf contains:
+
+socket udp 93
+mode tnc
+beacon after 360
+btext ax25ip - PRUEBA
+device /dev/ptyp0
+speed 38400
+loglevel 2
+broadcast QST-0 NODES-0
+broadcast QST-0 NODES-0
+route ea1apm 192.168.1.6 b d udp 93
+
+Then I run kissattach:
+
+/usr/sbin/kissattach /dev/ptyp0 axip 44.133.36.1
+AX.25 port axip bound to device ax1
+
+And then /usr/sbin/ax25ipd
+
+ax25ipd Version 1.0.2 / 0.0.4
+Copyright 1991, Michael Westerhof, Sun Microsystems, Inc.
+This software may be freely used, distributed, or modified, providing
+this header is not removed
+
+Current configuration:
+
+  socket     udp on port 93
+  mode       tnc
+  device     /dev/ptyp0
+  speed      38400
+  beacon     after 360
+  btext      ax25ip - PRUEBA
+  loglevel   2
+1 active routes.
+  EA1APM        192.168.1.6     udp     93      3
+0 parameters
+opening tty device: Input/output error
+
+I've tried with different pipes, and the result is the same. Any help will 
+be appreciated, I'm willing to make it work.
+
+Thanks in advance
+
+--
+Ricardo Saiz Villoria EA1APM
+AX.25:  ea1apm@ea1rkv.eapo.esp.eu
+WEB:    http://www.qsl.net/ea1apm
+E-MAIL: mailto:ea1apm@amsat.org
 
