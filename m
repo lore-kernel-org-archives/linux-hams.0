@@ -1,8 +1,8 @@
-From: Ben Stienstra <b.stienstra@xs4all.nl>
+From: Richard Adams <pa3gcu@zeelandnet.nl>
 Subject: Re: sniffing on a packet radio device
-Date: 11 Feb 2003 22:38:06 +0100
+Date: 11 Feb 2003 22:36:07 +0100
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <1044999486.1692.1.camel@atlantic>
+Message-ID: <1044999367.1248.2.camel@localhost.localdomain>
 References: <009e01c2d213$9e858fc0$3640a8c0@boemboem>
 Mime-Version: 1.0
 Content-Transfer-Encoding: 7bit
@@ -10,12 +10,8 @@ Return-path: <linux-hams-owner@vger.kernel.org>
 In-Reply-To: <009e01c2d213$9e858fc0$3640a8c0@boemboem>
 List-Id: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
-To: linux-hams@vger.kernel.org
-
-try /usr/bin/listen -r
-
-regards,
-PD2BS, Ben 
+To: Folkert van Heusden <folkert@vanheusden.com>
+Cc: linux-hams@vger.kernel.org
 
 On Tue, 2003-02-11 at 22:22, Folkert van Heusden wrote:
 > Hi,
@@ -31,11 +27,13 @@ On Tue, 2003-02-11 at 22:22, Folkert van Heusden wrote:
 > 
 > 
 > Thank you.
-> 
-> Folkert van Heusden
-> www.vanheusden.com
-> -
-> To unsubscribe from this list: send the line "unsubscribe linux-hams" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at  http://vger.kernel.org/majordomo-info.html
+
+listen -p bcsh0 -a
+
+--
+Regards Richard
+pa3gcu@zeelandnet.nl
+http://people.zeelandnet.nl/pa3gcu
+
+
 
