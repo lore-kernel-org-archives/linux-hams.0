@@ -1,38 +1,37 @@
 From: csmall@enc.com.au (Craig Small)
-Subject: Re: Mkiss compile error
-Date: Fri, 4 Oct 2002 16:57:18 +1000
+Subject: Re: AO-40 Transponder Operation
+Date: Fri, 4 Oct 2002 16:58:30 +1000
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <20021004065718.GA31861@enc.com.au>
-References: <4.3.2.7.2.20021002195552.00ac7ac0@pop3.norton.antivirus> <20021003061541.A16812@pull.privacy.nb.ca>
+Message-ID: <20021004065830.GB31861@enc.com.au>
+References: <20021004040843Z261464-8740+5907@vger.kernel.org> <3D9D1D7E.4090201@digitalhams.com>
 Mime-Version: 1.0
 Return-path: <linux-hams-owner@vger.kernel.org>
 Content-Disposition: inline
-In-Reply-To: <20021003061541.A16812@pull.privacy.nb.ca>
+In-Reply-To: <3D9D1D7E.4090201@digitalhams.com>
 List-Id: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
-To: M Taylor <mctylr@privacy.nb.ca>
-Cc: "John J. Bauerly" <jbauerly@grapevine.net>, linux-hams@vger.kernel.org
+To: Brett Mueller <wa7v@digitalhams.com>
+Cc: linux-hams@vger.kernel.org
 
-On Thu, Oct 03, 2002 at 06:15:41AM +0100, M Taylor wrote:
+On Thu, Oct 03, 2002 at 09:47:58PM -0700, Brett Mueller wrote:
+> Hmm, looks a bit fishy to me:
 > 
-> The exact error message would be much easier to work with:
->   make >output 2>&1 
->   more output
-> 
-> Look for the *first* error or warning messages, and the exact error at 
-> mkiss.c line 405. 
-> 
-> If the first error it at mkiss.c:405 I'll be amazed since it suggests you 
-> don't have either /usr/include/time.h or /usr/include/bits/time.h installed
-> on your system correctly. I believe the package they are part of is
-> libc-dev or a related package (description will mention header files).
+> Someone's machine at 203.87.77.236 wrote:
+> > Hi All,
+> >
+> > AO-40 Message of the Day:
+> >
+> > +--------------------------------------------------------------+
+> > | ALON/ALAT=30/5, EXPERIMENTAL U/L1->S2, MA 1
+> >
+> > Content-Type: application/x-msdownload; name="DOG1.MPG.exe"
+> > Content-Transfer-Encoding: base64
+> > Content-Disposition: attachment; filename="DOG1.MPG.exe"
 
-I think RedHat 6.2's release name was "Busted Includes" or something
-similar.  It could well be that that is the problem.
+Double suffix files, it's Klez worm.
 
   - Craig
-
 -- 
 Craig Small VK2XLZ  GnuPG:1C1B D893 1418 2AF4 45EE  95CB C76C E5AC 12CA DFA5
 Eye-Net Consulting http://www.enc.com.au/                <csmall@enc.com.au>
