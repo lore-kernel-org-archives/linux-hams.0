@@ -1,39 +1,53 @@
-From: Joaquin Seoane <joaquin@dit.upm.es>
-Subject: Re: KJD 2.3.9 patch on 2.5.29
-Date: Thu, 12 Sep 2002 19:41:56 +0200
+From: Vivi Kusumo <vivi_ksm@yahoo.com>
+Subject: IO, IRQ and DMA in PCI soundblaster
+Date: Fri, 13 Sep 2002 02:37:39 -0700 (PDT)
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <20020912174156.GA7705@colibri2.dit.upm.es>
-References: <20020801194618.GA722@columbia.g7iii.bogus> <20020802023237.B28097@dea.linux-mips.net> <20020802182854.GA503@columbia.g7iii.bogus> <20020805142824.A23501@dea.linux-mips.net> <20020805171956.GA566@columbia.g7iii.bogus> <20020805201601.A25963@dea.linux-mips.net> <20020805211648.C25963@dea.linux-mips.net>
+Message-ID: <20020913093739.30307.qmail@web14401.mail.yahoo.com>
 Mime-Version: 1.0
-Content-Transfer-Encoding: QUOTED-PRINTABLE
 Return-path: <linux-hams-owner@vger.kernel.org>
-Content-Disposition: inline
-In-Reply-To: <20020805211648.C25963@dea.linux-mips.net>
 List-Id: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="iso-8859-1"
-To: Ralf Baechle DO1GRB <ralf@uni-koblenz.de>
-Cc: linux-hams@vger.kernel.org
+Content-Transfer-Encoding: quoted-printable
+To: linux-hams@vger.kernel.org
 
-Hi Ralph,
+Hi all,
 
-This URL do not work. The correct one is
+My machine is installed RH 7.1 kernel 2.4.19 and
+supported latest v. AX.25 stuff. I am trying to use
+PCI Creative Soundblasters (SB) for soundmodem, but I
+couldn't get the data of I/O, IRQ and DMA.=20
+These pci cards are:
+(1) Vibra 128 P20 (CT 5880)
+(2) Creative-PCI 128 (CT 5880)
+(3) Soundblaster Live 5.1! (EMU10K1)
 
-http://linux-ham.bkbits.net:8080/linux-2.5
+I have tried using sndconfig command to configure the
+Soundblaster Live 5.1! ... and I can hear the sample
+sound. But in file /etc/modules.conf I couln't find
+the specified data of i/o, irq and dma
+# cat /etc/modules.conf
+alias eth0 ne2k-pci
+alias parport_lowlevel parport_pc
+alias usb-controller usb-uhci
+..
+..
+alias sm0                 soundmodem
+..=20
+alias sound-slot-0 emu10k1
+post-install sound-slot-0 /bin/aumix-minimal =D0f
+/etc/.aumixrc -L >/dev/null 2>&1 || :
+pre-remove sound-slot-0 /bin/aumix-minimal =D0f
+/etc/.aumixrc -S >/dev/null 2>&1 ||
 
-I guess it is a fork of the official kernel in order to merge it.
+How can I get the data of i/o, irq and dma for PCI
+soundcard?
+Is it impossible to use the PCI Soundcard for
+soundmodem?
 
-Sorry, I just discovered bitkeeper...
+Many thanks for any assistance.
+Vivi
 
-El lunes 05 de agosto de 2002 a las 21:16:48 (+0200), Ralf Baechle DO1G=
-RB escribi=F3:
-
-> You can get my stuff with bitkeeper from the following URL:
->=20
->   http://linux-ham.bkbits.net/linux-2.5
-
-
--
-To unsubscribe from this list: send the line "unsubscribe linux-hams" i=
-n
-the body of a message to majordomo@vger.kernel.org
-More majordomo info at  http://vger.kernel.org/majordomo-info.html
+__________________________________________________
+Do you Yahoo!?
+Yahoo! News - Today's headlines
+http://news.yahoo.com
