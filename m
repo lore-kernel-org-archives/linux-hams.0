@@ -1,152 +1,83 @@
-From: Chuck Gelm <nc8q@gelm.net>
-Subject: Re: FBB... any more help?
-Date: Thu, 26 Dec 2002 21:50:59 -0500
+From: Cathryn Mataga <cathrynm@junglevision.com>
+Subject: Re: redhat 6.2 dies 3/31/2003 + AX25 2.4 kernel issues
+Date: Thu, 26 Dec 2002 19:44:15 -0800
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <3E0BC013.988C639A@gelm.net>
-References: <Pine.LNX.4.44.0212261846390.27818-100000@jeeves.mvw.net>
+Message-ID: <3E0BCC8F.6090403@junglevision.com>
+References: <3E099099.7070306@junglevision.com> <20021226162643.A31559@pull.privacy.nb.ca>
 Mime-Version: 1.0
 Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"
-To: mvw@mvw.net
-Cc: linux-hams@vger.kernel.org
+Content-Type: text/plain; charset="us-ascii"; format="flowed"
+To: linux-hams@vger.kernel.org
 
-Hi, Mike:
+M Taylor wrote:
+> On Wed, Dec 25, 2002 at 03:03:53AM -0800, Cathryn Mataga wrote:
+> 
+>>According to the Redhat website, Redhat 6.2 and 7.0
+>>both die on 3/31/2003.  These are the only supported versions
+> 
+> 
+> No, they will not die, and they will not stop running. Red Hat
+> Software Inc. will stop offering support for them (which includes
+> releasing software updates). You are free to use RH 6.2 or 7.0
+> if you wish.
+> 
+> 
+>>that run with the 2.2 kernel.  But, I've also read messages
+>>here that the 2.4 kernel has race conditions and is prone
+>>to crash.  So, the question is, what do I do with my ax25
+>>Linux system with RF modems on 3/31/2003?
+> 
+> 
+> I have reports of mainly "larger" stations have problems
+> with 2.4 kernels, though I do not think that going backwards
+> to a 2.2 kernel will actually solve the problems.
+> 
+> I run a small 2.4 ax25 system with no problems, and no crashes
+> or system lockups. I am trying to help a friend isolate a 
+> system lockup (non responsive, no crash or kernel panic) with his
+> 2.4 based BBS and AMPRnet gateway.
+> 
+> 
+>>1.  Somehow get the 2.4 kernel fixed by 3/31/2003?  Is this
+>>possible?  What exactly is the issue, and how bad is this?
+>>Is this likely to happen?
+> 
+> 
+> People are working on the kernel AX.25, NetRom and the userland
+> tools. Others willing to contribute are welcome. One goal is
+> to have a new AX.25 kernel code ready for 2.6, it is currently
+> being worked on by Ralf and others in the 2.5 developmental kernel 
+> series.
+> 
+> 
+>>2.  Just live with the crashing.  Cycle the power on the
+>>
+>>3.  Maybe someone other than Redhat will continue to do security patches
+>>for 6.2?  I can't believe I'm the only one running 6.2.  Right?
+> 
+> 
+> You are not the only one running RH 6.2, but I do not think there is
+> enough of a _paying market_, to pay for the additional support in 2004
+> for RH 6.2. 
+> 
+> The 2.4 kernel has some wonderful advances, like journaling
+> file systems, better SMP support, and of course more device driver
+> support that I cannot imagine staying with RH 6.2. I would recommend
+> you upgrade to RH 7.3 or wait for RH 8.1 (soon-ish).
+> 
+> If you do have problems, then help us, to help you, by providing detailed
+> bug reports, from current systems.
+> 
 
- I know much more about you now.  I can understand better
-why you ask the questions that you do.  
+Anyway, after investigating this a little more,
+I've decided to try to keep the Redhat 6.2 running for a bit longer.
+I suppose I'll just have to keep a closer eye on security focus to avoid
+being script kiddie fodder, but hopefully that'll be about it.
+I have most of my other machines at the newer kernels, but the one ax25
+box still at Redhat 6.2.
 
- I ran KA9Q's NET from 1988-1989,
-(DOS)WA7MBL from 1989-1990,
-(DOS) AA4RE from 1990-2001,
- DOS    FBB from 1999-2000,
- WIN    FBB from 2000-2001,
-   XFBB for awhile in 2001.
-I used G8BPQ node code from 1990-2001.
+Sorry, I'd love to dig in and try to help fix this, but I have
+basically zero free time until maybe about 6/03 or so.
 
- I agree that the FBB docs do not seem to assume that this is
-one's first installation.  I first tried FBB in last half of 1999.
-My favorite pBBS was not being supported at that time and the
-'y2k' bug was fast approaching.  FBB was being supported at that
-time so I was trying to switch to FBB.  The 'docs' seemed to 
-assume that one was upgrading from the old v5.15 (IIRC) and the
-installer was familiar with the style and configuration.  
-Alas, I was not.
-:-(
- I had been using G8BPQ node code for a decade and, thankfully,
-I could configure FBB to use G8BQP node too. :-)
-
- At first I used the DOS version. 
-I was startled to find that there were no provisions to
-'monitor' what was happening on the ports. ! :-(
-Gosh, it was so nice to watch a forward session to see
-what was errant in a script file.  FBB was like flying blind!
-:-(
- Later when there were no RF paths in or out of the LAN, I 
-added the Windows version on another PC and picked up an
-internet telnet feed.
-
- I did successfully install v7.04h within the last year.
-However, I found no human activity and the only nodes
-I can hear are all single port nodes and they are all
-on the same frequency (145.01 MHz).  I could find no
-packet on 222-225 MHz nor 440-450 MHz.  :-(
-
- What are the Canadian Amateur Radio Rules in regard to
-the 802.11b devices?  Here in the USA, channels 1 through
-6 fall entirely within our 2390 - 2450 MHz band.
-
- Imagine 11 Megabits per second!  Quite an upgrade from
-300 baud, eh?  These 100mw transceivers are selling from
-40 USD and up.  With the addition of dish antennas (75 USD)
-they have proven reliable for LOS distances of up to
-20 miles.  Of course, LOS is the difficult part. :-|
-
- Since you are fluent in TCP/IP and it is 'easy' to
-encapsulate AX.25 in IP datagrams, imagine how easy
-it could be to link network nodes for 1200 baud users.
-;-)
-
-HTH,  Chuck
- 
-
-mvw@mvw.net wrote:
-> 
-> OK Chuck, here we go:
-> 
-> >> 1. Can I get bulletins via the Internet instead of via radio?
-> >  Yes.
-> 
-> OK. Sorry to ask, but how? I assume you mean wait for the offers by
-> telnet as you mention elsewhere: OK, that suits me fine, I'll wait.
-> 
-> >> Not sure any remaining bbs's in my area to give me a feed.
-> 
-> >  I am baffled by this statement.
-> 
-> Well, I used to run a bbs on our local VHF LAN frequency with a feed from
-> another local station on UHF: but he has stopped doing packet. I am not
-> sure anyone else still does. Background: I have been asked to run a BBS
-> for local emergency purposes. But while I am at it, bulletins may be a
-> nice addition. Since there is less and less packet I am pretty sure no
-> local sysops will object. The reactions are either positive or "don't
-> care about packet anymore".
-> 
-> I think packet radio is vastly underrated. The reason I am asking all
-> these questions here about BBS's is that local message storage is a nice
-> addition, but IMHO, tcp/ip is the real power. I mean:
-> 
-> - To get bits across my cell phone I pay $0.10 per kB or something.
-> Amateur bits are free.
-> 
-> - When my home cable connection goes down, I get to wait 2-3 weeks for a
-> repair van. The amateur infrastructure is under my own control. And
-> reliable.
-> 
-> - In emergencies, cell and Internet access will go down. My ham packet
-> station will not.
-> 
-> And keep in mind, I am trying to make a contribution! I have many PCs
-> available, and I have static IP's (I can be a gateway), and I have many
-> TNCs and radios available. And stable power, battery backups, good
-> antennas, and as an ex telecomms engineer I understand reliability. (My
-> packet station has now been up for 3 years with zero errors; last reboot
-> 370 days ago at my instigation).
-> 
-> Yet when I ask here, no-one appears interested.
-> 
-> And begging everyone's forgiveness, I am not all that up on packet: my
-> professional life is Internet and tcp/ip, so that I understand.  This
-> means I will sometimes ask silly questions and show my ignorance about
-> ax25 and BBS's. Bear with me! ;)
-> 
-> >  Umm, if you set up no forwarding, it is a
-> > "no forwarding to ax25 bbs network" pbbs.  :-|
-> 
-> I see - so by default fbbs does not forward? I am handicapped by the fact
-> that all the docs assume you know all this stuff. I used to, 25 years ago:
-> I knew all bout 300 baud modems, Fidonet etc - but I have forgotten all
-> that stuff and fbb docs are very unforgiving of people who have forgotten
-> stuff they knew a quarter century ago!  :-)
-> 
-> > If you are not going to forward, why have a 'full featured' pbbs?
-> 
-> Aha, good question. I asked here for simple BBS's: TNC functionality would
-> indeed have done: that is what I was looking for. But as I read it,
-> everyone here said "use FBB, as everyone else does", and indeed there are
-> no other alternatives, it appears. I am a pretty good reader, so point me
-> to the docs and I am happy to read 'em.
-> 
-> (That explains my occasional frustration too. Point me to the docs, and
-> then there are no docs, o0r as in FBB's case, they are hopelessly
-> contradictory and outdated. Leaves guys like me in a bind)
-> 
-> > A 'built into the TNC PMS' does what you have mentioned.
-> 
-> But for TCP/IP I need to set the TNC to KISS, so that built-in
-> functionality is not available...
-> 
-> Cheers, and thx for the help so far,
-> 
-> Michael VA3MVW
