@@ -1,23 +1,34 @@
-From: "David S. Miller" <davem@redhat.com>
-Subject: Re: [PATCH 2.6] convert netrom to module_param
-Date: Thu, 29 Jul 2004 16:02:54 -0700
-Sender: netdev-bounce@oss.sgi.com
-Message-ID: <20040729160254.030a92d8.davem@redhat.com>
-References: <20040729113651.6517fe27@dell_ss3.pdx.osdl.net>
+From: "Rodolfo Brasnarof" <rodob@ciudad.com.ar>
+Subject: Re: ax25 with digipeaters
+Date: Sat, 31 Jul 2004 16:09:00 -0300
+Sender: linux-hams-owner@vger.kernel.org
+Message-ID: <410BC41C.2453.48F16@localhost>
+References: <003101c473b5$d2254830$050010ac@tokland>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
-Return-path: <netdev-bounce@oss.sgi.com>
-In-Reply-To: <20040729113651.6517fe27@dell_ss3.pdx.osdl.net>
-Errors-to: netdev-bounce@oss.sgi.com
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Return-path: <linux-hams-owner@vger.kernel.org>
+In-reply-to: <003101c473b5$d2254830$050010ac@tokland>
+Content-description: Mail message body
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"
-To: Stephen Hemminger <shemminger@osdl.org>
-Cc: ralf@linux-mips.org, netdev@oss.sgi.com, linux-hams@vger.kernel.org
+Content-Type: text/plain; charset="iso-8859-1"
+To: linux-hams@vger.kernel.org
 
-On Thu, 29 Jul 2004 11:36:51 -0700
-Stephen Hemminger <shemminger@osdl.org> wrote:
 
-> Convert Netrom to use module_param
+---
+On 27 Jul 2004 at 10:43, Arnau S=E1nchez wrote:
 
-Also applied, thanks.
+> >I could not get axdigi working, but I'm using digi_ned=20
+> >instead, which works fine.
+>=20
+> I did't know about "digi_ned"... does it work well with ax25?
 
+You mean kernel ax25? Yes, it supports any ax25 kernel=20
+device. I set up a system wich has 2 vhf ports, one a tnc,=20
+and the other one a soundmodem, and digi_ned works fine on=20
+both, and it even does cross-port digipeating between them.
+
+-
+To unsubscribe from this list: send the line "unsubscribe linux-hams" i=
+n
+the body of a message to majordomo@vger.kernel.org
+More majordomo info at  http://vger.kernel.org/majordomo-info.html
