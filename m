@@ -1,28 +1,49 @@
-From: hg2ecz@ha5kfu.hu
-Subject: Re: handheld computer + linux + a ham radio?
-Date: Fri, 17 Sep 2004 08:25:14 +0200 (CEST)
+From: Cezar T <blimpyway@yahoo.com>
+Subject: Soundmodem/Baycom driver as radio modem only?
+Date: Fri, 17 Sep 2004 16:09:11 -0700 (PDT)
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <33002.195.56.240.213.1095402314.squirrel@195.56.240.213>
-References: <87acvp4yz5.fsf@jidanni.org>
+Message-ID: <20040917230911.68842.qmail@web41608.mail.yahoo.com>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7BIT
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <87acvp4yz5.fsf@jidanni.org>
 List-Id: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
-To: linux-hams@vger.kernel.org
+Content-Transfer-Encoding: 7bit
+To: Linux-Hams@vger.kernel.org
 
-> What can one do these days with a handheld computer + linux + a ham radio?
-> Merely check frequency tables? Of course.
-> Receive SSTV? Sitor?
-> Control the radio?
+Hi,
+I'm a newcomer to radio/linux/packet hope this isnt
+too silly a question..
 
---> http://radio.linux.org.au
+I want to get telemetry data link in a linux laptop
+from a microcontroller flying in a RC blimp.
 
-You can see here a lot of HAM programs.
-In section "sstv" there are two programs:
-    qsstv: its a classical SSTV via Soundcard.
-    HDSSTV: experimental digital SSTV.
+One way to try this is to have a audio radio link with
+AFSK1200 or similar modulation
 
-73! hg2ecz, Zsolt
+The problem is that the microcontroller does not know
+AX25 protocols, and I dont have the knowledge to write
+one. All it needs is just reading/writing bytes
+between only two endpoints.
 
+Is there a way to accomplish this through some
+character device accessing directly the modem driver
+or at least can you lead me to some usefull
+documentation? 
+
+Or what kind of external radio modem should I try to
+use (I understand the baycom modem is not accessible
+to the standard serial driver)
+
+I'm a newcomer to radio/linux/packet hope this isnt
+too silly a question..
+
+Thanks,
+Cezar
+
+
+	
+		
+__________________________________
+Do you Yahoo!?
+New and Improved Yahoo! Mail - 100MB free storage!
+http://promotions.yahoo.com/new_mail 
