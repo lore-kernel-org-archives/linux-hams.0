@@ -1,107 +1,147 @@
-From: Wilbert Knol <w.knol@niwa.co.nz>
-Subject: [ANN] qle-0.0.3 GUI logger/log editor released.
-Date: Fri, 14 Jan 2005 09:16:47 +1300
-Message-ID: <200501140916.47627.w.knol@niwa.co.nz>
-References: <000501c4f68e$5457b6c0$3d4689d8@oem7paq6co5hph> <opskcy9egselwowa@post.demon.co.uk> <20050110111132.718a2f53.rodob@datafull.com>
-Reply-To: w.knol@niwa.co.nz
+From: Jaime Robles <jaime@robles.nu>
+Subject: New version of KLog released 0.3.1 / Liberada una nueva =?iso-8859-1?q?versi=F3n_de_KLog_-?= 0.3.1
+Date: Mon, 17 Jan 2005 00:05:12 +0100
+Message-ID: <200501170005.19500.jaime@robles.nu>
 Mime-Version: 1.0
+Content-Type: multipart/signed;
+  boundary="nextPart4023422.HTkrj344nr";
+  protocol="application/pgp-signature";
+  micalg=pgp-sha1
 Content-Transfer-Encoding: 7bit
-Return-path: <hamlib-developer-admin@lists.sourceforge.net>
-In-Reply-To: <20050110111132.718a2f53.rodob@datafull.com>
-Content-Disposition: inline
-Sender: hamlib-developer-admin@lists.sourceforge.net
-Errors-To: hamlib-developer-admin@lists.sourceforge.net
-List-Unsubscribe: <https://lists.sourceforge.net/lists/listinfo/hamlib-developer>,
-	<mailto:hamlib-developer-request@lists.sourceforge.net?subject=unsubscribe>
+Return-path: <linux-hams-owner@vger.kernel.org>
+Sender: linux-hams-owner@vger.kernel.org
 List-Id: <linux-hams.vger.kernel.org>
-List-Post: <mailto:hamlib-developer@lists.sourceforge.net>
-List-Help: <mailto:hamlib-developer-request@lists.sourceforge.net?subject=help>
-List-Subscribe: <https://lists.sourceforge.net/lists/listinfo/hamlib-developer>,
-	<mailto:hamlib-developer-request@lists.sourceforge.net?subject=subscribe>
-List-Archive: <http://sourceforge.net/mailarchive/forum.php?forum=hamlib-developer>
-Content-Type: text/plain; charset="us-ascii"
-To: linux-hams@vger.kernel.org
-Cc: hamlib-developer@lists.sourceforge.net
+To: eadxnet@elistas.net, debian-hams@lists.debian.org, linux-hams@vger.kernel.org
+Cc: hamlinex@yahoogroups.com
 
-GPL 2 or later applies. Download the 82 kbyte archive from:
+--nextPart4023422.HTkrj344nr
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: quoted-printable
+Content-Disposition: inline
 
-    http://www.qsl.net/zl2arn/qle-0.0.3.tar.gz
+(Versi=F3n en espa=F1ol al final)
 
-Copy to your home directory, and unzip as a non-root user with:
+I am =A0happy to announce that the release of 0.3.1 version of KLog is
+available.
+=46rom the Changelog:
 
-    tar xvzf qle-0.0.3.tar.gz
+16-Jan-2005 0.3.1
 
-Read the README.
-
-Requirements:
---------------------
-
-    Perl/Tk
-    Hamlib 1.2.3 (highly recommended)
-    cwdaemon (optional)
-    A reasonably quick machine with a 1024x768 px (or better) screen.
-
-A clipping from the README follows - use a fixed font. Have fun.
-
-Wilbert, ZL2BSJ
-
------ cut here ------
-
-1. Introduction.
-----------------
-
-The qle-package contains the program qle.pl: a graphic QSO log viewer,
-log editor and QSO logger for amateur radio operators.
-
-"qle.pl" stands for QSO Logger and Editor. It is a Perl/Tk script that
-logs and modifies QSOs directly to a fast and light-weight SQLite
-database.
-
-Intended use: casual logging of rag-chew and contest QSOs. The logger
-caters for CW operators. See 'Features' list below.
-
-Table headings, fonts, colours and other attributes are set in a
-user-editable configuration file. The SQLite log schema supplied may
-be altered to suit your taste, provided the configuration file is
-updated accordingly (untested).
-
-If you are looking for a performance contest logger, consider using
-TLF by PA0R. Similarly,  XLOG (PG4I) and KLOG (EA4TV) are very good
-general-purpose loggers that are more intuitive to configure and use.
+=2D KLog has been optimized and now runs faster.
+=2D New feature: KLog saves the date/time of the last log file save.
+=2D New feature: KLog ask the user for a comment when Importing a TLF log (=
+for=20
+example to note that those QSO are from an specific contest or whatever).
+=2D Bug fixed: When selecting a DX-Spot from the DX-Cluster it did not over=
+wrote=20
+the name.
+=2D Bug fixed: When writting the log, there was an space missing before the=
+=20
+<EOR>.
+  It is just a "cosmetic" fix, not a real bug.
+=2D Bug fixed: The same with the QSL card status.
+=2D Bug fixed: KLog now recognises all the prefix that appears in cty.dat f=
+ile=20
+with
+  special CQ/ITU zones.
+=2D Bug fixed: KLog recognises the special call "3XDQC/P" as "3X" although =
+it=20
+does not
+  follow the "prefix+number+suffix" pattern
+=2D Bug fixed: When starting it now looks the cty.dat file in: ~/.klog and =
+in=20
+the current directory before starting without Entities' data. (TNX oh7jjt)
+=2D Bug fixed: If we are modifying a QSO, the search box is not updated. Av=
+oids=20
+some crashes.
 
 
-2. Features.
-------------
+KLog can still have many bugs and other not yet implemented features.
+You can download KLog from:
+http://jaime.robles.nu/klog
+and quickly from:
+http://klog.berlios.de
+http://developer.berlios.de/projects/klog/
 
-1. Hamlib rig control. A Hamlib-interfaced radio is higly recommended,
-   unless you are fond of manually keeping track of band and mode info.
-
-2. For contesters: computer-generated CW with 'cwdaemon'.
-
-3. The provided (and recommended) database schema logs the following
-   items:
-
-   day, month, year, UTC, call, RST sent, serial number sent, RST
-   received, serial number received, frequency, mode, operator, QTH,
-   my power, his power, QSL sent, QSL received, comment
-
-4. On-the-fly dupe checking by band/mode for contesters.
-
-5. Real-time and delayed (post-QSO) data entry.
-
-6. Built-in log searching and log editing.
-
-7. Complete lack of documentation other than the README and the
-   commented configuration file.
-
-8. The logger does not track scores and has no band-map or DX-cluster
-   support. There is no voice keyer support. Casual logging and DX-ing
-   only.
-
-<EOF>
+You will find the tar.gz sources and the debian package.
+You can see some screenshots in the web.
 
 
--------------------------------------------------------
-The SF.Net email is sponsored by: Beat the post-holiday blues
-Get a FREE limited edition SourceForge.net t-shirt from ThinkGeek.
-It's fun and FREE -- well, almost....http://www.thinkgeek.com/sfshirt
+Thanks for your help and i hope you find KLog useful.
+73
+
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D
+(Spanish version)
+
+Me alegro de anunciaros que ya est=E1 disponible la versi=F3n 0.3.1 de KLog.
+
+Del fichero Changelog vemos los cambios:
+
+16-Ene-2005 0.3.1
+
+=2D KLog ha sido optimizado y ahora se ejecuta m=E1s r=E1pido.
+=2D Nueva funcionalidad: KLog guarda la fecha/hora de la =FAltima vez que s=
+e=20
+guard=F3 el log.
+=2D Nueva funcionalidad: KLog le pide al usuario un comentario al importar =
+un=20
+log de TLF (por ejemplo para anotar que esos QSO son de un concurso o lo qu=
+e=20
+sea).
+=2D Error arreglado: Cuando se selecciona un anuncio del DX-Cluster, no=20
+sobreescrib=EDa el nombre.
+=2D Error arreglado: Al guardar el log, faltaba un espacio delante del <EOR=
+>. Es=20
+s=F3lo una soluci=F3n cosm=E9tica, no era un error real.
+=2D Error arreglado: Lo mismo con el estado de QSL
+=2D Error arreglado: KLog reconoce ahora todos los prefijos que aparecen en=
+ el=20
+fichero cty.dat con zonas CQ/ITU especiales.
+=2D Error arreglado: KLog reconoce el indicativo "3XDQC/P" como "3X" aunque=
+ no=20
+siga el patr=F3n "prefijo+n=FAmero+sufijo".
+=2D Error arreglado: Cuando arranca, ahora busca el fichero crt.dat en ~./k=
+log y=20
+en el directorio actual antes de empezar sin los datos de entidades. (TNX=20
+oh7jjt)
+=2D Error arreglado: Si estamos modificando un QSO no se actualiza el cuadr=
+o de=20
+b=FAsqueda. Elimina algunos "crash".
+
+
+KLog puede tener a=FAn muchos errores y otras funciones por implementar.
+Puedes descargar KLog de:
+http://jaime.robles.nu/klog
+y m=E1s r=E1pido desde:
+http://developer.berlios.de/projects/klog/
+
+Encontrar=E1s las fuentes en tar.gz o el paquete de Debian.
+Puedes ver capturas de pantalla en la web.
+
+Gracias por tu ayuda y espero que KLog te resulte =FAtil.
+73
+
+=2D-=20
+Un saludo,
+ Jaime Robles, EA4TV
+ jaime@robles.nu
+
+Visita:
+   http://jaime.robles.nu
+   http://www.redlibre.net - La Red Libre de todos! =20
+
+--nextPart4023422.HTkrj344nr
+Content-Type: application/pgp-signature
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.2.5 (GNU/Linux)
+
+iD8DBQBB6vMvER46oL+8yYURAmsQAJ9k35z/A/TkvmOdcMg5F6mIKuaIlgCfQTPL
+mSliMd7ysnSb/KBz73XpdzU=
+=AfbT
+-----END PGP SIGNATURE-----
+
+--nextPart4023422.HTkrj344nr--
