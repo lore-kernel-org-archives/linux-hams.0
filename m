@@ -1,50 +1,51 @@
-From: "Curt Mills, WE7U" <hacker@tc.fluke.com>
+From: Wilbert Knol <zl2bsj@zl2tze.ath.cx>
 Subject: Re: Linux AX.25 Socket programming
-Date: Thu, 2 Jan 2003 16:44:35 -0800 (PST)
+Date: Fri, 3 Jan 2003 19:32:03 +1300 (NZDT)
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <Pine.LNX.4.33.0301021642200.19643-100000@wapiti.tc.fluke.com>
-References: <1041473560.10921.9.camel@edith>
+Message-ID: <Pine.LNX.4.44.0301031919090.9645-100000@zl2bsj.ampr.org>
+References: <Pine.LNX.4.44.0301020617170.1552-100000@oh2bns.ampr.org>
 Mime-Version: 1.0
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <1041473560.10921.9.camel@edith>
+In-Reply-To: <Pine.LNX.4.44.0301020617170.1552-100000@oh2bns.ampr.org>
 List-Id: <linux-hams.vger.kernel.org>
 Content-Type: TEXT/PLAIN; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
-To: Kelly Black <kelly.black@penguinpackets.com>
-Cc: Linux Hams mailing list <linux-hams@vger.kernel.org>
-
-On 1 Jan 2003, Kelly Black wrote:
-
-> O.K. Thanks for the tip.  Can you get the callsign or other environment
-> info from the environment ( $ENV ?) as well like a CGI script does.
-
-Yes.  Very easily:
-
-    $display=$ENV{"DISPLAY"};
+To: linux-hams@vger.kernel.org
 
 
-> I will probably still write the program in C though as I was impressed
-> at how well I was able to view a curses based application via TCP/IP
-> over AX.25, and was floored by its responsiveness.
+On Thu, 2 Jan 2003, Tomi Manninen wrote:
 
-Remember though that Perl is a compiled language as well.  It just
-happens to compile it each time you invoke it.  It's very fast.
+> the same in eg. Perl. There was a thread about Perl and ax25d recently on 
+> this list but I have already forgotten what the correct procedure was...
 
-Perls strongpoint is in ripping apart text and reconstructing it in
-various ways.  It does most everything else as well.
+The trick was, to 'unbuffer' the Perl interpreter with:
+
+$|=1;
+# or any non-zero value
+
+My Perl Bible says:
+
+ English name: $OUTPUT_AUTOFLUSH
+
+ If set to any non-zero value, forces a flush after every write or 
+ print on the currently selected output device
 
 
-> One of my reasons for re-writing the existing application is to make
-> user training simple by providing a simple interface option instead of
-> just the terse command line option that exists now.
+I tried out the recently posted Perl script (having 'unbuffered it 
+first...)
 
-There's also PerlTk.  Not a bad way to get a program with a GUI up
-and running in a hurry.
+It looks as though AX25  scrambles the '\n', because the script keeps 
+waiting for input (much 
+like a Windows shutdown :-)
 
--- 
-Curt Mills, WE7U                    hacker_NO_SPAM_@tc.fluke.com
-Senior Methods Engineer/SysAdmin
-"Lotto:    A tax on people who are bad at math!"
-"Windows:  Microsoft's tax on computer illiterates!" -- WE7U
-"The world DOES revolve around me:  I picked the coordinate system!"
+When I set $/ to any character, the script then gets past the
+$call=(<>);
+statement once that character appears on stdin.
+
+How does ax25d present end-of-line?
+
+
+Wilbert, ZL2BSJ
+
+
 
