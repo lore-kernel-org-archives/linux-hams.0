@@ -1,46 +1,73 @@
-From: Chuck Gelm <nc8q@gelm.net>
-Subject: Re: LinWSJT 0.3 available
-Date: Fri, 04 Oct 2002 16:02:43 -0400
+From: jeff <wd4nmq@earthlink.net>
+Subject: Re: AO-40 Transponder Operation
+Date: Fri, 04 Oct 2002 17:59:59 -0400
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <3D9DF3E3.8FD7A88@gelm.net>
-References: <02100414464802.00828@g4klx>
+Message-ID: <3D9E0F5F.9070700@earthlink.net>
+References: <20021004040843Z261464-8740+5907@vger.kernel.org> <3D9D1D7E.4090201@digitalhams.com> <20021004065830.GB31861@enc.com.au> <3D9D869B.9000701@voicenet.com> <20021004175512.GH13150@localhost>
 Mime-Version: 1.0
 Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"
-To: g4klx@qsl.net
-Cc: Amsat BB <amsat-bb@amsat.org>, Linux Hams <linux-hams@vger.kernel.org>, Moon Net <moon-net@nlsa.com>
+Content-Type: text/plain; charset="us-ascii"; format="flowed"
+To: Nate Bargmann <n0nb@networksplus.net>
+Cc: linux-hams@vger.kernel.org
 
-Howdy, Y'all:
+Actually there are hams that use Linux. I have written a couple of radio 
+control programs for Kenwoods that run under Linux. One is exclusive 
+Linux and the other is written in Tcl/Tk that runs under Linux, Windows, 
+Mac or any system that there is a Tcl/Tk package for, and there are a 
+couple of dozen systems supported.
 
- Where can I find a definition of JT44, LinWSJT, & FSK441 ?
-I've seen its availability mentioned here, but I do not
-recall a definition.
+I also wrote a APRS app under Tcl/Tk that runs under Linux/Windows that 
+uses the online Tiger mapping service to draw the map and place APRS 
+stations on.
 
-Chuck
+I also am putting the finishing touches on a Linux echolink/ilnk app 
+called echoLinux. It is alpha right now.
 
-Jonathan Naylor wrote:
+So there are hams who use Linux.
+
+Nate Bargmann wrote:
+> * Margaret Leber <maggie@voicenet.com> [2002 Oct 04 12:13 -0500]:
 > 
-> Hi Folks
+>>Nonetheless, it's still a Windows virus. I'm starting to see more and 
+>>more  Klez-infected messages coming from people in the ham community.
 > 
-> I am happy to announce that LinWSJT 0.3 is now available. This are
-> open source implementations of JT44 and FSK441 for Linux, although only
-> JT44 is currently in a usable state.
 > 
-> Compared to the previous releases (0.1, 0.1a and 0.2) this version is
-> much faster, it now runs a number of discrete FFT's as opposed to a
-> sliding FFT. On my PC this gives an approximate speed improvament of 20
-> times, very worthwhile.
+> Sadly, I was hoping the trend would be the other way by now as more hams
+> would be using the Free OSes.  It appears this hasn't been the case.
 > 
-> If you have a previous version then I suggest you get this one and give
-> it a try.
+> Linux is slowly gaining more mention in the mainstream ham press.
+> Somehow it seems that as a group hams pretend to be on the cutting edge
+> of technology.  Most, however, are content to wallow in their current 
+> comfort zone.
 > 
-> It is available from my web site at http://www.qsl.net/g4klx in the
-> Software section.
+> I've advocated Linux for the past few years and have found very few
+> takers.  Even with standing offers of help to other hams with getting 
+> a Linux system going, I'm met with hams wanting help with their Doze 
+> machine, which I won't do.
 > 
-> Jonathan  HB9DRD/G4KLX
-> -
-> To unsubscribe from this list: send the line "unsubscribe linux-hams" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at  http://vger.kernel.org/majordomo-info.html
+> I've come to the conclusion that the only way a majority of hams will
+> give Linux a try is for some cool new mode of communications ala PSK31
+> would be available on Linux first and that a Doze version would be
+> non-existant.  Unfortunately, it's been working the other way around.
+> 
+> I'm glad Jonathan took on developing a WSJ app for Linux.  This is a
+> seriously cool mode, as I understand it, and a lack of a similar
+> capability puts my hamming at a severe disadvantage if I want to run the
+> latest ham tech.  The Gate's Tax is not welcome in my life and I will do
+> without before installing his bits on my machines.
+> 
+> Sigh...Off my soapbox now.
+> 
+> 73, de Nate >>
+> 
+
+
+
+-- 
+Jeff, wd4nmq
+wd4nmq@earthlink.net
+http://home.earthlink.net/~wd4nmq
+iLink client node #10438, iLink sysop link node #14746
+
