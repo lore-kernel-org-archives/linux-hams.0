@@ -1,8 +1,8 @@
 From: "Janusz Przybylski - SP1LOP" <sp1lop@gw.sp1lop.szczecin.pl>
-Subject: Dekoding encap.txt to routing for JNOS
-Date: Sat, 22 Mar 2003 20:10:54 +0100
+Subject: Dekoding encap.txt correct text.
+Date: Sat, 22 Mar 2003 20:23:23 +0100
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <000901c2f0a6$c71402d0$6400000a@gw.sp1lop.szczecin.pl>
+Message-ID: <003701c2f0a8$815f65c0$6400000a@gw.sp1lop.szczecin.pl>
 Reply-To: "Janusz Przybylski - SP1LOP" <sp1lop@gw.sp1lop.szczecin.pl>
 Mime-Version: 1.0
 Content-Transfer-Encoding: 7bit
@@ -12,12 +12,14 @@ Content-Type: text/plain; charset="us-ascii"
 To: linux-hams@vger.kernel.org
 
 I greet reading...
-I have request whether accessible permissive on decodification software is
-file encap.txt on file routing in format for JNOS 1.11e, because such system
-on gate of bristles.ampr.I have org installed.
 
-Routingu used in encap format.txt it is not peaceable with my format
-routingu
+I have request whether accessible permissive on decodification software is
+file encap.txt
+on file routing in format for JNOS 1.11e, because such system on gate of
+szczecin.ampr.org
+I have installed.
+
+Routingu used in encap format.txt it is not peaceable with my format routing
 and then example:
 encap.txt
 route addprivate 44.165.25/24 encap 80.48.10 5.183
@@ -29,8 +31,8 @@ this exemplifies from utilization my data.
 
 I ask about information in this matter on my e-mail
 sp1lop@gw.sp1lop.szczecin.pl
-I thank warmly, and apologize for my simultaneously very
-bad English
+I thank warmly, and apologize for my simultaneously very bad English
+
 
 
 73 de Janusz SP1LOP
