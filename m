@@ -1,35 +1,56 @@
-From: Bob Nielsen <nielsen@oz.net>
+From: Dave Stubbs <dave.stubbs@utoronto.ca>
 Subject: Re: Linux AX25 Digipeating Software
-Date: Thu, 23 Dec 2004 09:56:00 -0800
-Message-ID: <20041223175600.GC14938@office.n7xy.net>
-References: <41C9A12A.2000401@utoronto.ca> <NCBBKBAJDJIPKFIAFBKLIEGOFFAC.wilson.hein@verizon.net> <20041222204955.GC8131@office.n7xy.net> <20041222225831.GB4086@merlin> <Pine.GSO.4.58.0412231259020.27419@kuori.saunalahti.fi>
+Date: Fri, 24 Dec 2004 11:30:13 -0500
+Message-ID: <41CC4415.8000707@utoronto.ca>
+References: <NCBBKBAJDJIPKFIAFBKLIEGOFFAC.wilson.hein@verizon.net>
 Mime-Version: 1.0
+Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
-Content-Disposition: inline
-In-Reply-To: <Pine.GSO.4.58.0412231259020.27419@kuori.saunalahti.fi>
+In-Reply-To: <NCBBKBAJDJIPKFIAFBKLIEGOFFAC.wilson.hein@verizon.net>
 Sender: linux-hams-owner@vger.kernel.org
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset="us-ascii"; format="flowed"
 To: linux-hams List <linux-hams@vger.kernel.org>
 
-On Thu, Dec 23, 2004 at 01:01:04PM +0200, Tomi Manninen wrote:
-> On Wed, 22 Dec 2004, Nate Bargmann wrote:
-> 
-> > Perhaps until Craig declares it obsolete this should be hosted
-> > *somewhere* just to preserve access to the code.  Digipeating is
-> > sometimes not recommended by some, but it would be nice if this code
-> > could be updated if for no other reason than to have the Linux AX.25
-> > capability meet the spec.
-> 
-> FWIW, there is an axdigi-0.02.tar.gz at the old ax25 tools home
-> at http://he.fi/. The patch I sent, was against this. I have absolutely
-> no idea if this is the latest version or not...
-> 
+Wilson G. Hein wrote:
 
-The binary in that package appears to run on my system running a 2.4.26
-kernel (I had to install libc5 first).  I don't have any way to see if
-it actually is functional, however.
+>-----Original Message-----
+>  
+>
+>>>So, after all that - is there a good program out there that does simple,
+>>>single-port, layer 2, AX.25 digipeating and works with kernel 2.6?
+>>>
+>>>
+>>>
+>>>      
+>>>
+>>I'm not aware of any other non-APRS digi software, but you can get
+>>ax25digi at:
+>>
+>>ftp://ftp.tapr.org/software_lib/Linux/ax25/ax25digi.tgz
+>>
+>>
+>>
+>>    
+>>
+>Actually, there's no file there with that name at all.
+>
+>Try without the 25, axdigi.tgz downloaded for me:-)
+>
+>I also could noit get it to compile, and get an error from the binary, and
+>would love to have the this app working. Just no time to try myself.
+>
+>  
+>
+Uh,
 
-Bob
+But if you read my original post, you'll see that I had already tried 
+axdigi, and asked if there was anything else.  Kinda odd pointing back 
+to the same software then...
 
+I guess the upshot of all this is that what people call "ax25digi" is 
+not actually a separate piece of software from "axdigi", but it is 
+actually the same thing, just poorly remembered.
+
+Dave...
+VA3BHF
