@@ -1,73 +1,51 @@
-From: "Rodolfo Brasnarof" <rodob@ciudad.com.ar>
-Subject: Re: [HELP] Sound card as TNC, Kernel 2.4.22, Intel board
-Date: Thu, 30 Oct 2003 23:00:54 -0300
+From: 240231@msn.com
+Subject: The 30 Hour Wonder!      931399795
+Date: Fri, 31 Oct 2003 03:18:22 -0500
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <3FA19826.5337.4789FB@localhost>
-References: <Pine.LNX.4.58.0310290510560.20216@debian.ehrlichtronics.com>
+Message-ID: <S263102AbTJaI1R/20031031082718Z+24663@vger.kernel.org>
+Reply-To: 240231@bigfoot.com
 Mime-Version: 1.0
 Content-Transfer-Encoding: 7BIT
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-reply-to: <Pine.LNX.4.58.0310290510560.20216@debian.ehrlichtronics.com>
-Content-description: Mail message body
 List-Id: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
 To: linux-hams@vger.kernel.org
-Cc: Scott Ehrlich <scott@ehrlichtronics.com>
 
----
-On 29 Oct 2003 at 5:20, Scott Ehrlich wrote:
+Cyalus comes in smaller doses and produces fewer side effects. 
+Cyalus also works much faster than Sildenafil-based medications. 
+In clinical trials, the majority of men who took the drug were able to 
+engage in sexual intercourse within 30 minutes or less. 
+The studies also indicated that Cyalus stays in the system 
+for up to 30 hours. That's 26 hours longer than the traditional 
+Sildenafil-based medications treatment. 
 
-> I have an Intel Pentium 3 board with Debian Woody, Kernel 2.4.22, and am
-> trying to get the motherboard sound to act as my TNC.   I want to
-> experiment with packet and APRS using the sound card.
-> 
-> I've compiled a static kernel with AX.25 support, /sbin/ifconfig -a shows
-> AX.25 ports exist.   I run Xastir, Configure > Interfaces > Add > AX25 TNC
-> > OK and get an error window popping up:
-> 
-> "Interface error! Error opening interface 0 Hard Fail"
-> 
-> and the xterm from which I typed xastir offers:
-> 
-> axconfig: port 1 not active
-> axconfig: port 2 not active
-> ERROR: problem with axports file
-> 
-> 
-> 
-> What am I missing?
-> 
-> Thanks in advance.
+Test results showed that out of 700 participants at least 88 percent of men experienced improvement with their erections. 
 
-As far as I know, you need to install the usermode 
-soundmodem. I don't know if woody includes it, but you can 
-download and compile it yourself.
+More info http://www.hostvy.com/
 
-Then you can run the configuration utility, soundmodemconfig 
-or something.
 
-Then you need to edit /etc/axports
 
-Then start the soundmodem.
 
-Your soundcard must be supported by oss. Or maybe by alsa 
-with oss compatibility enabled.
 
-You need the mkiss kernel module too, in addition to ax25.
 
-I'm not sure, but maybe you need some of the folowing 
-packages:
 
-libax25
-ax25-tools
-ax25-apps
 
-I always install them prior to soundmodem because I need 
-them. For example ax25-tools includes kissattach, necesary 
-to attach a kiss tnc, and ax25-apps includes listen, that I 
-use for monitoring purposes.
 
-I hope you find this usefull. Try to check the ax25-howto 
-that can give you more details. If you have any question, 
-just ask.
+
+
+
+
+
+
+
+
+
+         
+11C135F4-74F93059-528D8FA5-7474C0E1-3351B81C
+         
+16FFD8F9-433C0795-6F0FE662-1DBABD2B-12E00C71
+             
+191C50F5-722C9A02-13D7EE9-6813E12E-5BFB1B22
+                
+
 
