@@ -1,31 +1,39 @@
-From: Jonathan Naylor <jonathan.naylor@ggaweb.ch>
-Subject: LinWSJT 0.3 available
-Date: Fri, 4 Oct 2002 14:46:48 +0200
+From: M Taylor <mctylr@privacy.nb.ca>
+Subject: Re: Configuring AX25 NET/ROM!
+Date: Fri, 4 Oct 2002 17:01:15 +0100
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <02100414464802.00828@g4klx>
-Reply-To: g4klx@qsl.net
+Message-ID: <20021004170115.B26455@pull.privacy.nb.ca>
+References: <3D9CADD2.96171596@kj6eo.com>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7BIT
 Return-path: <linux-hams-owner@vger.kernel.org>
+Content-Disposition: inline
+In-Reply-To: <3D9CADD2.96171596@kj6eo.com>; from kj6eo@kj6eo.com on Thu, Oct 03, 2002 at 01:51:30PM -0700
 List-Id: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
-To: Amsat BB <amsat-bb@amsat.org>, Linux Hams <linux-hams@vger.kernel.org>, Moon Net <moon-net@nlsa.com>
+Content-Transfer-Encoding: 7bit
+To: Bill Walton <kj6eo@kj6eo.com>
+Cc: LINUX HAMS MAILING LIST <linux-hams@vger.kernel.org>
 
-Hi Folks
+On Thu, Oct 03, 2002 at 01:51:30PM -0700, Bill Walton wrote:
+> Dear Linux-Hams Mailing List:
+> 
+> First of all I would like to thank you for your excellent advice regarding my AX25
+> NET/ROM configuration issues.  Most of my problems are caused by my lack of
+> experience with Linux.  Hopefully some day when I am old and gray I will be
+> answering linux questions instead of asking them (>:
+> 
+> I have basicially got everything running now but I have screwed up the NET/ROM
+> configuration somewhere and the node is not working properly.  For my particular
 
-I am happy to announce that LinWSJT 0.3 is now available. This are  
-open source implementations of JT44 and FSK441 for Linux, although only 
-JT44 is currently in a usable state.
+I just wanted to mention two useful configuration guides, 
 
-Compared to the previous releases (0.1, 0.1a and 0.2) this version is 
-much faster, it now runs a number of discrete FFT's as opposed to a 
-sliding FFT. On my PC this gives an approximate speed improvament of 20 
-times, very worthwhile.
+PA3GCU's (Richard Adams) 
+ http://people.zeelandnet.nl/pa3gcu/
+Linux AX.25 configuration by John Ackermann N8UR
+ http://www.febo.com/packet/linux-ax25/index.html
 
-If you have a previous version then I suggest you get this one and give 
-it a try.
+I plan to share my configuration when I take the time to write some better
+rc scripts.
 
-It is available from my web site at http://www.qsl.net/g4klx in the 
-Software section.
-
-Jonathan  HB9DRD/G4KLX
+Hope that helps.
+-ve1mct
