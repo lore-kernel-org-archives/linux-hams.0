@@ -1,30 +1,43 @@
-From: M Taylor <mctylr@privacy.nb.ca>
-Subject: Re: Just installed RedHat 9
-Date: Fri, 9 Jul 2004 22:23:50 +0100
+From: Wijaya <wijaya_mail@yahoo.com>
+Subject: Making a call
+Date: Fri, 9 Jul 2004 19:59:51 -0700 (PDT)
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <20040709222350.B25769@pull.privacy.nb.ca>
-References: <1223.192.168.1.117.1089178842.squirrel@gateway> <200407071710.47138.pa3gcu@zeelandnet.nl> <2498.192.168.1.117.1089215964.squirrel@gateway> <002801c4644c$0f62ecd0$6401a8c0@jeremiel>
+Message-ID: <20040710025951.9278.qmail@web41213.mail.yahoo.com>
 Mime-Version: 1.0
 Return-path: <linux-hams-owner@vger.kernel.org>
-Content-Disposition: inline
-In-Reply-To: <002801c4644c$0f62ecd0$6401a8c0@jeremiel>; from jemontanez@knology.net on Wed, Jul 07, 2004 at 12:58:47PM -0500
 List-Id: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
-To: John Montanez <jemontanez@knology.net>
-Cc: linux-hams@vger.kernel.org
+To: linux-hams@vger.kernel.org, linux-ham@trilug.org
 
-On Wed, Jul 07, 2004 at 12:58:47PM -0500, John Montanez wrote:
-> Hello,
-> 
-> I just installed RedHat 9, and am trying to recompile the kernel to include
-> support for amateur radio.  I get a message telling me that the kernel is to
-> big to be able to make a boot disk.  Can anyone tell me what sort of things
-> I can safely leave out when I configure the kernel to make it smaller.  It's
+Hi there,
+I've just trying to setting up hamradio with Kantronics KPC-9612+ (TNC) on
+Linux. But it seems not work correctly. 
+I was configure and load ax25/kiss driver kernel modules as required. 
+I was configure axport, ax25d.conf, ax25ipd.conf.
+TNC was configure on KISS mode.
+Before I setting up TNC to KISS mode, I was trying to connect each other
+use newuser/host mode from minicom. It working properly.
+What I don't understand is, each time I trying to make a call : 
 
-Anything you don't need. :-) Don't include drivers for hardware you don't
-have. But I suspect it may be hard to fit on a floppy.
+# call axip RE4SLO
 
-I suspect that you need to do 'make bzdisk', in case you are trying to
-use 'make zdisk'.
+Seems no one of TNC I've use to test no "Xmit /Rcv" and "Con / Sta" LED is
+lighting ON. Even, from the computer where I try to send it.
+It seems no call instruction send to TNC. So what should I do ?
+I was checking serial port many times if I've use wrong serial ports. But
+nothing wrong about serial ports. 
+Anyone here could give me an example from config to making a call to this
+TNC.
+Wishing any kind help from all of you.
+Regards,
 
+Wijaya
+
+
+
+		
+__________________________________
+Do you Yahoo!?
+Yahoo! Mail is new and improved - Check it out!
+http://promotions.yahoo.com/new_mail
