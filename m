@@ -1,36 +1,50 @@
-From: Bernard Pidoux <pidoux@ccr.jussieu.fr>
-Subject: BBS satellite documentation software
-Date: Mon, 20 Oct 2003 20:14:30 +0200
+From: matthew.cook@tekelek.com.au
+Subject: Usermode Soundmodem & TTY problems
+Date: Fri, 24 Oct 2003 11:37:30 +0930
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <3F942606.7070604@ccr.jussieu.fr>
+Message-ID: <OFFB707E04.BA8CFFFF-ONE9256DC9.00062E7D-E9256DC9.000BAC88@LocalDomain>
+References: <NCBBKBAJDJIPKFIAFBKLMEFKEJAC.whein3@earthlink.net>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
+In-Reply-To: <NCBBKBAJDJIPKFIAFBKLMEFKEJAC.whein3@earthlink.net>
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"; format="flowed"
-To: Liste LinuxFBB <xfbb@f6fbb.org>, linux-hams <linux-hams@vger.kernel.org>, FBB - User Forum <fbb@f6fbb.org>
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+To: linux-hams@vger.kernel.org
 
-Hello,
 
-DOS / Win32 version of SATDOC is available.
+Howdy,
 
-This is an utility program for packet radio BBS, taking care
-of individual satellite documentation file updates from AMSAT NEWS SERVICE
-bulletins.
+I'm wondering if anyone has experienced problems with the usermode
+soundmodem writing received packets in the first tty console after power on
+?   From testing it appears to write to the console that started the
+soundmodem program.   I have noticed this when remotely restarting
+soundmodem while ssh'd into the box from another machine.   I've played
+with the -s option but this is for logging errors not packets.   Does
+anyone know how to turn this off, is there a conditional define I can
+toggle ?
 
-No Sysops intervention is needed as soon as the program is setup.
+My current setup is;
 
-DOS / Win32 version w2.2e can be downloaded from
-the following URL :
+- VIA C3-800 with 82C686 onboard sound
+- Slackware 9.0 (no X11 installed)
+- Soundmodem-0.7.tar.gz
+- ax25-apps-0.0.6
+- ax25-tools-0.0.8
+- libax25-0.0.11
 
-ftp://nephtys.lip6.fr/jussieu/labos/physio/amsat-f/f6bvp/satdoc22e.zip
+Everything above is essentially working its just I cant use the first
+console without it being corrupted by the packets decoded by the usermode
+soundmodem.   It also makes remote management via ssh a bit of a pain if
+you have to restart the soundmodem, remote reboots being a bit scary at
+times.
 
-File satdoc22f.zip is in french.
-Zip archives include a complete doc for installation procedures.
+Any pointers would be greatly appreciated.
 
-Any comments and reports are welcome.
+Cheers
 
-73 de Bernard, F6BVP
-Past AMSAT-France President
+Matthew
+VK5ZMC
+
 
 
