@@ -1,84 +1,42 @@
-From: Erik Jakobsen <eja@urbakken.dk>
-Subject: fbb.
-Date: Tue, 14 Jan 2003 17:23:49 +0100
+From: Jonathan Naylor <jonathan.naylor@ggaweb.ch>
+Subject: Re: wxGTK-2.4.0
+Date: Tue, 14 Jan 2003 22:04:38 +0100
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <20030114172349.68ee4def.eja@urbakken.dk>
+Message-ID: <200301142203.56076.jonathan.naylor@ggaweb.ch>
+Reply-To: g4klx@qsl.net
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 Return-path: <linux-hams-owner@vger.kernel.org>
 List-Id: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
-To: linux-hams@vger.kernel.org
+To: Linux Hams <linux-hams@vger.kernel.org>
 
-Hi.
+Hi Wilbert
 
-On my SuSE 8.1 system, I try to install fbb7.04h, but there seems to be 
-something, that I have not seen before. I have an fbb7.04h install on an
-old SuSE 7.2 computer.
+I too am having the same fun !
 
-I got to the /src directory, and type make with a Makfile that has been
-modified according to the problems a year ago or so.
+My development is done with wxGTK-2.3.3 and it is perfectly happy with a 
+standard installation of GTK+ 1.2.10, but with the latest wxGTK you 
+need this pkg-config. So you can try downloading and building 
+pkg-config and seeing what happens, they claim that wxGTK-2.4.0 is 
+compatible with that version. Pkg-config is at 
+http://www.freedesktop.org/software/pkgconfig/ once I have installed 
+it, I found that it had identified my GTK+ 1.2.10 and had included it 
+in its list of packages.
 
-Here's what I get running make:
+I would not recommend trying LinWSJT (now at 0.4.2 BTW) with wxGTK 2.4.0 
+yet as there are some incompatibilities :-( Nothing too serious, just a 
+few hours of sorting some arguments out. I have gone the whole way and 
+installed GTK+ 2.2.0 and the rest of the libraries, something I 
+wouldn't recommend unless you have a few hours of free time. Try and 
+get hold of wxGTK 2.3.3 and use that to build LinWSJT. I will release a 
+wxGTK 2.4.0 compatible LinWSJT soon.
 
+I have to say that I am not too happy in the way that they have moved to 
+pkg-config, I though the existing framework of gtk-config was perfectly 
+adequate.
 
-eurit:/opt/fbbsrc.704h/src # make
-gcc -Wall -Wstrict-prototypes -O2 -g -funsigned-char  -D__LINUX__ -DPROTOTYPES -I../include -I/usr/include/netax25 -DUSE_NCURSES   -c -o arbre.o arbre.c
-In file included from ../include/serv.h:97,
-                 from arbre.c:32:
-../include/fbb_serv.h:41:24: linux/ax25.h: No such file or directory
-In file included from ../include/fbb_serv.h:42,
-                 from ../include/serv.h:97,
-                 from arbre.c:32:
-/usr/include/linux/netrom.h:24: parse error before "ax25_address"
-/usr/include/linux/netrom.h:28: parse error before "neighbour"
-/usr/include/linux/netrom.h:31: parse error before "digipeaters"
-/usr/include/linux/netrom.h:31: `AX25_MAX_DIGIS' undeclared here (not in a function)
-/usr/include/linux/netrom.h:32: parse error before '}' token
-In file included from ../include/fbb_serv.h:43,
-                 from ../include/serv.h:97,
-                 from arbre.c:32:
-/usr/include/linux/rose.h:49: parse error before "ax25_address"
-/usr/include/linux/rose.h:51: parse error before "srose_digi"
-/usr/include/linux/rose.h:57: parse error before "ax25_address"
-/usr/include/linux/rose.h:58: conflicting types for `srose_ndigis'
-/usr/include/linux/rose.h:50: previous declaration of `srose_ndigis'
-/usr/include/linux/rose.h:59: parse error before "srose_digis"
-/usr/include/linux/rose.h:60: parse error before '}' token
-/usr/include/linux/rose.h:65: parse error before "ax25_address"
-/usr/include/linux/rose.h:67: conflicting types for `ndigis'
-/usr/include/linux/netrom.h:30: previous declaration of `ndigis'
-/usr/include/linux/rose.h:68: parse error before "digipeaters"
-/usr/include/linux/rose.h:68: `AX25_MAX_DIGIS' undeclared here (not in a function)
-/usr/include/linux/rose.h:68: conflicting types for `digipeaters'
-/usr/include/linux/netrom.h:31: previous declaration of `digipeaters'
-/usr/include/linux/rose.h:69: parse error before '}' token
-/usr/include/linux/rose.h:78: parse error before "ax25_address"
-/usr/include/linux/rose.h:80: parse error before "source_digis"
-/usr/include/linux/rose.h:81: parse error before "dest_digis"
-/usr/include/linux/rose.h:84: parse error before "fail_call"
-In file included from ../include/fbb_serv.h:47,
-                 from ../include/serv.h:97,
-                 from arbre.c:32:
-/usr/include/netax25/axlib.h:28:26: netax25/ax25.h: No such file or directory
-/usr/include/netax25/axlib.h:29:26: netrose/rose.h: No such file or directory
-In file included from ../include/fbb_serv.h:47,
-                 from ../include/serv.h:97,
-                 from arbre.c:32:
-/usr/include/netax25/axlib.h:52: parse error before "null_ax25_address"
-/usr/include/netax25/axlib.h:91: parse error before '*' token
-/usr/include/netax25/axlib.h:104: parse error before '*' token
-In file included from ../include/fbb_serv.h:157,
-                 from ../include/serv.h:97,
-                 from arbre.c:32:
-/usr/include/stdlib.h:446: `rand' redeclared as different kind of symbol
-/usr/include/linux/rose.h:82: previous declaration of `rand'
-/usr/include/linux/rose.h:68: storage size of `digipeaters' isn't known
-make: *** [arbre.o] Error 1
+Such is life.
 
-
-What is the problem, and what can I do about it ?.
-
--- 
-<mvh Erik Jakobsen> vy 73 de OZ4KK.
+Jonathan  HB9DRD/G4KLX
 
