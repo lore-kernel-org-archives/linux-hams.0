@@ -1,87 +1,72 @@
-From: Ben Gelb <ben@gelbnet.com>
-Subject: Re: ax25d and STDIN
-Date: 28 Sep 2002 01:19:53 -0400
+From: "Michael Hart" <mhart@terrigal.net.au>
+Subject: Re: ax25
+Date: Sun, 29 Sep 2002 10:43:48 +1000
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <1033190393.2665.53.camel@ben>
-References: <Pine.LNX.4.44.0209280150590.31315-100000@oh2bns.ampr.org>
+Message-ID: <00b601c26751$4e9e3c00$0500a8c0@terrigal.net.au>
+References: <001301c26241$cbb617e0$0500a8c0@terrigal.net.au> <Pine.LNX.4.44.0209221831220.17022-100000@oh2bns.ampr.org> <20020922185417.B25813@pull.privacy.nb.ca>
 Mime-Version: 1.0
 Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <Pine.LNX.4.44.0209280150590.31315-100000@oh2bns.ampr.org>
 List-Id: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
-To: tpm@prkele.tky.hut.fi
-Cc: linux-hams@vger.kernel.org
+To: linux-hams@vger.kernel.org
 
-Thanks for helping me with this.
+Thanks to everyone for helping me get the AX25 network interface up and
+running.
 
-I have made some progress.
+ifconfig now shows an inerface labelled bcsf0 with an IP of 44.138.16.46
+(whcih is the packet radio ip address I was told to use by our packet ip
+co-ordinator).
 
-I have replaced the line where I originally tried to use fgets, with
-this wierd hacky solution:
+now all I have to do is configure a program to use it.
 
-while(1) {
-		$c = fread($in, 1);
-		if($c == $RETURN_CHAR) break;
-		$in_string.= $c;
-}
+The rest of our radio club is using JNOS which has built in pop mail etc.
+Apparently we have a pop server station somewhere where our packet mail is
+stored and also supports news groups like the internet.
 
-The program works as intended now.
+I have been trying to set up this program (and also have has a play with its
+big brother TNOS) but can't seem to get the configuration right.  I don't
+know what a lot of the packet terms are and how it comes together with the
+linux system - what the difference is between the packet ip and the host ip
+(for example) in the configuration file.
 
-Using fread with a large length doesn't work, because EOF is never found
-in stdin. So it just keeps waiting for the number of bytes specified.
+All of the local club users are using DOS (only the sysadmin[s] are using
+linux and they don't like redhat - they are using debian - so don't want to
+touch my machine) so the distributed autoexec.nos file is set up for control
+of the hardware.
 
-I don't really understand why this works with the SEQPACKET
-consideration. I am definitely not getting the whole packet at once,
-yet, as I said, it does work.
+I do not know how to set up the autoexec.nos file to input/output to the
+bcsf0 interface rather than trying to grab the hardware itself
 
-Does this make any sense to you?
+(I also do not know a lot of the other things in the autoexec.nos file)
 
-Thanks for you help!
-
-73 Ben
+Michael Hart
+VK2JXI
 
 
+----- Original Message -----
+From: M Taylor <mctylr@privacy.nb.ca>
+To: <linux-hams@vger.kernel.org>
+Cc: Michael Hart <mhart@terrigal.net.au>
+Sent: Monday, September 23, 2002 3:54 AM
+Subject: Re: ax25
 
-On Fri, 2002-09-27 at 19:09, Tomi Manninen wrote:
-> Hi again Ben,
-> 
-> > When I say 'hangs up' I mean that the user is disconnected from the ax25
-> > link. I should have been more specific. For some reason, the link dies.
-> > I was using fgets to read data. I tried using fread with length of 1024,
-> > 2048, and 10000. It was no different.
-> 
-> Ok, so it is probably not the SEQPACKET problem either. However I really 
-> can't think of any other explanation than a problem with your program.
-> 
-> As I said when someone connects to your system, ax25d accept()s the
-> connection, then fork()s. The parent process (ax25d) closes the socket
-> belonging to the incoming connection thereby completely detaching itself
-> from it. Ax25d then continues as if it never knew about that connection.
-> 
-> The child process copies the incoming connecting socket to it's 
-> stdin/out/err and then exec()s your program. After that your program has 
-> full control over the connection. Only your program can close the 
-> connection.
-> 
-> Well, there is another possibility and that is that the kernel closes the
-> connection for some reason. I think some misconfiguration of the kernel
-> ax25 support could cause that to happen.
-> 
-> Anyway my first guess still is that there is something wrong with your
-> program. Are you absolutely 100% sure that ax25d manages to start it?  
-> Could the read fail for some other reason? Have you tried logging exactly
-> what fails? I recommend making your program log each and every possible
-> error situation somewhere, maybe the system log.
-> 
-> -- 
-> Tomi Manninen           Internet:  oh2bns@sral.fi
-> OH2BNS                  AX.25:     oh2bns@oh2rbi.fin.eu
-> KP20ME04                Amprnet:   oh2bns@oh2rbi.ampr.org
-> 
-> -
-> To unsubscribe from this list: send the line "unsubscribe linux-hams" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at  http://vger.kernel.org/majordomo-info.html
+
+> On Sun, Sep 22, 2002 at 06:37:07PM +0300, Tomi Manninen wrote:
+> > On Mon, 23 Sep 2002, Michael Hart wrote:
+> >
+> The latest copy is from Sept 2001, and is located at
+>  http://www.tldp.org/HOWTO/AX25-HOWTO/
+>
+> One point that was not clear to me, was whether Michael Hart was trying
+> to use a RedHat distribution kernel (e.g. uname -r returns 2.4.18-5) or a
+> custom kernel (recommend getting 2.4.19 from www.au.kernel.org) built
+> with AX.25 and Baycom modules enabled.
+>
+> Trying to use the RedHat kernel will not work. AFAIK the RedHat kernel has
+> no amateur radio device drivers just the ax.25 net/rom and rose protocol
+> support.
+>
+>
 
 
