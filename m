@@ -1,46 +1,47 @@
-From: "Curt, WE7U" <archer@eskimo.com>
-Subject: Re: minicom to kpc-9612
-Date: Tue, 21 Dec 2004 12:50:44 -0800 (PST)
-Message-ID: <Pine.SUN.4.58.0412211235460.380@eskimo.com>
-References: <LFENLEGCDLCOKEJAECGNEELICDAA.rkrasko1@nycap.rr.com>
-Reply-To: "Curt Mills, WE7U" <archer@eskimo.com>
+From: Bob Nielsen <nielsen@oz.net>
+Subject: Re: Linux AX25 Digipeating Software
+Date: Tue, 21 Dec 2004 18:57:54 -0800
+Message-ID: <20041222025754.GB23082@office.n7xy.net>
+References: <200412211744.48000.sdaniels@airnet.com.au> <42630.192.168.1.15.1103624271.squirrel@192.168.1.15> <41C852B1.3020005@utoronto.ca>
 Mime-Version: 1.0
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <LFENLEGCDLCOKEJAECGNEELICDAA.rkrasko1@nycap.rr.com>
+Content-Disposition: inline
+In-Reply-To: <41C852B1.3020005@utoronto.ca>
 Sender: linux-hams-owner@vger.kernel.org
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: TEXT/PLAIN; charset="us-ascii"
+Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
-To: bob krasko <rkrasko1@nycap.rr.com>
-Cc: linux-hams@vger.kernel.org
+To: linux-hams List <linux-hams@vger.kernel.org>
 
-On Tue, 21 Dec 2004, bob krasko wrote:
+On Tue, Dec 21, 2004 at 11:43:29AM -0500, Dave Stubbs wrote:
+> Hello all,
+> 
+> Is there any good, reasonably modern Linux Digipeater software out 
+> there?  I've noticed that axdigi is still dated 1997 and won't compile 
+> on any reasonably modern system, and the old binary from 1997 won't run 
+> with any reasonably modern kernel.
+> 
+> Someone suggested that I try ax25digi, but ax25digi is not on the 
+> linux-hams site, and even google only brings up 6 websites that mention 
+> it - and even then only complaints about it - nothing about where to get it.
+> 
+> I found a couple forums where someone else was asking, very clearly, if 
+> there was an AX.25-level digipeater program out there, and all the 
+> replies were about APRS digipeating, not what the original poster really 
+> asked about.  (APRS forwarding really isn't digipeating anyway - more 
+> like bridging or routing - different OSI layer).
+> 
+> So, after all that - is there a good program out there that does simple, 
+> single-port, layer 2, AX.25 digipeating and works with kernel 2.6? 
+> 
 
-> after 10 years, i finally got debian running.
-> i am just configuring 2.4.18 for use with packet.
-> i have a  kantronics kpc-9612 and evidentally need to get it in kiss mode.
-> i remember running minicom a long time ago, and thought i would be able to
-> get the 9612 into kiss with that program.
-> minicom is up and running but not especially configured correctly.
-> my guess is that i need to get linux talking thru the comport to see the
-> tnc.
-> so my question is either:  how do i configure a comport in linux, or how do
-> i get to see my tnc thru minicom?
+I'm not aware of any other non-APRS digi software, but you can get 
+ax25digi at:
 
-Try running it as root, then setting up a configuration for the comm
-port of interest.  Usual names are /dev/ttyS0, /dev/ttyS1, etc.
+ftp://ftp.tapr.org/software_lib/Linux/ax25/ax25digi.tgz
 
-If you'll always be using the same comm port with Minicom, just save
-it as the default config instead.
 
-I usually save a config as name "ttyS0", then I set up
-/etc/minicom.users so that other users can use minicom.  Depending
-on the Linux distribution you're running, you may have to add the
-user to the appropriate group and/or change permissions on your
-/dev/ttyS? devices.
-
---
-Curt, WE7U.   APRS Client Comparisons: http://www.eskimo.com/~archer
-"Lotto:    A tax on people who are bad at math." -- unknown
-"Windows:  Microsoft's tax on computer illiterates." -- WE7U
-"The world DOES revolve around me:  I picked the coordinate system!"
+-- 
+Bob Nielsen, N7XY                          n7xy (at) n7xy.net
+Bainbridge Island, WA                      http://www.n7xy.net
+ 
