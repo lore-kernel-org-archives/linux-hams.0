@@ -1,45 +1,58 @@
-From: Jeroen Vreeken <pe1rxq@amsat.org>
-Subject: Re: sound card modem on a laptop?
-Date: Mon, 19 Jan 2004 01:14:00 +0100
+From: "Jim - KC4HW" <jim@kc4hw.net>
+Subject: Re: Remote Receiver
+Date: Sun, 18 Jan 2004 21:07:30 -0500
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <20040119011400.A7032@jeroen.pe1rxq.ampr.org>
-References: <20040117124207.3584bc09.washer@trlp.com> <1074441674.1290.22.camel@oh2bns.ampr.org> <400B2A0E.8030208@ccr.jussieu.fr>
+Message-ID: <400AF592.8794.D887281@localhost>
+References: <400A8D01.18370.BEFEDEA@localhost>
+Reply-To: jim@kc4hw.net
 Mime-Version: 1.0
 Content-Transfer-Encoding: 7BIT
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <400B2A0E.8030208@ccr.jussieu.fr>; from pidoux@ccr.jussieu.fr on Mon, Jan 19, 2004 at 01:51:26 +0100
+In-reply-to: <20040118214157.GZ1054@charybde.local>
+Content-description: Mail message body
 List-Id: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
-To: Bernard Pidoux <pidoux@ccr.jussieu.fr>
-Cc: Tomi Manninen <oh2bns@sral.fi>, James Washer <washer@trlp.com>, linux-hams@vger.kernel.org
+To: Stephane Fillod <f8cfe@free.fr>
+Cc: linux-hams@vger.kernel.org
 
-On 2004.01.19 01:51:26 +0100 Bernard Pidoux wrote:
-> Tomi Manninen wrote:
-> > 
-> > A comment about 2.6 kernels. Even though I haven't had a chance to try
-> > it myself yet (lazy me), I have been told that the MKISS driver in the
-> > 2.6 kernel doesn't compile.
-> > 
-> > The kernel mode soundmodem has been removed in 2.6 so you have
-> > to use the user mode soundmodem [1], and it's better anyway. However, 
-> > the user mode soundmodem needs the MKISS driver to talk to the kernel.
-> > So if the driver really does not compile, you can't use 2.6...
-> > 
-> > /Tomi
+Thanks for the information.  I will check this out.  
+
+73
+
+
+
+On 18 Jan 2004 at 22:41, Stephane Fillod wrote:
+
+> Hi Jim,
 > 
-> I have been experimenting Mandrake Linux 10.0 rc with kernel 2.6.0 and 
-> the last AX25 patches
-> included into 2.6.1 kernel.
+> On Sun, Jan 18, 2004, Jim - KC4HW wrote:
+> > Anybody been working on an interface for a TenTec RX-320D.  
+> > 
+> > I would like to be able to interface it with my Linux Red Hat 7.1, kernel
+> > 2.4.18 and have remote access when I travel away from my home station.  
 > 
-> Mkiss driver is running well and there was no compilation problem here.
+> Hamlib has support for the RX-320. The tentec backend is still in beta
+> stage, but the code is LGPL'd and support is good. Hamlib is a library, but
+> has CLI and perl/tcl/python bindings.
+> 
+> Note: Hamlib provides remote control, but no audio streaming. Some idea can
+> be taken from the IRLP project, gnomemeeting, RealAudio and such.
+> 
+> Please have a look at http://hamlib.org, and send question/reports to
+> hamlib-developer@lists.sourceforge.net mailing list.
+> 
+> Thanks,
+> Stephane - F8CFE
+> -
+> To unsubscribe from this list: send the line "unsubscribe linux-hams" in
+> the body of a message to majordomo@vger.kernel.org More majordomo info at 
+> http://vger.kernel.org/majordomo-info.html
+> 
 
-It depends on how many warnings and debugging you have turned on, although
-it compiles fine there is a warning about cli() being used. It is buggy
-with that respect although very hard to trigger in normal use.
-What can be triggered easily is another bug in the reuse of the netdevice
-structure that happens when kissattach is killed and a new kissattach
-process is started...
-I have fixes for both that are now being tested and it looks good sofar.
 
-Jeroen
+Jim Johnson, KC4HW
+Melbourne, Florida
+http://www.kc4hw.net
+DXCluster RF Connection: 144.95
+Telnet://kc4hw.homelinux.net:8000
 
