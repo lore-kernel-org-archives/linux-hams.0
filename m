@@ -1,78 +1,77 @@
-From: "Rodolfo Brasnarof" <rodob@ciudad.com.ar>
-Subject: Re:  f6fbb via telnet port, f6fbb mailing list?
-Date: Fri, 07 May 2004 17:35:48 -0300
+From: Adrian Bunk <bunk@fs.tum.de>
+Subject: [2.6 patch] remove kernel 2.2 code from drivers/net/hamradio/dmascc.c (fwd)
+Date: Sat, 8 May 2004 14:54:16 +0200
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <409BC8F4.3071.251CF@localhost>
-References: <200405031358.08880.dl4mge@darc.de>
+Message-ID: <20040508125415.GA6704@fs.tum.de>
 Mime-Version: 1.0
-Content-Transfer-Encoding: QUOTED-PRINTABLE
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-reply-to: <40999143.22988.14D94@localhost>
-Content-description: Mail message body
+Content-Disposition: inline
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="iso-8859-1"
-To: linux-hams@vger.kernel.org
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+To: Andrew Morton <akpm@osdl.org>, klaus.kudielka@ieee.org
+Cc: linux-hams@vger.kernel.org, linux-kernel@vger.kernel.org
+
+The trivial patch forwarded below still applies and compiles against 
+2.6.6-rc3-mm2.
+
+Please apply
+Adrian
 
 
-Sorry, my last message has too many typos and is not clear,=20
-even for me. (Correction included this time).
+----- Forwarded message from Adrian Bunk <bunk@fs.tum.de> -----
 
----
-On 6 May 2004 at 1:13, Rodolfo Brasnarof wrote:
+Date:	Sat, 7 Feb 2004 21:45:38 +0100
+From: Adrian Bunk <bunk@fs.tum.de>
+To: klaus.kudielka@ieee.org
+Cc: linux-hams@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: [2.6 patch] remove kernel 2.2 code from drivers/net/hamradio/dmascc.c
 
->=20
->=20
-> ---
-> On 3 May 2004 at 13:58, G=FCnther Montag wrote:
->=20
-> > Am Freitag 30 April 2004 07:12 schrieben Sie:
-> > > ---
-> > >
-> > > I don't understand very well, but you can default
-> > > modem/telnet access enabled to new users by adding it's
-> > > corresponding value in the mask in fbb.conf file as follows:
-> > >
-> > > # First connection mask :
-> > > # 0  : Disable
-> > > # 1  : Excluded
-> > > # 2  : Local
-> > > # 4  : Expert
-> > > # 8  : Sysop
-> > > # 16 : BBS
-> > > # 32 : Pagination
-> > > # 64 : Guest
-> > > # 128: Modem
-> > > # 256: See-all-messages
-> > > # 1024: Liste des messages nouveaux.
-> > > #mask =3D 3616
-> > > mask =3D 3744
-> > >
-> > > So add 128 to your existing mask, and all new users will have
-> > > modem access enabled. You still will have to edit old users I
-> > > think.
-> >=20
-> > Hallo  Rodolfo & friends
-> > I tried this, sorry, no change! Still the message "Read only
-> > access... you can only send a mail to the sysop".
->=20
-> The mask set de default values for NEW user as the register.
-> You'll have to edit old (already registered) users' configuration
-> with EU command, and add the M to them, I think one by one. Or
-> perhaps just erase all the users.
+The patch below removes some #ifdef'd kernel 2.2 code from 
+drivers/net/hamradio/dmascc.c .
 
-(should be)
+cu
+Adrian
 
-The mask sets de default values for NEW users as they=20
-register. You'll have to edit old (already registered)=20
-users' configuration with EU command, and add the M to them,=20
-I think one by one. Or perhaps just erase all the users.
-
-
-> If you only want to give access to some users, Add the M to them,
-> and you don't need the mask in this case.
-
+--- linux-2.6.2-mm1/drivers/net/hamradio/dmascc.c.old	2004-02-07 21:39:39.000000000 +0100
++++ linux-2.6.2-mm1/drivers/net/hamradio/dmascc.c	2004-02-07 21:39:58.000000000 +0100
+@@ -48,21 +48,6 @@
+ #include "z8530.h"
+ 
+ 
+-/* Linux 2.2 and 2.3 compatibility */
 -
-To unsubscribe from this list: send the line "unsubscribe linux-hams" i=
-n
+-#if LINUX_VERSION_CODE < KERNEL_VERSION(2,3,14)
+-#define net_device device
+-#endif
+-#if LINUX_VERSION_CODE < KERNEL_VERSION(2,3,43)
+-#define netif_start_queue(dev) { dev->tbusy = 0; }
+-#define netif_stop_queue(dev) { dev->tbusy = 1; }
+-#define netif_wake_queue(dev) { dev->tbusy = 0; mark_bh(NET_BH); }
+-#endif
+-#if LINUX_VERSION_CODE < KERNEL_VERSION(2,3,47)
+-#define netif_running(dev) (dev->flags & IFF_UP)
+-#endif
+-
+-
+ /* Number of buffers per channel */
+ 
+ #define NUM_TX_BUF      2          /* NUM_TX_BUF >= 1 (min. 2 recommended) */
+@@ -210,9 +195,6 @@
+ };
+ 
+ struct scc_priv {
+-#if LINUX_VERSION_CODE < KERNEL_VERSION(2,4,0)
+-  char name[IFNAMSIZ];
+-#endif
+   int type;
+   int chip;
+   struct net_device *dev;
+-
+To unsubscribe from this list: send the line "unsubscribe linux-kernel" in
 the body of a message to majordomo@vger.kernel.org
 More majordomo info at  http://vger.kernel.org/majordomo-info.html
+Please read the FAQ at  http://www.tux.org/lkml/
+
+----- End forwarded message -----
+
