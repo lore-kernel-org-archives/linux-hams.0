@@ -1,29 +1,29 @@
 From: "Pontus Falk" <pfalk@ax25.org>
-Subject: Re: Linux Newbie with Compiling Problems...
-Date: Mon, 24 Feb 2003 00:36:08 +0100 (CET)
+Subject: RE: Linux Newbie with Compiling Problems...
+Date: Mon, 24 Feb 2003 07:00:20 +0100 (CET)
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <3946.213.66.253.108.1046043368.squirrel@www.ax25.org>
+Message-ID: <4167.213.66.253.108.1046066420.squirrel@www.ax25.org>
+References: <01C2DB6A.A5024180.wb9mjn@wb9mjn-11.ampr.org>
 Mime-Version: 1.0
 Content-Transfer-Encoding: QUOTED-PRINTABLE
 Return-path: <linux-hams-owner@vger.kernel.org>
+In-Reply-To: <01C2DB6A.A5024180.wb9mjn@wb9mjn-11.ampr.org>
 List-Id: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="iso-8859-1"
-To: linux-hams@vger.kernel.org
+To: wb9mjn@wb9mjn-11.ampr.org
+Cc: linux-hams@vger.kernel.org
 
-Hi Don,
+Hi,
 
-> I am new to linux, and am having dificulty compiling AX.25 support
-> into the kernel.
+> Yes, during 'make bzImage'.
 
-Please let us know more...
-
-Is it during the 'make bzImage' command you get an error message? What
-does the message say?
+Ok, what abt the .config file - have you tried to search it for 'ide' o=
+r
+'lock'?
 
 Regards,
 
 Pontus/SM=D8RUX
-
 
 
 -
