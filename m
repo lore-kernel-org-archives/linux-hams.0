@@ -1,24 +1,62 @@
-From: Andrew Bates <abates@omeganetserv.com>
-Subject: Re: z8530 SCC chips.
-Date: Wed, 27 Oct 2004 09:19:56 -0600
-Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <1098890396.14828.5.camel@6-allhosts>
-References: <200410280024.35458.sdaniels@airnet.com.au>
+From: Adrian Bunk <bunk@stusta.de>
+Subject: [2.6 patch] : remove an unused function
+Date: Fri, 29 Oct 2004 01:00:32 +0200
+Sender: netdev-bounce@oss.sgi.com
+Message-ID: <20041028230032.GU3207@stusta.de>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
-Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <200410280024.35458.sdaniels@airnet.com.au>
+Return-path: <netdev-bounce@oss.sgi.com>
+Content-Disposition: inline
+Errors-to: netdev-bounce@oss.sgi.com
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"
-To: vk5hsx@wia.org.au
-Cc: linux-hams@vger.kernel.org
+Content-Type: text/plain; charset="us-ascii"; x-action="pgp-signed"
+Content-Transfer-Encoding: 7bit
+To: ralf@linux-mips.org
+Cc: linux-hams@vger.kernel.org, davem@davemloft.net, netdev@oss.sgi.com, linux-kernel@vger.kernel.org
 
-Jameco seems to carry them:
-http://www.jameco.com/webapp/wcs/stores/servlet/CategoryDisplay?storeId=10001&catalogId=10001&langId=-1&categoryId=11257
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-On Wed, 2004-10-27 at 08:54, Stef VK5HSX wrote:
-> I am wondering where I can get replacement Z8530 ZILOG chips for DRSI cards.
-> Somewhere online would be great, otherwise, a business or dealer..
-> 
-> Many thanks..
+The patch below removes an unused function from net/ax25/ax25_route.c
+
+
+diffstat output:
+ net/ax25/ax25_route.c |   16 ----------------
+ 1 files changed, 16 deletions(-)
+
+
+Signed-off-by: Adrian Bunk <bunk@stusta.de>
+
+- --- linux-2.6.10-rc1-mm1-full/net/ax25/ax25_route.c.old	2004-10-28 23:50:25.000000000 +0200
++++ linux-2.6.10-rc1-mm1-full/net/ax25/ax25_route.c	2004-10-28 23:50:41.000000000 +0200
+@@ -41,22 +41,6 @@
+ 
+ static ax25_route *ax25_get_route(ax25_address *, struct net_device *);
+ 
+- -/*
+- - * small macro to drop non-digipeated digipeaters and reverse path
+- - */
+- -static inline void ax25_route_invert(ax25_digi *in, ax25_digi *out)
+- -{
+- -	int k;
+- -
+- -	for (k = 0; k < in->ndigi; k++)
+- -		if (!in->repeated[k])
+- -			break;
+- -
+- -	in->ndigi = k;
+- -
+- -	ax25_digi_invert(in, out);
+- -}
+- -
+ void ax25_rt_device_down(struct net_device *dev)
+ {
+ 	ax25_route *s, *t, *ax25_rt;
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.2.6 (GNU/Linux)
+
+iD8DBQFBgXoQmfzqmE8StAARAqLLAKCZRsBxw7oCIFnvPVFFZ6ss4QRuOgCfcu4e
+++CuY/BJjph1Fr/xntu1j/o=
+=5M44
+-----END PGP SIGNATURE-----
 
