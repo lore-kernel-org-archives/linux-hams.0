@@ -1,8 +1,8 @@
-From: Nate Bargmann <n0nb@networksplus.net>
+From: Bob Nielsen <nielsen@oz.net>
 Subject: Re: Tracking down a Linux crash
-Date: Wed, 16 Oct 2002 16:52:42 -0500
+Date: Wed, 16 Oct 2002 19:33:12 -0700
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <20021016215242.GM7316@localhost>
+Message-ID: <20021017023312.GA3499@bob.n7xy.net>
 References: <3031448.1034759336@WUSJA129861-8HP> <Pine.LNX.4.44.0210160710180.1192-100000@yossarian.aniota.net>
 Mime-Version: 1.0
 Return-path: <linux-hams-owner@vger.kernel.org>
@@ -13,7 +13,7 @@ Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
 To: linux-hams <linux-hams@vger.kernel.org>
 
-* terry <wd0fpc@aniota.com> [2002 Oct 16 16:37 -0500]:
+On Wed, Oct 16, 2002 at 07:18:05AM -0700, terry wrote:
 > On Wed, 16 Oct 2002, John Ackermann N8UR wrote:
 > 
 > ... ciao:
@@ -24,21 +24,22 @@ To: linux-hams <linux-hams@vger.kernel.org>
 > declined to upgrade to the 2.4 series kernel, so can not speak to its
 > accommodation to them.
 
-I'm not running AX25 on this box, but I do have a Soyo KTV7A with a VIA
-chipset here and an Athlon 1300.  Video card is an Abit board with the
-GeForce 2 chipset.  Solid as a rock running Debian Testing and a custom
-2.4.18 kernel.  I did some homework and found rave reviews on the Soyo
-board and my experience has vindicated the the reviews,  Some other
-boards I read about were not so stable.
+There are a number of VIA chipsets.  I had an older one with a K6/2-350
+and it worked pretty well, except for some problems with DMA and an IDE
+(non-UDMA) drive (it worked fine with DMA disabled).
 
-John, have you tried dropping back to a simple window manager like
-IceWm?  I use IceWm here, so I can't comment on KDE.
+Currently I am running the same drive (without problems) in my shack
+computer which has a MSI motherboard with a 1.0 GHz Celeron and the VIA
+686 chipset running 2.4.19.  I haven't tried the onboard audio yet, but
+it seems pretty solid otherwise.  I don't know offhand if the onboard
+video is part of the VIA chipset or separate--it is reported as a
+Trident CyberBlade/i1 and seems pretty crummy running X.  I'm about to
+try an old S3 PCI video card to see if that helps, since I plan to use
+this machine for PSK31.
 
-73, de Nate >>
+Bob, N7XY
 
 -- 
- Wireless | Amateur Radio Station N0NB          | "We have awakened a
- Internet | n0nb@networksplus.net               | sleeping giant and
- Location | Bremen, Kansas USA EM19ov           | have instilled in him
-  Amateur radio exams; ham radio; Linux info @  | a terrible resolve".
-             http://www.qsl.net/n0nb/           | - Admiral Yamomoto
+Bob Nielsen, N7XY                          n7xy@n7xy.net
+Bainbridge Island, WA  
+IOTA NA-065, USI WA-028S 
