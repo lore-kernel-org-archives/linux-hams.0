@@ -1,32 +1,23 @@
-From: Erik Jakobsen <eja@urbakken.dk>
-Subject: PSK
-Date: Fri, 02 Jan 2004 20:37:53 +0100
+From: Tomi Manninen <oh2bns@sral.fi>
+Subject: Re: PSK
+Date: Fri, 02 Jan 2004 21:51:37 +0200
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <3FF5C891.8000805@urbakken.dk>
+Message-ID: <1073073097.1294.16.camel@oh2bns.ampr.org>
+References: <3FF5C891.8000805@urbakken.dk>
 Mime-Version: 1.0
 Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
+In-Reply-To: <3FF5C891.8000805@urbakken.dk>
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"; format="flowed"
+Content-Type: text/plain; charset="us-ascii"
 To: linux-hams@vger.kernel.org
 
-Hi.
+On Fri, 2004-01-02 at 21:37, Erik Jakobsen wrote:
 
-I have stopped the work with BBS'ing, and now I want to enjoy the 
-digital mode for myself.
+> What can I find to use for my digital modes ?.
 
-What can I find to use for my digital modes ?.
+http://gmfsk.connect.fi/
 
-I have a PTC-II from SCS in Germany, but maybe its better using a 
-soundcard ?.
-
-All aht you can tell me are most wellcome here.
-
-TIA.
 -- 
-Med venlig hilsen - Best regards.
-Erik Jakobsen - eja@urbakken.dk.
-Licensed radioamateur with the callsign OZ4KK.
-SuSE Linux 8.2 Proff.
-Registered as user #319488 with the Linux Counter, http://counter.li.org.
+Tomi Manninen / OH2BNS / KP20ME04
 
