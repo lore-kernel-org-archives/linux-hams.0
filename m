@@ -1,59 +1,45 @@
-From: Ron <ve1aic@yahoo.com>
+From: Chuck Hast <wchast@gmail.com>
 Subject: Re: Trying to get Ax25 running.
-Date: Tue, 12 Oct 2004 19:40:40 -0700 (PDT)
+Date: Wed, 13 Oct 2004 18:55:44 -0700
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <20041013024040.43747.qmail@web40829.mail.yahoo.com>
-Reply-To: ve1aic@yahoo.com
+Message-ID: <620c90570410131855154bae53@mail.gmail.com>
+References: <20041013024040.43747.qmail@web40829.mail.yahoo.com>
+Reply-To: Chuck Hast <wchast@gmail.com>
 Mime-Version: 1.0
+Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
+In-Reply-To: <20041013024040.43747.qmail@web40829.mail.yahoo.com>
 List-Id: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-To: Linux-Hams@vger.kernel.org
+To: linux-hams@vger.kernel.org
 
-Chuck we need some basic background info about your
-setup first.
-1. What ax25 rpms have you installed?
-2. What are your attach commands?
-3. What are you trying to accomplish?..setup for
-LinFBB?
+Folks,
+I updated my Linux install to 2.6.5.7-108default, and only got one lockup
+and that was under X. At first I thought it may have been due to the fact
+that all the ax25 stuff is under root, not sure if that is where it is supposed
+to be. If I run  call from a consol screen under both root and my login, it
+appears to be working now to the point where I can do ax25 calls. Next
+step will be to start putting in the network stuff.
 
-FYI here is the first part of my startup script for
-ax25 call fbb_start in /etc/ax25 along with other ax25
-files:
+Once I get it all running then I will need to see how to build something
+that I can stick on a CD in order to distribute to the other switch ops who
+want to move to Linux. 
 
-/usr/sbin/kissattach /dev/ttyS0 vhf xxx.xxx.xxx.xxx
+I assume that Call will not run in a X console. That appears to be where
+things go off into the weeds, by way last time I locked it up I tried to
+ssh in from another machine on my network, no joy. I could not even ping
+the machine, so it appears that it was locking up solid. 
 
-Where xxx=my ip address, with MFJ tnc in kiss mode on
-com1. See also com port speed in axports.
-
- Check your ax25 device with 'ifconfig' and you should
-see ax0.
-
-Be sure to read ax25-how-to at:
-
-http://www.tldp.org/HOWTO/AX25-HOWTO/
+Now to start adding the ROSE and Node stuff to it so that we can start
+testing the piece that we need for our network here, and also will be
+adding the other network stuff so people can play with the whole nine
+yards.
 
 
-73, Ron
 
-Chuck Hast wrote:
-> Folks,
-> I am a bit new to this. I am running SuSE 9.1 I have
-installed the AX25
-> stuff, and when I set up the port I have a KISS TNC
-on I see the commands
-> being sent to it.
-> When I run call, and it appears that the connection
-is established the whole
-> thing locks up. Not just that screen, but X,
-Keyboard and all. At that point
-> I end up hitting the power button in order to get
-out of it. 
-
-
-		
-__________________________________
-Do you Yahoo!?
-Read only the mail you want - Yahoo! Mail SpamGuard.
-http://promotions.yahoo.com/new_mail 
+-- 
+Chuck Hast 
+To paraphrase my flight instructor;
+"the only dumb question is the one you DID NOT ask resulting in my going
+out and having to identify your bits and pieces in the midst of torn
+and twisted metal."
