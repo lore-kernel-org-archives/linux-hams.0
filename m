@@ -1,37 +1,29 @@
-From: Stewart Wilkinson <g0lgs@gb7lgs.co.uk>
-Subject: Strange AXIP / AX25 Frames
-Date: Mon, 6 Jan 2003 22:45:11 +0000 (GMT)
+From: Wilbert Knol <zl2bsj@zl2tze.ath.cx>
+Subject: Re: Strange AXIP / AX25 Frames
+Date: Tue, 7 Jan 2003 22:12:27 +1300 (NZDT)
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <Pine.LNX.4.44.0301062235020.14800-100000@gb7lgs.co.uk>
+Message-ID: <Pine.LNX.4.44.0301072207280.12010-100000@zl2bsj.ampr.org>
+References: <Pine.LNX.4.44.0301062235020.14800-100000@gb7lgs.co.uk>
 Mime-Version: 1.0
 Return-path: <linux-hams-owner@vger.kernel.org>
+In-Reply-To: <Pine.LNX.4.44.0301062235020.14800-100000@gb7lgs.co.uk>
 List-Id: <linux-hams.vger.kernel.org>
 Content-Type: TEXT/PLAIN; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
-To: linux-hams@vger.kernel.org
+To: Stewart Wilkinson <g0lgs@gb7lgs.co.uk>
+Cc: linux-hams@vger.kernel.org
 
-Hi,
 
-I have been looking into a problem on a remote (from me) Linux system
-which is running a couple of AXIP links (configured as port '9'). 
 
-The system is running Kernel 2.4.19 with libax25-0.0.10, ax25-apps-0.0.6,
-and ax25-tools-0.0.8 .
+> 9: fm [invalid] to [invalid] via 90gGB7-2* M0GB7-3* [invalid] [invalid]* 
+> [invalid] gGB7BM 0GB7CR [invalid] ctl [invalid]0^ [DAMA]
 
-'listen -ap 9' shows quite a number of corrupted frames, such as:
+I had the same thing happen here, a couple of nights ago.
+A re-boot fixed it.
 
-9: fm [invalid] to [invalid] via 90gGB7-2* M0GB7-3* [invalid] [invalid]* 
-[invalid] gGB7BM 0GB7CR [invalid] ctl [invalid]0^ [DAMA]
+Kernel 2.4.20 & latest AX25 apps, lib, tools. TNC-2 in KISS-mode.
 
-which are repeated quite often.
+Wilbert.
 
-as well as some like:
 
-9: code 14 arg 132
-
-Anyone got any idea what is going on here, or what might cause this ?
-
--- 
-Stewart (G0LGS)
-g0lgs@gb7lgs.co.uk
 
