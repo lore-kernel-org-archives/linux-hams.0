@@ -1,47 +1,48 @@
-From: Tomi Manninen <tpm@prkele.tky.hut.fi>
-Subject: Re: Netrom Changes in G8PZT's Xrouter Software.
-Date: Thu, 29 Aug 2002 13:14:28 +0300 (EEST)
+From: csmall@eye-net.com.au (Craig Small)
+Subject: Re: ax25ipd
+Date: Thu, 29 Aug 2002 21:19:09 +1000
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <Pine.LNX.4.44.0208291306580.29121-100000@oh2bns.ampr.org>
-References: <Pine.LNX.4.33.0208282345050.25137-100000@gb7lgs.ampr.org>
-Reply-To: tpm@prkele.tky.hut.fi
+Message-ID: <20020829111909.GG13358@eye-net.com.au>
+References: <Pine.LNX.4.33.0208252223370.730-100000@n1uan.ampr.org> <20020827223629.GC10758@silly.cloud.net.au> <200208271822.51734.w9ya@amsat.org> <0208280548330G.02211@unix.pa3gcu>
 Mime-Version: 1.0
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <Pine.LNX.4.33.0208282345050.25137-100000@gb7lgs.ampr.org>
+Content-Disposition: inline
+In-Reply-To: <0208280548330G.02211@unix.pa3gcu>
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: TEXT/PLAIN; charset="us-ascii"
+Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
-To: Stewart Wilkinson <g0lgs@gb7lgs.co.uk>
-Cc: linux-hams@vger.kernel.org
+To: pa3gcu <pa3gcu@zeelandnet.nl>
+Cc: w9ya <w9ya@amsat.org>, Hamish Moffatt <hamish@cloud.net.au>, linux-hams@vger.kernel.org
 
-On Thu, 29 Aug 2002, Stewart Wilkinson wrote:
+On Wed, Aug 28, 2002 at 05:48:33AM +0000, pa3gcu wrote:
+> Looks like i started this thread, what i mean was, why do the ax25lib/apps/ 
+> and tools default to /usr/local and place binarys in /usr/local when some 
+> programs will "still" look in /etc/ax25 for thier config files instead of 
+> /usr/local/etc thats what i mean, seems like a funny way of doing things to 
+> me.
+Because people build the programs inconsistently.  More specifically
+they build the libraries with one set of options and the binaries with
+another.
 
-> Having spoken to Paula (G8PZT) tonight, she informs me that the next
-> release of her Xrouter (V1.77) which is due out in a few days, implements
-> addtional NETROM FrameType (0x07) which for Xrouter is effectively a
-> NETROM <DM> frame. (As I understand it, this gets over a few problems with
-> NETROM not noticing a distant router has rebooted and so can't handle
-> traffic on L3/L4 sessions that were open before the reboot, much more
-> quickly that simply waiting for the L4 Retry setting to be exceeded).
+> Yes the program concernd has the -C option, yes there is the 
+> ./configure --prefix=/usr --sysconfdir=/etc --localstatedir=/var
+> But folks dont read documentation do they and we constanly see this question 
+> poping up here on this list simply because one did not read the docs 
+> beforehand.
+Well, the must be reading it once then forgetting it.  If they do the
+same thing then there is no problem.
 
-I tried something similar in the Linux NET/ROM stack some time ago 
-re-using the CONNACK/CHOKE flag combination. However I got reports that 
-sending these frames killed some version of BPQ. Clearly a bug in BPQ but 
-I decided it's better to disable it in Linux anyway.
+The ax25 stuff uses standard auto* tools folks, its pretty common out
+there and probably the most common sort of build set.
 
-Could you ask Paula to send me details about the new extension. It should 
-be easy to make Linux do the right thing with it. And while she is at it, 
-it would be nice to see descriptions to the other extensions she has 
-implemented.
+People don't read documentation, I get plenty of emails that are FAQs;
+not just in ax25 stuff.
 
-> As a possible workaround for the 2.4.17 Kernel, I have modified the
-> nr_rx_frame function in af_netrom.c by replacing the lines:
+Part of the problem has been dumb error messages that don't say where
+they are looking.  I believe that is being fixed now.
 
-Why not copy the fix from 2.4.18/19? Or why not copy the whole NET/ROM
-stack from 2.4.18/19? Even better, why not upgrade to 2.4.19? :)
-
+  - Craig
 -- 
-Tomi Manninen           Internet:  oh2bns@sral.fi
-OH2BNS                  AX.25:     oh2bns@oh2rbi.fin.eu
-KP20ME04                Amprnet:   oh2bns@oh2rbi.ampr.org
-
+Craig Small VK2XLZ  GnuPG:1C1B D893 1418 2AF4 45EE  95CB C76C E5AC 12CA DFA5
+Eye-Net Consulting http://www.eye-net.com.au/        <csmall@eye-net.com.au>
+MIEEE <csmall@ieee.org>                 Debian developer <csmall@debian.org>
