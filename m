@@ -1,57 +1,37 @@
-From: Tomi Manninen <tpm@prkele.tky.hut.fi>
-Subject: Re: ax25 pakcet problem: any ideas?
-Date: Fri, 27 Dec 2002 22:14:33 +0200 (EET)
+From: Kelly Black <kelly.black@penguinpackets.com>
+Subject: Writing AX.25 Server Progie
+Date: 29 Dec 2002 00:07:02 -0600
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <Pine.LNX.4.44.0212272203520.1392-100000@oh2bns.ampr.org>
-References: <Pine.LNX.4.44.0212271459340.4022-100000@jeeves.mvw.net>
-Reply-To: tpm@prkele.tky.hut.fi
+Message-ID: <1041142023.32767.8.camel@edith>
 Mime-Version: 1.0
-Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <Pine.LNX.4.44.0212271459340.4022-100000@jeeves.mvw.net>
-List-Id: <linux-hams.vger.kernel.org>
-Content-Type: TEXT/PLAIN; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
-To: mvw@mvw.net
-Cc: linux-hams@vger.kernel.org
+Return-path: <linux-hams-owner@vger.kernel.org>
+List-Id: <linux-hams.vger.kernel.org>
+Content-Type: text/plain; charset="us-ascii"
+To: Linux Hams mailing list <linux-hams@vger.kernel.org>
 
-On Fri, 27 Dec 2002 mvw@mvw.net wrote:
+I am looking to start writing an AX.25 server program under Linux.  I
+have read a little bit of socket programming in other books, and would
+like to code up a simple server for testing.  I have looked at example
+code from beacon.c, ax25mond.c, axconv.c
 
-> OK, I shoudl check this. Worth nothing that other transmissions (ax25) do 
-> work, and also, va3am was able to connect fine. So perhaps the problem is 
-> more likely to be on the va3mvw side. Not sure what to look for but 
-> that's where my efforts will now concentrate.
+I was wondering if anybody could point me to other sources of socket
+programming for AX.25 that are up to date as far as keeping pace with
+the libax25 and coding conventions.
 
-Ok,
+I have to admit that I have never written a C program that used sockets
+before, but wish to give it a go.
 
-That would seem like the txdelay at VA3OAK is enough for it's TX chain but
-unfortunately on a shared channel you will have to go by the weakest link.  
-It might be that the TX-to-RX switching delay of the TRX or the synch
-delay of the TNC at VA3MVW might be too long.
+Sketchy details of the end product:
+Replacement of ARES/Data program used for the Twin Cities Marathon in
+Minnesota.  I would like to write a program to be more tailored to this
+event and put the code out under GPL so others can hack and use whatever
+bits they find useful (or not useful)
+:-)
 
-Then agin, the problem might be something else just as well...
+Thanks,
+Kelly Black
+KB0GBJ
 
-/Tomi
 
-> On Fri, 27 Dec 
-> 2002, Tomi Manninen wrote:
-> 
-> > On Fri, 27 Dec 2002 mvw@mvw.net wrote:
-> > 
-> > > But when I open by bbs, the first
-> > > packet is 255 characters long, and is never heard, The next packets are 
-> > > shorter and are always heard.
-> > 
-> > This is just a guess, but the lenght of the packet might not be the issue.  
-> > It could be that the txdelay at VA3OAK is too short, thereby distroying
-> > the start of the packet. That would cause behaviour like this. (I'm 
-> > assuming both packets are sent in one go.)
-> > 
-> > 
-> 
-> 
-
--- 
-Tomi Manninen           Internet:  oh2bns@sral.fi
-OH2BNS                  AX.25:     oh2bns@oh2rbi.fin.eu
-KP20ME04                Amprnet:   oh2bns@oh2rbi.ampr.org
 
