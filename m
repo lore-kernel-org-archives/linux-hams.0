@@ -1,45 +1,54 @@
-From: Tomi Manninen <oh2bns@sral.fi>
-Subject: Re: Trying to get Ax25 running.
-Date: Sat, 16 Oct 2004 16:52:02 +0300
+From: "Douglas Cole" <n7bfs@qwest.net>
+Subject: Re: xfbbd crashing, why ?
+Date: Sat, 16 Oct 2004 07:49:53 -0700
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <1097934722.1296.8.camel@oh2bns.ampr.org>
-References: <620c905704101518153ff636e@mail.gmail.com>
-	 <4170100F.F5F43579@free.fr> <1097864803.1290.14.camel@oh2bns.ampr.org>
-	 <4323.192.168.0.2.1097865189.squirrel@192.168.0.2>
-	 <1097866437.1290.30.camel@oh2bns.ampr.org>
-	 <Pine.SUN.4.58.0410151221210.28043@eskimo.com>
-	 <620c9057041015125535932b34@mail.gmail.com>
-	 <620c90570410151618432401d1@mail.gmail.com>
-	 <200410160128.i9G1Sk2M028098@yagi.h-net.msu.edu>
-	 <1097930726.1287.1.camel@oh2bns.ampr.org>
-	 <620c905704101606165716759@mail.gmail.com>
+Message-ID: <200410160749.53757.n7bfs@qwest.net>
+References: <200410090855.37618.n7bfs@qwest.net> <200410091051.33420.n7bfs@qwest.net> <1097345002.1357.6.camel@oh2bns.ampr.org>
+Reply-To: n7bfs@qwest.net
 Mime-Version: 1.0
 Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <620c905704101606165716759@mail.gmail.com>
+In-Reply-To: <1097345002.1357.6.camel@oh2bns.ampr.org>
+Content-Disposition: inline
 List-Id: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
-To: Linux-hams List <linux-hams@vger.kernel.org>
+To: Tomi Manninen <oh2bns@sral.fi>, Linux-hams List <linux-hams@vger.kernel.org>
 
-On Sat, 2004-10-16 at 16:16, Chuck Hast wrote:
+On Saturday 09 October 2004 11:03, Tomi Manninen wrote:
+> On Sat, 2004-10-09 at 20:51, Douglas Cole wrote:
+> > but I am not sure what "properly" would be, I know
+> > that we start FBB from the command line by entering "xfbbd" and hitting
+> > return, and then much info wizzes past on the screen and all is
+> > running...
+>
+> Replace "xfbbd" with "fbb". :)
 
-> I have done that, but I still have a problem. When I run the ax25-up file that
-> is set up for for the mkiss line, it starts up ok the first time, but
-> when I run the
-> ax25-down file that ax25-config generates it does not shut down a mkiss entry
+Thanks Tomi, this helped and it actually ran for more than 24hrs.
+But then a few days later it crashed again, and now it won't run at all :(
 
-Hmm.. I guess the simple solution would be to do a "killall mkiss" 
-somewhere near the top of the script. It should be placed before the 
-kissattach processes are killed.
+Not sure what we are doing wrong, since it runs fine while its running, but 
+crashes for some reason, and this time with no errors output...
 
-> if I do a ps -e I see a PID and mkiss if I do a ps -r I see that it is
-> the attachment
-> to the ttyz0 port that does not go away. 
+Does "xfbbd" need to be run from an xterm ?
 
-This makes me wonder if the pty behaviour has changed along the way and
-if my suggestion about the order of kissattach/mkiss is valid anymore...
-Oh well... :)
+We are doing everything from the command line as root.
 
--- 
-Tomi Manninen / OH2BNS / KP20ME04
+We are using a pk96 tnc on one of the serial ports of this pc and are using 
+kissattach for the ax0 port that it talks to so am not sure if that would be 
+an issue, but since it works for a while it has me confused...
+
+I have not had a chance to look at it since my previous posting, but am going 
+to try and spend some time on it today and see what I may be missing.
+
+I know I am not giving much for you folks to chew on, but I am not sure where 
+to look or what to do at this point, I guess I need to "rtfm" a bit more and 
+hope that helps ;)
+
+tia for any input
+
+
+Douglas Cole   N7BFS
+AMSAT#26182 , K2 # 544
+http://www.users.qwest.net/~cdoug3
+Registered Linux user # 188922
 
