@@ -1,34 +1,25 @@
-From: Martijn Hijdra <martijn@esrac.ele.tue.nl>
-Subject: Re: Request change ???
-Date: 11 Jul 2003 09:32:35 +0200
+From: terry <wd0fpc@aniota.com>
+Subject: Re: Split screen telnet client?
+Date: Fri, 11 Jul 2003 08:36:26 -0700 (PDT)
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <1057908754.2435.4.camel@imst153.imst.de>
-References: <Pine.LNX.4.33.0307091916160.8812-100000@zoef.pe1icq.ampr.org>
+Message-ID: <Pine.LNX.4.50.0307110834380.16266-100000@yossarian.aniota.net>
+References: <3104.44.140.19.34.1057579396.squirrel@ax25.org>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <Pine.LNX.4.33.0307091916160.8812-100000@zoef.pe1icq.ampr.org>
+In-Reply-To: <3104.44.140.19.34.1057579396.squirrel@ax25.org>
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"
-To: Arno Verhoeven <pe1icq@pi8zaa.ampr.org>
-Cc: Ronald Jochems <pd1acf@xs4all.nl>, Jeroen Vreeken <pe1rxq@amsat.org>, Ralf Baechle DO1GRB <ralf@linux-mips.org>, linux-hams@vger.kernel.org
+Content-Type: TEXT/PLAIN; charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+To: linux-hams <linux-hams@vger.kernel.org>
 
-Hi All,
+On Mon, 7 Jul 2003, Pontus Falk wrote:
 
-> >
-> > Is there a way to make this work ? I guess it is a driver issue ???
-> >
-> 
-> It must be in the driver. I have those statistics displayed for my dmascc
-> ports but not for the scc ports.
-> 
+> Can someone recommend a telnet client using split screen that is not for X
+> Windows?
 
-The scc statistics are definitly in the scc.c driver.
-I know for sure because I created a patch a long time ago
-to fix this problem.
-
-I have to take a peek into my archives this weekend to retrieve it.
-
-Martijn Hijdra, PE1MNL
+... if you don't require access to the system, how about 'talk' ...
 
 
+-- 
+73 , de WD0FPC		Pacific Nowthwest 2M Repeaters
+    aka: terry 		http://www.aniota.com/~wd0fpc
