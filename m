@@ -1,25 +1,27 @@
-From: "WILLIAMS,TED (HP-NewJersey,ex2)" <ted_williams@hp.com>
-Subject: Linux Ham Software
-Date: Wed, 8 May 2002 09:40:17 -0400
+From: Joop Stakenborg <pa3aba@debian.org>
+Subject: Call for developers (hamradio distribution)
+Date: Fri, 10 May 2002 12:54:17 +0200
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <abb9t3$cnr$2@main.gmane.org>
+Message-ID: <200205101254.17160.pa3aba@debian.org>
 Mime-Version: 1.0
+Content-Transfer-Encoding: 8BIT
 Return-path: <linux-hams-owner@vger.kernel.org>
 List-Id: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-To: "Debian Hams (E-mail)" <debian-hams@lists.debian.org>, "Linux Hams (E-mail)" <linux-hams@vger.kernel.org>, "PSK QTH (E-mail)" <psk31@mailman.qth.net>, "PSK31_Hams (E-mail)" <psk31@aintel.bi.ehu.es>, "SuSE Hams (E-mail)" <suse-ham-e@suse.com>
-
+To: hamlib-developer <hamlib-developer@lists.sourceforge.net>, Linux Hams <linux-hams@vger.kernel.org>
 
 Hi,
 
-Since Excite went away, I had to move the web page for twpsk, twlog, twcw
-and twclock.  The new url is:
+I am looking for people who want to help setting up a hamradio distribution. 
+It will start as a tiny distro for contesting, with more packages added 
+later-on. A description is on:
 
-   http://mywebpages.comcast.net/wa0eir
-
-73,
-
-Ted - wa0eir
+http://debianham.sunsite.dk/
 
 
+A mailing list has been created to get development started, you can join in by 
+sending a mail to: debianham-devel-request@sunsite.dk
+
+Regards,
+
+Joop PA4TU
