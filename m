@@ -1,28 +1,29 @@
-From: mvw@mvw.net
-Subject: Re: FBB... (follow up)
-Date: Wed, 25 Dec 2002 23:12:05 -0500 (EST)
+From: Wilbert Knol <zl2bsj@zl2tze.ath.cx>
+Subject: Re: Simple BBS, again, sorry for asking twice.
+Date: Thu, 26 Dec 2002 23:23:57 +1300 (NZDT)
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <Pine.LNX.4.44.0212252300060.24570-100000@jeeves.mvw.net>
-References: <Pine.LNX.4.44.0212260010330.7965-100000@oh2bns.ampr.org>
+Message-ID: <Pine.LNX.4.44.0212262318260.5859-100000@zl2bsj.ampr.org>
+References: <20021226041017.GC3554@n7xy.net>
 Mime-Version: 1.0
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <Pine.LNX.4.44.0212260010330.7965-100000@oh2bns.ampr.org>
+In-Reply-To: <20021226041017.GC3554@n7xy.net>
 List-Id: <linux-hams.vger.kernel.org>
 Content-Type: TEXT/PLAIN; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
-To: Tomi Manninen <tpm@prkele.tky.hut.fi>
-Cc: Linux-Hams <linux-hams@vger.kernel.org>
+To: Bob Nielsen <nielsen@oz.net>
+Cc: linux-hams@vger.kernel.org
 
-Tomi, and others,
+On Wed, 25 Dec 2002, Bob Nielsen wrote:
 
-OK, useful advice. The first thing I am doing is going to 
+> Has there been any update since 0.4-pre2?  That came out quite a while
+> ago (and I guess the "pre2" implies that a 0.4 version is imminent).
 
->  ftp://ftp.f6fbb.org/pub/f6fbb/distrib/linux/src/
+Last time I looked (a couple of months ago) 0.4-pre2 was the most 
+recent version. I think it's almost 2 years old now, and seems to be 
+perfectly OK.
 
-...to download version 7.04h source. I'll try with that and let you know 
-if I am getting on any better. I have some hope, as there are quite a few 
-versions between what I had and what the latest version there is.i
 
-Michael
+Wilbert, ZL2BSJ
+
 
 
