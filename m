@@ -2,7 +2,7 @@ From: Aleksandar Ilic <ailic@gmx.net>
 Subject: Re: ANN: gMFSK v0.4
 Date: Tue, 9 Apr 2002 00:18:18 +0200
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <02040823481500.00477@bcat>
+Message-ID: <a8t5pp$bbv$2@main.gmane.org>
 References: <Pine.LNX.4.33.0204081351140.31031-100000@oh2bns.ampr.org>
 Mime-Version: 1.0
 Content-Transfer-Encoding: 7BIT
