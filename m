@@ -1,40 +1,34 @@
-From: Ralf Baechle DO1GRB <ralf@linux-mips.org>
+From: Steven Whitehouse <steve@gw.chygwyn.com>
 Subject: Re: AX.25 in kernel 2.5 status?
-Date: Fri, 11 Oct 2002 15:03:40 +0200
+Date: Fri, 11 Oct 2002 14:47:36 +0100 (BST)
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <20021011150339.A15592@linux-mips.org>
-References: <20021010035703.B8136@pull.privacy.nb.ca> <200210110949.KAA19486@gw.chygwyn.com>
+Message-ID: <200210111347.OAA20311@gw.chygwyn.com>
+References: <20021011150339.A15592@linux-mips.org>
+Reply-To: Steve Whitehouse <Steve@ChyGwyn.com>
 Mime-Version: 1.0
+Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
-Content-Disposition: inline
-In-Reply-To: <200210110949.KAA19486@gw.chygwyn.com>; from steve@gw.chygwyn.com on Fri, Oct 11, 2002 at 10:49:25AM +0100
+In-Reply-To: <20021011150339.A15592@linux-mips.org> from "Ralf Baechle DO1GRB" at Oct 11, 2002 03:03:40 PM
 List-Id: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-To: Steve Whitehouse <Steve@ChyGwyn.com>
+To: Ralf Baechle DO1GRB <ralf@linux-mips.org>
 Cc: M Taylor <mctylr@privacy.nb.ca>, linux-hams@vger.kernel.org
 
-On Fri, Oct 11, 2002 at 10:49:25AM +0100, Steven Whitehouse wrote:
+Hi,
 
-> > A while back (a few months ago) a couple of developers/hams (Ralf and others) 
-> > mentioned that work needed to be done in the 2.5 linux kernel due to changes
-> > (I believe relating cli()/sti() plus other things).
-> > 
-> > Has there been any progress? There appears to be some patches included
-> > in 2.5.37 from Ralf and David Miller. Does include all the changes we 
-> > _need_ to make? (that is for when cli()/sti() and such calls go away)
-> >
-> The patch I proposed still hasn't made it into mainline yet. I had a
-> message from Arnaldo Carvalho de Melo recently asking about /proc
-> changes very much along the lines of the patch I did, so this has
-> brought it to mind again. I'll do my best to update, test and submit
-> it shortly providing there are no objections to it,
+[snip]
+> 
+> I yesterday published my changes to redo the /proc files for AX.25,
+> NET/ROM and ROSE with the seq_file stuff.  As usually these changesets
+> are available at http://linux-ham.bkbits.net/linux-2.5.
+> 
+> 73 de DO1GRB op Ralf
 
-I yesterday published my changes to redo the /proc files for AX.25,
-NET/ROM and ROSE with the seq_file stuff.  As usually these changesets
-are available at http://linux-ham.bkbits.net/linux-2.5.
+It seems you beat me to it :-) though there is one extra thing that still needs
+to be fixed in the uid code from my patch where ax25_findbyuid() returns
+a pointer to a structure which might disappear at any time. Its only use
+is to check permissions at bind time, so I just moved the check under
+the lock,
 
-73 de DO1GRB op Ralf
+Steve.
 
---
-Loc. JN47BS / CQ 14 / ITU 28 / DOK A21
