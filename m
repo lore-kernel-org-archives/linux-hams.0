@@ -1,86 +1,23 @@
-From: Jeroen Vreeken <pe1rxq@amsat.org>
-Subject: Re: [PATCH] hamradio/scc -
-Date: Tue, 16 Sep 2003 22:53:53 +0200
-Sender: netdev-bounce@oss.sgi.com
-Message-ID: <20030916225353.I13088@jeroen.pe1rxq.ampr.org>
-References: <20030915162335.0034a551.shemminger@osdl.org>
+From: Wilbert Knol <w.knol@niwa.co.nz>
+Subject: Re: Packet Problem
+Date: Wed, 17 Sep 2003 09:32:11 +1200
+Sender: linux-hams-owner@vger.kernel.org
+Message-ID: <200309170932.12058.w.knol@niwa.co.nz>
+References: <20030916012317.GA9420@leo.tneu.visi.com> <5520000.1063675764@flob> <20030916013740.GA9468@leo.tneu.visi.com>
+Reply-To: w.knol@niwa.co.nz
 Mime-Version: 1.0
-Content-Type: multipart/mixed; boundary="AWniW0JNca5xppdA"
-Content-Transfer-Encoding: 8bit
-Return-path: <netdev-bounce@oss.sgi.com>
-In-Reply-To: <20030915162335.0034a551.shemminger@osdl.org>; from shemminger@osdl.org on Tue, Sep 16, 2003 at 01:23:35 +0200
-Errors-to: netdev-bounce@oss.sgi.com
+Content-Transfer-Encoding: 7bit
+Return-path: <linux-hams-owner@vger.kernel.org>
+In-Reply-To: <20030916013740.GA9468@leo.tneu.visi.com>
+Content-Disposition: inline
 List-Id: <linux-hams.vger.kernel.org>
-To: Jeff Garzik <jgarzik@pobox.com>
-Cc: linux-hams@vger.kernel.org, netdev@oss.sgi.com, Stephen Hemminger <shemminger@osdl.org>
+Content-Type: text/plain; charset="us-ascii"
+To: Tim Neu <tim@tneu.visi.com>, linux-hams@vger.kernel.org
 
+Is your TNC is a TNC-2 (or clone) running TAPR firmware?
 
---AWniW0JNca5xppdA
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 8bit
+If so, and you reset it, beware that the TNC defaults to AWLEN=7 
+(7 data-bits).  This may account for the fact KISSATTACH won't talk to 
+the unit...
 
-On 2003.09.16 01:23:35 +0200 Stephen Hemminger wrote:
-> Update hamradio/scc for 2.6.0-test5
-> 	- use seq_file for /proc
-> 	- get rid of dev_get()
-> 	- use alloc_netdev
-
-I have a little adition of my own (should apply nicely next to this patch).
-The probe function uses the not yet initialized scc struct for requesting
-its io region.
-
-The second patch is against the bpqethernet driver.
-This has a debug printk that seems to be untouched since somewhere early
-2.1 kernels.
-The if statement it debugs seems to work perfectly and its only use at the
-moment is to annoy the hell out of me :)
-
-Jeroen
-
---AWniW0JNca5xppdA
-Content-Type: application/octet-stream; charset=us-ascii
-Content-Disposition: attachment; filename="scc-2.6.0.t5.rxq.diff"
-
---- linux-2.6.0-test5/drivers/net/hamradio/scc.c	Mon Sep  8 21:50:22 2003
-+++ linux-2.6.0-test5.rxq/drivers/net/hamradio/scc.c	Tue Sep 16 22:41:36 2003
-@@ -1767,7 +1767,7 @@
- 
- #ifndef SCC_DONT_CHECK
- 
--			if(request_region(scc->ctrl, 1, "scc-probe"))
-+			if(request_region(hwcfg.ctrl_a, 1, "scc-probe"))
- 			{
- 				disable_irq(hwcfg.irq);
- 				Outb(hwcfg.ctrl_a, 0);
-@@ -1779,7 +1779,7 @@
- 				if (InReg(hwcfg.ctrl_a,R13) != 0x55)
- 					found = 0;
- 				enable_irq(hwcfg.irq);
--				release_region(scc->ctrl, 1);
-+				release_region(hwcfg.ctrl_a, 1);
- 			}
- 			else
- 				found = 0;
-
---AWniW0JNca5xppdA
-Content-Type: application/octet-stream; charset=us-ascii
-Content-Disposition: attachment; filename="bpqether-2.6.0.t5.rxq.diff"
-
---- linux-2.6.0-test5/drivers/net/hamradio/bpqether.c	Mon Sep  8 21:50:03 2003
-+++ linux-2.6.0-test5.rxq/drivers/net/hamradio/bpqether.c	Mon Sep 15 15:40:16 2003
-@@ -189,10 +189,8 @@
- 
- 	bpq = (struct bpqdev *)dev->priv;
- 
--	if (!(bpq->acpt_addr[0] & 0x01) && memcmp(eth->h_source, bpq->acpt_addr, ETH_ALEN)) {
--		printk(KERN_DEBUG "bpqether: wrong dest %s\n", bpq_print_ethaddr(eth->h_source));
-+	if (!(bpq->acpt_addr[0] & 0x01) && memcmp(eth->h_source, bpq->acpt_addr, ETH_ALEN))
- 		goto drop;
--	}
- 
- 	len = skb->data[0] + skb->data[1] * 256 - 5;
- 
-
---AWniW0JNca5xppdA--
-
-
+Wilbert, ZL2BSJ
