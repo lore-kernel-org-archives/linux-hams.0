@@ -1,47 +1,42 @@
-From: Andrew Bates <abates@omeganetserv.com>
+From: Kelly Black <kelly.black@penguinpackets.com>
 Subject: Re: Linux AX.25 Socket programming
-Date: Wed, 01 Jan 2003 16:00:43 -0700
+Date: 01 Jan 2003 20:12:39 -0600
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <3E13731B.C965C3A7@omeganetserv.com>
+Message-ID: <1041473560.10921.9.camel@edith>
 References: <onKLlQBZqzE+EwXZ@mechserv.demon.co.uk>
- <1041461308.10491.17.camel@edith>
+	<1041461308.10491.17.camel@edith>  <3E13731B.C965C3A7@omeganetserv.com>
 Mime-Version: 1.0
 Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
+In-Reply-To: <3E13731B.C965C3A7@omeganetserv.com>
 List-Id: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
-To: Kelly Black <kelly.black@penguinpackets.com>
-Cc: Linux Hams mailing list <linux-hams@vger.kernel.org>
+To: Linux Hams mailing list <linux-hams@vger.kernel.org>
 
-> Excellent!!!  Does anybody know where I can find an example of a script
-> that is doing just this read from stdin and write to stdout.
->
+On Wed, 2003-01-01 at 17:00, Andrew Bates wrote:
+> > Excellent!!!  Does anybody know where I can find an example of a script
+> > that is doing just this read from stdin and write to stdout.
+> >
+> 
+> Here is a very simply perl script that reads and writes to the stdin/stdout:
+> 
+SNIP---
 
-Here is a very simply perl script that reads and writes to the stdin/stdout:
+O.K. Thanks for the tip.  Can you get the callsign or other environment
+info from the environment ( $ENV ?) as well like a CGI script does.
 
-#!/usr/bin/perl
-# -- beginning of script
+I will probably still write the program in C though as I was impressed
+at how well I was able to view a curses based application via TCP/IP
+over AX.25, and was floored by its responsiveness.
 
-# display our message to the stdout
-print "Testing ax25d\n";
-print "Please enter your callsign: ";
+One of my reasons for re-writing the existing application is to make
+user training simple by providing a simple interface option instead of
+just the terse command line option that exists now.
 
-# read input from the command line, until
-# a carriage return is received
-$call = (<>);
+Kelly
+KB0GBJ
 
-# remove the trailing carriage return
-chomp $call;
+P.S. The application I am trying to re-create will be a sub-set of
+ARES-DATA.  I will tailor it for tracking runners in a marathon race.
 
-# display callsign to the stdout
-print "Hello ".$call."!\n";
-
-exit;
-# -- end of script
-hope that helps, more information about perl can be found at www.perl.com...
-other scripting languages (like korn shell) have howto's at the linux
-documentation project (www.tldp.org).  Any language that can communicate with
-*nix's STDIN/STDOUT (C/C++, Java, ksh, sh, bash, perl, etc.) can be used for
-AX25d processes.
-Andrew
 
