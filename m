@@ -1,39 +1,49 @@
-From: Wilbert Knol <w.knol@niwa.co.nz>
-Subject: QSO logger/editor (ql.pl) updated to version 0.0.4
-Date: Fri, 12 Nov 2004 11:06:40 +1300
-Message-ID: <200411121106.40453.w.knol@niwa.co.nz>
-Reply-To: w.knol@niwa.co.nz
+From: "AA6QN" <AA6QN@pacbell.net>
+Subject: RE: mkiss, udev and kernel 2.6
+Date: Thu, 11 Nov 2004 16:56:40 -0800
+Message-ID: <000601c4c852$79768360$07001aac@adminqn>
+References: <4187BA73.2080908@ccr.jussieu.fr>
 Mime-Version: 1.0
 Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
-Content-Disposition: inline
+In-Reply-To: <4187BA73.2080908@ccr.jussieu.fr>
 Sender: linux-hams-owner@vger.kernel.org
 List-Id: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
-To: linux-hams@vger.kernel.org
+To: 'Bernard Pidoux' <pidoux@ccr.jussieu.fr>
+Cc: linux-hams@vger.kernel.org
 
+I ported my Linux over to Gentoo and started off with devfs. I did try udev
+and it did not work for me. So, back to devfs and things are working once
+again. Let us know if you get it running.
 
-Keyboard handling improvements courtesy of Nate, N0NB. ALT-sequences 
-(8-bit metamode) are now correctly handled ( as used by Debian and 
-some X-terminals).
+73,John AA6QN
 
-Fixed backspace handling on some X-terminals.
- 
-Added .schema file with the SQLite table definition. Added sample 
-SQLite3 database file. Added comments regarding Perl bindings in 
-Hamlib 1.1.4 and later.
+-----Original Message-----
+From: linux-hams-owner@vger.kernel.org
+[mailto:linux-hams-owner@vger.kernel.org] On Behalf Of Bernard Pidoux
+Sent: Tuesday, November 02, 2004 8:49 AM
+To: unlisted-recipients:; no To-header on input
+Cc: linux-hams@vger.kernel.org
+Subject: mkiss, udev and kernel 2.6
 
-http://www.qsl.net/zl2arn/ql-0.0.4.tar.gz
+Hi,
 
-The 'ql' package is a QSO logger and log editor. Intended use: QSO 
-logging and casual (CW) contesting, in a text-mode (Linux console) 
-environment, on low-spec computers.
+Does someone have an experience with mkiss and udev in 2.6 kernel ?
 
-Data is stored in a fixed schema to SQLite, a simple and fast 
-database. The logger relies heavily on hot-keys, has Hamlib rig 
-support and transmits CW for you using cwdaemon, a Linux CW keyer. 
+I need to use mkiss-kissattach to drive a dual port TNC 1200/9600 KPC9612.
 
-A Perl/Tk GUI version is being tested && coming soon.
+However I don't see how to set up a master-slave pseudo tty system with 
+udev.
 
+Actually, I went through by instructing the kernel to load devfs at boot 
+(append="devfs=mount... " in lilo.conf.
 
-Wilbert, ZL2BSJ.
+But Is there any other solution with udev alone (without devfs) ?
+
+73 de Bernard, f6bvp
+-
+To unsubscribe from this list: send the line "unsubscribe linux-hams" in
+the body of a message to majordomo@vger.kernel.org
+More majordomo info at  http://vger.kernel.org/majordomo-info.html
+
