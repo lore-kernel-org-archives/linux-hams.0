@@ -1,30 +1,44 @@
-From: Dennis Boone <drb@msu.edu>
-Subject: Re: Help setting up a packet stack
-Date: Sun, 28 Mar 2004 12:42:09 -0500
+From: Bill Vodall - WA7NWP <wa7nwp@jnos.org>
+Subject: ax25 in Suse 9.0 disconnects itself
+Date: Sun, 28 Mar 2004 21:10:02 -0800 (PST)
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <200403281742.i2SHg9Bf030932@yagi.h-net.msu.edu>
-References: <Pine.LNX.4.58.0403280803550.4899@jazzy_earth_dragon.net>
+Message-ID: <Pine.LNX.4.33.0403282108080.20359-100000@mlark.vodall.isomedia.com>
+References: <200403281742.i2SHg9Bf030932@yagi.h-net.msu.edu>
+Mime-Version: 1.0
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-reply-to: (Your message of Sun, 28 Mar 2004 08:18:12 PST.)
-             <Pine.LNX.4.58.0403280803550.4899@jazzy_earth_dragon.net> 
+In-Reply-To: <200403281742.i2SHg9Bf030932@yagi.h-net.msu.edu>
 List-Id: <linux-hams.vger.kernel.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
+Content-Type: TEXT/PLAIN; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
 To: linux-hams@vger.kernel.org
 
- > My problem is that I need to get the KPC-3+ to talk to the KPC-9612
- > so that the user and BBS ports can talk to the Backbone link port. I
- > have them set up to use the Build in K-Node setup.  Now, I have tryed
- > to use a RS-232 null-modem cable with no luck at all.  And I have
- > done a fair amount of searching on the net with little luck finding
- > anything more then "here is a pic of a node stack, cool anit it",
- > but no info on how it is set up (how I whish the rest of the world
- > was as open as the Liunx community was.)
 
-Grab the PDF manual for the KPC-3+ from the Kantronics web site.
-Look at the section about "Node Stacking", starting on page 143.
-See if it answers your question.
+Is there any known gotchas with AX25 in Suse 9.0.  We're doing
+just what I do with 8.2 and it's not working in 9.0.
 
-Dennis Boone
-KB8ZQZ
+For some reason, I'm disconnecting myself when the node I
+connect to responds.
+
+---
+
+..connect request from wa7nwp-3 to ELYSSA...
+
+vhf: fm ELYSSA to WA7NWP-3 ctl UA- 15:42:20
+vhf: fm WA7NWP-3 to ELYSSA ctl DISC+ 15:42:21
+vhf: fm WA7NWP-3 to ELYSSA ctl DISC+ 15:42:21
+
+vhf: fm ELYSSA to WA7NWP-3 ctl I00^ pid=F0(Text) len 113 15:42:21
+0000  ###CONNECTED TO NODE ELYSSA(K7IDX) CHANNEL AMMT. JUPITER 3250 fe
+0040  et SOLAR POWERMENTER COMMAND: B,C,J,N, or Help ?M
+vhf: fm ELYSSA to WA7NWP-3 ctl UA- 15:42:26
+vhf: fm ELYSSA to WA7NWP-3 ctl DM- 15:42:26
+
+---
+
+Any suggestions?
+
+Thanks,
+Bill - WA7NWP
+
+
+
