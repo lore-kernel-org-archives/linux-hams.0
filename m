@@ -1,49 +1,45 @@
 From: "Curt Mills, WE7U" <hacker@tc.fluke.com>
-Subject: Re: Xastir.lsm ?
-Date: Thu, 2 Jan 2003 14:58:38 -0800 (PST)
+Subject: Re: Linux AX.25 Socket programming
+Date: Thu, 2 Jan 2003 16:44:35 -0800 (PST)
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <Pine.LNX.4.33.0301021431290.19643-100000@wapiti.tc.fluke.com>
-References: <3E14BD8C.1DF51A36@gelm.net>
+Message-ID: <Pine.LNX.4.33.0301021642200.19643-100000@wapiti.tc.fluke.com>
+References: <1041473560.10921.9.camel@edith>
 Mime-Version: 1.0
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <3E14BD8C.1DF51A36@gelm.net>
+In-Reply-To: <1041473560.10921.9.camel@edith>
 List-Id: <linux-hams.vger.kernel.org>
 Content-Type: TEXT/PLAIN; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
-To: Chuck Gelm <nc8q@gelm.net>
-Cc: linux-hams@vger.kernel.org
+To: Kelly Black <kelly.black@penguinpackets.com>
+Cc: Linux Hams mailing list <linux-hams@vger.kernel.org>
 
-On Thu, 2 Jan 2003, Chuck Gelm wrote:
+On 1 Jan 2003, Kelly Black wrote:
 
->  However, my main issue is that I do not want to keep track of
-> development revisions.  My main issue is that I want the 'stable'
-> version release and the 'stable' files.  My original
-> opinion that I posted here, was that Xastir is developmental
-> code.  Your posts seem to confirm this opinion.
+> O.K. Thanks for the tip.  Can you get the callsign or other environment
+> info from the environment ( $ENV ?) as well like a CGI script does.
 
-hi hi
+Yes.  Very easily:
 
-Think what you want, run what you want.  You've got the facts now.
-I have no control over what you do with them.  ;-)
+    $display=$ENV{"DISPLAY"};
 
-Everything we've ever released on SourceForge is still there
-available for download, so run whatever version you prefer.  Myself,
-I'd choose the development version released 01/02/2003.  It won't
-fall over on you and has loads of new, very desirable features
-compared to the february 2002 "stable" release.  You're only hurting
-yourself by choosing an earlier version, but again, it's your
-choice.  Expect another release in two weeks.  And another.  And
-another.
 
-"stable"/"development" have quite different meanings across
-projects.  In our case it should be "somewhat stable"/"more stable".
+> I will probably still write the program in C though as I was impressed
+> at how well I was able to view a curses based application via TCP/IP
+> over AX.25, and was floored by its responsiveness.
 
-We'll probably release a new "stable" package sometime in the next
-month or three, for those that can't force themselves to run
-bleeding-edge software, and for the Linux distributions to pick up.
+Remember though that Perl is a compiled language as well.  It just
+happens to compile it each time you invoke it.  It's very fast.
 
-That's probably enough on this thread.  Back to other more
-interesting Linux ham stuff!
+Perls strongpoint is in ripping apart text and reconstructing it in
+various ways.  It does most everything else as well.
+
+
+> One of my reasons for re-writing the existing application is to make
+> user training simple by providing a simple interface option instead of
+> just the terse command line option that exists now.
+
+There's also PerlTk.  Not a bad way to get a program with a GUI up
+and running in a hurry.
 
 -- 
 Curt Mills, WE7U                    hacker_NO_SPAM_@tc.fluke.com
