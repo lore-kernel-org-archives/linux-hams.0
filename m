@@ -1,27 +1,49 @@
-From: "ravioli@softhome.net" <ravioli@softhome.net>
-Subject: Re: Oops in 2.4.26 on ax25 connect?
-Date: Sun, 18 Apr 2004 14:07:43 +0200
+From: Wilbert Knol <w.knol@niwa.co.nz>
+Subject: Logging software (ql-0.0.3rc3) released.
+Date: Mon, 19 Apr 2004 11:00:24 +1200
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <40826F8F.4060505@softhome.net>
-References: <40819B4B.40708@cs.unibo.it>
+Message-ID: <200404191100.24390.w.knol@niwa.co.nz>
+Reply-To: w.knol@niwa.co.nz
 Mime-Version: 1.0
 Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <40819B4B.40708@cs.unibo.it>
+Content-Disposition: inline
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"; format="flowed"
-To: Andrea Borgia <borgia@cs.unibo.it>
-Cc: linux-hams@vger.kernel.org
+Content-Type: text/plain; charset="us-ascii"
+To: linux-hams@vger.kernel.org
 
-Anyway, no problem with 2.4.21-0.13mdk
-(Do not know if it helps...)
+My home-brew amateur radio logging and log-editing software is now 
+available for public download at:
 
-Andrea Borgia wrote:
+http://www.qsl.net/zl2arn/zl2bsj.htm
 
-> On my Debian "Woody" system I am using the userspace soundmodem 
-> v0.7-1. I have setup ax25d to call ttylinkd when somebody connects to 
-> my own call and it was working fine with 2.4.25.
->
-> Has anyone else found the same problem? Any idea as to the cause?
+In brief: the logger and editor, written in  Perl, are ncurses (text 
+mode)  front-ends to SQLite, a light-weight relational database.The 
+logger talks to your radio via the excellent Hamlib rig control 
+libraries. It transmits CW for you using CWdaemon, and is GPL 
+licenced.
+
+Intended use: QSO logging and casual contesting.
+
+Check the 'features' link on the web page for further details. To 
+install, download the archive to your home directory. Extract with:
+
+ tar xvzf <archive-name>
+
+...and read the README.
+
+Comments/feedback appreciated. Thanks to Gordon ZL2ARN for setting up 
+the web page.
+
+
+Wilbert, ZL2BSJ
+
+
+
+
+
+
+
+
 
 
