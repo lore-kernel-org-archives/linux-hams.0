@@ -1,54 +1,77 @@
-From: Gavin Rogers <grogers@vk6hgr.echidna.id.au>
-Subject: Re: Security vulnerabilitys in AX.25/IP Node Software
-  (multiple)
-Date: Sat, 30 Aug 2003 02:19:00 +0800
-Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <5.2.1.1.2.20030830020555.01b17de8@vk6hgr.echidna.id.au>
-References: <15F2A301AB74C44A995781A937567A7C010A6DCD@markadmex01.adm.m
- ark.se>
+From: Stephen Hemminger <shemminger@osdl.org>
+Subject: [PATCH] set socket owner (ax25, rose, netrom)
+Date: Fri, 29 Aug 2003 11:42:08 -0700
+Sender: netdev-bounce@oss.sgi.com
+Message-ID: <20030829114208.40f10cca.shemminger@osdl.org>
 Mime-Version: 1.0
-Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <15F2A301AB74C44A995781A937567A7C010A6DCD@markadmex01.adm.m
- ark.se>
-List-Id: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"; format="flowed"
 Content-Transfer-Encoding: 7bit
-To: linux-hams@vger.kernel.org
+Return-path: <netdev-bounce@oss.sgi.com>
+Errors-to: netdev-bounce@oss.sgi.com
+List-Id: <linux-hams.vger.kernel.org>
+Content-Type: text/plain; charset="us-ascii"
+To: ralf@linux-mips.org, "David S. Miller" <davem@redhat.com>
+Cc: linux-hams@vger.kernel.org, netdev@oss.sgi.com
 
+AX25, NETROM, ROSE all need to set the socket owner field, otherwise it is possible
+to remove the module when there are orphaned sockets.
 
->
->----{ buffer overflow and popen() flaws }----
->
->* URONode (up to v0.5-R2) [Message command]
->   - mailbox.c:131 - Buffer overflow
->   - popen() stuff below is availible for all! (REALY SERIUS!)
->
->* AWZNode   (up to v0.4-pre2) [Send command]
->   - mailbox.c:134 - Buffer overflow (Note 1)
->   - popen() stuff below exist, but is not availible...  (Note 1)
->
->* LinuxNode
->   - This function does not exist in LinuxNode.
+Patch against 2.6.0-test4
 
-Hi All.
-
-Just for info:
-
-The popen using code that AWZNode/URONode uses to handle email sending 
-appears to have been taken from the "PMS" program distributed with 
-ax25-utils (ax25-utils-2.1.42a from 
-http://hes.iki.fi/pub/ham/unix/linux/ax25/ax25-utils-2.1.42a.tar.gz)
-
-So PMS (designed to be called from ax25d and emulates a TNC mailbox) from 
-ax25-utils is also vulnerable to attack.
-
-73
-Gavin
-
----
-Amateur radio station VK6HGR
-http://vk6hgr.ampr.org/
-
-Email : grogers@vk6hgr.echidna.id.au
-Packet: vk6hgr@vk6hgr.#per.#wa.aus.oc
+diff -Nru a/net/x25/af_x25.c b/net/x25/af_x25.c
+--- a/net/x25/af_x25.c	Fri Aug 29 11:23:32 2003
++++ b/net/x25/af_x25.c	Fri Aug 29 11:23:32 2003
+@@ -449,6 +449,7 @@
+ 	x25->sk = sk;
+ 
+ 	sock_init_data(NULL, sk);
++	sk_set_owner(sk, THIS_MODULE);
+ 
+ 	skb_queue_head_init(&x25->ack_queue);
+ 	skb_queue_head_init(&x25->fragment_queue);
+@@ -478,6 +479,7 @@
+ 	x25 = x25_sk(sk);
+ 
+ 	sock_init_data(sock, sk);
++	sk_set_owner(sk, THIS_MODULE);
+ 
+ 	init_timer(&x25->timer);
+ 
+diff -Nru a/net/rose/af_rose.c b/net/rose/af_rose.c
+--- a/net/rose/af_rose.c	Fri Aug 29 11:22:10 2003
++++ b/net/rose/af_rose.c	Fri Aug 29 11:22:10 2003
+@@ -518,6 +518,7 @@
+ 	rose = rose_sk(sk);
+ 
+ 	sock_init_data(sock, sk);
++	sk_set_owner(sk, THIS_MODULE);
+ 
+ 	skb_queue_head_init(&rose->ack_queue);
+ #ifdef M_BIT
+@@ -556,6 +557,7 @@
+ 	rose = rose_sk(sk);
+ 
+ 	sock_init_data(NULL, sk);
++	sk_set_owner(sk, THIS_MODULE);
+ 
+ 	skb_queue_head_init(&rose->ack_queue);
+ #ifdef M_BIT
+diff -Nru a/net/netrom/af_netrom.c b/net/netrom/af_netrom.c
+--- a/net/netrom/af_netrom.c	Fri Aug 29 11:22:49 2003
++++ b/net/netrom/af_netrom.c	Fri Aug 29 11:22:49 2003
+@@ -433,6 +433,7 @@
+ 	nr = nr_sk(sk);
+ 
+ 	sock_init_data(sock, sk);
++	sk_set_owner(sk, THIS_MODULE);
+ 
+ 	sock->ops    = &nr_proto_ops;
+ 	sk->sk_protocol = protocol;
+@@ -473,6 +474,7 @@
+ 	nr = nr_sk(sk);
+ 
+ 	sock_init_data(NULL, sk);
++	sk_set_owner(sk, THIS_MODULE);
+ 
+ 	sk->sk_type     = osk->sk_type;
+ 	sk->sk_socket   = osk->sk_socket;
 
