@@ -1,25 +1,26 @@
-From: George Lloyd <g.lloyd@btinternet.com>
-Subject: 32 FBB telnet problems.
-Date: Sun, 12 May 2002 16:33:00 +0100
+From: "Kameron A. Cole" <kernel@medianox.net>
+Subject: newbie needs equipment
+Date: Tue, 14 May 2002 21:22:19 -0500
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <02051216330000.08335@localhost.localdomain>
-Reply-To: g.lloyd@essexpkt.co.uk
+Message-ID: <3CE1C65B.6060901@medianox.net>
+Reply-To: kernel@medianox.net
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7BIT
+Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"
+Content-Type: text/plain; charset="us-ascii"; format="flowed"
 To: linux-hams@vger.kernel.org
 
-Hi,
+hello:
 
-Anyone know if there is a fix for a lack of line feeds with 32bit FBB telnet 
-forwarding to non FBB BBS.
+I'd like recommendations on a radio and modem (card) for a beginner with 
+an Inspiron 7000.
 
-It looks as though you have the choice of echo and line feeds or no echo and 
-no line feeds. Neither any good for telnet forwarding to non FBB BBS.
--- 
-G.B. Lloyd
-g.lloyd@essexpkt.co.uk
-www.essexpkt.co.uk 
-For the home of NNA BBS software
+Glad to be on the list!
+
+-kc
+
+ 
+
+
+
