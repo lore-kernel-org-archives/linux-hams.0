@@ -1,41 +1,42 @@
-From: Chuck Hast <wchast@gmail.com>
-Subject: Testing ax25 and network using call
-Date: Wed, 3 Nov 2004 22:59:28 -0800
-Message-ID: <620c905704110322596924e940@mail.gmail.com>
-Reply-To: Chuck Hast <wchast@gmail.com>
+From: Jim Meehan <jmeehan@vpizza.org>
+Subject: YAM transmit problem
+Date: Fri, 5 Nov 2004 18:56:01 -0800
+Message-ID: <20041106025600.GV16055@alcatraz.vpizza.org>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
+Content-Disposition: inline
 Sender: linux-hams-owner@vger.kernel.org
 List-Id: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
-To: Linux-hams List <linux-hams@vger.kernel.org>
+Content-Transfer-Encoding: 7bit
+To: linux-hams@vger.kernel.org
 
-I have the ax25 stuff working. I can issue a CALL command to connect to a
-nearby FPAC switch as a ax25 user.
+Hello all,
 
-But when I try to use it with ROSE I get the following
-The GW4PTS line
-Trying...
-connect: Invalid argument.
+I'm trying to get a YAM modem working with my Linux machine.  I believe
+I've got the configuration correct using yamcfg, ifconfig, and the 
+/etc/ax25/axports file.  I can see inbound packets using the "listen" tool
+from the ax25-utils package, and the RX packets counter is incrementing
+when I look at ifconfig:
 
-My rsport is rose and I am attempting to connect to node at a address of
-3100813224
-I have used rsparms to tell the app that the next door neighbor switch
-is kc5qcn-9  and the address of that switch is 3100813224
-If I issue the rsparms -node list  I see that 3100813224 is on port
-sp0 (using 6pack) and the neighbor switch call is kc5qcn-9
+yam0      Link encap:AMPR AX.25  HWaddr W6XE-11  
+          inet addr:10.0.0.1  Mask:255.0.0.0
+          UP RUNNING  MTU:256  Metric:1
+          RX packets:108 errors:0 dropped:0 overruns:0 frame:0
+          TX packets:0 errors:0 dropped:0 overruns:0 carrier:0
+          collisions:0 txqueuelen:0 
+          RX bytes:0 (0.0 b)  TX bytes:0 (0.0 b)
+          Interrupt:4 Base address:0x3f8 
 
-This is the format I am using;
-call rose node 3100813224
+However, when I try to transmit packets, using the "beacon" tool, or 
+ax25_call, no packets are transmitted.  I don't believe this is a hardware
+problem, since I don't see the TX packets counter in ifconfig incrementing,
+and I don't see any outbound packets in the output from "listen".  Also,
+I don't see the red TX LED go on on the YAM board.
 
-Node is the node app which resides at swithc 3100813224
+Any ideas on why none of the ax25 programs are transmitting packets?
 
-Anyone have a idea of why this is failing?
+Thanks,
 
--- 
-Chuck Hast 
-To paraphrase my flight instructor;
-"the only dumb question is the one you DID NOT ask resulting in my going
-out and having to identify your bits and pieces in the midst of torn
-and twisted metal."
+Jim, W6XE
+
