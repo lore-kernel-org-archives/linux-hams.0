@@ -1,38 +1,37 @@
-From: Scott Lambert <lambert@lambertfam.org>
-Subject: Re: Just Another Morse Tutor
-Date: Thu, 10 Apr 2003 03:27:22 -0400
+From: Mike Markowski <mm@UDel.Edu>
+Subject: Square One!
+Date: Thu, 10 Apr 2003 13:04:05 -0400
 Sender: linux-hams-owner@localhost
-Message-ID: <20030410072722.GB73545@laptop.lambertfam.org>
-References: <200304100907.14935.rdmartinml@infinito.it>
+Message-ID: <20030410170405.GA29076@strauss.udel.edu>
 Mime-Version: 1.0
 Return-path: <linux-hams-owner@vger.kernel.org>
 Content-Disposition: inline
-In-Reply-To: <200304100907.14935.rdmartinml@infinito.it>
 List-Id: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
-To: Giuseppe Martino <rdmartinml@infinito.it>
-Cc: linux-hams@vger.kernel.org
+To: Linux Hams <linux-hams@vger.kernel.org>
 
-On Thu, Apr 10, 2003 at 09:07:14AM +0200, Giuseppe Martino wrote:
-> Ciao!
-> 
-> My name is Giuseppe IZ8EQD,
-> 
-> I'm writing to this ML for a little bit OT question.
-> 
-> I'm writing a Morse Tutor, and I need some feedbacks.
-> So I thinked to ask a comment about my software to this ML.
-> 
-> If you want help me you can download ALDO at aldo.sf.net.
-> 
-> The last version is 0.0.10.
-> 
-> It's Software Libero licensed under GPL.
+Hi all,
 
-Yes!!! Thank you for not making this Linux only.  I will be trying it 
-out over the next several days.  
+I hope to get ax.25 going on my laptop and build in soundmodem
+support (in the hopes that my machine's ESS Allegro 1 is truly
+SB compatible).  After building the latest 2.4 kernel w/ax.25
+and soundmodem support, I couldn't find the ax25-utils that the
+AX25-HOWTO mentions.  In my search I found and subscribed to
+this list and saw a note go by saying the latest 2.5 is the
+better choice.  But before I do that, I'd like to doublecheck
+that the following is the way to do things rather than what the
+AX25-HOWTO says:
 
--- 
-Scott Lambert                    KC5MLE                       Unix SysAdmin
-lambert@lambertfam.org      
+	- Build latest 2.5 kernel with ax.25 & soundmodem support
+
+	- Install hamlib (disregard the AX25-HOWTO's advice
+	  about the ax25-* packages??)
+
+	- Start compiling & installing the applications.
+
+Sorry for the very basic nature of the questions.  Just want to
+be sure I'm heading off the right direction is all.  Thanks very
+much!
+
+	Mike   AB3AP
