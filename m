@@ -1,35 +1,24 @@
-From: iw2esa <anespo1@virgilio.it>
-Subject: Soundmodemconfig
-Date: Sat, 30 Oct 2004 12:01:45 +0200
-Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <200410301201.45278.anespo1@virgilio.it>
-Reply-To: anespo1@virgilio.it
+From: Chuck Hast <wchast@gmail.com>
+Subject: 6pack multi-drop
+Date: Sun, 31 Oct 2004 04:15:20 -0800
+Message-ID: <620c90570410310415117ab5b4@mail.gmail.com>
+Reply-To: Chuck Hast <wchast@gmail.com>
 Mime-Version: 1.0
 Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
-Content-Disposition: inline
+Sender: linux-hams-owner@vger.kernel.org
 List-Id: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
-To: linux-hams@vger.kernel.org
+To: Linux-hams List <linux-hams@vger.kernel.org>
 
-Thank you for all suggestions about configure soundmodem. Now I call 
-soundmodemconfig, create a new sessione and channel 0 but when go to use a 
-diagnostic I see this output:
+Has the multi-drop function in 6-pack been done yet for Linux? I have been
+playing with a single TNC and really like how it handles the channel. Would
+like to be able to use the multi-drop function, but all documentation says it
+has not been implemented yet.
 
-Modulator: afsk Demodulator: afsk
-Minimum sampling rate: 9600
-Audio IO: type soundcard
-sm[5381]: audio: starting "/dev/dsp0"
-sm[5381]: audio: forcing half duplex mode
-sm[5381]: audio: Error, cannot set the channel number to 1
-
-Any idea?
 -- 
-
-73 de Antonio, IW2ESA
-http://www.italinux.org Ham Portal
-SySop of IW2ESA-8, UHF Access 430.480Mhz 1200 Bd
-Telnet access telnet iw2esa.dyndns.org 3200
-DxCluster IW2ESA-6 VHF 144.875Mhz 1200 Bd
-Telnet access: telnet iw2esa.dyndns.org 7300
-
+Chuck Hast 
+To paraphrase my flight instructor;
+"the only dumb question is the one you DID NOT ask resulting in my going
+out and having to identify your bits and pieces in the midst of torn
+and twisted metal."
