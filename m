@@ -1,40 +1,43 @@
-From: Hamish Moffatt <hamish@cloud.net.au>
-Subject: Re: Compiling last node version.
-Date: Fri, 5 Mar 2004 11:29:12 +1100
+From: =?iso-8859-15?q?G=FCnther=20Montag=20?= <dl4mge@darc.de>
+Subject: soundcard pactor program: mailbox mode planned
+Date: Fri, 5 Mar 2004 13:59:12 +0100
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <20040305002912.GA6825@cloud.net.au>
-References: <200403050009.02359@www.cabodesantapola.org>
+Message-ID: <200403051359.12776.dl4mge@darc.de>
 Mime-Version: 1.0
 Content-Transfer-Encoding: QUOTED-PRINTABLE
 Return-path: <linux-hams-owner@vger.kernel.org>
-Content-Disposition: inline
-In-Reply-To: <200403050009.02359@www.cabodesantapola.org>
 List-Id: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="iso-8859-1"
 To: linux-hams@vger.kernel.org
+Cc: hfterm-hackers@lists.sourceforge.net, suse-ham-e@suse.com
 
-On Fri, Mar 05, 2004 at 12:09:01AM +0100, Ruben Navarro Huedo wrote:
-> dpkg-checkbuilddeps: Unmet build dependencies: debhelper (>=3D4)
-
-> libax25-0.0.11 $ dpkg-buildpackage -b -uc -d
-> dpkg-buildpackage: source package is libax25
-> dpkg-buildpackage: source version is 0.0.11-2
-> dpkg-buildpackage: source maintainer is Bruce Walker <w1bw@debian.org=
->
-> dpkg-buildpackage: host architecture is i386
->  debian/rules clean
-> dh_testdir
-> make: dh_testdir: No se encontr=F3 el programa
-> make: *** [clean] Error 127
->=20
-> Any help?
-
-Install the missing build dependencies ie debhelper >=3D 4.
-
-
-Hamish
+Hello friends
+at the moment I maintain Tom Sailer's hf package, it is a linux soundca=
+rd FSK=20
+program that can transmit and rx pactor level 1, amtor, gtor, rtty.
+I had the idea to add a pactor mailbox feature, like winlink or airmail=
+ which=20
+already exist. It might be interesting for clubs and hams who have a=20
+soundcard, but can not afford a ptc.
+I do not want to invent the wheel again, and i am still not so deep in =
+c.=20
+I think I am able to start with implement the command set, like usual i=
+n a=20
+mailbox. But I am looking for some tips, in what format to store the ma=
+ils=20
+(mbox? maildir? is there an other special format in packet mailboxes?) =
+and=20
+with which of the  existing programs I can connect my application (tnt?=
+  tnn?=20
+dpbox? f6fbb?) to forward mails to packet and / or internet. Where can =
+I=20
+begin to read?
+Thanks for your ideas!
+hf, last version 0.5, is at www.hfterm.sf.net
 --=20
-Hamish Moffatt VK3SB <hamish@debian.org> <hamish@cloud.net.au>
+73 de
+G=FCnther
+dl4mge@darc.de
 -
 To unsubscribe from this list: send the line "unsubscribe linux-hams" i=
 n
