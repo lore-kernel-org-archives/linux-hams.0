@@ -1,71 +1,35 @@
-From: =?iso-8859-15?q?G=FCnther=20Montag=20?= <dl4mge@darc.de>
-Subject: Re: ANN: gMFSK version 0.7pre1 -tnx!!
-Date: Fri, 4 Mar 2005 18:04:10 +0100
-Message-ID: <200503041804.10342.dl4mge@darc.de>
-References: <1109102740.1260.30.camel@oh2bns.ampr.org>
+From: Dave Stubbs <dave.stubbs@utoronto.ca>
+Subject: Soundmodem Logging
+Date: Sat, 05 Mar 2005 21:46:21 -0500
+Message-ID: <422A6EFD.3060000@utoronto.ca>
+References: <20040213100203.62bbe780.washer@trlp.com> <20040213193911.D220@jeroen.pe1rxq.ampr.org>
 Mime-Version: 1.0
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-In-Reply-To: <1109102740.1260.30.camel@oh2bns.ampr.org>
+Content-Transfer-Encoding: 7bit
+In-Reply-To: <20040213193911.D220@jeroen.pe1rxq.ampr.org>
 Sender: linux-hams-owner@vger.kernel.org
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="iso-8859-1"
-To: Tomi Manninen <oh2bns@sral.fi>
-Cc: linux hams <linux-hams@vger.kernel.org>, -HFTERMHACKERS- <hfterm-hackers@lists.sourceforge.net>
+Content-Type: text/plain; charset="us-ascii"; format="flowed"
+To: linux-hams@vger.kernel.org
 
-Am Dienstag 22 Februar 2005 21:05 schrieb Tomi Manninen:
-> Hi all,
->
-> I have uploaded the first pre-release of the upcoming
-> gMFSK version 0.7 to the gMFSK web site.
->
->  http://gmfsk.connect.fi/
->
-> A short list of new features:
->
-> - CW support. Both send and receive. Send currently only
->   through the soundcard. Cwdaemon support planned...
->
-> - Olivia support. For info about Olivia see
->   http://homepage.sunrise.ch/mysunrise/jalocha/mfsk.html
->   gMFSK is probably the first multimode graphical program
->   to support Olivia...
->
-> - Proper Feldhell fonts.
->
-> - Support for internationalization. Finnish and Slovakian
->   translations exist. Other languages welcome.
->
-> - All sorts of smaller stuff, see the ChangeLog for
-> details.
->
-> Like said, this is a pre-release. Not everything is ready
-> yet and there probably are some rough edges in there.
-> Anyway I highly recommend people to test it!
->
-> Have fun!
+Hello all,
 
+I'm using userspace soundmodem, and it works really great.  However, I 
+have a question about the soundmodem logging setup.
 
-Hello  Tomi !!
-Tnx very much for this very good program!
+I have the following in my script that starts up soundmodem:
 
-I managed to compile it with SuSE Linux 9.2 after one small=20
-challenge: The compiler said that popt.h was missing, so I=20
-searched and found that I had to install the package=20
-popt-devel. Configure had not checked it.
+soundmodem -sM -v 9
 
-Compared to the hf prog which I am maintaining (trying to)=20
-gmfsk is really beautiful and mature and has many=20
-user-friendly feature and good gui. The modes are very=20
-interesting and I will have lot of fun with it. Olifia=20
-sounds as beautiful as the name itself.
+According to my reading, the -s switch should switch logging to the 
+syslog, and the -v 9 switch should enable massive amounts of logging.
 
-Greetings
+However, despite this, the syslog only gets one entry showing syslog 
+startup, while the console gets the massive spew of log items.
 
-73 de
-G=FCnther
-dl4mge@darc.de
--
-To unsubscribe from this list: send the line "unsubscribe linux-hams" i=
-n
-the body of a message to majordomo@vger.kernel.org
-More majordomo info at  http://vger.kernel.org/majordomo-info.html
+Is there any way to redirect all these messages to the syslog instead, 
+where I believe my command line setup told them to go?
+
+Thanks,
+
+Dave
+VA3BHF
