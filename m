@@ -1,30 +1,38 @@
-From: Bob Snyder <rsnyder@toontown.erial.nj.us>
-Subject: Re: Compiling last node version.
-Date: Sat, 06 Mar 2004 15:07:00 -0500
+From: Wilbert Knol <w.knol@niwa.co.nz>
+Subject: Re: soundcard pactor program: mailbox mode planned
+Date: Mon, 8 Mar 2004 13:23:22 +1300
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <404A2F64.3030700@toontown.erial.nj.us>
-References: <200403050009.02359@www.cabodesantapola.org> <20040305002912.GA6825@cloud.net.au>
+Message-ID: <200403081323.22412.w.knol@niwa.co.nz>
+References: <200403051359.12776.dl4mge@darc.de>
+Reply-To: w.knol@niwa.co.nz
 Mime-Version: 1.0
 Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <20040305002912.GA6825@cloud.net.au>
+In-Reply-To: <200403051359.12776.dl4mge@darc.de>
+Content-Disposition: inline
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"; format="flowed"
+Content-Type: text/plain; charset="us-ascii"
 To: linux-hams@vger.kernel.org
 
-Hamish Moffatt wrote:
-> On Fri, Mar 05, 2004 at 12:09:01AM +0100, Ruben Navarro Huedo wrote:
-> 
->>dpkg-checkbuilddeps: Unmet build dependencies: debhelper (>=4)
-[...]
-> Install the missing build dependencies ie debhelper >= 4.
+It would be nice if the HF application was able to forward to, and 
+take delivery from Winlink/WL2K. However, it may pay to check out how 
+many WL2K stations still support PACTOR-1. I believe some now only 
+accept PT2 and 3 connections.
 
-Or even simpler: "apt-get build-dep libax25" which will install the 
-build dependencies for libax25, assuming they can be met with the 
-package sources you have defined.
+On the local machine, you could consider forwarding ( from the HF 
+application)  to the local SMTP server instead of trying to directly 
+store in the user's mailbox.
 
-Or live in the fast and mildly dangerous lane by running debian 
-unstable, or less risky, debian testing. :-)
+With regards to HF users: why not present them with an interface 
+similar to the UNIX mail program. Doesn't Linuxnode do that? You'd be 
+able to borrow the code.
 
-Bob N2KGO
+I don't know how hard it is to get local E-mail into a local FBB 
+server...but, to me, it makes sense to treat it all as E-mail, 
+allowing you to use whatever mail reader you like.
+
+Just some random musings...
+
+
+Wilbert, ZL2BSJ
 
