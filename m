@@ -1,31 +1,28 @@
-From: "Janusz Przybylski - SP1LOP" <Janusz.Przybylski@sp1lop.szczecin.pl>
-Subject: Help Back-UPS 250
-Date: Thu, 23 Dec 2004 13:55:41 +0100
-Message-ID: <000201c4e8ee$fbd09d70$fec9a8c0@sp1lop.szczecin.pl>
-Reply-To: "Janusz Przybylski - SP1LOP" <Janusz.Przybylski@sp1lop.szczecin.pl>
+From: Luc Langehegermann <luc@lx2gt.lu>
+Subject: Searching for some help
+Date: Thu, 23 Dec 2004 16:04:19 +0100
+Message-ID: <1103814259.41cade7397ec6@mail.lx2gt.lu>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 7BIT
 Return-path: <linux-hams-owner@vger.kernel.org>
 Sender: linux-hams-owner@vger.kernel.org
 List-Id: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
-To: Linux-Hams <linux-hams@vger.kernel.org>
+To: amsat-bb@amsat.org
+Cc: linux-hams@vger.kernel.org
 
-Hi All
+Hello,
 
-I look for to APC Back-UPS 250  electric schemat. 
-It does not it load me Battery only 8V is and 13,8 V should 
-I ask about help very.
+Thank you for reading this. As some of you may know, I am the Author of the KDE
+Satellite tracking an prediction software, Ktrack (cf http://ktrack.lx2gt.lu),
+and I am seaking help for my project. The code for the next release is almost
+finished, but lacks good documentation. The ham that wrote the old
+documentation can no longer work on the project, for different reasons. So I am
+seeking someone who has interests in the project, is relativly good in english
+writing (which I am NOT), to give me a hand to complete the documentation.
+
+Thanks, 73, Luc
 
 
-                          73 de Janusz SP1LOP
-==================================
-Co-ordinator Polish AmprNet 44.165/16
-http://www.szczecin.ampr.org/44-net
-==================================
-Inet:            Janusz.Przybylski@sp1lop.szczecin.pl
-AmprNet: sp1lop@szczecin.ampr.org
-AX25:     SP1LOP @ SR1BSZ.SZ.POL.EU
-====================================
-I'm Sysop: SR1BSZ & szczecin.ampr.org
- 
+----------------------------------------------------------------
+This message was sent using IMP, the Internet Messaging Program.
