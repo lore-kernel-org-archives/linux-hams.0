@@ -1,70 +1,78 @@
-From: Arno Verhoeven <pe1icq@pi8zaa.ampr.org>
-Subject: problem compiling aprsd-2.2.5-14
-Date: Wed, 03 Sep 2003 21:36:11 +0200
+From: Martijn Hijdra <martijn@esrac.ele.tue.nl>
+Subject: Statistics patch for scc.c  driver
+Date: Fri, 05 Sep 2003 10:15:27 +0200
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <3F5642AB.3040309@pi8zaa.ampr.org>
+Message-ID: <1062749727.4434.4.camel@imst153.imst.de>
+References: <Pine.LNX.4.33.0307091916160.8812-100000@zoef.pe1icq.ampr.org>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
+Content-Type: multipart/mixed; boundary="=-GIR3lJy9QLfAnVOV2+/v"
 Return-path: <linux-hams-owner@vger.kernel.org>
+In-Reply-To: <Pine.LNX.4.33.0307091916160.8812-100000@zoef.pe1icq.ampr.org>
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"; format="flowed"
-To: Linux HAMs <Linux-hams@vger.kernel.org>
+To: linux-hams@vger.kernel.org
 
-Hi,
 
-Aprsd-2.2.5.14 won't compile on on my system with gcc-3.2.3 
-(Slackware-current).
-It compiles fine on my older slackware 8.0 system (gcc-2.95.3)
+--=-GIR3lJy9QLfAnVOV2+/v
+Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
 
-This is the error...
+Hi All,
 
-g++ -DHAVE_CONFIG_H -I. -I. -I.. -I../src    -g -O2 -Wall -pipe -pthread 
--c -o utils.o `test -f 'utils.cpp' || echo './'`utils.cpp
-In file included from /usr/include/c++/3.2.3/backward/strstream:51,
-                 from utils.cpp:29:
-/usr/include/c++/3.2.3/backward/backward_warning.h:32:2: warning: 
-#warning This file includes at least one deprecated or antiquated 
-header. Please consider using one of the 32 headers found in section 
-17.4.1.2 of the C++ standard. Examples include substituting the <X> 
-header for the <X.h> header for C++ includes, or <sstream> instead of 
-the deprecated header <strstream.h>. To disable this warning use 
--Wno-deprecated.
-source='validate.cpp' object='validate.o' libtool=no \
-depfile='.deps/validate.Po' tmpdepfile='.deps/validate.TPo' \
-depmode=gcc3 /bin/sh ../support/depcomp \
-g++ -DHAVE_CONFIG_H -I. -I. -I.. -I../src    -g -O2 -Wall -pipe -pthread 
--c -o validate.o `test -f 'validate.cpp' || echo './'`validate.cpp
-In file included from /usr/include/c++/3.2.3/backward/strstream:51,
-                 from validate.cpp:35:
-/usr/include/c++/3.2.3/backward/backward_warning.h:32:2: warning: 
-#warning This file includes at least one deprecated or antiquated 
-header. Please consider using one of the 32 headers found in section 
-17.4.1.2 of the C++ standard. Examples include substituting the <X> 
-header for the <X.h> header for C++ includes, or <sstream> instead of 
-the deprecated header <strstream.h>. To disable this warning use 
--Wno-deprecated.
-g++  -g -O2 -Wall -pipe -pthread   -o aprsd  aprsd.o aprsString.o 
-ax25socket.o cpqueue.o crc32.o dupCheck.o aprsdexception.o 
-exceptionguard.o history.o httpserver.o mic_e.o mutex.o osdep.o 
-queryResp.o rf.o serial.o servers.o string.o utils.o validate.o  -lcrypt 
--lpthread  -lax25
-mutex.o(.text+0x136): In function `aprsd::MutexManager::reg_funcs()':
-/tmp/aprsd-2.2.5-14/src/mutex.cpp:142: undefined reference to 
-`pthread_atfork'
-collect2: ld returned 1 exit status
-make[2]: *** [aprsd] Error 1
-make[2]: Leaving directory `/tmp/aprsd-2.2.5-14/src'
-make[1]: *** [all-recursive] Error 1
-make[1]: Leaving directory `/tmp/aprsd-2.2.5-14'
-make: *** [all] Error 2
 
-Does anybody have a solution for this?
+I had some spare time and generated a small patch to
+fill the statistics counters for the scc driver.
+see output of ifconfig RX bytes and TX bytes.
+
+
+Patch is generated for 2.6.0 kernel but should apply
+on numerous other (read older) kernels because the driver is not changed
+in a long time.
+
+Please test and if this patch works correctly we can apply this to the standard kernel.
+
+
+btw, a small compile fix is is in scc.h to change datatype.
+
+
+
 
 -- 
-73, PE1ICQ  Arno Verhoeven
---------------------------------
-AX.25  pe1icq@pi8zaa.#nbo.nld.eu
-smtp   pe1icq@pi8zaa.ampr.org
-inet   pe1icq@amsat.org
+Martijn Hijdra <martijn@esrac.ele.tue.nl>
 
+--=-GIR3lJy9QLfAnVOV2+/v
+Content-Disposition: attachment; filename=patch
+Content-Type: text/plain; name=patch; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+
+--- drivers/net/hamradio/scc.c.orig	2003-08-23 01:58:57.000000000 +0200
++++ drivers/net/hamradio/scc.c	2003-09-03 08:57:50.000000000 +0200
+@@ -1635,6 +1635,7 @@
+ 	}
+ 		
+ 	scc->dev_stat.rx_packets++;
++	scc->dev_stat.rx_bytes += skb->len;
+ 
+ 	skb->dev      = scc->dev;
+ 	skb->protocol = htons(ETH_P_AX25);
+@@ -1661,6 +1662,7 @@
+ 	}
+ 	
+ 	scc->dev_stat.tx_packets++;
++	scc->dev_stat.tx_bytes += skb->len;
+ 	scc->stat.txframes++;
+ 	
+ 	kisscmd = *skb->data & 0x1f;
+--- include/linux/scc.h.orig	2003-09-03 09:13:26.000000000 +0200
++++ include/linux/scc.h	2003-09-03 09:13:55.000000000 +0200
+@@ -200,7 +200,7 @@
+ 	unsigned char fulldup;		/* Full Duplex mode 0=CSMA 1=DUP 2=ALWAYS KEYED */
+ 	unsigned char waittime;		/* Waittime before any transmit attempt */
+ 	unsigned int  maxkeyup;		/* Maximum time to transmit (seconds) */
+-	unsigned char mintime;		/* Minimal offtime after MAXKEYUP timeout (seconds) */
++	unsigned int  mintime;		/* Minimal offtime after MAXKEYUP timeout (seconds) */
+ 	unsigned int  idletime;		/* Maximum idle time in ALWAYS KEYED mode (seconds) */
+ 	unsigned int  maxdefer;		/* Timer for CSMA channel busy limit */
+ 	unsigned char tx_inhibit;	/* Transmit is not allowed when set */	
+
+--=-GIR3lJy9QLfAnVOV2+/v--
 
