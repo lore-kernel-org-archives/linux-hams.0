@@ -1,49 +1,41 @@
-From: Nate Bargmann <n0nb@networksplus.net>
+From: chuck gelm <chuck@gelm.net>
 Subject: Re: Linux AX25 Digipeating Software
-Date: Wed, 22 Dec 2004 16:58:31 -0600
-Message-ID: <20041222225831.GB4086@merlin>
-References: <41C9A12A.2000401@utoronto.ca> <NCBBKBAJDJIPKFIAFBKLIEGOFFAC.wilson.hein@verizon.net> <20041222204955.GC8131@office.n7xy.net>
+Date: Wed, 22 Dec 2004 19:32:18 -0500
+Message-ID: <41CA1212.7090503@gelm.net>
+References: <200412211744.48000.sdaniels@airnet.com.au> <42630.192.168.1.15.1103624271.squirrel@192.168.1.15> <41C852B1.3020005@utoronto.ca> <20041222025754.GB23082@office.n7xy.net> <41C9A12A.2000401@utoronto.ca>
+Reply-To: chuck@gelm.net
 Mime-Version: 1.0
+Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
-Content-Disposition: inline
-In-Reply-To: <20041222204955.GC8131@office.n7xy.net>
+In-Reply-To: <41C9A12A.2000401@utoronto.ca>
 Sender: linux-hams-owner@vger.kernel.org
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-To: linux-hams List <linux-hams@vger.kernel.org>
+Content-Type: text/plain; charset="us-ascii"; format="flowed"
+To: Dave Stubbs <dave.stubbs@utoronto.ca>
+Cc: linux-hams List <linux-hams@vger.kernel.org>
 
-* Bob Nielsen <nielsen@oz.net> [2004 Dec 22 16:29 -0600]:
+Dave Stubbs wrote:
 > 
-> Sorry about the broken URL, thanks Willie.  
-> 
-> The binary appears to have been built with libc4 (this thing really is
-> old!).  I suspect that it is written for an older version of gcc, as
-> well.  The oldest one I have is 2.95 and that bombs, as do 3.2 and 3.3. 
-> I'm not a C programmer, so can't reallly help there.
-> 
-> The only reason it still exists in the TAPR repository is that I haven't
-> taken the time to clean out the obsolete stuff.  I probably will, once 
-> we get the new tapr.org server fully online.
-> 
-> I don't know if Craig VK2XLZ (the author) still frequents this list, but
-> if so maybe he could comment.
+>>> So, after all that - is there a good program out there that does 
+>>> simple, single-port, layer 2, AX.25 digipeating and works with kernel 
+>>> 2.6?
+>>>   
+>>
+>>
+>> I'm not aware of any other non-APRS digi software, but you can get 
+>> ax25digi at:
+>>
+>> ftp://ftp.tapr.org/software_lib/Linux/ax25/ax25digi.tgz
+>>
+>>  
+>>
+> Actually, there's no file there with that name at all.
+> Dave
+> VA3BHF
 
-Perhaps until Craig declares it obsolete this should be hosted
-*somewhere* just to preserve access to the code.  Digipeating is
-sometimes not recommended by some, but it would be nice if this code
-could be updated if for no other reason than to have the Linux AX.25
-capability meet the spec.
+  Hmmm, there is an 'axdigi.tgz' at
+ftp://ftp.tapr.org/software_lib/Linux/ax25
 
-I've been playing with AX.25 on another box again and didn't realize
-digipeating was lacking until this thread.  This prompted me to grab
-the file and save Tomi's patch.
+HTH, Chuck
 
-73, de Nate >>
 
--- 
- Wireless | Amateur Radio Station N0NB          |  Successfully Microsoft
-  Amateur radio exams; ham radio; Linux info @  | free since January 1998.
-             http://www.qsl.net/n0nb/           |  "Debian, the choice of
-             My Kawasaki KZ-650 SR @            |     a GNU generation!"
-        http://www.networksplus.net/n0nb/       |   http://www.debian.org
