@@ -1,50 +1,36 @@
-From: Tomi Manninen OH2BNS <tpm@prkele.tky.hut.fi>
-Subject: Re: libax25 axio_flush bug hangs node and fix
-Date: Wed, 16 Oct 2002 15:56:14 +0300 (EETDST)
+From: Jonathan Naylor <jonathan.naylor@ggaweb.ch>
+Subject: Re: Announcing PREDICT Version 2.2.0
+Date: Wed, 16 Oct 2002 14:53:04 +0200
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <Pine.HPX.4.10.10210161541030.585-100000@saturn.trs.ntc.nokia.com>
-References: <20021016032141.GC7618@enc.com.au>
-Reply-To: tpm@prkele.tky.hut.fi
+Message-ID: <0210161453040T.07854@g4klx>
+Reply-To: g4klx@qsl.net
 Mime-Version: 1.0
+Content-Transfer-Encoding: 7BIT
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <20021016032141.GC7618@enc.com.au>
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: TEXT/PLAIN; charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-To: Craig Small <csmall@enc.com.au>
-Cc: linux-hams@vger.kernel.org
+Content-Type: text/plain; charset="us-ascii"
+To: Linux Hams <linux-hams@vger.kernel.org>, Amsat BB <amsat-bb@amsat.org>
 
-On Wed, 16 Oct 2002, Craig Small wrote:
+Hi All
 
-> On Tue, Oct 15, 2002 at 11:52:11AM +0200, Tihomir Heidelberg wrote:
-> > I noticed that my awznode (a variant of linux node) hangs and 
-> > use maximum CPU when user starts any external command and 
-> > incoming AX.25 connection get broken.
-> 
-> Damn, i thought this been fixed in 10. Tomi and somoene else were
-> discussing it, I'll need their help again.
+I've just downloaded and started using the latest Predict version, 
+2.2.1. It is excellent, the addition of support for ALON/ALAT and 
+transponder modes, amongst other things has made it a complete program 
+for amateur satellite use.
 
-No, actually the bug was introduced in .10 ...
+The reason that I says this, is that I can see no further need to 
+maintain the MTrack program that I originally wrote. Therefore I 
+recommend that any users of MTrack (all two of them) change over to 
+Predict and let MTrack die in peace. It will remain available from my 
+web site for a while longer but is likely to disappear at any time.
 
-Anyway, I spent last evening thinking back what was discussed with Jeroen
-last spring and then cleaning up his last patch a bit. I will send that to
-you in a few days.
+Being GPL (like Predict), anyone is welcome to download the MTrack code 
+and to maintain it or use bits of it for their own projects, but my 
+development and maintenance of it is now at an end.
 
-Now, the problem is that this patch will revert the "fix" that was tried
-in 10. Jeroen tried to fix a problem in the applications with a fix in the
-lib. After the discussion we finally agreed that the .9 behaviour is
-correct, only a few relatively minor bugs needed to be squashed. The "big"
-bug is in the applications using libax25io and _they_ need to be fixed.
+This does not affect my other software, Baken, LinWSJT, UKW Tools and 
+my forthcoming Moon Tracking software.
 
-So finally yesterday I also started to really think how to fix node. The
-fix won't be trivial but I'll try and produce a working fix soon. Gosh...
-That would be the first new node release since -99 ...
+Thank you and Goodnight
 
-(If you want a quick fix, then Tihomir's patch seems ok to me. But I
-really wouldn't like to see that in an official release.)
-
--- 
-Tomi Manninen           Internet:  oh2bns@sral.fi
-OH2BNS                  AX.25:     oh2bns@oh2rbi.fin.eu
-KP20ME04                Amprnet:   oh2bns@oh2rbi.ampr.org
-
+Jonathan  HB9DRD/G4KLX
