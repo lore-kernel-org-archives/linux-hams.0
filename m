@@ -1,32 +1,36 @@
-From: Mike Markowski <mm@UDel.Edu>
+From: Tomi Manninen <oh2bns@sral.fi>
 Subject: Re: FlexNet connect
-Date: Mon, 1 Mar 2004 15:16:26 -0500
+Date: Mon, 01 Mar 2004 22:30:26 +0200
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <20040301201626.GA9714@strauss.udel.edu>
+Message-ID: <1078173025.1255.94.camel@oh2bns.ampr.org>
 References: <20040229224718.GA15835@strauss.udel.edu>
+	 <20040301201626.GA9714@strauss.udel.edu>
 Mime-Version: 1.0
+Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
-Content-Disposition: inline
-In-Reply-To: <20040229224718.GA15835@strauss.udel.edu>
+In-Reply-To: <20040301201626.GA9714@strauss.udel.edu>
 List-Id: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-To: Linux Hams <linux-hams@vger.kernel.org>
+To: Linux-hams List <linux-hams@vger.kernel.org>
 
-With thanks to Dave Platt, this is now fixed!  It turns out
-that I needed to choose the half-duplex option in soundmodemconfig.
-And of course I had tried just about everything under the sun
-*except* that.  Hopefully this will save a future newcomer to packet
-the effort of tracking it down.
+On Mon, 2004-03-01 at 22:16, Mike Markowski wrote:
 
-	Mike  AB3AP
+> With thanks to Dave Platt, this is now fixed!  It turns out
+> that I needed to choose the half-duplex option in soundmodemconfig.
+> And of course I had tried just about everything under the sun
+> *except* that.  Hopefully this will save a future newcomer to packet
+> the effort of tracking it down.
 
-On Sun 29-Feb-04 at 1747 EST, Mike Markowski wrote:
-> [...] There are several FlexNet nodes near me and I can't connect
-> to any.  I type, for example, "call radio W3EOC-2" and see
-> soundmodem send out the SABM+.  Immediately after, I hear a
-> long packet returned by the FlexNet node but soundmodem
-> prints nothing.  [...]
-> 
-> 	Thanks,
-> 	Mike  AB3AP
+Do you mean setting the Audio IO "half duplex" option on
+or setting the Channel Access "full duplex" option off?
+
+The former should not be used unless the sound driver does not
+work reliably with it off. Setting it on can cause additional
+latency in T/R switching and thus make life miserable for 
+everyone on the channel.
+
+The latter should be obvious (and also default to off).
+
+-- 
+Tomi Manninen / OH2BNS / KP20ME04
+
