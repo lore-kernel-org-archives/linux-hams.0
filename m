@@ -1,37 +1,20 @@
-From: Dennis Boone <drb@msu.edu>
-Subject: Syntorxgen v1.0rel
-Date: Sat, 23 Nov 2002 12:15:21 -0500
+From: "John J. Bauerly" <jbauerly@grapevine.net>
+Subject: options to static IP?
+Date: Sun, 24 Nov 2002 09:27:29 -0600
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <E18FdsI-0005Cc-00@yagi.h-net.msu.edu>
+Message-ID: <4.3.2.7.2.20021124092315.00aea3c0@pop3.norton.antivirus>
+Mime-Version: 1.0
 Return-path: <linux-hams-owner@vger.kernel.org>
 List-Id: <linux-hams.vger.kernel.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
+Content-Type: text/plain; charset="us-ascii"; format="flowed"
 Content-Transfer-Encoding: 7bit
 To: linux-hams@vger.kernel.org
 
-The first release (v1.0rel) of syntorxgen is now available from
-http://msuarc.egr.msu.edu/syntorx/.
+Hello All;
 
-Syntorxgen generates code plugs (i.e. sets of channel settings for
-frequency, PL, etc.) for Motorola Syntor X transceivers.
+I am currently running a packet node with a static IP . But my options if I 
+ichange the service  of the connection will loose the IP number. Is there 
+another way to run axip without a static ip so I can use DSL or roadrunner?
 
-It is developed and runs on Linux.  Binaries are also available for
-Windows and MS-DOS, and the package should be portable to other
-platforms without too much trouble.  The program reads the
-specifications for the desired code plug from a simple text file, and
-writes an image to a disk in various formats suitable for use with an
-EEPROM programmer.
+John J. Bauerly NW0I
 
-A code plug decoder which reads a code plug and produces a syntorxgen
-input file is included, as are a number of sample input files,
-scripts for generating test code plugs, etc.
-
-A Debian package is available, courtesy of KC8PUN.
-
-Syntor X radios are built tough, perform well, are relatively
-inexpensive, and are suitable for a variety of purposes including
-packet.  Voluminous documentation is available on the web.
-
-Dennis Boone
-KB8ZQZ
