@@ -1,28 +1,33 @@
-From: bminish@minish.org
-Subject: AXIP over UDP help
-Date: Tue, 16 Mar 2004 18:27:37 -0500 (EST)
+From: Doug <appld@sasktel.net>
+Subject: Loading packages
+Date: Wed, 17 Mar 2004 20:48:08 -0600
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <200403162327.i2GNRce05811@No6.NetMegs.com>
+Message-ID: <5.1.0.14.2.20040317204718.04da6200@mail.sasktel.net>
+Mime-Version: 1.0
+Content-Transfer-Encoding: 7BIT
 Return-path: <linux-hams-owner@vger.kernel.org>
 List-Id: <linux-hams.vger.kernel.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset="us-ascii"; format="flowed"
 To: linux-hams@vger.kernel.org
 
-I hope this isn't the wrong place to ask this question but I need some help setting up a AXIP tunnel to another node 
+I am running FC-1 with kernel 2.4.22.2174.nptl. When I tried to load a 
+couple of
+development packages, the system told me it could not find libxml2. I tried to
+load it from the cd, and then the system said that the package was already in
+the system is was newer then the one I was trying to load. In other words,  it
+looks like the package I wanted to load required the old copy. The new one must
+of been picked up by YUM.
 
-I need to do this using UDP packets and I would like to do this on port 93 (incoming)
+The question is, how do I go about doing this. Do I remove the new rpm, 
+reload the
+old and then load the application that I wanted? Then, reload the newer 
+rpm??? What
+I am afraid of, is that if I do this, it will come back with other files it 
+needs.
 
-I am running Redhat 9 and am using xinetd to manage the port listeners and networking services. Kernel is already compiled with AX25 support and it's 2.4.20-28.9
+What is the best way of doing this??
 
-I have managed after some fumbling to get my node and dxcluser cluster listening on RF and available for telnet connections.
+Thanks
 
-Specifically I need help with configuring Xinetd correctly to route incoming traffic on port 93 to AX25IPD and to correctly route outgoing AXIP UDP packets to port 93 on the remote node 
+Doug VE5DA 
 
-As you can probably guess I am new to the AX25 side of Linux and an relatively new to Linux in general 
-
-I have had a good look at the ax25howto but it doesn't seem to cover this very well 
-
-73
-Brendan EI6IZ 
