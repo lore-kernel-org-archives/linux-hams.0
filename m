@@ -1,31 +1,25 @@
 From: Arno Verhoeven <pe1icq@pi8zaa.ampr.org>
-Subject: Re: logging software
-Date: Sat, 29 Jun 2002 14:57:53 +0200 (CEST)
+Subject: [OT] ham radio equipment dealer in Florida?
+Date: Tue, 2 Jul 2002 01:45:12 +0200 (CEST)
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <Pine.LNX.4.33.0206291455290.5554-100000@zoef.pe1icq.ampr.org>
-References: <3D17C441.9000708@medianox.net>
+Message-ID: <Pine.LNX.4.33.0207020137070.5989-100000@zoef.pe1icq.ampr.org>
 Mime-Version: 1.0
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <3D17C441.9000708@medianox.net>
 List-Id: <linux-hams.vger.kernel.org>
 Content-Type: TEXT/PLAIN; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
-To: "Kameron A. Cole" <kernel@medianox.net>
-Cc: linux-hams@vger.kernel.org
+To: linux-hams@vger.kernel.org
 
-On Mon, 24 Jun 2002, Kameron A. Cole wrote:
+Hi,
 
-> After this weekend's ARRL Field Day, I decided to find some logging
-> software!
->
-> In fact, any advice regarding a complete set up - how to link three
-> 'sites' (tents with two multiband radios apiece) up to laptops for logging.
->
+Sri for this off-topic post.
+I'm currently vacationing in Florida and I'm considering to buy a new
+handheld multi-band tranceiver. Something like the Icom T81.
 
-Have a look at TLF.
-
-An index of all ham software for Linux (incl. TLF) can be found at
-http://radio.linux.org.au
+I've found a dealer address in Orlando, but I'm wondering if I there are
+any shops in the Tampa area that sell ham radio equipment?
+Are there hams on this list from the Tampa Bay area that can help me with
+this?
 
 
 73, PE1ICQ  Arno Verhoeven
