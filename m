@@ -1,8 +1,8 @@
 From: "Wilson G. Hein" <wilson.hein@verizon.net>
 Subject: RE: Digital BASH Update
-Date: Wed, 24 Apr 2002 12:05:43 -0400
+Date: Wed, 24 Apr 2002 12:02:43 -0400
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <NCBBKBAJDJIPKFIAFBKLCEFAEFAC.wilson.hein@verizon.net>
+Message-ID: <NCBBKBAJDJIPKFIAFBKLMEEPEFAC.wilson.hein@verizon.net>
 References: <13787905.1019649070@WUSJA129861-8HP>
 Reply-To: <wghein@ptd.net>
 Mime-Version: 1.0
@@ -13,15 +13,8 @@ List-Id: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
 To: John Ackermann   N8UR <jra@febo.com>, Linux-Hams Mailing List <linux-hams@vger.kernel.org>
 
-I think this explains it all.
-
-X-Mail-Format-Warning: Bad RFC822 header formatting in Sender:
-linux-hams-owner@vger.kernel.org
-Precedence: bulk
-X-Mail-Format-Warning: Bad RFC822 header formatting in X-Mailing-List:
-linux-hams@vger.kernel.org
-X-Spam-Status: No, hits=0.7 required=5.0
-tests=IN_REP_TO,FROM_MISSING,DATE_MISSING,MISSING_HEADERS version=2.01
+Your right John, it's not your setup, it looks like the listserver is
+striping the header info.
 
 -----Original Message-----
 From: John Ackermann N8UR [mailto:jra@febo.com]
