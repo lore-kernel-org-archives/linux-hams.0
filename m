@@ -1,20 +1,32 @@
-From: "Rick Bolen" <rbolen@carolina.rr.com>
-Subject: axip connection registry?
-Date: Tue, 4 Jan 2005 00:29:49 -0500
-Message-ID: <CDEKLJBDJHAEEAKNLEDAAEPCCFAA.rbolen@carolina.rr.com>
+From: ggb112 <gerard.borg@anu.edu.au>
+Subject: SCC cards
+Date: Wed, 05 Jan 2005 13:56:49 +1100
+Message-ID: <41DB5771.3020508@anu.edu.au>
 Mime-Version: 1.0
 Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
 Sender: linux-hams-owner@vger.kernel.org
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"
-To: Linux-Hams <linux-hams@vger.kernel.org>
+Content-Type: text/plain; charset="us-ascii"; format="flowed"
+To: Linux-Hams@vger.kernel.org
 
+Hi all
 
-How does one find connections for ax25ipd digipeating?
+Thanks very much to those who answered my original questions about 
+serial synchronous
+HDLC cards.
 
-Is there a registry or something for this?
+The fact that the cards provide TTL output should be enough to get an 
+interface going.
 
-73 de Rick, KG4OFO
+I have since found some synchronous cards from QUATECH and KONTRON.
+However the manufacturers do not know of LINUX support.
 
+Do LINUX network drivers actually exist for cards like the MPAC-100?
+
+In any case, please suggest some card brands you know that work with 
+LINUX network
+drivers.
+
+Gerard
 
