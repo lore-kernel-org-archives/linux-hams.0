@@ -1,72 +1,38 @@
-From: jeremiah KD7DMP <jjgpg@cet.com>
-Subject: Re: Kenwood TR-7950 Crashing Computer?
-Date: Wed, 26 Mar 2003 19:20:56 -0800 (PST)
+From: "Colin Harris" <charis.g3orh@virgin.net>
+Subject: Netrom disconnects
+Date: Thu, 27 Mar 2003 11:24:38 -0000
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <Pine.LNX.4.44.0303261837100.15484-100000@jazzy_earth_dragon.net>
-References: <1048639171.16852.34.camel@bobcp4.lingpgmr.com>
+Message-ID: <000501c2f453$9c3e80c0$14000a0a@p75>
 Mime-Version: 1.0
-Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <1048639171.16852.34.camel@bobcp4.lingpgmr.com>
-List-Id: <linux-hams.vger.kernel.org>
-Content-Type: TEXT/PLAIN; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
-To: Robert L Cochran <cochranb@speakeasy.net>
-Cc: Linux-Hams <linux-hams@vger.kernel.org>
+Return-path: <linux-hams-owner@vger.kernel.org>
+List-Id: <linux-hams.vger.kernel.org>
+Content-Type: text/plain; charset="us-ascii"
+To: Linux Hams <linux-hams@vger.kernel.org>
 
-Hello,
+Hi all,
+          Our system here in s / west uk consists of two
+linuxnodes running DX Spider netrom linked on a 100 km path
+via two intermediate netrom nodes. My co-sysop at the other
+end reports frequent system crashes when a netrom disconnect
+occurs. This is not 100% certain but a "best guess" from
+observation and log checking. Has anyone experienced
+anything similar ?
 
-It sounds like you are getting too much RF in the computer and if messing
-up the hard drive. I had the same problem with my massive floppy disk
-collection and my 70cm HT, Every time I would use the HT I would find more
-and more floppies that where tosated. So what I did was  I got an Amo box
-and loaded all the floppies in there, and now they are all the same as
-when they went in.
-So maybe if you can't move you'r antenna, you should try putting shielding
-around you box, and see if that will help.
+At this end I use kernel 2.2.12-20 and the other end uses
+something later ( perhaps 2.2.20 or thereabouts ). (I do not
+have any crashes due to netrom disconnects from my incoming
+netrom circuits here ).
 
-Good luck and 73.
-Jeremiah
-KD7DMP
+He uses Node-0.3.0 and allied ax25 stuff and I use
+node-0.3.1 plus updates but this problem has existed for
+some months before any of my updates.
+                   Any pointers or help/advice would be much
+appreciated ( BTW we both run Redhat versions ). Is there
+any way we can positively capture such an event conclusively
+?
 
-On 25 Mar 2003, Robert L Cochran wrote:
 
-> Hi,
->
-> Last week, after transmitting several times on a Kenwood TR-7950
-> connected to my KPC-3 Plus and my (practically brand new) computer, my
-> Red Hat Linux installation simply froze and crashed on me. The hard
-> drive developed all sorts of never before seen (to me at least!) bad
-> blocks and inode issues which e2fsck couldn't cure. I was left realizing
-> I had no choice but to reinstall Red Hat 8. I was getting issues like
-> the 'diff' program suddenly becoming a symlink pointing at 'cut'.
->
-> Although an friend of mine thinks it is not possible, I'm wondering if
-> transmitting with this model of Kenwood (which is about 20 years old, I
-> would say) only about 1 foot from my computer and 3 feet from the
-> antenna, caused the system to crash? Perhaps the antenna is simply too
-> close to the computer? It is an MFJ mag-mount antenna. I didn't do very
-> much transmitting at all, I was trying to connect to a friend's packet
-> radio rig about 10 miles away on 145.010 and according to him we were
-> connected only once and it timed out.
->
-> 73,
->
-> Bob Cochran
-> KB3JCM
->
->
->
->
->
->
->
->
->
->
-> -
-> To unsubscribe from this list: send the line "unsubscribe linux-hams" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at  http://vger.kernel.org/majordomo-info.html
->
+- Regards Colin
 
 
