@@ -1,35 +1,38 @@
-From: "John Montanez" <jemontanez@knology.net>
-Subject: Re: Just installed RedHat 9
-Date: Tue, 13 Jul 2004 10:33:54 -0500
+From: Karl Larsen <k5di@zianet.com>
+Subject: Re: [MT63] ANN: mt63lx version 0.5
+Date: Tue, 13 Jul 2004 14:25:36 -0600 (MDT)
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <00a201c468ee$d074b0b0$6401a8c0@jeremiel>
-References: <1223.192.168.1.117.1089178842.squirrel@gateway> <2498.192.168.1.117.1089215964.squirrel@gateway> <002801c4644c$0f62ecd0$6401a8c0@jeremiel> <200407082315.27383.pa3gcu@zeelandnet.nl> <009501c46533$923c2850$6401a8c0@jeremiel>
+Message-ID: <Pine.LNX.4.44.0407131420280.5237-100000@bucket.k5di.com>
+References: <1089653483.3378.50.camel@oh2bns.ampr.org>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
+In-Reply-To: <1089653483.3378.50.camel@oh2bns.ampr.org>
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"
-To: linux-hams@vger.kernel.org
+Content-Type: TEXT/PLAIN; charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+To: Tomi Manninen <oh2bns@iki.fi>
+Cc: MT63 List <MT63@yahoogroups.com>, Linux-hams List <linux-hams@vger.kernel.org>
 
-Again I would like to say thanks to everyone who has taken the trouble to
-respond to my request for help.  Thank you all.
+On Mon, 12 Jul 2004, Tomi Manninen wrote:
 
+> Hi all,
+> 
+> Pawel Jalocha, SP9VRC has released a new version of his MT63
+> implementation for Linux. This program has a text mode user
+> interface. This is also the base code on which all the other
+> MT63 capable programs (Linux and Windows) are based on.
+> (With the exception of MixW ?)
+> 
+> You can download the code from:
+> 
+>  http://he.fi/pub/ham/unix/linux/hfmodems/mt63lx-0.5.tar.gz
 
+	Tomi- I compiled this version on Red Hat version 9 with the new 
+ansii standard C++ and it did compile with zero errors. His version 0.4 
+was done on an earlier Linux and it needed some simple fixes but I never 
+got around to them at all. I looked at the gMSFK source and you had put 
+the necessary fixes into your version of this code. 
 
-I finally managed to build a custom kernel.  I resorted to reading the
-instructions in the documentation.  Just like they say, "If all else fails
-read the instructions".  I followed the instructions step by step, added the
-amateur radio features that I wanted in the config file using xconfig,
-followed the remaining steps in the instructions and everything else was
-automatic.
-
-
-
-If I had done this to begin with, even a dummy like me would have had
-absolutely no problem customizing the RedHat 9 kernel.
-
-
-
-John / KC4TXC
-
+	I look forward to trying ratecall1 and see how good or bad my 
+soundcard is. 
 
