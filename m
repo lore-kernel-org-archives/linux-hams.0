@@ -1,34 +1,29 @@
-From: Tomi Manninen <tpm@prkele.tky.hut.fi>
+From: Cees Tool <c.tool@quicknet.nl>
 Subject: Re: Which laptops are good for linux+packet(sound card) for County
  ARES?
-Date: Sat, 19 Oct 2002 00:54:23 +0300 (EEST)
+Date: Sat, 19 Oct 2002 09:20:54 +0200
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <Pine.LNX.4.44.0210190047470.22291-100000@oh2bns.ampr.org>
-References: <3DB07EEE.9080804@bealenet.com>
-Reply-To: tpm@prkele.tky.hut.fi
+Message-ID: <001b01c27740$11a4cae0$0300a8c0@HUISKAMER>
+References: <Pine.SOL.3.91.1021017133250.10243A-100000@gateway.grumman.com>
+ <3DB026AA.9060309@bealenet.com> <20021018212927.GA15679@localhost>
+ <3DB07EEE.9080804@bealenet.com>
 Mime-Version: 1.0
+Content-Transfer-Encoding: 7BIT
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <3DB07EEE.9080804@bealenet.com>
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: TEXT/PLAIN; charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-To: linux-hams@vger.kernel.org
+Content-Type: text/plain; charset="us-ascii"
+To: Linux-Hams <linux-hams@vger.kernel.org>
 
-On Fri, 18 Oct 2002, tbmoore wrote:
+Hi Boyd,
 
-> Thanks, Nate.  That's good to know.  Is there a laptop in the $500 range 
-> that would have a soundmodem compatible sound card under linux?  We may 
-> be forced to use the TNC - most of my team prefer that anyway.
+There is a lot of info about linux on laptops on :
+http://www.linux-laptop.net/
 
-My experience says that the different thinkpad models have very different
-audio hardware. You really need to know what version you have in mind.  
-My elderly work laptop is a tp600x and iirc the sound card is a cs4610.  
-I think it's fairly well supported under Linux but unfortunately I'm not
-able to test that... :( Anyway, afaik, there are at least three tp600
-variants, each with different audio hardware...
+There are many reports and howto's on different types of laptops. Maybe you
+can find details about soundcards too.
 
--- 
-Tomi Manninen           Internet:  oh2bns@sral.fi
-OH2BNS                  AX.25:     oh2bns@oh2rbi.fin.eu
-KP20ME04                Amprnet:   oh2bns@oh2rbi.ampr.org
+Regards,
+Cees - PA3AES
+
+
 
