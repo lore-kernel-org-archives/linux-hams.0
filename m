@@ -1,35 +1,35 @@
-From: Matti Aarnio <matti.aarnio@zmailer.org>
-Subject: Re: ANN: mt63lx version 0.5
-Date: Tue, 13 Jul 2004 09:01:49 +0300
+From: "John Montanez" <jemontanez@knology.net>
+Subject: Re: Just installed RedHat 9
+Date: Tue, 13 Jul 2004 10:33:54 -0500
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <20040713060149.GI1486@mea-ext.zmailer.org>
-References: <1089653483.3378.50.camel@oh2bns.ampr.org> <40F35166.3080008@gelm.net>
+Message-ID: <00a201c468ee$d074b0b0$6401a8c0@jeremiel>
+References: <1223.192.168.1.117.1089178842.squirrel@gateway> <2498.192.168.1.117.1089215964.squirrel@gateway> <002801c4644c$0f62ecd0$6401a8c0@jeremiel> <200407082315.27383.pa3gcu@zeelandnet.nl> <009501c46533$923c2850$6401a8c0@jeremiel>
 Mime-Version: 1.0
+Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
-Content-Disposition: inline
-In-Reply-To: <40F35166.3080008@gelm.net>
 List-Id: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-To: chuck gelm <chuck@gelm.net>
-Cc: Linux-hams List <linux-hams@vger.kernel.org>
+To: linux-hams@vger.kernel.org
 
-On Mon, Jul 12, 2004 at 11:05:10PM -0400, chuck gelm wrote:
-> I have seen mention of this "MT63" every few weeks or months here on the
-> linux-hams mail list.  Where can I obtain a description of what MT63 is
-> and what hardware it requires?
+Again I would like to say thanks to everyone who has taken the trouble to
+respond to my request for help.  Thank you all.
 
-  "Multi-tone 63" -- description was attached there in the announcement.
 
-  Instead of the stand-alone implementation (that was announced), you
-  should try  gmfsk:   http://gmfsk.connect.fi/
 
-  You need an SSB radio, and decently precise sampling rate in your
-  audio card.  (better than 10^-4 precise.)
+I finally managed to build a custom kernel.  I resorted to reading the
+instructions in the documentation.  Just like they say, "If all else fails
+read the instructions".  I followed the instructions step by step, added the
+amateur radio features that I wanted in the config file using xconfig,
+followed the remaining steps in the instructions and everything else was
+automatic.
 
-  And some sort of PTT command interface circuit.  Possibly galvanic/opto
-  isolation in between the computer and radio.
 
-> Chuck nc8q
 
-73 de Matti, OH2MQK
+If I had done this to begin with, even a dummy like me would have had
+absolutely no problem customizing the RedHat 9 kernel.
+
+
+
+John / KC4TXC
+
+
