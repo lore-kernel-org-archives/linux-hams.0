@@ -1,33 +1,42 @@
-From: Hamish Moffatt <hamish@cloud.net.au>
+From: terry <wd0fpc@aniota.com>
 Subject: Re: SPLAT ...
-Date: Fri, 28 Jun 2002 00:30:47 +1000
+Date: Thu, 27 Jun 2002 11:51:05 -0700 (PDT)
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <20020627143047.GA6878@silly.cloud.net.au>
+Message-ID: <Pine.LNX.4.10.10206271139190.29199-100000@yossarian.aniota.com>
 References: <200206271358.g5RDw3X08658@amsat.org>
 Mime-Version: 1.0
 Return-path: <linux-hams-owner@vger.kernel.org>
-Content-Disposition: inline
 In-Reply-To: <200206271358.g5RDw3X08658@amsat.org>
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"
+Content-Type: TEXT/PLAIN; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
-To: linux-hams@vger.kernel.org
+To: linux-hams <linux-hams@vger.kernel.org>
 
-On Thu, Jun 27, 2002 at 06:58:03AM -0700, John A. Magliacane wrote:
-> Someone running Red Hat 6.2 had a similar problem with the install scripts.
-> It was cured by changing the '==' tests to '='.  I'm not sure why this was
-> necessary.
+On Thu, 27 Jun 2002, John A. Magliacane wrote:
 
-Sounds like a broken shell?
+... ciao:
 
-> As far as the bzip2 libraries are concerned, I'm pretty sure you need
-> libbz2.so under /usr/lib in addition to libbz2.a.  If you don't have it,
-> my suggestion is to install libbz2 from source instead of an RPM.
+> changing '==' tests to '='
+  
+    that helped.
+  
+> libbz2.so under /usr/lib in addition to libbz2.a ... install libbz2
+> from source instead of an RPM.
+ 
+    i tend to avoid RPM, and installed the bz-lib from source into
+'usr/lib'.
+  
 
-libbz2.a should be sufficient to link statically.
+    with regard to:
+  
+"cc -Wall -O3 -s -lm -lbz2 -fomit-frame-pointer splat.c -o splat"
+  
+    cc a symlink to gcc (gcc version egcs-2.91.66).  i was unable to find
+reference to "-s" and "-lm" in the manpage.  what do these flags imply.
+  
+    thanks ...
 
-
-Cheers,
-Hamish
 -- 
-Hamish Moffatt VK3SB <hamish@debian.org> <hamish@cloud.net.au>
+73 , de WD0FPC
+    aka: terry 
+
