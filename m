@@ -1,41 +1,27 @@
-From: pa3gcu <pa3gcu@zeelandnet.nl>
+From: John Mock <kd6pag@qsl.net>
 Subject: Re: Usermode Soundmodem
-Date: Mon, 26 Jul 2004 22:10:15 +0200
+Date: Mon, 26 Jul 2004 13:20:45 -0700
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <200407262210.15550.pa3gcu@zeelandnet.nl>
-References: <20040725183329.90335.qmail@web52604.mail.yahoo.com> <41053BF9.7020401@cs.unibo.it> <41055CA7.2020904@easyconnect.fr>
-Reply-To: pa3gcu@zeelandnet.nl
-Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
+Message-ID: <E1BpBxl-0007Fp-00@penngrove.fdns.net>
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <41055CA7.2020904@easyconnect.fr>
-Content-Disposition: inline
 List-Id: <linux-hams.vger.kernel.org>
+MIME-Version: 1.0
 Content-Type: text/plain; charset="us-ascii"
-To: Pierre-Philippe Coupard <pcoupard@easyconnect.fr>
-Cc: linux-hams@vger.kernel.org
+Content-Transfer-Encoding: 7bit
+To: linux-hams@vger.kernel.org
 
-On Monday 26 July 2004 21:33, Pierre-Philippe Coupard wrote:
-> I think the source of your problem is contained in your statement: VIA
-> chipset. Almost all odd sound or timing problem reports I get for my
-> software can be traced back to a VIA, AC97, or I8x0 sound chip. It's
-> unfortunate that you're kind of stuck with it on a laptop...
+    I think the source of your problem is contained in your statement: VIA
+    chipset. Almost all odd sound or timing problem reports I get for my
+    software can be traced back to a VIA, AC97, or I8x0 sound chip. It's
+    unfortunate that you're kind of stuck with it on a laptop... 
 
-Uum!, on a laptop!!, not just a laptop i fear, one of the shops in our street 
-sells more mobo's with VIA than anyother at the minute, its a question of 
-price rather than thinking about what one wants, they see and hear in this 
-case a computer with sound comming out of all cracks and crannys with windows 
-supported software, unfortunatly some if not all of those boards have VIA 
-chipsets, as soon as some unfortunate sole try's his brand spanking new 
-computer with Linux he is confronted with all sorts of sound related problems 
-due to chipset's spec's not being available to open source projects.
+Yep, that's right, i've the i8x0/AC97 problem on my Sony VAIO R505EL laptop.
+But 'multimon' can at least decode 1.2kb AFSK.  It's currently hardwared to
+22.05 KHz, not a great sample rate for a AC97, but it works.  So why can't 
+the usermode version of soundmodem[config] at least do this much???
 
--- 
-If the Linux community is a bunch of thieves because they
-try to imitate windows programs, then the Windows community
-is built on organized crime.
+		         -- KD6PAG  (Networking Old-Timer, Satellite QRPer)
 
-Regards Richard
-pa3gcu@zeelandnet.nl
-http://people.zeelandnet.nl/pa3gcu/
-
+[Note: I never send unsolicited binary attachments and if you receive anything
+purportedly from <kd6pag@qsl.net> that isn't signed with my callsign, then it
+probably isn't from me.]
