@@ -1,29 +1,31 @@
-From: Tomi Manninen <tpm@prkele.tky.hut.fi>
-Subject: Re: netrom problem?
-Date: Mon, 20 May 2002 11:21:35 +0300 (EEST)
+From: Arno Verhoeven <pe1icq@pi8zaa.ampr.org>
+Subject: /dev/parport and soundmodem
+Date: Mon, 20 May 2002 23:55:13 +0200
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <Pine.LNX.4.33.0205201120510.29412-100000@oh2bns.ampr.org>
-References: <OF09F0774B.6AB114A8-ONC1256BBF.00237D00@eurotel.sk>
-Reply-To: <tpm@prkele.tky.hut.fi>
+Message-ID: <3CE970C1.3060900@pi8zaa.ampr.org>
 Mime-Version: 1.0
-Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <OF09F0774B.6AB114A8-ONC1256BBF.00237D00@eurotel.sk>
-List-Id: <linux-hams.vger.kernel.org>
-Content-Type: TEXT/PLAIN; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
-To: Juraj Buliscak <buliscakj@eurotel.sk>
-Cc: linux-hams@vger.kernel.org
+Return-path: <linux-hams-owner@vger.kernel.org>
+List-Id: <linux-hams.vger.kernel.org>
+Content-Type: text/plain; charset="us-ascii"; format="flowed"
+To: linux-hams@vger.kernel.org
 
-On Mon, 20 May 2002, Juraj Buliscak wrote:
+Hi,
 
-> could you tell me, has 2.4.19-pre2 kernel also fix for non blocking
-> libax25io from Vreeken Jeroen included ?
+I'm going to try-out Thomas' soundmodem program, but I lack the parport 
+devices in /dev.
 
-No, it doesn't. The kernel and libax25io are two completely different 
-things.
+Are these the correct major,minor numbers for these devices?
+
+crw-rw----    1 root     root      99,   0 May 20 23:35 parport0
+crw-rw----    1 root     root      99,   1 May 20 23:36 parport1
+crw-rw----    1 root     root      99,   2 May 20 23:36 parport2
+crw-rw----    1 root     root      99,   3 May 20 23:36 parport3
 
 -- 
-Tomi Manninen           Internet:  oh2bns@sral.fi
-OH2BNS                  AX.25:     oh2bns@oh2rbi.fin.eu
-KP20ME04                Amprnet:   oh2bns@oh2rbi.ampr.org
+73, PE1ICQ  Arno Verhoeven
+--------------------------------
+AX.25  pe1icq@pi8zaa.#nbo.nld.eu
+smtp   pe1icq@pi8zaa.ampr.org
+inet   pe1icq@amsat.org
 
