@@ -1,48 +1,35 @@
-From: Thomas Osterried <thomas@osterried.de>
-Subject: Re: Problems with bpq-interface
-Date: Wed, 28 May 2003 13:17:09 +0200
+From: Hans-Peter Zorn <hpz@gmx.net>
+Subject: 1409.org, ax25-config, ...
+Date: Wed, 28 May 2003 13:32:41 +0200
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <20030528111709.GA5056@osterried.de>
-References: <3ED49335.6050903@linux.local>
-Mime-Version: 1.0
-Return-path: <linux-hams-owner@vger.kernel.org>
-Content-Disposition: inline
-In-Reply-To: <3ED49335.6050903@linux.local>
-List-Id: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"
+Message-ID: <177ADEBC-9100-11D7-84B6-000393D959DC@gmx.net>
+Mime-Version: 1.0 (Apple Message framework v552)
 Content-Transfer-Encoding: 7bit
-To: Florian Zagler <FlorianZagler@web.de>
-Cc: linux-hams@vger.kernel.org
+Return-path: <linux-hams-owner@vger.kernel.org>
+List-Id: <linux-hams.vger.kernel.org>
+Content-Type: text/plain; charset="us-ascii"; format="flowed"
+To: linux-hams@vger.kernel.org
 
-> ifconfig bpq0 hw ax25 DG1CAD-12 up
-> 
-> In the /etc/axports file I have the following entries:
-> 
-> kiss    DG1CAD-10       19200   255     7       KISS TNC
-> ether   DG1CAD-12       100000  255     7       BPQ/ethernet
-> 
-> But I get the following message everytime I try to access this interface:
-> 
-> ----    snip    ----
-> gateway:~# axparms -route add ether dg1cad-12
-> axconfig: port ether not active
-> axparms: invalid port name - ether
-> gateway:~#
-> ----    snip    ----
+Hi,
+Due to mistakes by our side, time constraints and weird circumstances 
+we lost our 1409.org domain
+which hosted projects like LinKT, ax25-config, kpsk and others.
 
-bpq needs an IP address to run.
-this should be enough:
-ifconfig bpq0 44.130.x.y up
-                     ^(your ampr IP. because it's internal, i suggest 44.128.0.2) 
-axparms -setcall bpq0 DG1CAD-12
+The website is now at 1409.linkt.de. Unfortunally we didn't backup our 
+ftp area, so some old
+packages may have been lost.
 
-"ether" in axports: bpq0 is referenced as "bpq0". afaik, nameif (interface
-naming) on bpqether interfaces is -unfortunately- not supported.
+LinKT is avalailble from http://sf.net/projects/linkt/
 
-you should change it to
-kiss    DG1CAD-10       19200   255     7       KISS TNC
-bpq0   DG1CAD-12       100000  255     7       BPQ/ethernet
+I will shortly upload the last version of ax25-config to 
+http://sf.net/projects/ax25config.
 
-73,
-	- thomas  dl9sau
+Since I take no longer part in any ham radio activities I will 
+unsubscribe from this list.
+If you have any questions or requests for packages that used to be 
+available from
+ftp.1409.org please contact me at hpz@gmx.net (NOT hp@1409.org).
+
+73s and good luck
+Hans-Peter
 
