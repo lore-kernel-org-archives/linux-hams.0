@@ -1,38 +1,40 @@
-From: Tomi Manninen <tpm@prkele.tky.hut.fi>
-Subject: Re: Fragmentation
-Date: Sat, 11 Jan 2003 18:11:48 +0200 (EET)
+From: "Ray Wells" <mvc@dodo.com.au>
+Subject: 4 port serial card.
+Date: Sun, 12 Jan 2003 16:38:48 +1100 (AUS Eastern Daylight Time)
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <Pine.LNX.4.44.0301111806160.1411-100000@oh2bns.ampr.org>
-References: <3E1F3667.C25ABB5B@free.fr>
-Reply-To: tpm@prkele.tky.hut.fi
+Message-ID: <3E20FF68.000003.11949@gizmo>
 Mime-Version: 1.0
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Content-Transfer-Encoding: 7BIT
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <3E1F3667.C25ABB5B@free.fr>
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: TEXT/PLAIN; charset="iso-8859-1"
-To: =?iso-8859-1?Q?G=E9rard?= Parat / F6FGZ <f6fgz@free.fr>
-Cc: Linux-Hams <linux-hams@vger.kernel.org>
+Content-Type: Text/Plain; charset="us-ascii"
+To: linux-hams@vger.kernel.org
 
-On Fri, 10 Jan 2003, G=E9rard Parat / F6FGZ wrote:
+Hi All,
 
-> I am wondering how to tweak mss/mtu/window/packet lenght etc ... to a=
-void
-> TCP/IP fragmentation for a 1200 bds link. I am trying to send 256 byt=
-e size
-> AX25 packet, here an example:
+This enquiry relates to a four-port serial card for a Linux BBS so I hope it
+s directed to the right place.
 
-I think having the interface MTU equal to the value in=20
-/proc/sys/net/ax25/<ifname>/maximum_packet_length should be enough to=20
-prevent AX.25 fragmentation.
+I acquired a four-port serial card that I'm trying to identify. 
 
---=20
-Tomi Manninen           Internet:  oh2bns@sral.fi
-OH2BNS                  AX.25:     oh2bns@oh2rbi.fin.eu
-KP20ME04                Amprnet:   oh2bns@oh2rbi.ampr.org
+I've checked out the latest serial-howto but to no avail so I'm hoping
+someone on this list may be able to assist.
 
--
-To unsubscribe from this list: send the line "unsubscribe linux-hams" i=
-n
-the body of a message to majordomo@vger.kernel.org
-More majordomo info at  http://vger.kernel.org/majordomo-info.html
+The card in question was made in Australia about 1992 (copyright allaw 1992)
+and carries the identification COM-4 (a brand name ??). 
+
+It has four 16550 UARTS and individual jumpers for each port to set comport
+number and IRQ. Additionally, there is an 8 way DIP switch which permits
+selection of operation under a single IRQ, among other things.
+
+The documentation says that Windows, Pick, Xenix, Unix, Concurrent DOS and
+DOS are supported.
+
+I don't have the drivers :-(
+
+Does anyone know anything about this card? My BBS is crying out for it for
+additional radio ports :-)
+
+TIA
+
+Ray Wells VK2TV
