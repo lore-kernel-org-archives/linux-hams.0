@@ -1,47 +1,36 @@
-From: Jeroen Vreeken <pe1rxq@amsat.org>
+From: "David S. Miller" <davem@redhat.com>
 Subject: Re: [PATCH] ax25, netrom and rose fixes for 2.6.0
-Date: Wed, 24 Dec 2003 17:39:47 +0100
+Date: Wed, 24 Dec 2003 19:37:30 -0800
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <20031224173947.A203@jeroen.pe1rxq.ampr.org>
-References: <20031219234435.C211@jeroen.pe1rxq.ampr.org> <3FE8BD47.4010108@free.fr>
+Message-ID: <20031224193730.65dbd326.davem@redhat.com>
+References: <20031219234435.C211@jeroen.pe1rxq.ampr.org>
+	<20031219225239.GD18789@linux-mips.org>
+	<20031219214544.0cecc0d7.davem@redhat.com>
+	<20031220150541.C211@jeroen.pe1rxq.ampr.org>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7BIT
+Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <3FE8BD47.4010108@free.fr>; from f6bvp@free.fr on Tue, Dec 23, 2003 at 23:10:15 +0100
+In-Reply-To: <20031220150541.C211@jeroen.pe1rxq.ampr.org>
 List-Id: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
-To: Bernard Pidoux F6BVP <f6bvp@free.fr>
-Cc: linux-hams@vger.kernel.org
+Cc: ralf@linux-mips.org, pe1rxq@amsat.org, linux-hams@vger.kernel.org
 
-On 2003.12.23 23:10:15 +0100 Bernard Pidoux F6BVP wrote:
-> 
-> I just tried to compile FPAC 3.25 and FBB 7.04j against kernel 6.0 just 
-> to see how compilation would perform.
-> Although I was sure there would be a number of obsolete code and that 
-> the programs will not run.
-> 
-> I had to modify a few #includes.
-> 
-> Replacing for example
-> 
-> #include <linux/ax25.h> by "netax25/kernel_ax25.h"
-> #include <linux/rose.h> by "netax25/kernel_rose.h"
-> #include <linux/netrom.h> by "netax25/kernel_netrom.h"
-> 
-> helped the compilation.
-> 
-> However in kernel_ax25.h I found that
-> #define AX25_PIDINCL 8
-> that was in former ax25.h was no more defined.
-> 
-> I guess this was removed on purpose ?
-> Am I wrong ?
+On Sat, 20 Dec 2003 15:05:41 +0100
+Jeroen Vreeken <pe1rxq@amsat.org> wrote:
 
-AX25_PIDINCL is a socket option for the ax25 stack...
-I am guessing that your kernel_ax25.h file is from a time that that didn't
-exist yet.....
+> On 2003.12.20 06:45:44 +0100 David S. Miller wrote:
+> > On Fri, 19 Dec 2003 23:52:39 +0100
+> > Ralf Baechle DO1GRB <ralf@linux-mips.org> wrote:
+> > 
+> > > On Fri, Dec 19, 2003 at 11:44:35PM +0100, Jeroen Vreeken wrote:
+> > > 
+> > > > Ralf, can you give your stamp of approval so Dave can apply them?
+> > > 
+> > > Stamp, stamp ...  David, can you apply his patch?
+> > 
+> > I will apply this after doing some review of it.
+> 
+> I just got word that include/net/ax25.h was not included in this patch...
+> This is the missing piece
 
-What exactly went wrong with the header files from linux?
-
-Jeroen
-
+All applied, thanks Jeroen.
