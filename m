@@ -1,60 +1,42 @@
-From: Bernard Pidoux F6BVP <pidoux@ccr.jussieu.fr>
-Subject: Re: Linux Newbie with Compiling Problems...
-Date: Mon, 03 Mar 2003 19:37:51 +0100
+From: SM3SGP <sm3sgp@kkn.net>
+Subject: Baycom ser12, DCD, duplex(?) problem
+Date: Tue, 4 Mar 2003 14:17:54 -0100
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <3E63A0FF.8040302@ccr.jussieu.fr>
-References: <01C2E097.984D9520.wb9mjn@wb9mjn-11.ampr.org>
+Message-ID: <200303041517.h24FHtC18390@c213-100-163-83.swipnet.se>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 7BIT
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <01C2E097.984D9520.wb9mjn@wb9mjn-11.ampr.org>
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"; format="flowed"
-To: "wb9mjn@wb9mjn-11.ampr.org" <wb9mjn@wb9mjn-11.ampr.org>
-Cc: Linux Hams mailing list <linux-hams@vger.kernel.org>
+Content-Type: text/plain; charset="us-ascii"
+To: linux-hams@vger.kernel.org
 
-wb9mjn wrote:
+Hej,
 
->   Hi Kelly and Jean,
->
->      Thanks for the response. This is where my latest attempt to compile in AX.25 is stalling. I will look up that package and install it.
->
->      73, Don...
->  
->
-I can assure you that you don't need it as86 from elsewhere for making 
-bzImage in Mandrake-Linux distro.
-Just issue the indicated set of commands :
+I am trying to get my Baycom serial 1200bd modem to work properly on my 
+2.4-18 machine. (Redhat 7.2 (I think) 500Mhz)
 
-make mrproper (followed by either make  xconfig or make menuconfig)
-make  dep
-make bzImage ...etc...
+I have configured an tested both the baycom_ser_hdx and fdx drivers, but same 
+result.
 
-73 de Bernard, F6BVP
+The modem does not care if the channel is busy and transmit over other 
+stations. Except from that, all seams to be OK. I have tesed with a lot of 
+differnet setting, but so far the PTT goes on and the modem starts to 
+transmit without waiting for a clear channel.
 
-> 
->On Sat, 2003-03-01 at 18:58, wb9mjn wrote:
->  
->
->>    Hi All,
->>
->>      Does anybody know what package the command 'as86' is part of ?
->>
->>    73, Don...
->>
->>    
->>
->
->It is in package bin86 under Debian if that helps.
->
->Debian description:
->
->This is the as86 and ld86 distribution written by Bruce Evans. It's a
->complete 8086 assembler and loader which can make 32-bit code for the
->386+ processors (under Linux it's used only to create the 16-bit boot
->sector and setup binaries).
->
->  
->
+How I start the modem:
+
+setserial /dev/ttyS0 uart none
+modeprobe baycom_ser_fdx
+sethdlc -p -i bcsf0 mode "ser12*" io 0x3f8 irq 4
+sethdlc -i bcsf0 -a txd 300 txt 50 slot 100 ppersist 40 half
+
+ifconfig bcsf0 hw ax25 sm3sgp up
+
+Are there any more tests I can do? Anyone out there still running Baycom 
+serial 1200bd modems and Linux?
+
+73 de Gus, SM3SGP
+
+sk3w.shacknet.nu 8000 Spider
 
 
