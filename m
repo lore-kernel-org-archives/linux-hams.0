@@ -1,40 +1,29 @@
-From: Tomi Manninen OH2BNS <tpm@prkele.tky.hut.fi>
-Subject: Re: packet terminal programm
-Date: Tue, 23 Apr 2002 15:01:45 +0300 (EETDST)
+From: Shane Deering <vk3bvp@qsl.net>
+Subject: JNOS <> Leafnode
+Date: Wed, 24 Apr 2002 00:55:37 +1000
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <Pine.HPX.4.10.10204231455580.18972-100000@saturn.trs.ntc.nokia.com>
-References: <OFEFBCA609.4E33FE2E-ONC1256BA4.00314AD0@eurotel.sk>
-Reply-To: tpm@prkele.tky.hut.fi
+Message-ID: <200204231454.g3NEssX01833@msv02-kent-syd.comindico.com.au>
+Reply-To: vk3bvp@qsl.net
 Mime-Version: 1.0
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Content-Transfer-Encoding: 7BIT
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <OFEFBCA609.4E33FE2E-ONC1256BA4.00314AD0@eurotel.sk>
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: TEXT/PLAIN; charset="iso-8859-1"
-To: Juraj Buliscak <buliscakj@eurotel.sk>
-Cc: linux-hams@vger.kernel.org
+Content-Type: text/plain; charset="us-ascii"
+To: linux-hams@vger.kernel.org
 
-On Tue, 23 Apr 2002, Juraj Buliscak wrote:
+I've spent the last couple of days setting up my linux computer for packet.
+So far FBB and JNOS are set up OK and seem to be working fine. I've got it  
+forwarding on air with one forward partner. A little bit of fine tuning 
+wouldn't go astray :-)
+Bulletins <> news groups work OK and Knode <> JNOS works OK.
+I can get Leafnode to get news article from JNOS and read them from Leafnode 
+with Knode, but I can't get Leafnode to send them to Leafnode. 
 
->       I=B4m looking for some terminal program for packet radio under =
-linux (
-> Xwindow ). Could someone tell me which are most used, and where is it
-> possible to obtain.
->       Now I am using Xpr from OK1ZIA, but I want to try something els=
-e.
+Has anyone got Leafnode and JNOS to talk to each other OK?
 
-LinKT is pretty nice IMHO. See
-http://www.1409.org/projects/linkt/index.html
+-- 
+Shane Deering
+vk3bvp@vk3bvp.#sev.vic.aus.oc / vk3bvp@qsl.net
+http://www.qsl.net/vk3bvp/
+Sent with KMail v1.3.2 on Wed Apr 24 00:43:16 EST 2002
 
-See also radio.linux.org.au, there might be other alternatives as well.
-
---=20
-Tomi Manninen           Internet:  oh2bns@sral.fi
-OH2BNS                  AX.25:     oh2bns@oh2rbi.fin.eu
-KP20ME04                Amprnet:   oh2bns@oh2rbi.ampr.org
-
--
-To unsubscribe from this list: send the line "unsubscribe linux-hams" i=
-n
-the body of a message to majordomo@vger.kernel.org
-More majordomo info at  http://vger.kernel.org/majordomo-info.html
