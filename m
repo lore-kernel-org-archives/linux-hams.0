@@ -1,59 +1,32 @@
-From: Tony Schonfeld <tony-no-spam@schonfeld.eu.org>
-Subject: Re: kernel 2.4.23 problem
-Date: Fri, 02 Jan 2004 19:24:02 +0100
+From: Erik Jakobsen <eja@urbakken.dk>
+Subject: PSK
+Date: Fri, 02 Jan 2004 20:37:53 +0100
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <3FF5B742.9060102@schonfeld.eu.org>
-References: <3FF444C3.9040306@schonfeld.eu.org> <20040101231318.A19167@pull.privacy.nb.ca>
+Message-ID: <3FF5C891.8000805@urbakken.dk>
 Mime-Version: 1.0
 Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <20040101231318.A19167@pull.privacy.nb.ca>
 List-Id: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"; format="flowed"
-To: M Taylor <mctylr@privacy.nb.ca>
-Cc: Tony Schonfeld <tony@schonfeld.eu.org>, linux-hams@vger.kernel.org
+To: linux-hams@vger.kernel.org
 
-M Taylor wrote:
-> On Thu, Jan 01, 2004 at 05:03:15PM +0100, Tony Schonfeld wrote:
-> 
->>Since i've upgrade kernel 2.4.22 to 2.4.23 my system is unstable
->>under debian sid like this message:
-> 
->  
-> 
->>Without ax25 running, everything is fine.
->>
->>i' haven't check 2.4.23 without ax25 but 2.4.22 run fine here.
-> 
->  
-> 
->>Do you know the fix for this problem ?
->>the only way is it upgrade to kernel 2.6 ?
-> 
-> 
-> The best long term fix is to upgrade to 2.6.0 (or newer), as the 2.6.x
-> kernel has numerous bug fixes. No offense to 9a4gl but as far as I know
-> his patch does not fix everything that Ralf and Joeron (sp?) have been
-> working on. 
-> 
-> The reason it is flakey under 2.4.x (for some people) is that some
-> basic or fundemental assumptions changed between 2.2.x and 2.4.x and
-> at the time no one made the necessary changes to AX.25 and the device
-> drivers. So some people will be bit by these bugs while others get
-> luckily and don't see them (faster, more complex setups, especially
-> gateways seem to be affected the most).
-> 
-> I believe that Debian 3.0 'testing' or 'unstable' both support the  2.6.x
-> kernel. (RedHat Linux 9 + module-init-util, or Fedora core 1 also support
-> 2.6 AFAIK)
-> 
-> There is a 2.6.0 HOWTO at <http://www.kerneltrap.com/>
-> 
-> Hope that helps,
-> 
-> -ve3tix (ex. ve1mct)
-Many thanks for all reply, i've temporary remove ax25 service
-from my server before change a clean kernel version.
+Hi.
 
-Tony
+I have stopped the work with BBS'ing, and now I want to enjoy the 
+digital mode for myself.
+
+What can I find to use for my digital modes ?.
+
+I have a PTC-II from SCS in Germany, but maybe its better using a 
+soundcard ?.
+
+All aht you can tell me are most wellcome here.
+
+TIA.
+-- 
+Med venlig hilsen - Best regards.
+Erik Jakobsen - eja@urbakken.dk.
+Licensed radioamateur with the callsign OZ4KK.
+SuSE Linux 8.2 Proff.
+Registered as user #319488 with the Linux Counter, http://counter.li.org.
 
