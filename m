@@ -1,39 +1,47 @@
-From: Kelly Black <kelly.black@penguinpackets.com>
+From: Andrew Bates <abates@omeganetserv.com>
 Subject: Re: Linux AX.25 Socket programming
-Date: 01 Jan 2003 16:48:27 -0600
+Date: Wed, 01 Jan 2003 16:00:43 -0700
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <1041461308.10491.17.camel@edith>
+Message-ID: <3E13731B.C965C3A7@omeganetserv.com>
 References: <onKLlQBZqzE+EwXZ@mechserv.demon.co.uk>
+ <1041461308.10491.17.camel@edith>
 Mime-Version: 1.0
 Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <onKLlQBZqzE+EwXZ@mechserv.demon.co.uk>
 List-Id: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
-To: Linux Hams mailing list <linux-hams@vger.kernel.org>
+To: Kelly Black <kelly.black@penguinpackets.com>
+Cc: Linux Hams mailing list <linux-hams@vger.kernel.org>
 
-On Wed, 2003-01-01 at 12:59, Jonathan Naylor wrote:
-> AX.25 (and NET/ROM and ROSE) server development can by careful design of 
-> the server be made extremely easy. The program ax25d is exactly 
-> analogous to inetd, in that it can launch programs when an incoming 
-> connection is received. This is controlled by the ax25d.conf file which 
-> also allows for different servers to be started depending on the 
-> incoming interface and/or incoming callsign. The started program only 
-> has to read and write to stdin and stdout respectively, ax25d is also 
-> capable of passing command line arguments to the started program based 
-> on a set of substitution parameters and literal text given in its 
-> configuration file.
+> Excellent!!!  Does anybody know where I can find an example of a script
+> that is doing just this read from stdin and write to stdout.
+>
 
-Thanks G4KLX!
+Here is a very simply perl script that reads and writes to the stdin/stdout:
 
-Excellent!!!  Does anybody know where I can find an example of a script
-that is doing just this read from stdin and write to stdout.
+#!/usr/bin/perl
+# -- beginning of script
 
-Sounds like a great way to prototype a server quickly.  Neat way to
-implement a quick service outside of the regular ones to get emergency
-services via a simple scripted telnet client as well!
+# display our message to the stdout
+print "Testing ax25d\n";
+print "Please enter your callsign: ";
 
-Kelly
-KB0GBJ
+# read input from the command line, until
+# a carriage return is received
+$call = (<>);
 
+# remove the trailing carriage return
+chomp $call;
+
+# display callsign to the stdout
+print "Hello ".$call."!\n";
+
+exit;
+# -- end of script
+hope that helps, more information about perl can be found at www.perl.com...
+other scripting languages (like korn shell) have howto's at the linux
+documentation project (www.tldp.org).  Any language that can communicate with
+*nix's STDIN/STDOUT (C/C++, Java, ksh, sh, bash, perl, etc.) can be used for
+AX25d processes.
+Andrew
 
