@@ -1,39 +1,33 @@
-From: Waldek <Waldemar.Ogonowski@GTServices.pl>
+From: Andrea Borgia <borgia@cs.unibo.it>
 Subject: Re: DX spoots via UI frames
-Date: Mon, 22 Mar 2004 18:17:22 +0100
+Date: Mon, 22 Mar 2004 18:20:49 +0100
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <405F1FA2.20603@GTServices.pl>
-References: <405F1630.4050500@GTServices.pl> <405F1B07.2070901@cs.unibo.it>
-Reply-To: Waldemar.Ogonowski@GTservices.pl
+Message-ID: <405F2071.4080304@cs.unibo.it>
+References: <405F1630.4050500@GTServices.pl> <405F1B07.2070901@cs.unibo.it> <405F1FA2.20603@GTServices.pl>
 Mime-Version: 1.0
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <405F1B07.2070901@cs.unibo.it>
+In-Reply-To: <405F1FA2.20603@GTServices.pl>
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="utf-8"; format="flowed"
-To: Andrea Borgia <borgia@cs.unibo.it>
-Cc: linux-hams@vger.kernel.org
+Content-Type: text/plain; charset="us-ascii"; format="flowed"
+To: linux-hams@vger.kernel.org
 
-U=C5=BCytkownik Andrea Borgia napisa=C5=82:
-
-> I don't know whether a specialised program exists or not, but you cou=
-ld=20
-> probably do that with telnet/ax25_call (depending on the source of yo=
-ur=20
-> spots) and the beacon command.
-
-Yes it is good idea and a try to do this but I have problem how to put=20
-info from  ax25_call to becaon:
-
-ax25_call port sp2abc sr2dxc | beacon -c sr2dxc -d DX vhf   ??? this is=
-=20
-don't work
+Waldek wrote:
 
 
+> Yes it is good idea and a try to do this but I have problem how to put 
+> info from  ax25_call to becaon:
+> ax25_call port sp2abc sr2dxc | beacon -c sr2dxc -d DX vhf   ??? this is 
+> don't work
+
+Ach, that was my idea 8-( You could also try with ax25mond, but then you 
+have to write some glue code to parse the data.
 
 
--
-To unsubscribe from this list: send the line "unsubscribe linux-hams" i=
-n
-the body of a message to majordomo@vger.kernel.org
-More majordomo info at  http://vger.kernel.org/majordomo-info.html
+B73,
+Andrea.
+
+-- 
+Homepage: http://andrea.borgia.bo.it     /    Amateur radio: IZ4FHT
+Key fingerprint: 4037 9711 85C6 F9F9 A505  FA0A BB62 3A3C F7BA 9B13
+
