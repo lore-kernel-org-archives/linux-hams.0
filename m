@@ -1,100 +1,87 @@
-From: Thomas Osterried <thomas@osterried.de>
+From: 9a4gl@9a0tcp.ampr.org (Tihomir Heidelberg)
 Subject: Re: AX.25 unaccepted socket makes problems
-Date: Wed, 28 May 2003 02:04:11 +0200
+Date: Wed, 28 May 03 08:46:03 CEST
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <20030528000411.GA1391@osterried.de>
-References: <2197@9A0TCP>
-Mime-Version: 1.0
+Message-ID: <2278@9A0TCP>
+References: <20030528000411.GA1391@osterried.de>
 Return-path: <linux-hams-owner@vger.kernel.org>
-Content-Disposition: inline
-In-Reply-To: <2197@9A0TCP>
+In-Reply-To: your message of Wed, 28 May 2003 02:04:11 +0200.
+             <20030528000411.GA1391@osterried.de>
 List-Id: <linux-hams.vger.kernel.org>
+MIME-Version: 1.0
 Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
-To: Tihomir Heidelberg <9a4gl@9a0tcp.ampr.org>
+To: thomas@osterried.de
 Cc: linux-hams@vger.kernel.org
 
-> are NOT destroyed here ! A condition:
->         (ax25->sk->state == TCP_LISTEN && ax25->sk->dead)
-> is not true because state of those connections are not
+Hi,
 
-as far as i got into the code when i looked for the reason for the
-segfault problem, former connected sessions come to the state TCP_LISTEN
-when they get disconnected.
+>> are NOT destroyed here ! A condition:
+>>         (ax25->sk->state == TCP_LISTEN && ax25->sk->dead)
+>> is not true because state of those connections are not
+>
+>as far as i got into the code when i looked for the reason for the
+>segfault problem, former connected sessions come to the state TCP_LISTEN
+>when they get disconnected.
 
-> +               skb->sk->state     = TCP_LISTEN;
-> +               if (!skb->sk->dead) {
-> +                       skb->sk->state_change(skb->sk);
-> +               }
+I couldnt get TCP_LISTEN state, ax25_rcv in ax25_in.c set that state
+to TCP_ESTABLISHED, dont see where it can be changed to TCP_LISTEN,
+debugging messages reports TCP_ESTABLISHED or TCP_CLOSE, depending
+if remote station disconnected or not.
 
-by insuring with with your patch should at least do not harm.
+>> +               skb->sk->state     = TCP_LISTEN;
+>> +               if (!skb->sk->dead) {
+>> +                       skb->sk->state_change(skb->sk);
+>> +               }
+>
+>by insuring with with your patch should at least do not harm.
 
-perhaps there's the problem for this phaenome:
-|    DB0TUD-0   DB0TUD-1   ax0     LISTENING    007/005  0       320
-|    DL6MPG-1   DB0TUD-15  ax0     LISTENING    005/007  0       432
-|    DB0TUD-0   DB0TUD-4   ax0     LISTENING    002/005  0       80
-|    DB0DSD-0   DB0TUD-1   ax0     LISTENING    001/000  0       80
-|    DL6MPG-4   DB0TUD-15  ax0     LISTENING    002/001  0       816
+yap, but TCP_LISTEN state is not proper state for such connections,
+so think there should be more reasonable fix for this
 
-> Cannot get the reason why
-> segmentation fault is happening, but hope someone else can find
-> a reason when problem is reproducable.
+also I think that skb->sk->pair should be set to NULL, because from this
+point the pair (listening socket) does not exist any more and reference
+to this can cause problem, right ?
 
-as i noted abt a month ago in a mail to this list, i tracked the
-problem down to the following point:
-there's a list of active ax25 control blocks (ax25_cb *ax25_list).
-this list gets corrupted. while walking through ax25_list->next->....->next,
-somewhere in this reference is pointing to somewhere where it should not.
+> there's a list of active ax25 control blocks (ax25_cb *ax25_list).
+> this list gets corrupted. while walking through ax25_list->next->....->next,
+> somewhere in this reference is pointing to somewhere where it should not.
+...
+> i looked several times over the code (routines adding and removing list
+> elements, checking for cli() and restore_flags()). everything looks ok
+> for me.
 
-ax25_get_info(), which is called when doing "netstat -a" or
-"cat /proc/net/ax25" from userspace, walks through this list. i had a chance
-to let show me the data of all ax25_cb elements while walking through
-the list (after i spicked my kernel with debug routines).
-somewhere in the middle of the list, the reference to "next" was inkonsistant
-in comparison to the time it was before, and the kernel oopsed while walking
-over the next list element pointer.
+yap, I also spent a lot of hours looking in code that handle this list,
+but cannot find anything that can hurt that list
 
-i looked several times over the code (routines adding and removing list
-elements, checking for cli() and restore_flags()). everything looks ok
-for me.
+> [as i mentioned also, ax25rtd which adds ax25 route lists to the kernel,
+> causes troubles to the kernel. perhaps it's one of those routines which
+> messes up the ax25 cb lists as side effect]
 
-currently, i assume this error is such difficile, because it may not
-be caused by the routines which change the list, but because _maybe_
-another routine in ax25.o allocates a buffer / struct, writes more
-data as it should to it, and overwrites parts of the struct where
-the ax25 control block is stored, causing corrupted data in the linked
-list.
+ax25rtd/axparms calls ioctl(SIOCADDRT) on ax.25 socket, I see that
+ax25_route_list is not protected with cli() stuff, maybe we should
+protect this list too ? dont know how this can hurt ax25_list, but
+protecting this list will not hurt anyone...
 
-[as i mentioned also, ax25rtd which adds ax25 route lists to the kernel,
-causes troubles to the kernel. perhaps it's one of those routines which
-messes up the ax25 cb lists as side effect]
+anyway, I read that Ralf is doing some things in 2.5 kernel tree,
+spinlock instead cli() protection should be used in future ax.25
+kernel, as I read Ralf works on spinlock in ax.25 code... should
+we move to spinlocks in 2.4 kernels too or we will wait for 2.6 ?
 
-btw, a few days ago i announced a bugfix (the [invalid] to [invalid] SABM
-problem). it does fix the problem. but my hope that the kernel oopses
-will go away was not proven: they still occured.
+>> Also, some months ago I mention here that regulary I get this
+>> AX.25 kernel behavior after few days of running 9A0TCP gateway
+>> machine. I noticed that very often ax25d died or had to restart
+>> ax25d because it was not handling connections. Think this
+>> bind/non-accept kernel problem is very probably the reason.
+>
+>afik, it's caused by the inkonsistent list:
+>ax25_find_listener() walks over ax25_list. and may not find the ax25
+>control block which actually listens.
+>ax25_find_listener() is called by ax25_rcv() in ax25_in.c when an SABM
+>is received.
 
-> Also, some months ago I mention here that regulary I get this
-> AX.25 kernel behavior after few days of running 9A0TCP gateway
-> machine. I noticed that very often ax25d died or had to restart
-> ax25d because it was not handling connections. Think this
-> bind/non-accept kernel problem is very probably the reason.
+yup, but if ax25d stops accepting connections, you will get ooops, dont know
+what came first, ax25d problem or kernel problem... but for sure ax25d
+problem may cause kernel problem...
 
-afik, it's caused by the inkonsistent list:
-ax25_find_listener() walks over ax25_list. and may not find the ax25
-control block which actually listens.
-ax25_find_listener() is called by ax25_rcv() in ax25_in.c when an SABM
-is received.
-
-a linux with a flexnet digipeater as neighbour (which connects quite often
-for link test probes) gets most oopses this way.
-
-
-on the other hand, an ax25 socket which is listening for incoming connections,
-for e.g. by ax25d, gets sometimes
-[pid  4924] accept(7, 0xbffff714, [72]) = -1 ECONNABORTED (Software caused connection abort)
-that should never happen.
-
-
-73,
-	- thomas  dl9sau
-
+73 de Tihomir Heidelberg, 9a4gl@9a0tcp.ampr.org
