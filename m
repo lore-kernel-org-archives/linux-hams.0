@@ -1,32 +1,48 @@
-From: Ralf Baechle DO1GRB <ralf@linux-mips.org>
-Subject: Re: ax25 kernel problem sometimes accur
-Date: Sun, 8 Dec 2002 00:39:11 +0100
+From: "Douglas Cole" <n7bfs@qwest.net>
+Subject: FBB for linux and internet forwarding
+Date: Sun, 8 Dec 2002 09:32:03 -0800
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <20021208003911.A30880@linux-mips.org>
-References: <20021207021016.A15120@linux-mips.org> <Pine.LNX.4.44.0212072115500.2444-100000@oh2bns.ampr.org>
+Message-ID: <200212080932.03464.n7bfs@qwest.net>
+Reply-To: n7bfs@qwest.net
 Mime-Version: 1.0
+Content-Transfer-Encoding: 8BIT
 Return-path: <linux-hams-owner@vger.kernel.org>
-Content-Disposition: inline
-In-Reply-To: <Pine.LNX.4.44.0212072115500.2444-100000@oh2bns.ampr.org>; from tpm@prkele.tky.hut.fi on Sat, Dec 07, 2002 at 09:32:44PM +0200
 List-Id: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-To: Tomi Manninen <tpm@prkele.tky.hut.fi>
-Cc: linux-hams@vger.kernel.org
+To: linux-hams@vger.kernel.org
 
-On Sat, Dec 07, 2002 at 09:32:44PM +0200, Tomi Manninen wrote:
+A question for the list that hopefully will not be too open ended .
 
-> > As is the 2.4 AX.25 code is totally racy.  Basically it only has a chance
-> > to survive if the user is nice ...
-> 
-> This reminds me... What is the situation with your fixes? I understood the 
-> kernel is now in feature freeze. Will the next release kernel have a bit 
-> more un-racy AX.25 stack?
+Our local packet crew (two guys)is considering changing from DOS based FBB BBS 
+to a Linux based machine but are concerned about ease of setup and stability.
 
-I consider everything I'm currently working on as pure bug fix.  As such
-they're not affected by the feature freeze.
+They wish to use internet forwarding (through a cable modem) and coming out on 
+VHF node freq'.
 
-73 de DO1GRB op Ralf
+My concern is , since I subscribe to this list for other reasons not related 
+to packet and am not a packet person, I see alot of posts recently about 
+troubles with the kernel and lockup problems , so my question is , is this 
+only for folks who are doing non-standard things or is this an issue with any 
+amateur trying to setup a Linux based FBB BBS with internet forwarding?
 
---
-Loc. JN47BS / CQ 14 / ITU 28 / DOK A21
+I don't want to have given them the wrong impression about Linux stability (I 
+use it on a daily basis for my desktop), only to have it be a troublesome and 
+failure prone system , as they are very happy with their DOS based machine , 
+they just want to move into the TCP/IP internet based way of forwarding , 
+which apparently the dos based one is hard to make so ...
+
+Any input or links/pointers on what not to do would be appreciated , they will 
+just be starting out with Linux and I am not knowledgable with Linux packet 
+at all...
+
+tia
+
+
+-- 
+Douglas Cole   N7BFS
+Spokane IRLP node owner
+AMSAT#26182 , K2 # 544
+http://www.users.qwest.net/~cdoug3
+Registered Linux user # 188922
+
+
