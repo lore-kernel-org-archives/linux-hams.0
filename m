@@ -1,49 +1,34 @@
-From: Bernard Pidoux <pidoux@ccr.jussieu.fr>
+From: James Washer <washer@trlp.com>
 Subject: Re: Linux 2.6.3 ... Where are mkiss and 6pack?
-Date: Thu, 19 Feb 2004 12:56:11 +0000
+Date: Thu, 19 Feb 2004 05:27:55 -0800
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <4034B26B.3010903@ccr.jussieu.fr>
-References: <200402182229.30123@www.cabodesantapola.org> <20040219003515.K231@jeroen.pe1rxq.ampr.org>
+Message-ID: <20040219052755.4cb4901a.washer@trlp.com>
+References: <200402182229.30123@www.cabodesantapola.org>
+	<20040219003515.K231@jeroen.pe1rxq.ampr.org>
+	<4034B26B.3010903@ccr.jussieu.fr>
 Mime-Version: 1.0
 Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <20040219003515.K231@jeroen.pe1rxq.ampr.org>
+In-Reply-To: <4034B26B.3010903@ccr.jussieu.fr>
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"; format="flowed"
-To: Jeroen Vreeken <pe1rxq@amsat.org>
-Cc: Ruben Navarro Huedo <eb5esx@eb5esx.ampr.org>, Linux-hams List <linux-hams@vger.kernel.org>
+Content-Type: text/plain; charset="us-ascii"
+To: Bernard Pidoux <pidoux@ccr.jussieu.fr>
+Cc: pe1rxq@amsat.org, eb5esx@eb5esx.ampr.org, linux-hams@vger.kernel.org
 
-Hi,
+SMP=Symmetric Multi Processing
 
-In my experience mkiss works very fine with kernel 2.6 !
-Could you explain what is SMP ?
+More than one processor.
 
-73 de Bernard, f6bvp
+ - jim
 
---------
+On Thu, 19 Feb 2004 12:56:11 +0000
+Bernard Pidoux <pidoux@ccr.jussieu.fr> wrote:
 
-Jeroen Vreeken wrote:
-> On 2004.02.18 22:29:29 +0100 Ruben Navarro Huedo wrote:
+> Hi,
 > 
->>-----BEGIN PGP SIGNED MESSAGE-----
->>Hash: SHA1
->>
->>Hello friends:
->>linux-2.6.3 has been released, but...Where are 6pack and mkiss?
->>I don't find them...
->>I can see bpq, Baycom...etc... but not 6pack or mkiss.
+> In my experience mkiss works very fine with kernel 2.6 !
+> Could you explain what is SMP ?
+> 
+> 73 de Bernard, f6bvp
 > 
 > 
-> Somebody decided that they are not SMP safe...
-> If you deselect 'Select only drivers expected to compile cleanly' in the
-> 'Code maturity level options' you will get the 6pack and mkiss drivers
-> back.
-> 
-> In other words someone has to go over the mkiss and 6pack code and make it
-> smp safe.
-> 
-> btw my last 6pack patch is NOT yet in 2.6.3 so you will have to apply that
-> manually.
-> 
-> Jeroen
-
