@@ -1,49 +1,54 @@
-From: Thomas Sailer <sailer@scs.ch>
+From: Braddock Gaskill KD5ZVK <braddock@braddock.com>
 Subject: Re: user soundmodem problems on Inspiron 8200 i810 chipset...
-Date: Wed, 10 Mar 2004 20:26:23 +0100
+Date: Wed, 10 Mar 2004 13:36:45 -0600
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <1078946783.18937.92.camel@kronenbourg.scs.ch>
-References: <20040310191511.18981.qmail@radagast.org>
+Message-ID: <20040310193645.GA3882@braddock.com>
+References: <20040309022333.GA4377@braddock.com> <1078861838.2336.1.camel@law3lz8h11.lib.loc.gov> <20040309213542.GA27566@braddock.com> <404F540B.3050309@scs.ch>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <20040310191511.18981.qmail@radagast.org>
+Content-Disposition: inline
+In-Reply-To: <404F540B.3050309@scs.ch>
 List-Id: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
-To: Dave Platt <dplatt@radagast.org>
-Cc: braddock@braddock.com, Linux-Hams@vger.kernel.org
+Content-Transfer-Encoding: 7bit
+To: Linux-Hams@vger.kernel.org
+Cc: Thomas Sailer <sailer@scs.ch>
 
-On Wed, 2004-03-10 at 20:15, Dave Platt wrote:
+On Wed, Mar 10, 2004 at 06:44:43PM +0100, Thomas Sailer wrote:
+> >http://braddock.com/soundmodem.png
+> 
+> Looks like alsa tries to do sample rate conversion, but
+> "somewhat" imperfectly. Sigh. Does anyone know how to convince
 
-> From what I can see, it looks as if ALSA tries to pick the "native"
-> rate supported by the card/chipset which is closest to the rate
-> being requested by the application.  There seems to be some logic
+The only strange thing about that theory (which I tend to agree
+probably is what's going on) is that if I do a 9600 samp/sec capture
+with SOX using the OSS interface, and look at the capture in Octave, I
+don't see the anomaly.  In fact, I can then take the 9600 samp/sec SOX
+capture of APRS input and use it with an unmodified version of
+soundmodem in "file" mode and get perfect copy.
 
-This is what OSS is supposed to do too. Soundmodem doesn't care much
-about what sample rate is chosen in the end, it just needs to know to
-update the filters correctly.
+The command I'm using for the sox capture is:
+sox -V -r 9600 -t ossdsp /dev/dsp -t wav -b -u -r 9600 /tmp/output4.wav
+(or -t raw to look at it in Octave)
 
-> which will also accept a [sub?]multiple of the native "best" rate.
+Now, a dmesg reveals an ALSA warning message when the snd-ac97-codec
+module is inserted:
+ALSA ../../alsa-kernel/pci/ac97/ac97_codec.c:1861: MC'97 1 converters and GPIO not ready (0xff00)
 
-which is not a good idea. This introduces aliasing distortion, and many
-application just try to request one rate, trusting that the driver will
-tell it if the hardware doesn't support it.
+I don't know if that warning is related.
 
-> The Intel 8x0 driver definition says that the driver supports
-> precisely one native sample rate - 48000 samples/second.  I
-> can't remember whether AC97 codecs are physically capable of
-> supporting any other sampling rate, and I don't know whether the
-> 8x0 has a built-in hardware resampler.
+Sox (in -V verbose mode) outputs:
+sox: Input file /dev/dsp: using sample rate 9600
+        size bytes, encoding unsigned, 1 channel
+sox: Input file /dev/dsp: comment "/dev/dsp"
+sox: Writing Wave file: Microsoft PCM format, 1 channel, 9600 samp/sec
+sox:         9600 byte/sec, 1 block align, 8 bits/samp
+sox: Output file /tmp/output4.wav: using sample rate 9600
+        size bytes, encoding unsigned, 1 channel
+sox: Output file: comment "/dev/dsp"
+sox: Finished writing Wave file, 17408 data bytes 17408 samples
 
-AC97 codec aren't required to support anything else than 48kHz, and
-afaik the 8x0 doesn't have a hw sample rate converter.
+At any rate, it's at least good to have these findings in the list
+archives for others if nothing else.
 
-> ALSA in the kernel, or by the application, is probably a decision
-> which would depend on the application.
-
-Soundmodem can do this itself. In fact it would prefer the driver to
-just say what the hardware does, and that the driver doesn't try to be
-too clever.
-
-Tom
-
+	braddock gaskill (KD5ZVK)
