@@ -1,38 +1,32 @@
-From: "John Williams" <vk5zty@bigpond.com>
-Subject: Re: ax25 support in aprsd
-Date: Tue, 27 Jan 2004 17:00:38 +1030
+From: Mike Markowski <mm@UDel.Edu>
+Subject: gMFSK compile problem
+Date: Wed, 28 Jan 2004 15:06:09 -0500
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <40169936.23017.B26D3B@localhost>
-References: <40168DC7.3946.85C307@localhost>
-Reply-To: vk5zty@bigpond.com
+Message-ID: <20040128200609.GA19299@strauss.udel.edu>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7BIT
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-reply-to: <Pine.LNX.4.44.0401262346000.11381-100000@mobile.adis.ca>
-Content-description: Mail message body
+Content-Disposition: inline
 List-Id: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
-To: Adi Linden <adil@adis.on.ca>, linux-hams@vger.kernel.org
+Content-Transfer-Encoding: 7bit
+To: Linux Hams <linux-hams@vger.kernel.org>
 
-I am not sure if you can.
+Hi all,
 
-Might be a question for the aprsd list.
-If the aprs server remembers the last setting then you could setup the filter with an aprs client.
-Otherwise try to locate a Canadian aprs server with preset filters, like we have in Australia.
+I'm trying to compile gmfsk-0.6beta2 but have run into a problem,
+a small one I think.  My config line (on RedHat 9) is
 
+configure --prefix=/usr --sysconfdir=/etc --localstatedir=/var --enable-hamlib
 
-Cheers
-John
-VK5ZTY
+and I get 
+
+checking for libgnomeui-2.0 hamlib... Package libgnomeui-2.0 was not found in the pkg-config search path.
+Perhaps you should add the directory containing `libgnomeui-2.0.pc'
+to the PKG_CONFIG_PATH environment variable
+No package 'libgnomeui-2.0' found
  
+ configure: error: Library requirements (libgnomeui-2.0 hamlib) not met; consider adjusting the PKG_CONFIG_PATH environment variable if your libraries are in a nonstandard prefix so pkg-config can find them.
 
-On 26 Jan 2004 at 23:47, Adi Linden wrote:
+Anyone have a solution?  I'm not sure what a .pc file is.  Thanks!
 
-> Things are beginning to make a lot of sense now. If I want to connect to 
-> port 14580 with aprsd, how do I get aprsd to send the filter string?
-> 
-> 73,
-> Adi
-> va3adi 
-> 
->
+	Mike  AB3AP
