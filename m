@@ -1,36 +1,37 @@
-From: Jeroen Vreeken <pe1rxq@amsat.org>
+From: Joop Stakenborg <pa3aba@debian.org>
 Subject: Re: INP3 patch + yam = kernel oops
-Date: Sat, 5 Apr 2003 01:08:25 +0200
+Date: Sat, 05 Apr 2003 11:43:13 +0200
 Sender: linux-hams-owner@localhost
-Message-ID: <20030405010825.G1131@jeroen.pe1rxq.ampr.org>
-References: <200304022112.07835.oyvind@cs.uit.no> <20030404235522.E1131@jeroen.pe1rxq.ampr.org> <200304050028.40766.oyvind@cs.uit.no>
+Message-ID: <3E8EA531.3070105@debian.org>
+References: <Pine.LNX.4.44.0304050111390.10741-100000@oh2bns.ampr.org>
 Mime-Version: 1.0
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <200304050028.40766.oyvind@cs.uit.no>; from oyvind@cs.uit.no on Sat, Apr 05, 2003 at 00:28:40 +0200
+In-Reply-To: <Pine.LNX.4.44.0304050111390.10741-100000@oh2bns.ampr.org>
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="iso-8859-1"
-To: =?ISO-8859-1?Q?=D8yvind_Hanssen?= <oyvind@cs.uit.no>
+Content-Type: text/plain; charset="us-ascii"; format="flowed"
+To: tpm@prkele.tky.hut.fi
 Cc: linux-hams@vger.kernel.org
 
-On 2003.04.05 00:28:40 +0200 =D8yvind Hanssen wrote:
-> Thanks for the response. I just booted a new kernel (2.4.20),=20
-> with Yam and INP3 patch and it seems to be working well now,=20
-> except that the patched nrattach does not seem to find the nrports fi=
-le.=20
-> I'll sort it out soon.=20
+Tomi Manninen wrote:
 
-It probably looking in /usr/local/etc/ax25 instead of /etc/ax25 or vice
-versa.
-You can set it with configure before compiling.
-(Or make one a symlink to the other like I did to prevent future mistak=
-es
-:)
+>On Fri, 4 Apr 2003, Jeroen Vreeken wrote:
+>
+>  
+>
+>>On a side note does anybody know how the status of ax25 in 2.5 is?
+>>I know there have been some changes, but I don't get replies from any mails
+>>to the author....
+>>    
+>>
+>
+>I'd like to know that as well. Ralf are you here? Any progress lately???
+>
+>  
+>
+Ralf is frequently on irc.freenode.net, channel #hamradio. His nick is 
+do1grb.
 
-	Jeroen
+Regards,
+Joop
 
--
-To unsubscribe from this list: send the line "unsubscribe linux-hams" i=
-n
-the body of a message to majordomo@vger.kernel.org
-More majordomo info at  http://vger.kernel.org/majordomo-info.html
