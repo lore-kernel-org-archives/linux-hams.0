@@ -1,28 +1,53 @@
-From: Mike Markowski <mm@UDel.Edu>
-Subject: Re: gMFSK compile problem
-Date: Wed, 28 Jan 2004 15:54:36 -0500
+From: John Magliacane <kd2bd@yahoo.com>
+Subject: Announcing SPLAT! version 1.1.0
+Date: Thu, 29 Jan 2004 13:43:02 -0800 (PST)
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <20040128205436.GM3805@strauss.udel.edu>
-References: <20040128200609.GA19299@strauss.udel.edu> <1075320809.2433.16.camel@oh2bns.ampr.org>
+Message-ID: <20040129214302.28508.qmail@web12205.mail.yahoo.com>
 Mime-Version: 1.0
 Return-path: <linux-hams-owner@vger.kernel.org>
-Content-Disposition: inline
-In-Reply-To: <1075320809.2433.16.camel@oh2bns.ampr.org>
 List-Id: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
-To: Tomi Manninen <oh2bns@sral.fi>
-Cc: Linux Hams <linux-hams@vger.kernel.org>
+To: linux-hams@vger.kernel.org
 
-On Wed 28-Jan-04 at 1513 EST, Tomi Manninen wrote:
-> On Wed, 2004-01-28 at 22:06, Mike Markowski wrote:
-> 
-> >  configure: error: Library requirements (libgnomeui-2.0 hamlib) not met; consider adjusting the PKG_CONFIG_PATH environment variable if your libraries are in a nonstandard prefix so pkg-config can find them.
-> 
-> You need to install the libgnomeui-devel package. It contains the .pc
-> and other files needed when compiling gMFSK.
+SPLAT!, a terrain and RF path analysis application for Linux/Unix,
+has been extensively modified by J. D. McDonald in January 2004 to
+include the Longley-Rice propagation model using C++ code from NTIA/ITS.
 
-Thanks, Tomi.  I'll download the lib (& whatever it depends on)
-and see how it goes.  Thanks again!
+In addition to analyzing line-of-sight propagation paths, SPLAT! now
+generates multi-color maps illustrating predicted signal strengths
+(path loss), path loss graphs, path loss reports, and terrain height
+graphs.  The default Earth radius as well as the default line-of-sight
+and path loss analysis range used by SPLAT! may also be modified using
+new command-line options.
 
-	Mike  AB3AP
+splat.c was renamed to splat.cpp to reflect changes necessary to merge
+with Longley-Rice C++ code.  A C++ compiler (gcc/g++) is now required
+to compile SPLAT!.
+
+This new release supercedes the older 1.0.3 version of SPLAT!
+
+For futher information, please see the SPLAT! web site at:
+
+	http://www.qsl.net/kd2bd/splat.html
+
+Until its release is made available through ibiblio.org and
+its mirrors, SPLAT! may be downloaded via http at:
+
+	http://www.qsl.net/kd2bd/splat-1.1.0.tar.gz
+
+Happy SPLATting!  :-)
+
+
+73, de John, KD2BD
+
+
+=====
+Visit John on the Web at:
+
+	http://www.qsl.net/kd2bd/
+
+__________________________________
+Do you Yahoo!?
+Yahoo! SiteBuilder - Free web site building tool. Try it!
+http://webhosting.yahoo.com/ps/sb/
