@@ -1,44 +1,69 @@
-From: Shane Deering <vk3bvp@qsl.net>
-Subject: Re: redhat 6.2 dies 3/31/2003 + AX25 2.4 kernel issues
-Date: Thu, 26 Dec 2002 13:24:23 +1100
+From: Bob Nielsen <nielsen@oz.net>
+Subject: Re: Simple BBS, again, sorry for asking twice.
+Date: Wed, 25 Dec 2002 20:10:17 -0800
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <200212261324.23684.vk3bvp@qsl.net>
-References: <3E099099.7070306@junglevision.com>
-Reply-To: vk3bvp@qsl.net
+Message-ID: <20021226041017.GC3554@n7xy.net>
+References: <004601c2ac60$da69cd40$04590cca@apana.org.au> <Pine.LNX.4.44.0212261255470.5411-100000@zl2bsj.ampr.org>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7BIT
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <3E099099.7070306@junglevision.com>
+Content-Disposition: inline
+In-Reply-To: <Pine.LNX.4.44.0212261255470.5411-100000@zl2bsj.ampr.org>
 List-Id: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 7bit
 To: linux-hams@vger.kernel.org
 
-On Wed, 25 Dec 2002 22:03, Cathryn Mataga wrote:
-> According to the Redhat website, Redhat 6.2 and 7.0
-> both die on 3/31/2003.  These are the only supported versions
-> that run with the 2.2 kernel.  But, I've also read messages
-> here that the 2.4 kernel has race conditions and is prone
-> to crash.  So, the question is, what do I do with my ax25
-> Linux system with RF modems on 3/31/2003?
+Has there been any update since 0.4-pre2?  That came out quite a while
+ago (and I guess the "pre2" implies that a 0.4 version is imminent).
 
-I'm using 2.2.17-21mdk kernel with RH7.2 on my packet box.
-It was compiled on a newer box running Mandrake 7.1 and copied to the redhad 
-box. It's a long story....
+Bob, N7XY
 
->
-> 1.  Somehow get the 2.4 kernel fixed by 3/31/2003?  Is this
-> possible?  What exactly is the issue, and how bad is this?
-> Is this likely to happen?
-
-I found early 2.4 (before 2.4.18) kernels very unstable for ax25 stuff.
-After 2.4.18 less unstable running on RH 7.2 and 7.3.
-This computer (I'm typing on) has Mandrake 9.0 on it and the standard kernel 
-2.4.19 seems to work OK out of the box (using modules) for ax25 stuff. But 
-I've only ran the packet stuff for short periods with a single TNC. I don't 
-know how it would stand up to more, busier ports running long term.
+On Thu, Dec 26, 2002 at 01:31:19PM +1300, Wilbert Knol wrote:
+> 
+> I guess my previous mesage regarding the use  of AWZnode 0.4-pre2 was 
+> not too clear. There are two commands that are relevant:
+> 
+> The 'send' command allows node users (typically incoming packet radio
+> users) to deposit a message. The target of the message is a callsign.
+> That callsign must be registered in node.users, where it is mapped to
+> an existing local Linux user. The message is then delivered to that 
+> user as E-mail (or it can be read from the AWZnode mailbox as per 
+> below)
+> 
+> The other command is the 'mail' command, which opens a mailbox, very
+> much like the one produced by the Linux 'mail' command. Once again,
+> the packet radio user must be registered in node.users for this
+> command to work. 
+> 
+> So, if a completely random ax25 user logs in, all they can do, is send
+> a message to the sysop with 'send <sysop_callsign>, asking to create a 
+> Linux account for them, and to make an entry for them in node.users. 
+> 
+> The latter maps their call to the Linux user, and allows them to use
+> the AWZnode 'mail' command.
+> 
+> Whilst all of this works, a new caller cannot log in and leave a 
+> message for another unregistered ax25 user, which, I guess, is what 
+> Michael wanted his PMS/BBS to do. In any case: new ax25 users *can* 
+> leave him a message.
+> 
+> Aside from all this, if you are running a multi-port ax25 setup,
+> AWZnode is a worthwhile thing to have. It doesn't gobble up any
+> resources as it is started from ax25d, and gives ax25 users the sort
+> of this they usually want: a cross-port gateway, mheard facilities,
+> telnet, ping etc. I have had it running here for quite a while and it
+> is very well-behaved.
+> 
+> Wilbert, ZL2BSJ
+> 
+> 
+> 
+> -
+> To unsubscribe from this list: send the line "unsubscribe linux-hams" in
+> the body of a message to majordomo@vger.kernel.org
+> More majordomo info at  http://vger.kernel.org/majordomo-info.html
 
 -- 
-Shane Deering   vk3bvp@qsl.net 	vk3bvp@vk3bvp.#sev.vic.aus.oc
-http://www.qsl.net/vk3bvp/		Up 1 hour and 56 minutes 
-Sent with KMail v1.4.1 on Thu Dec 26 13:07:03 EST 2002
-
+Bob Nielsen, N7XY                          n7xy@n7xy.net
+Bainbridge Island, WA  
+IOTA NA-065, USI WA-028S 
