@@ -1,66 +1,50 @@
-From: Chuck Gelm <nc8q@gelm.net>
-Subject: Re: Lost Connection
-Date: Tue, 03 Dec 2002 17:12:03 -0500
+From: 9a4gl@9a0tcp.ampr.org (Tihomir Heidelberg)
+Subject: ax25 kernel problem sometimes accur
+Date: Wed, 04 Dec 02 08:21:29 CET
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <3DED2C33.6031A902@gelm.net>
-References: <200212022326.00978.barry_linux@rogers.com>
-Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
+Message-ID: <19399@9A0TCP>
 Return-path: <linux-hams-owner@vger.kernel.org>
 List-Id: <linux-hams.vger.kernel.org>
+MIME-Version: 1.0
 Content-Type: text/plain; charset="us-ascii"
-To: barry_linux@rogers.com
-Cc: linux-hams@vger.kernel.org
+Content-Transfer-Encoding: 7bit
+To: linux-hams@vger.kernel.org
 
-Hi, Barry:
- Yes, this is off topic.
-This list is about amateur radio uses of linux.
-Not about hams that happen to use linux for
-non-amateur radio uses.
+Hi
 
- I'd suggest "linux-newbie@vger.kernel.org".
-Another suggestion would be to follow the suggestion
-at the bottom of every post on this list:
-"More majordomo info at  http://vger.kernel.org/majordomo-info.html"
+After few days of running 9a0tcp gateway, ax25 kernel at
+9a0tcp get broken. When the problem occur, all connections
+are running well, so I think that ax25_list is not broken
+because ax25_find_socket and ax25_find_cb functions are doing
+good work, but running netstat or cat /proc/net/ax25 will
+do "segementation fault". This makes big problems to some
+of my applications.
 
- However, let me guess that you 'smbmount'ed a XP filesystem
-on a linux workstation.  Then, when the XP filesystem 'goes down',
-you are suprised to see that the linux workstation has dropped
-the 'link' (smbmount)! :-|
+The problem occur on kernels 2.4.18, 2.4.19 and 2.4.20, but
+I notice it only on 9a0tcp gateway, even am running it on
+several machines. Maybe, because 9a0tcp have few times more
+traffic.
 
- Try smb-un-mount'ing the XP-filesystem before the XP box "goes down".
-Then re-smbmount'ing when the XP box 'goes up'.
-;-)
-See 'man smbumount'
+I analyzed the kernel ax25 source, and I tried to find what
+can make ax25_get_info function crash. I don't know much
+about how kernel and sockets exactly work, but want to know
+if someone have the same problem, and maybe one of kernel
+guru will catch a problem.
 
-HTH, Chuck
+But, what I suspect, in af_ax25.c we define a destructor for
+our sockets:
+         sk->destruct = ax25_free_sock;
+I guess that somebody/sometimes call this destructor when
+destroying a socket. I think that after that, socket cannot be
+considered as valid, but as control block still exists,
+shouldn't we set sk in control block to NULL ? ax25_get_info
+will still find that control block with sk set to destroyed
+socket, isn't it ?
+I added to the end of ax25_free_sock function this line:
+        sk->protinfo.ax25->sk=NULL;
+and I am waiting to see if this will help.
+Is there any expert that can tell me whats wrong here.
 
-barry wrote:
-> 
-> Hi, not sure if this will be calssed as off topic or not, but I am a Ham and
-> it is about Linux.
-> 
-> I have a link between Linux (Mandrake 8.2) and a windows XP Pro box
-> (established by smbmount). If (when) the XP box goes down, then comes back up
-> again, the link is no longer there. If I try to access it from Linux:
-> 
-> >ls XP_Drive
->  I get
-> 
-> ls : XP_Drive: Input/output error
-> 
-> If I try to access from midnight commander I get
-> 
-> File 'XP_Drive' existd\s but cannot be stat-ed: Input/output error
-> 
-> The only way I have managed to resolve the problem to date is to reboot linux,
-> I know there has to be a better way..............what is it please
-> 
-> Barry
-> 
-> ve3nav/va3wi
-> 
-> -
-> To unsubscribe from this list: send the line "unsubscribe linux-hams" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at  http://vger.kernel.org/majordomo-info.html
+Many thanks,
+
+73 de Tihomir Heidelberg, 9a4gl@9a0tcp.ampr.org
