@@ -1,43 +1,32 @@
-From: mvw@mvw.net
-Subject: ax25 pakcet problem: any ideas?
-Date: Fri, 27 Dec 2002 12:41:37 -0500 (EST)
+From: Tomi Manninen <tpm@prkele.tky.hut.fi>
+Subject: Re: ax25 pakcet problem: any ideas?
+Date: Fri, 27 Dec 2002 21:14:14 +0200 (EET)
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <Pine.LNX.4.44.0212271237170.3199-100000@jeeves.mvw.net>
-References: <11467.210.86.76.47.1040973380.squirrel@server.localdomain>
+Message-ID: <Pine.LNX.4.44.0212272110040.1392-100000@oh2bns.ampr.org>
+References: <Pine.LNX.4.44.0212271237170.3199-100000@jeeves.mvw.net>
+Reply-To: tpm@prkele.tky.hut.fi
 Mime-Version: 1.0
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <11467.210.86.76.47.1040973380.squirrel@server.localdomain>
+In-Reply-To: <Pine.LNX.4.44.0212271237170.3199-100000@jeeves.mvw.net>
 List-Id: <linux-hams.vger.kernel.org>
 Content-Type: TEXT/PLAIN; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
-To: linux-hams@vger.kernel.org
+To: mvw@mvw.net
+Cc: linux-hams@vger.kernel.org
 
-Hello all,
+On Fri, 27 Dec 2002 mvw@mvw.net wrote:
 
-Here's the issue: any ideas welcome.
+> But when I open by bbs, the first
+> packet is 255 characters long, and is never heard, The next packets are 
+> shorter and are always heard.
 
-Box 1 (client) talks to box 2( bbs server), via ax25. When box2 sends a
-packet, box 1 (the client)  hears it. But when I open by bbs, the first
-packet is 255 characters long, and is never heard, The next packets are 
-shorter and are always heard. Like this:
+This is just a guess, but the lenght of the packet might not be the issue.  
+It could be that the txdelay at VA3OAK is too short, thereby distroying
+the start of the packet. That would cause behaviour like this. (I'm 
+assuming both packets are sent in one go.)
 
-This packet from va3oak to va3mvw is sent but never seen by va3mvw:
-
-radio1: fm VA3OAK-1 to VA3MVW ctl I00^ pid=F0(Text) len 250 12:30:33
-0000  [FBB-7.04h-AB1FHMRX$]MM-----------------------------------------
-0040  -------MHello Michael, on 27-Dec at 12:30MWelcome to The VA3OAK
-0080  Message System, located inMOakville, Ontario. For licensed amate
-00C0  ur use only.M---------------------------------------------
-
-
-This one follows and IS always seen:
-
-radio1: fm VA3OAK-1 to VA3MVW ctl I01+ pid=F0(Text) len 47 12:30:33
-0000  ---MMVA3OAK (B,LM,R<nr>,S<call>,I,O,X,!,#,?) >
-
-
-Any ideas?
-
-Michael
-
+-- 
+Tomi Manninen           Internet:  oh2bns@sral.fi
+OH2BNS                  AX.25:     oh2bns@oh2rbi.fin.eu
+KP20ME04                Amprnet:   oh2bns@oh2rbi.ampr.org
 
