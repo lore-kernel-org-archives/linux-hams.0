@@ -1,24 +1,31 @@
-From: Bernard Pidoux F6BVP <f6bvp@free.fr>
-Subject: Re: PCISCC4 and LINUX 2.4.20
-Date: Sun, 08 Aug 2004 13:13:14 +0200
+From: David Quental <ct1drb@iol.pt>
+Subject: Dimensions of gmfsk.
+Date: Sun, 08 Aug 2004 22:18:18 +0100
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <41160ACA.8020708@free.fr>
-References: <20040808083811.92415.qmail@web41602.mail.yahoo.com>
-Reply-To: f6bvp@amsat.org
+Message-ID: <4116989A.5000703@iol.pt>
 Mime-Version: 1.0
 Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <20040808083811.92415.qmail@web41602.mail.yahoo.com>
 List-Id: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"; format="flowed"
-To: alfio <euroalfio@yahoo.it>
-Cc: linux-hams@vger.kernel.org
+To: Linux-hams List <linux-hams@vger.kernel.org>
 
-Hi Alfio,
+Hello to all.
 
-This is a PCI driver for the Baycom card !
+I have gmfsk last version and it works fine, but I have an estetical 
+problem with it:
+now I have a laptop with linux, suse 9.0, and included also gmfsk, I use 
+kde as windows system, but have a problem with gmfsk because dimensions 
+of it exceed dimensions of kde window, how can I resize gmfsk in order 
+to be inside of kde window and allow to see all details of operation???
 
-ftp://nephtys.lip6.fr/pub/hamradio/f6fbb/distrib/PciScc/
+Probably it is an easy configuration (as always with my problems) of 
+kde, but I saw all and could not to resize gmfsk.
 
-73, de Bernard, f6bvp
+Any answer will be welcome here.
+
+Best 73 to all and till next email.
+
+CT1DRB
+David Quental
 
