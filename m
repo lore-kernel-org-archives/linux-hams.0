@@ -1,72 +1,49 @@
-From: "Jean-Luc Coulon (f5ibh)" <jean-luc.coulon@wanadoo.fr>
-Subject: =?iso-8859-1?Q?Re=A0=3A?= Listen command
-Date: Tue, 9 Mar 2004 16:03:59 +0100
+From: Jonathan Naylor <jonathan@mechserv.demon.co.uk>
+Subject: ANN: UKW Tools 0.3.2 released
+Date: Tue, 9 Mar 2004 18:49:58 +0000
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <20040309150359.GC2593@tangerine.coulon.evette>
-References: <E6B40EBA0E7B31449C3C565C8ED2F2A001D35EB0@spsrvr04.sp.gruposimoldes.pt>
+Message-ID: <dFemtxAWHhTAFwRT@mechserv.demon.co.uk>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=PGP-SHA1;
-	protocol="application/pgp-signature"; boundary="f2QGlHpHGjS2mn6Y"
 Return-path: <linux-hams-owner@vger.kernel.org>
-Content-Disposition: inline
-In-Reply-To: <E6B40EBA0E7B31449C3C565C8ED2F2A001D35EB0@spsrvr04.sp.gruposimoldes.pt> (from Cristiano.Tavares@simoldesplasticos.pt on mar, mar 09, 2004 at 14:41:11 +0100)
 List-Id: <linux-hams.vger.kernel.org>
-To: Cristiano Tavares - SP <Cristiano.Tavares@simoldesplasticos.pt>
-Cc: Debian Ham =?iso-8859-1?Q?=28Correio_electr=F3nico=29?= <debian-hams@lists.debian.org>, Ham-List =?iso-8859-1?Q?=28Correio_electr=F3nico=29?= <linux-hams@vger.kernel.org>
+Content-Type: text/plain; charset="us-ascii"; format="flowed"
+Content-Transfer-Encoding: 7bit
+To: linux-hams@vger.kernel.org
 
+Hi Folks
 
---f2QGlHpHGjS2mn6Y
-Content-Type: text/plain; Format=Flowed; DelSp=Yes; charset=ISO-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+I'm pleased to announce that UKW Tools 0.3.2 has been released. This is 
+an amateur radio GIS program type thingy, that allows for radio 
+coverage, path plots and other good things to be done. In coverage mode 
+it can be used for tracing the coverage of FM repeaters for example, the 
+path plot mode is more useful for microwave types who want to get the 
+path loss over a given path. There are lots of other bits and pieces 
+that it does. The propagation model that it uses is the same as that 
+used by John KD2BD in Splat!
 
-Christiano,
+By using the wxWidgets (nee wxWindows)  library, I have been able to 
+make it portable to Windows also, and a Windows installer based version 
+is also available on my web site.
 
-You can change the /usr/bin/listen executable to be suid root.
-Or run it via sudo.
+The source code for UKW Tools is GPL as is my source for the Windows 
+installer.
 
---
-Regards and 73
-			- jean-Luc - f5ibh
+As released UKW Tools requires terrain data which is freely available on 
+the Internet but requires access to broadband due to the amount 
+required. The basic data I use is named SRTM and covers most of the 
+earth at 90m-ish intervals but is sometimes inaccurate. I use either 
+GTOPO30 or Globe data that covers the earth at 900m-ish intervals to 
+remove any faults it finds.
 
-Le 09.03.2004 14:41, Cristiano Tavares - SP a =E9crit=A0:
->73's to all.
->
->After instaling all the software for ax25 why does the LISTEN command
->works with root and does not work with my normal user?
->
->I get a error message like:
->
->socket: not permitted
->
->or
->
->socket: permission denied
->
->I am sorry, I'm very new to Linux.
->There are some things I don't understand.
->
->Is there any group I must add my normal user?
->Which one?
->
->Thanks in advance.
->-
->To unsubscribe from this list: send the line "unsubscribe linux-hams"
->in
->the body of a message to majordomo@vger.kernel.org
->More majordomo info at  http://vger.kernel.org/majordomo-info.html
->
+UKW Tools can be downloaded from http://www.qsl.net/g4klx under 
+Software.
 
---f2QGlHpHGjS2mn6Y
-Content-Type: application/pgp-signature
-Content-Disposition: inline
+My previous bits of software such as LinWSJT, MTrack and Baken are still 
+available from the same place.
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.2.4 (GNU/Linux)
+Share and Enjoy
 
-iD8DBQBATdzeUdGGXzzGnNARAjTeAKCkf+DyWu4Le9cvHApV4wuJgOh5GQCghUvZ
-4/1rMVpD3ZsasGBd/5lEP1A=
-=CDnw
------END PGP SIGNATURE-----
+Jonathan  G4KLX
 
---f2QGlHpHGjS2mn6Y--
+PS does anyone know where I can get the source code for a soft decision 
+Reed Solomon decoder ?
