@@ -1,55 +1,37 @@
-From: "Douglas Cole" <n7bfs@qwest.net>
-Subject: Re: KDE EchoLinux client development started
-Date: Thu, 10 Apr 2003 21:11:43 -0700
+From: Arno Verhoeven <pe1icq@pi8zaa.ampr.org>
+Subject: Re: Square One!
+Date: Fri, 11 Apr 2003 07:40:52 +0200 (CEST)
 Sender: linux-hams-owner@localhost
-Message-ID: <200304102111.43686.n7bfs@qwest.net>
-References: <200304072004.55533.ve3mtm@rac.ca> <20030408141909.A30053@pull.privacy.nb.ca> <200304102146.01378.ve3mtm@rac.ca>
-Reply-To: n7bfs@qwest.net
+Message-ID: <Pine.LNX.4.33.0304110739040.10175-100000@zoef.pe1icq.ampr.org>
+References: <200304110417.25298.ailic@gmx.net>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 8BIT
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <200304102146.01378.ve3mtm@rac.ca>
+In-Reply-To: <200304110417.25298.ailic@gmx.net>
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"
-To: Michael Melanson <ve3mtm@rac.ca>, LINUX HAMS MAILING LIST <linux-hams@vger.kernel.org>
+Content-Type: TEXT/PLAIN; charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+To: Aleksandar Ilic <ailic@gmx.net>
+Cc: linux-hams@vger.kernel.org
 
-On Thursday 10 April 2003 14:45, Michael Melanson wrote:
-> I have started, pending the acception of the Sourceforge project, but I
-> haven't uploaded anything yet (It's not much yet)
+On Fri, 11 Apr 2003, Aleksandar Ilic wrote:
+
+> On Thursday 10 April 2003 21:09, Tomi Manninen wrote:
+> > You should try the usermode soundmodem instead
 >
-> As for the Qt/GTK debate, I can do either. I chose Qt because that's what
-> I've used more, but that's by no means a binding reason. I have used GTK,
-> but that's a long time ago and not much at that. If the general concensus
-> is to use GTK, then I'll register a new SF project with a non-KDE name
+> Apropos my previous post: Tom's soundmodem also can't to compile because of
+> libxml to libxml2 upgrade...
+> It seems I was too fast upgrading to Slack 9.  :(
 >
-> This project will not implement the EchoLink protocol. That's done by
-> EchoLinux, which will run as a child process of this program.
->
-> I welcome any other input
->
->
-> - Michael VE3MTM
-> ve3mtm@rac.ca
+> Regards,
+> Alek
 
-Whip me beat me hang me out to dry, but if I had a choice, having an ncurses 
-interface so that one could run it from a console/limited hardware would be 
-kinda fun :^)
+Did you try the pre-compiled soundmodem package that is included with
+Slackware 9.0? (it's in /extra/ham/packet)
 
-Second choice would be QT.
-Third would be Kylix.
-Fourth would be GTK...
-Just my two pennies.
 
-Thanks for sharing what my dumb brain just doesn't seem to want to do (write 
-software).
-
-73
-
--- 
-Douglas Cole   N7BFS
-Spokane IRLP node owner
-AMSAT#26182 , K2 # 544
-http://www.users.qwest.net/~cdoug3
-Registered Linux user # 188922
-
+73, PE1ICQ  Arno Verhoeven
+--------------------------------
+AX.25  pe1icq@pi8zaa.#nbo.nld.eu
+smtp   pe1icq@pi8zaa.ampr.org
+inet   pe1icq@amsat.org
 
