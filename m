@@ -1,33 +1,19 @@
-From: Wilbert Knol <zl2bsj@zl2tze.ath.cx>
-Subject: Re: Linux AX.25 Socket programming
-Date: Sat, 4 Jan 2003 11:26:09 +1300 (NZDT)
+From: "Ray Wells" <mvc@dodo.com.au>
+Subject: 6pack
+Date: Sat, 4 Jan 2003 14:13:11 +1100 (AUS Eastern Daylight Time)
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <Pine.LNX.4.44.0301041120160.9645-100000@zl2bsj.ampr.org>
-References: <20030103210222.A10721@pull.privacy.nb.ca>
+Message-ID: <3E165147.000009.60245@gizmo>
 Mime-Version: 1.0
+Content-Transfer-Encoding: 7BIT
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <20030103210222.A10721@pull.privacy.nb.ca>
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: TEXT/PLAIN; charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-To: M Taylor <mctylr@privacy.nb.ca>
-Cc: linux-hams@vger.kernel.org
+Content-Type: Text/Plain; charset="us-ascii"
+To: linux-hams@vger.kernel.org
 
+Hi All,
 
+Can someone please advise me if the 6pack driver supports daisy-chaining of
+TNC's yet.
 
-On Fri, 3 Jan 2003, M Taylor wrote:
-
-> For portable Perl, 
-> 	$/ = \015;	# CR
-
-Try:
-        $/ = "\015";
-
-Perl wants a string. If you give it an integer number, it gets 
-interpreted as a buffer size....
-
-
-Wilbert, ZL2BSJ
-
-
-
+Ray Wells
+VK2TV
