@@ -1,22 +1,22 @@
-From: Luiz Catalan <catalan@lnx.lfc.mat.br>
-Subject: kernel 2.4.21 and AX25 & netrom
-Date: Sat, 30 Aug 2003 12:51:48 -0300 (BRT)
+From: "David S. Miller" <davem@redhat.com>
+Subject: Re: [PATCH] set socket owner (ax25, rose, netrom)
+Date: Sat, 30 Aug 2003 19:08:36 -0700
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <Pine.LNX.4.51.0308301247010.32430@lnx.lfc.mat.br>
+Message-ID: <20030830190836.41064340.davem@redhat.com>
+References: <20030829114208.40f10cca.shemminger@osdl.org>
 Mime-Version: 1.0
-Return-path: <linux-hams-owner@vger.kernel.org>
-List-Id: <linux-hams.vger.kernel.org>
-Content-Type: TEXT/PLAIN; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
-To: linux-hams@vger.kernel.org
+Return-path: <linux-hams-owner@vger.kernel.org>
+In-Reply-To: <20030829114208.40f10cca.shemminger@osdl.org>
+List-Id: <linux-hams.vger.kernel.org>
+Content-Type: text/plain; charset="us-ascii"
+To: Stephen Hemminger <shemminger@osdl.org>
+Cc: ralf@linux-mips.org, linux-hams@vger.kernel.org, netdev@oss.sgi.com
 
-Gurus on the list,
+On Fri, 29 Aug 2003 11:42:08 -0700
+Stephen Hemminger <shemminger@osdl.org> wrote:
 
-could someone, please, give me a clue about kernel 2.4.21 and ax25 (and
-netrom)? I have had often crashes due the netrom bug, told by several
-authors not only on this list. Do you suggest try an upgrade to
-2.6.0-testX or there is a fix to be done in the 2.4.21 kernel release? If
-there is such fix, where to get it?
+> AX25, NETROM, ROSE all need to set the socket owner field, otherwise it is possible
+> to remove the module when there are orphaned sockets.
 
-Thanks in advance for any answer,
-Luiz - PP5AQ
+Applied, thanks.
