@@ -1,27 +1,40 @@
-From: Mike Fenske <mike_fenske@telus.net>
-Subject: Soundmodem
-Date: Sat, 20 Jul 2002 20:15:40 -0700
+From: James Cutler <jwc@stanford.edu>
+Subject: Problems with UI frame reception
+Date: Mon, 22 Jul 2002 21:35:21 -0700 (PDT)
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <3.0.6.32.20020720201540.007a6500@pop.telus.net>
+Message-ID: <Pine.GSO.4.44.0207222123320.13893-100000@rescomp.Stanford.EDU>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
 Return-path: <linux-hams-owner@vger.kernel.org>
 List-Id: <linux-hams.vger.kernel.org>
+Content-Type: TEXT/PLAIN; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
 To: linux-hams@vger.kernel.org
 
-Hello all. I am tying to get Thomas's userspace soundmodem working on an
-IBM laptop. I have installed SuSE 7.3 and Kernel 2.4.8. AX25 is working
-fine with baycom drivers. I have installed soundmodem from SuSE's rpm's.
-Got it configured OK and soundmodem starts with no errors. If I check
-ifconfig, it shows port ax0 up running. Next, using "call" I tried
-"calling" a station, expecting to hear a packet from the internal speaker
-(I haven't hooked up a radio yet). Nothing is heard. After stopping "call"
-with Ctrl-C, I checked ifconfig again and see only 1 packet transmitted
-(should be at least 2 I think). I am using alsa sound drivers and sound
-card (ESS1688) works fine to play wav files, etc. 
+Hello,
 
-Any suggestions??
+I'm working with UI frames and am having problems with receiving UI
+frames.  I've written a simple send and recieve pair.  The send software
+seems correct as monitored by the "listen" program.  But the receiver is
+working as I expect.
 
-Mike Fenske
-VE7MKF
+First, I have to call "connect" (in addition to creating and binding the
+socket) on the receive socket for anything to be received.  And then it
+only receives packets from the socket I "connected" to.  Which makes sense
+but I'm confused why I need to "connect" a receive socket?
+
+Second, the packets I do receive are missing the first byte.  The first
+byte is cut off.
+
+I'm running kernel 2.4.19-rc2 with libax25-0.0.10.
+
+Any suggestions?
+
+Thanks.
+
+--James
+
+PS...I've hacked up "listen.c" code to do this but that uses SOCK_PACKET.
+It would be much cleaner to us DGRAMs but I'm having this reception
+issues.
+
+
