@@ -1,37 +1,31 @@
-From: Thomas Osterried <thomas@osterried.de>
-Subject: Re: Success! TWO questions remain
-Date: Tue, 17 Dec 2002 18:37:29 +0100
+From: mvw@mvw.net
+Subject: BBS - recommendations?
+Date: Wed, 18 Dec 2002 19:09:37 -0500 (EST)
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <20021217173729.GA13904@osterried.de>
-References: <Pine.LNX.4.44.0212111645150.1297-100000@jeeves.mvw.net> <Pine.LNX.4.44.0212120813300.5835-100000@jeeves.mvw.net>
+Message-ID: <Pine.LNX.4.44.0212181907500.3678-100000@jeeves.mvw.net>
+References: <Pine.LNX.4.44.0212122258110.4719-100000@oh2bns.ampr.org>
 Mime-Version: 1.0
 Return-path: <linux-hams-owner@vger.kernel.org>
-Content-Disposition: inline
-In-Reply-To: <Pine.LNX.4.44.0212120813300.5835-100000@jeeves.mvw.net>
+In-Reply-To: <Pine.LNX.4.44.0212122258110.4719-100000@oh2bns.ampr.org>
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"
+Content-Type: TEXT/PLAIN; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
-To: mvw@mvw.net
-Cc: linux-hams@vger.kernel.org
+To: Linux Hams mailing list <linux-hams@vger.kernel.org>
 
-> In any case, another question. I want to be able to telnet into one
-> machine from another using radio. Encryption is forbidden for amateur use
-> so this means clear passwords. Not good. (Even though I will not use root, 
-> of course).
+Hello all,
 
-the cleartext passwort for becoming root may be ommited with this
-littel tool, on
-http://x-berg.in-berlin.de/cgi-bin/viewcvs.cgi/ampr/root/
-(downloading the tarball (link on the bottom of the page is suggested)).
+I want a simple message system on my packet boxes. Either ax.25 based or 
+TCP/IP based.
 
-it does md5-password challenge in the standard way as bbs password
-protection wroks.
-this is some kind of one-way-password mechanism, and it does not matter
-that anyone reads your answer string.
+I do not need heavy all-encompassing OS-like systems - all I want is a 
+simple BBS-style system. Any recomemndations for what works well for you 
+all, and is simple to install and maintain?
 
-be aware that your ax25 connections with your PID=text session or
-your ax25.ip.tcp telnet session _may_ be "overtaken" by someone else.
+Background: I already have the system itself and ax.25 and TCP/IP over 
+ax.25 working. Just need a BBS on top!
 
-73,
-	- thomas  dl9sau
+Michael
+
+
+
 
