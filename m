@@ -1,33 +1,39 @@
-From: Mike Fenske <mike_fenske@telus.net>
-Subject: Re: KISS Mode
-Date: Sat, 27 Apr 2002 11:38:51 -0700
+From: "Wilbert Knol" <w.knol@niwa.cri.nz>
+Subject: Re: Kernel recommendations for AX.25?
+Date: Sun, 28 Apr 2002 19:03:50 +1200
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <3.0.6.32.20020427113851.0079ee60@pop.telus.net>
+Message-ID: <3CCC4796.32020.20D425D7@localhost>
+References: <20020426204957.GA2930@oz.net>
+Reply-To: w.knol@niwa.cri.nz
 Mime-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 7BIT
 Return-path: <linux-hams-owner@vger.kernel.org>
+In-Reply-To: <20020426204957.GA2930@oz.net>
 List-Id: <linux-hams.vger.kernel.org>
-Content-Transfer-Encoding: 7bit
-To: linux-hams@vger.kernel.org
+Content-Type: text/plain; charset="us-ascii"
+To: Bob Nielsen <nielsen@oz.net>, linux-hams@vger.kernel.org
 
-I use minicom. I setup a minicom configuration file called "ax25". Here I
-set baud rate to 9600, set the proper serial port and cleared all modem
-commands. I set modem initialization string to C0 FF C0 ^M. To do this,
-since I couldn't figure how to set those codes in minicom, I set the string
-to 123^M and then edited the config file with a hex editor. Then I just
-start "minicom ax25" and my TNC (KPC-9612) goes to command mode and I can
-use minicom to communicate. When finished I use INTFACE XKISS, RESET. Hope
-this helps,
 
-Mike
-VE7MKF
+> I'm about to build up a new machine for shack use (Duron 800 CPU,
+> Chaintek mainboard with VIA Apollo KT133 chipset, 128 MB) and was
+> wondering what kernel would be the best choice for use with AX.25
+> networking.  I run 2.4.18 on one of my boxes without AX.25 and it seems
+> pretty stable, but I recall seeing some messages about potential
+> problems with either AX.25 or some of the device drivers.  The changes
+> in the 2.4 series seem to still be coming at a fast clip.
 
->On Friday 26 April 2002 09:32 pm, charlie carroll wrote:
-> Can someone point me to the commands to put an external TNC into
-> and out of KISS mode?
->
-> Thanks
->
-> Charlie, k1xx
+I installed 2.4.18 a few days ago over 2.4.8, and have been impressed, 
+so far.
 
+A lot of funnies to do with AX25 have disappeared (and a new one has 
+appeared: the suspected parport problem :-)
+
+But if you are using KISS TNCs, 2.4.18 would have my vote. My 
+impression is, that it is more stable and possibly a little faster (the latter 
+may be to do with the change from ext2 to reiser, however)
+
+I am busy patching up to 19-pre7, trying to get to the bottom of the picpar 
+problem....I want my 70 cm 9k6 port back.
+
+Wilbert, ZL2BSJ
 
