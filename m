@@ -1,40 +1,36 @@
-From: Riley Williams <rhw@InfraDead.Org>
-Subject: Re: SPLAT ...
-Date: Thu, 27 Jun 2002 23:02:06 +0100 (BST)
+From: Arno Verhoeven <pe1icq@pi8zaa.ampr.org>
+Subject: Re: logging software
+Date: Sat, 29 Jun 2002 14:57:53 +0200 (CEST)
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <Pine.LNX.4.21.0206272252450.15173-100000@Consulate.UFP.CX>
-References: <200206271358.g5RDw3X08658@amsat.org>
-Reply-To: Riley Williams <rhw@InfraDead.Org>
+Message-ID: <Pine.LNX.4.33.0206291455290.5554-100000@zoef.pe1icq.ampr.org>
+References: <3D17C441.9000708@medianox.net>
 Mime-Version: 1.0
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <200206271358.g5RDw3X08658@amsat.org>
+In-Reply-To: <3D17C441.9000708@medianox.net>
 List-Id: <linux-hams.vger.kernel.org>
 Content-Type: TEXT/PLAIN; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
-To: John A Magliacane <kd2bd@amsat.org>
-Cc: Linux Ham Radio <linux-hams@vger.kernel.org>
+To: "Kameron A. Cole" <kernel@medianox.net>
+Cc: linux-hams@vger.kernel.org
 
-Hi John.
+On Mon, 24 Jun 2002, Kameron A. Cole wrote:
 
-> Someone running Red Hat 6.2 had a similar problem with the install
-> scripts. It was cured by changing the '==' tests to '='.  I'm not
-> sure why this was necessary.
+> After this weekend's ARRL Field Day, I decided to find some logging
+> software!
+>
+> In fact, any advice regarding a complete set up - how to link three
+> 'sites' (tents with two multiband radios apiece) up to laptops for logging.
+>
 
-At a guess, the install script was written on a system where sh != bash
-either because the Bourne shell is installed on the development system
-or because sh is a symlink to some shell other than bash (perhaps csh
-instead).
+Have a look at TLF.
 
-Another possibility: on MOST systems, if a script doesn't explicitly
-state which shell it is written for, /bin/sh is always used, but on SOME
-systems, the login shell is used instead. This latter appears to be more
-common where the login shell is not bash, so the choice of login shell
-may affect this, but I can't state that I know the logic behind this.
+An index of all ham software for Linux (incl. TLF) can be found at
+http://radio.linux.org.au
 
-My understanding is that this particular problem is the reason for the
-tests to ensure that the current shell is bash in the Configure and
-Menuconfig scripts for the Linux kernel, in which case this is obviously
-a recognised problem.
 
-Best wishes from Riley.
+73, PE1ICQ  Arno Verhoeven
+--------------------------------
+AX.25  pe1icq@pi8zaa.#nbo.nld.eu
+smtp   pe1icq@pi8zaa.ampr.org
+inet   pe1icq@amsat.org
 
