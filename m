@@ -1,22 +1,29 @@
-From: acierno@pocketdvm.com
-Subject: free to a good home...
-Date: Sun, 12 Sep 2004 10:36:17 -0400
+From: Ralf Baechle DL5RB <ralf@linux-mips.org>
+Subject: Re: [ANN] Hamlib 1.2.2 released
+Date: Mon, 13 Sep 2004 15:51:15 +0200
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <1B555479-04C9-11D9-A493-000A95DB9E94@pocketdvm.com>
-Mime-Version: 1.0 (Apple Message framework v619)
-Content-Transfer-Encoding: 7bit
+Message-ID: <20040913135115.GA29420@linux-mips.org>
+References: <20040823231207.GB2985@charybde.local>
+Mime-Version: 1.0
 Return-path: <linux-hams-owner@vger.kernel.org>
+Content-Disposition: inline
+In-Reply-To: <20040823231207.GB2985@charybde.local>
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"; format="flowed"
-To: Linux HAMs <linux-hams@vger.kernel.org>
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+To: Stephane Fillod <f8cfe@free.fr>, Hamlib developers <hamlib-developer@lists.sourceforge.net>, Linux HAMs <Linux-hams@vger.kernel.org>, GNU Radio mailing list <discuss-gnuradio@gnu.org>
 
-I have a sparcstation 4 in the worcester MA are that would be free to a 
-good (or bad) home...... Not sure exactly what is in the box but I do 
-remember that when I put it away four years ago it did boot up nicely 
-into red hat linux.  be glad to ship it, if you are willing to pay the 
-freight.........
+On Tue, Aug 24, 2004 at 01:12:07AM +0200, Stephane Fillod wrote:
 
+> Hamlib-1.2.2 has been released.
 
-mark
-n2uem
+[...]
 
+> Download pages are accessible at http://sourceforge.net/projects/hamlib
+> i386 rpms and .deb coming soon. Win32 DLL's are already available.
+
+I've put rpms of hamlib 1.2.2 for Fedora Core 2 into /pub/ham/hamlib-1.2.2
+on bacchus.net.dhis.org.  Feel free to put them onto sourceforge or
+anywhere else.
+
+  Ralf
