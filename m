@@ -1,41 +1,50 @@
-From: Jeroen Vreeken <pe1rxq@amsat.org>
-Subject: Re: Incoming AX.25 connections
-Date: Sun, 30 Nov 2003 21:11:32 +0100
+From: "Janusz Przybylski - SP1LOP" <sp1lop@sp1lop.szczecin.pl>
+Subject: New Address
+Date: Wed, 3 Dec 2003 11:10:11 +0100
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <20031130211132.C211@jeroen.pe1rxq.ampr.org>
-References: <3FCA4485.6030804@rz-online.de>
+Message-ID: <000f01c3b985$a7e668f0$64c9a8c0@sp1lop.szczecin.pl>
+Reply-To: "Janusz Przybylski - SP1LOP" <sp1lop@sp1lop.szczecin.pl>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7BIT
+Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <3FCA4485.6030804@rz-online.de>; from Manfred.Haertel@rz-online.de on Sun, Nov 30, 2003 at 20:27:01 +0100
 List-Id: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
-To: "Manfred Haertel, DB3HM" <Manfred.Haertel@rz-online.de>
-Cc: linux-hams@vger.kernel.org
+To: linux-hams@vger.kernel.org
 
-On 2003.11.30 20:27:01 +0100 "Manfred Haertel, DB3HM" wrote:
-> If I do not have any AX.25 listener running (no ax25d and no LinKT bound 
-> to some SSID on my system) and somebody tries to connect to my system, 
-> it seems, that Linux accepts this socket, as it sends an outgoing UA to 
-> the incoming SABM.
-> 
-> On the other hand, as there is no listener, the caller is connected to 
-> "nothing" on my system (just to the kernel). I can't talk to him.
-> 
-> Is this correct?
+Hi All
 
-Yup, this is because the link is protocol agnostic. At the moment of SABM
-reception it is not yet known if there is going to be text, ip, netrom or
-whatever protocol is going to be used. (Or a combination thereof)
-As such the kernel accepts connections to the ax25 address of the
-interface.
-It is mainly needed for those misguided souls that want to do IP in
-connected mode.
- 
-> If it is, is there any system call to "connect" to the incoming 
-> connection afterwards?
+Please correct to my new IP addres to encap.txt, I'm register this new data
+Dec 02 2003
+Thenks. de Janusz SP1LOP
 
-No that I now of...
+--------------
+Mail to update gateway 217.153.5.208
+Processing 'New Address: 62.69.192.233' command
+Delete Entry 217.153.5.208 command OK
+New Address command OK
+Gateways Entry written to file
+--------------
 
-Jeroen
+        greeting  73 de Janusz SP1LOP
+====================================
+Coordinator Polish AmprNet 44.165/16
+====================================
+Inet:      janusz@sp1lop.szczecin.pl
+AmprNet:    sp1lop@szczecin.ampr.org
+AX25:      sp1lop @ sr1bsz.sz.pol.eu
+====================================
+Sysop: SR1BSZ and szczecin.ampr.org
+
+
+
+
+
+---
+avast! Antivirus: Outbound message clean.
+Virus Database (VPS): 2003-12-02
+Tested on: 2003-12-03 11:10:21
+avast! is copyright (c) 2000-2003 ALWIL Software.
+http://www.avast.com
+
+
 
