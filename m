@@ -1,44 +1,33 @@
-From: Tomi Manninen <oh2bns@sral.fi>
-Subject: ANN: gMFSK v0.6beta2
-Date: Fri, 23 Jan 2004 19:06:12 +0200
+From: Luc Langehegermann <luc@lx2gt.lu>
+Subject: New Version of ktrack released
+Date: Fri, 23 Jan 2004 20:47:43 +0100
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <1074877572.1299.114.camel@oh2bns.ampr.org>
+Message-ID: <200401232047.43553.luc@lx2gt.lu>
 Mime-Version: 1.0
 Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
+Content-Disposition: inline
 List-Id: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
-To: Linux-hams List <linux-hams@vger.kernel.org>
+To: amsat-bb@amsat.org, linux-hams@vger.kernel.org
 
-Hi all,
+Hello,
 
-The second beta of gMFSK, the Gnome Multimode HF Terminal program has 
-been released to the public. You can find it here:
+I have just uploaded a new Version of ktrack. There are only litte external 
+changed, but some parts of its core have been completly rewritten. I would 
+really like to get some feedback, to further improve the Program.
 
-  http://gmfsk.connect.fi/
+Basically, KTrack is an Linux Satellite Tracking/Prediction Program, that 
+features a simple mat display, implements the only way for true doppler 
+compensation, while still alowing the user to change frequencies on the 
+radio, and can aim your antennas automatically towards the used satellite.
 
-This time no RPMs. If you want to build RPMs yourself, do a
-"rpmbuild -ta gmfsk-0.6beta2.tar.gz".
+In addition to that it provides an very simple way to generate prediction 
+lists of satellite passes.
 
-Changes in this release include
+The Program's somewhat outdates page is at http://ktrack.sourceforge.net the 
+source code is available at 
+http://sourceforge.net/project/showfiles.php?group_id=54337&package_id=49001&release_id=212030
 
- - A configuration druid (or wizard) that pops up the first
-   time you launch the software
-
- - New macros: $startqso, $logqso, $clearqso (set qso start 
-   time, log qso, clear qso data respectively)
-
- - Some sample macros/fixtexts
-
- - CWirc (see http://webperso.easyconnect.fr/om.the/web/helloip/)
-
- - Support for the upcoming hamlib 1.1.5
-
- - A few bug fixes and other minor stuff. See the ChangeLog
-   for details.
-
-As always, have fun!
-
--- 
-Tomi Manninen / OH2BNS / KP20ME04
+Have a lot of fun! 73, Luc, LX2GT
 
