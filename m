@@ -1,59 +1,32 @@
-From: BentBagger@netscape.net (Bent Bagger)
-Subject: Soundmodem gives error message: cannot start audio
-Date: Mon, 03 Feb 2003 10:58:25 -0500
+From: "Douglas Cole" <n7bfs@qwest.net>
+Subject: video capture
+Date: Mon, 3 Feb 2003 15:12:56 -0800
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <60D10534.44D9CC45.0AAC1079@netscape.net>
+Message-ID: <200302031512.56567.n7bfs@qwest.net>
+Reply-To: n7bfs@qwest.net
 Mime-Version: 1.0
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Content-Transfer-Encoding: 8BIT
 Return-path: <linux-hams-owner@vger.kernel.org>
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="iso-8859-1"
+Content-Type: text/plain; charset="us-ascii"
 To: Linux-Hams <linux-hams@vger.kernel.org>
 
-I am having problems with the user space sound modem 'soundmodem'. When=
- I
-start it using this configuration file:
+Well, I have spent a number of hours now searching way too much info on video 
+capture cards and usb dongles with no clear answer to my questions.
 
-<?xml version=3D"1.0"?>
-<modem>
-  <configuration name=3D"slug">
-    <channel name=3D"Channel 0">
-      <mod mode=3D"afsk" bps=3D"1200" f0=3D"1200" f1=3D"2200"/>
-      <demod mode=3D"afsk" bps=3D"1200" f0=3D"1200" f1=3D"2200"/>
-      <pkt mode=3D"MKISS" ifname=3D"ax0" hwaddr=3D"OZ6BL" ip=3D"44.145.=
-40.3" netmask=3D"255.255.255.0" broadcast=3D"44.145.40.255"/>
-    </channel>
-    <chaccess txdelay=3D"350" slottime=3D"100" ppersist=3D"40" fulldup=3D=
-"0" txtail=3D"10"/>
-    <audio type=3D"soundcard" device=3D"/dev/dsp" halfdup=3D"1"/>
-    <ptt file=3D"/dev/ttyS0"/>
-  </configuration>
-</modem>
+Was wondering if anyone has any knowledge of any usb video capture cards that 
+work well with >2.4.19 Linux ?
 
-(tnx CT1FOX) I get this error message:
+I am interested in playing with the new hdsstv mode and other things on my 
+linux boxen and want to pickup a capture card that will work on my penguin 
+machine ;^}
 
-sm[PID]: cannot start audio
+tia for all input !
 
-I cannot find any documention handling error messages. What does it mea=
-n=20
-and what can I do to get around it?
-
-Best 73 de Bent/OZ6BL
-
---=20
-Bent Bagger, OZ6BL
-Birker=F8d
-Danmark    (JO65EU)
+-- 
+Douglas Cole   N7BFS
+AMSAT#26182 , K2 # 544
+http://www.users.qwest.net/~cdoug3
+Registered Linux user # 188922
 
 
-__________________________________________________________________
-The NEW Netscape 7.0 browser is now available. Upgrade now! http://chan=
-nels.netscape.com/ns/browsers/download.jsp=20
-
-Get your own FREE, personal Netscape Mail account today at http://webma=
-il.netscape.com/
--
-To unsubscribe from this list: send the line "unsubscribe linux-hams" i=
-n
-the body of a message to majordomo@vger.kernel.org
-More majordomo info at  http://vger.kernel.org/majordomo-info.html
