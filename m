@@ -1,41 +1,59 @@
-From: Tomi Manninen OH2BNS <tpm@prkele.tky.hut.fi>
-Subject: Re: AX25/NETROM
-Date: Tue, 13 May 2003 14:36:10 +0300 (EETDST)
+From: Ana Maria Grilo Moreira <ct1drb@vizzavi.pt>
+Subject: Abt gmfsk last version.
+Date: Tue, 13 May 2003 14:23:20 +0100
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <Pine.HPX.4.10.10305131431470.26336-100000@saturn.trs.ntc.nokia.com>
-References: <S262447AbTELTDp/20030512190345Z+8235@vger.kernel.org>
-Reply-To: tpm@prkele.tky.hut.fi
+Message-ID: <3EC0F1C8.6020005@vizzavi.pt>
 Mime-Version: 1.0
+Content-Transfer-Encoding: 7BIT
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <S262447AbTELTDp/20030512190345Z+8235@vger.kernel.org>
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: TEXT/PLAIN; charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-To: Ron <ke7rt@clearwater.net>
-Cc: Linux-Hams@vger.kernel.org
+Content-Type: text/plain; charset="us-ascii"; format="flowed"
+To: linux-hams@vger.kernel.org
 
-On Mon, 12 May 2003, Ron wrote:
+Hello to all, best 73.
 
-> kissattach /dev/ttyS0 spider 192.168.0.0
-> kissattach /dev/ttyS1 spideruse 192.168.0.0
-> kissparms -p spider -t 150 -l 150 -s 50 -r 50
-> kissparms -p spideruse -t 150 -l 150 -s 50 -r 50
-> nrattach netrom
-> nrattach netrom2
+Name is David near Lisbon in IM58LP.
 
-> LINUX --->nrconfig:port netrom not active
-> LINUX --->nrconfig:port netrom2 not active
-> LINUX --->rsconfig: port  rose not active
+Like a lot ham linux programs, in fact i use only linux at home, at qrl 
+is diferent :).
 
-I think you need to give the netrom interfaces an IP number too. Try the
-"-i" option to nrattach. And by the way it might be better to not use
-192.168.0.0 as the IP number as it's a network address. Use .1 instead.
+Today i got new (from last month) version of gmfsk, tryed to compile, 
+but give me always same error. Here it is output:
 
-The ROSE warning you can probably ignore or better, edit "rsports" and
-comment the default config out.
+g++     -o gmfsk  main.o support.o interface.o callbacks.o waterfall.o 
+miniscope.o papertape.o gtkdial.o conf.o confdialog.o log.o macro.o 
+ptt.o qsodata.o snd.o trx.o mfsk/libmfsk.a mt63/libmt63.a rtty/librtty.a 
+throb/libthrob.a psk31/libpsk31.a feld/libfeld.a misc/libmisc.a 
+-L/opt/gnome2/lib -L/usr/X11R6/lib -lgnomeui-2 -lSM -lICE -lbonoboui-2 
+-lgnomecanvas-2 -lgnome-2 -lart_lgpl_2 -lpangoft2-1.0 -lgtk-x11-2.0 
+-lgdk-x11-2.0 -latk-1.0 -lgdk_pixbuf-2.0 -lpangoxft-1.0 -lpangox-1.0 
+-lpango-1.0 -lbonobo-2 -lgconf-2 -lgnomevfs-2 -lbonobo-activation 
+-lORBit-2 -lxml2 -lz -lm -llinc -lgmodule-2.0 -ldl -lgobject-2.0 
+-lgthread-2.0 -lpthread -lglib-2.0    -ldfftw
+/usr/lib/gcc-lib/i486-suse-linux/3.2/../../../libpangoft2-1.0.so: 
+undefined reference to `FT_Seek_Stream'
+/usr/lib/gcc-lib/i486-suse-linux/3.2/../../../libpangoft2-1.0.so: 
+undefined reference to `FT_Get_Short'
+/usr/lib/gcc-lib/i486-suse-linux/3.2/../../../libpangoft2-1.0.so: 
+undefined reference to `FT_Forget_Frame'
+/usr/lib/gcc-lib/i486-suse-linux/3.2/../../../libpangoft2-1.0.so: 
+undefined reference to `FT_Access_Frame'
+/usr/lib/gcc-lib/i486-suse-linux/3.2/../../../libpangoft2-1.0.so: 
+undefined reference to `FT_Get_Long'
+collect2: ld returned 1 exit status
+make[3]: *** [gmfsk] Error 1
+make[3]: Leaving directory `/home/ct1drb/gmfsk-0.5/src'
+make[2]: *** [all-recursive] Error 1
+make[2]: Leaving directory `/home/ct1drb/gmfsk-0.5/src'
+make[1]: *** [all-recursive] Error 1
+make[1]: Leaving directory `/home/ct1drb/gmfsk-0.5'
+make: *** [all] Error 2
 
--- 
-Tomi Manninen           Internet:  oh2bns@sral.fi
-OH2BNS                  AX.25:     oh2bns@oh2rbi.fin.eu
-KP20ME04                Amprnet:   oh2bns@oh2rbi.ampr.org
+
+Can anyone help me????
+
+Best 73 to all, till next email
+
+CT1DRB
+David Quental
 
