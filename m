@@ -1,38 +1,38 @@
-From: Alexandru Csete <alexc@phys.au.dk>
-Subject: Re: [Hamlib-developer] Re: [ANN] Hamlib 1.1.3 released
-Date: 21 Jun 2002 01:09:09 +0200
+From: "Adam J. Richter" <adam@yggdrasil.com>
+Subject: make-3.79.1 bug breaks linux-2.5.24/drivers/net/hamradio/soundmodem
+Date: Fri, 21 Jun 2002 23:57:38 -0700
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <1024614554.29821.21.camel@park172.koll.au.dk>
-References: <20020617213254.GA29020@charybde.local>
-	<Pine.LNX.4.21.0206201906490.15173-100000@Consulate.UFP.CX> 
-	<20020620220817.GB624@localhost>
-Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
+Message-ID: <200206220657.XAA21563@adam.yggdrasil.com>
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <20020620220817.GB624@localhost>
 List-Id: <linux-hams.vger.kernel.org>
+MIME-Version: 1.0
 Content-Type: text/plain; charset="us-ascii"
-To: Nate Bargmann <n0nb@networksplus.net>
-Cc: Hamlib developers <hamlib-developer@lists.sourceforge.net>, Linux HAMs <Linux-hams@vger.kernel.org>
+Content-Transfer-Encoding: 7bit
+To: bug-make@gnu.org
+Cc: linux-hams@vger.kernel.org, linux-kernel@vger.kernel.org, sailer@ife.ee.ethz.ch
 
-Hi Nate,
- 
-> If there is anyone on either list that would like to take over the
-> Hamlib webpage maintenance and/or the documentation I started, please
-> volunteer!  I had much more free time when I volunteered, but so far no
-> one has stepped forward to relieve me, although I only askedi for relief
-> once or twice on the Hamlib list.
+	linux-2.5.24/drivers/net/hamradio/soundmodem/Makefile contains
+the following rule:
 
-I'll be glad to help you out with the docs or the website (preferably
-not both). I have just taken my final exam and I hope that I will
-actually have some spare time in the next six months or so. The bad news
-is that I'll be gone to Geneva for the next four weeks and I will
-probably not be able to do anything before I'm back. I'll get back to
-you then (I will try not to forget it). Of course, I won't be sad if
-someone else will "get the job" in the meanwhile.
+$(obj)/sm_tbl_%: $(obj)/gentbl
+        $<
 
-Alex, OZ9AEC
+	obj was set to "." /usr/src/linux/Rules.make, which was included
+earlier in the Makefile.
 
- 
--- 
+	The problem is that when make executes this rule it executes
+"gentbl" rather than "./gentbl".  This causes the command to fail if
+you do not have "." in your path.  Make-3.79.1 is apparently being too
+clever in expanding file names.  I think this is a make bug.
 
+	Until the make bug is fixed, I have worked around the problem
+by replacing the rule with:
+
+$(obj)/sm_tbl_%: $(obj)/gentbl
+        PATH=$(obj):$$PATH $<
+
+
+Adam J. Richter     __     ______________   575 Oroville Road
+adam@yggdrasil.com     \ /                  Milpitas, California 95035
++1 408 309-6081         | g g d r a s i l   United States of America
+                         "Free Software For The Rest Of Us."
