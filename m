@@ -1,42 +1,74 @@
 From: Bob Nielsen <nielsen@oz.net>
 Subject: Re: AX25 socket question.
-Date: Tue, 16 Jul 2002 17:55:36 -0700
+Date: Tue, 16 Jul 2002 18:07:52 -0700
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <20020717005536.GA14695@oz.net>
-References: <20020716051912.28245.h010.c002.wm@mail.peoplepc.com.criticalpath.net> <Pine.LNX.4.21.0207161902311.4272-100000@Consulate.UFP.CX>
+Message-ID: <20020717010752.GB14695@oz.net>
+References: <Pine.LNX.4.21.0207161902311.4272-100000@Consulate.UFP.CX> <3D3480B1.E743CA51@earthlink.net>
 Mime-Version: 1.0
 Return-path: <linux-hams-owner@vger.kernel.org>
 Content-Disposition: inline
-In-Reply-To: <Pine.LNX.4.21.0207161902311.4272-100000@Consulate.UFP.CX>
+In-Reply-To: <3D3480B1.E743CA51@earthlink.net>
 List-Id: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
 To: Linux Ham Radio <linux-hams@vger.kernel.org>
 
-On Tue, Jul 16, 2002 at 07:17:44PM +0100, Riley Williams wrote:
-> Hi Timothy.
+That was the other one I referred to (actually it has both versions). 
+
+Bob, N7XY
+
+On Tue, Jul 16, 2002 at 04:23:13PM -0400, jeff wrote:
+> You'll find it here:
 > 
-> > Thanks for the information, I didn't realize that I would have to
-> > work at that lower level. But I like challenges. I'm looking for a
-> > book right now to get that will help explain some things to me, I
-> > just wish there was one specific to AX25.
+> http://www.tapr.org/tapr/html/Fax25.html
 > 
-> There is a book specific to AX.25, although whether it is still in print
-> is a good question. The book in question is "AX.25 Packet Radio Link
-> Layer Protocol" and explains exactly how the AX.25 protocol works. Also,
-> failing that, just remember that AX.25 is the LAP-B subset of the HDLC
-> protocol that is defined by international standard, and one can work out
-> the relevant details by referring to the HDLC standard and taking the
-> LAP-B subset whherever a choice is presented.
-
-You can find this one at
-
-ftp://tapr.org/general/ax25.doc
-
-There was an update to the specification on the TAPR web site at one
-time, but I cannot locate it.  Possibly N8UR would know.
-
-73, Bob
+> Riley Williams wrote:
+> > 
+> > Hi Timothy.
+> > 
+> > > Thanks for the information, I didn't realize that I would have to
+> > > work at that lower level. But I like challenges. I'm looking for a
+> > > book right now to get that will help explain some things to me, I
+> > > just wish there was one specific to AX25.
+> > 
+> > There is a book specific to AX.25, although whether it is still in print
+> > is a good question. The book in question is "AX.25 Packet Radio Link
+> > Layer Protocol" and explains exactly how the AX.25 protocol works. Also,
+> > failing that, just remember that AX.25 is the LAP-B subset of the HDLC
+> > protocol that is defined by international standard, and one can work out
+> > the relevant details by referring to the HDLC standard and taking the
+> > LAP-B subset whherever a choice is presented.
+> > 
+> > For a less technical (and probably much more understandable) approach, try
+> > http://www.rsgb.org/shop/acatalog/RSGB_On_Line_Shop_Packet___APRS_18.html
+> > or the equivalent on the ARRL website or your national society if it has
+> > one.
+> > 
+> > > I still plan to work on the monitoring program, I had planned to get
+> > > to that lower level sooner or later but it looks like it will be
+> > > sooner. Thanks for the help and information.  I have always used
+> > > other peoples programs before, but after a while I finally decided
+> > > to learn to do it myself just for the challenge and learning
+> > > experience.  I appreciate all the replies. Thanks.
+> > 
+> > No problem.
+> > 
+> > Best wishes from Riley.
+> > 
+> > -
+> > To unsubscribe from this list: send the line "unsubscribe linux-hams" in
+> > the body of a message to majordomo@vger.kernel.org
+> > More majordomo info at  http://vger.kernel.org/majordomo-info.html
+> 
+> -- 
+> Jeff, wd4nmq
+> wd4nmq@earthlink.net
+> http://home.earthlink.net/~wd4nmq
+> iLink client node #10438, iLink sysop link node #14746
+> -
+> To unsubscribe from this list: send the line "unsubscribe linux-hams" in
+> the body of a message to majordomo@vger.kernel.org
+> More majordomo info at  http://vger.kernel.org/majordomo-info.html
 
 -- 
 Bob Nielsen, N7XY                          n7xy@n7xy.net
