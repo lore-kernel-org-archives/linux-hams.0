@@ -1,26 +1,35 @@
-From: James Cutler <jwc@stanford.edu>
+From: Stephan Greene <sgreene@patriot.net>
 Subject: Re: 802.11b wireless lan equipment and ham radio ?
-Date: Wed, 1 May 2002 17:33:54 -0700 (PDT)
+Date: Wed, 1 May 2002 21:32:12 -0400 (EDT)
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <Pine.GSO.4.44.0205011733160.3326-100000@rescomp.Stanford.EDU>
-References: <20020502024738.J1284@mea-ext.zmailer.org>
+Message-ID: <Pine.LNX.4.44.0205012129300.15902-100000@tzion.greene.lan>
+References: <Pine.LNX.4.33.0205011845070.20979-100000@diablo.takeovertheworld.org>
 Mime-Version: 1.0
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <20020502024738.J1284@mea-ext.zmailer.org>
+In-Reply-To: <Pine.LNX.4.33.0205011845070.20979-100000@diablo.takeovertheworld.org>
 List-Id: <linux-hams.vger.kernel.org>
 Content-Type: TEXT/PLAIN; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
-To: 
+To: Jack Zielke <jack@takeovertheworld.org>
 Cc: linux-hams <linux-hams@vger.kernel.org>
 
+On Wed, 1 May 2002, Jack Zielke wrote:
 
->
->    Most WLAN cards have extremely wide receivers, which drown out their
->    AGC when they receive powerfull RF within 200-400 MHz.  Narrow Rx
->    pre-filter helps, but does not appear at commodity pcmcia cards.
->    For that matter, separate Rx/Tx paths, and PTT signal are not
->    available at commodity stuff either.
+>     We want to modify the frequency so that we can use part 97 rules
+> instead of part 15.  If anyone sees anything wrong...please correct me.
 
-Anyone know if WLAN cards can handle doppler shift say from a LEO
-satellite?
+Keep in mind that under Part 15 rules, however, you can use SSH, SSL, go 
+to on-line shopping sites, view adult content, etc.  Under Part 97 rules, 
+you might have problems with respect to encrypted access (ssh keys to 
+ident an unencrypted channel is a different matter, IMHO), accessing 
+commercial sites, etc.  Hams in other countries have to follow their own 
+licensing regs.
+
+73, 
+Steve
+KA1LM
+
+-------------------------------------------------------------------------
+Stephan A. Greene     sgreene@patriot.net        ka1lm@amsat.org
+-------------------------------------------------------------------------
 
