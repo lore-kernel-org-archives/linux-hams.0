@@ -1,54 +1,73 @@
 From: Iain Young - G7III <g7iii@g7iii.demon.co.uk>
-Subject: Re: Status of AX.25 in 2.5 / 2.6
-Date: Wed, 31 Jul 2002 18:53:19 +0100
+Subject: KJD 2.3.9 patch on 2.5.29
+Date: Thu, 1 Aug 2002 20:46:18 +0100
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <20020731175319.GA584@columbia.g7iii.bogus>
-References: <20020729185037.GA684@columbia.g7iii.bogus> <Pine.HPX.4.10.10207301239530.2883-100000@saturn.trs.ntc.nokia.com>
+Message-ID: <20020801194618.GA722@columbia.g7iii.bogus>
 Mime-Version: 1.0
 Return-path: <linux-hams-owner@vger.kernel.org>
 Content-Disposition: inline
-In-Reply-To: <Pine.HPX.4.10.10207301239530.2883-100000@saturn.trs.ntc.nokia.com>
 List-Id: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
-To: Tomi Manninen OH2BNS <tpm@prkele.tky.hut.fi>
-Cc: linux-hams@vger.kernel.org
+To: linux-hams@vger.kernel.org
 
-Hi Tomi,
+Hi All,
 
-You Wrote:
+With the AX25 status on 2.5/2.6 thread, and Tomi mentioning the
+KJD patch, I decided to see how much work would be involved in
+porting it to 2.5
 
-> Out of curiosity (and without having any strong personal opinion of my
-> own) why do you think this not the way to go? I know it breaks ARP but I
-> suppose that could be corrected somehow.
+(since the AX25 stack hasn't been touched much for a while, I
+thought it would be easier than other subsystems, that have had
+constant change).
 
-To be honest, it is just network 'purity', and my own personal
-preference.
+The 2.3[4] version of the patch always lagged behind the 2.2, and
+the latest version i could find was 2.3.9. This is known to be
+roughly equivalent to the 2.2.17 patch.
 
-To me, Layer 2 (AX25 in our case) should not dictate the Layer 3 (IP)
-routing decisions. Layer 3 routing should be the domain of Layer 3.
+It would seem there are around 74 files modified, or created in the
+patch. Having applied it 'raw' to the pure 2.5.29 tree, I had 35
+reject files created.
 
-Letting Layer 2 make the decision, while in most cases will get you
-the shortest path, may not give you the path you actually want
-(Again, network purity and my personal opinion)
+Two of those were the Makefile, and Config.in, so were expected to
+break, but should be easy to fix. Another  eight were detected as
+"Reverse or Previously Applied Patches", so I declined to apply them.
 
-I like to be able to say things like 44.0/16 should be routed via
-g7iii-1, 44.128/16 via dummy0 (black hole), 44.130 via g7iii-2,
-and route of last resort, 44/8 via g7iii-3 etc.
+(I suspect that these are induvidual patches, that found their
+way into later 2.3, or 2.4 - seaches of linux-kernel do find some
+AX25 patches around 2.4.17 at least)
 
-(You can probably guess that I deal with networks, DNS, etc etc
-for a living :>)
+That should leave around 25 .rej's to work through, to bring it up
+to the level of 2.3.9. Then of course the changes bewtween 2.2.17
+and 2.2.20 need to be mixed in as well.
 
-Of course, I do understand that I am probably the odd-ball case here,
-and for most AX25 users, the KJD stack behaviour is fine.
+On a Hunk basis, 83 FAILED, while 73 succeeded, which is about right
+when you look at the number of .rej's created (The 83 include the 8
+reverse or previously applied patches).
 
-Which is of course why I considered modifying the ipax device to
-be a module, and only talk to a named layer 2 interface, and load
-several modules, so i could route 44.0/16 via ipax0, 44.128/16
-via dummy0, 44.130 via ipax1, and the last resort of 44/8 via
-ipax2.
+Hopefully I'll get some time this weekend, and see what I can do
+cut those rej's down. Then I get to see if it compiles.
+
+Then I have a problem. IDE is dangerously broken in 2.5.x at the
+moment. While I could grab the 2.4 IDE "forward port", that means
+keeping track of two patches, and remembering to remove it before
+running diff :)
+
+Of course if anyone has a spare SCSI machine (all my SPARCs are dead
+atm), then they are more than welcome to test anything I come up
+with :)
+
+[Note that you will need the modified libax25, ax25-apps, and
+ax25-utils for anything I produce to even have half a chance of
+working]
+
+Anyway, I'll post later in the weekend, or early next week if I
+have any meaningfull success.
 
 
 All the Best
 
 Iain
+
+
+
