@@ -1,77 +1,36 @@
-From: Adrian Bunk <bunk@fs.tum.de>
-Subject: [2.6 patch] remove kernel 2.2 code from drivers/net/hamradio/dmascc.c (fwd)
-Date: Sat, 8 May 2004 14:54:16 +0200
+From: "Robin Gilks" <g8ecj@gilks.org>
+Subject: Any PHP gurus out there?
+Date: Wed, 12 May 2004 08:41:42 +1200 (NZST)
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <20040508125415.GA6704@fs.tum.de>
+Message-ID: <36436.202.37.96.11.1084308102.squirrel@zeus.localdomain>
+Reply-To: g8ecj@gilks.org
 Mime-Version: 1.0
+Content-Transfer-Encoding: 7BIT
 Return-path: <linux-hams-owner@vger.kernel.org>
-Content-Disposition: inline
 List-Id: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-To: Andrew Morton <akpm@osdl.org>, klaus.kudielka@ieee.org
-Cc: linux-hams@vger.kernel.org, linux-kernel@vger.kernel.org
+To: linux-hams@vger.kernel.org
 
-The trivial patch forwarded below still applies and compiles against 
-2.6.6-rc3-mm2.
+Greetings
 
-Please apply
-Adrian
+I've recently updated my system and am now using php 4.3. This has
+incorporated a recent change that causes register_global to be off by
+default and as a result it has broken the webconvers (ww convers access
+through a web page gateway) scripts I wrote a few years back.
 
+I've managed to get all the global variable handling stuff sorted out
+(with a sprinkling of $_POST and $_GET acesses as required!!) but I'm
+finding that in either the file or socket handling there is a very large
+delay (minutes on occation).
 
------ Forwarded message from Adrian Bunk <bunk@fs.tum.de> -----
+When I get home tonite I'll post what I have to my website (look under the
+personal pages for g8ecj) in case anyone knows of a "standard fix" that
+I've missed in my browsing of php.net :-))
 
-Date:	Sat, 7 Feb 2004 21:45:38 +0100
-From: Adrian Bunk <bunk@fs.tum.de>
-To: klaus.kudielka@ieee.org
-Cc: linux-hams@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: [2.6 patch] remove kernel 2.2 code from drivers/net/hamradio/dmascc.c
+Cheers
 
-The patch below removes some #ifdef'd kernel 2.2 code from 
-drivers/net/hamradio/dmascc.c .
+-- 
+Robin Gilks zl3rob/g8ecj
+Internet: g8ecj@gilks.org    http://www.gilks.org
 
-cu
-Adrian
-
---- linux-2.6.2-mm1/drivers/net/hamradio/dmascc.c.old	2004-02-07 21:39:39.000000000 +0100
-+++ linux-2.6.2-mm1/drivers/net/hamradio/dmascc.c	2004-02-07 21:39:58.000000000 +0100
-@@ -48,21 +48,6 @@
- #include "z8530.h"
- 
- 
--/* Linux 2.2 and 2.3 compatibility */
--
--#if LINUX_VERSION_CODE < KERNEL_VERSION(2,3,14)
--#define net_device device
--#endif
--#if LINUX_VERSION_CODE < KERNEL_VERSION(2,3,43)
--#define netif_start_queue(dev) { dev->tbusy = 0; }
--#define netif_stop_queue(dev) { dev->tbusy = 1; }
--#define netif_wake_queue(dev) { dev->tbusy = 0; mark_bh(NET_BH); }
--#endif
--#if LINUX_VERSION_CODE < KERNEL_VERSION(2,3,47)
--#define netif_running(dev) (dev->flags & IFF_UP)
--#endif
--
--
- /* Number of buffers per channel */
- 
- #define NUM_TX_BUF      2          /* NUM_TX_BUF >= 1 (min. 2 recommended) */
-@@ -210,9 +195,6 @@
- };
- 
- struct scc_priv {
--#if LINUX_VERSION_CODE < KERNEL_VERSION(2,4,0)
--  char name[IFNAMSIZ];
--#endif
-   int type;
-   int chip;
-   struct net_device *dev;
--
-To unsubscribe from this list: send the line "unsubscribe linux-kernel" in
-the body of a message to majordomo@vger.kernel.org
-More majordomo info at  http://vger.kernel.org/majordomo-info.html
-Please read the FAQ at  http://www.tux.org/lkml/
-
------ End forwarded message -----
 
