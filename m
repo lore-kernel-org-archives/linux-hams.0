@@ -1,27 +1,36 @@
-From: Hamish Moffatt <hamish@cloud.net.au>
-Subject: Re: Soundmodem && SBLive!
-Date: Sun, 13 Apr 2003 11:38:26 +1000
+From: Aleksandar Ilic <ailic@gmx.net>
+Subject: Re: Square One!
+Date: Sun, 13 Apr 2003 05:39:42 +0200
 Sender: linux-hams-owner@localhost
-Message-ID: <20030413013826.GA30173@silly.cloud.net.au>
-References: <200304122005.13012.rdmartinml@infinito.it>
+Message-ID: <200304130539.42078.ailic@gmx.net>
+References: <Pine.LNX.4.44.0304120051130.1511-100000@oh2bns.ampr.org> <3E981B9E.2070708@pi8zaa.ampr.org>
 Mime-Version: 1.0
+Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
+In-Reply-To: <3E981B9E.2070708@pi8zaa.ampr.org>
 Content-Disposition: inline
-In-Reply-To: <200304122005.13012.rdmartinml@infinito.it>
 List-Id: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-To: Linux Hams ML <linux-hams@vger.kernel.org>
+To: linux-hams@vger.kernel.org
 
-On Sat, Apr 12, 2003 at 08:05:12PM +0200, Giuseppe Martino wrote:
-> Is Soundmodem compatible with SBLive! (emu10k1) Card?
-> smmixer gives an error "Unknown mixer device"
-> ifconfig gives "SIOCSIFFLAGS" error....
-> Is there anyone that use SBLive! with soundmode?
+On Saturday 12 April 2003 15:58, Arno Verhoeven wrote:
+> However, you can simply install libxml-1.8.17-i386-1.tgz which was included
+> in Slackware 8.1. There are no conflicts.
 
-Are you using the kernel-based soundmodem or user-space soundmodem?
-I guess the kernel-based one, which I think needs an old soundblaster.
+Yes indeed. Thanks a lot, Arno !
 
-Hamish
+> Your missing libs to be able to runs gmfsk are in the Slackware 8.1 package
+> gnome-libs-1.4.1.7-i386-1.tgz
+> (...)
+> But you could try...
+
+I dare not to :) It seems there is some overwrites, and Tomi is already 
+proclaimed gmfsk v. 0.5.
+
+Big thanks to everybody who helped.
+
+Alek
 -- 
-Hamish Moffatt VK3SB <hamish@debian.org> <hamish@cloud.net.au>
+  73 de YU1IS  -=-  ICQ# 62419462
+
+
