@@ -1,33 +1,43 @@
-From: Aleksandar Ilic <ailic@gmx.net>
-Subject: Re: gcc-3.2.2 / libc-2.3.1 / gnome 2
-Date: Fri, 11 Apr 2003 23:22:41 +0200
+From: Tomi Manninen <tpm@prkele.tky.hut.fi>
+Subject: Re: Square One!
+Date: Sat, 12 Apr 2003 00:57:40 +0300 (EEST)
 Sender: linux-hams-owner@localhost
-Message-ID: <200304112322.41936.ailic@gmx.net>
-References: <Pine.HPX.4.10.10304111457420.17492-100000@saturn.trs.ntc.nokia.com>
+Message-ID: <Pine.LNX.4.44.0304120051130.1511-100000@oh2bns.ampr.org>
+References: <200304111344.02353.ailic@gmx.net>
+Reply-To: tpm@prkele.tky.hut.fi
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <Pine.HPX.4.10.10304111457420.17492-100000@saturn.trs.ntc.nokia.com>
-Content-Disposition: inline
+In-Reply-To: <200304111344.02353.ailic@gmx.net>
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"
-To: linux-hams@vger.kernel.org
+Content-Type: TEXT/PLAIN; charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+To: Aleksandar Ilic <ailic@gmx.net>
+Cc: linux-hams@vger.kernel.org
 
-On Friday 11 April 2003 14:04, Tomi Manninen OH2BNS wrote:
-> In practice of course lack of gnome-config might be the first
-> thing you notice if you try to compile it without having GTK1/Gnome1 devel
-> stuff installed.
+On Fri, 11 Apr 2003, Aleksandar Ilic wrote:
 
-Yes indeed. There was a bunch of missing libs, as I wrote today.
+> alek@bcat:~$ ldd `which gmfsk` |grep found
+>         libgnomeui.so.32 => not found
+>         libart_lgpl.so.2 => not found
+>         libgdk_imlib.so.1 => not found
+>         libgnome.so.32 => not found
+>         libgnomesupport.so.0 => not found
+> 
+> No luck. Nothing isn't compiled on slack 9 itself. libgnomeui.so.32 is now 
+> replaced with libgnomeui-2.so.0, and so on... I tried to change "libxml" to 
+> "libxml2" in soundmodem's configure script, but there was different 
+> structures in tree.h.
 
-> Anyway, I will be releasing gMFSK 0.5 soon. It's written for GTK2/Gnome2
-> so should work for you. Now I just need to stop adding new modes and
-> features to it and make a release...
+Are you sure slackware 9 doesn't have compatibility libs for earlier 
+versions? I'd be surprised if it doesn't. After all GTK1 and GTK2 are API 
+incompatible so a _lot_ of programs break there. My RH8 has both versions 
+installed and everything runs pretty smoothly...
 
-That's a good thing to hear ! Next we just have to alarm HB9JNX/AE4WA and 
-ON1MH that theire software becomes rusty :)
+Anyway a new gmfsk is on it's way, I'm currently writing (updating)
+README's and stuff like that... :)
 
-Regards,
-Alek
 -- 
-  73 de YU1IS
+Tomi Manninen           Internet:  oh2bns@sral.fi
+OH2BNS                  AX.25:     oh2bns@oh2rbi.fin.eu
+KP20ME04                Amprnet:   oh2bns@oh2rbi.ampr.org
+
