@@ -1,56 +1,39 @@
-From: Joop Stakenborg <pa3aba@debian.org>
-Subject: Re: FBB...
-Date: Wed, 25 Dec 2002 11:23:45 +0100
+From: Cathryn Mataga <cathrynm@junglevision.com>
+Subject: redhat 6.2 dies 3/31/2003 + AX25 2.4 kernel issues
+Date: Wed, 25 Dec 2002 03:03:53 -0800
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <20021225112345.35a8f3cf.pa3aba@debian.org>
-References: <Pine.LNX.4.44.0212242335340.17537-100000@jeeves.mvw.net>
-	<Pine.LNX.4.44.0212250010050.17537-100000@jeeves.mvw.net>
+Message-ID: <3E099099.7070306@junglevision.com>
 Mime-Version: 1.0
 Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <Pine.LNX.4.44.0212250010050.17537-100000@jeeves.mvw.net>
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"
-To: mvw@mvw.net
-Cc: linux-hams@vger.kernel.org
+Content-Type: text/plain; charset="us-ascii"; format="flowed"
+To: linux-hams <linux-hams@vger.kernel.org>
 
-On Wed, 25 Dec 2002 00:13:14 -0500 (EST)
-mvw@mvw.net wrote:
+According to the Redhat website, Redhat 6.2 and 7.0
+both die on 3/31/2003.  These are the only supported versions
+that run with the 2.2 kernel.  But, I've also read messages
+here that the 2.4 kernel has race conditions and is prone
+to crash.  So, the question is, what do I do with my ax25
+Linux system with RF modems on 3/31/2003?
 
-> OK, pity, but FBB is deleted. I have never seen a worse install in my
-> life, of any software! Apart from the edits needed before it will even
-> compile, there are no instructions (the README just says to 'make' and
-> enjoy), and the scripts included give nothing but fatal errors. Plus the
-> English is bad, but that is not the author's fault, and the licensing is 
-> odd (not GPL: it asks not to make changes)..
-> 
+1.  Somehow get the 2.4 kernel fixed by 3/31/2003?  Is this
+possible?  What exactly is the issue, and how bad is this?
+Is this likely to happen?
 
-I think you are wrong in several ways. The times I have set up 
-fbb have been easy. Included is a scipt which you run, which creates
-all the needed directories and creates a default setup. I have
-rarely encountered a similar piece of complex software which is
-so easy to set up.
+2.  Just live with the crashing.  Cycle the power on the
+machine every other day with a timer or some other horrible solution.
+Maybe it won't be that that bad.
 
-The english is certainly not bad and the licensing has been GPL
-for over a year now.
+3.  Maybe someone other than Redhat will continue to do security patches
+for 6.2?  I can't believe I'm the only one running 6.2.  Right?
 
+4.  Upgrade to a new Redhat, but somehow install a 2.2 kernel in
+a distribution designed for 2.4.  Will this work?  (I'm scared.)
 
-> So I am glad it works for some of you, but for me this is such low
-> standard software that I have deleted it.
-> 
+5.  Switch to some other distribution that will continue to support
+2.2 after 3/31/2003.
 
-Low standard software? Can you explain to me why it is used all over
-the world by almost every bbs?
+6.  Continue with 6.2 and keep an eye out for vulnerabilities and
+maybe strip out a few services that I use otherwise.
 
-
-> Any ideas for other systems like this, then?
-> 
-
-Yeah, build your own if you can't find what you want.
-
-> Michael
-> 
-> 
-> 
-
-Joop
