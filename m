@@ -1,23 +1,30 @@
-From: "David S. Miller" <davem@davemloft.net>
-Subject: Re: [PATCH] Fix ax25_get_socket locking
-Date: Mon, 14 Mar 2005 21:30:15 -0800
-Message-ID: <20050314213015.1b113610.davem@davemloft.net>
-References: <20050314083744.GA12765@linux-mips.org>
+From: Ralf Baechle DL5RB <ralf@linux-mips.org>
+Subject: [PATCH] Use skb_queue_purge
+Date: Wed, 16 Mar 2005 08:34:46 +0000
+Message-ID: <20050316083446.GA20392@linux-mips.org>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
-In-Reply-To: <20050314083744.GA12765@linux-mips.org>
+Content-Disposition: inline
 Sender: linux-hams-owner@vger.kernel.org
 List-Id: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
-To: Ralf Baechle DL5RB <ralf@linux-mips.org>
-Cc: netdev@oss.sgi.com, linux-hams@vger.kernel.org
+Content-Transfer-Encoding: 7bit
+To: netdev@oss.sgi.com, linux-hams@vger.kernel.org
+Cc: "David S. Miller" <davem@davemloft.net>
 
-On Mon, 14 Mar 2005 08:37:44 +0000
-Ralf Baechle DL5RB <ralf@linux-mips.org> wrote:
+skb_queue_purge exists so why not using it ;-)
 
-> In an attempt to return a locked socket ax25_get_socket() was calling
-> lock_sock() with a spinlock held, bad idea.  Making matters worse it's
-> only user is running in bottom half context resulting in a potencial
-> attempt to sleep in bottom half context, so fix the locking there as well.
-
-Looks fine.  Applied, thanks Ralf.
+Index: bk-afu/net/ax25/af_ax25.c
+===================================================================
+--- bk-afu.orig/net/ax25/af_ax25.c	2005-03-15 23:26:35.678081272 +0000
++++ bk-afu/net/ax25/af_ax25.c	2005-03-15 23:38:31.979186952 +0000
+@@ -306,9 +306,7 @@
+ 
+ 			kfree_skb(skb);
+ 		}
+-		while ((skb = skb_dequeue(&ax25->sk->sk_write_queue)) != NULL) {
+-			kfree_skb(skb);
+-		}
++		skb_queue_purge(&ax25->sk->sk_write_queue);
+ 	}
+ 
+ 	if (ax25->sk != NULL) {
