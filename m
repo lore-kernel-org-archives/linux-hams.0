@@ -1,48 +1,38 @@
-From: "John Williams" <john-w@bigpond.com>
-Subject: re ax25 support in aprsd
-Date: Tue, 27 Jan 2004 16:35:39 +0930
+From: "John Williams" <vk5zty@bigpond.com>
+Subject: Re: ax25 support in aprsd
+Date: Tue, 27 Jan 2004 17:00:38 +1030
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <4016935B.24867.9B8E3F@localhost>
-Reply-To: john-w@bigpond.com
+Message-ID: <40169936.23017.B26D3B@localhost>
+References: <40168DC7.3946.85C307@localhost>
+Reply-To: vk5zty@bigpond.com
 Mime-Version: 1.0
 Content-Transfer-Encoding: 7BIT
 Return-path: <linux-hams-owner@vger.kernel.org>
+In-reply-to: <Pine.LNX.4.44.0401262346000.11381-100000@mobile.adis.ca>
 Content-description: Mail message body
 List-Id: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
-To: linux-hams@vger.kernel.org
+To: Adi Linden <adil@adis.on.ca>, linux-hams@vger.kernel.org
 
-OK
-second, third and fourth appear to have filtered feeds. 
+I am not sure if you can.
 
-In the case of third they are 
-
-23 & 10152   Full APRS-IS Feed (no echo) 
-10151   Full APRS-IS Feed (echo) 
-10153   Full APRS-IS Feed w/ 30 Minute Dump 
-1314     Messages Only 
-14580   User Defined Filtering & CW 
-14579    East Coast USA Only Feed 
-10154    USA Only Feed 
-10155    Europe Only Feed 
-14501    Status Page (html) 
-14511    Status Page (text) 
+Might be a question for the aprsd list.
+If the aprs server remembers the last setting then you could setup the filter with an aprs client.
+Otherwise try to locate a Canadian aprs server with preset filters, like we have in Australia.
 
 
-So if you did this  
-
-Server third.aprs.net 14579 hub-sr 
-
-You would only see East cost US stations. 
-
-For your area in CA you will probably want to define your own filter 
-
-In this case used port 14580  and use the range and or prefix filters. 
-
-Read the info in this link. 
-http://www.aprsfl.net/status.txt 
-
-Cheers 
-John 
+Cheers
+John
 VK5ZTY
+ 
 
+On 26 Jan 2004 at 23:47, Adi Linden wrote:
+
+> Things are beginning to make a lot of sense now. If I want to connect to 
+> port 14580 with aprsd, how do I get aprsd to send the filter string?
+> 
+> 73,
+> Adi
+> va3adi 
+> 
+>
