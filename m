@@ -1,42 +1,73 @@
-From: Dennis Boone <drb@msu.edu>
+From: chuck gelm <chuck@gelm.net>
 Subject: Re: kenwood TM700
-Date: Mon, 11 Oct 2004 11:32:29 -0400
+Date: Mon, 11 Oct 2004 11:56:48 -0400
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <200410111532.i9BFWT25012630@yagi.h-net.msu.edu>
+Message-ID: <416AAD40.90006@gelm.net>
 References: <200410111700.29340.alexandre.chappaz@data-tools.com>
-Return-path: <linux-hams-owner@vger.kernel.org>
-In-reply-to: (Your message of Mon, 11 Oct 2004 17:00:29 +0200.)
-             <200410111700.29340.alexandre.chappaz@data-tools.com> 
-List-Id: <linux-hams.vger.kernel.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
+Reply-To: chuck@gelm.net
+Mime-Version: 1.0
 Content-Transfer-Encoding: 7bit
-To: linux-hams@vger.kernel.org
+Return-path: <linux-hams-owner@vger.kernel.org>
+In-Reply-To: <200410111700.29340.alexandre.chappaz@data-tools.com>
+List-Id: <linux-hams.vger.kernel.org>
+Content-Type: text/plain; charset="us-ascii"; format="flowed"
+To: alexandre.chappaz@data-tools.com
+Cc: Linux-Hams@vger.kernel.org
 
- > For the moment the TNC-radios are discussing in an half duplex mode
- > - that means one radio emmits a packet and stops, the second radio
- > receives the packet and answers and so on and so on... My problem
- > is that in that case, the maximum speed is only one packet ever half
- > second is emmited. This is due (to me) to the time the radio emettor
- > needs to bring the power up and running for emitting the packet. The
- > problem is that once the packet is sent, the radio stops the emission,
- > that means it has to start up again for the next packet. I didn't
- > find any mode for telling the emetor to stay up even if there's no
- > packet to transmit.......
+chappaz alexandre wrote:
 
-I've been told that the D7 radios limit window size to 1 frame.
-This may or may not be true of the D700.
+>hi guys
+>
+>I am a newbie in ham radio, and for my job I use 2 Kenwood TM700 transceivers 
+>for a numeric packet radio transmission (Kenwood TM700 has an build-in TNC),
+>
+> For the moment the TNC-radios are discussing in an half duplex mode - that 
+>means one radio emmits a packet and stops, the second radio receives the 
+>packet and answers and so on and so on... My problem is that in that case, 
+>the maximum speed is  only one packet ever half second is emmited. This is 
+>due (to me) to the time the radio emettor needs to bring the power up and 
+>running for emitting the packet. The problem is that once the packet is sent, 
+>the radio stops the emission, that  means it has to start up again for the 
+>next packet. I didn't find any mode for telling the emetor to stay up even if 
+>there's no packet to transmit....... So I'd like to know if someone could 
+>help me eather for configuring properly the built-in TNC or to use a 
+>soundcard modem in the same purpose 
+>( have numeric transmission with the less delay possible in fact ).
+>
+>
+>Thank a lot
+>(sorry for the not perfect english i am french)
+>Alex Chappaz
+>  
+>
 
-You probably want to experiment with the MAXFRAME command to enlarge
-the window size.  Apparently the command exists on the D7, but does
-nothing, so your mileage may vary.
+Dear Alex Chappaz:
 
-You may also wish to check the TXDELAY setting, which comes set at
-500 ms from the factory, though the radio works fine at 200-300 ms.
+ I think that I understand your situation and your english is
+1000 times better than my french.  ;-)
 
-To the best of my knowledge, there's no way to get the radios to
-transmit if there's no packet in the transmit queue.  This would
-cause problems due to the way channel busy is detected.
+However, you did not describe your goal.  Are you trying to
+increase your throughput?  It is the radio that is half-duplex
+and not the TNC or computer.
 
-Dennis Boone
-KB8ZQZ
+ It is the TNC that is reducing the size of a packet and the
+number of packets that can be sent.  The TM-700 has a
+'micro' TNC and not a TNC-2 clone.  I think that it has
+a limit of 128 bytes and one frame per packet.  This is
+0.125 kilobytes per packet.
+
+ A regular TNC-2 can send frames up to 256 bytes and up
+to seven (7) frames for a total of 1.75 kilobytes.
+
+ So, if you are trying to increase your data throughput,
+you may need to:
+Use radios capable of 'full duplex'.
+Use a TNC capable of full duplex and full TNC-2 standard
+ frames size and number of frames (256x7).
+
+ Since you only mention your two radios and noboby else;
+would using 802.11b devices help?
+
+Regards, Chuck
+
+
