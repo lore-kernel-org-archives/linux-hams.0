@@ -1,113 +1,56 @@
-From: "Wilson G. Hein" <vze2b869@verizon.net>
-Subject: RE: Digital BASH Update
-Date: Wed, 24 Apr 2002 17:48:52 -0400
+From: James Cutler <jwc@stanford.edu>
+Subject: Re: Baypac and kernel crashes
+Date: Wed, 24 Apr 2002 17:54:52 -0700 (PDT)
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <NCBBKBAJDJIPKFIAFBKLGEFDEFAC.vze2b869@verizon.net>
-References: <20020424204343.K1284@mea-ext.zmailer.org>
-Reply-To: <wilson.hein@verizon.net>
+Message-ID: <Pine.GSO.4.44.0204241748560.7938-100000@rescomp.Stanford.EDU>
+References: <20020423080237.A213@jeroen.pe1rxq.ampr.org>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <20020424204343.K1284@mea-ext.zmailer.org>
+In-Reply-To: <20020423080237.A213@jeroen.pe1rxq.ampr.org>
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"
-To: Matti Aarnio <matti.aarnio@zmailer.org>
-Cc: Linux-Hams Mailing List <linux-hams@vger.kernel.org>
-
-Well Matti,
-
-My MUA is Outlook 2000, and this only started within the past few months.
-It's only happening on copies of emails coming to me from the list. And I'm
-sure it must be happening to others.
-
-Here is the full header on the message missing the to and from fields.
-
-Return-Path: <linux-hams-owner@vger.kernel.org>
-Delivered-To: wghein@ptd.net
-Received: (qmail 3144 invoked from network); 24 Apr 2002 17:45:29 -0000
-Received: from smtpj.ha-net.ptd.net ([207.44.96.90]) (envelope-sender <>)
-          by mailb.ptd.net (qmail-ldap-1.03) with QMQP
-          for <>; 24 Apr 2002 17:45:29 -0000
-Delivered-To: CLUSTERHOST smtpj.ha-net.ptd.net wghein@ptd.net
-Received: (qmail 6548 invoked by uid 50005); 24 Apr 2002 17:44:49 -0000
-Received: from linux-hams-owner@vger.kernel.org by smtpj.ha-net.ptd.net
-	 by uid 50002 with qmail-scanner-1.10 (uvscan: v4.1.40/v4197. spamassassin.
-Clear:0. Processed in 1.370442 secs); 24 Apr 2002 17:44:49 -0000
-Received: from vger.kernel.org ([209.116.70.75]) (envelope-sender
-<linux-hams-owner@vger.kernel.org>)
-          by smtpj.ha-net.ptd.net (qmail-ldap-1.03) with SMTP
-          for <wghein@ptd.net>; 24 Apr 2002 17:44:47 -0000
-Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id <S312449AbSDXRnu>; Wed, 24 Apr 2002 13:43:50 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org
-	id <S312453AbSDXRnt>; Wed, 24 Apr 2002 13:43:49 -0400
-Received: from [195.163.186.27] ([195.163.186.27]:29572 "EHLO zmailer.org")
-	by vger.kernel.org with ESMTP id <S312449AbSDXRns>;
-	Wed, 24 Apr 2002 13:43:48 -0400
-Received: (mea@mea-ext) by mail.zmailer.org id <S255363AbSDXRnn>;
-	Wed, 24 Apr 2002 20:43:43 +0300
-X-Mail-Format-Warning: Bad RFC822 header formatting in Date:	Wed, 24 Apr
-2002 20:43:43 +0300
-X-Mail-Format-Warning: Bad RFC822 header formatting in From:	Matti Aarnio
-<matti.aarnio@zmailer.org>
-X-Mail-Format-Warning: Bad RFC822 header formatting in To:	"Wilson G. Hein"
-<wilson.hein@verizon.net>
-X-Mail-Format-Warning: Bad RFC822 header formatting in Cc:	John Ackermann
-N8UR <jra@febo.com>,
-	Linux-Hams Mailing List <linux-hams@vger.kernel.org>
-Subject: Re: Digital BASH Update
-Message-ID: <20020424204343.K1284@mea-ext.zmailer.org>
-References: <13787905.1019649070@WUSJA129861-8HP>
-<NCBBKBAJDJIPKFIAFBKLCEFAEFAC.wilson.hein@verizon.net>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <NCBBKBAJDJIPKFIAFBKLCEFAEFAC.wilson.hein@verizon.net>; from
-wilson.hein@verizon.net on Wed, Apr 24, 2002 at 12:05:43PM -0400
-X-Mail-Format-Warning: Bad RFC822 header formatting in Sender:
-linux-hams-owner@vger.kernel.org
-Precedence: bulk
-X-Mail-Format-Warning: Bad RFC822 header formatting in X-Mailing-List:
-linux-hams@vger.kernel.org
-X-Spam-Status: No, hits=0.7 required=5.0
-tests=IN_REP_TO,FROM_MISSING,DATE_MISSING,MISSING_HEADERS version=2.01
-
------Original Message-----
-From: Matti Aarnio [mailto:matti.aarnio@zmailer.org]
-Sent: Wednesday, April 24, 2002 1:44 PM
-To: Wilson G. Hein
-Cc: John Ackermann N8UR; Linux-Hams Mailing List
-Subject: Re: Digital BASH Update
+Content-Type: TEXT/PLAIN; charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+To: Jeroen Vreeken <pe1rxq@amsat.org>
+Cc: linux-hams@vger.kernel.org
 
 
-On Wed, Apr 24, 2002 at 12:05:43PM -0400, Wilson G. Hein wrote:
-> I think this explains it all.
+Is there anything special that needs to be done to configure for the
+2.4.18 kernel?  I'm using the following commands to configure it and it
+doesn't seem to be doing the trick (though they work under 2.4.17)
 
-    Yes, you have some seriously misbehaving incoming email verifier.
-    What the Mulberry does after that (it is a MUA, not MTA..)
-    that I don't know.
+insmod parport
+insmod parport_pc io=0x378 irq=7
+modprobe baycom_par mode="picpar" iobase=0x378
+sethdlc -i bcp0 -p mode "picpar" io 0x378
+axparms -setcall bcp0 kf6rfx-1
+ifconfig bcp0 192.168.2.2 up
 
-> X-Mail-Format-Warning: Bad RFC822 header formatting in Sender:
->   linux-hams-owner@vger.kernel.org
 
-    This Sender: is quite correct according to RFC 2822.
 
-> Precedence: bulk
-> X-Mail-Format-Warning: Bad RFC822 header formatting in X-Mailing-List:
->   linux-hams@vger.kernel.org
+On Tue, 23 Apr 2002, Jeroen Vreeken wrote:
 
-    The X-* headers should NOT be veried, nor used for anything at all.
-    They are everyones local stuff, and likely have separate meanings
-    for each site's suite of softwares.
-
-> X-Spam-Status: No, hits=0.7 required=5.0
->   tests=IN_REP_TO,FROM_MISSING,DATE_MISSING,MISSING_HEADERS version=2.01
+> On 2002.04.23 06:04:32 +0200 James Cutler wrote:
+> > We're having some problems using a BayPac 9600 with Linux 2.4.17.
+> >
+> > On one machine it works just fine until we start X.  As soon as we
+> > start X, the machine will crash as soon as we send an AX.25 packet
+> > (we were testing with "beacon").  The only way to recover from the
+> > crash is to power cycle or press the reset button.  This is
+> > repeatable.  We beacon, we work, we start X, we beacon, we crash.
+> > It does output the packet before it crashes.
+> >
+> > On a second machine that doesn't (can't) run X, we've noticed a
+> > similar crash.  It's a small embedded 486 (the Prometheus).  After
+> > several beacons, from 5-20, it will crash in the same hard manner.
+> > Only a power cycle will fix it.
+> >
+> > Has anyone else seen similar behavior?  Any ideas?
 >
-> -----Original Message-----
-> From: John Ackermann N8UR [mailto:jra@febo.com]
-> Sent: Wednesday, April 24, 2002 11:51 AM
-> To: wghein@ptd.net; Linux-Hams Mailing List
-> Subject: RE: Digital BASH Update
-
-/Matti Aarnio OH2MQK -- co-postmaster of vger.kernel.org
+> Every 2.4.x kernel up to 2.4.18 has this problem, it should be fixed now...
+> It was a problem with ax25 not using sock_orphan()
+>
+> Jeroen
+>
+>
+>
 
