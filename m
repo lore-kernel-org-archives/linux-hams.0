@@ -1,34 +1,32 @@
-From: Ruben Navarro Huedo <eb5esx@eb5esx.ampr.org>
-Subject: Kantronics KPC3 Under Linux.
-Date: Mon, 1 Nov 2004 10:43:11 +0100
-Message-ID: <200411011043.11458.eb5esx@eb5esx.ampr.org>
+From: "Jami Coffer" <tabathaflennikengvsp@mundivox.com>
+Subject: massive price reduction for v.iagara
+Date: Mon, 01 Nov 2004 09:30:00 +0100
+Message-ID: <C6A3E6A5.9664BCD@mundivox.com>
 Mime-Version: 1.0
 Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
-Content-Disposition: inline
 Sender: linux-hams-owner@vger.kernel.org
 List-Id: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
-To: Linux-hams List <linux-hams@vger.kernel.org>
+To: linux-hams <linux-hams@vger.kernel.org>
 
-Hello friends:
-I am trying to setup an old KPC-3 under Linux.
-My TNC is single port.
-I have a little problem:
-If i attach directly with:
+It contains the exact same ingredients as regular viaggra, except that you
+pay much, much less.
 
-kissattach /dev/ttyUSB0 radio 44.133.3.25
+It makes sexual intercourse much more enjoyable.
 
-Then i only RX, but no TX.
+Pay for your order by credit card online.
 
-To can TX i have to:
+Lakisha Schmucker
 
-mkiss -s 9600 /dev/ttyUSB0 /dev/ptyq0 /dev/ptyq1
-kissattach /dev/ttyq0 radio 44.133.3.25
+http://Qwbn.licensedmeds.com/?Eoh/Jamgq
 
-Is this ok?
-I have ONLY one radio port ... why do i have to use mkiss to can tx?
 
-Is the problem some TNC setting?
 
-Thank's
+
+
+
+If you are not interested in this, go here:
+http://K470858.licensedmeds.com/?Rmv/Unavbf
+m5Gocpa
+
