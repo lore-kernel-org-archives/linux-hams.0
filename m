@@ -1,8 +1,8 @@
 From: "Jose A. Amador" <co2ja01@fastmail.fm>
 Subject: Packet radio channel statistics ?
-Date: Wed, 07 May 2003 13:44:41 -0800
+Date: Wed, 07 May 2003 13:45:34 -0800
 Sender: linux-hams-owner@localhost
-Message-ID: <20030507214441.7B6FB17B21@www.fastmail.fm>
+Message-ID: <20030507214534.2F4DF3345B@www.fastmail.fm>
 Mime-Version: 1.0
 Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
@@ -49,5 +49,4 @@ read are welcome to achieve a solution.
   co2ja01@fastmail.fm
 
 -- 
-http://www.fastmail.fm - Accessible with your email software
-                          or over the web
+http://www.fastmail.fm - Sent 0.000002 seconds ago
