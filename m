@@ -1,25 +1,27 @@
-From: "David S. Miller" <davem@redhat.com>
-Subject: Re: [PATCH] (2/2) Convert yam driver to seq_file
-Date: Thu, 14 Aug 2003 21:22:55 -0700
-Sender: netdev-bounce@oss.sgi.com
-Message-ID: <20030814212255.22f27fb2.davem@redhat.com>
-References: <20030813093926.7b267dd6.shemminger@osdl.org>
+From: Arnaldo Carvalho de Melo <acme@conectiva.com.br>
+Subject: Re: [PATCH] (10/11) netrom - convert /proc interface to seq_file
+Date: Fri, 15 Aug 2003 18:12:17 -0300
+Sender: linux-hams-owner@vger.kernel.org
+Message-ID: <20030815211217.GL1564@conectiva.com.br>
+References: <20030813154635.376df59b.shemminger@osdl.org> <20030814172539.GD1785@conectiva.com.br> <20030814113025.2b40be14.shemminger@osdl.org>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
-Return-path: <netdev-bounce@oss.sgi.com>
-In-Reply-To: <20030813093926.7b267dd6.shemminger@osdl.org>
-Errors-to: netdev-bounce@oss.sgi.com
+Return-path: <linux-hams-owner@vger.kernel.org>
+Content-Disposition: inline
+In-Reply-To: <20030814113025.2b40be14.shemminger@osdl.org>
 List-Id: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 7bit
 To: Stephen Hemminger <shemminger@osdl.org>
-Cc: jpr@f6fbb.org, jgarzik@pobox.com, linux-hams@vger.kernel.org, netdev@oss.sgi.com
+Cc: "David S. Miller" <davem@redhat.com>, Jeroen Vreeken <pe1rxq@amsat.org>, linux-hams@vger.kernel.org, netdev@oss.sgi.com
 
-On Wed, 13 Aug 2003 09:39:26 -0700
-Stephen Hemminger <shemminger@osdl.org> wrote:
+Em Thu, Aug 14, 2003 at 11:30:25AM -0700, Stephen Hemminger escreveu:
+> On Thu, 14 Aug 2003 14:25:39 -0300
+> Arnaldo Carvalho de Melo <acme@conectiva.com.br> wrote:
+> > <nitpick> why not just one seq_printf call? </nitpick>
+> 
+> ax2asc() returns a pointer to static buffer.
 
-> Convert the yam driver to use the new seq_file interface to /proc.
-> This resolves potential issues with module owner and buffer sizes
-> by using the common library.
+argh :-\ Even if only for correctness shouldn't it receive a buffer, like
+snprintf, etc?
 
-I've applied both of your YAM driver patches, thanks Stephen.
-
+- Arnaldo
