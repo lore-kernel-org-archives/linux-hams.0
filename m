@@ -1,45 +1,34 @@
-From: Hisashi T Fujinaka <htodd@twofifty.com>
+From: Matti Aarnio <matti.aarnio@zmailer.org>
 Subject: Re: installing Predict on a RedHat 7.3 box , no go :^(
-Date: Sun, 15 Dec 2002 20:03:05 -0800 (PST)
+Date: Mon, 16 Dec 2002 12:26:30 +0200
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <Pine.OSX.4.50.0212152001270.8533-100000@lesleyanne.i8u.org>
-References: <200212151628.02870.n7bfs@qwest.net> <20021216020207.GJ448@localhost>
+Message-ID: <20021216102630.GR32122@mea-ext.zmailer.org>
+References: <200212151628.02870.n7bfs@qwest.net>
 Mime-Version: 1.0
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <20021216020207.GJ448@localhost>
+Content-Disposition: inline
+In-Reply-To: <200212151628.02870.n7bfs@qwest.net>
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: TEXT/PLAIN; charset="us-ascii"
+Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
-To: linux-hams@vger.kernel.org
+To: Douglas Cole <n7bfs@qwest.net>
+Cc: linux-hams@vger.kernel.org
 
-Predict isn't all that hard to get going. I even got it going on a NetBSD
-box.
+On Sun, Dec 15, 2002 at 04:28:02PM -0800, Douglas Cole wrote:
+...
+> BUT , it will not even begin to install :^(
+> here is what I get when I try to run ./configure on the RedHat box...
+> 
+> [root@n7bfs predict-2.2.1]# ./configure
+> One moment please... installer.c:16:20: curses.h: No such file or directory
+> Compilation failed.  Are you sure you have a C compiler (gcc) installed?
+> [root@n7bfs predict-2.2.1]#
 
-On Sun, 15 Dec 2002, Nate Bargmann wrote:
+  You do need   ncurses-devel  package.
 
-> * Douglas Cole <n7bfs@qwest.net> [2002 Dec 15 18:35 -0600]:
-> > [root@n7bfs predict-2.2.1]# ./configure
-> > One moment please... installer.c:16:20: curses.h: No such file or directory
-> > Compilation failed.  Are you sure you have a C compiler (gcc) installed?
-> > [root@n7bfs predict-2.2.1]#
-> >
-> >
-> > Now , what I get from that is that my node box does not have curses installed.
-> >
-> > Hmm , so I check and sure enough it has "ncurses" installed , but not curses,
-> > so I check all 3 install cd's and none have a curses package on them , so I
-> > check the SuSE install dvd and sure enough -it- has it!
->
-> Most likely your system is lacking the ncurses development package.  To
-> keep installation size smaller the binary library and files needed for
-> compiling packages that use the binary library are in seperate packages.
-> So, just install ncurses-dev or something similar and you should be
-> fine.
->
-> 73, de Nate >>
->
->
+...
+> tia for any input!
+> -- 
+> Douglas Cole   N7BFS
 
--- 
-Hisashi T Fujinaka - htodd@twofifty.com
-BSEE (6/86) + BSChem (3/95) + BAEnglish (8/95) + $2.50 = mocha latte
+73 de Matti Aarnio, OH1MQK
