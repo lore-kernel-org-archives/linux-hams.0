@@ -1,56 +1,48 @@
-From: Stephane Fillod <f8cfe@free.fr>
-Subject: [ANN] Hamlib 1.1.4 released
-Date: Mon, 28 Apr 2003 20:47:52 +0200
+From: "Marco Di Martino" <iw7eas@iw7eas.homeip.net>
+Subject: Speed on TCP/IP
+Date: Mon, 28 Apr 2003 23:56:00 +0200
 Sender: linux-hams-owner@localhost
-Message-ID: <20030428184751.GX29558@charybde.local>
+Message-ID: <000801c30dd0$fa749990$03c8a8c0@ozzy>
+References: <200304271530.47582.vk3bvp@qsl.net>
 Mime-Version: 1.0
+Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
-Content-Disposition: inline
 List-Id: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-To: Hamlib developers <hamlib-developer@lists.sourceforge.net>
-Cc: Linux HAMs <Linux-hams@vger.kernel.org>, sdrwg@arrl.org, GNU Radio mailing list <discuss-gnuradio@gnu.org>
+To: linux-hams@vger.kernel.org
 
+Hi!
+I've noticed that my ham-linux server is very slow in TCP/IP over ax.25.
+So I've tried to configure better the ax.25 parameter following the HOW-TO.
+Now the speed is quite better....but itsn't the optimum....
+These below are my parameters. So can you say me if they are correct and
+right ?
 
-Good news everyone!
+        echo "1" > /proc/sys/net/ax25/ax0/backoff_type
+        echo "0" > /proc/sys/net/ax25/ax0/ip_default_mode
+        echo "6" > /proc/sys/net/ax25/ax0/standard_window_size
+        echo "20" > /proc/sys/net/ax25/ax0/maximum_retry_count
+        echo "330" > /proc/sys/net/ax25/ax0/maximum_packet_length
+        echo -n 1 > /proc/sys/net/ax25/ax0/t1_timeout
+        echo -n 2 > /proc/sys/net/ax25/ax0/t2_timeout
+        echo -n 7 > /proc/sys/net/ax25/ax0/t3_timeout
+        echo -n 0 > /proc/sys/net/ax25/ax0/idle_timeout
+        echo "1" > /proc/sys/net/ax25/ax0/connect_mode
+        echo "1" > /proc/sys/net/ipv4/conf/ax0/accept_redirects
+        echo "1" > /proc/sys/net/ipv4/conf/ax0/accept_source_route
+        echo "0" > /proc/sys/net/ipv4/conf/ax0/log_martians
 
-Hamlib-1.1.4 has finally been released.
+Work conditions: 9600 baud with a good link...
 
-Hamlib provides a unified environment for the development of radio 
-and rotator control applications. Release 1.1.4 includes improved 
-rotator support, important build fixes for gcc-3.x, *BSD, Mac OS X,
-and Cygwin(win32) platforms. Besides improvements and bug fixes, 
-some experimental work has been started on SDR, stay tuned. 
- 
-Check it out at http://hamlib.org ! 
-  
-New in 1.1.4: 
-* new backends: Drake (R8B), GNU Radio (experimental), 
-		microtune, and many new rig models 
-* new rotator backends: fodtrack, rotorez 
-* better doxygenized documentation 
-* reworked perl and tcl bindings using swig 
-* vfo_t rework 
-* gcc-3.x compilance 
-   
-Note: Kylix binding may not be uptodate. 
-    
-Download pages are accessible at http://sourceforge.net/projects/hamlib 
-i386 rpms and .deb coming soon. DLL and VisualBasic wrapper are planned. 
-     
-Plan for 1.1.5: 
-* add support for the SDR-1000 
-* develop further the gnuradio backend 
-* complete the port to mingw(win32) environement 
-* enter more models of supported backends 
-* add Python and Java bindings 
-* etc. (any wishes?) 
-      
-Please, test it out and report to hamlib-developer@lists.sourceforge.net 
-Developers are also invited to join the Hamlib team by subscribing to this 
-mailing list. 
-       
-Have fun and let us know! 
-        
-73's de Stephane - F8CFE / the Hamlib team
+Thanks,
+Marco
+iw7eas
+
+----
+E-mail:
+iw7eas@virgilio.it
+iw7eas@iw7eas.homeip.net
+AX.25: IW7EAS@IW7CHV.IPUG.ITA.EU
+http://iw7eas.homeip.net/
+----
+
