@@ -1,40 +1,60 @@
-From: Tomi Manninen <oh2bns@sral.fi>
-Subject: Re: nrattach ports
-Date: Mon, 26 Jan 2004 02:00:11 +0200
+From: "Douglas Cole" <n7bfs@qwest.net>
+Subject: Re: packet/soundmodem questions
+Date: Sun, 25 Jan 2004 17:50:47 -0800
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <1075075211.1298.41.camel@oh2bns.ampr.org>
-References: <1074877572.1299.114.camel@oh2bns.ampr.org>
-	 <40145D92.4020408@ccr.jussieu.fr>
+Message-ID: <200401251750.47408.n7bfs@qwest.net>
+References: <200401251159.28252.n7bfs@qwest.net> <20040125150815.09c02009.washer@trlp.com>
+Reply-To: n7bfs@qwest.net
 Mime-Version: 1.0
 Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <40145D92.4020408@ccr.jussieu.fr>
+In-Reply-To: <20040125150815.09c02009.washer@trlp.com>
+Content-Disposition: inline
 List-Id: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
-To: Bernard Pidoux <pidoux@ccr.jussieu.fr>
-Cc: Linux-hams List <linux-hams@vger.kernel.org>
+To: James Washer <washer@trlp.com>
+Cc: linux-hams@vger.kernel.org
 
-On Mon, 2004-01-26 at 02:21, Bernard Pidoux wrote:
+On Sunday 25 January 2004 15:08, James Washer wrote:
+> I've been working on this very issue for a couple of days on my IBM X600
+> thinkpad, and will give it a shot soon on my T21.
+>
+> So far, the receive is fine, but I'm not transmitting yet. The soundcard is
+> only producing what sounds like framing bits.. No data yet.
+>
+> If you installed the AX.25 tools package, just do 'man -k AX.25' to see a
+> list of tools that were installed.
+>
+> Keep in touch with how things are going on your T23.
+>
+>  - jim
 
-> # /usr/sbin/nrattach -i 44.30.2.5 netrom
-> # /usr/sbin/nrattach -i 44.30.2.5 netmod
-> 
-> However nrattach creates two ports on my system that are identified as 
-> nr0 and nr1
-> not netrom and netmod as I can see with 'ip address' command.
-> Is there a problem with nrattach ? It does'nt seem to use the 
-> netrom/netmod argument ?
-> However I know that it works for I can use the netrom ports defined in 
-> /etc/nrports alias.
-> So maybe its only a display problem ?
+Thanks James for the input, I was hoping to get some input ala userland style 
+as I am not experienced in the Linux packet realm, so it appears that I have 
+lots of reading to do, since when I did the man command you provided above it 
+listed a mass of entries that I am totally unfamiliar with...
 
-Port names and interface names are two different things. 
-Nrattach (like most of the ax25-tools/apps) takes a port name
-from /etc/ax25/nrports as the last argument. When the kernel
-interface is created, it's name is whatever the kernel decides.
-Nrattach does not try to rename it. (Maybe it should now that
-it's possible..?)
+It may be easier for me to just go buy a used tnc, but then again where is the 
+fun in that ?  ;^}
 
--- 
-Tomi Manninen / OH2BNS / KP20ME04
+I will try to share my experiences with my T23 once I get an idea of where 
+"square one" is...
 
+73
+
+Doug
+
+
+>
+> On Sun, 25 Jan 2004 11:59:28 -0800
+>
+> "Douglas Cole" <n7bfs@qwest.net> wrote:
+> > Have been following the list for a while now and got interested in the
+> > soundmodem thread...
+> >
+> > I too would like to get soundmodem up and running so as to be able to run
+> > 1200 baud packet from my laptop (IBM thinkpad T23) and have done a small
+> > amount of searching but have not found any documentation on soundmodem,
+> > or at least so little that it leaves me wondering how to make things
+> > work...
+>
