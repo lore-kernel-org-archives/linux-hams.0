@@ -1,37 +1,62 @@
-From: "David S. Miller" <davem@davemloft.net>
-Subject: Re: [2.6 patch] /net/ax25/: some cleanups
-Date: Tue, 28 Dec 2004 10:05:07 -0800
-Message-ID: <20041228100507.7b374b5e.davem@davemloft.net>
-References: <20041212211339.GX22324@stusta.de>
-	<20041227185151.2a7ceb71.davem@davemloft.net>
-	<1104237408.20944.70.camel@localhost.localdomain>
+From: "bob krasko" <rkrasko1@nycap.rr.com>
+Subject: config troubleshooting
+Date: Tue, 28 Dec 2004 15:06:25 -0500
+Message-ID: <LFENLEGCDLCOKEJAECGNOEODCDAA.rkrasko1@nycap.rr.com>
 Mime-Version: 1.0
 Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <1104237408.20944.70.camel@localhost.localdomain>
 Sender: linux-hams-owner@vger.kernel.org
 List-Id: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
-To: Alan Cox <alan@lxorguk.ukuu.org.uk>
-Cc: bunk@stusta.de, ralf@linux-mips.org, linux-hams@vger.kernel.org, netdev@oss.sgi.com, linux-kernel@vger.kernel.org
+To: linux-hams@vger.kernel.org
 
-On Tue, 28 Dec 2004 14:27:08 +0000
-Alan Cox <alan@lxorguk.ukuu.org.uk> wrote:
 
-> On Maw, 2004-12-28 at 02:51, David S. Miller wrote:
-> > On Sun, 12 Dec 2004 22:13:39 +0100
-> > Adrian Bunk <bunk@stusta.de> wrote:
-> > 
-> > > The patch below contains the following cleanups:
-> > > - make two needlessly global functions static
-> > > - net/ax25/ax25_addr.c: remove the unused global function ax25digicmp
-> 
-> Dave this function is only unused because a patch in 2.6.10 broke AX.25
-> protocol support by removing the device and path checks. AX.25 is a link
-> layer protocol it is supposed to check the devices and arguably the
-> path. 
+my axports file is as follows:
+radio	kb2tgd-13	9600	255	2	(1200 baud port)
 
-Send a patch to netdev and CC: me to fix this as is standard
-procedure for getting changes into the networking.  :-)
+ax25d.conf file is as follows:
+[kb2tgd-13 via radio]
+nocall	* * * * * * *
+default	* * * * * * * -ax25	/usr/sbin/node	node
 
+everything else is ##
+
+i am trying to configure debian 2.4.18
+
+
+when i do a kissattach i use the command:
+kissattach /dev/ttyS0 radio
+i get an error message that starts with usage: -l  etc.
+i have tried it with many other possibilities and have come to the
+conclusion that:
+
+my configuration is not correct.
+
+according to the ax25 how to, i try /usr/sbin/kissattach and get the error
+that kissattach is not
+a directory.
+
+i have also gotten errors saying mkiss may not be loaded as a module, but
+when i do a mkiss command i get a usage:  xxxxxxx   so mkiss must be loaded,
+but i am using it wrong.
+
+i am using a dual port tnc, a pk 9612 kantronics, and in my gut i think the
+problem is in configuring this tnc, even though i do not have a use for the
+9600 baud side of the tnc.
+
+the 9600 in axports, is the speed of the comport and not the speed of the
+node system i am on, right?
+
+i have also input my ampr.org address of 44.69.12.254 as the address for the
+kissattach ports but am so confused at this time i am not sure if it needs
+that address or some kind or other network address.
+
+i have gone back to 2003 in back posts, read the how to so many times i feel
+stupid because the answer must be right there but i am missing it.
+
+i know there is a call and a listen program in the kernel somewhere also,
+that will eventually use some other file that has to be set up.
+
+thanks for your patience.
+bk
 
