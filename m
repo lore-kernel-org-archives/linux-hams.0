@@ -1,120 +1,140 @@
-From: Bob Nielsen <nielsen@oz.net>
-Subject: Re: ARRL's LoTW with Debian Sarge
-Date: Tue, 23 Sep 2003 17:34:44 -0700
-Sender: Bob Nielsen <nielsen@n7xy.net>
-Message-ID: <20030924003444.GA24050@n7xy.net>
-References: <20030918031442.GA708@localhost>
+From: Jeroen Vreeken <pe1rxq@amsat.org>
+Subject: [PATCH] fix sock_raw behaviour
+Date: Wed, 24 Sep 2003 23:45:44 +0200
+Sender: netdev-bounce@oss.sgi.com
+Message-ID: <20030924234544.A10634@jeroen.pe1rxq.ampr.org>
 Mime-Version: 1.0
-Return-path: <bounce-debian-hams=debian-hams=m.gmane.org@lists.debian.org>
-Content-Disposition: inline
-In-Reply-To: <20030918031442.GA708@localhost>
-Resent-Message-ID: <7nuqnD.A.qyF.NbOc_@murphy>
+Content-Type: multipart/mixed; boundary="AWniW0JNca5xppdA"
+Content-Transfer-Encoding: 8bit
+Return-path: <netdev-bounce@oss.sgi.com>
+Errors-to: netdev-bounce@oss.sgi.com
 List-Id: <linux-hams.vger.kernel.org>
-List-Post: <mailto:debian-hams@lists.debian.org>
-List-Help: <mailto:debian-hams-request@lists.debian.org?subject=help>
-List-Subscribe: <mailto:debian-hams-request@lists.debian.org?subject=subscribe>
-List-Unsubscribe: <mailto:debian-hams-request@lists.debian.org?subject=unsubscribe>
-List-Archive: <http://lists.debian.org/debian-hams/>
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-To: Linux Hams <linux-hams@vger.kernel.org>, Debian Hams <debian-hams@lists.debian.org>
+To: ralf@linux-mips.org, "David S . Miller" <davem@redhat.com>
+Cc: linux-hams@vger.kernel.org, netdev@oss.sgi.com
 
-Has anybody tried TrustedQSL version 1.07?  When I get to the point of
-creating the signed file, tqsl gives me the following error and then
-dies:
 
-tqsl: relocation error: tqsl: undefined symbol: tqsl_setADIFConverterDateFilte
+--AWniW0JNca5xppdA
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 8bit
+
+Hi,
+
+The attached patch fixes the behaviour of SOCK_RAW sockets in 2.6.0test5
+Address and port matching is now being done.
+A locking problem is also solved.
+And in the recv function the source address is reported back instead of the
+destination.
+(This was solved earlier in 2.2.x but appearantly didn't make it into 2.4
+and further.)
+
+Jeroen
+
+--AWniW0JNca5xppdA
+Content-Type: application/octet-stream; charset=us-ascii
+Content-Disposition: attachment; filename="sock-raw.diff"
+
+--- linux-2.6.0-test5/net/ax25/af_ax25.c.org	2003-09-23 23:26:17.000000000 +0200
++++ linux-2.6.0-test5/net/ax25/af_ax25.c	2003-09-24 23:33:32.000000000 +0200
+@@ -231,42 +231,29 @@
+ /*
+  *	Look for any matching address - RAW sockets can bind to arbitrary names
+  */
+-struct sock *ax25_addr_match(ax25_address *addr)
++void ax25_send_to_raw(ax25_address *addr, struct sk_buff *skb, int proto)
+ {
+-	struct sock *sk = NULL;
++	struct sock *sk;
+ 	ax25_cb *s;
++	struct sk_buff *copy;
+ 	struct hlist_node *node;
  
-I was able to create files with 1.06, but the LOTW system doesn't
-appear to like them and gives me this (I did successfully go through
-the certificate process):
+ 	spin_lock_bh(&ax25_list_lock);
+ 	ax25_for_each(s, node, &ax25_list) {
+ 		if (s->sk != NULL && ax25cmp(&s->source_addr, addr) == 0 &&
+-		    s->sk->sk_type == SOCK_RAW) {
++		    s->sk->sk_type == SOCK_RAW &&
++		    s->sk->sk_protocol == proto &&
++		    (!s->ax25_dev || s->ax25_dev->dev == skb->dev)) {
+ 			sk = s->sk;
+-			lock_sock(sk);
+-			break;
++			bh_lock_sock(sk);
++			if (atomic_read(&sk->sk_rmem_alloc) <= sk->sk_rcvbuf &&
++			    (copy = skb_clone(skb, GFP_ATOMIC)) != NULL)
++				if (sock_queue_rcv_skb(sk, copy) != 0)
++					kfree_skb(copy);
++			bh_unlock_sock(sk);
+ 		}
+ 	}
+-
+ 	spin_unlock_bh(&ax25_list_lock);
+-
+-	return sk;
+-}
+-
+-void ax25_send_to_raw(struct sock *sk, struct sk_buff *skb, int proto)
+-{
+-	struct sk_buff *copy;
+-	struct hlist_node *node;
+-
+-	sk_for_each_from(sk, node)
+-		if (sk->sk_type == SOCK_RAW &&
+-		    sk->sk_protocol == proto &&
+-		    atomic_read(&sk->sk_rmem_alloc) <= sk->sk_rcvbuf) {
+-			if ((copy = skb_clone(skb, GFP_ATOMIC)) == NULL)
+-				return;
+-
+-			if (sock_queue_rcv_skb(sk, copy) != 0)
+-				kfree_skb(copy);
+-		}
+ }
+ 
+ /*
+@@ -1633,16 +1620,16 @@
+ 	if (msg->msg_namelen != 0) {
+ 		struct sockaddr_ax25 *sax = (struct sockaddr_ax25 *)msg->msg_name;
+ 		ax25_digi digi;
+-		ax25_address dest;
++		ax25_address src;
+ 
+-		ax25_addr_parse(skb->mac.raw+1, skb->data-skb->mac.raw-1, NULL, &dest, &digi, NULL, NULL);
++		ax25_addr_parse(skb->mac.raw+1, skb->data-skb->mac.raw-1, &src, NULL, &digi, NULL, NULL);
+ 
+ 		sax->sax25_family = AF_AX25;
+ 		/* We set this correctly, even though we may not let the
+ 		   application know the digi calls further down (because it
+ 		   did NOT ask to know them).  This could get political... **/
+ 		sax->sax25_ndigis = digi.ndigi;
+-		sax->sax25_call   = dest;
++		sax->sax25_call   = src;
+ 
+ 		if (sax->sax25_ndigis != 0) {
+ 			int ct;
+--- linux-2.6.0-test5/include/net/ax25.h.org	2003-09-24 23:21:27.000000000 +0200
++++ linux-2.6.0-test5/include/net/ax25.h	2003-09-24 23:21:55.000000000 +0200
+@@ -227,8 +227,7 @@
+ struct sock *ax25_find_listener(ax25_address *, int, struct net_device *, int);
+ struct sock *ax25_get_socket(ax25_address *, ax25_address *, int);
+ extern ax25_cb *ax25_find_cb(ax25_address *, ax25_address *, ax25_digi *, struct net_device *);
+-extern struct sock *ax25_addr_match(ax25_address *);
+-extern void ax25_send_to_raw(struct sock *, struct sk_buff *, int);
++extern void ax25_send_to_raw(ax25_address *, struct sk_buff *, int);
+ extern void ax25_destroy_socket(ax25_cb *);
+ extern ax25_cb *ax25_create_cb(void);
+ extern void ax25_fillin_cb(ax25_cb *, ax25_dev *);
+--- linux-2.6.0-test5/include/net/ax25.h.org	2003-09-24 23:21:27.000000000 +0200
++++ linux-2.6.0-test5/include/net/ax25.h	2003-09-24 23:21:55.000000000 +0200
+@@ -227,8 +227,7 @@
+ struct sock *ax25_find_listener(ax25_address *, int, struct net_device *, int);
+ struct sock *ax25_get_socket(ax25_address *, ax25_address *, int);
+ extern ax25_cb *ax25_find_cb(ax25_address *, ax25_address *, ax25_digi *, struct net_device *);
+-extern struct sock *ax25_addr_match(ax25_address *);
+-extern void ax25_send_to_raw(struct sock *, struct sk_buff *, int);
++extern void ax25_send_to_raw(ax25_address *, struct sk_buff *, int);
+ extern void ax25_destroy_socket(ax25_cb *);
+ extern ax25_cb *ax25_create_cb(void);
+ extern void ax25_fillin_cb(ax25_cb *, ax25_dev *);
 
-2003-09-23 17:30:41 LOTW_QSO:  Error in record 3: No recognized signing specification in tCONTACT record
+--AWniW0JNca5xppdA--
 
-I didn't have any of these problems with the beta-test versions.
-
-This is on a Debian (mostly Sarge with a bit of Sid) system, using
-alien to convert the files.  I also tried compiling from source, but
-had trouble with both trustedqsl (configure can't locate tqsllib even if
-I specify the location) and tqsllib (/usr/bin/ld: cannot find -liberty).
-
-Puzzled,
-Bob, N7XY
-
-On Wed, Sep 17, 2003 at 10:14:42PM -0500, Nate Bargmann wrote:
-> Hello everyone.
-> 
-> For most on this list what I'm about describe is probably old hat, but
-> there may be some newcomers that would find this helpful in the list
-> archives.
-> 
-> As most are probably aware, the American Radio Relay League has been
-> working for a few years on a way to digitally sign log submissions for
-> electronic application for their various awards.  In the October 2003 
-> issue of QST (Amateur Windows?  8-) it has been announced that this 
-> program was opened to general use as of 15 September 2003.  On the 
-> Logbook of The World web page:
-> 
-> http://www.arrl.org/lotw/
-> 
-> there is a library and programs for signing and generating log data for
-> Linux.  These programs are provided in binary form only for Red Hat 7.2
-> and 8.0 releases and are RPMs.  Also provided are source RPMs for the
-> library and the applications.  These archives are not directly
-> installable as managed packages on my Linux distribution of choice, 
-> Debian, so they must be converted using a utility called Alien.
-> 
-> Having never needed Debian's Alien before, I decided this was as good of
-> a time as any to try it.  I grabbed the RH 8.0 RPMs and the source RPMs,
-> just in case.
-> 
-> I installed alien, rpm, libwxbase2.4, and libwxgtk2.4 as the web page
-> said the programs depended on WXWin 2.4.
-> 
-> Converting the RPMs to .deb's was straightforward with alien and
-> installation with dpkg completed without error.  I attempted to start
-> tqsl, but the startup failed.  A quick ldd /usr/bin/tqsl revealed a
-> dependency on libcrypto.so.2 that was not found.  Using the package
-> search page on the Debian site:
-> 
-> http://www.debian.org/distrib/packages
-> 
-> I found that it was a part of the libssl0.9.7 and libssl0.9.6 packages,
-> the latter version being in the oldlibs section.
-> 
-> Well, I created a symlink to libcrypto.so.0.9.7 named libcrypto.so.2:
-> 
-> ln -s libcrypto.so.0.9.7 libcrypto.so.2
-> 
-> (actually I used Midnight Commander, but this is generic--don't forget
-> you'll need to be root as these files reside in /usr/lib) and tried
-> again.  Running tqsl worked fine, but tqslcert failed with a relocation
-> error.
-> 
-> Poking around in the README in the tqsllib archive I found where the
-> library is dependent on OpenSSL 0.9.6.  So I redid my symlink to point
-> to libcrypto.so.0.9.6 and tqslcert loaded and ran.
-> 
-> In tqslcert I was able to create my certificate request and am now
-> waiting for the authentication process.
-> 
-> One quirk or bug I noticed in tqslcert is that if the Help button is
-> clicked and then the help window is backgrounded, the window that called
-> the help window is frozen and will remain so until the help window is
-> closed.  This may be a problem in WxWin, I don't know.
-> 
-> So there you have it, my micro-HOWTO on LoTW on Debian Sarge (Testing).
-> 
-> 73, de Nate >>
-> 
-> P.S. I keep this system updated about once per week.  An older Testing
-> snapshot may or may not work.  The same caveat may apply to Sid
-> (Unstable).
-> 
-> -- 
->  Wireless | Amateur Radio Station N0NB          | "We have awakened a
->  Internet | n0nb@networksplus.net               | sleeping giant and
->  Location | Bremen, Kansas USA EM19ov           | have instilled in him
->   Amateur radio exams; ham radio; Linux info @  | a terrible resolve".
->              http://www.qsl.net/n0nb/           | - Admiral Yamamoto
 
