@@ -1,47 +1,66 @@
-From: Tomi Manninen OH2BNS <tpm@prkele.tky.hut.fi>
-Subject: Re: binding ax devices to TCP ports?
-Date: Tue, 3 Dec 2002 11:55:49 +0200 (EET)
+From: Chuck Gelm <nc8q@gelm.net>
+Subject: Re: Lost Connection
+Date: Tue, 03 Dec 2002 17:12:03 -0500
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <Pine.HPX.4.10.10212031134590.18806-100000@saturn.trs.ntc.nokia.com>
-References: <BAY1-F1180e5cX65b6b0000705f@hotmail.com>
-Reply-To: tpm@prkele.tky.hut.fi
+Message-ID: <3DED2C33.6031A902@gelm.net>
+References: <200212022326.00978.barry_linux@rogers.com>
 Mime-Version: 1.0
-Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <BAY1-F1180e5cX65b6b0000705f@hotmail.com>
-List-Id: <linux-hams.vger.kernel.org>
-Content-Type: TEXT/PLAIN; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
-To: linux-hams@vger.kernel.org
+Return-path: <linux-hams-owner@vger.kernel.org>
+List-Id: <linux-hams.vger.kernel.org>
+Content-Type: text/plain; charset="us-ascii"
+To: barry_linux@rogers.com
+Cc: linux-hams@vger.kernel.org
 
-On Tue, 3 Dec 2002, ozgun erdogan wrote:
+Hi, Barry:
+ Yes, this is off topic.
+This list is about amateur radio uses of linux.
+Not about hams that happen to use linux for
+non-amateur radio uses.
 
-> I read the kissattach code as I need to write some code which binds a TCP 
-> port to an ax network device. That is, TCP packets coming from a specific 
-> port will be read from ax1. (with listen for example.)
+ I'd suggest "linux-newbie@vger.kernel.org".
+Another suggestion would be to follow the suggestion
+at the bottom of every post on this list:
+"More majordomo info at  http://vger.kernel.org/majordomo-info.html"
 
-I think you have to be a bit more specific about what you are trying to
-do. TCP is a transport layer protocol and TCP ports are a concept related
-to TCP, of course. A network device is quite a few steps below that in the
-OSI model (assuming for a minute that OSI model can be used to describe
-the Linux networking stack). Binding a TCP port to an ax or whatever
-network device doesn't really make much sense, to me anyway.
+ However, let me guess that you 'smbmount'ed a XP filesystem
+on a linux workstation.  Then, when the XP filesystem 'goes down',
+you are suprised to see that the linux workstation has dropped
+the 'link' (smbmount)! :-|
 
-You mention the "listen" program. Could whatever you are doing be done
-simply by modifying "listen" ?
+ Try smb-un-mount'ing the XP-filesystem before the XP box "goes down".
+Then re-smbmount'ing when the XP box 'goes up'.
+;-)
+See 'man smbumount'
 
-> So, could you make any comments on how struct ifreq is used, or the way the 
-> KISS device is created? (also a link to some documentation would be very 
-> useful)
+HTH, Chuck
 
-The essential thing in kissattach is the ioctl(..., TIOCSETD, ...) call.
-That tells the kernel to switch the serial port to a special networking
-mode (it sets a "line discipline" to it). The kernel then magically
-creates the network device for you. The rest of kissattach is mostly
-setting up some parameters like HW address, IP address etc. While these
-are of course important, the real work is done in that ioctl() call.
-
--- 
-Tomi Manninen           Internet:  oh2bns@sral.fi
-OH2BNS                  AX.25:     oh2bns@oh2rbi.fin.eu
-KP20ME04                Amprnet:   oh2bns@oh2rbi.ampr.org
-
+barry wrote:
+> 
+> Hi, not sure if this will be calssed as off topic or not, but I am a Ham and
+> it is about Linux.
+> 
+> I have a link between Linux (Mandrake 8.2) and a windows XP Pro box
+> (established by smbmount). If (when) the XP box goes down, then comes back up
+> again, the link is no longer there. If I try to access it from Linux:
+> 
+> >ls XP_Drive
+>  I get
+> 
+> ls : XP_Drive: Input/output error
+> 
+> If I try to access from midnight commander I get
+> 
+> File 'XP_Drive' existd\s but cannot be stat-ed: Input/output error
+> 
+> The only way I have managed to resolve the problem to date is to reboot linux,
+> I know there has to be a better way..............what is it please
+> 
+> Barry
+> 
+> ve3nav/va3wi
+> 
+> -
+> To unsubscribe from this list: send the line "unsubscribe linux-hams" in
+> the body of a message to majordomo@vger.kernel.org
+> More majordomo info at  http://vger.kernel.org/majordomo-info.html
