@@ -1,65 +1,62 @@
-From: "Jose A. Amador" <co2ja01@fastmail.fm>
-Subject: Re: Is there an "IPTABLES" expert on the list?
-Date: Mon, 31 Mar 2003 06:10:37 -0800
+From: pa3gcu <pa3gcu@zeelandnet.nl>
+Subject: Re: soundmodem/ax25 newbie questions.
+Date: Mon, 31 Mar 2003 19:57:49 +0000
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <20030331141037.BB7D42E7E5@www.fastmail.fm>
-References: <3E87A396.6030105@kj6eo.com>
+Message-ID: <03033119574904.04308@unix.pa3gcu>
+References: <200303302118.50687.linux-hams@amayzing.co.nz>
+Reply-To: pa3gcu@zeelandnet.nl
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 7BIT
 Return-path: <linux-hams-owner@vger.kernel.org>
-Content-Disposition: inline
-In-Reply-To: <3E87A396.6030105@kj6eo.com>
+In-Reply-To: <200303302118.50687.linux-hams@amayzing.co.nz>
 List-Id: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
-To: Bill Walton <kj6eo@kj6eo.com>, Linux Hams <linux-hams@vger.kernel.org>
+To: Aaron May <linux-hams@amayzing.co.nz>, Linux Hams <linux-hams@vger.kernel.org>
 
+On Sunday 30 March 2003 09:18, Aaron May wrote:
+> I have just finished trying to install the soundmodem kernel drivers, only
+> to find it doesn't like my sound card. The sound card is an on-board VIA
+> chipset, and in the BIOS it has an option to enable the legacy
+> sound-blaster on 0x220, irq5 dma 1, however when I try to ifconfig it up,
+> the system log reports no sb at that location. So my sound card will not
+> work? (further details at www.amayzing.co.nz/aaron/?page=045 if you are
+> interested.)
+>
+> So I moved on to the soundmodem usermode (?) version. I have happily got it
+> working to the point that text scrolls down the screen in kiss mode,
+> proving that my cables work.
+>
+> When I try it in mkiss mode, it results in an error:
+>
+> sm[1187]: ioctl: TIOCSETD: Invalid argument (22).
 
-Even when I am no expert on the theme, you might use shorewall (or
-seawall)
-to configure iptables.
+I did not reply to this one because i dont use a soundcard at all for packet, 
+however considering i've seen no replys i will tell you what,
+"ioctl: TIOCSETD" normally means, it means that at the time you gave the 
+command no mkiss was found in your kernel or no mkiss module was loaded.
+I hope i am correct here as i dont know what "Invalid argument (22)" is, i 
+did a quick search in the kernel source but it showed nothing.
 
-73 de Jose, CO2JA
+If your mkiss support is in module form then you need to have the following 
+in your /etc/modules.conf file.
 
-------
+alias tty-ldisc-5 mkiss 
 
-On Sun, 30 Mar 2003 18:10:30 -0800, "Bill Walton" <kj6eo@kj6eo.com> said:
+If i am completely wrong please accept my humble appols...
 
-> Hello List -
-> 
-> Is there an "IPTABLES" expert on the list?  I telnet to my TNOS box from 
-> a Windoze
-> box on my LAN.  After I replaced my "ipchains" firewall with a new 
-> "iptables" firewall
-> I can no longer telnet to my TNOS box using my terminal program "putty". 
->  What is
-> interesting is that if I shell out to DOS on the Windoze box I can 
-> "ping" the TNOS
-> box and "telnet" to it using the DOS "telnet 44.16.2.100" command.  I 
-> have attached
-> two files "dos.output" and "putty.output".  Both of these files capture 
-> what is going on
-> when I try to telnet to my TNOS box via "dos" or "putty".  The files 
-> were captured
-> using the "tcpdump" command ie "tcpdump -tqn -i eth1 > <output filename>.
-> 
-> I can also make my firewall file available to you by request 
-> "rc.firewall".  Any help
-> you could offer would be appreciated.  For whatever reason I just can't 
-> telnet to
-> the TNOS box using "putty".  Maybe I can't see the forest for the trees?
-> 
-> FYI, I can use "putty" telnet to connect to any other 44 IP number.  I 
-> can also use
-> "putty" ssh to connect to any of my servers on the LAN.
-> 
-> Any suggestions?
-> 
-> Regards,
-> 
-> Bill Walton KJ6EO (kj6eo.ampr.org)(44.16.2.100)
--- 
-  Jose A. Amador
-  co2ja01@fastmail.fm
+> I'm unsure if it means anything, but the line written as I come out of
+> soundmodemconfig says:  "selection: cfg: - chan: -"
+>
+> I more suspect that ax25 needs some more configuration? I haven't found any
+> doco/howto that makes sense to me about mkiss (I really am a newbie).
+>
+> Also If someone could point me at a simple packet terminal program?
+>
+> Any help would be appreciated.
+> Cheers, Aaron ZL3UAR.
 
 -- 
-http://www.fastmail.fm - I mean, what is it about a decent email service?
+Regards Richard
+pa3gcu@zeelandnet.nl
+http://people.zeelandnet.nl/pa3gcu/
+
