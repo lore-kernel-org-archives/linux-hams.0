@@ -1,46 +1,57 @@
-From: Matti Aarnio <matti.aarnio@zmailer.org>
-Subject: Re: Digital BASH Update
-Date: Wed, 24 Apr 2002 20:43:43 +0300
+From: Tomi Manninen <tpm@prkele.tky.hut.fi>
+Subject: ANNOUNCE: gMFSK v0.4.1
+Date: Wed, 24 Apr 2002 22:11:06 +0300 (EEST)
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <20020424204343.K1284@mea-ext.zmailer.org>
-References: <13787905.1019649070@WUSJA129861-8HP> <NCBBKBAJDJIPKFIAFBKLCEFAEFAC.wilson.hein@verizon.net>
+Message-ID: <Pine.LNX.4.33.0204242047010.11663-100000@oh2bns.ampr.org>
+Reply-To: <tpm@prkele.tky.hut.fi>
 Mime-Version: 1.0
 Return-path: <linux-hams-owner@vger.kernel.org>
-Content-Disposition: inline
-In-Reply-To: <NCBBKBAJDJIPKFIAFBKLCEFAEFAC.wilson.hein@verizon.net>; from wilson.hein@verizon.net on Wed, Apr 24, 2002 at 12:05:43PM -0400
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"
+Content-Type: TEXT/PLAIN; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
-To: "Wilson G. Hein" <wilson.hein@verizon.net>
-Cc: John Ackermann N8UR <jra@febo.com>, Linux-Hams Mailing List <linux-hams@vger.kernel.org>
+To: linux-hams@vger.kernel.org
 
-On Wed, Apr 24, 2002 at 12:05:43PM -0400, Wilson G. Hein wrote:
-> I think this explains it all.
+Hi all,
 
-    Yes, you have some seriously misbehaving incoming email verifier.
-    What the Mulberry does after that (it is a MUA, not MTA..)
-    that I don't know.
+I just uploaded gMFSK v0.4.1 to hes.iki.fi. For those who don't know,
+gMFSK is a MFSK16, RTTY and THROB soundcard terminal program for Linux
+(using the Gnome libraries).
 
-> X-Mail-Format-Warning: Bad RFC822 header formatting in Sender:
->   linux-hams-owner@vger.kernel.org
+This is primarily a bugfix release but there are a few new features as 
+well.
 
-    This Sender: is quite correct according to RFC 2822.
+A short list of changes:
 
-> Precedence: bulk
-> X-Mail-Format-Warning: Bad RFC822 header formatting in X-Mailing-List:
->   linux-hams@vger.kernel.org
+ - keyboard input with any modifiers was ignored making it impossible
+   enter uppercase letters for example, fixed
 
-    The X-* headers should NOT be veried, nor used for anything at all.
-    They are everyones local stuff, and likely have separate meanings
-    for each site's suite of softwares.
+ - fixtexts could not be saved, fixed
 
-> X-Spam-Status: No, hits=0.7 required=5.0
->   tests=IN_REP_TO,FROM_MISSING,DATE_MISSING,MISSING_HEADERS version=2.01
-> 
-> -----Original Message-----
-> From: John Ackermann N8UR [mailto:jra@febo.com]
-> Sent: Wednesday, April 24, 2002 11:51 AM
-> To: wghein@ptd.net; Linux-Hams Mailing List
-> Subject: RE: Digital BASH Update
+ - implemented command substitution macros, so something like
+   "My OS is $(cat /etc/redhat-release) with kernel $(uname -r)."
+   in your brag-file should work
 
-/Matti Aarnio OH2MQK -- co-postmaster of vger.kernel.org
+ - the list of bands in the QSO data combovox is now configurable
+   (but remember that you can always type whatever you want to the
+    entry field as well)
+
+ - time and date macro format strings are now fully configurable
+
+ - with the two new features listed above I removed the "short" time/date
+   macros. The command substitution macros should give you enough
+   flexibility
+
+ - waterfall draws the frequencies a bit differently now
+
+So there. The source code and rpms can be found at
+
+  http://hes.iki.fi/pub/ham/unix/linux/hfmodems/
+
+Have fun!
+
+-- 
+Tomi Manninen           Internet:  oh2bns@sral.fi
+OH2BNS                  AX.25:     oh2bns@oh2rbi.fin.eu
+KP20ME04                Amprnet:   oh2bns@oh2rbi.ampr.org
+
+
