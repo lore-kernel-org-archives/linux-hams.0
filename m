@@ -1,47 +1,37 @@
-From: "David Hambly" <webmissile@hotmail.com>
-Subject: HFTerm, F6FBB, FPAC and NetRom
-Date: Sat, 06 Nov 2004 16:20:26 +0000
-Message-ID: <BAY17-F365p1Fjxe0ym00034bad@hotmail.com>
+From: "Thomas - OZ2AFO" <tm@juletraesfoden.dk>
+Subject: aprsd setup
+Date: Sun, 7 Nov 2004 02:33:49 +0100
+Message-ID: <001301c4c469$d56f7c40$6402a8c0@laptop>
 Mime-Version: 1.0
+Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
 Sender: linux-hams-owner@vger.kernel.org
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; format=flowed; charset="us-ascii"
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; format="flowed"; charset="us-ascii"; reply-type="original"
 To: linux-hams@vger.kernel.org
 
-Folks,
+Hi all
 
-I am using HFTerm (soundcard PacTOR 1) with F6FBB, HFTerm telnets into 
-LinFBB using port 6300, this provides a soundcard PacTOR BBS.
+ I'm trying to setup an aprs station, supporting both digipeating and 
+i-gate. So far I have found that there is two packages : aprsdigi, and 
+aprsd. Each does one of the wanted things, but not the other. Am I correct?
 
-What I am trying to figure out is:
+How would one do the right setup of both aprsdigi AND aprsd on the same PC? 
+(If that's needed to do both my jobs)
 
-How to add NetRom to this config so when a new F6FBB mailbox pops up it is 
-added to the routing automagically.
+I sort of having aprsd up and running already, but it just sits there. It is 
+connected to the network (have connection to second.aprs.net, and another 
+local i-gate here in Denmark). And I can see in history.txt that it recieves 
+things. But if I try to use a program like ui-view to connect to the server 
+I don't get a thing, other than the position of the server itself. What am I 
+doing vrong?
 
-I assume that I would need to add another port to F6FBB (perhaps AXIP), make 
-an ax25 device and set up a gateway from the newly set up port to the telnet 
-port.  Currently, if I try ifconfig, it only shows the lo interface at 
-127.0.0.1, this does seem to carry the packets to and from LinFBB.
+aprsd is almost a standard install (conf file taken from debian install), 
+only changed calls, positions, and passcode..
 
-I am pretty new to all this.  I have FPAC but still not sure about the 
-axports config yet and want to keep the output low (just quick login in 
-expert mode).
+Anyone that would care to help me? An example of your configuration?
 
-It's kinda weird because HFTerm uses /dev/dsp and is not really a device 
-itself.  Not sure how to set axports if I don't actually have a device to 
-attach; Is there a way to set up a virtual device that would share the 
-telnet port (6300)?  Like I said, I'm pretty new, swimming in documentation, 
-trying to wrap my mind around this stuff.
+Regards
+Thomas 
 
-I also could use help setting up the forwarding but for now NetRom is step 
-one.
-
-73
-Dave
-
-_________________________________________________________________
-On the road to retirement? Check out MSN Life Events for advice on how to 
-get there! http://lifeevents.msn.com/category.aspx?cid=Retirement
 
