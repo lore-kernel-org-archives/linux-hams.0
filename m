@@ -1,44 +1,29 @@
-From: Tomi Manninen <oh2bns@sral.fi>
-Subject: ANN: gMFSK version 0.7pre1
-Date: Tue, 22 Feb 2005 22:05:40 +0200
-Message-ID: <1109102740.1260.30.camel@oh2bns.ampr.org>
+From: Ralf Baechle <ralf@linux-mips.org>
+Subject: [PATCH] Remove unused MAXBPQDEV definition
+Date: Sat, 26 Feb 2005 15:36:24 +0000
+Message-ID: <20050226153624.GA13172@linux-mips.org>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
+Content-Disposition: inline
 Sender: linux-hams-owner@vger.kernel.org
 List-Id: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
-To: Linux-hams List <linux-hams@vger.kernel.org>
+Content-Transfer-Encoding: 7bit
+To: Jeff Garzik <jgarzik@pobox.com>
+Cc: linux-hams@vger.kernel.org
 
-Hi all,
+ bpqether.c |    2 --
+ 1 files changed, 2 deletions(-)
 
-I have uploaded the first pre-release of the upcoming gMFSK
-version 0.7 to the gMFSK web site.
-
- http://gmfsk.connect.fi/
-
-A short list of new features:
-
-- CW support. Both send and receive. Send currently only
-  through the soundcard. Cwdaemon support planned...
-
-- Olivia support. For info about Olivia see
-  http://homepage.sunrise.ch/mysunrise/jalocha/mfsk.html
-  gMFSK is probably the first multimode graphical program
-  to support Olivia...
-
-- Proper Feldhell fonts.
-
-- Support for internationalization. Finnish and Slovakian
-  translations exist. Other languages welcome.
-
-- All sorts of smaller stuff, see the ChangeLog for details.
-
-Like said, this is a pre-release. Not everything is ready yet
-and there probably are some rough edges in there. Anyway I
-highly recommend people to test it!
-
-Have fun!
-
--- 
-Tomi Manninen / OH2BNS / KP20JF74
-
+Index: bk-afu/drivers/net/hamradio/bpqether.c
+===================================================================
+--- bk-afu.orig/drivers/net/hamradio/bpqether.c	2005-02-26 15:32:43.718910480 +0000
++++ bk-afu/drivers/net/hamradio/bpqether.c	2005-02-26 15:33:49.704879088 +0000
+@@ -112,8 +112,6 @@
+ };
+ 
+ 
+-#define MAXBPQDEV 100
+-
+ struct bpqdev {
+ 	struct list_head bpq_list;	/* list of bpq devices chain */
+ 	struct net_device *ethdev;	/* link to ethernet device */
