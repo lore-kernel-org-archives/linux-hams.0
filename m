@@ -1,135 +1,53 @@
-From: John Bennett <jabennett@insightbb.com>
-Subject: Re: Just installed RedHat 9
-Date: 09 Jul 2004 00:39:12 -0500
+From: Arno Verhoeven <pe1icq@pi8zaa.ampr.org>
+Subject: Re: ancient history ...
+Date: Fri, 09 Jul 2004 13:24:06 +0200
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <1089351552.4936.48.camel@xidev>
-References: <1223.192.168.1.117.1089178842.squirrel@gateway>
-	 <2498.192.168.1.117.1089215964.squirrel@gateway>
-	 <002801c4644c$0f62ecd0$6401a8c0@jeremiel>
-	 <200407082315.27383.pa3gcu@zeelandnet.nl>
-	 <009501c46533$923c2850$6401a8c0@jeremiel>
+Message-ID: <40EE8056.50803@pi8zaa.ampr.org>
+References: <40ECEF6A.1070202@ve7hex.ampr.org> <001a01c464dc$01673420$b1123c0a@magic875> <40ED7ABD.4010103@ve7hex.ampr.org>
 Mime-Version: 1.0
 Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <009501c46533$923c2850$6401a8c0@jeremiel>
+In-Reply-To: <40ED7ABD.4010103@ve7hex.ampr.org>
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"
-To: John Montanez <jemontanez@knology.net>
+Content-Type: text/plain; charset="us-ascii"; format="flowed"
+To: Niall Parker <niall@ve7hex.ampr.org>
 Cc: linux-hams@vger.kernel.org
 
-RH9 does have ax25 support, but only for the soundcard modem. If you
-intend to use KISS, you will need to rebuild the kernel. Be warned that
-one of the ax25.h files fails to include another necessary header and
-can cause configure to fail if it attempts to test for the presence of
-ax25. A lot of if's here, but this can and does happen. Case in point,
-ax25 support in Xastir will fail on RH9 because of this omission. On my
-system, they are found at:
+Niall Parker wrote:
 
-/usr/include/linux/ax25.h
-/usr/include/netax25/ax25.h	<-- this one has the required includes
+>>>
+>>>
+>>> ---
+>>>
+>>> [niall@ve7hexgw /tmp]$ call lsp spr
+>>> GW4PTS AX.25 Connect v1.11
+>>> *** Connected to spr
+>>> Error opening terminal: xterm.
+>>> [niall@ve7hexgw /tmp]$
+>>>
+>>
+>>
+>> Looks to me like it couldn't open an x-terminal session at either at 
+>> your
+>> box or at spr..
+>
+>
+> From what I recall of using it before, call was a completely command 
+> line app that didn't do anything fancy with X ... just as I am typing 
+> though I'm wondering if it may be a terminal type issue ... after some 
+> more experimentation I find I can get it to fail similarly with 
+> TERM=xterm or vt100 or linux (ie the "xterm" in the error line above 
+> is actually the variable TERM in the shell)
+>
 
-If you have not done so already, make sure you get all the current ax25
-tarballs off of Sourceforge and install them. Even though you may not
-think you need them:
+Try  "raw mode"
 
-libax25
-ax25-tools
-ax25-apps
+       call -r lsp spr
 
-The apps can be useful to troubleshoot your setup. For example, I often
-use the listen and call binaries to check my setup.
-
-If you need to rebuild the kernel, be sure you copy the appropriate
-config file from the configs directory to the root of the source tree
-(be sure that it is named '.config' on the copy). The configs directory
-is found in the root of the source tree. Do *NOT* do a 'make mrproper'
-as this will completely wipe out the '.config' file. After doing this,
-the only changes that you will need to make to the config is to set the
-correct processor (i686 covers a lot of territory...) and select the
-serial port kiss driver to be loaded as a module. Doing this will
-preserve all the configuration settings and features that were with the
-distribution. If you don't, a lot of stuff in X will break.
-
-If you are using the latest rpms from Red Hat (they still have them on
-their site), be advised that after the RH manuals were completed, RH
-changed how the upgrade patches to the kernel were applied (for building
-from the source). After downloading the src rpm, you will need to
-install/build by doing the following:
-
-rpm -Uvh kernel*.src.rpm
-cd /usr/src/redhat/SPECS
-rpmbuild -bp kernel-2.4.spec	<-- this will take awhile
-cd /usr/src/redhat/BUILD/kernel*/linux*
-cp configs/kernel-2.4.20-i686.config ./.config    <-- or whatever
-vi Makefile    <-- change EXTRAVERSION to something unique for you
-make menuconfig <-- selections as discussed above
-make dep clean bzImage modules modules_install install
-
-If you want grub to use your new kernel as the default, you will need to
-edit grub.conf in /boot/grub. Suggest you make this change *after* you
-have tested the new kernel.
-
-Non-kernel rpms should be installed using the '-Fvh' option.
-
-Hope this helps.
-
-73, John
-n4xi
-
-On Thu, 2004-07-08 at 16:36, John Montanez wrote:
-> First I would like to thank everyone who has taken the trouble to respond.
-> Thank you all.
-> 
-> > Does not redhat 9 already have ax25 support then, i know redhat 8 had it
-> as
-> > default so why would version 9 not have it.???
-> 
-> I don't think so because when I tried to install the FBB bulletin board
-> program I got a message telling me ax25 support was needed.  Thanks I will
-> check out your website.  I still can't seem to get this kernal thing right.
-> I compiled it but can't get it to load.  Looks like I'll be working on this
-> for a while till I learn more about linux.
-> 
-> John / KC4TXC
-> 
-> ----- Original Message ----- 
-> From: "pa3gcu" <pa3gcu@zeelandnet.nl>
-> To: "John Montanez" <jemontanez@knology.net>
-> Cc: <linux-hams@vger.kernel.org>
-> Sent: Thursday, July 08, 2004 4:15 PM
-> Subject: Re: Just installed RedHat 9
-> 
-> 
-> > On Wednesday 07 July 2004 19:58, John Montanez wrote:
-> > > Hello,
-> > >
-> > > I just installed RedHat 9, and am trying to recompile the kernel to
-> include
-> > > support for amateur radio.  I get a message telling me that the kernel
-> is
-> > > to big to be able to make a boot disk.  Can anyone tell me what sort of
-> > > things I can safely leave out when I configure the kernel to make it
-> > > smaller.  It's probably obvious but I'm a newbie at linux.
-> >
-> > Does not redhat 9 already have ax25 support then, i know redhat 8 had it
-> as
-> > default so why would version 9 not have it.???
-> >
-> > To answer you question about what and what not to compile would need a
-> very
-> > long answer.
-> > Take a quick look at my web page, its old but should give you some hints.
-> >
-> 
-> 
-> -
-> To unsubscribe from this list: send the line "unsubscribe linux-hams" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at  http://vger.kernel.org/majordomo-info.html
-
-John Bennett
-Evansville, IN
-Amateur Radio Web: http://home.insightbb.com/~n4xi
-Where am I? http://www.findu.com/cgi-bin/find.cgi?N4XI
-Bike Racing Web: http://home.insightbb.com/~xibike
+-- 
+73, PE1ICQ  Arno Verhoeven
+--------------------------------
+AX.25  pe1icq@pi8zaa.#nbo.nld.eu
+smtp   pe1icq@pi8zaa.ampr.org
+inet   pe1icq@amsat.org 
 
