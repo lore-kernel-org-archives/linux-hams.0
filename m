@@ -1,39 +1,54 @@
-From: Wilbert Knol <zl2bsj@zl2tze.ath.cx>
+From: Scott Ehrlich <scott@ehrlichtronics.com>
 Subject: Re: [HELP] Sound card as TNC, Kernel 2.4.22, Intel board
-Date: Thu, 30 Oct 2003 17:16:10 +1200 (GMT-12)
+Date: Thu, 30 Oct 2003 05:58:14 -0500 (EST)
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <Pine.LNX.4.44.0310301707300.23550-100000@zl2bsj.ampr.org>
-References: <Pine.LNX.4.33.0310290948530.12192-100000@wapiti.tc.fluke.com>
+Message-ID: <Pine.LNX.4.58.0310300558060.9042@debian.ehrlichtronics.com>
+References: <Pine.LNX.4.44.0310301707300.23550-100000@zl2bsj.ampr.org>
 Mime-Version: 1.0
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <Pine.LNX.4.33.0310290948530.12192-100000@wapiti.tc.fluke.com>
+In-Reply-To: <Pine.LNX.4.44.0310301707300.23550-100000@zl2bsj.ampr.org>
 List-Id: <linux-hams.vger.kernel.org>
 Content-Type: TEXT/PLAIN; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
-To: linux-hams@vger.kernel.org
-Cc: Scott Ehrlich <scott@ehrlichtronics.com>
+To: Wilbert Knol <zl2bsj@zl2tze.ath.cx>
+Cc: linux-hams@vger.kernel.org
 
+It actually does not exist:
 
-> > <snip> /sbin/ifconfig -a shows
-> > AX.25 ports exist.
+sudo /sbin/ifconfig ax25 up
+ax25: ERROR while getting interface flags: No such device
 
-That tells you the driver is loaded, and that the network interface
-exists.
+sudo /sbin/ifconfig ax.25 up
+ax.25: ERROR while getting interface flags: No such device
 
-Now check that the interface is 'up' with:
+This is why I seek help in trying to make it appear.
 
-  /sbin/ifconfig <interface_name>
+Scott
 
-If not, start it with:
+On Thu, 30 Oct 2003, Wilbert Knol wrote:
 
-  /sbin/ifconfig <interface_name> up
-
-Suggest you verify it works by using another application, like 'call'.
-Hope this helps.
-
-
-
-Wilbert, ZL2BSJ
-
-
-
+>
+> > > <snip> /sbin/ifconfig -a shows
+> > > AX.25 ports exist.
+>
+> That tells you the driver is loaded, and that the network interface
+> exists.
+>
+> Now check that the interface is 'up' with:
+>
+>   /sbin/ifconfig <interface_name>
+>
+> If not, start it with:
+>
+>   /sbin/ifconfig <interface_name> up
+>
+> Suggest you verify it works by using another application, like 'call'.
+> Hope this helps.
+>
+>
+>
+> Wilbert, ZL2BSJ
+>
+>
+>
+>
