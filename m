@@ -1,58 +1,50 @@
-From: Jacques Chion <Jacques.Chion@wanadoo.fr>
-Subject: netrom problems
-Date: Fri, 3 Jan 2003 21:13:42 +0100 (CET)
+From: Wilbert Knol <zl2bsj@zl2tze.ath.cx>
+Subject: Re: Linux AX.25 Socket programming
+Date: Sat, 4 Jan 2003 09:47:05 +1300 (NZDT)
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <Pine.LNX.4.44.0301032111490.1134-100000@cwoux.cerise.fr>
+Message-ID: <Pine.LNX.4.44.0301040925500.9645-100000@zl2bsj.ampr.org>
+References: <Pine.HPX.4.10.10301031914210.15434-100000@saturn.trs.ntc.nokia.com>
 Mime-Version: 1.0
-Content-Transfer-Encoding: QUOTED-PRINTABLE
 Return-path: <linux-hams-owner@vger.kernel.org>
+In-Reply-To: <Pine.HPX.4.10.10301031914210.15434-100000@saturn.trs.ntc.nokia.com>
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: TEXT/PLAIN; charset="iso-8859-1"
-To: linux-hams@vger.kernel.org
+Content-Type: TEXT/PLAIN; charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+To: Tomi Manninen OH2BNS <tpm@prkele.tky.hut.fi>
+Cc: linux-hams@vger.kernel.org
 
 
-Hello,
-I am using Linux for a long time without problems.
-At this time, i run with the kernel 2.4.20 and a home-made
-distribution which is an awful mix of redhat, debian and slackware.
-=46or the fun, i tried the netrom services with packet-radio.
-To install the necessary software, no probems.
-I run with a soundcard, using the the software soundmodem
-(the software itself, not the one included in the kernel).
 
-As i do'nt hear a node directly, i must contact it via=20
-a digipeater. So i used the nrparms command like that :
-nrparms -nodes F6ZZZ-8 + 44ZZZ 255 6 sm0 F6ZZZ-8 F5XXX
-nrparms -routes sm0 F6ZZZ-8 F5XXX + 120
+> The standard end-of-line in AX.25 related world is CR
 
-And i cannot contact F6ZZZ-8.
-If i look in /proc/net/nr_neigh, i get that :
+Thanks. In that case, in order to make it work with ax25d, Andrew 
+Bates's Perl script needs to start off like this:
+
+   #!/usr/bin/perl
+   # -- beginning of script
+   # Un-buffer STDIN:
+   $|=1;
+   # Use AX25 EOL:
+   # (Check the '$/' paragraph in 'man perlvar')
+   $/="\r";
+
+I found that the AX25 socket gets closed as soon as the script runs 
+out. The remote end gets a UI disconnect, hot on the heels of the last 
+Info frame. The remote user never gets to see the result of the script. 
+
+A graceful closedown by the remote user would fix that:
+
+   print "Hit ENTER to quit:";
+   $call = (<>);
+
+   exit;
+   # end of script
+
+So, it looks like it _really_ is as easy as advertised by G4KLX! I am 
+now scripting a search-my-log gizmo :-)
 
 
-addr  callsign  dev  qual lock count failed digipeaters
-00001 F6ZZZ-8   sm0   120    1     1      0 F5XX *
+Wilbert, ZL2BSJ
 
-So you see, the call under digipeaters in not correct, truncated and=20
-cause mistakes when i try to connect the node.
 
-I am using the following packages :
 
-libax25-0.0.9-2
-ax25-tools-0.0.8-3
-ax25-apps-0.0.5-1
-ax25-utils-2.1.42a-3
-
-I have tried different nrparms software coming from different packages
-without success.
-So, can you help me to find a solution ?
-Many thanks and best wishes for this new year.
-
-------
-Jacques.Chion@wanadoo.fr f6cwo
-Quelques HOWTO en fran=E7ais http://perso.wanadoo.fr/jacques.chion/
-
--
-To unsubscribe from this list: send the line "unsubscribe linux-hams" i=
-n
-the body of a message to majordomo@vger.kernel.org
-More majordomo info at  http://vger.kernel.org/majordomo-info.html
