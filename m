@@ -1,106 +1,35 @@
 From: mvw@mvw.net
-Subject: Success! TWO questions remain
-Date: Wed, 11 Dec 2002 16:57:13 -0500 (EST)
+Subject: Re: Success! TWO questions remain
+Date: Thu, 12 Dec 2002 08:16:22 -0500 (EST)
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <Pine.LNX.4.44.0212111645150.1297-100000@jeeves.mvw.net>
-References: <Pine.LNX.4.33.0212110953370.1291-100000@wapiti.tc.fluke.com>
+Message-ID: <Pine.LNX.4.44.0212120813300.5835-100000@jeeves.mvw.net>
+References: <Pine.LNX.4.44.0212111645150.1297-100000@jeeves.mvw.net>
 Mime-Version: 1.0
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <Pine.LNX.4.33.0212110953370.1291-100000@wapiti.tc.fluke.com>
+In-Reply-To: <Pine.LNX.4.44.0212111645150.1297-100000@jeeves.mvw.net>
 List-Id: <linux-hams.vger.kernel.org>
 Content-Type: TEXT/PLAIN; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
 To: linux-hams@vger.kernel.org
 
-I got it working, new 2.4.20 kernel, different PC, all OK. But a couple 
-of questions remain.
+Hello all,
 
-(And a side note: On this machine too, /dev/ttyS0 appeared dead. But at
-least it has two, and /dev/ttyS1 is just fine, so that is what I use. Not
-an ax25 problem btw, but odd.)
+Wonder if anyone saw my previous message?
 
-Anyway. I did this:
+In any case, another question. I want to be able to telnet into one
+machine from another using radio. Encryption is forbidden for amateur use
+so this means clear passwords. Not good. (Even though I will not use root, 
+of course).
 
-1. Installed RedHat 8 
-   Custom install.
+BUT, compression _is_ allowed. How can I get the tcp/ip content to be 
+compressed, so it is at least not easily readable?
 
-2. updated Redhat using up2date
+Thanks,
+Michael
 
-3. Recompiled 2.4.20 kernel
-   Config ax25 on
-   Serial port kiss on
-   (SCSI support off (or it would not makedeps))
+PS plus, how can I get telnet to accept connections only on its radio 
+port? This is a generalLinux question but if anyone happens to know the 
+answer?
 
-4. Installed from tarballs:
-   libax25
-   ax25tools
-   ax25apps
-   ...according to AX25-HOWTO
-
-5. edited two /etc/ax25 files:
-   ax25ports
-   rc.ax25
-
-   The first has:
-
-   # /etc/ax25/axports
-   r1  VA3MVW  9600  255  2  145.59MHz TCP/IP port
-
-
-   The second one has this, and I call it at the end of rc.local:
-
-   #rc.ax25
-   /usr/sbin/kissattach /dev/ttyS1 r1 44.135.90.48
-
-   # direct to myself via loopback:
-   /sbin/route add 44.135.90.48 lo
-
-   # Direct to area gateway port.ve3mch:
-   /sbin/route add 44.135.85.30 ax0
-
-   # Let all other 44 (ampr) routes go via there:
-   /sbin/route add -net 44.0.0.0 gw 44.135.85.30 netmask 255.0.0.0
-
-   # Direct to me at home:
-   /sbin/route add 44.135.90.46 ax0
-
-   /usr/sbin/mheardd
-
-
-So now I have the following two questions.
-
-1. I have set up TCP/IP OK, and I can ping/send mail/etc; but 
-   what about native ax25? Do I need to do anything? How can I check?
-
-2. My ROUTE table shows TWO routes to 44./class A subnet! My previous ax25 
-box did not do this and the route commands ar ethe same. The route 
-commands in the rc.ax25 script above give me this:
-
-[root@jeeves ax25]# route
-Kernel IP routing table
-Destination     Gateway         Genmask         Flags Metric Ref    Use 
-Iface
-port.ve3mch.amp *               255.255.255.255 UH    0      0        0 
-ax0
-va3mvw.ampr.org *               255.255.255.255 UH    0      0        0 lo
-va3oak.ampr.org *               255.255.255.255 UH    0      0        0 
-ax0
-216.138.207.128 *               255.255.255.224 U     0      0        0 
-eth0
-127.0.0.0       *               255.0.0.0       U     0      0        0 lo
-44.0.0.0        port.ve3mch.amp 255.0.0.0       UG    0      0        0 
-ax0
-44.0.0.0        *               255.0.0.0       U     0      0        0 
-ax0
-default         216.138.207.129 0.0.0.0         UG    0      0        0 
-eth0
-
-
-
-What is that second 44.0.0.0 doing there?? ANy ideas?
-
-
-Cheers
-Michael VA3MVW
 
 
