@@ -1,48 +1,20 @@
-From: "Ed Guy" <edguy@emcsw.com>
+From: Hamish Moffatt <hamish@cloud.net.au>
 Subject: Re: installing packet
-Date: Wed, 20 Nov 2002 08:31:10 -0500
+Date: Thu, 21 Nov 2002 00:23:39 +1100
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <06ab01c29099$177d9f60$7d01a8c0@sherry>
+Message-ID: <20021120132339.GC11380@silly.cloud.net.au>
 References: <20021120115855.36875.qmail@web20511.mail.yahoo.com>
 Mime-Version: 1.0
 Content-Transfer-Encoding: QUOTED-PRINTABLE
 Return-path: <linux-hams-owner@vger.kernel.org>
+Content-Disposition: inline
+In-Reply-To: <20021120115855.36875.qmail@web20511.mail.yahoo.com>
 List-Id: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="iso-8859-1"
-To: Evandro Eduardo Seron Ruiz <evandro_ruiz@yahoo.com.br>, linux-hams@vger.kernel.org
+To: linux-hams@vger.kernel.org
 
-Evandro,
-
-You probably need to install the 'ncurses-devel' package.
-It supplies the curses.h file.
-
-73
-/ed n2uth
-
-
-
------ Original Message -----
-=46rom: "Evandro Eduardo Seron Ruiz" <evandro_ruiz@yahoo.com.br>
-To: <linux-hams@vger.kernel.org>
-Sent: Wednesday, November 20, 2002 6:58 AM
-Subject: installing packet
-
-
->
->  Hello,
->
->  In order to have a packet system installed I have
->  downloaded the following packages:
->
->  ibax25-0.0.10.tar.gz
->  ax25-tools-0.0.8.tar.gz
->  ax25-apps-0.0.6.tar.gz    l
->
->  The first two the instalation succeeded, but when it
->  came to the last one I got the following error
-> message
->  after the make install
->
+On Wed, Nov 20, 2002 at 08:58:55AM -0300, Evandro Eduardo Seron Ruiz wr=
+ote:
 > gcc -DHAVE_CONFIG_H -I. -I. -I..     -g -O2 -Wall -c
 > call.c
 > call.c:38:20: curses.h: Arquivo ou diret=F3rio n=E3o
@@ -51,19 +23,16 @@ Subject: installing packet
 > make[1]: Saindo do diret=F3rio
 > `/usr/src/ax25-apps-0.0.6/call'
 > make: ** [install-recursive] Erro 1
->
+>=20
 >  Could anyone help me solve this.
->
->  Yours,
->  Evandro
->
->
-> =3D=3D=3D=3D=3D
-> =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D
->  Evandro Eduardo Seron Ruiz               PY2PCY
->
 
+Could you please translate this error message into English, or compile
+again with LANG =3D C?
+
+Thanks,
+Hamish
+--=20
+Hamish Moffatt VK3SB <hamish@debian.org> <hamish@cloud.net.au>
 -
 To unsubscribe from this list: send the line "unsubscribe linux-hams" i=
 n
