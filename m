@@ -1,42 +1,40 @@
-From: Wilbert Knol <zl2bsj@zl2tze.ath.cx>
+From: Jacques Chion <Jacques.Chion@wanadoo.fr>
 Subject: Re: kernel 2.4.21 and mkiss
-Date: Thu, 21 Aug 2003 19:32:22 -1200 (GMT+12)
+Date: Fri, 22 Aug 2003 09:54:59 +0200 (CEST)
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <Pine.LNX.4.44.0308211908130.12131-100000@zl2bsj.ampr.org>
+Message-ID: <Pine.LNX.4.44.0308220950240.882-100000@cwoux.cerise.fr>
 References: <1061516425.2064.28.camel@homer.spoo.org>
 Mime-Version: 1.0
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 Return-path: <linux-hams-owner@vger.kernel.org>
 In-Reply-To: <1061516425.2064.28.camel@homer.spoo.org>
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: TEXT/PLAIN; charset="us-ascii"
-Content-Transfer-Encoding: 7bit
+Content-Type: TEXT/PLAIN; charset="iso-8859-1"
 To: Ian J Maude <ian@gb7mbc.net>
 Cc: linux-hams <linux-hams@vger.kernel.org>
 
+Le Aug 22, Ian J Maude =E9crivait
 
 Hi Ian,
+i am using kernel-2.4.21 with all compiled in the kernel=20
+(without modules) and i have np problems with mkiss=20
+and kissattach.
+>
+=2E..............
 
-All my drivers are modules, and I can confirm kissattach works with kernel
-2.4.21. I can't see why built-in drivers would refuse to work, but I
-haven't tried that myself. Maybe you compiled the kernel but didn't
-install it. Or you are still booting the old kernel (verify the compile
-timestamp with 'uname -a' )
+> kissattach: Error setting line discipline: TIOCSETD: Invalid argument
+>
+What is the exact command you do with kissattach ?
 
-If you can't track down the problem, my suggestion would be to roll a new
-kernel, with ax25 support as modules. You'll find the mkiss module under:
-
-/lib/modules/<kernel-version/kernel/drivers/net/hamradio/mkiss.o
-
-Also, your apps/tools/libax25 are all outdated.
-The latest ones are 0.0.6 ,  0.0.8 and 0.0.11 respectively.
-
-It would be a good starting point to upgrade. Make sure to uninstall the
-rpms before compiling from the latest sources.
-
-Hope this helps.
+Best regards.
 
 
-Wilbert, ZL2BSJ
+------
+Jacques.Chion@wanadoo.fr f6cwo
+Quelques HOWTO en fran=E7ais http://perso.wanadoo.fr/jacques.chion/
 
-
-
+-
+To unsubscribe from this list: send the line "unsubscribe linux-hams" i=
+n
+the body of a message to majordomo@vger.kernel.org
+More majordomo info at  http://vger.kernel.org/majordomo-info.html
