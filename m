@@ -1,29 +1,47 @@
-From: "Curt Mills, WE7U" <hacker@tc.fluke.com>
-Subject: RE: Linux Soundmodem help required
-Date: Mon, 5 May 2003 09:57:03 -0700 (PDT)
+From: "Jose A. Amador" <co2ja01@fastmail.fm>
+Subject: How to obtain radio channel statistics ?
+Date: Tue, 06 May 2003 10:43:13 -0800
 Sender: linux-hams-owner@localhost
-Message-ID: <Pine.LNX.4.33.0305050956220.605-100000@wapiti.tc.fluke.com>
-References: <BKEGKPICNAKILKJKMHCAOEDFCKAA.Riley@Williams.Name>
+Message-ID: <20030506184313.2832D34BB8@www.fastmail.fm>
 Mime-Version: 1.0
-Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <BKEGKPICNAKILKJKMHCAOEDFCKAA.Riley@Williams.Name>
-List-Id: <linux-hams.vger.kernel.org>
-Content-Type: TEXT/PLAIN; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
-To: Riley Williams <Riley@Williams.Name>
-Cc: linux-hams@vger.kernel.org
+Return-path: <linux-hams-owner@vger.kernel.org>
+Content-Disposition: inline
+List-Id: <linux-hams.vger.kernel.org>
+Content-Type: text/plain; charset="us-ascii"
+To: Linux Hams <linux-hams@vger.kernel.org>
 
-On Sat, 3 May 2003, Riley Williams wrote:
 
-> I seem to remember that the /dev/cua* nodes were removed from the
-> Linux kernel somewhere in the 2.2 kernel series ???
+I am interested in finding out whatever is possible about the BBS users 
+parameters that can be measured from their activity on the air. Not
+everyone 
+turns out to be nice, or polite, or well educated, in spite of claims on 
+the contrary, and I want to MEASURE whatever can be measured or linux
+has statistics about. I want to be objective about the claims of some
+users
+that say that somebody else is too agressive and throws them away from
+the frequency.
 
-I still have dev entries for them with SuSE 7.3 and a 2.4.10 kernel.
+A goal is to have an automatic way to detect and log "abusers", and take 
+appropiate action on them.
+
+I am running Red Hat 5.2 since 1999 on a 486/66 with 330 Mb HD and 20 Mb 
+30 pin SIMMS. Even when it is old, both in software and hardware, it
+performs in an acceptable way on its 2 meters, 1200 baud port. The most 
+used service is a XFBB 7.00g26 BBS, and it is also running node 0.2.4, 
+and JNOS 1.11f, over ax25-utils-2.1.42a. TNC is a KPC-2 in KISS mode.
+
+I have attempted to run monax25 without stopping everything else and have
+found no way to do it. Any advices, suggestions or indications about what
+to
+read are welcome.
+
+
+73 de Jose, CO2JA
 
 -- 
-Curt Mills, WE7U                    hacker_NO_SPAM_@tc.fluke.com
-Senior Methods Engineer/SysAdmin
-"Lotto:    A tax on people who are bad at math!"
-"Windows:  Microsoft's tax on computer illiterates!" -- WE7U
-"The world DOES revolve around me:  I picked the coordinate system!"
+  Jose A. Amador
+  co2ja01@fastmail.fm
 
+-- 
+http://www.fastmail.fm - Choose from over 50 domains or use your own
