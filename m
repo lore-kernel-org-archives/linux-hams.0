@@ -1,38 +1,35 @@
 From: Jonathan Naylor <jonathan.naylor@ggaweb.ch>
-Subject: Predict 2.1.5
-Date: Sat, 20 Apr 2002 19:20:20 +0200
+Subject: Re: Predict 2.1.5
+Date: Sat, 20 Apr 2002 20:31:58 +0200
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <0204201920200F.00773@g4klx>
+Message-ID: <0204202031580G.00773@g4klx>
+References: <0204201920200F.00773@g4klx> <20020420182156.NNEM19810.fep04-svc.mail.telepac.pt@there>
 Reply-To: g4klx@qsl.net
 Mime-Version: 1.0
 Content-Transfer-Encoding: 7BIT
 Return-path: <linux-hams-owner@vger.kernel.org>
+In-Reply-To: <20020420182156.NNEM19810.fep04-svc.mail.telepac.pt@there>
 List-Id: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
-To: linux-hams@vger.kernel.org
+To: Claudio Martins <ctpm@mega.ist.utl.pt>, linux-hams@vger.kernel.org
 
-Hi All
+On Saturday 20 April 2002 20:17, Claudio Martins wrote:
+>    Predict 2.1.5 displays doppler on 2m and 70cm, but it can also
+> supply the doppler shift value normalized to 100MHz if used as a
+> tracking server. Start predict with -s switch (predict -s). It will
+> go into multi-sat mode and listen on udp port 1210. Doppler queries
+> to the predict server will be answered with 100MHz normalized
+> doppler.  There are sourcecode examples of how to do this in the
+> tarball.
 
-I downloaded Predict 2.1.5 today to have a look at an alternative to my 
-own mtrack program (shameless plug). In many ways it is excellent and 
-does things that my own program does not do, however as an active AO-40 
-user I have to say that there a few things that the program needs in 
-order to satisfy a phase 3 user:
+I know how to calculate doppler shifts, my point is that to be really 
+useful to an operator they should not need to calculate it by hand. The 
+program should do this sort of thing for you. It is this level of 
+functionality that makes or breaks a program.
 
-1. Satellite attitude, known as ALON/ALAT and is extremely important 
-with predicting usability of the satellite. The antenna off-pointing is 
-a very serious business.
-
-2. Doppler shift on other than 2m and 70cms. AO-40 uses 2401 MHz for 
-the downlink and uplinks are on 435 MHz and 1269 MHz. Also there is a 
-downlink on 24 GHz where the doppler is not inconsequential and signals 
-are weak.
-
-3. Modes. The program displays the MA in the 0-255 fashion, but it 
-would also be nice to program modes so that you can see at a glance 
-which is in operation. Some satellites (Fuji series) base mode 
-selection on the day of the week instead.
-
-Just my 0.02 CHF.
+>  cheers
+>
+>  Claudio
+>  CT3KD
 
 Jonathan  HB9DRD/G4KLX
