@@ -1,46 +1,55 @@
-From: Stef VK5HSX <sdaniels@airnet.com.au>
-Subject: z8530 SCC chips.
-Date: Thu, 28 Oct 2004 00:24:27 +0930
+From: chuck gelm <chuck@gelm.net>
+Subject: Re: z8530 SCC chips.
+Date: Wed, 27 Oct 2004 18:40:46 -0400
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <200410280024.35458.sdaniels@airnet.com.au>
-Reply-To: vk5hsx@wia.org.au
+Message-ID: <418023EE.5060106@gelm.net>
+References: <200410280024.35458.sdaniels@airnet.com.au>
+Reply-To: chuck@gelm.net
 Mime-Version: 1.0
-Content-Type: multipart/signed;
-  protocol="application/pgp-signature";
-  micalg=pgp-sha1;
-  boundary="Boundary-02=_ra7fBH9ZXfuec8s";
-  charset="us-ascii"
 Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
+In-Reply-To: <200410280024.35458.sdaniels@airnet.com.au>
 List-Id: <linux-hams.vger.kernel.org>
-To: linux-hams@vger.kernel.org
+Content-Type: text/plain; charset="us-ascii"; format="flowed"
+To: vk5hsx@wia.org.au
+Cc: linux-hams@vger.kernel.org
+
+Stef VK5HSX wrote:
+
+>I am wondering where I can get replacement Z8530 ZILOG chips for DRSI cards.
+>Somewhere online would be great, otherwise, a business or dealer..
+>
+>Many thanks..
+>  
+>
+You might ask Steve if he can assist.
+
+Electronic mail address:
+
+scoy@dma.org <mailto:scoy@dma.org> or
+
+k8UD@febo.com <mailto:k8ud@febo.com> or
+
+K8UD@amsat.org <mailto:K8ud@amsat.org>
+
+K8UD@arrl.net <mailto:K8ud@arrl.net>
+
+Home:
+3350 Maplewood Dr
+Beavercreek, OH 45434
+Home phone: 937-426-6085
+
+Work:
+Consolidated Electronics Inc
+705 Watervliet Ave
+PO Box 20070
+Dayton, OH 45420-0070
+Web: http://www./ceitron.com
+Office phone: 937-252-5662
+
+e-mail scoy@ceitron.com <mailto:scoy@ceitron.com>
+
+HTH, Chuck
 
 
---Boundary-02=_ra7fBH9ZXfuec8s
-Content-Type: text/plain;
-  charset="us-ascii"
-Content-Transfer-Encoding: quoted-printable
-Content-Disposition: inline
 
-I am wondering where I can get replacement Z8530 ZILOG chips for DRSI cards.
-Somewhere online would be great, otherwise, a business or dealer..
-
-Many thanks..
-=2D-=20
-Regards - Stef VK5HSX
-          Adelaide, Sth Australia=20
-	  -=3D Support Open Source =3D-
-
---Boundary-02=_ra7fBH9ZXfuec8s
-Content-Type: application/pgp-signature
-Content-Description: signature
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.2.4 (GNU/Linux)
-
-iD8DBQBBf7arH/+qRJ7D8UsRAnvjAJwPKYF+I9on9Bn27AwvtMkxOFhk+gCfYH2c
-gDE9anh0Hou/Pe4ZjigjRiE=
-=XRuZ
------END PGP SIGNATURE-----
-
---Boundary-02=_ra7fBH9ZXfuec8s--
