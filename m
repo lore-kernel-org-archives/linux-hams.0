@@ -1,45 +1,44 @@
-From: Bill Walton <kj6eo@kj6eo.com>
-Subject: Re: nrattach "Cannot find free NET/ROM device" error!
-Date: Wed, 02 Oct 2002 14:29:50 -0700
+From: M Taylor <mctylr@privacy.nb.ca>
+Subject: Re: Mkiss compile error
+Date: Thu, 3 Oct 2002 06:15:41 +0100
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <3D9B654E.BDF3F023@kj6eo.com>
-References: <Pine.LNX.4.44.0210022353020.10853-100000@oh2bns.ampr.org>
+Message-ID: <20021003061541.A16812@pull.privacy.nb.ca>
+References: <4.3.2.7.2.20021002195552.00ac7ac0@pop3.norton.antivirus>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
+Content-Disposition: inline
+In-Reply-To: <4.3.2.7.2.20021002195552.00ac7ac0@pop3.norton.antivirus>; from jbauerly@grapevine.net on Wed, Oct 02, 2002 at 08:06:59PM -0500
 List-Id: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
-To: tpm@prkele.tky.hut.fi
-Cc: LINUX HAMS MAILING LIST <linux-hams@vger.kernel.org>
+Content-Transfer-Encoding: 7bit
+To: "John J. Bauerly" <jbauerly@grapevine.net>
+Cc: linux-hams@vger.kernel.org
 
-Hi Tomi -
+On Wed, Oct 02, 2002 at 08:06:59PM -0500, John J. Bauerly wrote:
+> I have obtained the following versions of ax25 utilities to use on my RH6.2 
+> system.
+> 
+> ax25-tools-0.0.8 *
+> libax25-0.0.10
+> 
+> The libax25 'make' and 'make install' did ok. The ax25 apps 'make' and 
+> 'make install' did ok. However ax25 tools got as far as mkiss and errored. 
+> Error message was on line 405 in mkiss.c. It did not like timeout and 
+> pollinterval. Any ideas on what to check?
 
-Thank you for your response regarding the NETROM problems that I was
-having.  YES...you were absolutely correct, somehow I did not get the
-netrom module loaded.  I thought that I compiled it directly into the kernel
-but I must have choosen an <M> during the kernel configuration.
+The exact error message would be much easier to work with:
+  make >output 2>&1 
+  more output
 
-Again, your help is most appreciated!
+Look for the *first* error or warning messages, and the exact error at 
+mkiss.c line 405. 
 
-Regards,
+If the first error it at mkiss.c:405 I'll be amazed since it suggests you 
+don't have either /usr/include/time.h or /usr/include/bits/time.h installed
+on your system correctly. I believe the package they are part of is
+libc-dev or a related package (description will mention header files).
 
-Bill KJ6EO
+Make sure you have the related header files installed:
+  ls -l /usr/include/time.h /usr/include/bits/time.h
 
-Tomi Manninen wrote:
-
-> On Wed, 2 Oct 2002, Bill Walton wrote:
->
-> > Sounds easy but it doesn't work.  Here is what I get when I enter in the
-> > "nrattach netrom" command:
-> >
-> > nrattach: SIOCGIFFLAGS: no such device
-> > nrattach: cannot find free NET/ROM device
->
-> Is netrom compiled as a module? Have you loaded the module?
-> (modprobe netrom)
->
-> --
-> Tomi Manninen           Internet:  oh2bns@sral.fi
-> OH2BNS                  AX.25:     oh2bns@oh2rbi.fin.eu
-> KP20ME04                Amprnet:   oh2bns@oh2rbi.ampr.org
-
+-ve1mct
