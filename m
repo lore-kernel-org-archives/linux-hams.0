@@ -1,30 +1,42 @@
-From: Joshua <andrewjj20@yahoo.com>
-Subject: large packet networks
-Date: Tue, 2 Sep 2003 16:49:00 -0700 (PDT)
+From: Steven Whitehouse <steve@gw.chygwyn.com>
+Subject: Re: Demise of AX.25 raw sockets
+Date: Wed, 3 Sep 2003 11:46:29 +0100 (BST)
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <20030902234900.56806.qmail@web11007.mail.yahoo.com>
-Reply-To: andrewjj20@yahoo.com
+Message-ID: <200309031046.LAA10616@gw.chygwyn.com>
+References: <3F4D12DA.5040108@netscape.net>
+Reply-To: Steve Whitehouse <Steve@ChyGwyn.com>
 Mime-Version: 1.0
+Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
+In-Reply-To: <3F4D12DA.5040108@netscape.net> from "Bent Bagger" at Aug 27, 2003 10:21:46 PM
 List-Id: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-To: linux-hams@vger.kernel.org
+To: Bent Bagger <bentbagger@netscape.net>
+Cc: Edson Pereira <edson@fe.xdsl.ne.jp>, linux-hams@vger.kernel.org
 
-I am trying to setup what I hope will become a large
-packet network in my area using TCP/IP over AX.25,
-there will be a computer in each town which is
-connected to a larger network, probably on the same
-frequency, doen't have to be. would I need to set up
-linux to run as a router, and is that all I need to do.
+Hi,
 
-=====
-Joshua
-God Bless America
-VATSIM ID: 816287 
+Thats ok. Nothing has happened yet anyway as I've got rather busy with
+work all of a sudden. I'll look at the problem again in a couple of
+months or so if nobody else has solved it first along with the other
+items on my AX.25 todo list.
 
+I have recently got some new radio kit too, so it will be much easier for
+me to test things once I've moved. Sorry for the delay,
 
-__________________________________
-Do you Yahoo!?
-Yahoo! SiteBuilder - Free, easy-to-use web site design software
-http://sitebuilder.yahoo.com
+Steve.
+
+> 
+> Hi Steve,
+> 
+> I havn't checked this account for some time, hence the late response. 
+> You can find PB and PG for Linux at this URL: 
+> ftp://metalab.unc.edu/pub/linux/apps/ham/pbpg-2.1.tar.gz or at this URL: 
+> ftp://ftp.amsat.org/amsat/software/Linux/pbpg-2.1.tar.gz
+> 
+> Best 73 de Bent/OZ6BL
+> Maintainer of PB and PG for Linux
+> 
+> 
+> 
+
