@@ -1,28 +1,59 @@
-From: mvw@mvw.net
-Subject: Re: WeatherMAX and Linux
-Date: Mon, 3 Feb 2003 08:17:08 -0500 (EST)
+From: BentBagger@netscape.net (Bent Bagger)
+Subject: Soundmodem gives error message: cannot start audio
+Date: Mon, 03 Feb 2003 10:58:25 -0500
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <Pine.LNX.4.44.0302030816020.20917-100000@jeeves.mvw.net>
-References: <3E2D4997.9080807@pacbell.net>
+Message-ID: <60D10534.44D9CC45.0AAC1079@netscape.net>
 Mime-Version: 1.0
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <3E2D4997.9080807@pacbell.net>
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: TEXT/PLAIN; charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-To: "John F. Feist" <aa6qn@pacbell.net>
-Cc: Linux-Hams <linux-hams@vger.kernel.org>
+Content-Type: text/plain; charset="iso-8859-1"
+To: Linux-Hams <linux-hams@vger.kernel.org>
 
-John,
+I am having problems with the user space sound modem 'soundmodem'. When=
+ I
+start it using this configuration file:
 
-> Just by chance I have stumbled on to a Linux interface for my WeatherMAX 
-> station.
+<?xml version=3D"1.0"?>
+<modem>
+  <configuration name=3D"slug">
+    <channel name=3D"Channel 0">
+      <mod mode=3D"afsk" bps=3D"1200" f0=3D"1200" f1=3D"2200"/>
+      <demod mode=3D"afsk" bps=3D"1200" f0=3D"1200" f1=3D"2200"/>
+      <pkt mode=3D"MKISS" ifname=3D"ax0" hwaddr=3D"OZ6BL" ip=3D"44.145.=
+40.3" netmask=3D"255.255.255.0" broadcast=3D"44.145.40.255"/>
+    </channel>
+    <chaccess txdelay=3D"350" slottime=3D"100" ppersist=3D"40" fulldup=3D=
+"0" txtail=3D"10"/>
+    <audio type=3D"soundcard" device=3D"/dev/dsp" halfdup=3D"1"/>
+    <ptt file=3D"/dev/ttyS0"/>
+  </configuration>
+</modem>
 
-Would you recommend the Weathermax? How far can the sensors be from the 
-electronics? (In my case it's amost 100 ft).
+(tnx CT1FOX) I get this error message:
 
-(I am looking to add Wx to my Linux-based station).
+sm[PID]: cannot start audio
 
-Michael
+I cannot find any documention handling error messages. What does it mea=
+n=20
+and what can I do to get around it?
+
+Best 73 de Bent/OZ6BL
+
+--=20
+Bent Bagger, OZ6BL
+Birker=F8d
+Danmark    (JO65EU)
 
 
+__________________________________________________________________
+The NEW Netscape 7.0 browser is now available. Upgrade now! http://chan=
+nels.netscape.com/ns/browsers/download.jsp=20
+
+Get your own FREE, personal Netscape Mail account today at http://webma=
+il.netscape.com/
+-
+To unsubscribe from this list: send the line "unsubscribe linux-hams" i=
+n
+the body of a message to majordomo@vger.kernel.org
+More majordomo info at  http://vger.kernel.org/majordomo-info.html
