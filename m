@@ -1,49 +1,36 @@
-From: Jacques Chion <Jacques.Chion@wanadoo.fr>
+From: "Rodolfo Brasnarof" <rodob@ciudad.com.ar>
 Subject: Re: Terminal program
-Date: Thu, 12 Aug 2004 07:07:04 +0200 (CEST)
+Date: Sat, 14 Aug 2004 01:03:35 -0300
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <Pine.LNX.4.44.0408120704540.2350-100000@cwoux2.cerise.fr>
+Message-ID: <411D64E7.24370.396C1@localhost>
 References: <1092262861.3581.12.camel@celeron.munn.com>
 Mime-Version: 1.0
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Content-Transfer-Encoding: 7BIT
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <1092262861.3581.12.camel@celeron.munn.com>
+In-reply-to: <1092262861.3581.12.camel@celeron.munn.com>
+Content-description: Mail message body
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: TEXT/PLAIN; charset="iso-8859-1"
-To: David Munn <djmunn@bigpond.com>
-Cc: linux-hams@vger.kernel.org
+Content-Type: text/plain; charset="us-ascii"
+To: linux-hams@vger.kernel.org
 
-Le Aug 12, David Munn =C3=A9crivait :
+
+
+---
+On 12 Aug 2004 at 8:21, David Munn wrote:
 
 > Hi All,
-
-Hello David,
-
-=2E.....................
-> Does anyone know of a Linux terminal program that can be used to work=
- a
-> tnc in Command Mode.....preferably one that does not use X windows...=
-=2E.
+> I have a AMD K2 500 mhz comp with a 4 ghz h/d running Slackware 9 and
+> LinPac with the ax25 programs for packet....i usually use a Baycom modem
+> but it has gone belly up so have pressed a PaComm TNC320 into
+> service.....it works well in KISS mode.
+> However there one or two commands that i need to put into the tnc but
+> cant do it with LinPac...
+> Does anyone know of a Linux terminal program that can be used to work a
+> tnc in Command Mode.....preferably one that does not use X windows.....
 > Have looked on Radio.linux.org.au but cant seem to see one there...i
 > might be a bit dumb here hi hi....
->=20
 
- sometimes i use "minicom" wihout problems.
+What do you need. To operate packet in command mode, or just 
+to give your tnc a few commands before switching to kiss 
+mode?
 
-> Thanks for all your helpa
-
-
-You're welcome.
-Best regards
-
-Jacques f6cwo
-
-
---=20
-Quelques HOWTO en fran=E7ais: http://perso.wanadoo.fr/jacques.chion/
-
--
-To unsubscribe from this list: send the line "unsubscribe linux-hams" i=
-n
-the body of a message to majordomo@vger.kernel.org
-More majordomo info at  http://vger.kernel.org/majordomo-info.html
