@@ -1,55 +1,69 @@
-From: Leo Bistmans <on1aad.no.spam@amsat.org>
+From: Ruben Navarro Huedo <eb5esx@eb5esx.ampr.org>
 Subject: Re: Compiling last node version.
-Date: Thu, 4 Mar 2004 19:17:58 +0100
+Date: Fri, 5 Mar 2004 00:09:01 +0100
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <20040304191758.6d499e0c.on1aad.no.spam@amsat.org>
-References: <200403040004.24334@www.cabodesantapola.org>
-	<1078392897.1273.11.camel@oh2bns.ampr.org>
-	<49408.213.98.118.5.1078394577.squirrel@palotes.com>
-	<1078407401.1281.17.camel@oh2bns.ampr.org>
+Message-ID: <200403050009.02359@www.cabodesantapola.org>
 Mime-Version: 1.0
 Content-Transfer-Encoding: QUOTED-PRINTABLE
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <1078407401.1281.17.camel@oh2bns.ampr.org>
+Content-Description: clearsigned data
+Content-Disposition: inline
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="iso-8859-1"
-To: Tomi Manninen <oh2bns@sral.fi>
+Content-Type: Text/Plain; charset="iso-8859-1"
+To: on1aad@amsat.org
 Cc: linux-hams@vger.kernel.org
 
-On Thu, 04 Mar 2004 15:36:41 +0200
-Tomi Manninen <oh2bns@sral.fi> wrote:
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-> On Thu, 2004-03-04 at 12:02, Ruben Navarro Huedo wrote:
->=20
-> > Do you know about some Debian repository to download libax25-0.0.11
->=20
-> No (I don't use debian) but I'm sure someone on the list can help
-> you with this.
+Thank's for your answer.
+Trying it:
 
- Cannot find a backport debian package for it either.   So one can comp=
-ile the .0.0.11-2 that is found in unstable or testing.  Compiling it o=
-n your local system makes sure there will be no library mismatch.
+$ apt-get -b source libax25
+Reading Package Lists... Done
+Building Dependency Tree... Done
+Need to get 235kB of source archives.
+Get:1 http://ftp.belnet.be unstable/main libax25 0.0.11-2 (dsc) [598B]
+Get:2 http://ftp.belnet.be unstable/main libax25 0.0.11-2 (tar) [231kB]
+Get:3 http://ftp.belnet.be unstable/main libax25 0.0.11-2 (diff) [2831B=
+]
+=46etched 235kB in 10s (21.6kB/s)
+dpkg-source: extracting libax25 in libax25-0.0.11
+dpkg-buildpackage: source package is libax25
+dpkg-buildpackage: source version is 0.0.11-2
+dpkg-buildpackage: source maintainer is Bruce Walker <w1bw@debian.org>
+dpkg-buildpackage: host architecture is i386
+dpkg-checkbuilddeps: Unmet build dependencies: debhelper (>=3D4)
+dpkg-buildpackage: Build dependencies/conflicts unsatisfied; aborting.
+dpkg-buildpackage: (Use -d flag to override.)
+Build command 'cd libax25-0.0.11 && dpkg-buildpackage -b -uc' failed.
+E: Child process failed
+$ cd libax25.....
+libax25-0.0.11 $ dpkg-buildpackage -b -uc -d
+dpkg-buildpackage: source package is libax25
+dpkg-buildpackage: source version is 0.0.11-2
+dpkg-buildpackage: source maintainer is Bruce Walker <w1bw@debian.org>
+dpkg-buildpackage: host architecture is i386
+ debian/rules clean
+dh_testdir
+make: dh_testdir: No se encontr=F3 el programa
+make: *** [clean] Error 127
 
- 1) add deb-src source repository in the /etc/apt/sources.list
+Any help?
 
-  deb-src http://ftp.belnet.be/debian unstable main=20
+A lot of thank's.
+- --=20
+Ruben Navarro Huedo
+eb5esx (arroba) eb5esx.ampr.org
+http://www.cabodesantapola.org
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.2.1 (GNU/Linux)
 
- 2) read them
+iD8DBQFAR7cO0S5G8AO3zN8RArdAAJ9QLiARAFd3t2FZmn1EiQotTN0QdwCdGW5W
+rqGNOu7C6U0Rf7iGXSdxvQo=3D
+=3DQ5jv
+-----END PGP SIGNATURE-----
 
-  apt-get update
-
- 3=E0) fetch the source and compile
-
-  apt-get -b source libax25
-
- 4) if all goes well, install the two generated packages
-
-  dpkg -i libax25_0.0.11-2_i386.deb
-  dpkg -i libax25-dev_0.0.11-2_i386.deb
-
- There might be more paths to do it
-
- Good Luck, on1aad
 -
 To unsubscribe from this list: send the line "unsubscribe linux-hams" i=
 n
