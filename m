@@ -1,107 +1,33 @@
-From: Aleksandar Ilic <ailic@gmx.net>
-Subject: Sending unproto frames
-Date: Tue, 30 Jul 2002 09:33:02 +0200
+From: Jason Flynn G7OCD <jason.flynn@btinternet.com>
+Subject: Re: Status of AX.25 in 2.5 / 2.6
+Date: Tue, 30 Jul 2002 09:14:42 +0100
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <200207300930.44520.ailic@gmx.net>
+Message-ID: <3D464AF2.8040506@btinternet.com>
+References: <Pine.LNX.4.44.0207292101070.5578-100000@oh2bns.ampr.org>
 Mime-Version: 1.0
-Content-Type: Multipart/Mixed;
-  boundary="------------Boundary-00=_2ZW1WI46XKVD3B9W1Y2O"
+Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
 List-Id: <linux-hams.vger.kernel.org>
+Content-Type: text/plain; charset="us-ascii"; format="flowed"
 To: linux-hams@vger.kernel.org
 
+Tomi Manninen wrote:
+> Yes. That is why you should not have any user services (that are called
+> with plain AX.25) like LinuxNode or a BBS using the same callsign as you 
+> have in ifconfig/axports.
 
---------------Boundary-00=_2ZW1WI46XKVD3B9W1Y2O
-Content-Type: text/plain;
-  charset="iso-8859-2"
-Content-Transfer-Encoding: 8bit
+  I'm aware fully of the reasons behind this, but when you are running
+a system with 13 AX25 ports you start running out of SSIDs for your
+services. I've had to start naming services with names that aren't
+valid callsigns like 'MARTCONV' and 'SDGBBS' because before long I'm
+going to have used all the SSIDs for ports...
+It's limiting but we just have to put up with it or choose a new
+L2 addressing scheme.
 
-This is useful to me in everyday work via satellite.
+	J
 
-For both "V" mode (2m only) birds I use, PCSAT and ISS, almost all traffic is 
-via UI (unproto) frames. LinKt can not transmit unproto at all, and linpac 
-can not set "via" in destination call. I didn't search for other terminals, 
-but I made this handy utility. It is a simple frontend for /usr/sbin/beacon, 
-written in Tcl, providing sending three of most often used transmissions: 
-APRS frames, messages and even sending e-mails via satellite.
-
-I hope somebody else will also find it suitable.
-
-Kindly,
-Alek.
--- 
-  73 de YU1IS  -=-  ailic at ptt dot yu  -=-  ICQ#:62419462
-
-
---------------Boundary-00=_2ZW1WI46XKVD3B9W1Y2O
-Content-Type: text/plain;
-  charset="iso-8859-2";
-  name="xui"
-Content-Transfer-Encoding: 7bit
-Content-Disposition: attachment; filename="xui"
-
-#!/usr/bin/wish -f
-#
-# edit path to wish if necessary
-#################################
-
-wm title . "Xui by YU1IS"
-wm geometry . 460x180
-
-entry .mycall   -textvariable mycall
-entry .port	-textvariable port
-entry .via      -textvariable via
-entry .dest     -textvariable dest
-entry .message	-textvariable message
-
-label .text1 -text "My call:"
-label .text2 -text "ax25 port:"
-label .text3 -text "Destination:"
-label .text4 -text "To:"
-label .text5 -text "Message:"
-
-# edit these 3 lines
-#################################
-set mycall "YU1IS"
-set port "radio"
-set via "APRS VIA ARISS"
-
-button .aprs  -text "Send\nAPRS frame" -command {sndaprs $mycall $via $port}
-button .mail  -text "Send\ne-mail" -command {sndmail $mycall $via $port $dest $message}
-button .mssg  -text "Send\nmessage" -command {sndmssg $mycall $via $port $dest $message}
-button .exit  -text "Exit" -command {exit}
-
-place .text1    -x 10  -y 10 -width 100 -height 25 -anchor nw -bordermode ignore
-place .mycall   -x 110 -y 10 -width 120 -height 25 -anchor nw -bordermode ignore
-
-place .text2    -x 240 -y 10 -width 100 -height 25 -anchor nw -bordermode ignore
-place .port     -x 350 -y 10 -width 100 -height 25 -anchor nw -bordermode ignore
-
-place .text3    -x 10  -y 40 -width 100 -height 25 -anchor nw -bordermode ignore
-place .via      -x 110 -y 40 -width 120 -height 25 -anchor nw -bordermode ignore
-
-place .text4    -x 240 -y 40 -width 100 -height 25 -anchor nw -bordermode ignore
-place .dest     -x 350 -y 40 -width 100 -height 25 -anchor nw -bordermode ignore
-place .text5    -x 10  -y 70 -width 100 -height 25 -anchor nw -bordermode ignore
-place .message  -x 110 -y 70 -width 340 -height 25 -anchor nw -bordermode ignore
-
-place .aprs  -x 10  -y 120 -height 50 -width 90
-place .mail  -x 110 -y 120 -height 50 -width 90
-place .mssg  -x 210 -y 120 -height 50 -width 90
-place .exit  -x 360 -y 120 -height 50 -width 90
-
-
-# edit coordinates and greetings in sndaprs
-################################################
-proc sndaprs {mycall via port} {
-	exec /usr/sbin/beacon -c $mycall -d $via -s $port "=4332.31N/02143.19E-KN03UN /op.Alek (yu1is@netscape.net). 73!"
-}
-proc sndmail {mycall via port dest message} {
-	exec /usr/sbin/beacon -c $mycall -d $via -s $port ":EMAIL    :$dest $message"
-}
-proc sndmssg {mycall via port dest message} {
-	exec /usr/sbin/beacon -c $mycall -d $via -s $port ":$dest $message"
-}
-
---------------Boundary-00=_2ZW1WI46XKVD3B9W1Y2O--
+PS Anyone still not conviced about different L2 callsigns and
+IP addresses needed for each amateur port should think about
+the MACs and IPs on an internet router...
+Then the light should switch on :-)
 
