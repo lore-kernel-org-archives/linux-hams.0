@@ -1,36 +1,34 @@
-From: Tapio Sokura <oh2kku@iki.fi>
-Subject: Re: Norm Frequency beacon ?
-Date: Fri, 28 May 2004 04:02:42 +0300
+From: Dave Stubbs <dave.stubbs@utoronto.ca>
+Subject: F6FBB on Debian question
+Date: Fri, 28 May 2004 09:36:43 -0400
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <40B68FB2.8010902@iki.fi>
-References: <200405271330.25402.dl4mge@darc.de>	 <20040527125342.GU1749@mea-ext.zmailer.org> <1085680600.31191.151.camel@kronenbourg.scs.ch>
+Message-ID: <40B7406B.7080909@utoronto.ca>
+References: <1083593589.1273.39.camel@oh2bns.ampr.org>        <S263735AbUECPMZ/20040503151225Z+590@vger.kernel.org> <33777.192.168.1.116.1083599653.squirrel@gateway> <40A8FCD5.5070902@utoronto.ca> <40A90375.3080401@xs4all.nl>
 Mime-Version: 1.0
 Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <1085680600.31191.151.camel@kronenbourg.scs.ch>
+In-Reply-To: <40A90375.3080401@xs4all.nl>
 List-Id: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"; format="flowed"
-To: linux hams news group <linux-hams@vger.kernel.org>
-Cc: -HFTERMHACKERS- <hfterm-hackers@lists.sourceforge.net>
+To: linux-hams@vger.kernel.org
 
-Thomas Sailer wrote:
-> The difficulty with the PPS signal is that not every GPS receiver has it
-> and it requires some additional hardware to get into the PC. The
-> simplest method would be to wire it to the parallel port, but
-> unfortunately "real" parports are disappearing quickly.
+Hello all,
 
-I'd say most (at least a large part) PCs can read the PPS signal fine 
-via a direct connection to serial port DCD line, for example. PPS 
-outputs are often TTL, but still work with most PC serial ports. Of 
-course this does not help much if you don't have the PPS output on the GPS.
+This may be a dumb question, but I've searched all the docs I can find 
+and don't seem to get anywhere.  The FBB documentation mentions 
+INSTALL.SH for setting up initial parameters.  I installed FBB using the 
+Debian packages, and I cannot find INSTALL.SH anywhere, nor is it in the 
+file list for the package.  The BBS works quite well, as far as 
+accepting NETROM and telnet connections, except that I can't seem to set 
+security levels and actually get SYSOP access.  The Documentation 
+mentions that a file called INIT.SYS gets created, but from what I can 
+tell, the /etc/ax25/fbb.conf file seems to have SOME of the contents 
+that are supposed to be in INIT.SYS, and there is no INIT.SYS file.
 
-> NMEA perhaps? Given a long enough calibration period this might well be
-> precise enough... Does anyone know the timing of the NMEA output? Is it
-> aligned to the PPS?
+Am I chasing a wild goose here?  Or is there some modification in the 
+Debian-packaged version that makes this unneccesary?
 
-It depends on the GPS, I don't think there is an official standard or 
-practice. I'd guess at least the PPS-equipped timing receivers handle 
-NMEA in a predefined way to be able to stay on the right second.
+Thanks for your help,
 
-   Tapio
-
+Dave
+VA3BHF
