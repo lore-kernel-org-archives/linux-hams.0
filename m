@@ -1,35 +1,85 @@
-From: Tomi Manninen OH2BNS <tpm@prkele.tky.hut.fi>
-Subject: Re: gcc-3.2.2 / libc-2.3.1 / gnome 2
-Date: Fri, 11 Apr 2003 15:04:00 +0300 (EETDST)
+From: "Jose A. Amador" <co2ja01@fastmail.fm>
+Subject: Re: KDE EchoLinux client development started
+Date: Fri, 11 Apr 2003 12:44:35 -0800
 Sender: linux-hams-owner@localhost
-Message-ID: <Pine.HPX.4.10.10304111457420.17492-100000@saturn.trs.ntc.nokia.com>
-References: <200304110027.32425.ailic@gmx.net>
-Reply-To: tpm@prkele.tky.hut.fi
+Message-ID: <20030411204435.5CF6630D93@www.fastmail.fm>
+References: <200304072004.55533.ve3mtm@rac.ca> <20030408141909.A30053@pull.privacy.nb.ca> <200304102146.01378.ve3mtm@rac.ca> <200304102111.43686.n7bfs@qwest.net>
 Mime-Version: 1.0
-Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <200304110027.32425.ailic@gmx.net>
-List-Id: <linux-hams.vger.kernel.org>
-Content-Type: TEXT/PLAIN; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
-To: Aleksandar Ilic <ailic@gmx.net>
-Cc: linux-hams@vger.kernel.org
+Return-path: <linux-hams-owner@vger.kernel.org>
+Content-Disposition: inline
+In-Reply-To: <200304102111.43686.n7bfs@qwest.net>
+List-Id: <linux-hams.vger.kernel.org>
+Content-Type: text/plain; charset="us-ascii"
+To: n7bfs@qwest.net, Michael Melanson <ve3mtm@rac.ca>, Linux Hams <linux-hams@vger.kernel.org>
 
-On Fri, 11 Apr 2003, Aleksandar Ilic wrote:
 
-> There was a variety of reasons. gMFSK needs gnome-config, which no more 
-> exists.
 
-Actually gMFSK (0.4.1) needs GTK+ 1.2.x and Gnome 1.x. It won't work with
-Gnome2/GTK2. In practice of course lack of gnome-config might be the first
-thing you notice if you try to compile it without having GTK1/Gnome1 devel
-stuff installed.
+Not only for this thread, but for ANYTHING ELSE I agree with the choices 
+of N7BFS. If it MUST be graphical (say, SSTV, waterfalls or some other
+funny
+indicator) let it be so. If it is not, and text is sufficient, it makes
+sense to me to have escalating choices that range from text to the
+fanciest
+GUI, so either a 486 and text only (ncurses) or a P4 with a superwhizbang
+video card perform well with it with the proper configuration choices.
+Please don't forget the poor guy if it makes sense.
 
-Anyway, I will be releasing gMFSK 0.5 soon. It's written for GTK2/Gnome2
-so should work for you. Now I just need to stop adding new modes and
-features to it and make a release...
+73 de Jose, CO2JA
+
+On Thu, 10 Apr 2003 21:11:43 -0700, "Douglas Cole" <n7bfs@qwest.net>
+said:
+> On Thursday 10 April 2003 14:45, Michael Melanson wrote:
+> > I have started, pending the acception of the Sourceforge project, but I
+> > haven't uploaded anything yet (It's not much yet)
+> >
+> > As for the Qt/GTK debate, I can do either. I chose Qt because that's what
+> > I've used more, but that's by no means a binding reason. I have used GTK,
+> > but that's a long time ago and not much at that. If the general concensus
+> > is to use GTK, then I'll register a new SF project with a non-KDE name
+> >
+> > This project will not implement the EchoLink protocol. That's done by
+> > EchoLinux, which will run as a child process of this program.
+> >
+> > I welcome any other input
+> >
+> >
+> > - Michael VE3MTM
+> > ve3mtm@rac.ca
+> 
+> Whip me beat me hang me out to dry, but if I had a choice, having an
+> ncurses 
+> interface so that one could run it from a console/limited hardware would
+> be 
+> kinda fun :^)
+> 
+> Second choice would be QT.
+> Third would be Kylix.
+> Fourth would be GTK...
+> Just my two pennies.
+> 
+> Thanks for sharing what my dumb brain just doesn't seem to want to do
+> (write 
+> software).
+> 
+> 73
+> 
+> -- 
+> Douglas Cole   N7BFS
+> Spokane IRLP node owner
+> AMSAT#26182 , K2 # 544
+> http://www.users.qwest.net/~cdoug3
+> Registered Linux user # 188922
+> 
+> 
+> -
+> To unsubscribe from this list: send the line "unsubscribe linux-hams" in
+> the body of a message to majordomo@vger.kernel.org
+> More majordomo info at  http://vger.kernel.org/majordomo-info.html
+> 
+-- 
+  Jose A. Amador
+  co2ja01@fastmail.fm
 
 -- 
-Tomi Manninen           Internet:  oh2bns@sral.fi
-OH2BNS                  AX.25:     oh2bns@oh2rbi.fin.eu
-KP20ME04                Amprnet:   oh2bns@oh2rbi.ampr.org
-
+http://www.fastmail.fm - Consolidate POP email and Hotmail in one place
