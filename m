@@ -1,42 +1,24 @@
-From: "christoper" <garybird@balmainboys.com>
-Subject: Save a ton on Microsoft Office!
-Date: Mon, 31 May 2004 17:15:58 GMT
+From: Dave Stubbs <dave.stubbs@utoronto.ca>
+Subject: BBS Software
+Date: Mon, 31 May 2004 13:24:56 -0400
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <1086023758-15230@excite.com>
-Return-path: <linux-hams-owner@vger.kernel.org>
-List-Id: <linux-hams.vger.kernel.org>
-MIME-Version: 1.0
-Content-Type: text/plain;; charset="us-ascii"
+Message-ID: <40BB6A68.3050700@utoronto.ca>
+References: <200405271330.25402.dl4mge@darc.de> <1085680600.31191.151.camel@kronenbourg.scs.ch> <20040527201755.GX1749@mea-ext.zmailer.org> <200405311230.37550.dl4mge@darc.de>
+Mime-Version: 1.0
 Content-Transfer-Encoding: 7bit
-To: 40free.net.ph@vger.kernel.org
+Return-path: <linux-hams-owner@vger.kernel.org>
+In-Reply-To: <200405311230.37550.dl4mge@darc.de>
+List-Id: <linux-hams.vger.kernel.org>
+Content-Type: text/plain; charset="us-ascii"; format="flowed"
+To: linux hams <linux-hams@vger.kernel.org>
 
-Need software but not the price that comes with it?
-We sell OEM software at major discounts.
-Don't pay the department store markups, buy on the internet.
+Hello all,
 
-Free Delivery and Extra Discounts on orders over $200!
+Would it spark a zealous flame war if I was to ask what is the most 
+feature-rich and most popular Packet BBS software out there?  I'm 
+looking to offer a full email and news gateway to my club via packet.
 
-Save yourself or your company thousands of dollars, reap the rewards!
+Looking forward to your responses,
 
-Q:  How can you sell this software as OEM ? It seems too good to be true - is there a catch?
-
-A:  There is no catch - the software versions that we sell are OEM (Original Equipment Manufacturer) which means you will receive the installation CDs only (they do not come in their original retail packing and do not include the manual). We do guarantee that all programs are the 100% full working retail versions - no demos or academic versions! When you order, you will receive all materials required for a complete installation - or your money back! Why pay hundreds of dollars more when you can get exactly the same but OEM-CD? You don't have to pay that much for the fancy box and manuals. 
-
-
-
-Click here!!
-http://mycomp.biz/index.php?s=7555
-
-
-
-
-
-
-
-
-
-paula abcdeftango shawn gray mailer vermont wombat 
-fun moomoogodzilla amelie arizona
-dan don caesar 
-
-REMOV3: http://mycomp.biz/soft/chair.php
+Dave.
+VA3BHF
