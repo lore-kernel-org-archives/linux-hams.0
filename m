@@ -1,28 +1,39 @@
-From: linuxhams@n0qbj-11.ampr.org
-Subject: 2.6 Kernel AX25 driver bug
-Date: 25 Sep 2004 03:52:19 -0000
+From: Jeremy Utley <jerutley@gmail.com>
+Subject: ax25-tools and Kernel 2.6
+Date: Sat, 25 Sep 2004 20:41:51 -0700
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <20040925035219.4875.qmail@kunk.qbjnet.com>
+Message-ID: <d5d4185b0409252041110e8607@mail.gmail.com>
+Reply-To: Jeremy Utley <jerutley@gmail.com>
+Mime-Version: 1.0
+Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
 List-Id: <linux-hams.vger.kernel.org>
-MIME-Version: 1.0
 Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 7bit
 To: linux-hams@vger.kernel.org
 
-It appears that a bug has been introduced in the ax25 driver for 2.6 that
-prevents it from working properly on big-endian machines. When I take exactly
-the same hardware from a working debian 2.6.7 x86 system and move it to a
-PPC system with the exact same setup and parameters it appears to inproperly
-process RECEIVED packets. The listen command shows that the reply packets
-are being read (I'm doing a ping) but the tcp/ip level appears to ignore them.
-If I boot a 2.4.27 kernel on the PPC box it works fine with the exact same
-setup. Note that a simple call command DOES work, just tcp/ip packets fail.
+Hey all!
 
-I've tried this with the YAM driver AND the kiss driver through a serial port.
+Running into some difficulty compiling the ax25-tools package on my
+computer at home.  I'll start off with some stats on my system:
 
-Who is maintaining the ax25 driver in 2.6?? I see a lot of changes were made
-to it and maybe they would know what might be endian specific.
+P-II 266 laptop system
+Self-Compiled distribution (Linux from Scratch)
+Kernel 2.6.8.1-ck7
+GCC 3.4.2
+Glibc CVS Checkout from 08/28
+Binutils 2.15.91.0.2
+Linux-libc-headers 2.6.8.1
 
-Regards,
-Bob
+The problem is in compiling the ax25-tools - getting an error
+regarding soundmodem.h not found - this is of course because the
+soundmodem driver being removed from the kernel itself, and becoming
+the user-space application.  I did succeed in compiling the software
+by taking the old soundmodem.h from a 2.4.x kernel distribution, and
+placing it into /usr/include/linux, and this worked for a period of
+time.  However, I started encountering kernel panics every time I used
+kissattach to set up my ax0 interface.
+
+Do any of you out there have any suggestions on how I could remove the
+references to the old soundmodem abi's from the ax25-tools package?
+
+Jeremy, KF3EL
