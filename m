@@ -1,40 +1,66 @@
-From: "David S. Miller" <davem@redhat.com>
-Subject: Re: net/* module-related oddities
-Date: Sat, 21 Feb 2004 13:02:34 -0800
+From: Jorge Matias <martin@andorinha.ist.utl.pt>
+Subject: Re: Kpsk doesn't work with ALSA/es1968 module
+Date: Sun, 22 Feb 2004 14:19:30 +0000 (WET)
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <20040221130234.575505fc.davem@redhat.com>
-References: <20040221011854.GM31035@parcelfarce.linux.theplanet.co.uk>
-	<20040220184049.22bf1814.davem@redhat.com>
-	<20040221044144.GN31035@parcelfarce.linux.theplanet.co.uk>
+Message-ID: <Pine.LNX.4.58.0402221410450.3627@andorinha.ist.utl.pt>
+References: <Pine.LNX.4.44.0402192108340.7064-100000@zl2bsj.ampr.org>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <20040221044144.GN31035@parcelfarce.linux.theplanet.co.uk>
+In-Reply-To: <Pine.LNX.4.44.0402192108340.7064-100000@zl2bsj.ampr.org>
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"
-To: viro@parcelfarce.linux.theplanet.co.uk
-Cc: ralf@linux-mips.org, linux-hams@vger.kernel.org, acme@conectiva.com.br
+Content-Type: TEXT/PLAIN; charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+To: Wilbert Knol <w.knol@niwa.co.nz>
+Cc: Linux-Ham Mailing List <linux-hams@vger.kernel.org>
 
-On Sat, 21 Feb 2004 04:41:44 +0000
-viro@parcelfarce.linux.theplanet.co.uk wrote:
+On Thu, 19 Feb 2004, Wilbert Knol wrote:
 
-> 	What is intended there?  Is it "netrom already speaks that protocol
-> and it would be unhappy if you try to interfere"?  Then the first case above
-> is a bug - we can get netrom loaded and such socket opened.  If it's not that,
-> WTF it is?
+>
+>
+> On Wed, 18 Feb 2004, Jorge Matias wrote:
+> <snip>
+> >   Anyone had this problem?
+>
+>
+> Yes. I had *endless* problems with the soundcard (Yamaha OPL3SA2) in
+> my Toshiba Satellite 2520CDS notebook. It turned out to be interrupt
+> and DMA conflicts with the parallel port.
 
-It cannot be because of a protocol handling conflict.  NETROM registers
-AF_NETROM, AX25 registers AF_AX25, and ROSE registers AF_ROSE.
+Well, it is possible that I have problems with PCI Interrupts. All the
+Laptop's hardware is using PCI Sharing IRQ (11).
 
-I think all of these tests are simply backwards.  What it wants to do is
-say ESOCKTNOSUPPORT if the netrom/rose/etc. protocols aren't present or
-their module type can't be loaded, during ax25_create().
+>
+> Make sure your sound card works flawlessly with other apps, before
+> blaming KPSK. Linux is  often unable (on laptops) to detect sound
+> cards correctly and you wind up with incorrect DMA/IRQ settings.
+> Don't blindly trust P&P on laptops. They are full of on-board junk
+> that is outside the PCI bus, and, if P&P fails, you're in trouble.
 
-This code has been like this for centuries, I'm so scared to touch it.
+  I have tried several audio programs, audio playback programs and audio
+sampling programs and I have noted that I only have problems with the
+sound sampling.
+  In this same Laptop I have also WindowsXP installed and don't any kind
+of problem with the soundcard.
 
-Ralf, since you're the listed AX.25/ROSE/NETROM maintainer :)  Take a look
-at the crap happening in ax25_create(), all thoses tests about SEQPACKET
-sockets and IP, ROSE, NETROM.  They all look reversed.  They have to be,
-if not neither I nor Al here have any idea what the code is trying to do.
 
-Thanks.
+> If there are no known problems with your sound chipset and OSS, and
+> the OSS driver doesn't work, chances are it's wrongly configured or
+> there is a hardware conflict. Changing to ALSA won't fix that, and
+> you'll have to do some detective work.
+>
+> My approach would be to disable BIOS P&P, disable in the BIOS all
+> non-essential hardware, and force non-conflicting settings on the
+> sound card. Then boot Linux and force the driver to use those
+> settings. Once you have that going, you can turn other hardware back
+> on, one at a time... parport, serial port, IR bridge etc etc whilst
+> you keep testing everything under Linux and watching dmesg every time
+> you boot with a new set of hardware.
+> ...
+
+Thanks for your suggestions. I'm going to try to force another IRQ for the
+sound card and see what happens.
+I will report here the results.
+
+73,
+Jorge Matias
+CT2HBZ
