@@ -1,34 +1,49 @@
-From: Stewart Wilkinson <g0lgs@gb7lgs.co.uk>
+From: 9a4gl@9a0tcp.ampr.org (Tihomir Heidelberg)
 Subject: Re: ax25 kernel problem sometimes accur
-Date: Wed, 4 Dec 2002 19:42:22 +0000 (GMT)
+Date: Wed, 04 Dec 02 21:20:09 CET
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <Pine.LNX.4.44.0212041929490.7216-100000@gb7lgs.co.uk>
-References: <19399@9A0TCP>
-Mime-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
+Message-ID: <19470@9A0TCP>
+References: <Pine.LNX.4.44.0212041148210.23313-100000@off1.audion.com>
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <19399@9A0TCP>
+In-Reply-To: your message of Wed, 4 Dec 2002 12:04:48 +0100 (CET).
+             <Pine.LNX.4.44.0212041148210.23313-100000@off1.audion.com>
 List-Id: <linux-hams.vger.kernel.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
-To: linux-hams@vger.kernel.org
+To: ha3pg@ha3pmf.boszi.pte.hu
+Cc: linux-hams@vger.kernel.org
 
+Hi Sanyi,
 
-I am aware of several UK stations that are having lockup problems with
-systems running 2.4.19 kernels (using at least 3 different Linux
-Distributions). At the moment I know of just one system running 2.4.19
-kernel that has been up for over 35 days.
+thanks for reply, I applyed a fix explained in my post to linux-hams
+and I am waiting to see if this bug will occur again....
+    
+please, are you interested for testing this also ? it would be also
+good if ha5ob is interested... it would help me to find if it helps
+or not, because it is hard to find a host with high traffic that
+have this problem :)
 
-The systems in question seem to run Ok for anything up to 12-14 days,
-until they stop. Sometimes they stop with a Kernel Panic (Flashing
-keyboard lamps), other times (at least in my case today) the system is
-just non-responsive either to external traffic (pings over LAN etc) or to
-Keyboard Input.
+to try it you just need to edit /usr/src/linux/net/ax25/af_ax25.c
+and in function ax25_free_sock just add this line at the end:
+        sk->protinfo.ax25->sk=NULL;
+so, the ax25_free_sock function should look:     
+static void ax25_free_sock(struct sock *sk)
+{
+        ax25_free_cb(sk->protinfo.ax25);
+        sk->protinfo.ax25->sk=NULL;
+}
 
-As far as we have determined to date the crashes all follow a pattern
-where AX25 / NETROM connections start to be refused and sometime
-there-after the system totally stops functioning.
+of course, then you should do make modules;make modules_install
+if you use ax25 in module or make install if you have it compiled
+in kernel.
 
--- 
-Stewart (G0LGS)
-g0lgs@gb7lgs.co.uk
+this should not do anything harmfull in kernel, I am quite sure :)
 
+by my opinion, when kernel destroy an socket, there is still a pointer  
+in ax25 control block that points to that destroyed socket and everytime
+it access it it crash.
+
+so, will see if this will help...
+
+73 de Tihomir, 9a4gl@9a0tcp.ampr.org
