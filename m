@@ -1,32 +1,40 @@
-From: mvw@mvw.net
-Subject: FBB...
-Date: Wed, 25 Dec 2002 00:13:14 -0500 (EST)
+From: "Steve Fraser" <sfraser@sierra.apana.org.au>
+Subject: Re: Simple BBS, again, sorry for asking twice.
+Date: Wed, 25 Dec 2002 16:02:26 +1030
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <Pine.LNX.4.44.0212250010050.17537-100000@jeeves.mvw.net>
-References: <Pine.LNX.4.44.0212242335340.17537-100000@jeeves.mvw.net>
+Message-ID: <001c01c2abd7$02e251a0$04590cca@apana.org.au>
+References: <Pine.LNX.4.44.0212250359470.1372-100000@oh2bns.ampr.org>
 Mime-Version: 1.0
-Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <Pine.LNX.4.44.0212242335340.17537-100000@jeeves.mvw.net>
-List-Id: <linux-hams.vger.kernel.org>
-Content-Type: TEXT/PLAIN; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
-To: linux-hams@vger.kernel.org
+Return-path: <linux-hams-owner@vger.kernel.org>
+List-Id: <linux-hams.vger.kernel.org>
+Content-Type: text/plain; charset="us-ascii"
+To: mvw@mvw.net
+Cc: linux-hams@vger.kernel.org
 
-OK, pity, but FBB is deleted. I have never seen a worse install in my
-life, of any software! Apart from the edits needed before it will even
-compile, there are no instructions (the README just says to 'make' and
-enjoy), and the scripts included give nothing but fatal errors. Plus the
-English is bad, but that is not the author's fault, and the licensing is 
-odd (not GPL: it asks not to make changes)..
+Hi All
 
-So I am glad it works for some of you, but for me this is such low
-standard software that I have deleted it.
+ mvw@mvw.net wrote:
 
-Any ideas for other systems like this, then?
+>I would like to set up a
+> > simple messaging system/bbs, to use when someone goes to this system
+using
+> > ax25. I do not need "do it all" systems, just a simple bbs (and it's a
+> > 1200 bps port, so a simple one with little text would be great).
+> > Suggestions, all?
+>
+and Tomi responded:
 
-Michael
+> Other than a full FBB BBS, not really. Hessu started writing something to
+> this extent but I think that was never finished.
+>
+I havent used it myself, but awznode by Stefano Noferi  IZ5AWZ  seemed to
+have simple mail capability, passwords etc. It grew out of the normal "node"
+program so should be fairly familiar.
 
+The reference I found was  ftp://ftp.funet.fi/pub/ham/packet/linux/awznode/
 
+73 and Merry Xmas to all
 
-
+Steve, vk5asf
 
