@@ -1,24 +1,47 @@
-From: Scott Ehrlich <scott@ehrlichtronics.com>
-Subject: Serial port demodulators?
-Date: Wed, 12 Nov 2003 20:49:30 -0500 (EST)
+From: dj6rx@t-online.de (Klaus Heintzenberg)
+Subject: CF Speicherkarte
+Date: Fri, 14 Nov 2003 16:01:58 -0000
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <Pine.LNX.4.58.0311122042001.6518@debian.ehrlichtronics.com>
+Message-ID: <07be01c3aac8$a417f340$6400a8c0@DELL1>
 Mime-Version: 1.0
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 Return-path: <linux-hams-owner@vger.kernel.org>
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: TEXT/PLAIN; charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-To: linux-hams@vger.kernel.org
+Content-Type: text/plain; charset="iso-8859-1"
+To: LINUXHams <linux-hams@vger.kernel.org>
 
-I am about to take ownership of a new Baycom BP-2M and am wondering what
-program members of the list recommend for decoding of monitored signals?
-I plan to have a scanner attached.
+Ich habe es geschafft, mir den vollen Zugriff auf die CompactFlash-Kart=
+e  zu
+verbauen.
 
-I've looked at Multimon, but, from what I've been reading, appears to only
-work with a sound card for demodulation, and only from a captured file.
-Are these interpretations correct?  If yes, what are my other program
-options?
+Als User kann ich zwar Daten von der Karte lesen, kann aber nicht darau=
+f
+schreiben (l=F6schen)
 
-Thanks for any insight.
+Als root jedoch lassen sich die Karten lesen und schreiben.
 
-Scott
+
+
+Linux:/etc # ls /dev/sda1 -l
+
+brwxrwxrw-    1 root     disk       8,   1 2003-09-23 17:59 /dev/sda1
+
+
+
+Was muss ich tun, um das zu reparieren?
+
+
+
+73, Klaus
+
+
+
+
+
+
+
+-
+To unsubscribe from this list: send the line "unsubscribe linux-hams" i=
+n
+the body of a message to majordomo@vger.kernel.org
+More majordomo info at  http://vger.kernel.org/majordomo-info.html
