@@ -1,43 +1,65 @@
-From: Tomi Manninen OH2BNS <tpm@prkele.tky.hut.fi>
-Subject: Re: Status of AX.25 in 2.5 / 2.6
-Date: Mon, 29 Jul 2002 15:16:32 +0300 (EETDST)
+From: "Robert Jenkins" <raj@jrw.co.uk>
+Subject: RE: Status of AX.25 in 2.5 / 2.6
+Date: Mon, 29 Jul 2002 15:49:28 +0100
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <Pine.HPX.4.10.10207291502190.25868-100000@saturn.trs.ntc.nokia.com>
-References: <20020728224348.GG10796@eye-net.com.au>
-Reply-To: tpm@prkele.tky.hut.fi
+Message-ID: <000001c2370f$242f6c40$e239832c@jrws2>
+References: <20020726134216.A4126@dea.linux-mips.net>
 Mime-Version: 1.0
-Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <20020728224348.GG10796@eye-net.com.au>
-List-Id: <linux-hams.vger.kernel.org>
-Content-Type: TEXT/PLAIN; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
-To: linux-hams@vger.kernel.org
+Return-path: <linux-hams-owner@vger.kernel.org>
+In-Reply-To: <20020726134216.A4126@dea.linux-mips.net>
+List-Id: <linux-hams.vger.kernel.org>
+Content-Type: text/plain; charset="us-ascii"
+To: 'Ralf Baechle' <ralf@uni-koblenz.de>, linux-hams@vger.kernel.org
 
-On Mon, 29 Jul 2002, Craig Small wrote:
+Hi,
 
-> If you're looking for something later, you may want to solve the
-> ancient "why does an AX.25 interface need an IP address" question.  
-> The answer used to be "because it does", I'm not sure if that is still
-> the case, I've got ports sitting on a Linux computer over *there*
-> (points to rowlf) that don't have IP addresses or have 0.0.0.0
+Another couple of points with the present AX25 which I (and I believe
+others) find annoying:-
 
-I think it's still the case. If an interface doesn't have an IP address,
-it won't show up in the "list of known interfaces" from the kernel
-(SIOCGIFCONF I think). So the utils/apps will never find it...
+1: The insistance on a separate call+ssid for each port.
 
-I did some digging a couple of years ago and also did a patch (with code
-mostly stolen from Matt's/Jens' new-ax.25). See:
+Every port is allocated a unique name in axports anyway, so why the need
+for the unique call as well???
 
- http://hes.iki.fi/archive/dev-hams/2000/0055.html
+(This is WAY more annoying to me than the requirement for an IP address
+- at least it will accept the same IP on multiple ports!)
 
-I never got an answer.
 
-Oh, by the way. Has anyone done anything with the NEW-AX.25 patch lately?
-I think it has some potential but unfortunately seems it's now completely
-unmaintained.
+It certainly does not seem to be a requirement for AX25, as the Dos BPQ
+node works fine with one call for the whole system. Being able to use
+the same callsign/ssid for multiple ports would greatly simplify some
+more comnplex configs.
 
--- 
-Tomi Manninen           Internet:  oh2bns@sral.fi
-OH2BNS                  AX.25:     oh2bns@oh2rbi.fin.eu
-KP20ME04                Amprnet:   oh2bns@oh2rbi.ampr.org
+As far as I know, the callsigns / aliases that the AX25 code uses for
+incoming connects are the ones set in ax25d.conf and have no connection
+to the 'axports' callsigns; these are used for outgoing connects only.
+
+
+
+2: The apparent requirement for two or more Netrom ports / aliases for
+the Netrom system to work correctly? Most of the docs on setting up
+netrom say separate ports are needed for incoming and outgoing connects.
+Why???
+Again, it's not a fundamental requirement for Netrom, it's an oddity in
+the Linux implementation.
+
+
+
+
+
+One other request to anyone doing updates; please keep adding comments &
+useage notes to the sources! 
+
+Some functions do have brief descriptions, others have 'to do' notes or
+nothing at all. It makes it hard to do anything productive with the code
+when you can only spend short periods of time on it, and spend most of
+that time just trying to refresh your memory of what does what.
+
+
+Regards,
+
+Robert Jenkins.
+
+
 
