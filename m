@@ -1,47 +1,35 @@
-From: csmall@eye-net.com.au (Craig Small)
-Subject: Re: Unable to connect
-Date: Mon, 23 Sep 2002 12:11:31 +1000
+From: Ben Gelb <ben@gelbnet.com>
+Subject: ax25d and STDIN
+Date: 27 Sep 2002 01:08:33 -0400
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <20020923021131.GC8641@eye-net.com.au>
-References: <000001c26244$e014e880$0802a8c0@Barry>
+Message-ID: <1033103314.938.7.camel@ben>
 Mime-Version: 1.0
+Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
-Content-Disposition: inline
-In-Reply-To: <000001c26244$e014e880$0802a8c0@Barry>
 List-Id: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-To: Barry <barry_linux@rogers.com>
-Cc: linux-hams@vger.kernel.org
+To: linux-hams@vger.kernel.org
 
-On Sun, Sep 22, 2002 at 10:32:27AM -0400, Barry wrote:
-> Hi, just trying to recover from a major hardware failure here. I managed
-> to recover most of my configuration files, but a couple were lost.
-> 
-> I am using:
-> Athalon 1.3
-> 512 Mb RAM
-> 30Gb Disc
-> Mandrake 9.0rc3 Kernel 2.4.19
-> libaxax25-0.0.9 
-> ax25-apps-0.0.6
-> ax25-tools-0.0.8
-> node-0.3.0
-> clx 5.04
-> 
-> All compiled and installed OK. Problem comes whenever I try to connect,
-> say to VE3NAV-1 (the node), VE3NAV-3 (clx) etc. I get the "connected"
-> message, immediately followed by a disconnection. The result is the same
-> whether I connect via radio, or a local loopback from the keyboard.
+I am trying to write a simple scripts in PHP to run with ax25d. It will
+be used to collect information from aid stations at the upcoming Marine
+Corps Marathon in Washington, D.C.
 
-Do those two connect via ax25?  It sounds very similar to a problem you
-get with inetd that does the listening then attempts to start the child
-program (like , say ftpd), fails then bumps you off.
+I didn't want to get into network programming if it isn't necessary. And
+I would prefer to use an uncompiled language, like php or perl, so that
+I can make changes quickly if necessary.
 
-In that case check those programs run directly.  
+To output data I am using fopen("php://stdout", "w"); and to read data I
+am using fopen("php://stdin", "r"); The writing data part works fine,
+but whenever I attempt to read in data from stdin, ax25d hangs up.
 
-  - Craig
--- 
-Craig Small VK2XLZ  GnuPG:1C1B D893 1418 2AF4 45EE  95CB C76C E5AC 12CA DFA5
-Eye-Net Consulting http://www.eye-net.com.au/        <csmall@eye-net.com.au>
-MIEEE <csmall@ieee.org>                 Debian developer <csmall@debian.org>
+I have noticed in C++ I get this same problem when I attempt to use
+scanf to read in. However, if I use cin instead, it works fine.
+
+Does anybody know why this occurs and what I might do about it?
+
+Thanks Very Much!
+
+73 de Ben, KF4KJQ
+
+
+
