@@ -1,164 +1,22 @@
-From: terry <wd0fpc@aniota.com>
-Subject: [SECURITY] [DSA 274-1] New node packages fix remote root vulnerability
- (fwd)
-Date: Sat, 30 Aug 2003 07:48:31 -0700 (PDT)
+From: Luiz Catalan <catalan@lnx.lfc.mat.br>
+Subject: kernel 2.4.21 and AX25 & netrom
+Date: Sat, 30 Aug 2003 12:51:48 -0300 (BRT)
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <Pine.LNX.4.50.0308300747110.6457-100000@yossarian.aniota.net>
+Message-ID: <Pine.LNX.4.51.0308301247010.32430@lnx.lfc.mat.br>
 Mime-Version: 1.0
 Return-path: <linux-hams-owner@vger.kernel.org>
 List-Id: <linux-hams.vger.kernel.org>
 Content-Type: TEXT/PLAIN; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
-To: linux-hams <linux-hams@vger.kernel.org>
+To: linux-hams@vger.kernel.org
 
+Gurus on the list,
 
-... FYI:  from bugtraq ...
+could someone, please, give me a clue about kernel 2.4.21 and ax25 (and
+netrom)? I have had often crashes due the netrom bug, told by several
+authors not only on this list. Do you suggest try an upgrade to
+2.6.0-testX or there is a fix to be done in the 2.4.21 kernel release? If
+there is such fix, where to get it?
 
--- 
-73 , de WD0FPC		Pacific Nowthwest 2M Repeaters
-    aka: terry 		http://www.aniota.com/~wd0fpc
-
-
----------- Forwarded message ----------
-Date: Fri, 29 Aug 2003 10:13:27 +0200 (CEST)
-From: Martin Schulze <joey@infodrom.org>
-Reply-To: listadmin@securityfocus.com
-To: bugtraq@securityfocus.com
-Subject: [SECURITY] [DSA 274-1] New node packages fix remote root
-    vulnerability
-Resent-Date: Fri, 29 Aug 2003 03:17:35 -0500 (CDT)
-Resent-From: list@murphy.debian.org (SmartList)
-Resent-cc: recipient list not shown: ;
-
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
-
-- --------------------------------------------------------------------------
-Debian Security Advisory DSA 274-1                     security@debian.org
-http://www.debian.org/security/                             Martin Schulze
-August 29th, 2003                       http://www.debian.org/security/faq
-- --------------------------------------------------------------------------
-
-Package        : node
-Vulnerability  : buffer overflow, format string
-Problem-Type   : remote
-Debian-specific: no
-
-Morgan alias SM6TKY discovered and fixed several security related
-problems in LinuxNode, an Amateur Packet Radio Node program.  The
-buffer overflow he discovered can be used to gain unauthorised root
-access and can be remotely triggered.
-
-For the stable distribution (woody) this problem has been
-fixed in version 0.3.0a-2woody1.
-
-For the unstable distribution (sid) this problem has been fixed in
-version 0.3.2-1.
-
-We recommend that you upgrade your node packages immediately.
-
-
-Upgrade Instructions
-- --------------------
-
-wget url
-        will fetch the file for you
-dpkg -i file.deb
-        will install the referenced file.
-
-If you are using the apt-get package manager, use the line for
-sources.list as given below:
-
-apt-get update
-        will update the internal database
-apt-get upgrade
-        will install corrected packages
-
-You may use an automated update by adding the resources from the
-footer to the proper configuration.
-
-
-Debian GNU/Linux 3.0 alias woody
-- --------------------------------
-
-  Source archives:
-
-    http://security.debian.org/pool/updates/main/n/node/node_0.3.0a-2woody1.dsc
-      Size/MD5 checksum:      588 1efa176d975c1e05370f8ba964516797
-    http://security.debian.org/pool/updates/main/n/node/node_0.3.0a-2woody1.diff.gz
-      Size/MD5 checksum:     6480 188fb0de8bf4e0befe24381e0dae20de
-    http://security.debian.org/pool/updates/main/n/node/node_0.3.0a.orig.tar.gz
-      Size/MD5 checksum:    53547 8aff48a8744aa6ee6eaf1daa7c3b92f8
-
-  Alpha architecture:
-
-    http://security.debian.org/pool/updates/main/n/node/node_0.3.0a-2woody1_alpha.deb
-      Size/MD5 checksum:    64240 520c82abc8809f56870724351ed6de39
-
-  ARM architecture:
-
-    http://security.debian.org/pool/updates/main/n/node/node_0.3.0a-2woody1_arm.deb
-      Size/MD5 checksum:    47708 7f7955e0159549de75ec925f2237b7c9
-
-  Intel IA-32 architecture:
-
-    http://security.debian.org/pool/updates/main/n/node/node_0.3.0a-2woody1_i386.deb
-      Size/MD5 checksum:    47484 dbf928e7f52f5194fea6a03d2d3fdf01
-
-  Intel IA-64 architecture:
-
-    http://security.debian.org/pool/updates/main/n/node/node_0.3.0a-2woody1_ia64.deb
-      Size/MD5 checksum:    67634 71cc9de2aa3c9ad0145ff0aa3e0a29b3
-
-  HP Precision architecture:
-
-    http://security.debian.org/pool/updates/main/n/node/node_0.3.0a-2woody1_hppa.deb
-      Size/MD5 checksum:    52174 57c6db7ca08a02988fc0fb2b8bbe23eb
-
-  Motorola 680x0 architecture:
-
-    http://security.debian.org/pool/updates/main/n/node/node_0.3.0a-2woody1_m68k.deb
-      Size/MD5 checksum:    45790 7089cd0cb435322faed03e167a6e7dc7
-
-  Big endian MIPS architecture:
-
-    http://security.debian.org/pool/updates/main/n/node/node_0.3.0a-2woody1_mips.deb
-      Size/MD5 checksum:    52166 c6918f854b286a0b1fe46c1a4a2e0853
-
-  Little endian MIPS architecture:
-
-    http://security.debian.org/pool/updates/main/n/node/node_0.3.0a-2woody1_mipsel.deb
-      Size/MD5 checksum:    52240 3e214a4217e6fee4c7aa32f84770c02a
-
-  PowerPC architecture:
-
-    http://security.debian.org/pool/updates/main/n/node/node_0.3.0a-2woody1_powerpc.deb
-      Size/MD5 checksum:    49514 a599cf448a4c2bc3618aa0a404742c3f
-
-  IBM S/390 architecture:
-
-    http://security.debian.org/pool/updates/main/n/node/node_0.3.0a-2woody1_s390.deb
-      Size/MD5 checksum:    48998 7cc2ae72a9c975d78be45cd82f115116
-
-  Sun Sparc architecture:
-
-    http://security.debian.org/pool/updates/main/n/node/node_0.3.0a-2woody1_sparc.deb
-      Size/MD5 checksum:    49524 e086b527ec73a28d9ac2109249c71691
-
-
-  These files will probably be moved into the stable distribution on
-  its next revision.
-
-- ---------------------------------------------------------------------------------
-For apt-get: deb http://security.debian.org/ stable/updates main
-For dpkg-ftp: ftp://security.debian.org/debian-security dists/stable/updates/main
-Mailing list: debian-security-announce@lists.debian.org
-Package info: `apt-cache show <pkg>' and http://packages.debian.org/<pkg>
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.2.2 (GNU/Linux)
-
-iD8DBQE/TwsnW5ql+IAeqTIRAspBAKCuUvUewRjHtpE68T+MolH2TkcOdgCgr6iT
-DZbUJYANQL0UnwEs/YVDwMA=
-=h1uQ
------END PGP SIGNATURE-----
+Thanks in advance for any answer,
+Luiz - PP5AQ
