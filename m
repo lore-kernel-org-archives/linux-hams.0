@@ -1,42 +1,32 @@
-From: "John J. Bauerly" <jbauerly@grapevine.net>
-Subject: Mkiss compile error answer!
-Date: Thu, 03 Oct 2002 22:21:00 -0500
+From: Brett Mueller <wa7v@digitalhams.com>
+Subject: Re: AO-40 Transponder Operation
+Date: Thu, 03 Oct 2002 21:47:58 -0700
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <4.3.2.7.2.20021003220843.00ac9ab0@pop3.norton.antivirus>
+Message-ID: <3D9D1D7E.4090201@digitalhams.com>
+References: <20021004040843Z261464-8740+5907@vger.kernel.org>
 Mime-Version: 1.0
+Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
 List-Id: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"; format="flowed"
-Content-Transfer-Encoding: 7bit
 To: linux-hams@vger.kernel.org
 
-Hello All;
+Hmm, looks a bit fishy to me:
 
-Thanks to all that took the time to read and respond. I found the answer in 
-the archives to the question below. Thanks to Ichiro Hieda. He had 
-discovered that the location of time.h was not correct for his 
-distribution. This caused mkiss.c, netromd.c, and rip98d.c to fail. by 
-changing:
+Someone's machine at 203.87.77.236 wrote:
+ > Hi All,
+ >
+ > AO-40 Message of the Day:
+ >
+ > +--------------------------------------------------------------+
+ > | ALON/ALAT=30/5, EXPERIMENTAL U/L1->S2, MA 1
+ >
+ > Content-Type: application/x-msdownload; name="DOG1.MPG.exe"
+ > Content-Transfer-Encoding: base64
+ > Content-Disposition: attachment; filename="DOG1.MPG.exe"
 
-#include <time.h> to #include <sys/time.h>
+73,
 
-The package compiled nicely. I thought this beared repeating.
+Brett
 
-
- >Hello All;
-
- >I have obtained the following versions of ax25 utilities to use on my 
-RH6.2 system.
-
- >ax25-apps-0.0.6
- >ax25-tools-0.0.8 *
- >libax25-0.0.10
-
- >The libax25 'make' and 'make install' did ok. The ax25 apps 'make' and 
-'make install' did ok. >However ax25 tools got as far as mkiss and errored. 
-Error message was on line 405 in mkiss.c. >It did not like timeout and 
-pollinterval. Any ideas on what to check?
-
-
-John J. Bauerly NW0I
 
