@@ -1,61 +1,57 @@
-From: Bernard Pidoux <pidoux@ccr.jussieu.fr>
-Subject: script for 2.6 multi kiss dual port TNC
-Date: Sat, 14 Feb 2004 12:40:01 +0000
+From: "Douglas Cole" <n7bfs@qwest.net>
+Subject: Re: soundmodem ptt troubles
+Date: Sat, 14 Feb 2004 11:44:52 -0800
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <402E1721.1050601@ccr.jussieu.fr>
-References: <402E0D4C.6050503@ccr.jussieu.fr>
+Message-ID: <200402141144.52854.n7bfs@qwest.net>
+References: <200402092225.29942.n7bfs@qwest.net> <20040210154121.GA90446@freebsd.aeminium.pt>
+Reply-To: n7bfs@qwest.net
 Mime-Version: 1.0
-Content-Type: multipart/mixed;
- boundary="------------090001090208020504050509"
+Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <402E0D4C.6050503@ccr.jussieu.fr>
+In-Reply-To: <20040210154121.GA90446@freebsd.aeminium.pt>
+Content-Disposition: inline
 List-Id: <linux-hams.vger.kernel.org>
-To: linux-hams <linux-hams@vger.kernel.org>
+Content-Type: text/plain; charset="us-ascii"
+To: Nuno Sucena Almeida <slug@aeminium.org>, Linux Hams <linux-hams@vger.kernel.org>
 
-This is a multi-part message in MIME format.
---------------090001090208020504050509
-Content-Type: text/plain; charset=us-ascii; format=flowed
-Content-Transfer-Encoding: 7bit
+On Tuesday 10 February 2004 07:41, Nuno Sucena Almeida wrote:
+> Hello,
+>
+> 	try to download the source and compile it yourself. I remember that
+> I had a problem with an ancient version of soundmodem parport ptt support
+> (back in 2002 or 2003).
+> I checked the source and added a small fix to the parport init routine.
+> Check the latest source, I hope it's fixed by now. If not, search this list
+> for my callsign and you should be able to find my fix.
+>
+> 			73,
+> 					Nuno
+>
+> On Mon, Feb 09, 2004 at 10:25:29PM -0800, Douglas Cole wrote:
+> | setup soundmodem.conf for /dev/parport0 it complains "sm[15680]:
+>
 
-Hi,
 
-With kernel 2.6 there are some differences for initializing a multi 
-serial kiss connexion using a dual port TNC.
-This is part of my rc.ax25 script for two KPC9612 tncs I am using.
-Hope it will help starting with 2.6
+Thankyou Nuno, yes this did the trick :)
 
-73 de Bernard, f6bvp
+I removed the SuSE installed binary and compiled from source the 0.7 version 
+and after having to install a couple of libraries to make "configure" happy, 
+it compiled and installed and I am now able to enable ptt on the parallel 
+port pin two on the db25 connector ! :)
+It goes high (appx. +3.3vdc)  when ptt is asserted.
+
+So, now to build a small interface for the many different radios that I will 
+be using ...
+
+Next on my list is HDSSTV or RDFT as it is now called ;^}
+
+Thanks to all those that have put hard work into allowing linux hams to play 
+packet on their sound cards !  
+
+73
 
 
-
---------------090001090208020504050509
-Content-Type: text/plain;
- name="rc.ax25-2.6"
-Content-Transfer-Encoding: 7bit
-Content-Disposition: inline;
- filename="rc.ax25-2.6"
-
-#!/bin/sh
-# /etc/rc.d/rc.ax25
-# script for initializing ax25 multi kiss connexions
-# on two KPC9612 dual ports
-# to be used with kernel 2.6
-# f6bvp@amsat.org
-echo "Attaching kiss serial ports ax0, ax1, ax2, ax3"
-# radio ports ax0 ax1 ax2 ax3 are declared in /etc/axports
-# serial port 1 at 38400 bauds connected to KPC9612 #2
-/usr/local/sbin/mkiss -s 38400 -l /dev/tts/1 /dev/pty/m3 /dev/pty/m4
-# PORT #1 KPC9612 = 1200 ---> ax0
-/usr/local/sbin/kissattach -m 256 /dev/pty/s3 ax0 44.151.75.15
-# PORT #2 KPC9612 = 9600 ---> ax1
-/usr/local/sbin/kissattach -m 256 /dev/pty/s4 ax1 44.151.75.15
-# serial port 0 at 38400 bauds connected to KPC9612 #1
-/usr/local/sbin/mkiss -s 38400 -l /dev/tts/0 /dev/pty/m1 /dev/pty/m2
-# PORT #1 KPC9612 = 1200 ---> ax2
-/usr/local/sbin/kissattach -m 256 /dev/pty/s1 ax2 44.151.75.15
-# PORT #2 KPC9612 = 9600 ---> ax3
-/usr/local/sbin/kissattach -m 256 /dev/pty/s2 ax3 44.151.75.15
-#
-
---------------090001090208020504050509--
-
+Douglas Cole
+N7BFS
+Registered Linux user # 188922
+Spokane IRLP node 3250 owner
