@@ -1,38 +1,38 @@
-From: John Ackermann N8UR <jra@febo.com>
-Subject: OT:  Help using a analog-to-digital converter board under Linux
-Date: Sun, 22 Dec 2002 10:44:51 -0500
+From: "Andrew B." <ua1cam@sma.spb.ru>
+Subject: OE5DXL driver ?
+Date: Sun, 22 Dec 2002 23:27:19 +0300
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <1450000.1040571891@[192.168.1.222]>
+Message-ID: <1717384414.20021222232719@sma.spb.ru>
+Reply-To: "Andrew B." <ua1cam@sma.spb.ru>
 Mime-Version: 1.0
 Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
-Content-Disposition: inline
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"; format="flowed"
+Content-Type: text/plain; charset="us-ascii"
 To: linux-hams@vger.kernel.org
 
-I wonder if someone here would be willing to work with me off-list to see 
-if I can make use of an analog-to-digital converter board under Linux.
+Hello Friends,
 
-I have an ADAC 5500MF data acquisition board that has 8 channels of 12 bit 
-ADC (as well as some DAC channels and timers, but I'm not really interested 
-in those).  It has DOS and Windows software which frankly I'm not thrilled 
-with, even if you leave the OS aside!
+Anybody can help me find driver for OE5DXL-9k6modem for kernel above
+2.0.x !? I'll be happy,if it will for 2.2.x or 2.4.x!
 
-It appears that the board only uses some memory ports and doesn't use IRQs 
-or DMA.  I have the I/O memory map, and some sample program fragments from 
-the manual in several different languages.  I just don't know enough about 
-Linux programming at the hardware level to know how to begin writing my own 
-program.
+I'm not familiar in programming, but seems that adaptation of sources
+for newer kernel are possible. Maybe anybody of programmers will help?
 
-If someone has that skill and would be willing to help me out off-line, I'd 
-really appreciate it.  I can scan the relevant pages from the manual and 
-make them available.  My goal is to find a way to do this in perl, but if 
-we need to stick with C, that's OK.
+Source i get there: http://www2.cddc.vt.edu/linux/apps/ham/drivers/dxlmodem-2a.tar.gz
+For now, when i try to compile this sources ,i get errors like this:
+-----------------
+[root@linux dxlmodem-2a]# make
+gcc -I/usr/src/linux/include -Wall -Wstrict-prototypes -O2 -m486 -pipe -D__KERNEL__ -fomit-frame-pointer -DMODULE -DEXPORT_SYMTAB -DMODVERSIONS -include /usr/include/linux/modversions.h -DNOAX25_H -c dxlmodem.c -o dxlmodem.o
+In file included from dxlmodem.c:0:
+/usr/include/linux/modversions.h:1:2: #error Modules should never use kernel-headers system headers,
+/usr/include/linux/modversions.h:2:2: #error but headers from an appropriate kernel-source
+{standard input}: Assembler messages:
+{standard input}:9: Warning: Ignoring changed section attributes for .modinfo
+make: *** [dxlmodem.o] Error 1
+[root@linux dxlmodem-2a]#
+------------------
 
-Thanks to anyone who can help!
-
-73,
-John N8UR
-jra@febo.com
+Best regards,
+Andrew                          mailto:ua1camATsma.spb.ru
 
