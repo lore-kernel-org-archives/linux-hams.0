@@ -1,63 +1,36 @@
-From: 9a4gl@9a0tcp.ampr.org (Tihomir Heidelberg)
-Subject: AX.25 unaccepted socket makes problems
-Date: Tue, 27 May 03 18:17:48 CEST
+From: Thomas Osterried <thomas@osterried.de>
+Subject: Re: Fw: Fw: Statistics on AX25 interfaces
+Date: Wed, 28 May 2003 00:48:20 +0200
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <2197@9A0TCP>
+Message-ID: <20030527224820.GA1307@osterried.de>
+References: <002201c3246a$8b50fda0$0301a8c0@ozzy>
+Mime-Version: 1.0
 Return-path: <linux-hams-owner@vger.kernel.org>
+Content-Disposition: inline
+In-Reply-To: <002201c3246a$8b50fda0$0301a8c0@ozzy>
 List-Id: <linux-hams.vger.kernel.org>
-MIME-Version: 1.0
 Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
-To: linux-hams@vger.kernel.org
+To: Marco iw7eas <iw7eas@virgilio.it>
+Cc: linux-hams@vger.kernel.org
 
-Hi linux-hams,
+> > I'm just using mrtg and snmpd, but it works very well with internet
+> tipical
+> > interfaces as eth0, tunl0, ecc...
+> > Infact It seems doesn't report any ax25 traffic on ax0 or ax1!! I think it
+> > reports only tcp/ip activity on ax0,
+> > but it's very few....
 
-finaly I found a way how to produce AX.25 kernel get mad,
-I mean, when "cat /proc/net/ax25" produce segmentation fault,
-and everything got unstable.
+some time ago, there was a patch announced at this mailinglist.
+just looked at it. at least in linux kernel 2.4.20 this feature
+of mkiss.c comes by default.
 
-If your program bind ax.25 socket for listening, other station
-connects to that listening socket and if listening socket dies
-without accepting new connection from you program, after short
-period the things got mad...
+you may just extract drivers/net/ax25.c from this kernel, add it to your
+kernel source, and recompile+install the ax25 module.
 
-In ax25_destroy_socket function (af_ax25.c), there is a while
-loop for dequeuing those unaccepted connections and preparing
-them to die when heardbeat catch them. Also, there is code in
-ax25_std_heartbeat_expiry function (ax25_std_timer.c) that
-should destroy those connections, unfortunately those connection
-are NOT destroyed here ! A condition:
-        (ax25->sk->state == TCP_LISTEN && ax25->sk->dead)
-is not true because state of those connections are not
-TCP_LISTEN. State is TCP_ESTABLISHED or TCP_CLOSE, depending if
-other end disconnected or not. Cannot get the reason why
-segmentation fault is happening, but hope someone else can find
-a reason when problem is reproducable.
+imho, mrtg/snmp is the right way to go.
 
-To avoid this problem I added to ax25_destroy_socket function
-(af_ax25.c) following:
-        if (skb->sk != ax25->sk) {
-+               skb->sk->state     = TCP_LISTEN;
-+               if (!skb->sk->dead) {
-+                       skb->sk->state_change(skb->sk);
-+               }
-                skb->sk->dead  = 1;
-                ax25_start_heartbeat(skb->sk->protinfo.ax25);
-                skb->sk->protinfo.ax25->state = AX25_STATE_0;
-        }
+vy 73,
 
-I am pretty sure that this is not the way how problem should be
-fixed, there should be a different way how to mark socket for
-destroying, but at least, I got rid of this problem.
+	- thomas  dl9sau
 
-Also, some months ago I mention here that regulary I get this
-AX.25 kernel behavior after few days of running 9A0TCP gateway
-machine. I noticed that very often ax25d died or had to restart
-ax25d because it was not handling connections. Think this
-bind/non-accept kernel problem is very probably the reason.
-
-Anyone agree with me ? Can anyone make a resonable patch/fix
-for this problem ? Maybe setting skb->sk->destroy to 1 is right
-way ?
-
-73 de Tihomir Heidelberg, 9a4gl@9a0tcp.ampr.org
