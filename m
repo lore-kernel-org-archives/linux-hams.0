@@ -1,35 +1,42 @@
-From: <w9ya@arrl.net>
-Subject: Re: help xastir and mandrake (how to compile ax25 support ?)
-Date: Tue, 9 Nov 2004 21:46:49 -0500 (EST)
-Message-ID: <1103.65.166.80.196.1100054809.squirrel@w9ya0.pointclark.net>
-References: <1099943984.418fd03081dd7@imp4-q.free.fr>
-        <20041109012750.GA10725@linux-mips.org>
-        <200411090758.26321.oh1mrr@nic.fi>
-        <20041109120104.GB4791@linux-mips.org>
+From: Marco IW7EAS <iw7eas@virgilio.it>
+Subject: Linkt deb package
+Date: Wed, 10 Nov 2004 22:09:36 +0100
+Message-ID: <200411102209.36457.iw7eas@virgilio.it>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7BIT
+Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <20041109120104.GB4791@linux-mips.org>
+Content-Disposition: inline
 Sender: linux-hams-owner@vger.kernel.org
 List-Id: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
 To: linux-hams@vger.kernel.org
 
-> On Tue, Nov 09, 2004 at 07:58:26AM +0200, Jarmo wrote:
->
->> All packages,ax25-tools,ax25apps and libax25 can be found from
->> Mandrake cd's..
->
-> Does Mandrake also ship with shapelib and proj?  Xastir needs them for
-> map support but afair that was optional.
->
->   Ralf
-> -
-> To unsubscribe from this list: send the line "unsubscribe linux-hams" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at  http://vger.kernel.org/majordomo-info.html
+Hi!
+has anyone a dep packeg for linkt 0.6.x ?
+I can't find it on internet.
+My Linux is Knoppix 3.7 (debian).
 
-thac thac thac.. (i.e. see my post from yesterday)
-
-
-
+thanks for help
+Marco
+IW7EAS
+-- 
+---
+Marco Di Martino
+Via Ariosto, 34/A - 10036 - Settimo T.se (TO)
+Cell. +393285373364
+e-mail: iw7eas@virgilio.it
+-
+Amateur Callsign: I W 7 E A S
+Homepage: http://iw7eas.homeip.net/
+Ampr Hostname: iw7eas.ampr.org
+Ampr IP: 44.134.65.2
+LinuxNode: telnet://iw7eas.homeip.net/
+Jnos: telnet://iw7eas.homeip.net:4001/
+(X)net: telnet://iw7eas.homeip.net:4002/
+DxSpider: telnet://iw7eas.homeip.net:41112/
+NET/ROM: SETTGW:IW7EAS; NODEAS:IW7EAS-3
+Packet Mail : IW7EAS @ IK1ZNW.IPIE.ITA.EU
+AmprNet e-mail:
+iw7eas@iw7eas.ampr.org
+iw7eas@ik1znw.1.it.ampr.org
+---
