@@ -1,37 +1,47 @@
-From: M Taylor <mctylr@privacy.nb.ca>
-Subject: Re: ax25
-Date: Sun, 22 Sep 2002 18:54:17 +0100
+From: csmall@eye-net.com.au (Craig Small)
+Subject: Re: Unable to connect
+Date: Mon, 23 Sep 2002 12:11:31 +1000
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <20020922185417.B25813@pull.privacy.nb.ca>
-References: <001301c26241$cbb617e0$0500a8c0@terrigal.net.au> <Pine.LNX.4.44.0209221831220.17022-100000@oh2bns.ampr.org>
+Message-ID: <20020923021131.GC8641@eye-net.com.au>
+References: <000001c26244$e014e880$0802a8c0@Barry>
 Mime-Version: 1.0
 Return-path: <linux-hams-owner@vger.kernel.org>
 Content-Disposition: inline
-In-Reply-To: <Pine.LNX.4.44.0209221831220.17022-100000@oh2bns.ampr.org>; from tpm@prkele.tky.hut.fi on Sun, Sep 22, 2002 at 06:37:07PM +0300
+In-Reply-To: <000001c26244$e014e880$0802a8c0@Barry>
 List-Id: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
-To: linux-hams@vger.kernel.org
-Cc: Michael Hart <mhart@terrigal.net.au>
+To: Barry <barry_linux@rogers.com>
+Cc: linux-hams@vger.kernel.org
 
-On Sun, Sep 22, 2002 at 06:37:07PM +0300, Tomi Manninen wrote:
-> On Mon, 23 Sep 2002, Michael Hart wrote:
+On Sun, Sep 22, 2002 at 10:32:27AM -0400, Barry wrote:
+> Hi, just trying to recover from a major hardware failure here. I managed
+> to recover most of my configuration files, but a couple were lost.
 > 
-> > I guess if /dev/bcX is no longer used then I have an old AX25-HowTo.  What I
-> > need is a pointer to the latest AX25howto I guess
+> I am using:
+> Athalon 1.3
+> 512 Mb RAM
+> 30Gb Disc
+> Mandrake 9.0rc3 Kernel 2.4.19
+> libaxax25-0.0.9 
+> ax25-apps-0.0.6
+> ax25-tools-0.0.8
+> node-0.3.0
+> clx 5.04
 > 
-> What we need is someone writing a new AX25-HOWTO... The one you have is 
-> probably the latest there is.
+> All compiled and installed OK. Problem comes whenever I try to connect,
+> say to VE3NAV-1 (the node), VE3NAV-3 (clx) etc. I get the "connected"
+> message, immediately followed by a disconnection. The result is the same
+> whether I connect via radio, or a local loopback from the keyboard.
 
-The latest copy is from Sept 2001, and is located at
- http://www.tldp.org/HOWTO/AX25-HOWTO/
+Do those two connect via ax25?  It sounds very similar to a problem you
+get with inetd that does the listening then attempts to start the child
+program (like , say ftpd), fails then bumps you off.
 
-One point that was not clear to me, was whether Michael Hart was trying
-to use a RedHat distribution kernel (e.g. uname -r returns 2.4.18-5) or a 
-custom kernel (recommend getting 2.4.19 from www.au.kernel.org) built 
-with AX.25 and Baycom modules enabled. 
+In that case check those programs run directly.  
 
-Trying to use the RedHat kernel will not work. AFAIK the RedHat kernel has 
-no amateur radio device drivers just the ax.25 net/rom and rose protocol 
-support.
-
+  - Craig
+-- 
+Craig Small VK2XLZ  GnuPG:1C1B D893 1418 2AF4 45EE  95CB C76C E5AC 12CA DFA5
+Eye-Net Consulting http://www.eye-net.com.au/        <csmall@eye-net.com.au>
+MIEEE <csmall@ieee.org>                 Debian developer <csmall@debian.org>
