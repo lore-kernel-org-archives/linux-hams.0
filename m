@@ -1,50 +1,46 @@
-From: "Janusz Przybylski - SP1LOP" <sp1lop@gw.sp1lop.szczecin.pl>
-Subject: Dekoding encap.txt correct text.
-Date: Sat, 22 Mar 2003 20:23:23 +0100
+From: "B. Stienstra" <b.stienstra@xs4all.nl>
+Subject: 6pack problem
+Date: 23 Mar 2003 11:04:06 +0100
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <003701c2f0a8$815f65c0$6400000a@gw.sp1lop.szczecin.pl>
-Reply-To: "Janusz Przybylski - SP1LOP" <sp1lop@gw.sp1lop.szczecin.pl>
+Message-ID: <1048413846.30392.25.camel@atlantic>
+References: <003701c2f0a8$815f65c0$6400000a@gw.sp1lop.szczecin.pl>
 Mime-Version: 1.0
 Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
+In-Reply-To: <003701c2f0a8$815f65c0$6400000a@gw.sp1lop.szczecin.pl>
 List-Id: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
 To: linux-hams@vger.kernel.org
 
-I greet reading...
+Hello all,
 
-I have request whether accessible permissive on decodification software is
-file encap.txt
-on file routing in format for JNOS 1.11e, because such system on gate of
-szczecin.ampr.org
-I have installed.
+I've recently bought a TNC2multi (www.tnc2multi.de). The eeprom consist
+of a 6pack and tf2.7b firmware. You can switch between those two with a
+jumper. Since i'm running linux, i thought 6pack would be the best
+option. The problem is that the tnc stops running after a long while,
+say 8 hours. The /var/log/messages file says: 
+Mar 23 10:05:53 atlantic kernel: 6pack: resyncing TNC
 
-Routingu used in encap format.txt it is not peaceable with my format routing
-and then example:
-encap.txt
-route addprivate 44.165.25/24 encap 80.48.10 5.183
+After i disconnect the 12volt from the tnc and then reconnect it with
+12v the /var/log/messages says:
+Mar 23 10:06:18 atlantic kernel: 6pack: TNC found.
 
-and this routing:
-ip route add 44.165.25/25 via 80.48.10 5.183 dev tunl0 onlink
+And the tnc is up and running. Does anyone know what the problem could
+be? Below you can find my system info.
 
-this exemplifies from utilization my data.
+Kind regards,
+Ben, PD2BS
 
-I ask about information in this matter on my e-mail
-sp1lop@gw.sp1lop.szczecin.pl
-I thank warmly, and apologize for my simultaneously very bad English
+--
+PC: PIII, 866Mhz, 256MB mem
+OS: RedHat Linux 8.0, kernel 2.4.21-pre4
+TNC: TNC2multi (6pack/TF2.7b)
+AX25 software: ax25-apps-0.0.6, ax25-tools-0.0.8, libax25-0.0.10
 
 
 
-73 de Janusz SP1LOP
-================================
-SP1LOP Janusz Przybylski
-QTH: Szczecin JO73GL
---------------------------------------------------------------
-Member of SPDXC 397/R from 1986
-AmprNet: sp1lop.ampr.org       [44.165.25.33]
-I am Sysop szczecin.ampr.org [44.165.25.233]
-AX25  SP1LOP @ SR1BSZ.SZ.POL.EU
-----------------------------------------------------------------
-e-mail: sp1lop@gw.sp1lop.szczecin.pl
-Web:  http://www.sp1lop.szczecin.pl
+
+
+
+
 
