@@ -1,40 +1,24 @@
-From: Gordon Croft <gordon.croft@telus.net>
-Subject: setting input and output levels
-Date: Sat, 18 Dec 2004 14:35:03 -0800
-Message-ID: <41C4B097.5010205@telus.net>
+From: Tapio Sokura <oh2kku@iki.fi>
+Subject: 300 bps packet with soundmodem?
+Date: Sun, 19 Dec 2004 12:51:42 +0200
+Message-ID: <41C55D3E.4070608@iki.fi>
 Mime-Version: 1.0
 Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
 Sender: linux-hams-owner@vger.kernel.org
 List-Id: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"; format="flowed"
-To: linux-ham <linux-hams@vger.kernel.org>
+To: linux-hams@vger.kernel.org
 
-OK, I've got a rather basic question, but I can't seem to find the answer...
+I just tried soundmodem versions 0.7 and 0.9 for 300 bps HF packet 
+(afsk, 300 bps, tones 1600 and 1800 Hz). The modem window (from 
+soundmodemconfig's diagnostics menu) is constantly showing bit one, no 
+matter what audio I feed to it. If I bump the speed up to 400 bps or 
+anything above that, the modem sees both bits 0 and 1.
 
-How do I set the transmit and receive analog levels on the sound card to 
-use it as a sound modem or is it possible?
+Is there a bug in the soundmodem or is this a user error? I'm running 
+fedora core 1 and compiled the 0.9 version against alsa lib 1.0.7, 
+soundmodem 0.7 was compiled against freshrpms.net prepackaged alsa lib 
+1.0.4.
 
-I'm using a sound blaster sound card it says 'SB 4.05 detected OK' in 
-dmsg.  I compiled sound modem support into the kernel (I think) and I'm 
-using soundmodemconfig to set it up.  I can copy the traffic on my radio 
-through the sound card OK, although I have the output from the radio 
-going into the 'mic' input on the sound card instead of the line input.  
-I've even got the PTT working (with some help from people on this list, 
-thanks).
-
-Now when I try to transmit the radio is keyed but I don't think I'm 
-transmitting anything and I got thinking, how can I adjust the transmit, 
-or for that mater, the receive analog levels???
-
-Have I missed something really basic, or am I just not understanding the 
-way it works?
-
-
-
-
--- 
-No virus found in this outgoing message.
-Checked by AVG Anti-Virus.
-Version: 7.0.296 / Virus Database: 265.6.0 - Release Date: 17/12/2004
-
+   Tapio
