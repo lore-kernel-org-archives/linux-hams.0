@@ -1,38 +1,54 @@
-From: Hamish Moffatt <hamish@cloud.net.au>
-Subject: Re: installing packet
-Date: Thu, 21 Nov 2002 00:23:39 +1100
+From: =?iso-8859-1?q?Evandro=20Eduardo=20Seron=20Ruiz?= 
+	<evandro_ruiz@yahoo.com.br>
+Subject: installing packet
+Date: Thu, 21 Nov 2002 10:09:33 -0300 (ART)
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <20021120132339.GC11380@silly.cloud.net.au>
-References: <20021120115855.36875.qmail@web20511.mail.yahoo.com>
+Message-ID: <20021121130933.87823.qmail@web20507.mail.yahoo.com>
 Mime-Version: 1.0
 Content-Transfer-Encoding: QUOTED-PRINTABLE
 Return-path: <linux-hams-owner@vger.kernel.org>
-Content-Disposition: inline
-In-Reply-To: <20021120115855.36875.qmail@web20511.mail.yahoo.com>
 List-Id: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="iso-8859-1"
 To: linux-hams@vger.kernel.org
 
-On Wed, Nov 20, 2002 at 08:58:55AM -0300, Evandro Eduardo Seron Ruiz wr=
-ote:
-> gcc -DHAVE_CONFIG_H -I. -I. -I..     -g -O2 -Wall -c
-> call.c
-> call.c:38:20: curses.h: Arquivo ou diret=F3rio n=E3o
-> encontrado
-> make[1]: ** [call.o] Erro 1
-> make[1]: Saindo do diret=F3rio
-> `/usr/src/ax25-apps-0.0.6/call'
-> make: ** [install-recursive] Erro 1
->=20
->  Could anyone help me solve this.
+ Thank you all for the help.
+ It really was not clear for me that I had
+ to install ncurses-devel not ncurses,
+ but this was not the only problem.
 
-Could you please translate this error message into English, or compile
-again with LANG =3D C?
+ To make it shorter I found it easier to
+ install using rpm instead of compiling the
+ sources. The ax25lib, the tools and the apps
+ seem to be very dependent of the source code
+ and not only of the funcionality.
 
-Thanks,
-Hamish
---=20
-Hamish Moffatt VK3SB <hamish@debian.org> <hamish@cloud.net.au>
+ It took me too much time to find the exact
+ combination of packages wich seems now to
+ work, which  are:
+
+  libax25_0-0.0.10-1mdk
+  ax25-tools-0.0.8-3mdk
+  ax25-apps-0.0.6-1mdk
+ =20
+ for the Mandrake distribution.
+
+ Thank you all so much,
+
+ Evandro Ruiz
+ PY2 PCY=20
+
+
+
+=3D=3D=3D=3D=3D
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D
+ Evandro Eduardo Seron Ruiz               PY2PCY
+
+_______________________________________________________________________
+Yahoo! GeoCities
+Tudo para criar o seu site: ferramentas f=E1ceis de usar, espa=E7o de s=
+obra e acess=F3rios.
+http://br.geocities.yahoo.com/
 -
 To unsubscribe from this list: send the line "unsubscribe linux-hams" i=
 n
