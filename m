@@ -1,44 +1,27 @@
-From: John Feist <aa6qn@pacbell.net>
-Subject: PPPOE, IPTABLES and dynamic axip tunnels
-Date: Fri, 19 Jul 2002 08:33:10 -0700
+From: Mike Fenske <mike_fenske@telus.net>
+Subject: Soundmodem
+Date: Sat, 20 Jul 2002 20:15:40 -0700
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <3D383136.2C013C54@pacbell.net>
-Reply-To: aa6qn@pacbell.net
+Message-ID: <3.0.6.32.20020720201540.007a6500@pop.telus.net>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset="us-ascii"
 Return-path: <linux-hams-owner@vger.kernel.org>
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"
-To: LINUX-HAMS <linux-hams@vger.kernel.org>
+Content-Transfer-Encoding: 7bit
+To: linux-hams@vger.kernel.org
 
-The following is a email clip that I sent  requesting help with regards
-to port PPPOE towards a NETFILTER (IPTABLES) environment.  For those of
-you that make use of the dynamic ADSL connections that come with
-IPCHAINS and Masquerade to provide ip route axip tunnels between other
-AX25 nodes may want to consider the move as well.
+Hello all. I am tying to get Thomas's userspace soundmodem working on an
+IBM laptop. I have installed SuSE 7.3 and Kernel 2.4.8. AX25 is working
+fine with baycom drivers. I have installed soundmodem from SuSE's rpm's.
+Got it configured OK and soundmodem starts with no errors. If I check
+ifconfig, it shows port ax0 up running. Next, using "call" I tried
+"calling" a station, expecting to hear a packet from the internal speaker
+(I haven't hooked up a radio yet). Nothing is heard. After stopping "call"
+with Ctrl-C, I checked ifconfig again and see only 1 packet transmitted
+(should be at least 2 I think). I am using alsa sound drivers and sound
+card (ESS1688) works fine to play wav files, etc. 
 
------- to: info@roaringpenguin.com ------
-Greetings, first thank you for the pppoe support.  I am running RH7.3,
-kernel 2.4.19.pre9 with the canned installation of pppoe
-(adsl-start....) which works great with IPCHAINS in the masquerade
-environment.  Unfortunately there is a bad exploit that is associated
-with IPCHAINS due to the fact that ip-masquerade runs as udp between
-ports 61000-65000. You can read about this at:
-http://online.securityfocus.com/bid/1078/discussion/
+Any suggestions??
 
-What got me going was my kernel log report showed several incoming
-connections that provided tunnels into my server via port 61000 through
-my ipchains firewall from various external IP addresses.  Using a
-IPTABLES boilerplate from:
-http://orbital.wiretapped.net/~technion/iptables  I made the changes to
-reflect my network and loaded IPTABLES vice ipchains at boot up.  The
-firewall loaded fine but the ppp (pppoe) would not start.
-
-Since IPTABLES is a stateful protocol many of the childhood problems of
-IPCHAINS have been corrected.  I could use some direction to port the
-firewall toward the NETFILTER environment.
-
---------
-
-Hopefully the above may save someone else's headache, 73, John
-
+Mike Fenske
+VE7MKF
