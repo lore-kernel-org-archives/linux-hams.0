@@ -1,38 +1,41 @@
-From: "Andrew B." <ua1cam@sma.spb.ru>
-Subject: OE5DXL driver ?
-Date: Sun, 22 Dec 2002 23:27:19 +0300
+From: mvw@mvw.net
+Subject: Simple BBS, again, sorry for asking twice.
+Date: Tue, 24 Dec 2002 00:15:41 -0500 (EST)
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <1717384414.20021222232719@sma.spb.ru>
-Reply-To: "Andrew B." <ua1cam@sma.spb.ru>
+Message-ID: <Pine.LNX.4.44.0212240010320.10548-100000@jeeves.mvw.net>
+References: <Pine.LNX.4.33.0212161034190.1291-100000@wapiti.tc.fluke.com>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
+In-Reply-To: <Pine.LNX.4.33.0212161034190.1291-100000@wapiti.tc.fluke.com>
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"
+Content-Type: TEXT/PLAIN; charset="us-ascii"
+Content-Transfer-Encoding: 7bit
 To: linux-hams@vger.kernel.org
 
-Hello Friends,
+Hi all,
 
-Anybody can help me find driver for OE5DXL-9k6modem for kernel above
-2.0.x !? I'll be happy,if it will for 2.2.x or 2.4.x!
+OK, I have another all- new machine ready to go online. Redhat 8 with
+Custom kernel (2.4.20 with ax25 and kiss compiled in), two serial ports,
+routing for my two IPs, and so on. An as-new P133 with 64 MB and no cpu
+fan - perfect for many years of reliable radio use. 
 
-I'm not familiar in programming, but seems that adaptation of sources
-for newer kernel are possible. Maybe anybody of programmers will help?
+(My server 'hambox' has been up for years - 371 days since the last reboot 
+for regular dust-cleaning.)
 
-Source i get there: http://www2.cddc.vt.edu/linux/apps/ham/drivers/dxlmodem-2a.tar.gz
-For now, when i try to compile this sources ,i get errors like this:
------------------
-[root@linux dxlmodem-2a]# make
-gcc -I/usr/src/linux/include -Wall -Wstrict-prototypes -O2 -m486 -pipe -D__KERNEL__ -fomit-frame-pointer -DMODULE -DEXPORT_SYMTAB -DMODVERSIONS -include /usr/include/linux/modversions.h -DNOAX25_H -c dxlmodem.c -o dxlmodem.o
-In file included from dxlmodem.c:0:
-/usr/include/linux/modversions.h:1:2: #error Modules should never use kernel-headers system headers,
-/usr/include/linux/modversions.h:2:2: #error but headers from an appropriate kernel-source
-{standard input}: Assembler messages:
-{standard input}:9: Warning: Ignoring changed section attributes for .modinfo
-make: *** [dxlmodem.o] Error 1
-[root@linux dxlmodem-2a]#
-------------------
+Now, I asked before but forget the answers. Forgive me for asking again:
 
-Best regards,
-Andrew                          mailto:ua1camATsma.spb.ru
+a) I should know this, but how can I get telnet to only work on the radio 
+ports and not on the ethernet port? I.e. telnet (unencrypted) only from 
+the ax25 ports.
+
+b) I use tcp/ip for mail etc. But apart from that I would like to set up a 
+simple messaging system/bbs, to use when someone goes to this system using 
+ax25. I do not need "do it all" systems, just a simple bbs (and it's a 
+1200 bps port, so a simple one with little text would be great). 
+Suggestions, all?
+
+Many thanks for your indulgence.
+
+73
+Michael VA3MVW
 
