@@ -1,28 +1,23 @@
-From: "Pontus Falk" <pfalk@ax25.org>
-Subject: NET/ROM?
-Date: Sun, 18 May 2003 21:39:42 +0200 (CEST)
+From: "John" <aa6qn@pacbell.net>
+Subject: Compiling Perl/Tk800.024 on RH9 ?
+Date: Mon, 19 May 2003 05:42:05 -0700
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <1672.213.65.101.235.1053286782.squirrel@ax25.org>
+Message-ID: <CMECIEPPNBDKNAHKBHJGOEINCAAA.aa6qn@pacbell.net>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7BIT
+Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
 List-Id: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
-To: linux-hams@vger.kernel.org
+To: Linux-Hams <Linux-Hams@vger.kernel.org>
 
-Hi!
+Has anyone been successful compiling either perl/Tk800.024 or perl/Tk402.004
+on a RH9 platform? I keep getting an error "missing separator" from the
+Makefile. Doing the "perl Makefile.PL" runs just fine. This did work on a
+RH7.3 box. If I add a '=' after the 2 effected lines I still get a libpTk.a
+error.
 
-I'm using RH 8.0 and have just compiled the 2.4.20 kernel downloaded from
-rhn.redhat.com.
+I would like to get my WXNET (weather station) client back up and need the
+current Tk to do so.
 
-I get AX.25 to work OK but not NET/ROM.
-
-It says something like 'invalid port netrom' when I try to start netromd.
-
-Can someone give me a hint, please?
-
-Regards,
-
-Pontus Falk
-
+Thank you in advance, John
 
