@@ -1,31 +1,25 @@
-From: WJuergens@t-online.de (Wolf-Ruediger Juergens)
-Subject: Re: Abt gmfsk last version.
-Date: Sun, 18 May 2003 14:33:55 +0200
+From: Luc Langehegermann <lx2gt@gmx.net>
+Subject: A new version of KTrack has been released
+Date: Sun, 18 May 2003 16:02:18 +0200
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <200305181433.55576.wjuergens@t-online.de>
-References: <Pine.LNX.4.44.0305132315070.2357-100000@oh2bns.ampr.org> <200305181400.49324.wjuergens@t-online.de> <20030518121739.GA5123@silly.cloud.net.au>
+Message-ID: <200305181601.10236.lx2gt@gmx.net>
 Mime-Version: 1.0
 Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <20030518121739.GA5123@silly.cloud.net.au>
 Content-Disposition: inline
 List-Id: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
-To: linux-hams@vger.kernel.org
+To: amsat-bb@amsat.org, linux-hams@vger.kernel.org
 
-On Sunday 18 May 2003 14:17, Hamish Moffatt wrote:
-> What is your gcc --version? I have 3.2.3 20030415 (Debian prerelease)
-> and gmfsk 0.5 still compiles fine.
+Hello,
 
-> gcc --version
-gcc (GCC) 3.2.3 
+I have just released a new Version of KTrack. This version is considerated as 
+alpha quality, so be carefull, and submit any bug you encounter!
 
-I found my mistake, I had overwritten the CFLAGS/CPPFLAGS in the enviroment.
-Now it compiles ok.
-Thanks for help and sorry for waste bandwith.
+The Changelog can be found at 
+http://sourceforge.net/project/shownotes.php?release_id=160086. You can 
+download this version at 
+http://prdownloads.sourceforge.net/ktrack/ktrack-0.3.0-alpha1.tar.gz?download.
 
-73 Wolf, DL2WRJ
--- 
-Q:      Why did the programmer call his mother long distance?
-A:      Because that was her name.
-(/usr/games/fortune)
+73, Luc
+
