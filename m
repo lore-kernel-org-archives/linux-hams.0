@@ -1,34 +1,48 @@
-From: Tomi Manninen <tpm@prkele.tky.hut.fi>
-Subject: Re: Regarding XFBB Nightmares!
-Date: Thu, 20 Mar 2003 19:28:09 +0200 (EET)
+From: "Janusz Przybylski - SP1LOP" <sp1lop@gw.sp1lop.szczecin.pl>
+Subject: Dekoding encap.txt to routing for JNOS
+Date: Sat, 22 Mar 2003 20:10:54 +0100
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <Pine.LNX.4.44.0303201922410.1307-100000@oh2bns.ampr.org>
-References: <Pine.LNX.4.21.0303202204540.2250-100000@zl2bsj.ampr.org>
-Reply-To: tpm@prkele.tky.hut.fi
+Message-ID: <000901c2f0a6$c71402d0$6400000a@gw.sp1lop.szczecin.pl>
+Reply-To: "Janusz Przybylski - SP1LOP" <sp1lop@gw.sp1lop.szczecin.pl>
 Mime-Version: 1.0
-Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <Pine.LNX.4.21.0303202204540.2250-100000@zl2bsj.ampr.org>
-List-Id: <linux-hams.vger.kernel.org>
-Content-Type: TEXT/PLAIN; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
-To: LINUX HAMS MAILING LIST <linux-hams@vger.kernel.org>
+Return-path: <linux-hams-owner@vger.kernel.org>
+List-Id: <linux-hams.vger.kernel.org>
+Content-Type: text/plain; charset="us-ascii"
+To: linux-hams@vger.kernel.org
 
-On Thu, 20 Mar 2003, Wilbert Knol wrote:
+I greet reading...
+I have request whether accessible permissive on decodification software is
+file encap.txt on file routing in format for JNOS 1.11e, because such system
+on gate of bristles.ampr.I have org installed.
 
-> > What would be the easiest way to get around this dependency problem?
-> 
-> Toss those RPMs && compile from sources, against libc.so.6
+Routingu used in encap format.txt it is not peaceable with my format
+routingu
+and then example:
+encap.txt
+route addprivate 44.165.25/24 encap 80.48.10 5.183
 
-RPMs, if made properly, are _very_ handy things. Unfortunately the FBB RPM
-doesn't seem to be very well made. It seems to contain stuff that should
-not be there (not part of the FBB distribution), some of it is linked
-against libc5, some against glibc. Also there is at least one script that
-clashes with LPRng on my RH8 box.
+and this routing:
+ip route add 44.165.25/25 via 80.48.10 5.183 dev tunl0 onlink
 
-Does anyone have a pointer to a good .spec file or *source* RPM for FBB ?
+this exemplifies from utilization my data.
 
--- 
-Tomi Manninen           Internet:  oh2bns@sral.fi
-OH2BNS                  AX.25:     oh2bns@oh2rbi.fin.eu
-KP20ME04                Amprnet:   oh2bns@oh2rbi.ampr.org
+I ask about information in this matter on my e-mail
+sp1lop@gw.sp1lop.szczecin.pl
+I thank warmly, and apologize for my simultaneously very
+bad English
+
+
+73 de Janusz SP1LOP
+================================
+SP1LOP Janusz Przybylski
+QTH: Szczecin JO73GL
+--------------------------------------------------------------
+Member of SPDXC 397/R from 1986
+AmprNet: sp1lop.ampr.org       [44.165.25.33]
+I am Sysop szczecin.ampr.org [44.165.25.233]
+AX25  SP1LOP @ SR1BSZ.SZ.POL.EU
+----------------------------------------------------------------
+e-mail: sp1lop@gw.sp1lop.szczecin.pl
+Web:  http://www.sp1lop.szczecin.pl
 
