@@ -1,41 +1,38 @@
-From: Arno Verhoeven <pe1icq@pi8zaa.ampr.org>
+From: Tomi Manninen <oh2bns@sral.fi>
 Subject: Re: Soundmodem
-Date: Fri, 29 Oct 2004 16:33:53 +0200
+Date: Fri, 29 Oct 2004 19:59:22 +0300
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <418254D1.40407@pi8zaa.ampr.org>
+Message-ID: <1099069161.1288.8.camel@oh2bns.ampr.org>
 References: <200410291617.26097.anespo1@virgilio.it>
 Mime-Version: 1.0
 Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
 In-Reply-To: <200410291617.26097.anespo1@virgilio.it>
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"; format="flowed"
-To: anespo1@virgilio.it
-Cc: linux-hams@vger.kernel.org
+Content-Type: text/plain; charset="us-ascii"
+To: Linux-hams List <linux-hams@vger.kernel.org>
 
-iw2esa wrote:
-> Hello,
-> I've a little trouble using the ax25 soundmodem. Here is my conditions:
-> 
-> Slackware 9.1
-> Kernel 2.4.22 with ax25 e soundmodem modules compiled
-> Soundcard integrated in a MB Asus I810
-> 
+On Fri, 2004-10-29 at 17:17, iw2esa wrote:
 
-> 
-> Running soundmodem
+> Running gmfsk
 > ===============
-> soundmodem: error while loading shared libraries: libxml.so.1: cannot open 
-> shared object file: No such file or directory
+>  gmfsk
+> audio_alsa: no cards found!
 
+Something wrong with the ALSA config. You said that playing music
+works but maybe the OSS emulation layer is not working properly.
+Your music player might be using ALSA directly. gMFSK uses the
+OSS sound API and thus needs the ALSA OSS emulation layer to
+work.
 
-You need to install libxml-1.8.17-i386-2.tgz which you can find in the 
-/pasture directory on the CDROM.
+> ** (gmfsk:6084): WARNING **: FIXME: guard from double entry
 
+Hmm.. I guess this is from the threading libs, I don't think
+gMFSK has this error message. :)
+
+Anyway it's probably a result from the audio not working and
+as such not serious (?)
 
 -- 
-73, PE1ICQ  Arno Verhoeven
---------------------------------
-AX.25  pe1icq@pi8zaa.#nbo.nld.eu
-smtp   pe1icq@pi8zaa.ampr.org
-inet   pe1icq@amsat.org
+Tomi Manninen / OH2BNS / KP20ME04
+
