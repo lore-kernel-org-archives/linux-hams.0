@@ -1,42 +1,52 @@
-From: Tomi Manninen <tpm@prkele.tky.hut.fi>
+From: Cees Tool <c.tool@quicknet.nl>
 Subject: Re: FBB...
-Date: Wed, 25 Dec 2002 23:18:59 +0200 (EET)
+Date: Wed, 25 Dec 2002 22:31:45 +0100
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <Pine.LNX.4.44.0212252258010.1449-100000@oh2bns.ampr.org>
-References: <Pine.LNX.4.44.0212250010050.17537-100000@jeeves.mvw.net>
-Reply-To: tpm@prkele.tky.hut.fi
+Message-ID: <003401c2ac5d$06545000$0300a8c0@HUISKAMER>
+References: <Pine.LNX.4.44.0212251459330.21106-100000@jeeves.mvw.net>
 Mime-Version: 1.0
+Content-Transfer-Encoding: 7BIT
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <Pine.LNX.4.44.0212250010050.17537-100000@jeeves.mvw.net>
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: TEXT/PLAIN; charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-To: mvw@mvw.net
-Cc: linux-hams@vger.kernel.org
+Content-Type: text/plain; charset="us-ascii"
+To: Linux-Hams <linux-hams@vger.kernel.org>
 
-On Wed, 25 Dec 2002 mvw@mvw.net wrote:
+----- Original Message -----
+From: <mvw@mvw.net>
 
-> OK, pity, but FBB is deleted. I have never seen a worse install in my
-> life, of any software! Apart from the edits needed before it will even
-> compile, there are no instructions (the README just says to 'make' and
-> enjoy), and the scripts included give nothing but fatal errors. Plus the
+> This is definitely not GPL:
+>
+....
+> are old and do not fit the software... took me an hour to see I had to run
+> that script. How about a simple readme that mentions this? These are the
+> very basics of software!
+....
+>Alas, there is no standard "./configure, make, make
+>install", and the bbs when it does come up is mysterious, needs obscure
+>text files edited, and displays Toulouse stuff by default...
 
-FBB is not the easiest software to set up, I admit. Most of 
-the documentation at http://www.f6fbb.org/fbbdoc/doc.htm still applies to 
-the latest version but the Linux specific stuff is not well documented.
+Wow !
+The source-tree of the latest version I have here (7.04h) has all these
+things in it.
 
-You should read all the doc files from the source package: README, INFO, 
-FBBTREE and especially CHANGES!
+There is a file "COPYING" with the GPL license in it, there are several
+readme-files how you should compile the code,  there is no "configure"
+needed, you should only check if the path of the ax25-utils/libraries
+differs from the standard path and change it if needed. Then you can type
+"make"  and after that "make install" and the installation script will
+install everything in the right directory's and asks your station details.
+If you answer all questions, you will end up with a working installation.
+(and there is absolutely no need to remove include files from the source)
 
-> English is bad, but that is not the author's fault, and the licensing is 
-> odd (not GPL: it asks not to make changes)..
+Looking in the sourcecode tree for a file called README or INFO only costs 1
+minute of your time. (and is probably less then the time it took to write
+about "bad sofware")
 
-It has been changed to real GPL some time ago. See the COPYING file 
-included in the source. Unfortunately there are references to the old 
-licence here and there...
+If all of this is too difficult for you, please do not even try to install
+it. Probably the normal daily sysop work would also be too difficult ....
 
--- 
-Tomi Manninen           Internet:  oh2bns@sral.fi
-OH2BNS                  AX.25:     oh2bns@oh2rbi.fin.eu
-KP20ME04                Amprnet:   oh2bns@oh2rbi.ampr.org
+73
+Cees
+
+
 
