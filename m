@@ -1,82 +1,119 @@
-From: "IT3 Stuart B. Tener, USNR" <stuart@bh90210.net>
-Subject: New to the list...
-Date: Tue, 24 Jun 2003 07:28:28 -0700
+From: "John A. Magliacane" <kd2bd@yahoo.com>
+Subject: Announcing PREDICT Version 2.2.2
+Date: Tue, 24 Jun 2003 10:03:25 -0700 (PDT)
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <!~!UENERkVCMDkAAQACAAAAAAAAAAAAAAAAABgAAAAAAAAA6nohIbvp0RGXqACAx8VP1sKAAAAQAAAAu+l99CL0ZkWOoxTNvpJsHwEAAAAA@bh90210.net>
-Reply-To: <stuart@bh90210.net>
+Message-ID: <20030624170325.48839.qmail@web12204.mail.yahoo.com>
+References: <E186w1M-000HFS-00@serenity.mcc.ac.uk>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 8BIT
 Return-path: <linux-hams-owner@vger.kernel.org>
+In-Reply-To: <E186w1M-000HFS-00@serenity.mcc.ac.uk>
 List-Id: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 7bit
 To: linux-hams@vger.kernel.org
 
-List members:
-
-	I am new to the email list, and would like to ask a few questions.
-Is there a website that allows me to set and control the options I have for
-this email list?
-
-	AX.25/Linux questions!
-
-	I have been a System Administrator and a Ham for over 15 years each,
-and I am trying to get AX.25 + Linux working, so here we go. By the way in
-case it interests anyone I have read the AX.25 FAQ (did not understand all
-of it, but I did read it). I think the FAQ is very poorly organized but in
-terms of the technical data, I understand it.
-
-	Now it is my goal to get Linux running using the AX.25 drivers. When
-I do I, eventually I would like to build my own TNC using one of these
-single board computers, such as openbrick. But, that is after I make it work
-on the desktop I have (and my laptop).
-
-	I have a few questions for you now:
-
-	If my goal is to configure TCP/IP over a soundcard modem using
-Linux, what do I need to get working (using the AX.25 FAQ as a guide)? For
-example it is my understanding using a TNC, you would put the TNC into KISS
-mode to allow TCP/IP to avoid the AX.25 level. Then setup (in the old days)
-KA9Q to do the TCP/IP stack.
-
-	The first thing I would like to accomplish is making the PC act as
-an AX.25 TNC using the soundcard. Once this works (for basic packet
-operation) then I would like to configure the system to:
-
-	(a) Run TCP/IP, using the soundcard as the modem
-	(b) Run TCP/IP, using an external TNC in KISS mode (on /dev/ttyS0)
-
-	I did the modprobe of soundmodem, and then tried to issue the
-sethdlc command, but after doing so I got "no such address or device" when I
-did an "ifconfig sm0 up".
-
-	How can I verify what the IO, DMA and IRQ of the sound card is, if
-it is built into the motherboard, and the BIOS offers now way to set those
-for the card?
-
-	Other than the soundcard not being set right by sethdlc, I am lost
-as to what is wrong. Any assistance you can offer would be well appreciated.
-
-	Thanks in advance.
+PREDICT-2.2.2 has been released.  This release corrects several small bugs
+and adds several new features.  Some of the important changes include:
 
 
+* Fixed a bug that caused GET_SAT (UDP socket) requests to fail after
+  GET_DOPPLER requests were issued.  (Tnx: KF6RFX)
 
-Very Respectfully, 
+* Fixed a bug in "earthtrack" where latitude and longitude options sent
+  to "xplanet" were reversed under certain circumstances.  (Tnx: ZL2BSJ)
 
-Stuart Blake Tener, IT3 (E-4), USNR-R, N3GWG 
-Beverly Hills, California
-Ship Augmentation Unit (SAU) 
-NR FFG-38 1941 
-stuart@bh90210.net 
-west coast: (310)-358-0202 P.O. Box 16043, Beverly Hills, CA 90209-2043 
-east coast: (215)-338-6005 P.O. Box 45859, Philadelphia, PA 19149-5859 
+* "earthtrack" has been modified to work with "xplanet" version 1.0 and
+  later.  Compatibility for versions of "xplanet" prior to 1.0 is retained
+  through an earlier version of "earthtrack" that has been moved into
+  an "old_version" directory.
 
-Telecopier: (419)-715-6073 fax to email gateway via www.efax.com (it's
-free!) 
+* Orbital phase, eclipse depth, and squint angle data has been appended
+  to the information returned to UDP client applications in response
+  to the GET_SAT command.
 
-JOIN THE US NAVY RESERVE, SERVE YOUR COUNTRY, AND BENEFIT FROM IT ALL. 
+* Moon tracking code was replaced with a more precise algorithm based
+  on Meeus' method.
 
-Tuesday, June 24, 2003 7:22 AM
+* Added a lunar prediction mode that predicts "passes" of the Moon.
+
+* Added a solar prediction mode that predicts "passes" of the Sun.
+
+* Added "MoonTracker", a small utility that runs in the background and
+  directs an AZ/EL antenna array toward the position of the Moon (for
+  EME communications).
+
+* The Moon's declination, Greenwich hour angle, and right ascension
+  have been appended to the information returned to UDP clients in
+  response to the GET_MOON command.
+
+* The Sun's declination, Greenwich hour angle, and right ascension
+  have been appended to the information returned to UDP clients in
+  response to the GET_SUN command.
+
+* PREDICT now returns orbital data in NASA Two-Line format to UDP
+  clients in response to the GET_TLE command.
+
+* Added a new UDP socket command (GET_MODE) to return PREDICT's
+  current tracking mode (single, multi, none) to networked clients.
+  If PREDICT is operating in Single Satellite tracking mode, then the
+  name of the satellite currently being tracked is returned by GET_MODE.
+
+* In Main Menu option [G] (Edit Ground Station Information), ground
+  station latitude and longitude may now be entered in degree, minute,
+  second (DMS) format in addition to decimal degrees.
+
+* The "vocalizer" feature was dramatically improved.  Sound samples
+  are now read from ubiquitious .wav files, making it easier for users
+  to create samples of their own, even in languages other than English.
+  PREDICT now articulates numeric values in their entirety (ie:
+  "three hundred forty nine") instead of articulating each digit
+  individually ("three four nine") as was done previously.  Alarms
+  and additional announcements were added to alert a visual observer
+  when a spacecraft is visible, when it enters into sunlight, and
+  when it enters into eclipse.
+
+* Added "fodtrack", written by Luc Langermann, LX1GT.  This utility
+  permits AZ/EL antenna control using the Fodtrack hardware interface
+  via the parallel port.
+
+* Added titles to windows when PREDICT is run under X.
+
+* The latest version of "gsat" (1.1.0) has been included.
+
+* Several other coding changes were made.  Linux-specific code was
+  removed in an effort to allow easier compilation under FreeBSD,
+  MacOS X, and other Unixes in general.
+
+* PREDICT's main menu was expanded to handle the additional program
+  options.  The main menu also now displays the text "Server Mode"
+  when the program is invoked in socket server mode (-s).
+
+* Program documentation was updated.
 
 
+PREDICT may be downloaded from:
+
+	http://www.amsat.org/amsat/ftp/sotfware/Linux/predict-2.2.2.tar.gz
+
+Further information on PREDICT is available at:
+
+	http://www.qsl.net/kd2bd/predict.html
 
 
+Happy tracking!
+
+
+73, de John, KD2BD
+
+
+=====
+-=-=-=-=-=-=-=-=- John A. Magliacane, KD2BD -=-=-=-=-=-=-=-=-=-=-=-=-=-
+   Internet  : kd2bd@amsat.org  |  Video : 426.250 MHz/439.250 MHz
+   Satellite : UoSAT-OSCAR-22   |  Morse : -.-  -..  ..---  -...  -..
+   Voice     : +1.732.224.2948  |  WWW   : http://www.qsl.net/kd2bd/
+-=-=-=-=-=-=-=-= Linux Doesn't Cost.  It Pays. =-=-=-=-=-=-=-=-=-=-=-=-
+
+__________________________________
+Do you Yahoo!?
+SBC Yahoo! DSL - Now only $29.95 per month!
+http://sbc.yahoo.com
