@@ -1,45 +1,28 @@
-From: Arno Verhoeven <pe1icq@pi8zaa.ampr.org>
-Subject: Re: [ANN] Hamlib 1.1.4 released
-Date: Sun, 18 May 2003 17:13:41 +0200
+From: "Pontus Falk" <pfalk@ax25.org>
+Subject: NET/ROM?
+Date: Sun, 18 May 2003 21:39:42 +0200 (CEST)
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <3EC7A325.3040906@pi8zaa.ampr.org>
-References: <20030428184751.GX29558@charybde.local>
+Message-ID: <1672.213.65.101.235.1053286782.squirrel@ax25.org>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 7BIT
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <20030428184751.GX29558@charybde.local>
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"; format="flowed"
-To: Stephane Fillod <f8cfe@free.fr>, Linux HAMs <Linux-hams@vger.kernel.org>
-Cc: Hamlib developers <hamlib-developer@lists.sourceforge.net>, sdrwg@arrl.org, GNU Radio mailing list <discuss-gnuradio@gnu.org>
+Content-Type: text/plain; charset="us-ascii"
+To: linux-hams@vger.kernel.org
 
-Stephane Fillod wrote:
+Hi!
 
->Good news everyone!
->
->Hamlib-1.1.4 has finally been released.
->
->Hamlib provides a unified environment for the development of radio 
->and rotator control applications. Release 1.1.4 includes improved 
->rotator support, important build fixes for gcc-3.x, *BSD, Mac OS X,
->and Cygwin(win32) platforms. Besides improvements and bug fixes, 
->some experimental work has been started on SDR, stay tuned. 
-> 
->Check it out at http://hamlib.org ! 
->  
->
+I'm using RH 8.0 and have just compiled the 2.4.20 kernel downloaded from
+rhn.redhat.com.
 
-More good news :-)
+I get AX.25 to work OK but not NET/ROM.
 
-For those who are interested. A pre-compiled binary package for Slackware 9.0 is available from http://sharon.esrac.ele.tue.nl/pub/slackware/slackware-9.0_ham_updates/extra/ham/rigcontrol/
+It says something like 'invalid port netrom' when I try to start netromd.
 
-and for Slackware 8.1 at http://sharon.esrac.ele.tue.nl/pub/slackware/slackware-8.1_ham_updates/extra/ham/rigcontrol/
+Can someone give me a hint, please?
 
--- 
-73, PE1ICQ  Arno Verhoeven
---------------------------------
-AX.25  pe1icq@pi8zaa.#nbo.nld.eu
-smtp   pe1icq@pi8zaa.ampr.org
-inet   pe1icq@amsat.org
+Regards,
+
+Pontus Falk
 
 
