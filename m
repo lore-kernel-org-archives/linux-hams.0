@@ -1,25 +1,22 @@
-From: Aleksandar Ilic <ailic@gmx.net>
-Subject: Re: play selcal tones
-Date: Fri, 10 Sep 2004 23:40:20 +0200
+From: acierno@pocketdvm.com
+Subject: free to a good home...
+Date: Sun, 12 Sep 2004 10:36:17 -0400
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <200409102340.20812.ailic@gmx.net>
-References: <87hdqdw959.fsf@jidanni.org>
-Mime-Version: 1.0
+Message-ID: <1B555479-04C9-11D9-A493-000A95DB9E94@pocketdvm.com>
+Mime-Version: 1.0 (Apple Message framework v619)
 Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <87hdqdw959.fsf@jidanni.org>
-Content-Disposition: inline
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"
-To: linux-hams@vger.kernel.org
+Content-Type: text/plain; charset="us-ascii"; format="flowed"
+To: Linux HAMs <linux-hams@vger.kernel.org>
 
-On Sunday 05 September 2004 07:57, Dan Jacobson wrote:
-> How can I play selcal tones out my speakers?
-> beep -f 881.0 & beep -f 977.2 #doesn't work of course.
+I have a sparcstation 4 in the worcester MA are that would be free to a 
+good (or bad) home...... Not sure exactly what is in the box but I do 
+remember that when I put it away four years ago it did boot up nicely 
+into red hat linux.  be glad to ship it, if you are willing to pay the 
+freight.........
 
-Start xmms and add an URL:   tone://881.0;977.2
 
-kindly,
-Alek
--- 
-  73 de YU1IS  -=-  ICQ# 62419462
+mark
+n2uem
+
