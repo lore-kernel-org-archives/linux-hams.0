@@ -1,59 +1,90 @@
-From: =?iso-8859-1?Q?G=E9rard?= Parat / F6FGZ <f6fgz@free.fr>
-Subject: ax25ipd configuration problem
-Date: Sun, 16 Nov 2003 21:38:05 +0100
+From: =?iso-8859-1?q?=D8yvind=20Hanssen?= <oyvind@cs.uit.no>
+Subject: Patch to mheardd
+Date: Sun, 16 Nov 2003 22:22:06 +0100
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <3FB7E02D.D5CC7D78@free.fr>
+Message-ID: <200311162222.06965.oyvind@cs.uit.no>
 Mime-Version: 1.0
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Content-Type: Multipart/Mixed;
+  boundary="Boundary-00=_+p+t/EMDR/UPiHI"
 Return-path: <linux-hams-owner@vger.kernel.org>
 List-Id: <linux-hams.vger.kernel.org>
+To: linux-hams@vger.kernel.org
+
+
+--Boundary-00=_+p+t/EMDR/UPiHI
 Content-Type: text/plain; charset="iso-8859-1"
-To: Linux-Hams <linux-hams@vger.kernel.org>
+Content-Transfer-Encoding: quoted-printable
+Content-Disposition: inline
 
-Hello,
+There was a problem with invalid packets: Especially, corrupted digipeater =
+fields=20
+may lead to overwriting of memory far beyond the record in question. This m=
+ay have
+security implications. In my case it led to denial of service because file-=
+record
+locations were overwritten with garbage and the daemon attempted to write
+to these locations.=20
 
-I tried to setup a high speed AX25 tunnel using our brand new wlan netw=
-ork
-without success.
-The problem is the following answer:
+Now, with a sanity check of the digipeater field, the daemon now works corr=
+ectly=20
+though the USCC card here generates many bad packets.=20
 
-[root@f6fgz root]# ax25ipd -l 3
-fetching tty device parameters: Invalid argument
+73 de LA7ECA, Oyvind
+--=20
+Computer Science dept. University of Troms=F8,  ohanssen@acm.org,  Cell: +4=
+7 9511 7457
 
-My ax25ipd.conf:
-socket ip
-mode tnc
-device /dev/ttyp4
-speed 19200
-loglevel 0
-broadcast QST-0 NODES-0
-route f6fkq delta.localnet
+--Boundary-00=_+p+t/EMDR/UPiHI
+Content-Type: text/x-diff;
+  charset="us-ascii";
+  name="mheardd.diff"
+Content-Transfer-Encoding: 7bit
+Content-Disposition: attachment;
+	filename="mheardd.diff"
 
-My kiss stuffs:
-mkiss -s 19200 -l /dev/ttyS1 /dev/ptyp1 /dev/ptyp2
-mkiss -s 19200 -l /dev/ttyS0 /dev/ptyp3 /dev/ptyp4
-kissattach -m 256 /dev/ttyp1 vhf  f6fgz
-kissattach -m 512 /dev/ttyp2 uhf1 f6fgz
-kissattach -m 256 /dev/ttyp3 uhf2 f6fgz
-kissattach -m 256 /dev/ttyp4 uhf3 f6fgz
-
-All AX interfaces are up and running since years with this config. Only=
- new
-ax25ipd add-on won't work.
-
-What's wrong ? Thanks for your help.
-
-BTW, photos of the wlan on http://f6fgz.free.fr/HamLan (29 km and a ste=
-ady 80
-kb/s !)
-
---
-73 G=E9rard F6FGZ
-
-
-
+--- mheardd.orig.c	2003-11-16 21:52:10.000000000 +0100
++++ mheardd.c	2003-11-16 22:01:03.000000000 +0100
+@@ -228,14 +228,14 @@
+ 				syslog(LOG_WARNING, "packet too short\n");
+ 			continue;
+ 		}
 -
-To unsubscribe from this list: send the line "unsubscribe linux-hams" i=
-n
-the body of a message to majordomo@vger.kernel.org
-More majordomo info at  http://vger.kernel.org/majordomo-info.html
+-		mheard = findentry((ax25_address *)(data + AXLEN), port);
+-
++		
+ 		if (!ax25_validate(data + 0) || !ax25_validate(data + AXLEN)) {
+ 			if (logging)
+ 				syslog(LOG_WARNING, "invalid callsign on port %s\n", port);
+ 			continue;
+ 		}
++		
++		mheard = findentry((ax25_address *)(data + AXLEN), port);
+ 
+ 		memcpy(&mheard->entry.from_call, data + AXLEN, sizeof(ax25_address));
+ 		memcpy(&mheard->entry.to_call,   data + 0,     sizeof(ax25_address));
+@@ -248,7 +248,7 @@
+ 		data += (AXLEN + AXLEN);
+ 		size -= (AXLEN + AXLEN);
+ 
+-		while (!end) {
++		while (!end && mheard->entry.ndigis <= 7 && ax25_validate(data) ) {
+ 			memcpy(&mheard->entry.digis[mheard->entry.ndigis], data, sizeof(ax25_address));
+ 			mheard->entry.ndigis++;
+ 			
+@@ -257,7 +257,12 @@
+ 			data += AXLEN;
+ 			size -= AXLEN;
+ 		}
+-
++		if (!end) {
++		    if (logging)
++		        syslog(LOG_WARNING, "invalid digipeater field\n");
++                    continue; 
++		}
++		    
+ 		if (size == 0) {
+ 			if (logging)
+ 				syslog(LOG_WARNING, "packet too short\n");
+
+--Boundary-00=_+p+t/EMDR/UPiHI--
+
