@@ -1,35 +1,34 @@
-From: Tim Neu <tim@tneu.visi.com>
-Subject: Conference programs
-Date: Fri, 20 Jun 2003 11:30:24 -0500
+From: Tomi Manninen OH2BNS <tomi.manninen@hut.fi>
+Subject: Re: Conference programs
+Date: 20 Jun 2003 20:25:26 +0300
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <20030620163024.GA26294@leo.tneu.visi.com>
+Message-ID: <1056129926.3290.13.camel@oh2bns.ampr.org>
+References: <20030620163024.GA26294@leo.tneu.visi.com>
+Reply-To: oh2bns@sral.fi
 Mime-Version: 1.0
+Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
-Content-Disposition: inline
+In-Reply-To: <20030620163024.GA26294@leo.tneu.visi.com>
 List-Id: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 7bit
 To: linux-hams@vger.kernel.org
 
-I am running node on my linux box, and axmail for packet mail.  
+On Fri, 2003-06-20 at 19:30, Tim Neu wrote:
 
-I would like to finally cover the last function of a normal TNC - the
-ability to chat back and forth with at least one other person.
-(although more than one is a bonus). 
+> So, which program (or programs) provide simple text-based conferencing
+> that will work under NODE?   
 
-I've looked through many sofware packages that claim to be for text
-conferencing, but I have no idea which one(s) will work just fine
-running under NODE.   I think many of them expect a normal terminal
-screen at least. 
+This might not be quite what you are after but there is the TALK 
+function which is built-in in node.
 
-So, which program (or programs) provide simple text-based conferencing
-that will work under NODE?   
+Another possibility would be axconv, which is designed to connect
+to a convers server. You can run it from ax25d or from node as an
+extcmd.
 
-Thanks in advance. 
+ http://hes.iki.fi/pub/ham/unix/linux/ax25/axconv.c.gz
 
 -- 
-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
-______         _ __                          Military Intelligence
-  /           ' )  )        -KC0LQL-         Honest Politician
- / o ______    /  / _  . .                   Intellectual Property  
-/ <_/ / / <   /  (_</_(_/_  -- tneu@visi.com / http://www.visi.com/~tneu --
+Tomi Manninen           Internet:  oh2bns@sral.fi
+OH2BNS                  AX.25:     oh2bns@oh2rbi.fin.eu
+KP20ME04                Amprnet:   oh2bns@oh2rbi.ampr.org
+
