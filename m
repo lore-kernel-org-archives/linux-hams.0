@@ -1,27 +1,72 @@
-From: terry <wd0fpc@aniota.com>
-Subject: Re: 4 port serial card.
-Date: Sun, 12 Jan 2003 03:48:35 -0800 (PST)
+From: Bernd Driegert <bd@cool.de>
+Subject: [RFC][PATCH] mkiss.[ch]
+Date: Sun, 12 Jan 2003 15:26:42 +0100
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <Pine.LNX.4.50.0301120340570.8401-100000@yossarian.aniota.net>
-References: <3E20FF68.000003.11949@gizmo>
+Message-ID: <3E217B22.7040309@cool.de>
 Mime-Version: 1.0
-Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <3E20FF68.000003.11949@gizmo>
-List-Id: <linux-hams.vger.kernel.org>
-Content-Type: TEXT/PLAIN; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
-To: linux-hams <linux-hams@vger.kernel.org>
+Return-path: <linux-hams-owner@vger.kernel.org>
+List-Id: <linux-hams.vger.kernel.org>
+Content-Type: text/plain; charset="us-ascii"; format="flowed"
+To: linux-kernel@vger.kernel.org
+Cc: linux-hams@vger.kernel.org
 
-On Sun, 12 Jan 2003, Ray Wells wrote:
+The following patch does (hopefully):
+1) change MOD_xxx_USE_COUNT to module calls
+2) change cli() to use spin_lock
 
-> I acquired a four-port serial card that I'm trying to identify.
+Can someone check:
+a) ist it right in terms of usage (it's my first try for cleanup)
+b) does it work with the appropriate HW, since im no ham-guy
 
-... if the card manufactured, or sold, in the u.s., it might have an fcc
-id.  if it does, the fcc.gov site allows a search for them.
+Bernd
 
-    "http://www.fcc.gov/oet/fccid/" ...
+--- linux-2.5.56/drivers/net/hamradio/mkiss.h   Sun Jan 12 14:22:50 2003
++++ mkiss.h     Sun Jan 12 14:24:22 2003
+@@ -55,6 +55,7 @@
+  #define CRC_MODE_NONE   0
+  #define CRC_MODE_FLEX   1
+  #define CRC_MODE_SMACK  2
++       spinlock_t      driver_lock;
+  };
+
+  #define AX25_MAGIC             0x5316
+--- linux-2.5.56/drivers/net/hamradio/mkiss.c   Mon Nov 18 05:29:57 2002
++++ mkiss.c     Sun Jan 12 15:55:06 2003
+@@ -253,8 +253,7 @@
+                 return;
+         }
+
+-       save_flags(flags);
+-       cli();
++       spin_lock_irqsave(&ax->driver_lock, flags);
+
+         oxbuff    = ax->xbuff;
+         ax->xbuff = xbuff;
+@@ -285,7 +284,7 @@
+         ax->mtu      = dev->mtu + 73;
+         ax->buffsize = len;
+
+-       restore_flags(flags);
++       spin_unlock_irqrestore(&ax->driver_lock, flags);
+
+         if (oxbuff != NULL)
+                 kfree(oxbuff);
+@@ -676,7 +675,7 @@
+                 tmp_ax->mkiss = ax;
+         }
+
+-       MOD_INC_USE_COUNT;
++       try_module_get(THIS_MODULE);
+
+         /* Done.  We have linked the TTY line to a channel. */
+         return ax->dev->base_addr;
+@@ -696,7 +695,7 @@
+         ax->tty        = NULL;
+
+         ax_free(ax);
+-       MOD_DEC_USE_COUNT;
++       module_put(THIS_MODULE);
+  }
 
 
--- 
-73 , de WD0FPC
-    aka: terry
