@@ -1,39 +1,31 @@
-From: Heikki Hannikainen <hessu@hes.iki.fi>
-Subject: Re: List problems (mailing list archive searchable again, really!)
-Date: Tue, 15 Jul 2003 09:17:07 +0300 (EEST)
+From: Wilbert Knol <zl2bsj@zl2tze.ath.cx>
+Subject: Re: ANNOUNCE: gMFSK v0.5
+Date: Fri, 11 Jul 2003 22:40:50 -1200
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <Pine.LNX.4.44.0307150916480.10101-100000@hes.iki.fi>
+Message-ID: <200307112240.51496.zl2bsj@zl2tze.ath.cx>
+References: <Pine.LNX.4.44.0304192044470.6051-100000@oh2bns.ampr.org> <3F0F1E43.9030500@pi8zaa.ampr.org> <1057957908.2171.3.camel@oh2bns.ampr.org>
 Mime-Version: 1.0
+Content-Transfer-Encoding: 7BIT
 Return-path: <linux-hams-owner@vger.kernel.org>
+In-Reply-To: <1057957908.2171.3.camel@oh2bns.ampr.org>
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: TEXT/PLAIN; charset="us-ascii"
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset="us-ascii"
 To: linux-hams@vger.kernel.org
 
+On Friday 11 July 2003 09:11, Tomi Manninen wrote:
+> On Fri, 2003-07-11 at 23:29, Arno Verhoeven wrote:
+> > It doesn't on my machine (Slackware 9.0). If tried with both fftw-3.0 and
+> > 2.1.5 but in both cases configure gives an error.
+> >
+> > configure: error: FFTW libraries not found!!!
 
-  Hi everyone (long time no see),
+Just finished compiling it on a SuSE 8.1 box.
+Although I needed to install a bunch of Gnome libraries, as well as the fast 
+Fourier libraries, no Funny Business was required.
 
-Sometime during last month Matti Aarnio wrote:
-> It may take several weeks to index about 33 000 files in
-> there, and at some point Hessu will add google search forms. 
+It's going great on the IceWM desktop.
+Pretty impressive...even Feld-Hell :-)
 
-  During this month Google has now requested some 16k pages out of the
-33782 pages in the archives, and the search interface says it has around
-6k pages of hes.iki.fi in it's searchable index (it takes a while for the
-downloaded pages to get added to the production searchable index). The
-search should be useful by now, at least all the monthly index pages
-should be there, so I've now added the google customizable search forms to
-the mailing list archives at http://hes.iki.fi/archive/.
-
-  I had quite some trouble getting ht://dig to actually produce a working
-index of the largish set of pages, and some more trouble in getting it in
-an usable configuration (not needing to create a full new index every
-night - it took more than single a night to do so 8-). And then ht://dig
-had some security problems too, and I gave up with it. I guess google will
-do the trick well enough (not in a daily updated fashion, though). Happy
-searching! 8-)
-
-  - Hessu
-
+Wilbert, ZL2BSJ
 
 
