@@ -1,32 +1,44 @@
-From: "David S. Miller" <davem@redhat.com>
-Subject: Re: [PATCH] ax25 changes
-Date: Thu, 21 Aug 2003 12:18:10 -0700
+From: Ian J Maude <ian@gb7mbc.net>
+Subject: kernel 2.4.21 and mkiss
+Date: 22 Aug 2003 02:40:25 +0100
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <20030821121810.308f90cc.davem@redhat.com>
-References: <20030812194653.A28977@jeroen.pe1rxq.ampr.org>
-	<20030812135655.7334887b.shemminger@osdl.org>
-	<20030812230951.E28977@jeroen.pe1rxq.ampr.org>
-	<20030812153901.6e700dcb.shemminger@osdl.org>
-	<20030813010301.K28977@jeroen.pe1rxq.ampr.org>
-	<20030812172151.7de0c950.shemminger@osdl.org>
-	<20030813031159.6c6c9629.davem@redhat.com>
-	<20030813173446.A2604@jeroen.pe1rxq.ampr.org>
-	<20030813084252.7b667fb8.davem@redhat.com>
-	<20030820204518.C5568@jeroen.pe1rxq.ampr.org>
+Message-ID: <1061516425.2064.28.camel@homer.spoo.org>
 Mime-Version: 1.0
 Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <20030820204518.C5568@jeroen.pe1rxq.ampr.org>
 List-Id: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
-To: Jeroen Vreeken <pe1rxq@amsat.org>
-Cc: shemminger@osdl.org, linux-hams@vger.kernel.org, ralf@linux-mips.org, netdev@oss.sgi.com
+To: linux-hams <linux-hams@vger.kernel.org>
 
-On Wed, 20 Aug 2003 20:45:18 +0200
-Jeroen Vreeken <pe1rxq@amsat.org> wrote:
+Hi all,
+I am obviously doing something stupid here but I am struggling getting
+things going with the ax25 stuff under kernel 2.4.21.  I have put ax25
+support into the kernel and added kiss support (not as modules) and done
+all the usual kernel type things but when I run the kissattach commands,
+I get...
 
-> Fortunatly Stephen already reduced the amount of work by doing the netrom
-> stuff.
-> The next four patches are the remaining ax25 (and a litle netrom) patches:
+kissattach: Error setting line discipline: TIOCSETD: Invalid argument
+Are you sure you have enabled MKISS support in the kernel
+or, if you made it a module, that the module is loaded?
 
-Applied, thanks Jeroen.
+I have used the following rpms to install the ax25 stuff..
+
+ax25-apps-0.0.4-9.i386.rpm
+ax25-tools-0.0.6-13.i386.rpm
+libax25-0.0.7-7.i386.rpm
+libax25-devel-0.0.7-7.i386.rpm
+
+Any ideas folks?
+
+Ian
+
+
+-- 
+ 
+ Ian Maude G0VGS Morecambe Lancs UK | ian@gb7mbc.net
+ Sysop of GB7MBC, the Morecambe Bay Cluster
+ Running Linux and DXSpider
+
+ Find out about Summits on the Air!  
+ Visit the SOTA web site at http://www.sota.org.uk
+
