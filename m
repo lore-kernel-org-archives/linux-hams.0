@@ -1,37 +1,42 @@
-From: Kjell Jarl <K-Jarl@algonet.se>
-Subject: 2.4.19 panic, netrom
-Date: Tue, 29 Apr 2003 08:12:47 +0200
+From: Shane Deering <vk3bvp@qsl.net>
+Subject: Re: Redhat 7.2 + kernel 2.4.19
+Date: Tue, 29 Apr 2003 23:19:08 +1000
 Sender: linux-hams-owner@localhost
-Message-ID: <3EAE17DF.6060904@algonet.se>
+Message-ID: <200304292319.08013.vk3bvp@qsl.net>
+References: <200304271530.47582.vk3bvp@qsl.net>
+Reply-To: vk3bvp@qsl.net
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 7BIT
 Return-path: <linux-hams-owner@vger.kernel.org>
+In-Reply-To: <200304271530.47582.vk3bvp@qsl.net>
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"; format="flowed"
-To: Linux Hams <linux-hams@vger.kernel.org>
+Content-Type: text/plain; charset="us-ascii"
+To: linux-hams@vger.kernel.org
 
-Hi,
-I now think I can repeat the netrom disconnect causing kernel panics.
+On Sun, 27 Apr 2003 15:30, Shane Deering wrote:
+> Hello people.
 
-Netrom over ax.25.
+>  Or get fbb (GUI client) to compile with a newer  distro (MDK9.0 would be > 
+> nice).
 
-It seems that outstanding netrom frames when the disconnect arrives is 
-dangerous:
+After some helpfull advice from Stewart Wilkinson I got further with compiling 
+FBB on my MDK9.0 box. I can do a make ok in fbbsrc.704h/src.
+But not in fbbsrc.704h/src/X11
 
-- I issue a netrom connect to a distand node.
-- When connected, I send sveral "b" commands.
-- When (unsure of the number) one or two "b" has been sent, there comes 
-a netrom disconnect from the remote station.
-- In my vnc window, the last thing I saw was another b being sent to my 
-neighboring node after the disconnect arrived.
+Here's the last few lines when trying make -
 
+-L/usr/X11R6/LessTif/Motif2.0/lib -lXm -lXt -lXpm -lXext -lX11
+/usr/lib/libXpm.so: undefined reference to `_fxstat'
+collect2: ld returned 1 exit status
+make: *** [xfbb] Error 1
 
-Red Hat Linux release 7.1 (Seawolf)
-Kernel 2.4.19 on an i586
-uscc card 1200 bit
+I could do with a bit of a nudge (or severe beating with a book of man pages) 
+here.
+All/any help welcome.
 
-
-73
-Kjell, sm7gvf
-
+-- 
+Shane Deering                   Sent using Kmail v1.4.3
+vk3bvp@qsl.net                  on Mandrake Linux, the Desktop OS
+vk3bvp@vk3bvp.#sev.vic.aus.oc   MDK9.0 Up 7 hours and 30 minutes 
+http://www.qsl.net/vk3bvp/      RH7.2 Up 6 days, 3 hours and 38 minutes 
 
