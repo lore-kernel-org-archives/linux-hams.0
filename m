@@ -1,47 +1,22 @@
-From: "Marco Calistri" <ik5bcu@tin.it>
-Subject: aliasing 4 net-pf-10??
-Date: Sat, 24 Aug 2002 01:05:19 +0200 (CEST)
+From: Andrew Bates <abates@omeganetserv.com>
+Subject: no node?
+Date: Fri, 23 Aug 2002 19:39:18 -0600
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <20020823230519.5331.qmail@linux.ik5bcu.ampr.org>
-Reply-To: ik5bcu@tin.it
+Message-ID: <3D66E3C6.DB48D8B8@omeganetserv.com>
 Mime-Version: 1.0
-Content-Type: multipart/signed;
- boundary="_=XFMail.1.5.2.Linux:20020823235026:2037=_";
- micalg=pgp-md5; protocol="application/pgp-signature"
+Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
 List-Id: <linux-hams.vger.kernel.org>
+Content-Type: text/plain; charset="us-ascii"
 To: linux-hams@vger.kernel.org
 
-This message is in MIME format
---_=XFMail.1.5.2.Linux:20020823235026:2037=_
-Content-Type: text/plain; charset=iso-8859-15
+Hello all,
 
-Hello,could someone point me on the proper aliasing for net-pf-10?
-What is it?
+I am trying to set up a netrom node.  According to the HOWTO on the LDP,
+http://www.tldp.org/HOWTO/AX25-HOWTO/, there should be a node
+application supplied with the ax25-tools package.  I've searched and
+searched but found no node.c or node.h or a node binary anywhere either
+on my box or on the 'net.  Someone help please!!!
 
-cat /var/log/messages
+Andrew KB0LND
 
-Aug 23 23:45:46 sys3 modprobe: modprobe: Can't locate module net-pf-10
-
-
-----------------------------------
-E-Mail: Marco Calistri <ik5bcu@tin.it>
-Date: 23-Aug-2002 Time: 23:50:15
-Red Hat Linux release 7.3 (Valhalla) kernel 2.4.18-10
-This message was sent by XFMail
-----------------------------------
-
-
---_=XFMail.1.5.2.Linux:20020823235026:2037=_
-Content-Type: application/pgp-signature
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.0.7 (GNU/Linux)
-
-iD8DBQE9Zq4hs0ru0Kz1knARAl79AJ4l+evWayj9dlLfhos2hcOsaFB1FACeIK2+
-ve/JOeAogdL/NJZN5hXjg2c=
-=6JaN
------END PGP SIGNATURE-----
-
---_=XFMail.1.5.2.Linux:20020823235026:2037=_--
-End of MIME message
