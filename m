@@ -1,37 +1,25 @@
-From: ariel mastracchio <ari197516@yahoo.com>
-Subject: kernel soundmodem and PCI soudcard
-Date: Sun, 23 Jan 2005 15:34:49 -0800 (PST)
-Message-ID: <20050123233449.25730.qmail@web51010.mail.yahoo.com>
+From: "bob krasko" <rkrasko1@nycap.rr.com>
+Subject: thank you for your help
+Date: Mon, 24 Jan 2005 12:46:46 -0500
+Message-ID: <LFENLEGCDLCOKEJAECGNCENHCEAA.rkrasko1@nycap.rr.com>
 Mime-Version: 1.0
+Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
 Sender: linux-hams-owner@vger.kernel.org
 List-Id: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 7bit
 To: linux-hams@vger.kernel.org
 
-Hi,
+hi all,
 
-  Does it work?
+just wanted to leave a brief follow up note to say thanks to everyone.
 
-  Ok, i test the soundmodem user space and working
-fine (with soundblaster 4.1 digital pci) , but it not
-have the hapn4800 mode that have the kernel
-soundmodem, so the only option for my is the kernel
-soundmodem???
-  The 'multimon','soundmdoemconfig', etc work fine
-too.
-  
-  thanks in advance.
+just yesterday i finally got the listen and call programs to work and
+evidentally everything is ok, since i had to reboot 3 times and try
+everything again.
 
-hugs, 
-- ari (lu9aum)
+i learned a lot , tried a million things, and will be here to help the next
+guy who wants to pluck his hair out.
 
-
-		
-__________________________________ 
-Do you Yahoo!? 
-The all-new My Yahoo! - Get yours free! 
-http://my.yahoo.com 
- 
+best wishes de bob, kb2tgd
 
