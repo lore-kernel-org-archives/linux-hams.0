@@ -1,32 +1,42 @@
-From: John@man.ac.uk
+From: Margaret Leber <maggie@voicenet.com>
 Subject: Re: KDE EchoLinux client project
-Date: Tue, 8 Apr 2003 16:26:13 +0100 (BST)
+Date: Tue, 08 Apr 2003 11:52:39 -0400
 Sender: linux-hams-owner@localhost
-Message-ID: <E192uui-0005mL-Q2@probity.mcc.ac.uk>
-References: <20030408142024.GA3921@leo.tneu.visi.com>
+Message-ID: <3E92F047.4060605@voicenet.com>
+References: <E192r69-000HrJ-KE@probity.mcc.ac.uk> <200304080725.16056.w9ya@arrl.net> <20030408133905.GA23255@silly.cloud.net.au> <20030408142024.GA3921@leo.tneu.visi.com>
 Mime-Version: 1.0
-Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <20030408142024.GA3921@leo.tneu.visi.com>
-List-Id: <linux-hams.vger.kernel.org>
-Content-Type: TEXT/plain; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
-To: tim@tneu.visi.com
+Return-path: <linux-hams-owner@vger.kernel.org>
+List-Id: <linux-hams.vger.kernel.org>
+Content-Type: text/plain; charset="us-ascii"; format="flowed"
+To: Tim Neu <tim@tneu.visi.com>
 Cc: linux-hams@vger.kernel.org
 
-On  8 Apr, Tim Neu wrote:
+Tim Neu wrote:
 
 > I'd say most of us Linux folks would just be happy with something that
 > works!    
 
-True!
+Me too. I currently have EchoLinux (and EchoGUI, a sample client written 
+in Xforms) installed on my 2.4.3-12 Red Hat system. Everything seem so 
+work fine, except that I can't get any audio to transmit; receiveing 
+works fine. The microphone otherwise works correctly. Linux audio is 
+still a bit of a black art.
 
-> Once you have basic functionality, then the KDE folks can make their QT
-> version and the Gnome folks can make their GTK version.    
+> Is the source code (or specifications) for Echolink available?    
 
-Gnome is built on GTK, and the two are not tied together as you imply,
-as GTK based applications existed long before either Gnome or KDE. GTKis
-a derivative of the GIMP software NOT Gnome.
+My understanding is that there's not a lot of additional protocol 
+layered on top of an H.323 core; the EchoLinux is built on the 
+SpeakFreely project.
 
-John
+  73 de Maggie K3XS
+
+-- 
+-----/___.   _)   Margaret Stephanie Leber    / "The art of progress  /
+----/(, /|  /| http://voicenet.com/~maggie   / consists of preserving/
+---/   / | / |  _   _   _    `  _AOPA 925383/ order amid change and /
+--/ ) /  |/  |_(_(_(_/_(_/__(__(/_  FN20hd / change amid order."   /
+-/ (_/   '  K3XS  .-/ .-/    ARRL 39280   /___ --A.N.Whitehead ___/
+/____ICQ 7161096_(_/_(_/__AMSAT 32844____/ <maggie@voicenet.com>
 
 
