@@ -1,31 +1,27 @@
-From: w9ya <w9ya@amsat.org>
-Subject: Re: ax25ipd
-Date: Wed, 28 Aug 2002 08:29:44 +0000
+From: N1UAN Bob <bobbru@chartertn.net>
+Subject: kernel
+Date: Wed, 28 Aug 2002 17:18:48 -0400 (EDT)
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <200208280829.44581.w9ya@amsat.org>
-References: <Pine.LNX.4.33.0208252223370.730-100000@n1uan.ampr.org> <0208280548330G.02211@unix.pa3gcu> <20020828104246.GA21770@silly.cloud.net.au>
+Message-ID: <Pine.LNX.4.33.0208281714450.3082-100000@n1uan.ampr.org>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7BIT
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <20020828104246.GA21770@silly.cloud.net.au>
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"
-To: Hamish Moffatt <hamish@cloud.net.au>, linux-hams@vger.kernel.org
+Content-Type: TEXT/PLAIN; charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+To: linux-hams@vger.kernel.org
 
-On Wednesday 28 August 2002 10:42 am, Hamish Moffatt wrote:
-> On Wed, Aug 28, 2002 at 05:48:33AM +0000, pa3gcu wrote:
-> > Looks like i started this thread, what i mean was, why do the
-> > ax25lib/apps/ and tools default to /usr/local and place binarys in
-> > /usr/local when some programs will "still" look in /etc/ax25 for thier
-> > config files instead of /usr/local/etc thats what i mean, seems like a
-> > funny way of doing things to me.
->
-> /usr/local/etc is unnecessary (and ugly), as the admin is allowed to edit
-> /etc directly.
->
-> Hamish
+Hi
+I am running kernel 2.4.16 here for suse 7.1 linux and i want  to upgrade
+the kernel to 2.4.19 and i have found kernel 2.4.19-40 on the gwdg.de site
+it is an kernel by martel i was wondering if anyone else is running this
+kernel with the ax25 stuff  with suse 7.1 and if so does it have all
+needed
+in it
+if so can someone tell me how do i install  the rpm as i have  done this
+before but i dont remember right now
+also if this kernel doesnt do what is needed does nyone else know where
+there is an rpm kernel that i can get
+thanks
+Bob
 
-We are in absolute agreement here !
 
-Bob 
-w9ya
