@@ -1,69 +1,44 @@
-From: Shane Deering <vk3bvp@qsl.net>
-Subject: Re: Jnos and Areas
-Date: Sun, 22 Sep 2002 00:26:14 +1000
+From: "Michael Hart" <mhart@terrigal.net.au>
+Subject: Re: ax25
+Date: Sun, 22 Sep 2002 21:07:32 +1000
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <200209220026.14683.vk3bvp@qsl.net>
-References: <200209210111.01336.eb5esx@eb5esx.ampr.org>
-Reply-To: vk3bvp@qsl.net
+Message-ID: <00ae01c26228$443a98e0$0500a8c0@terrigal.net.au>
+References: <Pine.LNX.4.33.0208252310120.1012-100000@n1uan.ampr.org> <02082606171202.02211@unix.pa3gcu> <05f301c24cd4$401e4ae0$0500a8c0@terrigal.net.au>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7BIT
+Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <200209210111.01336.eb5esx@eb5esx.ampr.org>
 List-Id: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
 To: linux-hams@vger.kernel.org
 
-On Saturday 21 September 2002 09:11, Ruben Navarro Huedo wrote:
-> Hello all:
-> We are trying to configure nos.ea5rke.ampr.org
-> it runs ok, but we have problems with areas
-> How can we put bulletins/mails in public areas?
-> Our local FBB BBS is sending @ea bulletins to jnos, but they don't go in
-> the ea area. Jnos try to return the mail.
+----- Original Message -----
+From: Michael Hart <mhart@terrigal.net.au>
+To: <linux-hams@vger.kernel.org>
+Sent: Monday, August 26, 2002 5:43 PM
+Subject: ax25
+
+
+> Hi everyone,
 >
-> This is our rewrite:
->
-> *@ea ea
-> *@local local
+> I have RedHat 7.3 and the kernel version is 2.4.18
 
-Same as I do.
->
-> This is oue alias:
->
-> ea ea
-> local local
+Well I have now managed to get the ax25 tools utils and libs to compile.
 
-Same.
+My trouble is now I cannot find any of the devices that are described in the
+ax25 howto.
 
->
-> and this is our areas:
->
-> users   Mensajeria Privada
-> ea      Mensajeria EA
-> linux   Mensajeria sobre Linux
-> local   Mensajeria Local
-> intnet  Mensajeria sobre la Red
+my /proc/sys/net does not include an ax25 subdirectory (i.e. ax25 is not
+running) and ifconfig confirms this.  I have compiled it into the kernel but
+it doesn't seem to start.  I have edited my /etc/modules.conf file as
+described in the howto but still cannot find /dev/bc0 (even though I have
+selected it in the kernel compile)
 
-I use UPPERCASE which, if anything, should be worse. Like -
-USERS   Mensajeria Privada
+I cannot set anything up if they are not there.
 
->
-> Please...could you help us with this?
->
-> A lot of thank's.
+I don't know where to start.
 
-Maybe it's a problem with your autoexec.nos or paths used.
+michael
+vk2jxi
 
-Does it work if you send from the JNOS BBS prompt ?
-Are they getting to spool/mqueue ?
-If so, have you started smtp ?
-Does smtp work for p mail?
-How about a look at your autoexec.nos.
 
-More questions than answers :-(
-
--- 
-Shane Deering   vk3bvp@qsl.net 	vk3bvp@vk3bvp.#sev.vic.aus.oc
-http://www.qsl.net/vk3bvp/
-Sent with KMail v1.4.1 on Sun Sep 22 00:04:50 EST 
 
