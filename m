@@ -1,67 +1,94 @@
-From: "Riley Williams" <Riley@Williams.Name>
-Subject: RE: Mixed network problem
-Date: Thu, 26 Jun 2003 07:58:41 +0100
+From: "Catalin Tanasie" <forum@terrasat.ro>
+Subject: Re: Mixed network problem
+Date: Thu, 26 Jun 2003 10:33:54 +0300
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <BKEGKPICNAKILKJKMHCAGEFOEHAA.Riley@Williams.Name>
+Message-ID: <003201c33bb5$4fcf9770$8d551251@catalinu>
 References: <002901c33bb5$287a2a00$0100a8c0@xp400>
+Reply-To: "Catalin Tanasie" <forum@terrasat.ro>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
+Content-Type: multipart/signed;
+	boundary="----=_NextPart_000_002E_01C33BCE.71501000";
+	protocol="application/x-pkcs7-signature";
+	micalg=SHA1
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <002901c33bb5$287a2a00$0100a8c0@xp400>
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"
-To: Colin Harris <chedward@tiscali.co.uk>
-Cc: Linux Hams <linux-hams@vger.kernel.org>
+To: linux-hams@vger.kernel.org
 
-Hi Colin.
+This is a multi-part message in MIME format.
 
- > Anyone willing to converse off list with my networking problem ?
- > chedward@tiscali.co.uk  Apologies for being a bit off list.
+------=_NextPart_000_002E_01C33BCE.71501000
+Content-Type: text/plain;
+	charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
 
-I have no problem doing so, if you wish to email me.
+winxp can be "ping-ed", go to Local Area Connection Properties, click on
+advanced tab and disable (for testing purposes) Internet Connection Firewall
+if is enabled. If this solve your problem, go to advanced settings and
+choose what services do you want to enable.
+Hope this helps.
+Catalin, yo7gqz.
 
- > 3 Linux boxes working fine but my newly setup Win XP machine
- > refuses to play ball ( along with the Win 98 SE box which
- > networks ok with win XP ). I guess this is a hosts lookup
- > problem or similar but win 98SE did manage to ping / telnet
- > / ftp to and from Linux before I introduced Win XP / pro into
- > the network. Those three functions are all I require in the
- > win = linux function.
+----- Original Message ----- 
 
-Some basic questions:
+------=_NextPart_000_002E_01C33BCE.71501000
+Content-Type: application/x-pkcs7-signature;
+	name="smime.p7s"
+Content-Transfer-Encoding: base64
+Content-Disposition: attachment;
+	filename="smime.p7s"
 
- 1. Do you have a DHCP server on your network?
+MIAGCSqGSIb3DQEHAqCAMIACAQExCzAJBgUrDgMCGgUAMIAGCSqGSIb3DQEHAQAAoIII7TCCAnww
+ggHloAMCAQICAwoqUzANBgkqhkiG9w0BAQQFADCBkjELMAkGA1UEBhMCWkExFTATBgNVBAgTDFdl
+c3Rlcm4gQ2FwZTESMBAGA1UEBxMJQ2FwZSBUb3duMQ8wDQYDVQQKEwZUaGF3dGUxHTAbBgNVBAsT
+FENlcnRpZmljYXRlIFNlcnZpY2VzMSgwJgYDVQQDEx9QZXJzb25hbCBGcmVlbWFpbCBSU0EgMjAw
+MC44LjMwMB4XDTAzMDYxNzA3NTI0OVoXDTA0MDYxNjA3NTI0OVowQzEfMB0GA1UEAxMWVGhhd3Rl
+IEZyZWVtYWlsIE1lbWJlcjEgMB4GCSqGSIb3DQEJARYRZm9ydW1AdGVycmFzYXQucm8wgZ8wDQYJ
+KoZIhvcNAQEBBQADgY0AMIGJAoGBAPQhpXc9O0nKEUq+eSbEy84+SGdL1bcB6k8WeQLDjtRIbg1h
+EZ6GEsEikk4tMRa3OTPZZ6+AaNXNzOWXHJeRLUX/JZnKSIy5U/QozkJfPTjOUae8RtTTRvXvP2tT
+ZbtQ/TcHVp0ssWNOgFHYRPUACpNv+WFOM/xYCwV1UhKrCv7JAgMBAAGjLjAsMBwGA1UdEQQVMBOB
+EWZvcnVtQHRlcnJhc2F0LnJvMAwGA1UdEwEB/wQCMAAwDQYJKoZIhvcNAQEEBQADgYEAiPEAn6FZ
+gqrcnuH6hkHl5ZhZ3iwIsuF2HN0uS1lW3D/ZoFn8Hil0fGhmVlI6W3GaQBGB5LeWRpq/hf4yVBnz
+coM50r1G7X7EvZjhKDtOoKIxgz/9IF+TFPA4qR6D4GgY7eDgb6F5X4XjBMff6RAIkaanMHavBDQL
+nQ4DO3/bndkwggMtMIIClqADAgECAgEAMA0GCSqGSIb3DQEBBAUAMIHRMQswCQYDVQQGEwJaQTEV
+MBMGA1UECBMMV2VzdGVybiBDYXBlMRIwEAYDVQQHEwlDYXBlIFRvd24xGjAYBgNVBAoTEVRoYXd0
+ZSBDb25zdWx0aW5nMSgwJgYDVQQLEx9DZXJ0aWZpY2F0aW9uIFNlcnZpY2VzIERpdmlzaW9uMSQw
+IgYDVQQDExtUaGF3dGUgUGVyc29uYWwgRnJlZW1haWwgQ0ExKzApBgkqhkiG9w0BCQEWHHBlcnNv
+bmFsLWZyZWVtYWlsQHRoYXd0ZS5jb20wHhcNOTYwMTAxMDAwMDAwWhcNMjAxMjMxMjM1OTU5WjCB
+0TELMAkGA1UEBhMCWkExFTATBgNVBAgTDFdlc3Rlcm4gQ2FwZTESMBAGA1UEBxMJQ2FwZSBUb3du
+MRowGAYDVQQKExFUaGF3dGUgQ29uc3VsdGluZzEoMCYGA1UECxMfQ2VydGlmaWNhdGlvbiBTZXJ2
+aWNlcyBEaXZpc2lvbjEkMCIGA1UEAxMbVGhhd3RlIFBlcnNvbmFsIEZyZWVtYWlsIENBMSswKQYJ
+KoZIhvcNAQkBFhxwZXJzb25hbC1mcmVlbWFpbEB0aGF3dGUuY29tMIGfMA0GCSqGSIb3DQEBAQUA
+A4GNADCBiQKBgQDUadfUsJRkW3HpR9gMUbbqcpGwhF59LQ2PexLfhSV1KHQ6QixjJ5+Ve0vvfhmH
+HYbqo925zpZkGsIUbkSsfOaP6E0PcR9AOKYAo4d49vmUhl6t6sBeduvZFKNdbnp8DKVLVX8GGSl/
+npom1Wq7OCQIapjHsdqjmJH9edvlWsQcuQIDAQABoxMwETAPBgNVHRMBAf8EBTADAQH/MA0GCSqG
+SIb3DQEBBAUAA4GBAMfskn5O+PWWpWdiKqTwTRFg0G+NYFhhrCa7UjVcCM8w+6hKloofYkIjjBcP
+9LpknBesRynfnZhe0mxgcVyirNx54+duAEcftQ0o6AKd5Jr9E/Sm2Xyx+NxfIyYJkYBz0BQb3kOp
+gyXy5pwvFcr+pquKB3WLDN1RhGvk+NHOd6KBMIIDODCCAqGgAwIBAgIQZkVyt8x09c9jdkWE0C6R
+ATANBgkqhkiG9w0BAQQFADCB0TELMAkGA1UEBhMCWkExFTATBgNVBAgTDFdlc3Rlcm4gQ2FwZTES
+MBAGA1UEBxMJQ2FwZSBUb3duMRowGAYDVQQKExFUaGF3dGUgQ29uc3VsdGluZzEoMCYGA1UECxMf
+Q2VydGlmaWNhdGlvbiBTZXJ2aWNlcyBEaXZpc2lvbjEkMCIGA1UEAxMbVGhhd3RlIFBlcnNvbmFs
+IEZyZWVtYWlsIENBMSswKQYJKoZIhvcNAQkBFhxwZXJzb25hbC1mcmVlbWFpbEB0aGF3dGUuY29t
+MB4XDTAwMDgzMDAwMDAwMFoXDTA0MDgyNzIzNTk1OVowgZIxCzAJBgNVBAYTAlpBMRUwEwYDVQQI
+EwxXZXN0ZXJuIENhcGUxEjAQBgNVBAcTCUNhcGUgVG93bjEPMA0GA1UEChMGVGhhd3RlMR0wGwYD
+VQQLExRDZXJ0aWZpY2F0ZSBTZXJ2aWNlczEoMCYGA1UEAxMfUGVyc29uYWwgRnJlZW1haWwgUlNB
+IDIwMDAuOC4zMDCBnzANBgkqhkiG9w0BAQEFAAOBjQAwgYkCgYEA3jMypmPHCSVFPtJueCdngcXa
+iBmClw7jRCmKYzUqbXA8+tyu9+50bzC8M5B/+TRxoKNtmPHDT6Jl2w36S/HW3WGl+YXNVZo1Gp2S
+dagnrthy+boC9tewkd4c6avgGAOofENCUFGHgzzwObSbVIoTh/+zm51JZgAtCYnslGvpoWkCAwEA
+AaNOMEwwKQYDVR0RBCIwIKQeMBwxGjAYBgNVBAMTEVByaXZhdGVMYWJlbDEtMjk3MBIGA1UdEwEB
+/wQIMAYBAf8CAQAwCwYDVR0PBAQDAgEGMA0GCSqGSIb3DQEBBAUAA4GBADGxS0dd+QFx5fVTbF15
+1j2YwCYTYoEipxL4IpXoG0m3J3sEObr85vIk65H6vewNKjj3UFWobPcNrUwbvAP0teuiR59sogxY
+jTFCCRFssBpp0SsSskBdavl50OouJd2K5PzbDR+dAvNa28o89kTqJmmHf0iezqWf54TYyWJirQXG
+MYIB/jCCAfoCAQEwgZowgZIxCzAJBgNVBAYTAlpBMRUwEwYDVQQIEwxXZXN0ZXJuIENhcGUxEjAQ
+BgNVBAcTCUNhcGUgVG93bjEPMA0GA1UEChMGVGhhd3RlMR0wGwYDVQQLExRDZXJ0aWZpY2F0ZSBT
+ZXJ2aWNlczEoMCYGA1UEAxMfUGVyc29uYWwgRnJlZW1haWwgUlNBIDIwMDAuOC4zMAIDCipTMAkG
+BSsOAwIaBQCggbowGAYJKoZIhvcNAQkDMQsGCSqGSIb3DQEHATAcBgkqhkiG9w0BCQUxDxcNMDMw
+NjI2MDczMzU0WjAjBgkqhkiG9w0BCQQxFgQUHyiFiyDi6k7dPgQmyBLLPwcNew4wWwYJKoZIhvcN
+AQkPMU4wTDAKBggqhkiG9w0DBzAOBggqhkiG9w0DAgICAIAwDQYIKoZIhvcNAwICAUAwBwYFKw4D
+AgcwDQYIKoZIhvcNAwICASgwBwYFKw4DAh0wDQYJKoZIhvcNAQEBBQAEgYCo5K2kYfkvfz4xuEfI
+E4YSaGgWjRg0Sa+89TGC0il7aVnlYgQMzwilGkZuIvmEicRhQNun2JcdsoMnBz9E2dv8TeW0vXK+
+aHaW3k1y47o8IrYhsv9VklBEhdGrf0czKOZz5xGoA/W5a+kfeD9fKblgul3nLA90rFfp8/QZryr4
+cgAAAAAAAA==
 
- 2. Do you have a DNS server on your network?
+------=_NextPart_000_002E_01C33BCE.71501000--
 
-I run a network with several Linux boxes, one WinXPpro box and
-one Win98 box, and all of them talk to each other without any
-problems other than that the WinXP box doesn't respond to ping's
-for the reason stated below.
-
-My ADSL router is configured as a DHCP server that always
-provides the same IP address to the same MAC address, and one
-of my Linux boxes is configured to run bind and provide a DNS
-server for the entire network. The DHCP server is set to supply
-the Linux DNS server's IP address as the network DNS server.
-
- > I can ping Win 98 successfully but not XP.
-
-That is correct - WinXP disables ping responses and this can't
-be re-enabled in my experience. This is apparently part of M$'s
-"Security through obscurity" policy - if one doesn't get a ping
-response, one is not likely to try hacking further into that
-particular system.
-
-Personally, I'm rather cynical about the effectiveness of that
-particular policy...
-
-Best wishes from Riley.
----
- * Nothing as pretty as a smile, nothing as ugly as a frown.
-
----
-Outgoing mail is certified Virus Free.
-Checked by AVG anti-virus system (http://www.grisoft.com).
-Version: 6.0.491 / Virus Database: 290 - Release Date: 18-Jun-2003
 
