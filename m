@@ -1,48 +1,53 @@
-From: 9a4gl@9a0tcp.ampr.org (Tihomir Heidelberg)
-Subject: [PATCH] ax25 patches for 2.4.21
-Date: Sat, 19 Jul 03 22:45:18 CEST
+From: "J. Lance Cotton" <joe@lightningflash.net>
+Subject: Re: XASTIR cross-port digipeating?
+Date: Sat, 19 Jul 2003 16:38:28 -0500
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <7870@9A0TCP>
-Return-path: <linux-hams-owner@vger.kernel.org>
-List-Id: <linux-hams.vger.kernel.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
+Message-ID: <200307191638.28825.joe@lightningflash.net>
+References: <Pine.LNX.4.44.0307181818460.5497-100000@zl2bsj.ampr.org>
+Mime-Version: 1.0
 Content-Transfer-Encoding: 7bit
-To: linux-hams@vger.kernel.org
+Return-path: <linux-hams-owner@vger.kernel.org>
+In-Reply-To: <Pine.LNX.4.44.0307181818460.5497-100000@zl2bsj.ampr.org>
+Content-Disposition: inline
+List-Id: <linux-hams.vger.kernel.org>
+Content-Type: text/plain; charset="us-ascii"
+To: Wilbert Knol <zl2bsj@zl2tze.ath.cx>, linux-hams@vger.kernel.org
 
+On Saturday 19 July 2003 01:35, Wilbert Knol wrote:
+> Thanks for reading this message. I am running (amongst other things)
+> XASTIR on a small, two-port packet system. Is it possible to get XASTIR to
+> digipeat on one port APRS broadcasts heard on another? Or do I need the
+> separate 'aprsdigi' mentioned recently? (I have same-port digipeating
+> working successfully)
 
-Hi,
+Xastir doesn't digipeat, except for RELAY digipeating that home stations 
+should do. You would need aprsdigi or digi_ned to do any further digipeating.
 
-I made some work on 2.4.21 kernel and put my patch
-available for testing....
+> Similarly, are there any Internet based APRS servers (preferably in
+> VK/ZL). Will XASTIR re-transmit on any of the RF ports broadcasts heard on
+> the Internet interface, and vice versa?
 
-patch is at:
-ftp://ham2.cc.fer.hr/pub/users/9a4gl
-file: 9a4gl-ax25-2421-20030719.patch
+What is meant by "broadcasts"? Right now, Xastir will only dump from INET->RF 
+messages intended for stations heard locally, their related position packets, 
+and any NWS (US National Weather Service) packets that match callsigns listed 
+in ~/.xastir/data/nws-stations.txt (only NWS weather report packets are gated 
+to RF, so putting any callsign in nws-stations.txt won't cause Xastir to gate 
+any matching packet).
 
-on monday I am going on vacation, will be 3 weeks mostly
-without Internet... those who have time and want to try it,
-use it and please report me how it works on your machine....
-especialy those who have oopses in ax25, please try it
-because patch fixes several problems that caused oops...
+> A separate question: XASTIR 1.2.1 complains about NUM/SCROLL/CAPSLOCK
+> being engaged when I right-click the desktop. My notebook keyboard only
+> has a CAPSLOCK, and it is off. Is there a work-around for this?
 
-patch should fix ax25 and netrom (rose not, because I never
-used that)... dama is not tested at all because I also never
-run dama... all fixes I applied to standard AX.25 protocols are
-also applied to dama stuff, so it should work but is not tested
-yet... if anyone have possibolity to test dama, I will
-appreciate reports how it works...
+Xastir doesn't yet do the right filtering to determine if key modifiers like 
+those listed above are enabled, which in some cases (with LessTif, I think) 
+causes Xastir not to process those clicks. Look in the menu 
+File->Configure->Defaults and un-check "Warn if modifier keys". That will 
+disable the message.
 
-also it add some extensions to support my linsv node, also
-MTU of 1580 can be selected when configuring kernel to support
-sending and receiving larger packets... if you do not need
-that (probably not), then do not select those options
+> Wilbert, ZL2BSJ
 
-DMASCC driver modified so it can use software CRC, on
-S5/DMASCC there is a problem with hardware CRC.... if you
-use DMASCC driver and you see corrupted packets in monitor,
-receive corrupted text in terminal or have CRC errors in
-file transfers, you should enable software CRC for DMASCC
-driver in kernel
-
-73 de Tihomir, 9a4gl@9a0tcp.ampr.org
+-- 
+J. Lance Cotton, KJ5O
+joe@lightningflash.net
+Three Step Plan: 1. Take over the world. 2. Get a lot of cookies. 3. Eat the 
+cookies.
