@@ -1,27 +1,48 @@
-From: Dennis Boone <drb@msu.edu>
+From: Nate Bargmann <n0nb@networksplus.net>
 Subject: Re: Distance measuring
-Date: Tue, 06 Jan 2004 20:03:28 -0500
+Date: Tue, 6 Jan 2004 19:59:11 -0600
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <200401070103.i0713S7h013020@yagi.h-net.msu.edu>
+Message-ID: <20040107015911.GF27234@localhost>
 References: <200401061152.01460.phil@spiderweb.com.au>
+Mime-Version: 1.0
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-reply-to: (Your message of Tue, 06 Jan 2004 11:52:01 +1000.)
-             <200401061152.01460.phil@spiderweb.com.au> 
+Content-Disposition: inline
+In-Reply-To: <200401061152.01460.phil@spiderweb.com.au>
 List-Id: <linux-hams.vger.kernel.org>
-MIME-Version: 1.0
 Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
 To: linux-hams@vger.kernel.org
 
- > I'm looking for a Linux application, or maybe the code that does the
- > calculation, that will measure the distance between two points given
- > the latitude and longitude. I've seen applications that measure the
- > distance between grid squares but that's not what I need.
+* Phil <phil@spiderweb.com.au> [2004 Jan 06 18:19 -0600]:
+> Hello Everyone,
+> 
+> I'm looking for a Linux application, or maybe the code that does the 
+> calculation, that will measure the distance between two points given the 
+> latitude and longitude. I've seen applications that measure the distance 
+> between grid squares but that's not what I need.
+> 
+> Can anyone help?
 
-Look at the proj.4 package.  The geod and/or invgeod commands can do
-these calculations.
+Hi Phil.
 
-http://remotesensing.org/proj/
+You might also want to check out Hamlib at http://sf.net/projects/hamlib
 
-Dennis Boone
-KB8ZQZ
+Last summer a substantial amoutn of re-work went to locator.c in the src
+directory which implements just the functions you're looking for.
+Hamlib is written in C and it's a reasonably simple matter to install
+the library and use those functions in your program.  I won't guarantee
+the code to return extremely accurate results, but they seem reasonable.
+
+Right now the only way to get the latest changes is through CVS although
+a stable release is expected in the next few weeks.
+
+HTH,
+
+73, de Nate >>
+
+-- 
+ Wireless | Amateur Radio Station N0NB          |  Successfully Microsoft
+ Internet | n0nb@networksplus.net               | free since January 1998.
+ Location | Bremen, Kansas USA EM19ov           |  "Debian, the choice of
+  Amateur radio exams; ham radio; Linux info @  |     a GNU generation!"
+             http://www.qsl.net/n0nb/           |   http://www.debian.org
