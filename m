@@ -1,32 +1,46 @@
-From: Hamish Moffatt <hamish@cloud.net.au>
-Subject: Re: AX25 Coding Question
-Date: Fri, 12 Jul 2002 20:42:59 +1000
+From: Barry <barry_linux@rogers.com>
+Subject: ax25 start up scripts
+Date: 12 Jul 2002 22:09:59 -0400
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <20020712104259.GA30938@silly.cloud.net.au>
-References: <20020711175948.19313.h014.c002.wm@mail.peoplepc.com.criticalpath.net>
+Message-ID: <1026526200.3223.2.camel@linux2.baznet.com>
 Mime-Version: 1.0
+Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
-Content-Disposition: inline
-In-Reply-To: <20020711175948.19313.h014.c002.wm@mail.peoplepc.com.criticalpath.net>
 List-Id: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-To: linux-hams@vger.kernel.org
+To: Linux-Hams <linux-hams@vger.kernel.org>
 
-On Thu, Jul 11, 2002 at 05:59:47PM -0700, TIMOTHY POWELL wrote:
-> I want to write a packet-monitoring program in Java on
-> my Linux box.  But I can?t find out how to receive the
-> ax25 packet frames from the kernel.  I have come to the
-> conclusion though that I will have to use Java?s Native
-> Interface (JNI) capability to receive the packets,
-> which means I?ll end up coding part of the project in
-> C++.  Where can I find documentation on receiving the
-> ax25 packet frames from the kernel and some C or C++
-> coding examples?  
+Hi, I have the following in a file called rc.ax25
 
-The easiest way is to look at the source code for listen
-from ax25-tools.
+#!/bin/bash
 
-Hamish
--- 
-Hamish Moffatt VK3SB <hamish@debian.org> <hamish@cloud.net.au>
+kissnetd /dev/ptysf /dev/ptyse & 
+
+#sleep 10
+
+kissattach  /dev/ttyS2 ax0 44.135.97.18
+kissattach  /dev/ttyS3 ax1 44.135.97.19  
+kissattach  /dev/ttysf ax2 44.135.97.20
+kissattach  /dev/ttyse ax3 44.135.97.21
+
+/sbin/ifconfig ax0 mtu 236 broadcast 44.135.97.255 up
+/sbin/ifconfig ax1 mtu 236 broadcast 44.135.97.255 up
+/sbin/ifconfig ax2 mtu 236 broadcast 44.135.97.255 up
+/sbin/ifconfig ax3 mtu 236 broadcast 44.135.97.255 up
+
+The script works just fine if I execute it from a consol, but if I call
+it from rc.local and have it run at start up, ax0 and ax1 are created
+OK, but not ax2 and ax3.
+
+This problem occurs in other situations too, where the file runs fine
+when manually started, but not when called at startup. Any ideas please?
+
+Using Mandrake 8.2, with kernel 2.4.18-19
+Athalon 1.3 ghz
+
+Barry
+Ve3nav/va3wi
+
+
+
+
