@@ -1,31 +1,33 @@
-From: =?iso-8859-15?q?G=FCnther=20Montag=20?= <Safari.Doktor@addcom.de>
-Subject: new release hf-0.6.1 of Tom Sailer's ham fsk program
-Date: Mon, 13 Sep 2004 16:20:02 +0200
+From: chuck gelm <chuck@gelm.net>
+Subject: Whence AX.25 Utilities ?
+Date: Tue, 14 Sep 2004 08:54:59 -0400
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <200409131620.02648.Safari.Doktor@addcom.de>
+Message-ID: <4146EA23.1090504@gelm.net>
+References: <4131A0BC.3080205@urbakken.dk>
+Reply-To: chuck@gelm.net
 Mime-Version: 1.0
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
+In-Reply-To: <4131A0BC.3080205@urbakken.dk>
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="iso-8859-1"
-To: -HFTERMHACKERS- <hfterm-hackers@lists.sourceforge.net>, "Hubert.Fink@t-online.de" <Hubert.Fink@t-online.de>, XFBB <xfbb@f6fbb.org>, linux hams <linux-hams@vger.kernel.org>, ralf-axel-krause@gmx.de, suse-ham-e@suse.com, suse-ham@suse.com
+Content-Type: text/plain; charset="us-ascii"; format="flowed"
+To: linux-hams@vger.kernel.org
 
-Hello friends!
+http://tldp.org/HOWTO/AX25-HOWTO/index.html
+  indicates:
 
-Today I released hf-0.6.1,=20
-(pactor1, amtor, rtty=20
-can be used as automatic pactor 1 mailbox, has=20
-telnet-interface to F6FBB mailbox)
-with some bugfixes I hope,=20
-thanks for all your help in the mailinglists,=20
-have fun with testing!
+"To use the amateur radio protocols within Linux you will need to get a
+suitable copy of the AX.25 Utilities. More detailed information about 
+these and associated programs can be found on http://zone.pspt.fi/~jsn/."
 
---=20
-G=FCnther Montag
-Safari.Doktor@addcom.de
+zone.pspt.fi does not seem to resolve.
 
--
-To unsubscribe from this list: send the line "unsubscribe linux-hams" i=
-n
-the body of a message to majordomo@vger.kernel.org
-More majordomo info at  http://vger.kernel.org/majordomo-info.html
+Where may I find these utilities?
+
+OBTW, the http://tldp.org/HOWTO/AX25-HOWTO/index.html
+is nearly three years old.  Is there a more recent version?
+
+Regards, Chuck
+
+
+
