@@ -1,32 +1,21 @@
-From: Nuno Sucena Almeida <slug@aeminium.org>
-Subject: Re: Split screen telnet client?
-Date: Mon, 7 Jul 2003 21:50:05 +0100
+From: Ralf Baechle DO1GRB <ralf@linux-mips.org>
+Subject: FT-847 support for predict 2.2.2/gsat 1.1.0
+Date: Tue, 8 Jul 2003 01:25:17 +0200
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <20030707205005.GA52672@freebsd.aeminium.pt>
-References: <3104.44.140.19.34.1057579396.squirrel@ax25.org>
+Message-ID: <20030707232517.GC8948@linux-mips.org>
 Mime-Version: 1.0
 Return-path: <linux-hams-owner@vger.kernel.org>
 Content-Disposition: inline
-In-Reply-To: <3104.44.140.19.34.1057579396.squirrel@ax25.org>
 List-Id: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
-To: Linux Hams List <linux-hams@vger.kernel.org>
+To: linux-hams@vger.kernel.org
 
-You could try this:
+I've added support for the FT-847 to gsat 1.1.0 which is part of the
+predict 2.2.2 package.  A patch and rpms are available on
+ftp.linux-mips.net in /pub/ham/predict-2.2.2.
 
-http://freshmeat.net/projects/twin/
+73 de DO1GRB op Ralf
 
-                        73
-                                Nuno
-
-On Mon, Jul 07, 2003 at 02:03:16PM +0200, Pontus Falk wrote:
-| Can someone recommend a telnet client using split screen that is not for X
-| Windows?
-
-
--- 
-CT1FOX - http://aeminium.org/slug
-
-D30B 54C0 40A7 7D61 C44F  4BA4 F071 2168 F494 ACB9
-
+--
+Loc. JN47BS / CQ 14 / ITU 28 / DOK A21
