@@ -1,23 +1,24 @@
-From: Joop Stakenborg <pa3aba@debian.org>
-Subject: ANNOUNCE: xdx 1.0
-Date: Tue, 14 Oct 2003 20:37:00 +0200
+From: Richard Bown <richard.bown@blueyonder.co.uk>
+Subject: linrad
+Date: 17 Oct 2003 09:21:14 +0100
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <3F8C424C.7070005@debian.org>
+Message-ID: <1066378874.4086.18.camel@gb7tf.org.uk>
 Mime-Version: 1.0
 Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"; format="flowed"
+Content-Type: text/plain; charset="us-ascii"
 To: linux-hams@vger.kernel.org
 
-Xdx is a dx-cluster client for linux written with the GTK+-2.0 
-libraries. Source and rpm packages are available at:
+Hi
+ Has anyone had any success getting linrad working on mandrake 9.1 with
+2.4.21 kernel, after compiling mine just shuts down the graphics card
+and eventually causes the machine to crash.
+Alternatively has anyone had success running spectran on wine.
+that app dos'nt want to play on either vmware or win4lin
 
-http://people.debian.org/~pa3aba/xdx.html
-
-Regards,
-Joop
+TIA
+Richard
 -- 
-73 de Joop PG4I
-ex - PA4TU PA3ABA
+Richard Bown <richard.bown@blueyonder.co.uk>
 
