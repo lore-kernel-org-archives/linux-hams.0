@@ -1,29 +1,31 @@
-From: Mike Fenske <mike_fenske@telus.net>
+From: Stewart Wilkinson <g0lgs@gb7lgs.co.uk>
 Subject: Re: KPC 9612+ and kissattach
-Date: Tue, 03 Sep 2002 12:16:38 -0700
+Date: Tue, 3 Sep 2002 19:47:48 +0000 (GMT)
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <3.0.6.32.20020903121638.00797730@pop.telus.net>
+Message-ID: <Pine.LNX.4.33.0209031944530.15058-100000@gb7lgs.ampr.org>
+References: <3.0.6.32.20020903120814.007bb100@pop.telus.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset="us-ascii"
 Return-path: <linux-hams-owner@vger.kernel.org>
+In-Reply-To: <3.0.6.32.20020903120814.007bb100@pop.telus.net>
 List-Id: <linux-hams.vger.kernel.org>
 Content-Transfer-Encoding: 7bit
 To: linux-hams@vger.kernel.org
 
-Hello again Ian (and all).
 
-I forgot to say in my last e-mail that after issuing the INTFACE XKISS
-command, issue a RESET command.
+On Tue, 3 Sep 2002, Mike Fenske wrote:
 
-Mike Fenske
-VE7MKF
+> Hello Ian (and all).
+> 
+> With my KPC-9612, you have to use XKISS mode instead of KISS. Try (from
+> minicom or whatever) INTFACE XKISS and not INTFACE KISS. Baud rate between
+> computer and TNC should be 9600. 
 
+I just used INTFACE KISS & RESET with my 9612+ . 
 
->With my KPC-9612, you have to use XKISS mode instead of KISS. Try (from
->minicom or whatever) INTFACE XKISS and not INTFACE KISS. Baud rate between
->computer and TNC should be 9600. 
->
->Mike Fenske
->VE7MKF
+I guess you must be using mkiss with the -p option.
 
+-- 
+Stewart (G0LGS)
+g0lgs@gb7lgs.co.uk
 
