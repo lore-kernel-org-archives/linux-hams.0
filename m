@@ -1,39 +1,32 @@
-From: Luc Langehegermann <lx2gt@gmx.net>
+From: mvw@mvw.net
 Subject: Re: listen, permissions
-Date: Sat, 14 Dec 2002 16:43:03 +0100
+Date: Sat, 14 Dec 2002 10:59:53 -0500 (EST)
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <200212141643.03693.lx2gt@gmx.net>
-References: <Pine.LNX.4.44.0212140835060.14589-100000@jeeves.mvw.net>
+Message-ID: <Pine.LNX.4.44.0212141058400.15381-100000@jeeves.mvw.net>
+References: <200212141643.03693.lx2gt@gmx.net>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7BIT
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <Pine.LNX.4.44.0212140835060.14589-100000@jeeves.mvw.net>
+In-Reply-To: <200212141643.03693.lx2gt@gmx.net>
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"
-To: mvw@mvw.net, linux-hams@vger.kernel.org
+Content-Type: TEXT/PLAIN; charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+To: Luc Langehegermann <lx2gt@gmx.net>
+Cc: linux-hams@vger.kernel.org
 
-On Saturday 14 December 2002 16:35, mvw@mvw.net wrote:
-> All,
->
-> Bear with me one more time with beginner's questions...
->
-> I see I have to be root to use the "listen" app. Since listen has 755
-> permissions, why can I not run it as a normal user?
+Luc,
 
-Ass listen 'sniffs' the network devices, it need to run as root. I know - this 
-is not really precise, so someone correct me.
+> Ass listen 'sniffs' the network devices, it need to run as root. I know - this 
+> is not really precise, so someone correct me.
 
->
-> Also I see some apps have changed since the (excellent) AX25-Howto was
-> written (e.g.  ttylinkd is new). Where's the best place to find new (if
-> there are any!) ham radio Linux software?
+OK, makes sense (it is a promiscuous mode interface!). But what did I do
+on my old 2.0 kernel system (my 486, which has been up forever!) to allow
+it there?
 
-Take a look at http://radio.linux.org.au
+Thanks for the link too. 
 
->
-> Many thx all
-> 73 Michael VA3MVW
->
+This is still fun.
 
-73, Luc, LX2GT
+Michael
+
+
 
