@@ -1,36 +1,34 @@
-From: Robert =?iso-8859-1?q?Steinh=E4u=DFer?= <robert@steinhaeusser.com>
-Subject: Re: Strange AXIP / AX25 Frames
-Date: Tue, 7 Jan 2003 15:16:53 +0100
+From: Phil <phil@spiderweb.com.au>
+Subject: PIC programming question
+Date: Tue, 7 Jan 2003 14:30:56 +1000
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <200301071516.56542.robert@steinhaeusser.com>
-References: <Pine.LNX.4.44.0301072207280.12010-100000@zl2bsj.ampr.org>
+Message-ID: <200301062005.06383.phil@spiderweb.com.au>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7BIT
+Content-Transfer-Encoding: 8bit
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <Pine.LNX.4.44.0301072207280.12010-100000@zl2bsj.ampr.org>
 List-Id: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
 To: linux-hams@vger.kernel.org
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Hello All,
 
-Wilbert Knol wrote:
-> > 9: fm [invalid] to [invalid] via 90gGB7-2* M0GB7-3* [invalid] [invalid]*
-> > [invalid] gGB7BM 0GB7CR [invalid] ctl [invalid]0^ [DAMA]
->
-> Kernel 2.4.20 & latest AX25 apps, lib, tools. TNC-2 in KISS-mode.
+I'd to try my hand at PIC programming and the projects that I have in mind are 
+amateur radio related so I suppose this question is not off topic.
 
-KISS mode normally has no checksumming, so any stray HF will mess up the data 
-on your serial line between TNC and PC. Use shielded cabling and SMACK or 
-RMNC-CRC-KISS or (even better for numerous reasons) 6PACK.
+I have some utilities (gputils) that will create the hex code, however I'm 
+wondering what other people use to actually program the PIC.
 
-73, Robert DL1NC/N9KBK
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.2.1 (GNU/Linux)
+An Internet search didn't reveal very many programmers for Linux. One 
+interesting project is called ponyprog2000. The hardware is more complex than 
+a typical programmer that operates under MS Windows but it's probably more 
+versatile. The software appears to be easy enough to use.
 
-iD8DBQE+GuFYo4a8ramwUd8RAtZ3AJ4qUdrcGRAtM2/m9AhUmNvMoMiQrwCeKYS+
-NwjKGKT00PWmICX4E/8Jlhg=
-=M5q3
------END PGP SIGNATURE-----
+Does anyone have a favorite PIC programmer? My only interest at the moment is 
+to be able to program PIC 16F84 and 16F876 chips.
+
+-- 
+Regards,
+Phil
+phil@spiderweb.com.au
+
 
