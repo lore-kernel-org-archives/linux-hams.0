@@ -1,30 +1,43 @@
-From: Jorge Matias <martin@andorinha.ist.utl.pt>
-Subject: Kpsk doesn't work with ALSA/es1968 module
-Date: Wed, 18 Feb 2004 16:03:14 +0000 (WET)
+From: Mike Markowski <mm@UDel.Edu>
+Subject: gMFSK/hamlib/parport
+Date: Wed, 18 Feb 2004 10:27:45 -0500
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <Pine.LNX.4.58.0402181542330.2143@andorinha.ist.utl.pt>
+Message-ID: <20040218152745.GD16991@strauss.udel.edu>
 Mime-Version: 1.0
 Return-path: <linux-hams-owner@vger.kernel.org>
+Content-Disposition: inline
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: TEXT/PLAIN; charset="us-ascii"
+Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
-To: Linux-Ham Mailing List <linux-hams@vger.kernel.org>
+To: Linux Hams <linux-hams@vger.kernel.org>
 
+Hi all,
 
-  Hello all,
+A couple questions about the excellent gMFSK 0.6beta2:
 
-  I have a Toshiba Laptop computer and I'm using Debian Linux w/ kernel
-2.4.22 . I'm also using KDE 3.1 as Desktop Environment.
-  I have installed program Kpsk (for PSK31) and running the program I
-didn't see any signal from Sound Card. At the time I was using maestro.o
-driver (My soundcard is a Maestro2) from the kernel.
-  I have noted that the driver samples with a very low signal. So low
-that I can't hear a thing.
-  Well, I have installed ALSA Drivers/Utils 1.0.2c with es1968 driver and
-tried again. With this configuration Kpsk doesn't start at all. It gives
-an error in the audio thread.
-  Anyone had this problem?
+	Feature request:
+	- Are there any patches that allow gMFSK to use
+	  a parport for PTT?  If not, I'll be glad to look into
+	  possibly re-using the parport code from soundmodem-0.7.
 
+	Bug report (but maybe in hamlib):
+	- I'm using an ICOM 706 MkIIg with hamlib on ttyS0 and
+	  PTT to "none" in gMFSK just for the sake of seeing how
+	  gMFSK uses hamlib.  When I rotate the rig's tuning knob,
+	  gMFSK works for a bit nicely updating the spectrum freqs,
+	  but then I get a "Protocol error" and hamlib is disabled.
+	  I assume the data out of the rig is changing too rapidly
+	  for hamlib to capture it?  Or maybe gMFSK is trying to
+	  reread the data too frequently?
 
-Best Regards,
-Jorge
+I haven't played around with either yet just in case others are already
+aware and working on it.
+
+Oh, and I finally looked at gMFSK's "Help".  You know how it goes, when
+all else fails read the manual...  I like how you included so many
+URLs in there Tomi.  But I notice under the Usage section, it talks
+about opening images and how to scroll them.  :-)  Reused text from
+something else I guess?
+
+	Thanks for any info,
+	Mike  AB3AP
