@@ -1,50 +1,40 @@
-From: David Quental <ct1drb@iol.pt>
-Subject: Re: Gmfsk and kernel 2.6.2 - PROBLEM SOLVED.
-Date: Thu, 05 Feb 2004 08:31:42 +0000
+From: Mike Markowski <mm@UDel.Edu>
+Subject: Re: PTT with soundmodem - solved!
+Date: Thu, 5 Feb 2004 20:05:28 -0500
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <4021FF6E.30608@iol.pt>
-References: <402163F0.1060406@iol.pt>
+Message-ID: <20040206010528.GA18301@strauss.udel.edu>
+References: <20040201215530.GA572@strauss.udel.edu> <20040201215530.GA572@strauss.udel.edu> <3.0.6.32.20040201220959.0079bd30@pop.telus.net> <1075724381.1263.19.camel@oh2bns.ampr.org>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <402163F0.1060406@iol.pt>
+Content-Disposition: inline
+In-Reply-To: <1075724381.1263.19.camel@oh2bns.ampr.org>
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"; format="flowed"
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 7bit
 To: Linux Hams <linux-hams@vger.kernel.org>
 
-Hello to all.
+Tomi,
 
-Only to inform that i have the problem solved, thanks to help of Tomi.
-I only added sound lines from previous /etc/modules. conf to new 
-/etc/modprobe.conf, then did depmod -a and all ran fine and without 
-problems.
+You were exactly right!
 
-Thanks for all and till next time.
+On Mon 02-Feb-04 at  719 EST, Tomi Manninen wrote:
+> On Sun, Feb 01, 2004 at 04:55:30PM -0500, Mike Markowski wrote:
+> 
+> >     sm[15891]: ioctl: SNDCTL_DSP_SYNC: Device or resource busy (16)
+> 
+> [...] Unfortunately the only cause for the failure I can think of, is a 
+> poorly written sound card driver 
 
-CT1DRB
-David Quental
+> [...] Another remedy might be trying the ALSA driver.
 
+I read up on ALSA et al., downloaded the software, and started to
+compile.  Only then did I download kernel 2.6.1 and discover ALSA
+drivers are now in the kernel.  Doh!  Anyway, I cranked up xastir
+after rebooting with the new kernel and starting soundmodem, and
+everything is working fine!  Seeing acks come back from my aprs messages
+really capped off the effort.  So now that everything is working...I
+have to learn what other applications are available on packet.  :-)
 
-> Hello to all.
->
-> I am testing kernel 2.6.2 and gmfsk, but have problems with it, gmfsk 
-> refuses to work because it does not find device /dev/dsp1 (i have 2 
-> sound-cards in my computer), but in fact /dev/dsp1 exists and 
-> permissions are right. Is this problem a bad configuration of my side 
-> or a bug in new kernel 2.6.2??? With kernel 2.6.1 i think i had not 
-> this problem, it only happened with recent versions of 2.6.2 and a bit 
-> before.
->
-> Any help will be welcome here.
->
-> Best 73 and thanks for reading my email
->
-> CT1DRB
-> David Quental
->
-> -
-> To unsubscribe from this list: send the line "unsubscribe linux-hams" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at  http://vger.kernel.org/majordomo-info.html
->
+Thanks very much for the help getting my laptop "packeting."
 
+	Mike  AB3AP
