@@ -1,33 +1,70 @@
-From: Rodolfo Brasnarof <rodob@datafull.com>
+From: Gary Kohtala <w7ntf@yahoo.com>
 Subject: Re: Convers Setup
-Date: Tue, 26 Oct 2004 13:22:37 -0300
+Date: Tue, 26 Oct 2004 13:26:30 -0700 (PDT)
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <20041026132237.18a4c960.rodob@datafull.com>
-References: <417D35BD.9020709@utoronto.ca>
- <200410251818.i9PIIfks003119@yagi.h-net.msu.edu> <417D45FF.5060600@utoronto.ca>
+Message-ID: <20041026202630.33154.qmail@web50301.mail.yahoo.com>
+References: <20041025143617.67da0cf9.rodob@datafull.com>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7BIT
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-reply-to: <417D45FF.5060600@utoronto.ca>
+In-Reply-To: <20041025143617.67da0cf9.rodob@datafull.com>
 List-Id: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
-To: linux-hams@vger.kernel.org
+Content-Transfer-Encoding: 7bit
+To: Rodolfo Brasnarof <rodob@datafull.com>, linux-hams@vger.kernel.org
 
-On Mon, 25 Oct 2004 14:29:19 -0400
-Dave Stubbs <dave.stubbs@utoronto.ca> wrote:
+Speaking of Converse Servers, mine came back on line
+a few days ago. The TACOMA Convers Server is
+available at 66.80.67.210, port 3600, for anyone
+interested. I am running HTPP on a SuSE v9.0 Linux
+box.
 
-> I'm looking to *primarily* service AX.25 callers, since this is for
-> ARES use.
+73,
 
-conversd-saupp can accept ax25 connections by itself, but you need to
-loguin with/n your_call. I've setup it listening only on port 3600 tcp,
-and ax25 connections are handled by ax25d and axconv, which connects to
-de conversd on tcp/ip, logs you automatically, and even can issue some
-commands like a /w after connection, all automatically.
+Gary, W7NTF
 
-> Interesting - the coversd-saupp download links are all broken...
+--- Rodolfo Brasnarof <rodob@datafull.com> wrote:
 
-If you still can't download it, I can send it to you.
+> On Mon, 25 Oct 2004 13:19:57 -0400
+> Dave Stubbs <dave.stubbs@utoronto.ca> wrote:
+> 
+> > Hello all,
+> > 
+> > In an effort to get prepared for digital ARES
+> traffic handling, I'm 
+> > going to try running a digital net.  I'm looking
+> to add a convers
+> > server to my prototype node.  So far, I've found
+> the following pieces
+> > of software:
+> > 
+> > saupp
+> > wampes
+> > tpp-conversd
+> > tnn
+> > pp-conversd
+> > htpp
+> > htppu
+> > webconvers
+> 
+> I'm using conversd-saupp. It seems to be me newer,
+> has irc support, and
+> some ax25 support too.
+> 
+> For ax25 user connection, you could use axconv,
+> which hangs on ax25d,
+> and connects to conversd via tcp/ip.
+> -
+> To unsubscribe from this list: send the line
+> "unsubscribe linux-hams" in
+> the body of a message to majordomo@vger.kernel.org
+> More majordomo info at 
+> http://vger.kernel.org/majordomo-info.html
+> 
 
-conversd-saupp.tar.gz  260610 bytes
-axconv.c.gz  2563 bytes
+
+
+		
+__________________________________
+Do you Yahoo!?
+Yahoo! Mail Address AutoComplete - You start. We finish.
+http://promotions.yahoo.com/new_mail 
