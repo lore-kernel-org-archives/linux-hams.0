@@ -1,40 +1,53 @@
-From: Jack Zielke <jack@takeovertheworld.org>
-Subject: Re: FTP with wncrypted password.
-Date: Fri, 09 May 2003 11:13:06 -0400 (EDT)
+From: Mike Markowski <mm@UDel.Edu>
+Subject: Re: Pc/rig interface for packet
+Date: Fri, 9 May 2003 11:21:08 -0400
 Sender: linux-hams-owner@localhost
-Message-ID: <Pine.LNX.4.33.0305091108160.15079-100000@diablo.takeovertheworld.org>
-References: <20030509145648.35959.qmail@web9605.mail.yahoo.com>
+Message-ID: <20030509152108.GC10769@mahler.udel.edu>
+References: <096FB52976B50F458D5977CC9B40C9D9011396@Exchange.arkalmus.com> <Pine.LNX.4.44.0305021232540.1362-100000@oh2bns.ampr.org>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7BIT
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-reply-to: <20030509145648.35959.qmail@web9605.mail.yahoo.com>
+Content-Disposition: inline
+In-Reply-To: <Pine.LNX.4.44.0305021232540.1362-100000@oh2bns.ampr.org>
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: TEXT/PLAIN; charset="us-ascii"
-To: ariel mastracchio <ari197516@yahoo.com>
-Cc: linux-hams@vger.kernel.org
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+To: linux-hams@vger.kernel.org
 
->    I'm looking for a ftp server that support encrypted
-> password (not SSH or SSL, too much overhead for 1k2
+On Fri 02-May-03 at  546 EDT, Tomi Manninen wrote:
+> 
+> I have used a homemade interface where the PTT connection is similar to 
+> the "Serial Port Solution" on that page. Also I have no isolating 
+> transformers in the audio paths. I have had no problems with the setup 
+> even though my HF antenna (a random wire) is only a few meters away from 
+> the rig/pc.
+> 
+> However this is something everyone seems to have his/her own opinion and
+> they're all probably right. There are so many variables in a typical
+> station setup that you will have to try to see if _you_ need DC isolation
+> or not.
+> 
+> I don't know the Rascal kit interface but to me $20 seems cheap. Just 
+> buing a decent enclosure for a homemade project can easily be more 
+> expensive...
 
-I believe what you want is 'skey'  You should be able to find an ftp
-server that has skey support via a web search.  If you have problems
-locating the software let me know.
+Thanks, Tomi, for your opinion.  I decided the same as you and
+bought the Rascal kit.  With the included cables & parts, I think
+it would cost about the same or even a little more to buy the
+individual components myself.  Last night I took an hour or two,
+put it together and was able to test it out with a PSK31 session.
+So I can safely say now that I'd recommend the kit.  The web site
+is at http://www.packetradio.com/psk31.html
 
-Skey is a one time password implementation.  Each time you log in, your
-password becomes useless and you have to use a different one to log in the
-next time.  Perfect for 'over the air' as the passwords are not
-encrypted because they do not need to be.
+The enclosure, by the way, is not a fancy one.  It looks like one
+of those plastic soap holders you use for travel.  :-)  But it
+serves its purpose.  There is some velcro as well to fasten down
+the board, and you get a small decorative ring to insert in a hole
+where the tx led shows through.  It's a nice little kit, with
+detailed instructions, and even a diskette with Windows based
+freeware - maybe not useful for us on this group, but nice for him
+to throw in.
 
-Slackware has prebuilt packages for logging in with this system in the
-contrib/ham directory.
+Ok, enough of my mini product review.  Now on to getting packet
+going on my laptop!
 
-Jack
-
--- 
-  v,i,j,k,l,s,a[99]; main()   {
-for(scanf("%d",&s);*a-s;v=a[j*=v]-a[i],k=i<s,j+=(v=j<s&&(!k&&!!printf(2+"\n\n%c"
--(!l<<!j),"#Q"[l^v?(l^j)&1:2])&&++l||a[i]<s&&v&&v-i+j&&v+i-j))&&!(l%=s),v||(i==j
-?a[i+=k]=0:++a[i])>=s*k&&++a[--i]);}    /* Osovlanski and Nissenbaum */
-
-shamelessly stolen from: http://home.wxs.nl/~faase009/Signindex.html
-
+	Mike   AB3AP
