@@ -1,23 +1,30 @@
-From: "John" <aa6qn@pacbell.net>
-Subject: Compiling Perl/Tk800.024 on RH9 ?
-Date: Mon, 19 May 2003 05:42:05 -0700
+From: Ana Maria Grilo Moreira <ct1drb@vizzavi.pt>
+Subject: Abt SuSE 8.2.
+Date: Mon, 19 May 2003 22:21:28 +0100
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <CMECIEPPNBDKNAHKBHJGOEINCAAA.aa6qn@pacbell.net>
+Message-ID: <3EC94AD8.4030600@vizzavi.pt>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 7BIT
 Return-path: <linux-hams-owner@vger.kernel.org>
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"
-To: Linux-Hams <Linux-Hams@vger.kernel.org>
+Content-Type: text/plain; charset="us-ascii"; format="flowed"
+To: linux-hams@vger.kernel.org
 
-Has anyone been successful compiling either perl/Tk800.024 or perl/Tk402.004
-on a RH9 platform? I keep getting an error "missing separator" from the
-Makefile. Doing the "perl Makefile.PL" runs just fine. This did work on a
-RH7.3 box. If I add a '=' after the 2 effected lines I still get a libpTk.a
-error.
+73 to all.
 
-I would like to get my WXNET (weather station) client back up and need the
-current Tk to do so.
+First of all excuse me abt my ask, it is not concern abt ham but is around.
 
-Thank you in advance, John
+I use SuSE 8.1 but now there is version 8.2. Here in Portugal price is 
+vy high to me, so I ask if any ham has SuSE 8.2 can do copy of the 5 
+cd's and send them to me. Of course i pay mail transportation (inside EU 
+is cheap).
+
+I know that subject of my mail is not exactly concern to ham radio, so 
+my apologies, but new version of gmfsk only compiles under SuSE 8.2, so 
+this is my ask.
+
+Best 73 to all and agn my apologies.
+
+CT1DRB
+David Quental
 
