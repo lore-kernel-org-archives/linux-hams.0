@@ -1,7 +1,7 @@
 From: =?iso-8859-15?Q?G=FCnther_Montag?= <Safari.Doktor@addcom.de>
 Subject: [suse-ham-e] sorry for crash in hf-0.6.4, fixed in hf0.6.5
 Date: Mon, 15 Nov 2004 10:16:39 +0100
-Message-ID: <000801c4caf3$d0579180$0173a8c0@karschnet.local>
+Message-ID: <000b01c4caf3$d0612e70$0173a8c0@karschnet.local>
 Mime-Version: 1.0
 Content-Transfer-Encoding: quoted-printable
 Return-path: <hfterm-hackers-admin@lists.sourceforge.net>
