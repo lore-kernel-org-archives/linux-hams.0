@@ -1,37 +1,47 @@
-From: John Ackermann N8UR <jra@febo.com>
-Subject: Slightly OT: Perl question
-Date: Sat, 15 Mar 2003 14:24:47 -0500
+From: Hamish Moffatt <hamish@cloud.net.au>
+Subject: Re: Slightly OT: Perl question
+Date: Sun, 16 Mar 2003 09:46:04 +1100
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <28850000.1047756287@[192.168.1.1]>
+Message-ID: <20030315224604.GA18830@silly.cloud.net.au>
+References: <28850000.1047756287@[192.168.1.1]>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
 Content-Disposition: inline
+In-Reply-To: <28850000.1047756287@[192.168.1.1]>
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"; format="flowed"
-To: linux-hams@vger.kernel.org
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+To: John Ackermann N8UR <jra@febo.com>
+Cc: linux-hams@vger.kernel.org
 
-Hi --
+On Sat, Mar 15, 2003 at 02:24:47PM -0500, John Ackermann N8UR wrote:
+> I need to:
+> 
+> (a) test whether one bit of a byte is set or not (e..g, is bit 5 of $myvar 
+> a 1 or a 0);
+> 
+> and
+> 
+> (b) do a binary AND of two bytes (in other words, apply a bitmask).
 
-Sorry if this is a bit off-topic.
+Binary AND is the "&" operator as in C. So
 
-I need to do some bit-level manipulation in a perl program I'm writing to 
-capture data from a frequency counter via GPIB.  I have dug around through 
-the Camel Book and done some googling, but I haven't been able to find a 
-straightforward way to take care of (what should be) straightforward tasks.
+$c = $a & $b;
+$y = $x & 0xFF;
 
-I need to:
+etc achieves (b), and similarly for (a),
 
-(a) test whether one bit of a byte is set or not (e..g, is bit 5 of $myvar 
-a 1 or a 0);
+if ($myvar & 0x20) {
+    ....
+}
 
-and
+or perhaps more readably:
 
-(b) do a binary AND of two bytes (in other words, apply a bitmask).
+if ($myvar & (1 << 5)) {
+    ....
+}
 
-I'd sure appreciate a  perl snippet or two showing efficient ways to do 
-these things.
 
-Thanks,
-
-John
+Hamish
+-- 
+Hamish Moffatt VK3SB <hamish@debian.org> <hamish@cloud.net.au>
