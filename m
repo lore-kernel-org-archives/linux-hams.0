@@ -1,10 +1,10 @@
-From: pa3gcu <pa3gcu@zeelandnet.nl>
+From: JACrux <JAC@patents.freeserve.co.uk>
 Subject: Re: 4 port serial card.
-Date: Sun, 12 Jan 2003 08:29:00 +0000
+Date: Sun, 12 Jan 2003 10:34:42 +0000
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <03011208290006.31603@unix.pa3gcu>
+Message-ID: <200301121034.42284.JAC@patents.freeserve.co.uk>
 References: <3E20FF68.000003.11949@gizmo>
-Reply-To: pa3gcu@zeelandnet.nl
+Reply-To: JAC@patents.freeserve.co.uk
 Mime-Version: 1.0
 Content-Transfer-Encoding: 7BIT
 Return-path: <linux-hams-owner@vger.kernel.org>
@@ -12,6 +12,16 @@ In-Reply-To: <3E20FF68.000003.11949@gizmo>
 List-Id: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
 To: Ray Wells <mvc@dodo.com.au>, linux-hams@vger.kernel.org
+
+
+I have a similar card but the doc with it does not mention Linux - or anything 
+else. I got it to work by editing the setserial file to tell Linux what to do 
+(addresses and irqs)  with the four ports. But to make it work I had to 
+disable all the standard serial ports in the BIOS so that the new card would 
+not generate conflicts. I'm still using the same card - using the BIOS 
+comport disabling strategy under Win 98, sorry about that.  Of course as you 
+probably have a more modern machine, it might all be different.
+John Crux  G3JAG
 
 On Sunday 12 January 2003 05:38, Ray Wells wrote:
 > Hi All,
@@ -35,15 +45,6 @@ On Sunday 12 January 2003 05:38, Ray Wells wrote:
 > DOS are supported.
 >
 > I don't have the drivers :-(
-
-You may well have the driver(s), i am of the opinion that is it is stated 
-that "unix" is supported then quite possably there is a driver in the kernel 
-source for such an old card.
-Try looking into /usr/src/linux/Documentation/Configure.help for a driver.
-There is a list to be found with URL's in the Serial-HOWTO.
-I used google.com to look for the word "4-port" i got more than 100 hits, 
-there must be some hint for you in there as well.
-
 >
 > Does anyone know anything about this card? My BBS is crying out for it for
 > additional radio ports :-)
@@ -55,9 +56,4 @@ there must be some hint for you in there as well.
 > To unsubscribe from this list: send the line "unsubscribe linux-hams" in
 > the body of a message to majordomo@vger.kernel.org
 > More majordomo info at  http://vger.kernel.org/majordomo-info.html
-
--- 
-Regards Richard
-pa3gcu@zeelandnet.nl
-http://people.zeelandnet.nl/pa3gcu/
 
