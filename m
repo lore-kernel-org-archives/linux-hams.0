@@ -1,20 +1,17 @@
-From: "Rodolfo Brasnarof" <rodob@ciudad.com.ar>
+From: "Hannu Savolainen, oh2glh" <hannu@opensound.com>
 Subject: Re: Age and the art of making a EXT3 File System Kernel
-Date: Wed, 07 May 2003 01:27:09 -0300
+Date: Wed, 7 May 2003 10:52:47 +0300 (EEST)
 Sender: linux-hams-owner@localhost
-Message-ID: <3EB860ED.25000.23011@localhost>
-References: <3EB58620.2010309@pacbell.net>
+Message-ID: <Pine.LNX.4.10.10305071043570.27845-100000@zeus.compusonic.fi>
+References: <3EB860ED.25000.23011@localhost>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7BIT
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-reply-to: <3EB58620.2010309@pacbell.net>
-Content-description: Mail message body
+In-Reply-To: <3EB860ED.25000.23011@localhost>
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"
+Content-Type: TEXT/PLAIN; charset="us-ascii"
+Content-Transfer-Encoding: 7bit
 To: linux-hams@vger.kernel.org
 
-
----
 On 4 May 2003 at 14:29, John wrote:
 
 > Gaddsss, I really must be aging. I have successfully built a
@@ -30,16 +27,28 @@ On 4 May 2003 at 14:29, John wrote:
 > I am using RH8.0 with formatted scsi ext3 file system. The canned
 > 2.4.18-14 loads just fine but it lacks the dmascc0 drivers that I
 > need to ax25. I was attempting to build a 2.4.19 smp kernel.
-> 
-> Could some kind sole refresh my memory with the ext3 file system
-> requirements.
+I had the same problem few months ago. I think the LABEL=/ stuff requires
+some kind of disk label support option (which may be RedHat's extension to
+the kernel). I didn't manage to find any elegant solution within almost a
+day of work so I decided to use brute force.
 
-You should have ext3 support built into the kernel, unless 
-you use the initrd way, that lets you load it as a module. I 
-think you should have ext2 too.
+My method was editing /etc/fstab manually while running the old kernel. I
+just replaced "LABEL=/" with the /dev/hda# partition that contained the
+root fs. If there are any other LABEL= strings they need to be replaced in
+the same way. The easiest way to find out the right device names is the
+"df" command. 
 
-In order to mount the root filesystem as ext3, you have to 
-set that in fstab. Remember you can still mount your ext3 as 
-ext2. Also you can turn an ext2 into ext3, and vice-versa, 
-using tune2fs.
+Also the original RH's kernel works after this modification.
+However you should be very very carefull because making a mistake here
+makes the system unbootable forever. Don't do this kind of changes unless
+you are familiar with the /etc/fstab format.
+
+Best regards,
+
+Hannu
+-----
+Hannu Savolainen (hannu@opensound.com)
+http://www.opensound.com (Open Sound System (OSS))
+http://www.compusonic.fi (Finnish OSS pages)
+OH2GLH QTH: Karkkila, Finland LOC: KP20CM
 
