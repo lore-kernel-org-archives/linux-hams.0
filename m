@@ -1,45 +1,36 @@
-From: Stephane Fillod <fillods@users.sourceforge.net>
-Subject: [ANN] Hamlib 1.1.3 released
-Date: Mon, 17 Jun 2002 23:32:54 +0200
+From: Matt Ettus <matt@ettus.com>
+Subject: Re: [Hamlib-developer] [ANN] Hamlib 1.1.3 released
+Date: Tue, 18 Jun 2002 05:53:40 -0000
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <20020617213254.GA29020@charybde.local>
+Message-ID: <aemi30$c8o$2@main.gmane.org>
+Reply-To: matt@ettus.com
 Mime-Version: 1.0
+Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
 Content-Disposition: inline
 List-Id: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-To: Hamlib developers <hamlib-developer@lists.sourceforge.net>
+To: Stephane Fillod <fillods@users.sourceforge.net>, Hamlib developers <hamlib-developer@lists.sourceforge.net>
 Cc: Linux HAMs <Linux-hams@vger.kernel.org>
 
 
-Good news everyone!
+Stephane Fillod <fillods@users.sourceforge.net> said:
 
-Hamlib-1.1.3 has finally been released.
-Check it out at http://www.hamlib.org !
+>  * rotator frontend, new easycomm backend
 
-New in 1.1.3:
- * new backend: JRC (NRD-545), and many new rig models
- * rotator frontend, new easycomm backend
- * added Kylix and perl bindings and completed tcl/tk support
- * networked (RPC) rig and rotator
+Any interest in an F1EHN Az-el controller?  EME guys seem to love it.  I found
+info on the control protocol from some guys who cloned the damned thing...  I
+think its amazing that somebody put the effort in to copy bad hardware and
+protocols just to be compatible with closed source control software...
 
-Note: locator calculation is not working right.
+Anyway, they have docs on the [primitive] protocol here...
 
-Download pages are accessible at http://sourceforge.net/projects/hamlib
-i386 rpms and .deb coming soon.
+http://www.dnai.com/~rexa/Projects/EMEboard.html
 
-Plan for 1.1.4:
-* Enter more models of supported backends
-* more rotor stuff
-* extend perl binding, add Java binding
-* collaboration with gnuradio project
-* etc. (any wishes?)
+> Plan for 1.1.4:
+> * collaboration with gnuradio project
 
-Please, test it out and report to hamlib-developer@lists.sourceforge.net
-Developers are also invited to join the Hamlib team by subscribing to this
-mailing list.
+Cool.  Did you get a chance to grab the gnuradio code?
 
-Have fun and let us know!
+Matt
 
-73's de Stephane Fillod (f8cfe)
