@@ -1,43 +1,39 @@
-From: Mike Markowski <mm@UDel.Edu>
-Subject: Pc/rig interface for packet
-Date: Thu, 1 May 2003 14:00:55 -0400
+From: "Curt Mills, WE7U" <hacker@tc.fluke.com>
+Subject: Re: Pc/rig interface for packet
+Date: Thu, 1 May 2003 11:05:09 -0700 (PDT)
 Sender: linux-hams-owner@localhost
-Message-ID: <20030501180055.GK10769@mahler.udel.edu>
-References: <20030410170405.GA29076@strauss.udel.edu> <20030410175130.GE13938@n7xy.net>
+Message-ID: <Pine.LNX.4.33.0305011103190.605-100000@wapiti.tc.fluke.com>
+References: <20030501180055.GK10769@mahler.udel.edu>
 Mime-Version: 1.0
 Return-path: <linux-hams-owner@vger.kernel.org>
-Content-Disposition: inline
-In-Reply-To: <20030410175130.GE13938@n7xy.net>
+In-Reply-To: <20030501180055.GK10769@mahler.udel.edu>
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"
+Content-Type: TEXT/PLAIN; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
-To: Linux Hams <linux-hams@vger.kernel.org>
+To: Mike Markowski <mm@UDel.Edu>
+Cc: Linux Hams <linux-hams@vger.kernel.org>
 
-Thanks, everyone, for your helpful responses of a couple weeks ago.
-I've now got my rig talking to my laptop via hamlib - I love xlog's
-use of hamlib!
+On Thu, 1 May 2003, Mike Markowski wrote:
 
-I had other things occupying time for the last couple weeks but
-now want to get back to getting a packet radio set-up up &
-running.  The user mode soundmodem & kernel (2.4.20) w/mkiss
-support is now compiled, though I haven't finished going through
-the HOWTO to get everything else set up - that AX.25 HOWTO seems
-to go on and on...  :-o  I haven't bothered finishing it yet
-because I still have to make a cable, which brings me to my
-question.
+> now want to get back to getting a packet radio set-up up &
+> running.  The user mode soundmodem & kernel (2.4.20) w/mkiss
+> support is now compiled, though I haven't finished going through
+> the HOWTO to get everything else set up - that AX.25 HOWTO seems
+> to go on and on...  :-o
 
-For the rig/pc cable do you have opinions of the two choices I'm
-aware of:
+If you're interested in APRS on Linux, the Xastir package supports
+serial port KISS and the soundmodem program supports a KISS mode
+where it looks like a serial KISS device.  Connect the two together
+and you're up and running without having to set up AX.25 kernel
+networking.  Just another option.
 
-   * Use a simple idea like
-     http://www.baycom.org/~tom/pcf/ptt_circ/ptt.html
+If you're interested in other kinds of packet, Xastir won't help you
+there.
 
-   * Buy the Rascal kit (US $20) at
-     http://www.packetradio.com/psk31.html
+-- 
+Curt Mills, WE7U                    hacker_NO_SPAM_@tc.fluke.com
+Senior Methods Engineer/SysAdmin
+"Lotto:    A tax on people who are bad at math!"
+"Windows:  Microsoft's tax on computer illiterates!" -- WE7U
+"The world DOES revolve around me:  I picked the coordinate system!"
 
-Would electrically isolating the Tx/Rx/PTT signals like in the Rascal
-kit make a significant difference?  I read that the isolation is
-important if you want to use packet on HF.
-
-	Thanks!
-	Mike   AB3AP
