@@ -1,52 +1,65 @@
-From: Cees Tool <c.tool@quicknet.nl>
-Subject: Re: FBB...
-Date: Wed, 25 Dec 2002 22:31:45 +0100
+From: Tomi Manninen <tpm@prkele.tky.hut.fi>
+Subject: Re: remote TNC
+Date: Wed, 25 Dec 2002 23:53:30 +0200 (EET)
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <003401c2ac5d$06545000$0300a8c0@HUISKAMER>
-References: <Pine.LNX.4.44.0212251459330.21106-100000@jeeves.mvw.net>
+Message-ID: <Pine.LNX.4.44.0212252335330.4691-100000@oh2bns.ampr.org>
+References: <20021225133458.GA28240@silly.cloud.net.au>
+Reply-To: tpm@prkele.tky.hut.fi
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7BIT
 Return-path: <linux-hams-owner@vger.kernel.org>
+In-Reply-To: <20021225133458.GA28240@silly.cloud.net.au>
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"
-To: Linux-Hams <linux-hams@vger.kernel.org>
+Content-Type: TEXT/PLAIN; charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+To: Hamish Moffatt <hamish@cloud.net.au>
+Cc: linux-hams@vger.kernel.org
 
------ Original Message -----
-From: <mvw@mvw.net>
+On Thu, 26 Dec 2002, Hamish Moffatt wrote:
 
-> This is definitely not GPL:
->
-....
-> are old and do not fit the software... took me an hour to see I had to run
-> that script. How about a simple readme that mentions this? These are the
-> very basics of software!
-....
->Alas, there is no standard "./configure, make, make
->install", and the bbs when it does come up is mysterious, needs obscure
->text files edited, and displays Toulouse stuff by default...
+> 1. Computer A wants to transmit/receive on RF; RF port is attached to
+>    computer B; computers are on a local Ethernet together.
+> 
+>    +------------+          +------------+
+>    | Computer A |----------| Computer B +-- RF port (TNC etc)
+>    +------------+ Ethernet +------------+
+>      Runs application        Has RF port
+>      eg XASTIR
+> 
+>    Computer A wants to work through B transparently;
+>    it wouldn't have to specifically mention B in its AX.25 packet path,
+>    nor would frames received back by B.
 
-Wow !
-The source-tree of the latest version I have here (7.04h) has all these
-things in it.
+This would be a case for BPQ ether and rxecho I think. You can make it 
+so that A has a TNC directly connected to it.
 
-There is a file "COPYING" with the GPL license in it, there are several
-readme-files how you should compile the code,  there is no "configure"
-needed, you should only check if the path of the ax25-utils/libraries
-differs from the standard path and change it if needed. Then you can type
-"make"  and after that "make install" and the installation script will
-install everything in the right directory's and asks your station details.
-If you answer all questions, you will end up with a working installation.
-(and there is absolutely no need to remove include files from the source)
+> 2. Same but computers are connected only via IP, not necessarily on
+>    the same Ethernet:
+> 
+>    +------------+          +--------+           +------------+
+>    | Computer A |----------+ Router +-----------| Computer B +-- RF port
+>    +------------+ Ethernet,+--------+ Ethernet, +------------+
+>                   PPP etc.            PPP etc.
+>      Runs application
+>      eg XASTIR
+> 
+>    Again the application on A would like to see a standard Linux
+>    networking interface and think it's connected directly to RF.
 
-Looking in the sourcecode tree for a file called README or INFO only costs 1
-minute of your time. (and is probably less then the time it took to write
-about "bad sofware")
+Here you will have to use AXIP but I think you can still get the same as 
+in hte above with rxecho.
 
-If all of this is too difficult for you, please do not even try to install
-it. Probably the normal daily sysop work would also be too difficult ....
+> On a related note, can somebody give me a good description (either here
+> or a URL for) for BPQ over Ethernet? Is that part of the answer to #1?
+> I think AX/IP (RFC 1226) is the protocol behind #2, but does linux (ie
+> ax25ipd) do this already?
 
-73
-Cees
+Ax25ipd does RFC 1226, yes. For bpq ether I don't know about a good 
+description. But it is simply AX25 over raw ethernet, so there is not much 
+to it. The bpqparms(8) man page tells you pretty much everything needed to 
+configure it.
 
-
+-- 
+Tomi Manninen           Internet:  oh2bns@sral.fi
+OH2BNS                  AX.25:     oh2bns@oh2rbi.fin.eu
+KP20ME04                Amprnet:   oh2bns@oh2rbi.ampr.org
 
