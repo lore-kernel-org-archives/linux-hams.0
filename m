@@ -1,48 +1,95 @@
-From: Joaquin Seoane <joaquin@dit.upm.es>
-Subject: Re: KJD 2.3.9 patch on 2.5.29 (NOT FOUND)
-Date: Tue, 1 Oct 2002 13:39:43 +0200
+From: Bill Walton <kj6eo@kj6eo.com>
+Subject: Need Help With AX25/NETROM/ROSE!
+Date: Tue, 01 Oct 2002 10:42:22 -0700
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <20021001113943.GA4263@colibri2.dit.upm.es>
-References: <20020805201601.A25963@dea.linux-mips.net> <20020805211648.C25963@dea.linux-mips.net> <20020912174156.GA7705@colibri2.dit.upm.es> <20020801194618.GA722@columbia.g7iii.bogus> <20020802023237.B28097@dea.linux-mips.net> <20020802182854.GA503@columbia.g7iii.bogus> <20020805142824.A23501@dea.linux-mips.net> <20020805171956.GA566@columbia.g7iii.bogus> <20020805201601.A25963@dea.linux-mips.net> <20020805211648.C25963@dea.linux-mips.net>
+Message-ID: <3D99DE7E.691A0B24@kj6eo.com>
 Mime-Version: 1.0
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
-Content-Disposition: inline
-In-Reply-To: <20020912174156.GA7705@colibri2.dit.upm.es> <20020805211648.C25963@dea.linux-mips.net>
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="iso-8859-1"
+Content-Type: text/plain; charset="us-ascii"
 To: linux-hams@vger.kernel.org
-Cc: Ralf Baechle DO1GRB <ralf@uni-koblenz.de>, Arnau =?iso-8859-1?Q?S=E1nchez?= <arnau@gbt.tfo.upm.es>
 
-Hi Ralf,
+Hello -
 
-We tried to check Ralf's KJD patch to 2.5 in order to test it, but
-it seems that it is not there. Perhaps you have discarded it after no
-feedback from the list, or you have considered better to just patch the
-original AX.25 code for 4.5.  =BFCould you say something about it?
+Thank you for reading my message.  I am trying to get AX25/NETROM/ROSE
+going on my prototype system (RedHat 7.2 with a 2.4.18 kernel).  I am using
+Jeff Tranter's (VE3ICH) guide to help me get all this stuff working.  You can access
+the guide at:
 
+http://www.tldp.org/HOWTO/AX25-HOWTO/
 
-On 05 Aug 2002, Ralf Baechle DO1GRB wrote:
+The guide is version 2.0, 19 September 2001.
 
-> You can get my stuff with bitkeeper from the following URL:
->=20
->   http://linux-ham.bkbits.net/linux-2.5
->=20
-> Keep in mind that this is strictly work in progress.  An incomplete t=
-o do
-> list can be found in net/ax25/TODO.
->=20
-> Comments apreciated - patches even more :-)
+My goal is to replace my two DOSFBB/BPQ BBS's that have been on the air
+for years with XFBB/AX25/NETROM/ROSE.  I needed a BBS program so I
+choose XFBB, and I need a NODE so I choose the AX25/NETROM/ROSE
+package.
 
-On 12 Sep 2002, Joaquin Seoane wrote:
+WHERE I CURRENTLY STAND:
 
-> This URL do not work. The correct one is
->=20
-> http://linux-ham.bkbits.net:8080/linux-2.5
->=20
-> I guess it is a fork of the official kernel in order to merge it.
--
-To unsubscribe from this list: send the line "unsubscribe linux-hams" i=
-n
-the body of a message to majordomo@vger.kernel.org
-More majordomo info at  http://vger.kernel.org/majordomo-info.html
+1)    My kernel (2.4.18) is compiled and working with the Amateur AX25 stuff
+        enabled and installed. (Step #4 in guide).
+
+2)    All the AX25 libs, tools, and applications have been installed (no errors).  I
+        also installed all the configuration files ie "make installconf". (Step #4 in guide)
+
+WHERE THE PROBLEM EXISTS:
+
+Refer to Section 5.2 of the guide (Run time configurable parameters).  The guide
+says "Take a look at the.....(gives paths and filenames) ie:
+
+/proc/sys/net       /proc/sys/net/ax25/portname/      /proc/sys/net/netrom
+
+This is a summary of the subdirectories that I have in /proc/sys/net:
+
+802    appletalk    ax25    core    ethernet    ipv4    ipx    token-ring    unix
+
+This is a summary of the subdirectories that I have in /proc/sys/net/ax25/portname/
+
+A problem exists here ( I have no files in the ax25 subdirectory, furthermore I
+have no portname subdirectory off of ax25.
+
+Also there is no netrom subdirectory off of /proc/sys/net
+
+WHERE TO GO FROM HERE?
+
+I have located the AX25 and NETROM directories at the following paths:
+
+/root/linux/net
+
+However the files contained in the AX25 and NETROM subdirectories in no way
+shape or form resemble the structure outlined in section 5.2 of the guide.
+
+CLOSING COMMENTS:
+
+So as you can see, right now I find myself up that famous creek without a paddle.
+I need to unravel this mess and try to figure out what is going on between my
+system and this guide.  It is clear to me, very clear, that without the help of others
+such as yourself, my XFBB and AX25/NETROM/ROSE project is doomed.
+Obviously there are many of you that are successfully running this stuff.  I need to
+figure out how you did it, and where the information exists that can lead me to
+a successful resolution regarding this AX25 hell that I find myself in.
+
+I am running my own domain along with a TNOS system so that will give you an
+idea of my background.  I have also been running a packet bbs since the
+WA7MBL days so that should tell you how long I have been in the packet
+business.
+
+Would someone be kind enough to help me figure what is going wrong with
+my AX25 stuff?  If the guide that I am using is outdated then please direct me
+to the correct one.  If I have configured my system incorrectly then any help
+that you could provide that would point me in the right direction would be
+greatly appreciated.  I really don't need to run AXIP....I basically need the
+XFBB software and something that will give me a software node like the
+DOS BPQ that I am running with my radio ports.
+
+Regards,
+
+Bill Walton KJ6EO
+
+ax25:    kj6eo@kj6eo.#sca.ca.usa.noam
+AxIP:    kj6eo@kj6eo.ampr.org
+Email:    kj6eo@kj6eo.com
+Url:        http://www.kj6eo.com
+
