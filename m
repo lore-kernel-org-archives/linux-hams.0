@@ -1,39 +1,28 @@
-From: "AE5PL Lists" <HamLists@ametx.com>
-Subject: javAPRSIGate on Linux
-Date: Mon, 7 Jun 2004 08:28:29 -0500
+From: Jochen Schaeuble <psionic@psionic.de>
+Subject: problems with soundmodem (userspace)
+Date: Mon, 07 Jun 2004 22:22:06 +0200
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <478F6623898BBC4DBD692A223D28298A05A663@amewebsrvr.webametx.local>
+Message-ID: <40C4CE6E.70403@psionic.de>
 Mime-Version: 1.0
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
-Content-class: urn:content-classes:message
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="iso-8859-1"
+Content-Type: text/plain; charset="us-ascii"; format="flowed"
 To: linux-hams@vger.kernel.org
 
-Thanks to the excellent work done by =D8yvind Hanssen on javax25 (on so=
-urceforge.net), javAPRSIGate now has a fully functional interface to th=
-e Linux kernel ax25 support.  javAPRSIGate is adjunct software that run=
-s on javAPRSSrvr and is a full function IGate.  As the names imply, the=
-y are written completely in Java.  javAPRSSrvr has been running on Linu=
-x almost since its beginnings over 2 years ago.  All javAPRSSrvr softwa=
-re and adjuncts are written to run on 1.1.8 JVM's so they are compatibl=
-e with virtually any Java VM, though I recommend the latest Sun JVM for=
- Linux.
+Hi,
+I have several problems setting up the userspace version of soundmodem 
+with 9k6. Everything works perfect if I only send a small set of 
+characters (like c or m) - but sometimes a bit slow. If I enter a larger 
+amount of text (like a message) the connection is lost after about 10 
+minutes of retries. Any hints what I'm doing wrong? I use a Yaesu FT-817 
+with Debian testing (Kernel 2.4.22, ALSA). The parameters of soundmodem 
+are as follows:
 
-javAPRSSrvr and the associated adjunct software is free but distributio=
-n is restricted for a number of reasons.  If you are interested in tryi=
-ng javAPRSSrvr, drop me an email at pete@ae5pl.net with your name, call=
-, OS, intended use (private server, IGate, regional server, etc.) and I=
- will set you up.  Configuration is not hard, but I have found it alway=
-s helps to have a working starting point.
+txdelay="150" slottime="30" ppersist="30" fulldup="0" txtail="25"
 
-73,
+As terminal I use xcall.
 
-Pete Loveall AE5PL
-mailto:pete@ae5pl.net
--
-To unsubscribe from this list: send the line "unsubscribe linux-hams" i=
-n
-the body of a message to majordomo@vger.kernel.org
-More majordomo info at  http://vger.kernel.org/majordomo-info.html
+Is it better to use the kernelspace driver?
+
+vy 73 de Jochen DG1PSI
