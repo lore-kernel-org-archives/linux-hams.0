@@ -1,54 +1,46 @@
-From: Nate Bargmann <n0nb@networksplus.net>
-Subject: Re: AO-40 Transponder Operation
-Date: Fri, 4 Oct 2002 12:55:12 -0500
+From: Chuck Gelm <nc8q@gelm.net>
+Subject: Re: LinWSJT 0.3 available
+Date: Fri, 04 Oct 2002 16:02:43 -0400
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <20021004175512.GH13150@localhost>
-References: <20021004040843Z261464-8740+5907@vger.kernel.org> <3D9D1D7E.4090201@digitalhams.com> <20021004065830.GB31861@enc.com.au> <3D9D869B.9000701@voicenet.com>
+Message-ID: <3D9DF3E3.8FD7A88@gelm.net>
+References: <02100414464802.00828@g4klx>
 Mime-Version: 1.0
+Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
-Content-Disposition: inline
-In-Reply-To: <3D9D869B.9000701@voicenet.com>
 List-Id: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-To: linux-hams@vger.kernel.org
+To: g4klx@qsl.net
+Cc: Amsat BB <amsat-bb@amsat.org>, Linux Hams <linux-hams@vger.kernel.org>, Moon Net <moon-net@nlsa.com>
 
-* Margaret Leber <maggie@voicenet.com> [2002 Oct 04 12:13 -0500]:
+Howdy, Y'all:
+
+ Where can I find a definition of JT44, LinWSJT, & FSK441 ?
+I've seen its availability mentioned here, but I do not
+recall a definition.
+
+Chuck
+
+Jonathan Naylor wrote:
 > 
-> Nonetheless, it's still a Windows virus. I'm starting to see more and 
-> more  Klez-infected messages coming from people in the ham community.
-
-Sadly, I was hoping the trend would be the other way by now as more hams
-would be using the Free OSes.  It appears this hasn't been the case.
-
-Linux is slowly gaining more mention in the mainstream ham press.
-Somehow it seems that as a group hams pretend to be on the cutting edge
-of technology.  Most, however, are content to wallow in their current 
-comfort zone.
-
-I've advocated Linux for the past few years and have found very few
-takers.  Even with standing offers of help to other hams with getting 
-a Linux system going, I'm met with hams wanting help with their Doze 
-machine, which I won't do.
-
-I've come to the conclusion that the only way a majority of hams will
-give Linux a try is for some cool new mode of communications ala PSK31
-would be available on Linux first and that a Doze version would be
-non-existant.  Unfortunately, it's been working the other way around.
-
-I'm glad Jonathan took on developing a WSJ app for Linux.  This is a
-seriously cool mode, as I understand it, and a lack of a similar
-capability puts my hamming at a severe disadvantage if I want to run the
-latest ham tech.  The Gate's Tax is not welcome in my life and I will do
-without before installing his bits on my machines.
-
-Sigh...Off my soapbox now.
-
-73, de Nate >>
-
--- 
- Wireless | Amateur Radio Station N0NB          | "We have awakened a
- Internet | n0nb@networksplus.net               | sleeping giant and
- Location | Bremen, Kansas USA EM19ov           | have instilled in him
-  Amateur radio exams; ham radio; Linux info @  | a terrible resolve".
-             http://www.qsl.net/n0nb/           | - Admiral Yamomoto
+> Hi Folks
+> 
+> I am happy to announce that LinWSJT 0.3 is now available. This are
+> open source implementations of JT44 and FSK441 for Linux, although only
+> JT44 is currently in a usable state.
+> 
+> Compared to the previous releases (0.1, 0.1a and 0.2) this version is
+> much faster, it now runs a number of discrete FFT's as opposed to a
+> sliding FFT. On my PC this gives an approximate speed improvament of 20
+> times, very worthwhile.
+> 
+> If you have a previous version then I suggest you get this one and give
+> it a try.
+> 
+> It is available from my web site at http://www.qsl.net/g4klx in the
+> Software section.
+> 
+> Jonathan  HB9DRD/G4KLX
+> -
+> To unsubscribe from this list: send the line "unsubscribe linux-hams" in
+> the body of a message to majordomo@vger.kernel.org
+> More majordomo info at  http://vger.kernel.org/majordomo-info.html
