@@ -1,41 +1,54 @@
-From: Arno Verhoeven <pe1icq@pi8zaa.ampr.org>
-Subject: Re: Square One!
-Date: Sun, 13 Apr 2003 12:26:39 +0200 (CEST)
+From: Robert =?iso-8859-1?q?Steinh=E4u=DFer?= <robert@steinhaeusser.com>
+Subject: Gentoo ebuilds for ham radio packages
+Date: Sun, 13 Apr 2003 17:54:25 +0200
 Sender: linux-hams-owner@localhost
-Message-ID: <Pine.LNX.4.33.0304131219530.13578-100000@zoef.pe1icq.ampr.org>
-References: <200304130539.42078.ailic@gmx.net>
+Message-ID: <200304131754.31537.robert@steinhaeusser.com>
 Mime-Version: 1.0
-Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <200304130539.42078.ailic@gmx.net>
-List-Id: <linux-hams.vger.kernel.org>
-Content-Type: TEXT/PLAIN; charset="us-ascii"
+Content-Type: multipart/signed;
+  protocol="application/pgp-signature";
+  micalg=pgp-sha1;
+  boundary="Boundary-02=_3gYm+jp5mxMFoij";
+  charset="us-ascii"
 Content-Transfer-Encoding: 7bit
-To: Aleksandar Ilic <ailic@gmx.net>
-Cc: linux-hams@vger.kernel.org
+Return-path: <linux-hams-owner@vger.kernel.org>
+List-Id: <linux-hams.vger.kernel.org>
+To: linux-hams@vger.kernel.org
 
-On Sun, 13 Apr 2003, Aleksandar Ilic wrote:
-> > Your missing libs to be able to runs gmfsk are in the Slackware 8.1 package
-> > gnome-libs-1.4.1.7-i386-1.tgz
-> > (...)
-> > But you could try...
->
-> I dare not to :) It seems there is some overwrites, and Tomi is already
-> proclaimed gmfsk v. 0.5.
 
-I haven't done much about packaging for Slackware in a while and when I
-started working on it again, I was just too late for them to be inlcuded
-in Slackware 9.0. So every ham package in Slackware 9.0 is the very same
-package as in 8.1.
+--Boundary-02=_3gYm+jp5mxMFoij
+Content-Type: text/plain;
+  charset="us-ascii"
+Content-Transfer-Encoding: quoted-printable
+Content-Description: signed data
+Content-Disposition: inline
 
-However, some updated pre-compiled packages for Slackware 9.0 can be found
-on http://sharon.esrac.ele.tue.nl/pub/slackware/slackware-9.0_ham_updates/
+Hi all,
 
-I will add Tomi's updated gmfsk package when he releases a new source
-package.
+I have written a few Gentoo Linux ebuild scripts for ham radio packages. Th=
+ey=20
+are available on my page, http://robsh.de/gentoo/. Instructions for adding=
+=20
+the scripts to a running Gentoo system are on the page as well.
 
-73, PE1ICQ  Arno Verhoeven
---------------------------------
-AX.25  pe1icq@pi8zaa.#nbo.nld.eu
-smtp   pe1icq@pi8zaa.ampr.org
-inet   pe1icq@amsat.org
+The ebuilds are for 7plus-2.2.5, libax25-0.0.10 and -0.0.11, ax25-apps-0.0.=
+6,=20
+ax25-tools-0.0.8 and hamlib-1.1.3. If I receive no complaints or bug report=
+s,=20
+I will let them all be merged into the official portage tree.
+
+73, Robert DL1NC/N9KBK
+
+--Boundary-02=_3gYm+jp5mxMFoij
+Content-Type: application/pgp-signature
+Content-Description: signature
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.2.1 (GNU/Linux)
+
+iD8DBQA+mYg3o4a8ramwUd8RAiJ8AJ9kg5EPLnN3UgH7y80va2CEQf8D4gCgqUBq
+GiNZeDHhti3isEnfBgr+Y/s=
+=hA01
+-----END PGP SIGNATURE-----
+
+--Boundary-02=_3gYm+jp5mxMFoij--
 
