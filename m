@@ -1,40 +1,83 @@
-From: "Curt Mills, WE7U" <hacker@tc.fluke.com>
-Subject: Re: ax25 kernel problem sometimes accur
-Date: Wed, 11 Dec 2002 09:56:24 -0800 (PST)
+From: Stephen Kitchener <stephen@g6dzj.demon.co.uk>
+Subject: Re: ANNOUNCE: UKW Tools 0.02 released
+Date: Wed, 11 Dec 2002 21:01:20 +0000
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <Pine.LNX.4.33.0212110953370.1291-100000@wapiti.tc.fluke.com>
-References: <Pine.LNX.4.44.0212110828110.1073-100000@jeeves.mvw.net>
+Message-ID: <200212112101.21067.stephen@g6dzj.demon.co.uk>
+References: <200212110905.58203.jonathan.naylor@ggaweb.ch>
+Reply-To: stephen@g6dzj.demon.co.uk
 Mime-Version: 1.0
+Content-Transfer-Encoding: 7BIT
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <Pine.LNX.4.44.0212110828110.1073-100000@jeeves.mvw.net>
+In-Reply-To: <200212110905.58203.jonathan.naylor@ggaweb.ch>
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: TEXT/PLAIN; charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-To: mvw@mvw.net
-Cc: linux-hams@vger.kernel.org
+Content-Type: text/plain; charset="us-ascii"
+To: g4klx@qsl.net, Jonathan Naylor <jonathan.naylor@ggaweb.ch>, linux-hams@vger.kernel.org
 
-On Wed, 11 Dec 2002 mvw@mvw.net wrote:
+On Wednesday 11 Dec 2002 08:05, Jonathan Naylor wrote:
+Hi Jonathon,
 
-> Asking becuase TCP/IP over ax.25 is the one thing that can rescue packet,
-> I think. For instance, the fact I can get my provate email in and out when
-> ADSL and cable are down is a real benefit. The fact I can driva all around
-> town and pick up mail with a radio connection, free of charge, is also
-> very beneficial. I can have nmy servers send mail via radio with problem
-> reports when prob;lems occur. Emergency use. The list of useful 1200 bps
-> applications goes on!
+> Hi Folks
+>
+> The G4KLX software foundry is happy to announce that UKW Tools 0.02 has
+> been released. So what is UKW Tools ?
 
-Firenet just went through some of this along the east coast, where
-one gentleman was at his activated EOC, getting weather reports from
-firenet using ham tcp/ip when all other access was down.  These were
-the only weather reports they were able to get at the time during
-the ice storms they had back there.  He requested a special firenet
-feed for a 150 mile radius centered on the EOC location in order to
-keep the number of packets small.
+Downloaded and compiled ok ok Mandrake 8.2, I wonder if anyone else has had 
+the problems you talked about when they try and compile this and other 
+software on Mandrake 9.0, and if there is a solution ?
+
+>
+> UKW Tools is a kind of Goegraphic Information System (GIS) for radio
+> amateurs. Taking elevation data that is freely available on the
+> Internet, the program includes a suite of different funtions that allow
+> you to visualise radio paths and locations.
+>
+> I suggest that you look on my web site http://www.qsl.net/g4klx under
+> Software and have a look at screen shots for more information, but
+> briefly, the current functions are:
+>
+> 3D Map: Produces a map centred on a location that shows the topography
+> around it. The colours may be changed, the viewing angle may be changed
+> as can the type of projection used.
+>
+> Horizon View: Plots the elevations of the surrounding obstacles as
+> viewed from a site, an indication of their elevations and distance is
+> given.
+>
+> Show Map: Displays a map centred on a location with different colours
+> used to denote heights. Moving the mouse over the map will result in
+> information about the location below the mouse (locator and elevation).
+> The colours may be changed.
+>
+> Terrain: Given two locations the program will show the line of sight
+> path between them. In many ways this is the most interesting function.
+> The K (essentially the tropo conditions) value may be changed and when
+> the mouse is over the disgram some data about the location pointed to
+> will be shown.
+>
+> There are two functions, Local Map and View which have not been
+> implemented yet.
+>
+> UKW Tools 0.01 was released a little while ago but not announced because
+> it was a premature release to allow some operators to check their
+> sites.
+>
+> UKW Tools is written in C++ and makes use of the platform independent
+> wxWindows toolkit and it is possible that it could be built on Windows
+> as well as Linux.
+>
+> Jonathan  G4KLX (HB9DRD until February 2003)
+>
+> PS An article about the DSP functions used and the implementation of
+> LinWSJT is to be published in DUBUS 4/2002, and it can also be
+> downloaded from the Software page also. Warning, it is in Word 2000
+> format.
+>
+> -
+> To unsubscribe from this list: send the line "unsubscribe linux-hams" in
+> the body of a message to majordomo@vger.kernel.org
+> More majordomo info at  http://vger.kernel.org/majordomo-info.html
 
 -- 
-Curt Mills, WE7U                    hacker_NO_SPAM_@tc.fluke.com
-Senior Methods Engineer/SysAdmin
-"Lotto:    A tax on people who are bad at math!"
-"Windows:  Microsoft's tax on computer illiterates!" -- WE7U
-"The world DOES revolve around me:  I picked the coordinate system!"
+Stephen Kitchener
 
+"The best way to accellerate a win9x machine is at 9.81m/s2"
