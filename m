@@ -1,29 +1,35 @@
-From: Dennis Boone <drb@msu.edu>
+From: pa3gcu <pa3gcu@zeelandnet.nl>
 Subject: Re: Making a call
-Date: Fri, 09 Jul 2004 23:16:49 -0400
+Date: Sat, 10 Jul 2004 09:35:36 +0200
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <200407100316.i6A3Gncu022485@yagi.h-net.msu.edu>
+Message-ID: <200407100935.36965.pa3gcu@zeelandnet.nl>
 References: <20040710025951.9278.qmail@web41213.mail.yahoo.com>
-Return-path: <linux-hams-owner@vger.kernel.org>
-In-reply-to: (Your message of Fri, 09 Jul 2004 19:59:51 PDT.)
-             <20040710025951.9278.qmail@web41213.mail.yahoo.com> 
-List-Id: <linux-hams.vger.kernel.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
+Reply-To: pa3gcu@zeelandnet.nl
+Mime-Version: 1.0
 Content-Transfer-Encoding: 7bit
-To: linux-hams@vger.kernel.org
+Return-path: <linux-hams-owner@vger.kernel.org>
+In-Reply-To: <20040710025951.9278.qmail@web41213.mail.yahoo.com>
+Content-Disposition: inline
+List-Id: <linux-hams.vger.kernel.org>
+Content-Type: text/plain; charset="us-ascii"
+To: Wijaya <wijaya_mail@yahoo.com>
+Cc: linux-hams@vger.kernel.org, linux-ham@trilug.org
 
- > What I don't understand is, each time I trying to make a call : 
- > 
- > # call axip RE4SLO
+On Saturday 10 July 2004 04:59, Wijaya wrote:
+> # call axip RE4SLO
+>
+> Seems no one of TNC I've use to test no "Xmit /Rcv" and "Con / Sta" LED is
+> lighting ON. Even, from the computer where I try to send it.
 
-You did place the TNC in KISS mode after doing your testing with
-minicom?  Serial baud rates, and extended kiss settings (address,
-checksum, etc) need to be carefully matched.  It's very easy to
-get one of these out of whack.
+I no expert with kantronics, however it sounds to me as if the TNC is not in 
+kiss mode.
 
-Not sure you want to be calling via the "axip" port, if it's
-rigged up for IP, but I'm not the expert here.
+-- 
+If the Linux community is a bunch of thieves because they
+try to imitate windows programs, then the Windows community
+is built on organized crime.
 
-Dennis Boone
-KB8ZQZ
+Regards Richard
+pa3gcu@zeelandnet.nl
+http://people.zeelandnet.nl/pa3gcu/
+
