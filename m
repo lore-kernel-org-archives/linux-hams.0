@@ -1,66 +1,55 @@
-From: "Dexter N Muir" <dexy@ihug.co.nz>
-Subject: RE: making apps
-Date: Fri, 28 Mar 2003 15:59:19 +1200
+From: "Jose A. Amador" <co2ja01@fastmail.fm>
+Subject: Re: making apps
+Date: Thu, 27 Mar 2003 20:16:21 -0800
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <000001c2f4de$6bab2310$8c01a8c0@HP713A>
-References: <20030328025357.B17832@pull.privacy.nb.ca>
+Message-ID: <20030328041621.445F72B22C@www.fastmail.fm>
+References: <000001c2f4d3$4d4e0230$8c01a8c0@HP713A> <200303281357.22334.vk3bvp@qsl.net>
 Mime-Version: 1.0
 Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <20030328025357.B17832@pull.privacy.nb.ca>
+Content-Disposition: inline
+In-Reply-To: <200303281357.22334.vk3bvp@qsl.net>
 List-Id: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
-To: 'M Taylor' <mctylr@privacy.nb.ca>
-Cc: linux-hams@vger.kernel.org
+To: Shane <vk3bvp@qsl.net>, Linux Hams <linux-hams@vger.kernel.org>
 
-Thanks! Now can someone point me to the right version for Mandrake 9.0?
-Like I said, 'starting out'... :-)
-   Seems all the latest distros have dropped this package out - maybe
-HOWTOs should reflect this?
-
-Cheers all and thanks
-Dex ZL2DEX
-
------Original Message-----
-From: linux-hams-owner@vger.kernel.org
-[mailto:linux-hams-owner@vger.kernel.org] On Behalf Of M Taylor
-Sent: Friday, 28 March 2003 2:54 p.m.
-To: Dexter N Muir
-Cc: linux-hams@vger.kernel.org
-Subject: Re: making apps
-
-On Fri, Mar 28, 2003 at 02:39:42PM +1200, Dexter N Muir wrote:
-> Hi all
+On Fri, 28 Mar 2003 13:57:22 +1100, "Shane Deering" <vk3bvp@qsl.net>
+said:
+> On Fri, 28 Mar 2003 13:39, Dexter N Muir wrote:
+> > Hi all
+> >
+> >   Starting out with Mandrake 9.0, and trying to get ax25 up.  Looked at
+> > pa3gcu's page, and followed instructions.  Everything worked except make
+> > on ax25-apps-0.0.6, which bombed while making call.  Of course, it all
+> > scrolls up and off the screen - can someone point me to how to look at
+> > this (working at command prompt Ctrl-Alt-F1, so no xterm scrollbar :-),
 > 
->   Starting out with Mandrake 9.0, and trying to get ax25 up.  Looked
-at
-> pa3gcu's page, and followed instructions.  Everything worked except
-make
-> on ax25-apps-0.0.6, which bombed while making call.  Of course, it all
-> scrolls up and off the screen - can someone point me to how to look at
-> this (working at command prompt Ctrl-Alt-F1, so no xterm scrollbar
-:-),
-> so I can see better where exactly the bomb-out is?  It's repeatable.
+> Shift + page up|down
+> 
+> > so I can see better where exactly the bomb-out is?  It's repeatable.
+> >   A pointer to current archives would not go amiss either - all I could
+> > find was http://groups.google.com/groups?=mlist.linux.hams (current only
+> > to Nov 2002) and http://www.geocrawler.com/lists/3/Linux and selecting
+> > linux-hams (current to Aug 2002).
+> 
+> Or install ax25-apps-0.0.6-1mdk.i586.rpm
+ 
+You could also make a log of your compilation with something similar to:
 
-Shift-PageUp will allow you scroll up, provided you have not
-switched virtual consoles since the error message was printed.
+make > /tmp/making_apps 2>&1
 
-Look for the first compiler error and/or warning message, this is 
-the best place to start.
+Hope this helps. Guess that ncurses might be related as you were
+suggested
+before. Shane's suggestion (using the rpm) could be the easy way out...
 
-I'll make a wild guess that you do not have the ncurses header (include)
-files installed, which you can find in a RPM package called
-ncurses-devel
-or similiar. You should be able to find it on your Mandrake CDs or
-from a FTP mirror.
-
-73,
- ve1mct
-
--
-To unsubscribe from this list: send the line "unsubscribe linux-hams" in
-the body of a message to majordomo@vger.kernel.org
-More majordomo info at  http://vger.kernel.org/majordomo-info.html
+73 de Jose, CO2JA
 
 
 
+-- 
+  Jose A. Amador
+  co2ja01@fastmail.fm
+
+-- 
+http://www.fastmail.fm - Faster than the air-speed velocity of an
+                          unladen european swallow
