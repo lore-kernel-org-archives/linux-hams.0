@@ -1,32 +1,23 @@
-From: Jarmo <oh1mrr@nic.fi>
-Subject: Re: help xastir and mandrake (how to compile ax25 support ?)
-Date: Tue, 9 Nov 2004 16:05:08 +0200
-Message-ID: <200411091605.09029.oh1mrr@nic.fi>
-References: <1099943984.418fd03081dd7@imp4-q.free.fr> <200411090758.26321.oh1mrr@nic.fi> <20041109120104.GB4791@linux-mips.org>
+From: "Ruben Navarro Huedo" <eb5esx@eb5esx.ampr.org>
+Subject: xnet
+Date: Tue, 9 Nov 2004 15:14:47 +0100 (CET)
+Message-ID: <50752.80.58.9.172.1100009687.squirrel@palotes.com>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 7BIT
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <20041109120104.GB4791@linux-mips.org>
-Content-Disposition: inline
 Sender: linux-hams-owner@vger.kernel.org
 List-Id: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
-To: Ralf Baechle DL5RB <ralf@linux-mips.org>
-Cc: linux-hams@vger.kernel.org
+To: linux-hams@vger.kernel.org
 
-On Tuesday 09 November 2004 14:01, you wrote:
+Hello friends:
+I see connecting to other nodes that there is a new 1.37 version of xnet.
+at http://www.swiss-artg.ch we can only download 1.36.
+Do you know where can be downloaded de last version?
 
-> Does Mandrake also ship with shapelib and proj?  Xastir needs them for
-> map support but afair that was optional.
->
->   Ralf
-Yes
-Shape lib is in package mapserver and package proj is also 
-available...
-
-Jarmo
+Thank's
 
 -- 
-Linux is the answer.
-What was your question?
-(Brian Lane)
+Ruben Navarro Huedo
+eb5esx (arroba) eb5esx.ampr.org
+http://www.cabodesantapola.org
