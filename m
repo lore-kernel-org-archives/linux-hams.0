@@ -1,43 +1,20 @@
-From: "Albert Duane Lawson" <wb7awl@comcast.net>
-Subject: Node Crashes
-Date: Fri, 19 Sep 2003 18:48:54 -0700
-Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <001901c37f19$59ff2830$0200a8c0@albertla>
+From: Jeff Garzik <jgarzik@pobox.com>
+Subject: Re: [PATCH] (1/4) Update baycom drivers for 2.6
+Date: Sat, 20 Sep 2003 15:00:51 -0400
+Sender: netdev-bounce@oss.sgi.com
+Message-ID: <3F6CA3E3.9060909@pobox.com>
+References: <20030919133750.4053f72c.shemminger@osdl.org>
 Mime-Version: 1.0
 Content-Transfer-Encoding: 7bit
-Return-path: <linux-hams-owner@vger.kernel.org>
+Return-path: <netdev-bounce@oss.sgi.com>
+In-Reply-To: <20030919133750.4053f72c.shemminger@osdl.org>
+Errors-to: netdev-bounce@oss.sgi.com
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"
-To: linux-hams@vger.kernel.org
+Content-Type: text/plain; charset="us-ascii"; format="flowed"
+To: Stephen Hemminger <shemminger@osdl.org>
+Cc: Thomas Sailer <t.sailer@alumni.ethz.ch>, linux-hams@vger.kernel.org, netdev@oss.sgi.com
 
-Hi Gang,
+hum.  I seem to be missing patch 4/4...
 
-Experiencing problems with my ax25 node crashes after connecting to it.
-The log shows node received a SIGTERM every time this happens.
 
-Here's the breakdown on the setup:
-
-New Install of Red Hat 7.3 using the 2.4.18-3 kernel
-Intel 233 MHz CPU on an Intel Board  256 MB SDRam
-
-ax25-apps-0.0.6
-ax25-tools-0.0.8
-libax25-0.0.11
-node-0.3.2 (also have tried awznode with same results)
-
-These were not RPM packages, they were compiled by myself on
-the machine after Red Hat was installed.
-
-When I make a netrom connect to the node via ax25d, the first
-command issued will sometimes cause a disconnect.  The resulting
-message in the log is SIGTERM.  I do not notice this when using
-an ax25 connect or when using telnet into the node.
-
-Can anyone suggest where to look to see what's causing this...???
-Better yet, does anyone know what kind of problem this is and
-how to fix it...???
-
-73's
-
-Albert/WB7AWL
 
