@@ -1,60 +1,58 @@
 From: "Curt Mills, WE7U" <hacker@tc.fluke.com>
-Subject: Re: Re :Zipham
-Date: Mon, 21 Jul 2003 09:28:56 -0700 (PDT)
+Subject: Re: XASTIR cross-port digipeating?
+Date: Mon, 21 Jul 2003 09:40:20 -0700 (PDT)
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <Pine.LNX.4.33.0307210926480.23376-100000@wapiti.tc.fluke.com>
-References: <200307210725.39227.djmunn@bigpond.com>
+Message-ID: <Pine.LNX.4.33.0307210930510.23376-100000@wapiti.tc.fluke.com>
+References: <Pine.LNX.4.44.0307191408120.15342-100000@zl2bsj.ampr.org>
 Mime-Version: 1.0
-Content-Transfer-Encoding: QUOTED-PRINTABLE
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <200307210725.39227.djmunn@bigpond.com>
+In-Reply-To: <Pine.LNX.4.44.0307191408120.15342-100000@zl2bsj.ampr.org>
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: TEXT/PLAIN; charset="utf-8"
-To: David Munn <djmunn@bigpond.com>
-Cc: Linux-hams <linux-hams@vger.kernel.org>
+Content-Type: TEXT/PLAIN; charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+To: Wilbert Knol <zl2bsj@zl2tze.ath.cx>
+Cc: "J. Lance Cotton" <joe@lightningflash.net>, linux-hams@vger.kernel.org
 
-On Mon, 21 Jul 2003, David Munn wrote:
+On Sat, 19 Jul 2003, Wilbert Knol wrote:
 
-> Tnx guys for looking for the URL=C5=9B for me ....yep i typed the www=
-=2E in
-> error.....well i=C4=BAl just have to send an email to the author and =
-see if he can
-> help......would like to have a complete copy so that i can burn it to=
- a cd
-> for prosperity and in case one of the local hams wants a linux packet=
- setup
-> that is nice and small......have a number of small  (100-500 meg ) h/=
-ds here
-> that i could make up for giving to ops to try out a linux packet setu=
-p.....
 >
-> have just loaded Slackware 9.0 onto a 2.5 gig drive and am going to m=
-ake a
-> packet setup to run either Linpac 1.04 or LinAMC under KDE.....will l=
-et you
-> know how i get on.....
+> Thanks, Lance, for the info.
+>
+> > Xastir doesn't digipeat, except for RELAY digipeating that home stations
+> > should do.
+>
+> That's what I want: relay something I have heard on 2 m on the 70 cm port.
+> Maybe an idea for a new feature.
 
-Another option is to use the ZipSlack distribution, which is a
-subdirectory on the slackware server.  When expanded it fits on a
-100MB zip disk.
+It's on our feature request list, but it's unlikely that we'll get
+to that anytime soon.
 
-I started with this, added a few files from the 'X' set of floppies,
-and that gave me enough to compile/run Xastir on a laptop.  Did that
-with Slackware 8.0, but I think the latest still has zipslack as
-part of it.
 
-I run FVWM2 in order to get a bit more speed out of old laptops.
-KDE and Gnome really tax the CPU.  FVWM2 does not.
+> > > A separate question: XASTIR 1.2.1 complains about NUM/SCROLL/CAPSLOCK
+> > > being engaged when I right-click the desktop. My notebook keyboard only
+> > > has a CAPSLOCK, and it is off. Is there a work-around for this?
+> >
+> > Xastir doesn't yet do the right filtering to determine if key modifiers like
+> > those listed above are enabled, which in some cases (with LessTif, I think)
+> > causes Xastir not to process those clicks. Look in the menu
+> > File->Configure->Defaults and un-check "Warn if modifier keys". That will
+> > disable the message.
+>
+> What I meant was: a work-around to give me right-click functionality :-)
+> (which worked in earlier versions of XASTIR). I'll have a play with a
+> PS/2 full-size external keyboard.
 
---=20
+I believe that depends on your version of Lesstif/Motif/OpenMotif.
+They behave differently with respect to the mouse/keyboard
+modifiers.  Other people in the past have had trouble getting the
+right mouse button to function properly.  That was a while back
+though.  Perhaps you're running an old distribution where the
+problem showed up?
+
+-- 
 Curt Mills, WE7U                    hacker_NO_SPAM_@tc.fluke.com
 Senior Methods Engineer/SysAdmin
 "Lotto:    A tax on people who are bad at math!"
 "Windows:  Microsoft's tax on computer illiterates!" -- WE7U
 "The world DOES revolve around me:  I picked the coordinate system!"
 
--
-To unsubscribe from this list: send the line "unsubscribe linux-hams" i=
-n
-the body of a message to majordomo@vger.kernel.org
-More majordomo info at  http://vger.kernel.org/majordomo-info.html
