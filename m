@@ -1,19 +1,50 @@
-From: Hamish Moffatt <hamish@cloud.net.au>
+From: Henrique Miranda <hmiranda@fe.up.pt>
 Subject: Re: tcp.ip over ax25, when sent?
-Date: Mon, 30 Dec 2002 14:24:44 +1100
+Date: Mon, 30 Dec 2002 03:32:58 +0000 (WET)
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <20021230032444.GA24695@silly.cloud.net.au>
-References: <Pine.LNX.4.44.0212272203520.1392-100000@oh2bns.ampr.org> <Pine.LNX.4.44.0212292214080.20843-100000@jeeves.mvw.net>
+Message-ID: <Pine.LNX.4.20.0212300331270.10468-100000@viterbi.fe.up.pt>
+References: <Pine.LNX.4.44.0212292214080.20843-100000@jeeves.mvw.net>
 Mime-Version: 1.0
 Return-path: <linux-hams-owner@vger.kernel.org>
-Content-Disposition: inline
 In-Reply-To: <Pine.LNX.4.44.0212292214080.20843-100000@jeeves.mvw.net>
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"
+Content-Type: TEXT/PLAIN; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
-To: linux-hams@vger.kernel.org
+To: mvw@mvw.net
+Cc: linux-hams@vger.kernel.org
 
-On Sun, Dec 29, 2002 at 10:18:51PM -0500, mvw@mvw.net wrote:
+Hi Michael,
+
+An application that can solve your problem is axssh.
+You can find it at: http://hes.iki.fi/pub/ham/unix/utils/
+
+Description:
+
+Title:          Axssh
+Version:        0.1
+Entered-date:   
+Description:    Linemode wrapper for SSH via Amateur Packet Radio links
+Keywords:       ham, amateur, AX.25, TCP/IP
+Author:         jreuter@poboxes.com (Joerg Reuter)
+Maintained-by:  
+Primary-site:   db0bm.automation.fh-aachen.de /pub/incoming/dl1bke
+                axssh-0.1.tar.gz
+Alternate-site: 
+Original-site:  
+Platforms:      Linux, probably others as well. Required: libbsd, for 
+                Linux Alpha "libutil", SSH package from ftp.funet.fi,
+                VT100 emulation (Linux console, xterm...)
+Copying-policy: GPL
+
+HTH.
+
+Henrique
+
+
+On Sun, 29 Dec 2002 mvw@mvw.net wrote:
+	
+> Hello all,
+> 
 > When I use tcp/ip over ax25, I notice that packets are sent very
 > frequently when I am on the keyboard. For some applications (e.g.  using a
 > BBS, which is almost character-oriented) that is suitable, but for some,
@@ -27,12 +58,14 @@ On Sun, Dec 29, 2002 at 10:18:51PM -0500, mvw@mvw.net wrote:
 > 
 > I have of course read the HOWTO etc but no doubt skipped over this. Many
 > thanks for pointing me in the right direction.
+> 
+> Michael va3mvw
+> 
+> 
+> 
+> -
+> To unsubscribe from this list: send the line "unsubscribe linux-hams" in
+> the body of a message to majordomo@vger.kernel.org
+> More majordomo info at  http://vger.kernel.org/majordomo-info.html
+> 
 
-In Telnet you can get to the command prompt (usually control-]) then
-use 'mode line' to switch to line mode. You may have to change some
-other options after that, such as local echo. There doesn't seem to be a
-way to force line mode before starting telnet.
-
-Hamish
--- 
-Hamish Moffatt VK3SB <hamish@debian.org> <hamish@cloud.net.au>
