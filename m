@@ -1,29 +1,29 @@
-From: Nuno Sucena Almeida <slug@aeminium.org>
-Subject: DXCluster and HTPP (Convers) Link
-Date: Mon, 30 Jun 2003 15:01:10 +0100
+From: "Rodolfo Brasnarof" <rodob@ciudad.com.ar>
+Subject: Re: man listen
+Date: Mon, 30 Jun 2003 14:59:13 -0300
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <20030630140110.GA8649@freebsd.aeminium.pt>
+Message-ID: <3F005041.11037.1EF86@localhost>
+References: <NCEPJGLIJIFOHBPEAAAOAEJFFCAA.phil@wotech.com.au>
 Mime-Version: 1.0
+Content-Transfer-Encoding: 7BIT
 Return-path: <linux-hams-owner@vger.kernel.org>
-Content-Disposition: inline
+In-reply-to: <1056895450.1397.11.camel@oh2bns.ampr.org>
+Content-description: Mail message body
 List-Id: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 7bit
 To: Linux Hams <linux-hams@vger.kernel.org>
 
-Hello,
+---
+On 29 Jun 2003 at 17:04, Tomi Manninen wrote:
 
-	I'm looking for a link where to connect my local amateur radio
-club to the dxcluster and htpp network. The club callsign is CS6ARC, and 
-the callsign used with the dxcluster software (www.dxcluster.org) is CS6ARC-10
-so, it would be the login name for it.
-	Can you point me to somewhere or allow me to connect it to yours?
 
-		Thank you,
-				Nuno
+> In my opinion the old xNOS style AX.25 dump was much more
+> readable _and_ consistent with the other protocol dumps in
+> listen. But that's just me...
 
--- 
-CT1FOX - http://aeminium.org/slug
 
-D30B 54C0 40A7 7D61 C44F  4BA4 F071 2168 F494 ACB9
+Fortunately, listen is opensource, and can be modified. I 
+changed it a little to make it display the timestamp at the 
+begining of the line, instead of the end. I made no other 
+changes, but of course it's possible.
 
