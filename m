@@ -1,44 +1,29 @@
-From: Hamish Moffatt <hamish@cloud.net.au>
-Subject: Re: New to the list...
-Date: Wed, 25 Jun 2003 08:45:47 +1000
+From: "Colin Harris" <chedward@tiscali.co.uk>
+Subject: Mixed network problem
+Date: Thu, 26 Jun 2003 07:32:10 -0000
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <20030624224547.GA7915@cloud.net.au>
-References: <!~!UENERkVCMDkAAQACAAAAAAAAAAAAAAAAABgAAAAAAAAA6nohIbvp0RGXqACAx8VP1sKAAAAQAAAAu+l99CL0ZkWOoxTNvpJsHwEAAAAA@bh90210.net>
+Message-ID: <002901c33bb5$287a2a00$0100a8c0@xp400>
 Mime-Version: 1.0
+Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
-Content-Disposition: inline
-In-Reply-To: <!~!UENERkVCMDkAAQACAAAAAAAAAAAAAAAAABgAAAAAAAAA6nohIbvp0RGXqACAx8VP1sKAAAAQAAAAu+l99CL0ZkWOoxTNvpJsHwEAAAAA@bh90210.net>
 List-Id: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-To: linux-hams@vger.kernel.org
+To: Linux Hams <linux-hams@vger.kernel.org>
 
-On Tue, Jun 24, 2003 at 07:28:28AM -0700, IT3 Stuart B. Tener, USNR wrote:
-> 	The first thing I would like to accomplish is making the PC act as
-> an AX.25 TNC using the soundcard. Once this works (for basic packet
-> operation) then I would like to configure the system to:
-> 
-> 	(a) Run TCP/IP, using the soundcard as the modem
-> 	(b) Run TCP/IP, using an external TNC in KISS mode (on /dev/ttyS0)
-> 
-> 	I did the modprobe of soundmodem, and then tried to issue the
-> sethdlc command, but after doing so I got "no such address or device" when I
-> did an "ifconfig sm0 up".
-> 
-> 	How can I verify what the IO, DMA and IRQ of the sound card is, if
-> it is built into the motherboard, and the BIOS offers now way to set those
-> for the card?
+Hi,
 
-You may be able to get this information from /proc/pci.
+         Anyone willing to converse off list with my networking problem ?
+chedward@tiscali.co.uk  Apologies for being a bit off list.
 
-> 	Other than the soundcard not being set right by sethdlc, I am lost
-> as to what is wrong. Any assistance you can offer would be well appreciated.
+3 Linux boxes working fine but my newly setup Win XP machine refuses to play
+ball ( along with the Win 98 SE box which networks ok with win XP ). I guess
+this is a hosts lookup problem or similar but win 98SE did manage to ping /
+telnet / ftp to and from Linux before I introduced Win XP / pro into the
+network. Those three functions are all I require in the win = linux
+function.
 
-As well as the sound card parameters, you use sethdlc to configure how
-you will key the radio - serial port, parallel port or MIDI port. I
-think an error with those settings can also result in an error at 'up'
-time.
+I can ping Win 98 successfully but not XP.
 
-Hamish
--- 
-Hamish Moffatt VK3SB <hamish@debian.org> <hamish@cloud.net.au>
+- Regards Colin
+
+
