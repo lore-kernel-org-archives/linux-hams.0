@@ -1,61 +1,54 @@
-From: "Wilson G. Hein" <wilson.hein@verizon.net>
-Subject: RE: ax25 with digipeaters
-Date: Fri, 23 Jul 2004 20:45:51 -0400
+From: John Mock <kd6pag@qsl.net>
+Subject: PowerMac 8500 packet troubles
+Date: Sat, 24 Jul 2004 12:25:14 -0700
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <NCBBKBAJDJIPKFIAFBKLIEBDFCAC.wilson.hein@verizon.net>
-References: <41017FDE.27475.5756D@localhost>
-Mime-Version: 1.0
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Message-ID: <E1BoS8w-0006bB-00@penngrove.fdns.net>
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <41017FDE.27475.5756D@localhost>
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="iso-8859-1"
+MIME-Version: 1.0
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 7bit
 To: linux-hams@vger.kernel.org
 
-It would be nice to have it working. I'd like to have just basic digi
-capabilites (non aprs). It would be just the ticket.
+I'm trying to get 9.6kb packet running either on a PowerMac 8500 (with
+G3 upgrade) or Sony VAIO R505EL (P-III), preferably both.  I'm stuck on
+either at the moment.  Here's the PowerMac problem.
 
-Wilson
+The PowerMac 8500 has several audio inputs (as it's an AV machine).
+Under MacOS 8.6, i can select the 'Mic', 'Line', or video (i think)
+inputs.  The 'Mic' input has much too much gain and cannot be directly
+connected to an HT.  [I would need to make a special cable up, as even
+when i put attenuator on the HT end (as is needed for 9.6kb packet for
+bthe Sony), there is full scale noise (hum?)  with the volume off.]  
+
+Under MacOS, i can put the HT into the 'Line In' input and indeed, it
+comes up with a reasonable level when monitoring is enabled.  I don't
+have any MacOS packet code, so i can't verift that works, but there
+seems to be no reason it won't.
+
+Under LINUX, the same problem appears for the 'Mic' input.  Alas, the
+'Line' input doesn't seem to do anything.  I made a vague attempt at
+staring at the mixer-related parts of the driver in the kernel, but i
+didn't see anything obviously wrong.  I'm running LINUX 2.4.21 (with
+support added for a couple local I/O devices and using 'dmasound_pmac'
+audio driver) and it also loses on a vanilla LINUX 2.6.7 [.config's
+posted upon request].
+
+1. Does anyone know how to make the 'LINE' input work under LINUX on the 
+   PowerMac 8500?
+
+2. If that seems impossible, does anyone have a suitable analog circuit to
+   transform an HT's output into a level suitable for the 'Mic' input (and
+   still be capable of 9.6kb packet)?
+
+3. Will 9.6kb packet work at all in 'sound card' mode on a PowerMac 8500
+   and a 9.6kb capable HT (Kenwood TH-F6A).
+
+Thank you for your patience and assistance.
+
+		         -- KD6PAG  (Networking Old-Timer, Satellite QRPer)
 
 
-> -----Original Message-----
-> From: linux-hams-owner@vger.kernel.org
-> [mailto:linux-hams-owner@vger.kernel.org]On Behalf Of Rodolfo Brasnar=
-of
-> Sent: Friday, July 23, 2004 8:15 PM
-> To: linux-hams@vger.kernel.org
-> Subject: Re: ax25 with digipeaters
->
->
->
-> ---
-> On 19 Jul 2004 at 19:54, Arnau S=E1nchez wrote:
->
-> > Dave Platt wrote:
-> >
-> > > Linux AX.25 stack in the kernel does not digipeat of its
-> > > own accord.  You need to install additional software to handle
-> > > the digipeating.
-> >
-> >     This explains everything... I think I'll try the old
-> axdigi,  I hope it
-> > works!
->
-> I could not get axdigi working, but I'm using digi_ned
-> instead, which works fine.
->
-> -
-> To unsubscribe from this list: send the line "unsubscribe linux-hams"=
- in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at  http://vger.kernel.org/majordomo-info.html
----
-Outgoing mail is certified Virus Free.
-Checked by AVG anti-virus system (http://www.grisoft.com).
-Version: 6.0.719 / Virus Database: 475 - Release Date: 7/12/2004
-
--
-To unsubscribe from this list: send the line "unsubscribe linux-hams" i=
-n
-the body of a message to majordomo@vger.kernel.org
-More majordomo info at  http://vger.kernel.org/majordomo-info.html
+[Note: I never send unsolicited binary attachments and if you receive anything
+purportedly from <kd6pag@qsl.net> that isn't signed with my callsign, then it
+probably isn't from me.]
