@@ -1,34 +1,37 @@
-From: =?iso-8859-1?q?G=FCnther=20Montag?= <Safari.Doktor@addcom.de>
-Subject: Re: Compile warnings on hfterm with Mandrake
-Date: Thu, 11 Mar 2004 10:47:03 +0100
+From: Margaret Leber <maggie@voicenet.com>
+Subject: Re: APRS library?
+Date: Thu, 11 Mar 2004 04:52:23 -0500
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <200403111047.03072.Safari.Doktor@addcom.de>
-References: <20040309022333.GA4377@braddock.com> <1078861838.2336.1.camel@law3lz8h11.lib.loc.gov> <404E32F0.80308@softhome.net>
+Message-ID: <405036D7.30703@voicenet.com>
+References: <20040310023947.GA14019@braddock.com>
 Mime-Version: 1.0
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <404E32F0.80308@softhome.net>
+In-Reply-To: <20040310023947.GA14019@braddock.com>
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="iso-8859-1"
-To: "ravioli@softhome.net" <ravioli@softhome.net>, linux hams <linux-hams@vger.kernel.org>
+Content-Type: text/plain; charset="us-ascii"; format="flowed"
+To: Braddock Gaskill <braddock@braddock.com>
+Cc: linux-hams@vger.kernel.org
 
-Am Dienstag 09 M=E4rz 2004 22:11 schrieb ravioli@softhome.net:
-> A lot of warnings in the last release of hfterm-0.5 can be removed by
-> applying this diff.
-> More information on request.
-> Remi F4ECW
+Braddock Gaskill wrote:
 
-tnx Remi!!
-i forward it to hfterm hackers mailing list and
-will work it into next release!
---=20
-G=FCnther Montag
-Bahnhofstra=DFe 15
-D-86415 Mering
-08233-32356
-Safari.Doktor@addcom.de
--
-To unsubscribe from this list: send the line "unsubscribe linux-hams" i=
-n
-the body of a message to majordomo@vger.kernel.org
-More majordomo info at  http://vger.kernel.org/majordomo-info.html
+> I'm looking to integrate APRS into a custom mapping application.  Is
+> there any sort of integrated APRS parser library that would help?
+
+I forget whether I mentioned this here or on the Xastir developer's list 
+when I originally published this article in the PMRC Blurb, but here's 
+another approach to using Xastir with other software:
+
+http://www.phil-mont.org/PMRCmap/PMRConTheMap.html
+
+  73 de Maggie K3XS
+
+-- 
+-----/___.   _)Margaret Stephanie Leber CCP, SCJP/"The art of progress /
+----/(, /|  /| http://voicenet.com/~maggie SCWCD/ is to preserve order/
+---/   / | / |  _   _   _    `  _  AOPA 925383/ amid change and to  /
+--/ ) /  |/  |_(_(_(_/_(_/__(__(/_      K3XS / preserve change amid/
+-/ (_/   '        .-/ .-/        ARRL 39280 /order."-A.N.Whitehead/
+/________________(_/_(_/_______AMSAT 32844_/<maggie@voicenet.com>/
+
+
