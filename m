@@ -1,75 +1,40 @@
-From: Jack Zielke <kg4gjy@takeovertheworld.org>
-Subject: Re: Lost Connection
-Date: Mon,  2 Dec 2002 20:24:55 -0500
+From: "ozgun erdogan" <kushcu@hotmail.com>
+Subject: binding ax devices to TCP ports?
+Date: Tue, 03 Dec 2002 07:36:43 +0000
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <1038878695.3dec07e79145b@webmail.takeovertheworld.org>
-References: <200212022326.00978.barry_linux@rogers.com>
+Message-ID: <BAY1-F1180e5cX65b6b0000705f@hotmail.com>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7BIT
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <200212022326.00978.barry_linux@rogers.com>
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"
-To: barry_linux@rogers.com
-Cc: linux-hams@vger.kernel.org
-
-Hello Barry,
-    You have multiple options.  Linux believes that the drive is still mounted
-but the XP machine knows nothing about that old connection.  You can (as root)
-run umount /path/to/where/you/mounted.
-
-    As an example I mount a shared folder on my wife's XP machine.  I use
-smbmount //wildhare/new\ stuff /home/jack/wildhare
-If she reboots before I unmount the drive I have to be careful.  Any console
-that is in /home/jack/wildhare or a subfolder will hang if I try to move out of
-there (with a good reason).  From any console *not* in /home/jack/wildhare I can
-run (as root) umount /home/jack/wildhare
-If there is a console (or any program) that has the mounted filesystem as its
-current directory you will get an error telling you that it is in use.  You can
-find out what/who is using it by running fuser -v /home/jack/wildhare.  You can
-force it to unmount by running umount -f /home/jack/wildhare.
-
-The other option is to kill the smbmount process.  ps aux|grep smbmount to find
-its pid.
-
-I hope this helps,
-Jack Zielke
-KG4GJY
-Quoting barry <barry_linux@rogers.com>:
-
-> Hi, not sure if this will be calssed as off topic or not, but I am a Ham and
-> 
-> it is about Linux.
-> 
-> I have a link between Linux (Mandrake 8.2) and a windows XP Pro box 
-> (established by smbmount). If (when) the XP box goes down, then comes back up
-> 
-> again, the link is no longer there. If I try to access it from Linux:
-> 
-> >ls XP_Drive
->  I get 
-> 
-> ls : XP_Drive: Input/output error
-> 
-> If I try to access from midnight commander I get 
-> 
-> File 'XP_Drive' existd\s but cannot be stat-ed: Input/output error
-> 
-> The only way I have managed to resolve the problem to date is to reboot
-> linux, 
-> I know there has to be a better way..............what is it please
-> 
-> Barry
-> 
-> ve3nav/va3wi
-> 
-> 
-> 
-> -
-> To unsubscribe from this list: send the line "unsubscribe linux-hams" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at  http://vger.kernel.org/majordomo-info.html
-> 
+Content-Type: text/plain; format=flowed; charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+To: linux-hams@vger.kernel.org
 
 
--- 
+Hi,
+
+I read the kissattach code as I need to write some code which binds a TCP 
+port to an ax network device. That is, TCP packets coming from a specific 
+port will be read from ax1. (with listen for example.)
+
+I know some sockets stuff, but am not good in Linux Ham, and couldn't figure 
+out how kissattach creates a KISS networks device. I looked through the 
+readconfig(char *) function, but that seems to only initialize certain 
+parameters. I couldn't figure out how the device is created, nor how the 
+serial port is associated with the KISS networks device. I've been surfing 
+the web to find some information on creating KISS network devices and how to 
+write data to them, but couldn't succeed.
+
+So, could you make any comments on how struct ifreq is used, or the way the 
+KISS device is created? (also a link to some documentation would be very 
+useful)
+
+Thanks,
+
+Ozgun.
+
+
+_________________________________________________________________
+MSN 8 helps eliminate e-mail viruses. Get 2 months FREE*. 
+http://join.msn.com/?page=features/virus
+
