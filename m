@@ -1,47 +1,42 @@
-From: "Riley Williams" <Riley@Williams.Name>
-Subject: Re: Kernel 2.4.20
-Date: Thu, 24 Jul 2003 09:01:16 +0100
+From: pa3gcu <pa3gcu@zeelandnet.nl>
+Subject: Re: Compiling JNOS/ Linux
+Date: Thu, 24 Jul 2003 14:29:14 +0200
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <BKEGKPICNAKILKJKMHCAEEFPFAAA.Riley@Williams.Name>
-References: <200307241319.24240.djmunn@bigpond.com>
+Message-ID: <200307241429.14040.pa3gcu@zeelandnet.nl>
+References: <NPELJONPHCEGGIEGBBFLGEBLCEAA.robel@vktv.no>
+Reply-To: pa3gcu@zeelandnet.nl
 Mime-Version: 1.0
 Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <200307241319.24240.djmunn@bigpond.com>
+In-Reply-To: <NPELJONPHCEGGIEGBBFLGEBLCEAA.robel@vktv.no>
+Content-Disposition: inline
 List-Id: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
-To: David Munn <djmunn@bigpond.com>, Linux-hams <linux-hams@vger.kernel.org>
+To: Robert Eliassen <robel@vktv.no>, linux-hams@vger.kernel.org
 
-Hi David.
+On Thursday 24 July 2003 09:14, Robert Eliassen wrote:
+> Waldemar wrote, Jeremy replied:
+> >> I have ncurses compiled in /usr/src/ncurses-4.0 and
+> >> correct path to
+> >
+> > First off, why on earth is ncurses compiled under /usr/src?
+>
+> I compile all my sourcecode under /usr/src
+> Why on earth put (and compile) source elsewhere?
+> ;-)
 
- > Hi All...have been putting Slackware 9.0 onto a 2ghz h/d for use
- > with packet...I set it up with all the ax25 progs...libax25...ax25
- > utils...ax25 tools etc and then configured it to use my SB16
- > soundcard on 4800 bd...when I modprobe soundmodem I get a warning
- > message that the driver could corrupt the kernel and also ...no
- > licence....
+Because /usr/local/src is for that sort of stuff.
 
-The warning that the soundmodem driver could corrupt the kernel IS
-important. This will be connected with the fact that the kernel
-soundmodem driver is depreciated, and regarded as obsolete, with the
-current recommendation being to use the user-mode soundmodem tool in
-its place.
+> -Bob-
 
-The warning about no licence is probably a side-effect of that driver
-being regarded as obsolete, with the only future patches concerning
-it likely to be ones that just strip it out of the kernel altogether.
-Indeed, that happened in the 2.5 series some time ago, and there is
-no soundmodem driver in the current 2.6-test series as a result. As
-Jeremy has already stated, this warning is because of a requirement
-that each module state the licence it is released under, and it has
-no effect on the functionality of that module.
+-- 
+If the Linux community is a bunch of theives because they
+try to imitate windows programs, then the Windows community
+is built on organized crime.
 
-Best wishes from Riley G7GOD / KB8PPG
----
- * Nothing as pretty as a smile, nothing as ugly as a frown.
+Regards Richard
+pa3gcu@zeelandnet.nl
+http://people.zeelandnet.nl/pa3gcu/
 
----
-Outgoing mail is certified Virus Free.
-Checked by AVG anti-virus system (http://www.grisoft.com).
-Version: 6.0.502 / Virus Database: 300 - Release Date: 18-Jul-2003
+
 
