@@ -1,64 +1,50 @@
-From: Tomi Manninen OH2BNS <tpm@prkele.tky.hut.fi>
-Subject: Re: Problems with UI frame reception
-Date: Tue, 23 Jul 2002 15:26:30 +0300 (EETDST)
+From: arnau@gbt.tfo.upm.es
+Subject: Frame sequencing problems with soundmodem (0.5 and 0.6) and linux 2.4.18
+Date: Tue, 23 Jul 2002 15:07:04 +0200
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <Pine.HPX.4.10.10207231500020.27870-100000@saturn.trs.ntc.nokia.com>
-References: <Pine.GSO.4.44.0207222123320.13893-100000@rescomp.Stanford.EDU>
-Reply-To: tpm@prkele.tky.hut.fi
+Message-ID: <20020723130703.GA5983@dit.upm.es>
+Reply-To: Joaquin Seoane <joaquin@dit.upm.es>, arnau@gbt.tfo.upm.es
 Mime-Version: 1.0
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <Pine.GSO.4.44.0207222123320.13893-100000@rescomp.Stanford.EDU>
+Content-Disposition: inline
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: TEXT/PLAIN; charset="us-ascii"
+Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
-To: James Cutler <jwc@stanford.edu>
-Cc: linux-hams@vger.kernel.org
+To: linux-hams@vger.kernel.org
+Cc: joaquin@dit.upm.es, arnau@gbt.tfo.upm.es
 
-On Mon, 22 Jul 2002, James Cutler wrote:
+We have checked soundmodem versions 0.5 and 0.6 with kernel 2.4.18 using different modems
+and we had always the same kind of problems. The sender seems to repeat frames without
+any criterion.
 
-I'll start from the end...
+We had not any of these problems with kernel 2.2.19.  
+This is a listen trace with window size 4:
 
-> PS...I've hacked up "listen.c" code to do this but that uses SOCK_PACKET.
-> It would be much cleaner to us DGRAMs but I'm having this reception
-> issues.
+sb: fm CALL1 to CALL2B ctl SABM+ 14:05:24
+sb: fm CALL2B to CALL1 ctl UA- 14:05:24
+sb: fm CALL1 to CALL2B ctl I0-0^ pid=F0(Text) len 256 14:05:29
+sb: fm CALL1 to CALL2B ctl I0-1^ pid=F0(Text) len 256 14:05:29
+sb: fm CALL1 to CALL2B ctl I0-0^ pid=F0(Text) len 256 14:05:31
+sb: fm CALL1 to CALL2B ctl I0-2^ pid=F0(Text) len 256 14:05:31
+sb: fm CALL1 to CALL2B ctl I0-3+ pid=F0(Text) len 256 14:05:31
+sb: fm CALL1 to CALL2B ctl I0-1^ pid=F0(Text) len 256 14:05:33
+sb: fm CALL1 to CALL2B ctl I0-2^ pid=F0(Text) len 256 14:05:35
+sb: fm CALL1 to CALL2B ctl I0-3+ pid=F0(Text) len 256 14:05:37
+sb: fm CALL2B to CALL1 ctl RR1v 14:05:38
+sb: fm CALL1 to CALL2B ctl I0-4+ pid=F0(Text) len 256 14:05:38
+sb: fm CALL2B to CALL1 ctl RR2v 14:05:38
+sb: fm CALL1 to CALL2B ctl I0-5+ pid=F0(Text) len 256 14:05:38
+sb: fm CALL2B to CALL1 ctl RR3v 14:05:38
+sb: fm CALL2B to CALL1 ctl RR4- 14:05:38
+sb: fm CALL1 to CALL2B ctl I0-6+ pid=F0(Text) len 256 14:05:39
+sb: fm CALL1 to CALL2B ctl I0-7+ pid=F0(Text) len 256 14:05:39
+sb: fm CALL1 to CALL2B ctl I0-4+ pid=F0(Text) len 256 14:05:41
+sb: fm CALL1 to CALL2B ctl I0-5+ pid=F0(Text) len 256 14:05:43
+sb: fm CALL1 to CALL2B ctl I0-6+ pid=F0(Text) len 256 14:05:45
+sb: fm CALL1 to CALL2B ctl I0-7+ pid=F0(Text) len 256 14:05:46
+sb: fm CALL2B to CALL1 ctl RR5- 14:05:47
+....
 
-Yes, it would be but it seems that this part of the Linux AX.25 stack
-isn't quite "ready". The way it works is a bit vague and maybe even buggy.
-So everyone uses SOCK_PACKET...
+Any ideas?
 
-A few years ago I rewrote netromd to do the route broadcast listening with
-SOCK_RAW sockets but I couldn't release it as it would have required a
-kernel patch as well (there was a bug in the received address handling)...
-
-> First, I have to call "connect" (in addition to creating and binding the
-> socket) on the receive socket for anything to be received.  And then it
-> only receives packets from the socket I "connected" to.  Which makes sense
-> but I'm confused why I need to "connect" a receive socket?
-
-Hmm. This seems odd. My memory is a bit vague but looking at my code I
-have done:
-
-  s = socket(PF_AX25, SOCK_RAW, NETROM_PID);
-  sprintf(buf, "NODES via %s", ax25_config_get_addr(portname));
-  alen = ax25_aton(buf, &sa);
-  bind(s, (struct sockaddr *)&sa, alen);
-
-Then I sit on select() and finally:
-
-  size = recvfrom(s, buf, sizeof(buf), 0, (struct sockaddr *)&sa, &alen);
-
-This way all heard UI frames that have the destination address NODES
-and PID=NETROM should be received (and I get the sender address plus the
-used digipeater path in `sa').
-
-> Second, the packets I do receive are missing the first byte.  The first
-> byte is cut off.
-
-Yes, this seems to be the difference between SOCK_RAW and SOCK_DGRAM. The
-latter chops off the PID byte at the start.
-
--- 
-Tomi Manninen           Internet:  oh2bns@sral.fi
-OH2BNS                  AX.25:     oh2bns@oh2rbi.fin.eu
-KP20ME04                Amprnet:   oh2bns@oh2rbi.ampr.org
 
