@@ -1,8 +1,8 @@
 From: WJuergens@t-online.de (Wolf-Ruediger Juergens)
 Subject: Re: ANN: gMFSK v0.6beta1
-Date: Sun, 26 Oct 2003 11:12:56 +0100
+Date: Sun, 26 Oct 2003 13:44:55 +0100
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <200310261112.57045.wjuergens@t-online.de>
+Message-ID: <200310261344.55330.wjuergens@t-online.de>
 References: <1067119345.1305.73.camel@oh2bns.ampr.org>
 Mime-Version: 1.0
 Content-Transfer-Encoding: 7bit
@@ -13,33 +13,23 @@ List-Id: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
 To: linux-hams@vger.kernel.org
 
-Hi Tomi, all,
-
 Tomi Manninen wrote:
-> I have just made available the first beta of gMFSK version 0.6.
 
-Many thanks for your this fantastic program.
-I've downloaded the tarball and it compiled flawless under Suse 9.0.
-It's running seamless on the KDE Desktop.
+>  Now you need to find the bugs so
+> I can fix them.
 
->  - Feldhell TX works. Full international character set support.
+Hi Tomi,
 
-That's the best news at least for me ;-)
-Only one glitch, changing the feldhell font, I have to restart the program 
-to use the selected font. 
+Maybe a bug:
+My MFSK16 Picture Macro looks like:
+---------------------------
+$tx
+TEST BILD ${picc:/home/rungi/dl2wrj.jpg}
+$rx
+---------------------------
 
->  - The FFT library (FFTW) now uses "wisdom" to optimize CPU consumption.
->    User will notice that the first time a modem is used, there will be
->    a few seconds delay.
-
-The decoding of PSK is much better now (less bogus chars) than with KPSK.
-
-I'm using the nice logging program jLog from LA3HM, but it has of course no 
-support for the logging feature of gmfsk. So I will program some java 
-classes to support the IPC logging feature. Maybe he can use the classes 
-and integrate them in jLog. 
-
-Thanks again for your work, Tomi.
+wont work. Only <STX> and <EOT> is displayed no transmission.
+But the file is found, if change the filename gmfsk says file not found.
 
 73 Wolf, DL2WRJ
 -- 
