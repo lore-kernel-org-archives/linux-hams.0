@@ -1,30 +1,26 @@
-From: Wilbert Knol <w.knol@niwa.co.nz>
-Subject: Re: ANN: gMFSK v0.6beta2 configure error
-Date: Sun, 25 Jan 2004 11:36:08 +1300 (NZDT)
+From: Hamish Moffatt <hamish@cloud.net.au>
+Subject: Re: ANN: gMFSK v0.6beta2
+Date: Sun, 25 Jan 2004 12:45:10 +1100
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <Pine.LNX.4.44.0401251134060.10101-100000@zl2bsj.ampr.org>
-References: <200401241702.08043.ea3bkz@ure.es>
+Message-ID: <20040125014510.GB8238@cloud.net.au>
+References: <1074877572.1299.114.camel@oh2bns.ampr.org>
 Mime-Version: 1.0
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <200401241702.08043.ea3bkz@ure.es>
+Content-Disposition: inline
+In-Reply-To: <1074877572.1299.114.camel@oh2bns.ampr.org>
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: TEXT/PLAIN; charset="us-ascii"
+Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
-To: Salvador Caballe <ea3bkz@ure.es>
-Cc: linux-hams@vger.kernel.org
+To: Linux-hams List <linux-hams@vger.kernel.org>
 
+On Fri, Jan 23, 2004 at 07:06:12PM +0200, Tomi Manninen wrote:
+> The second beta of gMFSK, the Gnome Multimode HF Terminal program has 
+> been released to the public. You can find it here:
+> 
+>   http://gmfsk.connect.fi/
 
+Debian package built and uploaded... Thanks Tomi.
 
-On Sat, 24 Jan 2004, Salvador Caballe wrote:
-
-> No package 'libgnomeui-2.0' found
-
-<snip>
-
-> the libgnomeui package is already installed.
-
-Most likely, you need libgnomeui-devel.
-
-WIlbert, ZL2BSJ
-
-
+Hamish
+-- 
+Hamish Moffatt VK3SB <hamish@debian.org> <hamish@cloud.net.au>
