@@ -1,51 +1,31 @@
-From: Jack Zielke <jack@takeovertheworld.org>
-Subject: Re: Serial configuration problems.
-Date: Fri, 15 Nov 2002 20:47:01 -0500
+From: "Demetre Valaris" <sv1uy@sv1uy.ampr.org>
+Subject: LINUX screen blanking
+Date: Sun, 17 Nov 2002 16:26:09 +0200
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <1037411221.3dd5a39587d1f@webmail.takeovertheworld.org>
+Message-ID: <3DD7C321.28024.5C60FFB@localhost>
 References: <Pine.LNX.4.44.0211151144160.11367-100000@hanhet.loew.washington.edu>
-Mime-Version: 1.0
-Content-Transfer-Encoding: 7BIT
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <Pine.LNX.4.44.0211151144160.11367-100000@hanhet.loew.washington.edu>
+In-reply-to: <1037411221.3dd5a39587d1f@webmail.takeovertheworld.org>
 List-Id: <linux-hams.vger.kernel.org>
+MIME-Version: 1.0
 Content-Type: text/plain; charset="us-ascii"
-To: "K. David Prince" <kdp@hanhet.loew.washington.edu>
-Cc: Linux Hams <linux-hams@vger.kernel.org>
+Content-Transfer-Encoding: 7bit
+To: Linux Hams <linux-hams@vger.kernel.org>
 
-Dave,
-    What are you sending as a modem init string?  I use minicom to talk to my
-th-d7.  Since in the past I have used minicom for other things I saved a
-configuration just for the radio.  I run 'minicom ham'  I was wondering if
-possibly the modem init string or the modem reset string may be confusing the
-radio.  Just a stab in the dark.
+Hi guys,
 
-Jack
-KG4GJY
+Sorry for the off topic message, but this has been bugging me for a long time!
+How can I stop LINUX from blanking my screen?
+I run SUSE 7.3 with kernel 2.4.10-GB in text mode, no X-Windoze!!!
 
-cat /etc/minirc.ham
-# Machine-generated file - use "minicom -s" to change parameters.
-pu baudrate         9600
-pu bits             8
-pu parity           N
-pu stopbits         1
-pu minit            
-pu mreset  
+I have looked everywhere and there is no mention on how to stop the screen 
+blanking so I thought that Linux-Hams is my last resort!
 
-setserial -a /dev/ttyS1
-/dev/ttyS1, Line 1, UART: 16550A, Port: 0x02f8, IRQ: 3
-        Baud_base: 115200, close_delay: 50, divisor: 0
-        closing_wait: 3000
-        Flags: spd_normal skip_test
+Thanks in advance to anyone that will reply!!!
 
-stty -a < /dev/ttyS1
-speed 9600 baud; rows 0; columns 0; line = 0;
-intr = ^C; quit = ^\; erase = ^?; kill = ^U; eof = ^D; eol = <undef>;
-eol2 = <undef>; start = ^Q; stop = ^S; susp = ^Z; rprnt = ^R; werase = ^W;
-lnext = ^V; flush = ^O; min = 1; time = 0;
--parenb -parodd cs8 hupcl -cstopb cread clocal -crtscts
--ignbrk -brkint -ignpar -parmrk -inpck -istrip -inlcr -igncr icrnl ixon -ixoff
--iuclc -ixany -imaxbel
-opost -olcuc -ocrnl onlcr -onocr -onlret -ofill -ofdel nl0 cr0 tab0 bs0 vt0 ff0
-isig icanon iexten echo echoe echok -echonl -noflsh -xcase -tostop -echoprt
-echoctl echoke
+Regards to all.
+
+73 de Demetre SV1UY
+e-mail sv1uy@sv1uy.ampr.org
+http://www.athnet.ampr.org/~sv1uy
+
