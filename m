@@ -1,31 +1,43 @@
-From: David Quental <ct1drb@iol.pt>
-Subject: Dimensions of gmfsk.
-Date: Sun, 08 Aug 2004 22:18:18 +0100
+From: =?iso-8859-1?q?alfio?= <euroalfio@yahoo.it>
+Subject: Re: PCISCC4 and LINUX 2.4.20
+Date: Tue, 10 Aug 2004 14:28:18 +0200 (CEST)
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <4116989A.5000703@iol.pt>
+Message-ID: <20040810122818.84711.qmail@web41609.mail.yahoo.com>
+References: <41160ACA.8020708@free.fr>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 7BIT
 Return-path: <linux-hams-owner@vger.kernel.org>
+In-Reply-To: <41160ACA.8020708@free.fr>
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"; format="flowed"
-To: Linux-hams List <linux-hams@vger.kernel.org>
+Content-Type: text/plain; charset="us-ascii"
+To: linux-hams@vger.kernel.org
 
-Hello to all.
+ --- Bernard Pidoux F6BVP <f6bvp@free.fr> ha scritto: 
+> Hi Alfio,
+> 
+> This is a PCI driver for the Baycom card !
+> 
+>
+ftp://nephtys.lip6.fr/pub/hamradio/f6fbb/distrib/PciScc/
+> 
+> 73, de Bernard, f6bvp
 
-I have gmfsk last version and it works fine, but I have an estetical 
-problem with it:
-now I have a laptop with linux, suse 9.0, and included also gmfsk, I use 
-kde as windows system, but have a problem with gmfsk because dimensions 
-of it exceed dimensions of kde window, how can I resize gmfsk in order 
-to be inside of kde window and allow to see all details of operation???
+Hello.
+With the F6fbb's patch, the card now is up! I would
+try to use it with Xnet software.
+After attaching the driver , for example XNET no
+connects possible. The machine does not crash but the
+PCISCC Card is not 100% ok. The results, after attach
+the card to XNET, the System will be crash, after
+about 10 sec and the only way to make up PCISCC port
+is to reboot.
+Any help are welcome.. 
+Thanks.
+Al.
 
-Probably it is an easy configuration (as always with my problems) of 
-kde, but I saw all and could not to resize gmfsk.
 
-Any answer will be welcome here.
 
-Best 73 to all and till next email.
-
-CT1DRB
-David Quental
-
+		
+________________________________________________________
+Yahoo! Mail: gratis 100 MB per i messaggi e allegati da 10 MB
+http://mail.yahoo.it
