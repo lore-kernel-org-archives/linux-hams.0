@@ -1,52 +1,55 @@
-From: terry <wd0fpc@aniota.com>
-Subject: Re: Redhat 8 or 9 modules ?
-Date: Wed, 23 Apr 2003 01:02:14 -0700 (PDT)
+From: "Janusz Przybylski - SP1LOP" <sp1lop@sp1lop.szczecin.pl>
+Subject: New IP address to encap.txt
+Date: Sat, 26 Apr 2003 00:45:16 +0200
 Sender: linux-hams-owner@localhost
-Message-ID: <Pine.LNX.4.50.0304230038300.11684-100000@yossarian.aniota.net>
-References: <002301c307d3$cc2e8300$14000a0a@p75> <1050973440.3572.12.camel@bobcp4.lingpgmr.com>
+Message-ID: <00f201c30b7c$57e547c0$6900000a@sp1lop.szczecin.pl>
+Reply-To: "Janusz Przybylski - SP1LOP" <sp1lop@sp1lop.szczecin.pl>
 Mime-Version: 1.0
-Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <1050973440.3572.12.camel@bobcp4.lingpgmr.com>
-List-Id: <linux-hams.vger.kernel.org>
-Content-Type: TEXT/PLAIN; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
-To: linux-hams <linux-hams@vger.kernel.org>
+Return-path: <linux-hams-owner@vger.kernel.org>
+List-Id: <linux-hams.vger.kernel.org>
+Content-Type: text/plain; charset="us-ascii"
+To: linux-hams@vger.kernel.org
 
-On Mon, 21 Apr 2003, Robert L Cochran wrote:
+Hello ALL
 
-> There have been several updated glibc releases for recent Red Hat
-> distributions including 8 and 9.
+Because in day 22.04.2003 hour 21:47
+I registered the change my the IP of address. System confirmed this:
 
-... as i understand it, the latest spate of glibc issues involved an RPC
-function within the 'desktop'.
+-------------------------------------------------------------------
+[ *** Gateways Robot v4 - Expect possible bugs! *** ]
+Your gateways entry update has been successful.
+Here is the log of commands that And processed:
+Mail from Janusz Przybylski - SP1LOP < sp1lop@sp1lop.szczecin.pl >
+Mail this update gateway 80.48.105.183
+Processing" New Address: 217.153.5.208" command
+Delete Entry 80.48.105.183 command OK
+New Address command OK
+Gateways Entry written this file
+...
+Last Update: Tue Apr 22 12:01:29 200 3
+------------------------------------------------------------------
+Please write to encap.txt my data
+
+I ask about accomplishment of change in encap.txt
+44.165.25/25 encap 217.153.5.208
+44.165.26/24 encap 217.153.5.208
+
+Old IP: 80.48.105.183
+
+I greet and thank
+
+                            73 de Janusz SP1LOP
+=================================
+Coordynator Polish 44.165/16 Net
+=================================
+sp1lop@sp1lop.szczecin.pl
+sp1lop@szczecin.ampr.org
+sp1lop @ sr1bsz.sz.pol.eu
+=================================
+Sysop:  SR1BSZ  and  szczecin.ampr.org
 
 
-> I definitely don't try compiling myself unless all the Red Hat bug fixes
-> are installed on my system.
-
-    there is a certain danger in that, even though, it's a healthy
-mindset.  depending on RH to provide 'all your security' needs "traps" the
-user.  more often than not, RH trails public disclosure of vulnerabilities
-and fixes for them, by some time.  i am not willing to wait on RH to
-'back-port' , and generate an RPM for it.
-    as an aside, i built a new kernel, 2.4.20 using the the tools at hand
-from a pristine RH-8.0 install.  also, that kernel has proven to be more
-stable than RH's offering.
-
-> see Red Hat's Bugzilla bug #87682, and use the suggested workaround
-> mentioned in that for LANG before you do anything with CPAN. Be very
-> careful about messing with your LANG/locale settings though. I'd
-> probably change them back to what they were when I finish downloading
-> Perl modules off CPAN.
-
-    RH in its infinate wisdon chose to us (i think it's) UTF-8 as the
-default LANG.  the RH-8 ncurses install puked because of it.  this , as i
-understand it, was for 'internationalization'.  that's just dandy, only i
-live in the US and really like being able to have more than 8 colors
-available to my VC's.  for me, staying with RH's default encoding is not
-an attractive option, but as has been mentioned, caution is warranted ...
 
 
--- 
-73 , de WD0FPC		Pacific Nowthwest 2M Repeaters
-    aka: terry 		http://www.aniota.com/~wd0fpc
+avast! (VPS 2003-04-25): the message contains no virus
