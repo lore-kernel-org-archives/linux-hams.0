@@ -1,47 +1,39 @@
 From: Riley Williams <rhw@InfraDead.Org>
-Subject: Re: AX25 socket question.
-Date: Tue, 16 Jul 2002 19:17:44 +0100 (BST)
+Subject: Re: 802.11b wireless lan equipment and ham radio ?
+Date: Tue, 16 Jul 2002 19:24:26 +0100 (BST)
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <Pine.LNX.4.21.0207161902311.4272-100000@Consulate.UFP.CX>
-References: <20020716051912.28245.h010.c002.wm@mail.peoplepc.com.criticalpath.net>
+Message-ID: <Pine.LNX.4.21.0207161918380.4272-100000@Consulate.UFP.CX>
+References: <200207161516.g6GFGUj28670@faulkner.netnet.net>
 Reply-To: Riley Williams <rhw@InfraDead.Org>
 Mime-Version: 1.0
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <20020716051912.28245.h010.c002.wm@mail.peoplepc.com.criticalpath.net>
+In-Reply-To: <200207161516.g6GFGUj28670@faulkner.netnet.net>
 List-Id: <linux-hams.vger.kernel.org>
 Content-Type: TEXT/PLAIN; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
-To: TIMOTHY POWELL <kd4iky@peoplepc.com>
+To: Steve Lampereur <kb9mwr@yahoo.com>
 Cc: Linux Ham Radio <linux-hams@vger.kernel.org>
 
-Hi Timothy.
+Hi Steve.
 
-> Thanks for the information, I didn't realize that I would have to
-> work at that lower level. But I like challenges. I'm looking for a
-> book right now to get that will help explain some things to me, I
-> just wish there was one specific to AX25.
+>>> Reclassifying by simply calling it Part 97 and opperating within the
+>>> first 6 channels provides a legal way around this.
 
-There is a book specific to AX.25, although whether it is still in print
-is a good question. The book in question is "AX.25 Packet Radio Link
-Layer Protocol" and explains exactly how the AX.25 protocol works. Also,
-failing that, just remember that AX.25 is the LAP-B subset of the HDLC
-protocol that is defined by international standard, and one can work out
-the relevant details by referring to the HDLC standard and taking the
-LAP-B subset whherever a choice is presented.
+>> ...and actually having a part 97 license... ;-
 
-For a less technical (and probably much more understandable) approach, try
-http://www.rsgb.org/shop/acatalog/RSGB_On_Line_Shop_Packet___APRS_18.html
-or the equivalent on the ARRL website or your national society if it has
-one.
+> A lot of hams are using this technology but under Part 15. I also
+> assumed everyone on this (linux-hams) list is licensed.
 
-> I still plan to work on the monitoring program, I had planned to get
-> to that lower level sooner or later but it looks like it will be
-> sooner. Thanks for the help and information.  I have always used
-> other peoples programs before, but after a while I finally decided
-> to learn to do it myself just for the challenge and learning
-> experience.  I appreciate all the replies. Thanks.
+I'm licensed, but "Part 15" and "Part 97" means nothing to me as I'm not
+in the USA. I would suspect that whoever posted that comment also isn't
+in the USA but elsewhere in the world (memory says Australia) and thus
+is subject to the vagarities of his or her national radio regulatory
+authority.
 
-No problem.
+For reference, here in the UK, it's the Radiocommunications Agency and
+"Document BR68" that defines what licensed radio amateurs can and cannot
+do, and the said document doesn't come anywhere near having 97 parts
+(the current one has 12 parts).
 
 Best wishes from Riley.
 
