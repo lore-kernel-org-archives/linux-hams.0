@@ -1,43 +1,26 @@
-From: =?iso-8859-1?q?alfio?= <euroalfio@yahoo.it>
-Subject: Re: PCISCC4 and LINUX 2.4.20
-Date: Tue, 10 Aug 2004 14:28:18 +0200 (CEST)
+From: "Bill Vodall" <wa7nwp@jnos.org>
+Subject: On line Callbook service
+Date: Tue, 10 Aug 2004 21:44:56 -0700
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <20040810122818.84711.qmail@web41609.mail.yahoo.com>
-References: <41160ACA.8020708@free.fr>
+Message-ID: <002101c47f5d$f4b7f880$6a7ea8c0@geo>
+References: <51501.192.168.1.15.1091855706.squirrel@192.168.1.15>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7BIT
+Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <41160ACA.8020708@free.fr>
 List-Id: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
 To: linux-hams@vger.kernel.org
 
- --- Bernard Pidoux F6BVP <f6bvp@free.fr> ha scritto: 
-> Hi Alfio,
-> 
-> This is a PCI driver for the Baycom card !
-> 
->
-ftp://nephtys.lip6.fr/pub/hamradio/f6fbb/distrib/PciScc/
-> 
-> 73, de Bernard, f6bvp
 
-Hello.
-With the F6fbb's patch, the card now is up! I would
-try to use it with Xnet software.
-After attaching the driver , for example XNET no
-connects possible. The machine does not crash but the
-PCISCC Card is not 100% ok. The results, after attach
-the card to XNET, the System will be crash, after
-about 10 sec and the only way to make up PCISCC port
-is to reboot.
-Any help are welcome.. 
-Thanks.
-Al.
+So...   what's available these days for setting up an
+online callbook system to be access from RF (uronode, etc)?
 
+Any  "telnet xxx <call>"  sites?
 
+What about systems for downloading the raw data and running the
+server locally?   I know JNOS has a couple options but I'm
+looking for something at the Linux system level.
 
-		
-________________________________________________________
-Yahoo! Mail: gratis 100 MB per i messaggi e allegati da 10 MB
-http://mail.yahoo.it
+Thanks,
+Bill - WA7NWP
+
