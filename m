@@ -1,38 +1,20 @@
-From: w9ya <w9ya@amsat.org>
+From: "Douglas Cole" <n7bfs@qwest.net>
 Subject: Re: FBB for linux and internet forwarding
-Date: Sun, 8 Dec 2002 18:34:32 -0500
+Date: Sun, 8 Dec 2002 15:25:53 -0800
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <200212081834.32393.w9ya@amsat.org>
+Message-ID: <200212081525.53260.n7bfs@qwest.net>
 References: <200212080932.03464.n7bfs@qwest.net> <3DF3B8DF.1D44C438@gelm.net>
+Reply-To: n7bfs@qwest.net
 Mime-Version: 1.0
 Content-Transfer-Encoding: 7BIT
 Return-path: <linux-hams-owner@vger.kernel.org>
 In-Reply-To: <3DF3B8DF.1D44C438@gelm.net>
 List-Id: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
-To: linux-hams@vger.kernel.org
+To: Chuck Gelm <nc8q@gelm.net>
+Cc: linux-hams@vger.kernel.org
 
-Hey gang; 
-
-I don't know squat about FBB, but I can tell you this much (as little as it 
-is)...dos can be VERY reliable when set up right. I have a dos accounting 
-server I built for a client several years ago that NEVER goes down except 
-when I clean the dust bunnies out. Linux can ALSO be ...VERY reliable when 
-set up right. (Differnet clients, same (similar) stories to tell.)
-
-If networking hardware and interface software are causing a change in 
-operating system, yeah, unfortunately there will be some bumps in the road as 
-a "rule" regardless of what the application is.
-
-Not much to go with, just probably confirming what you already know and/or are 
-finding out.
-
-vy 73
-
-Bob
-w9ya
-
-On Sunday 08 December 2002 04:25 pm, Chuck Gelm wrote:
+On Sunday 08 December 2002 13:25, Chuck Gelm wrote:
 > Hello, Douglas:
 >
 >  I've run an active Linux networking server for as long as 6 months
@@ -46,12 +28,18 @@ On Sunday 08 December 2002 04:25 pm, Chuck Gelm wrote:
 >
 >  As a minimum, the first thing I can suggest is to subscribe to
 > the fbb@f6fbb.org and xfbb@f6fbb.org list.
+
+Thanks , this I will let them know .
+
 >
 >  IMHO, if you have been running or using nodes
 >  (NETROM 2000, THENET, X1J, Xrouter, or G8BPQ) get ready for a
 > disappointment.  The current linux implementation of 'node' is
 > made expressly for wire networking with little adaptation for
 > radio networking environments.  :-(
+
+Unkown , since I am not the sysadmin.
+
 >
 >  Next:
 > "internet forwarding (through a cable modem) and coming out on
@@ -61,17 +49,32 @@ On Sunday 08 December 2002 04:25 pm, Chuck Gelm wrote:
 > "internet forwarding" happens between two pBBSs that have
 > an internet 'port'.
 >
+Sorry , as I previously said , I am not the one who admins the system , just 
+the one Ham in town they know who uses Linux as his desktop , and had 
+mentioned that Linux could work for them , so I really don't have a clue as 
+to what their setup is , and have'nt spent any time with packet in general 
+for well over 5 years (I used to have a 1200 baud passive packet repeater in 
+town , but took it down from lack of use).
+
+
 >  "coming out on VHF node frequency" has multiple topics also:
 > "coming out" == tranceiving
 > VHF == what difference does the band make?
 > 'node' == do you want standard AX.25 packets on the 'node frequency'
 > or do you need L3/L4 packets on the 'node frequency'?
 >
+See above.
+
+
 >  -or-
 >
 >  This is purely a choice of whether you wish to enable the
 > 'gateway' function of FBB.  All this should probably be discussed
 > on the FBB/xFBB list(s).
+
+Looks like that will be the case :^}
+
+
 >
 >  Lastly, this list may be appropriate to discuss
 > packet (AX.25 and 'linux-node') "kernel and lockup problems"
@@ -79,6 +82,11 @@ On Sunday 08 December 2002 04:25 pm, Chuck Gelm wrote:
 > AX.25 and 'node' packets.  :-|
 >
 > HTH, Chuck nc8q
+
+Yes, thanks for the response , I will try to get them to both this and the 
+xFBB lists hopefully :)
+73
+
 >
 > Douglas Cole wrote:
 > > A question for the list that hopefully will not be too open ended .
@@ -116,14 +124,4 @@ On Sunday 08 December 2002 04:25 pm, Chuck Gelm wrote:
 > > AMSAT#26182 , K2 # 544
 > > http://www.users.qwest.net/~cdoug3
 > > Registered Linux user # 188922
-> >
-> > -
-> > To unsubscribe from this list: send the line "unsubscribe linux-hams" in
-> > the body of a message to majordomo@vger.kernel.org
-> > More majordomo info at  http://vger.kernel.org/majordomo-info.html
->
-> -
-> To unsubscribe from this list: send the line "unsubscribe linux-hams" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at  http://vger.kernel.org/majordomo-info.html
-
+> 
