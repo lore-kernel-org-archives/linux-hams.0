@@ -1,38 +1,97 @@
-From: Ralf Baechle DO1GRB <ralf@linux-mips.org>
-Subject: Re: AX.25 in kernel 2.5 status?
-Date: Fri, 11 Oct 2002 17:38:50 +0200
+From: "John A. Magliacane" <kd2bd@yahoo.com>
+Subject: Announcing PREDICT Version 2.2.0
+Date: Sat, 12 Oct 2002 13:27:46 -0700 (PDT)
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <20021011173850.A19593@linux-mips.org>
-References: <20021011163542.A17419@linux-mips.org> <200210111456.PAA20991@gw.chygwyn.com>
+Message-ID: <20021012202746.49164.qmail@web12202.mail.yahoo.com>
+References: <20020708155751.11207.qmail@web12207.mail.yahoo.com>
 Mime-Version: 1.0
 Return-path: <linux-hams-owner@vger.kernel.org>
-Content-Disposition: inline
-In-Reply-To: <200210111456.PAA20991@gw.chygwyn.com>; from steve@gw.chygwyn.com on Fri, Oct 11, 2002 at 03:56:23PM +0100
+In-Reply-To: <20020708155751.11207.qmail@web12207.mail.yahoo.com>
 List-Id: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
-To: Steve Whitehouse <Steve@ChyGwyn.com>
-Cc: M Taylor <mctylr@privacy.nb.ca>, linux-hams@vger.kernel.org
+To: linux-hams@vger.kernel.org
 
-On Fri, Oct 11, 2002 at 03:56:23PM +0100, Steven Whitehouse wrote:
+Hello Everyone.
 
-> > Another problem we still have - and we're sharing it with other protocols
-> > such ipv4 - is that our proc code is holding a lock for the time the
-> > /proc file is open.  That's not a significant time but it may delay
-> > access, so I've made most of those loads rw locks.  Worst case a buggy
-> > or malicious piece of software might even hold a proc file open for a long
-> > time thereby stalling the functioning of the stack partially or fully.
-> > 
-> Its only during read operations, not the open that the lock is held I
-> think, but I agree that an rw lock is the best solution here.
+PREDICT version 2.2.0 has been released.  This version contains
+significant internal changes including the adoption of SGP4/SDP4
+orbital models, support for a satellite transponder database, and
+a completely revised Single Satellite Tracking mode that provides
+detailed uplink and downlink frequencies (properly compensated for
+Doppler shift) that are required for successful communication via
+OSCAR satellites.  (You can now "tune" across a transponder using
+the keyboard to equate a particular downlink signal to the required
+uplink frequency.)  Many of the other functions of the program
+were allowed to successfully remain intact.
 
-The only solution I see would be redoing the data structures or as
-implemented in a few other places in the kernel accepting O(n) behaviour
-for the seq_operations.next method - which would make reading the
-performance for reading the proc file O(n^2).  But that's a minor
-problem at the moment.
+The CHANGES file provides more details, and reads as follows:
 
-73 de DO1GRB op Ralf
+Release 2.2.0: (a.k.a. The Columbus Day Release)
+By John A. Magliacane <kd2bd@amsat.org> (12-Oct-2002):
 
---
-Loc. JN47BS / CQ 14 / ITU 28 / DOK A21
+* PREDICT's satellite tracking algorithm was replaced by a more precise
+  model based on a port of Dr. TS Kelso's SGP4/SDP4 Pascal routines to
+  'C' by Neoklis Kyriazis, 5B4AZ.
+
+* PREDICT now imports, exports, and permits editing of TLE element set
+  numbers, International Designators, and Bstar and nddot/6 drag terms
+  in addition to all the remaining orbital data found in a two-line
+  element set.
+
+* Earthtrack was modified so that when multi-tracking satellites,
+  range circles are displayed 5 minutes prior to AOS through LOS.
+
+* Maximum allowable callsign length was increased to 15 characters to
+  permit groundstation names to be used in place of 6 character callsigns.
+
+* Vocalizer will no longer send audio to the soundcard if the soundcard
+  cannot be set to the proper sampling rate and word size.
+
+* The Single Tracking mode was completely redesigned to allow interactive
+  selection of satellite transponder, provide real-time Doppler-compensated
+  uplink and downlink frequency information, and support for a transponder
+  database.  Spacecraft antenna squint angle, propagation delay, echo,
+  and satellite eclipse depth information are also now available.  See
+  the NEWS file for additional information.
+
+* Orbital predictions now report squint angles instead of orbit
+  numbers if ALAT/ALON data is available in the transponder database.
+
+* A Visual BASIC Windows-based client application has been contributed
+  by Steve Fraser, VK5ASF.  Steve also contributed some small coding
+  changes that allow PREDICT to be successfully invoked by rc.local
+  upon startup.
+
+* Bent Bagger, OZ6BL, contributed a small change to get_response() in
+  the client demo.c program.  The modification recognizes the absence
+  of a PREDICT server, and displays an appropriate error message.
+  The previous method set an alarm and waited for a timeout to occur.
+
+* A bug in the configure script was fixed.
+
+* Lots of other small coding changes were made.
+
+
+Further details are available at:
+
+        http://www.qsl.net/kd2bd/predict.html
+
+
+Enjoy the program!
+
+
+73, de John, KD2BD
+
+
+=====
+-=-=-=-=-=-=-=-=- John A. Magliacane, KD2BD -=-=-=-=-=-=-=-=-=-=-=-=-=-
+   Internet  : kd2bd@amsat.org  |  Video : 426.250 MHz/439.250 MHz
+   Satellite : KITSAT-OSCAR-25  |  Morse : -.-  -..  ..---  -...  -..
+   Voice     : +1.732.224.2948  |  WWW   : http://www.qsl.net/kd2bd/
+-=-=-=-=-=-=-=-= Linux Doesn't Cost.  It Pays. =-=-=-=-=-=-=-=-=-=-=-=-
+
+__________________________________________________
+Do you Yahoo!?
+Faith Hill - Exclusive Performances, Videos & More
+http://faith.yahoo.com
