@@ -1,32 +1,24 @@
-From: Haines Brown <brownh@hartford-hwp.com>
-Subject: a little help request (OT)
-Date: Wed, 8 Jan 2003 13:26:46 -0500
+From: "Wilson G. Hein" <vze2b869@verizon.net>
+Subject: shutdown script
+Date: Wed, 8 Jan 2003 15:06:05 -0500
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <200301081826.h08IQkMr016456@hartford-hwp.com>
-Reply-To: brownh@hartford-hwp.com
+Message-ID: <NCBBKBAJDJIPKFIAFBKLOEFBEHAC.vze2b869@verizon.net>
+Reply-To: <whein3@earthlink.net>
+Mime-Version: 1.0
+Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
 List-Id: <linux-hams.vger.kernel.org>
-MIME-Version: 1.0
 Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-To: linux-hams@hartford-hwp.com
+To: Linux-Hams Mailing List <linux-hams@vger.kernel.org>
 
-I get an error when subscribers reply to my messages sent to another
-list supported by vger.kernel.org, and so I'm asking for a little
-help to see if the problem has (in part, at least) to do with the list
-server. 
+I'm wondering if someone has a script to close ax25 and netrom, etc
+interfaces. I would presume it would have something to look at the pid's and
+then kill the process. I wnat to plug it into /etc/sysconfig/network-scripts
+to automate startup and close through the normal init scripts.
 
-The problem is that the To: line in my messages (such as the one you
-are now reading) for some reason sometimes takes the form
-listnamne@mydomain name. I.e., linux-hams@hartford-hwp.com. So if you
-were to reply by hitting your Reply button, it will bounce because
-sent to an invalid address. 
+TIA,
 
-Would some kind soul reply to this message and in so doing inspect its
-header's To: line to see if the false address is there, and then let
-me know? If so, you will have to change it to brownh@hartford-hwp.com
-so that your reply gets through to me instead of bouncing back at you.
+Regards,
 
-Thanks 
+Willie, WJ3G
 
-Haines Brown KB1GRM
