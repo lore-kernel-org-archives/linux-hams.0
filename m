@@ -1,49 +1,46 @@
-From: "Robin Gilks" <g8ecj@gilks.org>
-Subject: Re: Convers Setup
-Date: Wed, 27 Oct 2004 14:21:35 +1300 (NZDT)
+From: Stef VK5HSX <sdaniels@airnet.com.au>
+Subject: z8530 SCC chips.
+Date: Thu, 28 Oct 2004 00:24:27 +0930
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <47705.202.37.96.11.1098840095.squirrel@202.37.96.11>
-References: <417D35BD.9020709@utoronto.ca>
-Reply-To: g8ecj@gilks.org
+Message-ID: <200410280024.35458.sdaniels@airnet.com.au>
+Reply-To: vk5hsx@wia.org.au
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7BIT
+Content-Type: multipart/signed;
+  protocol="application/pgp-signature";
+  micalg=pgp-sha1;
+  boundary="Boundary-02=_ra7fBH9ZXfuec8s";
+  charset="us-ascii"
+Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <417D35BD.9020709@utoronto.ca>
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"
 To: linux-hams@vger.kernel.org
 
-> Hello all,
->
-> In an effort to get prepared for digital ARES traffic handling, I'm
-> going to try running a digital net.  I'm looking to add a convers server
-> to my prototype node.  So far, I've found the following pieces of
-> software:
->
-> saupp
-> wampes
-> tpp-conversd
-> tnn
-> pp-conversd
-> htpp
-> htppu
-> webconvers
 
-Webconvers is not a convers server as such - it is the interface 'glue'
-that allows access to an existing convers server via the web using a
-browser.
+--Boundary-02=_ra7fBH9ZXfuec8s
+Content-Type: text/plain;
+  charset="us-ascii"
+Content-Transfer-Encoding: quoted-printable
+Content-Disposition: inline
 
-The latest version is 2.1beta2 which has a channel display to simplify the
-moving between channels and operating on multiple channels.
+I am wondering where I can get replacement Z8530 ZILOG chips for DRSI cards.
+Somewhere online would be great, otherwise, a business or dealer..
 
-I'm looking for feedback on use and translations are still required - I
-know that its being used in non-English environments but nobody has sent
-me any language files :-((
+Many thanks..
+=2D-=20
+Regards - Stef VK5HSX
+          Adelaide, Sth Australia=20
+	  -=3D Support Open Source =3D-
 
+--Boundary-02=_ra7fBH9ZXfuec8s
+Content-Type: application/pgp-signature
+Content-Description: signature
 
--- 
-Robin Gilks zl3rob/g8ecj
-Internet: g8ecj@gilks.org    http://www.gilks.org
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.2.4 (GNU/Linux)
 
+iD8DBQBBf7arH/+qRJ7D8UsRAnvjAJwPKYF+I9on9Bn27AwvtMkxOFhk+gCfYH2c
+gDE9anh0Hou/Pe4ZjigjRiE=
+=XRuZ
+-----END PGP SIGNATURE-----
 
-
+--Boundary-02=_ra7fBH9ZXfuec8s--
