@@ -1,8 +1,8 @@
 From: Henk de Groot <henk.de.groot@hetnet.nl>
-Subject: Kenwood TH-D7G and binary data question
-Date: Tue, 20 Aug 2002 22:47:52 +0200
+Subject: The TH-D7 bugs
+Date: Tue, 20 Aug 2002 22:47:41 +0200
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <5.1.0.14.2.20020820220441.00a734f0@pop.hetnet.nl>
+Message-ID: <5.1.0.14.2.20020820224010.00a649b0@pop.hetnet.nl>
 Mime-Version: 1.0
 Return-path: <linux-hams-owner@vger.kernel.org>
 List-Id: <linux-hams.vger.kernel.org>
@@ -14,221 +14,186 @@ Hello,
 
 WARNING: Technical content!
 
-I just happened to see some mails about using the TH-D7 in KISS. I have 
-done some tests with it and posted reports in the past. They are among 
-others in the TH-D7 yahoo group. Here is the report I send out of my 
-experiments to use the TH-D7 for binary transfer (and why it stops with the 
-STA and CON indications burning at the screen). Good luck reading!
-
-Kind regards,
-
-Henk.
-------------------------------------------------------------------------
-Subject: TH-D7E "StaCon" error in KISS
-
-Hello,
-
-Yesterday I did some tests with the THD7 in KISS and found out how to avoid 
-the KISS hangup where the "STA" and "CON" indications are shown and the TNC 
-not responds anymore. I conducted the test for an issue on the APRS SIG, 
-but the text may be interesting for you too.
-
-There are some rumours that packets with > 100 bytes will kill the KISS 
-TNC. THIS IS NOT TRUE. There are problems with long packets however in 
-standalone APRS mode which Kenwood can fix. The KISS TNC is killed by 
-sending too much frames to it. It seems like the TH-D7 can only buffer
-one full-size information frame at the time.
-
-Here is the text I wrote to the APRS SIG (which a changed preamble for 
-posting here).
+Here is more information about the problems I found in the TH-D7. It has 
+been posted before but seeing the discussion here it may be of interest.
 
 Kind regards.
 
 Henk.
 
-------------------------------------------------------------------------
-I did some experiments and there are some interesting things to know about 
-KISS with the THD7. The software I use restricts the size of the data to 
-256 bytes as per AX25 V2 specification so I did not try oversized packets. 
-Of course when sending a complete KISS frame with 256 bytes payload data 
-the total number of bytes will be higher due to the header and due to the 
-escape-bytes in the KISS data.
+------------------------------------------------------------------
+Hello All,
 
-Executive Summary (Detailed description will follow below)
-------------------------------------------------------------------------
-Good news: The TH-D7E V2.0 in KISS works!!!
+I promised a lot of people to report about the latest Kenwood update  for
+the TH-D7E handheld tranciever with build-in TNC.
 
-         +----------------------------------------------------+
-         | USE MAXFRAME of 1, at most 2 on your transmissions |
-         | and the TH-D7 will not hang with the "con" "sta"   |
-         | indicators lit anymore. MAXFRAME 3 and up gives    |
-         | problems, at least at 1200 baud                    |
-         +----------------------------------------------------+
+For those  who are  not aware  of it  the following.  Kenwood has  now at
+least 3 versions of the TH-D7E in the field.
 
-Uplink:
--------
-Sending 250 byte data-frames are no problem. Apparently the TH-D7 has 
-enough storage capacity to hold the data and the AX.25 header of a 
-full-size frame. MAXFRAME however is a problem. Sending 1 frame at a time 
-works reliable. Sending 2 frames at a time doesn't gain much since they are 
-send as two separate frames anyway. I got a CRC error with YAPP using 2 
-frames, but you may get away with it... When sending 3 or more frames to 
-the TH-D7 in one go then the TNC hangs with the "con" and "sta" indication 
-burning. I would recommend to use a MAXFRAME of 1 on the TH-D7 in KISS mode.
+The  first  version,  which  is  usually  referred  to  as  v1.0, was the
+European  version  of  the  TH-D7A  but  was  unfortunately  lacking some
+functionality  essential  for  Europe.  This  was  KISS  support and DAMA
+support.
 
-Downlink:
----------
-When using 1200 baud there are no problems with reception. At least 3 
-consecutive frames with 230 bytes of payload data each works fine (no digis 
-in the header). With 9600 baud the transmitting station should send only 
-one information frame at a time since the TH-D7 can only buffer one frame 
-on reception. If the sender sends more frames then the link will become 
-very slow due to a lot of retransmissions. Two TH-D7's may work together 
-however due to the way adjacent frames are transmitted. But since the TH-D7 
-is at its best when it uses a MAX-FRAME of 1, this is not really an advantage.
-------------------------------------------------------------------------
-------------------------------------------------------------------------
+The second version, v2.0, fixed this. This second version also  corrected
+some  other  things  like  the  ability  to  use 9600 baud in APRS mode -
+needed  for  watching  DX  clusters  -  and  the ability to handle higher
+precision NMEA position strings,  like transmitted by newer  eTrex GPSses
+for example.
 
-Detailed description:
----------------------
-First the good news. You can send binary packets with 250 bytes payload. 
-Reception works okay too.
+The third  version,   which also  identifies   itself as  v2.0, fixed  an
+annoying  bug  in  the  second   version,  known  as  the  "long  packet"
+problem. Kenwood can  update existing   TH-D7E's, but unfortunately  only
+the TH-D7E v2.0. I know this fix  is available in the UK and in  Belgium.
 
-I conducted some tests on a connection-oriented link at 1200 baud with our 
-near-by packet BBS. I used a connection-oriented link to be able to do a 
-YAPP upload and download. The tools I used for this are TSTHOST 1.43 (dos) 
-and the TFPCX 2.73 driver. The maximum packet size I used was 250 bytes, 
-TSTHOST will not accept a higher setting but I bet 256 bytes works fine 
-since 256 bytes also works on UI frame transmissions.
+My unit was send to Belgium via  my dealer. A round-trip can be as  short
+as 2 weeks, but for me it was  over 8 weeks due to the fact that  bacause
+of warantee I  had to send  it via the  dealer. So far  I've not heard it
+was available in Germany, which kind of surprises me.
 
-I put the THD7 in KISS the following way:
-------------------------------------------------------------------------
-TC 1
-TC 0
-XFLOW OFF
-PACLEN 0
-TX 25
-KISS ON
-RESTART
-------------------------------------------------------------------------
-(Note: TC is not a TNC command but a THD7 command. TC 1 switches the TNC 
-off, TC 0 switches it on. This way I know for sure that I have a clean 
-start! For the "TC 1" command capitals letters are important, otherwise it 
-doesn't work.)
+I just got my TH-D7E back and tested some of the known problems.
 
-My BBS is not using DAMA, if it does also insert "PPERSIST OFF" and "DWAIT 
-0" after the "TX 25" setting. NEVER USE THIS ON NON-DAMA LINKS!
+First of all some data about  the upgrade itself. From the outside  there
+is  no  visible  difference  between  this  new  version and the old v2.0
+version. None of the menus are  changed and even the TNC startup  message
+is  the  same  as  before  the  upgrade  (same  date,  same 2Chip version
+number). To me it seems  that the only way to  verify if it is new  or an
+old TH-D7E v2.0 is by watching  the behaviour with the known bugs  of the
+old v2.0 version.
 
-Binary uploading:
------------------
-I have a good link with the BBS and there was nobody else using the same 
-QRG. I started a YAPP upload of a .ZIP file (actually dnexe030.zip...).
+---------------------------------------------------------------------------
+Problem: Long UI packet problem in APRS
+Symptom: Decoding packets stopped, Beacon transmission stopped. Cycling
+          the TNC is needed to bring APRS to life again.
+Report :
 
-So I tried a MAX-FRAME of 6 (MAX-FRAME of 7 gives problems with some 
-implementations, that's why I never go beyond 6). The THD7 is not able to 
-intermediately store 6 frames. Within seconds it hangs with the "con" and 
-"sta" indication lit in the screen. There is no response from the TNC 
-anymore, I can however still send the command "TC 1" to switch the TNC off.
+In the TH-D7E v2.0  this problem occured on  reception of a packet  which
+length, written down in TAPR  TNC format, exceededs 195 characters.  This
+was  very  reproducable.  After  the  upgrade  I  tried  to reproduce the
+problem. It  looks like  the Engineers  at Kenwood  found the  weak spot.
+Even UI frames  with  256  bytes of data,   the maximum length  accroding
+to the AX.25  spec, doesn't do  any harm anymore!  I'm very pleased  with
+this I can tell you!
 
-The link speed to the radio is 9600 baud while the air interface is only 
-1200 baud. That's why the THD7 will have to buffer the frames.
+I let it  run for half  a day on  our heavily loaded  LAP QRG, after that
+torture, which killed the APRS function  for sure with the old v2.0,  the
+TH-D7E still ran happily.
 
-I restarted the attempt, this time I set MAX-FRAME to 1. This actually 
-works without getting a hang-up. I am able to transfer 70 Bytes/second this 
-way according to TSTHOST's information. 1200 baud equals to 150 
-Bytes/second but you have to subtract the RX/TX changeover time and the 
-protocol-overhead, this is actually not too bad when sending only 1 frame 
-at a time. I used a TXdelay of 25, which is 250 ms which works reliable on 
-the TH7D.
+After I pressed the TNC button  once more to enter Packet mode  I noticed
+that  it  hung  up  on  me,  I  was  not  able to send anything. So still
+something gets messed up after reception of the long packet, but I  don't
+think this is  a problem. If  TH-D7E is just  switched on an  then set to
+Packet there is no problem as far as I could see.
 
-Now that I know a MAX-FRAME of 1 works I bumped the number of frames up to 
-see where the limit is. MAX-FRAME of 2 reveals an interesting thing, which 
-I did not know. The two frames are not transmitted as one block by the 
-TH-D7, but also 2 consecutive frames; the TH-D7 shortly interrupts the 
-transmission between the two frames. The BBS receives the frames okay so 
-the TH-D7 apparently inserts also a TXdelay between the frames. The first 
-attempt to upload the file failed. YAPP aborted with a CRC error. The 
-second time went better. The transmission speed was a bit higher, 88 
-Bytes/second.
+---------------------------------------------------------------------------
+Problem: Hangup in KISS mode after some time of use
 
-I went to MAX-FRAME of 3. That was interesting too. First of all I noticed 
-that the data was not flowing okay anymore. Looking the monitor screen I 
-saw that the BBS was consistently loosing the 3rd frame. I guess that is 
-because it was not transmitted all right anymore. After some time I aborted the
-upload and low-and-behold, the TNC hang himself with "con" and "sta" burning.
+Symptom: "STA" and "CON" burning on the display, no transmission and
+          reception of packets anymore, no response from the TNC anymore
 
-What I could make of this is that the TH-D7 just buffers 1 complete frame. 
-The TNC can also hold 1 TX frame. When I use a MAX-FRAME of 1, I hardly see 
-the "sta" indication. I assume that the KISS frame that just arrived is 
-passed on to the TNC immediately for transmission. With a MAX-FRAME of 2 
-this also is okay, 1 frame is in the TNC, the other in the TH-D7 firmware.
+Report :
+This problem occured with WinAPRS in KISS mode on the TH-D7E after a  few
+hours. There was however a much quicker way to get this hangup. That  was
+by using the TH-D7E in  KISS with the DIGI_NED digipeater  software. Then
+the hangup occured in minutes.  This problem still exists. It  is however
+a  *lot*  better  now.  It  now  takes  about 30 minutes to have the same
+problem again, using  the digipeater method.  So definately something  is
+improved. Unfortunatly its not eliminated  however. With the old v2.0  it
+was  possible  to  regain  control  by  sending the command "TC 1", which
+switched the TNC off  (important, "TC" in capitals). Then with "TC 0" the
+TNC could be activated again. This method still works with the new v2.0.
+---------------------------------------------------------------------------
+Problem: PERSIST works the wrong way arround
 
-An extra RR frame will fit also, but not a complete new I frame. When 
-overrun the TH-D7 gives up. So never pass more than 2 frames to the TH-D7 
-in KISS. I'm guessing now, but I think the reason why the TH-D7 has no 
-problem in TAPR mode is because of XON/XOFF flow control. In transparent 
-KISS software flow-control does not work.
+Symptom: With PERSIST=255 the TNC never transmits instead of always
+          With PERSIST=0 the TNC always transmits instead of never
 
-I set MAXFRAME back to 1 and uploaded the whole file, 239022 bytes, which 
-succeeds in one go without a single hiccup (it is a torture for the TH-D7 
-however, it got really hot since is took almost an hour to complete!). When 
-I do a "DIR" in the DOSFBB directory then the size matches the original. 
-This file will now be used for the next test where I retrieve it again 
-using YAPP.
+Report :
+This  is  anoying  if  you  use  the latest  version of TFPCX which, when
+connected to a  DAMA node, programs  the PERSIST parameter  to 255 to get
+better DAMA behaviour. The TH-D7E refuses to transmit in that case.  This
+can be  verified in  terminal mode.  Just set  PERSIST to  255 and try to
+transmit something.  The transmission  will be  queued in  the TH-D7E. If
+you then set PERSIST to 0 all the queued data is transmitted. On the  new
+v2.0 this problem still  exists. A bypass for  those who want to  work in
+DAMA with the latest TFPCX version can switch the PERSIST channel  access
+method off and use the DWAIT method  with a time of 0 for direct  access.
 
-Binary downloading:
--------------------
-With uploading I uploaded a ZIP file of 239022 bytes. Now I try to download 
-it again using YAPP. This time I don't have much control over the packet 
-size and the number of packets I am receiving.
+To start KISS use the following commands to do this:
 
-The BBS I use sends packets with 230 bytes of payload data and a MAX-FRAME 
-of 3. I went to the directory where I uploaded my ZIP file and started the 
-download procedure. This went without problems. Frankly I also did not 
-expect any problems. There is no buffering problem in the TH-D7 during 
-download since the KISS link is much faster than the 1200-baud radio link.
+cmd: PPERSIST OFF
+cmd: DWAIT 0
+cmd: KISS ON
+cmd: RESTART
 
-There are never more than 2 full packets in the TH-D7: The received packet, 
-which is currently send to the KISS link and the packet being collected in 
-the TNC from RF. I got a speed of 97 Bytes/second. I remember similar 
-figures from the days when I used to have a BayCom modem for up- and 
-downloading to the FBB-BBS. It looks quite normal to me.
+WARNING: Only use this with DAMA, not for normal connections! For  normal
+connections  you  can  use  this  table  to  find out the correct PERSIST
+values which depends on the total number of the stations on the channel:
 
-I have noticed before, problems arise when using 9600 baud. In that case 
-the TH-D7 will only receive the first information frame of a block of 
-I-frames correctly. When the TH-D7 has only internal storage for 1 frame 
-then this adds up. With 1200 baud the buffer is cleared before the next 
-frame arrives. With 9600 baud this is not the case anymore. The 9600 
-synchronous data-rate on RF is higher than the asynchronous data-rate on 
-the KISS link. So the next frame is received before the buffer is cleared 
-and the TH-D7 has to drop that frame.
+nr of users      TAPR               THD7E
+on the channel  PERSIST            PERSIST
+  1 (only you)     255                  0
+  2                128                128
+  3                 85                171
+  4                 64                192
+  8                 32                224
 
-As noticed above, when sending 2 frames with a TH-D7 the transmission is 
-shortly interrupted between the two frames. This may buy enough time to 
-clear the buffer so 2 TH-D7's talking to each other with 9600 baud may work 
-for that reason (and if it is still too fast the Txdelay can be increased 
-to increase the time between the information frames). When using another 
-implementation also the transmitter has to restrict its
-transmissions to 1 frame at a time. If not the link will become very slow 
-due to retransmissions.
+The assumption here is that the TH-D7E persist is 256 - PERSIST
+---------------------------------------------------------------------------
+Problem: RESptime timer doesn't work
 
-After I downloaded my ZIP file, which proceeded without any problem, I 
-compared the downloaded file with the original. A binary compare showed no 
-difference at all.
+Symptom: Slow connection because the TH-D7E doesn't take initiative when
+          the node doesn't send a POLL bit on the last I frame
 
-There may be a potential killing bit-pattern. Even when the TH-D7 is in 
-KISS mode you can switch the TNC off by sending "TC 1<CR>" to the TH-D7. If 
-the TH-D7 follows the KISS specification the "T" character may be 
-implemented as a special "command byte", in that case there is no problem. 
-If that is not the case however than an accidental "TC 1<CR>" sequence in 
-the transmitted data may switch the TNC off. I have not verified this. The 
-chance this happens is pretty low I think. The ZIP file I uploaded did not 
-contain such a pattern.
+Report :
+A lot of protocol  stacks used in Western  Europe do not send  a poll bit
+on the last transmitted I frame before witching to reception. This  makes
+the gaps between  the transmission and  the RR ack  a bit wider  so other
+stations have a chance to "break-in". The RR response of the reciever  is
+triggered by  the internal  RES timer  instead. In  de Kenwood this timer
+doesn't seem to work. Now the link becomes slow bacause the TH-D7E  waits
+until the node  or BBS polls  the TH-D7E due  to an elapsed  FRACK timer.
+This has not changed with the new v2.0 version.
+---------------------------------------------------------------------------
+
+Problem: Slow 9600 baud in KISS
+
+Symptom: Only 1 frame at the time is handled in KISS at 9600 baud
+
+Report :
+
+It  looks  that  after  reception  of  1  frame  the TH-D7E is so busy to
+transmit  it  to  the  serial  KISS  port  that  the next frame is always
+missed. As  far as  I could  see this  has not  changed with the new v2.0
+version. In 1200 baud  there seems to be  no problem in KISS  (except for
+the hangup problem mentioned above),  but that was already the  case with
+the previous v2.0 version.
+---------------------------------------------------------------------------
+
+Summary:
+As far  as I  could see  the advantage  of the  upgrade is the ability to
+sustain long packets in APRS mode,  which was, for me at least,  the most
+annoying problem  and I  am really  pleased that  Kenwood managed  to fix
+this. Futhermore the KISS mode seems to be more stable.
+
+Although the other problems still  remain, the advantage of this  upgrade
+is worth  more than  enough to  have to  part with  the TH-D7E  for a few
+weeks. After  sending it  off I  started to  realize however  how much  I
+missed this nice handheld  device, I'm glad it  is back now. The  upgrade
+itself was free  of change (under  warantee), I only  covered the postage
+from me to my dealer and back.
+
+I hope this information was usefull  for you, and many thanks to  Kenwood
+for listening and fixing the most annoying problem. I am a happy man!
 
 Kind regards,
 
 Henk.
 
-P.S. Copying and publishing this text is hereby permitted, no explicit 
-permission from me needed (although its nice to hear if it is usefull).
+I accidently found a new small bug. Set the TNC in APRS mode. Press  LIST
+once.  Now  if  you  press  the  PTT  the TH-D7E jumps back to the normal
+screen.  If  you  however  do  this  while  recieving an APRS message the
+transmitter goes on and  stays on even after  release of the PTT  button!
+Pressing the PTT again for a  short time stops the transmission. I  don't
+know if the old v2.0 version has this too.
 
