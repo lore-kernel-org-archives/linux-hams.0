@@ -1,47 +1,49 @@
-From: Fabio IZ4AFW <iz4afw@libero.it>
-Subject: Re: Need help with serial card + baycom
-Date: Mon, 15 Nov 2004 13:19:58 +0100
-Message-ID: <6.1.2.0.2.20041115131558.02623da0@popmail.libero.it>
-References: <6.1.2.0.2.20041114202646.02842888@in.aliceposta.it>
- <6.1.2.0.2.20041114234158.0283e7a8@popmail.libero.it>
- <1100502427.8341.37.camel@kronenbourg.scs.ch>
+From: "Curt, WE7U" <archer@eskimo.com>
+Subject: Re: Run app on login
+Date: Mon, 15 Nov 2004 07:44:56 -0800 (PST)
+Message-ID: <Pine.SUN.4.58.0411150742470.171@eskimo.com>
+References: <620c9057041113184754867a6d@mail.gmail.com> <200411132106.58898.budr@netride.net>
+Reply-To: "Curt Mills, WE7U" <archer@eskimo.com>
 Mime-Version: 1.0
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <1100502427.8341.37.camel@kronenbourg.scs.ch>
-References: <6.1.2.0.2.20041114202646.02842888@in.aliceposta.it>
- <6.1.2.0.2.20041114234158.0283e7a8@popmail.libero.it>
- <1100502427.8341.37.camel@kronenbourg.scs.ch>
+In-Reply-To: <200411132106.58898.budr@netride.net>
 Sender: linux-hams-owner@vger.kernel.org
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"; format="flowed"
+Content-Type: TEXT/PLAIN; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
-To: Thomas Sailer <sailer@scs.ch>
-Cc: linux-hams@vger.kernel.org
+To: Bud Rogers <budr@netride.net>
+Cc: Linux-hams List <linux-hams@vger.kernel.org>
 
-At 08:07 15/11/2004, you wrote:
->This is just a sanity check that the parameters are in the ISA range.
->Which doesn't make sense any more...
+On Sat, 13 Nov 2004, Bud Rogers wrote:
+
+> On Saturday 13 November 2004 20:47, Chuck Hast wrote:
+> > Folks,
+> > I am trying to figure out how to have a particular application start
+> > up when a user logs in with a specified login.
+> > Example,
+> > User logs in with "radio"  password "hamradio"
+> > Instead of bringing up a prompt, I want a login of radio to start up
+> > a special application. I am sure that Linux can do it, just not quite
+> > sure how to do so.
 >
-> > I'll try to remove the check as soon as possible to see if this solves the
-> > problem... but probably that check is there for a good reason ;)
->
->If it works for you, please submit a patch to the kernel lieutenants
->(Dave Miller in this case probably).
->
->Thanks,
->Tom
+> Anything you put in a user's .bashrc or .bash_profile will be run
+> whenever that user logs in.  You can have it set up things in your
+> environment, or run certain commands.  Man bash will give you the
+> details.
 
-OK, I'll let you know ASAP and eventually I'll contact Dave to submit the 
-patch.
-Probably I'll also have to set the correct divisor in the UART because 
-baud_base is 921600 on my PCI board instead of 115200... and I assume that 
-using setserial is pointless, because the module doesn't use the standard 
-serial support of the kernel...
+Or .profile.
 
-Thanks a lot for the info Tom!
+Run when logging in:  .profile or .bash_profile
 
-Ciao
-Fabio IZ4AFW
+Run when any new shell/subshell is started:  .bashrc
 
+If you're dealing with an environment where one process or one user
+might start multiple shells or subshells, then you want to stick
+with the .profile or .bash_profile files, as then your application
+will only get run once per login.
 
-
+--
+Curt, WE7U			         http://www.eskimo.com/~archer
+"Lotto:    A tax on people who are bad at math." -- unknown
+"Windows:  Microsoft's tax on computer illiterates." -- WE7U
+"The world DOES revolve around me:  I picked the coordinate system!"
