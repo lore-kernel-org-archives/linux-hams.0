@@ -1,39 +1,38 @@
-From: M Taylor <mctylr@privacy.nb.ca>
-Subject: Re: Writing AX.25 Server Progie
-Date: Tue, 31 Dec 2002 02:31:39 +0000
+From: Wilbert Knol <zl2bsj@zl2tze.ath.cx>
+Subject: Re: packet radio indoor :-(
+Date: Tue, 31 Dec 2002 19:55:41 +1300 (NZDT)
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <20021231023139.D24525@pull.privacy.nb.ca>
-References: <1041142023.32767.8.camel@edith>
+Message-ID: <Pine.LNX.4.44.0212311920230.2754-100000@zl2bsj.ampr.org>
+References: <20021230214816.58459.qmail@web14408.mail.yahoo.com>
 Mime-Version: 1.0
 Return-path: <linux-hams-owner@vger.kernel.org>
-Content-Disposition: inline
-In-Reply-To: <1041142023.32767.8.camel@edith>; from kelly.black@penguinpackets.com on Sun, Dec 29, 2002 at 12:07:02AM -0600
+In-Reply-To: <20021230214816.58459.qmail@web14408.mail.yahoo.com>
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"
+Content-Type: TEXT/PLAIN; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
-To: Kelly Black <kelly.black@penguinpackets.com>
+To: Vivi Kusumo <vivi_ksm@yahoo.com>
 Cc: linux-hams@vger.kernel.org
 
-On Sun, Dec 29, 2002 at 12:07:02AM -0600, Kelly Black wrote:
-> I was wondering if anybody could point me to other sources of socket
-> programming for AX.25 that are up to date as far as keeping pace with
-> the libax25 and coding conventions.
-> 
-> I have to admit that I have never written a C program that used sockets
-> before, but wish to give it a go.
-> 
-> Sketchy details of the end product:
-> Replacement of ARES/Data program used for the Twin Cities Marathon in
-> Minnesota.  I would like to write a program to be more tailored to this
 
-I would look at some of the APRS software, I think there is some simple
-clients/servers which should be less "strange" than the utilities
-and low-level applications than come with the stock ax25-tools and ax25-apps.
+On Mon, 30 Dec 2002, Vivi Kusumo wrote:
 
-Look through Hamsoft <http://radio.linux.org.au/>, most applications
-include source code.
+> Many thanks for all assistance, but 'ping' is still
+> unuseable ;-(
+> What should I do please?
 
-Good luck,
+Fix it, of course.
 
--ve1mct
+my1com is OK. It's transmitting. Now fix the other end, along the same 
+lines.
+
+Use 'listen -a' to see if the echo request arrives. 
+
+If not, fiddle with the mixer on the receiving end. Make sure the line
+input is not muted. Wind up the transmitted audio. Check your audio
+leads. Make sure the machine being pinged has a return route.
+
+
+Wilbert, ZL2BSJ
+
+
 
