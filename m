@@ -1,30 +1,35 @@
-From: Nuno Sucena Almeida <slug@aeminium.org>
-Subject: Re: DXCluster and HTPP (Convers) Link
-Date: Wed, 2 Jul 2003 11:59:22 +0100
+From: George Lloyd <g.lloyd@btinternet.com>
+Subject: Crashes
+Date: Fri, 4 Jul 2003 13:15:26 +0100
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <20030702105922.GB14778@freebsd.aeminium.pt>
-References: <20030630140110.GA8649@freebsd.aeminium.pt>
+Message-ID: <03070413152600.01306@localhost.localdomain>
+Reply-To: g.lloyd@essexpkt.co.uk
 Mime-Version: 1.0
+Content-Transfer-Encoding: 7BIT
 Return-path: <linux-hams-owner@vger.kernel.org>
-Content-Disposition: inline
-In-Reply-To: <20030630140110.GA8649@freebsd.aeminium.pt>
 List-Id: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-To: Linux Hams <linux-hams@vger.kernel.org>
+To: linux-hams@vger.kernel.org
 
+Hi Folks,
 
-Hello!
+Can someone please help me from tearing my hair out please.
 
-	Thank you for all for possible link connections you where able
-to provide me. In the meanwhile I've contacted national nodes and connected
-my dxlcluster and convers server to them.
+I'm running Redhat 7.1 with Kernel 2.4.18, libax25-0.0.11,  ax25-tools-0.0.8, 
+ ax25-apps-0.0.6 and node--.0.3.1.
 
-		Cheers,
-				Nuno
+The problem I have is if anyone connects to the node or any other ax25 
+application (Spider) via another node (BPQ or Xrouter) sometimes when they 
+disconnect the whole system locks up. I've checked the logs but cannot see 
+any indication of what has happened. Sometimes it crashes straight away and 
+other times after a couple of  minutes.
+
+Anyone else having this problem or an idea what might be causing it. I have 
+all the AX25 stuff compiled in the kernel.
+
 
 -- 
-CT1FOX - http://aeminium.org/slug
-
-D30B 54C0 40A7 7D61 C44F  4BA4 F071 2168 F494 ACB9
-
+G.B. Lloyd
+g.lloyd@essexpkt.co.uk
+www.essexpkt.co.uk 
+For the home of NNA BBS software
