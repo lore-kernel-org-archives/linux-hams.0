@@ -1,23 +1,29 @@
-From: "Rodolfo Brasnarof" <rodob@ciudad.com.ar>
-Subject: ax.25 digipeater and axdi
-Date: Mon, 15 Sep 2003 23:01:10 -0300
+From: Mike Fenske <mike_fenske@telus.net>
+Subject: Re: Packet Problem
+Date: Mon, 15 Sep 2003 19:01:59 -0700
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <3F6644B6.18089.C3CF1@localhost>
+Message-ID: <3.0.6.32.20030915190159.007b9c10@pop.telus.net>
+References: <20030916012317.GA9420@leo.tneu.visi.com>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7BIT
-Return-path: <linux-hams-owner@vger.kernel.org>
-Content-description: Mail message body
-List-Id: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
-To: linux-hams@vger.kernel.org
+Return-path: <linux-hams-owner@vger.kernel.org>
+In-Reply-To: <20030916012317.GA9420@leo.tneu.visi.com>
+List-Id: <linux-hams.vger.kernel.org>
+Content-Transfer-Encoding: 7bit
+To: Tim Neu <tim@tneu.visi.com>, linux-hams@vger.kernel.org
 
-Hello. I've been using linux ax.25 for some time, with 
-LinPac terminal, and now I have some interest in setting it 
-as a digipeater. I found axdigi program. Tryed to compile 
-it, but gives a lot of errors. It has not configuration 
-script neither makefile. It's just one .c file.
+You didn't say what type of TNC's you were using, but with my KPC-9612, I
+have 2 kiss modes, KISS and XKISS. Can't remember which one I use, but one
+works and one doesn't (using SuSE 7.3, kernel 2.2.18).
 
-I'm using Mandrake 9.0 with kernel 2.4.19. Is there a way to 
-make it work with my system? Or is it there another way to 
-enable digipeating?
+73,
+Mike Fenske
+VE7MKF
+
+At 20:23 15/09/03 -0500, Tim Neu wrote:
+>Hello! 
+>
+>I have a VERY bizzare problem on Linux with AX.25.  I can usually
+>handle linux problems on my own, but this one I'm going to need to
+>see if anyone else can help... 
 
