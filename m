@@ -1,51 +1,42 @@
-From: Steven Whitehouse <steve@gw.chygwyn.com>
+From: Ralf Baechle DO1GRB <ralf@uni-koblenz.de>
 Subject: Re: Status of AX.25 in 2.5 / 2.6
-Date: Fri, 26 Jul 2002 13:50:45 +0100 (BST)
+Date: Fri, 26 Jul 2002 14:50:25 +0200
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <200207261250.NAA32030@gw.chygwyn.com>
-References: <20020726134216.A4126@dea.linux-mips.net>
-Reply-To: Steve Whitehouse <Steve@ChyGwyn.com>
+Message-ID: <20020726145025.A24762@dea.linux-mips.net>
+References: <20020726134216.A4126@dea.linux-mips.net> <Pine.HPX.4.10.10207261512490.22573-100000@saturn.trs.ntc.nokia.com>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <20020726134216.A4126@dea.linux-mips.net> from "Ralf Baechle" at Jul 26, 2002 01:42:16 PM
+Content-Disposition: inline
+In-Reply-To: <Pine.HPX.4.10.10207261512490.22573-100000@saturn.trs.ntc.nokia.com>; from tpm@prkele.tky.hut.fi on Fri, Jul 26, 2002 at 03:16:03PM +0300
 List-Id: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
-To: Ralf Baechle <ralf@uni-koblenz.de>
+Content-Transfer-Encoding: 7bit
+To: Tomi Manninen OH2BNS <tpm@prkele.tky.hut.fi>
 Cc: linux-hams@vger.kernel.org
 
-Hi,
+On Fri, Jul 26, 2002 at 03:16:03PM +0300, Tomi Manninen OH2BNS wrote:
 
+> > No substancial changes have been done to the AX.25 kernel stack in a
+> > extended period of time.  As the result it is still doing crude stuff
+> > like globally enabling and disabling interrupts, has no understanding
+> > of shared skb, isn't fully multithreaded and probably plenty more
+> > problems I haven't spotted yet. Now that we're about to remove global
+> > cli() / sti() from the kernel this means the AX.25 stack will soon break
+> > entirely.
+> > 
+> > Is there any ongoing development I'm not aware of?  Just in case I've
+> > started doing some cleanup last night ...
 > 
-> Forgive if I'm missing any developments on this list; I've been (again ...)
-> unsubscribed by one of Mati's scripts ...
-> 
-> No substancial changes have been done to the AX.25 kernel stack in a extended
-> period of time.  As the result it is still doing crude stuff like globally
-> enabling and disabling interrupts, has no understanding of shared skb, isn't
-> fully multithreaded and probably plenty more problems I haven't spotted yet.
-> Now that we're about to remove global cli() / sti() from the kernel this
-> means the AX.25 stack will soon break entirely.
-> 
-> Is there any ongoing development I'm not aware of?  Just in case I've
-> started doing some cleanup last night ...
-> 
-> 73 de DO1GRB op Ralf
->
-I started a little. Untested yet, but for what its worth:
+> As far as I know there is no development going on. Or if there is, people
+> have hidden it pretty well. So I think everyone will warmly welcome your
+> efforts!
 
-http://www.chygwyn.com/~steve/kpatch/ax25/ax25-uid-2.5.25.diff
+Cute.  I started hacking on it because I'm interested in packet but I'm
+not even QRV in packet right now.  While I'm killing another bit of forest
+by printing the AX.25 spec, anybody got me a pointer to some sort of DAMA
+spec?
 
-Please feel free to use as much/little as you like of this patch. It would
-be nice to do enough tidying to these protocols that we can get rid of
-things like deliver_to_old_ones() from the core code. I can't spare a
-lot of time, but I'll help where I can.
+73 de DO1GRB op Ralf
 
-I spoke to Dave Jones at the recent UKUUG conference and he mentioned that
-it appeared that nobody was doing any work on AX.25 and associated
-protocols which was why I started something. It would be a good idea to
-drop him a line to let him know that you are working on it,
-
-Steve.
-G7RRM
-
+--
+Loc. JN47BS / CQ 14 / ITU 28 / DOK A21
