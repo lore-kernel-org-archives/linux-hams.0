@@ -1,38 +1,40 @@
-From: "Colin Harris" <charis.g3orh@virgin.net>
-Subject: Netrom disconnects
-Date: Thu, 27 Mar 2003 11:24:38 -0000
+From: Wilbert Knol <zl2bsj@zl2tze.ath.cx>
+Subject: RE: Kenwood TR-7950 Crashing Computer?
+Date: Thu, 27 Mar 2003 23:03:29 +1200 (NZST)
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <000501c2f453$9c3e80c0$14000a0a@p75>
+Message-ID: <Pine.LNX.4.21.0303272253020.4067-100000@zl2bsj.ampr.org>
+References: <1048733700.2533.37.camel@bobcp4.lingpgmr.com>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
+In-Reply-To: <1048733700.2533.37.camel@bobcp4.lingpgmr.com>
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"
-To: Linux Hams <linux-hams@vger.kernel.org>
-
-Hi all,
-          Our system here in s / west uk consists of two
-linuxnodes running DX Spider netrom linked on a 100 km path
-via two intermediate netrom nodes. My co-sysop at the other
-end reports frequent system crashes when a netrom disconnect
-occurs. This is not 100% certain but a "best guess" from
-observation and log checking. Has anyone experienced
-anything similar ?
-
-At this end I use kernel 2.2.12-20 and the other end uses
-something later ( perhaps 2.2.20 or thereabouts ). (I do not
-have any crashes due to netrom disconnects from my incoming
-netrom circuits here ).
-
-He uses Node-0.3.0 and allied ax25 stuff and I use
-node-0.3.1 plus updates but this problem has existed for
-some months before any of my updates.
-                   Any pointers or help/advice would be much
-appreciated ( BTW we both run Redhat versions ). Is there
-any way we can positively capture such an event conclusively
-?
+Content-Type: TEXT/PLAIN; charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+To: linux-hams@vger.kernel.org
 
 
-- Regards Colin
+Hi Bob,
+
+
+On 26 Mar 2003, Robert L Cochran wrote:
+
+> The TR-7930 runs at 25 watts HI and 5 watts LOW. 
+> 
+> My 7950 really makes my small computer monitor image jump with each
+
+
+You should put up an outside antenna. 25 Watts inside the shack is not a
+good thing... For a start, antennas don't like to be near
+hash-producing things such as computers.
+
+Even at 5 Watts, you'll be putting high levels of RF into all your shack
+gear, resulting in RF detection and feedback. 
+
+I wouldn't trust any electronic equipment to work reliably in such an
+environment. Get the near field away from your gear.
+
+
+Wilbert, ZL2BSJ
+
 
 
