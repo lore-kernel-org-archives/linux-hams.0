@@ -1,25 +1,32 @@
-From: Ralf Baechle DL5RB <ralf@linux-mips.org>
+From: Jarmo <oh1mrr@nic.fi>
 Subject: Re: help xastir and mandrake (how to compile ax25 support ?)
-Date: Tue, 9 Nov 2004 13:01:04 +0100
-Message-ID: <20041109120104.GB4791@linux-mips.org>
-References: <1099943984.418fd03081dd7@imp4-q.free.fr> <20041109012750.GA10725@linux-mips.org> <200411090758.26321.oh1mrr@nic.fi>
+Date: Tue, 9 Nov 2004 16:05:08 +0200
+Message-ID: <200411091605.09029.oh1mrr@nic.fi>
+References: <1099943984.418fd03081dd7@imp4-q.free.fr> <200411090758.26321.oh1mrr@nic.fi> <20041109120104.GB4791@linux-mips.org>
 Mime-Version: 1.0
+Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
+In-Reply-To: <20041109120104.GB4791@linux-mips.org>
 Content-Disposition: inline
-In-Reply-To: <200411090758.26321.oh1mrr@nic.fi>
 Sender: linux-hams-owner@vger.kernel.org
 List-Id: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-To: Jarmo <oh1mrr@nic.fi>
+To: Ralf Baechle DL5RB <ralf@linux-mips.org>
 Cc: linux-hams@vger.kernel.org
 
-On Tue, Nov 09, 2004 at 07:58:26AM +0200, Jarmo wrote:
+On Tuesday 09 November 2004 14:01, you wrote:
 
-> All packages,ax25-tools,ax25apps and libax25 can be found from Mandrake
-> cd's..
+> Does Mandrake also ship with shapelib and proj?  Xastir needs them for
+> map support but afair that was optional.
+>
+>   Ralf
+Yes
+Shape lib is in package mapserver and package proj is also 
+available...
 
-Does Mandrake also ship with shapelib and proj?  Xastir needs them for
-map support but afair that was optional.
+Jarmo
 
-  Ralf
+-- 
+Linux is the answer.
+What was your question?
+(Brian Lane)
