@@ -1,27 +1,37 @@
-From: Tomi Manninen <oh2bns@sral.fi>
-Subject: Re: xfbbd crashing, why ?
-Date: Sat, 09 Oct 2004 21:03:22 +0300
+From: chappaz alexandre <alexandre.chappaz@data-tools.com>
+Subject: kenwood TM700
+Date: Mon, 11 Oct 2004 17:00:29 +0200
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <1097345002.1357.6.camel@oh2bns.ampr.org>
-References: <200410090855.37618.n7bfs@qwest.net>
-	 <6.1.1.1.2.20041009105040.03412b50@mail.sasktel.net>
-	 <200410091051.33420.n7bfs@qwest.net>
+Message-ID: <200410111700.29340.alexandre.chappaz@data-tools.com>
+Reply-To: alexandre.chappaz@data-tools.com
 Mime-Version: 1.0
 Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <200410091051.33420.n7bfs@qwest.net>
+Content-Disposition: inline
 List-Id: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
-To: Linux-hams List <linux-hams@vger.kernel.org>
+To: Linux-Hams@vger.kernel.org
 
-On Sat, 2004-10-09 at 20:51, Douglas Cole wrote:
+hi guys
 
-> but I am not sure what "properly" would be, I know 
-> that we start FBB from the command line by entering "xfbbd" and hitting 
-> return, and then much info wizzes past on the screen and all is running...
+I am a newbie in ham radio, and for my job I use 2 Kenwood TM700 transceivers 
+for a numeric packet radio transmission (Kenwood TM700 has an build-in TNC),
 
-Replace "xfbbd" with "fbb". :)
+ For the moment the TNC-radios are discussing in an half duplex mode - that 
+means one radio emmits a packet and stops, the second radio receives the 
+packet and answers and so on and so on... My problem is that in that case, 
+the maximum speed is  only one packet ever half second is emmited. This is 
+due (to me) to the time the radio emettor needs to bring the power up and 
+running for emitting the packet. The problem is that once the packet is sent, 
+the radio stops the emission, that  means it has to start up again for the 
+next packet. I didn't find any mode for telling the emetor to stay up even if 
+there's no packet to transmit....... So I'd like to know if someone could 
+help me eather for configuring properly the built-in TNC or to use a 
+soundcard modem in the same purpose 
+( have numeric transmission with the less delay possible in fact ).
 
--- 
-Tomi Manninen / OH2BNS / KP20ME04
+
+Thank a lot
+(sorry for the not perfect english i am french)
+Alex Chappaz
 
