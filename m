@@ -1,73 +1,32 @@
-From: chuck gelm <chuck@gelm.net>
-Subject: Re: kenwood TM700
-Date: Mon, 11 Oct 2004 11:56:48 -0400
+From: Chuck Hast <wchast@gmail.com>
+Subject: Trying to get Ax25 running.
+Date: Tue, 12 Oct 2004 09:32:51 -0400
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <416AAD40.90006@gelm.net>
-References: <200410111700.29340.alexandre.chappaz@data-tools.com>
-Reply-To: chuck@gelm.net
+Message-ID: <620c905704101206324b957deb@mail.gmail.com>
+Reply-To: Chuck Hast <wchast@gmail.com>
 Mime-Version: 1.0
 Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <200410111700.29340.alexandre.chappaz@data-tools.com>
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"; format="flowed"
-To: alexandre.chappaz@data-tools.com
-Cc: Linux-Hams@vger.kernel.org
+Content-Type: text/plain; charset="us-ascii"
+To: linux-hams@vger.kernel.org
 
-chappaz alexandre wrote:
+Folks,
+I am a bit new to this. I am running SuSE 9.1 I have installed the AX25
+stuff, and when I set up the port I have a KISS TNC on I see the commands
+being sent to it.
+When I run call, and it appears that the connection is established the whole
+thing locks up. Not just that screen, but X, Keyboard and all. At that point
+I end up hitting the power button in order to get out of it.
 
->hi guys
->
->I am a newbie in ham radio, and for my job I use 2 Kenwood TM700 transceivers 
->for a numeric packet radio transmission (Kenwood TM700 has an build-in TNC),
->
-> For the moment the TNC-radios are discussing in an half duplex mode - that 
->means one radio emmits a packet and stops, the second radio receives the 
->packet and answers and so on and so on... My problem is that in that case, 
->the maximum speed is  only one packet ever half second is emmited. This is 
->due (to me) to the time the radio emettor needs to bring the power up and 
->running for emitting the packet. The problem is that once the packet is sent, 
->the radio stops the emission, that  means it has to start up again for the 
->next packet. I didn't find any mode for telling the emetor to stay up even if 
->there's no packet to transmit....... So I'd like to know if someone could 
->help me eather for configuring properly the built-in TNC or to use a 
->soundcard modem in the same purpose 
->( have numeric transmission with the less delay possible in fact ).
->
->
->Thank a lot
->(sorry for the not perfect english i am french)
->Alex Chappaz
->  
->
+I am going to try to get a second machine set up so I can try to get into
+it remotely and see if I can kill it that way.
 
-Dear Alex Chappaz:
+Any ideas of what I have screwed up?
 
- I think that I understand your situation and your english is
-1000 times better than my french.  ;-)
-
-However, you did not describe your goal.  Are you trying to
-increase your throughput?  It is the radio that is half-duplex
-and not the TNC or computer.
-
- It is the TNC that is reducing the size of a packet and the
-number of packets that can be sent.  The TM-700 has a
-'micro' TNC and not a TNC-2 clone.  I think that it has
-a limit of 128 bytes and one frame per packet.  This is
-0.125 kilobytes per packet.
-
- A regular TNC-2 can send frames up to 256 bytes and up
-to seven (7) frames for a total of 1.75 kilobytes.
-
- So, if you are trying to increase your data throughput,
-you may need to:
-Use radios capable of 'full duplex'.
-Use a TNC capable of full duplex and full TNC-2 standard
- frames size and number of frames (256x7).
-
- Since you only mention your two radios and noboby else;
-would using 802.11b devices help?
-
-Regards, Chuck
-
-
+-- 
+Chuck Hast 
+To paraphrase my flight instructor;
+"the only dumb question is the one you DID NOT ask resulting in my going
+out and having to identify your bits and pieces in the midst of torn
+and twisted metal."
