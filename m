@@ -1,43 +1,54 @@
-From: Jeroen Vreeken <pe1rxq@amsat.org>
-Subject: Re: [PATCH] ax25_cb refcounting & waitqueue usage
-Date: Wed, 9 Jul 2003 00:52:15 +0200
+From: "Ronald Jochems" <pd1acf@xs4all.nl>
+Subject: Request change ???
+Date: Wed, 9 Jul 2003 08:35:05 +0200
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <20030709005215.A219@jeroen.pe1rxq.ampr.org>
-References: <20030706192734.E4454@jeroen.pe1rxq.ampr.org> <20030707133710.GJ1820@conectiva.com.br> <20030707192340.A219@jeroen.pe1rxq.ampr.org> <20030707172503.GC5292@conectiva.com.br>
+Message-ID: <001101c345e4$3c5be020$2a01a8c0@p3>
+References: <20030705211733.A255@jeroen.pe1rxq.ampr.org> <20030707001148.GC29616@linux-mips.org> <20030707223907.A8771@jeroen.pe1rxq.ampr.org>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7BIT
+Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <20030707172503.GC5292@conectiva.com.br>; from acme@conectiva.com.br on Mon, Jul 07, 2003 at 19:25:04 +0200
 List-Id: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
-To: Arnaldo Carvalho de Melo <acme@conectiva.com.br>
-Cc: linux-hams@vger.kernel.org, ralf@linux-mips.org
+To: Jeroen Vreeken <pe1rxq@amsat.org>, Ralf Baechle DO1GRB <ralf@linux-mips.org>
+Cc: linux-hams@vger.kernel.org
 
-On 2003.07.07 19:25:04 +0200 Arnaldo Carvalho de Melo wrote:
+All,
 
-> so may I suggest that you use the same arquitecture of list handling in
-> struct
-> sock? i.e. use hlist and have a ax25_cb_add, ax25_cb_del{_init} that does
-> the
-> refcounting, etc, so that it "looks like" what we have for struct sock
-> and that
-> way a casual ax25 hacker can take advantage of what he learnt from
-> studying
-> struct sock handling? I plan to attack the list searching problem in a
-> general
-> way, i.e. abstracting more the search in a bsearch(3) way, using inlines
-> and
-> macros so that all the protocols have a more consistent implementation.
+I'm not sure if this is the 'right' way/group to ask, but here is my
+question. It is related to the AX25 kernel i believe.
 
-Good idea...
+Please see below examples, my question is about the 'statistical'
+information wich is 'new' in i believe 2.4 kernels.
+The total ammount of packets is translated in complete bytes transmitted,
+and received.
+With the current Z8530 SCC driver these statistics are not calculated.
+For ethernet cards they are calculated.
 
-I now have the first ax25 stack with hlists running on my test system...
-It needs some cleaning up (some old junk commented out at the moment and I
-need to rename some functions to be more descriptive) which will probably
-happen in the next few days.
-I also removed the bpq header length stuff in the skb allocation, it now
-uses the hard_header_length of the network device... The stack should not
-have to now which devices there might possibly be.
+Is there a way to make this work ? I guess it is a driver issue ???
 
-Jeroen
+root@pd1acf:~# ifconfig scc1
+scc1      Link encap:AMPR AX.25  HWaddr PD1ACF-2
+          inet addr:44.137.2.92  Mask:255.255.0.0
+          UP RUNNING  MTU:256  Metric:1
+          RX packets:1200006 errors:1150494 dropped:0 overruns:0 frame:0
+          TX packets:509433 errors:2 dropped:0 overruns:0 carrier:0
+          collisions:0 txqueuelen:16
+          RX bytes:0 (0.0 b)  TX bytes:0 (0.0 b)
+
+root@pd1acf:/usr/src/linux# ifconfig eth0
+eth0      Link encap:Ethernet  HWaddr 00:60:08:E8:00:28
+          inet addr:192.168.1.1  Bcast:192.168.1.255  Mask:255.255.255.0
+          UP BROADCAST RUNNING MULTICAST  MTU:1500  Metric:1
+          RX packets:8783615 errors:0 dropped:0 overruns:0 frame:0
+          TX packets:9147315 errors:0 dropped:0 overruns:0 carrier:44
+          collisions:237625 txqueuelen:100
+          RX bytes:1045445509 (997.0 Mb)  TX bytes:3091956405 (2948.7 Mb)
+          Interrupt:10 Base address:0x6800
+
+root@pd1acf:/usr/src/linux#
+
+
+Best regards,
+
+Ron
 
