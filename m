@@ -1,54 +1,43 @@
-From: Steve Lampereur <kb9mwr@yahoo.com>
+From: Jason Flynn G7OCD <jason.flynn@btinternet.com>
 Subject: Re: 802.11b wireless lan equipment and ham radio ?
-Date: Wed, 17 Jul 2002 16:04:41 -0500
+Date: Thu, 18 Jul 2002 07:40:56 +0100
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <200207172104.g6HL4fp16013@faulkner.netnet.net>
+Message-ID: <3D3662F8.1010407@btinternet.com>
+References: <200207172104.g6HL4fp16013@faulkner.netnet.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
 List-Id: <linux-hams.vger.kernel.org>
-Content-Transfer-Encoding: 7bit
-To: linux-hams@vger.kernel.org
-Cc: ss@lists.tapr.org
+Content-Type: text/plain; charset="us-ascii"; format="flowed"
+To: Steve Lampereur <kb9mwr@yahoo.com>
+Cc: linux-hams@vger.kernel.org, ss@lists.tapr.org
 
->>Anyone know if this is possible (well legal I know the mods are
->>technically possible) in VK?  The US and Australian laws are similar but
->>maybe the differences are enough to thwart it.
->>
->> - Craig
+Steve Lampereur wrote:
 
-According to Document BR68 where much of it is in a table format called the
-Schedule, from 2400-2450 MHz licensed hams can run upto 400W (26dBW) and the
-Permitted Types of Transmission include: (5th column) Morse, Telephony,
-RTTY, Data, Facsimilie, SSTV, FSTV.
+A lot of stuff that only pertains to the UK :-) But...
 
->NOTES TO SCHEDULE
->(d) *Any modulation technique* (except for pulse emissions below 1000 MHz)
-may be used >for the types of transmission specified in the fifth column of
-the Schedule which are >defined as follows:
->Morse    : hand or automatically-sent Morse code
->Telephony: speech, including selective calling signals
->RTTY     : radio teletype and AMTOR
->Data*    : digital codes representing numbers, text, speech, images,
-measurements,     >           computer programs or other Information
-authorised by the Licence
->Facsimile: transmission of fixed or graphic images
->SSTV     : slow scan (ie, reduced bandwidth) television
->FSTV     : fast scan television.
+> According to Document BR68 where much of it is in a table format called the
+> Schedule, from 2400-2450 MHz licensed hams can run upto 400W (26dBW) and the
+> Permitted Types of Transmission include: (5th column) Morse, Telephony,
+> RTTY, Data, Facsimilie, SSTV, FSTV.
 
-Reading that makes me believe using Spread Spectrum is legal in the UK under
-Amateur their rules..
+Remember, if you're running unattended you have to
+a) write a letter to the local RIS officer.
+b) Only run 14dBW.
 
->IDENTIFICATION - 7(1)
->(d) by the same type of transmission that is being used for the
->communication;
+He can still object.
+He may do this if he thinks 14dBW + 15dB Antenna gain might
+affect other local (non-ham) users...
 
-Reads basically the same here, nesting your call in the ethernet datagram
-should fullfill this.
+> Reading that makes me believe using Spread Spectrum is legal in the UK under
+> Amateur their rules..
 
+Only if the spreading codes are publicly available.
+In this case they are so it's OK, but if they
+weren't we would be 'encoding to obscure the transmission'
+  rather than 'facilitating transmission'.
 
-Hope this helps, 73' Steve
-http://www.qsl.net/kb9mwr/projects/wireless/Ham_Ethernet_GBPPR.pdf
+	J
 
 
 
