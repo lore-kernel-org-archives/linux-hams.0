@@ -1,37 +1,29 @@
-From: "Riley Williams" <Riley@Williams.Name>
-Subject: RE: Mixed network problem
-Date: Fri, 27 Jun 2003 07:26:49 +0100
+From: Nuno Sucena Almeida <slug@aeminium.org>
+Subject: linux 2.4.21 and AX.25 support
+Date: Sat, 28 Jun 2003 05:26:37 +0100
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <BKEGKPICNAKILKJKMHCAOEIKEHAA.Riley@Williams.Name>
-References: <003201c33bb5$4fcf9770$8d551251@catalinu>
+Message-ID: <20030628042637.GA93229@freebsd.aeminium.pt>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <003201c33bb5$4fcf9770$8d551251@catalinu>
+Content-Disposition: inline
 List-Id: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
-To: Catalin Tanasie <forum@terrasat.ro>
-Cc: linux-hams@vger.kernel.org
+Content-Transfer-Encoding: 7bit
+To: linux-hams@vger.kernel.org
 
-Hi Catalan.
+Hello,
 
- > WinXP can be "ping-ed", go to Local Area Connection Properties,
- > click on advanced tab and disable (for testing purposes) Internet 
- > Connection Firewall if is enabled.
+	anyone here running ax.25 on a linux 2.4.21 system?
+	I'm having problems with:
+	- soundmodem: there is no output sound from the soundcard but
+with the -v debug option i can 'see' the packets going out.
+	- yam modem: there is a countinuous sound and the output, with
+the 'listen' command showing the packets going, but they are never sent.
 
-It's not enabled on my system, and never has been.
+	I have everything configured correctly and i'm using for
+the tests a simple ping or call command. I have no kernel error messages :/
 
- > If this solve your problem, go to advanced settings and choose
- > what services do you want to enable.
-
-It didn't solve the no-ping problem here...
-
-Best wishes from Riley G7GOD / KB8PPG.
----
- * Nothing as pretty as a smile, nothing as ugly as a frown.
-
----
-Outgoing mail is certified Virus Free.
-Checked by AVG anti-virus system (http://www.grisoft.com).
-Version: 6.0.493 / Virus Database: 292 - Release Date: 25-Jun-2003
+			73,
+				Nuno
+-- 
 
