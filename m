@@ -1,43 +1,24 @@
-From: Dave <howek@vcss.k12.ca.us>
-Subject: Re: DX help
-Date: Thu, 08 Jan 2004 19:22:58 -0800
+From: Jens Schoon <j.schoon@gmx.de>
+Subject: Digital Voice Mailbox System?
+Date: Fri, 09 Jan 2004 16:57:12 +0100
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <btl6l9$daj$1@sea.gmane.org>
-References: <Pine.LNX.4.33.0401082105530.7036-100000@n1uan.ampr.org>
+Message-ID: <3FFECF58.8040309@gmx.de>
 Mime-Version: 1.0
 Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <Pine.LNX.4.33.0401082105530.7036-100000@n1uan.ampr.org>
 List-Id: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"; format="flowed"
 To: linux-hams@vger.kernel.org
 
-N1UAN Bob wrote:
-> Hi
-> I was wondering if there is anyone out there that could help me
-> with setting up dxspider dxcluster if so maybe you can write me back
-> direct and we can set up something to get this to work
-> thanks in advance
-> Bobbru@chartertn.net
-> Bob N1UAN
-> 
-> 
-> -
-> To unsubscribe from this list: send the line "unsubscribe linux-hams" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at  http://vger.kernel.org/majordomo-info.html
-> 
-You want to access one or set up one of your own?
-73
-Dave
+Hello,
+
+I am looking for an "Digital Voice Mailbox System" for linux like the 
+DVMS by DG9MGZ (DOS) or AMVONES (www.qsl.net/amvones) by DL6NEK (Windows).
+Does anybody know where i can find such a software?
+
+73 de DH6BB
+Jens
 
 
--- 
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-"So many electrons and so little time!!"
-                73   K6DBH   Dave
-         Also at, K6DBH@ARRL.net
-                             . .
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 
