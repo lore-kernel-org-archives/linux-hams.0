@@ -1,22 +1,25 @@
-From: Dave <howek@vcss.k12.ca.us>
-Subject: Best way to Telnet in Linux SuSe 9.0?
-Date: Wed, 31 Dec 2003 08:41:25 -0800
+From: "David S. Miller" <davem@redhat.com>
+Subject: Re: [PATCH] missing spin_unlock and recvmsg fix
+Date: Wed, 31 Dec 2003 10:36:17 -0800
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <bsuu6p$inn$1@sea.gmane.org>
+Message-ID: <20031231103617.02c5db8f.davem@redhat.com>
+References: <20031231170647.C3527@jeroen.pe1rxq.ampr.org>
 Mime-Version: 1.0
 Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
+In-Reply-To: <20031231170647.C3527@jeroen.pe1rxq.ampr.org>
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"; format="flowed"
-To: linux-hams@vger.kernel.org
+Content-Type: text/plain; charset="us-ascii"
+To: Jeroen Vreeken <pe1rxq@amsat.org>
+Cc: linux-hams@vger.kernel.org, ralf@linux-mips.org
 
-I am only 3 days old in Linux, but trying to get up and walk quickly.
+On Wed, 31 Dec 2003 17:06:47 +0100
+Jeroen Vreeken <pe1rxq@amsat.org> wrote:
 
-What is the best way to run Telnet in Linux?  I want to log onto a DX 
-Spotting Telnet site.
+> This is a small patch for two ax25 problems:
+> - A missing spin_unlock.
+> - recvmsg was reporting the destination address instead of the source
+> address.
+>  (and I really want recvfrom() and not recvto() :)
 
-73
-
-Dave
-
-
+Applied, thanks Jeroen.
