@@ -1,39 +1,41 @@
-From: Tomi Manninen <oh2bns@sral.fi>
-Subject: Re: Linuxnode vulnerability
-Date: Sat, 28 Feb 2004 14:54:09 +0200
+From: Ralf Baechle DO1GRB <ralf@linux-mips.org>
+Subject: Re: [PATCH] ax25 Locking fix
+Date: Sat, 28 Feb 2004 18:26:50 +0100
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <1077972849.1287.7.camel@oh2bns.ampr.org>
-References: <200402270023.02872@www.cabodesantapola.org>
-	 <20040227180708.A6790@jeroen.pe1rxq.ampr.org>
-	 <001201c3fd8e$73ddb980$1400a8c0@IZ4EFN>
-	 <1077935047.1249.3.camel@oh2bns.ampr.org>
-	 <002201c3fdd8$5d944ff0$1400a8c0@IZ4EFN>
+Message-ID: <20040228172650.GA4106@linux-mips.org>
+References: <20040213234806.J220@jeroen.pe1rxq.ampr.org> <402D694E.5080802@ccr.jussieu.fr>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <002201c3fdd8$5d944ff0$1400a8c0@IZ4EFN>
+Content-Disposition: inline
+In-Reply-To: <402D694E.5080802@ccr.jussieu.fr>
 List-Id: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
-To: Linux-hams List <linux-hams@vger.kernel.org>
+Content-Transfer-Encoding: 7bit
+To: Bernard Pidoux <pidoux@ccr.jussieu.fr>
+Cc: Jeroen Vreeken <pe1rxq@amsat.org>, davem@redhat.com, linux-hams@vger.kernel.org
 
-Hi,
+On Sat, Feb 14, 2004 at 12:18:22AM +0000, Bernard Pidoux wrote:
 
-All of these refer to the same bug(s). And they are all fixed already.
+> Is there any chance that you could have a look at rose.o module code in 
+> order to fix a kernel panic problem.
+> If rose module is just installed it can be removed and reinstalled 
+> without problem.
+> But as soon as I do "ifconfig rose0 2080175502" I have a kernel panic.
+> Also if I perform a rsattach and try to remove the module then I have a 
+> kernel oops.
 
-> http://xforce.iss.net/xforce/xfdb/13077
+I assume you meant "ifconfig rose0 hw rose 2080175502"?  Without the
+"hw rose" it's just an obscure way to set the ip address to 12.104.129.142.
+
+> Once I had the chance to catch this message from syslog@f6bvp
+>   (f6bvp is the actual name of my Linux machine):
 > 
-> LinuxNode is a freely available amateur packet radio node program for
-> Linux-based operating systems. LinuxNode versions 0.3.2 and earlier are
-> vulnerable to a format string attack. A remote attacker can exploit this
-> vulnerability to cause a denial of service or execute arbitrary code on the
-> system.
+> f6bvp kernel : unregister_net_device : wainting for rose0 to become 
+> free. Usage count  =1
+> repeats x times ...
+> 
+> and then I observed a catastrophic PC reboot.
 
-This has incorrect wording as a result of a mix-up by the Debian 
-security team. It should read "0.3.1 and earlier" or "before 0.3.2". 
-If you follow the above link and then follow the link to the 
-CAN-2003-0708 page you notice that they have corrected the wording 
-now...
+Sounds like a problem with reference counting, can't be hard to fix.
 
--- 
-Tomi Manninen / OH2BNS / KP20ME04
-
+  Ralf
