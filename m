@@ -1,29 +1,22 @@
-From: "ravioli@softhome.net" <ravioli@softhome.net>
-Subject: Re: satdoc 2.6 BBS satellite documentation software
-Date: Fri, 05 Mar 2004 20:12:38 +0100
+From: N1UAN Bob <bobbru@chartertn.net>
+Subject: dxspider error
+Date: Sat, 6 Mar 2004 13:27:21 -0500 (EST)
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <4048D126.3000104@softhome.net>
-References: <40489050.50106@ccr.jussieu.fr>
+Message-ID: <Pine.LNX.4.33.0403061325540.2016-100000@n1uan.ampr.org>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <40489050.50106@ccr.jussieu.fr>
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"; format="flowed"
-To: Bernard Pidoux <pidoux@ccr.jussieu.fr>
-Cc: xfbb@f6fbb.org, linux-hams <linux-hams@vger.kernel.org>, FBB - User Forum <fbb@f6fbb.org>
+Content-Type: TEXT/PLAIN; charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+To: linux-hams@vger.kernel.org
 
-Great !
-Would it be possible to have it in F6FBB package ?
-Thanks !
-Remi F4ECW
+Hi
+Wonder anyone out there running dxspider has seen this error before and if
+so what could be doing this and how to fix it
+thanks
+__db_assert: "0" failed: file "../dist/../common/db_err.c", line 200
 
-Bernard Pidoux wrote:
+Bob N1UAN
+/ex
 
-> Hi,
->
-> I have released version 2.6 of SATDOC.
-> This update improves the treatment of AMSAT ANS bulletins for 
-> extraction of satellite documentations.
->
 
