@@ -1,46 +1,34 @@
-From: James Cutler <jwc@stanford.edu>
+From: "Curt Mills, WE7U" <hacker@tc.fluke.com>
 Subject: Re: Serial port recommendations?
-Date: Mon, 26 Aug 2002 15:54:15 -0700
+Date: Mon, 26 Aug 2002 16:00:05 -0700 (PDT)
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <3D6AB197.1070106@stanford.edu>
-References: <20020826224739.GB16112@bob.n7xy.net>
+Message-ID: <Pine.GSO.4.44.0208261558180.20993-100000@dogbert.tc.fluke.com>
+References: <3D6AB197.1070106@stanford.edu>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
+In-Reply-To: <3D6AB197.1070106@stanford.edu>
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"; format="flowed"
-To: Bob Nielsen <nielsen@oz.net>
-Cc: linux-hams@vger.kernel.org
+Content-Type: TEXT/PLAIN; charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+To: James Cutler <jwc@stanford.edu>
+Cc: Bob Nielsen <nielsen@oz.net>, linux-hams@vger.kernel.org
 
-I've had good luck with both PCI and ISA cards from Dolphin.
-http://www.dolphinfast.com/
+On Mon, 26 Aug 2002, James Cutler wrote:
 
-I bought two of the cards, took the UART chips out of one, and
-placed them in the other for a 4 port card.
-
-
-Bob Nielsen wrote:
-
->I just built a new computer (1 GHz Celeron) for the shack.  It has 2
->onboard serial ports and I was wondering what would be the best way to
->add additional ports.  I figure I need 2-3 for packet, one for rig
->control, one for RTTY/PSK31 PTT and one for CW keying (5-6 total if I
->don't switch connectors).  The motherboard has several PCI slots and
->one ISA, as well as two USB connectors.  I have one old 2-port ISA
->board and I've seen USB-to-serial adapters, but figure a 4-port serial
->adapter might be best.  I haven't seen any of these recently, however. 
->The software I will be using is kernel AX.25 + DX Spider + Xastir
->(packet) and TLF (contesting and general HF use), plus something for
->RTTY and PSK31, (I haven't decided exactly what yet.)
+> I've had good luck with both PCI and ISA cards from Dolphin.
+> http://www.dolphinfast.com/
 >
->Any suggestions on the best way to get additional serial ports?
->
->73, Bob N7XY
->-
->To unsubscribe from this list: send the line "unsubscribe linux-hams" in
->the body of a message to majordomo@vger.kernel.org
->More majordomo info at  http://vger.kernel.org/majordomo-info.html
->  
->
+> I bought two of the cards, took the UART chips out of one, and
+> placed them in the other for a 4 port card.
 
+We've been using RocketPort cards in a lot of machines, mostly
+8-port cards with a few 16-port cards lately.  We've been more than
+pleased with them.  You can get them in ISA or PCI versions.  Not
+sure if they fit your budget, but they work awfully well.  They have
+drivers for Windows and Linux at least, perhaps others.
+
+Curt Mills, WE7U                         hacker.NO_*SPAM@tc.fluke.com
+Senior Methods Engineer/SysAdmin
+"Lotto:    A tax on people who are bad at math." -- unknown
+"Windows:  Microsoft's tax on computer illiterates." -- WE7U
 
