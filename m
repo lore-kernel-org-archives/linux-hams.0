@@ -1,77 +1,31 @@
-From: "Henk Remijn" <hremijn@zeelandnet.nl>
+From: Jack Zielke <jack@takeovertheworld.org>
 Subject: Re: 802.11b wireless lan equipment and ham radio ?
-Date: Wed, 1 May 2002 20:47:03 +0200
+Date: Wed, 1 May 2002 18:51:58 -0400 (EDT)
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <002d01c1f140$95a760e0$0c01a8c0@w2k>
-References: <3CCFCFEF.2385E8F4@club-internet.fr>
+Message-ID: <Pine.LNX.4.33.0205011845070.20979-100000@diablo.takeovertheworld.org>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"
+Content-Type: TEXT/PLAIN; charset="us-ascii"
+Content-Transfer-Encoding: 7bit
 To: linux-hams <linux-hams@vger.kernel.org>
 
-Hi,
+Hello,
+    We want to modify the frequency so that we can use part 97 rules
+instead of part 15.  If anyone sees anything wrong...please correct me.
+As long as the device stays on the frequency for non-hams everyone,
+including hams, have to obey the part 15 rules.  If we change the
+frequency to a ham band that allows spread spectrum we can use the part 97
+rules instead.
+    As I understand it the main goal is to get away from the 1 Watt limit
+and the 6dB antenna gain limit.  If we change to a ham band we can use up
+to 100 Watts and any dB gain antenna.
 
-Why do you want to modify the frequency. These wireless devices already can
-be used without an amateur license. Some types already have an external
-antenna connector.
+Jack
 
-Interesting link on this topic: http://www.ronen.ampr.org/~ronen/wlan.html
+-- 
+main(c){float t,x,y,b=-2,a=b;for(;b-=a>2?.1/(a=-2):0,b<2;putchar(30+
+c),a+=.0503)for(x=y=c=0;++c<90&x*x+y*y<4;y=2*x*y+b,x=t)t=x*x-y*y+a;}
 
-73 Henk PA5KT
-
-
------ Original Message -----
-From: "Toussaint OTTAVI (TK1BI)" <t_ottavi@club-internet.fr>
-To: "linux-hams" <linux-hams@vger.kernel.org>
-Sent: Wednesday, May 01, 2002 1:22 PM
-Subject: 802.11b wireless lan equipment and ham radio ?
-
-
-> Hi list,
->
-> A few days ago, I saw a message about configuring a 802.11b network
-> adapter under Linux.
->
-> For those who don't know, 802.11b (also called 'WiFi') is a wireless lan
-> protocol, to connect 'remote' computers to Ethernet networks via a
-> radio link. 802.11b equipments (network adapters, access points, bridges)
-> are becoming more and more popular, and prices are very affordable.
->
-> These equipments are using freqencies over 2400 MHz. The exact
-> frequency coverage depends on country regulations, ie in France, only
-> 4 channels are allowed, around 2450 to 2480 (not sure about the exact
-> values). Maximum throughput is 11 Mbits with high efficiency modulation
-> techniques.
->
-> PURPOSE:
-> --------
->
-> Does someone think it would be technically possible to modify the
-> radio part of such a network adapter, in order to work on the amateur
-> radio 2.4 GHz frequencies (2350-2400) ?
->
-> I presume this is not so easy ;-) This would anyway allow great
-> capabilities for high rate TCP/IP packet-radio links for affordable
-> prices.
->
-> Could some specialists of SHF and/or digital modulation techniques give
-> us their point of view about the feasibility of such modifications on
-> commercial 802.11b equipments ?
->
-> (sorry for my poor english which may be inaccurate ;-)
->
-> Thanks for comments & best 73,
-> Toussaint.
->
-> --
->  >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>   <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
->  Toussaint OTTAVI (TK1BI)            WWW   : http://kalliste.fr.fm
->  Phone : (+33) 6.10.28.41.72 (GSM)   Email : t_ottavi@club-internet.fr
->  Mail  : B.P. 223, F-20179 AJACCIO   Packet: TK1BI@TK5KP.FCOR.FRA.EU
-> -
-> To unsubscribe from this list: send the line "unsubscribe linux-hams" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at  http://vger.kernel.org/majordomo-info.html
+shamelessly stolen from: http://home.wxs.nl/~faase009/Signindex.html
 
