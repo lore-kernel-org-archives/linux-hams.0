@@ -1,49 +1,23 @@
-From: Alex Flinsch <aflinsch@msonj.com>
-Subject: Re: Yaesu ft847/100 control
-Date: Mon, 16 Sep 2002 13:10:39 -0400
+From: "John F. Feist" <aa6qn@pacbell.net>
+Subject: ax25ipd daemon dying
+Date: Wed, 18 Sep 2002 05:23:00 -0700
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <5.0.0.25.2.20020916130235.00aa78b0@mail.msonj.com>
-References: <200209160808.22938.n7bfs@qwest.net>
- <200209161801.47199.lx2gt@gmx.net>
+Message-ID: <3D887024.8060100@pacbell.net>
+Reply-To: aa6qn@pacbell.net
 Mime-Version: 1.0
+Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <3D860B7D.5000706@voicenet.com>
 List-Id: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"; format="flowed"
-Content-Transfer-Encoding: 7bit
-To: Margaret Leber <maggie@voicenet.com>
-Cc: n7bfs@qwest.net, linux-hams@vger.kernel.org
+To: Linux-Hams <linux-hams@vger.kernel.org>
 
-At 12:49 PM 9/16/02 -0400, Margaret Leber wrote:
+Greetings, I have been running ax25ipd daemon for several years now and 
+it has been pretty stable. For some reason or another after upgrading 
+the kernel to 2.4.18-pre9 I am finding the ax25ipd daemon has stopped 
+running as a process. Thinking it was the kernel version I upgraded once 
+again to 2.4.19 and the same thing happens. "ip route" tunnel is still 
+working. Anyone else seen this problem?
+ax25ipd version 1.0.2 / 0.0.6
 
-
->>Hmm... you could try using grig. Grig uses hamlib, and as far as i know, 
->>hamlib supports both, the ft847 and the ft100
-
-FT100 support for hamlib is limited (I know, I wrote it), but I will be 
-getting a chance to work on it again soon. As I will be unemployed as of 
-next week.
-
-I have a kylix gui for controlling a ft100 @ http://www.qsl.net/kc2ivl
-Planned features --
-    Remove dependence on my ft100 command line program
-    convert to use hamlib bindings for kylix (so it could support more rigs)
-
-
-
-
-
-
->73 de Maggie K3XS, who is still looking for work,
->
->   resume available at http://voicenet.com/~maggie/mslresume.html
-
-
-
-
-
--- 
-Alex Flinsch
-aflinsch@msonj.com
-732-424-2550 x263
+Thank you in advance, John
 
