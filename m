@@ -1,46 +1,32 @@
-From: pa3gcu <pa3gcu@zeelandnet.nl>
-Subject: Re: Linuxnode Software!
-Date: Sat, 5 Oct 2002 08:53:06 +0000
+From: Tomi Manninen <tpm@prkele.tky.hut.fi>
+Subject: Re: nodes and package help?
+Date: Sat, 5 Oct 2002 15:07:06 +0300 (EEST)
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <02100508530604.00234@unix.pa3gcu>
-References: <3D9E8817.487F5590@kj6eo.com>
-Reply-To: pa3gcu@zeelandnet.nl
+Message-ID: <Pine.LNX.4.44.0210051459380.15787-100000@oh2bns.ampr.org>
+References: <4.3.2.7.2.20021004164401.00ac9860@pop3.norton.antivirus>
+Reply-To: tpm@prkele.tky.hut.fi
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7BIT
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <3D9E8817.487F5590@kj6eo.com>
+In-Reply-To: <4.3.2.7.2.20021004164401.00ac9860@pop3.norton.antivirus>
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"
-To: Bill Walton <kj6eo@kj6eo.com>, LINUX HAMS MAILING LIST <linux-hams@vger.kernel.org>
+Content-Type: TEXT/PLAIN; charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+To: "John J. Bauerly" <jbauerly@grapevine.net>
+Cc: linux-hams@vger.kernel.org
 
-On Saturday 05 October 2002 06:35, Bill Walton wrote:
-> Linuxnode Software?
->
-> Well no wonder why my node won't work.  It is interesting that I have read
-> all these AX25 HOWTO'S and none of them told me that the node software was
-> not included with the AX25 Libs, Apps, Tools packages.  ANYWAY....would
-> someone be kind enough to tell me where I could get the linuxnode
-> software....or any node software that will run with my system (RedHat 7.2
-> and a 2.4.18 kernel)?  I tried all 3 versions of the Awznode software and I
-> can't compile it (out of date?).
+On Fri, 4 Oct 2002, John J. Bauerly wrote:
 
-node-0.3.0 compiles cleanly here with 2.4.18, node-0.3.0 can be obtained at;
+> I am continuing the set-up of my Redhat 6.2 AX25 system. After compiling 
+> the ax25-apps and ax25-tools I seem to be missing some apps. Needed is node 
+> and node.conf. Several questions are will it run on RH6.2 or would it be 
 
-ftp.funet.fi:/pub/ham/unix/Linux/packet/ax25/
-
-If you have further problems please cut and paste the last few lines of your 
-compile attenmt, we can then see whats wrong, (hopefully)..
-
->
-> Your assistance is appreciated!
->
-> Regards,
->
-> Bill KJ6EO
->
+Easiest route would be to get node-0.3.0-1.i386.rpm from the Red Hat 6.2 
+Powertools CD (or from the net). It's guaranteed to work on your distro.
+If you want to compile from source then the primary distribution site for 
+LinuxNode is hes.iki.fi.
 
 -- 
-Regards Richard
-pa3gcu@zeelandnet.nl
-http://people.zeelandnet.nl/pa3gcu/
+Tomi Manninen           Internet:  oh2bns@sral.fi
+OH2BNS                  AX.25:     oh2bns@oh2rbi.fin.eu
+KP20ME04                Amprnet:   oh2bns@oh2rbi.ampr.org
 
