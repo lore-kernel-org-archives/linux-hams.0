@@ -1,29 +1,32 @@
-From: Terry Dawson <terry@animats.net>
-Subject: Re: ax25/netrom/rose patch for kernel 2.4.22 - need testers
-Date: Fri, 7 Nov 2003 12:19:39 +1100
+From: "Lane Wilson" <lwilson@dccnet.com>
+Subject: Setting Up ax.25 FRACK, RESPTIME. etc on Linux ax.25 ports
+Date: Thu, 6 Nov 2003 18:55:05 -0800
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <200311071219.39047.terry@animats.net>
-References: <20461@9A0TCP>
+Message-ID: <IBEEKNDDJBNNJGAILFDJAEMFFJAC.lwilson@dccnet.com>
 Mime-Version: 1.0
 Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <20461@9A0TCP>
-Content-Disposition: inline
 List-Id: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
 To: linux-hams@vger.kernel.org
 
-On Thu, 30 Oct 2003 10:52 am, Tihomir Heidelberg wrote:
+Hello all,
 
-> I need those who ...
-> 1) use DAMA
-> 2) have more then one CPU
-> 3) use ROSE protocol
+How are most of you setting up the ax.25 port settings in your Linux ax.25
+configurations?
+This is referred to in the ax.25 howto document as the T1, T2, T3, N2, ...
+settings.
 
-Since I meet two of those criterion, and I've been largely missing-in-action 
-for some time, I guess I should help out :)
+Do you have to write the values to the /proc/sys/net/ax25/portname/file each
+time you boot up?
 
-regards
-Terry
+How do you make FBB use these settings?
+
+Generally, what are people doing about setting these things up on a Linux
+machines?
+
+Thanks
+
+Lane, ve7ihl
 
 
