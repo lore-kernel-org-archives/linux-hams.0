@@ -1,72 +1,25 @@
-From: Stephen Hemminger <shemminger@osdl.org>
-Subject: [PATCH] Fix use after free in AX.25
-Date: Tue, 5 Aug 2003 14:56:58 -0700
+From: James Morris <jmorris@intercode.com.au>
+Subject: Re: [PATCH] (2/2) Convert ROSE to seq_file
+Date: Wed, 6 Aug 2003 10:34:03 +1000 (EST)
 Sender: netdev-bounce@oss.sgi.com
-Message-ID: <20030805145658.1b3f194b.shemminger@osdl.org>
+Message-ID: <Mutt.LNX.4.44.0308061033550.24985-100000@excalibur.intercode.com.au>
+References: <20030805144622.100f208d.shemminger@osdl.org>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
 Return-path: <netdev-bounce@oss.sgi.com>
+In-Reply-To: <20030805144622.100f208d.shemminger@osdl.org>
 Errors-to: netdev-bounce@oss.sgi.com
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"
-To: Ralf Baechle <ralf@linux-mips.org>, "David S. Miller" <davem@redhat.com>
-Cc: linux-hams@vger.kernel.org, netdev@oss.sgi.com
+Content-Type: TEXT/PLAIN; charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+To: Stephen Hemminger <shemminger@osdl.org>
+Cc: Ralf Baechle <ralf@linux-mips.org>, "David S. Miller" <davem@redhat.com>, linux-hams@vger.kernel.org, netdev@oss.sgi.com
 
-This patch is against 2.6.0-test2.  The problem is that the ax25_destroy_socket
-function frees the socket buffer, but then ax25_release dereferences this causing
-an OOPS.  To reproduce:
-	modprobe ax25; ifconfig -a
+Applied to bk://kernel.bkbits.net/jmorris/net-2.5
 
-Replaced sk_free with sock_put which will free if this is the last reference.
 
-diff -urNp -X dontdiff net-2.5/net/ax25/af_ax25.c linux-2.5-net/net/ax25/af_ax25.c
---- net-2.5/net/ax25/af_ax25.c	2003-08-04 09:32:21.000000000 -0700
-+++ linux-2.5-net/net/ax25/af_ax25.c	2003-08-05 14:34:21.000000000 -0700
-@@ -349,7 +349,7 @@ void ax25_destroy_socket(ax25_cb *ax25)
- 			ax25->timer.data     = (unsigned long)ax25;
- 			add_timer(&ax25->timer);
- 		} else {
--			sk_free(ax25->sk);
-+			sock_put(ax25->sk);
- 		}
- 	} else {
- 		ax25_free_cb(ax25);
-@@ -944,15 +944,13 @@ static int ax25_release(struct socket *s
- 		switch (ax25->state) {
- 		case AX25_STATE_0:
- 			ax25_disconnect(ax25, 0);
--			ax25_destroy_socket(ax25);
--			break;
-+			goto drop;
- 
- 		case AX25_STATE_1:
- 		case AX25_STATE_2:
- 			ax25_send_control(ax25, AX25_DISC, AX25_POLLON, AX25_COMMAND);
- 			ax25_disconnect(ax25, 0);
--			ax25_destroy_socket(ax25);
--			break;
-+			goto drop;
- 
- 		case AX25_STATE_3:
- 		case AX25_STATE_4:
-@@ -995,13 +993,16 @@ static int ax25_release(struct socket *s
- 		sk->sk_shutdown |= SEND_SHUTDOWN;
- 		sk->sk_state_change(sk);
- 		sock_set_flag(sk, SOCK_DEAD);
--		ax25_destroy_socket(ax25);
-+		goto drop;
- 	}
- 
- 	sock->sk   = NULL;
- 	sk->sk_socket = NULL;	/* Not used, but we should do this */
- 	release_sock(sk);
--
-+	return 0;
-+ drop:
-+	release_sock(sk);
-+	ax25_destroy_socket(ax25);
- 	return 0;
- }
- 
+- James
+-- 
+James Morris
+<jmorris@intercode.com.au>
 
 
