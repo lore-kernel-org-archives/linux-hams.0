@@ -1,93 +1,80 @@
-From: Nate Bargmann <n0nb@networksplus.net>
-Subject: [Fwd: [Ham-Linux] RELEASE: xastir 1.2.0 - Stable]
-Date: Sat, 12 Jul 2003 22:35:34 -0500
+From: Arno Verhoeven <pe1icq@pi8zaa.ampr.org>
+Subject: Re: PROBLEM: gMFSK v0.5 locks up.
+Date: Sun, 13 Jul 2003 22:15:02 +0200
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <20030713033534.GF7627@localhost>
+Message-ID: <3F11BDC6.2080306@pi8zaa.ampr.org>
+References: <Pine.LNX.4.44.0304192044470.6051-100000@oh2bns.ampr.org>	<20030420023708.GA22988@silly.cloud.net.au>	<3F0F1E43.9030500@pi8zaa.ampr.org> <200307112325.24591.ailic@gmx.net>	<3F0F3126.8030403@pi8zaa.ampr.org>  <3F0FC0FD.5060307@pi8zaa.ampr.org> <1058027447.1273.58.camel@oh2bns.ampr.org>
 Mime-Version: 1.0
-Return-path: <linux-hams-owner@vger.kernel.org>
-Content-Disposition: inline
-List-Id: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
+Return-path: <linux-hams-owner@vger.kernel.org>
+In-Reply-To: <1058027447.1273.58.camel@oh2bns.ampr.org>
+List-Id: <linux-hams.vger.kernel.org>
+Content-Type: text/plain; charset="us-ascii"; format="flowed"
 To: linux-hams@vger.kernel.org
 
-Thought the list might like to know...
+Tomi Manninen wrote:
 
-73, de Nate >>
+>On Sat, 2003-07-12 at 11:04, Arno Verhoeven wrote:
+>
+>  
+>
+>>Until now I didn't get it to produce any sound yet. (sound works on that 
+>>system. Other applications can use the sound card)
+>>    
+>>
+>
+>Are you getting any sound input? I mean does the waterfall show any 
+>noise?
+>
 
------ Forwarded message from KC7ZRU - Tate <kc7zru@arrl.net> -----
+No, nothing shows up.
 
-Date: Mon, 16 Jun 2003 21:34:27 -0600
-From: KC7ZRU - Tate <kc7zru@arrl.net>
-To: TAPR APRS Special Interest Group <aprssig@lists.tapr.org>,
-	APRS Announcements <aprsnews@lists.tapr.org>,
-	RM-APRS@yahoogroups.com, ham-linux <ham-linux@mailman.qth.net>
-Subject: [Ham-Linux] RELEASE: xastir 1.2.0 - Stable
-Organization: http://www.cauce.org
-User-Agent: Mozilla/5.0 (Windows; U; Win98; en-US; rv:1.4) Gecko/20030529
+>>1. click the "Abort transmission immediately" button.
+>>2. click the "Mode" pull-down menu and try to select another mode.
+>>    
+>>
+>
+>This would indicate that the current RX thread is stuck somewhere
+>(and the rest of the program is waiting for it to complete). It could
+>be a blocked open() or read(). Are you sure no-one else is having the
+>sound card open?
+>
 
-It's here folks - released for your use and pleasure on 13 June:
-The latest stable release of xastir
+I have no other program running that would use the sound card. Th elock
+ups also occur when I use a simple windowmanger like twm.
+(trying to avoid kde's sound server from interfering...)
 
-http://sourceforge.net/projects/xastir
+>Edson's idea is also good. Knowing where exactly it is stuck is
+>valuable information.
+>
 
-The xastir project is a dynamic, constantly growing and developing 
-endevour. On the sourceforge site, you can also find information on how 
-to stay up to date with the latest development of xastir via CVS. 
-Already, new ideas, features and tweeks are being added.
+This is the last bit of output from strace after I try to select another
+mode.
 
-For information on what xastir is, what it can do for your APRS 
-experience, and information on the xastir users email reflector, visit: 
-http://www.xastir.org
+ead(3, "\7\4b\23i\v@\1:\0\0\0002\0 \0034\0 \3f\2X\0!\0\3\0\20\0"..., 32) = 32
+read(3, "\7\3b\23i\v@\1:\0\0\0004\0 \3\0\0\0\0f\2X\0\37\0\1\0\20"..., 32) = 32
+read(3, "\22\0d\23\216\1 \3\216\1 \3\0\16\217\10\216\1 \3\0\0\0"..., 32) = 32
+read(3, "\10\3e\23i\v@\1:\0\0\0\37\0 \3\0\0\0\0f\2X\0I\0D\0\20\0"..., 32) = 32
+read(3, "\7\4e\23i\v@\1:\0\0\0002\0 \0034\0 \3f\2X\0!\0\3\0\20\0"..., 32) = 32
+read(3, "\7\3e\23i\v@\1:\0\0\0004\0 \3\0\0\0\0f\2X\0\37\0\1\0\20"..., 32) = 32
+read(3, "\t\3f\23\4\0 \3\2\364\377\277\37I\f\10\310\22`\10\3002"..., 32) = 32
+read(3, "\1\2g\23\0\0\0\0\4\0 \3\0\0\0\0\0\0\0\0\1\0\0\0\0\327\332"..., 32) = 32
+rt_sigprocmask(SIG_SETMASK, NULL, [RTMIN], 8) = 0
+rt_sigsuspend([]
 
-I'm at a bit of a loss for words trying to describe what all xastir can 
-do. The list is rather large. Over 115 different local and online map 
-sources, weather instrumentation, kernel AX.25 support, serial TNC 
-support, support for customizable server port filters, messaging, 
-auto-reply, control over how those many information sources are layered 
-and displayed, mapping bookmarks, objects, I-gate, NWS info gating to 
-RF, map scrolling to track your icon for mobile stations, updated 
-multi-lingual support and many other features I've left out - simply 
-because no one station/person can use 'em all! Basically - if you've 
-heard of it, very good chance xastir's got it. If you've an idea and 
-it's *not* implimented, yet, mention it on the xastir users email list 
-or enter your feature request direct to the request tracker on 
-sourceforge. If it's a popular idea - well, no promises - but I have 
-seen some features added and available literaly within hours of being 
-mentioned.
+>Oh, does the CPU load increase when gmfsk is locked up?
+>  
+>
 
-Due to the numerous bug fixes, clean ups and improvements - anyone 
-running any older version of xastir is highly encouraged to upgrade to 
-1.2.0 - you'll be glad you did!
-
-And last, but not least - many, many thanks to the entire 
-xastir-development team!!
-
-Way to go guys. Thanks for building what, in my opinion, is the most 
-useful, bug free and accessible full service APRS client anywhere for 
-almost any platform.
-
-73
+No, the CPU load doesn't go up.
 
 
 -- 
-        "The Dungeon" online at http://go.to/kc7zru
-              Casper, WY    |    CARC Repeater
-                DN62tt      |      146.940-
-                 http://www.trib.com/~carc
+73, PE1ICQ  Arno Verhoeven
+--------------------------------
+AX.25  pe1icq@pi8zaa.#nbo.nld.eu
+smtp   pe1icq@pi8zaa.ampr.org
+inet   pe1icq@amsat.org
 
 
-_______________________________________________
-Ham-Linux mailing list
-Ham-Linux@mailman.qth.net
-http://mailman.qth.net/mailman/listinfo/ham-linux
 
-
------ End forwarded message -----
-
--- 
- Wireless | Amateur Radio Station N0NB          | "We have awakened a
- Internet | n0nb@networksplus.net               | sleeping giant and
- Location | Bremen, Kansas USA EM19ov           | have instilled in him
-  Amateur radio exams; ham radio; Linux info @  | a terrible resolve".
-             http://www.qsl.net/n0nb/           | - Admiral Yamamoto
