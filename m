@@ -1,36 +1,37 @@
-From: John@man.ac.uk
+From: w9ya <w9ya@arrl.net>
 Subject: Re: KDE EchoLinux client project
-Date: Tue, 8 Apr 2003 12:21:46 +0100 (BST)
+Date: Tue, 8 Apr 2003 07:25:16 -0500
 Sender: linux-hams-owner@localhost
-Message-ID: <E192r69-000HrJ-KE@probity.mcc.ac.uk>
-References: <200304072152.59359.ve3mtm@rac.ca>
+Message-ID: <200304080725.16056.w9ya@arrl.net>
+References: <E192r69-000HrJ-KE@probity.mcc.ac.uk>
+Reply-To: w9ya@arrl.net
 Mime-Version: 1.0
-Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <200304072152.59359.ve3mtm@rac.ca>
-List-Id: <linux-hams.vger.kernel.org>
-Content-Type: TEXT/plain; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
-To: ve3mtm@rac.ca
-Cc: linux-hams@vger.kernel.org
+Return-path: <linux-hams-owner@vger.kernel.org>
+In-Reply-To: <E192r69-000HrJ-KE@probity.mcc.ac.uk>
+Content-Disposition: inline
+List-Id: <linux-hams.vger.kernel.org>
+Content-Type: text/plain; charset="us-ascii"
+To: linux-hams@vger.kernel.org
 
-On  7 Apr, Michael Melanson wrote:
-..
-> In light of the fact that there is no good GUI client for EchoLinux,  the Linux 
-> implementation of the EchoLink protocol, I am starting development of a 
-> KDE/Qt-based client. SourceForge just set up the project. Anyone with 
-> experience developing with KDE and who can afford a modest time committment 
-> (I don't ask much) should email me (ve3mtm@rac.ca).
+Actually a qt based one should be just as satisfactory. Most desktop machines 
+have both gtk and qt installed to take advantage of programs written for 
+both.
 
-Why not make use of GTK+ rather than KDE/Qt, then your package isn't
-locking us all into installing KDE...
+Bob
 
-John
--- 
-  John Heaton, G1YYH
-  Manchester Computing, Kilburn Building.
-  The University of Manchester, Oxford Road, Manchester, England, M13-9PL
-  pstn://+44-161-275-6011/Hello/Is.Dat-U?
-  fax://+44-161-275-6040/screech/warble/ssshhh/beepbeep
-
-
+On Tuesday 08 April 2003 06:21 am, John@man.ac.uk wrote:
+> On  7 Apr, Michael Melanson wrote:
+> ..
+>
+> > In light of the fact that there is no good GUI client for EchoLinux,  the
+> > Linux implementation of the EchoLink protocol, I am starting development
+> > of a KDE/Qt-based client. SourceForge just set up the project. Anyone
+> > with experience developing with KDE and who can afford a modest time
+> > committment (I don't ask much) should email me (ve3mtm@rac.ca).
+>
+> Why not make use of GTK+ rather than KDE/Qt, then your package isn't
+> locking us all into installing KDE...
+>
+> John
 
