@@ -1,28 +1,28 @@
-From: Ian J Maude <ian@gb7mbc.net>
-Subject: Kernel rebuild under FC3
-Date: Fri, 03 Dec 2004 09:10:33 +0000
-Message-ID: <1102065033.3345.2.camel@gb7mbc.spoo.org>
+From: Thomas Sailer <t.sailer@alumni.ethz.ch>
+Subject: Re: Kernel rebuild under FC3
+Date: Fri, 03 Dec 2004 17:01:23 +0100
+Message-ID: <1102089683.4752.160.camel@kronenbourg.scs.ch>
+References: <1102065033.3345.2.camel@gb7mbc.spoo.org>
 Mime-Version: 1.0
 Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
+In-Reply-To: <1102065033.3345.2.camel@gb7mbc.spoo.org>
 Sender: linux-hams-owner@vger.kernel.org
 List-Id: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
-To: linux-hams@vger.kernel.org
+To: Ian J Maude <ian@gb7mbc.net>
+Cc: linux-hams@vger.kernel.org
 
-Hi all,
-This is so basic I am embarrassed!  I have not built a kernel in some
-time but recently upgraded the machine to FC3.  I now need to add
-Amateur Radio support into the kernel but I am failing miserably.  Linux
-seems to be no longer in /usr/src for a start!  Can anyone give me some
-pointers please?
+On Fri, 2004-12-03 at 09:10 +0000, Ian J Maude wrote:
+> time but recently upgraded the machine to FC3.  I now need to add
+> Amateur Radio support into the kernel but I am failing miserably.  Linux
+> seems to be no longer in /usr/src for a start!  Can anyone give me some
+> pointers please?
 
-Ian
--- 
-Ian Maude G0VGS Morecambe Lancs UK | ian@gb7mbc.net
-Sysop of GB7MBC, the Morecambe Bay Cluster
-Running Linux and DXSpider | K2 #4044
- 
-Find out about Summits on the Air!  
-Visit the SOTA web site at http://www.sota.org.uk
+FC3 no longer supplies kernel sources in /usr/src. To get the
+distribution sources, install the kernel-*.src.rpm,
+cd /usr/src/redhat/SPECS, rpmbuild -bp kernel*.spec, then the sources
+end up in /usr/src/redhat/BUILD/kernel*
+
+Tom
 
