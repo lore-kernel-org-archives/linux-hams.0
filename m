@@ -1,26 +1,41 @@
-From: "John F. Feist" <aa6qn@pacbell.net>
-Subject: WeatherMAX and Linux
-Date: Tue, 21 Jan 2003 05:22:31 -0800
+From: Dennis Boone <drb@msu.edu>
+Subject: trivnetdb 1.0
+Date: Wed, 22 Jan 2003 09:46:48 -0500
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <3E2D4997.9080807@pacbell.net>
-Reply-To: aa6qn@pacbell.net
-Mime-Version: 1.0
-Content-Transfer-Encoding: 7BIT
+Message-ID: <E18bM9R-0005Br-00@yagi.h-net.msu.edu>
+Reply-To: drb@msu.edu
 Return-path: <linux-hams-owner@vger.kernel.org>
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"; format="flowed"
-To: Linux-Hams <linux-hams@vger.kernel.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+To: linux-hams@vger.kernel.org, debian-hams@lists.debian.org
 
-Just by chance I have stumbled on to a Linux interface for my WeatherMAX 
-station. Works like a charm and has a very nice gui front end. The 
-application is called WXNET.  Now to conqure the HTML creation utility. 
-I was wondering if anyone out there has experience with the interface?
+If you receive dups of this message, please accept my apologies.  I've
+conversed with several of you in different contexts, and I'm losing
+track of who is where.
 
-I would also like to ask if anyone has schematics for the WeatherMAX 
-main unit. I have seem to lost the function on part of the Wind 
-Direction logic circuit and would like to trouble shoot it. Without a 
-roadmap its kinda hard.
+In December I had discussions on a couple of mailing lists and
+privately with several individuals about packet-based services, and
+about a trivial network database package I wrote for ham use.  I
+posted a URL for the bare script at the time.  I had enough inquiries
+about the beast that I decided to package it properly.
 
-Thank you in advance,
-John
+So, trivnetdb version 1.0 is released.  The package includes the
+program itself (somewhat enhanced since December), clear statement of
+license (GPL), and some documentation.  The program requires perl and
+some assorted perl modules, and a perl DBI compliant database
+(e.g. MySQL), and runs on unix hosts.  It can be obtained from:
 
+    http://msuarc.egr.msu.edu/kb8zqz/packet/trivnetdb-1.0.tar.gz
+
+The file is quite small, about 22 kB.
+
+Trivnetdb is designed to be used for public service events like
+bike-a-thons, shelter operations, etc, though its capabilities
+obviously extend to other uses as well.
+
+Cheers,
+
+Dennis Boone
+KB8ZQZ
