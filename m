@@ -1,30 +1,30 @@
-From: "David S. Miller" <davem@redhat.com>
-Subject: Re: [PATCH] use after free in AF_ROSE
-Date: Wed, 10 Dec 2003 14:53:26 -0800
-Sender: netdev-bounce@oss.sgi.com
-Message-ID: <20031210145326.6d1d9b81.davem@redhat.com>
-References: <20031210100851.4b4a6927.shemminger@osdl.org>
+From: David Quental <ct1drb@iol.pt>
+Subject: Problems with uscc and kernel 2.6.0-test11
+Date: Thu, 11 Dec 2003 15:43:26 +0000
+Sender: linux-hams-owner@vger.kernel.org
+Message-ID: <3FD8909E.7090906@iol.pt>
 Mime-Version: 1.0
 Content-Transfer-Encoding: 7bit
-Return-path: <netdev-bounce@oss.sgi.com>
-In-Reply-To: <20031210100851.4b4a6927.shemminger@osdl.org>
-Errors-to: netdev-bounce@oss.sgi.com
+Return-path: <linux-hams-owner@vger.kernel.org>
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"
-To: Stephen Hemminger <shemminger@osdl.org>
-Cc: ralf@linux-mips.org, netdev@oss.sgi.com, linux-hams@vger.kernel.org
+Content-Type: text/plain; charset="us-ascii"; format="flowed"
+To: LINUXHams <linux-hams@vger.kernel.org>
 
-On Wed, 10 Dec 2003 10:08:51 -0800
-Stephen Hemminger <shemminger@osdl.org> wrote:
+Hello to all.
 
-> Doing multiple protocol testing and get crashes with simple
-> socket/close combo with AF_ROSE.  The problem is that it
-> dereferences the socket in rose_release after it has already been
-> freed by rose_destroy_socket.
-> 
-> This patch fixes that problem, and also uses sock_put to handle the
-> case where rose_destroy_socket is called with sk_refcnt > 1 which
-> might be possible if data comes in during close.
+I have on uscc at address 320 and irq 5, it works fine under kernel 
+2.4.21-144 from SuSE 9.0. But under kernel 2.6.0-test11 i have problem 
+when try to load it, shell freezes and if i do command 'ifconfig' in 
+another shell it freezes as well. Since first kernel 2.6.0 i have 
+problems with my uscc, never worked because of those freezes.
+Any help will be fine.
+Another thing:
+in kernel 2.6.0-test11 i use same .config than in SuSE.
 
-Applied, thanks a lot Stephen.
+Best 73 till then.
+
+CT1DRB
+David Quental
+
+
 
