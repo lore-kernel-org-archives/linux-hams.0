@@ -1,85 +1,54 @@
-From: mredmondhaziem1@zipmail.com.br
-Subject: =?iso-8859-1?Q?Please=20reply=20quickly=2E?=
-Date: Mon, 13 Dec 2004 20:17:49 +0100
-Message-ID: <41BD3DF5000014FC__2522.75654715977$1102969195$gmane$org@www.zipmail.com.br>
+From: Dave Platt <dplatt@radagast.org>
+Subject: Re: PCI SCC Card - Debian Sarge
+Date: Mon, 13 Dec 2004 11:34:46 -0800 (PST)
+Message-ID: <20041213193446.5413.qmail@radagast.org>
+References: <200412132339.05169.sdaniels@airnet.com.au>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7BIT
 Return-path: <linux-hams-owner@vger.kernel.org>
+In-Reply-To: <200412132339.05169.sdaniels@airnet.com.au>
 Sender: linux-hams-owner@vger.kernel.org
 List-Id: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
-To: 
+Content-Transfer-Encoding: 7bit
+To: vk5hsx@wia.org.au
+Cc: linux-hams@vger.kernel.org
 
-Mr.Edmond Haziem.
-Republic of Benin 
+Stef VK5HSX <sdaniels@airnet.com.au> wrote:
+> Hi there..
+> 
+> 	After our Z8530 ISA DRSI cards died, we had to purchased a new PCI SCC card. 
+> The following spec's of the card:
+> 	2 port PCI serial card,  I/O ports re-mapped to 3F8, 2F8, 3E8, 2E8
+> 	16750 UART with 64byte FIFO buffer.
+> 	They will operate at a baud rate up to 921.6 KBs. COM1-4 etc. Sunix 4038D
+> 
+> I wish to configure ax25 for packet bbs. Currently we used z8530drv, however, 
+> I am wondering the best way to go about drivers and setup under Debian sarge, 
+> using 2.4.27 kernel, with machine running- Pen II-266MHZ, 200MB RAM.
 
-Good day, 
+If you're using them to talk via normal asynchronous protocols to a
+TNC, then you can probably just use the standard Linux serial drivers.
+It looks as if the 16450/16550 drivers have some support for the
+16750 chip with its larger send/receive buffer.
 
-With warm heart i offer my friendship and my greetings and i hope this letter
-meets you in good time. It will be surprising for you to receive this proposal
-from me since you do not know me personally.However, i am sincerely seeking
-your confidence in this transaction, which i, propose with my free mind
-and as a person of integrity. 
+You'll need to use the "setserial" program to tell the kernel what
+UART type the cards have.
 
-A) It is practically impossible for me to carry out this business alone.
+You may also need to use "setserial" to identify the I/O port address
+and/or the IRQ for each port on the card.  This may or may not be
+necessary - it'll depend on whether the card automatically maps its
+resources into the ISA space usually used by onboard UARTs, or
+whether it puts its port in PCI space and depends on software remapping
+under Windows.
 
+Try running "/sbin/lspci -v" to find the card, and see what port
+addresses and IRQs it is claiming.  You can probably plug these
+values into a setserial config file or script (it's /etc/serial.conf
+under Debian, I believe) to have the kernel drivers configured
+correctly at boot time.
 
-B) You live in a foreign land far away from mine. This should normally not
-be a requirement, but when you understand the transaction then you will
-understand why it is important that you live far away from me. 
-
-C) The amount of money involved in this transaction is Fifteen Million one
-hundred thousand united states dollars (US$15,100,000.00) which is too much
-for a man of modest means like myself to handle in my country. 
-
-I believe from my few points above, you can begin to get an idea why i need
-your participation.I am writing you in respect of a foreign customer who
-has a Domicilliary account in my bank. His name was Engineer Frank oliver.
-He was among those who died in a plane crash, Since the demise of this our
-customer, Engineer Frank oliver, who was an oil merchant/import & exporter,
-i have kept a close watch of the deposit records and accounts and since
-then nobody has come to claim the money in this a/c as next of kin to the
-late Engineer.He had only Fifteen Million one hundred thousand united states
-dollars (S$15,100,000.00) in his account and the account is coded. 
-
-It is only an insider that could produce the code of the deposit particulars.
-As it stands now, there is nobody in that position to produce the needed
-information other than my very self considering my position in the bank.
-Based on the reason that nobody has come forward to claim the deposit as
-next of kin, i hereby ask you to send an application to the bank as the
-next of kin to the deceased and get this fund transfered into your foreign
-bank a/c for mutual sharing between myself and you, 5% for expences we will
-incure 35% for you and 60% for me. 
-
-All i need is for you to follow my instructions closely because i am experienced
-in inheritance matters here and i am on ground here to advice you on every
-step until you receive the fund. What is required of you is to send an application
-to the bank as next of kin to this late Engineer and i promise you that
-everything will go smoothly. 
-
-I also indulge you not to make undo use of the information given to you,
-i need also to trust that you will not tell people or your bank about this
-business.You will collect the money first, then I get my share, then you
-can tell anybody what you chose thereafter. I shall need your help to invest
-in your country therefore, any experience you have in this area will be
-beneficial. 
-
-Please feel free to ask any question and seek for explanations if required
-and upon the receipt of your favourable esponses,you should including your
-telephone number for easy communication. 
-
-Yours treuly, 
-Mr.Edmond Haziem.
-Phone:+229-844986.
-
-
-
-
-
-
-------------------------------------------
-Use o melhor sistema de busca da Internet
-Radar UOL - http://www.radaruol.com.br
-
-
+Now, if you have a need for a real SCC-compatible card, capable
+of synchronousserial transfers and HDLC, then I don't think you'll
+succeed with the card you have.  As far as I can tell the 16750
+is an asynchronous-mode chip only, not a USART.
 
