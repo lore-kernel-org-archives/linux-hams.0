@@ -1,50 +1,44 @@
-From: Tim Waugh <twaugh@redhat.com>
-Subject: Re: PARPORT 9k6 modem & kernel 2.4.18
-Date: Fri, 26 Apr 2002 08:37:34 +0100
+From: ariel mastracchio <ari197516@yahoo.com>
+Subject: manchester 4800 vs. HAPN 4800
+Date: Fri, 26 Apr 2002 07:27:07 -0700 (PDT)
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <20020426083734.O25081@redhat.com>
-References: <Pine.LNX.4.44.0204261018460.7924-100000@zl2bsj.ampr.org>
+Message-ID: <20020426142707.42176.qmail@web9602.mail.yahoo.com>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-md5;
-	protocol="application/pgp-signature"; boundary="jFijuCULRDbBA23d"
 Return-path: <linux-hams-owner@vger.kernel.org>
-Content-Disposition: inline
-In-Reply-To: <Pine.LNX.4.44.0204261018460.7924-100000@zl2bsj.ampr.org>; from zl2bsj@zl2tze.myip.org on Fri, Apr 26, 2002 at 10:27:33AM +1200
 List-Id: <linux-hams.vger.kernel.org>
-To: Wilbert Knol <zl2bsj@zl2tze.myip.org>
-Cc: linux-hams <linux-hams@vger.kernel.org>, w.knol@niwa.cri.nz
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+To: linux-hams@vger.kernel.org
+
+Hi!
+     I do packet with linux 2.2.16 and soundmodem,
+attached to my radio tm-731 VHF, i test the hapn-4800
+module with some radioamateurs of my area that have
+manchester-4800, i received OK, but when i transmited
+nobody heard my (the audio is OK).
+
+     I have not a full-duplex sound card so i cant
+heard miself...
+
+     Does anonyone know if MANCHESTER-4800 (modem) is
+compatible with HAPN-4800 (linux soundmodem)???
+
+     Thank you in advance....
 
 
---jFijuCULRDbBA23d
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+- ari
 
-On Fri, Apr 26, 2002 at 10:27:33AM +1200, Wilbert Knol wrote:
 
->=20
-> I can confirm James's story.
->=20
-> After upgrading from kernel 2.4.8 (Mdk 8.1) to 2.4.18 (Mdk 8.2), my
-> parport 9k6 BayCom modem no longer works.
 
-If you use 2.4.19-pre7, does the problem go away?  There were some
-parport fixes after 2.4.18 I think.
 
-Tim.
-*/
 
---jFijuCULRDbBA23d
-Content-Type: application/pgp-signature
-Content-Disposition: inline
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.0.6 (GNU/Linux)
-Comment: For info see http://www.gnupg.org
+=====
+amastr@mail.palermo.edu.ar
+lu9aum@amsat.org
+lu9aum@lu9aum.ampr.org
 
-iD8DBQE8yQO9yaXy9qA00+cRAsD4AKCaq/amPxDwFq6/cegQLPbpSF4gaACdFcbe
-BWn9FGnSPgqSE+KiaugG+zE=
-=i1KD
------END PGP SIGNATURE-----
-
---jFijuCULRDbBA23d--
+__________________________________________________
+Do You Yahoo!?
+Yahoo! Games - play chess, backgammon, pool and more
+http://games.yahoo.com/
