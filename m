@@ -1,104 +1,62 @@
-From: Matti Aarnio <matti.aarnio@zmailer.org>
-Subject: Re: Spammers
-Date: Sat, 9 Aug 2003 20:55:20 +0300
+From: Robert L Cochran <cochranb@speakeasy.net>
+Subject: Re: spam on the list ?
+Date: 09 Aug 2003 21:20:01 -0400
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <20030809175520.GL6898__35826.8696618781$1060457129@mea-ext.zmailer.org>
-References: <6734256000.20030809185259@xhost.cz>
-Reply-To: postmaster@vger.kernel.org
+Message-ID: <1060478401.2415.12.camel@bobcp4.lingpgmr.com>
+References: <200308091121.37375.n7bfs@qwest.net>
 Mime-Version: 1.0
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Content-Type: multipart/signed; micalg=pgp-sha1; protocol="application/pgp-signature"; boundary="=-owCD7HRz8V8h6DUh7be8"
 Return-path: <linux-hams-owner@vger.kernel.org>
-Content-Disposition: inline
-In-Reply-To: <6734256000.20030809185259@xhost.cz>
+In-Reply-To: <200308091121.37375.n7bfs@qwest.net>
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="iso-8859-1"
-To: linux-raid@vger.kernel.org, linux-kernel@vger.kernel.org, linux-net@vger.kernel.org, linux-admin@vger.kernel.org
+To: n7bfs@qwest.net
+Cc: Linux-Hams <linux-hams@vger.kernel.org>
 
-Cross-posted to a few of vger's lists, because this is a popular thing,=
+
+--=-owCD7HRz8V8h6DUh7be8
+Content-Type: text/plain
+Content-Transfer-Encoding: quoted-printable
+
+Please try not to flame the list admins (via pointed or barbed comments)
+for the occasional spam message. Before shooting arrows, make sure you
+clearly see the target. Double check, research it, and think it through.
+That "deer" might not be a deer.
+
+Bob Cochran
+KB3JCM
+
+
 =20
-and people need to be reminded about proper reaction to spams on these
-lists:  NONE     (but do read onwards)
-
-Reply is INTENTIONALLY directed to vger's postmasters: we have a small
-group of BOFHs running the filters, if you don't like something of what
-we do, you have to convince us, discussion and democracy in a list won'=
-t
-alter our policies - instead it might get BOFHish treatment ...
-
-On Sat, Aug 09, 2003 at 06:52:59PM +0200, Vladim=EDr T?ebick=FD wrote:
-> Hello,
+On Sat, 2003-08-09 at 14:21, Douglas Cole wrote:
+> I have been getting a number of USE (UnSolicited Email) that are coming f=
+rom=20
+> the Linux-hams list .
 >=20
->       Have you also noticed spammers attacking this mailing lists? I
->       don't know whether are they registered subscribers or whether i=
-t
->       is required for people to be registered as a subcribers so that
->       they could post to the mailling list.
+> I thought this list was moderated ?
 >=20
->       In attachment there is one of the most recent spams I received.
+> If it is an open relay, why is that ?
+>=20
+> I value the postings that are sent to this list for the reason the list w=
+as=20
+> started, but am concerned about the increase in spam coming from it.
+>=20
+> Is the list moderator on vacation/holiday ?
+>=20
+> Not complaining, just curious...
+>=20
+> tia for any input.
 
-DON'T!
+--=-owCD7HRz8V8h6DUh7be8
+Content-Type: application/pgp-signature; name=signature.asc
+Content-Description: This is a digitally signed message part
 
-Spammers post everywhere, and we do _intentionally_ run lists as
-open-for-posting, which necessitates retroactive filter addition,
-in case a new strain of spams is seen.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.2.1 (GNU/Linux)
 
-This is one of the topics in the linux-kernel FAQ, which has
-a lot of general things for all of vger's lists:
-     http://www.tux.org/lkml/
+iD8DBQA/NZ3Bi3RyNZv37fARAjJ+AJ9Bnna6yPRM9TOg+S6BoEoeAE326ACdFt3T
+MaCacpx4S7h1AFrGSfGhSus=
+=bH1I
+-----END PGP SIGNATURE-----
 
-Running lists _closed_ doesn't solve the thing either.  It would
-be enough for a spammer to fake source address that is known poster
-to a list.  We have to use message content analysis, but that isn't
-very effective, when the content is extremely short (one web URL,
-or some such..)   Main reason to not to close the lists is that
-it would be a royal pain for managers, and for users...
+--=-owCD7HRz8V8h6DUh7be8--
 
-Lattest spammer strains (software scare peddlers, various advance
-fee fraudsters, etc.) are fairly well filtered away, but still
-something does leak thru.   A _lot_ more goes to the trash-pile.
-Some rare legitimate bits end up in there too, but we try to
-have a moment to inform sender's of those about the issue.
-We DO NOT approve any postings.
-
-We rather tolerate a bit of spams, and filter them away from
-repeating.  But remember that list-owners don't read all lists,
-so sometimes contacting:  postmaster@vger.kernel.org  with
-samples would expedite problem solving.   Posting to LISTS
-won't help!
-
-Note: VGER has web-service, try it!  See Majordomo-info.
-
-
-Oh yes, anything short of a cordial letter to postmasters to
-ask changes in our policies can fairly easily result in BOFHish
-treatments..  (usually ignoring) .. don't whine!
-
-Trivial changes might get made instantly, but things needing
-a lot of work are prone to take a long time, if they will ever
-be considered beyond work guestimation.   Volunteers for this
-most thankless of tasks (you hardly ever get thanks, but tons
-of complaints, of course!) can also offer themselves to us.
-
-With _enough_ people, we might be able to turn the lists into
-moderated (natural intelligence filter), with decent through-
-put delays.   Consider doing that for at least for a couple
-of years, and many hours per day ...   somehow I think that
-is completely unfeasible approach on voluntary basis.
-
-> --=20
-> Regards,
->  Vladimir Trebicky                          mailto:trebicky@xhost.cz
-
-/Matti Aarnio -- co-postmaster of vger.kernel.org
--
-To unsubscribe from this list: send the line "unsubscribe linux-kernel"=
- in
-the body of a message to majordomo@vger.kernel.org
-More majordomo info at  http://vger.kernel.org/majordomo-info.html
-Please read the FAQ at  http://www.tux.org/lkml/
-
--
-To unsubscribe from this list: send the line "unsubscribe linux-hams" i=
-n
-the body of a message to majordomo@vger.kernel.org
-More majordomo info at  http://vger.kernel.org/majordomo-info.html
