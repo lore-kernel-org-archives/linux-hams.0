@@ -1,34 +1,30 @@
-From: Niall Parker <niall@ve7hex.ampr.org>
-Subject: Re: ancient history ...
-Date: Fri, 09 Jul 2004 11:34:20 -0700
+From: M Taylor <mctylr@privacy.nb.ca>
+Subject: Re: Just installed RedHat 9
+Date: Fri, 9 Jul 2004 22:23:50 +0100
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <40EEE52C.8000206@ve7hex.ampr.org>
-References: <40ECEF6A.1070202@ve7hex.ampr.org> <001a01c464dc$01673420$b1123c0a@magic875> <40ED7ABD.4010103@ve7hex.ampr.org> <40EE8056.50803@pi8zaa.ampr.org>
+Message-ID: <20040709222350.B25769@pull.privacy.nb.ca>
+References: <1223.192.168.1.117.1089178842.squirrel@gateway> <200407071710.47138.pa3gcu@zeelandnet.nl> <2498.192.168.1.117.1089215964.squirrel@gateway> <002801c4644c$0f62ecd0$6401a8c0@jeremiel>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <40EE8056.50803@pi8zaa.ampr.org>
+Content-Disposition: inline
+In-Reply-To: <002801c4644c$0f62ecd0$6401a8c0@jeremiel>; from jemontanez@knology.net on Wed, Jul 07, 2004 at 12:58:47PM -0500
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"; format="flowed"
-To: Arno Verhoeven <pe1icq@pi8zaa.ampr.org>
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+To: John Montanez <jemontanez@knology.net>
 Cc: linux-hams@vger.kernel.org
 
-Arno Verhoeven wrote:
-> Niall Parker wrote:
- >> ...
->> though I'm wondering if it may be a terminal type issue ... after some 
->> more experimentation I find I can get it to fail similarly with 
->> TERM=xterm or vt100 or linux (ie the "xterm" in the error line above 
->> is actually the variable TERM in the shell)
->>
+On Wed, Jul 07, 2004 at 12:58:47PM -0500, John Montanez wrote:
+> Hello,
 > 
-> Try  "raw mode"
-> 
->       call -r lsp spr
+> I just installed RedHat 9, and am trying to recompile the kernel to include
+> support for amateur radio.  I get a message telling me that the kernel is to
+> big to be able to make a boot disk.  Can anyone tell me what sort of things
+> I can safely leave out when I configure the kernel to make it smaller.  It's
 
-That seems to work fine, any ideas why I need to use raw mode now ? (I 
-definitely didn't use it before).
+Anything you don't need. :-) Don't include drivers for hardware you don't
+have. But I suspect it may be hard to fit on a floppy.
 
-						... Niall
-
+I suspect that you need to do 'make bzdisk', in case you are trying to
+use 'make zdisk'.
 
