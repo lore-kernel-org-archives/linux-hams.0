@@ -1,70 +1,58 @@
-From: w9ya@amsat.org
-Subject: Re: Packet at the physical level
-Date: Fri, 19 Sep 2003 09:19:51 -0500
-Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <200309190919.51583.w9ya@amsat.org>
-References: <memo.20030919071047.57493A@rovoreed.compulink.co.uk>
+From: Stephen Hemminger <shemminger@osdl.org>
+Subject: [PATCH] (3/4) baycom/hdlcdrv unregister
+Date: Fri, 19 Sep 2003 13:38:04 -0700
+Sender: netdev-bounce@oss.sgi.com
+Message-ID: <20030919133804.5ac0fc22.shemminger@osdl.org>
 Mime-Version: 1.0
 Content-Transfer-Encoding: 7bit
-Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <memo.20030919071047.57493A@rovoreed.compulink.co.uk>
-Content-Disposition: inline
+Return-path: <netdev-bounce@oss.sgi.com>
+Errors-to: netdev-bounce@oss.sgi.com
 List-Id: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
-To: linux-hams@vger.kernel.org
+To: Thomas Sailer <t.sailer@alumni.ethz.ch>, Jeff Garzik <jgarzik@pobox.com>
+Cc: linux-hams@vger.kernel.org, netdev@oss.sgi.com
 
-Well the "bottom layer" of VHF packet can be done with almost any standard 202 
-modem.
+If baycom driver has never been opened, it will attempt to free
+an IRQ that it never registered when removed.  The problem is that hdlcdrv
+does not keep track of open/close state.
 
-Back in late 1983 "we" put just such a modem into "loopback" mode, adjusted 
-the audio response characteristics, and added a time-out/control timer to an 
-existing duplex 2-meter repeater. We then had a duplex packet repeater. This 
-was documented in two of the early ARRL Networking Conference books.
-
-I have since moved from the Los Angeles area but before I left we incorporated 
-some of the ded/netrom software using the rs-232 connection the repeater now 
-had on it by way of the attached modem. (This repeater was used extensively 
-during development of the netrom software.)
-
-We also modified the Jon Bloom Xerox 820 software as our second controller. It 
-had a homemade version of skip's state machine made out of some simple TTL 
-and roms. It also used the same 202 modem and a very simple keep-alive 
-circuit. This allowed us to do cross-band/cross-network hookups while the 
-netrom stuff was being developed. This controller was complete overkill for 
-transporting in-network (lan) operation.
-
-(I am told that the operation was still running, although on different 
-hardware, the last time I checked a few years ago. I imagine it still is. )
-
-Bottom line: yes there is the need to run some "nrzee-ish" code into a modem, 
-but what a "modem does" is what *is* done by a 202 modem as far a 1200 baud 
-ham packet is standardized at. As long as one is talking about the physical 
-layer of ham-packet, the modem tones are properly handled by the 202 
-standard(s).
-
-Vy 73 y'all;
-
-Bob
-w9ya
-
-On Friday 19 September 2003 02:10 am, Mike Davies wrote:
-> 	Thanks for all the replies (so far). A little bit of fiddling here
-> has confirmed that valid packets can start with either tone. You learn
-> something every day.
->
-> 	By the way, VHF amateur packet is not Bell202 compatible. I've
-> seen this mentioned before, but I've got the source code for a Bell202
-> modem which I know works, and that simply uses a 1300Hz tone for high bit
-> and a 2100Hz tone for a low bit. So not only does it use different tones
-> it doesn't do the NRZ modulation.
->
-> 	Hopefully in the next day or two I'll be able to transmit a few
-> test packets, and then I'll be able to determine the CRC polynomial if
-> nothing turns up before.
->
-> Mike
-> -
-> To unsubscribe from this list: send the line "unsubscribe linux-hams" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at  http://vger.kernel.org/majordomo-info.html
+diff -Nru a/drivers/net/hamradio/hdlcdrv.c b/drivers/net/hamradio/hdlcdrv.c
+--- a/drivers/net/hamradio/hdlcdrv.c	Fri Sep 19 13:16:29 2003
++++ b/drivers/net/hamradio/hdlcdrv.c	Fri Sep 19 13:16:29 2003
+@@ -554,6 +554,7 @@
+ 	/*
+ 	 * initialise some variables
+ 	 */
++	s->opened = 1;
+ 	s->hdlcrx.hbuf.rd = s->hdlcrx.hbuf.wr = 0;
+ 	s->hdlcrx.in_hdlc_rx = 0;
+ 	s->hdlcrx.rx_state = 0;
+@@ -593,6 +594,7 @@
+ 	if (s->skb)
+ 		dev_kfree_skb(s->skb);
+ 	s->skb = NULL;
++	s->opened = 0;
+ 	return i;
+ }
+ 
+@@ -845,7 +847,7 @@
+ 
+ 	BUG_ON(s->magic != HDLCDRV_MAGIC);
+ 
+-	if (s->ops->close)
++	if (s->opened && s->ops->close)
+ 		s->ops->close(dev);
+ 	unregister_netdev(dev);
+ 	
+diff -Nru a/include/linux/hdlcdrv.h b/include/linux/hdlcdrv.h
+--- a/include/linux/hdlcdrv.h	Fri Sep 19 13:16:29 2003
++++ b/include/linux/hdlcdrv.h	Fri Sep 19 13:16:29 2003
+@@ -180,6 +180,7 @@
+ 
+ struct hdlcdrv_state {
+ 	int magic;
++	int opened;
+ 
+ 	const struct hdlcdrv_ops *ops;
+ 
 
