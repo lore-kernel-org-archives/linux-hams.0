@@ -1,32 +1,29 @@
-From: ggb112 <gerard.borg@anu.edu.au>
-Subject: SCC cards
-Date: Wed, 05 Jan 2005 13:56:49 +1100
-Message-ID: <41DB5771.3020508@anu.edu.au>
+From: Jarmo <oh1mrr@nic.fi>
+Subject: 6pack warning
+Date: Wed, 5 Jan 2005 08:16:47 +0200
+Message-ID: <200501050816.47950.oh1mrr@nic.fi>
 Mime-Version: 1.0
 Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
+Content-Disposition: inline
 Sender: linux-hams-owner@vger.kernel.org
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"; format="flowed"
+Content-Type: text/plain; charset="us-ascii"
 To: Linux-Hams@vger.kernel.org
 
-Hi all
+If somebody is going to use kernel 2.6.10-bkX or -mm1,there is bug
+in 6pack.
+If you somehow loose power from tnc and power it up again,you don't
+get 6pack resynced anymore.Have to restart ax's again.
+Stable 2.6.10 and -ac patched fids tnc(s) ok after powerdown.
 
-Thanks very much to those who answered my original questions about 
-serial synchronous
-HDLC cards.
+So,before it goes into next stable kernel,person who made patch
+for -bk and -mm trees,please at least consider correct that bug,ok?
 
-The fact that the cards provide TTL output should be enough to get an 
-interface going.
+May source be with you..
 
-I have since found some synchronous cards from QUATECH and KONTRON.
-However the manufacturers do not know of LINUX support.
-
-Do LINUX network drivers actually exist for cards like the MPAC-100?
-
-In any case, please suggest some card brands you know that work with 
-LINUX network
-drivers.
-
-Gerard
-
+Jarmo
+-- 
+Linux is the answer.
+What was your question?
+(Brian Lane)
