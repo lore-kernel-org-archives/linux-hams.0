@@ -1,47 +1,34 @@
-From: Jacques Chion <Jacques.Chion@wanadoo.fr>
+From: "Tim Neu" <tim@tneu.visi.com>
 Subject: Re: PMS messaging program: where?
-Date: Thu, 9 Jan 2003 22:04:19 +0100 (CET)
+Date: Thu, 9 Jan 2003 16:06:27 -0600
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <Pine.LNX.4.44.0301092202550.2502-100000@cwoux.cerise.fr>
-References: <20030109193304.M8545@tneu.visi.com>
+Message-ID: <20030109220627.M32751@tneu.visi.com>
+References: <20030109193304.M8545@tneu.visi.com> <Pine.LNX.4.44.0301092202550.2502-100000@cwoux.cerise.fr>
 Mime-Version: 1.0
-Content-Transfer-Encoding: QUOTED-PRINTABLE
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <20030109193304.M8545@tneu.visi.com>
+In-Reply-To: <Pine.LNX.4.44.0301092202550.2502-100000@cwoux.cerise.fr>
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: TEXT/PLAIN; charset="iso-8859-1"
-To: Tim Neu <tim@tneu.visi.com>
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+To: Jacques Chion <Jacques.Chion@wanadoo.fr>, Tim Neu <tim@tneu.visi.com>
 Cc: linux-hams@vger.kernel.org
 
-Le Jan 9, Tim Neu =E9crivait
+On Thu, 9 Jan 2003 22:04:19 +0100 (CET), Jacques Chion wrote
+> 
+> Hello,
+> you can find that program in ax25-utils-2.1.42.a-3 package.
+> Best 73
 
->=20
-> The linux ax25 faq refers to a packet radio mail program called "pms"=
-=2E  I
-> can't seem to find this program anywhere!   I installed the debian pa=
-ckage by
-> the same name - but that doesn't seem to be anything related to packe=
-t radio.
->  (It's some sort of python library)
->=20
+Hmm.  When I try to intstall ax25-utils on debian, it claims that ax25utils is
+replaced by ax25-tools...
 
-=2E............................
->=20
-> Does this program still exist, or is it superceeded by something else=
-?
->=20
-> Thanks in advance.
+I _do_ have ax25-tools installed, though, but it does not have pms.  
+Evidently ax25-tools does not completely replace all funtionality of
+ax25-utils, or the debian package folks have their wires crossed. 
 
-Hello,
-you can find that program in ax25-utils-2.1.42.a-3 package.
-Best 73
+I will give a search for ax25-utils.   Thanks for the help.  
 
-------
-Jacques.Chion@wanadoo.fr f6cwo
-Quelques HOWTO en fran=E7ais http://perso.wanadoo.fr/jacques.chion/
+--
+Open WebMail Project (http://openwebmail.org)
+Debian Project (http://www.debian.org)
 
--
-To unsubscribe from this list: send the line "unsubscribe linux-hams" i=
-n
-the body of a message to majordomo@vger.kernel.org
-More majordomo info at  http://vger.kernel.org/majordomo-info.html
