@@ -1,29 +1,41 @@
-From: Wilbert Knol <zl2bsj@zl2tze.ath.cx>
-Subject: Re: Simple BBS, again, sorry for asking twice.
-Date: Thu, 26 Dec 2002 23:23:57 +1300 (NZDT)
+From: mvw@mvw.net
+Subject: FBB... any more help?
+Date: Thu, 26 Dec 2002 14:13:38 -0500 (EST)
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <Pine.LNX.4.44.0212262318260.5859-100000@zl2bsj.ampr.org>
-References: <20021226041017.GC3554@n7xy.net>
+Message-ID: <Pine.LNX.4.44.0212261405370.27818-100000@jeeves.mvw.net>
+References: <1040857685.20143.25.camel@pc3.pa4tu.net>
 Mime-Version: 1.0
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <20021226041017.GC3554@n7xy.net>
+In-Reply-To: <1040857685.20143.25.camel@pc3.pa4tu.net>
 List-Id: <linux-hams.vger.kernel.org>
 Content-Type: TEXT/PLAIN; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
-To: Bob Nielsen <nielsen@oz.net>
-Cc: linux-hams@vger.kernel.org
+To: linux-hams@vger.kernel.org
 
-On Wed, 25 Dec 2002, Bob Nielsen wrote:
+OK, so 7.04h is a bit better than 7.03 and I am making some progress. I
+have fbb working, replaced the dozens of "f6fbb's" and "Toulouse's" in the
+english.txt file (why not make them variables!), and I can now locally
+access and send/receive messages using xffbC. (Have not hooked up the
+radios yet until it is all working).
 
-> Has there been any update since 0.4-pre2?  That came out quite a while
-> ago (and I guess the "pre2" implies that a 0.4 version is imminent).
+1. Can I get bulletins via the Internet instead of via radio? Not sure any
+remaining bbs's in my area to give me a feed.
 
-Last time I looked (a couple of months ago) 0.4-pre2 was the most 
-recent version. I think it's almost 2 years old now, and seems to be 
-perfectly OK.
+2. Alternately, what do I do to make it a local message box only (ie no 
+forwarding to ax25 bbs network)? Docs not very clear on this. E.g. what 
+config changes do I make; how do I send bulletinsg just locally, etc.
+
+Any other help gratefully acknowledged.
+
+73 Mike VA3MVW
 
 
-Wilbert, ZL2BSJ
+
+
+
+
+
+
 
 
 
