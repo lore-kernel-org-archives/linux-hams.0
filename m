@@ -1,37 +1,31 @@
-From: Jeroen Vreeken <pe1rxq@amsat.org>
-Subject: Re: Linux 2.6.3 ... Where are mkiss and 6pack?
-Date: Thu, 19 Feb 2004 00:35:15 +0100
+From: Wilbert Knol <w.knol@niwa.co.nz>
+Subject: Re: gMFSK/hamlib/parport
+Date: Thu, 19 Feb 2004 08:15:04 +1300 (NZDT)
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <20040219003515.K231@jeroen.pe1rxq.ampr.org>
-References: <200402182229.30123@www.cabodesantapola.org>
+Message-ID: <Pine.LNX.4.44.0402190810380.25041-100000@zl2bsj.ampr.org>
+References: <20040218152745.GD16991@strauss.udel.edu>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7BIT
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <200402182229.30123@www.cabodesantapola.org>; from eb5esx@eb5esx.ampr.org on Wed, Feb 18, 2004 at 22:29:29 +0100
+In-Reply-To: <20040218152745.GD16991@strauss.udel.edu>
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"
-To: Ruben Navarro Huedo <eb5esx@eb5esx.ampr.org>
-Cc: Linux-hams List <linux-hams@vger.kernel.org>
+Content-Type: TEXT/PLAIN; charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+To: Mike Markowski <mm@UDel.Edu>
+Cc: Linux Hams <linux-hams@vger.kernel.org>
 
-On 2004.02.18 22:29:29 +0100 Ruben Navarro Huedo wrote:
-> -----BEGIN PGP SIGNED MESSAGE-----
-> Hash: SHA1
-> 
-> Hello friends:
-> linux-2.6.3 has been released, but...Where are 6pack and mkiss?
-> I don't find them...
-> I can see bpq, Baycom...etc... but not 6pack or mkiss.
 
-Somebody decided that they are not SMP safe...
-If you deselect 'Select only drivers expected to compile cleanly' in the
-'Code maturity level options' you will get the 6pack and mkiss drivers
-back.
+> 	Bug report (but maybe in hamlib):
+> 	- I'm using an ICOM 706 MkIIg with hamlib on ttyS0 and
+> 	  PTT to "none" in gMFSK just for the sake of seeing how
+> 	  gMFSK uses hamlib.  When I rotate the rig's tuning knob,
+> 	  gMFSK works for a bit nicely updating the spectrum freqs,
+> 	  but then I get a "Protocol error" and hamlib is disabled.
 
-In other words someone has to go over the mkiss and 6pack code and make it
-smp safe.
+Try turning off what Icom calls "transceive mode" in the rig.
 
-btw my last 6pack patch is NOT yet in 2.6.3 so you will have to apply that
-manually.
+Having this mode on causes the rig to announce frequency data as you
+tune around. It causes bus collisions with Hamlib packets, resulting
+in a protocol errors.
 
-Jeroen
+Wilbert, ZL2BSJ
 
