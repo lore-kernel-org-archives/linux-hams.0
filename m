@@ -1,53 +1,38 @@
-From: Rodolfo Brasnarof <rodob@datafull.com>
-Subject: Re: setting input and output levels
-Date: Thu, 23 Dec 2004 14:05:14 -0300
-Message-ID: <20041223140514.1fe87063.rodob@datafull.com>
-References: <41C4B097.5010205@telus.net>
+From: Bob Nielsen <nielsen@oz.net>
+Subject: Re: Linux AX25 Digipeating Software
+Date: Thu, 23 Dec 2004 09:44:41 -0800
+Message-ID: <20041223174441.GB14938@office.n7xy.net>
+References: <41C9A12A.2000401@utoronto.ca> <NCBBKBAJDJIPKFIAFBKLIEGOFFAC.wilson.hein@verizon.net> <20041222204955.GC8131@office.n7xy.net> <20041222225831.GB4086@merlin> <Pine.GSO.4.58.0412231259020.27419@kuori.saunalahti.fi>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7BIT
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-reply-to: <41C4B097.5010205@telus.net>
+Content-Disposition: inline
+In-Reply-To: <Pine.GSO.4.58.0412231259020.27419@kuori.saunalahti.fi>
 Sender: linux-hams-owner@vger.kernel.org
 List-Id: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
-To: linux-hams@vger.kernel.org
-Cc: Gordon Croft <gordon.croft@telus.net>
+Content-Transfer-Encoding: 7bit
+To: linux-hams List <linux-hams@vger.kernel.org>
 
-On Sat, 18 Dec 2004 14:35:03 -0800
-Gordon Croft wrote:
-
-> OK, I've got a rather basic question, but I can't seem to find the
-> answer...
+On Thu, Dec 23, 2004 at 01:01:04PM +0200, Tomi Manninen wrote:
+> On Wed, 22 Dec 2004, Nate Bargmann wrote:
 > 
-> How do I set the transmit and receive analog levels on the sound card
-> to use it as a sound modem or is it possible?
+> > Perhaps until Craig declares it obsolete this should be hosted
+> > *somewhere* just to preserve access to the code.  Digipeating is
+> > sometimes not recommended by some, but it would be nice if this code
+> > could be updated if for no other reason than to have the Linux AX.25
+> > capability meet the spec.
+> 
+> FWIW, there is an axdigi-0.02.tar.gz at the old ax25 tools home
+> at http://he.fi/. The patch I sent, was against this. I have absolutely
+> no idea if this is the latest version or not...
 
-I is possible, and many are doing this (me included).
+That is sightly newer than the version I found at the TAPR site. 
+Jonathan Naylor patched it previously to compile on 2.1 kernels (the
+original was compiled on kernel 1.1.95 with GCC 2.6.2 and libc 4.6.27,
+per the README file.)
 
-> I'm using a sound blaster sound card it says 'SB 4.05 detected OK' in 
-> dmsg.  I compiled sound modem support into the kernel (I think) and
-> I'm using soundmodemconfig to set it up.
+I'll play around with it (and the new patch) a bit and if it looks 
+useful, I'll upload a new *unofficial* version to the tapr site.
 
-No. The soundmodemconfig utility is the configuration tool for userspace
-soundmodem, not the kernel soundmodem module.
+Bob N7XY
 
- I can copy the traffic on my
-> radio through the sound card OK, although I have the output from the
-> radio going into the 'mic' input on the sound card instead of the line
-> input.  I've even got the PTT working (with some help from people on
-> this list, thanks).
-
-The line input should perform better. You need to select the recording
-source from a mixer app.
-
-> Now when I try to transmit the radio is keyed but I don't think I'm 
-> transmitting anything and I got thinking, how can I adjust the
-> transmit, or for that mater, the receive analog levels???
-
-For adjusting the receive level, use the soundmodemconfig tool, which
-has a calibration feature. Then adjust for best reception of all other
-stations.
-
-I adjust tx level just by ear. Try to make it sound similar to other
-reference station (a well working tnc or something). Then if needed
-adjust for others to have best reception of you.
