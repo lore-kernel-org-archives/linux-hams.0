@@ -1,35 +1,55 @@
-From: Ruben Navarro Huedo <eb5esx@eb5esx.ampr.org>
-Subject: Linux 2.6.3 ... Where are mkiss and 6pack?
-Date: Wed, 18 Feb 2004 22:29:29 +0100
+From: Alex V Flinsch <avflinsch@att.net>
+Subject: Re: gMFSK/hamlib/parport
+Date: Wed, 18 Feb 2004 18:32:15 -0500
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <200402182229.30123@www.cabodesantapola.org>
+Message-ID: <1077147135.6923.8.camel@homer.linux1.lan>
+References: <20040218152745.GD16991@strauss.udel.edu>
+Reply-To: avflinsch@att.net
 Mime-Version: 1.0
-Content-Transfer-Encoding: 8BIT
+Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
-Content-Description: clearsigned data
-Content-Disposition: inline
+In-Reply-To: <20040218152745.GD16991@strauss.udel.edu>
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: Text/Plain; charset="us-ascii"
-To: Linux-hams List <linux-hams@vger.kernel.org>
+Content-Type: text/plain; charset="us-ascii"
+To: Linux Hams <linux-hams@vger.kernel.org>
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On Wed, 2004-02-18 at 10:27, Mike Markowski wrote:
+> Hi all,
+> 
+> A couple questions about the excellent gMFSK 0.6beta2:
+> 
 
-Hello friends:
-linux-2.6.3 has been released, but...Where are 6pack and mkiss?
-I don't find them...
-I can see bpq, Baycom...etc... but not 6pack or mkiss.
+Execllent? I consider it to be a step above excellent!
 
-Thank's.
-- -- 
-Ruben Navarro Huedo
-eb5esx (arroba) eb5esx.ampr.org
-http://www.cabodesantapola.org
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.2.1 (GNU/Linux)
+> 
+>       Bug report (but maybe in hamlib):
+>       - I'm using an ICOM 706 MkIIg with hamlib on ttyS0 and
+>         PTT to "none" in gMFSK just for the sake of seeing how
+>         gMFSK uses hamlib.  When I rotate the rig's tuning knob,
+>         gMFSK works for a bit nicely updating the spectrum freqs,
+>         but then I get a "Protocol error" and hamlib is disabled.
+>         I assume the data out of the rig is changing too rapidly
+>         for hamlib to capture it?  Or maybe gMFSK is trying to
+>         reread the data too frequently?
+> 
 
-iD8DBQFAM9k50S5G8AO3zN8RApwlAJ9XDOWUd6MrLjfYnMOnBOlOFDx0xACfcUc4
-vrYn91xyt4x4DVyVwhF7a00=
-=ZOyp
------END PGP SIGNATURE-----
+I just tried this on my system (Yaesu FT100,gMFSK-0.6beta2,
+hamlib-1.2.0) and this does not occur, if there is a problem, it might
+be in the IC-706 implementation in hamlib, what version of hamlib are
+you using? 
+
+
+BTW I have only had one problem with gMFSK, and that has been happening
+for quite sometime (I think it started around version 0.5). Sometimes
+(that's the killer) the program will lock up when switching modes. Has
+anyone else had that problem?
+
+
+
+
+-- 
+Alex / AB2RC 
+Yaesu FT100 software for Linux http://www.qsl.net/kc2ivl
+Why do they call Radio "Wireless", between my shack and antennas
+I must have over 1500 feet of wire!
 
