@@ -1,24 +1,30 @@
-From: "David S. Miller" <davem@davemloft.net>
-Subject: Re: [2.6 patch] ax25_route.c: remove an unused function
-Date: Mon, 1 Nov 2004 16:29:46 -0800
-Message-ID: <20041101162946.19b3869e.davem@davemloft.net>
-References: <20041028230032.GU3207@stusta.de>
-	<20041029002045.GO29142@stusta.de>
+From: Bernard Pidoux <pidoux@ccr.jussieu.fr>
+Subject: mkiss, udev and kernel 2.6
+Date: Tue, 02 Nov 2004 17:48:51 +0100
+Message-ID: <4187BA73.2080908@ccr.jussieu.fr>
+References: <20040729113651.6517fe27@dell_ss3.pdx.osdl.net>
 Mime-Version: 1.0
 Content-Transfer-Encoding: 7bit
-Return-path: <netdev-bounce@oss.sgi.com>
-In-Reply-To: <20041029002045.GO29142@stusta.de>
-Sender: netdev-bounce@oss.sgi.com
-Errors-to: netdev-bounce@oss.sgi.com
+Return-path: <linux-hams-owner@vger.kernel.org>
+In-Reply-To: <20040729113651.6517fe27@dell_ss3.pdx.osdl.net>
+Sender: linux-hams-owner@vger.kernel.org
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"
-To: Adrian Bunk <bunk@stusta.de>
-Cc: ralf@linux-mips.org, linux-hams@vger.kernel.org, netdev@oss.sgi.com, linux-kernel@vger.kernel.org
+Content-Type: text/plain; charset="us-ascii"; format="flowed"
+To: 
+Cc: linux-hams@vger.kernel.org
 
-On Fri, 29 Oct 2004 02:20:45 +0200
-Adrian Bunk <bunk@stusta.de> wrote:
+Hi,
 
-> The patch below removes an unused function from net/ax25/ax25_route.c
+Does someone have an experience with mkiss and udev in 2.6 kernel ?
 
-Applied, thanks Adrian.
+I need to use mkiss-kissattach to drive a dual port TNC 1200/9600 KPC9612.
 
+However I don't see how to set up a master-slave pseudo tty system with 
+udev.
+
+Actually, I went through by instructing the kernel to load devfs at boot 
+(append="devfs=mount... " in lilo.conf.
+
+But Is there any other solution with udev alone (without devfs) ?
+
+73 de Bernard, f6bvp
