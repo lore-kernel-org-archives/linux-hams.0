@@ -1,35 +1,37 @@
-From: "Robin Gilks" <g8ecj@abmdata.co.uk>
-Subject: OT: Visiting NZ Dec/Jan - any Linux-Hams North or South Island?
-Date: Tue, 6 Aug 2002 14:23:49 -0000 (GMT)
+From: Riley Williams <rhw@InfraDead.Org>
+Subject: Re: Responses to my Kenwood D7 question
+Date: Sun, 11 Aug 2002 17:23:37 +0100 (BST)
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <11981.213.52.201.51.1028643829.squirrel@server.localdomain>
-Reply-To: g8ecj@abmdata.co.uk
+Message-ID: <Pine.LNX.4.21.0208111720040.8397-100000@Consulate.UFP.CX>
+References: <20020804172700.A30218@pull.privacy.nb.ca>
+Reply-To: Riley Williams <Riley@Williams.Name>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7BIT
 Return-path: <linux-hams-owner@vger.kernel.org>
+In-Reply-To: <20020804172700.A30218@pull.privacy.nb.ca>
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"
-To: linux-hams@vger.kernel.org
+Content-Type: TEXT/PLAIN; charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+To: M Taylor <mctylr@privacy.nb.ca>
+Cc: John Ackermann N8UR <jra@febo.com>, linux-hams@vger.kernel.org
 
-Greetings
+Hi.
 
-I'm visiting NZ (again - third time lucky?) for 6 weeks in December
-2002/January 2003 starting in the North (Bay of Islands) and ending in
-Christchurch just before Xmas, driving though Auckland, Taupo, Wellington,
-Picton, Tasmin, Greymouth on the way.
-I'm interesting in finding out what digital activity there is in these
-areas (making use of Linux of course!!) more for eyeball contact than
-carting a laptop/modem/radio about (although I'll probably have a 2m/70cm
-handie with me).
-Are there any clubs, meets, rallies or whatever likely to be on during
-this time - I'd not be adverse to an invite to a barbi or for a beer
-either :-)) - where a traveller can socialise?
+>> I've had a couple of responses to my posting about using the Kenwood
+>> TH-D7 in KISS mode.  Unfortunately, they both confirm that the radio
+>> just doesn't work properly in KISS.  That's a real bummer.
+>>
+>> Cees, by the way -- my D7 is a relatively early one, but I had it
+>> upgraded by Kenwood to the (g) version at Dayton Hamvention a couple
+>> of years ago, so I think I have the latest firmware and that
+>> apparently doesn't touch this problem.
 
--- 
-Robin
+> It has been explained that a proper KISS mode won't fit in the
+> single ROM that is in the TH-D7.
 
-Internet: g8ecj@abmdata.co.uk     http://gb7ipd.dnsalias.net/
-Anorak mode = Shack: (+44) 1628 533311  Fax:  (+44) 8700 516573
-Club pages (g4xyw modem etc) at http://www.tvipug.org
+Does anybody have details of precicely what sort of functions are
+implemented in the KISS mode that is implemented in the TH-D7 ???
+If so, perhaps somebody can write code for the Linux kernel that
+works around whatever limitations it has.
 
+Best wishes from Riley G7GOD / KB8PPG.
 
