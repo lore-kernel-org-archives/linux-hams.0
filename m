@@ -1,43 +1,75 @@
-From: Haines Brown <brownh@hartford-hwp.com>
+From: jjgpg <jjgpg@cet.com>
 Subject: Re: Tracking down a Linux crash
-Date: Wed, 16 Oct 2002 10:40:35 -0400
+Date: Wed, 16 Oct 2002 08:21:52 -0700 (PDT)
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <200210161440.g9GEeZD02068@hartford-hwp.com>
-References: <1034774433.5514.2.camel@edith> <4049232.1034760354@WUSJA129861-8HP>
+Message-ID: <Pine.LNX.4.21.0210160820140.19191-100000@jazzy_earth_dargon.net>
+References: <4049232.1034760354@WUSJA129861-8HP>
+Mime-Version: 1.0
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-reply-to: <4049232.1034760354@WUSJA129861-8HP> (message from John Ackermann
-	N8UR on Wed, 16 Oct 2002 09:25:54 -0400)
+In-Reply-To: <4049232.1034760354@WUSJA129861-8HP>
 List-Id: <linux-hams.vger.kernel.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
+Content-Type: TEXT/PLAIN; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
-To: jra@febo.com
-Cc: kelly.black@penguinpackets.com, linux@lists.tapr.org, linux-hams@vger.kernel.org
+To: John Ackermann N8UR <jra@febo.com>
+Cc: Kelly Black <kelly.black@penguinpackets.com>, linux@lists.tapr.org, linux-hams@vger.kernel.org
 
-I don't have much to offer except commiseration ;-)
+Hi,
 
-It would help to define just what happens to your system. If you
-really mean "crash," in that the screen goes black, and your drive
-access stops, and a reboot begins, etc., then the usual culprit may be
-flakey RAM.
+Have check all your memory. I had a simular prob. running Gnome 1. I was
+using some old simms 70ns. But when I swiched to 133mhz dimms the prob
+went ayway. 
 
-Had it happen to me twice over the years, where RAM replacement solved
-the problem. Manufacturers usually pretty willing to replace RAM,
-questions unasked, if covered by warranty.
+Jeremiah KD7DMP
 
-If you've got RAM kicking around, try a substitution. If you have
-plenty of RAM and can take out a bank, try that. Real RAM testers are
-prohibitively expensive, but software testers I'm told work OK
-(apparently better than they did ten years ago). If that's the route
-for you, consider memtester-2.93.1. It compiles easily. The only catch
-is that it runs and runs until you stop it. I didn't know that and
-spent a week with it running in the background before it dawned on me
-it would not complete by itself ;-(
+On Wed, 16 Oct 2002, John Ackermann N8UR wrote:
 
-If instead your system freezes (no keyboard our mouse inputs), forcing
-you to RESET, you might have a problem with your video card. I'm not
-positive, but I believe I once had this kind of problem because the
-heat sink on the card had fallen off. When I put it back on with
-thermal glue, the problem stopped (so far)..
+> Hi Kelly --
+> 
+> I don't think it's heat as the crash sometimes occurs relatively quickly 
+> after powerup, and other times after days of running.  The CPU is not being 
+> overclocked, and has an original AMD heatsink/fan, plus there's a fan on 
+> the case.  However, I'm not monitoring CPU temperature in the system (don't 
+> have that software installed yet) so I can't say for sure what the temp is.
+> 
+> Re the logs, there's nothing -- in particular, no sign of a kernel panic.
+> 
+> Thanks for the quick reply!
+> 
+> 73,
+> John
+> 
+> --On Wednesday, October 16, 2002 8:20 AM -0500 Kelly Black 
+> <kelly.black@penguinpackets.com> wrote:
+> 
+> > On Wed, 2002-10-16 at 08:08, John Ackermann N8UR wrote:
+> >> Hi all --
+> >>
+> >> I realize this may be a bit off-topic, but my rationale is that (a) I'm
+> >> among knowledgeable friends, and (b) this machine is destined to be my
+> >> hamshack system, displacing a Windows box.
+> >>
+> > ---Snip long description---
+> >
+> > Could the problem be heat related?  What is the CPU temp when the
+> > lockups occur (or just after a reboot).  Does anything show up in the
+> > logs (kernel panics or anything suspicious?).
+> >
+> > Kelly Black
+> > KB0GBJ
+> >
+> >
+> >
+> >
+> 
+> 
+> 
+> ----
+> John Ackermann    N8UR         jra@febo.com     http://www.febo.com
+> President, TAPR                n8ur@tapr.org    http://www.tapr.org
+> 
+> -
+> To unsubscribe from this list: send the line "unsubscribe linux-hams" in
+> the body of a message to majordomo@vger.kernel.org
+> More majordomo info at  http://vger.kernel.org/majordomo-info.html
+> 
 
-Haines KB1GRM 
