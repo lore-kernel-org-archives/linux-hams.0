@@ -1,70 +1,49 @@
-From: Gary Kohtala <w7ntf@yahoo.com>
+From: "Robin Gilks" <g8ecj@gilks.org>
 Subject: Re: Convers Setup
-Date: Tue, 26 Oct 2004 13:26:30 -0700 (PDT)
+Date: Wed, 27 Oct 2004 14:21:35 +1300 (NZDT)
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <20041026202630.33154.qmail@web50301.mail.yahoo.com>
-References: <20041025143617.67da0cf9.rodob@datafull.com>
+Message-ID: <47705.202.37.96.11.1098840095.squirrel@202.37.96.11>
+References: <417D35BD.9020709@utoronto.ca>
+Reply-To: g8ecj@gilks.org
 Mime-Version: 1.0
+Content-Transfer-Encoding: 7BIT
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <20041025143617.67da0cf9.rodob@datafull.com>
+In-Reply-To: <417D35BD.9020709@utoronto.ca>
 List-Id: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-To: Rodolfo Brasnarof <rodob@datafull.com>, linux-hams@vger.kernel.org
+To: linux-hams@vger.kernel.org
 
-Speaking of Converse Servers, mine came back on line
-a few days ago. The TACOMA Convers Server is
-available at 66.80.67.210, port 3600, for anyone
-interested. I am running HTPP on a SuSE v9.0 Linux
-box.
+> Hello all,
+>
+> In an effort to get prepared for digital ARES traffic handling, I'm
+> going to try running a digital net.  I'm looking to add a convers server
+> to my prototype node.  So far, I've found the following pieces of
+> software:
+>
+> saupp
+> wampes
+> tpp-conversd
+> tnn
+> pp-conversd
+> htpp
+> htppu
+> webconvers
 
-73,
+Webconvers is not a convers server as such - it is the interface 'glue'
+that allows access to an existing convers server via the web using a
+browser.
 
-Gary, W7NTF
+The latest version is 2.1beta2 which has a channel display to simplify the
+moving between channels and operating on multiple channels.
 
---- Rodolfo Brasnarof <rodob@datafull.com> wrote:
+I'm looking for feedback on use and translations are still required - I
+know that its being used in non-English environments but nobody has sent
+me any language files :-((
 
-> On Mon, 25 Oct 2004 13:19:57 -0400
-> Dave Stubbs <dave.stubbs@utoronto.ca> wrote:
-> 
-> > Hello all,
-> > 
-> > In an effort to get prepared for digital ARES
-> traffic handling, I'm 
-> > going to try running a digital net.  I'm looking
-> to add a convers
-> > server to my prototype node.  So far, I've found
-> the following pieces
-> > of software:
-> > 
-> > saupp
-> > wampes
-> > tpp-conversd
-> > tnn
-> > pp-conversd
-> > htpp
-> > htppu
-> > webconvers
-> 
-> I'm using conversd-saupp. It seems to be me newer,
-> has irc support, and
-> some ax25 support too.
-> 
-> For ax25 user connection, you could use axconv,
-> which hangs on ax25d,
-> and connects to conversd via tcp/ip.
-> -
-> To unsubscribe from this list: send the line
-> "unsubscribe linux-hams" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at 
-> http://vger.kernel.org/majordomo-info.html
-> 
+
+-- 
+Robin Gilks zl3rob/g8ecj
+Internet: g8ecj@gilks.org    http://www.gilks.org
 
 
 
-		
-__________________________________
-Do you Yahoo!?
-Yahoo! Mail Address AutoComplete - You start. We finish.
-http://promotions.yahoo.com/new_mail 
