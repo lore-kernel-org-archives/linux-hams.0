@@ -1,36 +1,42 @@
-From: Tomi Manninen <tomi.manninen@hut.fi>
+From: Tomi Manninen <tpm@prkele.tky.hut.fi>
 Subject: Re: [PATCH] node and libax25io nonblocking
-Date: Mon, 17 Feb 2003 23:21:54 +0200 (EET)
+Date: Tue, 18 Feb 2003 00:13:48 +0200 (EET)
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <1045516914.3e5152727b071@webmail2.hut.fi>
+Message-ID: <Pine.LNX.4.44.0302180001290.1481-100000@oh2bns.ampr.org>
 References: <20030217215608.A801@jeroen.pe1rxq.ampr.org>
-Reply-To: oh2bns@sral.fi
+Reply-To: tpm@prkele.tky.hut.fi
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7BIT
 Return-path: <linux-hams-owner@vger.kernel.org>
 In-Reply-To: <20030217215608.A801@jeroen.pe1rxq.ampr.org>
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"
+Content-Type: TEXT/PLAIN; charset="us-ascii"
+Content-Transfer-Encoding: 7bit
 To: Jeroen Vreeken <pe1rxq@amsat.org>
 Cc: linux-hams@vger.kernel.org, csmall@small.dropbear.id.au
 
-On Mon, 17 Feb 2003 21:56:08 +0100 Jeroen Vreeken <pe1rxq@amsat.org> wrote:
+On Mon, 17 Feb 2003, Jeroen Vreeken wrote:
 
-> I got a bit tired of waiting for a new node release....
-> The attached patches are against libax25-0.0.10 and node-0.3.0.
-> The libax25 patch is basicly the same I posted a while back with the
-> buffer check added and a few changes to axio_puts(), axio_gets() and
+> The libax25 patch is basicly the same I posted a while back with the buffer
+> check added and a few changes to axio_puts(), axio_gets() and
 > axio_getline().
 
-Well, I'm a bit tired of things too...
+Question: is this different from the patch I sent you and Craig a few 
+months back? The version that should be in the CVS now (I haven't checked 
+the CVS).
 
-Anyway, I did a fix to node a few weeks ago and I was going to send it
-to you (jeroen) for testing. I don't have a setup to test it properly
-here. I'll look at your fix and tell you what I think. Basically I don't
-think libax25 should be touched, other than the bugs introduced in 0.0.10
-need to be fixed (ie. go back to 0.0.9 behaviour).
+The approach you have used for fixing node seems after a quick look 
+similar to what I had done, but there is one thing I need to discuss with 
+you. I'll get back to you on that later.
+
+You have covered a few cases that I had missed but also you have a 
+few cases that I think are not needed. (It shouldn't be necessary to add 
+any extra select() loops or other blocking measures when the socket 
+already is blocking...)
+
+More comments tomorrow.
 
 -- 
-Tomi Manninen         Internet:  oh2bns@sral.fi
-OH2BNS                AX.25:     oh2bns@oh2rbi.fin.eu
-KP20ME04              Amprnet:   oh2bns@oh2rbi.ampr.org
+Tomi Manninen           Internet:  oh2bns@sral.fi
+OH2BNS                  AX.25:     oh2bns@oh2rbi.fin.eu
+KP20ME04                Amprnet:   oh2bns@oh2rbi.ampr.org
+
