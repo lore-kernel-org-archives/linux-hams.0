@@ -1,29 +1,25 @@
-From: Richard <richard.bown@blueyonder.co.uk>
-Subject: Re: convers links
-Date: Tue, 20 Jul 2004 10:34:27 +0100
+From: Dave Stubbs <dave.stubbs@utoronto.ca>
+Subject: FBB SMTP
+Date: Thu, 22 Jul 2004 19:08:12 -0400
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <40FCE723.8050304@blueyonder.co.uk>
-References: <40FC143F.5000403@blueyonder.co.uk>
+Message-ID: <410048DC.9070505@utoronto.ca>
+References: <20040719173115.25966.qmail@radagast.org> <01a101c46db9$64d69ba0$050010ac@tokland>
 Mime-Version: 1.0
 Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <40FC143F.5000403@blueyonder.co.uk>
+In-Reply-To: <01a101c46db9$64d69ba0$050010ac@tokland>
 List-Id: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"; format="flowed"
-To: Richard <richard.bown@blueyonder.co.uk>
-Cc: linux-hams@vger.kernel.org
+To: linux-hams@vger.kernel.org
 
-Richard wrote:
+Hello all,
 
-> Hi can anyone recommend a a UK or northern European Convers I can link 
-> to.
->
-> Thanks
-> Richard
+I get vague hints from some websites that F6FBB will do SMTP.  However, 
+I can find nothing about this in the documentation or examples.
 
-Thanks to all who replied both on line and direct, Ive put my primary 
-link into London_UK
+Will FBB do this?  Or does it require another app?
 
-Many thanks and nice to see some old callsigns still around
-73
-Richard
+Thanks in advance and 73
+
+Dave
+VA3BHF
