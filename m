@@ -1,29 +1,44 @@
-From: Riley Williams <rhw@MemAlpha.Co.UK>
+From: Dennis Boone <drb@msu.edu>
 Subject: Re: KISS Mode
-Date: Mon, 23 Feb 2004 16:21:48 +0000 (GMT)
+Date: Mon, 23 Feb 2004 11:45:04 -0500
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <Pine.LNX.4.44.0402231619330.16431-100000@Consulate.MemAlpha.Co.UK>
-References: <E6B40EBA0E7B31449C3C565C8ED2F2A00130E42A@spsrvr04.sp.gruposimoldes.pt>
-Mime-Version: 1.0
+Message-ID: <200402231645.i1NGj44L000909@yagi.h-net.msu.edu>
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <E6B40EBA0E7B31449C3C565C8ED2F2A00130E42A@spsrvr04.sp.gruposimoldes.pt>
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: TEXT/PLAIN; charset="us-ascii"
+MIME-Version: 1.0
+Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
-To: Cristiano Tavares - SP <Cristiano.Tavares@simoldesplasticos.pt>
-Cc: Linux Ham Radio <linux-hams@vger.kernel.org>
+To: linux-hams@vger.kernel.org
 
-Hi Cristiano.
+ > Is there any program that makes the tnc pass to kiss using the shell,
+ > just like KISSER was used in DOS?
 
-> Is there any program that makes the tnc pass to kiss using the shell,
-> just like KISSER was used in DOS?
+The following perl script gets a Kantronics TNC _out_ of KISS mode;
+may work for others, I haven't read manuals or tried it.
 
-Can't printf be used to do that? Assuming your TNC was on what DOS calls 
-COM1 you'd use...
+    #!/usr/bin/perl
 
-	printf 'KISS\r\n' > /dev/ttyS0
+    $dev = shift(@ARGV);
+    $speed = shift(@ARGV);
 
-...to put it in KISS mode, wouldn't you?
+    open(DEV, "+<$dev") ||
+        die "unable to open $dev: $!";
 
-Best wishes from Riley G7GOD / KB8PPG.
+    print DEV chr(0xc0), chr(0xff), chr(0xc0);
 
+    close(DEV);
+
+Sample usage: kissoff /dev/ttyS0 1200
+
+To get the TNC into KISS mode, you can generally use minicom or kermit
+to to connect to the TNC, get it into command mode, then type the
+appropriate command.  For a Kantronics unit that would be:
+
+    intface kiss
+    reset
+
+which sticks when you turn off the power.  The command may be
+different for other brands; I have manuals for the PK-900 and PK-232,
+but they are at home right now.
+
+De
