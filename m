@@ -1,97 +1,53 @@
-From: "John A. Magliacane" <kd2bd@yahoo.com>
-Subject: Announcing PREDICT Version 2.2.0
-Date: Sat, 12 Oct 2002 13:27:46 -0700 (PDT)
+From: M Taylor <mctylr@privacy.nb.ca>
+Subject: Re: IP over Packet Ham Radio
+Date: Sun, 13 Oct 2002 20:05:11 +0100
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <20021012202746.49164.qmail@web12202.mail.yahoo.com>
-References: <20020708155751.11207.qmail@web12207.mail.yahoo.com>
+Message-ID: <20021013200511.B7927@pull.privacy.nb.ca>
+References: <a05111b01b9cb55f871e3@[10.10.1.6]>
 Mime-Version: 1.0
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <20020708155751.11207.qmail@web12207.mail.yahoo.com>
+Content-Disposition: inline
+In-Reply-To: <a05111b01b9cb55f871e3@[10.10.1.6]>; from creyn@wi.rr.com on Thu, Oct 10, 2002 at 11:12:56AM -0500
 List-Id: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
-To: linux-hams@vger.kernel.org
+To: Christian Reynolds <creyn@wi.rr.com>
+Cc: linux-hams@vger.kernel.org
 
-Hello Everyone.
+On Thu, Oct 10, 2002 at 11:12:56AM -0500, Christian Reynolds wrote:
+ 
+> Question:  The HOWTO suggests that I should be able to ping along the 
+> radio network.  I am using IP numbers on the air of 192.168.100.30 
+> and 192.168.100.40.   The ping requests are transmitted, and the 
+> other computer does not respond.
+> 
+> Remember, that this system works using the call and linuxnode system...
+> 
+> What I am trying to do is see if I can do a direct telnet from 
+> 192.168.100.30 and have it contact 192.168.100.40.  I see the packets 
+> going out using the supplied monitor program... I see it calling the 
+> other box (and hear the chatter over the air on another radio), but 
+> the TNC will not answer.
+> 
+> I do not have any firewalling software on these two computers running.
+> 
+> I am wondering if there is something in the software that requires me 
+> to be on the 44.x.x.x network... I am running 192.168...
+> 
+> Any suggestions?
 
-PREDICT version 2.2.0 has been released.  This version contains
-significant internal changes including the adoption of SGP4/SDP4
-orbital models, support for a satellite transponder database, and
-a completely revised Single Satellite Tracking mode that provides
-detailed uplink and downlink frequencies (properly compensated for
-Doppler shift) that are required for successful communication via
-OSCAR satellites.  (You can now "tune" across a transponder using
-the keyboard to equate a particular downlink signal to the required
-uplink frequency.)  Many of the other functions of the program
-were allowed to successfully remain intact.
+My first piece of advice is to try using the command "listen -a" and "listen"
+(without -a) on the receiving machine (192.168.100.40 I believe).
 
-The CHANGES file provides more details, and reads as follows:
+On 192.168.100.40, 'ping 192.168.100.40' works right?
 
-Release 2.2.0: (a.k.a. The Columbus Day Release)
-By John A. Magliacane <kd2bd@amsat.org> (12-Oct-2002):
+My random guess is whether the connect is 8-bit clean. I know I had
+such problems with using the built-in TNC of the Kenwood TH-D7 mkII,
+trying to use it in KISS mode.
 
-* PREDICT's satellite tracking algorithm was replaced by a more precise
-  model based on a port of Dr. TS Kelso's SGP4/SDP4 Pascal routines to
-  'C' by Neoklis Kyriazis, 5B4AZ.
+Do you mean you want to be able to do "port forwarding" using netfilter/
+iptables or ipchains on 192.168.100.30, and forward the connection to
+192.168.100.40? Or just to be able to telnet between the machines?
 
-* PREDICT now imports, exports, and permits editing of TLE element set
-  numbers, International Designators, and Bstar and nddot/6 drag terms
-  in addition to all the remaining orbital data found in a two-line
-  element set.
-
-* Earthtrack was modified so that when multi-tracking satellites,
-  range circles are displayed 5 minutes prior to AOS through LOS.
-
-* Maximum allowable callsign length was increased to 15 characters to
-  permit groundstation names to be used in place of 6 character callsigns.
-
-* Vocalizer will no longer send audio to the soundcard if the soundcard
-  cannot be set to the proper sampling rate and word size.
-
-* The Single Tracking mode was completely redesigned to allow interactive
-  selection of satellite transponder, provide real-time Doppler-compensated
-  uplink and downlink frequency information, and support for a transponder
-  database.  Spacecraft antenna squint angle, propagation delay, echo,
-  and satellite eclipse depth information are also now available.  See
-  the NEWS file for additional information.
-
-* Orbital predictions now report squint angles instead of orbit
-  numbers if ALAT/ALON data is available in the transponder database.
-
-* A Visual BASIC Windows-based client application has been contributed
-  by Steve Fraser, VK5ASF.  Steve also contributed some small coding
-  changes that allow PREDICT to be successfully invoked by rc.local
-  upon startup.
-
-* Bent Bagger, OZ6BL, contributed a small change to get_response() in
-  the client demo.c program.  The modification recognizes the absence
-  of a PREDICT server, and displays an appropriate error message.
-  The previous method set an alarm and waited for a timeout to occur.
-
-* A bug in the configure script was fixed.
-
-* Lots of other small coding changes were made.
-
-
-Further details are available at:
-
-        http://www.qsl.net/kd2bd/predict.html
-
-
-Enjoy the program!
-
-
-73, de John, KD2BD
-
-
-=====
--=-=-=-=-=-=-=-=- John A. Magliacane, KD2BD -=-=-=-=-=-=-=-=-=-=-=-=-=-
-   Internet  : kd2bd@amsat.org  |  Video : 426.250 MHz/439.250 MHz
-   Satellite : KITSAT-OSCAR-25  |  Morse : -.-  -..  ..---  -...  -..
-   Voice     : +1.732.224.2948  |  WWW   : http://www.qsl.net/kd2bd/
--=-=-=-=-=-=-=-= Linux Doesn't Cost.  It Pays. =-=-=-=-=-=-=-=-=-=-=-=-
-
-__________________________________________________
-Do you Yahoo!?
-Faith Hill - Exclusive Performances, Videos & More
-http://faith.yahoo.com
+-ve1mct 
+ http://www.mctaylor.com/ve1mct/
