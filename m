@@ -1,92 +1,39 @@
-From: =?iso-8859-1?q?G=FCnther=20Montag=20?= <dl4mge@darc.de>
-Subject: Fwd: Re: usage of f6fbb via telnet port
-Date: Fri, 23 Apr 2004 11:10:56 +0200
+From: "Rodolfo Brasnarof" <rodob@ciudad.com.ar>
+Subject: Re: usage of f6fbb via telnet port
+Date: Mon, 26 Apr 2004 02:05:13 -0300
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <200404231110.56989.dl4mge@darc.de>
+Message-ID: <408C6E59.5037.3F0768@localhost>
+References: <40888C26.32381.228C49@localhost>
 Mime-Version: 1.0
 Content-Transfer-Encoding: QUOTED-PRINTABLE
 Return-path: <linux-hams-owner@vger.kernel.org>
+In-reply-to: <200404231502.30654.dl4mge@darc.de>
+Content-description: Mail message body
 List-Id: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="iso-8859-1"
-To: linux hams <linux-hams@vger.kernel.org>
-Cc: -HFTERMHACKERS- <hfterm-hackers@lists.sourceforge.net>
+To: linux-hams@vger.kernel.org
+Cc: =?ISO-8859-1?Q?G=FCnther_Montag?= <dr.g.montag@gmx.net>
 
 
+---
+On 23 Apr 2004 at 15:02, G=FCnther Montag wrote:
 
-----------  Weitergeleitete Nachricht  ----------
+> Tnx for info!
+> will test this config!
+> I want to be able to send and receive mail using a ham program (hf / =
+hfterm)=20
+> 's rx and tx window, which means, configure the program as mailbox., =
+like the=20
+> pactor mailboxes.
+> Where can I read something about axip?
 
-Subject: Re: usage of f6fbb via telnet port
-Date: Fri, 23 Apr 2004 11:10:10 +0200
-=46rom: G=FCnther Montag  <dl4mge@darc.de>
-To: John Coppens <john@jcoppens.com>
-Cc: "-HFTERMHACKERS-" <hfterm-hackers@lists.sourceforge.net>
+=46irst, why don't you reply to linux-hams, so all of us can=20
+help you?
 
-Am Donnerstag 22 April 2004 17:37 schrieben Sie:
-> On Thu, 22 Apr 2004 15:49:53 +0200
->
-> G=FCnther Montag  <dl4mge@darc.de> wrote:
-> > 3286
->
-> Hi Gunter
->
-> This is what I found out:
->
-> That port (3286) is open normally, but it is formatted to be used wit=
-h the
-> xfbbC terminal program. The username and password are made into a key=
- to
-> be sent to that port, to get actual access.
->
-> According to 18.23 of the FBB manual:
->
-> The address to use may be 189C (189C hex =3D 6300 decimal).
->
-> But, it=B4s also possible to define another port address,
-> for example if you want Telnet access to LinFBB on port 23,
-> (port 23 is standard for Telnet, but 23 is also used by inetd in Linu=
-x!)
-> then change the =B4address=B4 of COM2 to 17 (hex 17 =3D 23 decimalt)
->
-> Tip:
-> You may put the R letter (Read only default access) which gives a
-> read-only if the user is unknown or not authorized for Modem/Telnet (=
-M
-> Flag in EU command).
->
->
-> <Image>Example of PORT.SYS for LinFBB
->
-> Standard PORT.SYS with 1 TNC (COM1) with WA8DED-hostmode,
-> 4 channels, 1 channel for outgoing forward,
-> and one Telnet interface listening on port 6300,
-> 8 channels, 1 channel for outgoing forward.
->
-> #
-> #Ports TNCs
-> 2      2
-> #
-> #Com Interface Address (device)   Baud
-> 1    9         /dev/cua0          9600
-> 2    9         189C               0		<=3D=3D=3D the telnet port at 63=
-00
-> #
->
-> 73,
-> John
-> ON6JC/LW3HAZ
+You can read about axip (actually ax25 ip encapsulation) on=20
+manpages: axipd(1), ax25ipd.conf(5), and some examples in=20
+ax25-howto.
 
-Thanks very much, i think this will helm me a lot!
---
-73 de
-G=FCnther
-dl4mge@darc.de
-
--------------------------------------------------------
-
---=20
-73 de
-G=FCnther
-dl4mge@darc.de
 -
 To unsubscribe from this list: send the line "unsubscribe linux-hams" i=
 n
