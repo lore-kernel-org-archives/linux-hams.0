@@ -1,62 +1,49 @@
-From: Wilbert Knol <w.knol@niwa.co.nz>
-Subject: Re: Kpsk doesn't work with ALSA/es1968 module
-Date: Thu, 19 Feb 2004 22:04:18 +1300 (NZDT)
+From: Bernard Pidoux <pidoux@ccr.jussieu.fr>
+Subject: Re: Linux 2.6.3 ... Where are mkiss and 6pack?
+Date: Thu, 19 Feb 2004 12:56:11 +0000
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <Pine.LNX.4.44.0402192108340.7064-100000@zl2bsj.ampr.org>
-References: <Pine.LNX.4.58.0402181542330.2143@andorinha.ist.utl.pt>
+Message-ID: <4034B26B.3010903@ccr.jussieu.fr>
+References: <200402182229.30123@www.cabodesantapola.org> <20040219003515.K231@jeroen.pe1rxq.ampr.org>
 Mime-Version: 1.0
-Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <Pine.LNX.4.58.0402181542330.2143@andorinha.ist.utl.pt>
-List-Id: <linux-hams.vger.kernel.org>
-Content-Type: TEXT/PLAIN; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
-To: Jorge Matias <martin@andorinha.ist.utl.pt>
-Cc: Linux-Ham Mailing List <linux-hams@vger.kernel.org>
+Return-path: <linux-hams-owner@vger.kernel.org>
+In-Reply-To: <20040219003515.K231@jeroen.pe1rxq.ampr.org>
+List-Id: <linux-hams.vger.kernel.org>
+Content-Type: text/plain; charset="us-ascii"; format="flowed"
+To: Jeroen Vreeken <pe1rxq@amsat.org>
+Cc: Ruben Navarro Huedo <eb5esx@eb5esx.ampr.org>, Linux-hams List <linux-hams@vger.kernel.org>
 
+Hi,
 
+In my experience mkiss works very fine with kernel 2.6 !
+Could you explain what is SMP ?
 
-On Wed, 18 Feb 2004, Jorge Matias wrote:
-<snip>
->   Anyone had this problem?
+73 de Bernard, f6bvp
 
+--------
 
-Yes. I had *endless* problems with the soundcard (Yamaha OPL3SA2) in
-my Toshiba Satellite 2520CDS notebook. It turned out to be interrupt
-and DMA conflicts with the parallel port.
-
-Make sure your sound card works flawlessly with other apps, before
-blaming KPSK. Linux is  often unable (on laptops) to detect sound
-cards correctly and you wind up with incorrect DMA/IRQ settings.
-Don't blindly trust P&P on laptops. They are full of on-board junk
-that is outside the PCI bus, and, if P&P fails, you're in trouble.
-
-If there are no known problems with your sound chipset and OSS, and
-the OSS driver doesn't work, chances are it's wrongly configured or
-there is a hardware conflict. Changing to ALSA won't fix that, and
-you'll have to do some detective work.
-
-My approach would be to disable BIOS P&P, disable in the BIOS all
-non-essential hardware, and force non-conflicting settings on the
-sound card. Then boot Linux and force the driver to use those
-settings. Once you have that going, you can turn other hardware back
-on, one at a time... parport, serial port, IR bridge etc etc whilst
-you keep testing everything under Linux and watching dmesg every time
-you boot with a new set of hardware.
-
-This seems like a lot of work, but it isn't too bad. The laptop BIOS
-is very limited, a lot of things are fixed, it isn't as  complicated
-as desktop machines.
-
-The sound system is really easy to wipe out, because it uses two DMA
-channels, more than one interrupt (from memory) and lots of IO ports.
-
-I am not saying your problem is necessarily hardware, but it is a
-candidate. I have never seen a laptop that didn't require some
-intervention to get all system components working properly.
-
-HTH...
-
-Wilbert, ZL2BSJ
-
-
+Jeroen Vreeken wrote:
+> On 2004.02.18 22:29:29 +0100 Ruben Navarro Huedo wrote:
+> 
+>>-----BEGIN PGP SIGNED MESSAGE-----
+>>Hash: SHA1
+>>
+>>Hello friends:
+>>linux-2.6.3 has been released, but...Where are 6pack and mkiss?
+>>I don't find them...
+>>I can see bpq, Baycom...etc... but not 6pack or mkiss.
+> 
+> 
+> Somebody decided that they are not SMP safe...
+> If you deselect 'Select only drivers expected to compile cleanly' in the
+> 'Code maturity level options' you will get the 6pack and mkiss drivers
+> back.
+> 
+> In other words someone has to go over the mkiss and 6pack code and make it
+> smp safe.
+> 
+> btw my last 6pack patch is NOT yet in 2.6.3 so you will have to apply that
+> manually.
+> 
+> Jeroen
 
