@@ -1,53 +1,58 @@
-From: "J. Lance Cotton" <joe@lightningflash.net>
+From: Wilbert Knol <zl2bsj@zl2tze.ath.cx>
 Subject: Re: XASTIR cross-port digipeating?
-Date: Sat, 19 Jul 2003 16:38:28 -0500
+Date: Sat, 19 Jul 2003 14:49:01 -1200 (GMT+12)
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <200307191638.28825.joe@lightningflash.net>
-References: <Pine.LNX.4.44.0307181818460.5497-100000@zl2bsj.ampr.org>
+Message-ID: <Pine.LNX.4.44.0307191408120.15342-100000@zl2bsj.ampr.org>
+References: <200307191638.28825.joe@lightningflash.net>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <Pine.LNX.4.44.0307181818460.5497-100000@zl2bsj.ampr.org>
-Content-Disposition: inline
+In-Reply-To: <200307191638.28825.joe@lightningflash.net>
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"
-To: Wilbert Knol <zl2bsj@zl2tze.ath.cx>, linux-hams@vger.kernel.org
+Content-Type: TEXT/PLAIN; charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+To: "J. Lance Cotton" <joe@lightningflash.net>
+Cc: linux-hams@vger.kernel.org
 
-On Saturday 19 July 2003 01:35, Wilbert Knol wrote:
-> Thanks for reading this message. I am running (amongst other things)
-> XASTIR on a small, two-port packet system. Is it possible to get XASTIR to
-> digipeat on one port APRS broadcasts heard on another? Or do I need the
-> separate 'aprsdigi' mentioned recently? (I have same-port digipeating
-> working successfully)
 
-Xastir doesn't digipeat, except for RELAY digipeating that home stations 
-should do. You would need aprsdigi or digi_ned to do any further digipeating.
+Thanks, Lance, for the info.
 
-> Similarly, are there any Internet based APRS servers (preferably in
-> VK/ZL). Will XASTIR re-transmit on any of the RF ports broadcasts heard on
-> the Internet interface, and vice versa?
+> Xastir doesn't digipeat, except for RELAY digipeating that home stations
+> should do.
 
-What is meant by "broadcasts"? Right now, Xastir will only dump from INET->RF 
-messages intended for stations heard locally, their related position packets, 
-and any NWS (US National Weather Service) packets that match callsigns listed 
-in ~/.xastir/data/nws-stations.txt (only NWS weather report packets are gated 
-to RF, so putting any callsign in nws-stations.txt won't cause Xastir to gate 
-any matching packet).
+That's what I want: relay something I have heard on 2 m on the 70 cm port.
+Maybe an idea for a new feature.
 
-> A separate question: XASTIR 1.2.1 complains about NUM/SCROLL/CAPSLOCK
-> being engaged when I right-click the desktop. My notebook keyboard only
-> has a CAPSLOCK, and it is off. Is there a work-around for this?
+> > Similarly, are there any Internet based APRS servers (preferably in
+> > VK/ZL). Will XASTIR re-transmit on any of the RF ports broadcasts heard on
+> > the Internet interface, and vice versa?
+>
+> What is meant by "broadcasts"?
 
-Xastir doesn't yet do the right filtering to determine if key modifiers like 
-those listed above are enabled, which in some cases (with LessTif, I think) 
-causes Xastir not to process those clicks. Look in the menu 
-File->Configure->Defaults and un-check "Warn if modifier keys". That will 
-disable the message.
+A UI frame announcing someone's position.
 
-> Wilbert, ZL2BSJ
+I have ticked the box that says  "enable Inet->RF and RF->Inet
+traffic". This looks like a nice feature. It would be good to make some
+meaningful use of this.
 
--- 
-J. Lance Cotton, KJ5O
-joe@lightningflash.net
-Three Step Plan: 1. Take over the world. 2. Get a lot of cookies. 3. Eat the 
-cookies.
+Any local Inet gates, in this part of the woods? I don't want to
+antagonise the locals by re-transmitting US summer-time WX data :-)
+
+> > A separate question: XASTIR 1.2.1 complains about NUM/SCROLL/CAPSLOCK
+> > being engaged when I right-click the desktop. My notebook keyboard only
+> > has a CAPSLOCK, and it is off. Is there a work-around for this?
+>
+> Xastir doesn't yet do the right filtering to determine if key modifiers like
+> those listed above are enabled, which in some cases (with LessTif, I think)
+> causes Xastir not to process those clicks. Look in the menu
+> File->Configure->Defaults and un-check "Warn if modifier keys". That will
+> disable the message.
+
+What I meant was: a work-around to give me right-click functionality :-)
+(which worked in earlier versions of XASTIR). I'll have a play with a
+PS/2 full-size external keyboard.
+
+
+Wilbert, ZL2BSJ
+
+
+
