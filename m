@@ -1,68 +1,37 @@
-From: "Douglas Cole" <n7bfs@qwest.net>
-Subject: Re: installing Predict on a RedHat 7.3 box , no go :^(
-Date: Mon, 16 Dec 2002 18:54:26 -0800
+From: Thomas Osterried <thomas@osterried.de>
+Subject: Re: Success! TWO questions remain
+Date: Tue, 17 Dec 2002 18:37:29 +0100
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <200212161854.26249.n7bfs@qwest.net>
-References: <E18Nz1e-00050R-00@probity.mcc.ac.uk>
-Reply-To: n7bfs@qwest.net
+Message-ID: <20021217173729.GA13904@osterried.de>
+References: <Pine.LNX.4.44.0212111645150.1297-100000@jeeves.mvw.net> <Pine.LNX.4.44.0212120813300.5835-100000@jeeves.mvw.net>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7BIT
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <E18Nz1e-00050R-00@probity.mcc.ac.uk>
+Content-Disposition: inline
+In-Reply-To: <Pine.LNX.4.44.0212120813300.5835-100000@jeeves.mvw.net>
 List-Id: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
-To: John@man.ac.uk, htodd@twofifty.com
+Content-Transfer-Encoding: 7bit
+To: mvw@mvw.net
 Cc: linux-hams@vger.kernel.org
 
-On Monday 16 December 2002 09:24, John@man.ac.uk wrote:
-> On 15 Dec, Hisashi T Fujinaka wrote:
-> > Predict isn't all that hard to get going. I even got it going on a NetBSD
-> > box.
->
-> I have it running on several SuSE systems, CygWIN on Windows and on IRIX
-> 6.5 on an ancient SGI Challenge S...
->
-> See my Predict 2.2.1 mods at:
->
-> 	http://voyager.mcc.ac.uk/Predict/
-> or
-> 	http://cumin.mcc.ac.uk/Predict/
->
-> John
+> In any case, another question. I want to be able to telnet into one
+> machine from another using radio. Encryption is forbidden for amateur use
+> so this means clear passwords. Not good. (Even though I will not use root, 
+> of course).
 
-Yeah , I'm kinda dumb that way , since I don't write software and I am 
-notoriously lazy...
+the cleartext passwort for becoming root may be ommited with this
+littel tool, on
+http://x-berg.in-berlin.de/cgi-bin/viewcvs.cgi/ampr/root/
+(downloading the tarball (link on the bottom of the page is suggested)).
 
-On the particular box that I was having troubles installing , it was a minimal 
-installation to conserve disk space, hence no development packages, whereas 
-my SuSE box has a very large drive so I just told it to install "everything" 
-and so the fact that it "the SuSE distro' installer scripts" happily 
-installed the dev-packages of course was transparent to a dummy like me, all 
-I knew was it was a no brainer to install predict on my SuSE box and the 
-RH-IRLP node box was a no go, and since the error code confusingly (not a 
-word) said curses.h , and of course I looked for a curses package and 
-couldn't find anything but ncurses, so after looking at the files on my SuSE 
-box and seeing curses.h there , I looked at the installed packages and didn't 
-find any curses package but did find a ncurses-dev package, so I made a leap 
-of faith and downloaded and installed the RH7.3 package for ncurses-devel and 
-sure enough the predict installer played :)
+it does md5-password challenge in the standard way as bbs password
+protection wroks.
+this is some kind of one-way-password mechanism, and it does not matter
+that anyone reads your answer string.
 
-Now , all you sharp egg's out there are going , duh !?!
+be aware that your ax25 connections with your PID=text session or
+your ax25.ip.tcp telnet session _may_ be "overtaken" by someone else.
 
-But for me that took some effort , so if by some chance this is archived so 
-that someone else runs into this same scenario then I hope that this will 
-help them ...
-I'll try and have a better question next time ;^}
-
-my 5cents worth ...
-
-73
-
--- 
-Douglas Cole   N7BFS
-Spokane IRLP node owner
-AMSAT#26182 , K2 # 544
-http://www.users.qwest.net/~cdoug3
-Registered Linux user # 188922
-
+73,
+	- thomas  dl9sau
 
