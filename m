@@ -1,71 +1,53 @@
-From: Dennis Boone <drb@msu.edu>
+From: =?iso-8859-1?Q?G=E9rard?= / F6FGZ <f6fgz@free.fr>
 Subject: Re: Trying to get Ax25 running.
-Date: Fri, 15 Oct 2004 13:37:44 -0400
+Date: Fri, 15 Oct 2004 19:59:43 +0200
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <200410151737.i9FHbiZW031272@yagi.h-net.msu.edu>
-References: <620c9057041015095771b236e0@mail.gmail.com>  <620c9057041013094421cbf279@mail.gmail.com> <20041014025505.66938.qmail@web40824.mail.yahoo.com> <620c9057041014060070eeccf6@mail.gmail.com> <200410141313.i9EDDoah001022@yagi.h-net.msu.edu>
+Message-ID: <4170100F.F5F43579@free.fr>
+References: <620c9057041015095771b236e0@mail.gmail.com>  <620c9057041013094421cbf279@mail.gmail.com> <20041014025505.66938.qmail@web40824.mail.yahoo.com> <620c9057041014060070eeccf6@mail.gmail.com> <200410141313.i9EDDoah001022@yagi.h-net.msu.edu> <200410151737.i9FHbiZW031272@yagi.h-net.msu.edu>
+Mime-Version: 1.0
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-reply-to: (Your message of Fri, 15 Oct 2004 09:57:06 PDT.)
-             <620c9057041015095771b236e0@mail.gmail.com> 
 List-Id: <linux-hams.vger.kernel.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-To: linux-hams@vger.kernel.org
+Content-Type: text/plain; charset="iso-8859-1"
+To: Linux-Hams <linux-hams@vger.kernel.org>
 
- > I have used the AX25 config tool to configure this stuff. I am trying
- > to set up things to run mkiss, but I can not quite figure out where
- > to put the -c so that mkiss will use the crc check.
- > 
- > ax25-config tool does not ask for it, so I assume that the author
- > did not get that far down the road, but when I look in the files it
- > creates I do not see the mkiss line anywhere, I do see where it does
- > a modprobe for ax25,kiss and mkiss, the one that is installed when I
- > do a lsmod is mkiss. So now if I can just figure out where the mkiss
- > configuration line is stuck I should be able to set it up to use the
- > crc check on the kiss frames.
+Dennis Boone a =E9crit :
 
-It might help if you posted your current config files, but from memory,
-here are the commands in my startup script:
+>         mkiss -c -l -s 19200 /dev/ttyS0 /dev/ptyz0 /dev/ptyz1
+>         kissattach /dev/ptyz0 hfport 44.135.96.242
+>         kissattach /dev/ptyz0 vhfport 44.135.96.243
 
-	mkiss -c -l -s 19200 /dev/ttyS0 /dev/ptyz0 /dev/ptyz1
-	kissattach /dev/ptyz0 hfport 44.135.96.242
-	kissattach /dev/ptyz0 vhfport 44.135.96.243
+I correct your memory ;-)
+kissattach /dev/ttyz0 hfport 44.135.96.242
+kissattach /dev/ttyz1 vhfport 44.135.96.243
 
-where:
+It is important to have ptyxx from one side corresponding to ttyxx on t=
+he other
+side.
+From /usr/src/linux/Documentation/devices.txt:
+  2 char        Pseudo-TTY masters
+                  0 =3D /dev/ptyp0        First PTY master
+                  1 =3D /dev/ptyp1        Second PTY master
+                    ...
+                255 =3D /dev/ptyef        256th PTY master
 
-	19200 is the baud rate (my hardware seems to keep up just fine
-	with no handshaking at this speed, ymmv)
+                Pseudo-tty's are named as follows:
+                * Masters are "pty", slaves are "tty";
+                * the fourth letter is one of pqrstuvwxyzabcde indicati=
+ng
+                  the 1st through 16th series of 16 pseudo-ttys each, a=
+nd
+                * the fifth letter is one of 0123456789abcdef indicatin=
+g
+                  the position within the series.
 
-	/dev/ttyS0 is the serial port to which the TNC is connected
+Choose some pairs !
 
-	/dev/ptyz0 ... are the pty devices created by mkiss to allow
-	separate access to the TNC's different ports
 
-	[v]hfport is the name of the port from the axports file
-
-	44.135.96.24x are the IP addresses allocated to the ports (not
-	actually mine, and while you need to have something here, if you're
-	not doing IP, I think you can use anything that doesn't conflict)
-
-You may also need the polling option of mkiss in your setup.
-
-Then I go on to start up a node program, ax25d, convers and database
-services, etc.
-
-Here's my axports file:
-
-	hfport KB8ZQZ-3 19200 255 7 HF Port
-	vhfport KB8ZQZ-4 19200 255 7 VHF Port on 145.03
-
-With this setup, I can then do:
-
-	call vhfport wc8lan-15
-
-to talk to the pbbs at the EOC.
-
-Reading your comments about modules, I wonder if you have the ax25
-and kiss modules built into your kernel?
-
-Dennis Boone
-KB8ZQZ
+--
+73 G=E9rard F6FGZ
+-
+To unsubscribe from this list: send the line "unsubscribe linux-hams" i=
+n
+the body of a message to majordomo@vger.kernel.org
+More majordomo info at  http://vger.kernel.org/majordomo-info.html
