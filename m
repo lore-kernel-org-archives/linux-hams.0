@@ -1,45 +1,37 @@
-From: "Pontus Falk" <pfalk@ax25.org>
-Subject: Re: Problem...
-Date: Mon, 17 Mar 2003 23:09:53 +0100 (CET)
+From: Shane Deering <vk3bvp@qsl.net>
+Subject: Re: Node RPM's
+Date: Tue, 18 Mar 2003 09:40:29 +1100
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <2758.213.65.101.235.1047938993.squirrel@www.ax25.org>
-References: <2705.213.65.101.235.1047935260.squirrel@www.ax25.org>
-        <03031721434901.01189@unix.pa3gcu>
+Message-ID: <200303180940.29326.vk3bvp@qsl.net>
+References: <Pine.LNX.4.44.0303172240010.6204-100000@oh2bns.ampr.org>
+Reply-To: vk3bvp@qsl.net
 Mime-Version: 1.0
 Content-Transfer-Encoding: 7BIT
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <03031721434901.01189@unix.pa3gcu>
+In-Reply-To: <Pine.LNX.4.44.0303172240010.6204-100000@oh2bns.ampr.org>
 List-Id: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
-To: pa3gcu@zeelandnet.nl
-Cc: linux-hams@vger.kernel.org
+To: linux-hams@vger.kernel.org
 
->> The I enter "/usr/sbin/kissattach /dev/ttyq0 ax0 44.140.16.35" but get
->> an error message like:
->>
->> kissattach: Error setting line dicipline: TIOCSETD: invalid argument
->> Are you sure you have enabled MKISS support in the kernel
->> or, if you made it a module, that the module is loaded?
+On Tue, 18 Mar 2003 07:45, Tomi Manninen wrote:
+> Hi,
 >
-> And.?? Do you have "mkiss" support compiled into your kernel or is it a
-> module, ?? looks like its a module so you need to load the module
-> beforehand.
+> Using the .spec files from Red Hat I rolled my own LinuxNode RPMs and
+> uploaded them to hes.iki.fi:
 >
-> 'modprobe mkiss'   ?????
+>   http://hes.iki.fi/pub/ham/unix/linux/ax25/node-0.3.1-1.i386.rpm
+>   http://hes.iki.fi/pub/ham/unix/linux/ax25/node-0.3.1-1.src.rpm
 >
-> If that fails then you possably do not have the required kernel
-> configuration. Check /usr/src/linux/.config for MKISS you could try;
->
-> cat /usr/src/linux/.config | grep MKISS
-> You should get CONFIG_MKISS=m or CONFIG_MKISS=y if you get
-> # CONFIG_MKISS is not set
-> that means you dont have mkiss at all.
+> The binary RPM is built on RH 8.0. If it doesn't work for you then you can
+> try to rebuild from the source RPM.
 
-Yes, I have CONFIG_MKISS=y in /usr/src/linux/.config. But, I have
-CONFIG_HAMRADIO=m if that is any problem. I don't know where to set this
-to y in menuconfig... When I try to set it manually and recompile the
-kernel I get an error message...
+"rpm --rebuild node-0.3.1-1.src.rpm" worked fine here on Redhat 7.2 and 
+Mandrake 9.0
+And I'm still on my fist cup of coffee.
 
-Pontus
-
+-- 
+Shane Deering                   Sent using Kmail v1.4.3
+vk3bvp@qsl.net                  on Mandrake Linux, the Desktop OS
+vk3bvp@vk3bvp.#sev.vic.aus.oc   MDK9.0 Up 31 minutes 
+http://www.qsl.net/vk3bvp/      RH7.2 Up 16 days, 12 hours and 45 minutes 
 
