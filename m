@@ -1,49 +1,40 @@
-From: Dennis Boone <drb@msu.edu>
+From: Tomi Manninen OH2BNS <tpm@prkele.tky.hut.fi>
 Subject: Re: XFBB Nightmares!
-Date: Wed, 19 Mar 2003 00:26:44 -0500
+Date: Wed, 19 Mar 2003 16:08:48 +0200 (EET)
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <E18vW68-00048x-00@yagi.h-net.msu.edu>
-References: <3E77CC70.3040101@kj6eo.com>  <3E77B2F2.7030806@kj6eo.com> <E18vRKe-0002K6-00@yagi.h-net.msu.edu>
+Message-ID: <Pine.HPX.4.10.10303191601250.7151-100000@saturn.trs.ntc.nokia.com>
+References: <E18vW68-00048x-00@yagi.h-net.msu.edu>
+Reply-To: tpm@prkele.tky.hut.fi
+Mime-Version: 1.0
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-reply-to: (Your message of Tue, 18 Mar 2003 17:48:32 PST.)
-             <3E77CC70.3040101@kj6eo.com> 
+In-Reply-To: <E18vW68-00048x-00@yagi.h-net.msu.edu>
 List-Id: <linux-hams.vger.kernel.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
+Content-Type: TEXT/PLAIN; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
 To: linux-hams@vger.kernel.org
 
- > Thank you for answering my message.  My base directory is
- > /usr/src/fbb.  When the shell tries to execute the executable "xfbb",
- > I get this message just before I get the unknown return value 127
- > error:
+On Wed, 19 Mar 2003, Dennis Boone wrote:
 
- > /usr/src/fbb/bin/xfbb:no such file or directory
+> It sounds like the package you obtained is broken somehow.  The
+> package file name you mentioned does not seem to be a source package,
+> and the installation instructions sound like a binary package of some
+> sort.  My (Debian) package doesn't include a binary called xfbb; I do
+> have xfbbd and xfbbC.
 
- > In the above directory I do see the file "xfbb".  If I try to execute
- > it from the directory that it resides in /usr/src/fbb/bin I get a "no
- > such file" error message.  The xfbb file must be linked to something
- > preventing me and the shell from executing it.
+It's probably not broken. It's just so old that the binary is linked
+against a very old version of libc (libc5). Not having this lib installed
+causes a somewhat misleading error message when one tries to execute the
+binary. Some of the modern distributions might still have a compatibility
+package for libc5 but it's probably not installed by default.
 
-Bill:
+Anyway, I would recommend installing a newer version of xfbb. There are
+binary packages available as people have already pointed out.
 
-It sounds like the package you obtained is broken somehow.  The
-package file name you mentioned does not seem to be a source package,
-and the installation instructions sound like a binary package of some
-sort.  My (Debian) package doesn't include a binary called xfbb; I do
-have xfbbd and xfbbC.
+This is becoming a FAQ. I think Jean-Paul should do himself a favor and
+remove the old binary packages from his web site... :)
 
-Given that, and the fact that there are newer versions available, I
-wonder if the easiest thing to do might be to grab a different binary
-package.  There's an RPM version of 7.04 on the download page at:
+-- 
+Tomi Manninen           Internet:  oh2bns@sral.fi
+OH2BNS                  AX.25:     oh2bns@oh2rbi.fin.eu
+KP20ME04                Amprnet:   oh2bns@oh2rbi.ampr.org
 
-    http://www.f6fbb.org/versions.html
-
-The URL for that file directly is:
-
-    ftp://ftp.f6fbb.org/pub/f6fbb/distrib/linux/packages/redhat/xfbb-7.04-2.i386.rpm
-
-If you really want to try to untangle the one you have, or if the RPM
-is balky for some reason, we can dig further.
-
-De
