@@ -1,27 +1,27 @@
-From: ggb112 <gerard.borg@anu.edu.au>
-Subject: baycom usb
-Date: Fri, 10 Dec 2004 11:43:41 +1100
-Message-ID: <41B8F13D.9030308@anu.edu.au>
+From: Peter <pc2a@pi4cc.nl>
+Subject: Making a loop device
+Date: Fri, 10 Dec 2004 13:54:34 +0100
+Message-ID: <41B99C8A.79AE2A6F@pi4cc.nl>
 Mime-Version: 1.0
 Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
 Sender: linux-hams-owner@vger.kernel.org
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"; format="flowed"
+Content-Type: text/plain; charset="us-ascii"
 To: linux-hams@vger.kernel.org
 
-Hi everyone
+Hi
 
-I am still having trouble with the baycom usb modem. In a previous email 
-I explained that
-I could not set up networking.
+Setting up a new system here but it has 1 com port on it.
+Normaal I use 2 comports to make a loopback
 
-If anyone has a set of commands that they use to bring up ax0 and set 
-the ip address and
-HAM radio operational parameters for this modem, it would be greatly 
-appreciated.
+There must be a way to make a pseudo device and make a loop with them
+But I can remember (and with google) how to setup
 
-Cheers
+Running kernel 2.6 here
 
-Gerard Borg
+Peter
+PC2A
+
+
 
