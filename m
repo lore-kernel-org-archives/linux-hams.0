@@ -1,37 +1,26 @@
-From: Andrea Borgia <borgia@cs.unibo.it>
-Subject: Re: Configuring SoundModem with a PCI sound card
-Date: Sun, 23 May 2004 11:13:56 +0300
+From: =?iso-8859-1?q?Vittorio=20Vallero?= <ik1rac@yahoo.it>
+Subject: Re: PTT problem
+Date: Thu, 27 May 2004 13:10:48 +0200 (CEST)
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <40B05D44.6010301@cs.unibo.it>
-References: <40AFFB0D.3010101@ftc-i.net>
+Message-ID: <20040527111048.59900.qmail@web14423.mail.yahoo.com>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 7BIT
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <40AFFB0D.3010101@ftc-i.net>
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"; format="flowed"
+Content-Type: text/plain; charset="us-ascii"
 To: linux-hams@vger.kernel.org
 
-Gale D. Wilkinson wrote:
+Thanks to everybody !
+You were right! I had just to recompile the packages.
+It seems that Ham packages for Slack 9.1 do not match
+my setup.
+73s
 
-> I have been looking at the info in the AX25 HowTo for setting up a sound 
-> card modem but am running into problems as the documentation seems to 
-> only cover the old ISA sound cards. setcrystal in particular is where I 
-> am having problems.  Are there any newer docs/howto's that would give 
-> the proper setup procedures for configuring soundmodem with these newer 
 
- From your reference to setcrystal, I gather you're trying to use the 
-older soundmodem, the in-kernel version. I suggest that you try the 
-newer userspace program: all you need is OSS/ALSA drivers for your card, 
-a mixer (aumix will do nicely) and this package, which also includes a 
-nice GUI for generating a config file.
+	
 
-HTH,
-Andrea.
-
--- 
-Homepage: http://andrea.borgia.bo.it     /    Amateur radio: IZ4FHT
-A: Because it messes up the order in which people normally read text.
-Q: Why is top-posting such a bad thing?
-A: Top-posting.
-Q: What is the most annoying thing on usenet and in e-mail?
+	
+		
+____________________________________________________________
+Yahoo! Companion - Scarica gratis la toolbar di Ricerca di Yahoo! 
+http://companion.yahoo.it
