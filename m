@@ -1,8 +1,8 @@
 From: Jonathan Naylor <jonathan.naylor@ggaweb.ch>
-Subject: LinWSJT 0.4.3
-Date: Fri, 17 Jan 2003 14:16:03 +0100
+Subject: JT44 TNG
+Date: Sun, 19 Jan 2003 15:19:53 +0100
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <200301171416.03085.jonathan.naylor@ggaweb.ch>
+Message-ID: <200301191519.53806.jonathan.naylor@ggaweb.ch>
 Reply-To: g4klx@qsl.net
 Mime-Version: 1.0
 Content-Transfer-Encoding: 8bit
@@ -11,16 +11,12 @@ List-Id: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
 To: Linux Hams <linux-hams@vger.kernel.org>
 
-Hi Folks
+I have written a paper outlining the techniques that are to be used to 
+push the performance of JT44 (the EME data mode) even further. The 
+paper, which is non mathematical, can be found at 
+http://www.qsl.net/g4klx under Software or under News.
 
-This is a new release of LinWSJT it includes upgraded FSK441 receive, 
-wxGTK-2.4.0 compatibility and other things. You can get the software 
-from my web pages as well as browse the support files, there are a 
-couple of screen shots if you like pictures. It can be found in the 
-usual place http://www.qsl.net/g4klx under Software.
-
-If you have an earlier release of LinWSJT then I suggest you upgrade to 
-this version. Good things await those who do.
+73
 
 Jonathan  HB9DRD/G4KLX
 
