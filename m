@@ -1,140 +1,94 @@
-From: Jeroen Vreeken <pe1rxq@amsat.org>
-Subject: [PATCH] fix sock_raw behaviour
-Date: Wed, 24 Sep 2003 23:45:44 +0200
-Sender: netdev-bounce@oss.sgi.com
-Message-ID: <20030924234544.A10634@jeroen.pe1rxq.ampr.org>
+From: "Gunnar Widell (HF/ESE)" <gunnar.widell@ericsson.com>
+Subject: EPROM 6pack TNC2X speed? check sum error
+Date: Thu, 25 Sep 2003 16:33:28 +0200
+Sender: linux-hams-owner@vger.kernel.org
+Message-ID: <1F55F6582266314A85A55F6241509B670395F556@Esealnt863.al.sw.ericsson.se>
 Mime-Version: 1.0
-Content-Type: multipart/mixed; boundary="AWniW0JNca5xppdA"
-Content-Transfer-Encoding: 8bit
-Return-path: <netdev-bounce@oss.sgi.com>
-Errors-to: netdev-bounce@oss.sgi.com
+Return-path: <linux-hams-owner@vger.kernel.org>
 List-Id: <linux-hams.vger.kernel.org>
-To: ralf@linux-mips.org, "David S . Miller" <davem@redhat.com>
-Cc: linux-hams@vger.kernel.org, netdev@oss.sgi.com
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+To: "Linux-Hams (E-mail)" <linux-hams@vger.kernel.org>
+Cc: 'Johannes Kneip' <johannes@baycom.org>
+
+We are experience problems with the 6pack and Baycom TNC2X.
+
+From the syslog:
+
+Sep 25 13:53:27 sk0ct kernel: 6pack: bad checksum fd
+Sep 25 13:54:10 sk0ct kernel: 6pack: bad checksum bf
+Sep 25 13:54:12 sk0ct kernel: 6pack: bad checksum f1
+Sep 25 13:54:17 sk0ct kernel: 6pack: bad checksum bf
+Sep 25 13:55:13 sk0ct kernel: 6pack: bad checksum 1c
+Sep 25 13:55:15 sk0ct kernel: 6pack: bad checksum 8d
+Sep 25 13:55:18 sk0ct kernel: 6pack: bad checksum 65
+Sep 25 13:55:18 sk0ct kernel: 6pack: bad checksum 9f
+Sep 25 13:55:22 sk0ct kernel: 6pack: bad checksum 23
+Sep 25 13:55:22 sk0ct mheardd[252]: packet too short
+Sep 25 13:55:27 sk0ct kernel: 6pack: bad checksum 88
+Sep 25 13:55:28 sk0ct kernel: 6pack: bad checksum 1d
+sk0ct:~#
+
+We also had problems when using KISS mode, lots of errors.
+We can run traffic, but see errors. Also after about 6 hours, the computer hangs.
+We have not seen any specific cause for this exept of these "checksum errors".
+
+I sent a mail to Baycom regarding 6pack software for the TNC2X. See questions and answers below.
+
+We found that the default speed for this modem is 38400, but have not seen any way to change it. I suspect that this high speed migth cause problems?
+
+Some questions:
+
+1)  Software /hardware handshake with 6pack? Can I do some special settings on the com ports?
+
+2)  How to set the speed?
+
+3)  What else to look for?
+
+4)  This "bad checksum" is only on the serial interface? Or could this be an alarm that the radio path is bad?
+
+Info:
+Kernel 2.4.22
+This is a NEW installation. TNCs was OK under Windows/FBB and DEDHost eproms.
+The computer has 4 TNCs, 2 TINY2 and 2 TNC2X.  Tiny2 running 1200bd and 6PACK. NO PROBLEMS.
+TNC2X on 9k6 with this "bad checksum".
+
+73 de Gus, SM3SGP
+
+@ SK0CT
 
 
---AWniW0JNca5xppdA
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 8bit
-
-Hi,
-
-The attached patch fixes the behaviour of SOCK_RAW sockets in 2.6.0test5
-Address and port matching is now being done.
-A locking problem is also solved.
-And in the recv function the source address is reported back instead of the
-destination.
-(This was solved earlier in 2.2.x but appearantly didn't make it into 2.4
-and further.)
-
-Jeroen
-
---AWniW0JNca5xppdA
-Content-Type: application/octet-stream; charset=us-ascii
-Content-Disposition: attachment; filename="sock-raw.diff"
-
---- linux-2.6.0-test5/net/ax25/af_ax25.c.org	2003-09-23 23:26:17.000000000 +0200
-+++ linux-2.6.0-test5/net/ax25/af_ax25.c	2003-09-24 23:33:32.000000000 +0200
-@@ -231,42 +231,29 @@
- /*
-  *	Look for any matching address - RAW sockets can bind to arbitrary names
-  */
--struct sock *ax25_addr_match(ax25_address *addr)
-+void ax25_send_to_raw(ax25_address *addr, struct sk_buff *skb, int proto)
- {
--	struct sock *sk = NULL;
-+	struct sock *sk;
- 	ax25_cb *s;
-+	struct sk_buff *copy;
- 	struct hlist_node *node;
- 
- 	spin_lock_bh(&ax25_list_lock);
- 	ax25_for_each(s, node, &ax25_list) {
- 		if (s->sk != NULL && ax25cmp(&s->source_addr, addr) == 0 &&
--		    s->sk->sk_type == SOCK_RAW) {
-+		    s->sk->sk_type == SOCK_RAW &&
-+		    s->sk->sk_protocol == proto &&
-+		    (!s->ax25_dev || s->ax25_dev->dev == skb->dev)) {
- 			sk = s->sk;
--			lock_sock(sk);
--			break;
-+			bh_lock_sock(sk);
-+			if (atomic_read(&sk->sk_rmem_alloc) <= sk->sk_rcvbuf &&
-+			    (copy = skb_clone(skb, GFP_ATOMIC)) != NULL)
-+				if (sock_queue_rcv_skb(sk, copy) != 0)
-+					kfree_skb(copy);
-+			bh_unlock_sock(sk);
- 		}
- 	}
--
- 	spin_unlock_bh(&ax25_list_lock);
--
--	return sk;
--}
--
--void ax25_send_to_raw(struct sock *sk, struct sk_buff *skb, int proto)
--{
--	struct sk_buff *copy;
--	struct hlist_node *node;
--
--	sk_for_each_from(sk, node)
--		if (sk->sk_type == SOCK_RAW &&
--		    sk->sk_protocol == proto &&
--		    atomic_read(&sk->sk_rmem_alloc) <= sk->sk_rcvbuf) {
--			if ((copy = skb_clone(skb, GFP_ATOMIC)) == NULL)
--				return;
--
--			if (sock_queue_rcv_skb(sk, copy) != 0)
--				kfree_skb(copy);
--		}
- }
- 
- /*
-@@ -1633,16 +1620,16 @@
- 	if (msg->msg_namelen != 0) {
- 		struct sockaddr_ax25 *sax = (struct sockaddr_ax25 *)msg->msg_name;
- 		ax25_digi digi;
--		ax25_address dest;
-+		ax25_address src;
- 
--		ax25_addr_parse(skb->mac.raw+1, skb->data-skb->mac.raw-1, NULL, &dest, &digi, NULL, NULL);
-+		ax25_addr_parse(skb->mac.raw+1, skb->data-skb->mac.raw-1, &src, NULL, &digi, NULL, NULL);
- 
- 		sax->sax25_family = AF_AX25;
- 		/* We set this correctly, even though we may not let the
- 		   application know the digi calls further down (because it
- 		   did NOT ask to know them).  This could get political... **/
- 		sax->sax25_ndigis = digi.ndigi;
--		sax->sax25_call   = dest;
-+		sax->sax25_call   = src;
- 
- 		if (sax->sax25_ndigis != 0) {
- 			int ct;
---- linux-2.6.0-test5/include/net/ax25.h.org	2003-09-24 23:21:27.000000000 +0200
-+++ linux-2.6.0-test5/include/net/ax25.h	2003-09-24 23:21:55.000000000 +0200
-@@ -227,8 +227,7 @@
- struct sock *ax25_find_listener(ax25_address *, int, struct net_device *, int);
- struct sock *ax25_get_socket(ax25_address *, ax25_address *, int);
- extern ax25_cb *ax25_find_cb(ax25_address *, ax25_address *, ax25_digi *, struct net_device *);
--extern struct sock *ax25_addr_match(ax25_address *);
--extern void ax25_send_to_raw(struct sock *, struct sk_buff *, int);
-+extern void ax25_send_to_raw(ax25_address *, struct sk_buff *, int);
- extern void ax25_destroy_socket(ax25_cb *);
- extern ax25_cb *ax25_create_cb(void);
- extern void ax25_fillin_cb(ax25_cb *, ax25_dev *);
---- linux-2.6.0-test5/include/net/ax25.h.org	2003-09-24 23:21:27.000000000 +0200
-+++ linux-2.6.0-test5/include/net/ax25.h	2003-09-24 23:21:55.000000000 +0200
-@@ -227,8 +227,7 @@
- struct sock *ax25_find_listener(ax25_address *, int, struct net_device *, int);
- struct sock *ax25_get_socket(ax25_address *, ax25_address *, int);
- extern ax25_cb *ax25_find_cb(ax25_address *, ax25_address *, ax25_digi *, struct net_device *);
--extern struct sock *ax25_addr_match(ax25_address *);
--extern void ax25_send_to_raw(struct sock *, struct sk_buff *, int);
-+extern void ax25_send_to_raw(ax25_address *, struct sk_buff *, int);
- extern void ax25_destroy_socket(ax25_cb *);
- extern ax25_cb *ax25_create_cb(void);
- extern void ax25_fillin_cb(ax25_cb *, ax25_dev *);
-
---AWniW0JNca5xppdA--
+-----Original Message-----
+From: Johannes Kneip [mailto:johannes@baycom.org]
+Sent: den 5 september 2003 09:44
+To: Gunnar Widell (HF/ESE)
+Subject: Re: EPROM 6pack TNC2X speed?
 
 
+Gunnar,
+
+6PACK and KISS adjusts the speed automatically, thus it need not be set 
+to any value.
+
+Best regards
+
+Johannes
+
+Gunnar Widell (SE/ESE) wrote:
+
+>Hi,
+>
+>We are experience problems with the TNC2X. We get errors on our KISS link between the Linux computer and the TNC.
+>It migth be some problem with the speed 38400. We will try to use a eprom with lower speed, but also talk about try out the 6PACK solution.
+>
+>There is no information about speed in the 6pack binary for TNC2X on your webpage?
+>Also the KISS ONLY eprom, speed info?
+>
+>regards
+>SM3SGP Gunnar
+>
+>SK0CT Ericsson Radio Club
+>
+>
+>  
+>
