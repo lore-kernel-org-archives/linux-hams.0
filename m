@@ -1,41 +1,29 @@
-From: 9a4gl@9a0tcp.ampr.org (Tihomir Heidelberg)
+From: csmall@enc.com.au (Craig Small)
 Subject: Re: libax25 axio_flush bug hangs node and fix
-Date: Tue, 15 Oct 02 21:58:28 CEST
+Date: Wed, 16 Oct 2002 13:21:41 +1000
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <13437@9A0TCP>
-References: <3ISZK1A5zFr9Ewiz@skywaves.demon.co.uk>
+Message-ID: <20021016032141.GC7618@enc.com.au>
+References: <13346@9A0TCP>
+Mime-Version: 1.0
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: your message of 	Tue, 15 Oct 2002 19:22:49 +0100.
-             <3ISZK1A5zFr9Ewiz@skywaves.demon.co.uk>
+Content-Disposition: inline
+In-Reply-To: <13346@9A0TCP>
 List-Id: <linux-hams.vger.kernel.org>
-MIME-Version: 1.0
 Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
-To: paul@skywaves.demon.co.uk
+To: Tihomir Heidelberg <9a4gl@9a0tcp.ampr.org>
 Cc: linux-hams@vger.kernel.org
 
-Hi
+On Tue, Oct 15, 2002 at 11:52:11AM +0200, Tihomir Heidelberg wrote:
+> I noticed that my awznode (a variant of linux node) hangs and 
+> use maximum CPU when user starts any external command and 
+> incoming AX.25 connection get broken.
 
->Internal connections to my Linux_node then onward connection fails.
->Certain conditions the entry in the node user table stays there until I
->kill the associated node process.
+Damn, i thought this been fixed in 10. Tomi and somoene else were
+discussing it, I'll need their help again.
 
-it happend when someone connect to node, then execute any external
-command (that call any linux command) and then connection get broken
-
-but, because axio_flush enters unlimited loop when one end of pipe die, it
-is very possible that this bug produce also hangs of node in different
-situations
-
-as I see this loop does not exists in libax25-0.0.9, so I it very
-possible that I get this problem after installing libax25-0.0.10
-
-at http://ham2.cc.fer.hr/9a4gl/ax25io.patch is patch you can apply
-to libax25-0.0.10 to see if it helps in your situation
-
-of course, then do:
-make
-make install
-ldconfig
-
-73 de Tihomir, 9a4gl@9a0tcp.ampr.org
+  - Craig
+-- 
+Craig Small VK2XLZ  GnuPG:1C1B D893 1418 2AF4 45EE  95CB C76C E5AC 12CA DFA5
+Eye-Net Consulting http://www.enc.com.au/                <csmall@enc.com.au>
+MIEEE <csmall@ieee.org>                 Debian developer <csmall@debian.org>
