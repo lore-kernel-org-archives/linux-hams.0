@@ -1,22 +1,25 @@
-From: =?iso-8859-1?q?G=FCnther=20Montag=20?= <dl4mge@darc.de>
-Subject: Re: Norm Frequency beacon ?
-Date: Mon, 31 May 2004 12:30:37 +0200
+From: =?iso-8859-15?q?G=FCnther=20Montag=20?= <dl4mge@darc.de>
+Subject: simple DCF77 receiver circuit?
+Date: Mon, 31 May 2004 13:33:08 +0200
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <200405311230.37550.dl4mge@darc.de>
-References: <200405271330.25402.dl4mge@darc.de> <1085680600.31191.151.camel@kronenbourg.scs.ch> <20040527201755.GX1749@mea-ext.zmailer.org>
+Message-ID: <200405311333.08526.dl4mge@darc.de>
 Mime-Version: 1.0
 Content-Transfer-Encoding: QUOTED-PRINTABLE
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <20040527201755.GX1749@mea-ext.zmailer.org>
 List-Id: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="iso-8859-1"
-To: linux hams <linux-hams@vger.kernel.org>, -HFTERMHACKERS- <hfterm-hackers@lists.sourceforge.net>
+To: linux hams <linux-hams@vger.kernel.org>
+Cc: -HFTERMHACKERS- <hfterm-hackers@lists.sourceforge.net>
 
-Thank you all for the interesting suggestions and=20
-discussion!
-Thanks especially to you, Tom, the father of this program!
-Will have to think about it and test all the ideas...
+Hello
 
+would like to build a simple receiver for the DCF77 signal,
+does some have a link where to find a circuit?
+
+should just make the signal hearable, I can decode and use=20
+the signal with Tom's DCF77rx program.
+
+Tnx
 --=20
 73 de
 G=FCnther
