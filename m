@@ -1,67 +1,34 @@
-From: Jim Bayer <kc9aop@gmail.com>
-Subject: Re: New Kernel
-Date: Wed, 8 Dec 2004 21:24:16 -0600
-Message-ID: <e524c5320412081924563c4642@mail.gmail.com>
-References: <1102337343.3133.2.camel@gb7mbc.spoo.org>
-Reply-To: Jim Bayer <kc9aop@gmail.com>
+From: Chuck Hast <wchast@gmail.com>
+Subject: Running Listen
+Date: Thu, 9 Dec 2004 08:52:57 -0500
+Message-ID: <620c905704120905527c439dc@mail.gmail.com>
+Reply-To: Chuck Hast <wchast@gmail.com>
 Mime-Version: 1.0
 Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <1102337343.3133.2.camel@gb7mbc.spoo.org>
 Sender: linux-hams-owner@vger.kernel.org
 List-Id: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
-To: Ian J Maude <ian@gb7mbc.net>
-Cc: Linux-Hams-Owner <linux-hams@vger.kernel.org>
+To: Linux-Hams <linux-hams@vger.kernel.org>
 
-This is definately SEL (Secure Linux) output.  When you build FC3 you
-get the option to set SEL to Audit on|off|audit only.  Do you remember
-what you chose?  I'm not too conversant on SEL, but I could figure it
-out pretty quickly if you need help.
+Folks,
+I am trying to run listen as a non-root user. I have checked the permissions
+and group stuff, all appears Ok, it I run it as root, it takes off just fine,
+but if I run it as a non-root user I get this error:
+socket: Operation not permitted
 
-'73 and good luck
+I have done some looking and see something to the effect that tcpdump
+must be run as root or you get the same error, is this true of listen also?
 
-
-Jim - KC9AOP
-
-
-On Mon, 06 Dec 2004 12:49:03 +0000, Ian J Maude <ian@gb7mbc.net> wrote:
-> Hi all,
-> I finally managed to get ax25d and netromd running on kernel 2.6.9 under
-> FC3 :-)
-> I used the original config file from /boot and rerolled adding the ax25
-> stuff.  I seem to be getting some errors though and I wonder if anyone
-> can help.  I do not get this with the pre-rolled kernel which is odd.
-> 
-> audit(1102337087.341:0): avc:  denied  { read write } for  pid=3887
-> exe=/usr/bin/perl path=socket:[36323] dev=sockfs ino=36323
-> scontext=user_u:system_r:httpd_sys_script_t
-> tcontext=user_u:system_r:httpd_t tclass=unix_stream_socket
-> 
-> audit(1102337087.346:0): avc:  denied  { search } for  pid=3887
-> exe=/usr/bin/perl dev=tmpfs ino=997
-> scontext=user_u:system_r:httpd_sys_script_t
-> tcontext=user_u:object_r:tmpfs_t tclass=dir
-> 
-> Can anyone tell me what's missing?
-> 
-> Ian
-> --
-> Ian Maude G0VGS Morecambe Lancs UK | ian@gb7mbc.net
-> Sysop of GB7MBC, the Morecambe Bay Cluster
-> Running Linux and DXSpider | K2 #4044
-> 
-> Find out about Summits on the Air!
-> Visit the SOTA web site at http://www.sota.org.uk
-> 
-> -
-> To unsubscribe from this list: send the line "unsubscribe linux-hams" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at  http://vger.kernel.org/majordomo-info.html
-> 
-
+Indeed I wanted to set up listen so I could have a log in directly to a listen
+session so I could just log in remotely and observe the goings on's on the
+different ports of the switch. (Has high speed internet connection so there
+is not problem there) Again I can ssh into the box as root and start a listen
+session just fine, but as anything else I get the above infamous error.
 
 -- 
-'73'
-
-Jim - KC9AOP
+Chuck Hast 
+To paraphrase my flight instructor;
+"the only dumb question is the one you DID NOT ask resulting in my going
+out and having to identify your bits and pieces in the midst of torn
+and twisted metal."
