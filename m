@@ -1,45 +1,35 @@
-From: =?iso-8859-1?q?=D8yvind=20Hanssen?= <oyvind@cs.uit.no>
-Subject: Re: remote TNC
-Date: Wed, 25 Dec 2002 23:15:34 +0100
+From: Tomi Manninen <tpm@prkele.tky.hut.fi>
+Subject: Re: FBB...
+Date: Thu, 26 Dec 2002 00:34:33 +0200 (EET)
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <200212252315.35178.oyvind@cs.uit.no>
-References: <Pine.LNX.4.44.0212252335330.4691-100000@oh2bns.ampr.org>
+Message-ID: <Pine.LNX.4.44.0212260012500.7965-100000@oh2bns.ampr.org>
+References: <003401c2ac5d$06545000$0300a8c0@HUISKAMER>
+Reply-To: tpm@prkele.tky.hut.fi
 Mime-Version: 1.0
-Content-Transfer-Encoding: QUOTED-PRINTABLE
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <Pine.LNX.4.44.0212252335330.4691-100000@oh2bns.ampr.org>
+In-Reply-To: <003401c2ac5d$06545000$0300a8c0@HUISKAMER>
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="iso-8859-1"
-To: linux-hams@vger.kernel.org
+Content-Type: TEXT/PLAIN; charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+To: Linux-Hams <linux-hams@vger.kernel.org>
 
-I have also been thinking about this, specifically, I was thinking
-about using Xastir on my laptop while the radio was running on=20
-another computer.=20
+On Wed, 25 Dec 2002, Cees Tool wrote:
 
-I modfied the aprs_tty program by PE1DNN to use stdin/stdout
-instead of a pty. Then I was able to use ssh to run this on the
-computer with the radio and redirect i/o to the other end. I believe
-it is possible to redirect the client end of ssh to a pty such that
-Xastir can connect it. I havent managed to get it working yet
-but it should not be too hard.=20
+> you should only check if the path of the ax25-utils/libraries
+> differs from the standard path and change it if needed.
 
-Better though, I believe one could modify Xastir to fork off=20
-an external command and redirecting is i/o to a pipe etc. etc.
+Actually I don't think even this is necessary. It's left over from the 
+time when libax25 was not available as a dynamic library with the headers 
+installed in a standard location.
 
-Of course, axip is a more generic solution, but with Xastir we
-need the aprs_tty program anyway (if not running Xastir as root).=20
+There is definitely a lot to be done in FBB to get these things right but
+then again having written a few software packages myself I can really say
+that documantation is definitely the most annoying, dull and even
+difficult part of it all... So I'm not going to say anything bad about
+Jean-Paul because of it... :)
 
-73 de LA7ECA, =D8yvind=20
+-- 
+Tomi Manninen           Internet:  oh2bns@sral.fi
+OH2BNS                  AX.25:     oh2bns@oh2rbi.fin.eu
+KP20ME04                Amprnet:   oh2bns@oh2rbi.ampr.org
 
-> Here you will have to use AXIP but I think you can still get the same=
- as
-> in hte above with rxecho.
-[...]
---=20
-Associate Professor, Computer Science dept., University of Troms=F8
-oyvind@cs.uit.no, http://hans.priv.no/oivindh
--
-To unsubscribe from this list: send the line "unsubscribe linux-hams" i=
-n
-the body of a message to majordomo@vger.kernel.org
-More majordomo info at  http://vger.kernel.org/majordomo-info.html
