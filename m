@@ -1,36 +1,30 @@
-From: "AE5PL Lists" <HamLists@ametx.com>
-Subject: RE: AX25 over Windows
-Date: Tue, 28 Dec 2004 08:06:00 -0600
-Message-ID: <478F6623898BBC4DBD692A223D28298A0EF95F@amewebsrvr.webametx.local>
+From: Alan Cox <alan@lxorguk.ukuu.org.uk>
+Subject: Re: [2.6 patch] /net/ax25/: some cleanups
+Date: Tue, 28 Dec 2004 14:27:08 +0000
+Message-ID: <1104237408.20944.70.camel@localhost.localdomain>
+References: <20041212211339.GX22324@stusta.de>
+	 <20041227185151.2a7ceb71.davem@davemloft.net>
 Mime-Version: 1.0
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Return-path: <linux-hams-owner@vger.kernel.org>
-Content-class: urn:content-classes:message
-Sender: linux-hams-owner@vger.kernel.org
+Content-Transfer-Encoding: 7bit
+Return-path: <netdev-bounce@oss.sgi.com>
+In-Reply-To: <20041227185151.2a7ceb71.davem@davemloft.net>
+Sender: netdev-bounce@oss.sgi.com
+Errors-to: netdev-bounce@oss.sgi.com
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="iso-8859-1"
-To: linux-hams@vger.kernel.org
+Content-Type: text/plain; charset="us-ascii"
+To: "David S. Miller" <davem@davemloft.net>
+Cc: Adrian Bunk <bunk@stusta.de>, ralf@linux-mips.org, linux-hams@vger.kernel.org, netdev@oss.sgi.com, Linux Kernel Mailing List <linux-kernel@vger.kernel.org>
 
-Check out AGWPE at http://www.raag.org/sv2agw/index.html
+On Maw, 2004-12-28 at 02:51, David S. Miller wrote:
+> On Sun, 12 Dec 2004 22:13:39 +0100
+> Adrian Bunk <bunk@stusta.de> wrote:
+> 
+> > The patch below contains the following cleanups:
+> > - make two needlessly global functions static
+> > - net/ax25/ax25_addr.c: remove the unused global function ax25digicmp
 
-73,
+Dave this function is only unused because a patch in 2.6.10 broke AX.25
+protocol support by removing the device and path checks. AX.25 is a link
+layer protocol it is supposed to check the devices and arguably the
+path. 
 
-Pete Loveall AE5PL
-mailto:pete@ae5pl.net =20
-
-> -----Original Message-----
-> From: Lic. Juan Antonio Chirino L=F3pez
-> Posted At: Tuesday, December 28, 2004 7:52 AM
-> Subject: AX25 over Windows
->=20
->=20
-> Hello.
-> Have you any support for Ax25 over Windows 2000 or XP?
->=20
-> Thanks,
-> Chirino
--
-To unsubscribe from this list: send the line "unsubscribe linux-hams" i=
-n
-the body of a message to majordomo@vger.kernel.org
-More majordomo info at  http://vger.kernel.org/majordomo-info.html
