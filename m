@@ -1,31 +1,33 @@
-From: Dave Stubbs <dave.stubbs@utoronto.ca>
-Subject: Kernel 2.6 Oddness
-Date: Wed, 14 Jul 2004 15:47:31 -0400
+From: Tomi Manninen <oh2bns@sral.fi>
+Subject: Re: Kernel 2.6 Oddness
+Date: Wed, 14 Jul 2004 23:26:49 +0300
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <40F58DD3.7080600@utoronto.ca>
+Message-ID: <1089836809.1302.59.camel@oh2bns.ampr.org>
 References: <Pine.LNX.4.44.0407131420280.5237-100000@bucket.k5di.com>
+	 <40F58DD3.7080600@utoronto.ca>
 Mime-Version: 1.0
 Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <Pine.LNX.4.44.0407131420280.5237-100000@bucket.k5di.com>
+In-Reply-To: <40F58DD3.7080600@utoronto.ca>
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"; format="flowed"
+Content-Type: text/plain; charset="us-ascii"
 To: Linux-hams List <linux-hams@vger.kernel.org>
 
-Hello all,
+On Wed, 2004-07-14 at 22:47, Dave Stubbs wrote:
 
-A question.  I have a nice little Debian learning box up and running, 
-with an AX.25 stack running, and access through "node" via telnet (radio 
-coming soon).  I have fbb also running, and connect to it through 
-Net/ROM from node.  I decided not to configure rose, but just use 
-Net/ROM and it was fine.  Recently I upgraded to kernel 2.6 and updated 
-a bunch of other packages, and now node won't allow connections any 
-more.  It says "rsconfig:  port rose not active  *** configuration 
-error" and then quits.  My config files doesn't seem to have changed, 
-but this is suddenly happening.  Does this ring a bell with anyone?  Is 
-there some setting I'm missing that I need to modify?
+> Recently I upgraded to kernel 2.6 and updated 
+> a bunch of other packages, and now node won't allow connections any 
+> more.  It says "rsconfig:  port rose not active  
 
-Thanks for your help,
+This is only a warning. Edit the rsports file and remove all
+rose port definitions.
 
-Dave
-VA3BHF
+> *** configuration 
+> error" and then quits.
+
+Node should print the real cause of this to the system logs.
+Check /var/log/messages for starters.
+
+-- 
+Tomi Manninen / OH2BNS / KP20ME04
+
