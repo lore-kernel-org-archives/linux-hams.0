@@ -1,25 +1,45 @@
-From: terry <wd0fpc@aniota.com>
-Subject: Re: Split screen telnet client?
-Date: Fri, 11 Jul 2003 08:36:26 -0700 (PDT)
+From: Arno Verhoeven <pe1icq@pi8zaa.ampr.org>
+Subject: Re: ANNOUNCE: gMFSK v0.5
+Date: Fri, 11 Jul 2003 22:29:55 +0200
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <Pine.LNX.4.50.0307110834380.16266-100000@yossarian.aniota.net>
-References: <3104.44.140.19.34.1057579396.squirrel@ax25.org>
+Message-ID: <3F0F1E43.9030500@pi8zaa.ampr.org>
+References: <Pine.LNX.4.44.0304192044470.6051-100000@oh2bns.ampr.org> <20030420023708.GA22988@silly.cloud.net.au>
 Mime-Version: 1.0
-Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <3104.44.140.19.34.1057579396.squirrel@ax25.org>
-List-Id: <linux-hams.vger.kernel.org>
-Content-Type: TEXT/PLAIN; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
-To: linux-hams <linux-hams@vger.kernel.org>
+Return-path: <linux-hams-owner@vger.kernel.org>
+In-Reply-To: <20030420023708.GA22988@silly.cloud.net.au>
+List-Id: <linux-hams.vger.kernel.org>
+Content-Type: text/plain; charset="us-ascii"; format="flowed"
+To: linux-hams@vger.kernel.org
 
-On Mon, 7 Jul 2003, Pontus Falk wrote:
+Hamish Moffatt wrote:
+> On Sat, Apr 19, 2003 at 09:58:04PM +0300, Tomi Manninen wrote:
+> 
+>>Hi all,
+>>
+>>I just uploaded gMFSK v0.5 to hes.iki.fi:
+>>
+>>  http://hes.iki.fi/pub/ham/unix/linux/hfmodems/
+>>
+>>There you will find a tar.gz source package, a source RPM and a binary
+>>i386 RPM for Red Hat 8.0.
+> 
+> 
+> Neat! Compiled easily on Debian and I'll upload the package shortly.
 
-> Can someone recommend a telnet client using split screen that is not for X
-> Windows?
+It doesn't on my machine (Slackware 9.0). If tried with both fftw-3.0 and 2.1.5
+but in both cases configure gives an error.
 
-... if you don't require access to the system, how about 'talk' ...
+configure: error: FFTW libraries not found!!!
+
+Does anybody know a way how to solve this?
 
 
 -- 
-73 , de WD0FPC		Pacific Nowthwest 2M Repeaters
-    aka: terry 		http://www.aniota.com/~wd0fpc
+73, PE1ICQ  Arno Verhoeven
+--------------------------------
+AX.25  pe1icq@pi8zaa.#nbo.nld.eu
+smtp   pe1icq@pi8zaa.ampr.org
+inet   pe1icq@amsat.org
+
+
