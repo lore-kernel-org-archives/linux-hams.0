@@ -1,75 +1,56 @@
-From: "Ben Gelb" <ben@gelbnet.com>
-Subject: RE: ax25d and STDIN
-Date: Sun, 29 Sep 2002 18:14:39 -0400
+From: csmall@enc.com.au (Craig Small)
+Subject: Re: Unwanted Broadcast
+Date: Mon, 30 Sep 2002 08:39:33 +1000
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <000f01c26805$9daf6d00$0bc43e2c@ben>
-References: <Pine.LNX.4.44.0209292103580.13963-100000@oh2bns.ampr.org>
+Message-ID: <20020929223933.GC17719@enc.com.au>
+References: <200209282105.37374.barry_linux@rogers.com>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <Pine.LNX.4.44.0209292103580.13963-100000@oh2bns.ampr.org>
+Content-Disposition: inline
+In-Reply-To: <200209282105.37374.barry_linux@rogers.com>
 List-Id: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
-To: tpm@prkele.tky.hut.fi
+Content-Transfer-Encoding: 7bit
+To: barry <barry_linux@rogers.com>
 Cc: linux-hams@vger.kernel.org
 
-I think I am going to stick with my hack. It works fine for the amount
-of data I will be inputting at a time (less than 80 chars) so I don't
-forsee any problems. 
+On Sat, Sep 28, 2002 at 09:05:37PM -0400, barry wrote:
+> Port AX0 rgularly send broadcasts (see below) AX1 does not. As far as I can 
+> see both AX0 and AX1 have been defined the same. Any suggestions how to 
+> prevent this. They are only short packets (except when I restart the machine, 
+> especially after a few hours of it being down), but they shouldn't be there
+> 
+> Thanks 
+> 
+> Barry
+> 
+> 
+> ax0: fm VE3NAV to VE3PZ ctl SABM+
+> ax0: fm VE3NAV to VE3PZ ctl SABM+
+> ax0: fm VE3NAV-4 to QST ctl UI pid=CC(IP) len 251
+> IP: len 251 44.135.97.17->44.255.255.255 ihl 20 ttl 64 DF prot UDP
+> UDP: len 231 netbios-dgm->netbios-dgm Data 223
+> 0000  ..'?,.a....?.. EMEJEOFFFICACACACACACACACACACAAA. ENEEELEHFCEPFFF
+> 0040  ACACACACACACACABO.?SMB%..............................7..........
+> 0080  .........7.V.........H.\MAILSLOT\BROWSE..m.?..LINUX.............
+> 00C0  ......U?Samba Server 2.2.6pre2.
+> ax0: fm VE3NAV-4 to QST ctl UI pid=CC(IP) len 234
+> IP: len 234 44.135.97.17->44.255.255.255 ihl 20 ttl 64 DF prot UDP
+> UDP: len 214 netbios-dgm->netbios-dgm Data 206
+> 0000  ..'?,.a....?.. EMEJEOFFFICACACACACACACACACACAAA. ABACFPFPENFDECF
+> 0040  CEPFHFDEFFPFPACAB.?SMB%..............................&..........
+> 0080  .........&.V.........7.\MAILSLOT\BROWSE..m.?..MDKGROUP..........
+> 00C0  ......U?LINUX.
+> ax0: fm VE3NAV to VE3PZ ctl SABM+  
 
-There is no real way to do a low-level read() in php, not that I am
-aware of anyway, and the setbuf() family of functions doesn't exist.
+Samba NetBIOS broadcasts, adjust your samba config to change it.  Look
+around the interfaces line so that samba only runs on the interfaces you
+want.
 
-Thanks for your help, perhaps I'll consider using C next time, but I
-really want an uncompiled language so I can make changes quickly if
-problems arise. I think I mentioned that before.
+A network protocol invented by Microsoft, of course its rubbish.
 
-73 Ben
-
------Original Message-----
-From: linux-hams-owner@vger.kernel.org
-[mailto:linux-hams-owner@vger.kernel.org] On Behalf Of Tomi Manninen
-Sent: Sunday, September 29, 2002 2:27 PM
-To: Ben Gelb
-Cc: linux-hams@vger.kernel.org
-Subject: Re: ax25d and STDIN
-
-On 28 Sep 2002, Ben Gelb wrote:
-
-> Using fread with a large length doesn't work, because EOF is never
-found
-> in stdin. So it just keeps waiting for the number of bytes specified.
-
-Actually I Don't think it's EOF that is missed. You would expect to see
-EOF only when the user disconnects. It's probably that the io stream is
-fully buffered. Playing with the setbuf() family of functions (if 
-available in php, perl or whatever you use, I don't know) might be a 
-solution.
-
-> I don't really understand why this works with the SEQPACKET
-> consideration. I am definitely not getting the whole packet at once,
-> yet, as I said, it does work.
-
-Your code (which I believe in some form uses the libc stdio library)
-buffers the reads and the actual low level read() is called with a
-buffer
-larger than what you specify. The default is probably the machine page
-size. I think that's why it works.
-
-I have found that the safest option is to directly use a low level
-read() 
-call and handle any buffering my self. I don't know if that is an option
-
-for you however. So after all your hack might the best solution.
-
+  - Craig
 -- 
-Tomi Manninen           Internet:  oh2bns@sral.fi
-OH2BNS                  AX.25:     oh2bns@oh2rbi.fin.eu
-KP20ME04                Amprnet:   oh2bns@oh2rbi.ampr.org
-
--
-To unsubscribe from this list: send the line "unsubscribe linux-hams" in
-the body of a message to majordomo@vger.kernel.org
-More majordomo info at  http://vger.kernel.org/majordomo-info.html
-
-
+Craig Small VK2XLZ  GnuPG:1C1B D893 1418 2AF4 45EE  95CB C76C E5AC 12CA DFA5
+Eye-Net Consulting http://www.enc.com.au/                <csmall@enc.com.au>
+MIEEE <csmall@ieee.org>                 Debian developer <csmall@debian.org>
