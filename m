@@ -1,46 +1,38 @@
-From: "B. Stienstra" <b.stienstra@xs4all.nl>
-Subject: 6pack problem
-Date: 23 Mar 2003 11:04:06 +0100
+From: M Taylor <mctylr@privacy.nb.ca>
+Subject: Re: Dekoding encap.txt to routing for JNOS
+Date: Sun, 23 Mar 2003 17:04:40 +0000
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <1048413846.30392.25.camel@atlantic>
-References: <003701c2f0a8$815f65c0$6400000a@gw.sp1lop.szczecin.pl>
+Message-ID: <20030323170440.A24193@pull.privacy.nb.ca>
+References: <000901c2f0a6$c71402d0$6400000a@gw.sp1lop.szczecin.pl>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <003701c2f0a8$815f65c0$6400000a@gw.sp1lop.szczecin.pl>
+Content-Disposition: inline
+In-Reply-To: <000901c2f0a6$c71402d0$6400000a@gw.sp1lop.szczecin.pl>; from sp1lop@gw.sp1lop.szczecin.pl on Sat, Mar 22, 2003 at 08:10:54PM +0100
 List-Id: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
-To: linux-hams@vger.kernel.org
+Content-Transfer-Encoding: 7bit
+To: Janusz Przybylski - SP1LOP <sp1lop@gw.sp1lop.szczecin.pl>
+Cc: linux-hams@vger.kernel.org
 
-Hello all,
+On Sat, Mar 22, 2003 at 08:10:54PM +0100, Janusz Przybylski - SP1LOP wrote:
+> 
+> Routingu used in encap format.txt it is not peaceable with my format
+> routingu
+> and then example:
+> encap.txt
+> route addprivate 44.165.25/24 encap 80.48.10 5.183
+> 
+> and this routing:
+> ip route add 44.165.25/25 via 80.48.10 5.183 dev tunl0 onlink
+> 
+> this exemplifies from utilization my data.
 
-I've recently bought a TNC2multi (www.tnc2multi.de). The eeprom consist
-of a 6pack and tf2.7b firmware. You can switch between those two with a
-jumper. Since i'm running linux, i thought 6pack would be the best
-option. The problem is that the tnc stops running after a long while,
-say 8 hours. The /var/log/messages file says: 
-Mar 23 10:05:53 atlantic kernel: 6pack: resyncing TNC
+If I understand your request correctly, you wish to use the encap.txt
+file for building IPIP encapsulation routes under Linux using iproute2.
 
-After i disconnect the 12volt from the tnc and then reconnect it with
-12v the /var/log/messages says:
-Mar 23 10:06:18 atlantic kernel: 6pack: TNC found.
+If so, then I have some scripts that should help you.
+http://www.mctaylor.com/ve1mct/ampr_gateways.tar.gz
+ 
+I hope that is useful for you.
 
-And the tnc is up and running. Does anyone know what the problem could
-be? Below you can find my system info.
-
-Kind regards,
-Ben, PD2BS
-
---
-PC: PIII, 866Mhz, 256MB mem
-OS: RedHat Linux 8.0, kernel 2.4.21-pre4
-TNC: TNC2multi (6pack/TF2.7b)
-AX25 software: ax25-apps-0.0.6, ax25-tools-0.0.8, libax25-0.0.10
-
-
-
-
-
-
-
-
+-ve1mct
