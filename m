@@ -1,34 +1,24 @@
-From: Jeroen Vreeken <pe1rxq@amsat.org>
-Subject: Re: Linux 2.6.3 ... Where are mkiss and 6pack?
-Date: Thu, 19 Feb 2004 20:44:55 +0100
+From: Aleksandar Ilic <ailic@gmx.net>
+Subject: Re: TCP/IP via digi
+Date: Thu, 19 Feb 2004 23:48:13 +0100
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <20040219204455.A231@jeroen.pe1rxq.ampr.org>
-References: <200402182229.30123@www.cabodesantapola.org> <20040219003515.K231@jeroen.pe1rxq.ampr.org> <4034B26B.3010903@ccr.jussieu.fr>
+Message-ID: <200402192348.13675.ailic@gmx.net>
+References: <200402182351.22651.ailic@gmx.net> <200402192115.08247.pa3gcu@zeelandnet.nl>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7BIT
+Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <4034B26B.3010903@ccr.jussieu.fr>; from pidoux@ccr.jussieu.fr on Thu, Feb 19, 2004 at 13:56:11 +0100
+In-Reply-To: <200402192115.08247.pa3gcu@zeelandnet.nl>
+Content-Disposition: inline
 List-Id: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
-To: Bernard Pidoux <pidoux@ccr.jussieu.fr>
-Cc: Ruben Navarro Huedo <eb5esx@eb5esx.ampr.org>, Linux-hams List <linux-hams@vger.kernel.org>
+To: linux-hams@vger.kernel.org
 
-On 2004.02.19 13:56:11 +0100 Bernard Pidoux wrote:
-> Hi,
-> 
-> In my experience mkiss works very fine with kernel 2.6 !
-> Could you explain what is SMP ?
+Paul, Richard,
 
-As long as you use a single processor system they indeed work fine....
-And the nasty thing is that they will probably appear to work fine on an
-multiprocessor system to. Except for the fact that it will probably have
-some misterious lockup once every few weeks :)
+thanks for an express answer.
+I'll give a try and announce the results.
 
-Somebody has looked at the code and decided that it probably has some race
-conditions. (which might go wrong or might go right depending on the phase
-of the moon)
-Someone would have to go over the code and make sure it uses the propper
-locking mechanisms.
-
-Jeroen
+Alek.
+-- 
+  73 de YU1IS  -=-  ICQ# 62419462
 
