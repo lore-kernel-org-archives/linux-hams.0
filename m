@@ -1,38 +1,57 @@
-From: "Curt Mills, WE7U" <hacker@tc.fluke.com>
-Subject: Re: Usermode Soundmodem & TTY problems
-Date: Fri, 24 Oct 2003 08:47:01 -0700 (PDT)
+From: Tomi Manninen <oh2bns@sral.fi>
+Subject: ANN: gMFSK v0.6beta1
+Date: Sun, 26 Oct 2003 01:02:25 +0300
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <Pine.LNX.4.33.0310240845080.12192-100000@wapiti.tc.fluke.com>
-References: <OFBAAAADE1.9F6E9FCC-ONE9256DC9.0021434C-E9256DC9.0021F3F8@LocalDomain>
+Message-ID: <1067119345.1305.73.camel@oh2bns.ampr.org>
 Mime-Version: 1.0
-Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <OFBAAAADE1.9F6E9FCC-ONE9256DC9.0021434C-E9256DC9.0021F3F8@LocalDomain>
-List-Id: <linux-hams.vger.kernel.org>
-Content-Type: TEXT/PLAIN; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
-To: matthew.cook@tekelek.com.au
-Cc: linux-hams@vger.kernel.org
+Return-path: <linux-hams-owner@vger.kernel.org>
+List-Id: <linux-hams.vger.kernel.org>
+Content-Type: text/plain; charset="us-ascii"
+To: linux-hams@vger.kernel.org
 
-On Fri, 24 Oct 2003 matthew.cook@tekelek.com.au wrote:
+Hi all,
 
-> Ok I hadn't thought to grep for standard out (*slaps fingers*) nor
-> redirecting the output, I'
-> ll try that tonight.   Otherwise those lines get pulled, thanks for the
-> pointers :-)
+I have just made available the first beta of gMFSK version 0.6. 
+Once again this new version is anything but ready so this time I 
+have cleverly named it a beta... Now you need to find the bugs so
+I can fix them.
 
-You can also just start it up like this:
+Seriously, while this is work in progress, the new features should
+prove useful to people using gMFSK for their digital mode fix.
+Here is a short list of changes in this version:
 
-    (program 2>&1) > /dev/null
+ - Feldhell TX works. Full international character set support.
+                                                                                
+ - All modems have their own config dialog. Clicking the mode
+   label in the statusbar opens the dialog for the current mode.
+   (RTTY and THROB squelch and Feldhell AGC settings don't work yet.)
+                                                                                
+ - Help file. This is still work in progress. Specifically the
+   section about usage is mostly bogus right now.
+                                                                                
+ - TX text is handled a bit differently now. Difficult to explain,
+   please test...
+                                                                                
+ - Locator entry in QSO data (also sent to remote log).
+                                                                                
+ - MFSK pictures.
+                                                                                
+ - The FFT library (FFTW) now uses "wisdom" to optimize CPU consumption.
+   User will notice that the first time a modem is used, there will be
+   a few seconds delay.
+                                                                                
+ - Hamlib (rig control) support.
 
-That redirects STDERR to STDOUT inside a subshell (the
-parenthesis), then redirections STDOUT to NULL.  Works for most
-things.  You can use a similar method to make sure you get all
-messages to a log file, both STDOUT and STDERR.
+There is also a web page devoted to gMFSK now. You can download the
+new version from there:
+
+  http://gmfsk.connect.fi/
+
+I have provided source code and both source and binary RPMS's (binary 
+RPM compiled on Red Hat 9). If compiling from source, please read at 
+least the first 20 lines of the INSTALL file... :)
 
 -- 
-Curt Mills, WE7U                    hacker_NO_SPAM_@tc.fluke.com
-Senior Methods Engineer/SysAdmin
-"Lotto:    A tax on people who are bad at math!"
-"Windows:  Microsoft's tax on computer illiterates!" -- WE7U
-"The world DOES revolve around me:  I picked the coordinate system!"
+Tomi Manninen / OH2BNS / KP20ME04
 
