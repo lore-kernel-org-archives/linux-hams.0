@@ -1,31 +1,38 @@
-From: mvw@mvw.net
-Subject: BBS - recommendations?
-Date: Wed, 18 Dec 2002 19:09:37 -0500 (EST)
+From: Michael Melanson <ve3mtm@rac.ca>
+Subject: Re: BBS - recommendations?
+Date: Wed, 18 Dec 2002 22:59:24 -0500
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <Pine.LNX.4.44.0212181907500.3678-100000@jeeves.mvw.net>
-References: <Pine.LNX.4.44.0212122258110.4719-100000@oh2bns.ampr.org>
+Message-ID: <200212182259.29444.ve3mtm@rac.ca>
+References: <Pine.LNX.4.44.0212181907500.3678-100000@jeeves.mvw.net>
 Mime-Version: 1.0
+Content-Transfer-Encoding: 8BIT
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <Pine.LNX.4.44.0212122258110.4719-100000@oh2bns.ampr.org>
+In-Reply-To: <Pine.LNX.4.44.0212181907500.3678-100000@jeeves.mvw.net>
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: TEXT/PLAIN; charset="us-ascii"
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset="us-ascii"
 To: Linux Hams mailing list <linux-hams@vger.kernel.org>
 
-Hello all,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-I want a simple message system on my packet boxes. Either ax.25 based or 
-TCP/IP based.
+I'm sure there's real software out there for just this purpose, but you could 
+always roll your own. In fact, I don't think it would be that hard to make a 
+simple message system. If you treat the ax.25 device as a TTY, then you can 
+bind agetty to the device, and make the BBS software be the shell when they 
+login.
 
-I do not need heavy all-encompassing OS-like systems - all I want is a 
-simple BBS-style system. Any recomemndations for what works well for you 
-all, and is simple to install and maintain?
+Cheers
 
-Background: I already have the system itself and ax.25 and TCP/IP over 
-ax.25 working. Just need a BBS on top!
+- -- 
+Michael Melanson VE3MTM
+ve3mtm@rac.ca
+73 33
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.0.6 (GNU/Linux)
+Comment: For info see http://www.gnupg.org
 
-Michael
-
-
-
+iD8DBQE+AUQhxg/UNuqCTUsRAmVnAJ9rYTdJYLCdx8eYKuGOmmehsJatswCgi2RV
+UCXPbyvDnmcYA7RANSlbM3w=
+=rKzO
+-----END PGP SIGNATURE-----
 
