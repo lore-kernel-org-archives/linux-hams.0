@@ -1,29 +1,39 @@
-From: Wilbert Knol <w.knol@niwa.co.nz>
-Subject: Re: 2nd indoor Packet Radio
-Date: Mon, 21 Jul 2003 12:35:20 +1200
+From: David Munn <djmunn@bigpond.com>
+Subject: Re :Zipham
+Date: Mon, 21 Jul 2003 07:25:37 +1000
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <200307211235.20816.w.knol@niwa.co.nz>
-References: <20030718150452.24757.qmail@web14410.mail.yahoo.com>
-Reply-To: w.knol@niwa.co.nz
+Message-ID: <200307210725.39227.djmunn@bigpond.com>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <20030718150452.24757.qmail@web14410.mail.yahoo.com>
-Content-Disposition: inline
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"
-To: Vivi Kusumo <vivi_ksm@yahoo.com>, linux-hams@vger.kernel.org
+Content-Type: text/plain; charset="utf-8"
+To: Linux-hams <linux-hams@vger.kernel.org>
 
 
-On Saturday 19 July 2003 03:04 am, Vivi Kusumo wrote:
-> radio: fm  MY1COM  to MY2COM  ctl UI pid=CC(IP) len 84
-> IP: len 84 44.128.1.20->44.128.1.21 ihl 20 ttl 64 DF
-> prot ICMP
-> ICMP: type Echo Request id 8759 seq 768
-> 0000  w.W?R.L.HI.KLMNOPQRSTUVWXYZ[\]^_ !"#$%&'()*+,-./01234567
+Tnx guys for looking for the URL=C5=9B for me ....yep i typed the www. =
+in=20
+error.....well i=C4=BAl just have to send an email to the author and se=
+e if he can=20
+help......would like to have a complete copy so that i can burn it to a=
+ cd=20
+for prosperity and in case one of the local hams wants a linux packet s=
+etup=20
+that is nice and small......have a number of small  (100-500 meg ) h/ds=
+ here=20
+that i could make up for giving to ops to try out a linux packet setup.=
+=2E...
 
-Do you actually have a valid callsign?  I don't think the Brits have 
-got to the 'MY' prefix yet ;-)
+have just loaded Slackware 9.0 onto a 2.5 gig drive and am going to mak=
+e a=20
+packet setup to run either Linpac 1.04 or LinAMC under KDE.....will let=
+ you=20
+know how i get on.....
 
-
-Wilbert, ZL2BSJ
+73s from David Munn
+VK4BDJ
+-
+To unsubscribe from this list: send the line "unsubscribe linux-hams" i=
+n
+the body of a message to majordomo@vger.kernel.org
+More majordomo info at  http://vger.kernel.org/majordomo-info.html
