@@ -1,29 +1,36 @@
-From: Dennis Boone <drb@msu.edu>
+From: Ralf Baechle DL5RB <ralf@linux-mips.org>
 Subject: Re: Norm Frequency beacon ?
-Date: Thu, 27 May 2004 09:01:25 -0400
+Date: Thu, 27 May 2004 15:05:14 +0200
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <200405271301.i4RD1PwQ025390@yagi.h-net.msu.edu>
+Message-ID: <20040527130514.GB1166@linux-mips.org>
 References: <200405271330.25402.dl4mge@darc.de>
+Mime-Version: 1.0
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-reply-to: (Your message of Thu, 27 May 2004 13:30:25 +0200.)
-             <200405271330.25402.dl4mge@darc.de> 
+Content-Disposition: inline
+In-Reply-To: <200405271330.25402.dl4mge@darc.de>
 List-Id: <linux-hams.vger.kernel.org>
-MIME-Version: 1.0
 Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
-To: linux hams news group <linux-hams@vger.kernel.org>
-Cc: -HFTERMHACKERS- <hfterm-hackers@lists.sourceforge.net>
+To: G?nther Montag <dl4mge@darc.de>
+Cc: linux hams news group <linux-hams@vger.kernel.org>, -HFTERMHACKERS- <hfterm-hackers@lists.sourceforge.net>
 
- > does someone know, is there something lik a beacon on the air on
- > shortw ave or medium wave, ham or radio band, which sends a known fixed
- > exact frequen cy tone in AM, e.g. 1000 Hz or other, for calibration?`
- > Something like DCF77 on longwave?
+On Thu, May 27, 2004 at 01:30:25PM +0200, G?nther Montag  wrote:
 
-You might see if you can receive the Canadian or US time and frequency
-standards stations, CHU and WWV, in your location:
+> does someone know, is there something lik a beacon on the air on shortwave or 
+> medium wave, ham or radio band, which sends a known fixed exact frequency 
+> tone in AM, e.g. 1000 Hz or other, for calibration?`
+> Something like DCF77 on longwave?
+> 
+> We have a real-time pactor program which needs an exact frequency for 
+> calibration, and not everyone has an DCF77 receiver.
 
-http://inms-ienm.nrc-cnrc.gc.ca/time_services/shortwave_broadcasts_e.html
-http://www.boulder.nist.gov/timefreq/stations/wwv.html
+A few shortwave stations among them DW have a reputation for a highly
+accurate carrier frequency.  There are also the usual time stations such
+as WWV on shortwave.  Within Germany ZDF's signal makes a good timebase;
+a few years ago description how to build a highly accurate frequency
+normal based on this signal have been published.
 
-Dennis Boone
-KB8ZQZ
+73 de DL5RB op Ralf
+
+--
+Loc. JN47BS / CQ 14 / ITU 28 / DOK A21
