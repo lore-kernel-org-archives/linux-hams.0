@@ -1,25 +1,27 @@
-From: "David S. Miller" <davem@redhat.com>
-Subject: Re: [PATCH] missing spin_unlock and recvmsg fix
-Date: Wed, 31 Dec 2003 10:36:17 -0800
+From: Hamish Moffatt <hamish@cloud.net.au>
+Subject: Re: Best way to Telnet in Linux SuSe 9.0?
+Date: Thu, 1 Jan 2004 12:01:49 +1100
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <20031231103617.02c5db8f.davem@redhat.com>
-References: <20031231170647.C3527@jeroen.pe1rxq.ampr.org>
+Message-ID: <20040101010149.GC5444@cloud.net.au>
+References: <bsuu6p$inn$1@sea.gmane.org>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <20031231170647.C3527@jeroen.pe1rxq.ampr.org>
+Content-Disposition: inline
+In-Reply-To: <bsuu6p$inn$1@sea.gmane.org>
 List-Id: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
-To: Jeroen Vreeken <pe1rxq@amsat.org>
-Cc: linux-hams@vger.kernel.org, ralf@linux-mips.org
+Content-Transfer-Encoding: 7bit
+To: linux-hams@vger.kernel.org
 
-On Wed, 31 Dec 2003 17:06:47 +0100
-Jeroen Vreeken <pe1rxq@amsat.org> wrote:
+On Wed, Dec 31, 2003 at 08:41:25AM -0800, Dave wrote:
+> I am only 3 days old in Linux, but trying to get up and walk quickly.
+> 
+> What is the best way to run Telnet in Linux?  I want to log onto a DX 
+> Spotting Telnet site.
 
-> This is a small patch for two ax25 problems:
-> - A missing spin_unlock.
-> - recvmsg was reporting the destination address instead of the source
-> address.
->  (and I really want recvfrom() and not recvto() :)
+"telnet <hostname>" at a shell prompt should do it. You might have to
+install a package to get the telnet client.
 
-Applied, thanks Jeroen.
+Hamish
+-- 
+Hamish Moffatt VK3SB <hamish@debian.org> <hamish@cloud.net.au>
