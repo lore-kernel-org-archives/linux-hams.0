@@ -1,36 +1,40 @@
-From: Aleksandar Ilic <ailic@gmx.net>
-Subject: Re: TCP/IP via digi
-Date: Sat, 21 Feb 2004 00:59:38 +0100
+From: "David S. Miller" <davem@redhat.com>
+Subject: Re: net/* module-related oddities
+Date: Sat, 21 Feb 2004 13:02:34 -0800
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <200402210059.39062.ailic@gmx.net>
-References: <200402182351.22651.ailic@gmx.net> <oRyvymAfzNNAFwn8@skywaves.demon.co.uk>
+Message-ID: <20040221130234.575505fc.davem@redhat.com>
+References: <20040221011854.GM31035@parcelfarce.linux.theplanet.co.uk>
+	<20040220184049.22bf1814.davem@redhat.com>
+	<20040221044144.GN31035@parcelfarce.linux.theplanet.co.uk>
 Mime-Version: 1.0
 Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <oRyvymAfzNNAFwn8@skywaves.demon.co.uk>
-Content-Disposition: inline
+In-Reply-To: <20040221044144.GN31035@parcelfarce.linux.theplanet.co.uk>
 List-Id: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
-To: linux-hams@vger.kernel.org
+To: viro@parcelfarce.linux.theplanet.co.uk
+Cc: ralf@linux-mips.org, linux-hams@vger.kernel.org, acme@conectiva.com.br
 
-Hello Paul,
+On Sat, 21 Feb 2004 04:41:44 +0000
+viro@parcelfarce.linux.theplanet.co.uk wrote:
 
-> get the sysop of the x1j4 node to enable the IP stack on the
-> node then you can use it as an ip router.
+> 	What is intended there?  Is it "netrom already speaks that protocol
+> and it would be unhappy if you try to interfere"?  Then the first case above
+> is a bug - we can get netrom loaded and such socket opened.  If it's not that,
+> WTF it is?
 
-I've checked IP settings at x-1j4 node, and you was right. IP adress is in 
-wrong range, and no route is set. The bizzare thing is, that people from 
-radio-club who are maintaining digi haven't a clue about sysop password. They 
-will try to find when and who programmed the EPROM's for them - Hi !
-In between, is it any "factory-default" password for TheNet? I'm very much 
-assured it is left as is. Would you look at your documentation once again?
+It cannot be because of a protocol handling conflict.  NETROM registers
+AF_NETROM, AX25 registers AF_AX25, and ROSE registers AF_ROSE.
 
-It is all about 4N1ZNX gateway (of which I am co-sysop), and 4N1ZNI-6 
-digipeater on near hill. Those two are covering Nis area here in east Serbia 
-since last autumn very solid.
+I think all of these tests are simply backwards.  What it wants to do is
+say ESOCKTNOSUPPORT if the netrom/rose/etc. protocols aren't present or
+their module type can't be loaded, during ax25_create().
 
-regards,
-Alek
--- 
-  73 de YU1IS  -=-  ICQ# 62419462
+This code has been like this for centuries, I'm so scared to touch it.
 
+Ralf, since you're the listed AX.25/ROSE/NETROM maintainer :)  Take a look
+at the crap happening in ax25_create(), all thoses tests about SEQPACKET
+sockets and IP, ROSE, NETROM.  They all look reversed.  They have to be,
+if not neither I nor Al here have any idea what the code is trying to do.
+
+Thanks.
