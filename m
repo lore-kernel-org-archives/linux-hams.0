@@ -1,62 +1,56 @@
-From: "Rodolfo Brasnarof" <rodob@ciudad.com.ar>
-Subject: Re: Soundmodem && SBLive!
-Date: Tue, 15 Apr 2003 20:24:39 -0300
+From: Tomi Manninen <tpm@prkele.tky.hut.fi>
+Subject: ANNOUNCE: gMFSK v0.5
+Date: Sat, 19 Apr 2003 21:58:04 +0300 (EEST)
 Sender: linux-hams-owner@localhost
-Message-ID: <3E9C6A87.22232.37320@localhost>
-References: <3E9A1E49.14409.BE2D@localhost>
+Message-ID: <Pine.LNX.4.44.0304192044470.6051-100000@oh2bns.ampr.org>
+Reply-To: tpm@prkele.tky.hut.fi
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7BIT
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-reply-to: <200304140816.37438.rdmartinml@infinito.it>
-Content-description: Mail message body
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"
-To: rdmartinml@infinito.it
-Cc: linux-hams@vger.kernel.org
+Content-Type: TEXT/PLAIN; charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+To: linux-hams@vger.kernel.org
 
----
-On 14 Apr 2003 at 8:16, Giuseppe Martino wrote:
+Hi all,
 
-> Il Monday 14 April 2003 07:34, Rodolfo Brasnarof ha scritto:
-> > So, try the user-space one, which should work with ANY
-> > soundcard supported by OSS. Is your card working with OSS?
-> 
-> Yes,  It is.
-> 
-> > Then it should work with the user-space soundmodem.
-> 
-> But Is soundmodem kernel-space no longer mantained?
+I just uploaded gMFSK v0.5 to hes.iki.fi:
 
-I don't know, but the user-space soundmodem is easier to 
-configure, more flexible, and works with virtually any 
-soundcard supported by the kernel.
+  http://hes.iki.fi/pub/ham/unix/linux/hfmodems/
 
-The kernel soundmodem only works with soundblaster or 
-windows sound system compatible cards. Those include 
-SoundBlaster, SBPro, SB16, AWE32, AWE64, and many 
-compatibles, for example those with Crystal chipsets (I have 
-one with this chip and made it work with the kernel module, 
-in both SB and WSS mode). Those are mainly isa cards. Sound 
-Blaster PCI cards (like mine PCI128) don't work with this, 
-and perhaps no pci card would work. This is a restriction 
-the other soundmodem doesn't have (and an important one if 
-your card is not supported).
+There you will find a tar.gz source package, a source RPM and a binary
+i386 RPM for Red Hat 8.0.
 
-Other thing is flexibility. When you configure the user 
-soundmodem, for example in afsk modulation, you can choose 
-the tones you want to use. This is not posible with the 
-kernes soundmodem. A friend and I are using 2400bps afsk 
-with custom tones (we choosed the tones which worked best).
+I release this version now not because it's ready but because if I don't
+release it now, I will never release it. It's up to you to find all the
+bugs. :-)
 
-Other thing is that when I tried the kernel soundmodem, I 
-had problems unloading the module (the module gives a 
-segmentation fault).
+This is a rather extensive re-write as I have switched to using GTK+ 2 /
+Gnome 2. Consequently there are still some unimplemented features compared
+to v0.4.1.
 
-And finaly, there's the mixer. You can use the usual mixer 
-to change audio levels. I use aumix in command line mode 
-from within a script, but you can use what you like.
+The most important new features are the port to GTK+ 2 / Gnome 2 and the 
+new modems: MFSK8, (Q)PSK31, MT63 and FeldHell. FeldHell is RX only for 
+now. I have previously written a Hellscreiber program for GTK+ 1.x but 
+never released it. Now I need to figure out how to do the character 
+rendering for TX in GTK+ 2.
 
-One bad thing is that if you want to use the configuration 
-utility you need X. But you can take a sample configuration 
-file and edit it yourself.
+PSK31 and MT63 borrow a lot from other peoples code so they should work 
+pretty well. However MT63 has no support for the extended features in 
+Nino's program or MixW. MFSK8 seems to work but is pretty much untested.
+
+Bear in mind that this is very much work in progress. All bug reports,
+feature requests and contributed code is welcome, though I reserve the
+right to select what will make it to the next release... :)
+
+Last but not least there is the name issue. The program is not anymore a 
+collection of various M-ary FSK modems, there are PSK, OFDM and Fuzzy 
+modes as well. So the name is not the best one anymore. Suggestions for a 
+new name are welcome!
+
+Now, share and enjoy!
+
+-- 
+Tomi Manninen           Internet:  oh2bns@sral.fi
+OH2BNS                  AX.25:     oh2bns@oh2rbi.fin.eu
+KP20ME04                Amprnet:   oh2bns@oh2rbi.ampr.org
 
