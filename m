@@ -1,24 +1,22 @@
-From: Richard Bown <richard.bown@blueyonder.co.uk>
-Subject: linrad
-Date: 17 Oct 2003 09:21:14 +0100
+From: "Wilson G. Hein" <whein3@earthlink.net>
+Subject: RPM's
+Date: Sun, 19 Oct 2003 08:51:58 -0400
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <1066378874.4086.18.camel@gb7tf.org.uk>
+Message-ID: <NCBBKBAJDJIPKFIAFBKLMEFKEJAC.whein3@earthlink.net>
+Reply-To: <whein3@earthlink.net>
 Mime-Version: 1.0
 Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
 List-Id: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
-To: linux-hams@vger.kernel.org
+To: Linux-Hams Mailing List <linux-hams@vger.kernel.org>
 
-Hi
- Has anyone had any success getting linrad working on mandrake 9.1 with
-2.4.21 kernel, after compiling mine just shuts down the graphics card
-and eventually causes the machine to crash.
-Alternatively has anyone had success running spectran on wine.
-that app dos'nt want to play on either vmware or win4lin
+Hello,
 
-TIA
-Richard
--- 
-Richard Bown <richard.bown@blueyonder.co.uk>
+Might anyone have rpm's of the latest libax25, ax25-apps, and ax25-tools,
+they would be willing to share?
+
+Thanks,
+
+Willie WJ3G
 
