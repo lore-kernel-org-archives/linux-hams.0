@@ -1,26 +1,28 @@
 From: Thomas Sailer <sailer@scs.ch>
-Subject: Re: ANN: UKW Tools 0.3.2 released
-Date: Wed, 10 Mar 2004 18:42:09 +0100
+Subject: Re: user soundmodem problems on Inspiron 8200 i810 chipset...
+Date: Wed, 10 Mar 2004 18:44:43 +0100
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <404F5371.4070704@scs.ch>
-References: <dFemtxAWHhTAFwRT@mechserv.demon.co.uk>
+Message-ID: <404F540B.3050309@scs.ch>
+References: <20040309022333.GA4377@braddock.com> <1078861838.2336.1.camel@law3lz8h11.lib.loc.gov> <20040309213542.GA27566@braddock.com>
 Mime-Version: 1.0
 Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <dFemtxAWHhTAFwRT@mechserv.demon.co.uk>
+In-Reply-To: <20040309213542.GA27566@braddock.com>
 List-Id: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"; format="flowed"
-To: Jonathan Naylor <jonathan@mechserv.demon.co.uk>
-Cc: linux-hams@vger.kernel.org
+To: braddock@braddock.com
+Cc: Linux-Hams@vger.kernel.org
 
-Jonathan Naylor wrote:
+braddock@braddock.com wrote:
 
-> PS does anyone know where I can get the source code for a soft decision 
-> Reed Solomon decoder ?
+> http://braddock.com/soundmodem.png
+>
 
-Soft decision decoding of block codes is hard to do efficiently. In fact I don't
-know any algorithm that does it efficiently. That's why normally a convolutional code
-is used as inner code 8-)
+Looks like alsa tries to do sample rate conversion, but
+"somewhat" imperfectly. Sigh. Does anyone know how to convince
+ALSA to not do any sample rate conversion in their OSS emulation?
+
+In the long run soundmodem probably should just use alsa natively.
 
 Tom
 
