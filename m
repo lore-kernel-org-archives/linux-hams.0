@@ -1,37 +1,38 @@
-From: Wilbert Knol <w.knol@niwa.co.nz>
+From: =?iso-8859-1?q?=D8yvind_Hanssen?= <oyvind@cs.uit.no>
 Subject: Re: [RFC] Future of INP3 patch
-Date: Wed, 31 Mar 2004 00:27:33 +1200 (NZST)
+Date: Tue, 30 Mar 2004 15:35:35 +0200
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <Pine.LNX.4.44.0403310016220.28083-100000@zl2bsj.ampr.org>
+Message-ID: <200403301535.35888.oyvind@cs.uit.no>
 References: <20040329202649.C231@jeroen.pe1rxq.ampr.org>
 Mime-Version: 1.0
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 Return-path: <linux-hams-owner@vger.kernel.org>
 In-Reply-To: <20040329202649.C231@jeroen.pe1rxq.ampr.org>
+Content-Disposition: inline
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: TEXT/PLAIN; charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-To: linux-hams <linux-hams@vger.kernel.org>
+Content-Type: text/plain; charset="iso-8859-1"
+To: linux-hams@vger.kernel.org
+Cc: Jeroen Vreeken <pe1rxq@amsat.org>
 
+I havent dared to switch to the 2.6 kernel yet, use the INP3 patch for =
+the 2.4=20
+kernel. We really appreciate it (and depend on it) here in my area, so =
+it would be nice=20
+if it was included in the mainstream kernel, of course.=20
 
-> I haven't seen any replies after posting about the inp3 patches for 2.6 so
-> either the spontanious combustion problems are fixed or nobody cares.....
-> At the moment the patch seems to be pretty stable and running without
-> problems so I was wondering what to do next:
+73 de LA7ECA @LA3T
 
-It is not a case of not caring. I haven't the guts to try the 2.6
-kernels...
-
-My experience upgrading 2.2 to  2.4 wasn't a happy one. I rely on a
-working AX25 system for my E-mail, and the current 2.4.22 kernel
-(without NETROM) is reasonably stable.
-
-I suspect several list subscribers (those running full-service DX
-Clusters, BBS's, gateways etc etc) are in the same boat.
-
-However, if the 2.6.4 kernel with Jeroen's inp3 patches applied is OK
-for AX25, then I am quite prepared to give it a try. What is the
-verdict?
-
-
-Wilbert, ZL2BSJ
-
+> - Try to get it in 2.6.
+>   (The patch only affects netrom and is for 99% configurable with
+> CONFIG_NETROM_INP with the exeption of the netrom node sorting but th=
+is
+> shouldn't be a problem)
+>=20
+--=20
+Computer Science dept. University of Troms=F8,  ohanssen@acm.org,  Cell=
+: +47 9511 7457
+-
+To unsubscribe from this list: send the line "unsubscribe linux-hams" i=
+n
+the body of a message to majordomo@vger.kernel.org
+More majordomo info at  http://vger.kernel.org/majordomo-info.html
