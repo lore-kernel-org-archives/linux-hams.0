@@ -1,24 +1,29 @@
-From: "Wilson G. Hein" <vze2b869@verizon.net>
-Subject: shutdown script
-Date: Wed, 8 Jan 2003 15:06:05 -0500
+From: Nuno Miguel Fernandes Sucena Almeida <slug@aeminium.org>
+Subject: Re: PIC programming question
+Date: Wed, 8 Jan 2003 20:54:40 +0000
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <NCBBKBAJDJIPKFIAFBKLOEFBEHAC.vze2b869@verizon.net>
-Reply-To: <whein3@earthlink.net>
+Message-ID: <20030108205440.GA5325@freebsd.aeminium.pt>
+References: <200301062005.06383.phil@spiderweb.com.au>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
+Content-Disposition: inline
+In-Reply-To: <200301062005.06383.phil@spiderweb.com.au>
 List-Id: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
-To: Linux-Hams Mailing List <linux-hams@vger.kernel.org>
+Content-Transfer-Encoding: 7bit
+To: Phil <phil@spiderweb.com.au>
+Cc: linux-hams@vger.kernel.org
 
-I'm wondering if someone has a script to close ax25 and netrom, etc
-interfaces. I would presume it would have something to look at the pid's and
-then kill the process. I wnat to plug it into /etc/sysconfig/network-scripts
-to automate startup and close through the normal init scripts.
 
-TIA,
 
-Regards,
+On Tue, Jan 07, 2003 at 02:30:56PM +1000, Phil wrote:
+| An Internet search didn't reveal very many programmers for Linux. One 
+|interesting project is called ponyprog2000. The hardware is more complex than 
 
-Willie, WJ3G
+check the two simple schematics at:
 
+http://www.finitesite.com/d3jsys/
+
+		73,
+			Nuno
+-- 
