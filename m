@@ -1,38 +1,40 @@
-From: Arnaldo Carvalho de Melo <acme@conectiva.com.br>
-Subject: Re: [PATCH] C99 initializers for net/netrom/sysctl_net_netrom.c
-Date: Fri, 14 Feb 2003 00:19:25 -0200
-Sender: linux-net-owner@vger.kernel.org
-Message-ID: <20030214021925.GF6258@conectiva.com.br>
-References: <20030214012320.GB13561@debian>
+From: James Cutler <jwc@stanford.edu>
+Subject: Kissattach and pseudoterminals
+Date: Thu, 13 Feb 2003 19:18:37 -0800 (PST)
+Sender: linux-hams-owner@vger.kernel.org
+Message-ID: <Pine.LNX.4.44.0302131901220.4132-100000@localhost.localdomain>
 Mime-Version: 1.0
-Return-path: <linux-net-owner@vger.kernel.org>
-Content-Disposition: inline
-In-Reply-To: <20030214012320.GB13561@debian>
+Return-path: <linux-hams-owner@vger.kernel.org>
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"
+Content-Type: TEXT/PLAIN; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
-To: Art Haas <ahaas@airmail.net>
-Cc: linux-net@vger.kernel.org, linux-hams@vger.kernel.org
+To: linux-hams@vger.kernel.org
 
-Em Thu, Feb 13, 2003 at 07:23:20PM -0600, Art Haas escreveu:
-> Hi.
-> 
-> Here's a patch that switches the file to use C99 initiailzers to aid
-> readability and remove warings if '-W' is used.
-> 
-> +		.extra1		= &min_quality,
-> +		.extra2		= &max_quality
 
-Art, just a small nitpick: the "standard" in the kernel sources is for all
-the members to have an ending comma, just like this:
+Just wondering if anyone has every tried to setup two local KISS devices 
+with kissattach using psuedo terminals on Linux?  See 
+http://www.tldp.org/HOWTO/Text-Terminal-HOWTO-6.html for info pseudo 
+terminals.  Basically they allow you to create two serials on a machine 
+that are connected via software.
 
-> +		.extra1		= &min_quality,
-> +		.extra2		= &max_quality,
-                                              ^
-                                              ^
-                                              ^
-So that when we need to add another member the patch gets smaller 8)
+I'd like to write and test AX25 code on my laptop using KISS devices.  On 
+my desktop, which has two physical serial ports, I connect them with a 
+null modem cable as loop back.  Then I can attach two KISS devices that 
+are connected via the cable.
 
-Aside from this small nitpick, keep it up the good work!
+I cannot do this on my laptop since I have just one serial port.  In the 
+past I've built a small connector that connects TX line to the RX line to 
+test one way, but I'd like to test bi directional communication, hence the 
+pseudo terminals.
 
-- Arnaldo
+But, when I use pseudo terminals, only one packet can be sent and then it 
+stops (tested with beacon and listen).  Killing and restarting kissattach 
+allows one more packet to go through but no more.
+
+Anyone have an idea on how to fix this?
+
+Cheers,
+
+--James, KF6RFX
+
+
