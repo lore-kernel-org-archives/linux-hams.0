@@ -1,40 +1,58 @@
-From: Wilbert Knol <zl2bsj@zl2tze.ath.cx>
-Subject: RE: Kenwood TR-7950 Crashing Computer?
-Date: Thu, 27 Mar 2003 23:03:29 +1200 (NZST)
+From: bernard pidoux <pidoux@ccr.jussieu.fr>
+Subject: Re: Problem...
+Date: Thu, 27 Mar 2003 13:01:37 +0100
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <Pine.LNX.4.21.0303272253020.4067-100000@zl2bsj.ampr.org>
-References: <1048733700.2533.37.camel@bobcp4.lingpgmr.com>
+Message-ID: <3E82E821.2080304@ccr.jussieu.fr>
+References: <GMEHKCCPLOCMPOLBMKICCEJNDOAA.hremijn@zeelandnet.nl> <3E8086E6.3000709@ccr.jussieu.fr> <200303251925.56224.oh1mrr@nic.fi>
 Mime-Version: 1.0
-Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <1048733700.2533.37.camel@bobcp4.lingpgmr.com>
-List-Id: <linux-hams.vger.kernel.org>
-Content-Type: TEXT/PLAIN; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
-To: linux-hams@vger.kernel.org
+Return-path: <linux-hams-owner@vger.kernel.org>
+In-Reply-To: <200303251925.56224.oh1mrr@nic.fi>
+List-Id: <linux-hams.vger.kernel.org>
+Content-Type: text/plain; charset="us-ascii"; format="flowed"
+To: Jarmo <oh1mrr@nic.fi>
+Cc: linux-hams@vger.kernel.org
 
+Jarmo wrote:
 
-Hi Bob,
+>On Tuesday 25 March 2003 18:42, bernard pidoux wrote:
+>
+>  
+>
+>>For example,  install Mandrake Linux distro 7.2, then update with 7.2
+>>update (february 2003 delivery or so) that can be found on any Linux
+>>distro mirror.
+>>Then install (optionally) the last 2.2 kernel if you want.
+>>
+>>Bernard Pidoux, F6BVP
+>>    
+>>
+>
+>Hi
+>
+>I have all ax25 stuff compiled as modules and working like charm
+>in mandrake 9.0 with kernel 2.4.20.
+>
+>Have one 9k6 port using 6pack...So with 2.4.x series kernel ax25
+>IS working fine...
+>Have tested 2.5.x series and there ax25 does not work....
+>
+>Jarmo
+>  
+>
 
+I am glad that your AX25 applications are working fine with Linux kernel 
+2.4.x
+I was only reporting that this is not the case when serial link are 
+handled by mkiss.
+I assume that it is a question of heavy interrupts load for I have 
+traced the problem and found that kernel panics occur very often around 
+the same address in ax25 input routines.
+This is probably related to the lot of cli() instructions and the new 
+way interrupts are managed in 2.4 kernels.
+All these cli() sti() have been removed in 2.5 kernel. Thats why I hope 
+mkiss will work again on 2.6.
 
-On 26 Mar 2003, Robert L Cochran wrote:
-
-> The TR-7930 runs at 25 watts HI and 5 watts LOW. 
-> 
-> My 7950 really makes my small computer monitor image jump with each
-
-
-You should put up an outside antenna. 25 Watts inside the shack is not a
-good thing... For a start, antennas don't like to be near
-hash-producing things such as computers.
-
-Even at 5 Watts, you'll be putting high levels of RF into all your shack
-gear, resulting in RF detection and feedback. 
-
-I wouldn't trust any electronic equipment to work reliably in such an
-environment. Get the near field away from your gear.
-
-
-Wilbert, ZL2BSJ
-
+Best 73 de Bernard, F6BVP
 
 
