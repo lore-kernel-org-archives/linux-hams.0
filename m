@@ -1,53 +1,48 @@
-From: Jarmo <oh1mrr@nic.fi>
+From: Ralf Baechle DO1GRB <ralf@linux-mips.org>
 Subject: Re: Timers in 2.6.x kernels
-Date: Sat, 13 Mar 2004 16:59:49 +0200
+Date: Sat, 13 Mar 2004 23:06:22 +0100
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <200403131659.49496.oh1mrr@nic.fi>
-References: <200403121310.02980.oh1mrr@nic.fi> <20040313141914.GB26738@linux-mips.org>
+Message-ID: <20040313220622.GA18544@linux-mips.org>
+References: <200403121310.02980.oh1mrr@nic.fi> <20040313141914.GB26738@linux-mips.org> <200403131659.49496.oh1mrr@nic.fi>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <20040313141914.GB26738@linux-mips.org>
 Content-Disposition: inline
+In-Reply-To: <200403131659.49496.oh1mrr@nic.fi>
 List-Id: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
-To: Ralf Baechle DO1GRB <ralf@linux-mips.org>
+Content-Transfer-Encoding: 7bit
+To: Jarmo <oh1mrr@nic.fi>
 Cc: linux-hams@vger.kernel.org
 
-On Saturday 13 March 2004 16:19, you wrote:
+On Sat, Mar 13, 2004 at 04:59:49PM +0200, Jarmo wrote:
 
-> All properly written kernel code should now be used USER_HZ for any kind of
-> kernel interfaces that are user or application visible.  Unfortunately
-> quite a bit of the ham code in the kernel still hasn't done that
-> transitition so now we've got a wild mix of time units.
->
-> I guess for consistence we should bit the bullet and standardize on one
-> unit, seconds or miliseconds as appropriate.  HZ or USER_HZ require the
-> user to know what kind of system or even what kernel version he's running.
+> In 6pack driver here in linux,there's still 0.3.0 version,and if I remember
+> the end of 90' ,there was something 0.4.2 version for dos/windows.
+> It never came into kernel tree...
 
-In 6pack driver here in linux,there's still 0.3.0 version,and if I remember
-the end of 90' ,there was something 0.4.2 version for dos/windows.
-It never came into kernel tree...
+MS drivers and Linux drivers are technically very different.  So quite
+likely the version numbers are refering to different drivers.  And anyway,
+the Linux driver has been changed fairly often, just not the version
+number of the driver.  So in short, the content of information in the
+version number is probably approximating that of cosmic noise ;-)
 
-> Do you happen to be running a CONFIG_SMP / CONFIG_PREEMPT kernel?  The
-> locking stuff in the 6pack driver looks pretty broken and I wouldn't
-> expect it to survive for long with any of these two kernel options
-> enabled.
+> > APM implementations tend to tamper with interrupts so disabling APM while
+> > running data over the serial port may help.
+> 
+> This morning I compiled kernel without APM and it has been running
+> from since.
+> Hope,that get it running more stable..9 hours max uptime was quite
+> annoying.
+> 
+> Ofcourse possibilities to start use mkiss......Hope someone should
+> find intress to look code and make improvements..My knowledge
+> is below zero...;-)
+> 
+> Still have to remember,that this is a hobby..isn't it?
 
-No
+Maybe - but software that works less than reliable sucks.
 
-> APM implementations tend to tamper with interrupts so disabling APM while
-> running data over the serial port may help.
+73 de DO1GRB op Ralf
 
-This morning I compiled kernel without APM and it has been running
-from since.
-Hope,that get it running more stable..9 hours max uptime was quite
-annoying.
-
-Ofcourse possibilities to start use mkiss......Hope someone should
-find intress to look code and make improvements..My knowledge
-is below zero...;-)
-
-Still have to remember,that this is a hobby..isn't it?
-
-Jarmo
+--
+Loc. JN47BS / CQ 14 / ITU 28 / DOK A21
