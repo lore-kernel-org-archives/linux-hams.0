@@ -1,62 +1,74 @@
-From: 9a4gl@9a0tcp.ampr.org (Tihomir Heidelberg)
-Subject: Re: AX.25 unaccepted socket makes problems
-Date: Wed, 28 May 03 14:29:08 CEST
+From: Shane Deering <vk3bvp@qsl.net>
+Subject: Re: Problems with bpq-interface
+Date: Thu, 29 May 2003 00:03:04 +1000
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <2313@9A0TCP>
+Message-ID: <200305290003.04046.vk3bvp@qsl.net>
+References: <3ED49335.6050903@linux.local>
+Reply-To: vk3bvp@qsl.net
+Mime-Version: 1.0
+Content-Transfer-Encoding: 7BIT
 Return-path: <linux-hams-owner@vger.kernel.org>
+In-Reply-To: <3ED49335.6050903@linux.local>
 List-Id: <linux-hams.vger.kernel.org>
-MIME-Version: 1.0
 Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-To: thomas@osterried.de
-Cc: linux-hams@vger.kernel.org
+To: linux-hams@vger.kernel.org
 
-Hi,
-
->> also I think that skb->sk->pair should be set to NULL, because from this
->> point the pair (listening socket) does not exist any more and reference
->> to this can cause problem, right ?
+On Wed, 28 May 2003 20:45, Florian Zagler wrote:
+> Hi all,
 >
->hmm. the listening socket exists as long the userspace application does
->listen().
->but i do not really understand the sk->pair concept.
+> I have problems getting the bpq0 interface work.
+> My computers are running Debian Woody (kiss and bpq) and Mandrake 9.1
+> (bpq) and the problem is on both.
+>
+> I use the following command to bring it up:
+>
+> ifconfig bpq0 hw ax25 DG1CAD-12 up
+>
+> In the /etc/axports file I have the following entries:
+>
+> kiss    DG1CAD-10       19200   255     7       KISS TNC
+> ether   DG1CAD-12       100000  255     7       BPQ/ethernet
+>
+> But I get the following message everytime I try to access this interface:
+>
+> ----    snip    ----
+> gateway:~# axparms -route add ether dg1cad-12
+> axconfig: port ether not active
+> axparms: invalid port name - ether
+> gateway:~#
+> ----    snip    ----
+>
+> I didn't find a solution in the AX25-HOWTO and the manpages.
+>
+> Is there a bug or do I use the wrong commands?
 
-yap, but I am talking about when listening socket is going to be
-destroyed and there are some unaccepted connections made by listening
-socket (lets call them CHILDs)... those CHILDs keeps living in kernel after
-listening socket is destroyed... CHILDs have sk->pair pointing
-to its listening socket (I really do not know who use/need that sk->pair)
-but after listening socket is destroyed I think that CHILDs must not have
-a reference to it anymore...
+The following is what I do to start bpqether on two boxes here.
+It works fine. One thing I should do is replace vk3bvp-6 with a bogus 
+callsign.
 
-> also i have problems in understanding the concept in ax25_destroy_socket():
-> skb->sk->dead is set to 1, then ax25_start_heartbeat() is called, which
-> is a timer (which expires in +5s).
+----Mandrake end---
+# /etc/ax25/axports
+tofbb	vk3bvp-6 	57600	255	6	link to fbb
 
-yap, CHILDs are destroyed after +5s (heardbeat expirity), I really do not
-know why they are destroyed this way with a delay ?! Why dont we call
-ax25_destroy_socket recursivly to destroy all CHILDs ? Anyone know the
-reason ? They are anyway destroyed the same way on heardbeat exipirity.
+# This is on the end of rc.local
+modprobe bpqether
+/sbin/ifconfig bpq0 192.168.1.6 hw ax25 vk3bvp-6 up
+echo "bpqether started"
 
-> if we set it to skb->sk->state = TCP_LISTEN and our state is
-> AX25_STATE_0, then this timer will call ax25_destroy_socket() again.
+---Redhat end---
+# /etc/ax25/axports
+ether	eth-0  		10000000	255	6	ethernet port
 
-again, but first time it destroyed listening socket, and from timer it
-destroy unaccepted socket...
+# In the middle of my ax25 startup script
+/sbin/ifconfig bpq0 192.168.1.3 hw ax25 eth-0 up
 
-> potentially running ax25_std_heartbeat_expiry(), which will use
-> ax25->sk->... we have just free'd.
+---Unproto seen on Redhat end---
+ether: fm VK3BVP-6 to VK3BVP ctl SABM+ 
+ether: fm VK3BVP to VK3BVP-6 ctl UA- 
 
-no, timer is handling nondestroyed socket (the CHILD)
-
-> i have done this (interested in?). after the observation that when
-> ax25rtd is running, the oops problem on ax25 cb's (which are independend
-> of the ax25 route list) occorued.
-
-yup, but when ax25_route_list is unprotected, it get broken, it is very
-probably that new element in ax25_list is at memory which was used a bit
-ago in ax25_route_list, anyone know if ax25_route_list also get broken
-when ax25_list is broken ?
-
-73 de Tihomir, 9a4gl@9a0tcp.ampr.org
+-- 
+Shane Deering                   Sent using Kmail v1.4.3
+vk3bvp@qsl.net                  on Mandrake Linux, the Desktop OS
+vk3bvp@vk3bvp.#sev.vic.aus.oc   MDK9.0 Up 6 hours and 47 minutes 
+http://www.qsl.net/vk3bvp/      RH7.2 Up 5 days, 4 hours and 10 minutes 
 
