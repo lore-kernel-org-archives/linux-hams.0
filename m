@@ -1,29 +1,29 @@
-From: John Ronan <j0n@tssg.wit.ie>
-Subject: Multimon & AR 8200MK-II.
-Date: Sun, 7 Apr 2002 20:58:04 +0100 (BST)
+From: Aleksandar Ilic <ailic@gmx.net>
+Subject: Re: ANN: gMFSK v0.4
+Date: Mon, 8 Apr 2002 05:32:30 +0200
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <Pine.LNX.4.33.0204072050320.6982-100000@tssg.wit.ie>
-References: <3CB096D3.BE3C340D@pacbell.net>
+Message-ID: <02040805201200.01821@bcat>
+References: <Pine.LNX.4.33.0203290250170.1587-100000@oh2bns.ampr.org>
 Mime-Version: 1.0
-In-Reply-To: <3CB096D3.BE3C340D@pacbell.net>
+Content-Transfer-Encoding: 7BIT
+In-Reply-To: <Pine.LNX.4.33.0203290250170.1587-100000@oh2bns.ampr.org>
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: TEXT/PLAIN; charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-To: linux-hams@vger.kernel.org
+Content-Type: text/plain; charset="us-ascii"
+To: Tomi Manninen <tpm@prkele.tky.hut.fi>, linux-hams@vger.kernel.org
 
-Hi,
+On Friday 29 March 2002 02:13, Tomi Manninen wrote:
+> I just uploaded version 0.4 of gMFSK to hes.iki.fi.
 
-I'm wondering if any of you have experience of running Multimon with Linux
-to decode Pocsag transmissions.  I've been trying for a while to get my
-On-board sound card working on a K7VZA Motherboard. I succeeded on
-Saturday, with kernel-2.4.18 and the latest 'Stable' Alsa sound drivers.
-It decodes AX25/DTMF tones fine, just I don't seem to be able to get it to
-decode POCSAG reliably.  I'm using a AR8200MK-II in combination with a
-JAV-232, and pulling the discriminator from the JAV-232.  It 'kinda'
-works.  I'm just wondering if I'm missing something.
+Hello, Tomi and the list !
 
-Regards
-de John EI7IG
+If I start gMFSK from KDE, it is working - except I can not type from 
+keyboard in the transmit window. I can copy and paste text in it, but 
+keyboard is dead.
+From GNOME, all is OK.
+I suppose you'll be interested about that.
 
-
-
+Keep up a good work ! gMFSK is a very usefull piece of software.
+Kindly,
+Alek
+-- 
+  73 de YU1IS  -=-  ailic at ptt dot yu  -=-  ICQ#:62419462
