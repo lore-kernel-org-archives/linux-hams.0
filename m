@@ -1,36 +1,27 @@
 From: "Curt Mills, WE7U" <hacker@tc.fluke.com>
 Subject: RE: making apps
-Date: Fri, 28 Mar 2003 09:39:10 -0800 (PST)
+Date: Fri, 28 Mar 2003 12:22:15 -0800 (PST)
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <Pine.LNX.4.33.0303280936240.31136-100000@wapiti.tc.fluke.com>
-References: <BKEGKPICNAKILKJKMHCAMEAGCEAA.Riley@Williams.Name>
+Message-ID: <Pine.LNX.4.33.0303281220370.31136-100000@wapiti.tc.fluke.com>
+References: <BKEGKPICNAKILKJKMHCACEBJCEAA.Riley@Williams.Name>
 Mime-Version: 1.0
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <BKEGKPICNAKILKJKMHCAMEAGCEAA.Riley@Williams.Name>
+In-Reply-To: <BKEGKPICNAKILKJKMHCACEBJCEAA.Riley@Williams.Name>
 List-Id: <linux-hams.vger.kernel.org>
 Content-Type: TEXT/PLAIN; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
 To: Riley Williams <Riley@Williams.Name>
-Cc: "Jose A. Amador" <co2ja01@fastmail.fm>, Shane <vk3bvp@qsl.net>, Linux Hams <linux-hams@vger.kernel.org>
+Cc: Linux Hams <linux-hams@vger.kernel.org>
 
 On Fri, 28 Mar 2003, Riley Williams wrote:
 
-> When it comes to making logs of what's going on, I generally do...
->
->            make 2>&1 | tee make.log
+>  3. Where `make` is an alias, the alias is expanded BEFORE applying
+>     the redirection. This is the case where differences occur.
 
-I do this instead:
+That's the case I most often use it.  Also:  Where I type something
+from the command line like:
 
-    (make 2>&1) | tee make.log
-
-The reason for the extra parenthesis:  It makes it run in a
-subshell, and you can pipe all of STDERR from the subshell to
-STDOUT, which then gets piped to "tee".
-
-If you don't use those parenthesis and you're running something that
-invokes several different scripts/programs, or an alias that has
-more than two commands in it, you don't get everything piped into
-the "tee" command.  With the parenthesis, you do.
+    (make clean;make;make install-strip) | tee make.log
 
 -- 
 Curt Mills, WE7U                    hacker_NO_SPAM_@tc.fluke.com
