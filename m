@@ -1,58 +1,34 @@
-From: bernard pidoux <pidoux@ccr.jussieu.fr>
-Subject: Re: Problem...
-Date: Thu, 27 Mar 2003 13:01:37 +0100
+From: Cranz Nichols <cnichols@centramedia.net>
+Subject: RE: Kenwood TR-7950 Crashing Computer?
+Date: 27 Mar 2003 06:16:26 -0600
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <3E82E821.2080304@ccr.jussieu.fr>
-References: <GMEHKCCPLOCMPOLBMKICCEJNDOAA.hremijn@zeelandnet.nl> <3E8086E6.3000709@ccr.jussieu.fr> <200303251925.56224.oh1mrr@nic.fi>
+Message-ID: <1048767387.9269.14.camel@nacho>
+References: <BKEGKPICNAKILKJKMHCAKEMHCDAA.Riley@Williams.Name>
 Mime-Version: 1.0
 Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <200303251925.56224.oh1mrr@nic.fi>
+In-Reply-To: <BKEGKPICNAKILKJKMHCAKEMHCDAA.Riley@Williams.Name>
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"; format="flowed"
-To: Jarmo <oh1mrr@nic.fi>
-Cc: linux-hams@vger.kernel.org
+Content-Type: text/plain; charset="us-ascii"
+To: linux-hams@vger.kernel.org
 
-Jarmo wrote:
+5 Watts...  But nothing curious happens on 25 Watts either.
 
->On Tuesday 25 March 2003 18:42, bernard pidoux wrote:
->
->  
->
->>For example,  install Mandrake Linux distro 7.2, then update with 7.2
->>update (february 2003 delivery or so) that can be found on any Linux
->>distro mirror.
->>Then install (optionally) the last 2.2 kernel if you want.
->>
->>Bernard Pidoux, F6BVP
->>    
->>
->
->Hi
->
->I have all ax25 stuff compiled as modules and working like charm
->in mandrake 9.0 with kernel 2.4.20.
->
->Have one 9k6 port using 6pack...So with 2.4.x series kernel ax25
->IS working fine...
->Have tested 2.5.x series and there ax25 does not work....
->
->Jarmo
->  
->
+Outside antenna.  Waterpipe ground.
 
-I am glad that your AX25 applications are working fine with Linux kernel 
-2.4.x
-I was only reporting that this is not the case when serial link are 
-handled by mkiss.
-I assume that it is a question of heavy interrupts load for I have 
-traced the problem and found that kernel panics occur very often around 
-the same address in ax25 input routines.
-This is probably related to the lot of cli() instructions and the new 
-way interrupts are managed in 2.4 kernels.
-All these cli() sti() have been removed in 2.5 kernel. Thats why I hope 
-mkiss will work again on 2.6.
+cln
+WB5BKL
 
-Best 73 de Bernard, F6BVP
 
+On Wed, 2003-03-26 at 20:09, Riley Williams wrote:
+> Hi Cranz..
+> 
+>  > FWIW, I have a 7930 about 14 inches away from my Compaq
+>  > DeskPro running RH 8.0. No problems that I am aware of.
+>  >
+>  > Just another data point.
+> 
+> To flesh out that data point, what power level do you run?
+> 
+<snip>
 
