@@ -1,27 +1,25 @@
-From: Riley Williams <rhw@InfraDead.Org>
-Subject: Re: AX25 socket question.
-Date: Tue, 16 Jul 2002 22:38:19 +0100 (BST)
+From: Hamish Moffatt <hamish@cloud.net.au>
+Subject: Re: 802.11b wireless lan equipment and ham radio ?
+Date: Wed, 17 Jul 2002 08:37:38 +1000
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <Pine.LNX.4.21.0207162237280.4272-100000@Consulate.UFP.CX>
-References: <3D3480B1.E743CA51@earthlink.net>
-Reply-To: Riley Williams <rhw@InfraDead.Org>
+Message-ID: <20020716223738.GA1312@silly.cloud.net.au>
+References: <200207161516.g6GFGUj28670@faulkner.netnet.net>
 Mime-Version: 1.0
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <3D3480B1.E743CA51@earthlink.net>
+Content-Disposition: inline
+In-Reply-To: <200207161516.g6GFGUj28670@faulkner.netnet.net>
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: TEXT/PLAIN; charset="us-ascii"
+Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
-To: jeff <wd4nmq@earthlink.net>
-Cc: Linux Ham Radio <linux-hams@vger.kernel.org>
+To: linux-hams@vger.kernel.org
 
-Hi Jeff.
+On Tue, Jul 16, 2002 at 10:16:30AM -0500, Steve Lampereur wrote:
+> come up with something like this as all 802.11b devices use the
+> same Prism chipset.  
 
-> You'll find it here:
->
-> http://www.tapr.org/tapr/html/Fax25.html
+Are you sure about that?
 
-Many thanks. I've just had a look and that's later than my printed
-version, so I've just downloaded it for reference...
 
-Best wishes from Riley.
-
+Hamish
+-- 
+Hamish Moffatt VK3SB <hamish@debian.org> <hamish@cloud.net.au>
