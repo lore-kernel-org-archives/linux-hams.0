@@ -1,42 +1,36 @@
-From: terry <wd0fpc@aniota.com>
+From: Iain Young - G7III <g7iii@g7iii.demon.co.uk>
 Subject: Re: SPLAT ...
-Date: Thu, 27 Jun 2002 11:51:05 -0700 (PDT)
+Date: Thu, 27 Jun 2002 20:03:02 +0100
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <Pine.LNX.4.10.10206271139190.29199-100000@yossarian.aniota.com>
-References: <200206271358.g5RDw3X08658@amsat.org>
+Message-ID: <20020627190302.GA742@columbia.g7iii.bogus>
+References: <200206271358.g5RDw3X08658@amsat.org> <Pine.LNX.4.10.10206271139190.29199-100000@yossarian.aniota.com>
 Mime-Version: 1.0
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <200206271358.g5RDw3X08658@amsat.org>
+Content-Disposition: inline
+In-Reply-To: <Pine.LNX.4.10.10206271139190.29199-100000@yossarian.aniota.com>
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: TEXT/PLAIN; charset="us-ascii"
+Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
-To: linux-hams <linux-hams@vger.kernel.org>
+To: terry <wd0fpc@aniota.com>
+Cc: linux-hams@vger.kernel.org
 
-On Thu, 27 Jun 2002, John A. Magliacane wrote:
+On Thu, Jun 27, 2002 at 11:51:05AM -0700, terry wrote:
 
-... ciao:
+>     cc a symlink to gcc (gcc version egcs-2.91.66).  i was unable to find
+> reference to "-s" and "-lm" in the manpage.  what do these flags imply.
 
-> changing '==' tests to '='
-  
-    that helped.
-  
-> libbz2.so under /usr/lib in addition to libbz2.a ... install libbz2
-> from source instead of an RPM.
- 
-    i tend to avoid RPM, and installed the bz-lib from source into
-'usr/lib'.
-  
+-l pulls in libraries, or more accurately tells the linker to pull in
+libraries. -lm is telling it to pull the maths library in, IIRC.
 
-    with regard to:
-  
-"cc -Wall -O3 -s -lm -lbz2 -fomit-frame-pointer splat.c -o splat"
-  
-    cc a symlink to gcc (gcc version egcs-2.91.66).  i was unable to find
-reference to "-s" and "-lm" in the manpage.  what do these flags imply.
-  
-    thanks ...
+Checking the manpage for ld, -s "Omits all symbol information from the
+output file". Basically this means it does what strip(1) does before
+creating your executable, saving you running strip(1)
 
--- 
-73 , de WD0FPC
-    aka: terry 
+When you run gcc, your code actually gets passed thru the preprocessor
+first (cpp), then gcc proper, then the linker (ld) to create the
+executable.
 
+
+All the Best
+
+Iain.
