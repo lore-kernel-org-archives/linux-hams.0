@@ -1,27 +1,26 @@
-From: Wilbert Knol <zl2bsj@zl2tze.ath.cx>
-Subject: Re: wxGTK-2.4.0 (3)
-Date: Thu, 16 Jan 2003 23:52:29 +1300 (NZDT)
+From: Jonathan Naylor <jonathan.naylor@ggaweb.ch>
+Subject: LinWSJT 0.4.3
+Date: Fri, 17 Jan 2003 14:16:03 +0100
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <Pine.LNX.4.44.0301162347370.25363-100000@zl2bsj.ampr.org>
-References: <200301152212.05203.jonathan.naylor@ggaweb.ch>
+Message-ID: <200301171416.03085.jonathan.naylor@ggaweb.ch>
+Reply-To: g4klx@qsl.net
 Mime-Version: 1.0
+Content-Transfer-Encoding: 8bit
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <200301152212.05203.jonathan.naylor@ggaweb.ch>
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: TEXT/PLAIN; charset="us-ascii"
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset="us-ascii"
 To: Linux Hams <linux-hams@vger.kernel.org>
 
+Hi Folks
 
-A quick correction to my previous note (due to a dodgy cache):
+This is a new release of LinWSJT it includes upgraded FSK441 receive, 
+wxGTK-2.4.0 compatibility and other things. You can get the software 
+from my web pages as well as browse the support files, there are a 
+couple of screen shots if you like pictures. It can be found in the 
+usual place http://www.qsl.net/g4klx under Software.
 
-  ./configure --with-gtk --disable-gtk2
+If you have an earlier release of LinWSJT then I suggest you upgrade to 
+this version. Good things await those who do.
 
-...will work, if you have both gtk+ and gtk+2 installed, and the gtk+2 
-is earlier than version 2.0.0
-
-
-Wilbert, ZL2BSJ
-
-
+Jonathan  HB9DRD/G4KLX
 
