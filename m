@@ -1,40 +1,39 @@
-From: Ralf Baechle DO1GRB <ralf@linux-mips.org>
+From: mvw@mvw.net
 Subject: Re: ax25 kernel problem sometimes accur
-Date: Wed, 11 Dec 2002 13:30:17 +0100
+Date: Wed, 11 Dec 2002 08:36:25 -0500 (EST)
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <20021211133016.A14287@linux-mips.org>
-References: <20021211024019.A28178@linux-mips.org> <Pine.HPX.4.10.10212111219220.22086-100000@saturn.trs.ntc.nokia.com>
+Message-ID: <Pine.LNX.4.44.0212110828110.1073-100000@jeeves.mvw.net>
+References: <20021211133016.A14287@linux-mips.org>
 Mime-Version: 1.0
 Return-path: <linux-hams-owner@vger.kernel.org>
-Content-Disposition: inline
-In-Reply-To: <Pine.HPX.4.10.10212111219220.22086-100000@saturn.trs.ntc.nokia.com>; from tpm@prkele.tky.hut.fi on Wed, Dec 11, 2002 at 12:29:12PM +0200
+In-Reply-To: <20021211133016.A14287@linux-mips.org>
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"
+Content-Type: TEXT/PLAIN; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
-To: Tomi Manninen OH2BNS <tpm@prkele.tky.hut.fi>
-Cc: linux-hams@vger.kernel.org
+To: linux-hams@vger.kernel.org
 
-On Wed, Dec 11, 2002 at 12:29:12PM +0200, Tomi Manninen OH2BNS wrote:
+Gents,
 
-> Ok, I understand. Anyway some kind of progress report would be nice. Even
-> something like: "don't hold your breath", if that is appropriate... :-)
+> [snip] AX.25 is about the worst protocol design
+> I've ran over in my life
 
-Holding breath is definately something that could negativly impact your
-health ;-)
+That's not encouraging. Is it really that bad?
 
-> I have gotten surprisingly many private queries about this lately, so to
-> recap what I have understood so far: the 2.4 code is bad, full of races,
-> works only if treated nicely. Your SOCKOPS_WRAP removal obviously makes
-> things even worse until you redo the locking stuff. When that is done we
-> have a perfect ax.25 stack again. Right? ;-)
+Asking becuase TCP/IP over ax.25 is the one thing that can rescue packet, 
+I think. For instance, the fact I can get my provate email in and out when 
+ADSL and cable are down is a real benefit. The fact I can driva all around 
+town and pick up mail with a radio connection, free of charge, is also 
+very beneficial. I can have nmy servers send mail via radio with problem 
+reports when prob;lems occur. Emergency use. The list of useful 1200 bps 
+applications goes on!
 
-In some sense the improments that are necessary to make the AX.25 stack
-"future proof" are ridiculous.  AX.25 is about the worst protocol design
-I've ran over in my life, so making a multi-threaded implementation of it
-is an amusing thought.  But the other legacy protocols like Appletalk
-are going through the same pain ...
+But that asusmes the protocol is solid. My 2.0 kernel running old ax.25 
+stuff has been up 4 years now without dropping a packet. Are we saying 
+nowadays it's worse? Should I can my 2.4.20 kernel with ax.25?
 
-73 de DO1GRB op Ralf
+Sorry for dropping in in the middle!
 
---
-Loc. JN47BS / CQ 14 / ITU 28 / DOK A21
+Michael VA3MVW
+
+
+
