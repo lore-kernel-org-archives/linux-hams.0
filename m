@@ -1,41 +1,49 @@
-From: "Bill Vodall" <wa7nwp@jnos.org>
+From: Dave Stubbs <dave.stubbs@utoronto.ca>
 Subject: Re: BBS Software
-Date: Wed, 2 Jun 2004 15:13:32 -0700
+Date: Thu, 03 Jun 2004 15:21:08 -0400
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <001001c448ee$d90de7c0$6a7ea8c0@geo>
-References: <200405271330.25402.dl4mge@darc.de> <1085680600.31191.151.camel@kronenbourg.scs.ch> <20040527201755.GX1749@mea-ext.zmailer.org> <200405311230.37550.dl4mge@darc.de> <40BB6A68.3050700@utoronto.ca>
+Message-ID: <40BF7A24.9000101@utoronto.ca>
+References: <200405271330.25402.dl4mge@darc.de> <1085680600.31191.151.camel@kronenbourg.scs.ch> <20040527201755.GX1749@mea-ext.zmailer.org> <200405311230.37550.dl4mge@darc.de> <40BB6A68.3050700@utoronto.ca> <001001c448ee$d90de7c0$6a7ea8c0@geo> <40BF6052.30407@utoronto.ca> <000601c4499a$74cb7aa0$6a7ea8c0@wa7nwp.ampr.org>
 Mime-Version: 1.0
 Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
+In-Reply-To: <000601c4499a$74cb7aa0$6a7ea8c0@wa7nwp.ampr.org>
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"
-To: Dave Stubbs <dave.stubbs@utoronto.ca>, linux hams <linux-hams@vger.kernel.org>
+Content-Type: text/plain; charset="us-ascii"; format="flowed"
+To: linux hams <linux-hams@vger.kernel.org>
 
+Bill Vodall wrote:
 
-> Would it spark a zealous flame war
+> Hi Dave,
+> 
+> 
+>>I was looking at the Linux version of JNOS recently, I compiled and ran 
+>>it on a Linux system that already had 3 ethernet interfaces with full 
+>>TCP/IP, AX.25, and NET/ROM running in the Linux kernel.  JNOS didn't see 
+>>any of these interfaces, so I'm assuming it has it's own network stack 
+>>that is different from the OS one?
+> 
+> 
+> Yes.  Think of JNOS as a virtual machine.   It's almost totally separate for the Linux
+> box.   You connect the JNOS system to the Linux box with a slip link over
+> a pseudo tty using net2kiss and slattach.   A google on those terms should give you
+> the necessary incancation -- if not I can forward the relevant parts from my setup.
+> 
+> 
 
-One could only wish...   Too many folks have turned off packet...
+Ah!
 
-> if I was to ask what is the most
-> feature-rich and most popular Packet BBS software out there?  I'm
-> looking to offer a full email and news gateway to my club via packet.
+Well, at least that makes sense then, and my conclusions were pretty 
+accurate.
 
-Email and News -- you don't need a BBS.  Just hook up a Linux box
-with the AX25 system and get it on the air.  Add the UroNode or equivalent
-as a friendly user interface and you're in business.
+My take on the whole situation is that the JNOS on Linux is great for a 
+person who used JNOS for many years back in the DOS days and learned it 
+well.  I have a suspicion that, for someone like myself who is a new ham 
+but who has used Linux daily ever since 1993, I might just be better off 
+sticking with the Linux Kernel AX.25 stuff.  It probably offers 
+comparable functionality to JNOS, but is much more familiar because it 
+is from "my world".
 
-I'm currently using JNOS on Linux as a gateway between Internet Email and
-packet mailbox messaging.   The idea is to be able to send an Email note to
-ab1xyz@ampr2.net
-have have it automatically delievered to ab1xyz's personal TNC mailbox.
-There
-are probably other tools that will do the Internet to/from Packet gatewaying
-but
-I'm familar with JNOS and, best of all, the source is available.
-
-HTH.
-
-73,
-Bill - WA7NWP
-
-
+73
+Dave
+VA3BHF
