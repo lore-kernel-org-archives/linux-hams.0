@@ -1,30 +1,32 @@
-From: g7iii@g7iii.demon.co.uk (Iain Young - G7III)
-Subject: Re: Another Software Defined Radio
-Date: Tue, 13 May 2003 20:26:20 +0100
+From: Tomi Manninen <tpm@prkele.tky.hut.fi>
+Subject: Re: Abt gmfsk last version.
+Date: Tue, 13 May 2003 22:30:12 +0300 (EEST)
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <20030513192620.GA753@g7iii.demon.co.uk>
-References: <20030513181749.GA576@g7iii.demon.co.uk> <1280000.1052852950@[192.168.1.222]>
+Message-ID: <Pine.LNX.4.44.0305132227160.2357-100000@oh2bns.ampr.org>
+References: <3EC0F1C8.6020005@vizzavi.pt>
+Reply-To: tpm@prkele.tky.hut.fi
 Mime-Version: 1.0
 Return-path: <linux-hams-owner@vger.kernel.org>
-Content-Disposition: inline
-In-Reply-To: <1280000.1052852950@[192.168.1.222]>
+In-Reply-To: <3EC0F1C8.6020005@vizzavi.pt>
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"
+Content-Type: TEXT/PLAIN; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
-To: linux-hams@vger.kernel.org
-Cc: jra@febo.com
+To: Ana Maria Grilo Moreira <ct1drb@vizzavi.pt>
+Cc: linux-hams@vger.kernel.org
 
-On Tue, May 13, 2003 at 03:09:10PM -0400, John Ackermann N8UR wrote:
+On Tue, 13 May 2003, Ana Maria Grilo Moreira wrote:
 
-> The software is pretty open, but the hardware isn't -- they don't provide 
-> any schematics so, for example, getting an IF signal out is pretty hard.
+> /usr/lib/gcc-lib/i486-suse-linux/3.2/../../../libpangoft2-1.0.so: 
+> undefined reference to `FT_Seek_Stream'
 
-Ah okay. I meant it was open in that you could get the API etc,
-rather than schematics etc - my apologies for any confusion, and
-thanks for the clarification.
- 
+A friend of mine reported exactly the same error with SuSE 8.1. We never 
+found a fix for it, but we didn't try very hard...
 
-All the Best
+Anyway with SuSE 8.2 he didn't have any problems.
 
-Iain.
+-- 
+Tomi Manninen           Internet:  oh2bns@sral.fi
+OH2BNS                  AX.25:     oh2bns@oh2rbi.fin.eu
+KP20ME04                Amprnet:   oh2bns@oh2rbi.ampr.org
+
 
