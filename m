@@ -1,33 +1,26 @@
-From: Doug <appld@sasktel.net>
-Subject: Loading packages
-Date: Wed, 17 Mar 2004 20:48:08 -0600
+From: =?iso-8859-15?q?G=FCnther=20Montag=20?= <dl4mge@darc.de>
+Subject: Re: soundcard pactor program: mailbox mode planned
+Date: Thu, 18 Mar 2004 16:15:19 +0100
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <5.1.0.14.2.20040317204718.04da6200@mail.sasktel.net>
+Message-ID: <200403181615.19021.dl4mge@darc.de>
+References: <200403051359.12776.dl4mge@darc.de> <200403101634.46625.dl4mge@darc.de> <404F5C8E.8020102@softhome.net>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7BIT
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 Return-path: <linux-hams-owner@vger.kernel.org>
+In-Reply-To: <404F5C8E.8020102@softhome.net>
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"; format="flowed"
-To: linux-hams@vger.kernel.org
+Content-Type: text/plain; charset="iso-8859-1"
+To: "ravioli@softhome.net" <ravioli@softhome.net>, linux hams <linux-hams@vger.kernel.org>
 
-I am running FC-1 with kernel 2.4.22.2174.nptl. When I tried to load a 
-couple of
-development packages, the system told me it could not find libxml2. I tried to
-load it from the cd, and then the system said that the package was already in
-the system is was newer then the one I was trying to load. In other words,  it
-looks like the package I wanted to load required the old copy. The new one must
-of been picked up by YUM.
 
-The question is, how do I go about doing this. Do I remove the new rpm, 
-reload the
-old and then load the application that I wanted? Then, reload the newer 
-rpm??? What
-I am afraid of, is that if I do this, it will come back with other files it 
-needs.
-
-What is the best way of doing this??
-
-Thanks
-
-Doug VE5DA 
-
+tnx very much for info!
+Will read all about it!
+--=20
+73 de
+G=FCnther
+dl4mge@darc.de
+-
+To unsubscribe from this list: send the line "unsubscribe linux-hams" i=
+n
+the body of a message to majordomo@vger.kernel.org
+More majordomo info at  http://vger.kernel.org/majordomo-info.html
