@@ -1,27 +1,31 @@
-From: John Mock <kd6pag@qsl.net>
+From: Pierre-Philippe Coupard <pcoupard@easyconnect.fr>
 Subject: Re: Usermode Soundmodem
-Date: Mon, 26 Jul 2004 13:20:45 -0700
+Date: Mon, 26 Jul 2004 22:23:20 +0200
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <E1BpBxl-0007Fp-00@penngrove.fdns.net>
-Return-path: <linux-hams-owner@vger.kernel.org>
-List-Id: <linux-hams.vger.kernel.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
+Message-ID: <41056838.7030106@easyconnect.fr>
+References: <20040725183329.90335.qmail@web52604.mail.yahoo.com> <41053BF9.7020401@cs.unibo.it> <41055CA7.2020904@easyconnect.fr> <200407262210.15550.pa3gcu@zeelandnet.nl>
+Mime-Version: 1.0
 Content-Transfer-Encoding: 7bit
-To: linux-hams@vger.kernel.org
+Return-path: <linux-hams-owner@vger.kernel.org>
+In-Reply-To: <200407262210.15550.pa3gcu@zeelandnet.nl>
+List-Id: <linux-hams.vger.kernel.org>
+Content-Type: text/plain; charset="us-ascii"; format="flowed"
+To: pa3gcu@zeelandnet.nl
+Cc: linux-hams@vger.kernel.org
 
-    I think the source of your problem is contained in your statement: VIA
-    chipset. Almost all odd sound or timing problem reports I get for my
-    software can be traced back to a VIA, AC97, or I8x0 sound chip. It's
-    unfortunate that you're kind of stuck with it on a laptop... 
+pa3gcu wrote:
+--8<--8<--
+>>software can be traced back to a VIA, AC97, or I8x0 sound chip. It's
+>>unfortunate that you're kind of stuck with it on a laptop...
+> 
+> Uum!, on a laptop!!, not just a laptop i fear, one of the shops in our street 
 
-Yep, that's right, i've the i8x0/AC97 problem on my Sony VAIO R505EL laptop.
-But 'multimon' can at least decode 1.2kb AFSK.  It's currently hardwared to
-22.05 KHz, not a great sample rate for a AC97, but it works.  So why can't 
-the usermode version of soundmodem[config] at least do this much???
+Well yeah, what I meant was, with a desktop machine at least you have 
+the option of installing something else. Matter of fact, I always buy 
+at least one SB-Live! to install in any computer I get, regardless of 
+whatever sound device is already inside. I figure $15 is pretty cheap 
+for a decent soundcard that supports any sample rate and hardware 
+mixing flawlessly, and if the original sound device works too, so much 
+the better :-)
 
-		         -- KD6PAG  (Networking Old-Timer, Satellite QRPer)
-
-[Note: I never send unsolicited binary attachments and if you receive anything
-purportedly from <kd6pag@qsl.net> that isn't signed with my callsign, then it
-probably isn't from me.]
+73 de Pierre F8EJF
