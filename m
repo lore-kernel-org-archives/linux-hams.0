@@ -1,26 +1,35 @@
-From: =?iso-8859-1?q?Vittorio=20Vallero?= <ik1rac@yahoo.it>
-Subject: Re: PTT problem
-Date: Thu, 27 May 2004 13:10:48 +0200 (CEST)
+From: =?iso-8859-15?q?G=FCnther=20Montag=20?= <dl4mge@darc.de>
+Subject: Norm Frequency beacon ?
+Date: Thu, 27 May 2004 13:30:25 +0200
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <20040527111048.59900.qmail@web14423.mail.yahoo.com>
+Message-ID: <200405271330.25402.dl4mge@darc.de>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7BIT
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 Return-path: <linux-hams-owner@vger.kernel.org>
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"
-To: linux-hams@vger.kernel.org
+Content-Type: text/plain; charset="iso-8859-1"
+To: linux hams news group <linux-hams@vger.kernel.org>
+Cc: -HFTERMHACKERS- <hfterm-hackers@lists.sourceforge.net>
 
-Thanks to everybody !
-You were right! I had just to recompile the packages.
-It seems that Ham packages for Slack 9.1 do not match
-my setup.
-73s
+Hello friends
 
+does someone know, is there something lik a beacon on the air on shortw=
+ave or=20
+medium wave, ham or radio band, which sends a known fixed exact frequen=
+cy=20
+tone in AM, e.g. 1000 Hz or other, for calibration?`
+Something like DCF77 on longwave?
 
-	
+We have a real-time pactor program which needs an exact frequency for=20
+calibration, and not everyone has an DCF77 receiver.
 
-	
-		
-____________________________________________________________
-Yahoo! Companion - Scarica gratis la toolbar di Ricerca di Yahoo! 
-http://companion.yahoo.it
+tnx!
+--=20
+73 de
+G=FCnther
+dl4mge@darc.de
+-
+To unsubscribe from this list: send the line "unsubscribe linux-hams" i=
+n
+the body of a message to majordomo@vger.kernel.org
+More majordomo info at  http://vger.kernel.org/majordomo-info.html
