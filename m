@@ -1,71 +1,26 @@
-From: Ruben Navarro Huedo <eb5esx@eb5esx.ampr.org>
+From: "Rad, Darius" <alpha@area49.net>
 Subject: Re: Compiling last node version.
-Date: Fri, 5 Mar 2004 00:09:01 +0100
+Date: Thu, 4 Mar 2004 18:35:50 -0500
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <200403050009.02359@www.cabodesantapola.org>
+Message-ID: <20040304233550.GC1009@vagabond.area49.net>
+References: <200403040004.24334@www.cabodesantapola.org> <1078392897.1273.11.camel@oh2bns.ampr.org> <49408.213.98.118.5.1078394577.squirrel@palotes.com>
 Mime-Version: 1.0
-Content-Transfer-Encoding: QUOTED-PRINTABLE
 Return-path: <linux-hams-owner@vger.kernel.org>
-Content-Description: clearsigned data
 Content-Disposition: inline
+In-Reply-To: <49408.213.98.118.5.1078394577.squirrel@palotes.com>
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: Text/Plain; charset="iso-8859-1"
-To: on1aad@amsat.org
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+To: Ruben Navarro Huedo <eb5esx@eb5esx.ampr.org>
 Cc: linux-hams@vger.kernel.org
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On Thu, Mar 04, 2004 at 11:02:57AM +0100, Ruben Navarro Huedo wrote:
+> 
+> Do you know about some Debian repository to download libax25-0.0.11
+> 
 
-Thank's for your answer.
-Trying it:
+Debian testing and unstable have version 0.0.11-2 of packages libax25
+and libax25-dev, which should be available from any official mirror.
 
-$ apt-get -b source libax25
-Reading Package Lists... Done
-Building Dependency Tree... Done
-Need to get 235kB of source archives.
-Get:1 http://ftp.belnet.be unstable/main libax25 0.0.11-2 (dsc) [598B]
-Get:2 http://ftp.belnet.be unstable/main libax25 0.0.11-2 (tar) [231kB]
-Get:3 http://ftp.belnet.be unstable/main libax25 0.0.11-2 (diff) [2831B=
-]
-=46etched 235kB in 10s (21.6kB/s)
-dpkg-source: extracting libax25 in libax25-0.0.11
-dpkg-buildpackage: source package is libax25
-dpkg-buildpackage: source version is 0.0.11-2
-dpkg-buildpackage: source maintainer is Bruce Walker <w1bw@debian.org>
-dpkg-buildpackage: host architecture is i386
-dpkg-checkbuilddeps: Unmet build dependencies: debhelper (>=3D4)
-dpkg-buildpackage: Build dependencies/conflicts unsatisfied; aborting.
-dpkg-buildpackage: (Use -d flag to override.)
-Build command 'cd libax25-0.0.11 && dpkg-buildpackage -b -uc' failed.
-E: Child process failed
-$ cd libax25.....
-libax25-0.0.11 $ dpkg-buildpackage -b -uc -d
-dpkg-buildpackage: source package is libax25
-dpkg-buildpackage: source version is 0.0.11-2
-dpkg-buildpackage: source maintainer is Bruce Walker <w1bw@debian.org>
-dpkg-buildpackage: host architecture is i386
- debian/rules clean
-dh_testdir
-make: dh_testdir: No se encontr=F3 el programa
-make: *** [clean] Error 127
+// darius
 
-Any help?
-
-A lot of thank's.
-- --=20
-Ruben Navarro Huedo
-eb5esx (arroba) eb5esx.ampr.org
-http://www.cabodesantapola.org
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.2.1 (GNU/Linux)
-
-iD8DBQFAR7cO0S5G8AO3zN8RArdAAJ9QLiARAFd3t2FZmn1EiQotTN0QdwCdGW5W
-rqGNOu7C6U0Rf7iGXSdxvQo=3D
-=3DQ5jv
------END PGP SIGNATURE-----
-
--
-To unsubscribe from this list: send the line "unsubscribe linux-hams" i=
-n
-the body of a message to majordomo@vger.kernel.org
-More majordomo info at  http://vger.kernel.org/majordomo-info.html
