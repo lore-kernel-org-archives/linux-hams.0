@@ -1,33 +1,29 @@
-From: Gordon Croft <gordon.croft@telus.net>
-Subject: PTT problem
-Date: Sun, 07 Nov 2004 14:57:34 -0800
-Message-ID: <418EA85E.6050706@telus.net>
+From: "Manfred Haertel, DB3HM" <Manfred.Haertel@rz-online.de>
+Subject: Re: aprsd setup
+Date: Mon, 08 Nov 2004 18:46:05 +0100
+Message-ID: <418FB0DD.4030102@rz-online.de>
+References: <001301c4c469$d56f7c40$6402a8c0@laptop> <20041107014458.GA3069@cloud.net.au> <001601c4c4b2$36c995a0$6402a8c0@laptop>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 Return-path: <linux-hams-owner@vger.kernel.org>
+In-Reply-To: <001601c4c4b2$36c995a0$6402a8c0@laptop>
 Sender: linux-hams-owner@vger.kernel.org
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"; format="flowed"
-To: linux-ham <linux-hams@vger.kernel.org>
+Content-Type: text/plain; charset="iso-8859-1"; format="flowed"
+To: linux-hams@vger.kernel.org
 
-Hello list,
-I'm new to packet radio and am not as good at circuit design as I should 
-be!!:)
+Thomas M=F8rch wrote:
 
-I've built a circuit to interface the serial port RTS signal to the 
-radio PTT line.
-The radio is an old ICOM IC-20 and I checked to make sure it has a 
-positive voltage (+12V) on the PTT line .  If I ground the PTT lead, it 
-keys the transmitter, so I think the radio is working correctly.
+> As I understand two programs can not use
+> the same ssid / call? Or can they?
 
-The circuit I built uses an opto Isolator (NTE3040).
-I tried to send the circuit lay-out but the server rejected my message...
+They can, unless they connect to the same remote station.
 
-When I check the current flow on the PTT side of the opto isolator with 
-the computer trying to key the transmitter, I see about 14 mA and the 
-transmitter on the radio does not operate.  If I just connect the PTT 
-line to ground through the ammeter, I see about 125 mA and the 
-transmitter does send.  Is it possible that the opto isolator is 
-presenting too high a resistance and there's not enough current flow to 
-activate the transmitter?  If so, how could I correct the problem?
-
+--=20
+Manfred H=E4rtel, DB3HM    mailto:Manfred.Haertel@rz-online.de
+                          http://rz-home.de/mhaertel
+-
+To unsubscribe from this list: send the line "unsubscribe linux-hams" i=
+n
+the body of a message to majordomo@vger.kernel.org
+More majordomo info at  http://vger.kernel.org/majordomo-info.html
