@@ -1,75 +1,46 @@
 From: Henning Makholm <henning@makholm.net>
 Subject: Re: make-3.79.1 bug breaks linux-2.5.24/drivers/net/hamradio/soundmodem
-Date: 24 Jun 2002 14:07:34 +0200
+Date: 24 Jun 2002 14:13:10 +0200
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <yahptyglw1l.fsf@pc-043.diku.dk>
-References: <Pine.LNX.4.21.0206222329070.15173-100000@Consulate.UFP.CX>
-Mime-Version: 1.0
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Message-ID: <yahn0tklvs9.fsf@pc-043.diku.dk>
+References: <200206222156.OAA00651@baldur.yggdrasil.com>
+Content-Transfer-Encoding: 8bit
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: Riley Williams's message of "Sun, 23 Jun 2002 00:01:54 +0100 (BST)"
+In-Reply-To: "Adam J. Richter"'s message of "Sat, 22 Jun 2002 14:56:23 -0700"
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: TEXT/PLAIN; charset="iso-8859-1"
-To: Riley Williams <rhw@InfraDead.Org>
-Cc: Kai Germaschewski <kai@tp1.ruhr-uni-bochum.de>, bug-make@gnu.org, Linux Ham Radio <linux-hams@vger.kernel.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset="us-ascii"
+To: "Adam J. Richter" <adam@yggdrasil.com>
+Cc: henning@makholm.net, bug-make@gnu.org, linux-hams@vger.kernel.org, linux-kernel@vger.kernel.org, sailer@ife.ee.ethz.ch
 
-Scripsit Riley Williams <rhw@InfraDead.Org>
+Scripsit "Adam J. Richter" <adam@yggdrasil.com>
 
-> Linux-Hams package is inherently Linux specific, GNU make is the only
-> version of make used with Linux (as far as I have seen anyway), and G=
-NU
-> make (in all versions I have met) correctly expands $(...) as a singl=
-e
-> token wherever it is met.
+> >I'm not sure this is really a bug either. It is a Good Thing that make
+> >tries to normalize the names of targets and dependencies internally,
+> >lest the build may be incomplete or redundant if make does not realize
+> >that foo.bar and ./foo.bar is the same file. It is quite reasonable
+> >for $< to unfold to the *canonical* name of the file in question, I
+> >think.
 
-No it doesn't. If it did, it idiomatic rules such as
+> 	That just makes the behavior of make less predictable.
+> Whatever make does with the file names internally is its own business.
+> Rewriting the file names passed to commands unnecessarily is
+> potentially a big problem.
 
-binary: $(OBJS)
-	$(CC) -o $< $(OBJS)
+It is not rewriting file names. It is just substituting the name of
+the dependency for the $< variable, just as documented.
 
-would not work.
+> >If one absolutely wants the command to use the exact form of the
+> >dependency that's used in the dependency list, it's easy to simply
+> >reproduce that form, replacing the % by $*
 
+> 	Sorry, I do not understand what you mean.
 
-It is even easy to check this:
+It wasn't right anyway. I remembered the semantics of $* when the file
+name contains slashes wrong.
 
-pc-043:~/foo$ cat Makefile
-foo =3D a b
-bar:
-        ./echonum $(foo) stop
-pc-043:~/foo$ cat echonum
-#! /bin/sh
-while true ; do
-  echo $1
-  [ "$1" =3D stop ] && exit 0 ;
-  shift
-done
-pc-043:~/foo$ gmake bar
-=2E/echonum a b stop
-a
-b
-stop
-pc-043:~/foo$ gmake --version
-GNU Make version 3.79.1, by Richard Stallman and Roland McGrath.
-Built for i686-pc-linux-gnu
-Copyright (C) 1988, 89, 90, 91, 92, 93, 94, 95, 96, 97, 98, 99, 2000
-        Free Software Foundation, Inc.
-This is free software; see the source for copying conditions.
-There is NO warranty; not even for MERCHANTABILITY or FITNESS FOR A
-PARTICULAR PURPOSE.
-
-Report bugs to <bug-make@gnu.org>.
-
-pc-043:~/foo$=20
-
---=20
-Henning Makholm        "Hvorfor skulle jeg tale som en slave og en t=E5=
-be? Jeg
-                =F8nsker ikke, at han skal leve evigt, og jeg ved, at h=
-an ikke
-               kommer til at leve evigt, uanset om jeg =F8nsker det ell=
-er ej."
--
-To unsubscribe from this list: send the line "unsubscribe linux-hams" i=
-n
-the body of a message to majordomo@vger.kernel.org
-More majordomo info at  http://vger.kernel.org/majordomo-info.html
+-- 
+Henning Makholm                      "They are trying to prove a hypothesis,
+                             they are down here gathering data every season,
+                       they're publishing results in peer-reviewed journals.
+                     They're wrong, I think, but they are still scientists."
