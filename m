@@ -1,21 +1,36 @@
-From: <w9ya@arrl.net>
+From: Mike Markowski <mm@UDel.Edu>
 Subject: Re: QSSTV-5.2d compiling
-Date: Mon, 15 Nov 2004 19:58:32 -0500 (EST)
-Message-ID: <1030.65.166.80.196.1100566712.squirrel@w9ya0.pointclark.net>
-References: <41984799.9020305@bigpond.com>
+Date: Tue, 16 Nov 2004 14:42:37 -0500
+Message-ID: <20041116194237.GA20427@strauss.udel.edu>
+References: <41984799.9020305@bigpond.com> <1030.65.166.80.196.1100566712.squirrel@w9ya0.pointclark.net>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7BIT
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <41984799.9020305@bigpond.com>
+Content-Disposition: inline
+In-Reply-To: <1030.65.166.80.196.1100566712.squirrel@w9ya0.pointclark.net>
 Sender: linux-hams-owner@vger.kernel.org
 List-Id: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 7bit
 To: linux-hams@vger.kernel.org
 
-Thac has working rpm spec files for this. AND.....he uses a for loop (if I
-recall correctly) to accomplish what is needed. <- You might like to check
-this out.
+Thanks, David, you were a great help.  I had just downloaded qsstv
+when your note came through.  To summarize for others, using David's
+info to get qsstv running:
 
+   - Go to http://eu.hurd.gnuab.org/pub/debian/pool/main/q/qsstv/
+
+   - Download qsstv_5.2d.orig.tar.gz and qsstv_5.2d-8+cfg.diff.gz
+
+   - After untarring/gzipping, patch -p 0 < qsstv_5.2d-8+cfg.diff
+
+   - touch qsstv/configform.ui qsstv/ftpform.ui qsstvrecform.ui \
+     qsstv/zoomform.ui qsstv/freqform.ui qsstv/posform.ui \
+     qsstv/textselect.ui
+
+   - And you're all set to configure, make, & install.
+
+73,
+Mike  AB3AP
 
 > Hi All...have had great problems with compiling QSSTV-5.2d on Fedora
 > Core 2 and Mandrake 9.2 or 10......I found it wouldnt compile at
@@ -40,10 +55,3 @@ this out.
 > best 73's
 > David Munn
 > VK4BDJ
-> -
-> To unsubscribe from this list: send the line "unsubscribe linux-hams" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at  http://vger.kernel.org/majordomo-info.html
-
-
-
