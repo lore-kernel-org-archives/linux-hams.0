@@ -1,38 +1,47 @@
-From: "Curt Mills, WE7U" <hacker@tc.fluke.com>
-Subject: Re: ax.25 digipeater and axdi
-Date: Tue, 16 Sep 2003 09:00:44 -0700 (PDT)
+From: pa3gcu <pa3gcu@zeelandnet.nl>
+Subject: Re: Packet Problem
+Date: Tue, 16 Sep 2003 20:49:21 +0200
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <Pine.LNX.4.33.0309160900020.12192-100000@wapiti.tc.fluke.com>
-References: <3F6644B6.18089.C3CF1@localhost>
+Message-ID: <200309162049.21787.pa3gcu@zeelandnet.nl>
+References: <20030916012317.GA9420@leo.tneu.visi.com> <200309160933.10609.pa3gcu@zeelandnet.nl> <20030916124603.GA10749@leo.tneu.visi.com>
+Reply-To: pa3gcu@zeelandnet.nl
 Mime-Version: 1.0
-Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <3F6644B6.18089.C3CF1@localhost>
-List-Id: <linux-hams.vger.kernel.org>
-Content-Type: TEXT/PLAIN; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
-To: Rodolfo Brasnarof <rodob@ciudad.com.ar>
+Return-path: <linux-hams-owner@vger.kernel.org>
+In-Reply-To: <20030916124603.GA10749@leo.tneu.visi.com>
+Content-Disposition: inline
+List-Id: <linux-hams.vger.kernel.org>
+Content-Type: text/plain; charset="us-ascii"
+To: Tim Neu <tim@tneu.visi.com>
 Cc: linux-hams@vger.kernel.org
 
-On Mon, 15 Sep 2003, Rodolfo Brasnarof wrote:
+On Tuesday 16 September 2003 14:46, Tim Neu wrote:
+> # name callsign speed paclen window description
+> #
+> p1       KB0UPW-1        1200    255     2       145.670 MHz
+> (1200
+> bps)
 
-> Hello. I've been using linux ax.25 for some time, with
-> LinPac terminal, and now I have some interest in setting it
-> as a digipeater. I found axdigi program. Tryed to compile
-> it, but gives a lot of errors. It has not configuration
-> script neither makefile. It's just one .c file.
->
-> I'm using Mandrake 9.0 with kernel 2.4.19. Is there a way to
-> make it work with my system? Or is it there another way to
-> enable digipeating?
+Your ax25 versions are uptodate and should pose no problems as thats what most 
+of us use.
 
-digi_ned does digipeating as well.  I'm not sure whether it's
-APRS-specific or not.  Web pages should tell you what it can/cannot
-do.
+Tomi and another chap mentioned the "line" speed  i suggest you take note of 
+that. I belive that the problem must lye there.
+
+Another thing is in your start script you start 2 ax25 interfaces while in 
+your axports you only have one entry, possably you cut it out.
+
+You use 2 different ip#'s, there is no need, one is sufficent unless you have 
+needs to do otherwise.
 
 -- 
-Curt Mills, WE7U                    hacker_NO_SPAM_@tc.fluke.com
-Senior Methods Engineer/SysAdmin
-"Lotto:    A tax on people who are bad at math!"
-"Windows:  Microsoft's tax on computer illiterates!" -- WE7U
-"The world DOES revolve around me:  I picked the coordinate system!"
+If the Linux community is a bunch of theives because they
+try to imitate windows programs, then the Windows community
+is built on organized crime.
+
+Regards Richard
+pa3gcu@zeelandnet.nl
+http://people.zeelandnet.nl/pa3gcu/
+
+
 
