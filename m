@@ -1,29 +1,34 @@
-From: "=?iso-8859-1?Q?Lic._Juan_Antonio_Chirino_L=F3pez?=" 
-	<chirino@mtz.jovenclub.cu>
-Subject: AX25 over Windows
-Date: Tue, 28 Dec 2004 09:54:24 -0500
-Message-ID: <003a01c4eced$1ef08520$0202a8c0@equipo>
+From: "AE5PL Lists" <HamLists@ametx.com>
+Subject: RE: AX25 over Windows
+Date: Tue, 28 Dec 2004 08:06:00 -0600
+Message-ID: <478F6623898BBC4DBD692A223D28298A0EF95F@amewebsrvr.webametx.local>
 Mime-Version: 1.0
 Content-Transfer-Encoding: QUOTED-PRINTABLE
 Return-path: <linux-hams-owner@vger.kernel.org>
+Content-class: urn:content-classes:message
 Sender: linux-hams-owner@vger.kernel.org
 List-Id: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="iso-8859-1"
 To: linux-hams@vger.kernel.org
 
-Hello.
-Have you any support for Ax25 over Windows 2000 or XP?
+Check out AGWPE at http://www.raag.org/sv2agw/index.html
 
-Thanks,
-Chirino
+73,
 
+Pete Loveall AE5PL
+mailto:pete@ae5pl.net =20
 
-
---=20
-Este mensaje ha sido analizado por MailScanner
-en busca de virus y otros contenidos peligrosos,
-y se considera que est=E1 limpio.
-
+> -----Original Message-----
+> From: Lic. Juan Antonio Chirino L=F3pez
+> Posted At: Tuesday, December 28, 2004 7:52 AM
+> Subject: AX25 over Windows
+>=20
+>=20
+> Hello.
+> Have you any support for Ax25 over Windows 2000 or XP?
+>=20
+> Thanks,
+> Chirino
 -
 To unsubscribe from this list: send the line "unsubscribe linux-hams" i=
 n
