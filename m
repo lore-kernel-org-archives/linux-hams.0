@@ -1,32 +1,45 @@
-From: "Lane Wilson" <lwilson@dccnet.com>
-Subject: Setting Up ax.25 FRACK, RESPTIME. etc on Linux ax.25 ports
-Date: Thu, 6 Nov 2003 18:55:05 -0800
+From: g7iii@g7iii.demon.co.uk (Iain Young - G7III)
+Subject: ANNOUNCE: New (III) Predict Clients
+Date: Sun, 9 Nov 2003 19:16:01 +0000
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <IBEEKNDDJBNNJGAILFDJAEMFFJAC.lwilson@dccnet.com>
+Message-ID: <20031109191601.GA612@g7iii.demon.co.uk>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
+Content-Disposition: inline
 List-Id: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 7bit
 To: linux-hams@vger.kernel.org
 
-Hello all,
+Hi All,
 
-How are most of you setting up the ax.25 port settings in your Linux ax.25
-configurations?
-This is referred to in the ax.25 howto document as the T1, T2, T3, N2, ...
-settings.
+I've written a couple of predict clients, that build on the
+supplied earthtrack and planettrack, that you may, or may
+not find usefull.
 
-Do you have to write the values to the /proc/sys/net/ax25/portname/file each
-time you boot up?
+First is satellitetrack. This is very similar to planettrack,
+but adds the following features:
 
-How do you make FBB use these settings?
+   o Automatic Update when running the -window flag of xplanet,
+      every x seconds
+   o Adjustable Colour Scheme
+   o Satellite Footprints drawn, even when satellite not within
+     range of groundtation
+   o Ground Track Capability
 
-Generally, what are people doing about setting these things up on a Linux
-machines?
+missiontrack allows you to specify upto 5 'main' satellite's,
+and unlimited 'aux' satellites and groundstations in a config
+file.
 
-Thanks
+Both are avaliable under the GPL at the URL:
+http://www.xciv.org/~iain/iii-predictclients/  in the file
+iii-predictclients.tar
 
-Lane, ve7ihl
+Note that both use xplanet only, and not xearth.
+
+I have a few further ideas at various stages of development,
+so I'll be adding them to the collection when they are in a
+state to release.
 
 
+Iain
