@@ -1,33 +1,29 @@
-From: chuck gelm <chuck@gelm.net>
-Subject: Whence AX.25 Utilities ?
-Date: Tue, 14 Sep 2004 08:54:59 -0400
+From: Tomi Manninen <oh2bns@sral.fi>
+Subject: Re: Whence AX.25 Utilities ?
+Date: Tue, 14 Sep 2004 16:20:38 +0300
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <4146EA23.1090504@gelm.net>
-References: <4131A0BC.3080205@urbakken.dk>
-Reply-To: chuck@gelm.net
+Message-ID: <1095168038.1321.10.camel@oh2bns.ampr.org>
+References: <4131A0BC.3080205@urbakken.dk>  <4146EA23.1090504@gelm.net>
 Mime-Version: 1.0
 Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <4131A0BC.3080205@urbakken.dk>
+In-Reply-To: <4146EA23.1090504@gelm.net>
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"; format="flowed"
-To: linux-hams@vger.kernel.org
+Content-Type: text/plain; charset="us-ascii"
+To: Linux-hams List <linux-hams@vger.kernel.org>
 
-http://tldp.org/HOWTO/AX25-HOWTO/index.html
-  indicates:
+On Tue, 2004-09-14 at 15:54, chuck gelm wrote:
 
-"To use the amateur radio protocols within Linux you will need to get a
-suitable copy of the AX.25 Utilities. More detailed information about 
-these and associated programs can be found on http://zone.pspt.fi/~jsn/."
+> Where may I find these utilities?
 
-zone.pspt.fi does not seem to resolve.
+Lib, tools and apps from 
 
-Where may I find these utilities?
+ http://ax25.sourceforge.net/
 
-OBTW, the http://tldp.org/HOWTO/AX25-HOWTO/index.html
-is nearly three years old.  Is there a more recent version?
+and LinuxNode from
 
-Regards, Chuck
+ http://he.fi/pub/ham/unix/linux/ax25/
 
-
+-- 
+Tomi Manninen / OH2BNS / KP20ME04
 
