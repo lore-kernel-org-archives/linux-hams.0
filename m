@@ -1,42 +1,38 @@
-From: Jonathan Naylor <jonathan.naylor@ggaweb.ch>
-Subject: ANNOUNCE: New versions of LinWSJT and UKW Tools
-Date: Sat, 11 Jan 2003 00:32:57 +0100
+From: Tomi Manninen <tpm@prkele.tky.hut.fi>
+Subject: Re: Fragmentation
+Date: Sat, 11 Jan 2003 18:11:48 +0200 (EET)
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <200301110032.57714.jonathan.naylor@ggaweb.ch>
-Reply-To: g4klx@qsl.net
+Message-ID: <Pine.LNX.4.44.0301111806160.1411-100000@oh2bns.ampr.org>
+References: <3E1F3667.C25ABB5B@free.fr>
+Reply-To: tpm@prkele.tky.hut.fi
 Mime-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 Return-path: <linux-hams-owner@vger.kernel.org>
+In-Reply-To: <3E1F3667.C25ABB5B@free.fr>
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"
-To: Linux Hams <linux-hams@vger.kernel.org>
+Content-Type: TEXT/PLAIN; charset="iso-8859-1"
+To: =?iso-8859-1?Q?G=E9rard?= Parat / F6FGZ <f6fgz@free.fr>
+Cc: Linux-Hams <linux-hams@vger.kernel.org>
 
-Hi All
+On Fri, 10 Jan 2003, G=E9rard Parat / F6FGZ wrote:
 
-I am happy to announce the availability of new versions of two of my
-software packages. They both run under Linux and are open source (GPL).
+> I am wondering how to tweak mss/mtu/window/packet lenght etc ... to a=
+void
+> TCP/IP fragmentation for a 1200 bds link. I am trying to send 256 byt=
+e size
+> AX25 packet, here an example:
 
-The first is LinWSJT 0.4 which is an implementation of the FSK441 and 
-JT44 data modes for use with Meteor Scatter and EME/Tropo respectively. 
-New with this release is the FSK441 program as well as changes to the 
-JT44 program, although these are not visible to the user. Both programs 
-make use of the sound card in a PC to do the receiving and 
-transmitting, the hard work is done by Digital Signal Processing 
-functions within the program. The only real requirement is that the 
-computer clock is within one second or so of the correct time. Within 
-the package is a Word 2000 document outlining in simple language some 
-of the techniques that are used.
+I think having the interface MTU equal to the value in=20
+/proc/sys/net/ax25/<ifname>/maximum_packet_length should be enough to=20
+prevent AX.25 fragmentation.
 
-The second piece of software is UKW Tools which allows for the plotting 
-of terrain so that radio paths can be investigated. The actual data 
-used for this must be obtained separately over the Internet. This is a 
-minor revision of the previous release and fixes a couple of bugs.
+--=20
+Tomi Manninen           Internet:  oh2bns@sral.fi
+OH2BNS                  AX.25:     oh2bns@oh2rbi.fin.eu
+KP20ME04                Amprnet:   oh2bns@oh2rbi.ampr.org
 
-Both of these packages can be found on my web pages 
-http://www.qsl.net/g4klx under Software. There you will also find 
-MTrack my satellite tracking program and Baken which visualises 
-European V/U/SHF beacons. Both of these latter two packages have 
-whiskers on.
-
-Jonathan  HB9DRD/G4KLX
-
+-
+To unsubscribe from this list: send the line "unsubscribe linux-hams" i=
+n
+the body of a message to majordomo@vger.kernel.org
+More majordomo info at  http://vger.kernel.org/majordomo-info.html
