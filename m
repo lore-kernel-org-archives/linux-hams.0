@@ -1,41 +1,37 @@
-From: mvw@mvw.net
-Subject: Simple BBS, again, sorry for asking twice.
-Date: Tue, 24 Dec 2002 00:15:41 -0500 (EST)
+From: Wilbert Knol <zl2bsj@zl2tze.ath.cx>
+Subject: Re: Simple BBS, again, sorry for asking twice.
+Date: Tue, 24 Dec 2002 19:54:19 +1300 (NZDT)
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <Pine.LNX.4.44.0212240010320.10548-100000@jeeves.mvw.net>
-References: <Pine.LNX.4.33.0212161034190.1291-100000@wapiti.tc.fluke.com>
+Message-ID: <Pine.LNX.4.44.0212241945580.2791-100000@zl2bsj.ampr.org>
+References: <Pine.LNX.4.44.0212240010320.10548-100000@jeeves.mvw.net>
 Mime-Version: 1.0
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <Pine.LNX.4.33.0212161034190.1291-100000@wapiti.tc.fluke.com>
+In-Reply-To: <Pine.LNX.4.44.0212240010320.10548-100000@jeeves.mvw.net>
 List-Id: <linux-hams.vger.kernel.org>
 Content-Type: TEXT/PLAIN; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
-To: linux-hams@vger.kernel.org
+To: mvw@mvw.net
+Cc: linux-hams@vger.kernel.org
 
-Hi all,
+On Tue, 24 Dec 2002 mvw@mvw.net wrote:
 
-OK, I have another all- new machine ready to go online. Redhat 8 with
-Custom kernel (2.4.20 with ax25 and kiss compiled in), two serial ports,
-routing for my two IPs, and so on. An as-new P133 with 64 MB and no cpu
-fan - perfect for many years of reliable radio use. 
+> ports and not on the ethernet port? I.e. telnet (unencrypted) only from 
+> the ax25 ports.
 
-(My server 'hambox' has been up for years - 371 days since the last reboot 
-for regular dust-cleaning.)
+Use the 'route' command. Make the radio port the default interface. 
+All IP traffic will, from then on, use that port.
 
-Now, I asked before but forget the answers. Forgive me for asking again:
+> 
+> b) I use tcp/ip for mail etc. But apart from that I would like to set up a 
+> simple messaging system/bbs, to use when someone goes to this system using 
+> ax25. I do not need "do it all" systems, just a simple bbs (and it's a 
 
-a) I should know this, but how can I get telnet to only work on the radio 
-ports and not on the ethernet port? I.e. telnet (unencrypted) only from 
-the ax25 ports.
+Consider using 'ax25d' to start up the 'mail' program, allowing people 
+to send and receive local E-mail.
 
-b) I use tcp/ip for mail etc. But apart from that I would like to set up a 
-simple messaging system/bbs, to use when someone goes to this system using 
-ax25. I do not need "do it all" systems, just a simple bbs (and it's a 
-1200 bps port, so a simple one with little text would be great). 
-Suggestions, all?
+HTH...
 
-Many thanks for your indulgence.
+Wilbert, ZL2BSJ
 
-73
-Michael VA3MVW
+
 
