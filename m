@@ -1,63 +1,45 @@
-From: Arno Verhoeven <pe1icq@pi8zaa.ampr.org>
-Subject: Re: ax25d and callsign*
-Date: Sun, 28 Sep 2003 18:57:27 +0200
+From: Wilbert Knol <w.knol@niwa.co.nz>
+Subject: ARRL's LoTW
+Date: Tue, 30 Sep 2003 17:58:57 +1200
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <3F7712F7.2030000@pi8zaa.ampr.org>
-References: <5.2.1.1.2.20030929001043.01b50860@joan.greenwood.wa.edu.au> <5.2.1.1.2.20030929001043.01b50860@joan.greenwood.wa.edu.au> <5.2.1.1.2.20030929004058.01b1fdf8@vk6hgr.echidna.id.au>
+Message-ID: <200309301758.57353.w.knol@niwa.co.nz>
+References: <20030918031442.GA708@localhost> <20030926174737.GB26521@n7xy.net> <200309261808.05245.w9ya@arrl.net>
+Reply-To: w.knol@niwa.co.nz
 Mime-Version: 1.0
 Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <5.2.1.1.2.20030929004058.01b1fdf8@vk6hgr.echidna.id.au>
+In-Reply-To: <200309261808.05245.w9ya@arrl.net>
+Content-Disposition: inline
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"; format="flowed"
-To: Gavin Rogers <grogers@vk6hgr.echidna.id.au>
-Cc: linux-hams@vger.kernel.org
+Content-Type: text/plain; charset="us-ascii"
+To: Linux Hams <linux-hams@vger.kernel.org>
 
-Gavin Rogers wrote:
+I compiled from the source tarballs on a Mandrake 9.1 box.
+Things I found:
 
-> At 06:32 PM 28/09/2003 +0200, you wrote:
->
->>> [VK6HGR-7* VIA loop]
->>> default * * * * * *  - root  /usr/sbin/rsuplnk rsuplnk  rose
->>>
->>
->> remove the asterisk. I.e [VK6HGR-7 VIA loop]
->
->
-> Hi Arno.
->
-> I tried that. Without the asterisk it sets up ax25d to listen for a 
-> call directed _to_ that callsign, not via the callsign in a digipeater 
-> call.
->
-> Without the asterisk I can call vk6hgr-7 and rsuplnk runs (albeit with 
-> an error, since that isn't how it's designed to be called):
->
-> c loop vk6hgr-7
->
-> Trying VK6HGR-7 on loop... Type <RETURN> to abort
-> Connected to VK6HGR-12 (Escape: CTRL-T)
-> *** No ROSE address given
-> ^T
-> Reconnected to HGRNOD:VK6HGR-15
->
->
+I had to install the static openSSL devel RPM, and libbinutils2-devel. 
 
-Oops... I was too hastely answering and didn't read well enough through 
-your question. I missed the part about the digipeater.
-I have never used it that way. (didn't even know it was possible)
+tqsllib-1.3 does not have a 'make install' target. I copied everything 
+in /usr/local/src/tqsllib/.libs to /usr/local/lib, fixed up the 
+symlinks and refreshed the linker cache.
 
-Are you limited to rose for some reason?
-If netrom is also ok for you, then you could consider using pe1rxq's 
-nrbridge.
-http://sharon.esrac.ele.tue.nl/users/pe1rxq/
+In TrustedQSL-1.08, the ./configure script refused to find the newly 
+installed libraries. The ./configure failed.
+
+Using "./configure --with-tqsllib=/usr/local/lib" didn't help.
+
+It appears the ./configure script tacks "/lib" onto the path, so 
+"./configure --with-tqsllib=/usr/local" worked.
+
+I then found that "make install" failed. It looks for a non-existent 
+"licenses" directory.
+
+Anyway, the 'tqsl' and 'tqslcert' applications both appear to work.
+
+A pat on the back of ARRL for this initiative. Less time QSL-ing is 
+more time on the air :-)
 
 
--- 
-73, PE1ICQ  Arno Verhoeven
---------------------------------
-AX.25  pe1icq@pi8zaa.#nbo.nld.eu
-smtp   pe1icq@pi8zaa.ampr.org
-inet   pe1icq@amsat.org
+Wilbert, ZL2BSJ
 
 
