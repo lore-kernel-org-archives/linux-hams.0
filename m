@@ -1,39 +1,35 @@
-From: Gavin Rogers <grogers@vk6hgr.echidna.id.au>
+From: Nuno Sucena Almeida <slug@aeminium.org>
 Subject: Re: PMS
-Date: Tue, 10 Feb 2004 23:36:34 +0800
+Date: Tue, 10 Feb 2004 15:45:34 +0000
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <5.2.1.1.2.20040210233211.015751b0@vk6hgr.echidna.id.au>
-References: <E6B40EBA0E7B31449C3C565C8ED2F2A00130E402@spsrvr04.sp.grupo
- simoldes.pt>
+Message-ID: <20040210154534.GB90446@freebsd.aeminium.pt>
+References: <E6B40EBA0E7B31449C3C565C8ED2F2A00130E402@spsrvr04.sp.gruposimoldes.pt>
 Mime-Version: 1.0
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <E6B40EBA0E7B31449C3C565C8ED2F2A00130E402@spsrvr04.sp.grupo
- simoldes.pt>
+Content-Disposition: inline
+In-Reply-To: <E6B40EBA0E7B31449C3C565C8ED2F2A00130E402@spsrvr04.sp.gruposimoldes.pt>
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"; format="flowed"
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset="iso-8859-1"
 To: linux-hams@vger.kernel.org
 
-At 03:30 PM 10/02/2004 +0000, Cristiano Tavares - SP wrote:
->My distribution of Debian doesn't bring the PMS program.
->
->Where can I get it?
+Ol=E1,
 
-You probably don't want it. It uses an insecure method to send email which 
-could lead to your computer being compromised. It's the same code that's in 
-AWZNode and other node programs that can send email use which was the 
-subject of security bulletins a while ago - see 
-http://he.fi/archive/linux-hams/200308/0084.html
+	tenta ir a=20
 
-As far as I know, nobody's fixed it yet.
+			http://radio.linux.org.au/
 
-73
-Gavin.
+	pode ser que encontres o que procuras.
 
----
-Amateur radio station VK6HGR
-http://vk6hgr.ampr.org/
 
-Email : grogers@vk6hgr.echidna.id.au
-Packet: vk6hgr@vk6hgr.#per.#wa.aus.oc
+				73,
+					Nuno
 
+On Tue, Feb 10, 2004 at 03:30:11PM -0000, Cristiano Tavares - SP wrote:
+| My distribution of Debian doesn't bring the PMS program.
+| Where can I get it?
+-
+To unsubscribe from this list: send the line "unsubscribe linux-hams" i=
+n
+the body of a message to majordomo@vger.kernel.org
+More majordomo info at  http://vger.kernel.org/majordomo-info.html
