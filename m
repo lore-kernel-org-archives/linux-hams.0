@@ -1,36 +1,40 @@
-From: "Curt Mills, WE7U" <hacker@tc.fluke.com>
-Subject: Re: Tracking down a Linux crash
-Date: Wed, 16 Oct 2002 09:38:29 -0700 (PDT)
+From: "Ben Gelb" <ben@gelbnet.com>
+Subject: RE: Tracking down a Linux crash
+Date: Wed, 16 Oct 2002 16:49:13 -0400
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <Pine.LNX.4.33.0210160936380.29585-100000@wapiti.tc.fluke.com>
-References: <001601c2751d$e22bae10$0701a8c0@lz130>
+Message-ID: <000101c27555$7f1fdde0$0bc43e2c@ben>
+References: <3031448.1034759336@WUSJA129861-8HP>
 Mime-Version: 1.0
-Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <001601c2751d$e22bae10$0701a8c0@lz130>
-List-Id: <linux-hams.vger.kernel.org>
-Content-Type: TEXT/PLAIN; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
-To: jbennett <jbennett@insightbb.com>
-Cc: John Ackermann N8UR <jra@febo.com>, linux@lists.tapr.org, linux-hams@vger.kernel.org
+Return-path: <linux-hams-owner@vger.kernel.org>
+In-Reply-To: <3031448.1034759336@WUSJA129861-8HP>
+List-Id: <linux-hams.vger.kernel.org>
+Content-Type: text/plain; charset="us-ascii"
+To: 'John Ackermann N8UR' <jra@febo.com>, linux@lists.tapr.org, linux-hams@vger.kernel.org
 
-On Wed, 16 Oct 2002, jbennett wrote:
+I had some problems with X freezing and virtual terminals disappearing
+when using the Kernel framebuffer device. You might want to make sure
+that kernel framebuffer support is not enabled in the kernel and that
+your XConfig doesn't attempt to use the Kernel Framebuffer device.
 
-> motherboard with a P3-500 installed w/256 MB RAM. Video is an ATI 128 Rage.
-> My laptop, a Dell Inspiron 8100 w/a P3-850 has done it on occasion. It uses
-> the Nvidia chipset. I believe my friend's machine is a Dell 5100 w/a P3-550.
-> I believe his video chipset is ATI. My gut instinct says it's in the X
-> driver, but that's just a guess. Like you, have been unable to find anything
-> on the Internet.  Will be interesting to see what turns up.
+-Ben
 
-The video card I had the lockup problems with was an older ATI PCI
-card.  I don't remember the model.  I replaced it with an S3 PCI
-card and all is well.  Not that it assures the problem is with the
-video or the ATI drivers, but it's another data point.
 
--- 
-Curt Mills, WE7U                    hacker_NO_SPAM_@tc.fluke.com
-Senior Methods Engineer/SysAdmin
-"Lotto:    A tax on people who are bad at math!"
-"Windows:  Microsoft's tax on computer illiterates!" -- WE7U
-"The world DOES revolve around me:  I picked the coordinate system!"
+
+-----Original Message-----
+From: linux-hams-owner@vger.kernel.org
+[mailto:linux-hams-owner@vger.kernel.org] On Behalf Of John Ackermann
+N8UR
+Sent: Wednesday, October 16, 2002 9:09 AM
+To: linux@lists.tapr.org; linux-hams@vger.kernel.org
+Subject: Tracking down a Linux crash
+
+Hi all --
+
+I realize this may be a bit off-topic, but my rationale is that (a) I'm
+among knowledgeable friends, and (b) this machine is destined to be my
+hamshack system, displacing a Windows box.
+
+snip
+
 
