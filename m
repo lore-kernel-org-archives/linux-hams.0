@@ -1,51 +1,38 @@
-From: Wilbert Knol <zl2bsj@zl2tze.ath.cx>
+From: Tomi Manninen OH2BNS <tpm@prkele.tky.hut.fi>
 Subject: Re: Linux AX.25 Socket programming
-Date: Fri, 3 Jan 2003 19:32:03 +1300 (NZDT)
+Date: Fri, 3 Jan 2003 19:17:56 +0200 (EET)
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <Pine.LNX.4.44.0301031919090.9645-100000@zl2bsj.ampr.org>
-References: <Pine.LNX.4.44.0301020617170.1552-100000@oh2bns.ampr.org>
+Message-ID: <Pine.HPX.4.10.10301031914210.15434-100000@saturn.trs.ntc.nokia.com>
+References: <Pine.LNX.4.44.0301031919090.9645-100000@zl2bsj.ampr.org>
+Reply-To: tpm@prkele.tky.hut.fi
 Mime-Version: 1.0
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <Pine.LNX.4.44.0301020617170.1552-100000@oh2bns.ampr.org>
+In-Reply-To: <Pine.LNX.4.44.0301031919090.9645-100000@zl2bsj.ampr.org>
 List-Id: <linux-hams.vger.kernel.org>
 Content-Type: TEXT/PLAIN; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
-To: linux-hams@vger.kernel.org
+To: Wilbert Knol <zl2bsj@zl2tze.ath.cx>
+Cc: linux-hams@vger.kernel.org
 
+On Fri, 3 Jan 2003, Wilbert Knol wrote:
 
-On Thu, 2 Jan 2003, Tomi Manninen wrote:
+> On Thu, 2 Jan 2003, Tomi Manninen wrote:
+> 
+> > the same in eg. Perl. There was a thread about Perl and ax25d recently on 
+> > this list but I have already forgotten what the correct procedure was...
+> 
+> The trick was, to 'unbuffer' the Perl interpreter with:
 
-> the same in eg. Perl. There was a thread about Perl and ax25d recently on 
-> this list but I have already forgotten what the correct procedure was...
+Ok, but how about input? Didn't it need something special too?
 
-The trick was, to 'unbuffer' the Perl interpreter with:
+> How does ax25d present end-of-line?
 
-$|=1;
-# or any non-zero value
+The standard end-of-line in AX.25 related world is CR (yes, a really
+bright idea indeed...). Ax25d doesn't touch that at all so any program
+lauched from ax25s needs to do the conversions itself.
 
-My Perl Bible says:
-
- English name: $OUTPUT_AUTOFLUSH
-
- If set to any non-zero value, forces a flush after every write or 
- print on the currently selected output device
-
-
-I tried out the recently posted Perl script (having 'unbuffered it 
-first...)
-
-It looks as though AX25  scrambles the '\n', because the script keeps 
-waiting for input (much 
-like a Windows shutdown :-)
-
-When I set $/ to any character, the script then gets past the
-$call=(<>);
-statement once that character appears on stdin.
-
-How does ax25d present end-of-line?
-
-
-Wilbert, ZL2BSJ
-
-
+-- 
+Tomi Manninen           Internet:  oh2bns@sral.fi
+OH2BNS                  AX.25:     oh2bns@oh2rbi.fin.eu
+KP20ME04                Amprnet:   oh2bns@oh2rbi.ampr.org
 
