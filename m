@@ -1,41 +1,37 @@
-From: Ralf Baechle DO1GRB <ralf@uni-koblenz.de>
+From: csmall@eye-net.com.au (Craig Small)
 Subject: Re: Status of AX.25 in 2.5 / 2.6
-Date: Fri, 26 Jul 2002 20:15:10 +0200
+Date: Sat, 27 Jul 2002 09:24:26 +1000
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <20020726201510.A28240@dea.linux-mips.net>
-References: <20020726134216.A4126@dea.linux-mips.net> <200207261250.NAA32030@gw.chygwyn.com>
+Message-ID: <20020726232426.GB18207@eye-net.com.au>
+References: <20020726134216.A4126@dea.linux-mips.net>
 Mime-Version: 1.0
 Return-path: <linux-hams-owner@vger.kernel.org>
 Content-Disposition: inline
-In-Reply-To: <200207261250.NAA32030@gw.chygwyn.com>; from steve@gw.chygwyn.com on Fri, Jul 26, 2002 at 01:50:45PM +0100
+In-Reply-To: <20020726134216.A4126@dea.linux-mips.net>
 List-Id: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
-To: Steve Whitehouse <Steve@ChyGwyn.com>
+To: Ralf Baechle <ralf@uni-koblenz.de>
 Cc: linux-hams@vger.kernel.org
 
-On Fri, Jul 26, 2002 at 01:50:45PM +0100, Steven Whitehouse wrote:
-
-> I started a little. Untested yet, but for what its worth:
+On Fri, Jul 26, 2002 at 01:42:16PM +0200, Ralf Baechle wrote:
+> No substancial changes have been done to the AX.25 kernel stack in a extended
+> period of time.  As the result it is still doing crude stuff like globally
+> enabling and disabling interrupts, has no understanding of shared skb, isn't
+> fully multithreaded and probably plenty more problems I haven't spotted yet.
+> Now that we're about to remove global cli() / sti() from the kernel this
+> means the AX.25 stack will soon break entirely.
 > 
-> http://www.chygwyn.com/~steve/kpatch/ax25/ax25-uid-2.5.25.diff
-> 
-> Please feel free to use as much/little as you like of this patch. It would
-> be nice to do enough tidying to these protocols that we can get rid of
-> things like deliver_to_old_ones() from the core code. I can't spare a
-> lot of time, but I'll help where I can.
-> 
-> I spoke to Dave Jones at the recent UKUUG conference and he mentioned that
-> it appeared that nobody was doing any work on AX.25 and associated
-> protocols which was why I started something. It would be a good idea to
-> drop him a line to let him know that you are working on it,
+> Is there any ongoing development I'm not aware of?  Just in case I've
+> started doing some cleanup last night ...
 
-I took a look at your code; it's orthogonal to what I did so far.  I
-consider the removal of global cli/sti & co the most immediate problem,
-so I started redoing the whole locking in net/ax25/.  Some of that stuff
-was unbelievably bad wrt. to SMP machines.
+No, if there is something going on I don't know about it, which is not
+that surprising anyway.  If you're doing only internal stuff than go
+right ahead.  If you want to fiddle with anything that changes the API
+let me know so that the libraries and programs can handle it.
 
-73 de DO1GRB op Ralf
-
---
-Loc. JN47BS / CQ 14 / ITU 28 / DOK A21
+  - Craig
+-- 
+Craig Small VK2XLZ  GnuPG:1C1B D893 1418 2AF4 45EE  95CB C76C E5AC 12CA DFA5
+Eye-Net Consulting http://www.eye-net.com.au/        <csmall@eye-net.com.au>
+MIEEE <csmall@ieee.org>                 Debian developer <csmall@debian.org>
