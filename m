@@ -1,31 +1,29 @@
-From: terry <wd0fpc@aniota.com>
+From: "jbennett" <jbennett@insightbb.com>
 Subject: Re: Tracking down a Linux crash
-Date: Wed, 16 Oct 2002 07:18:05 -0700 (PDT)
+Date: Wed, 16 Oct 2002 09:17:22 -0500
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <Pine.LNX.4.44.0210160710180.1192-100000@yossarian.aniota.net>
+Message-ID: <001a01c2751e$bec1b630$0701a8c0@lz130>
 References: <3031448.1034759336@WUSJA129861-8HP>
 Mime-Version: 1.0
-Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <3031448.1034759336@WUSJA129861-8HP>
-List-Id: <linux-hams.vger.kernel.org>
-Content-Type: TEXT/PLAIN; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
-To: linux-hams <linux-hams@vger.kernel.org>
+Return-path: <linux-hams-owner@vger.kernel.org>
+List-Id: <linux-hams.vger.kernel.org>
+Content-Type: text/plain; charset="us-ascii"
+To: John Ackermann N8UR <jra@febo.com>, linux@lists.tapr.org, linux-hams@vger.kernel.org
 
-On Wed, 16 Oct 2002, John Ackermann N8UR wrote:
+Oops...
 
-... ciao:
+Forgot to mention in my first reply--- running RH 7.3. Happens with
+kernel-as-shipped, or custom w/AX25. Have upgraded kernel from RH and also
+from kernel.org. No difference.
 
-> with VIA chipset
+73,
+John Bennett
+n4xi
 
-    i've had nothing but trouble with via chipsets.  however, i've
-declined to upgrade to the 2.4 series kernel, so can not speak to its
-accommodation to them.
-
-    was your choice of motherboard driven by the HW HOWTO, or is the board
-'supposed' to run under linux ...
-
--- 
-73 , de WD0FPC
-    aka: terry
+----- Original Message -----
+From: "John Ackermann N8UR" <jra@febo.com>
+To: <linux@lists.tapr.org>; <linux-hams@vger.kernel.org>
+Sent: Wednesday, October 16, 2002 8:08 AM
+Subject: Tracking down a Linux crash
 
