@@ -1,27 +1,28 @@
-From: Peter <pc2a@pi4cc.nl>
-Subject: Making a loop device
-Date: Fri, 10 Dec 2004 13:54:34 +0100
-Message-ID: <41B99C8A.79AE2A6F@pi4cc.nl>
+From: Gervase Chavasse <g_chavasse@onetel.com>
+Subject: Re: gmfsk and SuSE 9.1
+Date: Sat, 11 Dec 2004 09:21:49 +0000
+Message-ID: <1102756909.4914.7.camel@linux>
+References: <200412091926.06125.g_chavasse@onetel.com>
+	 <1102620958.1217.15.camel@oh2bns.ampr.org>
 Mime-Version: 1.0
 Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
+In-Reply-To: <1102620958.1217.15.camel@oh2bns.ampr.org>
 Sender: linux-hams-owner@vger.kernel.org
 List-Id: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
-To: linux-hams@vger.kernel.org
+To: Tomi Manninen <oh2bns@sral.fi>
+Cc: Linux-hams List <linux-hams@vger.kernel.org>
 
-Hi
+On Thu, 2004-12-09 at 19:35, Tomi Manninen wrote:
 
-Setting up a new system here but it has 1 com port on it.
-Normaal I use 2 comports to make a loopback
+> > ../../depcomp: line 414: exec: g++: not found
+> 
+> You don't seem to have the C++ compiler installed. On my Red Hat the
+> package is called "gcc-c++".
+Many thanks for the rapid reply.  Only one more error message calling
+for popt-devel and that did it.
 
-There must be a way to make a pseudo device and make a loop with them
-But I can remember (and with google) how to setup
-
-Running kernel 2.6 here
-
-Peter
-PC2A
-
-
+Thanks for a great program.
+Gervase GW4URJ
 
