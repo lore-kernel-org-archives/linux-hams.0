@@ -1,38 +1,30 @@
-From: Jeroen Vreeken <pe1rxq@amsat.org>
-Subject: Re: Baypac and kernel crashes
-Date: Tue, 23 Apr 2002 08:02:37 +0200
+From: "Juraj Buliscak" <buliscakj@eurotel.sk>
+Subject: packet terminal programm
+Date: Tue, 23 Apr 2002 11:03:29 +0200
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <20020423080237.A213@jeroen.pe1rxq.ampr.org>
-References: <Pine.GSO.4.44.0204222103400.21272-100000@rescomp.Stanford.EDU>
+Message-ID: <OFEFBCA609.4E33FE2E-ONC1256BA4.00314AD0@eurotel.sk>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7BIT
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <Pine.GSO.4.44.0204222103400.21272-100000@rescomp.Stanford.EDU>; from jwc@stanford.edu on Tue, Apr 23, 2002 at 06:04:32 +0200
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"
-To: James Cutler <jwc@stanford.edu>
-Cc: linux-hams@vger.kernel.org
+Content-Type: text/plain; charset="iso-8859-1"
+To: linux-hams@vger.kernel.org
 
-On 2002.04.23 06:04:32 +0200 James Cutler wrote:
-> We're having some problems using a BayPac 9600 with Linux 2.4.17.
-> 
-> On one machine it works just fine until we start X.  As soon as we
-> start X, the machine will crash as soon as we send an AX.25 packet
-> (we were testing with "beacon").  The only way to recover from the
-> crash is to power cycle or press the reset button.  This is
-> repeatable.  We beacon, we work, we start X, we beacon, we crash.
-> It does output the packet before it crashes.
-> 
-> On a second machine that doesn't (can't) run X, we've noticed a
-> similar crash.  It's a small embedded 486 (the Prometheus).  After
-> several beacons, from 5-20, it will crash in the same hard manner.
-> Only a power cycle will fix it.
-> 
-> Has anyone else seen similar behavior?  Any ideas?
+Hello all,
 
-Every 2.4.x kernel up to 2.4.18 has this problem, it should be fixed now...
-It was a problem with ax25 not using sock_orphan()
+      I=B4m looking for some terminal program for packet radio under li=
+nux (
+Xwindow ). Could someone tell me which are most used, and where is it
+possible to obtain.
+      Now I am using Xpr from OK1ZIA, but I want to try something else.
 
-Jeroen
+Many thanks
+
+Duro, OM8ACE
 
 
+-
+To unsubscribe from this list: send the line "unsubscribe linux-hams" i=
+n
+the body of a message to majordomo@vger.kernel.org
+More majordomo info at  http://vger.kernel.org/majordomo-info.html
