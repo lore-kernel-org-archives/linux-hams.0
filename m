@@ -1,38 +1,57 @@
-From: Tomi Manninen <tpm@prkele.tky.hut.fi>
-Subject: Re: listen, permissions
-Date: Sat, 14 Dec 2002 19:48:46 +0200 (EET)
+From: "Douglas Cole" <n7bfs@qwest.net>
+Subject: installing Predict on a RedHat 7.3 box , no go :^(
+Date: Sun, 15 Dec 2002 16:28:02 -0800
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <Pine.LNX.4.44.0212141939370.8488-100000@oh2bns.ampr.org>
-References: <Pine.LNX.4.44.0212141058400.15381-100000@jeeves.mvw.net>
-Reply-To: tpm@prkele.tky.hut.fi
+Message-ID: <200212151628.02870.n7bfs@qwest.net>
+Reply-To: n7bfs@qwest.net
 Mime-Version: 1.0
+Content-Transfer-Encoding: 8BIT
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <Pine.LNX.4.44.0212141058400.15381-100000@jeeves.mvw.net>
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: TEXT/PLAIN; charset="us-ascii"
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset="us-ascii"
 To: linux-hams@vger.kernel.org
 
-On Sat, 14 Dec 2002 mvw@mvw.net wrote:
+Ok ,  I must admit to not being very good at installing something if its not 
+in a RPM form , so when I tried to install Predict on a SuSE 8.0 box and it 
+went flawlessly I got rather overconfident and tried to install it on my 
+RedHat IRLP node box , so I could let it run as a server 24/7 since that 
+machine is always on , and has alot of process time doing nothing...
 
-> > Ass listen 'sniffs' the network devices, it need to run as root. I know - this 
-> > is not really precise, so someone correct me.
-> 
-> OK, makes sense (it is a promiscuous mode interface!). But what did I do
-> on my old 2.0 kernel system (my 486, which has been up forever!) to allow
-> it there?
+BUT , it will not even begin to install :^(
+here is what I get when I try to run ./configure on the RedHat box...
 
-Earlier, listen was by default installed with the SUID bit set and so any
-user could run it with root privileges. As this is considered somewhat
-dangerous (a bug in listen could allow a local root compromise), ax25-apps
-was changed not to do this. So now it is up to each sysop to enable it if
-needed. You can do this as root:
+[root@n7bfs predict-2.2.1]# ./configure
+One moment please... installer.c:16:20: curses.h: No such file or directory
+Compilation failed.  Are you sure you have a C compiler (gcc) installed?
+[root@n7bfs predict-2.2.1]#
 
- chown root /usr/bin/listen	# if not already...
- chmod u+s /usr/bin/listen
+
+Now , what I get from that is that my node box does not have curses installed.
+
+Hmm , so I check and sure enough it has "ncurses" installed , but not curses, 
+so I check all 3 install cd's and none have a curses package on them , so I 
+check the SuSE install dvd and sure enough -it- has it!
+
+So my general question is , has anyone who is using the latest version of 
+predict running it on a RedHat box and if so what did you have to do to make 
+it happen ?
+
+I have done a search on rpmfind.net and have not found any curses packages for 
+Redhat , which seems kinda confusing , but not surprising .
+
+Or could someone point me in the direction of a how-to/info page that would 
+help me figure out how to install curses from sources so I don't need a 
+stinking RPM file to install curses on my node box ;^}
+Or maybe I just didn't install RedHat properly...
+
+tia for any input!
+
 
 -- 
-Tomi Manninen           Internet:  oh2bns@sral.fi
-OH2BNS                  AX.25:     oh2bns@oh2rbi.fin.eu
-KP20ME04                Amprnet:   oh2bns@oh2rbi.ampr.org
+Douglas Cole   N7BFS
+Spokane IRLP node owner
+AMSAT#26182 , K2 # 544
+http://www.users.qwest.net/~cdoug3
+Registered Linux user # 188922
+
 
