@@ -1,42 +1,33 @@
-From: Nuno Miguel Fernandes Sucena Almeida <slug@aeminium.org>
-Subject: Re: How to use soundmodem driver?
-Date: Mon, 16 Sep 2002 13:09:25 +0100 (WEST)
+From: "Douglas Cole" <n7bfs@qwest.net>
+Subject: Yaesu ft847/100 control
+Date: Mon, 16 Sep 2002 08:08:22 -0700
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <Pine.LNX.4.21.0209161304100.4370-100000@aeminium.aeminium.pt>
-References: <20020916064451.8626.qmail@web14402.mail.yahoo.com>
+Message-ID: <200209160808.22938.n7bfs@qwest.net>
+Reply-To: n7bfs@qwest.net
 Mime-Version: 1.0
+Content-Transfer-Encoding: 8BIT
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <20020916064451.8626.qmail@web14402.mail.yahoo.com>
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: TEXT/PLAIN; charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-To: Vivi Kusumo <vivi_ksm@yahoo.com>
-Cc: Linux-Hams <linux-hams@vger.kernel.org>
+Content-Type: text/plain; charset="us-ascii"
+To: linux-hams@vger.kernel.org
 
-On Sun, 15 Sep 2002, Vivi Kusumo wrote:
+Been a lurker for quite a while now , and have been learning lots about packet 
+, but was wondering if anyone has done a gui/X based control proggie for the 
+above radio's?
 
-> How can I configure the soundmodem-0.6 driver now? 
-> Are the io, irq and dma (howto point 6.1.5.2) still
-> required?
-> # insmod hdlcdrv
-> # insmod soundmodem mode="sbc:afsk1200" iobase=? irq=?
-> dma=?
-> # sethdlc -p -i  sm0 mode sbc:afsk1200 io ?? irq ??
-> dma ?? serio 0x2f8
+I don't seem to have the brains to be a programmer and so am at the mercy of 
+you folks who have ;^}
 
+I desire a Linux based program , as that is all I run at home , and I am 
+willing to pay money for it if it is stable and X based .
 
-I must NOT use this:-) Check the README file! The soundmodem USER MODE
-runs as a regular unix daemon. 
-	Check my packet_soundmodem.sh script at
+tia 
 
-http://www.co.it.pt/~slug/packet/packet_soundmodem_latest.tar.gz
-	
-	to give you an idea on how to use it.
-	To configure the soundmodem daemon you use the soundmodemconfig X
-tool, from the soundmodem package. But do it before running the daemon,
-'cause they can't work at the same time.
-			73,
-				Nuno Sucena Almeida
---
-www.aeminium.org/slug
+-- 
+Douglas Cole   N7BFS
+Spokane IRLP node owner
+AMSAT#26182 , K2 # 544
+http://www.users.qwest.net/~cdoug3
+Registered Linux user # 188922
+
 
