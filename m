@@ -1,34 +1,27 @@
-From: Bill Vodall - WA7NWP <wa7nwp@jnos.org>
-Subject: Re: KDE EchoLinux client development started - SERVER?
-Date: Sat, 12 Apr 2003 12:16:24 -0700 (PDT)
+From: Hamish Moffatt <hamish@cloud.net.au>
+Subject: Re: Soundmodem && SBLive!
+Date: Sun, 13 Apr 2003 11:38:26 +1000
 Sender: linux-hams-owner@localhost
-Message-ID: <Pine.LNX.4.33.0304121212430.31473-100000@jnos.org>
-References: <20030411204435.5CF6630D93@www.fastmail.fm>
+Message-ID: <20030413013826.GA30173@silly.cloud.net.au>
+References: <200304122005.13012.rdmartinml@infinito.it>
 Mime-Version: 1.0
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <20030411204435.5CF6630D93@www.fastmail.fm>
+Content-Disposition: inline
+In-Reply-To: <200304122005.13012.rdmartinml@infinito.it>
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: TEXT/PLAIN; charset="us-ascii"
+Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
-To: linux-hams@vger.kernel.org
+To: Linux Hams ML <linux-hams@vger.kernel.org>
 
+On Sat, Apr 12, 2003 at 08:05:12PM +0200, Giuseppe Martino wrote:
+> Is Soundmodem compatible with SBLive! (emu10k1) Card?
+> smmixer gives an error "Unknown mixer device"
+> ifconfig gives "SIOCSIFFLAGS" error....
+> Is there anyone that use SBLive! with soundmode?
 
+Are you using the kernel-based soundmodem or user-space soundmodem?
+I guess the kernel-based one, which I think needs an old soundblaster.
 
-> > > This project will not implement the EchoLink protocol. That's done by
-> > > EchoLinux, which will run as a child process of this program.
-
-
-EchoLink is great.
-
-Having a nice client on Linux will be a really good thing.
-
-What about the other side?   It would be useful, at times,
-to have a local Echolink style server.  It's not always
-necessary nor desireable to join  the big group.
-
-Is anybody working on or thinking about an open server?
-
-73,
-Bill - WA7NWP
-
-
+Hamish
+-- 
+Hamish Moffatt VK3SB <hamish@debian.org> <hamish@cloud.net.au>
