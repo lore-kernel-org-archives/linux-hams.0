@@ -1,34 +1,22 @@
-From: Chuck Gelm <nc8q@gelm.net>
-Subject: Re: newbie needs equipment
-Date: Wed, 15 May 2002 05:58:02 -0400
+From: "Kameron A. Cole" <kernel@medianox.net>
+Subject: modems
+Date: Wed, 15 May 2002 15:13:16 -0500
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <3CE2312A.1CD31B45@gelm.net>
-References: <3CE1C65B.6060901@medianox.net>
+Message-ID: <3CE2C15C.2020504@medianox.net>
+Reply-To: kernel@medianox.net
 Mime-Version: 1.0
 Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"
+Content-Type: text/plain; charset="us-ascii"; format="flowed"
 To: linux-hams@vger.kernel.org
 
-Linksys WMP11
+I have a Xircom Realport card modem for my Dell I7K, which works great. 
+ Does anyone know if it will hook in to a radio?  Also, green as I am, 
+does the modem need to be wireless, and, if not, how do you hook in to 
+the radio.
 
-HTH, Chuck
+Any advice greatly appreciated....
 
-"Kameron A. Cole" wrote:
-> 
-> hello:
-> 
-> I'd like recommendations on a radio and modem (card) for a beginner with
-> an Inspiron 7000.
-> 
-> Glad to be on the list!
-> 
-> -kc
-> 
-> 
-> 
-> -
-> To unsubscribe from this list: send the line "unsubscribe linux-hams" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at  http://vger.kernel.org/majordomo-info.html
+-kc
+
