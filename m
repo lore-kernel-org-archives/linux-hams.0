@@ -1,50 +1,52 @@
-From: Dave Stubbs <dave.stubbs@utoronto.ca>
+From: Robert =?iso-8859-1?q?Steinh=E4u=DFer?= <robert@steinhaeusser.com>
 Subject: Re: Convers Setup
-Date: Mon, 25 Oct 2004 14:29:19 -0400
+Date: Mon, 25 Oct 2004 22:19:46 +0200
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <417D45FF.5060600@utoronto.ca>
-References: <417D35BD.9020709@utoronto.ca> <200410251818.i9PIIfks003119@yagi.h-net.msu.edu>
+Message-ID: <200410252219.53207.robert@steinhaeusser.com>
+References: <417D35BD.9020709@utoronto.ca>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 7BIT
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <200410251818.i9PIIfks003119@yagi.h-net.msu.edu>
+In-Reply-To: <417D35BD.9020709@utoronto.ca>
+Content-Disposition: inline
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"; format="flowed"
+Content-Type: text/plain; charset="us-ascii"
 To: linux-hams@vger.kernel.org
 
-I'm looking to *primarily* service AX.25 callers, since this is for ARES 
-use.
+Hi,
 
-Interesting - the coversd-saupp download links are all broken...
+> saupp
+> wampes
+> tpp-conversd
+> tnn
+> pp-conversd
+> htpp
+> htppu
+> webconvers
 
-Dave
-VA3BHF
+as far as I remember, Dieter Deyke DK5?? wrote the first implementation for 
+WAMPES, also the first networking version. ppconvers split off and version 
+3.12 was integrated into TNN (and later XNet). There was also a port for 
+PC/FlexNet (on DOS). At some point, tppconvers was split off ppconvers and 
+was released in conjunction with TNOS. Even later, htppconvers (?by Tomi 
+Manninen OH2BNS?) was made from tppconvers. Some patches may have made it 
+back into ppconvers with the release of 3.13 (kernel-AX25 support, limited 
+loop detection w/ backup links etc.). All improvements of these versions were 
+bundled by Thomas Osterried, DL9SAU into sauppconvers. He is actively 
+maintaining it, has removed a lot of bugs (race conditions etc.) and added 
+some nice extras (improved logging, easier/more flexible link setup, access 
+control, IRC mode).
 
-Dennis Boone wrote:
+From the saupp readme:
 
-> > Has anyone run any of these convers servers before?  Have you been
-> > on convers chats before where you could actually tell what server
-> > software you were connecting to?  Were any of the above "really good"?
-> > or "really bad"?
->
->I have run htpp.  It's prone to occasional segfaults.  My users have
->mostly been lightweight types, and have connected via ax.25, rather
->than IP.  Other than the segfaults, I've not had problems with it.
->
->That said, you might consider using an IRC server instead of a
->convers server.  There's a fair amount of commonality; in many
->user communities, there'll be more experience with IRC than convers.
->IRC servers are typically far more heavily (ab)used and thus much more
->resistant to abuse.  If you need to provide service to ax.25 callers,
->it should be possible to use ax25d+shims to provide client service
->using something like the text-mode sirc client.
->
->Dennis Boone
->KB8ZQZ
->-
->To unsubscribe from this list: send the line "unsubscribe linux-hams" in
->the body of a message to majordomo@vger.kernel.org
->More majordomo info at  http://vger.kernel.org/majordomo-info.html
->  
->
+  browseable CVS:
+    http://x-berg.in-berlin.de/cgi-bin/viewcvs.cgi/ampr/conversd-saupp/
+  http download:
+    http://x-berg.in-berlin.de/cgi-bin/viewcvs.cgi/ampr/conversd-saupp/conversd-saupp.tar.gz?tarball=1
+  anon rsync:
+    rsync -auvz --delete rsync://x-berg.in-berlin.de/cvs/ampr/conversd-saupp .
+  anon cvspserver:
+    export CVSROOT=:pserver:cvs@x-berg.in-berlin.de:/var/cvs
+    cvs -z6 checkout ampr/conversd-saupp
 
+73, Robert DL1NC/N9KBK
