@@ -1,37 +1,45 @@
-From: Thomas Osterried <thomas@osterried.de>
+From: n7ipb@algedi.wetnet.net (Ken Koster)
 Subject: Re: axspawn and security on the air
-Date: Wed, 28 May 2003 18:01:00 +0200
+Date: Wed, 28 May 2003 15:24:47 -0700
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <20030528160100.GA8977@osterried.de>
+Message-ID: <3ED5372F.mail9D91CJQTC@algedi.wetnet.net>
 References: <3ED4C9DA.6070108@lightningflash.net>
 Mime-Version: 1.0
+Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
-Content-Disposition: inline
 In-Reply-To: <3ED4C9DA.6070108@lightningflash.net>
 List-Id: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-To: "J. Lance Cotton" <joe@lightningflash.net>
-Cc: linux-hams@vger.kernel.org
+To: linux-hams@vger.kernel.org, joe@lightningflash.net
 
-> callsign and wreak havoc. If I require a password for user login, the 
-> password is transmitted plaintext, right? Same situation as before.
+In a previous message, KJ5O says
 
-with our digi / mailbox db0tud, we do it this way:
+>I am working on setting up an digi-ned based APRS digipeater and I want to 
+>have ax25d listen for a very restricted set of connections for remote 
+>administering of the digipeater.
+>
+>I plan on restricting connections to local-only (no digi-hops) connections 
+>from authorized admin callsigns. Based on what I read in the AX.25 HOWTO, I 
+>should use an axspawn command to open up a shell once the connection is made.
 
-users have empty passwords.
+>The background to my question is this: If I leave the password for an admin 
+>user blank, some rogue user could easily change their TNC to use an admin 
+>callsign and wreak havoc. If I require a password for user login, the password 
+>is transmitted plaintext, right? Same situation as before.
 
-if we need to authenticate for administration (root access), we use
-the package "root"
-(see http://x-berg.in-berlin.de/cgi-bin/viewcvs.cgi/ampr/root/ for details).
+Why bother with axspawn at all?  Since you're making direct connections 
+just use SSH, it's not unusable at 1200b, maybe a bit slow but I do it all
+the time.
 
-"md5root" uses a md5-based hashing algorithm like it is used by the bbs'es
-(dpbox, etc..). root is suid bit. if the challenge response is ok,
-a uid-0 shell is spawned. no plaintext password is transmitted.
+>
+>This machine will hopefully, eventually be connected to the Internet, where 
+>ssh connections are more bandwidth-appropriate, but I want to have the ability 
+>to remote administer this computer over the air with minimal possibility for 
+>abuse.
 
-but be aware that ax25 sessions as well as tcp sessions could be overtaken
-by another user. on the other hand, it's ham community, not inet..
+I remote administer five of our local machines with SSH, some at 1200b, some
+at 9600b and several hops away.  VI is even usable at 9600, tolerable 
+at 1200 :-)
 
-73,
-	- thomas
 
+Ken,  N7IPB
