@@ -1,43 +1,39 @@
-From: Tomi Manninen <tpm@prkele.tky.hut.fi>
-Subject: RE: Pc/rig interface for packet
-Date: Fri, 2 May 2003 12:46:34 +0300 (EEST)
+From: Sriram Chadalavada <swenggsri@yahoo.com>
+Subject: TNC Software emulator - talk with KISS interface
+Date: Fri, 2 May 2003 08:29:15 -0700 (PDT)
 Sender: linux-hams-owner@localhost
-Message-ID: <Pine.LNX.4.44.0305021232540.1362-100000@oh2bns.ampr.org>
-References: <096FB52976B50F458D5977CC9B40C9D9011396@Exchange.arkalmus.com>
-Reply-To: tpm@prkele.tky.hut.fi
+Message-ID: <20030502152915.24259.qmail@web13309.mail.yahoo.com>
+References: <200304291858.54384.sm6rpz@home.se>
 Mime-Version: 1.0
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <096FB52976B50F458D5977CC9B40C9D9011396@Exchange.arkalmus.com>
+In-Reply-To: <200304291858.54384.sm6rpz@home.se>
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: TEXT/PLAIN; charset="us-ascii"
+Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
 To: linux-hams@vger.kernel.org
 
-On Thu, 1 May 2003 BobDonnell@arkalmus.com wrote:
+Hello everyone,
+  I am looking for software (KISS-based)TNC emulators
+that can run on Redhat 7.3 configured with AX.25
+support.
+Currently, I have installed KISS interfaces on two
+Linux boxes and made them talk. But our project
+(KUTESAT) needs emulation of an AX.25 link between two
+systems ie a KISS interface on host talking to a sw
+TNC which in turn communicates with its counterpart on
+the other machine.
+               I looked up on the web and found tfkiss
+rpm which works on Suse. Can this be used on Redhat
+7.3 too (installation as rpm or from source)? If so,
+is it possible to make it work with the KISS
+interfaces described above (created by using
+kissattach command)?
+                                       Cheers,
+                                       Sriram
+                                    
+                         
 
-> I prefer the Baycom modem approach, if where you're headed is the
-> 1200-baud packet world.
-
-Mike wasn't talking about BayCom modems. He was asking whether the PTT 
-circuit shown at that baycom address was ok...
-
-I have used a homemade interface where the PTT connection is similar to 
-the "Serial Port Solution" on that page. Also I have no isolating 
-transformers in the audio paths. I have had no problems with the setup 
-even though my HF antenna (a random wire) is only a few meters away from 
-the rig/pc.
-
-However this is something everyone seems to have his/her own opinion and
-they're all probably right. There are so many variables in a typical
-station setup that you will have to try to see if _you_ need DC isolation
-or not.
-
-I don't know the Rascal kit interface but to me $20 seems cheap. Just 
-buing a decent enclosure for a homemade project can easily be more 
-expensive...
-
--- 
-Tomi Manninen           Internet:  oh2bns@sral.fi
-OH2BNS                  AX.25:     oh2bns@oh2rbi.fin.eu
-KP20ME04                Amprnet:   oh2bns@oh2rbi.ampr.org
-
+__________________________________
+Do you Yahoo!?
+The New Yahoo! Search - Faster. Easier. Bingo.
+http://search.yahoo.com
