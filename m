@@ -1,46 +1,44 @@
-From: "Dexter N Muir" <dexy@ihug.co.nz>
-Subject: Re: Is this list still functioning?
-Date: Fri, 1 Nov 2002 19:31:55 +1300
+From: pd <pdickson@att.net>
+Subject: Running a PERL script from AX25D
+Date: Fri, 1 Nov 2002 21:28:00 +0000
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <001901c28170$5fcbb0a0$0100a8c0@main>
-References: <200210301251.37526.phil@spiderweb.com.au>
+Message-ID: <200211012128.00330.pdickson@att.net>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8BIT
 Return-path: <linux-hams-owner@vger.kernel.org>
 List-Id: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
 To: linux-hams@vger.kernel.org
 
+I am trying to run a PERL script as the "server" for some AX25 connections.
+My PERL script works fine when I invoke it from the command line.
 
------ Original Message -----
-From: "Phil" <phil@spiderweb.com.au>
-To: <linux-hams@vger.kernel.org>
-Sent: Wednesday, October 30, 2002 3:51 PM
-Subject: Is this list still functioning?
+In ax25d.conf I specifiy a bash script to be run as the session command.
+Inside the bash script there is an 'echo' command, which I see when i connect.
+Other commands in that script also work.  But then it runs the PERL script and 
+everything just stalls.
 
+Here is the bash script:
 
-> I haven't received anything from the list for a week or so. Is this list
-still
-> functioning?
->
-> --
-> Regards,
-> Phil
-> phil@spiderweb.com.au
->
->
-> -
-> To unsubscribe from this list: send the line "unsubscribe linux-hams" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at  http://vger.kernel.org/majordomo-info.html
->
+#!/bin/bash
+echo 'wait...'
+HOME=/home/bbs
+echo 'HOME set'
+cd /home/bbs
+pwd
+perl t.pl
 
-Yep - just proves what's been happening is RIGHT - no more problems :-)
+and here is the PERL script:
 
-... well, that, and the real beavers still have their heads down working for
-us users...
+#!/usr/bin/perl
+print "Hi\n";
+print "Enter a number\n";
+$buf = <STDIN>;
+$n = $buf * 2;
+print "Twice that is $n\n";
+print "bye!\n";
 
-Cheers all
+Any suggestions?
 
-Dex  (aspiring linux user ...)
+KB1EHD
 
