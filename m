@@ -1,31 +1,42 @@
-From: Tomi Manninen <oh2bns@sral.fi>
-Subject: RE: New node questions
-Date: Fri, 09 Apr 2004 17:38:45 +0300
+From: Phil <phil@spiderweb.com.au>
+Subject: Clicking from sound card
+Date: Tue, 13 Apr 2004 18:33:40 +1000
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <1081521525.1277.5.camel@oh2bns.ampr.org>
-References: <002001c41e2e$35e622a0$6301a8c0@wotech.net>
+Message-ID: <200404131833.41119.phil@spiderweb.com.au>
 Mime-Version: 1.0
 Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <002001c41e2e$35e622a0$6301a8c0@wotech.net>
+Content-Disposition: inline
 List-Id: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
-To: Linux-hams List <linux-hams@vger.kernel.org>
+To: linux-hams@vger.kernel.org
 
-On Fri, 2004-04-09 at 15:28, Philip Maley wrote:
+Hello everyone,
 
-> On vk6dlx I just use "vk6dlx" as the mnemonic. It's been like that for
-> years and nobody has commented so it must be ok. I never have seen
-> anything written on use of the "#" prefix that a few stations use.
+Thank you for reading this.
 
-Some node software/firmware doesn't propagate nodes that have an
-alias beginning with "#". Those aliases are meant for backbone nodes
-and this behaviour is a way of "hiding" the backbone nodes from
-regular users.
+I've had limited success with digital modes, such as PSK31, because of a 
+random clicking sound that's very noticeable. It almost sounds like a loose 
+connection, but it's not. The sound card, and PSK31, both work perfectly 
+under Microsoft's Windows.
 
-Nowadays this isn't of much use as most(?) implementations don't
-comply with this "standard"...
+I've tried two different Sound Blaster cards and both the OSS and Alsa 
+drivers. The clicking sound is faster with the Alsa driver. The drivers are 
+ES1371 and SND-ENS1371 respectively. I've disabled any services that I 
+thought might be interrupting the sound system but without any noticeable 
+effect.
+
+The clicking can be heard behind system sounds as well (such as opening or 
+closing a window). MP3 files play without any clicking at all.
+
+I'm currently operating under Mandrake 9.2 and I had the same clicking under 
+9.1 so perhaps it's more likely a hardware issue.
+
+Has anyone else experienced this annoying problem or can anyone offer a 
+suggestion for a cure?
 
 -- 
-Tomi Manninen / OH2BNS / KP20ME04
+Regards,
+Phil.
+
 
