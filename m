@@ -1,8 +1,8 @@
 From: Jean-Luc <jean-luc.coulon@wanadoo.fr>
 Subject: Re: Age and the art of making a EXT3 File System Kernel
-Date: Mon, 05 May 2003 08:11:45 +0200
+Date: Mon, 05 May 2003 08:15:32 +0200
 Sender: linux-hams-owner@localhost
-Message-ID: <3EB600A1.86D56D9B@wanadoo.fr>
+Message-ID: <3EB60184.7CE30AE2@wanadoo.fr>
 References: <3EB58620.2010309@pacbell.net>
 Mime-Version: 1.0
 Content-Transfer-Encoding: 7bit
@@ -37,11 +37,7 @@ John wrote:
 > the body of a message to majordomo@vger.kernel.org
 > More majordomo info at  http://vger.kernel.org/majordomo-info.html
 
-John,
+Don't forget to set the filesystem to ext3 in /etc/fstab
 
-ext3 filesystem have to be buit in the kernel, not as module otherwise
-you will never be able to boot on your ext3 partition.
-
----
-Regards and 73
-	Jean-Luc f5ibh
+----
+jean-Luc
