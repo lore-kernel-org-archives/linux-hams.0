@@ -1,41 +1,34 @@
-From: "Curt, WE7U" <archer@eskimo.com>
-Subject: Re: Suse 9.1 and Xastir problems compiling
-Date: Tue, 6 Jul 2004 10:03:23 -0700 (PDT)
+From: "Rodolfo Brasnarof" <rodob@ciudad.com.ar>
+Subject: Re: Setting kiss mode Kantronics kpc-9612+ on linux
+Date: Wed, 07 Jul 2004 01:02:58 -0300
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <Pine.SUN.4.58.0407061002350.29856@eskimo.com>
-References: <40E9E13A.8090207@ftc-i.net>
-Reply-To: "Curt Mills, WE7U" <archer@eskimo.com>
+Message-ID: <40EB4BC2.16702.2E985C@localhost>
+References: <20040705135714.44447.qmail@web41209.mail.yahoo.com>
 Mime-Version: 1.0
+Content-Transfer-Encoding: 7BIT
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <40E9E13A.8090207@ftc-i.net>
+In-reply-to: <20040705135714.44447.qmail@web41209.mail.yahoo.com>
+Content-description: Mail message body
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: TEXT/PLAIN; charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-To: "Gale D. Wilkinson" <gdwrbw@ftc-i.net>
-Cc: linux-hams@vger.kernel.org
+Content-Type: text/plain; charset="us-ascii"
+To: linux-hams@vger.kernel.org
+Cc: Wijaya <wijaya_mail@yahoo.com>
 
-On Mon, 5 Jul 2004, Gale D. Wilkinson wrote:
 
-> I am having a problem getting Xastir to compile on Suse 9.1 as the
-> ./configure script says it can not find the Motif devel files.  Per Yast
-> they are installed.  Even went so far as to remove Motif and install
-> Lesstif with the same results.
->
-> Hopefully some one out there has managed to get Xastir up and running on
-> Suse 9.1!
->
-> As I am a fairly new user of Linux I have no idea where to look,  any
-> help would be greatly appreciated.
+---
+On 5 Jul 2004 at 6:57, Wijaya wrote:
 
-Send me the output of this command:
+> Hi there, I need advice and help, how to setting up kiss mode on linux use
+> tnc from Kantronics (KPC-9612+). 
+> I never setting up any tnc devices before. But I've succed to control this
+> device via minicom to connect each others and send/receive simple message
+> over it without problem.
 
-    rpm -q -a | grep -i motif
+In some Kantronics TNC you set kiss mode by issuing the 
+following commands:
 
-And also send me your config.log file.  Don't send all that to the
-list.  Thanks.
+int kiss
+reset
 
---
-Curt, WE7U			         http://www.eskimo.com/~archer
-"Lotto:    A tax on people who are bad at math." -- unknown
-"Windows:  Microsoft's tax on computer illiterates." -- WE7U
-"The world DOES revolve around me:  I picked the coordinate system!"
+Or just int kiss, and then switch tnc off and on again.
+
