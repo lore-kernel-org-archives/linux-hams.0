@@ -1,47 +1,39 @@
 From: Chuck Gelm <nc8q@gelm.net>
-Subject: Re: Messages
-Date: Sat, 13 Jul 2002 11:31:05 -0400
+Subject: Re: 802.11b wireless lan equipment and ham radio ?
+Date: Sat, 13 Jul 2002 16:01:29 -0400
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <3D3047B9.27C3B93D@gelm.net>
-References: <20020707165727.13342.qmail@email.com>
+Message-ID: <3D308719.7D016ECF@gelm.net>
+References: <200207082022.g68KMo522077@faulkner.netnet.net>
 Mime-Version: 1.0
 Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
 List-Id: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
-To: barry winch <barry@email.com>
+To: Steve Lampereur <kb9mwr@yahoo.com>
 Cc: linux-hams@vger.kernel.org
 
-Hi, Barry:
+Howdy:
 
- Do you have a 'spam' filter enabled?
+ Wouldn't it be great if there was a firmware flash that
+would set several (11 or more) channels inside 2390 - 2450 MHz.
+Or, at least, redefining channels 7 - 11 inside 2390-2350 MHz.
+Assuming that, some day, somewhere, interference will exist
+with part 15 users.
 
-HTH, Chuck nc8q
+Chuck nc8q
 
-barry winch wrote:
+Steve Lampereur wrote:
 > 
-> Hi, looking for some advice on posting messages to this list
+> Actually most of the Part 15 users with external antennas are in violation of
+> Sec. 15.204  External radio frequency power amplifiers and antenna
+> modifications.
 > 
-> I used to be able to send messages to the list, but no longer can. I unsubscribed (successfully), in case I had got bumped off the list for some reason, and re-subscribed (successfully), using a different e-mail address.
+> Reclassifying by simply calling it Part 97 and opperating within the first 6
+> channels provides a legal way around this.
+
+ ...and actually having a part 97 license... ;-)
+
 > 
-> So far I have received nothing on the list since 29/06.
-> 
-> This message has been sent by logging onto to a web based email site, and if you read this then obviously it worked, but from home using outlook (plain text format), the message does NOT get posted. If I request a delivery receipt then one is sent showing all is well
-> 
-> Any ideas please
-> 
-> Barry
-> ve3nav
-> barry@email.com
-> --
-> __________________________________________________________
-> Sign-up for your own FREE Personalized E-mail at Mail.com
-> http://www.mail.com/?sr=signup
-> 
-> Save up to $160 by signing up for NetZero Platinum Internet service.
-> http://www.netzero.net/?refcd=N2P0602NEP8
-> 
-> -
-> To unsubscribe from this list: send the line "unsubscribe linux-hams" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at  http://vger.kernel.org/majordomo-info.html
+> Overview:
+> http://www.qsl.net/kb9mwr/projects/wireless/plan.html
+<snip>
