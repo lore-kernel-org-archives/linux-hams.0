@@ -1,30 +1,41 @@
-From: "Nick Filer" <nfiler@cs.man.ac.uk>
-Subject: Getting a ROSE address?
-Date: Wed, 30 Oct 2002 13:14:04 -0000
+From: John@man.ac.uk
+Subject: Re: Announcing PREDICT Version 2.2.0
+Date: Wed, 16 Oct 2002 13:12:56 +0100 (BST)
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <067a01c28016$38bafe90$bdc15882@msa014>
-Reply-To: "Nick Filer" <nfiler@cs.man.ac.uk>
+Message-ID: <E186w1M-000HFS-00@serenity.mcc.ac.uk>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"
+Content-Type: TEXT/plain; charset="us-ascii"
+Content-Transfer-Encoding: 7bit
 To: linux-hams@vger.kernel.org
 
-I have searched but failed to find how to obtain the 10 digit ROSE address
-for my machine. Do I just generate a random number - I know the first 4
-digits (the DNIC) need to be locally allocated.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Thanks.
+On 12 Aug, John@man.ac.uk wrote:
+> I updated my mods for the Linux version of Predict a wee bit ....
 
-Nick
+I've had a go at modifying the new 2.2.1 release of Predict as well.
 
-----------------------------------------------------------------------
-Dr Nick Filer                      Room:      IT405
-Department of Computer Science     Telephone: +44-161-275-6171
-University of Manchester           FAX:       +44-161-275-7275
-Manchester M13 9PL                 Email:     nfiler@cs.man.ac.uk
-UK
-----------------------------------------------------------------------
+> 	http://voyager.mcc.ac.uk/Predict/
+
+Bye for now, John
+- -- 
+  John Heaton, G1YYH
+  Manchester Computing, Kilburn Building.
+  The University of Manchester, Oxford Road, Manchester, England, M13-9PL
+  pstn://+44-161-275-6011/Hello/Is.Dat-U?
+  fax://+44-161-275-6040/screech/warble/ssshhh/beepbeep
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.0.6 (GNU/Linux)
+Comment: For info see http://www.gnupg.org
+
+iEYEARECAAYFAj2tV7oACgkQDwhbGQHPUt1SJQCfRwuXo39zmKJ9wNytimsj5CAm
+owoAn1x/94Xk56MVhcy0oCh4LIQdVadF
+=szhW
+-----END PGP SIGNATURE-----
+
+
 
 
