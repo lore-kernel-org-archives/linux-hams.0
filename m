@@ -1,48 +1,43 @@
-From: Wilbert Knol <zl2bsj@zl2tze.ath.cx>
-Subject: Re: Poor eth0 through put
-Date: Mon, 14 Oct 2002 22:31:55 +1300 (NZDT)
+From: 9a4gl@9a0tcp.ampr.org (Tihomir Heidelberg)
+Subject: libax25 axio_flush bug hangs node and fix
+Date: Tue, 15 Oct 02 11:52:11 CEST
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <Pine.LNX.4.44.0210142211530.2762-100000@zl2bsj.ampr.org>
-References: <4.3.2.7.2.20021013172543.00acce70@pop3.norton.antivirus>
-Mime-Version: 1.0
+Message-ID: <13346@9A0TCP>
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <4.3.2.7.2.20021013172543.00acce70@pop3.norton.antivirus>
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: TEXT/PLAIN; charset="us-ascii"
+MIME-Version: 1.0
+Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
-To: "John J. Bauerly" <jbauerly@grapevine.net>
-Cc: linux-hams@vger.kernel.org
+To: linux-hams@vger.kernel.org
 
-On Sun, 13 Oct 2002, John J. Bauerly wrote:
+Hi
 
-> transfer using ftp. I pinged the machines found a high error rate between 
-> the 2 machines. I brought a third on line and both will work fine to it 
+I noticed that my awznode (a variant of linux node) hangs and 
+use maximum CPU when user starts any external command and 
+incoming AX.25 connection get broken.
 
-Another thing to look out for is that you are using the latest driver for 
-the network card. I had similar problems with (from memory) a Tulip card, 
-at work, also on a RH distro, and, after a quick web search, found a 
-much later driver, which cured it.
+After tracing found something strange in libax25-0.0.10 in 
+ax25io.c.
 
-Have a look in /usr/src/linux/Documentation/networking for the
-info file on your card. You may be able to turn off DMA on the NIC, which 
-could make a difference if there is a DMA conflict.
+In function static int flush_obuf(ax25io *p)
+it returns -1 if write to output file descriptor failed
+if ((ret = write(p->ofd, p->obuf, p->optr < p->paclen ? p->optr : p->paclen)) < 0)
+return -1
 
-if the machine is dual-bootable, another trick is to look at the resources 
-for the card under Windows (DMA, IRQ etc), and compare them to those 
-Linux. You could then fix them the same under Linux (turn PnP off)
+but, in axio_flush(ax25io *p)
+we have following loop:
+while (p->optr) {
+                FD_ZERO(&fdset);
+                FD_SET(p->ofd, &fdset);   
+                if (select(p->ofd+1, NULL, &fdset, NULL, NULL)<0)
+                        return -1;
+		flushed+=flush_obuf(p);
+                flushed+=j;
+}
+it is obvious that this loop will never end if above mentioned write
+failed. After breaking this loop if flush_obuf returns -1 my awnnode
+does not hangs.
 
-if your LAN is ethernet coax, you did remember to put the terminating 
-resistors on the Tees, didn't you??
+Can maintainer of libax25 fix this in next release ?
 
-> file transfer are ok if one or both are running windows. Don't want to run 
-> windows. 
-
-Too right.
-
-A collegue gave me a demo of the Cross-over Wine package the other day: he 
-fired up Internet Explorer on his KDE desktop <grin>
-
-
-Wilbert, ZL2BSJ
-
-
+73 de Tihomir Heidelberg, 9a4gl@9a0tcp.ampr.org
