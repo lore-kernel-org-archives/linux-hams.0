@@ -1,29 +1,31 @@
-From: Tomi Manninen <oh2bns@sral.fi>
-Subject: Re: Linux AX25 Digipeating Software
-Date: Thu, 23 Dec 2004 13:01:04 +0200 (EET)
-Message-ID: <Pine.GSO.4.58.0412231259020.27419@kuori.saunalahti.fi>
-References: <41C9A12A.2000401@utoronto.ca> <NCBBKBAJDJIPKFIAFBKLIEGOFFAC.wilson.hein@verizon.net>
- <20041222204955.GC8131@office.n7xy.net> <20041222225831.GB4086@merlin>
+From: "Janusz Przybylski - SP1LOP" <Janusz.Przybylski@sp1lop.szczecin.pl>
+Subject: Help Back-UPS 250
+Date: Thu, 23 Dec 2004 13:55:41 +0100
+Message-ID: <000201c4e8ee$fbd09d70$fec9a8c0@sp1lop.szczecin.pl>
+Reply-To: "Janusz Przybylski - SP1LOP" <Janusz.Przybylski@sp1lop.szczecin.pl>
 Mime-Version: 1.0
+Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <20041222225831.GB4086@merlin>
 Sender: linux-hams-owner@vger.kernel.org
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: TEXT/PLAIN; charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-To: linux-hams List <linux-hams@vger.kernel.org>
+Content-Type: text/plain; charset="us-ascii"
+To: Linux-Hams <linux-hams@vger.kernel.org>
 
-On Wed, 22 Dec 2004, Nate Bargmann wrote:
+Hi All
 
-> Perhaps until Craig declares it obsolete this should be hosted
-> *somewhere* just to preserve access to the code.  Digipeating is
-> sometimes not recommended by some, but it would be nice if this code
-> could be updated if for no other reason than to have the Linux AX.25
-> capability meet the spec.
+I look for to APC Back-UPS 250  electric schemat. 
+It does not it load me Battery only 8V is and 13,8 V should 
+I ask about help very.
 
-FWIW, there is an axdigi-0.02.tar.gz at the old ax25 tools home
-at http://he.fi/. The patch I sent, was against this. I have absolutely
-no idea if this is the latest version or not...
 
--- 
-Tomi Manninen / OH2BNS / KP20ME04
+                          73 de Janusz SP1LOP
+==================================
+Co-ordinator Polish AmprNet 44.165/16
+http://www.szczecin.ampr.org/44-net
+==================================
+Inet:            Janusz.Przybylski@sp1lop.szczecin.pl
+AmprNet: sp1lop@szczecin.ampr.org
+AX25:     SP1LOP @ SR1BSZ.SZ.POL.EU
+====================================
+I'm Sysop: SR1BSZ & szczecin.ampr.org
+ 
