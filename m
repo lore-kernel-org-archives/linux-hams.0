@@ -1,26 +1,51 @@
 From: Ralf Baechle DL5RB <ralf@linux-mips.org>
-Subject: Re: [PATCH 2/9] Use netdev_priv in YAM driver
-Date: Sat, 5 Feb 2005 19:15:02 +0000
-Message-ID: <20050205191502.GA3781@linux-mips.org>
-References: <20050130212621.GB6399@linux-mips.org> <420063BE.5030707@pobox.com> <20050205185834.GA3203@linux-mips.org> <42051B39.3020507@pobox.com>
+Subject: [PATCH] Fix 6pack resynchronizatio with a TNC
+Date: Wed, 9 Feb 2005 00:34:26 +0000
+Message-ID: <20050209003425.GA18719@linux-mips.org>
 Mime-Version: 1.0
 Content-Disposition: inline
-In-Reply-To: <42051B39.3020507@pobox.com>
 Sender: linux-hams-owner@vger.kernel.org
 List-Id: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
-To: Jeff Garzik <jgarzik@pobox.com>
-Cc: linux-hams@vger.kernel.org
+To: linux-hams@vger.kernel.org
 
-On Sat, Feb 05, 2005 at 02:15:05PM -0500, Jeff Garzik wrote:
+Keep the resynchronization timer running or we're never going to sync
+after a 6pack has been disconnected / reconnected or powercycled.
+While we're at it, it's time to upgrade my callsign in the source :-)
 
-> >#1 did touch only the encapsulation pseudo devices provided by the NETROM
-> >and ROSE network protocols in net/netrom and net/rose so I did cc only to
-> >netdev.  Thought you'd not care.  In case you do, it's attached below.
-> 
-> Nah, that's all DaveM.  Thanks for letting me know.
+Please test this and let me know of your test results.
 
-Thought so.
+73 de DL5RB op Ralf
 
- Ralf
+--
+Loc. JN47BS / CQ 14 / ITU 28 / DOK A21
+
+ 6pack.c |    6 ++----
+ 1 files changed, 2 insertions(+), 4 deletions(-)
+
+Index: bk-afu/drivers/net/hamradio/6pack.c
+===================================================================
+--- bk-afu.orig/drivers/net/hamradio/6pack.c	2005-02-08 17:06:24.465393600 +0000
++++ bk-afu/drivers/net/hamradio/6pack.c	2005-02-08 17:08:37.682141576 +0000
+@@ -1023,10 +1023,8 @@
+ 
+ 	for (count1 = 0; count1 < count; count1++) {
+ 		inbyte = pre_rbuff[count1];
+-		if (inbyte == SIXP_FOUND_TNC) {
++		if (inbyte == SIXP_FOUND_TNC)
+ 			tnc_set_sync_state(sp, TNC_IN_SYNC);
+-			del_timer(&sp->resync_t);
+-		}
+ 		if ((inbyte & SIXP_PRIO_CMD_MASK) != 0)
+ 			decode_prio_command(sp, inbyte);
+ 		else if ((inbyte & SIXP_STD_CMD_MASK) != 0)
+@@ -1036,7 +1034,7 @@
+ 	}
+ }
+ 
+-MODULE_AUTHOR("Ralf Baechle DO1GRB <ralf@linux-mips.org>");
++MODULE_AUTHOR("Ralf Baechle DL5RB <ralf@linux-mips.org>");
+ MODULE_DESCRIPTION("6pack driver for AX.25");
+ MODULE_LICENSE("GPL");
+ MODULE_ALIAS_LDISC(N_6PACK);
