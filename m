@@ -1,31 +1,25 @@
-From: Tomi Manninen <oh2bns@sral.fi>
-Subject: Re: paket station setup
-Date: Mon, 27 Dec 2004 21:45:37 +0200
-Message-ID: <1104176737.1218.2.camel@oh2bns.ampr.org>
-References: <LFENLEGCDLCOKEJAECGNEENJCDAA.rkrasko1@nycap.rr.com>
-	 <20041227194045.GA5032@office.n7xy.net>
+From: "David S. Miller" <davem@davemloft.net>
+Subject: Re: [2.6 patch] /net/ax25/: some cleanups
+Date: Mon, 27 Dec 2004 18:51:51 -0800
+Message-ID: <20041227185151.2a7ceb71.davem@davemloft.net>
+References: <20041212211339.GX22324@stusta.de>
 Mime-Version: 1.0
 Content-Transfer-Encoding: 7bit
-Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <20041227194045.GA5032@office.n7xy.net>
-Sender: linux-hams-owner@vger.kernel.org
+Return-path: <netdev-bounce@oss.sgi.com>
+In-Reply-To: <20041212211339.GX22324@stusta.de>
+Sender: netdev-bounce@oss.sgi.com
+Errors-to: netdev-bounce@oss.sgi.com
 List-Id: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
-To: Linux-hams List <linux-hams@vger.kernel.org>
+To: Adrian Bunk <bunk@stusta.de>
+Cc: ralf@linux-mips.org, linux-hams@vger.kernel.org, netdev@oss.sgi.com, linux-kernel@vger.kernel.org
 
-On Mon, 2004-12-27 at 21:40, Bob Nielsen wrote:
+On Sun, 12 Dec 2004 22:13:39 +0100
+Adrian Bunk <bunk@stusta.de> wrote:
 
-> There is no /dev/ax0 created.  As a minimum, you need to load the ax25
-> and mkiss modules, edit /etc/ax25/axports and /etc/ax25/ax25d.conf and
-> run the following (as root):
-> 
-> kissattach /dev/ttyS0 <portname> <ipaddress>
-> 
-> ax25d
+> The patch below contains the following cleanups:
+> - make two needlessly global functions static
+> - net/ax25/ax25_addr.c: remove the unused global function ax25digicmp
 
-No need to configure ax25d unless you want to set up a service that
-accepts _incoming_ connections, like node.
-
--- 
-Tomi Manninen / OH2BNS / KP20ME04
+Applied, thanks Adrian.
 
