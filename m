@@ -1,43 +1,34 @@
-From: "Ben Stienstra" <b.stienstra@xs4all.nl>
-Subject: RE: Soundmodem && SBLive!
-Date: Sat, 12 Apr 2003 20:40:57 +0200
+From: Bill Vodall - WA7NWP <wa7nwp@jnos.org>
+Subject: Re: KDE EchoLinux client development started - SERVER?
+Date: Sat, 12 Apr 2003 12:16:24 -0700 (PDT)
 Sender: linux-hams-owner@localhost
-Message-ID: <000001c30123$0ed8acb0$1401a8c0@windowsxp>
-References: <200304122005.13012.rdmartinml@infinito.it>
+Message-ID: <Pine.LNX.4.33.0304121212430.31473-100000@jnos.org>
+References: <20030411204435.5CF6630D93@www.fastmail.fm>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <200304122005.13012.rdmartinml@infinito.it>
+In-Reply-To: <20030411204435.5CF6630D93@www.fastmail.fm>
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"
-To: 'Linux Hams ML' <linux-hams@vger.kernel.org>
-
-Yes, I had it running a while ago. RedHat 8 but I now use a tnc2
-
+Content-Type: TEXT/PLAIN; charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+To: linux-hams@vger.kernel.org
 
 
------Oorspronkelijk bericht-----
-Van: linux-hams-owner@mxzilla4.xs4all.nl
-[mailto:linux-hams-owner@mxzilla4.xs4all.nl] Namens Giuseppe Martino
-Verzonden: zaterdag 12 april 2003 20:05
-Aan: Linux Hams ML
-Onderwerp: Soundmodem && SBLive!
 
-Hi,
+> > > This project will not implement the EchoLink protocol. That's done by
+> > > EchoLinux, which will run as a child process of this program.
 
-Is Soundmodem compatible with SBLive! (emu10k1) Card?
 
-smmixer gives an error "Unknown mixer device"
+EchoLink is great.
 
-ifconfig gives "SIOCSIFFLAGS" error....
+Having a nice client on Linux will be a really good thing.
 
-Is there anyone that use SBLive! with soundmode?
+What about the other side?   It would be useful, at times,
+to have a local Echolink style server.  It's not always
+necessary nor desireable to join  the big group.
 
-thanks
+Is anybody working on or thinking about an open server?
 
-73 de IZ8EQD
--
-To unsubscribe from this list: send the line "unsubscribe linux-hams" in
-the body of a message to majordomo@vger.kernel.org
-More majordomo info at  http://vger.kernel.org/majordomo-info.html
+73,
+Bill - WA7NWP
+
 
