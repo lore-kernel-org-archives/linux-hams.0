@@ -1,45 +1,62 @@
-From: Margaret Leber <maggie@voicenet.com>
-Subject: Re: Ham populated IRC Linux channel?
-Date: Tue, 7 May 2002 11:30:29 -0400
+From: Dale Coleman <kf4sir@digitalhamradio.org>
+Subject: PSK31 on a Linux PDS (Sharp SL-5500)
+Date: Wed, 08 May 2002 06:58:01 -0400
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <0205071130290I.10484@kasumi>
-References: <Pine.LNX.4.44.0205062229270.2421-100000@zl2bsj.ampr.org> <3CD7A517.8DA44CB0@gelm.net> <20020507104354.GA5013@oz.net>
+Message-ID: <5.1.0.14.2.20020508065627.01ba0480@mail.earthlink.net>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7BIT
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <20020507104354.GA5013@oz.net>
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"
-To: Bob Nielsen <nielsen@oz.net>
-Cc: linux-hams <linux-hams@vger.kernel.org>
+Content-Type: text/plain; charset="us-ascii"; format="flowed"
+Content-Transfer-Encoding: 7bit
+To: linux-hams@vger.kernel.org
 
-On Tuesday 07 May 2002 06:43, Bob Nielsen wrote in "Re: Ham populated 
-IRC Linux channel?":
+At 04:14 PM 5/7/02, you wrote:
 
-> Try www.openprojects.org (see below)
-> On Tue, May 07, 2002 at 05:57:43AM -0400, Chuck Gelm wrote:
-> > I've seen "the OPN servers" mentioned several times.  I'm
-> > interested. Please, would someone be more specific,
-> >  i.e. an URL, a FQDN, or an IP address?
+Hi Don and the group, I cross posted this message to the 
+linux-hams@vger.kernel.org list to see if they might have some ideas.
 
-Just to give a little more detail, what Bob is saying is that the Open 
-Projects Network (OPN) website at http://www.openprojects.org will tell 
-you that there is an IRC network whose main rotation you can access by 
-connecting an IRC client (like Xchat) to the FQDN irc.openprojects.org.
+Does this PDA have a reflective LCD display? The reason I ask is can you 
+read it in sun light?
 
-This will connect you a currently available IRC server in the network 
-based on workload; which one you get doesn't matter as the same 
-channels are carried on all of them, and everybody can chat with 
-everybody else no matter which server they're on. Looks like there's 
-about 20 servers in the net total.
+Thanks, Dale
 
-  73 de Maggie K3XS
+>Hi All,
+>
+>I recently purchased a new PDA by Sharp. It's called Zaurus (SL-5500).
+>This little box runs on embedded Linux and uses Troll Tech's Qtopia
+>desktop. It's compatible with console applications, Qtopia apps and Java
+>apps (Jeode). It has a built in mini keyboard, headphone outs and an all
+>important MIC input. It also supports a serial cable. It has a 206 MHZ
+>StrongARM processor and 64MB of RAM. It has plenty of horsepower for
+>playing mp3s and mpeg videos.
+>
+>I'd love to see a PSK31 app on this box so I could take it on camping
+>and canoe trips. It appears to have more than enough power to run PSK31
+>and it has the necessary MIC input and sound output. A serial cable is
+>an option.
+>
+>I looked around and found the source code for a project called
+>phaseshift.4 which was written by Edson Pereira, pu1jte/n1vtn a couple
+>of years ago. It was based on PSK31 code by Hansi Reiser, dl9rdz and Ted
+>Williams, wa0eir. The program was written for Troll Tech's QT library
+>and I suspect it could be ported to embedded Linux without too much
+>trouble. The program was released under the GNU GPL license so it may be
+>modified.
+>
+>I haven't done any programming in years and would have to learn from the
+>ground up how to either port this program to the Sharp or write a PSK31
+>program from scratch.
+>
+>I'm looking for anyone that can help me get this program ported over to
+>the Zaurus.  Help!
+>
+>73,
+>Don
+>don@n3mk.com
+>www.myzaurus.com (for Zaurus info)
 
--- 
------/___.   _)   Margaret Stephanie Leber    / "The art of progress  /
-----/(, /|  /| http://voicenet.com/~maggie   / consists of preserving/
----/   / | / |  _   _   _    `  _AOPA 925383/ order amid change and /
---/ ) /  |/  |_(_(_(_/_(_/__(__(/_  FN20hd / change amid order."   /
--/ (_/   '  K3XS  .-/ .-/    ARRL 39280   /___ --A.N.Whitehead ___/
-/____ICQ 7161096_(_/_(_/__AMSAT 32844____/ <maggie@voicenet.com>
+--
+Dale Coleman
+kf4sir@digitalhamradio.org
+http://digitalhamradio.org
 
