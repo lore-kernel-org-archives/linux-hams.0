@@ -1,28 +1,27 @@
-From: Robert L Cochran <cochranb@speakeasy.net>
-Subject: Yamaha YMF-724 Soundcard
-Date: 27 Feb 2003 19:57:24 -0500
+From: T + J Williams <wa0eir@comcast.net>
+Subject: twclock and twlog
+Date: Sat, 01 Mar 2003 13:54:56 -0500
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <1046393844.10993.18.camel@bobcp4.lingpgmr.com>
+Message-ID: <001c01c2e024$0d531b70$6401a8c0@adubn1.nj.home.com>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 7BIT
 Return-path: <linux-hams-owner@vger.kernel.org>
 List-Id: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
-To: linux-hams <linux-hams@vger.kernel.org>
+To: debian-hams@lists.debian.org, linux-hams@vger.kernel.org, psk31@aintel.bi.ehu.es, qrp-l@Lehigh.EDU
 
-Hi Folks,
+Hi,
 
-Does the Yamaha YMF-724 soundcard (which is integrated into my Dell XPS
-T550's motherboard) qualify as a soundcard modem?
+I am updating all of the tw programs.  There are now statically linked
+versions for twclock and twlog.  You just untar and install - no need to
+download libraries or compile.
 
-How about an onboard Realtek ALC650 Codec which is on another machine?
+If want to compile your own, the makefiles will handle LessTif and
+openMotif.  When compiling with LessTif, some additional code is
+included in the programs to make things work with LessTif.
 
-Thanks a lot!
+You can find everything at http://wa0eir.ham.org
 
 73,
-
-Bob Cochran
-KB3JCM
-
-
+Ted - wa0eir
 
