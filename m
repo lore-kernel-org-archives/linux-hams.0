@@ -1,36 +1,36 @@
-From: =?iso-8859-1?Q?G=E9rard?= Parat / F6FGZ <f6fgz@free.fr>
-Subject: Re: ANNOUNCE: gMFSK v0.5
-Date: Sun, 20 Apr 2003 11:32:14 +0200
+From: Gavin Rogers <grogers@vk6hgr.echidna.id.au>
+Subject: 2400 baud with soundmodem
+Date: Mon, 21 Apr 2003 02:20:46 +0800
 Sender: linux-hams-owner@localhost
-Message-ID: <3EA2691E.11C3729C@free.fr>
-References: <Pine.LNX.4.44.0304192044470.6051-100000@oh2bns.ampr.org> <20030420023708.GA22988@silly.cloud.net.au>
+Message-ID: <5.1.0.14.2.20030421021542.00ac8e28@joan.greenwood.wa.edu.au>
 Mime-Version: 1.0
-Content-Transfer-Encoding: QUOTED-PRINTABLE
 Return-path: <linux-hams-owner@vger.kernel.org>
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="iso-8859-1"
+Content-Type: text/plain; charset="us-ascii"; format="flowed"
+Content-Transfer-Encoding: 7bit
 To: linux-hams@vger.kernel.org
 
-> > Last but not least there is the name issue. The program is not anym=
-ore a
-> > collection of various M-ary FSK modems, there are PSK, OFDM and Fuz=
-zy
-> > modes as well. So the name is not the best one anymore. Suggestions=
- for a
-> > new name are welcome!
->
-> Tough decision! You could always borrow parts of similar programs' na=
-mes
-> an add a G prefix :-) Like gMix or gScope or something. But there sho=
-uld
-> be a better option.
+Hi All.
 
-What about Tomix or Tomisk ?
+I am wondering if Thomas Sailer's supurb soundmodem package supports the 
+2400 baud Bell 201 DPSK mode that the MFJ-2400 modem disconnect board supports?
 
---
-73 G=E9rard F6FGZ
--
-To unsubscribe from this list: send the line "unsubscribe linux-hams" i=
-n
-the body of a message to majordomo@vger.kernel.org
-More majordomo info at  http://vger.kernel.org/majordomo-info.html
+I have a lot of users here locally who have MFJ-1270B and the like TNCs 
+with 2400 baud cards and are keen to run 2400 baud packet. I only have 
+available the soundmodem driver, though.
+
+Any suggestions?
+
+Many thanks.
+
+Regards,
+Gavin Rogers
+
+---
+Amateur radio station VK6HGR
+http://vk6hgr.ampr.org/
+
+Email : grogers@vk6hgr.echidna.id.au
+Ampr  : grogers@vk6hgr.ampr.org
+Packet: vk6hgr@vk6hgr.#per.#wa.aus.oc
+
