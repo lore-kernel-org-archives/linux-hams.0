@@ -1,33 +1,29 @@
-From: Tomi Manninen <oh2bns@sral.fi>
-Subject: IMPORTANT: LinuxNode v0.3.2
-Date: Tue, 26 Aug 2003 21:45:47 +0300
+From: Per <perpetum@home.se>
+Subject: gMFSK lockups
+Date: Wed, 27 Aug 2003 08:42:14 +0200
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <1061923547.1292.66.camel@oh2bns.ampr.org>
+Message-ID: <3F4C52C6.7030704@home.se>
 Mime-Version: 1.0
 Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"
+Content-Type: text/plain; charset="us-ascii"; format="flowed"
 To: linux-hams@vger.kernel.org
 
-Hello all,
+Hi all,
 
-I just uploaded a new version of LinuxNode to:
+I use gMFSK quite a lot and it's really good !
+I do have two problems with it and they are probably
+related. At times it will freeze approximately once every
+second or sort of work at half speed.
+Another problem is when I try to key the transmitter then
+it can completely freeze up (without keying).
+The problems seem realated, if it's sort of working at half
+speed then it will freeze completely if I try to key the
+transmission (I use ttyS1 RTS for that).
+I've tried running as root but that didn't help and I tried strace
+but couldn't make heads nor tails of the output.
+Has anyone else experienced this ? Any suggestions ?
 
-  http://hes.iki.fi/pub/ham/unix/linux/ax25/
-
-You'll find a source tar.gz, a source RPM and a binary RPM
-(compiled on RedHat 9).
-
-This version contains fixes for *SERIOUS* security flaws (read
-"remote root"). Upgrading all systems immediately is highly
-recommended!!!
-
-Thanks to Morgan, SM6TKY for pointing out the flaws and helping
-in fixing them!
-
--- 
-Tomi Manninen           Internet:  oh2bns@sral.fi
-OH2BNS                  AX.25:     oh2bns@oh2rbi.fin.eu
-KP20ME04                Amprnet:   oh2bns@oh2rbi.ampr.org
+73's de Per / SM0RWO
 
