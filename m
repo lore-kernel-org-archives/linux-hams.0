@@ -1,22 +1,40 @@
-From: pd <pdickson@att.net>
-Subject: Re: Port not active?
-Date: Sun, 25 Aug 2002 17:47:53 +0000
+From: "Daniel Roloff" <dlr@cs.pdx.edu>
+Subject: RE: no data from user-mode soundmodem
+Date: Sun, 25 Aug 2002 18:45:16 -0700
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <200208251738.49961.pdickson@att.net>
-References: <200208250845.59571.pdickson@att.net>
+Message-ID: <NCBBKMFJEOGLLIAIAGGJCEBHFDAA.dlr@cs.pdx.edu>
+References: <200208250147.g7P1l7N07098@12-224-31-54.client.attbi.com>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7BIT
+Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <200208250845.59571.pdickson@att.net>
+In-Reply-To: <200208250147.g7P1l7N07098@12-224-31-54.client.attbi.com>
 List-Id: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
 To: linux-hams@vger.kernel.org
 
-Something about your requests for more information jogged my thinking - the IP 
-address has to be *non-zero*!
+I wrote:
+>
+> I have successfully gotten the user-mode soundmodem working on two
+> linux systems, but a third one has me stumped. The systems are all very
+> similar. For two of them, I had to install the alsa sound drivers to get
+> the i810 audio to work, but after doing that, one of the systems seems to
+> be working fine.  (So far, I have only tried receiving packet data.) The
+> other system brings up the sm0 device (as reported by ifconfig), but never
+> receives any packets. But using soundmodemconfig shows audio getting to
+> the modem and DCD being detected.  Also, using soundmodem -v255 shows
+> DCD being set appropriately. Neither soundmodem or soundmodemconfig
+> fully decode any packets though, (ie. nothing is printed to stdout,
+> or to the diagnostic modem text window).
+>
+> In kisspkt.c, pktput is called, as is hdlc_receive, but that's as far
+> as I got with my debug attempt.
+>
+I was able to get a little farther with debugging this and it seems that the
+received packets are not passing the check_crc_ccitt call. I commented this
+call out and data is being received, but it is about half garbage. I do not
+know what is causing this because the receiver audio (through the soundcard)
+sounds good and looks good on the soundmodemconfig diagnostic tools. I'll be
+investigating it some more though.
 
-So instead of putting 0.0.0.0 on the kissattach command I bothered to look up 
-my assigned IP address, tried it, and it worked fine.
-
-Thanks for the help.  Now on to the daemons and APRS...
+Dan
 
