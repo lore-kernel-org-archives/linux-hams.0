@@ -1,33 +1,24 @@
-From: Tomi Manninen <tpm@prkele.tky.hut.fi>
+From: BentBagger@netscape.net (Bent Bagger)
 Subject: Re: Obsolete AX.25 socket structure
-Date: Sat, 14 Sep 2002 23:02:38 +0300 (EEST)
+Date: Mon, 16 Sep 2002 02:59:54 -0400
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <Pine.LNX.4.44.0209142251470.7681-100000@oh2bns.ampr.org>
-References: <6D288933.0851A6A1.0AAC1079@netscape.net>
-Reply-To: tpm@prkele.tky.hut.fi
-Mime-Version: 1.0
+Message-ID: <44C85C7F.2144E5FD.0AAC1079@netscape.net>
+Content-Transfer-Encoding: 8bit
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <6D288933.0851A6A1.0AAC1079@netscape.net>
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: TEXT/PLAIN; charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-To: Bent Bagger <BentBagger@netscape.net>
+MIME-Version: 1.0
+Content-Type: text/plain; charset="us-ascii"
+To: tpm@prkele.tky.hut.fi
 Cc: linux-hams@vger.kernel.org
 
-On Sat, 14 Sep 2002, Bent Bagger wrote:
+Thanks, Tomi, it did the trick. And you were right, it was a simple
+change.
 
-> <date> <host> kernel: ax25_sendmsg(): pb uses obsolete socket sructure
+Best 73 de Bent/OZ6BL
 
-> bind (s_directory, (struct sockaddr *)&src, sizeof(src));
 
-> and src is a struct sockaddr_ax25 with my call in it.
 
-Currently you are supposed to feed a "struct full_sockaddr_ax25" to bind 
-instead of a "struct sockaddr_ax25". That should be a simple modification 
-to your program. Just make sure sax25_ndigis is zero.
+__________________________________________________________________
+The NEW Netscape 7.0 browser is now available. Upgrade now! http://channels.netscape.com/ns/browsers/download.jsp 
 
--- 
-Tomi Manninen           Internet:  oh2bns@sral.fi
-OH2BNS                  AX.25:     oh2bns@oh2rbi.fin.eu
-KP20ME04                Amprnet:   oh2bns@oh2rbi.ampr.org
-
+Get your own FREE, personal Netscape Mail account today at http://webmail.netscape.com/
