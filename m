@@ -1,35 +1,50 @@
-From: Jonathan Naylor <jonathan.naylor@ggaweb.ch>
-Subject: Re: Predict 2.1.5
-Date: Sat, 20 Apr 2002 20:31:58 +0200
+From: Ricardo Saiz Villoria <ea1apm@amsat.org>
+Subject: still about ax25ipd
+Date: Sat, 20 Apr 2002 22:31:03 +0200 (CEST)
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <0204202031580G.00773@g4klx>
-References: <0204201920200F.00773@g4klx> <20020420182156.NNEM19810.fep04-svc.mail.telepac.pt@there>
-Reply-To: g4klx@qsl.net
+Message-ID: <Pine.LNX.4.33.0204202200490.2668-100000@localhost.localdomain>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7BIT
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <20020420182156.NNEM19810.fep04-svc.mail.telepac.pt@there>
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"
-To: Claudio Martins <ctpm@mega.ist.utl.pt>, linux-hams@vger.kernel.org
+Content-Type: TEXT/PLAIN; charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+To: linux-hams <linux-hams@vger.kernel.org>
 
-On Saturday 20 April 2002 20:17, Claudio Martins wrote:
->    Predict 2.1.5 displays doppler on 2m and 70cm, but it can also
-> supply the doppler shift value normalized to 100MHz if used as a
-> tracking server. Start predict with -s switch (predict -s). It will
-> go into multi-sat mode and listen on udp port 1210. Doppler queries
-> to the predict server will be answered with 100MHz normalized
-> doppler.  There are sourcecode examples of how to do this in the
-> tarball.
+Hi
 
-I know how to calculate doppler shifts, my point is that to be really 
-useful to an operator they should not need to calculate it by hand. The 
-program should do this sort of thing for you. It is this level of 
-functionality that makes or breaks a program.
+Maybe this is more about flexnet than about linux. I've continued trying
+to make axip work between flexnet and linux.
 
->  cheers
->
->  Claudio
->  CT3KD
+The problem was: we have four computers at my radioclub (linux, msdos,
+win95, win2k), and anyone can talk to any other through axip, EXCEPT linux
+to msdos (the other way round works ok).
 
-Jonathan  HB9DRD/G4KLX
+The msdos computer has a 3C503 card, with ippd driver and flexnet. I've 
+configured it with raw ip encapsulation and udp via port 93 and 10093. 
+Linux can hear its packets, as it can be seen with "listen".
+
+When linux sends packets, they are received in msdos with a packet
+watching utility (actually, it's a program called pktwatch). They are even
+received by the flexnet axip device driver (ippd): when a packet (axip or
+icmp echo request) is sent from linux, ippd increments the packet input 
+count. BUT those packets do not reach flexnet kernel, as the "stat" 
+utility always shows 0 received packets. Neither they can be seen with 
+"show".
+
+I did another test. I ran a ncsa telnet client from msdos, to see if it 
+could connect to linux. It works flawlessly.
+
+The only answer I can think of is that either ax25ipd or, more likely,
+ippd, are not fully compliant with the protocol.
+
+regards
+
+-- 
+Ricardo Saiz Villoria EA1APM
+AX.25:  ea1apm@ea1rkv.eapo.esp.eu
+WEB:	http://www.qsl.net/ea1apm
+E-MAIL: mailto:ea1apm@amsat.org
+
+
+
+
