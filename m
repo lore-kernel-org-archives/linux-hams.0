@@ -1,67 +1,44 @@
-From: Robert Donnell <kd7nm@pugetsound.net>
-Subject: Re: Which laptops are good for linux+packet(sound card) for
-  County ARES?
-Date: Sat, 19 Oct 2002 08:00:25 -0700
+From: tbmoore <tbmoore@bealenet.com>
+Subject: Re: Which laptops are good for linux+packet(sound card) for County
+ ARES?
+Date: Mon, 21 Oct 2002 20:40:58 -0400
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <5.1.1.6.0.20021019074255.01f0fec0@127.0.0.1>
-References: <3DB07EEE.9080804@bealenet.com>
- <Pine.SOL.3.91.1021017133250.10243A-100000@gateway.grumman.com>
- <3DB026AA.9060309@bealenet.com>
- <20021018212927.GA15679@localhost>
- <3DB07EEE.9080804@bealenet.com>
+Message-ID: <3DB49E9A.7020309@bealenet.com>
+References: <3DAEE3AE.3030808@bealenet.com>
 Mime-Version: 1.0
+Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <670000.1035026443@[192.168.1.222]>
 List-Id: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"; format="flowed"
-Content-Transfer-Encoding: 7bit
-To: linux-hams@vger.kernel.org
+To: tbmoore <tbmoore@bealenet.com>
+Cc: linux-hams@vger.kernel.org
 
-Hi all,
+Thanks for all the help.  I will let you know which way we go with the 
+decision.  But it sounds like there is a chance the 600E soundcard will 
+work as is, if it is the right card, and if it doesn't, the external 
+modem or tnc will certainly work.
 
-I tried to comment to the list earlier,. however due to some changes where 
-I work, I can't seem to originate email there that passes muster with 
-Majordomo.
+I'll look up the Modem method - I guess that method still uses laptop 
+software to generate the input to the modem, and the modem interfaces to 
+the radio, while a TNC only needs the pc as a terminal (dumb, or 
+otherwise) and does all the other "layers" in the TNC.  Is that correct? 
+  Do you have a favorite place to read about it?
 
-A couple of years ago I used my NEC Versa 6050MX (A P-150MMX processor) 
-successfully with a Baycom modem, running Xastir, the open source X APRS 
-program.  This to give you a feel for the processing power required to 
-support the Baycom modem.
-
-The Baycom modem also has a cabling advantage over using a sound card 
-modem, if the only capability you're trying to add is packet operation - 
-that is that there becomes only one cable connection between computer and 
-radio - the Baycom modem plugs into the serial port of the PC (possibly 
-with a serial extension cable) and then there's the cable from the radio to 
-the modem.  This is better than having two cables from the sound card 
-connections, plus a third connection to the serial or parallel port to 
-provide transmit/receive switching.
-
-In the case of the laptop I use, there is sufficient power available on the 
-signalling from the serial port to power the modem, so no external power 
-source is needed.
-
-TigerTronics (www.tigertronics.com) offers a fully assembled Baycom modem 
-for $49, with the adapter to convert from it's DB-25 serial port connection 
-to the typical DB-9 PC serial port connection being an extra $6.  This 
-modem is built right into the shell of the DB-25 connector, with a jack in 
-the other end for the radio cable.  Or the original Baycom kit design uses 
-a DB-9 connector - see the www.baycom.org web site for details on their 
-offerings.  I've not done an extensive search lately, however there used to 
-be Baycom kits offered by other vendors here in the U.S. for about 
-$20.  These take a couple of hours or less to assemble.  My modem is one of 
-the kit modems.  And I've seen pictures of an assembled version built using 
-surface mount parts, such that the entire modem is built in the cover shell 
-behind a DB-9 connector - talk about small!
-
-Another "plus" is that you don't tie up the sound card on the laptop such 
-that other software (such as Xastir with the Festival speech synthesizer 
-installed) can be used, and it allows operation with laptops without sound.
-
-I hope this info helps broaden your possible selection of suitable laptops.
-
-73, Bob
+73
+Boyd, KO4WK
 
 
+tbmoore wrote:
+> We want to set up a laptop w/Linux and w/soundcard to do packet for
+> our Emergency Service for the Caroline County ARES net in Virginia.
+> 
+> What brand/model do you recommend?  Can we do it with an used laptop in 
+> the $500 range?  Is the IBM Thinkpad 600 a good one?  Thanks.
+> 
+> Boyd KO4WK@arrl.net
 
+
+-- 
+T. Boyd Moore
+Zech 4:6  KO4WK@ARRL.NET
 
