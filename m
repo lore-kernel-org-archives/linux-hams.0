@@ -1,32 +1,33 @@
-From: Stephen Hemminger <shemminger@osdl.org>
-Subject: Re: [PATCH] (1/4) Update baycom drivers for 2.6
-Date: Sat, 20 Sep 2003 14:48:12 -0700
-Sender: netdev-bounce@oss.sgi.com
-Message-ID: <20030920144812.0c587a12.shemminger@osdl.org>
-References: <20030919133750.4053f72c.shemminger@osdl.org>
-	<3F6CA3E3.9060909@pobox.com>
+From: "Rodolfo Brasnarof" <rodob@ciudad.com.ar>
+Subject: Re: Testing Distro
+Date: Sun, 21 Sep 2003 04:38:08 -0300
+Sender: linux-hams-owner@vger.kernel.org
+Message-ID: <3F6D2B30.3178.348C3@localhost>
+References: <000501c37db8$ef5bc850$32000a0a@xp1700>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
-Return-path: <netdev-bounce@oss.sgi.com>
-In-Reply-To: <3F6CA3E3.9060909@pobox.com>
-Errors-to: netdev-bounce@oss.sgi.com
+Content-Transfer-Encoding: 7BIT
+Return-path: <linux-hams-owner@vger.kernel.org>
+In-reply-to: <200309181107.30785.pa3gcu@zeelandnet.nl>
+Content-description: Mail message body
 List-Id: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
-To: Jeff Garzik <jgarzik@pobox.com>
-Cc: t.sailer@alumni.ethz.ch, linux-hams@vger.kernel.org, netdev@oss.sgi.com
+To: linux-hams@vger.kernel.org
+Cc: pa3gcu@zeelandnet.nl
 
-On Sat, 20 Sep 2003 15:00:51 -0400
-Jeff Garzik <jgarzik@pobox.com> wrote:
+---
+On 18 Sep 2003 at 11:07, pa3gcu wrote:
 
-> hum.  I seem to be missing patch 4/4...
+> On Thursday 18 September 2003 09:45, Colin Harris wrote:
+> > Have not seen any Linux-Hams messages for ages. Just testing for responses.
 > 
-patch 4 was replacing local random with get_random_bytes.
-Probably not a good idea since people seem to be paranoid
-about losing entropy ...
+> Then there is something wrong, there have been around 40 mails to the list 
+> this month alone.
 
-A good future thing would be to make a kernel version of random()
-for all drivers that uses get_random_bytes as a seed, but doesn't
-drain the pool in normal use.
+On monday I posted a message to the list, and didn't get a 
+copy, then I realized I've been unsubscribed, or 
+deactivated, and had to re-subscribe. Fortunately many 
+answered with copy to my adress.
 
-
+By the way, I've just downloaded and installed digi_ned. 
+It's too much more complex than I need, but it's working.
 
