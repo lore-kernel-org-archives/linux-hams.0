@@ -1,144 +1,77 @@
-From: "Luc Langehegermann" <luc@lx2gt.lu>
-Subject: Re: Sony VAIO laptop 'soundmodem' troubles
-Date: Sat, 24 Jul 2004 22:37:48 +0200
+From: John Mock <kd6pag@qsl.net>
+Subject: re: Sony VAIO laptop 'soundmodem' troubles
+Date: Sat, 24 Jul 2004 15:22:18 -0700
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <004601c471be$1580e430$6401a8c0@lx2gt>
-References: <E1BoSf3-0006hp-00@penngrove.fdns.net>
-Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
+Message-ID: <E1BoUuI-000791-00@penngrove.fdns.net>
 Return-path: <linux-hams-owner@vger.kernel.org>
 List-Id: <linux-hams.vger.kernel.org>
+MIME-Version: 1.0
 Content-Type: text/plain; charset="us-ascii"
-To: John Mock <kd6pag@qsl.net>, linux-hams@vger.kernel.org
+Content-Transfer-Encoding: 7bit
+To: linux-hams@vger.kernel.org
 
-Hello John,
+Thanks for the ALSA suggestions.  That fixed my audio startup error at
+least, that is to say, with 'Mode: alsa', i now see the usual sine waves
+at the two AFSK frequencies.  However, it still isn't successful at
+decoding anything; DCD in the Scope display does not light, and there
+are not the expected bimodal peaks at 1200 and 2200 Hz on the spectrum
+display (maybe just weak spikes).  Attached are the new log and config 
+files.
 
-Under ALSA the devices have different names!
+Any futher suggestions would be gratefully appreciated.  'multimon' still
+works just fine, so i haven't broken anything.
 
-hw:0 (first soundcard)
-hw:1 (second soundcard)
+Thank you again for your patience and assistance!
 
-or:
-
-plughw:0
-plughw:1
-
-The difference if, with plughw ALSA tried to do sample rate conversion /
-format conversion / channel conversion.
-
-sample rate conversion is a very bad idea, if you use soundmodem.
-
-/dev/dsp* under also will alsways do the conversions, unless you turn them
-off! Take a look at http://www.alsa-project.org/~iwai/OSS-Emulation.html
-
-73, Luc, LX2GT
+		         -- KD6PAG  (Networking Old-Timer, Satellite QRPer)
 
 
------ Original Message ----- 
-From: "John Mock" <kd6pag@qsl.net>
-To: <linux-hams@vger.kernel.org>
-Sent: Saturday, July 24, 2004 9:58 PM
-Subject: Sony VAIO laptop 'soundmodem' troubles
+P.S.  AE6EO: I'm already using a 10K trimpot to set the level here for VAIO
+audio input, since there is no level setting on Kenwood TH-F6A in 9.6kb mode.
+Alas, that doesn't work very well on the Mac, as i previously noted and is 
+the wrong approach, as you noted, for noise reasons.  I would rather fix the
+software than kludge the hardware.  *SIGH*
 
 
-> I'm trying to get 9.6kb packet running either on a PowerMac 8500 (with
-> G3 upgrade) or Sony VAIO R505EL (P-III), preferably both.  I'm stuck on
-> either at the moment.  Here's the Sony problem.
->
-> On the VAIO machine, 'multimon' decodes APRS packets at 1.2kb AFSK from
-> either of my HT's directly connected to the 'Mic' input.
-'soundmodemconfig'
-> shows similar waveforms to 'multimon' but gets gibberish for APRS packets
-> in 'soundcard' [non-ALSA] mode.
->
-> Thus far, i have not found anyone transmitting 9.6kb packet locally, and
-> attempts to receive a couple of different satellites so far as not gotten
-> any packets at 9.6 kb using 'multimon'.  (I have not yet tried 9.6kb with
-> 'soundmodem'.)
->
-> I looked into the LINUX-Hams archives, and note that others have not had
-> an easy time getting the AC97 codec to work properly.  I picked up a copy
-> of experimental version of 'soundmodem' with native ALSA code mentioned in
-> June of this year.  Forcing the AFSK sample rate to either 22050 Hz or
-> 48000 Hz in 'soundcard' mode does not seem to change anything (c.f. the
-> discussion of similar problem[s] here in March of this year).  Trying to
-> use native ALSA mode shows a dialog box "Cannot start audio I/O" and the
-> message
->
->     ALSA lib pcm.c:1972:(snd_pcm_open_noupdate) Unknown PCM /dev/dsp
->
-> A copy of '/etc/ax25/soundmodem.conf' and the full error log are attached
-> below.  I am running a vanilla LINUX 2.6.7 [.config posted upon request]
-> and the 'unstable' branch of Debian LINUX.
->
-> Any idea what might be wrong with 'soundmodem' at 1.2 kb AFSK and/or with
-> 'multimon' at 9.6kb FSK?  (Of course, fixing 'multimon' is really only a
-> temporary fix, as i want to make packet work properly.)
->
-> Thank you for your patience and assistance.
->
->          -- KD6PAG  (Networking Old-Timer, Satellite QRPer)
->
->
-> [Note: I never send unsolicited binary attachments and if you receive
-anything
-> purportedly from <kd6pag@qsl.net> that isn't signed with my callsign, then
-it
-> probably isn't from me.]
->
-> --------------------------------------------------------------------------
------
-> <?xml version="1.0"?>
-> <modem>
->   <configuration name="vaio">
->     <chaccess txdelay="150" slottime="100" ppersist="40" fulldup="0"
-txtail="10"/>
->     <audio type="alsa" device="/dev/dsp" halfdup="0" file="" repeat="0"
-simchan="0 - Ideal channel" snr="10" snrmode="0 - White Gaussian" srate="0"
-capturechannelmode="Mono"/>
->     <ptt file="none"/>
->     <channel name="Channel 0">
->       <mod mode="afsk" bps="1200" f0="1200" f1="2200" diffenc="1"/>
->       <demod mode="afsk" bps="1200" f0="1200" f1="2200" diffdec="1"/>
->       <pkt mode="MKISS" ifname="sm0" hwaddr="KD6PAG-1" ip="44.4.28.42"
-netmask="255.255.255.0" broadcast="44.4.28.255"/>
->     </channel>
->     <channel name="Channel 1">
->       <mod mode="fsk" bps="9600" f0="1200" f1="2200"/>
->       <demod mode="fsk" bps="9600"/>
->       <pkt mode="MKISS" ifname="sm1" hwaddr="KD6PAG-2" ip="44.4.28.42"
-netmask="255.255.255.0" broadcast="44.4.28.255"/>
->     </channel>
->   </configuration>
-> </modem>
-> --------------------------------------------------------------------------
------
-> VAIO 505> ./soundmodemconfig
-> config_select: cfg: vaio  chan: -
-> selection: cfg: vaio  chan: -
-> config_deselect: cfg: vaio  chan: -
-> channel_select: cfg: vaio  chan: Channel 0
-> selection: cfg: vaio  chan: Channel 0
-> Modulator: afsk Demodulator: afsk
-> Modulator: parameter bps value 1200
-> Modulator: parameter f0 value 1200
-> Modulator: parameter f1 value 2200
-> Modulator: parameter diffenc value 1
-> Demodulator: parameter bps value 1200
-> Demodulator: parameter f0 value 1200
-> Demodulator: parameter f1 value 2200
-> Demodulator: parameter diffdec value 1
-> Minimum sampling rate: 9600
-> Audio IO: type alsa
-> ALSA lib pcm.c:1972:(snd_pcm_open_noupdate) Unknown PCM /dev/dsp
-> sm[3419]: alsa: Error opening PCM device /dev/dsp
->
-============================================================================
-===
-> -
-> To unsubscribe from this list: send the line "unsubscribe linux-hams" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at  http://vger.kernel.org/majordomo-info.html
->
->
+[Note: I never send unsolicited binary attachments and if you receive anything
+purportedly from <kd6pag@qsl.net> that isn't signed with my callsign, then it
+probably isn't from me.]
 
+-------------------------------------------------------------------------------
+VAIO 510> sudo ./soundmodemconfig 
+config_select: cfg: vaio  chan: -
+selection: cfg: vaio  chan: -
+config_deselect: cfg: vaio  chan: -
+channel_select: cfg: vaio  chan: Channel 0
+selection: cfg: vaio  chan: Channel 0
+Modulator: Off Demodulator: afsk
+Demodulator: parameter bps value 1200
+Demodulator: parameter f0 value 1200
+Demodulator: parameter f1 value 2200
+Demodulator: parameter diffdec value 0
+Minimum sampling rate: 7000
+Audio IO: type alsa
+sm[3874]: chanmode: 0x80d8528 [0x1]
+ALSA: Using sample rate 48000, sample format 2, significant bits 16, buffer size 16384, period size 512
+sm[3874]: audio: starting "hw:0,0"
+Real sampling rate: 7000
+-------------------------------------------------------------------------------
+<?xml version="1.0"?>
+<modem>
+  <configuration name="vaio">
+    <chaccess txdelay="150" slottime="100" ppersist="40" fulldup="0" txtail="10"/>
+    <audio type="alsa" device="hw:0,0" halfdup="0" file="" repeat="0" simchan="0 - Ideal channel" snr="10" snrmode="0 - White Gaussian" srate="0" capturechannelmode="Left"/>
+    <ptt file="none"/>
+    <channel name="Channel 0">
+      <mod mode="Off" bps="1200" f0="1200" f1="2200" diffenc="1"/>
+      <demod mode="afsk" bps="1200" f0="1200" f1="2200" diffdec="0"/>
+      <pkt mode="MKISS" ifname="sm0" hwaddr="KD6PAG-1" ip="44.4.28.42" netmask="255.255.255.0" broadcast="44.4.28.255"/>
+    </channel>
+    <channel name="Channel 1">
+      <mod mode="fsk" bps="9600" f0="1200" f1="2200"/>
+      <demod mode="fsk" bps="9600"/>
+      <pkt mode="MKISS" ifname="sm1" hwaddr="KD6PAG-2" ip="44.4.28.42" netmask="255.255.255.0" broadcast="44.4.28.255"/>
+    </channel>
+  </configuration>
+</modem>
+===============================================================================
