@@ -1,47 +1,26 @@
-From: Jonathan Naylor <jonathan.naylor@ggaweb.ch>
-Subject: JT44 on Linux
-Date: Wed, 14 Aug 2002 10:55:53 +0200
+From: Bob Nielsen <nielsen@oz.net>
+Subject: Re: JT44 on Linux
+Date: Wed, 14 Aug 2002 04:57:13 -0700
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <02081410521905.00798@g4klx>
-Reply-To: g4klx@qsl.net
+Message-ID: <20020814115713.GA609@bob.n7xy.net>
+References: <02081410521905.00798@g4klx>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7BIT
 Return-path: <linux-hams-owner@vger.kernel.org>
+Content-Disposition: inline
+In-Reply-To: <02081410521905.00798@g4klx>
 List-Id: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 7bit
 To: linux-hams@vger.kernel.org
 
-Hi Folks
+On Wed, Aug 14, 2002 at 10:55:53AM +0200, Jonathan Naylor wrote:
+> 
+> PS has anyone got a good circuit for interfacing a sound card into a 
+> radio ?
 
-Long time no see.
+I don't usually recommend this as a source of accurate information, but
+K4ABT has some interface diagrams on his web site,
+http://www.packetradio.com.  He also sells kits and assembled
+interfaces (less expensive than the others I've seen).
 
-I am interested in writing an implementation of JT44 for Linux. JT44 is 
-the data mode written by Joe Taylor K1JT for weak signal work like EME 
-and things, it has become hugely popular but the software only runs 
-under Windows at present. Thankfully Joe has published the 
-specification of the mode allowing others to (potentially) copy it. 
-There is another mode called FSK441 which is used for meteor scatter, 
-but I do not aim to implement that until JT44 is operational.
-
-It is a relatively simple mode, the transmit side is simply FSK using 
-44 tones. The receive side is probably a FFT the result of which is 
-used by the software to determine where the clock is and also to use 
-averaging to extract the signal from the noise.
-
-The transmit side could probably be adapted from a sound modem 
-implementation that already exists, and could probably be done quite 
-quickly, the receive side is more complex but there are GPL FFT display 
-programs around that could be used as the basis of the receive side. Of 
-course Joe has probably done a few clever things that we will in due 
-course discover, however we will worry about that later.
-
-I did send an e-mail to Joe about writing a Linux implementation, but I 
-got no response, however I think that is probably down to him being a 
-busy man. Perhaps once we have some software running then he may take 
-more of an interest in us. Everything that I do will appear under the 
-GPL of course.
-
-Jonathan  HB9DRD/G4KLX
-
-PS has anyone got a good circuit for interfacing a sound card into a 
-radio ?
+Bob, N7XY
