@@ -1,39 +1,31 @@
-From: Margaret Leber <maggie@voicenet.com>
-Subject: Re: AO-40 Transponder Operation
-Date: Fri, 04 Oct 2002 08:28:54 -0400
+From: Jonathan Naylor <jonathan.naylor@ggaweb.ch>
+Subject: LinWSJT 0.3 available
+Date: Fri, 4 Oct 2002 14:46:48 +0200
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <3D9D8986.5050103@voicenet.com>
-References: <20021004040843Z261464-8740+5907@vger.kernel.org> <3D9D1D7E.4090201@digitalhams.com> <20021004065830.GB31861@enc.com.au> <3D9D869B.9000701@voicenet.com>
+Message-ID: <02100414464802.00828@g4klx>
+Reply-To: g4klx@qsl.net
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 7BIT
 Return-path: <linux-hams-owner@vger.kernel.org>
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"; format="flowed"
-To: Margaret Leber <maggie@voicenet.com>, linux-hams@vger.kernel.org
-Cc: Craig Small <csmall@enc.com.au>, Brett Mueller <wa7v@digitalhams.com>
+Content-Type: text/plain; charset="us-ascii"
+To: Amsat BB <amsat-bb@amsat.org>, Linux Hams <linux-hams@vger.kernel.org>, Moon Net <moon-net@nlsa.com>
 
-Margaret Leber wrote:
-> Craig Small wrote:
->> Double suffix files, it's Klez worm.
-> Didn't have an <iframe infector...but perhaps that was stripped by the 
-> listserver.
-> 
-> Nonetheless, it's still a Windows virus. I'm starting to see more and 
-> more  Klez-infected messages coming from people in the ham community.
+Hi Folks
 
-A followup: it's much worse than Klez, with a 50,688 byte payload, it's 
-Bugbear.  Nasty.
+I am happy to announce that LinWSJT 0.3 is now available. This are  
+open source implementations of JT44 and FSK441 for Linux, although only 
+JT44 is currently in a usable state.
 
-    http://www.messagelabs.com/viruseye/report.asp?id=110
+Compared to the previous releases (0.1, 0.1a and 0.2) this version is 
+much faster, it now runs a number of discrete FFT's as opposed to a 
+sliding FFT. On my PC this gives an approximate speed improvament of 20 
+times, very worthwhile.
 
-  73 de Maggie K3XS
+If you have a previous version then I suggest you get this one and give 
+it a try.
 
--- 
------/___.   _)   Margaret Stephanie Leber    / "The art of progress  /
-----/(, /|  /| http://voicenet.com/~maggie   / consists of preserving/
----/   / | / |  _   _   _    `  _AOPA 925383/ order amid change and /
---/ ) /  |/  |_(_(_(_/_(_/__(__(/_  FN20hd / change amid order."   /
--/ (_/   '  K3XS  .-/ .-/    ARRL 39280   /___ --A.N.Whitehead ___/
-/____ICQ 7161096_(_/_(_/__AMSAT 32844____/ <maggie@voicenet.com>
+It is available from my web site at http://www.qsl.net/g4klx in the 
+Software section.
 
-
+Jonathan  HB9DRD/G4KLX
