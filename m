@@ -1,37 +1,51 @@
-From: Margaret Leber <maggie@voicenet.com>
-Subject: Re: APRS library?
-Date: Thu, 11 Mar 2004 04:52:23 -0500
+From: "Ruben Navarro Huedo" <eb5esx@eb5esx.ampr.org>
+Subject: Netrom...broadcast to 2 ports.
+Date: Thu, 11 Mar 2004 14:03:28 +0100 (CET)
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <405036D7.30703@voicenet.com>
-References: <20040310023947.GA14019@braddock.com>
+Message-ID: <60881.194.140.66.170.1079010208.squirrel@palotes.com>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 7BIT
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <20040310023947.GA14019@braddock.com>
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"; format="flowed"
-To: Braddock Gaskill <braddock@braddock.com>
-Cc: linux-hams@vger.kernel.org
+Content-Type: text/plain; charset="us-ascii"
+To: linux-hams@vger.kernel.org
 
-Braddock Gaskill wrote:
+Hello friends:
+I am trying to broadcast netrom frames to two ax25 ports using netromd.
 
-> I'm looking to integrate APRS into a custom mapping application.  Is
-> there any sort of integrated APRS parser library that would help?
+# /etc/ax25/nrports
+#
+# The format of this file is:
+#
+# name callsign alias paclen description
+#
+netrom  EA5RKE-3 RKENOD 235     Puerto Netrom
 
-I forget whether I mentioned this here or on the Xastir developer's list 
-when I originally published this article in the PMRC Blurb, but here's 
-another approach to using Xastir with other software:
+# /etc/ax25/nrbroadcast
+#
+# The format of this file is:
+#
+# ax25_name min_obs def_qual worst_qual verbose
+#
+nos     1       200     100     1
 
-http://www.phil-mont.org/PMRCmap/PMRConTheMap.html
+If i add another port in nrbroadcast, only broadcasts to the first port.
 
-  73 de Maggie K3XS
+Using Debian/woody:
+linux:/etc/ax25# dpkg -l | grep ax25
+ii  ax25-apps      0.0.6-1        Applications for AX25
+ii  ax25-tools     0.0.8-2        AX-25 Tools
+ii  libax25        0.0.10-1       ax25 libraries for hamradio applications
+ii  libax25-dev    0.0.10-1       ax25 library development files
+linux:/etc/ax25#
+
+Any help?
+
+Thank's.
+
+
 
 -- 
------/___.   _)Margaret Stephanie Leber CCP, SCJP/"The art of progress /
-----/(, /|  /| http://voicenet.com/~maggie SCWCD/ is to preserve order/
----/   / | / |  _   _   _    `  _  AOPA 925383/ amid change and to  /
---/ ) /  |/  |_(_(_(_/_(_/__(__(/_      K3XS / preserve change amid/
--/ (_/   '        .-/ .-/        ARRL 39280 /order."-A.N.Whitehead/
-/________________(_/_(_/_______AMSAT 32844_/<maggie@voicenet.com>/
-
-
+Ruben Navarro Huedo
+eb5esx (arroba) eb5esx.ampr.org
+http://www.cabodesantapola.org
