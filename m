@@ -1,69 +1,49 @@
-From: Jim Bayer <kc9aop@yahoo.com>
-Subject: Re: Run app on login
-Date: Sun, 14 Nov 2004 10:44:24 -0800 (PST)
-Message-ID: <20041114184424.66418.qmail@web60610.mail.yahoo.com>
-References: <Pine.LNX.4.44.0411131952180.1435-100000@wapiti>
+From: Robert =?iso-8859-1?q?Steinh=E4u=DFer?= <robert@steinhaeusser.com>
+Subject: Re: Linkt deb package
+Date: Sun, 14 Nov 2004 20:02:56 +0100
+Message-ID: <200411142003.01316.robert@steinhaeusser.com>
+References: <200411102209.36457.iw7eas@virgilio.it> <200411112152.12444.robert@steinhaeusser.com>
 Mime-Version: 1.0
+Content-Type: multipart/signed;
+  boundary="nextPart1140086.a2YjOY2cky";
+  protocol="application/pgp-signature";
+  micalg=pgp-sha1
+Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <Pine.LNX.4.44.0411131952180.1435-100000@wapiti>
+In-Reply-To: <200411112152.12444.robert@steinhaeusser.com>
 Sender: linux-hams-owner@vger.kernel.org
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-To: Linux-hams List <linux-hams@vger.kernel.org>
+To: linux-hams@vger.kernel.org
 
-Curt,
+--nextPart1140086.a2YjOY2cky
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: quoted-printable
+Content-Disposition: inline
 
-You will also need to change /etc/shells to include the new login script or the "radio" user may 
-not be able to log in.  It will not be able to ftp for certain.
- 
-'73
- 
-Jim - KC9AOP
+Hello list,
 
+today Basti, DO2KSM gave me debian .deb packages of LinKT 0.8rc3. I suppose=
+=20
+they work just as well with Knoppix.
 
-Curt Mills <archer@eskimo.com> wrote:On Sat, 13 Nov 2004, Bud Rogers wrote:
+I have included them on the download page at=20
+http://sourceforge.net/projects/linkt/.
 
-> On Saturday 13 November 2004 20:47, Chuck Hast wrote:
-> > Folks,
-> > I am trying to figure out how to have a particular application start
-> > up when a user logs in with a specified login.
-> > Example,
-> > User logs in with "radio" password "hamradio"
-> > Instead of bringing up a prompt, I want a login of radio to start up
-> > a special application. I am sure that Linux can do it, just not quite
-> > sure how to do so.
->
-> Anything you put in a user's .bashrc or .bash_profile will be run
-> whenever that user logs in. You can have it set up things in your
-> environment, or run certain commands. Man bash will give you the
-> details.
+Please give feedback at the LinKT forums at Sourceforge or on our mailing=20
+lists there (linkt-users / linkt-devel).
 
-Another method is to create a special user "radio" and make the
-shell for that user be the application you want to run. When the
-application is exited the person is logged out. The shell is the
-last entry on the line in the /etc/passwd file. Change from
-"/bin/bash" to the path/filename of the executable.
+73, Robert DL1NC/N9KBK
 
--- 
-Curt, WE7U. archer at eskimo dot com
-http://www.eskimo.com/~archer
-Lotto: A tax on people who are bad at math. - unknown
-Windows: Microsoft's tax on computer illiterates. - WE7U.
-The world DOES revolve around me: I picked the coordinate system!"
+--nextPart1140086.a2YjOY2cky
+Content-Type: application/pgp-signature
 
--
-To unsubscribe from this list: send the line "unsubscribe linux-hams" in
-the body of a message to majordomo@vger.kernel.org
-More majordomo info at http://vger.kernel.org/majordomo-info.html
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.2.6 (GNU/Linux)
 
+iD8DBQBBl6vlo4a8ramwUd8RAuhHAJ9gNV2tVy8esbsksW5eOCqCVp1pNgCfUwqG
+YAcZUTvt87oCcA5Qm+KeF1s=
+=iUO2
+-----END PGP SIGNATURE-----
 
-
-
-		
-__________________________________ 
-Do you Yahoo!? 
-Check out the new Yahoo! Front Page. 
-www.yahoo.com 
- 
-
+--nextPart1140086.a2YjOY2cky--
