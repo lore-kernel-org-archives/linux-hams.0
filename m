@@ -1,48 +1,42 @@
-From: Arno Verhoeven <pe1icq@pi8zaa.ampr.org>
+From: Matti Aarnio <matti.aarnio@zmailer.org>
 Subject: Re: List problems
-Date: Sun, 29 Jun 2003 13:55:41 +0200
+Date: Sun, 29 Jun 2003 15:16:57 +0300
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <3EFED3BD.1030309@pi8zaa.ampr.org>
-References: <200306290928.34069.pa3gcu@zeelandnet.nl> <NCEPJGLIJIFOHBPEAAAOKEJFFCAA.phil@wotech.com.au> <20030629105225.GV28900@mea-ext.zmailer.org> <20030629114316.GX28900@mea-ext.zmailer.org>
+Message-ID: <20030629121657.GY28900@mea-ext.zmailer.org>
+References: <20030629113144.GW28900@mea-ext.zmailer.org> <NCEPJGLIJIFOHBPEAAAOOEJIFCAA.phil@wotech.com.au>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <20030629114316.GX28900@mea-ext.zmailer.org>
+Content-Disposition: inline
+In-Reply-To: <NCEPJGLIJIFOHBPEAAAOOEJIFCAA.phil@wotech.com.au>
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"; format="flowed"
-To: Matti Aarnio <matti.aarnio@zmailer.org>
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+To: Phil Maley <phil@wotech.com.au>
 Cc: Linux Hams <linux-hams@vger.kernel.org>
 
-Matti Aarnio wrote:
+On Sun, Jun 29, 2003 at 07:44:09PM +0800, Phil Maley wrote:
+> Thanks Matti
+> 
+> Please don't be discouraged by my minor frustrations.
+> 
+> Can I suggest that reference to the two archive locations I mentioned
+> simply be removed from
+> <http://vger.kernel.org/vger-lists.html#linux-hams> and leave the link
+> to Hessu's archive. And if there is indeed a problem with his search
+> facility then it would be great if he can fix it.
 
->On Sun, Jun 29, 2003 at 01:52:25PM +0300, Matti Aarnio wrote:
->  
->
->>>Also, the VGER majordomo web site says the official archives are at
->>>the locations I mentioned previously. No mention there of Heikki's
->>>site. Maybe the confusing and contradictory data is designed to keep
->>>non hard-core operators away.
->>>      
->>>
->>  Or more like nobody made me aware of Heikki's archive.
->>  I will add it to VGER's list of known archives.
->>    
->>
->
->  Oh yes, if anybody knows anything else that could be put
->  into lists info file (like HOWTO/FAQ pointers, etc.), do
->  tell me.
->  
->
+Hessu was online (and not jumping off perfectly fine flying airplanes,
+or any other offline hobby he has), and reported that he had  robots.txt
+forbidding any web-crawler from descending into /archive/.   Now he allows
+Googlebot.  It may take several weeks to index about 33 000 files in 
+there, and at some point Hessu will add google search forms.
 
-OK how about a link to the catalogue of all (known) Linux ham SW which 
-can be found at http://radio.linux.org.au
+> Congratulations on the changes you appear to have made on that page
+> today. It looks nice and clean and easy to follow.
 
--- 
-73, PE1ICQ  Arno Verhoeven
---------------------------------
-AX.25  pe1icq@pi8zaa.#nbo.nld.eu
-smtp   pe1icq@pi8zaa.ampr.org
-inet   pe1icq@amsat.org 
+Uh ? Adding a line or two isn't very much..
 
+> 73
+> Phil Maley vk6ad
 
+73 de Matti, OH2MQK
