@@ -1,34 +1,60 @@
-From: Cranz Nichols <cnichols@centramedia.net>
-Subject: RE: Kenwood TR-7950 Crashing Computer?
-Date: 27 Mar 2003 06:16:26 -0600
+From: Kjell Jarl <K-Jarl@algonet.se>
+Subject: Re: Netrom disconnects
+Date: Thu, 27 Mar 2003 18:25:56 +0100
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <1048767387.9269.14.camel@nacho>
-References: <BKEGKPICNAKILKJKMHCAKEMHCDAA.Riley@Williams.Name>
+Message-ID: <3E833424.2080904@algonet.se>
+References: <000501c2f453$9c3e80c0$14000a0a@p75>
 Mime-Version: 1.0
 Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <BKEGKPICNAKILKJKMHCAKEMHCDAA.Riley@Williams.Name>
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"
-To: linux-hams@vger.kernel.org
+Content-Type: text/plain; charset="us-ascii"; format="flowed"
+To: Colin Harris <charis.g3orh@virgin.net>
+Cc: Linux Hams <linux-hams@vger.kernel.org>
 
-5 Watts...  But nothing curious happens on 25 Watts either.
+Since I switched to 2.4.19 under redhat 7.1, I have seen less, if any, 
+faults regarding this.
+I have been posting similar results on earlier kernels, suspecting 
+netrom disconnects, maybe the problmes was solved in 2.4.19?
 
-Outside antenna.  Waterpipe ground.
-
-cln
-WB5BKL
+73
+Kjell
 
 
-On Wed, 2003-03-26 at 20:09, Riley Williams wrote:
-> Hi Cranz..
+
+Colin Harris wrote:
+> Hi all,
+>           Our system here in s / west uk consists of two
+> linuxnodes running DX Spider netrom linked on a 100 km path
+> via two intermediate netrom nodes. My co-sysop at the other
+> end reports frequent system crashes when a netrom disconnect
+> occurs. This is not 100% certain but a "best guess" from
+> observation and log checking. Has anyone experienced
+> anything similar ?
 > 
->  > FWIW, I have a 7930 about 14 inches away from my Compaq
->  > DeskPro running RH 8.0. No problems that I am aware of.
->  >
->  > Just another data point.
+> At this end I use kernel 2.2.12-20 and the other end uses
+> something later ( perhaps 2.2.20 or thereabouts ). (I do not
+> have any crashes due to netrom disconnects from my incoming
+> netrom circuits here ).
 > 
-> To flesh out that data point, what power level do you run?
+> He uses Node-0.3.0 and allied ax25 stuff and I use
+> node-0.3.1 plus updates but this problem has existed for
+> some months before any of my updates.
+>                    Any pointers or help/advice would be much
+> appreciated ( BTW we both run Redhat versions ). Is there
+> any way we can positively capture such an event conclusively
+> ?
 > 
-<snip>
+> 
+> - Regards Colin
+> 
+> 
+> -
+> To unsubscribe from this list: send the line "unsubscribe linux-hams" in
+> the body of a message to majordomo@vger.kernel.org
+> More majordomo info at  http://vger.kernel.org/majordomo-info.html
+> 
+> 
+> 
+
 
