@@ -1,22 +1,31 @@
-From: Marco iw7eas <iw7eas@virgilio.it>
-Subject: X-BOT
-Date: Wed, 17 Sep 2003 10:01:28 +0200
+From: Phil <phil@spiderweb.com.au>
+Subject: Soundmodem and AO-16 question
+Date: Thu, 18 Sep 2003 08:31:36 +1000
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <200309171001.28781.iw7eas@virgilio.it>
-References: <20030916012317.GA9420@leo.tneu.visi.com> <20030916013740.GA9468@leo.tneu.visi.com> <200309170932.12058.w.knol@niwa.co.nz>
+Message-ID: <200309180831.37043.phil@spiderweb.com.au>
 Mime-Version: 1.0
 Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <200309170932.12058.w.knol@niwa.co.nz>
 Content-Disposition: inline
 List-Id: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
 To: linux-hams@vger.kernel.org
 
-Hi....
-I'm searching for a simplex BOT, such as X-bot 
-for Convers servers, to get always active the italian
-channel. Do you how to find this software ?
-Thank you 
+Hello All,
 
-Marco iw7eas
+During a quite period I decided to try to decode the very strong signal that I 
+receive from AO-16 using soundmodem version 0.5. The diagnostic tools show 
+that I'm receiving something, however "listen" does not display anything at 
+all. 
+
+Soundmodem does decode AFSK signals from the ISS and PCSAT as well as the 
+telemetry from AO-40 reasonably well but not the PSK signal from AO-16.
+
+Should I be able to decode PSK data, and if not are there any other Linux 
+applications that will?
+
+-- 
+Regards,
+Phil.
+
+
