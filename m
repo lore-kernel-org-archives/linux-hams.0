@@ -1,44 +1,29 @@
-From: Arno Verhoeven <pe1icq@pi8zaa.ampr.org>
+From: Hamish Moffatt <hamish@cloud.net.au>
 Subject: Re: help need with APRS on ultrasun
-Date: Fri, 20 Aug 2004 07:48:06 +0200
+Date: Fri, 20 Aug 2004 19:57:13 +1000
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <41259096.4080509@pi8zaa.ampr.org>
+Message-ID: <20040820095713.GA31647@cloud.net.au>
 References: <D0460580-F263-11D8-AA7C-000A95DB9E94@pocketdvm.com>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
+Content-Disposition: inline
 In-Reply-To: <D0460580-F263-11D8-AA7C-000A95DB9E94@pocketdvm.com>
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"; format="flowed"
-To: Mark Acierno <acierno@pocketdvm.com>
-Cc: Linux HAMs <Linux-hams@vger.kernel.org>
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+To: Linux-hams List <linux-hams@vger.kernel.org>
 
-Mark Acierno wrote:
-
-> Hi all I relatively new to Linux - so I apologize ahead of time if 
-> this is a dumb question
->
-> I wanted to get an APRS system up and running on my sun Ultra 2 
-> creator running debian. This is to replace the weather station that 
-> was running on my tired old mac.
->
-> I downloaded the Xastir package and got it all onto my sun. ...... 
-> only there is no installation guide. the instructions pick up after a 
+On Fri, Aug 20, 2004 at 12:45:51AM -0400, Mark Acierno wrote:
+> I downloaded the Xastir package and got it all onto my sun. ...... only 
+> there is no installation guide. the instructions pick up after a 
 > successful installation. i've unpackaged the software but what to I do 
 > now???  there is no executable image called Xastir. Also, before I get 
 > any further into this is this the best game in town (or will it even 
-> work on my hardware?) 
+> work on my hardware?)
 
+No, but there should be a binary called "xastir" (no capital).
+If not, there's a bug in the package.
 
-Don't know if it will work on your Sun HW, but try this...
-
-http://www.eskimo.com/~archer/README.Getting-Started
-
-
+Hamish (debian xastir package maintainer)
 -- 
-73, PE1ICQ  Arno Verhoeven 
---------------------------------
-AX.25  pe1icq@pi8zaa.#nbo.nld.eu
-smtp   pe1icq@pi8zaa.ampr.org
-inet   pe1icq@amsat.org
-
+Hamish Moffatt VK3SB <hamish@debian.org> <hamish@cloud.net.au>
