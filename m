@@ -1,17 +1,30 @@
-From: Bob Nielsen <nielsen@oz.net>
-Subject: Re: making apps
-Date: Thu, 27 Mar 2003 21:14:53 -0800
+From: "Dexter N Muir" <dexy@ihug.co.nz>
+Subject: RE: making apps
+Date: Fri, 28 Mar 2003 18:25:33 +1200
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <20030328051453.GB2763@n7xy.net>
-References: <20030328025357.B17832@pull.privacy.nb.ca> <000001c2f4de$6bab2310$8c01a8c0@HP713A>
+Message-ID: <000001c2f4f2$d94bc640$8c01a8c0@HP713A>
+References: <20030328051453.GB2763@n7xy.net>
 Mime-Version: 1.0
+Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
-Content-Disposition: inline
-In-Reply-To: <000001c2f4de$6bab2310$8c01a8c0@HP713A>
+In-Reply-To: <20030328051453.GB2763@n7xy.net>
 List-Id: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 7bit
+To: 'Bob Nielsen' <nielsen@oz.net>, linux-hams@vger.kernel.org
+
+I did wonder about Debian - thanks for the confirmation Bob!  Mandrake
+take note! :-)  I found libncurses and libncurses-devel, ncurses and
+ncurses-extraterms, but not ncurses-devel.  Where do I go?
+
+Cheers
+Dex
+
+-----Original Message-----
+From: linux-hams-owner@vger.kernel.org
+[mailto:linux-hams-owner@vger.kernel.org] On Behalf Of Bob Nielsen
+Sent: Friday, 28 March 2003 5:15 p.m.
 To: linux-hams@vger.kernel.org
+Subject: Re: making apps
 
 On Fri, Mar 28, 2003 at 03:59:19PM +1200, Dexter N Muir wrote:
 >    Seems all the latest distros have dropped this package out - maybe
@@ -28,8 +41,10 @@ ax25-tools - AX-25 Tools
 ax25-xtools - AX-25 Tools (X versions)
 dgipip - AMPRNet dynamic IPIP encapsulation routing daemon.
 fbb - Packet radio mailbox and utilities
-hamfax - Receive/send radio facsimile transmissions with Soundcard/PTC-II
-hamlib-dev - Development library to control radio transceivers and receivers.
+hamfax - Receive/send radio facsimile transmissions with
+Soundcard/PTC-II
+hamlib-dev - Development library to control radio transceivers and
+receivers.
 hamlib-doc - Documentation for the hamlib radio control library.
 hamlib-utils - Utilities to support the hamlib radio control library.
 hamlib1 - Run-time library to control radio transceivers and receivers.
@@ -49,7 +64,8 @@ sattrack - satellite tracker and prediction
 sattrack-x11 - satellite tracker and prediction
 soundmodem - Sound Card Amateur Packet Radio Modems
 tlf - Console mode purpose CW keyer, logging- and contest program
-tlfmanual - Documentation for tlf, a hamradio logging and contest program
+tlfmanual - Documentation for tlf, a hamradio logging and contest
+program
 twclock - Clock program for hamradio operators
 twlog - Logging program for hamradio operators
 xastir - X Amateur Station Tracking and Information Reporting
@@ -59,3 +75,10 @@ xlog - GTK+ Logging program for Hamradio Operators
 
 73,
 Bob, N7XY
+-
+To unsubscribe from this list: send the line "unsubscribe linux-hams" in
+the body of a message to majordomo@vger.kernel.org
+More majordomo info at  http://vger.kernel.org/majordomo-info.html
+
+
+
