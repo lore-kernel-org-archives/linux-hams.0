@@ -1,16 +1,66 @@
-From: Jeroen Vreeken <pe1rxq@amsat.org>
-Subject: [pe1rxq@amsat.org: Re: SuSE / RedHat]
-Date: Fri, 9 Jan 2004 01:03:56 +0100
+From: "IT3 Stuart B. Tener, USNR" <stuart@bh90210.net>
+Subject: RE: [pe1rxq@amsat.org: Re: SuSE / RedHat]
+Date: Thu, 8 Jan 2004 16:26:15 -0800
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <20040109010356.E203@jeroen.pe1rxq.ampr.org>
-References: <!~!UENERkVCMDkAAQACAAAAAAAAAAAAAAAAABgAAAAAAAAA6nohIbvp0RGXqACAx8VP1sKAAAAQAAAAjAlFKD8vcUyu/awUkdzfUQEAAAAA@bh90210.net> <20040109010302.C203@jeroen.pe1rxq.ampr.org>
+Message-ID: <!~!UENERkVCMDkAAQACAAAAAAAAAAAAAAAAABgAAAAAAAAA6nohIbvp0RGXqACAx8VP1sKAAAAQAAAAijlqNgr7rUGc9uCKMGR/uQEAAAAA@bh90210.net>
+References: <20040109010356.E203@jeroen.pe1rxq.ampr.org>
+Reply-To: <stuart@bh90210.net>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7BIT
+Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <20040109010302.C203@jeroen.pe1rxq.ampr.org>; from pe1rxq@amsat.org on Fri, Jan 09, 2004 at 01:03:02 +0100
+In-Reply-To: <20040109010356.E203@jeroen.pe1rxq.ampr.org>
 List-Id: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
+To: 'Jeroen Vreeken' <pe1rxq@amsat.org>, linux-hams@vger.kernel.org
+
+Mr. Vreeken:
+
+	Thank you for your most expeditious reply!
+
+	I have posted the issues here before, but I plan on making an
+install of SuSE PRO 9, once I receive it from a friend. At that point I am
+going to try to install the AX.25 stuff again.
+
+	I also did look on the sourceforge site, and was surprised to not
+see any RPMS (though I did see tar files).
+
+	Your idea of not switching all the supplies on at one time, sounds
+to me like a good one! I am going to try to design or think of a design for
+an enclosure that is rack mountable and can hold several of these supplies.
+
+	What I guess I really need is a large rack mount box, I can
+customize to hold a mobile rig, and some PC Supplies and other stuff in it.
+
+
+Very Respectfully, 
+
+IT3 Stuart Blake Tener, USNR-R 
+Beverly Hills, California
+
+USS CURTS / NR FFG-38 1941 (Ship Augmentation Unit)
+NMCRC Long Beach, CA
+
+Email: teners@bh90210.net
+NIPR : stuart.tener@navy.mil
+CNRF : tenersb@hq.cnrf.navy.mil
+
+Amateur/HAM Radio Callsign: N3GWG
+
+west coast: (310)-358-0202 P.O. Box 16043, Beverly Hills, CA 90209-2043 
+east coast: (215)-338-6005 P.O. Box 45859, Philadelphia, PA 19149-5859 
+Telecopier: (419)-715-6073 fax to email gateway via www.efax.com
+
+JOIN THE US NAVY RESERVE, SERVE YOUR COUNTRY, AND BENEFIT FROM IT ALL. 
+
+Sunday, September 14, 2003 7:14 AM
+
+
+-----Original Message-----
+From: linux-hams-owner@vger.kernel.org
+[mailto:linux-hams-owner@vger.kernel.org] On Behalf Of Jeroen Vreeken
+Sent: Thursday, January 08, 2004 4:04 PM
 To: linux-hams@vger.kernel.org
+Subject: [pe1rxq@amsat.org: Re: SuSE / RedHat]
 
 On 2004.01.09 00:25:51 +0100 "IT3 Stuart B. Tener, USNR" wrote:
 > Listmembers:
@@ -82,4 +132,10 @@ Be carefull that they don't generate unwanted RF interference or audible
 whistles on the supply. They seem to work just fine mostly.
 
 Jeroen
+
+-
+To unsubscribe from this list: send the line "unsubscribe linux-hams" in
+the body of a message to majordomo@vger.kernel.org
+More majordomo info at  http://vger.kernel.org/majordomo-info.html
+
 
