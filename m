@@ -1,46 +1,49 @@
-From: "Lane Wilson" <lwilson@dccnet.com>
-Subject: Problems with ax25 support in 2.4.18 kernel ?
-Date: Tue, 10 Dec 2002 08:45:08 -0800
+From: "Curt Mills, WE7U" <hacker@tc.fluke.com>
+Subject: Re: Canot get serial card working: It worked ONCE.
+Date: Tue, 10 Dec 2002 09:27:26 -0800 (PST)
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <000101c2a06b$8046e5b0$1401a8c0@LANE>
-Reply-To: <lwilson@dccnet.com>
+Message-ID: <Pine.LNX.4.33.0212100922580.1291-100000@wapiti.tc.fluke.com>
+References: <Pine.LNX.4.44.0212101039080.29662-100000@jeeves.mvw.net>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
+In-Reply-To: <Pine.LNX.4.44.0212101039080.29662-100000@jeeves.mvw.net>
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"
-To: linux-hams@vger.kernel.org
+Content-Type: TEXT/PLAIN; charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+To: mvw@mvw.net
+Cc: Linux-Hams@vger.kernel.org
 
-Is there any hams out there who are running the ax25 ham radio support
-packages under Linux slackware 8.1? If so, what versions of the packages are
-you using with the 2.4.18 kernel? Are you finding any stability problems at
-all?
+On Tue, 10 Dec 2002 mvw@mvw.net wrote:
 
-What I am doing is setting up a new Linux computer to be used with XFBB and
-JNOS, and I am currently setting up base Linux ax.25 support in the OS. The
-problem I am having is that the computer "locks up" solid when running any
-web browser in
-KDE (3.0), only once I have a KISS serial port attached to a TNC. If I do
-not perform the "kissattach" command, then all is well. Once the kissattach
-command has been executed, I then start up X-Window (startx) and then
-start-up a web browser, and it will freeze the machine in about a minute.
+> I did this and it worked once (I used minicom and was able to talk
+> successfully to the TNC). I then did kissattach (which should be
+> irrelevant, this should not survive a reboot and believe me, I;ve rebooted
+> plenty). IN any case, it never worked again: now, when I try, I see
+> nothing (no errors either). A breakout box shows no activity on pin 2 and
+> RTS (pin 4) inactive (should be active). So the port may think it is not
+> on.
 
-Details:
-PC:    Duron 1.3GHz CPU, 512M Ram
-OS:    Slackware 8.1 Linux
-kernel:    2.4.18 (also tried 2.4.20)
-AX25:    libax25-0.0.10.tag.gz
-         ax25-tools-0.0.8.tar.gz
-         ax25-apps-0.0.6.tar.gz
-COM Ports:    COM1, COM2, and one serial port residing on a USB to serial
-converter cable
+I can think of a few possibilities right off:
 
-Can anybody recommend what version of the Linux kernel should be used with
-the Linux ax.25 support to get a stable operation?
+1) A lock file may have been created for that port, and your
+kissattach statement may not be able to delete it and take over the
+port.  Check areas like /var/lock, /var/spool/lock, etc for
+lockfiles.
 
-Thank-you for your help
+2) Some other program (gpm?) is using that port.
 
-Lane, ve7ihl
+3) Permissions on the /dev/cua0 or /dev/ttyS0 device may not be set
+properly for that user, or perhaps you haven't added that user to
+the "uucp" group (another way of handling permissions for that
+port).
 
+Is this an unusual card that might require special techniques to set
+up?
 
+-- 
+Curt Mills, WE7U                    hacker_NO_SPAM_@tc.fluke.com
+Senior Methods Engineer/SysAdmin
+"Lotto:    A tax on people who are bad at math!"
+"Windows:  Microsoft's tax on computer illiterates!" -- WE7U
+"The world DOES revolve around me:  I picked the coordinate system!"
 
