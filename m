@@ -1,51 +1,40 @@
-From: Dennis Boone <drb@msu.edu>
-Subject: Re: Writing AX.25 Server Progie
-Date: Sun, 05 Jan 2003 22:02:34 -0500
+From: "Andrew Bates" <abates@omeganetserv.com>
+Subject: Re: redhat 6.2 dies 3/31/2003 + AX25 2.4 kernel issues
+Date: Fri, 27 Dec 2002 09:52:02 -0700
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <E18VNX8-00050N-00@yagi.h-net.msu.edu>
-References: <1041142023.32767.8.camel@edith>
-Return-path: <linux-hams-owner@vger.kernel.org>
-In-reply-to: (Your message of 29 Dec 2002 00:07:02 CST.)
-             <1041142023.32767.8.camel@edith> 
-List-Id: <linux-hams.vger.kernel.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
+Message-ID: <01e701c2b52f$d76c8920$0201a8c0@wcomnet.com>
+References: <3E099099.7070306@junglevision.com> <20021226162643.A31559@pull.privacy.nb.ca> <3E0BCC8F.6090403@junglevision.com>
+Mime-Version: 1.0
 Content-Transfer-Encoding: 7bit
-To: linux-hams@vger.kernel.org
+Return-path: <linux-hams-owner@vger.kernel.org>
+List-Id: <linux-hams.vger.kernel.org>
+Content-Type: text/plain; charset="us-ascii"
+To: Cathryn Mataga <cathrynm@junglevision.com>, linux-hams@vger.kernel.org
 
- > Replacement of ARES/Data program used for the Twin Cities Marathon in
- > Minnesota.
+> Anyway, after investigating this a little more,
+> I've decided to try to keep the Redhat 6.2 running for a bit longer.
+> I suppose I'll just have to keep a closer eye on security focus to avoid
+> being script kiddie fodder, but hopefully that'll be about it.
+> I have most of my other machines at the newer kernels, but the one ax25
+> box still at Redhat 6.2.
 
-Kelly:
+I guess I'm not following this trail very well... but what difference does
+it make what version of a distribution anyone runs?  First of all, why go to
+all the trouble of flattening a box and upgrading the entire system to a new
+distro?  Only some of the packages need to be upgraded, and it sounds like
+to me, you probably only need to upgrade your kernel (easy, download from
+www.kernel.org) and maybe the ax25 tools (available from sourceforge).  All
+other packages (if you are the type of person to use RPM) can be upgraded to
+newer distro's versions.  The alternative is to -erase the package and start
+over from .tar.gz and compile.....
 
-Strange coincidences.  I recently built a perl database server similar
-to ARESDATA for Linux.  I've just returned from holiday travels, so
-much of what I would have said has already been discussed, but I
-thought I would offer a few thoughts.
+As far as the 2.4 kernel goes, I'm running 2.4.19 with 2 rf ports and 1
+ax25-ip port via 10baseT.  In the six months it has been online it has only
+locked up once.  With the 2.4 kernel comes the introduction of iptables,
+which is one of the best deterrents for malicious activity.  If someone runs
+an nmap on your IP and gets no response back they are probably not going to
+try to hack you.
 
-I spent a week looking into AX.25 server programming, and concluded
-that to do it in perl would require a fair amount of work on the perl
-networking modules.  However, I did discover that ax25d and the
-net_call program can be combined to solve the line ending issues and
-let you write a standard internet socket application.  This has the
-additional advantages that there are lots of perl modules to support
-such development, and that you can also use something like telnet to
-access your application, as well as AX25 connects.  Since you seem to
-have radio TCP/IP running in your area, you could also use telnet over
-radio.
+Anyhow, that's my two cents worth
+Andrew
 
-I opted for command line style, rather than a menu-driven approach,
-but there's no reason why you would have to take that path.  You could
-also build a client application which provided gui (or menu chui)
-interface, and make the client-server protocol be fairly terse,
-conserving bandwidth.
-
-If you (or anyone else) wants to see the code I built, it's at:
-
-    http://msuarc.egr.msu.edu/kb8zqz/packet/trivnetdbd
-
-The code is ugly, especially in its abuse of global variables, but you
-should be able to get a feel for the networking stuff.
-
-Dennis Boone
-KB8ZQZ
