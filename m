@@ -1,39 +1,71 @@
-From: Tomi Manninen <oh2bns@sral.fi>
+From: Dennis Boone <drb@msu.edu>
 Subject: Re: Trying to get Ax25 running.
-Date: Fri, 15 Oct 2004 20:15:26 +0300
+Date: Fri, 15 Oct 2004 13:37:44 -0400
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <1097860526.1293.7.camel@oh2bns.ampr.org>
-References: <620c9057041013094421cbf279@mail.gmail.com>
-	 <20041014025505.66938.qmail@web40824.mail.yahoo.com>
-	 <620c9057041014060070eeccf6@mail.gmail.com>
-	 <200410141313.i9EDDoah001022@yagi.h-net.msu.edu>
-	 <620c9057041015095771b236e0@mail.gmail.com>
-Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
+Message-ID: <200410151737.i9FHbiZW031272@yagi.h-net.msu.edu>
+References: <620c9057041015095771b236e0@mail.gmail.com>  <620c9057041013094421cbf279@mail.gmail.com> <20041014025505.66938.qmail@web40824.mail.yahoo.com> <620c9057041014060070eeccf6@mail.gmail.com> <200410141313.i9EDDoah001022@yagi.h-net.msu.edu>
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <620c9057041015095771b236e0@mail.gmail.com>
+In-reply-to: (Your message of Fri, 15 Oct 2004 09:57:06 PDT.)
+             <620c9057041015095771b236e0@mail.gmail.com> 
 List-Id: <linux-hams.vger.kernel.org>
+MIME-Version: 1.0
 Content-Type: text/plain; charset="us-ascii"
-To: Linux-hams List <linux-hams@vger.kernel.org>
+Content-Transfer-Encoding: 7bit
+To: linux-hams@vger.kernel.org
 
-On Fri, 2004-10-15 at 19:57, Chuck Hast wrote:
+ > I have used the AX25 config tool to configure this stuff. I am trying
+ > to set up things to run mkiss, but I can not quite figure out where
+ > to put the -c so that mkiss will use the crc check.
+ > 
+ > ax25-config tool does not ask for it, so I assume that the author
+ > did not get that far down the road, but when I look in the files it
+ > creates I do not see the mkiss line anywhere, I do see where it does
+ > a modprobe for ax25,kiss and mkiss, the one that is installed when I
+ > do a lsmod is mkiss. So now if I can just figure out where the mkiss
+ > configuration line is stuck I should be able to set it up to use the
+ > crc check on the kiss frames.
 
-> I have used the AX25 config tool to configure this stuff. I am trying
-> to set up things to run
-> mkiss, but I can not quite figure out where to put the -c so that
-> mkiss will use the crc check.
+It might help if you posted your current config files, but from memory,
+here are the commands in my startup script:
 
-mkiss and mkiss are not the same... :)
+	mkiss -c -l -s 19200 /dev/ttyS0 /dev/ptyz0 /dev/ptyz1
+	kissattach /dev/ptyz0 hfport 44.135.96.242
+	kissattach /dev/ptyz0 vhfport 44.135.96.243
 
-The manual page you obviously have been reading, is for a user mode
-tool that can be used to connect one or more kissattached kernel
-interfaces to one serial port running one or more TNC's with
-multidrop-kiss, crc-check etc. extended KISS modes.
+where:
 
-The mkiss that you load with modprobe/insmod is a kernel module
-that provides the kernel services that kissattach needs when you
-make kernel KISS interfaces.
+	19200 is the baud rate (my hardware seems to keep up just fine
+	with no handshaking at this speed, ymmv)
 
--- 
-Tomi Manninen / OH2BNS / KP20ME04
+	/dev/ttyS0 is the serial port to which the TNC is connected
 
+	/dev/ptyz0 ... are the pty devices created by mkiss to allow
+	separate access to the TNC's different ports
+
+	[v]hfport is the name of the port from the axports file
+
+	44.135.96.24x are the IP addresses allocated to the ports (not
+	actually mine, and while you need to have something here, if you're
+	not doing IP, I think you can use anything that doesn't conflict)
+
+You may also need the polling option of mkiss in your setup.
+
+Then I go on to start up a node program, ax25d, convers and database
+services, etc.
+
+Here's my axports file:
+
+	hfport KB8ZQZ-3 19200 255 7 HF Port
+	vhfport KB8ZQZ-4 19200 255 7 VHF Port on 145.03
+
+With this setup, I can then do:
+
+	call vhfport wc8lan-15
+
+to talk to the pbbs at the EOC.
+
+Reading your comments about modules, I wonder if you have the ax25
+and kiss modules built into your kernel?
+
+Dennis Boone
+KB8ZQZ
