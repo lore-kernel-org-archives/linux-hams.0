@@ -1,63 +1,34 @@
-From: Dave Platt <dplatt@radagast.org>
-Subject: Re: Updates & MKISS on USB serial?
-Date: Wed, 23 Jun 2004 10:45:08 -0700 (PDT)
+From: sir.archibald.sinclair@ntlworld.com
+Subject: sm0 and 2.4.18 kernel
+Date: Wed, 23 Jun 2004 18:36:27 -0000
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <20040623174508.30714.qmail@radagast.org>
-References: <20040623114001.GA15244@linux-mips.org>
+Message-ID: <40D9CDAB.25542.1053DDE@localhost>
 Mime-Version: 1.0
+Content-Transfer-Encoding: 7BIT
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <20040623114001.GA15244@linux-mips.org>
+Content-description: Mail message body
 List-Id: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 7bit
 To: linux-hams@vger.kernel.org
-Cc: raj@jrw.co.uk
 
-> Can anyone tell me if USB serial adaptors will work OK with the standard
-> AX25 serial port stuff - Kissattach / MKISS??
-> For KISS TNC connection.)
->  
-> If so, any advice on make or type?
 
-In principal, they should work fine - the TNC should not see any
-difference.
+	I'm wanting to upgrade my kernel to 2.4.18 (from 2.2.16)
 
-In practice, the success rate may depend on the specific model,
-and on how well the Linux driver for the device is written.
+	I seem to remember reading somewhere that the AX25 
+stuff doesn't run on these more recent kernels. Is this true ?
 
-I've been using one of the little KISS-only "TNC-X" TNCs,
-which I purchased with the USB option - a DLP-USB232M module
-which plugs into the TNC board.  Under Linux 2.4.22 (and, I
-think, 2.4.24 as well), the results were a bit like the old
-doggerel:
+	I've built a 2.4.18 kernel here and tried booting it but it 
+came up with all sorts of errors concerning sm0, and it's so long 
+ago since I installed all this sound modem stuff I can't remember 
+what's responsible for this device.
 
-   "There once was a pretty little girl
-    with curls down over her forehead.
-    When she was good, she was very very good,
-    and when she was bad, she was horrid."
+	So two questions..
+1) Will the Ax25 utils etc run OK on a 2.4.18 kernel
+2) Why is the kernel complaining about sm0 - it says it can't locate 
+the module sm0 - but the module isn't actually called that from what 
+I remember.
 
-The Linux driver for this particular USB dongle/adapter,
-and/or the Linux USB-serial and USB stack in general, seems
-to have some significant problems with hot unplugging.  If
-the device is in use (e.g. kissattach is attached to it),
-and the device or its hub is unplugged, there's a pretty
-high likelyhood of a single-thread kernel panic which leaves
-the USB stack in a boggle-brained state.  The device won't
-be "seen" again properly until the USB stack is restarted...
-and because it boggled out in a semi-busy state, there seems
-to be no way to unload and reload the modules without actually
-rebooting the system.
+	In brief I simply took the old .config file from the running 
+2.2.16 system, and saved it prior to doing a make dep, etc
 
-As long as I was careful not to unplug, it worked fine, but
-unplugging even once by accident would necessitate rebooting
-the system, and that's just not acceptable.  So, I unplugged
-the module from the TNC-X board, and switched it back to
-RS-232 serial mode, which works just fine.
-
-There may have been improvements in the Linux kernel's
-handling of hot unplugging of serial USB devices in more
-recent kernels, and it's possible that other serial dongles
-don't exhibit this problme.  I haven't been motivated to try 
-to find out, as the serial mode on this TNC works reliably and as
-I have plenty of spare serial ports on the system in question.
 
