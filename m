@@ -1,29 +1,31 @@
-From: Andrea Borgia <borgia@cs.unibo.it>
-Subject: old 8-bit card for soundmodem?
-Date: Sun, 01 Feb 2004 12:32:16 +0100
+From: Hamish Moffatt <hamish@cloud.net.au>
+Subject: Re: old 8-bit card for soundmodem?
+Date: Sun, 1 Feb 2004 22:51:43 +1100
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <401CE3C0.3030101@cs.unibo.it>
+Message-ID: <20040201115143.GA11950@cloud.net.au>
+References: <401CE3C0.3030101@cs.unibo.it>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
+Content-Disposition: inline
+In-Reply-To: <401CE3C0.3030101@cs.unibo.it>
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"; format="flowed"
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 7bit
 To: Linux-Hams@vger.kernel.org
 
-Hello.
+On Sun, Feb 01, 2004 at 12:32:16PM +0100, Andrea Borgia wrote:
+> I have an old 8-bit soundcard that I would like to use with the 
+> soundmodem to receive a 1200bps cluster. From the docs and from googling 
+> the archives (and the 'Net at large), I haven't been able to find any 
+> comment either for or against such cards.
+> 
+> Has anyone here tried the soundmodem with 8-bits-per-sample soundcards? 
+> Can such old cards do 1200? What about 9600?
 
-I have an old 8-bit soundcard that I would like to use with the 
-soundmodem to receive a 1200bps cluster. From the docs and from googling 
-the archives (and the 'Net at large), I haven't been able to find any 
-comment either for or against such cards.
+I'm running the kernel soundmodem (linux 2.2) with an SB Pro, which is
+8-bit stereo IIRC. It works fine at 1200 baud. I have not tried 9600,
+nor the more recent user-space soundmodem.
 
-Has anyone here tried the soundmodem with 8-bits-per-sample soundcards? 
-Can such old cards do 1200? What about 9600?
-
-B73 & TIA,
-Andrea.
-
+Hamish
 -- 
-Homepage: http://andrea.borgia.bo.it     /    Amateur radio: IZ4FHT
-Key fingerprint: 4037 9711 85C6 F9F9 A505  FA0A BB62 3A3C F7BA 9B13
-
+Hamish Moffatt VK3SB <hamish@debian.org> <hamish@cloud.net.au>
