@@ -1,49 +1,34 @@
-From: Tomi Manninen <oh2bns@sral.fi>
-Subject: Re: user soundmodem problems on Inspiron 8200 i810 chipset...
-Date: Thu, 11 Mar 2004 11:30:03 +0200
+From: =?iso-8859-1?q?G=FCnther=20Montag?= <Safari.Doktor@addcom.de>
+Subject: Re: Compile warnings on hfterm with Mandrake
+Date: Thu, 11 Mar 2004 10:47:03 +0100
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <1078997403.1276.11.camel@oh2bns.ampr.org>
-References: <20040310193645.GA3882@braddock.com>
-	 <20040310215616.19500.qmail@radagast.org>
-	 <20040310234111.GA19788@braddock.com>
+Message-ID: <200403111047.03072.Safari.Doktor@addcom.de>
+References: <20040309022333.GA4377@braddock.com> <1078861838.2336.1.camel@law3lz8h11.lib.loc.gov> <404E32F0.80308@softhome.net>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <20040310234111.GA19788@braddock.com>
+In-Reply-To: <404E32F0.80308@softhome.net>
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"
-To: Linux-hams List <linux-hams@vger.kernel.org>
+Content-Type: text/plain; charset="iso-8859-1"
+To: "ravioli@softhome.net" <ravioli@softhome.net>, linux hams <linux-hams@vger.kernel.org>
 
-On Thu, 2004-03-11 at 01:41, braddock@braddock.com wrote:
+Am Dienstag 09 M=E4rz 2004 22:11 schrieb ravioli@softhome.net:
+> A lot of warnings in the last release of hfterm-0.5 can be removed by
+> applying this diff.
+> More information on request.
+> Remi F4ECW
 
-> So, if someone tells me how to modify the period and buffer sizes in
-> soundmodem, I'll experiment and see if I can make the problem go away.
-
-It's the ioctl(SNDCTL_DSP_SETFRAGMENT) call in soundcard/audioio.c.
-This is from the OSS Programmers Guide (pp. 97-98):
-
-  int arg = 0xMMMMSSSS;
-  ioctl(audio_fd, SNDCTL_DSP_SETFRAGMENT, &arg);
-
-  The argument to this call is an integer encoded as 0xMMMMSSSS 
-  (in hex). The 16 least significant bits determine the fragment 
-  size. The size is 2^SSSS. For example SSSS=0008 gives fragment 
-  size of 256 bytes (2^8). The minimum is 16 bytes (SSSS=4) and 
-  the maximum is total_buffer_size/2. Some devices or processor
-  architectures may require larger fragments - in this case the
-  requested fragment size is automatically increased.
-
-  ...
-
-  The 16 most significant bits (MMMM) determine the maximum number 
-  of fragments. By default, the driver computes this based on 
-  available buffer space. The minimum value is 2 and the maximum 
-  depends on the total buffer space available for the device. Set
-  MMMM=0x7fff if you don't want to limit the number of fragments.
-
-I don't think changing the fragment size is a solution though as it
-affects the real-time preformance of soundmodem...
-
--- 
-Tomi Manninen / OH2BNS / KP20ME04
-
+tnx Remi!!
+i forward it to hfterm hackers mailing list and
+will work it into next release!
+--=20
+G=FCnther Montag
+Bahnhofstra=DFe 15
+D-86415 Mering
+08233-32356
+Safari.Doktor@addcom.de
+-
+To unsubscribe from this list: send the line "unsubscribe linux-hams" i=
+n
+the body of a message to majordomo@vger.kernel.org
+More majordomo info at  http://vger.kernel.org/majordomo-info.html
