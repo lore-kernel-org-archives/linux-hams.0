@@ -1,58 +1,62 @@
-From: chuck gelm <chuck@gelm.net>
-Subject: Re: kenwood radio & numeric data
-Date: Tue, 12 Oct 2004 12:05:24 -0400
+From: <Morgan.Wemanis@mark.se>
+Subject: RE: kenwood radio & numeric data
+Date: Tue, 12 Oct 2004 21:14:16 +0200
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <416C00C4.3060002@gelm.net>
-References: <200410121714.52100.alexandre.chappaz@data-tools.com>
-Reply-To: chuck@gelm.net
+Message-ID: <04Oct12.211649cest.332295@gateway.mark.se>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <200410121714.52100.alexandre.chappaz@data-tools.com>
+Content-class: urn:content-classes:message
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"; format="flowed"
-To: alexandre.chappaz@data-tools.com
-Cc: linux-hams@vger.kernel.org, =?ISO-8859-1?Q?Andr=E9_HONIG?= <andre@data-tools.com>
+Content-Type: text/plain; charset="iso-8859-1"
+To: alexandre.chappaz@data-tools.com, linux-hams@vger.kernel.org
+Cc: andre@data-tools.com
 
-chappaz alexandre wrote:
+Hi Alex,
 
->Hi guy
->
->I've got a new question for U if you've got time to thing of it.....I wrote 
->yesterday to get informations about the Kenwood tm700... radio & Tnc.... Well 
->I think I wont manage to achieve what I want using the internal TNC...... 
->That's why I write again to ask if anyone could give a little help for 
->choosing a nice modem (either hardware or software with a sound card) to 
->transmit numeric data over radio with the smallest delay possible....... The 
->"packet radio" protocol limits the use I want to have because the goal for me 
->would be to have a constant data stream over the radio. So if someone knows 
->what kind of material i should use it would be really helpful.....
->
->Thanks a lot
->
->Alex
->  
->
-Hi, Alex:
+Have a look at radiometrix stuff.
+http://www.radiometrix.co.uk/
 
- I have questions also.  Your goal seems to be:
-"have a constant data stream over the radio".
+73 de Morgan, sm6tky
 
-I do not think that it matters that the data is numeric or other.
+-----Original Message-----
+=46rom: linux-hams-owner@vger.kernel.org [mailto:linux-hams-owner@vger.=
+kernel.org] On Behalf Of chappaz alexandre
+Sent: Tuesday, October 12, 2004 5:15 PM
+To: linux-hams@vger.kernel.org
+Cc: Andr=E9 HONIG
+Subject: kenwood radio & numeric data
 
-Why do you use radio?
-Why do you use Amateur Radio?
-Why do you use AX.25?
-Would 802.11b ( 11 Mbps ) be close enough to 'constant' ?
+Hi guy
 
-The closest thing I am aware of that supports 'constant data stream',
-or at least constant small delay, is ATM.
+I've got a new question for U if you've got time to thing of it.....I w=
+rote=20
+yesterday to get informations about the Kenwood tm700... radio & Tnc...=
+=2E Well=20
+I think I wont manage to achieve what I want using the internal TNC....=
+=2E.=20
+That's why I write again to ask if anyone could give a little help for=20
+choosing a nice modem (either hardware or software with a sound card) t=
+o=20
+transmit numeric data over radio with the smallest delay possible......=
+=2E The=20
+"packet radio" protocol limits the use I want to have because the goal =
+for me=20
+would be to have a constant data stream over the radio. So if someone k=
+nows=20
+what kind of material i should use it would be really helpful.....
 
-If you want 'constant', you need 'full duplex'.
- i.e. You need full duplex radios.  Perhaps a
-'dual bander' capable of full duplex would suit your goal.
+Thanks a lot
 
+Alex
 
-Regards, Chuck
-
-
+-
+To unsubscribe from this list: send the line "unsubscribe linux-hams" i=
+n
+the body of a message to majordomo@vger.kernel.org
+More majordomo info at  http://vger.kernel.org/majordomo-info.html
+-
+To unsubscribe from this list: send the line "unsubscribe linux-hams" i=
+n
+the body of a message to majordomo@vger.kernel.org
+More majordomo info at  http://vger.kernel.org/majordomo-info.html
