@@ -1,60 +1,73 @@
-From: Bob Nielsen <nielsen@oz.net>
-Subject: Re: DX spots via UI frames
-Date: Mon, 22 Mar 2004 11:26:59 -0800
+From: "IZ4EFN Alessio" <iz4efn@libero.it>
+Subject: Anyone running APRSD on Slackware?
+Date: Wed, 24 Mar 2004 18:10:26 +0100
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <20040322192659.GB1032@office.n7xy.net>
-References: <405F1630.4050500@GTServices.pl> <405F409A.7060302@ccr.jussieu.fr>
+Message-ID: <001401c411c2$e78de420$1400a8c0@IZ4EFN>
 Mime-Version: 1.0
+Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
-Content-Disposition: inline
-In-Reply-To: <405F409A.7060302@ccr.jussieu.fr>
 List-Id: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-To: linux-hams <linux-hams@vger.kernel.org>
+To: linux-hams@vger.kernel.org
 
-On Mon, Mar 22, 2004 at 07:38:02PM +0000, Bernard Pidoux wrote:
-> Waldek wrote:
-> 
-> >I'm looking for a program under Linux that connects to a cluster
-> >and retransmit dx spots to unproto.
-> 
-> I dont know either about such a program. Maybe this function could be 
-> implemented into DxNet itself ?
-> 
-> By the way, I think that DxNet source of the program is not very easy to 
-> find.
-> It is barely referenced through Google and I did not see it on Linux Ham 
-> site http://radio.linux.org.au/
-> 
-> For those who would like to run DxNet developped by F5MZN here are some 
-> clues.
-> 
-> 24h/day more than 500 'nodes' are interconnected worldwide
-> through HF or Internet. On average 3500 users share DX spots this way.
-> 
-> You can find information for subscribing to the DxNet list here :
-> http://www.f6fbb.org/mailman/listinfo/dxnet
-> 
-> Browse the list archives here :
-> http://www.f6fbb.org/pipermail/dxnet/
-> 
-> Read this to see how to use cvs for downloading the source code of DxNet :
-> http://www.f6fbb.org/pipermail/dxnet/2002-July/000778.html
-> 
-> A user can access a DxNet node via Packet Radio or Telnet to port 9000.
-> Then you receive DX spots line by line.
-> An there are a lot of usefull user commands.
-> 
-> For evaluation you can try to access F5MZN DxNet node here :
-> 
-> http://dxnet.eu.org/
-> 
-> 73 de Bernard, f6bvp
-> 
+I'm installing aprsd215b11 bye wa4dsy on a Slackware 9.1 server.
 
-Another DX Cluster implementation for Linux (written in Perl) is DX
-Spider at <http://www.dxcluster.org>.  It also runs under Windows (but
-why would one do that?)
+I get the following errors, both as PGM and DEAMON.
 
-73, Bob N7XY
+Seems like an internal compiler error, but i'm using 3.2.3 and he suggest to
+compile from 3.2.
+
+I'm also quite scared about the Slackware fact...here everyone seems to bo
+running it on RH and SUSE...?!?!
+
+Anyone already experienced this?
+
+Thanks, Alessio.
+
+
+root@Slack_ARIMO:/tmp/aprsd215# ./INSTALLPGM
+Installing aprsd as a program
+Making aprsd from source
+g++   -Wall -pthread -mcpu=i386    -c servers.cpp
+In file included from /usr/include/c++/3.2.3/backward/strstream:51,
+                 from servers.cpp:61:
+/usr/include/c++/3.2.3/backward/backward_warning.h:32:2: warning: #warning
+This file includes at least one deprecated or antiquated header. Please
+consider using one of the 32 headers found in section 17.4.1.2 of the C++
+standard. Examples include substituting the <X> header for the <X.h> header
+for C++ includes, or <sstream> instead of the deprecated header
+<strstream.h>. To disable this warning use -Wno-deprecated.
+g++: Internal error: Terminated (program cc1plus)
+Please submit a full bug report.
+See <URL:http://gcc.gnu.org/bugs.html> for instructions.
+make: *** [servers.o] Error 1
+Making aprspass from source
+g++   -Wall -pthread -mcpu=i386    -c servers.cpp
+In file included from /usr/include/c++/3.2.3/backward/strstream:51,
+                 from servers.cpp:61:
+/usr/include/c++/3.2.3/backward/backward_warning.h:32:2: warning: #warning
+This file includes at least one deprecated or antiquated header. Please
+consider using one of the 32 headers found in section 17.4.1.2 of the C++
+standard. Examples include substituting the <X> header for the <X.h> header
+for C++ includes, or <sstream> instead of the deprecated header
+<strstream.h>. To disable this warning use -Wno-deprecated.
+g++: Internal error: Terminated (program cc1plus)
+Please submit a full bug report.
+See <URL:http://gcc.gnu.org/bugs.html> for instructions.
+make: *** [servers.o] Error 1
+Copying /tmp/aprsd215/aprsd to /home/aprsd2
+cp: cannot stat `aprsd': No such file or directory
+Copying /tmp/aprsd215/aprspass to /home/aprsd2
+cp: cannot stat `aprspass': No such file or directory
+Copying /tmp/aprsd215/aprsddoc.html to /home/aprsd2
+Install complete
+User manual is aprsddoc.html.
+Please cd to /home/aprsd2/ and edit INIT.TNC, aprsd.conf,
+welcome.txt, and user.deny before running.
+To start change dir to /home/aprsd2 and enter ./aprsd
+To stop hit ctrl-C or q
+To allow users other than root to run it you must change
+the owner and/or mode of /home/aprsd2 and all the files in it.
+Linux user/pass checking only works if run as root.
+root@Slack_ARIMO:/tmp/aprsd215#
+
