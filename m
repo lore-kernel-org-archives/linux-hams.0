@@ -1,61 +1,40 @@
-From: "Jeremy Utley" <jeremy@jutley.org>
+From: "Robert Eliassen" <robel@vktv.no>
 Subject: RE: Compiling JNOS/ Linux
-Date: Thu, 24 Jul 2003 01:57:55 -0400
+Date: Thu, 24 Jul 2003 09:14:46 +0200
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <PEEBJGCPPGPJPGIFDLPJOEAOCAAA.jeremy@jutley.org>
-References: <200307240726.28512.Waldemar.Ogonowski@GTservices.pl>
+Message-ID: <NPELJONPHCEGGIEGBBFLGEBLCEAA.robel@vktv.no>
+References: <PEEBJGCPPGPJPGIFDLPJOEAOCAAA.jeremy@jutley.org>
 Mime-Version: 1.0
 Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <200307240726.28512.Waldemar.Ogonowski@GTservices.pl>
+In-Reply-To: <PEEBJGCPPGPJPGIFDLPJOEAOCAAA.jeremy@jutley.org>
 List-Id: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
 To: linux-hams@vger.kernel.org
 
 
+Waldemar wrote, Jeremy replied:
 
-> -----Original Message-----
-> From: linux-hams-owner@vger.kernel.org
-> [mailto:linux-hams-owner@vger.kernel.org]On Behalf Of 
-> Waldemar Ogonowski
+>> I have ncurses compiled in /usr/src/ncurses-4.0 and
+>> correct path to
 
-> 
-> 
-> Hi,
-> 
-> I have tried compile JNOS v1.11f under Linux (Slackware 9.0) 
-> but without 
-> success. I have ncurses compiled in /usr/src/ncurses-4.0 and 
-> correct path to 
+> First off, why on earth is ncurses compiled under /usr/src?
 
-First off, why on earth is ncurses compiled under /usr/src?
+I compile all my sourcecode under /usr/src
+Why on earth put (and compile) source elsewhere?
+;-)
 
-Second - why not just use the ncurses libs provided with the slackware
-packages?
+> Second - why not just use the ncurses libs provided with the
+> slackware packages?
 
-> include and lib in Makefile JNOS but when compile JNOS this 
-> finished with 
-> error.: 
->  ---------------
-> unix.a(curses.o)(.text+0x224): In function `curses_init':
-> /usr/src/jnos/curses.c:283: undefined reference to `MainColors'
-> unix.a(curses.o)(.text+0x3db):/usr/src/jnos/curses.c:281: 
-> undefined reference 
-> to `MainColors'
-> unix.a(curses.o)(.text+0x3e8):/usr/src/jnos/curses.c:281: 
-> undefined reference 
-> to `MainColors'
-> unix.a(curses.o)(.text+0x1060): In function `curses_create':
-> /usr/src/jnos/curses.c:872: undefined reference to `MainColors'
-> unix.a(curses.o)(.text+0x1076):/usr/src/jnos/curses.c:873: 
-> undefined reference 
-> to `MainColors'
-> collect2: ld returned 1 exit status
-> make: *** [jnos] Error 1
+Agree. I guess Waldemar missed this library when installing Slackware.
+Fortunately he can just go to the directory where the file
+ncurses-5.37-i386-1.tgz exists and type
+
+installpkg ncurses-5.3-i386-1.tgz
+
+(or whatever way he likes to install packages) :-)
+
+-Bob-
 
 
-Try adding the the directory containing the ncurses libraries to 
-/etc/ld.so.conf and run ldconfig, then remove/re-extract your JNOS
-source code and recompile.
-
--J-
