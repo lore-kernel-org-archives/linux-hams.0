@@ -1,43 +1,27 @@
-From: "Douglas Cole" <n7bfs@qwest.net>
+From: Tomi Manninen <oh2bns@sral.fi>
 Subject: Re: xfbbd crashing, why ?
-Date: Sat, 9 Oct 2004 10:51:33 -0700
+Date: Sat, 09 Oct 2004 21:03:22 +0300
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <200410091051.33420.n7bfs@qwest.net>
-References: <200410090855.37618.n7bfs@qwest.net> <6.1.1.1.2.20041009105040.03412b50@mail.sasktel.net>
-Reply-To: n7bfs@qwest.net
+Message-ID: <1097345002.1357.6.camel@oh2bns.ampr.org>
+References: <200410090855.37618.n7bfs@qwest.net>
+	 <6.1.1.1.2.20041009105040.03412b50@mail.sasktel.net>
+	 <200410091051.33420.n7bfs@qwest.net>
 Mime-Version: 1.0
 Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <6.1.1.1.2.20041009105040.03412b50@mail.sasktel.net>
-Content-Disposition: inline
+In-Reply-To: <200410091051.33420.n7bfs@qwest.net>
 List-Id: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
-To: Doug <appld@sasktel.net>
-Cc: linux-hams@vger.kernel.org
+To: Linux-hams List <linux-hams@vger.kernel.org>
 
-On Saturday 09 October 2004 09:53, you wrote:
-> Doug mine did that only at 02:00 every nite. The problem was in the
-> housekeeping
-> routine. The problem was because the system was not started properly. When
-> I started it with the fbb command, it was fine. I use RH8.0 here. Not sure
-> how you are supposed to start yours, but there are different ways...
->
-> Cheers
-> Doug VE5DA
-Thanks for the reply Doug, you bring up a good point, that I may not be 
-starting FBB "properly", but I am not sure what "properly" would be, I know 
-that we start FBB from the command line by entering "xfbbd" and hitting 
-return, and then much info wizzes past on the screen and all is running...
+On Sat, 2004-10-09 at 20:51, Douglas Cole wrote:
 
-I will go back to the documentation and see where I am messing up, but so far 
-am puzzled.
+> but I am not sure what "properly" would be, I know 
+> that we start FBB from the command line by entering "xfbbd" and hitting 
+> return, and then much info wizzes past on the screen and all is running...
 
-Thanks for the input :)
+Replace "xfbbd" with "fbb". :)
 
-
-
-Douglas Cole   N7BFS
-AMSAT#26182 , K2 # 544
-http://www.users.qwest.net/~cdoug3
-Registered Linux user # 188922
+-- 
+Tomi Manninen / OH2BNS / KP20ME04
 
