@@ -1,23 +1,25 @@
-From: Hans-Peter Zorn <hp@1409.org>
-Subject: Re: KJD 2.3.9 patch on 2.5.29
-Date: 01 Aug 2002 23:33:37 +0200
+From: "Colin Harris" <charis.g3orh@virgin.net>
+Subject: Suse 8.*
+Date: Thu, 1 Aug 2002 21:18:24 +0100
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <1028237618.864.316.camel@rsh-356>
-References: <20020801194618.GA722@columbia.g7iii.bogus>
+Message-ID: <000501c23998$bd0aa980$14000a0a@p75>
 Mime-Version: 1.0
 Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <20020801194618.GA722@columbia.g7iii.bogus>
 List-Id: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
-To: linux-hams@vger.kernel.org
+To: Linux Hams <linux-hams@vger.kernel.org>
 
-Hi Iain,
-have a look at http://ftp.ccac.rwth-aachen.de/pub/jr/newax25-devel/ .
-Joerg started to port Jens' and Matzes  code to 2.4, but he didn't
-complete it and he stopped developement at 2.4.3 (time constraints I
-guess).
+A little advice please from a Suse user which I can pass on
+to a raw recruit. He has I think Suse 8.4 or close to it. He
+has found ax25-apps / tools etc on disc 4 but cannot find
+libax25. He tried libax25-0.0.9.tar.gz install but got loads
+of errors. He then phoned me. Can anyone advise of the
+existence of libax25 on Suse-8.? and on which diisc.
+If_not_exist , which version should he use please so that he
+can download it. I don't know the kernel version.
 
-73s HP
+- Regards Colin
+
 
 
