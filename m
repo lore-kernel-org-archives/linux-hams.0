@@ -1,38 +1,25 @@
-From: Jarmo <oh1mrr@nic.fi>
+From: Ralf Baechle DL5RB <ralf@linux-mips.org>
 Subject: Re: help xastir and mandrake (how to compile ax25 support ?)
-Date: Tue, 9 Nov 2004 07:58:26 +0200
-Message-ID: <200411090758.26321.oh1mrr@nic.fi>
-References: <1099943984.418fd03081dd7@imp4-q.free.fr> <20041109012750.GA10725@linux-mips.org>
+Date: Tue, 9 Nov 2004 13:01:04 +0100
+Message-ID: <20041109120104.GB4791@linux-mips.org>
+References: <1099943984.418fd03081dd7@imp4-q.free.fr> <20041109012750.GA10725@linux-mips.org> <200411090758.26321.oh1mrr@nic.fi>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <20041109012750.GA10725@linux-mips.org>
 Content-Disposition: inline
+In-Reply-To: <200411090758.26321.oh1mrr@nic.fi>
 Sender: linux-hams-owner@vger.kernel.org
 List-Id: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
-To: linux-hams@vger.kernel.org
+Content-Transfer-Encoding: 7bit
+To: Jarmo <oh1mrr@nic.fi>
+Cc: linux-hams@vger.kernel.org
 
-On Tuesday 09 November 2004 03:27, you wrote:
-> On Mon, Nov 08, 2004 at 08:59:44PM +0100, ph.ttv@free.fr wrote:
-> > who uses xastir on Mandrake ?
-> >
-> > I don't know how to compile xastir with ax25 support on my mdk 9.2 :-(
-> >
-> > (ax25 works fine ever on my computer)
->
-> You can find Xastir and the various other packages it depends on my
-> machine at bacchus.net.dhis.org.  The packages were built for Fedora Core 2
-> so may or may not work or install on Mandrake.
->
-> 73 de DL5RB op Ralf
+On Tue, Nov 09, 2004 at 07:58:26AM +0200, Jarmo wrote:
 
-All packages,ax25-tools,ax25apps and libax25 can be found from Mandrake
-cd's..
+> All packages,ax25-tools,ax25apps and libax25 can be found from Mandrake
+> cd's..
 
-Jarmo
+Does Mandrake also ship with shapelib and proj?  Xastir needs them for
+map support but afair that was optional.
 
--- 
-Linux is the answer.
-What was your question?
-(Brian Lane)
+  Ralf
