@@ -1,51 +1,44 @@
-From: "AE5PL Lists" <HamLists@ametx.com>
-Subject: RE: ax25 Questions
-Date: Fri, 4 Jun 2004 13:12:12 -0500
+From: =?iso-8859-1?q?=D8yvind_Hanssen?= <oyvind@cs.uit.no>
+Subject: Re: ax25 Questions
+Date: Fri, 4 Jun 2004 21:19:14 +0200
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <478F6623898BBC4DBD692A223D28298A05A630@amewebsrvr.webametx.local>
+Message-ID: <200406042119.14847.oyvind@cs.uit.no>
+References: <478F6623898BBC4DBD692A223D28298A05A630@amewebsrvr.webametx.local>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 8BIT
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 Return-path: <linux-hams-owner@vger.kernel.org>
-Content-class: urn:content-classes:message
+In-Reply-To: <478F6623898BBC4DBD692A223D28298A05A630@amewebsrvr.webametx.local>
+Content-Disposition: inline
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"
+Content-Type: text/plain; charset="iso-8859-1"
 To: linux-hams@vger.kernel.org
 
-Well, I have got the answers, sort of.
+Yes, it was a bug there. I will also consider using separate Linux sock=
+ets (in the native code) for=20
+sending and receiving, but I thought those sockets allowed one to send =
+at the same time as
+block for receive, on the same socket instance.=20
 
-> -----Original Message-----
-> From: AE5PL Lists
-> Posted At: Thursday, June 03, 2004 10:40 PM
-> Subject: ax25 Questions
-> 
-> recvfrom may be returning the size of the longest packet 
-> received instead of the current packet length.  I suspect 
-> this problem is in the javax25 native code, but I figured I 
-> would throw it out anyway.
+Another question btw. It seems that the SOCK_PACKET type of socket is=20
+the typical way to access raw AX.25 packets in Linux, but the doc says =
+that this
+type of socket should be avoided (obsolete) and that the AF_PACKET/SOCK=
+_RAW=20
+type should be used instead. I this equivalent, is this supported for A=
+X.25?=20
 
-As I suspected, this was in the javax25 native C code and has been
-corrected.
+73 de LA7ECA, =D8yvind
 
-> sendto seems to wait for the socket to become free if a 
-> recvfrom is pending.  The idea is to be able to have one 
-> thread wait for an incoming packet while another thread can 
-> send a packet(s) based on a timer.
 
-This seems to be due to the fact that the socket is opened in blocking
-mode.  I was able to circumvent this problem by opening a socket for
-receive and another socket to the same port for transmit.  Works fine.
+On Friday 04 June 2004 20:12, AE5PL Lists wrote:
+> Well, I have got the answers, sort of.
+>=20
 
-I have added jaAPRSIGate as an adjunct to javAPRSSrvr over the last two
-weeks.  It is a full featured IGate which works in conjunction with
-javAPRSSrvr.  javAPRSSrvr and javAPRSIGate run on virtually any machine
-with a 1.1.4 JVM or higher.  There are TNC interfaces for javAPRSIGate
-for KipSS (Windows), AGWPE (Windows), KISS TNC's (Windows and Linux),
-and now ax25 (Linux).
-
-For those Java developers out there, javax25 (on sourceforge.net) is a
-nice tool for ax25 socket work.
-
-73,
-
-Pete Loveall AE5PL
-mailto:pete@ae5pl.net
+--=20
+Computer Science dept. University of Troms=F8,  ohanssen@acm.org,  Cell=
+: +47 9511 7457
+-
+To unsubscribe from this list: send the line "unsubscribe linux-hams" i=
+n
+the body of a message to majordomo@vger.kernel.org
+More majordomo info at  http://vger.kernel.org/majordomo-info.html
