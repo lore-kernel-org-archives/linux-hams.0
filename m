@@ -1,49 +1,46 @@
-From: Curt Mills <archer@eskimo.com>
-Subject: Re: ax25 with digipeaters
-Date: Thu, 15 Jul 2004 21:22:41 -0700 (PDT)
+From: Arno Verhoeven <pe1icq@pi8zaa.ampr.org>
+Subject: Re: ANN: gMFSK v0.6 released
+Date: Sun, 18 Jul 2004 19:29:53 +0200
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <Pine.LNX.4.44.0407152121160.30845-100000@wapiti>
-References: <065101c46a60$34620420$050010ac@tokland>
+Message-ID: <40FAB391.6090400@pi8zaa.ampr.org>
+References: <1089908644.1286.53.camel@oh2bns.ampr.org>
 Mime-Version: 1.0
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <065101c46a60$34620420$050010ac@tokland>
+In-Reply-To: <1089908644.1286.53.camel@oh2bns.ampr.org>
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: TEXT/PLAIN; charset="iso-8859-1"
-To: =?iso-8859-1?Q?Arnau_S=E1nchez?= <arnau@gbt.tfo.upm.es>
-Cc: linux-hams@vger.kernel.org
+Content-Type: text/plain; charset="us-ascii"; format="flowed"
+To: Tomi Manninen <oh2bns@sral.fi>, Linux-hams List <linux-hams@vger.kernel.org>, MFSK List <MFSK@yahoogroups.com>, MT63 List <MT63@yahoogroups.com>
 
-On Thu, 15 Jul 2004, [iso-8859-1] Arnau S=E1nchez wrote:
+Tomi Manninen wrote:
+> Hi all,
+> 
+> I have just released version 0.6 final of gMFSK, the multimode 
+> HF terminal program for Linux and other unix-like operating systems.
+> 
+> This is a major release. New features added since version 0.5
+> include at least:
+> 
+>  - Hellschreiber transmit
+>  - MFSK picture support
+>  - Waterfall improvements
+>  - Hamlib support
+>  - CWirc support
+>  - Configuration druid
+>  - New mode: PSK63
+>  - Parallel port PTT
+>  - Samplerate conversion
 
-> I have been using ax25 for long time, but until now I had never tried=
- to use it with
-> digipeaters... I try:
->
-> (from SOURCE)
-> call port FINAL DIGI (or call port FINAL via DIGI)
->
-> but the station with callsign "DIGI" does not repeat the packet (alth=
-ough it shows it in listen)
->
-> What's the problem? Should something be enabled on "DIGI" station?
 
-Make sure the syntax is proper for your command.  I don't recall
-whether spaces are needed or commas between stations.
+Hi,
 
-Yes, there are parameters on the intermediate stations that would
-need to be set to use it as a digipeater.  Something like "MRPT
-ON"???  Can't recall the exact commands, and they may change based
-on the TNC or the software involved.
+A pre-compiled binary package for Slackware-10 is available from 
+http://sharon.esrac.ele.tue.nl/pub/slackware/slackware-current_ham_updates/extra/ham/
 
---=20
-Curt, WE7U.				archer at eskimo dot com
-http://www.eskimo.com/~archer
-  Lotto:  A tax on people who are bad at math. - unknown
-Windows:  Microsoft's tax on computer illiterates. - WE7U.
-The world DOES revolve around me:  I picked the coordinate system!"
 
--
-To unsubscribe from this list: send the line "unsubscribe linux-hams" i=
-n
-the body of a message to majordomo@vger.kernel.org
-More majordomo info at  http://vger.kernel.org/majordomo-info.html
+-- 
+73, PE1ICQ  Arno Verhoeven
+--------------------------------
+AX.25  pe1icq@pi8zaa.#nbo.nld.eu
+smtp   pe1icq@pi8zaa.ampr.org
+inet   pe1icq@amsat.org
