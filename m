@@ -1,34 +1,37 @@
-From: Chuck Hast <wchast@gmail.com>
-Subject: Running Listen
-Date: Thu, 9 Dec 2004 08:52:57 -0500
-Message-ID: <620c905704120905527c439dc@mail.gmail.com>
-Reply-To: Chuck Hast <wchast@gmail.com>
+From: "Curt, WE7U" <archer@eskimo.com>
+Subject: Re: Running Listen
+Date: Thu, 9 Dec 2004 08:26:44 -0800 (PST)
+Message-ID: <Pine.SUN.4.58.0412090825060.29098@eskimo.com>
+References: <620c905704120905527c439dc@mail.gmail.com>
+Reply-To: "Curt Mills, WE7U" <archer@eskimo.com>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
+In-Reply-To: <620c905704120905527c439dc@mail.gmail.com>
 Sender: linux-hams-owner@vger.kernel.org
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"
-To: Linux-Hams <linux-hams@vger.kernel.org>
+Content-Type: TEXT/PLAIN; charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+To: Chuck Hast <wchast@gmail.com>
+Cc: Linux-Hams <linux-hams@vger.kernel.org>
 
-Folks,
-I am trying to run listen as a non-root user. I have checked the permissions
-and group stuff, all appears Ok, it I run it as root, it takes off just fine,
-but if I run it as a non-root user I get this error:
-socket: Operation not permitted
+On Thu, 9 Dec 2004, Chuck Hast wrote:
 
-I have done some looking and see something to the effect that tcpdump
-must be run as root or you get the same error, is this true of listen also?
+> I am trying to run listen as a non-root user. I have checked the permissions
+> and group stuff, all appears Ok, it I run it as root, it takes off just fine,
+> but if I run it as a non-root user I get this error:
+> socket: Operation not permitted
 
-Indeed I wanted to set up listen so I could have a log in directly to a listen
-session so I could just log in remotely and observe the goings on's on the
-different ports of the switch. (Has high speed internet connection so there
-is not problem there) Again I can ssh into the box as root and start a listen
-session just fine, but as anything else I get the above infamous error.
+Have you tried setting the SUID bit?
 
--- 
-Chuck Hast 
-To paraphrase my flight instructor;
-"the only dumb question is the one you DID NOT ask resulting in my going
-out and having to identify your bits and pieces in the midst of torn
-and twisted metal."
+That allows it to run as root no matter who started it.  Just set
+the owner to root and then set that bit using chmod.
+
+Note that there are security implications to this.  If someone else
+can gain control of that program while it's running (through buffer
+overflows usually), then they can gain root access of your system.
+
+--
+Curt, WE7U.   APRS Client Comparisons: http://www.eskimo.com/~archer
+"Lotto:    A tax on people who are bad at math." -- unknown
+"Windows:  Microsoft's tax on computer illiterates." -- WE7U
+"The world DOES revolve around me:  I picked the coordinate system!"
