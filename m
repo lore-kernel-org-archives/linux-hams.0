@@ -1,42 +1,46 @@
-From: Kelly Black <kelly.black@penguinpackets.com>
+From: Tomi Manninen <tpm@prkele.tky.hut.fi>
 Subject: Re: Linux AX.25 Socket programming
-Date: 01 Jan 2003 20:12:39 -0600
+Date: Thu, 2 Jan 2003 06:37:26 +0200 (EET)
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <1041473560.10921.9.camel@edith>
+Message-ID: <Pine.LNX.4.44.0301020617170.1552-100000@oh2bns.ampr.org>
 References: <onKLlQBZqzE+EwXZ@mechserv.demon.co.uk>
-	<1041461308.10491.17.camel@edith>  <3E13731B.C965C3A7@omeganetserv.com>
+Reply-To: tpm@prkele.tky.hut.fi
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <3E13731B.C965C3A7@omeganetserv.com>
+In-Reply-To: <onKLlQBZqzE+EwXZ@mechserv.demon.co.uk>
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"
-To: Linux Hams mailing list <linux-hams@vger.kernel.org>
+Content-Type: TEXT/PLAIN; charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+To: linux-hams@vger.kernel.org
 
-On Wed, 2003-01-01 at 17:00, Andrew Bates wrote:
-> > Excellent!!!  Does anybody know where I can find an example of a script
-> > that is doing just this read from stdin and write to stdout.
-> >
-> 
-> Here is a very simply perl script that reads and writes to the stdin/stdout:
-> 
-SNIP---
+On Wed, 1 Jan 2003, Jonathan Naylor wrote:
 
-O.K. Thanks for the tip.  Can you get the callsign or other environment
-info from the environment ( $ENV ?) as well like a CGI script does.
+> Servers that can be started by ax25d do not need to be in C or C++, but 
+> can be in Perl, Java, Ruby, COBOL or anything else that can read and 
+> write to stdin/stdout.
 
-I will probably still write the program in C though as I was impressed
-at how well I was able to view a curses based application via TCP/IP
-over AX.25, and was floored by its responsiveness.
+One word of caution though: AX.25 connections are so called sequential
+packet connections which means that packet boundaries have meaning in the
+protocol. To make a long story short, this means that you are yourself
+responsible for packetizing the data in correct size chunks.
 
-One of my reasons for re-writing the existing application is to make
-user training simple by providing a simple interface option instead of
-just the terse command line option that exists now.
+When you read from stdin, you have to pass the read() system call a buffer
+that is larger than any incoming packet might be. Otherwise data will be
+lost. See for example axconv where read() is always called with a buffer
+of 4096 bytes.
 
-Kelly
-KB0GBJ
+When you write to stdout, you need to make sure you don't write() a buffer
+longer than the MTU (or PACLEN). Also, you probably want to avoid a
+situation where you write() several short buffers in a row as they will be 
+sent separately. In axconv I have used the stdio functions for writing 
+(and buffering) and used setvbuf() to set the effective paclen.
 
-P.S. The application I am trying to re-create will be a sub-set of
-ARES-DATA.  I will tailor it for tracking runners in a marathon race.
+The above holds for C, and I'm not completely sure how you can accomplish 
+the same in eg. Perl. There was a thread about Perl and ax25d recently on 
+this list but I have already forgotten what the correct procedure was...
 
+-- 
+Tomi Manninen           Internet:  oh2bns@sral.fi
+OH2BNS                  AX.25:     oh2bns@oh2rbi.fin.eu
+KP20ME04                Amprnet:   oh2bns@oh2rbi.ampr.org
 
