@@ -1,37 +1,23 @@
-From: Joop Stakenborg <pa3aba@debian.org>
-Subject: Re: INP3 patch + yam = kernel oops
-Date: Sat, 05 Apr 2003 11:43:13 +0200
+From: Marco Calistri <ik5bcu@tin.it>
+Subject: Doubts on modems utilization
+Date: Sat, 05 Apr 2003 17:02:29 +0200 (CEST)
 Sender: linux-hams-owner@localhost
-Message-ID: <3E8EA531.3070105@debian.org>
-References: <Pine.LNX.4.44.0304050111390.10741-100000@oh2bns.ampr.org>
+Message-ID: <20030405150229.7107.qmail@linux.ik5bcu.ampr.org>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 7BIT
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <Pine.LNX.4.44.0304050111390.10741-100000@oh2bns.ampr.org>
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"; format="flowed"
-To: tpm@prkele.tky.hut.fi
-Cc: linux-hams@vger.kernel.org
+Content-Type: text/plain; charset="us-ascii"
+To: linux-hams@vger.kernel.org
 
-Tomi Manninen wrote:
+Hello and sorry for this silly question:
 
->On Fri, 4 Apr 2003, Jeroen Vreeken wrote:
->
->  
->
->>On a side note does anybody know how the status of ax25 in 2.5 is?
->>I know there have been some changes, but I don't get replies from any mails
->>to the author....
->>    
->>
->
->I'd like to know that as well. Ralf are you here? Any progress lately???
->
->  
->
-Ralf is frequently on irc.freenode.net, channel #hamradio. His nick is 
-do1grb.
+I wonder if are there any chances to interface a simple modem to linux and be
+able to use it under applications running kiss mode.
 
-Regards,
-Joop
+Until now I always used TNCs to do this.
+
+Many thanks,73's
+
+Marco IK5BCU
 
