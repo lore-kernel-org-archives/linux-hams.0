@@ -1,36 +1,42 @@
-From: Jorge Matias <martin@andorinha.ist.utl.pt>
+From: jarmo <oh1mrr@nic.fi>
 Subject: Re: Protocol error
-Date: Mon, 18 Nov 2002 11:31:04 +0000 (WET)
+Date: Mon, 18 Nov 2002 13:58:08 +0200
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <Pine.LNX.4.33.0211181130060.5434-100000@andorinha.ist.utl.pt>
-References: <Pine.LNX.4.44.0211181146400.1138-100000@off1.audion.com>
+Message-ID: <200211181358.08540.oh1mrr@nic.fi>
+References: <3DD7E005.25470.636F19D@localhost> <3DD8D4BF.27441.288F6F3@localhost>
 Mime-Version: 1.0
+Content-Transfer-Encoding: 7BIT
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <Pine.LNX.4.44.0211181146400.1138-100000@off1.audion.com>
+In-Reply-To: <3DD8D4BF.27441.288F6F3@localhost>
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: TEXT/PLAIN; charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-To: Sandor Dibuz <ha3pg@ha3pmf.boszi.pte.hu>
-Cc: Demetre Valaris <sv1uy@bbs.sv1uy.ampr.org>, linux-hams <linux-hams@vger.kernel.org>
+Content-Type: text/plain; charset="us-ascii"
+To: linux-hams <linux-hams@vger.kernel.org>
 
-On Mon, 18 Nov 2002, Sandor Dibuz wrote:
+On Monday 18 November 2002 11:53, Demetre Valaris wrote:
 
-> On Mon, 18 Nov 2002, Demetre Valaris wrote:
 >
-> > >   I have the same problem for a loooong time. I also have lots af messages like
-> > > this one in my /var/log/messages:
-> > >
-> > > Nov 18 00:34:36 hamradio kernel: NET: 8 messages suppressed.
->
-> ...
->
-> Roumored that latest kernel (pre)release versions don't spit them out. At
-> least HA5OB/Zoli was happy to see kernel 2.4.20-rc1 ceased complaining.
+> Thanks for reply. I wonder if this causes any problems. At this end when I
+> had a P133 AMD with 32MB RAm, sometimes my radio would key the TNC and TX
+> nothing. Now I am not sure whether this is a TNC or computer problem.
+> Eversince I upgraded my hardware to a faster PC (P433 Celeron with 128MB
+> RAM) I have not observed this problem although the "protocol 0000 is buggy,
+> dev ax0) is still there. I am not sure what caused the problem though,
+> although it seems that the old slower PC with the 32MB RAM was at fault,
+> but this problem was not persistent!!
 
-  I'm very pleased to know that, because with all those messages in the
-log is very difficult to track other errors.
+Hi
 
-73,
-Jorge
-CT2HBZ
+We have here in OH1RCF 4 tnc's and only one is giving protocol is buggy
+info...Same as bad checsum messages...
+I myself have only one tnc and i get every now and then bad checksum but no
+protocol buggy.
+We are using 6pack in tnc's...And now we have started thinking that errormsg's
+migth come because of bad groundings..ie. Tnc's cases are grounded too lightly
+and RF could cause some weird things...
+
+PC is something 333MHz and 64M ram in oh1rcf...I have amd xp-1700+ with
+512M ram...
+
+73 de Jarmo,OH1MRR
+
 
