@@ -1,53 +1,75 @@
-From: Bob Nielsen <nielsen@oz.net>
+From: Tomi Manninen <oh2bns@sral.fi>
 Subject: Re: Linux AX25 Digipeating Software
-Date: Wed, 22 Dec 2004 12:49:55 -0800
-Message-ID: <20041222204955.GC8131@office.n7xy.net>
-References: <41C9A12A.2000401@utoronto.ca> <NCBBKBAJDJIPKFIAFBKLIEGOFFAC.wilson.hein@verizon.net>
+Date: Wed, 22 Dec 2004 23:30:48 +0200
+Message-ID: <1103751047.1219.2.camel@oh2bns.ampr.org>
+References: <41C9A12A.2000401@utoronto.ca>
+	 <NCBBKBAJDJIPKFIAFBKLIEGOFFAC.wilson.hein@verizon.net>
+	 <20041222204955.GC8131@office.n7xy.net>
 Mime-Version: 1.0
+Content-Type: multipart/mixed; boundary="=-xRpN2a2Q26SKxVEW5bE2"
 Return-path: <linux-hams-owner@vger.kernel.org>
-Content-Disposition: inline
-In-Reply-To: <NCBBKBAJDJIPKFIAFBKLIEGOFFAC.wilson.hein@verizon.net>
+In-Reply-To: <20041222204955.GC8131@office.n7xy.net>
 Sender: linux-hams-owner@vger.kernel.org
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"
+To: Linux-hams List <linux-hams@vger.kernel.org>
+
+
+--=-xRpN2a2Q26SKxVEW5bE2
+Content-Type: text/plain
 Content-Transfer-Encoding: 7bit
-To: linux-hams List <linux-hams@vger.kernel.org>
 
-On Wed, Dec 22, 2004 at 01:25:27PM -0500, Wilson G. Hein wrote:
-> -----Original Message-----
-> >>So, after all that - is there a good program out there that does simple,
-> >>single-port, layer 2, AX.25 digipeating and works with kernel 2.6?
-> >>
-> >>
-> >>
-> >
-> >I'm not aware of any other non-APRS digi software, but you can get
-> >ax25digi at:
-> >
-> >ftp://ftp.tapr.org/software_lib/Linux/ax25/ax25digi.tgz
-> >
-> >
-> >
-> Actually, there's no file there with that name at all.
-> 
-> Try without the 25, axdigi.tgz downloaded for me:-)
-> 
-> I also could noit get it to compile, and get an error from the binary, and
-> would love to have the this app working. Just no time to try myself.
-> 
+On Wed, 2004-12-22 at 22:49, Bob Nielsen wrote:
 
-Sorry about the broken URL, thanks Willie.  
+> The binary appears to have been built with libc4 (this thing really is
+> old!).  I suspect that it is written for an older version of gcc, as
+> well.  The oldest one I have is 2.95 and that bombs, as do 3.2 and 3.3. 
+> I'm not a C programmer, so can't reallly help there.
 
-The binary appears to have been built with libc4 (this thing really is
-old!).  I suspect that it is written for an older version of gcc, as
-well.  The oldest one I have is 2.95 and that bombs, as do 3.2 and 3.3. 
-I'm not a C programmer, so can't reallly help there.
+Just a quick and dirty hack... Maybe this works, at least it compiles 
+for me now...
 
-The only reason it still exists in the TAPR repository is that I haven't
-taken the time to clean out the obsolete stuff.  I probably will, once 
-we get the new tapr.org server fully online.
+-- 
+Tomi Manninen / OH2BNS / KP20ME04
 
-I don't know if Craig VK2XLZ (the author) still frequents this list, but
-if so maybe he could comment.
+--=-xRpN2a2Q26SKxVEW5bE2
+Content-Description: 
+Content-Disposition: inline; filename=axdigi-0.02.diff
+Content-Type: text/x-patch; charset=ISO-8859-15
+Content-Transfer-Encoding: 7bit
 
-Bob, N7XY
+diff -ruN axdigi-0.02.orig/axdigi.c axdigi-0.02/axdigi.c
+--- axdigi-0.02.orig/axdigi.c	1997-06-12 19:56:56.000000000 +0300
++++ axdigi-0.02/axdigi.c	2004-12-22 23:24:23.000000000 +0200
+@@ -20,17 +20,18 @@
+  *        12th June 1997.
+  */
+ 
+-#include <linux/if.h>
+-#include <linux/if_ether.h>
++#include <net/if.h>
+ #include <netinet/in.h>
+ #include <sys/ioctl.h>
+ #include <sys/socket.h>
+ #include <sys/types.h>
+ #include <stdio.h>
+ #include <stdlib.h>
+-#include <strings.h>
++#include <string.h>
+ #include <unistd.h>
+-#include <linux/ax25.h>
++#include <netax25/ax25.h>
++
++#define	ETH_P_AX25	0x0002
+ 
+ int recv_packet(unsigned char *buf, int size, unsigned char *port);
+ void print_call(unsigned char *buf);
+@@ -250,4 +251,4 @@
+ 		}
+ 	} /* for */
+ }	
+-		
+\ No newline at end of file
++		
+
+--=-xRpN2a2Q26SKxVEW5bE2--
+
