@@ -1,55 +1,28 @@
-From: Jeroen Vreeken <pe1rxq@amsat.org>
+From: Tomi Manninen <tpm@prkele.tky.hut.fi>
 Subject: Re: INP3 patch + yam = kernel oops
-Date: Fri, 4 Apr 2003 23:55:22 +0200
+Date: Sat, 5 Apr 2003 01:12:51 +0300 (EEST)
 Sender: linux-hams-owner@localhost
-Message-ID: <20030404235522.E1131@jeroen.pe1rxq.ampr.org>
-References: <200304022112.07835.oyvind@cs.uit.no>
+Message-ID: <Pine.LNX.4.44.0304050111390.10741-100000@oh2bns.ampr.org>
+References: <20030404235522.E1131@jeroen.pe1rxq.ampr.org>
+Reply-To: tpm@prkele.tky.hut.fi
 Mime-Version: 1.0
-Content-Transfer-Encoding: QUOTED-PRINTABLE
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <200304022112.07835.oyvind@cs.uit.no>; from oyvind@cs.uit.no on Wed, Apr 02, 2003 at 21:12:07 +0200
+In-Reply-To: <20030404235522.E1131@jeroen.pe1rxq.ampr.org>
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="iso-8859-1"
+Content-Type: TEXT/PLAIN; charset="us-ascii"
+Content-Transfer-Encoding: 7bit
 To: linux-hams@vger.kernel.org
 
-On 2003.04.02 21:12:07 +0200 =D8yvind Hanssen wrote:
->=20
-> I was thinking of giving up and do without INP3, but if anyone knows =
-this
-> problem and=20
-> perhaps a hint where to look?? I used the patch which was meant for a
-> 2.4.19 prerelease, but
-> agains the official 2.4.19 kernel source. I cant find any other info =
-on
-> this than:=20
-> http://sharon.pi8zaa.ampr.org/users/pe1rxq/inp3.html
->=20
-> Btw. What is the "sock_orphan patch"?
+On Fri, 4 Apr 2003, Jeroen Vreeken wrote:
 
-Its a fix for a prblem with earlier 2.4 kernels that would crash as alm=
-ost
-immediatly.
+> On a side note does anybody know how the status of ax25 in 2.5 is?
+> I know there have been some changes, but I don't get replies from any mails
+> to the author....
 
-I haven't tried the patch on a 'real' 2.4.19 source yet so it could be =
-the
-cause...
-But ax25 in 2.4 is terribly broken :(
+I'd like to know that as well. Ralf are you here? Any progress lately???
 
-On a side note does anybody know how the status of ax25 in 2.5 is?
-I know there have been some changes, but I don't get replies from any m=
-ails
-to the author....
+-- 
+Tomi Manninen           Internet:  oh2bns@sral.fi
+OH2BNS                  AX.25:     oh2bns@oh2rbi.fin.eu
+KP20ME04                Amprnet:   oh2bns@oh2rbi.ampr.org
 
-I just want to know if it is just as likely to crash as 2.4, more likel=
-y or
-is it getting better?
-In other words is it worth to try??? What needs to be done? Can I help?=
-??
-
-	Jeroen
-
--
-To unsubscribe from this list: send the line "unsubscribe linux-hams" i=
-n
-the body of a message to majordomo@vger.kernel.org
-More majordomo info at  http://vger.kernel.org/majordomo-info.html
