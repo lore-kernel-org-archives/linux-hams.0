@@ -1,39 +1,30 @@
 From: Tomi Manninen <tpm@prkele.tky.hut.fi>
 Subject: Re: ANN: gMFSK v0.4
-Date: Mon, 8 Apr 2002 13:57:23 +0300 (EEST)
+Date: Mon, 8 Apr 2002 18:32:40 +0300 (EEST)
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <Pine.LNX.4.33.0204081351140.31031-100000@oh2bns.ampr.org>
-References: <Pine.LNX.4.33.0204081242250.29550-100000@oh2bns.ampr.org>
+Message-ID: <Pine.LNX.4.33.0204081822410.15167-100000@oh2bns.ampr.org>
+References: <3CB1CD09.12082.1950EDB@localhost>
 Reply-To: <tpm@prkele.tky.hut.fi>
 Mime-Version: 1.0
-In-Reply-To: <Pine.LNX.4.33.0204081242250.29550-100000@oh2bns.ampr.org>
+In-Reply-To: <3CB1CD09.12082.1950EDB@localhost>
 List-Id: <linux-hams.vger.kernel.org>
 Content-Type: TEXT/PLAIN; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
-To: Aleksandar Ilic <ailic@gmx.net>
+To: Wilbert Knol <w.knol@niwa.cri.nz>
 Cc: linux-hams@vger.kernel.org
 
-On Mon, 8 Apr 2002, Tomi Manninen wrote:
+On Mon, 8 Apr 2002, Wilbert Knol wrote:
 
-> On Mon, 8 Apr 2002, Aleksandar Ilic wrote:
-> 
-> > If I start gMFSK from KDE, it is working - except I can not type from 
-> > keyboard in the transmit window. I can copy and paste text in it, but 
-> > keyboard is dead.
-> > From GNOME, all is OK.
-> 
-> Ok, thanks for the report. It is indeed interesting and bit strange too. 
-> I'll need to try and see if I can reproduce it here.
+> A question: I would like to extract PTT from a USB serial adapter, but the 
+> device file for it doesn't show up in the pick list of gMFSK. Can I safely 
+> add a symlink to the USB device file and call it, say /dev/ttyS99?
 
-I could not reproduce this with KDE but I found another possible cause for
-it. Can you check if you have NumLock (or CapsLock or ScrollLock) on when
-this happens.
+You can type whatever filename you want in the PTT text entry box. It
+doesn't need to be from the list.
 
-It seems that shortly before releasing 0.4 I added a bug that makes the TX
-window ignore keyboard input when any modifiers are on. In fact you can't
-even type in CAPITAL letters...
-
-Oh well, I will release 0.4.1 soon with this and another small bug fixed.
+I don't have any USB serial converters here but I suppose you could just
+type /dev/ttyUSB0 or /dev/usb/ttyUSB or whatever there. If the USB serial
+driver implements the necessary ioctls it should work.
 
 -- 
 Tomi Manninen           Internet:  oh2bns@sral.fi
