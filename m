@@ -1,36 +1,36 @@
 From: "Demetre Valaris" <sv1uy@sv1uy.ampr.org>
-Subject: Re: LINUX screen blanking
-Date: Sun, 17 Nov 2002 18:04:57 +0200
+Subject: Protocol error
+Date: Sun, 17 Nov 2002 18:29:25 +0200
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <3DD7DA49.4423.6208840@localhost>
-References: <3DD7C7E7.20193.5D8B5D5@localhost>
+Message-ID: <3DD7E005.25470.636F19D@localhost>
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-reply-to: <Pine.LNX.4.44.0211171031220.25424-100000@mars.local.net>
 List-Id: <linux-hams.vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
-To: abolduc@attbi.com
-Cc: linux-hams <linux-hams@vger.kernel.org>
+To: linux-hams <linux-hams@vger.kernel.org>
 
-On 17 Nov 2002 at 10:33, Al Bolduc wrote:
+Hi guys,
 
-> I have that command in rc.local.  That way it gets set every time I boot.
-> 
-> Al
-> 
-> #  Al Bolduc - abolduc@attbi.com - ka1as@amsat.org - ka1as@arrl.net
-> 
-> 
+Ever since I started using AX25 tools I seem to be getting the foolowing error 
+message from the kernel in /var/log/messages.
 
-Right you are Al,
+Nov 17 18:15:21 nest-0 kernel: protocol 0000 is buggy, dev ax0
 
-Just tried it and it works FB FB FB! Thanks a lot.
-I had in my JNOS startup script and it is FB.
-Will now put it in rc.local as you suggested, well /sbin/init.d/boot.local in 
-my SUSE distribution.
+This message keep repeating quite often.
 
-Many thanks again. Regards to you and yours!!!
+Now this is probably a warning and it does not seem to cause any problems to 
+my AX25 operation. Has anyone seen this messsage in his setup and what does it 
+mean please?
+
+I use SUSE 7.3 with 2.4.10-GB kernel and I use the distribution AX25 tools.
+On port ax0 I do not use TCP/IP, just AX25 because it is the ax port for my 
+APRSD. The funny thing is that I do not get any reports on interface ax1 where 
+I use TCP/IP and it has a pk6 link to AMPRnet. I also have to tell you that I 
+have assigned an IP address to port ax0 as well, but I do not use any IP on 
+ax0.
+
+Any ideas would be much appreciated.
 
 73 de Demetre SV1UY
 e-mail sv1uy@sv1uy.ampr.org
