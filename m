@@ -1,49 +1,49 @@
-From: "Curt, WE7U" <archer@eskimo.com>
-Subject: Re: Run app on login
-Date: Mon, 15 Nov 2004 07:44:56 -0800 (PST)
-Message-ID: <Pine.SUN.4.58.0411150742470.171@eskimo.com>
-References: <620c9057041113184754867a6d@mail.gmail.com> <200411132106.58898.budr@netride.net>
-Reply-To: "Curt Mills, WE7U" <archer@eskimo.com>
+From: <w9ya@arrl.net>
+Subject: Re: QSSTV-5.2d compiling
+Date: Mon, 15 Nov 2004 19:58:32 -0500 (EST)
+Message-ID: <1030.65.166.80.196.1100566712.squirrel@w9ya0.pointclark.net>
+References: <41984799.9020305@bigpond.com>
 Mime-Version: 1.0
+Content-Transfer-Encoding: 7BIT
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <200411132106.58898.budr@netride.net>
+In-Reply-To: <41984799.9020305@bigpond.com>
 Sender: linux-hams-owner@vger.kernel.org
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: TEXT/PLAIN; charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-To: Bud Rogers <budr@netride.net>
-Cc: Linux-hams List <linux-hams@vger.kernel.org>
+Content-Type: text/plain; charset="us-ascii"
+To: linux-hams@vger.kernel.org
 
-On Sat, 13 Nov 2004, Bud Rogers wrote:
+Thac has working rpm spec files for this. AND.....he uses a for loop (if I
+recall correctly) to accomplish what is needed. <- You might like to check
+this out.
 
-> On Saturday 13 November 2004 20:47, Chuck Hast wrote:
-> > Folks,
-> > I am trying to figure out how to have a particular application start
-> > up when a user logs in with a specified login.
-> > Example,
-> > User logs in with "radio"  password "hamradio"
-> > Instead of bringing up a prompt, I want a login of radio to start up
-> > a special application. I am sure that Linux can do it, just not quite
-> > sure how to do so.
+
+> Hi All...have had great problems with compiling QSSTV-5.2d on Fedora
+> Core 2 and Mandrake 9.2 or 10......I found it wouldnt compile at
+> "sstvparam.ccp"...found the alternate copy of this on the net and
+> overwrote the origional.....that compiled ok.....the next problem was
+> with 'zoomform.cpp'....chased all over the net and finally found a
+> qsstv-5.2d.diff.gz file used in Debian for QSSTV.......noted that there
+> was mention of using 'touch' on the 'zoomform.ui' file .....patched the
+> origional qsstv-5.2d.tar.gz after untaring.....still no joy......then
+> went and had a look in the '/debian/rules' file and saw the lines under
+> build.....used the following command in the qsstv-5.2d dir after
+> untaring it.....
+> touch qsstv/configform.ui qsstv/ftpform.ui qsstvrecform.ui
+> qsstv/zoomform.ui qsstv/freqform.ui qsstv/posform.ui qsstv/textselect.ui
+> then ./configure && make  no more error problems...su then make
+> install.... great now i have QSSTV up and running.....
 >
-> Anything you put in a user's .bashrc or .bash_profile will be run
-> whenever that user logs in.  You can have it set up things in your
-> environment, or run certain commands.  Man bash will give you the
-> details.
+> Hope this helps anyone who has had problems......the touch command could
+>  be written into the configure system somewhere but i dont know how to
+> do  it....
+>
+> best 73's
+> David Munn
+> VK4BDJ
+> -
+> To unsubscribe from this list: send the line "unsubscribe linux-hams" in
+> the body of a message to majordomo@vger.kernel.org
+> More majordomo info at  http://vger.kernel.org/majordomo-info.html
 
-Or .profile.
 
-Run when logging in:  .profile or .bash_profile
 
-Run when any new shell/subshell is started:  .bashrc
-
-If you're dealing with an environment where one process or one user
-might start multiple shells or subshells, then you want to stick
-with the .profile or .bash_profile files, as then your application
-will only get run once per login.
-
---
-Curt, WE7U			         http://www.eskimo.com/~archer
-"Lotto:    A tax on people who are bad at math." -- unknown
-"Windows:  Microsoft's tax on computer illiterates." -- WE7U
-"The world DOES revolve around me:  I picked the coordinate system!"
