@@ -1,192 +1,42 @@
-From: James Cutler <jwc@stanford.edu>
-Subject: Maximizing baycom_par throughput
-Date: Wed, 19 Mar 2003 10:31:58 -0800 (PST)
+From: Shane Deering <vk3bvp@qsl.net>
+Subject: Re: Regarding XFBB Nightmares!
+Date: Thu, 20 Mar 2003 09:59:50 +1100
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <Pine.LNX.4.44.0303182317040.6182-200000@DNab404623.Stanford.EDU>
+Message-ID: <200303200959.50733.vk3bvp@qsl.net>
+References: <3E78A6CA.70604@kj6eo.com>
+Reply-To: vk3bvp@qsl.net
 Mime-Version: 1.0
-Content-Type: MULTIPART/MIXED; BOUNDARY="1135283781-410784600-1048098718=:27455"
+Content-Transfer-Encoding: 7BIT
 Return-path: <linux-hams-owner@vger.kernel.org>
+In-Reply-To: <3E78A6CA.70604@kj6eo.com>
 List-Id: <linux-hams.vger.kernel.org>
+Content-Type: text/plain; charset="us-ascii"
 To: linux-hams@vger.kernel.org
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
-  Send mail to mime@docserver.cac.washington.edu for more info.
+On Thu, 20 Mar 2003 04:20, Bill Walton wrote:
 
---1135283781-410784600-1048098718=:27455
-Content-Type: TEXT/PLAIN; charset=US-ASCII
+> install it ie: "rpm -i --test"
+> and it failed the dependency "libc.so.5".  I am running RedHat 7.2 with
+> a 2.4.20 kernel and
+> "libc.so.6".
+>
+> What would be the easiest way to get around this dependency problem?
 
-Hello,
+Install it. I found libc-5.3.12-31.i386.rpm sitting on my Redhat box and guess 
+that's what I used when told by the fbb RPM that it was needed. I can't 
+remember if there was a trick involved, but I did manage to get it working.
 
-I'm trying to maximize output from a 9600 baud picpar modem, the 
-Tigertronics BP-96A.  I'm currently only able to send at a rate of 3600bps 
-before the receiver detects missing packets.
+The following is taken from the description in that RPM.
+"Older Linux systems (including all Red Hat Linux releases between 2.0 and 
+4.2, inclusive) were based on libc version 5. The libc package includes the 
+libc5 libraries and other libraries based on libc5. With these libraries 
+installed, old applications which need them will be able to run on your glibc 
+(libc version 6) based system. The libc package should be installed so that 
+you can run older applications which need libc version 5."
 
-I'm using code that calculates throughput in an open loop fashion and 
-throttles back the sending of packets when a limit is reached.  See the 
-attached code.
+-- 
+Shane Deering                   Sent using Kmail v1.4.3
+vk3bvp@qsl.net                  on Mandrake Linux, the Desktop OS
+vk3bvp@vk3bvp.#sev.vic.aus.oc   MDK9.0 Up 36 minutes 
+http://www.qsl.net/vk3bvp/      RH7.2 Up 18 days, 12 hours and 59 minutes 
 
-When I set the modem in "full" duplex mode with sethdlc, I get the best 
-throughput.  However it seems I am paying the txdelay penalty on each 
-packet, rather than on just the first one (since I'm sending a stream of 
-continous packets down).  So each packet is delayed by txdelay.  I have to 
-wait for each packet is sent in its entirety before I send the next one.  
-Sending packets more quickly results in them being dropped and not 
-transmitted.
-
-When I set the modem to "half" duplex mode with sethdlc, the throughput is 
-worse.  Packets are sent irradically and if I send them too quickly they 
-are dropped as well.  I've increased the buffer lengths in hdlcdrv.c which 
-helps prevent the dropped packets but still they are sent irradically.
-
-I can't seem to get a continous multiple packet transmission from the 
-picpar/baycom_par modem.
-
-Anyone have any ideas?
-
-Cheers,
-
---James
-
-
---1135283781-410784600-1048098718=:27455
-Content-Type: TEXT/PLAIN; charset=US-ASCII; name="throughput.c"
-Content-Transfer-Encoding: BASE64
-Content-ID: <Pine.LNX.4.44.0303191031580.27455@wyders.stanford.edu>
-Content-Description: 
-Content-Disposition: attachment; filename="throughput.c"
-
-I2luY2x1ZGUgPHN0ZGlvLmg+DQojaW5jbHVkZSA8c3RkbGliLmg+DQojaW5j
-bHVkZSA8dW5pc3RkLmg+DQojaW5jbHVkZSA8c3lzL3R5cGVzLmg+DQojaW5j
-bHVkZSA8c3lzL3NvY2tldC5oPg0KI2luY2x1ZGUgPG5ldC9ldGhlcm5ldC5o
-Pg0KI2luY2x1ZGUgPG5ldGF4MjUvYXgyNS5oPg0KI2luY2x1ZGUgPG5ldGF4
-MjUvYXhjb25maWcuaD4NCg0KI2RlZmluZSBCTE9DS19TSVpFCTIwMA0KI2Rl
-ZmluZSBBWF9ERVZJQ0UJImJjcDAiDQojZGVmaW5lIE1BWF9SRVRSSUVTCTEw
-MA0KI2RlZmluZQlOVU1CRVJfT0ZfUEFDS0VUUyAyMA0KI2RlZmluZSBCUFMJ
-NDAwCQkJLy8gQnl0ZXMgcGVyIHNlY29uZA0KDQpzdHJ1Y3QgdGltZXZhbCBz
-dGFydDsNCmxvbmcgYnl0ZUNvdW50Ow0KZG91YmxlIHRocm91Z2hwdXQ7DQoN
-Ci8vIEluaXRpYWxpemVzIEFYMjUgDQppbnQgaW5pdEFYMjUoKSANCnsNCglp
-ZiAoYXgyNV9jb25maWdfbG9hZF9wb3J0cygpID09IDApIHsNCgkJZnByaW50
-ZihzdGRlcnIsICJFUlJPUjogbm8gQVguMjUgcG9ydHMgZGVmaW5lZFxuIik7
-DQoJICAgICAgICByZXR1cm4gMTsNCgl9DQoJcmV0dXJuIDA7DQp9DQoNCg0K
-Ly8gQ3JlYXRlcyBhIGRhdGFncmFtIHNvY2tldCBmb3IgQVgyNS4gIFRoZSBw
-b3J0IGlzIGJvdW5kIHRvIGEgc291cmNlDQovLyBhZGRyZXNzIGFuZCBjb25u
-ZWN0ZWQgdG8gYSBkZXN0aW5hdGlvbiBhZGRyZXNzLg0KaW50IGNvbm5lY3RQ
-b3J0VHgoIGNoYXIgKnBvcnQsIGNoYXIgKmRlc3RDYWxsICkgew0KDQoJY2hh
-ciAqcG9ydGNhbGw7DQoJaW50IHMsIGRsZW4sIGxlbjsNCglzdHJ1Y3QgZnVs
-bF9zb2NrYWRkcl9heDI1IGRlc3Q7DQoJc3RydWN0IGZ1bGxfc29ja2FkZHJf
-YXgyNSBzcmM7DQoNCglpZiAoKHBvcnRjYWxsID0gYXgyNV9jb25maWdfZ2V0
-X2FkZHIocG9ydCkpID09IE5VTEwpIHsNCgkJZnByaW50ZihzdGRlcnIsIA0K
-CQkJImJlYWNvbjogaW52YWxpZCBBWC4yNSBwb3J0IHNldHRpbmcgLSAlc1xu
-IiwgcG9ydCk7DQoJCXJldHVybiAxOw0KCX0NCglmcHJpbnRmKHN0ZGVyciwg
-IkxvYWRlZCBwb3J0OiAlc1xuIiwgcG9ydGNhbGwpOw0KDQoJaWYgKChkbGVu
-ID0gYXgyNV9hdG9uKGRlc3RDYWxsLCAmZGVzdCkpID09IC0xKSB7DQoJCWZw
-cmludGYoc3RkZXJyLCANCgkJCSJiZWFjb246IHVuYWJsZSB0byBjb252ZXJ0
-IGNhbGxzaWduICclcydcbiIsIGRlc3RDYWxsKTsNCgkJcmV0dXJuIDE7DQoJ
-fQ0KCQ0KCWlmICgobGVuID0gYXgyNV9hdG9uKHBvcnRjYWxsLCAmc3JjKSkg
-PT0gLTEpIHsNCgkJZnByaW50ZihzdGRlcnIsIA0KCQkJImJlYWNvbjogdW5h
-YmxlIHRvIGNvbnZlcnQgY2FsbHNpZ24gJyVzJ1xuIiwgcG9ydGNhbGwpOw0K
-CQlyZXR1cm4gMTsNCgl9DQoJZnByaW50ZihzdGRlcnIsICJDb252ZXJ0ZWQg
-Y2FsbCBzaWduXG4iKTsNCglmZmx1c2goc3RkZXJyKTsNCg0KCWlmICgocyA9
-IHNvY2tldChBRl9BWDI1LCBTT0NLX0RHUkFNLCAweGJiKSkgPCAwKSB7DQoJ
-CWZwcmludGYoIHN0ZGVyciwgIkZhaWxlZCB0byBvcGVuIHNvY2tldFxuIiAp
-Ow0KCQlwZXJyb3IoIlNvY2tldCBvcGVuIGZhaWxlZCIpOw0KCQlyZXR1cm4g
-MTsNCgl9DQoNCglmcHJpbnRmKHN0ZGVyciwgIk9wZW5lZCBzb2NrZXRcbiIp
-Ow0KDQoJaWYgKGJpbmQocywgKHN0cnVjdCBzb2NrYWRkciAqKSZzcmMsIGxl
-bikgPT0gLTEpIHsNCgkJZnByaW50Ziggc3RkZXJyLCAiRmFpbGVkIHRvIGJp
-bmQgc29ja2V0XG4iICk7DQoJCXJldHVybiAxOw0KCX0NCg0KCWlmICggY29u
-bmVjdCggcywgKHN0cnVjdCBzb2NrYWRkciAqKSZkZXN0LCBkbGVuICkgIT0g
-MCApDQoJCXBlcnJvcigiY29ubmVjdCBmYWlsZWQiKTsNCg0KCXJldHVybigg
-cyApOw0KDQp9DQoNCi8vIC0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
-LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
-LS0NCi8vIENhbGN1bGF0ZXMgb3BlbiBsb29wIHRocm91Z2hwdXQuICBVc2Vk
-IHRvIGxpbWl0IG92ZXJmbG93aW5nIGluIHRyYW5zbWl0DQovLyBidWZmZXIg
-YW5kIGRyb3BwaW5nIHBhY2tldHMuDQovLyAtLS0tLS0tLS0tLS0tLS0tLS0t
-LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
-LS0tLS0tLS0tLS0tDQpkb3VibGUgY2FsY1Rocm91Z2hwdXQoKSANCnsNCglz
-dHJ1Y3QgdGltZXZhbCBub3c7DQoJZG91YmxlIHVEaWZmLCBzTm93LCB1c05v
-dywgc1N0YXJ0LCB1c1N0YXJ0Ow0KDQoJaWYgKCBnZXR0aW1lb2ZkYXkoICZu
-b3csIE5VTEwpID09IC0xICkgDQoJCXBlcnJvcigiRXJyb3IgaW4gZ2V0IHRp
-bWUgb2YgZGF5Iik7DQoNCglzTm93IAk9IChkb3VibGUpbm93LnR2X3NlYzsN
-Cgl1c05vdyAJPSAoZG91YmxlKW5vdy50dl91c2VjOw0KCXNTdGFydCAJPSAo
-ZG91YmxlKXN0YXJ0LnR2X3NlYzsNCgl1c1N0YXJ0ID0gKGRvdWJsZSlzdGFy
-dC50dl91c2VjOw0KDQoJdURpZmYgPSAoIHNOb3cgLSBzU3RhcnQgKSAqIDEw
-MDAwMDA7DQoJdURpZmYgPSB1RGlmZiArICggdXNOb3cgLSAgdXNTdGFydCAp
-Ow0KDQoJdGhyb3VnaHB1dCA9ICggYnl0ZUNvdW50ICogMTAwMDAwMCApIC8g
-dURpZmY7DQoJdGhyb3VnaHB1dCA9ICggIChkb3VibGUpYnl0ZUNvdW50ICog
-MTAwMDAwMCApIC8gdURpZmY7DQoNCglmcHJpbnRmKHN0ZGVyciwgIlx0XHR0
-aHJvdWdocHV0ICVkXG4iLCAoaW50KXRocm91Z2hwdXQgKTsNCg0KCXJldHVy
-biAodGhyb3VnaHB1dCk7DQp9DQoNCi8vIC0tLS0tLS0tLS0tLS0tLS0tLS0t
-LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
-LS0tLS0tLS0tLS0NCi8vIEluaXRpdGlhbGl6ZXMgdmFyaWFibGVzIHVzZWQg
-aW4gdGhyb3VnaHB1dCBjYWxjdWxhdGlvbnMuDQovLyAtLS0tLS0tLS0tLS0t
-LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
-LS0tLS0tLS0tLS0tLS0tLS0tDQp2b2lkIGluaXRUaHJvdWdocHV0VmFycygp
-DQp7DQoJYnl0ZUNvdW50ID0gdGhyb3VnaHB1dCA9IDA7DQoJaWYgKCBnZXR0
-aW1lb2ZkYXkoICZzdGFydCwgTlVMTCkgPT0gLTEgKSANCgkJcGVycm9yKCJF
-cnJvciBpbiBzdGFydCBnZXQgdGltZSBvZiBkYXkiKTsNCn0NCg0KDQoNCi8v
-IC0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
-LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0NCi8vIFNlbmRzIHBh
-Y2tldHMNCi8vIC0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
-LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0NCnZv
-aWQgc2VuZFBhY2tldHMoIGludCBzLCBpbnQgYmxvY2tTaXplLCBpbnQgbm9w
-LCBpbnQgYnBzICkgDQp7DQoJaW50IGksIHRvdGFsLCBjb3VudDsNCglkb3Vi
-bGUgdVRpbWU7DQoJc3RydWN0IHRpbWV2YWwgbm93Ow0KCWNoYXIgZGF0YVsx
-MDAwXTsNCgljaGFyIHN0clsxMDAwXTsNCg0KCWZwcmludGYoc3RkZXJyLCAi
-U2VuZGluZyAlZCBwYWNrZXRzIG9mIHNpemUgJWRcbiIsIG5vcCwgYmxvY2tT
-aXplICk7DQoNCglpbml0VGhyb3VnaHB1dFZhcnMoKTsNCg0KCS8vIEJ1aWxk
-IHBhY2tldCB0byBzZW5kDQoJc3RyWzBdID0gJ1wwJzsNCgl3aGlsZSAoIHN0
-cmxlbihzdHIpIDwgYmxvY2tTaXplICkNCgkJc3ByaW50Ziggc3RyLCAiMCVz
-Iiwgc3RyICk7DQoNCgljb3VudCA9IDA7DQoJd2hpbGUoIGNvdW50IDwgbm9w
-ICkNCgl7DQoNCgkJLy8gQXBwZW5kIGNvdW50IHRvIGRhdGENCgkJc3ByaW50
-ZiggZGF0YSwgIiVzOiVkIiwgc3RyLCBjb3VudCApOw0KDQoJCWZwcmludGYo
-c3RkZXJyLCAiXHRzZW5kaW5nIHBhY2tldCAlZDolc1xuIiwgY291bnQsIGRh
-dGEgKTsNCg0KCQkvLyBQYXVzZSB0byB0aHJvdHRsZSBiYWNrIHRocm91Z2hw
-dXQgaWYgbmVlZGVkLiAgSGF2ZSB0byBkbyB0aGlzDQoJCS8vIGluIGFuIG9w
-ZW4gbG9vcCBmYXNoaW9uLg0KCQlpID0gMDsNCgkJd2hpbGUgKCAoY2FsY1Ro
-cm91Z2hwdXQoKSA+IGJwcyApICYmICggaSA8PSBNQVhfUkVUUklFUyApICkg
-DQoJCXsNCgkJCWkrKzsNCgkJCXVzbGVlcCgxMDApOw0KCQl9DQoNCgkJLy8g
-U2VuZCB0aGUgcGFja2V0Lg0KCQlpZiggc2VuZCggcywgZGF0YSwgc3RybGVu
-KGRhdGEpLCAwICkgPCAgc3RybGVuKGRhdGEpICkNCgkJew0KCQkJcGVycm9y
-KCJUaGUgd3JpdGUgZmFpbGVkKDEpIik7DQoJCQlleGl0KC0xKTsNCgkJfQ0K
-CQlieXRlQ291bnQrPXN0cmxlbihkYXRhKTsNCgkJY291bnQrKzsNCgkJcHJp
-bnRmICgiXHRUb3RhbCBkYXRhIHNlbnQ6ICVkXG4iLCBieXRlQ291bnQgKTsN
-Cgl9DQoNCglwcmludGYgKCJcblRvdGFsIGRhdGEgc2VudDogJWRcbiIsIGJ5
-dGVDb3VudCApOw0KfQ0KDQovLyAtLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
-LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
-LS0tLS0tDQovLyBQcmludCBwcm9wZXIgdXNhZ2UNCi8vIC0tLS0tLS0tLS0t
-LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
-LS0tLS0tLS0tLS0tLS0tLS0tLS0NCnZvaWQgcHJpbnRVc2FnZSgpDQp7DQoJ
-ZnByaW50ZihzdGRlcnIsICJ1c2FnZTogdGhyb3VnaHB1dCBbLXAgPHBvcnRf
-bmFtZT5dIFstcyA8YmxvY2tfc2l6ZT5dXG4iKTsNCglmcHJpbnRmKHN0ZGVy
-ciwgIiAgICAgICAgICAgICAgICAgIFstbiA8bnVtYmVyX29mX3BhY2tldHM+
-XSBbLWIgPGJ5dGVzX3Blcl9zZWM+XSBcbiIgKTsNCn0NCg0KaW50IG1haW4o
-IGludCBhcmdjLCBjaGFyKiogYXJndikgDQp7DQoJaW50ICBicHMsYyxudW1i
-ZXJPZlBhY2tldHMsIGJsb2NrU2l6ZSwgaWQsIHR4U29ja2V0Ow0KCWNoYXIg
-cG9ydFsxMV07DQoNCglibG9ja1NpemUgPSBCTE9DS19TSVpFOw0KCXN0cmNw
-eSggcG9ydCwgQVhfREVWSUNFICk7DQoJbnVtYmVyT2ZQYWNrZXRzID0gTlVN
-QkVSX09GX1BBQ0tFVFM7DQoJYnBzID0gQlBTOw0KDQoJLy8gUGFyc2UgYXJn
-dW1lbnRzDQoJd2hpbGUgKChjID0gZ2V0b3B0KGFyZ2MsIGFyZ3YsICJwOnM6
-YjpuOiIpKSAhPSAtMSkgew0KCQlzd2l0Y2ggKGMpIHsNCgkJCWNhc2UgJ3An
-Og0KCQkJCQlzdHJuY3B5KCBwb3J0LCBvcHRhcmcsIDEwICk7DQoJCQkJCWlm
-ICggc3RybGVuKG9wdGFyZykgPj0gMTAgKSBwb3J0WzExXSA9ICdcMCc7DQoJ
-CQkJCWJyZWFrOw0KDQoJCQljYXNlICdzJzoNCgkJCQkJaWYgKCAoIGJsb2Nr
-U2l6ZSA9IGF0b2kob3B0YXJnKSApIDw9IDAgKSB7DQoJCQkJCQlmcHJpbnRm
-KCBzdGRlcnIsICJ0aHJvdWdocHV0OiBpbnZhbGlkIGJsb2NrIHNpemUgLSAl
-c1xuIiwgDQoJCQkJCQkJCSBvcHRhcmcpOw0KCQkJCQkJcmV0dXJuIDE7DQoJ
-CQkJCX0NCgkJCQkJYnJlYWs7DQoNCgkJCWNhc2UgJ24nOg0KCQkJCQlpZiAo
-ICggbnVtYmVyT2ZQYWNrZXRzID0gYXRvaShvcHRhcmcpICkgPD0gMCApIHsN
-CgkJCQkJCWZwcmludGYoIHN0ZGVyciwgInRocm91Z2hwdXQ6IGludmFsaWQg
-bnVtYmVyIC0gJXNcbiIsIA0KCQkJCQkJCQkgb3B0YXJnKTsNCgkJCQkJCXJl
-dHVybiAxOw0KCQkJCQl9DQoJCQkJCWJyZWFrOw0KDQoJCQljYXNlICdiJzoN
-CgkJCQkJaWYgKCAoIGJwcyA9IGF0b2kob3B0YXJnKSApIDw9IDAgKSB7DQoJ
-CQkJCQlmcHJpbnRmKCBzdGRlcnIsICJ0aHJvdWdocHV0OiBpbnZhbGlkIG51
-bWJlciAtICVzXG4iLCANCgkJCQkJCQkJIG9wdGFyZyk7DQoJCQkJCQlyZXR1
-cm4gMTsNCgkJCQkJfQ0KCQkJCQlicmVhazsNCg0KDQoJCQljYXNlICc6JzoN
-CgkJCWNhc2UgJz8nOg0KCQkJZGVmYXVsdDoJDQoJCQkJCXByaW50VXNhZ2Uo
-KTsNCgkJCQkJcmV0dXJuIDE7DQoNCgkJfQ0KCX0NCg0KCWluaXRBWDI1KCk7
-DQoJdHhTb2NrZXQgPSBjb25uZWN0UG9ydFR4KCBwb3J0LCAiUVNUIiApOw0K
-CXNlbmRQYWNrZXRzKCB0eFNvY2tldCwgYmxvY2tTaXplLCBudW1iZXJPZlBh
-Y2tldHMsIGJwcyApOw0KCWNsb3NlICggdHhTb2NrZXQgKTsNCg0KfQ0KDQoN
-Cg0K
---1135283781-410784600-1048098718=:27455--
