@@ -1,58 +1,41 @@
-From: Tomi Manninen OH2BNS <tpm@prkele.tky.hut.fi>
-Subject: Re: wxGTK-2.4.0 (2)
-Date: Wed, 15 Jan 2003 12:05:06 +0200 (EET)
+From: Jonathan Naylor <jonathan.naylor@ggaweb.ch>
+Subject: Re: wxGTK-2.4.0
+Date: Wed, 15 Jan 2003 22:12:05 +0100
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <Pine.HPX.4.10.10301151155040.6214-100000@saturn.trs.ntc.nokia.com>
-References: <Pine.LNX.4.44.0301151950170.7507-100000@zl2bsj.ampr.org>
-Reply-To: tpm@prkele.tky.hut.fi
+Message-ID: <200301152212.05203.jonathan.naylor@ggaweb.ch>
+Reply-To: g4klx@qsl.net
 Mime-Version: 1.0
+Content-Transfer-Encoding: 8bit
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <Pine.LNX.4.44.0301151950170.7507-100000@zl2bsj.ampr.org>
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: TEXT/PLAIN; charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-To: Wilbert Knol <zl2bsj@zl2tze.ath.cx>
-Cc: linux-hams@vger.kernel.org
+Content-Type: text/plain; charset="us-ascii"
+To: Linux Hams <linux-hams@vger.kernel.org>
 
-On Wed, 15 Jan 2003, Wilbert Knol wrote:
+Hi again
 
-> Hmmm...looks OK.
+I've had a very enjoyable day building different version of wxGTK-2.4.0 
+and building LinWSJT and finding what does and doesn't work with it !
 
-Yes, it does. Except maybe the --libs part which seems to point to a beta
-version 1.3 of most of the libs...
+LinWSJT does work with wxGTK-2.4.0 but not with all build types:
 
-> The config.log error message was, that it couldn't find gtk/gtk.h :
-> 
-> configure:12357: checking for GTK+ - version >= 2.0.0
-> configure:12511: gcc -o conftest    -D_FILE_OFFSET_BITS=64 
-> -D_LARGE_FILES  conftest.c   1>&5
-> configure:12503:21: gtk/gtk.h: No such file or directory
+It will work with wxGTK-2.4.0 built with GTK+ 1.x.y (in my case 1.2.10), 
+this is achieved by using "./configure --with-gtk" for wxGTK.
 
-Yeah. The real problem seems to be that the "configure" test compile
-doesn't include the necessary flags so it's bound to fail. My guess was
-that pkg-config wouldn't give the correct flags but it seems it does. So I
-don't understand what is going on here...
+It will sort of work with wxGTK-2.4.0 and GTK+ 2 (in my case 2.2.0) but 
+without Unicode support by "./configure --with-gtk --enable-gtk2". When 
+I means "sort of works", I mean that the numbers on the spectrum graph 
+(the square graph on the right) do not appear, but otherwise FSK441 
+operates correctly, JT44 is perfectly OK.
 
-> Shouldn't the gcc statement have included something like:
->    -I/usr/include/gtk-2.0
+The currently released LinWSJT will not build as Unicode, the next 
+release is Unicode compliant but suffers from the same problems as 
+above. I think this is a bug in wsGTK-2.4.0 and I will report it to the 
+bug tracking database. If I build wxGTK for debugging I get an 
+assertion failure when dealing with Pango.
 
-Yes. And pkg-config was supposed to supply it.
+So I recommend using wxGTK-2.4.0 with GTK+ 1.x.y and you should be fine, 
+of course you may have to install pkg-config to get it to build in the 
+first place.
 
-> I upgraded pkg-config to 0.14 as suggested, which didn't help (but is 
-> worth having for the bug fixes:-).
-
-The way I have understood it, it's the GTK2 installation that is
-responsible for putting a file "gtk+-2.0.pc" or something like that in a
-place where pkg-config finds it. That file has the knowledge about where
-the headers and libs are located. So it's not pkg-config's fault if this
-data is incorrect.
-
-But like I said, I don't understand what happened as the pkg-config
-output looks ok.
-
--- 
-Tomi Manninen           Internet:  oh2bns@sral.fi
-OH2BNS                  AX.25:     oh2bns@oh2rbi.fin.eu
-KP20ME04                Amprnet:   oh2bns@oh2rbi.ampr.org
-
+Jonathan  HB9DRD/G4KLX
 
