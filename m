@@ -1,41 +1,44 @@
-From: Ralf Baechle DO1GRB <ralf@linux-mips.org>
-Subject: Re: [PATCH] ax25 Locking fix
-Date: Sat, 28 Feb 2004 18:26:50 +0100
+From: "Rodolfo Brasnarof" <rodob@ciudad.com.ar>
+Subject: Re: Would you run Linuxnode into an _OLD_ server?
+Date: Sun, 29 Feb 2004 02:58:17 -0300
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <20040228172650.GA4106@linux-mips.org>
-References: <20040213234806.J220@jeroen.pe1rxq.ampr.org> <402D694E.5080802@ccr.jussieu.fr>
+Message-ID: <40415549.29870.2BACA2@localhost>
+References: <001201c3fd8e$73ddb980$1400a8c0@IZ4EFN>
 Mime-Version: 1.0
+Content-Transfer-Encoding: 7BIT
 Return-path: <linux-hams-owner@vger.kernel.org>
-Content-Disposition: inline
-In-Reply-To: <402D694E.5080802@ccr.jussieu.fr>
+In-reply-to: <001201c3fd8e$73ddb980$1400a8c0@IZ4EFN>
+Content-description: Mail message body
 List-Id: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-To: Bernard Pidoux <pidoux@ccr.jussieu.fr>
-Cc: Jeroen Vreeken <pe1rxq@amsat.org>, davem@redhat.com, linux-hams@vger.kernel.org
+To: linux-hams@vger.kernel.org
+Cc: IZ4EFN Alessio <iz4efn@libero.it>
 
-On Sat, Feb 14, 2004 at 12:18:22AM +0000, Bernard Pidoux wrote:
 
-> Is there any chance that you could have a look at rose.o module code in 
-> order to fix a kernel panic problem.
-> If rose module is just installed it can be removed and reinstalled 
-> without problem.
-> But as soon as I do "ifconfig rose0 2080175502" I have a kernel panic.
-> Also if I perform a rsattach and try to remove the module then I have a 
-> kernel oops.
+---
+On 28 Feb 2004 at 1:04, IZ4EFN Alessio wrote:
 
-I assume you meant "ifconfig rose0 hw rose 2080175502"?  Without the
-"hw rose" it's just an obscure way to set the ip address to 12.104.129.142.
-
-> Once I had the chance to catch this message from syslog@f6bvp
->   (f6bvp is the actual name of my Linux machine):
+> Good morning guys,
 > 
-> f6bvp kernel : unregister_net_device : wainting for rose0 to become 
-> free. Usage count  =1
-> repeats x times ...
+> just subscribed and jus starting bothering you with stupid question :)
 > 
-> and then I observed a catastrophic PC reboot.
+> My name is Alex, IZ4EFN and I'm setting up some Linux-ax25 servicies for my
+> local club.
+> 
+> One of these is a Linuxnode, connected via KISS to a node and via LAN to our
+> router server.
+> 
+> This is the question:
+> 
+> would you run JUST Linuxnode 0.3.2 on a Pentium 133, 32MB RAM?
 
-Sounds like a problem with reference counting, can't be hard to fix.
+I'm doing something like this on a 100 MHZ 486 16M ram, and 
+at work I have a router vpn server and stuff running on a 
+486 dx 33 with 12MB of ram, and 600MB HD. I'm using 
+Slackware 9.1 as base system, and custom 2.4.25 kernel. With 
+a custom kernel you can save maybe 500k-1MB of ram by 
+removing unnecesary things.
 
-  Ralf
+So, don't worry. This is such a poor hardware. It's a 
+powerfull system.
+
