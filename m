@@ -1,99 +1,16 @@
-From: ariel mastracchio <ari197516@yahoo.com>
-Subject: Re: driver soundmodem  HAPN-1 4800
-Date: Fri, 1 Oct 2004 05:55:54 -0700 (PDT)
+From: Dan Jacobson <jidanni@jidanni.org>
+Subject: Re: play selcal tones
+Date: Sat, 09 Oct 2004 12:21:28 +0800
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <20041001125554.27565.qmail@web51003.mail.yahoo.com>
-References: <00ad01c4a71e$bd61feb0$0a01a8c0@amd2700>
+Message-ID: <87u0t4v7w7.fsf@jidanni.org>
+References: <87hdqdw959.fsf@jidanni.org> <200409102340.20812.ailic@gmx.net>
 Mime-Version: 1.0
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <00ad01c4a71e$bd61feb0$0a01a8c0@amd2700>
 List-Id: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
 To: linux-hams@vger.kernel.org
+Cc: olle@xmms.org, thomas@xmms.org
 
-Hi, 
-
- Thanks for the answer Ron,
-
-  You have it working whitch other station with SCC?
-  Yes nobody heard my.. i tried some other txdelay
-txtail and keep not working...
-
-  Someone use other mode than the AFSK1200?
-
-un abrazo,
-- ari
-
-lu9aum
-
---- Ronald Jochems <acfnews@xs4all.nl> wrote:
-
-> Hi Ariel,
-> 
-> The HAPN modems should connect to a SCC card. In
-> this setup we have it
-> running with the linux drivers.
-> Am i correct that you see stations, but they cannot
-> hear you ?
-> If that is the case, can you check if your
-> transmitter goes on-air ? If so
-> is it maybe too short (txdelay) ?
-> 
-> Best regards,
-> 
-> ron
-> 
-> 
-> ----- Original Message -----
-> From: "ariel mastracchio" <ari197516@yahoo.com>
-> To: <linux-hams@vger.kernel.org>
-> Sent: Thursday, September 30, 2004 3:52 PM
-> Subject: driver soundmodem HAPN-1 4800
-> 
-> 
-> > Hello all,
-> >     I set up a station with this driver in linux
-> but
-> > still can't connect with nobody... has someone
-> test
-> > it? it works? i cant heard some station in UHF
-> witch
-> > the manchester modem but nobody heard my..
-> >
-> > hugs.
-> >
-> > lu9aum
-> >
-> >
-> >
-> >
-> >
-> >
-> >
-> > _______________________________
-> > Do you Yahoo!?
-> > Express yourself with Y! Messenger! Free. Download
-> now.
-> > http://messenger.yahoo.com
-> > -
-> > To unsubscribe from this list: send the line
-> "unsubscribe linux-hams" in
-> > the body of a message to majordomo@vger.kernel.org
-> > More majordomo info at 
-> http://vger.kernel.org/majordomo-info.html
-> >
-> 
-> -
-> To unsubscribe from this list: send the line
-> "unsubscribe linux-hams" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at 
-> http://vger.kernel.org/majordomo-info.html
-> 
-
-
-__________________________________________________
-Do You Yahoo!?
-Tired of spam?  Yahoo! Mail has the best spam protection around 
-http://mail.yahoo.com 
+Done.  http://jidanni.org/comm/radio/programs/selcal
+selcal -- generate ICAO SELCAL tones just like on aviation radio using xmms
