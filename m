@@ -1,66 +1,61 @@
-From: Shane Deering <vk3bvp@qsl.net>
-Subject: Re: shutdown script
-Date: Thu, 9 Jan 2003 11:57:35 +1100
+From: mvw@mvw.net
+Subject: fbb, progress and questions
+Date: Wed, 8 Jan 2003 23:08:13 -0500 (EST)
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <200301091157.35104.vk3bvp@qsl.net>
-References: <NCBBKBAJDJIPKFIAFBKLOEFBEHAC.vze2b869@verizon.net>
-Reply-To: vk3bvp@qsl.net
+Message-ID: <Pine.LNX.4.44.0301082249560.27870-100000@jeeves.mvw.net>
+References: <03010806374600.26408@unix.pa3gcu>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7BIT
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <NCBBKBAJDJIPKFIAFBKLOEFBEHAC.vze2b869@verizon.net>
+In-Reply-To: <03010806374600.26408@unix.pa3gcu>
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"
+Content-Type: TEXT/PLAIN; charset="us-ascii"
+Content-Transfer-Encoding: 7bit
 To: linux-hams@vger.kernel.org
 
-On Thu, 9 Jan 2003 07:06, Wilson G. Hein wrote:
-> I'm wondering if someone has a script to close ax25 and netrom, etc
-> interfaces. I would presume it would have something to look at the pid's
-> and then kill the process. I wnat to plug it into
-> /etc/sysconfig/network-scripts to automate startup and close through the
-> normal init scripts.
->
-> TIA,
->
-> Regards,
->
-> Willie, WJ3G
+Hello all,
 
-This isn't elegant, but it is simple and it works.
-dip is used to set up pipes between the kernel and JNOS.
-The other ports are all hardware kiss ports.
-One day (maybe) I'll write something better.
- 
-#!/bin/sh
-# Shut down all our ax25 stuff
-# save our netrom routes and nodes first
-/usr/sbin/nodesave /etc/ax25/nodes
-# Now start shutting down stuff.
-fbb stop
-pkill ax25d
-ifconfig ax0 down
-ifconfig ax1 down
-ifconfig ax2 down
-ifconfig ax3 down
-ifconfig ax4 down
-ifconfig ax5 down
-ifconfig nr0 down
-ifconfig nr1 down
-ifconfig nr2 down
-ifconfig nr3 down
-ifconfig nr4 down
-ifconfig sl0 down
-pkill dip
-pkill kissattach
-pkill mheardd
-pkill netromd
-rm /var/lock/LCK.pty* 2>/dev/null
-rm /var/lock/LCK.tty* 2>/dev/null
-#It should be OK to shut down now.
+Well, a week further and some progress on fbb... but it is rather hard
+going - for someone used to the Internet and smtp etc, this is all a tad
+counterintuitive, and the documentation is rather obtuse, so bear with
+me... I have so many questions I don't know where to start... I will not
+bore you but just to give you a flavour of BASIC stuff I just cannot find
+documented, and yes, before you ask, I have read the docs (or tried to) on
+the f6fbb.org site..:
+
+- How does this "forwarding" work??
+- What are messages vs bulletins vs private messages etc?
+- when a message is "on hold", how do I get it "off hold"?
+- Why does killing a message not remove it? How DO I remove it?
+- How does a node I forward to, allow/know/handle this?
+- Why do I have one password set with "EU" command and one in passwd.sys, 
+and never the twain shall meet?
+- ehy can I not use the "EU" command when telnetted in, but I can use it 
+when using the xfbbC app?
+- the forward file apprently needs a degree of knowledge that is beyond 
+me: so, any examples?
+- What are white pages (the docs just say this is an interesting 
+implementation of white pages)?
+- How do I get bulletins in? And out?
+- Using EU, can I not change someone's home bbs?
+- Is there a 'phone book', so I do not have to type SP <call> @ 
+ve3mch.#scon.on.can.noam or some such string each time?
+- Many programming techniques that are used in fbb are extremely poor
+(sorry! do not mean to be rude, but just wondering WHY).  Like using 
+binary configuration settings (2, 4, 8, 16, 32, etc); or using setup files 
+that depend on exact numbers of lines, etc. Is this historical accident?
+- I guess fbb does its own ax25 thing - why not just use kernel ax25?
 
 
--- 
-Shane Deering   vk3bvp@qsl.net 	vk3bvp@vk3bvp.#sev.vic.aus.oc
-http://www.qsl.net/vk3bvp/		Up 51 minutes 
-Sent with KMail v1.4.1 on Thu Jan  9 11:33:44 EST 2003
+As you see, my lack of understanding is so great that I wonder if I will
+ever usefully use this. So rather than bore you with too many questions
+about the detail, a few meta questions, namely: is this all part of the
+normal learning process, or am I overlooking some good basic docs
+somewhere? (Or am I too dumb)? Should I bother? And, if yes, what is the
+best way to find info (not the docs, apparently).
+
+Many thanks for your advice, all.
+
+73 
+Michael
+VA3MVW
 
