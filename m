@@ -1,56 +1,40 @@
-From: "Robin Gilks" <g8ecj@gilks.org>
-Subject: Re: pci scc cards
-Date: Tue, 21 Dec 2004 23:17:51 +1300 (NZDT)
-Message-ID: <42630.192.168.1.15.1103624271.squirrel@192.168.1.15>
-References: <200412211744.48000.sdaniels@airnet.com.au>
-Reply-To: g8ecj@gilks.org
+From: Dave Stubbs <dave.stubbs@utoronto.ca>
+Subject: Linux AX25 Digipeating Software
+Date: Tue, 21 Dec 2004 11:43:29 -0500
+Message-ID: <41C852B1.3020005@utoronto.ca>
+References: <200412211744.48000.sdaniels@airnet.com.au> <42630.192.168.1.15.1103624271.squirrel@192.168.1.15>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7BIT
+Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <200412211744.48000.sdaniels@airnet.com.au>
+In-Reply-To: <42630.192.168.1.15.1103624271.squirrel@192.168.1.15>
 Sender: linux-hams-owner@vger.kernel.org
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"
-To: vk5hsx@wia.org.au
-Cc: linux-hams List <linux-hams@vger.kernel.org>
+Content-Type: text/plain; charset="us-ascii"; format="flowed"
+To: linux-hams List <linux-hams@vger.kernel.org>
 
-> Greetings..
->
-> 	We are having trouble trying to configure PCI SCC Card. The chip used is
-> a
-> SUN 1889 (Dual Port card). Currently we use a script..
->
+Hello all,
 
-[snip]
+Is there any good, reasonably modern Linux Digipeater software out 
+there?  I've noticed that axdigi is still dated 1997 and won't compile 
+on any reasonably modern system, and the old binary from 1997 won't run 
+with any reasonably modern kernel.
 
-> We tried looking at psicscc program, however, there is NO support for SUN
-> 1889
-> chip. Is there an alternative to the way we are doing it or using pciscc.
-> We had just moved away from ISA DRSI cards using the Z8530drv, as the
-> cards
-> were damaged.
->
-> The problem we get is cannot attach kiss to the devices..
-> Any help would be much appreciated
->
-Hi Stef
+Someone suggested that I try ax25digi, but ax25digi is not on the 
+linux-hams site, and even google only brings up 6 websites that mention 
+it - and even then only complaints about it - nothing about where to get it.
 
-Bad luck on the choice of cards - what you have there is NOT an SCC card
-and will never operate in the same manner as the DRSI card you used to
-use.
+I found a couple forums where someone else was asking, very clearly, if 
+there was an AX.25-level digipeater program out there, and all the 
+replies were about APRS digipeating, not what the original poster really 
+asked about.  (APRS forwarding really isn't digipeating anyway - more 
+like bridging or routing - different OSI layer).
 
-What you have is a simple dual UART card which can be treated the same way
-as the normal serial ports on the motherboard - no syncronous data, no
-HDLC, no direct modem connection for AX25 :-((
+So, after all that - is there a good program out there that does simple, 
+single-port, layer 2, AX.25 digipeating and works with kernel 2.6? 
 
-Best advice would be to exchange the card for a standard serial multi-port
-card that is supported by the Linux kernel as I doubt you will find a
-'commercial' SCC card apart from the Baycom team (that I know of anyway!)
+Thanks in advance,
 
-
--- 
-Robin Gilks zl3rob/g8ecj
-Internet: g8ecj@gilks.org    http://www.gilks.org
-
+Dave
+VA3BHF
 
 
