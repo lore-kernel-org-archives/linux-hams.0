@@ -1,32 +1,74 @@
-From: Bob Nielsen <nielsen@oz.net>
-Subject: Re: IP over Packet Ham Radio
-Date: Tue, 15 Oct 2002 10:25:22 -0700
+From: Paul Lewis <paul@skywaves.demon.co.uk>
+Subject: Re: libax25 axio_flush bug hangs node and fix
+Date: Tue, 15 Oct 2002 19:22:49 +0100
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <20021015172522.GA15284@bob.n7xy.net>
-References: <a05111b01b9cb55f871e3@[10.10.1.6]> <3.0.6.32.20021015075203.007a0650@pop.telus.net>
+Message-ID: <3ISZK1A5zFr9Ewiz@skywaves.demon.co.uk>
+References: <13346@9A0TCP>
 Mime-Version: 1.0
 Return-path: <linux-hams-owner@vger.kernel.org>
-Content-Disposition: inline
-In-Reply-To: <3.0.6.32.20021015075203.007a0650@pop.telus.net>
+In-Reply-To: <13346@9A0TCP>
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"
+Content-Type: text/plain; charset="us-ascii"; format="flowed"
 Content-Transfer-Encoding: 7bit
-To: linux-hams@vger.kernel.org
+To: Tihomir Heidelberg <9a4gl@9a0tcp.ampr.org>
+Cc: linux-hams@vger.kernel.org
 
-On Tue, Oct 15, 2002 at 07:52:03AM -0700, Mike Fenske wrote:
-> Hello All. I have been trying to do the same thing here and it does work. I
-> am using 2 Tekk data radio's with a KPC-9612 TNC on one end and soundmodem
-> 0.6 on the other end. I am also using 192.168.x.x addressing for testing. I
-> suspect Christian's problem is in routing as he said that he cannot ping
-> the other machine. Perhaps you can supply a copy of the routing tables from
-> each maching?
-> 
-> Something odd I noticed here is when telnetting from one machine to the
-> other, a packet was transmitted each time I pressed a key and nothing would
-> appear on the screen until that packet was acknowledged by the other
-> computer. I assumed that nothing would be transmitted until I pressed
-> "enter". Anyone have any thoughts?
+Are the Symptoms of this shown as -
+Internal connections to my Linux_node then onward connection fails. 
+Certain conditions the entry in the node user table stays there until I 
+kill the associated node process.
 
-Try hitting ^] then 'mode line' at the telnet> prompt.
+Also incoming netrom connections to my linux_node where the link breaks 
+between the remote and  my system does not clear down and leaves the 
+user entry (USERS command) until I get round to Killing the associated 
+node process. Seem to be from the time I install libax25-0.0.10
 
-Bob, N7XY
+I had been thinking that I was looking for a netrom/node patch as I had 
+to rebuild my system in August due to lost of hard disk.  and Installed 
+the latest Libax25 as part of the rebuild.
+de Paul g4apl (gb7cip Caterham_Uk)
+
+
+
+
+In message <13346@9A0TCP>, Tihomir Heidelberg <9a4gl@9a0tcp.ampr.org> 
+writes
+>Hi
+>
+>I noticed that my awznode (a variant of linux node) hangs and
+>use maximum CPU when user starts any external command and
+>incoming AX.25 connection get broken.
+>
+>After tracing found something strange in libax25-0.0.10 in
+>ax25io.c.
+>
+>In function static int flush_obuf(ax25io *p)
+>it returns -1 if write to output file descriptor failed
+>if ((ret = write(p->ofd, p->obuf, p->optr < p->paclen ? p->optr : 
+>p->paclen)) < 0)
+>return -1
+>
+>but, in axio_flush(ax25io *p)
+>we have following loop:
+>while (p->optr) {
+>                FD_ZERO(&fdset);
+>                FD_SET(p->ofd, &fdset);
+>                if (select(p->ofd+1, NULL, &fdset, NULL, NULL)<0)
+>                        return -1;
+>               flushed+=flush_obuf(p);
+>                flushed+=j;
+>}
+>it is obvious that this loop will never end if above mentioned write
+>failed. After breaking this loop if flush_obuf returns -1 my awnnode
+>does not hangs.
+>
+>Can maintainer of libax25 fix this in next release ?
+>
+>73 de Tihomir Heidelberg, 9a4gl@9a0tcp.ampr.org
+>-
+>To unsubscribe from this list: send the line "unsubscribe linux-hams" in
+>the body of a message to majordomo@vger.kernel.org
+>More majordomo info at  http://vger.kernel.org/majordomo-info.html
+
+-- 
+paul@skywaves.demon.co.uk
