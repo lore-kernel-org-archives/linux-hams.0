@@ -1,52 +1,60 @@
-From: David Quental <ct1drb@iol.pt>
-Subject: Re: Re : Problems with uscc and kernel 2.6.0-test11
-Date: Fri, 12 Dec 2003 08:42:10 +0000
+From: "Janusz Przybylski - SP1LOP" <sp1lop@sp1lop.szczecin.pl>
+Subject: Bad register data to fuller.net
+Date: Sun, 14 Dec 2003 18:08:22 +0100
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <3FD97F62.5000402@iol.pt>
-References: <3FD8909E.7090906@iol.pt> <20031211160025.GC1758@tangerine.coulon.evette> <3FD897DD.7080800@iol.pt> <20031211232839.E211@jeroen.pe1rxq.ampr.org>
+Message-ID: <001b01c3c264$e18f5110$64c9a8c0@sp1lop.szczecin.pl>
+Reply-To: "Janusz Przybylski - SP1LOP" <sp1lop@sp1lop.szczecin.pl>
 Mime-Version: 1.0
 Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <20031211232839.E211@jeroen.pe1rxq.ampr.org>
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"; format="flowed"
-To: Jeroen Vreeken <pe1rxq@amsat.org>
-Cc: LINUXHams <linux-hams@vger.kernel.org>
+Content-Type: text/plain; charset="us-ascii"
+To: linux-hams@vger.kernel.org
 
-Jeroen Vreeken wrote:
+Hi Sysop's
 
->On 2003.12.11 17:14:21 +0100 David Quental wrote:
->  
->
->>Hello Jean-Luc.
->>
->>Yes, here it is the same. shells are dead but aparently modem is 
->>initialized but nothing more. Lets wait.
->>
->>Best regards and best 73.
->>    
->>
->
->I have a system running with an scc card.
->I did fix some additional bugs in ax.25, but don't remember if I did
->anything with the scc card :) If the system survives the weekend I'll post
->a patch (and look at what exactly changed over the last few weeks)
->
->Jeroen
->
->-
->To unsubscribe from this list: send the line "unsubscribe linux-hams" in
->the body of a message to majordomo@vger.kernel.org
->More majordomo info at  http://vger.kernel.org/majordomo-info.html
->
->  
->
-Ok Jeroen.
-Tks, i will wait for a positive test from your side during next weekend.
+in encap.txt
+# $Id: encap.txt,v 4.2940 2003/12/12 19:46:04 gate Exp $
 
-Best 73 and till then.
+and gateways:
+# $Id: gateways,v 1.599 2003/12/12 19:46:03 gate Exp $
 
-CT1DRB
-David Quental
+
+I found bad registrations:
+==========================
+Error: an inet prefix is expected rather than "44.137.4.25/".
+Error: an inet prefix is expected rather than "44.130.19.37/".
+Error: an inet prefix is expected rather than "44.136.224.44/".
+Error: an inet prefix is expected rather than "44.137.34.5/".
+Error: an inet prefix is expected rather than "44.133.28.92/".
+Error: an inet prefix is expected rather than "44.130.19.162/".
+Error: an inet prefix is expected rather than "44.48.56.53/".
+Error: an inet prefix is expected rather than "44.48.56.54/".
+================================================================
+
+I ask sysop's about improvement these registrations by addition  
+after address class IP 44-net and renewed registrations in fuller.net 
+
+I thank
+
+
+        greeting  73 de Janusz SP1LOP
+====================================
+Coordinator Polish AmprNet 44.165/16
+====================================
+Inet:      janusz@sp1lop.szczecin.pl
+AmprNet:    sp1lop@szczecin.ampr.org
+AX25:      sp1lop @ sr1bsz.sz.pol.eu
+====================================
+Sysop: SR1BSZ and szczecin.ampr.org
+
+
+---
+avast! Antivirus: Outbound message clean.
+Virus Database (VPS): 2003-12-11
+Tested on: 2003-12-14 18:08:23
+avast! is copyright (c) 2000-2003 ALWIL Software.
+http://www.avast.com
+
 
 
