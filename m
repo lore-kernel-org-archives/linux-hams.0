@@ -1,32 +1,34 @@
-From: Haines Brown <brownh@hartford-hwp.com>
-Subject: Re: Tracking down a Linux crash
-Date: Thu, 17 Oct 2002 08:02:20 -0400
+From: Tomi Manninen <tpm@prkele.tky.hut.fi>
+Subject: Re: libax25 axio_flush bug hangs node and fix
+Date: Thu, 17 Oct 2002 16:41:35 +0300 (EEST)
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <200210171202.g9HC2KD08295@hartford-hwp.com>
-References: <3031448.1034759336@WUSJA129861-8HP> <3DAE5AD6.5CE83E7F@kj6eo.com>
+Message-ID: <Pine.LNX.4.44.0210171640370.17440-100000@oh2bns.ampr.org>
+References: <3DAE6AD8.ABE017DD@algonet.se>
+Reply-To: tpm@prkele.tky.hut.fi
+Mime-Version: 1.0
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-reply-to: <3DAE5AD6.5CE83E7F@kj6eo.com> (message from Bill Walton on Wed,
-	16 Oct 2002 23:38:14 -0700)
+In-Reply-To: <3DAE6AD8.ABE017DD@algonet.se>
 List-Id: <linux-hams.vger.kernel.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
+Content-Type: TEXT/PLAIN; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
-To: kj6eo@kj6eo.com
-Cc: jra@febo.com, linux@lists.tapr.org, linux-hams@vger.kernel.org
+To: Kjell Jarl <K-Jarl@algonet.se>
+Cc: linux-hams <linux-hams@vger.kernel.org>
 
-> I put a variable powersupply on the CPU fan and slowly starved it
-> for air to see if I could duplicate the problem that I was having.
-> The Duron 1300 locked up at 60 degrees C.  Even on the hottest days
-> I was not exceeding a CPU temperature of 50 degrees C max.  To make
-> a long story short, my problem was due to a motherboard failure.  I
-> traced it down by using some component cooler.  I replaced the MB
-> .... problem solved.
+On Thu, 17 Oct 2002, Kjell Jarl wrote:
 
-Bill,
+> Tomi Manninen OH2BNS wrote:
+> > No, actually the bug was introduced in .10 ...
+> 
+> I am runnung libax25-0.0.7-7 under redhat 7.1, kernel 2.4.19 (2.4.13 was
+> the same). I fell I have the same problem with freezing after broken
+> connections, probably more than just node.
+> Is this the same bug?
 
-Could I ask for a little more detail? How were you measuring CPU
-temperature? What do you mean by a "component cooler?" Did you select
-areas of the MB to cool and then await the result?
+No it isn't. This bug is only in 0.0.10. What exactly freezes?
 
-Haines Brown KB1GRM
+
+-- 
+Tomi Manninen           Internet:  oh2bns@sral.fi
+OH2BNS                  AX.25:     oh2bns@oh2rbi.fin.eu
+KP20ME04                Amprnet:   oh2bns@oh2rbi.ampr.org
 
