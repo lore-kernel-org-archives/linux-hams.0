@@ -1,44 +1,67 @@
-From: csmall@enc.com.au (Craig Small)
-Subject: Re: ax25 in sparc/solaris OE ?
-Date: Tue, 25 Mar 2003 14:54:22 +1100
+From: "Henk Remijn" <hremijn@zeelandnet.nl>
+Subject: RE: Problem...
+Date: Tue, 25 Mar 2003 07:41:50 +0100
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <20030325035422.GA10640@enc.com.au>
-References: <000501c2f26d$2fff6920$0600a8c0@hal2000>
+Message-ID: <GMEHKCCPLOCMPOLBMKICCEJNDOAA.hremijn@zeelandnet.nl>
+References: <03031815501301.03692@unix.pa3gcu>
 Mime-Version: 1.0
+Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
-Content-Disposition: inline
-In-Reply-To: <000501c2f26d$2fff6920$0600a8c0@hal2000>
+In-Reply-To: <03031815501301.03692@unix.pa3gcu>
 List-Id: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-To: Dale Osborn <osbornd@starband.net>
+To: Pontus Falk <pfalk@ax25.org>
 Cc: linux-hams@vger.kernel.org
 
-On Mon, Mar 24, 2003 at 08:23:44PM -0500, Dale Osborn wrote:
-> In the past, I have run ax25 in x86 debian GNU/Linux operating environment
-> (OE) with positive results. Since I am in possession of a number of sparc
-> workstations, I am interested in making ax25 work on them. However, I am by
-> no means an engineer. But am willing to put in an hour or two a day to learn
-> how to port it over. I've been self-teaching C, C++, and perl off and on for
-> a few years from O'Reilly books. Am a military certified sysadmin on Solaris
-> and HPUX (which means I was never formally trained how to program except
-> shell scripting!) Am retired with some spare time on my hands.  I understand
-> there are Linux ports available for the sparc architecture, is there any
-> experience in this regard here? I would prefer to make it work in the
-> Solaris OE using gnu tools. Any ideas where to start?
+Pontus,
+
+With lsmod you can check if modules are loaded.
+
+1. I would not use 2.4.18, this was is buggy. Try a later kernel.
+But this has nothing to do with your problem now.
+
+2. Try to build as much drivers as modules, especially the ham radio ones.
+
+If nothing is going to work, you might consider switching to debian. This
+distro has ham-radio enabled by default. No kernel recompiling necessary.
+
+73, Henk PA5KT
+
+> -----Original Message-----
+> From: linux-hams-owner@vger.kernel.org
+> [mailto:linux-hams-owner@vger.kernel.org]On Behalf Of pa3gcu
+> Sent: dinsdag 18 maart 2003 16:50
+> To: Pontus Falk
+> Cc: linux-hams@vger.kernel.org
+> Subject: Re: Problem...
+>
+>
+> On Monday 17 March 2003 22:09, Pontus Falk wrote:
+>
+> > > cat /usr/src/linux/.config | grep MKISS
+> > > You should get CONFIG_MKISS=m or CONFIG_MKISS=y if you get
+> > > # CONFIG_MKISS is not set
+> > > that means you dont have mkiss at all.
+> >
+> > Yes, I have CONFIG_MKISS=y in /usr/src/linux/.config. But, I have
+> > CONFIG_HAMRADIO=m if that is any problem. I don't know where to set this
+> > to y in menuconfig... When I try to set it manually and recompile the
+> > kernel I get an error message...
+>
+> Why not do it the other way round, compile tham all as modules.
+>
+> > Pontus
+> >
+>
+> --
+> Regards Richard
+> pa3gcu@zeelandnet.nl
+> http://people.zeelandnet.nl/pa3gcu/
+>
+> -
+> To unsubscribe from this list: send the line "unsubscribe linux-hams" in
+> the body of a message to majordomo@vger.kernel.org
+> More majordomo info at  http://vger.kernel.org/majordomo-info.html
+>
 
 
-I got a bunch of T1 and X1 Sun sparc servers running Linux.  You will
-get some funnies, mainly to do with programmers expecting a certain
-endianism and CPU bit width, but they are mostly solveable.
-
-That would certainly be easier than porting the ax25 code over to
-Solaris.  Of course if you want to do it for fun then it is quite
-possible.  Remember that the sort of work involved is a lot harder to do
-than just normal userland type programs.
-
-  - Craig
--- 
-Craig Small VK2XLZ  GnuPG:1C1B D893 1418 2AF4 45EE  95CB C76C E5AC 12CA DFA5
-Eye-Net Consulting http://www.enc.com.au/                <csmall@enc.com.au>
-MIEEE <csmall@ieee.org>                 Debian developer <csmall@debian.org>
