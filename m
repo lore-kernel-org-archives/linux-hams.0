@@ -1,28 +1,27 @@
-From: Thomas Sailer <t.sailer@alumni.ethz.ch>
-Subject: Re: Kernel rebuild under FC3
-Date: Fri, 03 Dec 2004 17:01:23 +0100
-Message-ID: <1102089683.4752.160.camel@kronenbourg.scs.ch>
-References: <1102065033.3345.2.camel@gb7mbc.spoo.org>
+From: =?iso-8859-1?Q?Thomas_M=F8rch?= <thomas@juletraesfoden.dk>
+Subject: aprsd failure
+Date: Fri, 3 Dec 2004 17:40:00 +0100
+Message-ID: <000301c4d956$bb52d800$6402a8c0@laptop>
 Mime-Version: 1.0
 Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <1102065033.3345.2.camel@gb7mbc.spoo.org>
 Sender: linux-hams-owner@vger.kernel.org
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"
-To: Ian J Maude <ian@gb7mbc.net>
-Cc: linux-hams@vger.kernel.org
+Content-Type: text/plain; format="flowed"; charset="us-ascii"; reply-type="original"
+To: linux-hams@vger.kernel.org
 
-On Fri, 2004-12-03 at 09:10 +0000, Ian J Maude wrote:
-> time but recently upgraded the machine to FC3.  I now need to add
-> Amateur Radio support into the kernel but I am failing miserably.  Linux
-> seems to be no longer in /usr/src for a start!  Can anyone give me some
-> pointers please?
+Anyone that has experienced that aprsd 2.2.5 is sending stations far away?
 
-FC3 no longer supplies kernel sources in /usr/src. To get the
-distribution sources, install the kernel-*.src.rpm,
-cd /usr/src/redhat/SPECS, rpmbuild -bp kernel*.spec, then the sources
-end up in /usr/src/redhat/BUILD/kernel*
+I have set it up on our local station in Denmark, and all station that it 
+hears on RF is sendt to Russia
 
-Tom
+It's about 100 degrees offset on the longitude every time. The server is 
+running aprsd and aprsdigi.
+
+
+Any one that has a hint to what I should look at?
+
+Regards
+Thomas 
+
 
