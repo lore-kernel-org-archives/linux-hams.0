@@ -1,67 +1,43 @@
-From: "Wilson G. Hein" <vze2b869@verizon.net>
-Subject: RE: colrconv-0.99.2.tar.gz
-Date: Fri, 27 Dec 2002 10:20:38 -0500
+From: mvw@mvw.net
+Subject: ax25 pakcet problem: any ideas?
+Date: Fri, 27 Dec 2002 12:41:37 -0500 (EST)
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <NCBBKBAJDJIPKFIAFBKLKEDCEHAC.vze2b869@verizon.net>
-References: <20021227142713.3e614f93.pa3aba@debian.org>
-Reply-To: <whein3@earthlink.net>
+Message-ID: <Pine.LNX.4.44.0212271237170.3199-100000@jeeves.mvw.net>
+References: <11467.210.86.76.47.1040973380.squirrel@server.localdomain>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <20021227142713.3e614f93.pa3aba@debian.org>
+In-Reply-To: <11467.210.86.76.47.1040973380.squirrel@server.localdomain>
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"
+Content-Type: TEXT/PLAIN; charset="us-ascii"
+Content-Transfer-Encoding: 7bit
 To: linux-hams@vger.kernel.org
 
-Thank you Joop!
+Hello all,
 
-That worked, now using colrconv! wahoo
+Here's the issue: any ideas welcome.
 
-> -----Original Message-----
-> From: Joop Stakenborg [mailto:pa3aba@debian.org]
-> Sent: Friday, December 27, 2002 8:27 AM
-> To: whein3@earthlink.net
-> Cc: linux-hams@vger.kernel.org
-> Subject: Re: colrconv-0.99.2.tar.gz
->
->
-> On Wed, 25 Dec 2002 20:58:50 -0500
-> "Wilson G. Hein" <vze2b869@verizon.net> wrote:
->
-> > > -----Original Message-----
-> > > From: Chuck Doolittle [mailto:chuck@hamlink.org]
-> > > Sent: Wednesday, December 25, 2002 8:43 PM
-> > > To: whein3@earthlink.net; Linux-Hams Mailing List
-> > > Subject: Re: colrconv-0.99.2.tar.gz
-> > >
-> > > > [root@HGW colrconv-0.99.2]# rpm -q ncurses
-> > > > ncurses-5.2-26
-> > >
-> > > You need either ncurses-dev or ncurses-devel depending on
-> distro level.
-> > >
-> >
-> > New error
-> >
-> > [root@HGW colrconv-0.99.2]# make colrconv
-> > gcc -Wall -I/usr/include/ncurses colrconv.c -lncurses -o colrconv
-> > colrconv.c: In function `status':
-> > colrconv.c:735: warning: implicit declaration of function `time'
-> > colrconv.c:736: warning: implicit declaration of function `localtime'
-> > colrconv.c:736: warning: assignment makes pointer from integer without a
-> > cast
-> > colrconv.c:738: dereferencing pointer to incomplete type
-> > colrconv.c:738: dereferencing pointer to incomplete type
-> > make: *** [colrconv] Error 1
-> >
-> > Now what?
-> >
->
-> #include <time.h>
->
-> > Willie
-> >
-> > -
->
-> Joop
+Box 1 (client) talks to box 2( bbs server), via ax25. When box2 sends a
+packet, box 1 (the client)  hears it. But when I open by bbs, the first
+packet is 255 characters long, and is never heard, The next packets are 
+shorter and are always heard. Like this:
+
+This packet from va3oak to va3mvw is sent but never seen by va3mvw:
+
+radio1: fm VA3OAK-1 to VA3MVW ctl I00^ pid=F0(Text) len 250 12:30:33
+0000  [FBB-7.04h-AB1FHMRX$]MM-----------------------------------------
+0040  -------MHello Michael, on 27-Dec at 12:30MWelcome to The VA3OAK
+0080  Message System, located inMOakville, Ontario. For licensed amate
+00C0  ur use only.M---------------------------------------------
+
+
+This one follows and IS always seen:
+
+radio1: fm VA3OAK-1 to VA3MVW ctl I01+ pid=F0(Text) len 47 12:30:33
+0000  ---MMVA3OAK (B,LM,R<nr>,S<call>,I,O,X,!,#,?) >
+
+
+Any ideas?
+
+Michael
+
 
