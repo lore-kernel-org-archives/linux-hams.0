@@ -1,44 +1,28 @@
-From: Luc Langehegermann <lx2gt@gmx.net>
-Subject: Re: Problems to compile modem p3d
-Date: Sat, 1 Feb 2003 15:29:03 +0100
+From: mvw@mvw.net
+Subject: Re: WeatherMAX and Linux
+Date: Mon, 3 Feb 2003 08:17:08 -0500 (EST)
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <200302011529.03496.lx2gt@gmx.net>
-References: <200301261711.54428.jonathan.naylor@ggaweb.ch>
+Message-ID: <Pine.LNX.4.44.0302030816020.20917-100000@jeeves.mvw.net>
+References: <3E2D4997.9080807@pacbell.net>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <200301261711.54428.jonathan.naylor@ggaweb.ch>
-Content-Disposition: inline
+In-Reply-To: <3E2D4997.9080807@pacbell.net>
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"
-To: g4klx@qsl.net, Jonathan Naylor <jonathan.naylor@ggaweb.ch>, Linux Hams <linux-hams@vger.kernel.org>
+Content-Type: TEXT/PLAIN; charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+To: "John F. Feist" <aa6qn@pacbell.net>
+Cc: Linux-Hams <linux-hams@vger.kernel.org>
 
-Seems to work for me!
+John,
 
-Thanks, Luc
+> Just by chance I have stumbled on to a Linux interface for my WeatherMAX 
+> station.
 
-On Sunday 26 January 2003 17:12, Jonathan Naylor wrote:
-> Hi Luc et al
->
-> I have a quick and dirty patch which generates warnings but allows the
-> package to
-> compile. I think there is a need for a 0.2 release as newer versions of
-> GCC throw
-> a lot of warnings when compiling it.
->
-> --- diag.c.old  2003-01-26 16:47:22.000000000 +0100
-> +++ diag.c      2003-01-26 16:49:01.000000000 +0100
-> @@ -123,7 +123,7 @@
->         { 0, 0, 0, 0, },
->          0,
->          NULL, NULL, 0, 0,
-> -        { }, { }, PTHREAD_COND_INITIALIZER, PTHREAD_MUTEX_INITIALIZER
-> +        0, 0, PTHREAD_COND_INITIALIZER, PTHREAD_MUTEX_INITIALIZER
->  };
->
->  /*
-> ----------------------------------------------------------------------
-> */
->
-> Jonathan  HB9DRD/G4KLX
+Would you recommend the Weathermax? How far can the sensors be from the 
+electronics? (In my case it's amost 100 ft).
+
+(I am looking to add Wx to my Linux-based station).
+
+Michael
+
 
