@@ -1,21 +1,24 @@
-From: James Washer <washer@trlp.com>
-Subject: soundmodem 0.7 and linux 2.6.2 - problems when killing/restarting
- soundmodem
-Date: Fri, 13 Feb 2004 16:31:22 -0800
+From: "David S. Miller" <davem@redhat.com>
+Subject: Re: [PATCH] ax25 Locking fix
+Date: Fri, 13 Feb 2004 21:33:50 -0800
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <20040213163122.40b4bbd8.washer@trlp.com>
+Message-ID: <20040213213350.7d15fbcd.davem@redhat.com>
+References: <20040213234806.J220@jeroen.pe1rxq.ampr.org>
 Mime-Version: 1.0
 Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
+In-Reply-To: <20040213234806.J220@jeroen.pe1rxq.ampr.org>
 List-Id: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
-To: linux-hams@vger.kernel.org
+To: Jeroen Vreeken <pe1rxq@amsat.org>
+Cc: linux-hams@vger.kernel.org, ralf@linux-mips.org
 
+On Fri, 13 Feb 2004 23:48:06 +0100
+Jeroen Vreeken <pe1rxq@amsat.org> wrote:
 
-If I startsoundmodem once, all is well, if I kill and restart it.. things get ugly.. I get an oops.
+> This is a oneliner for 2.6 changing an unlock into a lock.
+> This prevents an oops on removal of the ax25 module.
 
-Someone mentioned a patch to the register_netdev routine I believe, but I never heard anymore about it..
+Durrr, thanks for the fix Jeroen.
 
-Before I start digging into the code, has someone already fixed this?
-
- - jim
+Patch applied.
