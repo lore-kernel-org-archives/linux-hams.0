@@ -1,34 +1,34 @@
-From: Thomas Sailer <sailer@scs.ch>
-Subject: Re: Need help with serial card + baycom
-Date: Mon, 15 Nov 2004 08:07:07 +0100
-Message-ID: <1100502427.8341.37.camel@kronenbourg.scs.ch>
-References: <6.1.2.0.2.20041114202646.02842888@in.aliceposta.it>
-	 <6.1.2.0.2.20041114234158.0283e7a8@popmail.libero.it>
+From: =?iso-8859-15?q?G=FCnther=20Montag=20?= <Safari.Doktor@addcom.de>
+Subject: sorry for crash in hf-0.6.4, fixed in hf0.6.5
+Date: Mon, 15 Nov 2004 10:40:29 +0100
+Message-ID: <200411151040.29930.Safari.Doktor@addcom.de>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <6.1.2.0.2.20041114234158.0283e7a8@popmail.libero.it>
 Sender: linux-hams-owner@vger.kernel.org
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"
-To: Fabio IZ4AFW <iz4afw@libero.it>
-Cc: linux-hams@vger.kernel.org
+Content-Type: text/plain; charset="iso-8859-1"
+To: linlink@wetnet.net
+Cc: linux hams <linux-hams@vger.kernel.org>, ralf-axel-krause@gmx.de, suse-ham-e@suse.com, -HFTERMHACKERS- <hfterm-hackers@lists.sourceforge.net>
 
-On Sun, 2004-11-14 at 23:47 +0100, Fabio IZ4AFW wrote:
+Hello friends
+Due to not storing the rx window, after some minutes of rx
+(depending on amount of data) hf-0.6.4 died of buffer=20
+overflow.
+I fixed that in 0.6.5.=20
+The calibration programs have now bettwe output and write=20
+the configuration automagically,=20
+the mailbox feature has been improved, tested successfully=20
+also with repeated connects in Pactor and Amtor ARQ and=20
+=46EC.=20
+Welcome to download at http://hfterm.sf.net, please all bugs=20
+and flames to the hfterm hackers list. 73 !!
+--=20
+G=FCnther Montag
+Safari.Doktor@addcom.de
 
-> is there a reason why dev->base_addr must be less than (0x1000-SER12_EXTENT)?
-> If, like in this case, SER12_EXTENT==8, then my card at base address 0xb408 
-> doesn't pass this check...
-
-This is just a sanity check that the parameters are in the ISA range.
-Which doesn't make sense any more...
-
-> I'll try to remove the check as soon as possible to see if this solves the 
-> problem... but probably that check is there for a good reason ;)
-
-If it works for you, please submit a patch to the kernel lieutenants
-(Dave Miller in this case probably).
-
-Thanks,
-Tom
-
+-
+To unsubscribe from this list: send the line "unsubscribe linux-hams" i=
+n
+the body of a message to majordomo@vger.kernel.org
+More majordomo info at  http://vger.kernel.org/majordomo-info.html
