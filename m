@@ -1,55 +1,39 @@
-From: Iain Young - G7III <g7iii@g7iii.demon.co.uk>
-Subject: Re: KJD 2.3.9 patch on 2.5.29
-Date: Fri, 2 Aug 2002 19:28:54 +0100
+From: John Ackermann N8UR <jra@febo.com>
+Subject: Using Kenwood D7 with Linux AX.25
+Date: Fri, 02 Aug 2002 22:24:56 -0400
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <20020802182854.GA503@columbia.g7iii.bogus>
-References: <20020801194618.GA722@columbia.g7iii.bogus> <20020802023237.B28097@dea.linux-mips.net>
+Message-ID: <310796010.1028327096@[192.168.1.4]>
 Mime-Version: 1.0
+Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
 Content-Disposition: inline
-In-Reply-To: <20020802023237.B28097@dea.linux-mips.net>
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-To: Ralf Baechle DO1GRB <ralf@uni-koblenz.de>
-Cc: linux-hams@vger.kernel.org
+Content-Type: text/plain; charset="us-ascii"; format="flowed"
+To: linux-hams@vger.kernel.org
 
-Hi Ralf,
+I'm trying to use my Kenwood TH-D7A(g) handy-talkie for some packet demos 
+and am having real problems.  My basic AX25 configuration is OK as I can 
+hook up to a TNC-2 clone with KISS chip and it works fine.
 
-You Wrote:
- 
-> > (since the AX25 stack hasn't been touched much for a while, I
-> > thought it would be easier than other subsystems, that have had
-> > constant change).
-> 
-> Definately not.  The whole AX.25, NET/ROM and ROSE code is suffering from
-> severe bitrot.  None of the internal data structures are properly locked
-> etc.  I'm currently working on that.
+I put the D7 in KISS mode at 9600 baud (which it seems to drop out of on 
+every power cycle, grrrr) and hook it up to the known-working linux setup. 
+The D7 receives OK but seems to transmit only preamble flags; when you 
+listen to a packet, there's just flags with no evidence of a data portion 
+and nothing decodes at the other end.  No data comes out of the thing, no 
+matter how long I program the TXD.
 
-I meant easier as in easier to merge, as there would be few patches
-that have been added to the mainline, thus less rejects.
+I understand that the D7 has KISS limitations due to buffer size, but I'm 
+not even getting the basic function to work, and that doesn't seem right.
 
-Id actually be interested in your fixes, I may be able to integrate
-them into any 2.5 version of the KJD AX25 stack that I manage to
-produce.
- 
-> So you may find it easy to get old code into the current kerrnel - but
-> then it'll suffer from the same problems.  The fact is that the AX.25
-> code is looking like it was written for a 2.0 or 2.2 kernel ...
+Anyone got a D7 working with kernel AX.25, and have any suggestions for me? 
+(As a data point, when the D7 is in normal packet mode using minicom as a 
+terminal program it transmits just fine, so the hbaud, etc. are set 
+correctly.)
 
-The KJD 'patch' is more like an entirely new AX25 stack - The Stack
-in 2.4/2.5 currently predates it. The origional idea was to get the
-KJD/FEF stack into 2.3, and thus 2.4 when it was released.
+Thanks,
 
-Unfortunatley Matt and Jens ran out of time, and priorties changed,
-however a 2.4.x version was started by Jens, and was up to 2.4.9, but
-is only a partial patch (there are a few .rej's actually in the patch).
+John
 
-Checkout http://www.afthd.tu-darmstadt.de/~dg1kjd/linux-ax25 for more
-details, and why Jens gave it up.
-
-
-All the Best
-
-Iain.
-
+----
+John Ackermann   N8UR      jra@febo.com              http://www.febo.com
+President, TAPR            n8ur@tapr.org             http://www.tapr.org 
