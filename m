@@ -1,59 +1,30 @@
-From: ggb112 <gerard.borg@anu.edu.au>
-Subject: mkiss serial errors
-Date: Wed, 19 Jan 2005 10:17:09 +1100
-Message-ID: <41ED98F5.8080702@anu.edu.au>
+From: Wilbert Knol <w.knol@niwa.co.nz>
+Subject: Re: [ANN] qle-0.0.3 GUI logger/log editor released.
+Date: Thu, 20 Jan 2005 13:44:28 +1300
+Message-ID: <200501201344.28901.w.knol@niwa.co.nz>
+References: <000501c4f68e$5457b6c0$3d4689d8@oem7paq6co5hph> <200501140916.47627.w.knol@niwa.co.nz> <200501201332.54993.w.knol@niwa.co.nz>
+Reply-To: w.knol@niwa.co.nz
 Mime-Version: 1.0
 Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
+In-Reply-To: <200501201332.54993.w.knol@niwa.co.nz>
+Content-Disposition: inline
 Sender: linux-hams-owner@vger.kernel.org
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"; format="flowed"
+Content-Type: text/plain; charset="us-ascii"
 To: linux-hams@vger.kernel.org
 
-Hi all
 
-I am trying to run mkiss directly over a serial wireless link and I plan 
-to do FEC to fix up the lost bits. With
-78% packet loss I only have a BER of .1%.. so it should be doable. I am 
-using the inbuilt flex CRC to detect
-packet errors. Packets are of arbitrary length up to mtu=150 and consist 
-of 10 bit frames with 8 data bits
-as is usual for mkiss. If there are no lost serial frames then I could 
-probably do FEC.
+On Friday 14 January 2005 09:16, Wilbert Knol wrote:
+> GPL 2 or later applies. Download the 82 kbyte archive from:
+>
+>     http://www.qsl.net/zl2arn/qle-0.0.3.tar.gz
 
-However I notice that often  if there is a CRC error then the packet has 
-1 or 2 less bytes than was trasnmitted. These
-must have been dropped somewhere and I suspect that it was by the serial 
-port receiving the data. However mkiss does not
-seem to report serial errors.
+New URL:
 
-To be specific, the snippet of code responsible for reporting serial 
-errors in mkiss.c is as follows
-(see ax25_receive_buf  inside mkiss.c)
+     http://zl2arn.ath.cx/zl2bsj/qle-0.0.3.tar.gz
 
-        /* Read the characters out of the buffer */
-        while (count--) {
-                if (fp != NULL && *fp++) {
-                        if (!test_and_set_bit(AXF_ERROR, &ax->flags))
-                                ax->rx_errors++;
-                        cp++;
-                        continue;
-                }
-
-                kiss_unesc(ax, *cp++);
-        }
-
-The if(fp!=NULL && *fp++) statement is never satisfied. Here fp is a 
-point to a pointer of serial error flags from tty_io.c .
-
-I cannot understand from the man page for test_and_clear_bit how this 
-all works. BTW this snippet of code is identical to that in slip.c
+Thanks to Gordon ZL2ARN for hosting the archive.
 
 
-Does anyone know how to make this code report serial errors or if not: 
-extract serial errors from mkiss or the kernel
-
-Many thanks
-
-Gerard Borg
-
+Wilbert, ZL2BSJ
