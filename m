@@ -1,28 +1,48 @@
-From: Steven Whitehouse <steve@gw.chygwyn.com>
+From: Thomas Osterried <thomas@osterried.de>
 Subject: Re: AX.25 unaccepted socket makes problems
-Date: Wed, 28 May 2003 11:20:26 +0100 (BST)
+Date: Wed, 28 May 2003 12:25:31 +0200
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <200305281020.LAA18189@gw.chygwyn.com>
-References: <2278@9A0TCP>
-Reply-To: Steve Whitehouse <Steve@ChyGwyn.com>
+Message-ID: <20030528102531.GB4379@osterried.de>
+References: <20030528000411.GA1391@osterried.de> <2278@9A0TCP>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <2278@9A0TCP> from "Tihomir Heidelberg" at May 28, 2003 08:46:03 AM
+Content-Disposition: inline
+In-Reply-To: <2278@9A0TCP>
 List-Id: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 7bit
 To: Tihomir Heidelberg <9a4gl@9a0tcp.ampr.org>
-Cc: thomas@osterried.de, linux-hams@vger.kernel.org
 
-Hi,
+> also I think that skb->sk->pair should be set to NULL, because from this
+> point the pair (listening socket) does not exist any more and reference
+> to this can cause problem, right ?
 
-I've got a few odd bits of patches for AX.25 for 2.5 kernels that I'm intending
-to feed into the kernel shortly. I'll take a look at the problem you've
-brought up at the same time as I'd like to have that solved. My main
-interest though is 2.5 rather than fixing up 2.4.
+hmm. the listening socket exists as long the userspace application does
+listen().
+but i do not really understand the sk->pair concept.
 
-[snip]
-> 
+
+also i have problems in understanding the concept in ax25_destroy_socket():
+skb->sk->dead is set to 1, then ax25_start_heartbeat() is called, which
+is a timer (which expires in +5s).
+
+if we set it to skb->sk->state = TCP_LISTEN and our state is
+AX25_STATE_0, then this timer will call ax25_destroy_socket() again.
+due to the timer it is not a loop (hopefully), but after our first
+ax25_destroy_socket() goes further down (ax25->sk == NULL), we will call
+ax25_free_cb(ax25). what will our timer do, which we restarted above and
+which will work on this ax25 control block?
+
+and: if ax25->sk is != NULL and there are no in/outstanding buffer, there's
+only an sk_free(ax25->sk). the socket is not destroyed, but ax25->sk is not
+set to NULL. does it refer now to an unassigned memory segment? should'n
+in this case ax25_free_cb() called too? here also the problem with a
+potentially running ax25_std_heartbeat_expiry(), which will use ax25->sk->...
+we have just free'd.
+
+well, i deeply hope there's someone out there who knows how this code works ;)
+
+
 > > [as i mentioned also, ax25rtd which adds ax25 route lists to the kernel,
 > > causes troubles to the kernel. perhaps it's one of those routines which
 > > messes up the ax25 cb lists as side effect]
@@ -31,21 +51,26 @@ interest though is 2.5 rather than fixing up 2.4.
 > ax25_route_list is not protected with cli() stuff, maybe we should
 > protect this list too ? dont know how this can hurt ax25_list, but
 > protecting this list will not hurt anyone...
-> 
+
+just thought the same some weeks ago.
+
+i have done this (interested in?). after the observation that when
+ax25rtd is running, the oops problem on ax25 cb's (which are independend
+of the ax25 route list) occorued.
+
+unfotunately, i never found a way to produce the corrupted ax25 cb list
+by force. thus i only could wait for oopses. and my system where i tried
+this never oopsed :(
+
 > anyway, I read that Ralf is doing some things in 2.5 kernel tree,
 > spinlock instead cli() protection should be used in future ax.25
 > kernel, as I read Ralf works on spinlock in ax.25 code... should
 > we move to spinlocks in 2.4 kernels too or we will wait for 2.6 ?
->
-Yes, some of his work has made it in, some more can be found in the linux-hams
-bkbits tree. If you are looking at structures that are not currently
-protected in 2.4, then I'd suggest looking at spinlocks right away. You
-might find the solution in Ralf's work for 2.5 and it would be a good
-idea to try and keep 2.4 similar to 2.5 where possible.
 
-The last day or two I've been quite busy and I hope to have some time to
-put out my patches for testing shortly,
+i'd advice not to hack too much in the current code. we may get more
+problems or side-effects.
 
-Steve.
-G7RRM
+
+73,
+	- thomas
 
