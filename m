@@ -1,50 +1,43 @@
-From: M Taylor <mctylr@privacy.nb.ca>
-Subject: Re: Linkt instalation ?
-Date: Wed, 24 Apr 2002 03:04:11 +0100
+From: John Ackermann N8UR <jra@febo.com>
+Subject: Digital BASH Update
+Date: Wed, 24 Apr 2002 11:21:33 -0400
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <20020424030411.A1351@pull.privacy.nb.ca>
-References: <OF0F9F5A8A.B0E2E10E-ONC1256BA4.006B9C42@eurotel.sk>
+Message-ID: <12010740.1019647293@WUSJA129861-8HP>
 Mime-Version: 1.0
+Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
 Content-Disposition: inline
-In-Reply-To: <OF0F9F5A8A.B0E2E10E-ONC1256BA4.006B9C42@eurotel.sk>; from buliscakj@eurotel.sk on Tue, Apr 23, 2002 at 09:38:17PM +0200
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-To: Juraj Buliscak <buliscakj@eurotel.sk>
-Cc: linux-hams@vger.kernel.org
+Content-Type: text/plain; charset="us-ascii"; format="flowed"
+To: tapr-lists@febo.com, linux-hams@vger.kernel.org, debian-hams@vger.kernel.org, mvarbb@febo.com, nos-bbs@hydra.carleton.ca
 
-On Tue, Apr 23, 2002 at 09:38:17PM +0200, Juraj Buliscak wrote:
-> Hello all...
-> 
-> I've tried to install Linkt:
-> 
-> [root@localhost linkt]# rpm -ivh linkt-0.6.2-105.i386.rpm
->       libstdc++-libc6.1-2.so.3 is needed for linkt-0.6.2-105
-> 
-> [root@localhost RPMS]# rpm -ivh qt-2.3.1-5.i386.rpm
-> error: unresolved dependencies:
->       libmng.so.1   is needed for qt-2.3.1-5
->       libstdc++-libc6.2-2.so.3   is needed for qt-2.3.1-5
+We're very happy to announce that Bdale Garbe, KB0G, will be the keynote 
+speaker at the TAPR/MVFMA Digital BASH on Friday evening at Hamvention.
 
-this is looking for libstdc++ for glibc2.2.
- 
-> For libstdc++ I have symbolic link to
-> libstdc++-2-libc6.1-1-2.9.0.so,
+Bdale is one of the long-time "good guys" in the digital radio and amateur 
+satellite worlds.  He was in the middle of the early work on KA9Q's "NET" 
+and "NOS" programs, pioneered megabit-rate packet radio, and in the 
+satellite world was heavily involved in the RUDAK and AO-40 GPS 
+experiments.  Back in the Old Days, he was a board member and Vice 
+President of TAPR, and remains one of TAPR's best friends.  On a different 
+front, Bdale was just elected as Debian Project Leader, so he now oversees 
+one of the major Linux distributions -- and the one that is by far the most 
+ham-friendly.  Bdale works in the Linux development group at HP, and in his 
+spare (?) time does VHF/UHF/microwave contesting and roaming.
 
-but you have installed libstdc++ for glibc2.1 on your system.
+Bdale's talk will blend all of these interests into an entertaining and 
+informative presentation titled "From Bits in the Basement to Debian -- and 
+Back Again".
 
-> but does anybody know what library is libmng.so.1,
-> and in which package is it from?
+You can find more information about the Digital BASH and TAPR's other 
+Hamvention activities at http://www.tapr.org/tapr/dayton/.
 
-I'm guessing you are using an older (about 1 year or more) distribution
-of Linux, perhaps Red Hat Linux 6.2 or SuSE 6.2. 
+See you there!
 
-I would suggest try using the rpm for SuSE 6.2 from the LinKT download
-page <http://www.1409.org/projects/linkt/download.html>.
+73,
+John
 
-Otherwise compiling it from source code. Though you would need to
-install the basic KDE and QT (runtime) libraries and the seperate
-KDE and QT library devel rpms (look like qt-devel-2.3.1-5.i386.rpm).
+----
+John Ackermann    N8UR         jra@febo.com     http://www.febo.com
+President, TAPR                n8ur@tapr.org    http://www.tapr.org
 
-I hope that helps.
