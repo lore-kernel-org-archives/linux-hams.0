@@ -1,46 +1,21 @@
-From: Jacques Chion <Jacques.Chion@wanadoo.fr>
-Subject: Re: config sound modem search...
-Date: Sat, 22 Jan 2005 07:04:48 +0100 (CET)
-Message-ID: <Pine.LNX.4.44.0501220701530.3376-100000@cwoux2.cerise.fr>
-References: <002501c5001a$a12fa0d0$fec9a8c0@sp1lop.szczecin.pl>
+From: Harold Hartley <haroldh@midmaine.com>
+Subject: ax25-config 3.3
+Date: Sat, 22 Jan 2005 16:54:57 -0500
+Message-ID: <41F2CBB1.20304@midmaine.com>
 Mime-Version: 1.0
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <002501c5001a$a12fa0d0$fec9a8c0@sp1lop.szczecin.pl>
 Sender: linux-hams-owner@vger.kernel.org
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: TEXT/PLAIN; charset="iso-8859-1"
-To: Janusz Przybylski - SP1LOP <Janusz.Przybylski@sp1lop.szczecin.pl>
-Cc: Linux-Hams <linux-hams@vger.kernel.org>
+Content-Type: text/plain; charset="us-ascii"; format="flowed"
+To: linux-hams@vger.kernel.org
 
-Le Jan 22, Janusz Przybylski - SP1LOP =E9crivait :
+I am wondering if anyone out there has had problems with the ax25-config 
+utility to setup the config files for packet..
+When I run it, it tells me I need to install dialog to run the utility 
+script.
+I'm running mandrake 10.1 and wondering if anyone can help me out..
 
-> Hi all.
->
+Harold
+n1llu
 
-Hi Janusz,
-
-=20
-> I search configuration  sound modem for JNOS-2 as well as for XNET
-> under Linux 2.4...
->=20
->=20
->
-
-The best is to use the package soundmodem, not the one included in the =
-kernel.
-You install it, and then you use the file file soundmodemconfig.
-You choose the KISS mode, and start jnos ou xnet as you like.
-
-Best regards and best 73
-Jim F6CWO=20
-
---=20
-Quelques HOWTO en fran=E7ais: http://perso.wanadoo.fr/jacques.chion/
-
-
--
-To unsubscribe from this list: send the line "unsubscribe linux-hams" i=
-n
-the body of a message to majordomo@vger.kernel.org
-More majordomo info at  http://vger.kernel.org/majordomo-info.html
