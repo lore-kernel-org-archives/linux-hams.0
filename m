@@ -1,40 +1,29 @@
-From: Bernard Pidoux <pidoux@ccr.jussieu.fr>
+From: Brett Mueller <wa7v@digitalhams.com>
 Subject: Re: ipipmail?
-Date: Tue, 28 May 2002 23:31:04 +0200
+Date: Wed, 29 May 2002 10:13:22 -0700
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <3CF3F718.DB75EFDE@ccr.jussieu.fr>
+Message-ID: <200205291006.1031@csepp.net>
 References: <200205281341.51816@csepp.net>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 7BIT
 Return-path: <linux-hams-owner@vger.kernel.org>
+In-Reply-To: <200205281341.51816@csepp.net>
 List-Id: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
-To: Brett Mueller <wa7v@digitalhams.com>
-Cc: linux-hams@vger.kernel.org
+To: linux-hams@vger.kernel.org
 
-Hi,
+Hello Linux Hams,
 
-I confirm that anonymous ftp is not accepted by albert.animats.net site.
-You should probably contact 
-Terry Dawson, VK2KTJ
-Terry@animats.net
+I got some responses on my request yesterday.  Thanks to Ruben, EB5ESX, for 
+passing along a munge script that works with iproute2.  Also thanks to Terry, 
+VK2KTJ, for fixing the ftp server for anonymous logins so I could retrieve 
+ipipmail.  Between the two, I'll certainly have what I need!  :-)
 
-73 de Bernard, F6BVP.
+73 es tnx agn,
 
---------------
+Brett, WA7V
 
-Brett Mueller wrote :
-> 
-> Hello all,
-> 
-> I wonder if some kind soul would be willing to share a copy of ipipmail v 2.0
-> with me?  The ftp links supplied at http://radio.linux.org.au/ don't seem to
-> be working with an anonymous login.
-> 
-> Tnx & 73,
-> 
-> Brett, WA7V
-> -
-> To unsubscribe from this list: send the line "unsubscribe linux-hams" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at  http://vger.kernel.org/majordomo-info.html
+On Tuesday 28 May 2002 01:47 pm, I wrote:
+> I wonder if some kind soul would be willing to share a copy of ipipmail v
+> 2.0 with me?  The ftp links supplied at http://radio.linux.org.au/ don't
+> seem to be working with an anonymous login.
