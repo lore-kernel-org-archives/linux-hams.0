@@ -1,30 +1,44 @@
-From: Mark Acierno <acierno@pocketdvm.com>
-Subject: help need with APRS on ultrasun
-Date: Fri, 20 Aug 2004 00:45:51 -0400
+From: Arno Verhoeven <pe1icq@pi8zaa.ampr.org>
+Subject: Re: help need with APRS on ultrasun
+Date: Fri, 20 Aug 2004 07:48:06 +0200
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <D0460580-F263-11D8-AA7C-000A95DB9E94@pocketdvm.com>
-Mime-Version: 1.0 (Apple Message framework v619)
+Message-ID: <41259096.4080509@pi8zaa.ampr.org>
+References: <D0460580-F263-11D8-AA7C-000A95DB9E94@pocketdvm.com>
+Mime-Version: 1.0
 Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
+In-Reply-To: <D0460580-F263-11D8-AA7C-000A95DB9E94@pocketdvm.com>
 List-Id: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"; format="flowed"
-To: Linux-hams List <linux-hams@vger.kernel.org>
+To: Mark Acierno <acierno@pocketdvm.com>
+Cc: Linux HAMs <Linux-hams@vger.kernel.org>
 
-Hi all I relatively new to Linux - so I apologize ahead of time if this 
-is a dumb question
+Mark Acierno wrote:
 
-I wanted to get an APRS system up and running on my sun Ultra 2 creator 
-running debian. This is to replace the weather station that was running 
-on my tired old mac.
+> Hi all I relatively new to Linux - so I apologize ahead of time if 
+> this is a dumb question
+>
+> I wanted to get an APRS system up and running on my sun Ultra 2 
+> creator running debian. This is to replace the weather station that 
+> was running on my tired old mac.
+>
+> I downloaded the Xastir package and got it all onto my sun. ...... 
+> only there is no installation guide. the instructions pick up after a 
+> successful installation. i've unpackaged the software but what to I do 
+> now???  there is no executable image called Xastir. Also, before I get 
+> any further into this is this the best game in town (or will it even 
+> work on my hardware?) 
 
-I downloaded the Xastir package and got it all onto my sun. ...... only 
-there is no installation guide. the instructions pick up after a 
-successful installation. i've unpackaged the software but what to I do 
-now???  there is no executable image called Xastir. Also, before I get 
-any further into this is this the best game in town (or will it even 
-work on my hardware?)
 
-thanx so much for your patients and help
+Don't know if it will work on your Sun HW, but try this...
 
-mark
+http://www.eskimo.com/~archer/README.Getting-Started
+
+
+-- 
+73, PE1ICQ  Arno Verhoeven 
+--------------------------------
+AX.25  pe1icq@pi8zaa.#nbo.nld.eu
+smtp   pe1icq@pi8zaa.ampr.org
+inet   pe1icq@amsat.org
 
