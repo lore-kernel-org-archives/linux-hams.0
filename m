@@ -1,25 +1,44 @@
-From: "Romano J M Silva" <rmagacho@predialnet.com.br>
-Subject: Soundcard tones and PTT delay
-Date: Wed, 20 Oct 2004 23:29:14 -0300
+From: Dave Stubbs <dave.stubbs@utoronto.ca>
+Subject: Convers Setup
+Date: Mon, 25 Oct 2004 13:19:57 -0400
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <001601c4b715$c1fee440$0100000a@tf281703>
+Message-ID: <417D35BD.9020709@utoronto.ca>
 Mime-Version: 1.0
 Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"
+Content-Type: text/plain; charset="us-ascii"; format="flowed"
 To: linux-hams@vger.kernel.org
 
 Hello all,
 
-I am trying to use the Ax.25 soundcard modem driver and I was wondering if
-it is possible to setup the 2 tones afsk should use for example, 1200 and
-1800.
+In an effort to get prepared for digital ARES traffic handling, I'm 
+going to try running a digital net.  I'm looking to add a convers server 
+to my prototype node.  So far, I've found the following pieces of software:
 
-One other thing. The radio I am using requires a 10ms delay after PTT is
-keyed. Is it possible to setup such a configuration using the soundcard
-driver?
+saupp
+wampes
+tpp-conversd
+tnn
+pp-conversd
+htpp
+htppu
+webconvers
 
-Thank you very much,
-Romano Magacho
+Has anyone run any of these convers servers before?  Have you been on 
+convers chats before where you could actually tell what server software 
+you were connecting to?  Were any of the above "really good"?  or 
+"really bad"?
 
+My only option so far is to work my way through them one by one until I 
+find one that works well.
+
+Hoping to shortcut this.
+
+Also, is there a central site with general info about how convers works, 
+what it is, who came up with it, etc?  That would really help.
+
+Thanks,
+
+Dave
+VA3BHF
