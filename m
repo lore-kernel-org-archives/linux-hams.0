@@ -1,35 +1,70 @@
-From: M Taylor <mctylr@privacy.nb.ca>
-Subject: Re: New Kernel
-Date: Mon, 6 Dec 2004 19:23:21 +0000
-Message-ID: <20041206192321.A28889@pull.privacy.nb.ca>
-References: <1102337343.3133.2.camel@gb7mbc.spoo.org>
+From: ggb112 <gerard.borg@anu.edu.au>
+Subject: networking with baycom usb
+Date: Wed, 08 Dec 2004 10:47:46 +1100
+Message-ID: <41B64122.5050308@anu.edu.au>
 Mime-Version: 1.0
+Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
-Content-Disposition: inline
-In-Reply-To: <1102337343.3133.2.camel@gb7mbc.spoo.org>; from ian@gb7mbc.net on Mon, Dec 06, 2004 at 12:49:03PM +0000
 Sender: linux-hams-owner@vger.kernel.org
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-To: Ian J Maude <ian@gb7mbc.net>
-Cc: Linux-Hams-Owner <linux-hams@vger.kernel.org>
+Content-Type: text/plain; charset="us-ascii"; format="flowed"
+To: linux-hams@vger.kernel.org
 
-On Mon, Dec 06, 2004 at 12:49:03PM +0000, Ian J Maude wrote:
-> Hi all,
-> I finally managed to get ax25d and netromd running on kernel 2.6.9 under
-> FC3 :-)
-> 
-> audit(1102337087.341:0): avc:  denied  { read write } for  pid=3887
-> exe=/usr/bin/perl path=socket:[36323] dev=sockfs ino=36323
-> scontext=user_u:system_r:httpd_sys_script_t
-> tcontext=user_u:system_r:httpd_t tclass=unix_stream_socket
-> 
+Hello all
 
-I believe that is SELinux output, and since a AX.25 is a not so common
-network socket I suspect that the default permissions don't expect to
-allow such a connection to be made (the thinking being that anything 
-non-standard is malicious).
+I am trying to get the baycomusb modem working under RedHats 8 and 9 
+with 2.4.18-14
+and 2.4.26 kernels.
 
-Of course I am just guessing here.
+I would like to find information about how to set up the network 
+parameters and  start
+communicating with it.
 
--ve3tix
+I have downloaded baycomusb-0.10.tar.gz and unpacked. I then did the 
+following to install...
+
+cd baycomusb-0.10
+./configure
+make
+make install (as root)
+
+This produced /usr/local/sbin/baycomusb which I have used to check the 
+proper operation
+of the modem  The modem appears to function correctly according to 
+various tests.
+
+I have read the baycomusb man page which says that ax25 and mkiss have 
+to be installed in the kernel.
+No problem here. I also have baycoimfpga_init.so installed from 
+baycomepp-0.10-1.i386.rpm.
+
+What next?  How do I set up network info such as IP address?
+
+The baycomusb.initscript seems not to need ip address information. I 
+have launched baycomusbserv
+but as  it has no man page I am not sure how to use it. Both baycomusb 
+and baycomusbserv seem
+to need /etc/ax25/baycomusb.conf but I can see no way to generate it. 
+Moreover is the file
+bayconusb.conf or baycomusb.xml?
+
+There is a line in baycomusb.initscript which (though commented out) 
+wants to do
+
+modprobe baycom_usb
+
+Is baycom_usb.o an important module? The above configure/make/make 
+install does not produce it
+as it thinks that nothing has  to be done for the kerneldrv subdirectory.
+.
+Are there any other drivers needed apart from ax25 and mkiss (and of 
+course the USB drivers)? I have
+prior exerience in running packet over serial port using mkiss.
+
+Thanks for any suggestions
+
+Cheers
+
+Gerard Borg
+
+
