@@ -1,43 +1,66 @@
 From: Jeroen Vreeken <pe1rxq@amsat.org>
-Subject: Re: [PATCH] scc fix for 2.6.0
-Date: Tue, 30 Dec 2003 19:41:21 +0100
+Subject: [PATCH] missing spin_unlock and recvmsg fix
+Date: Wed, 31 Dec 2003 17:06:47 +0100
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <20031230194121.E160@jeroen.pe1rxq.ampr.org>
-References: <20031225195233.C3614@jeroen.pe1rxq.ampr.org> <20031227040522.GA7123@linux-mips.org>
+Message-ID: <20031231170647.C3527@jeroen.pe1rxq.ampr.org>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7BIT
+Content-Type: multipart/mixed; boundary="+fexcqMh/evT6CrY"
+Content-Transfer-Encoding: 8bit
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <20031227040522.GA7123@linux-mips.org>; from ralf@linux-mips.org on Sat, Dec 27, 2003 at 05:05:23 +0100
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"
-To: Ralf Baechle DO1GRB <ralf@linux-mips.org>
-Cc: Jeroen Vreeken <pe1rxq@amsat.org>, linux-hams@vger.kernel.org, jgarzik@pobox.com
+To: linux-hams@vger.kernel.org
+Cc: davem@redhat.com, ralf@linux-mips.org
 
-On 2003.12.27 05:05:23 +0100 Ralf Baechle DO1GRB wrote:
-> On Thu, Dec 25, 2003 at 07:52:33PM +0100, Jeroen Vreeken wrote:
-> 
-> > This is a fix for the scc driver in 2.6.0
-> > It was calling register_netdev from within a ioctl and thus holding
-> > rtnl_lock()
-> > It now uses register_netdevice and calls rtnl_lock() itself if outside
-> the
-> > ioctl.
-> 
-> Somehow the whole device registration in that driver looks suspect.
-> Registering from the driver's module_init() method is fine - but doing so
-> from ioctl looks more it's some kind of ancient workaround or so?
 
-At module init it only registers scc0.
-sccinit later uses ioctls on this device to tell the driver how many chips
-there really are, what kind of boards they are on, what crystal they have
-and what addresses they use for the various registers.
-At that time the ioctl will generate additional scc network devices if
-necessary.
-To my knowledge the only way to do this otherwise is to generate some kind
-of scc specific /proc device... Which would be even more ugly.
+--+fexcqMh/evT6CrY
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 8bit
 
-The way scc works now has been like that since altleast the 2.0 kernels and
-I never heard anybody come up with a better way.
+Hi,
+
+This is a small patch for two ax25 problems:
+- A missing spin_unlock.
+- recvmsg was reporting the destination address instead of the source
+address.
+ (and I really want recvfrom() and not recvto() :)
 
 Jeroen
+
+--+fexcqMh/evT6CrY
+Content-Type: application/octet-stream; charset=us-ascii
+Content-Disposition: attachment; filename="ax25.2.6.0.rxq2.diff"
+
+diff -ru linux-2.6.0.rxq.applied/net/ax25/af_ax25.c linux-2.6.0.rxq/net/ax25/af_ax25.c
+--- linux-2.6.0.rxq.applied/net/ax25/af_ax25.c	2003-12-31 16:37:07.000000000 +0100
++++ linux-2.6.0.rxq/net/ax25/af_ax25.c	2003-12-31 16:18:04.000000000 +0100
+@@ -247,6 +247,7 @@
+ 				kfree_skb(copy);
+ 		}
+ 	}
++	spin_unlock_bh(&ax25_list_lock);
+ }
+ 
+ /*
+@@ -1618,16 +1619,16 @@
+ 	if (msg->msg_namelen != 0) {
+ 		struct sockaddr_ax25 *sax = (struct sockaddr_ax25 *)msg->msg_name;
+ 		ax25_digi digi;
+-		ax25_address dest;
++		ax25_address src;
+ 
+-		ax25_addr_parse(skb->mac.raw+1, skb->data-skb->mac.raw-1, NULL, &dest, &digi, NULL, NULL);
++		ax25_addr_parse(skb->mac.raw+1, skb->data-skb->mac.raw-1, &src, NULL, &digi, NULL, NULL);
+ 
+ 		sax->sax25_family = AF_AX25;
+ 		/* We set this correctly, even though we may not let the
+ 		   application know the digi calls further down (because it
+ 		   did NOT ask to know them).  This could get political... **/
+ 		sax->sax25_ndigis = digi.ndigi;
+-		sax->sax25_call   = dest;
++		sax->sax25_call   = src;
+ 
+ 		if (sax->sax25_ndigis != 0) {
+ 			int ct;
+
+--+fexcqMh/evT6CrY--
 
