@@ -1,41 +1,35 @@
-From: Michael Willems <mvw@mvw.net>
-Subject: And another question
-Date: Thu, 12 Dec 2002 13:21:57 -0500 (EST)
+From: Tomi Manninen <tpm@prkele.tky.hut.fi>
+Subject: Re: Success! TWO questions remain
+Date: Thu, 12 Dec 2002 22:54:30 +0200 (EET)
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <Pine.LNX.4.44.0212121315220.27325-100000@njord.mvw.net>
-References: <1039714569.13779.4.camel@edith>
+Message-ID: <Pine.LNX.4.44.0212122248330.4719-100000@oh2bns.ampr.org>
+References: <200212120934.49608.n7ipb@koster.seatcp.net>
+Reply-To: tpm@prkele.tky.hut.fi
 Mime-Version: 1.0
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <1039714569.13779.4.camel@edith>
+In-Reply-To: <200212120934.49608.n7ipb@koster.seatcp.net>
 List-Id: <linux-hams.vger.kernel.org>
 Content-Type: TEXT/PLAIN; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
-To: Linux Hams mailing list <linux-hams@vger.kernel.org>
+To: linux-hams@vger.kernel.org
 
-Good discussion about encryption, please keep it going :)
+On Thu, 12 Dec 2002, Ken Koster wrote:
 
-Meanwhile another question, and I do apologise for all the traffic.
+> SSH does do encryption and optionally can do compression as well.  From
+> the SSH man page " It (ssh) is intended to replace rlogin and rsh, and 
+> provide secure encrypted communications between two untrusted hosts over an 
+> insecure network."
 
-Every time I ping another node it fails the first time, then works the 
-2nd time.
+SSH at least used to have a cipher option "none" that disables all 
+encryption. It might require recompiling as the option is typically 
+disabled to protect people who don't understand what it means...
 
-E.g. from va3mvw.ampr.org I ping va3oak.ampr.org. Both are on my local 
-radio frequency and I have direct routes from one to the other and 
-vice-versa.
+I have used it many times combined with RSA authentication and compression 
+and I always felt safe about not breaking the rules here in Finland. Of 
+course I might have been wrong all the time... :)
 
-The first time, instead of a ping (ICMP echo request), my node send a 
-packet "from VA3MVW to QST". That results in no replies, so in the shell I 
-see "no route to host".
-
-If I ping again immediately, it DOES send the echo request, and gets back 
-an echo ack from the other side, and all is OK< the ping works.
-
-What beginner's mistake am I making? DNS sounds likely but no, I am 
-pinging IP's, not names. So what else am I overlooking?
-
-Thanks for your indulgence again, and thanks for any help!
-
-Michael VA3MVW
-
-
+-- 
+Tomi Manninen           Internet:  oh2bns@sral.fi
+OH2BNS                  AX.25:     oh2bns@oh2rbi.fin.eu
+KP20ME04                Amprnet:   oh2bns@oh2rbi.ampr.org
 
