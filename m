@@ -1,33 +1,28 @@
-From: Rodolfo Brasnarof <rodob@datafull.com>
+From: Gervase Chavasse <g_chavasse@onetel.com>
 Subject: Re: question soundmodem again...
-Date: Fri, 18 Feb 2005 12:44:36 -0300
-Message-ID: <20050218124436.5377e39d.rodob@datafull.com>
-References: <20050218133810.89878.qmail@web51002.mail.yahoo.com>
+Date: Sat, 19 Feb 2005 20:33:25 +0000
+Message-ID: <200502192033.25488.g_chavasse@onetel.com>
+References: <20050218133810.89878.qmail@web51002.mail.yahoo.com> <20050218124436.5377e39d.rodob@datafull.com>
+Reply-To: g_chavasse@onetel.com
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7BIT
-In-reply-to: <20050218133810.89878.qmail@web51002.mail.yahoo.com>
+Content-Transfer-Encoding: 7bit
+In-Reply-To: <20050218124436.5377e39d.rodob@datafull.com>
+Content-Disposition: inline
 Sender: linux-hams-owner@vger.kernel.org
 List-Id: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
 To: linux-hams@vger.kernel.org
-Cc: ariel mastracchio <ari197516@yahoo.com>
 
-On Fri, 18 Feb 2005 05:38:10 -0800 (PST)
-ariel mastracchio wrote:
+On Friday 18 February 2005 15:44, Rodolfo Brasnarof  wrote:
 
-> Hi, 
-> 
->   Someone know if is posible to have two soundcard
-> working in the same computer?? one for example keying
-> in lpt1 and the other in com1?
+> It is possible to have two soundcards working on
+> the same computer, and even more than two. I have two on my system, one
+> for audio applications, system sound, etc, and the other for packet
+> operation.
+I should be interested to know how?  I have a basic sound card built in to the 
+motherboard, which I should like to use for normal operating system and other 
+sounds, and a separate soundcard which I use for radio data modes.  When I 
+installed the separate sound card it muted the motherboard.  I see nothing in 
+the BIOS to reactivate the latter.  Any advice would be much appreciated.
 
-It is possible to have two soundcards working on
-the same computer, and even more than two. I have two on my system, one
-for audio applications, system sound, etc, and the other for packet
-operation.
-
-There are some limitations on which cards can be set to work together.
-Alsa has good support for more than one card.
-
-You mean having one card with soundmodem for packet operation, and the
-other for using with gmfsk for example? It should be possible.
+Gervase GW4URJ
