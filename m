@@ -1,45 +1,47 @@
-From: Robert L Cochran <cochranb@speakeasy.net>
-Subject: Kenwood TR-7950 Crashing Computer?
-Date: 25 Mar 2003 19:39:30 -0500
+From: M Taylor <mctylr@privacy.nb.ca>
+Subject: Re: Problem...
+Date: Wed, 26 Mar 2003 00:46:33 +0000
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <1048639171.16852.34.camel@bobcp4.lingpgmr.com>
+Message-ID: <20030326004633.A5531@pull.privacy.nb.ca>
+References: <GMEHKCCPLOCMPOLBMKICCEJNDOAA.hremijn@zeelandnet.nl> <3E8086E6.3000709@ccr.jussieu.fr>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
+Content-Disposition: inline
+In-Reply-To: <3E8086E6.3000709@ccr.jussieu.fr>; from pidoux@ccr.jussieu.fr on Tue, Mar 25, 2003 at 05:42:14PM +0100
 List-Id: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
-To: Linux-Hams <linux-hams@vger.kernel.org>
+Content-Transfer-Encoding: 7bit
+To: bernard pidoux <pidoux@ccr.jussieu.fr>
+Cc: linux-hams@vger.kernel.org
 
-Hi,
+On Tue, Mar 25, 2003 at 05:42:14PM +0100, bernard pidoux wrote:
+> 
+> I was not able to achieve a normal functionning of Linux as soon as AX25 
+> was set up with mkiss connexions with any of 2.4.xx kernels. And I tried 
+> with different PCs.
+> In 2.4 kernel, there are major problems with interruptions (and kernel 
+> panics after a few minutes or hours) that should be corrected in kernel 
+> version under development (actually around 2.5.65) leading to a possible 
+> return to correct functionning (I hope) in [2.6.x -ve1mct] kernel.
 
-Last week, after transmitting several times on a Kenwood TR-7950
-connected to my KPC-3 Plus and my (practically brand new) computer, my
-Red Hat Linux installation simply froze and crashed on me. The hard
-drive developed all sorts of never before seen (to me at least!) bad
-blocks and inode issues which e2fsck couldn't cure. I was left realizing
-I had no choice but to reinstall Red Hat 8. I was getting issues like
-the 'diff' program suddenly becoming a symlink pointing at 'cut'.
+Bugs can only be fixed if people take the time to make a bug report.
 
-Although an friend of mine thinks it is not possible, I'm wondering if
-transmitting with this model of Kenwood (which is about 20 years old, I
-would say) only about 1 foot from my computer and 3 feet from the
-antenna, caused the system to crash? Perhaps the antenna is simply too
-close to the computer? It is an MFJ mag-mount antenna. I didn't do very
-much transmitting at all, I was trying to connect to a friend's packet
-radio rig about 10 miles away on 145.010 and according to him we were
-connected only once and it timed out.
+There are developers here willing to help you if you need assistance
+with finding the cause of the problem. (Myself included, though I am
+not a kernel developer)
 
-73,
+One thing I would really like to know is if certain protocols cause
+problems, i.e. does plain AX.25 cause problem, or NetRom traffic,
+what about AXIP traffic? Did you have a large route table (that is,
+are your an AMPRnet gateway)? Any idea of the CPU load when the kernel
+panic occured? Was there multiple connections/traffic on different or 
+same RF ports? Error messages in the syslog or messages file relating
+to networking or amateur radio stuff?
 
-Bob Cochran
-KB3JCM
+The problems that exist in the 2.4 kernel also exist in the 2.2 kernel,
+it is just that there are harder to trigger. They will become worst in
+2.5/2.6 unless they are fixed, so the best time is now, while 2.5 is
+still a development kernel.
 
-
-
-
-
-
-
-
-
-
+Thank you,
+ve1mct
