@@ -1,22 +1,46 @@
-From: <jifernandez.olea@eresmas.net>
-Subject: leo satellite communications and ham radio
-Date: Tue, 19 Nov 2002 00:17:38 GMT
+From: Jorge Matias <martin@andorinha.ist.utl.pt>
+Subject: messages supressed [Was: Protocol error]
+Date: Tue, 19 Nov 2002 10:16:22 +0000 (WET)
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <3c9ed3b9ed.3b9ed3c9ed@eresmas.net>
+Message-ID: <Pine.LNX.4.33.0211191012120.31130-100000@andorinha.ist.utl.pt>
+References: <3DD88922.CFBA65F1@free.fr>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 Return-path: <linux-hams-owner@vger.kernel.org>
-Content-Language: es
-Content-Disposition: inline
+In-Reply-To: <3DD88922.CFBA65F1@free.fr>
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"
-To: linux-hams@vger.kernel.org
+Content-Type: TEXT/PLAIN; charset="iso-8859-1"
+To: =?iso-8859-1?Q?G=E9rard?= Parat / F6FGZ <f6fgz@free.fr>
+Cc: Linux-Ham Mailing List <linux-hams@vger.kernel.org>
 
-Hello everybody.
-First at all excuse my english, it may be inaccurate.
-I'd like to know if there is anyone working with any leo
-satellite at 2.4 GHz. In this case, Which rates can be achieve?
-Thank you,
-Nacho.-
--- Nacho [jifernandez.olea@eresmas.net] --
+On Mon, 18 Nov 2002, G=E9rard Parat / F6FGZ wrote:
 
+> Jorge Matias a =E9crit :
+>
+> > On Sun, 17 Nov 2002, Demetre Valaris wrote:
+> >
+> >   Hi Demetre,
+> >
+> >   I have the same problem for a loooong time. I also have lots af m=
+essages
+> > like this one in my /var/log/messages:
+> >
+> > Nov 18 00:34:36 hamradio kernel: NET: 8 messages suppressed.
+>
+> This kind of messages occurs with Xnet v1.30 when updating routing ta=
+ble (poll).
+
+Well, I have XNet running. Is there a way to eliminate these messages?
+
+73,
+Jorge
+CT2HBZ
+
+> --
+> 73 G=E9rard F6FGZ
+
+-
+To unsubscribe from this list: send the line "unsubscribe linux-hams" i=
+n
+the body of a message to majordomo@vger.kernel.org
+More majordomo info at  http://vger.kernel.org/majordomo-info.html
