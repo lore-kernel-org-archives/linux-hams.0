@@ -1,22 +1,39 @@
-From: Jonathan Naylor <jonathan.naylor@ggaweb.ch>
-Subject: JT44 TNG
-Date: Sun, 19 Jan 2003 15:19:53 +0100
+From: Luc Langehegermann <lx2gt@gmx.net>
+Subject: [Announce] Ktrack 0.2.2 released
+Date: Mon, 20 Jan 2003 20:05:43 +0100
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <200301191519.53806.jonathan.naylor@ggaweb.ch>
-Reply-To: g4klx@qsl.net
+Message-ID: <200301202005.43279.lx2gt@gmx.net>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
+Content-Disposition: inline
 List-Id: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
-To: Linux Hams <linux-hams@vger.kernel.org>
+To: linux-hams@vger.kernel.org, amsat-bb@amsat.org
 
-I have written a paper outlining the techniques that are to be used to 
-push the performance of JT44 (the EME data mode) even further. The 
-paper, which is non mathematical, can be found at 
-http://www.qsl.net/g4klx under Software or under News.
+Hello,
 
-73
+I have just released a new KTrack Version.
 
-Jonathan  HB9DRD/G4KLX
+Changelog:
+
+0.2.1 to 0.2.2
+
+- Fixed an bug, where the unable to init rig message appears, if the user
+  has selected 'none' in the rig control
+- Fixed the bug that caused ktrack to crash, if one of the selected rigs are
+  'none'
+- The rigs in the rigconfig comboboxes are now sorted alphabetically
+- Only satellites that are displayed are now calculated. The previous version
+  calculated them all, even if not displayed
+- Much faster AOS / LOS calculation routines
+- Only calculate AOS for satellites that actually can reach our position
+- Removed the possibility to not correct the downlink... now the real way of
+  doppler correction is always used!
+- Removed every reference to the obsolete fodtrack driver that was still in
+  the source tree from ktrack
+
+As usual, you get get it at http://ktrack.sourceforge.net
+
+73, Luc
 
