@@ -1,38 +1,35 @@
-From: John@man.ac.uk
-Subject: Re: installing Predict on a RedHat 7.3 box , no go :^(
-Date: Mon, 16 Dec 2002 17:24:29 +0000 (GMT)
+From: "Curt Mills, WE7U" <hacker@tc.fluke.com>
+Subject: Re: listen, permissions
+Date: Mon, 16 Dec 2002 10:36:09 -0800 (PST)
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <E18Nz1e-00050R-00@probity.mcc.ac.uk>
-References: <Pine.OSX.4.50.0212152001270.8533-100000@lesleyanne.i8u.org>
+Message-ID: <Pine.LNX.4.33.0212161034190.1291-100000@wapiti.tc.fluke.com>
+References: <Pine.LNX.4.44.0212140835060.14589-100000@jeeves.mvw.net>
 Mime-Version: 1.0
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <Pine.OSX.4.50.0212152001270.8533-100000@lesleyanne.i8u.org>
+In-Reply-To: <Pine.LNX.4.44.0212140835060.14589-100000@jeeves.mvw.net>
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: TEXT/plain; charset="us-ascii"
+Content-Type: TEXT/PLAIN; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
-To: htodd@twofifty.com
+To: mvw@mvw.net
 Cc: linux-hams@vger.kernel.org
 
-On 15 Dec, Hisashi T Fujinaka wrote:
-> Predict isn't all that hard to get going. I even got it going on a NetBSD
-> box.
+On Sat, 14 Dec 2002 mvw@mvw.net wrote:
 
-I have it running on several SuSE systems, CygWIN on Windows and on IRIX
-6.5 on an ancient SGI Challenge S...
+> Also I see some apps have changed since the (excellent) AX25-Howto was
+> written (e.g.  ttylinkd is new). Where's the best place to find new (if
+> there are any!) ham radio Linux software?
 
-See my Predict 2.2.1 mods at:
+APRS Software:  http://www.xastir.org
 
-	http://voyager.mcc.ac.uk/Predict/
-or
-	http://cumin.mcc.ac.uk/Predict/
+Run the development versions.  They're very stable.  "Stable"
+version is much too old now.  "Development" versions come out about
+every two weeks.  CVS version changes almost every day.  New enough
+for you?
 
-John
 -- 
-  John Heaton, G1YYH
-  Manchester Computing, Kilburn Building.
-  The University of Manchester, Oxford Road, Manchester, England, M13-9PL
-  pstn://+44-161-275-6011/Hello/Is.Dat-U?
-  fax://+44-161-275-6040/screech/warble/ssshhh/beepbeep
-
-
+Curt Mills, WE7U                    hacker_NO_SPAM_@tc.fluke.com
+Senior Methods Engineer/SysAdmin
+"Lotto:    A tax on people who are bad at math!"
+"Windows:  Microsoft's tax on computer illiterates!" -- WE7U
+"The world DOES revolve around me:  I picked the coordinate system!"
 
