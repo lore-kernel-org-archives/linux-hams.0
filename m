@@ -1,92 +1,62 @@
-From: Tomi Manninen <oh2bns@sral.fi>
-Subject: Re: Gmfsk 0.6beta3 segmentation fault with Mandrake 10
-Date: Sat, 13 Mar 2004 15:02:45 +0200
+From: Ralf Baechle DO1GRB <ralf@linux-mips.org>
+Subject: Re: Timers in 2.6.x kernels
+Date: Sat, 13 Mar 2004 15:19:14 +0100
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <1079182965.1271.1.camel@oh2bns.ampr.org>
-References: <4052C5F5.8070903@home.se>
+Message-ID: <20040313141914.GB26738@linux-mips.org>
+References: <200403121310.02980.oh1mrr@nic.fi>
 Mime-Version: 1.0
-Content-Type: multipart/mixed; boundary="=-HCA07p+L6/su1igW6eGi"
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <4052C5F5.8070903@home.se>
+Content-Disposition: inline
+In-Reply-To: <200403121310.02980.oh1mrr@nic.fi>
 List-Id: <linux-hams.vger.kernel.org>
-To: =?ISO-8859-1?Q?P=E4r?= <perpetum@home.se>
-Cc: Linux Hams <linux-hams@vger.kernel.org>
-
-
---=-HCA07p+L6/su1igW6eGi
-Content-Type: text/plain; charset="iso-8859-15"
-Content-Transfer-Encoding: quoted-printable
-
-On Sat, 2004-03-13 at 10:27, P=E4r wrote:
-
-> Has anyone tried getting gmfsk to work with Mandrake 10 ?
-> It compiles and installs nicely but when I try to run it crashes
-> after the initial wizard. It will present a nice "segmentation
-> fault" every time now.  Any hints ?
-
-This seems to happen with certain versions of Gnome libs. Please
-try the attached patch.
-
---=20
-Tomi Manninen / OH2BNS / KP20ME04
-
---=-HCA07p+L6/su1igW6eGi
-Content-Disposition: attachment; filename=gmfsk-modes.patch
-Content-Type: text/x-patch; name=gmfsk-modes.patch; charset=ISO-8859-15
+Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
+To: Jarmo <oh1mrr@nic.fi>
+Cc: linux-hams@vger.kernel.org
 
-diff -ruN gmfsk-0.6beta3.orig/src/main.c gmfsk-0.6beta3/src/main.c
---- gmfsk-0.6beta3.orig/src/main.c	2004-02-20 02:29:28.000000000 +0200
-+++ gmfsk-0.6beta3/src/main.c	2004-03-13 14:59:28.000000000 +0200
-@@ -688,37 +688,37 @@
- 		switch (trx_get_mode()) {
- 		default:
- 		case MODE_MFSK16:
--			w = find_menu_item("Mode/MFSK16");
-+			w = find_menu_item("_Mode/MFSK16");
- 			break;
- 		case MODE_MFSK8:
--			w = find_menu_item("Mode/MFSK8");
-+			w = find_menu_item("_Mode/MFSK8");
- 			break;
- 		case MODE_RTTY:
--			w = find_menu_item("Mode/RTTY");
-+			w = find_menu_item("_Mode/RTTY");
- 			break;
- 		case MODE_THROB1:
--			w = find_menu_item("Mode/THROB (1 throb/s)");
-+			w = find_menu_item("_Mode/THROB (1 throb/s)");
- 			break;
- 		case MODE_THROB2:
--			w = find_menu_item("Mode/THROB (2 throbs/s)");
-+			w = find_menu_item("_Mode/THROB (2 throbs/s)");
- 			break;
- 		case MODE_THROB4:
--			w = find_menu_item("Mode/THROB (4 throbs/s)");
-+			w = find_menu_item("_Mode/THROB (4 throbs/s)");
- 			break;
- 		case MODE_BPSK31:
--			w = find_menu_item("Mode/PSK31 (BPSK)");
-+			w = find_menu_item("_Mode/PSK31 (BPSK)");
- 			break;
- 		case MODE_QPSK31:
--			w = find_menu_item("Mode/PSK31 (QPSK)");
-+			w = find_menu_item("_Mode/PSK31 (QPSK)");
- 			break;
- 		case MODE_PSK63:
--			w = find_menu_item("Mode/PSK63");
-+			w = find_menu_item("_Mode/PSK63");
- 			break;
- 		case MODE_MT63:
--			w = find_menu_item("Mode/MT63");
-+			w = find_menu_item("_Mode/MT63");
- 			break;
- 		case MODE_FELDHELL:
--			w = find_menu_item("Mode/FELDHELL");
-+			w = find_menu_item("_Mode/FELDHELL");
- 			break;
- 		}
- 
+On Fri, Mar 12, 2004 at 01:10:02PM +0200, Jarmo wrote:
 
---=-HCA07p+L6/su1igW6eGi--
+> Have found that timerparameters have loud a much differences
+> between kernels 2.2-->2.4-->2.6.Now looked up,that there is
+> big change happened in kernels param.h file.
 
+The change was long overdue but we didn't have the necessary infrastructure
+in the kernel.org tree to increase HZ without affecting binary compatibility
+with applications.
+
+All properly written kernel code should now be used USER_HZ for any kind of
+kernel interfaces that are user or application visible.  Unfortunately quite
+a bit of the ham code in the kernel still hasn't done that transitition
+so now we've got a wild mix of time units.
+
+I guess for consistence we should bit the bullet and standardize on one
+unit, seconds or miliseconds as appropriate.  HZ or USER_HZ require the
+user to know what kind of system or even what kernel version he's running.
+
+> A little bit more success to keep system up longer,but it crash still...
+
+You're just putting less pressure on the buggy part of the system.  Doesn't
+mean your change is improving correctness, unfortunately.
+
+> And what we get into syslog
+> 
+>  Mar  5 16:46:58 oh1rbf kernel: 6pack: bad checksum f7                           
+> Mar  5 16:46:58 oh1rbf last message repeated 4 times                            
+> Mar  5 16:46:58 oh1rbf kernel: bad: scheduling while atomic!                    
+> Mar  5 16:46:58 oh1rbf kernel: Call Trace:                                      
+> Mar  5 16:46:58 oh1rbf kernel:  [schedule+1339/1408] schedule+0x53b/0x580       
+> Mar  5 16:46:58 oh1rbf kernel:  [<c011869b>] schedule+0x53b/0x580               
+> Mar  5 16:46:58 oh1rbf kernel:  [_stext+0/32] rest_init+0x0/0x20                
+> Mar  5 16:46:58 oh1rbf kernel:  [<c0105000>] rest_init+0x0/0x20                 
+> Mar  5 16:46:58 oh1rbf kernel:  [apm_do_busy+22/48] apm_do_busy+0x16/0x30       
+> Mar  5 16:46:58 oh1rbf kernel:  [<c01148b6>] apm_do_busy+0x16/0x30
+
+Do you happen to be running a CONFIG_SMP / CONFIG_PREEMPT kernel?  The
+locking stuff in the 6pack driver looks pretty broken and I wouldn't
+expect it to survive for long with any of these two kernel options
+enabled.
+
+APM implementations tend to tamper with interrupts so disabling APM while
+running data over the serial port may help.
+
+  Ralf
