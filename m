@@ -1,17 +1,28 @@
-From: "brpoi" <brpoi2002@yahoo.co.uk>
-Subject: what distro should i use
-Date: Tue, 3 Feb 2004 03:27:34 +0700
+From: David Quental <ct1drb@iol.pt>
+Subject: Gmfsk and kernel 2.6.2.
+Date: Wed, 04 Feb 2004 21:28:16 +0000
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <002101c3e9cb$01771480$2f685e3d@nc2>
+Message-ID: <402163F0.1060406@iol.pt>
 Mime-Version: 1.0
 Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"
-To: linux-hams@vger.kernel.org
+Content-Type: text/plain; charset="us-ascii"; format="flowed"
+To: Linux Hams <linux-hams@vger.kernel.org>
 
-i have acer travelmate 252lc2 notebook... i'd like to gprs-ing with linux..
-what distro can i use for gprs-ing, because my notebook only accepting
-redhat 9.0 and suse 9.0 pro..thankz
+Hello to all.
 
+I am testing kernel 2.6.2 and gmfsk, but have problems with it, gmfsk 
+refuses to work because it does not find device /dev/dsp1 (i have 2 
+sound-cards in my computer), but in fact /dev/dsp1 exists and 
+permissions are right. Is this problem a bad configuration of my side or 
+a bug in new kernel 2.6.2??? With kernel 2.6.1 i think i had not this 
+problem, it only happened with recent versions of 2.6.2 and a bit before.
+
+Any help will be welcome here.
+
+Best 73 and thanks for reading my email
+
+CT1DRB
+David Quental
 
