@@ -1,34 +1,23 @@
-From: "AE5PL Lists" <HamLists@ametx.com>
-Subject: RE: Linux AX25 Digipeating Software
-Date: Tue, 21 Dec 2004 13:40:56 -0600
-Message-ID: <478F6623898BBC4DBD692A223D28298A0EF937@amewebsrvr.webametx.local>
+From: "bob krasko" <rkrasko1@nycap.rr.com>
+Subject: minicom to kpc-9612
+Date: Tue, 21 Dec 2004 15:20:51 -0500
+Message-ID: <LFENLEGCDLCOKEJAECGNEELICDAA.rkrasko1@nycap.rr.com>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 8BIT
+Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
-Content-class: urn:content-classes:message
 Sender: linux-hams-owner@vger.kernel.org
 List-Id: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
 To: linux-hams@vger.kernel.org
 
-javAPRSDigi, a component of javAPRSSrvr, provides full APRS digipeater
-capabilities and works with the Linux ax25 kernel support.  It is not,
-however, a carte-blanc digipeater; only APRS.  You can obtain it for
-free by contacting me directly at pete@ae5pl.net
+after 10 years, i finally got debian running.
+i am just configuring 2.4.18 for use with packet.
+i have a  kantronics kpc-9612 and evidentally need to get it in kiss mode.
+i remember running minicom a long time ago, and thought i would be able to
+get the 9612 into kiss with that program.
+minicom is up and running but not especially configured correctly.
+my guess is that i need to get linux talking thru the comport to see the
+tnc.
+so my question is either:  how do i configure a comport in linux, or how do
+i get to see my tnc thru minicom?
 
-73,
-
-Pete Loveall AE5PL
-mailto:pete@ae5pl.net  
-
-> -----Original Message-----
-> From: Dave Stubbs
-> Posted At: Tuesday, December 21, 2004 10:46 AM
-> Subject: Linux AX25 Digipeating Software
-> 
-> Is there any good, reasonably modern Linux Digipeater 
-> software out there?  I've noticed that axdigi is still dated 
-> 
-> So, after all that - is there a good program out there that 
-> does simple, single-port, layer 2, AX.25 digipeating and 
-> works with kernel 2.6? 
