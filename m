@@ -1,20 +1,23 @@
-From: Jeff Garzik <jgarzik@pobox.com>
-Subject: Re: [PATCH] (resend)
-Date: Tue, 14 Oct 2003 14:07:36 -0400
-Sender: netdev-bounce@oss.sgi.com
-Message-ID: <3F8C3B68.6000207@pobox.com>
-References: <20031008235634.C207@jeroen.pe1rxq.ampr.org>
+From: Joop Stakenborg <pa3aba@debian.org>
+Subject: ANNOUNCE: xdx 1.0
+Date: Tue, 14 Oct 2003 20:37:00 +0200
+Sender: linux-hams-owner@vger.kernel.org
+Message-ID: <3F8C424C.7070005@debian.org>
 Mime-Version: 1.0
 Content-Transfer-Encoding: 7bit
-Return-path: <netdev-bounce@oss.sgi.com>
-In-Reply-To: <20031008235634.C207@jeroen.pe1rxq.ampr.org>
-Errors-to: netdev-bounce@oss.sgi.com
+Return-path: <linux-hams-owner@vger.kernel.org>
 List-Id: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"; format="flowed"
-To: Jeroen Vreeken <pe1rxq@amsat.org>
-Cc: linux-hams@vger.kernel.org, netdev@oss.sgi.com
+To: linux-hams@vger.kernel.org
 
-applied
+Xdx is a dx-cluster client for linux written with the GTK+-2.0 
+libraries. Source and rpm packages are available at:
 
+http://people.debian.org/~pa3aba/xdx.html
 
+Regards,
+Joop
+-- 
+73 de Joop PG4I
+ex - PA4TU PA3ABA
 
