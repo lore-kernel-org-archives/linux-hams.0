@@ -1,33 +1,51 @@
-From: mvw@mvw.net
-Subject: Wx stations and aprs
-Date: Sun, 5 Jan 2003 20:58:57 -0500 (EST)
+From: Dennis Boone <drb@msu.edu>
+Subject: Re: Writing AX.25 Server Progie
+Date: Sun, 05 Jan 2003 22:02:34 -0500
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <Pine.LNX.4.44.0301052055090.6293-100000@jeeves.mvw.net>
-References: <3E188700.5090702@kj6eo.com>
-Mime-Version: 1.0
+Message-ID: <E18VNX8-00050N-00@yagi.h-net.msu.edu>
+References: <1041142023.32767.8.camel@edith>
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <3E188700.5090702@kj6eo.com>
+In-reply-to: (Your message of 29 Dec 2002 00:07:02 CST.)
+             <1041142023.32767.8.camel@edith> 
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: TEXT/PLAIN; charset="us-ascii"
+MIME-Version: 1.0
+Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
-To: LINUX HAMS MAILING LIST <linux-hams@vger.kernel.org>
+To: linux-hams@vger.kernel.org
 
-Hello all,
+ > Replacement of ARES/Data program used for the Twin Cities Marathon in
+ > Minnesota.
 
-Xmas was good in terms of spare time. I am still working on my active
-home. I now have x10 installed and fbb running (basically: though it's
-local; unless you log in via ax25 it still does not get/send mail or
-bulletins from the outside world).
+Kelly:
 
-Anyway - two different questions this time.
+Strange coincidences.  I recently built a perl database server similar
+to ARESDATA for Linux.  I've just returned from holiday travels, so
+much of what I would have said has already been discussed, but I
+thought I would offer a few thoughts.
 
-a) APRS! Any recommendations for both Linux software and maps?
+I spent a week looking into AX.25 server programming, and concluded
+that to do it in perl would require a fair amount of work on the perl
+networking modules.  However, I did discover that ax25d and the
+net_call program can be combined to solve the line ending issues and
+let you write a standard internet socket application.  This has the
+additional advantages that there are lots of perl modules to support
+such development, and that you can also use something like telnet to
+access your application, as well as AX25 connects.  Since you seem to
+have radio TCP/IP running in your area, you could also use telnet over
+radio.
 
-b) Weather stations - I would love broadcast my local Wx status on APRS,
-but before I spend money unwisely, what weather stations (and associated
-software) has worked for any of you?
+I opted for command line style, rather than a menu-driven approach,
+but there's no reason why you would have to take that path.  You could
+also build a client application which provided gui (or menu chui)
+interface, and make the client-server protocol be fairly terse,
+conserving bandwidth.
 
-Best,
-Michael VA3MVW
+If you (or anyone else) wants to see the code I built, it's at:
 
+    http://msuarc.egr.msu.edu/kb8zqz/packet/trivnetdbd
 
+The code is ugly, especially in its abuse of global variables, but you
+should be able to get a feel for the networking stuff.
+
+Dennis Boone
+KB8ZQZ
