@@ -1,28 +1,54 @@
-From: Tomi Manninen <oh2bns@sral.fi>
-Subject: Re: gmfsk and SuSE 9.1
-Date: Thu, 09 Dec 2004 21:35:58 +0200
-Message-ID: <1102620958.1217.15.camel@oh2bns.ampr.org>
-References: <200412091926.06125.g_chavasse@onetel.com>
+From: Jim Bayer <kc9aop@gmail.com>
+Subject: Re: Running Listen
+Date: Thu, 9 Dec 2004 16:58:38 -0600
+Message-ID: <e524c532041209145849580078@mail.gmail.com>
+References: <620c905704120905527c439dc@mail.gmail.com>
+Reply-To: Jim Bayer <kc9aop@gmail.com>
 Mime-Version: 1.0
 Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <200412091926.06125.g_chavasse@onetel.com>
+In-Reply-To: <620c905704120905527c439dc@mail.gmail.com>
 Sender: linux-hams-owner@vger.kernel.org
 List-Id: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
-To: Gervase Chavasse <g_chavasse@onetel.com>
-Cc: Linux-hams List <linux-hams@vger.kernel.org>
+To: Chuck Hast <wchast@gmail.com>
+Cc: Linux-Hams <linux-hams@vger.kernel.org>
 
-On Thu, 2004-12-09 at 21:26, Gervase Chavasse wrote:
+Did you try setting the sticky bit?
 
-> I have overcome a number of error messages in the ./configure and make 
-> processes, but under "make install" I now get the following message:
+As root type chmod a+s <file>.  This sets the owner and group sticky
+bit to root.  Then anyone who runs the program runs it as root.
 
-> ../../depcomp: line 414: exec: g++: not found
+On Thu, 9 Dec 2004 08:52:57 -0500, Chuck Hast <wchast@gmail.com> wrote:
+> Folks,
+> I am trying to run listen as a non-root user. I have checked the permissions
+> and group stuff, all appears Ok, it I run it as root, it takes off just fine,
+> but if I run it as a non-root user I get this error:
+> socket: Operation not permitted
+> 
+> I have done some looking and see something to the effect that tcpdump
+> must be run as root or you get the same error, is this true of listen also?
+> 
+> Indeed I wanted to set up listen so I could have a log in directly to a listen
+> session so I could just log in remotely and observe the goings on's on the
+> different ports of the switch. (Has high speed internet connection so there
+> is not problem there) Again I can ssh into the box as root and start a listen
+> session just fine, but as anything else I get the above infamous error.
+> 
+> --
+> Chuck Hast
+> To paraphrase my flight instructor;
+> "the only dumb question is the one you DID NOT ask resulting in my going
+> out and having to identify your bits and pieces in the midst of torn
+> and twisted metal."
+> -
+> To unsubscribe from this list: send the line "unsubscribe linux-hams" in
+> the body of a message to majordomo@vger.kernel.org
+> More majordomo info at  http://vger.kernel.org/majordomo-info.html
+> 
 
-You don't seem to have the C++ compiler installed. On my Red Hat the
-package is called "gcc-c++".
 
 -- 
-Tomi Manninen / OH2BNS / KP20ME04
+'73'
 
+Jim - KC9AOP
