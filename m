@@ -1,44 +1,60 @@
-From: Jonathan Naylor <jonathan.naylor@ggaweb.ch>
-Subject: LinWSJT 0.1 Alpha available
-Date: Thu, 19 Sep 2002 12:54:08 +0200
+From: Ruben Navarro Huedo <eb5esx@eb5esx.ampr.org>
+Subject: Jnos and Areas
+Date: Sat, 21 Sep 2002 01:11:01 +0200
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <0209191254080G.00986@g4klx>
-Reply-To: g4klx@qsl.net
+Message-ID: <200209210111.01336.eb5esx@eb5esx.ampr.org>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7BIT
+Content-Transfer-Encoding: 8bit
 Return-path: <linux-hams-owner@vger.kernel.org>
 List-Id: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
-To: Amsat BB <amsat-bb@amsat.org>, Linux Hams <linux-hams@vger.kernel.org>, Moon Net <moon-net@nlsa.com>
+To: linux-hams@vger.kernel.org
 
-Hi Folks
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-I am happy to announce the availability of LinWSJT (sorry about the 
-name) 0.1 Alpha. This is my attempt to implement JT44 and FSK441 for 
-Linux (and other platforms) in C++ and under the GPL. At present the 
-FSK441 side is languishing, but the JT44 side has been quite heavily 
-developed and transmits and receives JT44 effectively. My latest work 
-has been adding a suitable GUI to it.
+Hello all:
+We are trying to configure nos.ea5rke.ampr.org
+it runs ok, but we have problems with areas
+How can we put bulletins/mails in public areas?
+Our local FBB BBS is sending @ea bulletins to jnos, but they don't go in the
+ea area. Jnos try to return the mail.
 
-It is now available in source code form. Please drop me a line if you 
-would like a copy, either to look at, or to work on, or even to use. 
-There are still many things to do with the GUI and I am particularly 
-interested in finding people who can help out with that side. There is 
-reasonable documentation in the package in the TODO and README files. 
-For an overview of the JT44 mode itself I would advise you look at the 
-original WSJT program and its documentation.
+This is our rewrite:
 
-I suppose I should give a brief overview of what the program does:
+*@ea ea
+*@local local
 
-JT44 Transmit
-JT44 Receive (from the sound card, and from wave files)
-PTT Control via the Serial and Parallel ports
-Recording of incoming audio in wave files
-Saving of incoming messages into a text file
+This is oue alias:
 
-I intend to update my web site with this new information in due course, 
-but for the moment send me an e-mail to get a copy of the source code.
+ea ea
+local local
 
-73
+and this is our areas:
 
-Jonathan  HB9DRD/G4KLX
+users   Mensajeria Privada
+ea      Mensajeria EA
+linux   Mensajeria sobre Linux
+local   Mensajeria Local
+intnet  Mensajeria sobre la Red
+
+Please...could you help us with this?
+
+A lot of thank's.
+
+- -- 
+You can find my public key here:  
+http://pgp.rediris.es:11371/pks/lookup?op=get&search=0x03B7CCDF
+Linux Registered User 68452 (Nov/97)
+Ruben Navarro Huedo
+http://www.palotes.com
+eb5esx@eb5esx.ampr.org
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.0.6 (GNU/Linux)
+Comment: For info see http://www.gnupg.org
+
+iD8DBQE9i6sF0S5G8AO3zN8RAhDVAKCbaL1FvCsZ0uDwDaWgShKQA3dr3wCfXsuI
+tSjr8l1TxlP+RrmPQUm61ZQ=
+=K1RV
+-----END PGP SIGNATURE-----
+
