@@ -1,50 +1,25 @@
-From: Bob Morgan <wb5aoh@wb5aoh.dyndns.org>
-Subject: soundmodem won't start
-Date: Tue, 19 Oct 2004 18:46:46 -0500
+From: Tomi Manninen <oh2bns@sral.fi>
+Subject: Re: soundmodem won't start
+Date: Wed, 20 Oct 2004 12:47:49 +0300 (EEST)
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <16757.42855.133537.841067@halvor.tensleep.com>
-Reply-To: wb5aoh@wb5aoh.dyndns.org
+Message-ID: <Pine.GSO.4.58.0410201245290.28484@kuori.saunalahti.fi>
+References: <16757.42855.133537.841067@halvor.tensleep.com>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
+In-Reply-To: <16757.42855.133537.841067@halvor.tensleep.com>
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"
+Content-Type: TEXT/PLAIN; charset="us-ascii"
+Content-Transfer-Encoding: 7bit
 To: Linux-hams List <linux-hams@vger.kernel.org>
 
+On Tue, 19 Oct 2004, Bob Morgan wrote:
 
-I have been running ax25 on linux for years through kiss interface
-tnc's, but am now getting serious about getting it working through
-soundcards, so far just wasting a lot of time.
+> sm[pid]: cannot start audio
+> [program exits]
 
-Config here is SB-Live cards on a few various P-II machines running 2.4
-kernels, have ax25, mkiss, emu10k1, ac97_codec etc loaded.
-Same problem on more than one similar setup machine.
+What version of soundmodem are you using? There used to be
+a bug in soundmodem hat caused a successfull soundcard open
+be interpreted as an error and vice versa...
 
-As root, trying either the afsk modem or the psk modem in the config,
-I get past the point of finding the serial port, and always end up
-with the diagnostic:
-
-sm[pid]: cannot start audio
-[program exits]
-
-Other soundcard apps such as xoscope, xanalyser, qsstv, gpsk31, ohphone run fine.
-
-If I run soundmodem under control of strace, main seems to exit
-right after the return of the routine that looks like it is
-calling all of the soundcard ioctls, apparently successfully, although
-I am recalling this from memory from diagnosing it earlier today.
-
-I really wish there were some documentation to be had.  I just now
-after a week of work discovered that soundmodemconfig has some working
-scope and spectrum displays, and while soundmodem can't start up,
-apparently soundmodemconfig can, and does display believable
-waveforms and correct frequency spectra, the cursor displayed freq
-does match the service monitor audio generator counter.
-
-Can someone tell me where it is stuck?  I can probably post an strace
-of what it is doing a little later if it will do any good.
-While I am doing first tests with afsk 1200 to prove it can work,
-I am really interested in the two psk modems to see how they perform.
-
-73 de Bob WB5AOH
-
+-- 
+Tomi Manninen / OH2BNS / KP20ME04
