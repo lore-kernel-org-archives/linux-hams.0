@@ -1,55 +1,70 @@
-From: Adrian Bunk <bunk@stusta.de>
-Subject: [2.6 patch] ax25_route.c: remove an unused function
-Date: Fri, 29 Oct 2004 02:20:45 +0200
-Sender: netdev-bounce@oss.sgi.com
-Message-ID: <20041029002045.GO29142@stusta.de>
-References: <20041028230032.GU3207@stusta.de>
+From: Steve Coy <scoy@dma.org>
+Subject: Re: z8530 SCC chips.
+Date: Thu, 28 Oct 2004 18:10:46 -0400
+Sender: linux-hams-owner@vger.kernel.org
+Message-ID: <41816E66.8000708@dma.org>
+References: <200410280024.35458.sdaniels@airnet.com.au> <418023EE.5060106@gelm.net>
+Reply-To: scoy@dma.org
 Mime-Version: 1.0
-Return-path: <netdev-bounce@oss.sgi.com>
-Content-Disposition: inline
-In-Reply-To: <20041028230032.GU3207@stusta.de>
-Errors-to: netdev-bounce@oss.sgi.com
-List-Id: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
-To: ralf@linux-mips.org
-Cc: linux-hams@vger.kernel.org, davem@davemloft.net, netdev@oss.sgi.com, linux-kernel@vger.kernel.org
+Return-path: <linux-hams-owner@vger.kernel.org>
+List-Id: <linux-hams.vger.kernel.org>
+Content-Type: text/plain; charset="us-ascii"; format="flowed"
+To: chuck@gelm.net
+Cc: vk5hsx@wia.org.au, linux-hams@vger.kernel.org
 
-[ this time without the problems due to a digital signature... ]
+Oct 28, 2004
 
-The patch below removes an unused function from net/ax25/ax25_route.c
+Chuck, I might have one. I am just getting to the bottom of a rather 
+large purchase from a liquidation sale of computer parts. This might be 
+in the lot. I should know something next week.
+
+73 de K8UD
+Steve
 
 
-diffstat output:
- net/ax25/ax25_route.c |   16 ----------------
- 1 files changed, 16 deletions(-)
+chuck gelm wrote:
+
+> Stef VK5HSX wrote:
+>
+>> I am wondering where I can get replacement Z8530 ZILOG chips for DRSI 
+>> cards.
+>> Somewhere online would be great, otherwise, a business or dealer..
+>>
+>> Many thanks..
+>>  
+>>
+> You might ask Steve if he can assist.
+>
+> Electronic mail address:
+>
+> scoy@dma.org <mailto:scoy@dma.org> or
+>
+> k8UD@febo.com <mailto:k8ud@febo.com> or
+>
+> K8UD@amsat.org <mailto:K8ud@amsat.org>
+>
+> K8UD@arrl.net <mailto:K8ud@arrl.net>
+>
+> Home:
+> 3350 Maplewood Dr
+> Beavercreek, OH 45434
+> Home phone: 937-426-6085
+>
+> Work:
+> Consolidated Electronics Inc
+> 705 Watervliet Ave
+> PO Box 20070
+> Dayton, OH 45420-0070
+> Web: http://www./ceitron.com
+> Office phone: 937-252-5662
+>
+> e-mail scoy@ceitron.com <mailto:scoy@ceitron.com>
+>
+> HTH, Chuck
+>
+>
+>
 
 
-Signed-off-by: Adrian Bunk <bunk@stusta.de>
-
---- linux-2.6.10-rc1-mm1-full/net/ax25/ax25_route.c.old	2004-10-28 23:50:25.000000000 +0200
-+++ linux-2.6.10-rc1-mm1-full/net/ax25/ax25_route.c	2004-10-28 23:50:41.000000000 +0200
-@@ -41,22 +41,6 @@
- 
- static ax25_route *ax25_get_route(ax25_address *, struct net_device *);
- 
--/*
-- * small macro to drop non-digipeated digipeaters and reverse path
-- */
--static inline void ax25_route_invert(ax25_digi *in, ax25_digi *out)
--{
--	int k;
--
--	for (k = 0; k < in->ndigi; k++)
--		if (!in->repeated[k])
--			break;
--
--	in->ndigi = k;
--
--	ax25_digi_invert(in, out);
--}
--
- void ax25_rt_device_down(struct net_device *dev)
- {
- 	ax25_route *s, *t, *ax25_rt;
 
