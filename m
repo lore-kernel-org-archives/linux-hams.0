@@ -1,62 +1,90 @@
-From: Bob Nielsen <nielsen@oz.net>
-Subject: Re: Linux AX25 Digipeating Software
-Date: Sat, 25 Dec 2004 14:17:18 -0800
-Message-ID: <20041225221718.GB21692@office.n7xy.net>
-References: <41C9A12A.2000401@utoronto.ca> <NCBBKBAJDJIPKFIAFBKLIEGOFFAC.wilson.hein@verizon.net> <20041222204955.GC8131@office.n7xy.net> <20041222225831.GB4086@merlin> <Pine.GSO.4.58.0412231259020.27419@kuori.saunalahti.fi> <20041223175600.GC14938@office.n7xy.net> <20041225182614.GB20204@office.n7xy.net>
+From: acfnews@xs4all.nl
+Subject: Re: SCC Driver compilation error
+Date: Sun, 26 Dec 2004 08:41:02 +0100 (CET)
+Message-ID: <20082.80.126.37.112.1104046862.squirrel@80.126.37.112>
+References: <41CD6AD8.9040708@libero.it>
 Mime-Version: 1.0
+Content-Transfer-Encoding: 7BIT
 Return-path: <linux-hams-owner@vger.kernel.org>
-Content-Disposition: inline
-In-Reply-To: <20041225182614.GB20204@office.n7xy.net>
+In-Reply-To: <41CD6AD8.9040708@libero.it>
 Sender: linux-hams-owner@vger.kernel.org
 List-Id: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-To: linux-hams List <linux-hams@vger.kernel.org>
+To: IZ4EFN Alessio <iz4efn@libero.it>
+Cc: linux-hams List <linux-hams@vger.kernel.org>
 
-On Sat, Dec 25, 2004 at 10:26:14AM -0800, Bob Nielsen wrote:
-> On Thu, Dec 23, 2004 at 09:56:00AM -0800, Bob Nielsen wrote:
-> > On Thu, Dec 23, 2004 at 01:01:04PM +0200, Tomi Manninen wrote:
-> > > On Wed, 22 Dec 2004, Nate Bargmann wrote:
-> > > 
-> > > > Perhaps until Craig declares it obsolete this should be hosted
-> > > > *somewhere* just to preserve access to the code.  Digipeating is
-> > > > sometimes not recommended by some, but it would be nice if this code
-> > > > could be updated if for no other reason than to have the Linux AX.25
-> > > > capability meet the spec.
-> > > 
-> > > FWIW, there is an axdigi-0.02.tar.gz at the old ax25 tools home
-> > > at http://he.fi/. The patch I sent, was against this. I have absolutely
-> > > no idea if this is the latest version or not...
-> > > 
-> > 
-> > The binary in that package appears to run on my system running a 2.4.26
-> > kernel (I had to install libc5 first).  I don't have any way to see if
-> > it actually is functional, however.
-> 
-> I applied Tomi's patch and compiled on a 2.6.9 system (glibc/libc6
-> 2.3.2).  This binary also runs on my 2.4.26 system.  I didn't have an
-> opportunity to try digipeating with it, however.  This revised version
-> (renumbered to avoid confusion) can be downloaded from:
-> 
-> ftp://ftp.tapr.org/software_lib/ax25/axdigi-0.03.tgz
+Hello Alessio,
 
-Oops, that should have been 
+Why not use the kernel's source ?
+If you include them in the kernel, i think no problems should appear.
 
-ftp://ftp.tapr.org/software_lib/Linux/ax25/axdigi-0.03.tgz
+Best regards,
 
-Thanks to SP1LOP for pointing out my error.
+ron
 
-> 
-> 73, Bob N7XY
->  
+
+
+> Hello guys,
+>
+> Marry Christmast to everyone!!
+>
+> I'm, in these days of holiday, trying to setup a couple of old cards
+> based on Z8530.
+>
+> These are S5PCC design (board rebuild by I2REO), two Z8530 with 2 modems
+> each.
+>
+> While compiling the usual driver i get the following error:
+>
+>
+> root@Slack_ARIMO:~/z8530drv-2.4# make dep
+> gcc -O2 -m486 -Wall -Wstrict-prototypes -DCONFIG_SCC_STANDALONE -M
+> sccstat.c sccinit.c sccparam.c >.depend
+> gcc -O2 -m486 -Wall -Wstrict-prototypes -DCONFIG_SCC_STANDALONE -c -pipe
+> -D__KERNEL__ -DMODULE -DMODVERSIONS -fomit-frame-pointer
+> -DCONFIG_SCC_DEV -DCONFIG_SCC_TTY -I/usr/src/linux/include -M scc.c
+>  >>.depend
+> scc.c:156:20: warning: extra tokens at end of #undef directive
+> In file included from scc.c:189:
+> /usr/src/linux/include/linux/malloc.h:4:2: warning: #warning
+> linux/malloc.h is deprecated, use linux/slab.h instead.
+> scc.c:3153:46: macro "dev_kfree_skb" passed 2 arguments, but takes just 1
+> scc.c:3164:46: macro "dev_kfree_skb" passed 2 arguments, but takes just 1
+> scc.c:3171:38: macro "dev_kfree_skb" passed 2 arguments, but takes just 1
+> make: *** [dep] Error 1
+> root@Slack_ARIMO:~/z8530drv-2.4#
+>
+>
+>
+> and the make is replying this:
+>
+>
+>
+> root@Slack_ARIMO:~/z8530drv-2.4# make
+> install -g root -o root -m 0755 -s sccstat /sbin/sccstat
+> install -g root -o root -m 0700 -s sccinit /sbin/sccinit
+> install -g root -o root -m 0700 -s sccparam /sbin/sccparam
+> install -g root -o root -m 0644 z8530drv.conf /etc/z8530drv.conf.ex
+> for d in 0 1 2 3 4 5 6 7 ; do \
+>         rm -f /dev/scc$d                ;\
+>         mknod /dev/scc$d c 34 $d        ;\
+> done
+> root@Slack_ARIMO:~/z8530drv-2.4#
+>
+>
+>
+> which seems to be fine.,
+>
+>
+> Where do you think the matter is?
+>
+> Thanks for help, Alessio IZ4EFN.
+>
+>
 > -
 > To unsubscribe from this list: send the line "unsubscribe linux-hams" in
 > the body of a message to majordomo@vger.kernel.org
 > More majordomo info at  http://vger.kernel.org/majordomo-info.html
-> 
-> 
+>
 
--- 
-Bob Nielsen, N7XY                          n7xy (at) n7xy.net
-Bainbridge Island, WA                      http://www.n7xy.net
- 
+
