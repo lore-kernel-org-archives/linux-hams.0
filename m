@@ -1,65 +1,53 @@
-From: Tomi Manninen <tpm@prkele.tky.hut.fi>
-Subject: Re: remote TNC
-Date: Wed, 25 Dec 2002 23:53:30 +0200 (EET)
+From: "Steve Fraser" <sfraser@sierra.apana.org.au>
+Subject: Re: Simple BBS, again, sorry for asking twice.
+Date: Thu, 26 Dec 2002 08:29:08 +1030
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <Pine.LNX.4.44.0212252335330.4691-100000@oh2bns.ampr.org>
-References: <20021225133458.GA28240@silly.cloud.net.au>
-Reply-To: tpm@prkele.tky.hut.fi
+Message-ID: <004601c2ac60$da69cd40$04590cca@apana.org.au>
+References: <Pine.LNX.4.44.0212252208100.2780-100000@zl2bsj.ampr.org>
 Mime-Version: 1.0
-Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <20021225133458.GA28240@silly.cloud.net.au>
-List-Id: <linux-hams.vger.kernel.org>
-Content-Type: TEXT/PLAIN; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
-To: Hamish Moffatt <hamish@cloud.net.au>
-Cc: linux-hams@vger.kernel.org
+Return-path: <linux-hams-owner@vger.kernel.org>
+List-Id: <linux-hams.vger.kernel.org>
+Content-Type: text/plain; charset="us-ascii"
+To: Wilbert Knol <zl2bsj@zl2tze.ath.cx>, linux-hams@vger.kernel.org
 
-On Thu, 26 Dec 2002, Hamish Moffatt wrote:
+Hi All,
 
-> 1. Computer A wants to transmit/receive on RF; RF port is attached to
->    computer B; computers are on a local Ethernet together.
-> 
->    +------------+          +------------+
->    | Computer A |----------| Computer B +-- RF port (TNC etc)
->    +------------+ Ethernet +------------+
->      Runs application        Has RF port
->      eg XASTIR
-> 
->    Computer A wants to work through B transparently;
->    it wouldn't have to specifically mention B in its AX.25 packet path,
->    nor would frames received back by B.
+I wrote:
+>
+> > I havent used it myself, but awznode by Stefano Noferi  IZ5AWZ  seemed
+to
+> > have simple mail capability, passwords etc. It grew out of the normal
+"node"
+> > program so should be fairly familiar.
+>
+and Wilbert replied:
 
-This would be a case for BPQ ether and rxecho I think. You can make it 
-so that A has a TNC directly connected to it.
+> It has an 's <sysop_callsign>' command for sending mail to the sysop.
+> The sysop gets to see it as E-mail. But it's one way only. There is no
+> 'r' command for the user to read a reply.
 
-> 2. Same but computers are connected only via IP, not necessarily on
->    the same Ethernet:
-> 
->    +------------+          +--------+           +------------+
->    | Computer A |----------+ Router +-----------| Computer B +-- RF port
->    +------------+ Ethernet,+--------+ Ethernet, +------------+
->                   PPP etc.            PPP etc.
->      Runs application
->      eg XASTIR
-> 
->    Again the application on A would like to see a standard Linux
->    networking interface and think it's connected directly to RF.
+I downloaded a copy of it. From the README file:
+"Other features:
+- local users of the linux machine can be granted access to the mailreader
+  and optionally to the shell. ...............(bits omitted)
+  Users with the mail option enabled will receive messages like "New mail
+  has arrived", mostly when the stated condition is met ;-)
+- all users can send messages to a callsign associated in the kernel table
+  with a linux username ("send" command)."
 
-Here you will have to use AXIP but I think you can still get the same as 
-in hte above with rxecho.
+This may be a new feature in the v0.4-pre2 version I downloaded.
 
-> On a related note, can somebody give me a good description (either here
-> or a URL for) for BPQ over Ethernet? Is that part of the answer to #1?
-> I think AX/IP (RFC 1226) is the protocol behind #2, but does linux (ie
-> ax25ipd) do this already?
+>No 3rd party mail.
+>
+I think that is still true
 
-Ax25ipd does RFC 1226, yes. For bpq ether I don't know about a good 
-description. But it is simply AX25 over raw ethernet, so there is not much 
-to it. The bpqparms(8) man page tells you pretty much everything needed to 
-configure it.
+> AWZnode is really an on-demand loading node (very good), not a PMS or
+> BBS.
+>
+It seems to be evolving into a PMS, going by what I've seen in the above.
 
--- 
-Tomi Manninen           Internet:  oh2bns@sral.fi
-OH2BNS                  AX.25:     oh2bns@oh2rbi.fin.eu
-KP20ME04                Amprnet:   oh2bns@oh2rbi.ampr.org
+regards
+
+Steve
 
