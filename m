@@ -1,34 +1,24 @@
-From: M Taylor <mctylr@privacy.nb.ca>
-Subject: AX.25 in kernel 2.5 status?
-Date: Thu, 10 Oct 2002 03:57:03 +0100
+From: Bill Walton <kj6eo@kj6eo.com>
+Subject: AX25 Problems!
+Date: Wed, 09 Oct 2002 23:45:47 -0700
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <20021010035703.B8136@pull.privacy.nb.ca>
+Message-ID: <3DA5221B.25812BBE@kj6eo.com>
 Mime-Version: 1.0
+Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
-Content-Disposition: inline
 List-Id: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-To: linux-hams@vger.kernel.org
+To: LINUX HAMS MAILING LIST <linux-hams@vger.kernel.org>
 
+Hello Everyone -
 
-A while back (a few months ago) a couple of developers/hams (Ralf and others) 
-mentioned that work needed to be done in the 2.5 linux kernel due to changes
-(I believe relating cli()/sti() plus other things).
+Has anyone seen this error message in /var/log/messages:
 
-Has there been any progress? There appears to be some patches included
-in 2.5.37 from Ralf and David Miller. Does include all the changes we 
-_need_ to make? (that is for when cli()/sti() and such calls go away)
+Linux Kernel: netromd uses obsolete (PF_INET, SOCK_PACKET)
 
-I guess I am asking what needs to be done before users can "safely" use
-2.5.x kernels for amateur radio stuff.
+I am running RedHat 7.2 and a 2.4.19 kernel.
 
-Should the http://sourceforge.net/projects/ax25 Bug tracking, Support
-Requests / Patches / Feature Requires be used for the AX.25 (et all)
-kernel as well as the userland libraries, tools, and apps?
+Regards,
 
-Oh, and can a non-kernel programmer help? (I'm not familiar with kernel
-programming, but I can program, can I be of assistance?)
+Bill KJ6EO
 
-Thanks,
--ve1mct
