@@ -1,30 +1,32 @@
-From: Arno Verhoeven <pe1icq@pi8zaa.ampr.org>
-Subject: [OT] ham radio equipment dealer in Florida?
-Date: Tue, 2 Jul 2002 01:45:12 +0200 (CEST)
+From: George Lloyd <g.lloyd@btinternet.com>
+Subject: netcfg problem
+Date: Sun, 7 Jul 2002 16:31:07 +0100
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <Pine.LNX.4.33.0207020137070.5989-100000@zoef.pe1icq.ampr.org>
+Message-ID: <02070716310700.11637@localhost.localdomain>
+Reply-To: g.lloyd@essexpkt.co.uk
 Mime-Version: 1.0
+Content-Transfer-Encoding: 7BIT
 Return-path: <linux-hams-owner@vger.kernel.org>
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: TEXT/PLAIN; charset="us-ascii"
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset="us-ascii"
 To: linux-hams@vger.kernel.org
 
 Hi,
 
-Sri for this off-topic post.
-I'm currently vacationing in Florida and I'm considering to buy a new
-handheld multi-band tranceiver. Something like the Icom T81.
+Can anyone help me. I'm using RedHat 7.1 and trying to set the default route 
+to the internet machine on my small home network. If I use nefcfg to set the 
+route and enter save it comes up with "unknown process" but the machine knows 
+the default route to the internet machine. However, when I reboot it looses 
+the default route data again.
 
-I've found a dealer address in Orlando, but I'm wondering if I there are
-any shops in the Tampa area that sell ham radio equipment?
-Are there hams on this list from the Tampa Bay area that can help me with
-this?
+Can I install the routing information manually? If so which file is it stored 
+in?
 
+As you can no doubt tell I'm not that up on networking in Linux so any help 
+would be appreciated.
 
-73, PE1ICQ  Arno Verhoeven
---------------------------------
-AX.25  pe1icq@pi8zaa.#nbo.nld.eu
-smtp   pe1icq@pi8zaa.ampr.org
-inet   pe1icq@amsat.org
-
+-- 
+G.B. Lloyd
+g.lloyd@essexpkt.co.uk
+www.essexpkt.co.uk 
+For the home of NNA BBS software
