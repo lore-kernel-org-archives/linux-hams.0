@@ -1,41 +1,56 @@
-From: Wilbert Knol <zl2bsj@zl2tze.ath.cx>
-Subject: Re: Simple BBS, again, sorry for asking twice.
-Date: Wed, 25 Dec 2002 22:30:48 +1300 (NZDT)
+From: Joop Stakenborg <pa3aba@debian.org>
+Subject: Re: FBB...
+Date: Wed, 25 Dec 2002 11:23:45 +0100
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <Pine.LNX.4.44.0212252208100.2780-100000@zl2bsj.ampr.org>
-References: <001c01c2abd7$02e251a0$04590cca@apana.org.au>
+Message-ID: <20021225112345.35a8f3cf.pa3aba@debian.org>
+References: <Pine.LNX.4.44.0212242335340.17537-100000@jeeves.mvw.net>
+	<Pine.LNX.4.44.0212250010050.17537-100000@jeeves.mvw.net>
 Mime-Version: 1.0
-Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <001c01c2abd7$02e251a0$04590cca@apana.org.au>
-List-Id: <linux-hams.vger.kernel.org>
-Content-Type: TEXT/PLAIN; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
-To: linux-hams@vger.kernel.org
+Return-path: <linux-hams-owner@vger.kernel.org>
+In-Reply-To: <Pine.LNX.4.44.0212250010050.17537-100000@jeeves.mvw.net>
+List-Id: <linux-hams.vger.kernel.org>
+Content-Type: text/plain; charset="us-ascii"
+To: mvw@mvw.net
+Cc: linux-hams@vger.kernel.org
+
+On Wed, 25 Dec 2002 00:13:14 -0500 (EST)
+mvw@mvw.net wrote:
+
+> OK, pity, but FBB is deleted. I have never seen a worse install in my
+> life, of any software! Apart from the edits needed before it will even
+> compile, there are no instructions (the README just says to 'make' and
+> enjoy), and the scripts included give nothing but fatal errors. Plus the
+> English is bad, but that is not the author's fault, and the licensing is 
+> odd (not GPL: it asks not to make changes)..
+> 
+
+I think you are wrong in several ways. The times I have set up 
+fbb have been easy. Included is a scipt which you run, which creates
+all the needed directories and creates a default setup. I have
+rarely encountered a similar piece of complex software which is
+so easy to set up.
+
+The english is certainly not bad and the licensing has been GPL
+for over a year now.
 
 
+> So I am glad it works for some of you, but for me this is such low
+> standard software that I have deleted it.
+> 
 
-> I havent used it myself, but awznode by Stefano Noferi  IZ5AWZ  seemed to
-> have simple mail capability, passwords etc. It grew out of the normal "node"
-> program so should be fairly familiar.
-
-It has an 's <sysop_callsign>' command for sending mail to the sysop. 
-The sysop gets to see it as E-mail. But it's one way only. There is no 
-'r' command for the user to read a reply. No 3rd party mail. 
-
-AWZnode is really an on-demand loading node (very good), not a PMS or 
-BBS.
-
-What I do here for a PMS is, to tell users to reconnect to my AWZnode 
-and leave me an E-mail with 's', or drop me a line at the local BBS. 
-LinPac then downloads it on the hour. Sorry, I can't be more 
-helpful...
-
-With regards to the 'talk' problem somebody mentioned, make sure that 
-'mesg y' is executed on the terminal you want to talk to. I have it in my 
-.bash_profile
+Low standard software? Can you explain to me why it is used all over
+the world by almost every bbs?
 
 
-Wilbert, ZL2BSJ
+> Any ideas for other systems like this, then?
+> 
 
+Yeah, build your own if you can't find what you want.
 
+> Michael
+> 
+> 
+> 
 
+Joop
