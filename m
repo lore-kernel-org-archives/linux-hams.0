@@ -1,65 +1,52 @@
-From: Bob Nielsen <nielsen@oz.net>
-Subject: Re: Conversd?
-Date: Wed, 9 Apr 2003 08:50:06 -0700
+From: Jack Heller <KB7NO@worldnet.att.net>
+Subject: ld - RH8 - config - Help!
+Date: Wed, 9 Apr 2003 08:33:24 -0700
 Sender: linux-hams-owner@localhost
-Message-ID: <20030409155006.GC8024@n7xy.net>
-References: <20030408175757.GA5695@n7xy.net> <3E9313AA.30807@debian.org>
+Message-ID: <200304090833.24832.KB7NO@worldnet.att.net>
 Mime-Version: 1.0
+Content-Transfer-Encoding: 8BIT
 Return-path: <linux-hams-owner@vger.kernel.org>
-Content-Disposition: inline
-In-Reply-To: <3E9313AA.30807@debian.org>
 List-Id: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-To: Joop Stakenborg <pa3aba@debian.org>
-Cc: linux-hams@vger.kernel.org
+To: linux-hams@vger.kernel.org
 
-Thanks Joop.  As I said it had been a long time (probably >5 years). 
+Hello,
+        I am still new to Linux. And problems arise that are a bit tough on 
+the aging 
+brain.
 
-Bob, N7XY
+        I installed two log programs, TWLog and TLF, with their required 
+libraries.  
+I find neither able to boot due to "error while loading shared libraries."
 
-On Tue, Apr 08, 2003 at 08:23:38PM +0200, Joop Stakenborg wrote:
-> Bob Nielsen wrote:
-> 
-> >I haven't used convers in a long time and thought I'd try running
-> >conversd on my system.  I found several versions around and wondered
-> >which is preferred?
-> >
-> >I looked at conversd-saupp-1.122, htpp-1.22 and htppu-1.5 and they all
-> >compile without problems but experience the same strange behavior when
-> >I run them.
-> >
-> >I edited conversd.conf to test it locally without any links, set up
-> >127.0.0.1 as a USER and ran the daemon, but when I telnet to port
-> >3600, I get the conversd.issue message, but nothing else.  The only
-> >command which appears to work is /bye.  Does anyone know what I am
-> >missing here (probably something obvious)?
-> > 
-> >
-> Hi bob,
-> 
-> You need to logon with "/name callsign channel".
-> Channel is optional.
-> 
-> >73,
-> >Bob, N7XY
-> >-
-> >To unsubscribe from this list: send the line "unsubscribe linux-hams" in
-> >the body of a message to majordomo@vger.kernel.org
-> >More majordomo info at  http://vger.kernel.org/majordomo-info.html
-> >
-> >
-> > 
-> >
-> Regards,
-> Joop PA4TU
-> 
-> -
-> To unsubscribe from this list: send the line "unsubscribe linux-hams" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at  http://vger.kernel.org/majordomo-info.html
+        It took a bit of research and finally found reference to running 
+"ldconfigure."  Then found that does not exist in Red Hat 8.
 
--- 
-Bob Nielsen, N7XY                          n7xy@n7xy.net
-Bainbridge Island, WA                      http://www.n7xy.net
-IOTA NA-065, USI WA-028S 
+        More reading -- Found ld exists -- 30 page manual in RH relates almost 
+entirely to programmers intending to make program work when installed in RH.  
+Other reading not so informative.  Finally came up with the following command 
+line that comes somewhat close, but no cigar.
+
+        ld -o twlog /lib/libXbae.so.4.0.8 libXbae.so
+
+        Tried many configurations of the above, but have to ask for help.  In 
+the 
+/usr/local/lib the folowing 3 files exist:
+
+        libXbae.so
+        libXbae.so.4
+        libXbae.so.4.0.8
+
+        And -- Think I found the problem with these files.  They are empty!
+
+And the hamlib files (for TLF) seem to be intact with data present.  Must be a 
+failure in the Xbae install.
+
+        Now the question is: would the command line above work, and how should 
+it be 
+configured to boot the other program (TLF) -- It is much more complex. (many 
+lib files)
+
+TIA for your patience --  Jack   KB7NO
+
+
