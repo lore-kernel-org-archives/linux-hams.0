@@ -1,7 +1,7 @@
 From: Bob Nielsen <nielsen@oz.net>
 Subject: Re: Linux AX25 Digipeating Software
-Date: Thu, 23 Dec 2004 09:44:41 -0800
-Message-ID: <20041223174441.GB14938@office.n7xy.net>
+Date: Thu, 23 Dec 2004 09:56:00 -0800
+Message-ID: <20041223175600.GC14938@office.n7xy.net>
 References: <41C9A12A.2000401@utoronto.ca> <NCBBKBAJDJIPKFIAFBKLIEGOFFAC.wilson.hein@verizon.net> <20041222204955.GC8131@office.n7xy.net> <20041222225831.GB4086@merlin> <Pine.GSO.4.58.0412231259020.27419@kuori.saunalahti.fi>
 Mime-Version: 1.0
 Return-path: <linux-hams-owner@vger.kernel.org>
@@ -25,14 +25,11 @@ On Thu, Dec 23, 2004 at 01:01:04PM +0200, Tomi Manninen wrote:
 > FWIW, there is an axdigi-0.02.tar.gz at the old ax25 tools home
 > at http://he.fi/. The patch I sent, was against this. I have absolutely
 > no idea if this is the latest version or not...
+> 
 
-That is sightly newer than the version I found at the TAPR site. 
-Jonathan Naylor patched it previously to compile on 2.1 kernels (the
-original was compiled on kernel 1.1.95 with GCC 2.6.2 and libc 4.6.27,
-per the README file.)
+The binary in that package appears to run on my system running a 2.4.26
+kernel (I had to install libc5 first).  I don't have any way to see if
+it actually is functional, however.
 
-I'll play around with it (and the new patch) a bit and if it looks 
-useful, I'll upload a new *unofficial* version to the tapr site.
-
-Bob N7XY
+Bob
 
