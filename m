@@ -1,48 +1,47 @@
-From: Jarmo <oh1mrr@nic.fi>
-Subject: Re: Timers in 2.6.x kernels
-Date: Sun, 14 Mar 2004 08:01:27 +0200
+From: =?ISO-8859-15?Q?P=E4r?= <perpetum@home.se>
+Subject: Re: Gmfsk 0.6beta3 segmentation fault with Mandrake 10
+Date: Sun, 14 Mar 2004 09:05:17 +0000
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <200403140801.27105.oh1mrr@nic.fi>
-References: <200403121310.02980.oh1mrr@nic.fi> <200403131659.49496.oh1mrr@nic.fi> <20040313220622.GA18544@linux-mips.org>
+Message-ID: <4054204D.8030909@home.se>
+References: <4052C5F5.8070903@home.se> <1079182965.1271.1.camel@oh2bns.ampr.org>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <20040313220622.GA18544@linux-mips.org>
-Content-Disposition: inline
+In-Reply-To: <1079182965.1271.1.camel@oh2bns.ampr.org>
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"
-To: Ralf Baechle DO1GRB <ralf@linux-mips.org>
-Cc: linux-hams@vger.kernel.org
+Content-Type: text/plain; charset="iso-8859-1"; format="flowed"
+To: 
+Cc: Linux Hams <linux-hams@vger.kernel.org>
 
-On Sunday 14 March 2004 00:06, you wrote:
+Tomi Manninen wrote:
 
-> MS drivers and Linux drivers are technically very different.  So quite
-> likely the version numbers are refering to different drivers.  And anyway,
-> the Linux driver has been changed fairly often, just not the version
-> number of the driver.  So in short, the content of information in the
-> version number is probably approximating that of cosmic noise ;-)
-
-True...
-But also true,that there is no maintainer for 6pack at the moment..
-So we here,who use it,are in "liquid"...Want to modernize system,
-hardware and software, but seems to take some time...
-In a way this is fun,to try solve problems,but packetradio/cluster
-users does not feel that way,when everything is crushed most
-of the time...
-
-> > Hope,that get it running more stable..9 hours max uptime was quite
-> > annoying.
-
-8  hours 14mins...AAARGGHHHH!
-
- Still have to remember,that this is a hobby..isn't it?
+>On Sat, 2004-03-13 at 10:27, P=E4r wrote:
 >
-> Maybe - but software that works less than reliable sucks.
+> =20
 >
-> 73 de DO1GRB op Ralf
+>>Has anyone tried getting gmfsk to work with Mandrake 10 ?
+>>It compiles and installs nicely but when I try to run it crashes
+>>after the initial wizard. It will present a nice "segmentation
+>>fault" every time now.  Any hints ?
+>>   =20
+>>
+>
+>This seems to happen with certain versions of Gnome libs. Please
+>try the attached patch.
+>
+> =20
+>
+I tried switching to Mandrake 9.2.1 and got the same segfault there as
+well. I've applied the patch and it seems to work, no segfaults now.
+I'll retry it on Mandrake 10 but as I got the same errors in 9.2.1 as i=
+n
+10 I guess it will work in 10 as well now (will check).
+Thank you !
 
-True,but this case I've started to think,that there sucks my linux
-skills;-)
-No...I'm not giving up...Next..... HW change...again..
+/P=E4r
 
-Jarmo
+-
+To unsubscribe from this list: send the line "unsubscribe linux-hams" i=
+n
+the body of a message to majordomo@vger.kernel.org
+More majordomo info at  http://vger.kernel.org/majordomo-info.html
