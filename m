@@ -1,32 +1,28 @@
-From: Tomi Manninen <oh2bns@sral.fi>
+From: Mike Markowski <mm@UDel.Edu>
 Subject: Re: gMFSK compile problem
-Date: Wed, 28 Jan 2004 22:13:29 +0200
+Date: Wed, 28 Jan 2004 15:54:36 -0500
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <1075320809.2433.16.camel@oh2bns.ampr.org>
-References: <20040128200609.GA19299@strauss.udel.edu>
+Message-ID: <20040128205436.GM3805@strauss.udel.edu>
+References: <20040128200609.GA19299@strauss.udel.edu> <1075320809.2433.16.camel@oh2bns.ampr.org>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <20040128200609.GA19299@strauss.udel.edu>
+Content-Disposition: inline
+In-Reply-To: <1075320809.2433.16.camel@oh2bns.ampr.org>
 List-Id: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
-To: Mike Markowski <mm@UDel.Edu>
+Content-Transfer-Encoding: 7bit
+To: Tomi Manninen <oh2bns@sral.fi>
 Cc: Linux Hams <linux-hams@vger.kernel.org>
 
-On Wed, 2004-01-28 at 22:06, Mike Markowski wrote:
-
-> checking for libgnomeui-2.0 hamlib... Package libgnomeui-2.0 was not found in the pkg-config search path.
-> Perhaps you should add the directory containing `libgnomeui-2.0.pc'
-> to the PKG_CONFIG_PATH environment variable
-> No package 'libgnomeui-2.0' found
->  
->  configure: error: Library requirements (libgnomeui-2.0 hamlib) not met; consider adjusting the PKG_CONFIG_PATH environment variable if your libraries are in a nonstandard prefix so pkg-config can find them.
+On Wed 28-Jan-04 at 1513 EST, Tomi Manninen wrote:
+> On Wed, 2004-01-28 at 22:06, Mike Markowski wrote:
 > 
-> Anyone have a solution?  I'm not sure what a .pc file is.  Thanks!
+> >  configure: error: Library requirements (libgnomeui-2.0 hamlib) not met; consider adjusting the PKG_CONFIG_PATH environment variable if your libraries are in a nonstandard prefix so pkg-config can find them.
+> 
+> You need to install the libgnomeui-devel package. It contains the .pc
+> and other files needed when compiling gMFSK.
 
-You need to install the libgnomeui-devel package. It contains the .pc
-and other files needed when compiling gMFSK.
+Thanks, Tomi.  I'll download the lib (& whatever it depends on)
+and see how it goes.  Thanks again!
 
--- 
-Tomi Manninen / OH2BNS / KP20ME04
-
+	Mike  AB3AP
