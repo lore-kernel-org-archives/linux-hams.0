@@ -1,34 +1,29 @@
-From: "Curt Mills, WE7U" <hacker@tc.fluke.com>
-Subject: Re: Linux Soundmodem help required
-Date: Fri, 2 May 2003 16:09:40 -0700 (PDT)
+From: Paul Lewis <paul@skywaves.demon.co.uk>
+Subject: node 0.3.1 connect_to: connect: No buffer space available
+Date: Sat, 3 May 2003 17:38:23 +0100
 Sender: linux-hams-owner@localhost
-Message-ID: <Pine.LNX.4.33.0305021608070.605-100000@wapiti.tc.fluke.com>
-References: <MKEMIADGOFJHLPNBFLBAKEPNCEAA.malc.davies@tesco.net>
+Message-ID: <BodzvMB$B$s+Ewys@skywaves.demon.co.uk>
 Mime-Version: 1.0
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <MKEMIADGOFJHLPNBFLBAKEPNCEAA.malc.davies@tesco.net>
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: TEXT/PLAIN; charset="us-ascii"
+Content-Type: text/plain; charset="us-ascii"; format="flowed"
 Content-Transfer-Encoding: 7bit
-To: malcolm davies <malc.davies@tesco.net>
-Cc: linux-hams@vger.kernel.org
+To: linux-hams@vger.kernel.org
 
-On Fri, 2 May 2003, malcolm davies wrote:
+Hello Readers
 
-> dev '/dev/ttyS0' neither a parport or serport
-> cannot start PTT output
+Anyone got pointers to this error.
 
-Check permissions to see if a normal user can write to that port.
-You can either change permissions on the port or add your user to
-the group that owns that port.
+Internet search has not come up with an answer.
+Do I have control over the buffer referred to?
 
-Try the /dev/cua0 port instead.  That's another way to access the
-same port.
+Occurred since I added encap routes to my server's gateway
+
+T 44.131.10.55
+GB7CR:CRNODE CRCHAT:GB7CIP-5 connect_to: connect: No buffer space 
+available
+
+Paul g4apl
 
 -- 
-Curt Mills, WE7U                    hacker_NO_SPAM_@tc.fluke.com
-Senior Methods Engineer/SysAdmin
-"Lotto:    A tax on people who are bad at math!"
-"Windows:  Microsoft's tax on computer illiterates!" -- WE7U
-"The world DOES revolve around me:  I picked the coordinate system!"
-
+paul@skywaves.demon.co.uk
