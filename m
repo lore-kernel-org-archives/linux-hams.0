@@ -1,39 +1,58 @@
-From: Cathryn Mataga <cathrynm@junglevision.com>
-Subject: redhat 6.2 dies 3/31/2003 + AX25 2.4 kernel issues
-Date: Wed, 25 Dec 2002 03:03:53 -0800
+From: Hamish Moffatt <hamish@cloud.net.au>
+Subject: remote TNC
+Date: Thu, 26 Dec 2002 00:34:58 +1100
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <3E099099.7070306@junglevision.com>
+Message-ID: <20021225133458.GA28240@silly.cloud.net.au>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
+Content-Disposition: inline
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"; format="flowed"
-To: linux-hams <linux-hams@vger.kernel.org>
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+To: linux-hams@vger.kernel.org
 
-According to the Redhat website, Redhat 6.2 and 7.0
-both die on 3/31/2003.  These are the only supported versions
-that run with the 2.2 kernel.  But, I've also read messages
-here that the 2.4 kernel has race conditions and is prone
-to crash.  So, the question is, what do I do with my ax25
-Linux system with RF modems on 3/31/2003?
 
-1.  Somehow get the 2.4 kernel fixed by 3/31/2003?  Is this
-possible?  What exactly is the issue, and how bad is this?
-Is this likely to happen?
+Hi all,
 
-2.  Just live with the crashing.  Cycle the power on the
-machine every other day with a timer or some other horrible solution.
-Maybe it won't be that that bad.
+Merry Christmas.
 
-3.  Maybe someone other than Redhat will continue to do security patches
-for 6.2?  I can't believe I'm the only one running 6.2.  Right?
+Can anyone suggest solutions for using an AX.25 port (TNC, soundmodem
+or whatever) remotely eg hooked up to a different computer. Here's two 
+scenarios:
 
-4.  Upgrade to a new Redhat, but somehow install a 2.2 kernel in
-a distribution designed for 2.4.  Will this work?  (I'm scared.)
+1. Computer A wants to transmit/receive on RF; RF port is attached to
+   computer B; computers are on a local Ethernet together.
 
-5.  Switch to some other distribution that will continue to support
-2.2 after 3/31/2003.
+   +------------+          +------------+
+   | Computer A |----------| Computer B +-- RF port (TNC etc)
+   +------------+ Ethernet +------------+
+     Runs application        Has RF port
+     eg XASTIR
 
-6.  Continue with 6.2 and keep an eye out for vulnerabilities and
-maybe strip out a few services that I use otherwise.
+   Computer A wants to work through B transparently;
+   it wouldn't have to specifically mention B in its AX.25 packet path,
+   nor would frames received back by B.
 
+2. Same but computers are connected only via IP, not necessarily on
+   the same Ethernet:
+
+   +------------+          +--------+           +------------+
+   | Computer A |----------+ Router +-----------| Computer B +-- RF port
+   +------------+ Ethernet,+--------+ Ethernet, +------------+
+                  PPP etc.            PPP etc.
+     Runs application
+     eg XASTIR
+
+   Again the application on A would like to see a standard Linux
+   networking interface and think it's connected directly to RF.
+
+On a related note, can somebody give me a good description (either here
+or a URL for) for BPQ over Ethernet? Is that part of the answer to #1?
+I think AX/IP (RFC 1226) is the protocol behind #2, but does linux (ie
+ax25ipd) do this already?
+
+
+Thanks,
+Hamish
+-- 
+Hamish Moffatt VK3SB <hamish@debian.org> <hamish@cloud.net.au>
