@@ -1,90 +1,60 @@
-From: Vivi Kusumo <vivi_ksm@yahoo.com>
-Subject: packet radio indoor
-Date: Sun, 29 Dec 2002 11:35:52 -0800 (PST)
+From: Wilbert Knol <zl2bsj@zl2tze.ath.cx>
+Subject: Re: packet radio indoor
+Date: Mon, 30 Dec 2002 12:30:50 +1300 (NZDT)
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <20021229193552.74273.qmail@web14407.mail.yahoo.com>
-References: <Pine.LNX.4.44.0212252216050.1449-100000@oh2bns.ampr.org>
+Message-ID: <Pine.LNX.4.44.0212301220060.6319-100000@zl2bsj.ampr.org>
+References: <20021229193552.74273.qmail@web14407.mail.yahoo.com>
 Mime-Version: 1.0
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <Pine.LNX.4.44.0212252216050.1449-100000@oh2bns.ampr.org>
+In-Reply-To: <20021229193552.74273.qmail@web14407.mail.yahoo.com>
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"
+Content-Type: TEXT/PLAIN; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
-To: linux-hams@vger.kernel.org
+To: Vivi Kusumo <vivi_ksm@yahoo.com>
+Cc: linux-hams@vger.kernel.org
 
-Dear all,
+On Sun, 29 Dec 2002, Vivi Kusumo wrote:
 
-I will use packet radio only in a room
-|pc1|--|sc1|--|ht1| <--/
-                      /--> |ht2|--|sc2|--|pc2| 
-The hardware and software are:
-Personal Computer
-Sound Card
-HT
-RH Linux 7.1 kernel upgraded 2.4.19 and radio packet
-support
-libax25-0.0.9
-ax25-apps-0.0.6
-ax25-tools-0.0.8
-node.0.3.0
-soundmodem-0.7
+> my1com# ifconfig
+> sm0  Link encap: AMPR AX.25 HWaddr MY1COM
+>      inet addr: 44.128.1.5 Bcast: 44.128.1.255 Mask:
+> 255.255.255.0
+>      ..
+
+Is sm0 'UP'?? (next line, please)
+
+If not: 'ifconfig sm0 up'
+
+Next: set up the IP routing (man route). See below.
 
 
-First of all I am using stereo cable to connect 2
-machines without ht and checking if the TCP/IP
-facilities works such as ping, ftp, telnet and ssh. 
-|pc1|--|sc1|--------|sc2|--|pc2|
+> Next I have connected sc1 and sc2 using stereo cables
+> as follow:
 
-According to
-<http://people.zeelandnet.nl/pa3gcu/installax25.htm> I
-have installed the ax.25 stuff and node.0.3.0 in pc1
-and pc2, and all going well without error message in
-the directory </usr/local/src>. Than I  installed the
-soundmodem-0.7 in the same directory.
+Good idea.
+Run 'aumix' and make sure the line input and output are not muted.
+Make sure the volumes are not right down...
 
-my1com# ifconfig
-sm0  Link encap: AMPR AX.25 HWaddr MY1COM
-     inet addr: 44.128.1.5 Bcast: 44.128.1.255 Mask:
-255.255.255.0
-     ..
+Are the sound modems actually transmitting audio? Check with as 
+pair of headphones. If you blow your brains out, then it's working :-)
+Are you seeing anything on the interfaces? Try: 'listen -a -c'
 
-my2com# ifconfig 
-sm0  Link encap: AMPR AX.25 HWaddr MY2COM
-     inet addr: 44.128.1.8 Bcast: 44.128.1.255 Mask:
-255.255.255.0
-     ..
+> But the "ping", "ftp", "ssh" and "telnet" commands
+> don't work from pc1 to pc2 and virce virca.
+> [my1com]$ ping my2com
+> PING my2com.ampr.org (44.128.1.8) from 44.128.1.5:
+> 56(84) bytes of data
+> >From my1com.ampr.org (44.128.1.5): Destination Host
+> unreachable
 
-Next I have connected sc1 and sc2 using stereo cables
-as follow:
-MIC-sc1|----|SPK-sc2
+You will have to tell your machine what port to send the frame on;
 
-SPK-sc1|----|MIC-sc2
+route add 44.128.1.8 sm0
 
-But the "ping", "ftp", "ssh" and "telnet" commands
-don't work from pc1 to pc2 and virce virca.
-[my1com]$ ping my2com
-PING my2com.ampr.org (44.128.1.8) from 44.128.1.5:
-56(84) bytes of data
-From my1com.ampr.org (44.128.1.5): Destination Host
-unreachable
-From my1com.ampr.org (44.128.1.5): Destination Host
-unreachable
-From my1com.ampr.org (44.128.1.5): Destination Host
-unreachable
-
---- my2com.ampr.org ping statistics ---
-4 packets transmitted, 0 packet received, +3 errors,
-100% packet loss
-
-Please any idea what should I do to make "ping",
-"ftp", "ssh" and "telnet" commands workable and
-useable? 
-
-Thanks
-Vivi
+You may also have to set an ARP entry (man arp)
 
 
-__________________________________________________
-Do you Yahoo!?
-Yahoo! Mail Plus - Powerful. Affordable. Sign up now.
-http://mailplus.yahoo.com
+Wilbert, ZL2BSJ
+
+
+
