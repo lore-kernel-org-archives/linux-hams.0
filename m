@@ -1,64 +1,51 @@
-From: Bill Walton <kj6eo@kj6eo.com>
-Subject: AX25 and FBB!
-Date: Sat, 15 Mar 2003 10:54:02 -0800
+From: Tomi Manninen <tpm@prkele.tky.hut.fi>
+Subject: Re: AX25 and FBB!
+Date: Sat, 15 Mar 2003 21:22:49 +0200 (EET)
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <3E7376CA.9040100@kj6eo.com>
+Message-ID: <Pine.LNX.4.44.0303152113190.1305-100000@oh2bns.ampr.org>
+References: <3E7376CA.9040100@kj6eo.com>
+Reply-To: tpm@prkele.tky.hut.fi
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
+In-Reply-To: <3E7376CA.9040100@kj6eo.com>
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"; format="flowed"
-To: LINUX HAMS MAILING LIST <linux-hams@vger.kernel.org>
+Content-Type: TEXT/PLAIN; charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+To: Bill Walton <kj6eo@kj6eo.com>
+Cc: LINUX HAMS MAILING LIST <linux-hams@vger.kernel.org>
 
-Hello -
+On Sat, 15 Mar 2003, Bill Walton wrote:
 
-Thank you for taking time to read my message.  I started fooling around 
-with AX25 about
-6 months ago and just finally got it working this weekend.  What kept 
-the whole thing from
-working was some "syntax" errors in the "node.conf" file.  Some of the 
-parameter values
-needed to have some of the letters capitalized ie "ConnTimeout" instead 
-of "conntimeout"
-and so on.  Those errors were present as examples of what working files 
-should look
-like.  Since I am new to Linux AX25 it was impossible to recognize those 
-mistakes in
-advance.  My configuration is still a little screwed up but AX25 and the 
-Linuxnode both
-are working!  I now need to move on to XFBB.
+> What kept the whole thing from working was some "syntax" errors in the
+> "node.conf" file.  Some of the parameter values needed to have some of
+> the letters capitalized ie "ConnTimeout" instead of "conntimeout" and so
+> on.
 
-I know that this mailing list is not really intended for FBB questions 
-but I am in hopes that
-you will just "look the other way" and answer my simple question if you 
-can.  I want to
-install the full X-Windows vershion of Linux FBB.  The tarball that I 
-have is:
+This is really surprising and actually very hard for me (as the author 
+of LinuxNode) to believe. In fact in the source code of node this is the 
+way the config commands are defined:
 
-x700e_full.tgz
+	...
+	add_internal_cmd(&cfg_cmds, "alias",        0, do_alias);
+	add_internal_cmd(&cfg_cmds, "conntimeout",  0, do_conntimeout);
+	add_internal_cmd(&cfg_cmds, "escapechar",   0, do_escapechar);
+	...
 
-The README file gives some simple instructions on how to install it ie:
+You will notice that the command name is in lower case. The actual command
+parser then is case insensitive.
 
-1)    Un-tar it in a specific place.
-2)    Instructions on how to install it ... "run ./install.sh" and 
-answer the questions.
-3)    Edit the init.srv and port.sys files .... etc.
-4)    Then run it with the "./xfbb.sh" command.
+Could it be that there were other errors in the commands? What does the 
+error message in the system log file look like?
 
-What I get is that stupid "Unknown return value 127" error.  I have been 
-told that XFBB
-has to be compiled.  If so there is no makefile that comes with it, or 
-any instructions on
-how to compile it.
+> I know that this mailing list is not really intended for FBB questions
+> but I am in hopes that you will just "look the other way" and answer my
+> simple question if you can.
 
-Any suggestions that you might have to point me in the right direction 
-would be greatly
-appreciated.  If my questions are stupid, then please excuse me for 
-being stupid.  I just
-need to get beyond this FBB problem and get my stuff online!
+I'm sure you'll get a good answer from someone here. But there is also a
+xfbb list. See http://www.f6fbb.org/mailists.html.
 
-Regards,
-
-Bill KJ6EO
-
+-- 
+Tomi Manninen           Internet:  oh2bns@sral.fi
+OH2BNS                  AX.25:     oh2bns@oh2rbi.fin.eu
+KP20ME04                Amprnet:   oh2bns@oh2rbi.ampr.org
 
