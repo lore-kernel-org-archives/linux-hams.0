@@ -1,38 +1,35 @@
-From: "Wilbert Knol" <w.knol@niwa.cri.nz>
+From: Tomi Manninen <tpm@prkele.tky.hut.fi>
 Subject: Re: ANN: gMFSK v0.4
-Date: Mon, 8 Apr 2002 17:02:01 +1200
+Date: Mon, 8 Apr 2002 12:44:52 +0300 (EEST)
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <3CB1CD09.12082.1950EDB@localhost>
-References: <Pine.LNX.4.33.0203290250170.1587-100000@oh2bns.ampr.org>
-Reply-To: w.knol@niwa.cri.nz
+Message-ID: <Pine.LNX.4.33.0204081242250.29550-100000@oh2bns.ampr.org>
+References: <02040805201200.01821@bcat>
+Reply-To: <tpm@prkele.tky.hut.fi>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7BIT
 In-Reply-To: <02040805201200.01821@bcat>
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"
-To: linux-hams@vger.kernel.org
+Content-Type: TEXT/PLAIN; charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+To: Aleksandar Ilic <ailic@gmx.net>
+Cc: linux-hams@vger.kernel.org
 
-I have the source RPM installed and running now, on a Mdk 8.1 distro, 
-KDE desktop, and it appears to be working very nicely.
+On Mon, 8 Apr 2002, Aleksandar Ilic wrote:
 
-Initially, gMSFK complained about read errors from the sound device. I 
-tried re-assigning DMA channels from the BIOS, and updating the OSS 
-module accordingly, but it went from read errors to write errors to a full 
-system freeze :-(
+> If I start gMFSK from KDE, it is working - except I can not type from 
+> keyboard in the transmit window. I can copy and paste text in it, but 
+> keyboard is dead.
+> From GNOME, all is OK.
+> I suppose you'll be interested about that.
 
-The fix was to ditch OSS for the ALSA drivers, and all is well now. I am 
-using a Toshiba laptop and the Yamaha sound system has always been a 
-bit tricky to get going.
+Ok, thanks for the report. It is indeed interesting and bit strange too. 
+I'll need to try and see if I can reproduce it here.
 
-Anyway, the KDE sound server does a pretty good job of sharing the 
-sound system between apps, I am going to try to record a sound bite of 
-transmitted audio into a file, and re-play it, to see what the transmitted 
-spectrum looks like. I am really intrigued by the MFSK, which sounds like 
-a mix  between a flute and bag-pipes on fast-forward.
+> Keep up a good work ! gMFSK is a very usefull piece of software.
 
-A question: I would like to extract PTT from a USB serial adapter, but the 
-device file for it doesn't show up in the pick list of gMFSK. Can I safely 
-add a symlink to the USB device file and call it, say /dev/ttyS99?
+Thanks.
 
-Wilbert, ZL2BSJ
+-- 
+Tomi Manninen           Internet:  oh2bns@sral.fi
+OH2BNS                  AX.25:     oh2bns@oh2rbi.fin.eu
+KP20ME04                Amprnet:   oh2bns@oh2rbi.ampr.org
 
