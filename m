@@ -1,39 +1,49 @@
-From: "Curt Mills, WE7U" <hacker@tc.fluke.com>
-Subject: Re: XASTIR cross-port digipeating?
-Date: Tue, 22 Jul 2003 13:20:25 -0700 (PDT)
+From: Vivi Kusumo <vivi_ksm@yahoo.com>
+Subject: Re: 2nd indoor Packet Radio
+Date: Tue, 22 Jul 2003 16:10:19 -0700 (PDT)
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <Pine.LNX.4.33.0307221319250.23376-100000@wapiti.tc.fluke.com>
-References: <Pine.LNX.4.44.0307212332100.3897-100000@zl2bsj.ampr.org>
+Message-ID: <20030722231019.52681.qmail@web14404.mail.yahoo.com>
+References: <200307211235.20816.w.knol@niwa.co.nz>
 Mime-Version: 1.0
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <Pine.LNX.4.44.0307212332100.3897-100000@zl2bsj.ampr.org>
+In-Reply-To: <200307211235.20816.w.knol@niwa.co.nz>
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: TEXT/PLAIN; charset="us-ascii"
+Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
-To: Wilbert Knol <zl2bsj@zl2tze.ath.cx>
-Cc: linux-hams@vger.kernel.org
+To: linux-hams@vger.kernel.org
+Cc: w.knol@niwa.co.nz
 
-On Mon, 21 Jul 2003, Wilbert Knol wrote:
+--- Wilbert Knol <w.knol@niwa.co.nz> wrote:
+> 
+> On Saturday 19 July 2003 03:04 am, Vivi Kusumo
+> wrote:
+> > radio: fm  MY1COM  to MY2COM  ctl UI pid=CC(IP)
+> len 84
+> > IP: len 84 44.128.1.20->44.128.1.21 ihl 20 ttl 64
+> DF
+> > prot ICMP
+> > ICMP: type Echo Request id 8759 seq 768
+> > 0000  w.W?R.L.HI.KLMNOPQRSTUVWXYZ[\]^_
+> !"#$%&'()*+,-./01234567
+> 
+> Do you actually have a valid callsign?  I don't
+> think the Brits have 
+> got to the 'MY' prefix yet ;-)
 
->
-> I changed in the file /etc/sysconfig/keyboard:
->
->    KBD_NUMLOCK="bios"
->
-> into
->
->    KDB_NUMLOCK="no"
->
-> ...and right-clicking now works!
+Hi Wilbert,
 
-That probably means that going into your CMOS BIOS and selecting
-"Boot with NumLock On = NO" would have also solved the problem,
-right?
+I don't have any valid callsign that's why I am using
+licence free HT just like a toy, kenwood demitoos
+UBZ-LJ20. I am also using an experimental ip for
+packet radio (44.128.1.x) and trying it within a
+room/indoor :-)
 
--- 
-Curt Mills, WE7U                    hacker_NO_SPAM_@tc.fluke.com
-Senior Methods Engineer/SysAdmin
-"Lotto:    A tax on people who are bad at math!"
-"Windows:  Microsoft's tax on computer illiterates!" -- WE7U
-"The world DOES revolve around me:  I picked the coordinate system!"
+Should I change MYxCOM to PCxHAM or other?
 
+Thanks & regards,
+VK
+
+__________________________________
+Do you Yahoo!?
+Yahoo! SiteBuilder - Free, easy-to-use web site design software
+http://sitebuilder.yahoo.com
