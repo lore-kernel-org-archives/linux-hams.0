@@ -1,59 +1,99 @@
-From: "Ronald Jochems" <acfnews@xs4all.nl>
+From: ariel mastracchio <ari197516@yahoo.com>
 Subject: Re: driver soundmodem  HAPN-1 4800
-Date: Thu, 30 Sep 2004 20:53:12 +0200
+Date: Fri, 1 Oct 2004 05:55:54 -0700 (PDT)
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <00ad01c4a71e$bd61feb0$0a01a8c0@amd2700>
-References: <20040930135210.30195.qmail@web51005.mail.yahoo.com>
+Message-ID: <20041001125554.27565.qmail@web51003.mail.yahoo.com>
+References: <00ad01c4a71e$bd61feb0$0a01a8c0@amd2700>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
+In-Reply-To: <00ad01c4a71e$bd61feb0$0a01a8c0@amd2700>
 List-Id: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
-To: ariel mastracchio <ari197516@yahoo.com>, linux-hams@vger.kernel.org
+Content-Transfer-Encoding: 7bit
+To: linux-hams@vger.kernel.org
 
-Hi Ariel,
+Hi, 
 
-The HAPN modems should connect to a SCC card. In this setup we have it
-running with the linux drivers.
-Am i correct that you see stations, but they cannot hear you ?
-If that is the case, can you check if your transmitter goes on-air ? If so
-is it maybe too short (txdelay) ?
+ Thanks for the answer Ron,
 
-Best regards,
+  You have it working whitch other station with SCC?
+  Yes nobody heard my.. i tried some other txdelay
+txtail and keep not working...
 
-ron
+  Someone use other mode than the AFSK1200?
 
+un abrazo,
+- ari
 
------ Original Message -----
-From: "ariel mastracchio" <ari197516@yahoo.com>
-To: <linux-hams@vger.kernel.org>
-Sent: Thursday, September 30, 2004 3:52 PM
-Subject: driver soundmodem HAPN-1 4800
+lu9aum
 
+--- Ronald Jochems <acfnews@xs4all.nl> wrote:
 
-> Hello all,
->     I set up a station with this driver in linux but
-> still can't connect with nobody... has someone test
-> it? it works? i cant heard some station in UHF witch
-> the manchester modem but nobody heard my..
->
-> hugs.
->
-> lu9aum
->
->
->
->
->
->
->
-> _______________________________
-> Do you Yahoo!?
-> Express yourself with Y! Messenger! Free. Download now.
-> http://messenger.yahoo.com
+> Hi Ariel,
+> 
+> The HAPN modems should connect to a SCC card. In
+> this setup we have it
+> running with the linux drivers.
+> Am i correct that you see stations, but they cannot
+> hear you ?
+> If that is the case, can you check if your
+> transmitter goes on-air ? If so
+> is it maybe too short (txdelay) ?
+> 
+> Best regards,
+> 
+> ron
+> 
+> 
+> ----- Original Message -----
+> From: "ariel mastracchio" <ari197516@yahoo.com>
+> To: <linux-hams@vger.kernel.org>
+> Sent: Thursday, September 30, 2004 3:52 PM
+> Subject: driver soundmodem HAPN-1 4800
+> 
+> 
+> > Hello all,
+> >     I set up a station with this driver in linux
+> but
+> > still can't connect with nobody... has someone
+> test
+> > it? it works? i cant heard some station in UHF
+> witch
+> > the manchester modem but nobody heard my..
+> >
+> > hugs.
+> >
+> > lu9aum
+> >
+> >
+> >
+> >
+> >
+> >
+> >
+> > _______________________________
+> > Do you Yahoo!?
+> > Express yourself with Y! Messenger! Free. Download
+> now.
+> > http://messenger.yahoo.com
+> > -
+> > To unsubscribe from this list: send the line
+> "unsubscribe linux-hams" in
+> > the body of a message to majordomo@vger.kernel.org
+> > More majordomo info at 
+> http://vger.kernel.org/majordomo-info.html
+> >
+> 
 > -
-> To unsubscribe from this list: send the line "unsubscribe linux-hams" in
+> To unsubscribe from this list: send the line
+> "unsubscribe linux-hams" in
 > the body of a message to majordomo@vger.kernel.org
-> More majordomo info at  http://vger.kernel.org/majordomo-info.html
->
+> More majordomo info at 
+> http://vger.kernel.org/majordomo-info.html
+> 
 
+
+__________________________________________________
+Do You Yahoo!?
+Tired of spam?  Yahoo! Mail has the best spam protection around 
+http://mail.yahoo.com 
