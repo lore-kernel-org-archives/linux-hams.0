@@ -1,28 +1,38 @@
-From: Chuck Gelm <nc8q@gelm.net>
-Subject: ? wireless 802.11b, D-Link DWL-520
-Date: Sat, 20 Apr 2002 11:52:59 -0400
+From: Jonathan Naylor <jonathan.naylor@ggaweb.ch>
+Subject: Predict 2.1.5
+Date: Sat, 20 Apr 2002 19:20:20 +0200
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <3CC18EDB.8551499D@gelm.net>
-References: <F182IyDPxcgiKMXNaGf0001b276@hotmail.com> <3CBD9E75.1030802@lvcm.com>
+Message-ID: <0204201920200F.00773@g4klx>
+Reply-To: g4klx@qsl.net
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 7BIT
 Return-path: <linux-hams-owner@vger.kernel.org>
 List-Id: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
-To: nc8q@gelm.net
+To: linux-hams@vger.kernel.org
 
-Howdy, Ladies and Gentlemen newbie guru's"
+Hi All
 
- I'd would like a wireless (802.11b) link between two hosts:
-kernel-2.2.19 (Slackware-7.1) k6-266 
-kernel-2.4.17 (Slackware-8.0) 80586x120
+I downloaded Predict 2.1.5 today to have a look at an alternative to my 
+own mtrack program (shameless plug). In many ways it is excellent and 
+does things that my own program does not do, however as an active AO-40 
+user I have to say that there a few things that the program needs in 
+order to satisfy a phase 3 user:
 
- I am installing D-Link DWL-520 PCI cards.
+1. Satellite attitude, known as ALON/ALAT and is extremely important 
+with predicting usability of the satellite. The antenna off-pointing is 
+a very serious business.
 
-How do I configure the cards, /usr/src/linux/.config ?
+2. Doppler shift on other than 2m and 70cms. AO-40 uses 2401 MHz for 
+the downlink and uplinks are on 435 MHz and 1269 MHz. Also there is a 
+downlink on 24 GHz where the doppler is not inconsequential and signals 
+are weak.
 
-How do I set them up for an 'ad-hoc' network?
+3. Modes. The program displays the MA in the 0-255 fashion, but it 
+would also be nice to program modes so that you can see at a glance 
+which is in operation. Some satellites (Fuji series) base mode 
+selection on the day of the week instead.
 
-How do I configure the cards to use one channel among 1 through 6?
+Just my 0.02 CHF.
 
-Kindest regards, Chuck
+Jonathan  HB9DRD/G4KLX
