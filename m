@@ -1,50 +1,64 @@
-From: Robert =?iso-8859-1?q?Steinh=E4u=DFer?= <robert@steinhaeusser.com>
-Subject: Re: Suse 8.*
-Date: Thu, 1 Aug 2002 23:58:16 +0200
+From: Ken Koster <n7ipb@koster.seatcp.net>
+Subject: Re: Status of AX.25 in 2.5 / 2.6
+Date: Thu, 1 Aug 2002 15:10:34 -0700
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <200208012358.20099.robert@steinhaeusser.com>
-References: <000501c23998$bd0aa980$14000a0a@p75>
+Message-ID: <200208011510.34815.n7ipb@koster.seatcp.net>
+References: <20020729185037.GA684@columbia.g7iii.bogus> <Pine.HPX.4.10.10207301239530.2883-100000@saturn.trs.ntc.nokia.com> <20020731175319.GA584@columbia.g7iii.bogus>
 Mime-Version: 1.0
 Content-Transfer-Encoding: 7BIT
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <000501c23998$bd0aa980$14000a0a@p75>
+In-Reply-To: <20020731175319.GA584@columbia.g7iii.bogus>
 List-Id: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
-To: Linux Hams <linux-hams@vger.kernel.org>
+To: Iain Young - G7III <g7iii@g7iii.demon.co.uk>, Tomi Manninen OH2BNS <tpm@prkele.tky.hut.fi>
+Cc: linux-hams@vger.kernel.org
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On Wednesday 31 July 2002 10:53, Iain Young - G7III wrote:
+> Hi Tomi,
+>
+> You Wrote:
+> > Out of curiosity (and without having any strong personal opinion of my
+> > own) why do you think this not the way to go? I know it breaks ARP but I
+> > suppose that could be corrected somehow.
+>
+> To be honest, it is just network 'purity', and my own personal
+> preference.
 
-Hi Colin,
+And mine as well,  let's not muck with the layers at least not in such an
+egregious way.  And fixing ARP may not be that easy.
 
-Colin Harris schrieb:
-> A little advice please from a Suse user which I can pass on
-> to a raw recruit. He has I think Suse 8.4 or close to it.
+> To me, Layer 2 (AX25 in our case) should not dictate the Layer 3 (IP)
+> routing decisions. Layer 3 routing should be the domain of Layer 3.
+>
+> Letting Layer 2 make the decision, while in most cases will get you
+> the shortest path, may not give you the path you actually want
+> (Again, network purity and my personal opinion)
+>
+> I like to be able to say things like 44.0/16 should be routed via
+> g7iii-1, 44.128/16 via dummy0 (black hole), 44.130 via g7iii-2,
+> and route of last resort, 44/8 via g7iii-3 etc.
+>
+> (You can probably guess that I deal with networks, DNS, etc etc
+> for a living :>)
+>
+> Of course, I do understand that I am probably the odd-ball case here,
+> and for most AX25 users, the KJD stack behaviour is fine.
 
-there is no SuSE 8.4... only 6.4 (no longer updated by SuSE), 7.0-7.3 and 8.0.
+You're not the only one, our whole Puget Sound network is configured with
+ax25 as just a simple link level protocol, no netrom, rose or other protocols.
+Each lan is independant and RIP2 is used for dynamic routing between
+lan's.  If the KJD stack behaviour gets in our way it won't be finding it's way
+into any kernel we build.
 
-> He
-> has found ax25-apps / tools etc on disc 4 but cannot find
-> libax25. He tried libax25-0.0.9.tar.gz install but got loads
-> of errors. He then phoned me. Can anyone advise of the
-> existence of libax25 on Suse-8.? and on which diisc.
+>
+> Which is of course why I considered modifying the ipax device to
+> be a module, and only talk to a named layer 2 interface, and load
+> several modules, so i could route 44.0/16 via ipax0, 44.128/16
+> via dummy0, 44.130 via ipax1, and the last resort of 44/8 via
+> ipax2.
 
-Quite few infos...
+That would probably work for us as well.
 
-Since he has ax25-apps/tools, I suppose he is using a "professional" version. 
-The "personal" version does not have any ham radio packages.
+Ken,  N7IPB
 
-The dependencies autoselect libax25 from within YaST(2). He should install via 
-YaST (up to 7.3) or YaST2 (since 7.<something>), it will prompt for the 
-correct CDs. libax25 is there. Or check for it in INDEX.gz on any CD.
-
-73, Robert DL1NC/N9KBK
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.0.6 (GNU/Linux)
-Comment: For info see http://www.gnupg.org
-
-iD8DBQE9Sa77o4a8ramwUd8RAuqnAKCTTzjucMZhZK23Jfr7a2gYRYax7ACfQSDF
-GgbjOnDDCX7Xmgt1w1BOv/4=
-=AKPm
------END PGP SIGNATURE-----
 
