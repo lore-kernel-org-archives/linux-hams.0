@@ -1,48 +1,44 @@
-From: pa3gcu <pa3gcu@zeelandnet.nl>
-Subject: Re: PMS messaging program: where?
-Date: Fri, 10 Jan 2003 06:27:53 +0000
+From: Tomi Manninen OH2BNS <tpm@prkele.tky.hut.fi>
+Subject: Re: Beginner questions about soundmodem and others
+Date: Fri, 10 Jan 2003 10:11:01 +0200 (EET)
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <03011006275300.31603@unix.pa3gcu>
-References: <20030109193304.M8545@tneu.visi.com> <Pine.LNX.4.44.0301092202550.2502-100000@cwoux.cerise.fr> <20030109220627.M32751@tneu.visi.com>
-Reply-To: pa3gcu@zeelandnet.nl
+Message-ID: <Pine.HPX.4.10.10301101003520.8319-100000@saturn.trs.ntc.nokia.com>
+References: <20030109175607.0c94ab8f.washer@trlp.com>
+Reply-To: tpm@prkele.tky.hut.fi
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7BIT
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <20030109220627.M32751@tneu.visi.com>
+In-Reply-To: <20030109175607.0c94ab8f.washer@trlp.com>
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"
-To: Tim Neu <tim@tneu.visi.com>, Jacques Chion <Jacques.Chion@wanadoo.fr>, Tim Neu <tim@tneu.visi.com>
+Content-Type: TEXT/PLAIN; charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+To: James Washer <washer@trlp.com>
 Cc: linux-hams@vger.kernel.org
 
-On Thursday 09 January 2003 22:06, Tim Neu wrote:
-> On Thu, 9 Jan 2003 22:04:19 +0100 (CET), Jacques Chion wrote
->
-> > Hello,
-> > you can find that program in ax25-utils-2.1.42.a-3 package.
-> > Best 73
->
-> Hmm.  When I try to intstall ax25-utils on debian, it claims that ax25utils
-> is replaced by ax25-tools...
->
-> I _do_ have ax25-tools installed, though, but it does not have pms.
-> Evidently ax25-tools does not completely replace all funtionality of
-> ax25-utils, or the debian package folks have their wires crossed.
->
-> I will give a search for ax25-utils.   Thanks for the help.
+On Thu, 9 Jan 2003, James Washer wrote:
 
-As Tomi explained PMS is not part of anything thesedays, however i still use 
-it on my system, i can suplly you with a binary, however there is no garentee 
-it will work, it works on a slackware 8.0 system using;
+> 1)I'm confused by this whole AX.25 kernel thing... I had assumed that
+> (most) TNCs handled the AX.25 protocol themselves. I understand that
+> with a soundmodem, the linux system would have to do the AX.25, but
+> what about if I use an off-the-shelf TNC ( kpc3 for example ). Does
+> linux arrange to turn the AX.25 handling OFF in the TNC and do it in
+> software?
 
-ax25-apps-0.0.4.
-ax25-tools-0.0.5
-libax25-0.0.7
-node-0.3.0
+Yes, typically the TNC is put to a so called KISS mode (6PACK is another
+alternative). In KISS mode the TNC only handles modulation and
+demodulation, HDLC en/decoding (bit stuffing and framing that is) and
+AX.25 CRC checking. Everything else is left to the PC.
 
-Let me know if you want it.
+This is basically the only sane way to be able to support higher level
+protocols on top of AX.25. Also it makes the simple text mode support much
+more flexible.
+
+> 2) Can I put more than one sound card in my linux box.. One for music,
+> the other, perhaps multiple soundcards, for packet?
+
+Yes.
 
 -- 
-Regards Richard
-pa3gcu@zeelandnet.nl
-http://people.zeelandnet.nl/pa3gcu/
+Tomi Manninen           Internet:  oh2bns@sral.fi
+OH2BNS                  AX.25:     oh2bns@oh2rbi.fin.eu
+KP20ME04                Amprnet:   oh2bns@oh2rbi.ampr.org
 
