@@ -1,133 +1,75 @@
-From: heitzmah <heitzmann@utanet.at>
-Subject: Problem with YAM and Debian;
-Date: Sat, 25 Jan 2003 01:06:52 +0000
+From: Thomas Osterried <thomas@x-berg.in-berlin.de>
+Subject: kernel ax25 - oopses, zombies in netstat, failing accept()'s
+Date: Sat, 25 Jan 2003 04:21:32 +0100
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <200301250106.52676.heitzmann@utanet.at>
+Message-ID: <20030125032132.GA11452@osterried.de>
 Mime-Version: 1.0
-Content-Type: Multipart/Mixed;
-  boundary="------------Boundary-00=_GFW8JAQQER4R95D2DBP9"
 Return-path: <linux-hams-owner@vger.kernel.org>
+Content-Disposition: inline
 List-Id: <linux-hams.vger.kernel.org>
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 7bit
 To: linux-hams@vger.kernel.org
-Cc: vladpopa@inode.at
+
+hello,
+
+in the past i faced several problems with kernel ax25.
+
+1. sometimes an accept() returns
+     -1 ECONNABORTED (Software caused connection abort)
+   for ax25d, this means that this listener is dead and ax25d has to
+   be restarted.
+   i wrote a patch for ax25d to re-read the config after this event,
+   and re-initialize the interfaces. this solved the problem, but
+   i'm still looking for the main reason why accept() fails.
+   needless to say that the interfaces are (still) up and ax25d
+   successfully re-bind()s a short time later.
+
+2. our kernel 2.2.20 -which runs for more than a year now in this
+   unchanged configuration- recently caused an oops.
+   an application trying to listen() will segfault and will cause
+   a kernel oops.
+   in our case tnt died, ax25d not. ax25d was still acceptig new connections.
+   tnt was not restartable and the kernel complained.
+   netstat -an displayed data until down to the ax25 socket information,
+   there segfaulting and causing a kernel oops.
+
+   currently, we discuss the poblem on eu-convers.
+   these problems also occur with kernel 2.4.x, on several different
+   maschines and various setups, while other systems never shown this
+   symptom. it seems more frequently on kernel 2.4.x than on 2.4.x.
+
+3. on our node / mailbox db0tud (kernel 2.2.x) there are some old connections
+   (formerly state CONNECTED) lingering around (since weeks); they
+   are marked as state "LISTEN" and they have still buffers in the input
+   queue. 
+   Dest       Source     Device  State        Vr/Vs    Send-Q  Recv-Q
+   DB0TUD-0   DB0TUD-1   ax0     LISTENING    007/005  0       320
+   DL6MPG-1   DB0TUD-15  ax0     LISTENING    005/007  0       432
+   DB0TUD-0   DB0TUD-4   ax0     LISTENING    002/005  0       80
+   DB0DSD-0   DB0TUD-1   ax0     LISTENING    001/000  0       80
+   DL6MPG-4   DB0TUD-15  ax0     LISTENING    002/001  0       816
+   this may be a bug in the userspace application (after restart of tnt
+   (frontend to the bbs) they disappear). 
+   but why they're lingering in listening state?
+
+4. as in 3), a session which is dead may still be there, even if the interface
+   was down. the port is referenced as "???", but the session is not cleared
+   when the interface went down.
+   DL9SAU-9   DL9SAU-8   ???     LISTENING    007/000  0       65280
+
+   these sessions in case 3) or 4) may still be successfully connected
+   by a user:
+   DL9SAU-9   DL9SAU-8   bpq1    ESTABLISHED  000/001  0       0
+   DL9SAU-9   DL9SAU-8   ???     LISTENING    007/000  0       65280
 
 
---------------Boundary-00=_GFW8JAQQER4R95D2DBP9
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: quoted-printable
-
-Dear Linux-Ham's!
-
-Since abt 2 months I'm using Debian. Before I was a SuSE-user. With SuSE =
-my=20
-Packet-Radio worked very good.
-
-RX/TX: T7F (data-transceiver-kit for 9k6 or 19k2)
-Modem: YAM
-
-Now I tried to set up my Debian-box for Packet. I did this with a small=20
-program called ax25-config. It's a script using 'dialog'. After setup the=
-=20
-file /etc/init.d/ax25 is starting the script /etc/ax25/ax25-up, to launch=
- =20
-the ax.25-subsystem. You can see this file as attachment. The=20
-TCP/IP-section is for testing only... :-))
-
-The following deb-packages are installed:
-
-ax25-tools
-ax25-xtools
-ax25-apps
-ax25-utils
-ax25-utils-devel
-
-Kernel: 2.4.19 (self-compilation) - yam and ax25 are compiled into the=20
-kernel, it's not necessary to load this functions as module.
-
-After booting my 'Woody 3.0 unstable' (basing on Knoppix 3.1), I tried to=
-=20
-connect my local 9k6-node:
-
-call ym0 oe2xum
-
-The Transceiver is going on air, but is not willing to end his transmissi=
-on.=20
-The only way to interrupt this, is to switch of the power-supply. Maybe I=
-=20
-could try to kill some jobs on my Debian-box, but this would require too=20
-much time and I don't like to waste time of other hams on our local node.=
-=2E.
-
-Anyone an idea?
-I would be very glad getting help to activate my PR. tnx!
-
-Deutschsprachige Linux-Hams k=F6nnen mir nat=FCrlich auch in deutscher Sp=
-rache=20
-antworten. Ich glaube das krieg ich als '=D6si' noch hin... :-)) hi
-
-73 + 55 de Herbert (OE2HHN - NCI#3766)
---------------Boundary-00=_GFW8JAQQER4R95D2DBP9
-Content-Type: application/x-shellscript;
-  name="ax25-up"
-Content-Transfer-Encoding: quoted-printable
-Content-Disposition: attachment; filename="ax25-up"
-
-#!/bin/bash
-# Version =3D ax25-config-0.3.3
-# Startym0
-# Serielle Schnittstelle freigeben
-setserial /dev/ttyS0 uart none
-# Module einbinden
-#modprobe ax25; modprobe yam
-#
-setserial /dev/ttyS0 Port 0 > /dev/null
-# Konfiguration des Modems:
-yamcfg yam0 irq 4 iobase 0x3f8 bitrate 9600 baudrate 19200
-#
-# Parameter einstellen: P=3D128, W=3D10, TX-Delay=3D60
-yamcfg  yam0  txdelay 60 txtail 20 slottime 10 persist 128 duplex 0
-#
-# Modem im System anmelden und mit dem Rufzeichen verkn=FCpfen
-/sbin/ifconfig yam0 hw ax25 OE2HHN-0 up
-echo 100 > /proc/sys/net/ax25/yam0/t1_timeout
-echo 30 > /proc/sys/net/ax25/yam0/t2_timeout
-echo 30000 > /proc/sys/net/ax25/yam0/t3_timeout
-echo 10 > /proc/sys/net/ax25/yam0/maximum_retry_count
-echo 4 > /proc/sys/net/ax25/yam0/standard_window_size
-echo 256 > /proc/sys/net/ax25/yam0/maximum_packet_length
-# Port "ym0" als Netzwerkger=E4t "yam0" anmelden mit IP 44.143.33.19
-/sbin/ifconfig yam0 44.143.33.19 netmask 255.0.0.0 \
-               broadcast 44.255.255.255 up
-# Endym0
-# StartARNM
-/usr/sbin/axparms -route add ym0 default oe2xum -ipmode vc
-# weitere Routen:
-/usr/sbin/axparms -route add ym0 oe2xum -ipmode vc
-/sbin/arp -H ax25 -f /etc/ax25/arptab
-/sbin/route del -net 44.0.0.0 netmask 255.0.0.0 yam0
-/sbin/route add -net 44.0.0.0 netmask 255.0.0.0 irtt 8000 yam0
-# Gateways:
-/sbin/route add -net 44.143.33.0 netmask 255.255.255.0 gw 44.143.33.19 oe=
-2hhn  irtt 12000 yam0
-echo 1 >/proc/sys/net/ax25/yam0/ip_default_mode
-#
-# Logins von au=DFen erm=F6glichen
-/usr/sbin/ax25d &
-echo $! > /var/run/ax25d.pid
-#
-# Start AX25 routing daemon
-/usr/sbin/ax25rtd &
-echo $! > /var/run/ax25rtd.pid
-#
-# Monitor auf Terminal 11 starten
-#/usr/bin/listen -artc > /dev/tty11 &
-#echo $! > /var/run/listen.pid
-# EndARNM
-# AX.25-SpyDaemon starten
-ax25spyd
-#
+it would make me not wonder, if all these problems would have the same
+cause, for e.g. bad references to session pointers, lists of ax25
+session structs, left back-reference to socket-lists, etc.., resulting into
+the set of possible effects described above.
 
 
---------------Boundary-00=_GFW8JAQQER4R95D2DBP9--
+73,
+	- thomas  dl9sau   Sysop Team db0tud
 
