@@ -1,44 +1,25 @@
-From: pd <pdickson@att.net>
-Subject: Running a PERL script from AX25D
-Date: Fri, 1 Nov 2002 21:28:00 +0000
+From: John Ackermann N8UR <jra@febo.com>
+Subject: Logging program (non-contest) suggestions?
+Date: Sun, 03 Nov 2002 11:25:37 -0500
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <200211012128.00330.pdickson@att.net>
+Message-ID: <21570000.1036340737@[192.168.1.222]>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 8BIT
+Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
+Content-Disposition: inline
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"
+Content-Type: text/plain; charset="us-ascii"; format="flowed"
 To: linux-hams@vger.kernel.org
 
-I am trying to run a PERL script as the "server" for some AX25 connections.
-My PERL script works fine when I invoke it from the command line.
+Hi all --
 
-In ax25d.conf I specifiy a bash script to be run as the session command.
-Inside the bash script there is an 'echo' command, which I see when i connect.
-Other commands in that script also work.  But then it runs the PERL script and 
-everything just stalls.
+I'm looking for an X-based logging program for general purpose use.  I'm 
+interested in something that does a good job on basic logging functions, 
+and not necessarily for lots of goodies like rig interface, etc.
 
-Here is the bash script:
+Thanks for any suggestions.
 
-#!/bin/bash
-echo 'wait...'
-HOME=/home/bbs
-echo 'HOME set'
-cd /home/bbs
-pwd
-perl t.pl
-
-and here is the PERL script:
-
-#!/usr/bin/perl
-print "Hi\n";
-print "Enter a number\n";
-$buf = <STDIN>;
-$n = $buf * 2;
-print "Twice that is $n\n";
-print "bye!\n";
-
-Any suggestions?
-
-KB1EHD
+73,
+John N8UR
+jra@febo.com
 
