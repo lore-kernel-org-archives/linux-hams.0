@@ -1,29 +1,36 @@
-From: "jbennett" <jbennett@insightbb.com>
+From: Tomi Manninen OH2BNS <tpm@prkele.tky.hut.fi>
 Subject: Re: Tracking down a Linux crash
-Date: Wed, 16 Oct 2002 09:17:22 -0500
+Date: Wed, 16 Oct 2002 17:20:31 +0300 (EETDST)
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <001a01c2751e$bec1b630$0701a8c0@lz130>
-References: <3031448.1034759336@WUSJA129861-8HP>
+Message-ID: <Pine.HPX.4.10.10210161715280.585-100000@saturn.trs.ntc.nokia.com>
+References: <4049232.1034760354@WUSJA129861-8HP>
+Reply-To: tpm@prkele.tky.hut.fi
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
+In-Reply-To: <4049232.1034760354@WUSJA129861-8HP>
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"
-To: John Ackermann N8UR <jra@febo.com>, linux@lists.tapr.org, linux-hams@vger.kernel.org
+Content-Type: TEXT/PLAIN; charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+To: John Ackermann N8UR <jra@febo.com>
+Cc: linux-hams@vger.kernel.org
 
-Oops...
+On Wed, 16 Oct 2002, John Ackermann N8UR wrote:
 
-Forgot to mention in my first reply--- running RH 7.3. Happens with
-kernel-as-shipped, or custom w/AX25. Have upgraded kernel from RH and also
-from kernel.org. No difference.
+> I don't think it's heat as the crash sometimes occurs relatively quickly 
+> after powerup, and other times after days of running.  The CPU is not being 
+> overclocked, and has an original AMD heatsink/fan, plus there's a fan on 
+> the case.  However, I'm not monitoring CPU temperature in the system (don't 
+> have that software installed yet) so I can't say for sure what the temp is.
 
-73,
-John Bennett
-n4xi
+Have you tried beating your system hard with something like Cerberus
+(search google with key words "cerberus" and "ctcs") with the system
+running in text mode? Cerberus was the only program to reliably report
+memory failures on my new box half a year ago. All the others (including
+memtest86) showed no errors, but still I had occasionally lockups and
+programs crashing. A new memory module fixed everything.
 
------ Original Message -----
-From: "John Ackermann N8UR" <jra@febo.com>
-To: <linux@lists.tapr.org>; <linux-hams@vger.kernel.org>
-Sent: Wednesday, October 16, 2002 8:08 AM
-Subject: Tracking down a Linux crash
+-- 
+Tomi Manninen           Internet:  oh2bns@sral.fi
+OH2BNS                  AX.25:     oh2bns@oh2rbi.fin.eu
+KP20ME04                Amprnet:   oh2bns@oh2rbi.ampr.org
 
