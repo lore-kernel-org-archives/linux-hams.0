@@ -1,42 +1,29 @@
-From: mvw@mvw.net
-Subject: Re: FBB... (follow up)
-Date: Wed, 25 Dec 2002 17:05:36 -0500 (EST)
+From: Tomi Manninen <tpm@prkele.tky.hut.fi>
+Subject: Re: remote TNC
+Date: Thu, 26 Dec 2002 00:06:56 +0200 (EET)
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <Pine.LNX.4.44.0212251703560.21106-100000@jeeves.mvw.net>
-References: <003401c2ac5d$06545000$0300a8c0@HUISKAMER>
+Message-ID: <Pine.LNX.4.44.0212252357250.7965-100000@oh2bns.ampr.org>
+References: <Pine.LNX.4.44.0212252335330.4691-100000@oh2bns.ampr.org>
+Reply-To: tpm@prkele.tky.hut.fi
 Mime-Version: 1.0
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <003401c2ac5d$06545000$0300a8c0@HUISKAMER>
+In-Reply-To: <Pine.LNX.4.44.0212252335330.4691-100000@oh2bns.ampr.org>
 List-Id: <linux-hams.vger.kernel.org>
 Content-Type: TEXT/PLAIN; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
-To: Cees Tool <c.tool@quicknet.nl>
-Cc: Linux-Hams <linux-hams@vger.kernel.org>
+To: Hamish Moffatt <hamish@cloud.net.au>
+Cc: linux-hams@vger.kernel.org
 
-Cees,
+On Wed, 25 Dec 2002, Tomi Manninen wrote:
 
-To be exact, the f6fbb site has this on its "latest versions" page:
+> This would be a case for BPQ ether and rxecho I think. You can make it 
+> so that A has a TNC directly connected to it.
 
-----------------------------------
-LinFbb
+Argh... I meant that it can be configured so that A _thinks_ it has a TNC
+connected directly to it...
 
-LinFBB 7.03c daemon-version (Linux) source code (634 KB)
-LinFBB 7.03 daemon-version (Linux) Redhat 5.2 RPM (850 KB)
-LinFBB 7.04 all-versions (Linux) Redhat 6.1 RPM (879 KB)
-LinFBB 7.03 daemon-version (Linux) SuSE 7.0 RPM (352 KB)
-LinFBB 7.03 daemon-version (Linux) Slackware 7.0 package (353 KB)
-LinFBB 7.03 daemon-version (Linux) Debian package (333 KB)
-Windows client v1.12 for LinFBB 7.03 daemon-version (888 KB)
-7pFBB 2.00 (7+) package for LinFBB 7.03.
-MULTI 1.25 package for LinFBB.
-C_FILTER package for LinFBB.
-----------------------------------
-
-
-..so that is why I thought the latest version source was 7.03 (and I have 
-RedHAt 8, so a 6.1 rpm would almost certianly not work).
-
-Cheers,
-Michael
-
+-- 
+Tomi Manninen           Internet:  oh2bns@sral.fi
+OH2BNS                  AX.25:     oh2bns@oh2rbi.fin.eu
+KP20ME04                Amprnet:   oh2bns@oh2rbi.ampr.org
 
