@@ -1,59 +1,62 @@
-From: Christian Reynolds <creyn@wi.rr.com>
-Subject: IP over Packet Ham Radio
-Date: Thu, 10 Oct 2002 11:12:56 -0500
+From: Ralf Baechle DO1GRB <ralf@linux-mips.org>
+Subject: Re: AX.25 in kernel 2.5 status?
+Date: Thu, 10 Oct 2002 19:22:28 +0200
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <a05111b01b9cb55f871e3@[10.10.1.6]>
+Message-ID: <20021010192228.A565@linux-mips.org>
+References: <20021010035703.B8136@pull.privacy.nb.ca>
 Mime-Version: 1.0
 Return-path: <linux-hams-owner@vger.kernel.org>
+Content-Disposition: inline
+In-Reply-To: <20021010035703.B8136@pull.privacy.nb.ca>; from mctylr@privacy.nb.ca on Thu, Oct 10, 2002 at 03:57:03AM +0100
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"; format="flowed"
+Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
-To: linux-hams@vger.kernel.org
+To: M Taylor <mctylr@privacy.nb.ca>
+Cc: linux-hams@vger.kernel.org
 
-Hello,
+On Thu, Oct 10, 2002 at 03:57:03AM +0100, M Taylor wrote:
 
-I think I found the right group to ask this question!
+> A while back (a few months ago) a couple of developers/hams (Ralf and others) 
+> mentioned that work needed to be done in the 2.5 linux kernel due to changes
+> (I believe relating cli()/sti() plus other things).
+> 
+> Has there been any progress? There appears to be some patches included
+> in 2.5.37 from Ralf and David Miller. Does include all the changes we 
+> _need_ to make? (that is for when cli()/sti() and such calls go away)
 
-I have gone through the Linux-HOWTO concerning setting up ax25 on a 
-linux box, and have setup the node software.  I can get two computers 
-to talk to each other using:
+Not by far.  The entire locking in the code is a mess.  It just happens
+to work if you're nice to the code that is uniprocessor, no preemption
+patches, avoid configuring routes etc. while the system is active etc.
+Fixing all those omissions takes a while.  And cli/sti was just the peak
+of the ice berg.  The SOCKCALL_WRAP wrap stuff will go away for example
+and getting away without that require even more auverhaul of the locking
+strategy which I'm just working on.
 
-call  <port> <callsign>
+The result will probably be the only multithreaded AX.25, NETROM and ROSE
+stacks on the planet.  An attribute of dubious value for a low bandwidth
+protocols - but at least the thing will work.
 
-and the node comes up, just like it should, and we are connected. 
- From there, I can do a telnet session into a computer, and run 
-axmail, and be moving right along.
+> I guess I am asking what needs to be done before users can "safely" use
+> 2.5.x kernels for amateur radio stuff.
 
-Question:  The HOWTO suggests that I should be able to ping along the 
-radio network.  I am using IP numbers on the air of 192.168.100.30 
-and 192.168.100.40.   The ping requests are transmitted, and the 
-other computer does not respond.
+2.4 needs the same stuff.  If it's working for you then just because you're
+not shaking the code hard enough.
 
-Remember, that this system works using the call and linuxnode system...
+> Should the http://sourceforge.net/projects/ax25 Bug tracking, Support
+> Requests / Patches / Feature Requires be used for the AX.25 (et all)
+> kernel as well as the userland libraries, tools, and apps?
 
-What I am trying to do is see if I can do a direct telnet from 
-192.168.100.30 and have it contact 192.168.100.40.  I see the packets 
-going out using the supplied monitor program... I see it calling the 
-other box (and hear the chatter over the air on another radio), but 
-the TNC will not answer.
+That project looks rather dead.
 
-I do not have any firewalling software on these two computers running.
+Anyway, all the userspace stuff stays usable.  I've been careful to not
+change any of the kernel interfaces.
 
-I am wondering if there is something in the software that requires me 
-to be on the 44.x.x.x network... I am running 192.168...
+> Oh, and can a non-kernel programmer help? (I'm not familiar with kernel
+> programming, but I can program, can I be of assistance?)
 
-Any suggestions?
+I don't have the bandwidth to do that but I think we need some documentation
+of the AX.25 / NETROM/ ROSE network interface for programmers.  And all
+the userspace stuff is still way too complex for the average "plug and play"
+ham ...
 
-I am heading on a short vacation... if a network diagram would be 
-useful, I will prepare one.  The goal is to use this system to send 
-in weather reports via internet email using the packet protocols as 
-OSI Layer 1.
-
-Thanks!
-
-Christian Reynolds
-KC0ARF
--- 
-
-Christian Reynolds
-creyn@wi.rr.com
+  Ralf
