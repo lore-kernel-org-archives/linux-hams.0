@@ -1,67 +1,64 @@
-From: Arno Verhoeven <pe1icq@pi8zaa.ampr.org>
-Subject: Re: FBB and ax25
-Date: Sat, 15 Mar 2003 12:24:41 +0100
+From: Bill Walton <kj6eo@kj6eo.com>
+Subject: AX25 and FBB!
+Date: Sat, 15 Mar 2003 10:54:02 -0800
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <3E730D79.4050503@pi8zaa.ampr.org>
-References: <20030218233527.K507@jeroen.pe1rxq.ampr.org> <Pine.LNX.4.44.0302190033590.14956-200000@oh2bns.ampr.org> <20030221103751.GA16223@enc.com.au> <20030221165337.A3524@jeroen.pe1rxq.ampr.org> <20030222110955.GA3467@enc.com.au> <20030225155732.GA2719@leo.tneu.visi.com>
+Message-ID: <3E7376CA.9040100@kj6eo.com>
 Mime-Version: 1.0
 Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <20030225155732.GA2719@leo.tneu.visi.com>
 List-Id: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"; format="flowed"
-To: Tim Neu <tim@tneu.visi.com>
-Cc: Linux Hams <linux-hams@vger.kernel.org>
+To: LINUX HAMS MAILING LIST <linux-hams@vger.kernel.org>
 
-Tim Neu wrote:
+Hello -
 
->I have set up FBB on my linux box, listening at KC0LQL-3, and have NODE
->also running on KC0LQL-5.     I use FBB for mail and conference, and
->NODE for a database gateway (amoung other things). 
->
->I want to be able to access either from a command prompt on the system,
->however currently I can only get to "node" via "telnet localhost node".
->
->I would like to be able to get to FBB the same way, but it does not
->appear to have the same archietecture. (it runs as a daemon rather than
->using ax25d.conf, and I do not see any listening TCP/IP ports).  How can
->I get to FBB directly? Getting to it is possibe by using "call" to
->digipeat to my host via a local digipeater, but that is a needless waste
->of bandwidth. 
->
-There are several ways of getting into fbb from the command line. Sine 
-you can already get into node from the command line, then one way of 
-getting into fbb is via node.
-You could simply connect to  KC0LQL-3 from node.
-To do this your machine must listen to 2 netrom callsigns. (both  
-KC0LQL-3 and KC0LQL-5)
-Let me know if you need more details.
+Thank you for taking time to read my message.  I started fooling around 
+with AX25 about
+6 months ago and just finally got it working this weekend.  What kept 
+the whole thing from
+working was some "syntax" errors in the "node.conf" file.  Some of the 
+parameter values
+needed to have some of the letters capitalized ie "ConnTimeout" instead 
+of "conntimeout"
+and so on.  Those errors were present as examples of what working files 
+should look
+like.  Since I am new to Linux AX25 it was impossible to recognize those 
+mistakes in
+advance.  My configuration is still a little screwed up but AX25 and the 
+Linuxnode both
+are working!  I now need to move on to XFBB.
 
->
->Finally, if I do digi through somewhere else and try to connect, my
->connection is failing if there is already someone connected.  i.e. only
->one person appears to be allowed on at a time.  I think I have something
->set up incorrectly to prevent FBB from allowing multiple connections. 
->
->  
->
-This is a setting in  FBB's port.sys file.
-This is what I have at the end of that file.
+I know that this mailing list is not really intended for FBB questions 
+but I am in hopes that
+you will just "look the other way" and answer my simple question if you 
+can.  I want to
+install the full X-Windows vershion of Linux FBB.  The tarball that I 
+have is:
 
-#TNC NbCh Com MultCh Pacln Maxfr NbFwd MxBloc M/P-Fwd Mode Freq
-0    0    0    0      0     0     0     0      00/01   ----  File-fwd.
-1    15   1   netrom  230   4     5     30     05/60   UXY  netrom
-2    5    2   0       250   2     2     10     00/60   TUW  Telnet
-3    5    3   0       250   7     2     10     10/60   SU   Pop3
+x700e_full.tgz
 
-This allows 15 connections on the netrom port, 5 connections via telnet, 
-and 5 simultaneous pop3 connections.
+The README file gives some simple instructions on how to install it ie:
 
--- 
-73, PE1ICQ  Arno Verhoeven
---------------------------------
-AX.25  pe1icq@pi8zaa.#nbo.nld.eu
-smtp   pe1icq@pi8zaa.ampr.org
-inet   pe1icq@amsat.org 
+1)    Un-tar it in a specific place.
+2)    Instructions on how to install it ... "run ./install.sh" and 
+answer the questions.
+3)    Edit the init.srv and port.sys files .... etc.
+4)    Then run it with the "./xfbb.sh" command.
+
+What I get is that stupid "Unknown return value 127" error.  I have been 
+told that XFBB
+has to be compiled.  If so there is no makefile that comes with it, or 
+any instructions on
+how to compile it.
+
+Any suggestions that you might have to point me in the right direction 
+would be greatly
+appreciated.  If my questions are stupid, then please excuse me for 
+being stupid.  I just
+need to get beyond this FBB problem and get my stuff online!
+
+Regards,
+
+Bill KJ6EO
 
 
