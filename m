@@ -1,85 +1,111 @@
-From: "Pontus Falk" <pfalk@ax25.org>
-Subject: Re: AXIP?
-Date: Sat, 5 Jul 2003 20:54:24 +0200 (CEST)
+From: Jeroen Vreeken <pe1rxq@amsat.org>
+Subject: [PATCH] mkiss
+Date: Sat, 5 Jul 2003 21:17:33 +0200
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <2740.44.140.19.34.1057431264.squirrel@ax25.org>
-References: <2042.44.140.19.34.1057400138.squirrel@ax25.org>
-        <3F06B92E.7070307@pi8zaa.ampr.org>
+Message-ID: <20030705211733.A255@jeroen.pe1rxq.ampr.org>
 Mime-Version: 1.0
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Content-Type: multipart/mixed; boundary="AWniW0JNca5xppdA"
+Content-Transfer-Encoding: 8bit
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <3F06B92E.7070307@pi8zaa.ampr.org>
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="iso-8859-1"
-To: pe1icq@pi8zaa.ampr.org
-Cc: linux-hams@vger.kernel.org
-
-Hi!
-
-It could be so that my NAT router (W-linx MB-400S/E) doesn't handle
-protokoll 93 very well..?
-
-Now I try to get AXUDP to work.
-
-I changed 'socket ip' to 'socket udp' in ax25ipd.conf.
-
-I also put 'route sm7xxx 213.65.xxx.xxx b' in ax25ipd.conf. Does it may=
-be
-have to be a 44.xxx.xxx.xxx number?
-
-If it have to be a 44 number, should I then have a line like '/sbin/rou=
-te
-add -net 44.xxx.xxx.xxx netmask 255.255.255.0 tunl0 gw 213.65.xxx.xxx'?
-
-Hope to hear from you all!
-
-Thanks in advance!
-
-73 de Pontus/SM=D8RUX
-
-Arno Verhoeven skrev:
-> Pontus Falk wrote:
->
->>Hi!
->>
->>I'm trying to set up an AXIP link fo a friend of mine, with no
->> success...
->>
->>I'm using 2.4.20. Everyting is running very good, so I guess it is ju=
-st
->> a matter of configuration.
->>
->>I've read AX25-HOWTO, but don't get it to work...
->>
->>Any ideas?
->>
->>Regards,
->>
->>Pontus Falk/SM=D8RUX
->>
->>
->
-> Hi Pontus,
->
-> axipd doesn't handle SSID's very well, so if your using a SSID ID oth=
-er
-> than -0 then this might be the cause why you don't get it to work.
->
-> Otherwise, send us is the command lines you use to iniate axip, and t=
-he
-> axipd.conf file.
->
-> --
-> 73, PE1ICQ  Arno Verhoeven
-> --------------------------------
-> AX.25  pe1icq@pi8zaa.#nbo.nld.eu
-> smtp   pe1icq@pi8zaa.ampr.org
-> inet   pe1icq@amsat.org
+To: linux-hams@vger.kernel.org
+Cc: ralf@linux-mips.org
 
 
+--AWniW0JNca5xppdA
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 8bit
 
+Hi,
+
+This is a patch to get mkiss working under 2.5.74
+It used the driver_data field of the tty structure, this field can be NULL.
+Further the whole mkiss magic stuff seems to be unreachable as I can't find
+a single piece of code in the kernel that sets the driver_data field with
+this structure... Is is something from a long time ago?? Shouldn't it be
+removed completly?
+This patch also removes the MOD_*_USE_COUNT calls.
+
+Jeroen
+
+--AWniW0JNca5xppdA
+Content-Type: application/octet-stream; charset=us-ascii
+Content-Disposition: attachment; filename="mkiss-2.5.74.rxq.diff"
+
+diff -ru linux-2.5.74/drivers/net/hamradio/mkiss.c linux-2.5.74.rxq/drivers/net/hamradio/mkiss.c
+--- linux-2.5.74/drivers/net/hamradio/mkiss.c	2003-07-02 22:57:13.000000000 +0200
++++ linux-2.5.74.rxq/drivers/net/hamradio/mkiss.c	2003-07-05 19:33:20.000000000 +0200
+@@ -22,6 +22,8 @@
+  *	Matthias (DG2FEF)       Added support for FlexNet CRC (on special request)
+  *                              Fixed bug in ax25_close(): dev_lock_wait() was
+  *                              called twice, causing a deadlock.
++ *	Jeroen (PE1RXQ)		Added NULL check for tty->driver_data and removed
++ *				MOD_*_USE_COUNT calls
+  */
+ 
+ #include <linux/config.h>
+@@ -320,7 +322,7 @@
+ 	if (ax->rbuff[0] > 0x0f) {
+ 		if (ax->mkiss != NULL) {
+ 			mkiss= ax->mkiss->tty->driver_data;
+-			if (mkiss->magic == MKISS_DRIVER_MAGIC)
++			if (mkiss && mkiss->magic == MKISS_DRIVER_MAGIC)
+ 				tmp_ax = ax->mkiss;
+ 		} else if (ax->rbuff[0] & 0x20) {
+ 		        ax->crcmode = CRC_MODE_FLEX;
+@@ -376,7 +378,7 @@
+ 
+ 	p = icp;
+ 
+-	if (mkiss->magic  != MKISS_DRIVER_MAGIC) {
++	if (!mkiss || mkiss->magic  != MKISS_DRIVER_MAGIC) {
+ 	        switch (ax->crcmode) {
+ 		         unsigned short crc;
+ 
+@@ -430,7 +432,7 @@
+ 
+ 		if (ax->mkiss != NULL) {
+ 			mkiss= ax->mkiss->tty->driver_data;
+-			if (mkiss->magic  == MKISS_DRIVER_MAGIC)
++			if (mkiss && mkiss->magic  == MKISS_DRIVER_MAGIC)
+ 				ax_unlock(ax->mkiss);
+ 	        }
+ 
+@@ -452,7 +454,7 @@
+ 
+ 	tmp_ax = NULL;
+ 
+-	if (mkiss->magic  == MKISS_DRIVER_MAGIC) {
++	if (mkiss && mkiss->magic  == MKISS_DRIVER_MAGIC) {
+ 		if (skb->data[0] < 0x10)
+ 			skb->data[0] = skb->data[0] + 0x10;
+ 		tmp_ax = ax->mkiss;
+@@ -666,7 +668,7 @@
+ 
+ 	mkiss = ax->tty->driver_data;
+ 
+-	if (mkiss->magic  == MKISS_DRIVER_MAGIC) {
++	if (mkiss && mkiss->magic  == MKISS_DRIVER_MAGIC) {
+ 		for (cnt = 1; cnt < ax25_maxdev; cnt++) {
+ 			if (ax25_ctrls[cnt]) {
+ 				if (netif_running(&ax25_ctrls[cnt]->dev)) {
+@@ -685,8 +687,6 @@
+ 		tmp_ax->mkiss = ax;
+ 	}
+ 
+-	MOD_INC_USE_COUNT;
 -
-To unsubscribe from this list: send the line "unsubscribe linux-hams" i=
-n
-the body of a message to majordomo@vger.kernel.org
-More majordomo info at  http://vger.kernel.org/majordomo-info.html
+ 	/* Done.  We have linked the TTY line to a channel. */
+ 	return ax->dev->base_addr;
+ }
+@@ -705,7 +705,6 @@
+ 	ax->tty        = NULL;
+ 
+ 	ax_free(ax);
+-	MOD_DEC_USE_COUNT;
+ }
+ 
+ 
+
+--AWniW0JNca5xppdA--
+
