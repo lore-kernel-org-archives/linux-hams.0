@@ -1,45 +1,79 @@
-From: Dave Platt <dplatt@radagast.org>
+From: braddock@braddock.com
 Subject: Re: user soundmodem problems on Inspiron 8200 i810 chipset...
-Date: Wed, 10 Mar 2004 13:56:16 -0800 (PST)
+Date: Wed, 10 Mar 2004 17:41:11 -0600
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <20040310215616.19500.qmail@radagast.org>
-References: <20040310193645.GA3882@braddock.com>
+Message-ID: <20040310234111.GA19788@braddock.com>
+References: <20040310193645.GA3882@braddock.com> <20040310215616.19500.qmail@radagast.org>
 Mime-Version: 1.0
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <20040310193645.GA3882@braddock.com>
+Content-Disposition: inline
+In-Reply-To: <20040310215616.19500.qmail@radagast.org>
 List-Id: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
-To: braddock@braddock.com
+To: Dave Platt <dplatt@radagast.org>
 Cc: Linux-Hams@vger.kernel.org
 
-> The only strange thing about that theory (which I tend to agree
-> probably is what's going on) is that if I do a 9600 samp/sec capture
-> with SOX using the OSS interface, and look at the capture in Octave, I
-> don't see the anomaly.  In fact, I can then take the 9600 samp/sec SOX
-> capture of APRS input and use it with an unmodified version of
-> soundmodem in "file" mode and get perfect copy.
+On Wed, Mar 10, 2004 at 01:56:16PM -0800, Dave Platt wrote:
+>  cat /proc/asound/card0/pcm0c/sub0/hw_params
+> 
+> If you can grab, and then post the results of this
+> for the SOX and soundmodem situations, it might give
 
-It might be interesting to look and see what sorts of capture
-parameters are actually being set up in the driver by each
-of these two cases.
+What a great little /proc tidbit.  
 
-To do this, start a capture (either a SOX recording, or
-run soundmodemconfig and open up the diagnostic scope),
-and then try:
+After looking at the hw_params stuff, I slightly modified my sox line
+to capture 16-bit samples instead of 8-bit to better match soundmodem
+(which captures in 16-bit).
 
- cat /proc/asound/card0/pcm0c/sub0/hw_params
+sox -V -w -r 9600 -t ossdsp /dev/dsp -t wav -w -u -r 9600 /tmp/output6.wav
 
-On my system (running the 1.0.2c ALSA drivers), this
-shows a bunch of interesting information, including the
-sample format. number of channels, native capture rate
-(both as an integer, and as a numerator/denominator ratio
-which I imagine is based on the hardware clock rate and
-a divisor), buffer and period size, and processing tick
-time.  It then provides much the same information for
-the OSS compatibility layer.
+I recorded some APRS activity with this, then verified that soundmodem
+in "file" mode would copy it from the captured wave file.  Worked
+fine, I didn't see our anomaly.  I captured the /proc/../hw_params
+data from this sox call, and from soundmodem (without my
+sample rate hack), which showed the anomaly.  
 
-If you can grab, and then post the results of this
-for the SOX and soundmodem situations, it might give
-further information about what might be making the
-resampler go kerSPRUNG.
+The period/frame parameters vary by an order of magnitude between
+them.  I don't know how to change these in sox, so I can't give a
+better match (I'd LOVE to be able to reproduce the anomaly in sox so
+we could file a reproducable bug report with the ALSA folks).
+
+Here is /proc/../hw_params for the SOX call:
+access: RW_INTERLEAVED
+format: S16_LE
+subformat: STD
+channels: 2
+rate: 48000 (48000/1)
+period_size: 5115
+buffer_size: 10230
+tick_time: 10000
+OSS format: S16_LE
+OSS channels: 1
+OSS rate: 9600
+OSS period bytes: 2048
+OSS periods: 2
+OSS period frames: 5115
+
+Here is /proc/../hw_params for soundmodemconfig in 1200 bps afsk scope mode:
+access: RW_INTERLEAVED
+format: S16_LE
+subformat: STD
+channels: 2
+rate: 48000 (48000/1)
+period_size: 639
+buffer_size: 10224
+tick_time: 10000
+OSS format: S16_LE
+OSS channels: 1
+OSS rate: 9600
+OSS period bytes: 256
+OSS periods: 16
+OSS period frames: 639
+
+So, if someone tells me how to modify the period and buffer sizes in
+soundmodem, I'll experiment and see if I can make the problem go away.
+
+	-braddock
+
+
