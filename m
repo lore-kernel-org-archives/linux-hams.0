@@ -1,68 +1,93 @@
-From: Niall Parker <niall@ve7hex.ampr.org>
-Subject: ancient history ...
-Date: Wed, 07 Jul 2004 23:53:30 -0700
+From: <w9ya@arrl.net>
+Subject: Re: hamlib not compiling well
+Date: Thu, 8 Jul 2004 02:43:19 -0500 (EST)
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <40ECEF6A.1070202@ve7hex.ampr.org>
+Message-ID: <3626.192.168.1.117.1089272599.squirrel@gateway>
+References: <1223.192.168.1.117.1089178842.squirrel@gateway>
+        <200407071710.47138.pa3gcu@zeelandnet.nl>
+        <2498.192.168.1.117.1089215964.squirrel@gateway>
+        <200407080811.05522.pa3gcu@zeelandnet.nl>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 7BIT
 Return-path: <linux-hams-owner@vger.kernel.org>
+In-Reply-To: <200407080811.05522.pa3gcu@zeelandnet.nl>
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"; format="flowed"
+Content-Type: text/plain; charset="us-ascii"
 To: linux-hams@vger.kernel.org
 
-Hello,
+> On Wednesday 07 July 2004 17:59, w9ya@arrl.net wrote:
+>> >> I am running into a problem that I have not seen before. There are
+>> files being created but they are without the ".so"in the file name,
+>> I tried adding "--enable-shared" to the configure, but this did not
+>> work, nor have I ever required this.
+>> >
+>> > After installing libs one needs to use 'ldconfig' to configure
+>> dynamic linker  run time bindings, as show in the manual page of
+>> ldconfig. I presume this is your problem.
+>>
+>> Um, perhaps I was not clear about this. If that is my fault, I am
+>> sorry.
+>>
+>> This is prior to installing the libs.
+>
+> Whatever, but i have just retrived hamlib-1.1.4.tar.bz2 decompressed it
+> and  simply did;
+>
+> ./configure
+> make
+> make install
+>
+> Things look ok to me. .so files do get created in subdirs, make install
+> installs everything in /usr/local/lib and seeminly links things as well.
 
-I'm trying to get an old machine I had running years ago back online and I'm 
-running into problems, maybe someone here with a good memory can help me.
+Hey Richard;
 
-The system is running kernel 2.0.37 with ax.25 compiled in (no modules) and 
-using the ax25-utils-2.0.12. I've managed to get the system running and hearing 
-traffic but when I try to connect using call I get
+And well they might seem o.k. for you.
 
----
+I was making rpms for Mandrake, which entails a different approach.
 
-[niall@ve7hexgw /tmp]$ call lsp spr
-GW4PTS AX.25 Connect v1.11
-*** Connected to spr
-Error opening terminal: xterm.
-[niall@ve7hexgw /tmp]$
+1 - /usr/local is off limits.
+2 - File permissions and ownership issues may be present.
+3 - Extraneous files may have to noticed and removed.
+4 - ALL files must be accounted for.
+5 - Various other distribution specific issues in many other areas often
+need to be attended to. (And these can be many.)
 
-----
+But I definitely can say this; even with your approach, if you had tried
+to do a simple compile on a Mandrake 10.0 Official machine you would have
+run into the same problems I had.
 
-the trace of packets going back and forth for this
+BTW I reported the fix yesterday or the day before for this, so the
+problem is solved; it appears to be a versioning issue with
+libtool/libtldl.
 
-----
+Finally IMHO it is a really bad idea to just compile, even into
+/usr/local, on a system (like mandrake, debian, red hat, suse, and many
+other "distros") that uses a file tracking package management system. You
+run the risk of system instability or worse.
 
-[Thu Jul  8 02:57:34 2004]
-Port lsp: AX25: VE7SPR-8->ID <UI C> pid=Text
-0000  TheNet Plus 2.08 (SPR).
+Thanks for the concerns es vy 73;
 
-[Thu Jul  8 03:07:03 2004]
-Port lsp: AX25: VE7HEX->SPR <C C P>
+Bob
+w9ya
 
-[Thu Jul  8 03:07:05 2004]
-Port lsp: AX25: SPR->VE7HEX <UA R F>
+>
+>> Bob
+>> w9ya
+>
+> --
+> If the Linux community is a bunch of thieves because they
+> try to imitate windows programs, then the Windows community
+> is built on organized crime.
+>
+> Regards Richard
+> pa3gcu@zeelandnet.nl
+> http://people.zeelandnet.nl/pa3gcu/
+>
+> -
+> To unsubscribe from this list: send the line "unsubscribe linux-hams" in
+> the body of a message to majordomo@vger.kernel.org
+> More majordomo info at  http://vger.kernel.org/majordomo-info.html
 
-[Thu Jul  8 03:07:05 2004]
-Port lsp: AX25: VE7HEX->SPR <D C P>
 
-[Thu Jul  8 03:07:06 2004]
-Port lsp: AX25: SPR->VE7HEX <UA R F>
-
-----
-
-It appears my system is dropping the connection as soon as it gets an 
-acknowledgement. Any ideas what is configured wrong ? The system worked fine 
-when I was using it 4 years ago, though I mainly used it for tcp/ip stuff and 
-didn't do much with ax.25/netrom etc.
-
-The error message above is not within the call executable, nor can I find it in 
-the ax25-utils source anywhere. The system is very limited for debugging, no 
-strace/gdb etc (it was stripped down to run in 2 MB RAM) and short of rebuilding 
-another box with the old distribution CDs I no longer have anything this old 
-running.
-
-Any ideas appreciated.
-
-						... Niall (VE7HEX)
 
