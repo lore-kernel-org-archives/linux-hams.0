@@ -1,36 +1,37 @@
-From: Arno Verhoeven <linux-hams-list-rcvr@sharon.esrac.ele.tue.nl>
-Subject: Re: FBB SMTP
-Date: Fri, 23 Jul 2004 09:58:59 +0200
+From: "Rodolfo Brasnarof" <rodob@ciudad.com.ar>
+Subject: Re: ax25 with digipeaters
+Date: Fri, 23 Jul 2004 21:15:10 -0300
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <4100C543.8020508@sharon.esrac.ele.tue.nl>
-References: <20040719173115.25966.qmail@radagast.org> <01a101c46db9$64d69ba0$050010ac@tokland> <410048DC.9070505@utoronto.ca>
+Message-ID: <41017FDE.27475.5756D@localhost>
+References: <01a101c46db9$64d69ba0$050010ac@tokland>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <410048DC.9070505@utoronto.ca>
+In-reply-to: <01a101c46db9$64d69ba0$050010ac@tokland>
+Content-description: Mail message body
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"; format="flowed"
-To: Dave Stubbs <dave.stubbs@utoronto.ca>, linux-hams@vger.kernel.org
+Content-Type: text/plain; charset="iso-8859-1"
+To: linux-hams@vger.kernel.org
 
-Dave Stubbs wrote:
 
-> Hello all,
-> 
-> I get vague hints from some websites that F6FBB will do SMTP.  However, 
-> I can find nothing about this in the documentation or examples.
-> 
-> Will FBB do this?  Or does it require another app?
-> 
+---
+On 19 Jul 2004 at 19:54, Arnau S=E1nchez wrote:
 
-As of version 7.04c FBB can accept incoming mail with SMTP, and has the 
-capability to serve as a pop3 server.
+> Dave Platt wrote:
+>=20
+> > Linux AX.25 stack in the kernel does not digipeat of its
+> > own accord.  You need to install additional software to handle
+> > the digipeating.
+>=20
+>     This explains everything... I think I'll try the old axdigi,  I h=
+ope it
+> works!
 
-The CHANGES file in the source tar-ball contains some examples that you 
-can put in your configuration files.
+I could not get axdigi working, but I'm using digi_ned=20
+instead, which works fine.
 
--- 
-73, PE1ICQ  Arno Verhoeven
---------------------------------
-AX.25  pe1icq@pi8zaa.#nbo.nld.eu
-smtp   pe1icq@pi8zaa.ampr.org
-inet   pe1icq@amsat.org
+-
+To unsubscribe from this list: send the line "unsubscribe linux-hams" i=
+n
+the body of a message to majordomo@vger.kernel.org
+More majordomo info at  http://vger.kernel.org/majordomo-info.html
