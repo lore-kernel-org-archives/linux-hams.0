@@ -1,64 +1,62 @@
-From: "Jean-Luc Coulon (f5ibh)" <jean-luc.coulon@wanadoo.fr>
-Subject: =?iso-8859-1?B?UmWgOiBSZaA=?=
-	=?iso-8859-1?Q?=3A?= New stable version Linux kernel 2.6.1 is out
-Date: Sat, 10 Jan 2004 20:41:20 +0100
-Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <20040110194120.GG951@tangerine.coulon.evette>
-References: <400045AB.4050403@geofizyka.pl> <20040110200607.I211@jeroen.pe1rxq.ampr.org> <20040110191328.GE951@tangerine.coulon.evette> <20040110192736.A9978@pull.privacy.nb.ca>
+From: Stephen Hemminger <shemminger@osdl.org>
+Subject: [PATCH] (4/5) remove bpqether pre-existing device discovery loop
+Date: Tue, 13 Jan 2004 11:00:39 -0800
+Sender: netdev-bounce@oss.sgi.com
+Message-ID: <20040113110039.647711c9.shemminger@osdl.org>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=PGP-SHA1;
-	protocol="application/pgp-signature"; boundary="gE7i1rD7pdK0Ng3j"
-Return-path: <linux-hams-owner@vger.kernel.org>
-Content-Disposition: inline
-In-Reply-To: <20040110192736.A9978@pull.privacy.nb.ca> (from mctylr@privacy.nb.ca on sam, jan 10, 2004 at 20:27:36 +0100)
+Content-Transfer-Encoding: 7bit
+Return-path: <netdev-bounce@oss.sgi.com>
+Errors-to: netdev-bounce@oss.sgi.com
 List-Id: <linux-hams.vger.kernel.org>
-To: linux-hams@vger.kernel.org
+Content-Type: text/plain; charset="us-ascii"
+To: "David S. Miller" <davem@redhat.com>
+Cc: netdev@oss.sgi.com, linux-hams@vger.kernel.org
 
+Remove duplicate/conflicting code now that netdev_register_notifier replays the 
+device registration events. Reorder initialization to avoid having to simplify error unwind 
+if /proc creation failed.
 
---gE7i1rD7pdK0Ng3j
-Content-Type: text/plain; Format=Flowed; DelSp=Yes; charset=ISO-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+diff -Nru a/drivers/net/hamradio/bpqether.c b/drivers/net/hamradio/bpqether.c
+--- a/drivers/net/hamradio/bpqether.c	Tue Jan 13 10:23:55 2004
++++ b/drivers/net/hamradio/bpqether.c	Tue Jan 13 10:23:55 2004
+@@ -606,33 +606,20 @@
+  */
+ static int __init bpq_init_driver(void)
+ {
+-	struct net_device *dev;
+-
+-	dev_add_pack(&bpq_packet_type);
+-
+-	register_netdevice_notifier(&bpq_dev_notifier);
+-
+-	printk(banner);
+-
+ #ifdef CONFIG_PROC_FS
+ 	if (!proc_net_fops_create("bpqether", S_IRUGO, &bpq_info_fops)) {
+ 		printk(KERN_ERR
+ 			"bpq: cannot create /proc/net/bpqether entry.\n");
+-		unregister_netdevice_notifier(&bpq_dev_notifier);
+-		dev_remove_pack(&bpq_packet_type);
+ 		return -ENOENT;
+ 	}
+ #endif  /* CONFIG_PROC_FS */
+ 
+-	rtnl_lock();
+-	for (dev = dev_base; dev != NULL; dev = dev->next) {
+-		if (dev_is_ethdev(dev) && bpq_new_device(dev)) {
+-			printk(KERN_ERR
+-			       "bpq: cannot setup dev for '%s'\n",
+-			       dev->name);
+-		}
+-	}
+-	rtnl_unlock();
++	dev_add_pack(&bpq_packet_type);
++
++	register_netdevice_notifier(&bpq_dev_notifier);
++
++	printk(banner);
++
+ 	return 0;
+ }
+ 
 
-Le 10.01.2004 20:27, M Taylor a =E9crit=A0:
->On Sat, Jan 10, 2004 at 08:13:28PM +0100, Jean-Luc Coulon (f5ibh) wrote:
->> Le 10.01.2004 20:06, Jeroen Vreeken a =E9crit=A0:
->> >On 2004.01.10 19:34:19 +0100 sp2ong@geofizyka.pl wrote:
->> >> I have download lastest stable linux kernel 2.6.1 if this version
->> >> contain all current patches for AX.25 stack?
->> >
->> >For the ax.25 stack yes, but the scc and mkiss patches are not yet in.
->> >
->>
->> Well, I tried to apply the scc patch to the 2.6.1 and it does not =20
->> apply ...
->>
->> [root@tangerine] /usr/src/linux # patch <
->/home/jean-luc/scc-linux-2.6.0.rxq.
->> diff -p1
->> patching file drivers/net/hamradio/scc.c
->> Reversed (or previously applied) patch detected!  Assume -R? [n]
->
->I haven't checked, but it is quite possibly that it was a reversed patch.
->Try saying 'y' here.
-Hmmm ?? No, it is already aplied, I've checked the code.
-
---
-			- Jean-luc
->
->-ve3tix
->
-
---gE7i1rD7pdK0Ng3j
-Content-Type: application/pgp-signature
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.2.4 (GNU/Linux)
-
-iD8DBQBAAFVgUdGGXzzGnNARAoj2AJ9V5H6Q18O4k2JH+ttkak6GEKH6SQCfeq6e
-3yP5Cmnjm9DrZgzCRvmGC/M=
-=1s3j
------END PGP SIGNATURE-----
-
---gE7i1rD7pdK0Ng3j--
