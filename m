@@ -1,39 +1,34 @@
-From: tbmoore <tbmoore@bealenet.com>
+From: Tomi Manninen <tpm@prkele.tky.hut.fi>
 Subject: Re: Which laptops are good for linux+packet(sound card) for County
  ARES?
-Date: Fri, 18 Oct 2002 17:36:46 -0400
+Date: Sat, 19 Oct 2002 00:54:23 +0300 (EEST)
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <3DB07EEE.9080804@bealenet.com>
-References: <Pine.SOL.3.91.1021017133250.10243A-100000@gateway.grumman.com> <3DB026AA.9060309@bealenet.com> <20021018212927.GA15679@localhost>
+Message-ID: <Pine.LNX.4.44.0210190047470.22291-100000@oh2bns.ampr.org>
+References: <3DB07EEE.9080804@bealenet.com>
+Reply-To: tpm@prkele.tky.hut.fi
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
+In-Reply-To: <3DB07EEE.9080804@bealenet.com>
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"; format="flowed"
-To: Nate Bargmann <n0nb@networksplus.net>
-Cc: linux-hams@vger.kernel.org
+Content-Type: TEXT/PLAIN; charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+To: linux-hams@vger.kernel.org
 
-Thanks, Nate.  That's good to know.  Is there a laptop in the $500 range 
-that would have a soundmodem compatible sound card under linux?  We may 
-be forced to use the TNC - most of my team prefer that anyway.
-Boyd
+On Fri, 18 Oct 2002, tbmoore wrote:
+
+> Thanks, Nate.  That's good to know.  Is there a laptop in the $500 range 
+> that would have a soundmodem compatible sound card under linux?  We may 
+> be forced to use the TNC - most of my team prefer that anyway.
+
+My experience says that the different thinkpad models have very different
+audio hardware. You really need to know what version you have in mind.  
+My elderly work laptop is a tp600x and iirc the sound card is a cs4610.  
+I think it's fairly well supported under Linux but unfortunately I'm not
+able to test that... :( Anyway, afaik, there are at least three tp600
+variants, each with different audio hardware...
 
 -- 
-T. Boyd Moore
-Zech 4:6  KO4WK@ARRL.NET
-
-Nate Bargmann wrote:
->
-> 
-> While I have had good luck with an aging Thinkpad 760ED, I would
-> recommend anyone considering one of the older TP models first check if
-> it's using the mwave chipset for sound.  Mwave is not supported except
-> by loading a DOS driver and then warm booting into Linux.  Performance
-> is poor and probably not acceptable for any applications using
-> soundmodem or similar.  Some models, notably the 760EL used an ESS
-> chipset and they are supported, but only 8 bit audio.
-> 
-> 73, de Nate >>
-> 
-
+Tomi Manninen           Internet:  oh2bns@sral.fi
+OH2BNS                  AX.25:     oh2bns@oh2rbi.fin.eu
+KP20ME04                Amprnet:   oh2bns@oh2rbi.ampr.org
 
