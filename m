@@ -1,126 +1,55 @@
-From: Richard van der Riet <pa3gwh@worldmail.nl>
-Subject: Re: SuSE 8.1 and kernel upgrade
-Date: Sun, 8 Jun 2003 13:51:02 +0200
+From: Wilbert Knol <zl2bsj@zl2tze.ath.cx>
+Subject: Re: SuSE 8.1 and kernel upgrade (solved)
+Date: Tue, 10 Jun 2003 11:52:11 -1200
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <200306081351.02751.pa3gwh@worldmail.nl>
-References: <200306051330.22124.w.knol@niwa.co.nz>
+Message-ID: <200306101152.11209.zl2bsj@zl2tze.ath.cx>
+References: <200306051330.22124.w.knol@niwa.co.nz> <200306081351.02751.pa3gwh@worldmail.nl>
 Mime-Version: 1.0
 Content-Transfer-Encoding: 7BIT
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <200306051330.22124.w.knol@niwa.co.nz>
-Content-Disposition: inline
+In-Reply-To: <200306081351.02751.pa3gwh@worldmail.nl>
 List-Id: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
-To: w.knol@niwa.co.nz, linux-hams@vger.kernel.org
+To: Richard van der Riet <pa3gwh@worldmail.nl>, linux-hams@vger.kernel.org
+Cc: Thomas Osterried <thomas@osterried.de>
 
-On Thursday 05 June 2003 03:30, Wilbert Knol wrote:
-Hello Wilbert,
+Hi Richard and others,
 
-> The problem I keep having is, that the Reiser file system does not
-> want to mount with the home-brewed kernel. I have built reiserfs into
-> the kernel, but the fschk.reiser keeps failing. It then proceeds to
-> mount the filesystem read-only in maintainance mode.  The file system
-> seems perfectly OK in that mode.
+On Saturday 07 June 2003 23:51, Richard van der Riet wrote:
+> On Thursday 05 June 2003 03:30, Wilbert Knol wrote:
+> Hello Wilbert,
 >
-If I recall correctly, SuSE have changed the behaviour of their OS as far as 
-ReiserFS is concerned, I think you need to add reiser as a module instead of 
-compiling it into the kernel, so it can be loaded early in the process.
+> > The problem I keep having is, that the Reiser file system does not
+> > want to mount with the home-brewed kernel. I have built reiserfs into
+> > the kernel, but the fschk.reiser keeps failing. It then proceeds to
+> > mount the filesystem read-only in maintainance mode.  The file system
+> > seems perfectly OK in that mode.
+>
+> If I recall correctly, SuSE have changed the behaviour of their OS as far
+> as ReiserFS is concerned, I think you need to add reiser as a module
+> instead of compiling it into the kernel, so it can be loaded early in the
+> process.
 
-From their support database:
+For those interested in the solution....my mistake was that I had built the 
+device file system (aka devfs) into the kernel...and made it mount at boot 
+time.
 
+SuSEE 8.1 apparenty does not use devfs. As a result, the device node
+for my Reiser partition did not match the entry in /etc/fstab...and the 
+initial file system check (fsch.reiserfs) failed to run (although it was 
+happy to mount it read-only)
 
-From SuSE Linux version 7.2 on, reiserfs support is no longer included in the 
-kernel but is loaded as a module. For this reason, the file system cannot be 
-mounted off-hand during the boot process.
-Solution:
-Integrate the module reiserfs into the INITRD (initial ramdisk).
+With regards to Richard's suggestion, I tried building Reiser into the kernel 
+as well as having it as a module. Both worked equally well. The advantage of 
+having it into the kernel is, that no initial RAM disk is needed (unless 
+there are other drivers...SCSI etc) and the boot process seems a little 
+quicker.
 
-Background: By using an initial ramdisk in which the module reiserfs is 
-included, the module will be loaded during the boot process immediately after 
-starting the kernel, even before the root file system is mounted.
-Procedure:
-Up to SuSE Linux Version 7.3
-Boot your installed system with the installation CD. To integrate the reiserfs 
-module in the initrd, you can either directly insert the module in the file 
-/etc/rc.config (variable INITRD_MODULES) and then execute the following 
-script in a root shell:
+So, I am a happy chappy now...the latest stable kernel *and* a working ACPI
+fan :-)
 
-mk_initrd
+Thanks to Richard PA3GWH and Thomas DL9SAU for the hints.
 
-or you can start YaST (1) and select the dialogs
+Wilbert, ZL2BSJ 
 
-    * System Administration ->
-    * Change configuration file
-
-   1. Search for the variable INITRD_MODULES (for example by using the search 
-function, key F4).
-   2. Use F3 to verify if the entry reiserfs is already available. If not, 
-append this entry separating it with a blank from already existing entries.
-   3. Leave the dialog with F10 and finish YaST.
-
-Then invoke the script that creates a new initrd. This can be done by entering 
-in a root shell:
-
-mk_initrd
-
-Skip to the section All versions.
-From SuSE Linux Version 8.0
-From SuSE Linux 8.0 on, the INITRD entry can be found in the file 
-/etc/sysconfig/kernel. You can either directly insert the module reiserfs in 
-this file (variable INITRD_MODULES) and then execute the following script in 
-a root shell
-
-mk_initrd
-
-or you can use YaST2. For this purpose, start YaST2 Control Center and change 
-to the dialogs:
-
-    * System ->
-    * Editor for /etc/sysconfig
-
-   1. Select Search and enter INITRD_MODULES in the search mask.
-   2. If more than one result is displayed, select INITRD_MODULES.
-   3. Check if the entry reiserfs is already available. If not, append this 
-entry separating it with a blank from existing entries.
-   4. Select Save and answer the confirmation question with OK.
-
-Now leave YaST2 and subsequently execute the script that creates a new initrd:
-
-mk_initrd
-
-All versions
-If there were no modules defined for initrd yet, you still have to modify 
-LILO's configuration file. To do this, open the file /etc/lilo.conf with an 
-editor of your choice and search for the following section (it may vary 
-depending on the SuSE version):
-
-image = /boot/vmlinuz
-  root = /dev/ ...
-  label = linux
-
-image = /boot/vmlinuz.suse
-  root = /dev/ ...
-  label = suse
-  optional
-
-Change these lines to:
-
-image = /boot/vmlinuz
-  root = /dev/ ...
-  initrd = /boot/initrd          # insert this line
-  label = linux
-
-image = /boot/vmlinuz.suse
-  root = /dev/ ...
-  initrd = /boot/initrd.suse     # insert this line
-  label = suse
-  optional
-
-Then the bootloader LILO has to be updated. To do this, execute
-
-lilo
-
-Good Luck
-
-Richard PA3GWH
 
