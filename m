@@ -1,57 +1,49 @@
-From: "Petri T. Koistinen" <petri.koistinen@iki.fi>
-Subject: [PATCH] drivers/net/hamradio/Kconfig URL update
-Date: Wed, 11 Feb 2004 22:20:51 +0200 (EET)
+From: "Robert Jenkins" <raj@jrw.co.uk>
+Subject: RE: FBB + Kernel 2.6
+Date: Wed, 11 Feb 2004 20:38:32 -0000
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <Pine.LNX.4.58.0402112216291.12093@dsl-hkigw4m08.dial.inet.fi>
+Message-ID: <E1Ar182-0002be-KJ@ptb-relay01.plus.net>
+References: <402A94F2.5040007@ccr.jussieu.fr>
 Mime-Version: 1.0
-Return-path: <linux-hams-owner@vger.kernel.org>
-List-Id: <linux-hams.vger.kernel.org>
-Content-Type: TEXT/PLAIN; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
-To: "David S. Miller" <davem@redhat.com>
+Return-path: <linux-hams-owner@vger.kernel.org>
+In-Reply-To: <402A94F2.5040007@ccr.jussieu.fr>
+List-Id: <linux-hams.vger.kernel.org>
+Content-Type: text/plain; charset="us-ascii"
+To: 'Bernard Pidoux' <pidoux@ccr.jussieu.fr>, 'Ruben Navarro Huedo' <eb5esx@eb5esx.ampr.org>
 Cc: linux-hams@vger.kernel.org
 
-Hi!
+Hi,
 
-URL update and unify some documentation.
+My FBB BBS + Node system is VERY stable - it runs for months at a time.
 
-Petri
+It uses:
+Redhat 7.2
+Kernel 2.4.18-RC4 plus the Netrom patch (by Tomi Manninen?? - it's a long
+time ago, I can't remember where it was from!)
 
---- linux-2.6/drivers/net/hamradio/Kconfig	2004-02-05 17:02:11.000000000 +0200
-+++ linux-2.6-trivial/drivers/net/hamradio/Kconfig	2004-02-11 22:14:17.000000000 +0200
-@@ -71,9 +71,9 @@
- 	  Before you configure each interface with ifconfig, you MUST set
- 	  certain parameters, such as channel access timing, clock mode, and
- 	  DMA channel. This is accomplished with a small utility program,
--	  dmascc_cfg, available at
--	  <http://www.nt.tuwien.ac.at/~kkudielk/Linux/>. Please be sure to get
--	  at least version 1.27 of dmascc_cfg, as older versions will not
-+	  dmascc_cfg, available at
-+	  <http://cacofonix.nt.tuwien.ac.at/~oe1kib/Linux/>. Please be sure to
-+	  get at least version 1.27 of dmascc_cfg, as older versions will not
- 	  work with the current driver.
+Libax25-0.0.10
+Ax25-apps-0.0.6
+Ax25-tools-0.0.8
+Node-0.3.0
+Fbb704h
 
- config SCC
-@@ -96,8 +96,9 @@
- 	help
- 	  Say Y here if you experience problems with the SCC driver not
- 	  working properly; please read
--	  <file:Documentation/networking/z8530drv.txt> for details. If unsure,
--	  say N.
-+	  <file:Documentation/networking/z8530drv.txt> for details.
-+
-+	  If unsure, say N.
+It had severe problems until libax25-0.0.10 was released; the run time was
+typically 2 - 3 days on 0.0.9
 
- config SCC_TRXECHO
- 	bool "support for TRX that feedback the tx signal to rx"
-@@ -105,7 +106,9 @@
- 	help
- 	  Some transmitters feed the transmitted signal back to the receive
- 	  line.  Say Y here to foil this by explicitly disabling the receiver
--	  during data transmission.  If in doubt, say Y.
-+	  during data transmission.
-+
-+	  If in doubt, say Y.
+Since installing 0.0.10 (and recompiling ALL the other AX25 related stuff),
+it appears bombproof - the only reason it gets rebooted is when I am working
+on the house & need to turn the power off! The longest is around six months.
 
- config BAYCOM_SER_FDX
- 	tristate "BAYCOM ser12 fullduplex driver for AX.25"
+(The radio interface is multiple serial ports with one KISS tnc per port).
+
+I know RH7.2 is rather old, but the system works so well I've been avoiding
+doing any changes...
+
+
+Regards,
+Robert Jenkins.
+
+
+
+
