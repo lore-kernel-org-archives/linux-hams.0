@@ -1,83 +1,106 @@
-From: Stephen Kitchener <stephen@g6dzj.demon.co.uk>
-Subject: Re: ANNOUNCE: UKW Tools 0.02 released
-Date: Wed, 11 Dec 2002 21:01:20 +0000
+From: mvw@mvw.net
+Subject: Success! TWO questions remain
+Date: Wed, 11 Dec 2002 16:57:13 -0500 (EST)
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <200212112101.21067.stephen@g6dzj.demon.co.uk>
-References: <200212110905.58203.jonathan.naylor@ggaweb.ch>
-Reply-To: stephen@g6dzj.demon.co.uk
+Message-ID: <Pine.LNX.4.44.0212111645150.1297-100000@jeeves.mvw.net>
+References: <Pine.LNX.4.33.0212110953370.1291-100000@wapiti.tc.fluke.com>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7BIT
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <200212110905.58203.jonathan.naylor@ggaweb.ch>
+In-Reply-To: <Pine.LNX.4.33.0212110953370.1291-100000@wapiti.tc.fluke.com>
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"
-To: g4klx@qsl.net, Jonathan Naylor <jonathan.naylor@ggaweb.ch>, linux-hams@vger.kernel.org
+Content-Type: TEXT/PLAIN; charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+To: linux-hams@vger.kernel.org
 
-On Wednesday 11 Dec 2002 08:05, Jonathan Naylor wrote:
-Hi Jonathon,
+I got it working, new 2.4.20 kernel, different PC, all OK. But a couple 
+of questions remain.
 
-> Hi Folks
->
-> The G4KLX software foundry is happy to announce that UKW Tools 0.02 has
-> been released. So what is UKW Tools ?
+(And a side note: On this machine too, /dev/ttyS0 appeared dead. But at
+least it has two, and /dev/ttyS1 is just fine, so that is what I use. Not
+an ax25 problem btw, but odd.)
 
-Downloaded and compiled ok ok Mandrake 8.2, I wonder if anyone else has had 
-the problems you talked about when they try and compile this and other 
-software on Mandrake 9.0, and if there is a solution ?
+Anyway. I did this:
 
->
-> UKW Tools is a kind of Goegraphic Information System (GIS) for radio
-> amateurs. Taking elevation data that is freely available on the
-> Internet, the program includes a suite of different funtions that allow
-> you to visualise radio paths and locations.
->
-> I suggest that you look on my web site http://www.qsl.net/g4klx under
-> Software and have a look at screen shots for more information, but
-> briefly, the current functions are:
->
-> 3D Map: Produces a map centred on a location that shows the topography
-> around it. The colours may be changed, the viewing angle may be changed
-> as can the type of projection used.
->
-> Horizon View: Plots the elevations of the surrounding obstacles as
-> viewed from a site, an indication of their elevations and distance is
-> given.
->
-> Show Map: Displays a map centred on a location with different colours
-> used to denote heights. Moving the mouse over the map will result in
-> information about the location below the mouse (locator and elevation).
-> The colours may be changed.
->
-> Terrain: Given two locations the program will show the line of sight
-> path between them. In many ways this is the most interesting function.
-> The K (essentially the tropo conditions) value may be changed and when
-> the mouse is over the disgram some data about the location pointed to
-> will be shown.
->
-> There are two functions, Local Map and View which have not been
-> implemented yet.
->
-> UKW Tools 0.01 was released a little while ago but not announced because
-> it was a premature release to allow some operators to check their
-> sites.
->
-> UKW Tools is written in C++ and makes use of the platform independent
-> wxWindows toolkit and it is possible that it could be built on Windows
-> as well as Linux.
->
-> Jonathan  G4KLX (HB9DRD until February 2003)
->
-> PS An article about the DSP functions used and the implementation of
-> LinWSJT is to be published in DUBUS 4/2002, and it can also be
-> downloaded from the Software page also. Warning, it is in Word 2000
-> format.
->
-> -
-> To unsubscribe from this list: send the line "unsubscribe linux-hams" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at  http://vger.kernel.org/majordomo-info.html
+1. Installed RedHat 8 
+   Custom install.
 
--- 
-Stephen Kitchener
+2. updated Redhat using up2date
 
-"The best way to accellerate a win9x machine is at 9.81m/s2"
+3. Recompiled 2.4.20 kernel
+   Config ax25 on
+   Serial port kiss on
+   (SCSI support off (or it would not makedeps))
+
+4. Installed from tarballs:
+   libax25
+   ax25tools
+   ax25apps
+   ...according to AX25-HOWTO
+
+5. edited two /etc/ax25 files:
+   ax25ports
+   rc.ax25
+
+   The first has:
+
+   # /etc/ax25/axports
+   r1  VA3MVW  9600  255  2  145.59MHz TCP/IP port
+
+
+   The second one has this, and I call it at the end of rc.local:
+
+   #rc.ax25
+   /usr/sbin/kissattach /dev/ttyS1 r1 44.135.90.48
+
+   # direct to myself via loopback:
+   /sbin/route add 44.135.90.48 lo
+
+   # Direct to area gateway port.ve3mch:
+   /sbin/route add 44.135.85.30 ax0
+
+   # Let all other 44 (ampr) routes go via there:
+   /sbin/route add -net 44.0.0.0 gw 44.135.85.30 netmask 255.0.0.0
+
+   # Direct to me at home:
+   /sbin/route add 44.135.90.46 ax0
+
+   /usr/sbin/mheardd
+
+
+So now I have the following two questions.
+
+1. I have set up TCP/IP OK, and I can ping/send mail/etc; but 
+   what about native ax25? Do I need to do anything? How can I check?
+
+2. My ROUTE table shows TWO routes to 44./class A subnet! My previous ax25 
+box did not do this and the route commands ar ethe same. The route 
+commands in the rc.ax25 script above give me this:
+
+[root@jeeves ax25]# route
+Kernel IP routing table
+Destination     Gateway         Genmask         Flags Metric Ref    Use 
+Iface
+port.ve3mch.amp *               255.255.255.255 UH    0      0        0 
+ax0
+va3mvw.ampr.org *               255.255.255.255 UH    0      0        0 lo
+va3oak.ampr.org *               255.255.255.255 UH    0      0        0 
+ax0
+216.138.207.128 *               255.255.255.224 U     0      0        0 
+eth0
+127.0.0.0       *               255.0.0.0       U     0      0        0 lo
+44.0.0.0        port.ve3mch.amp 255.0.0.0       UG    0      0        0 
+ax0
+44.0.0.0        *               255.0.0.0       U     0      0        0 
+ax0
+default         216.138.207.129 0.0.0.0         UG    0      0        0 
+eth0
+
+
+
+What is that second 44.0.0.0 doing there?? ANy ideas?
+
+
+Cheers
+Michael VA3MVW
+
+
