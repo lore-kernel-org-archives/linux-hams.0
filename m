@@ -1,29 +1,31 @@
-From: Ralf Baechle DL5RB <ralf@linux-mips.org>
-Subject: Re: [ANN] Hamlib 1.2.2 released
-Date: Mon, 13 Sep 2004 15:51:15 +0200
+From: =?iso-8859-15?q?G=FCnther=20Montag=20?= <Safari.Doktor@addcom.de>
+Subject: new release hf-0.6.1 of Tom Sailer's ham fsk program
+Date: Mon, 13 Sep 2004 16:20:02 +0200
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <20040913135115.GA29420@linux-mips.org>
-References: <20040823231207.GB2985@charybde.local>
+Message-ID: <200409131620.02648.Safari.Doktor@addcom.de>
 Mime-Version: 1.0
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 Return-path: <linux-hams-owner@vger.kernel.org>
-Content-Disposition: inline
-In-Reply-To: <20040823231207.GB2985@charybde.local>
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-To: Stephane Fillod <f8cfe@free.fr>, Hamlib developers <hamlib-developer@lists.sourceforge.net>, Linux HAMs <Linux-hams@vger.kernel.org>, GNU Radio mailing list <discuss-gnuradio@gnu.org>
+Content-Type: text/plain; charset="iso-8859-1"
+To: -HFTERMHACKERS- <hfterm-hackers@lists.sourceforge.net>, "Hubert.Fink@t-online.de" <Hubert.Fink@t-online.de>, XFBB <xfbb@f6fbb.org>, linux hams <linux-hams@vger.kernel.org>, ralf-axel-krause@gmx.de, suse-ham-e@suse.com, suse-ham@suse.com
 
-On Tue, Aug 24, 2004 at 01:12:07AM +0200, Stephane Fillod wrote:
+Hello friends!
 
-> Hamlib-1.2.2 has been released.
+Today I released hf-0.6.1,=20
+(pactor1, amtor, rtty=20
+can be used as automatic pactor 1 mailbox, has=20
+telnet-interface to F6FBB mailbox)
+with some bugfixes I hope,=20
+thanks for all your help in the mailinglists,=20
+have fun with testing!
 
-[...]
+--=20
+G=FCnther Montag
+Safari.Doktor@addcom.de
 
-> Download pages are accessible at http://sourceforge.net/projects/hamlib
-> i386 rpms and .deb coming soon. Win32 DLL's are already available.
-
-I've put rpms of hamlib 1.2.2 for Fedora Core 2 into /pub/ham/hamlib-1.2.2
-on bacchus.net.dhis.org.  Feel free to put them onto sourceforge or
-anywhere else.
-
-  Ralf
+-
+To unsubscribe from this list: send the line "unsubscribe linux-hams" i=
+n
+the body of a message to majordomo@vger.kernel.org
+More majordomo info at  http://vger.kernel.org/majordomo-info.html
