@@ -1,55 +1,26 @@
-From: Bob Nielsen <nielsen@oz.net>
-Subject: Re: Serial port recommendations?
-Date: Tue, 27 Aug 2002 00:00:20 -0700
+From: Hamish Moffatt <hamish@cloud.net.au>
+Subject: Re: ax25ipd
+Date: Tue, 27 Aug 2002 22:05:47 +1000
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <20020827070020.GA18051@bob.n7xy.net>
-References: <20020826224739.GB16112@bob.n7xy.net> <3D6AB197.1070106@stanford.edu>
+Message-ID: <20020827120547.GA17396@silly.cloud.net.au>
+References: <Pine.LNX.4.33.0208252223370.730-100000@n1uan.ampr.org> <154811171.20020827000800@sma.spb.ru> <0208262053180B.02211@unix.pa3gcu> <200208262147.08027.w9ya@amsat.org>
 Mime-Version: 1.0
 Return-path: <linux-hams-owner@vger.kernel.org>
 Content-Disposition: inline
-In-Reply-To: <3D6AB197.1070106@stanford.edu>
+In-Reply-To: <200208262147.08027.w9ya@amsat.org>
 List-Id: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
 To: linux-hams@vger.kernel.org
 
-Thanks for the tip.  They appear to sell through several sources who
-put their own part number on the cards (there is a direct special
-shown, but the offer expired last year!).  The cross-reference doesn't
-show the card I was intererested, but based on what IS shown, I think I
-found it (a 4-port 16550-based PCI card) at JDR for a fairly good
-price ($66).
+On Mon, Aug 26, 2002 at 09:47:08PM +0000, w9ya wrote:
+> As far as I can tell, /usr/local has been "depreciated" into the "old-timers" 
+> pile. It is not a useful directory for this according to the FHS and LSB.
 
-Bob N7XY
+The distributions (Red Hat, Debian, SuSE, Mandrake etc) shouldn't put
+anything in /usr/local, but if you are installing something outside of
+the packaging system then /usr/local is the recommended place.
 
-On Mon, Aug 26, 2002 at 03:54:15PM -0700, James Cutler wrote:
-> I've had good luck with both PCI and ISA cards from Dolphin.
-> http://www.dolphinfast.com/
-> 
-> I bought two of the cards, took the UART chips out of one, and
-> placed them in the other for a 4 port card.
-> 
-> 
-> Bob Nielsen wrote:
-> 
-> >I just built a new computer (1 GHz Celeron) for the shack.  It has 2
-> >onboard serial ports and I was wondering what would be the best way to
-> >add additional ports.  I figure I need 2-3 for packet, one for rig
-> >control, one for RTTY/PSK31 PTT and one for CW keying (5-6 total if I
-> >don't switch connectors).  The motherboard has several PCI slots and
-> >one ISA, as well as two USB connectors.  I have one old 2-port ISA
-> >board and I've seen USB-to-serial adapters, but figure a 4-port serial
-> >adapter might be best.  I haven't seen any of these recently, however. 
-> >The software I will be using is kernel AX.25 + DX Spider + Xastir
-> >(packet) and TLF (contesting and general HF use), plus something for
-> >RTTY and PSK31, (I haven't decided exactly what yet.)
-> >
-> >Any suggestions on the best way to get additional serial ports?
-> >
-> >73, Bob N7XY
-> >-
-
+Hamish
 -- 
-Bob Nielsen, N7XY                          n7xy@n7xy.net
-Bainbridge Island, WA  
-IOTA NA-065, USI WA-028S 
+Hamish Moffatt VK3SB <hamish@debian.org> <hamish@cloud.net.au>
