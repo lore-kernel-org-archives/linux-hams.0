@@ -1,32 +1,34 @@
-From: Bob Nielsen <nielsen@oz.net>
-Subject: Re: linux 2.4.21 and AX.25 support
-Date: Fri, 27 Jun 2003 23:11:05 -0700
+From: "Phil Maley" <phil@wotech.com.au>
+Subject: List problems
+Date: Sun, 29 Jun 2003 14:48:03 +0800
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <20030628061105.GA4089@n7xy.net>
-References: <20030628042637.GA93229@freebsd.aeminium.pt>
+Message-ID: <NCEPJGLIJIFOHBPEAAAOKEJEFCAA.phil@wotech.com.au>
+Reply-To: <phil@wotech.com.au>
 Mime-Version: 1.0
+Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
-Content-Disposition: inline
-In-Reply-To: <20030628042637.GA93229@freebsd.aeminium.pt>
 List-Id: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-To: linux-hams@vger.kernel.org
+To: Linux Hams <linux-hams@vger.kernel.org>
 
-On Sat, Jun 28, 2003 at 05:26:37AM +0100, Nuno Sucena Almeida wrote:
-> Hello,
-> 
-> 	anyone here running ax.25 on a linux 2.4.21 system?
-> 	I'm having problems with:
-> 	- soundmodem: there is no output sound from the soundcard but
-> with the -v debug option i can 'see' the packets going out.
-> 	- yam modem: there is a countinuous sound and the output, with
-> the 'listen' command showing the packets going, but they are never sent.
-> 
-> 	I have everything configured correctly and i'm using for
-> the tests a simple ping or call command. I have no kernel error messages :/
-> 
+Hi all
 
-I'm running 2.4.21 here with no problems (mkiss and ax25 as modules).
+I have been unable to post to the list for some time although I am
+receiving at least some postings.
 
-Bob, N7XY
+Anyway, there is also a serious problem with the archives.
+
+<http://groups.google.com/groups?group=mlist.linux.hams> shows the
+last message was on 20 April.
+The other archive at <http://www.geocrawler.com/lists/3/Linux/> shows
+the last message was on 31 March.
+Clearly both are wrong.
+
+The list maintainer is obviously too busy to take much notice so I
+wonder if we should set a new list up at yahoo groups or somewhere
+else more reliable.
+
+73
+Phil Maley vk6ad
+Perth Australia
+
