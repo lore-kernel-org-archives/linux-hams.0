@@ -1,37 +1,31 @@
-From: Wilbert Knol <zl2bsj@zl2tze.ath.cx>
-Subject: Re: Simple BBS, again, sorry for asking twice.
-Date: Tue, 24 Dec 2002 19:54:19 +1300 (NZDT)
+From: Jonathan Naylor <jonathan@mechserv.demon.co.uk>
+Subject: Interesting web sites
+Date: Tue, 24 Dec 2002 13:28:33 +0000
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <Pine.LNX.4.44.0212241945580.2791-100000@zl2bsj.ampr.org>
-References: <Pine.LNX.4.44.0212240010320.10548-100000@jeeves.mvw.net>
+Message-ID: <aSqXogABEGC+Ewzx@mechserv.demon.co.uk>
 Mime-Version: 1.0
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <Pine.LNX.4.44.0212240010320.10548-100000@jeeves.mvw.net>
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: TEXT/PLAIN; charset="us-ascii"
+Content-Type: text/plain; charset="us-ascii"; format="flowed"
 Content-Transfer-Encoding: 7bit
-To: mvw@mvw.net
-Cc: linux-hams@vger.kernel.org
+To: linux-hams@vger.kernel.org
 
-On Tue, 24 Dec 2002 mvw@mvw.net wrote:
+Merry Xmas to all, etc.
 
-> ports and not on the ethernet port? I.e. telnet (unencrypted) only from 
-> the ax25 ports.
+In my searches on the Internet I have come across an interesting web 
+site dedicated to advanced amateur radio. By advanced I mean it covers 
+topics such as microwaves, propagation, DSP, software defined radio and 
+of course Linux in amateur radio. It is a site based on Slash code (I 
+think) and is found at http://www.neoamateur.org it appears a little 
+under used and it would be a shame if it died due to neglect. It is a 
+refreshing change from the appliance operator mentality to be found in 
+most parts of amateur radio these days.
 
-Use the 'route' command. Make the radio port the default interface. 
-All IP traffic will, from then on, use that port.
+Another web page that I have just discovered is http://www.dspguru.com 
+which as you can guess specialises in DSP software and hardware. A very 
+interesting resource, and one I could have done with a while ago when I 
+started on LinWSJT.
 
-> 
-> b) I use tcp/ip for mail etc. But apart from that I would like to set up a 
-> simple messaging system/bbs, to use when someone goes to this system using 
-> ax25. I do not need "do it all" systems, just a simple bbs (and it's a 
+Have a good time and don't eat too much Turkey.
 
-Consider using 'ax25d' to start up the 'mail' program, allowing people 
-to send and receive local E-mail.
-
-HTH...
-
-Wilbert, ZL2BSJ
-
-
-
+Jonathan  HB9DRD/G4KLX
