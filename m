@@ -1,94 +1,20 @@
-From: "Catalin Tanasie" <forum@terrasat.ro>
-Subject: Re: Mixed network problem
-Date: Thu, 26 Jun 2003 10:33:54 +0300
+From: John Agar <dutchwas2@wpcusrgrp.org>
+Subject: ax25 library, tools and applications
+Date: Thu, 26 Jun 2003 08:04:31 -0500
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <003201c33bb5$4fcf9770$8d551251@catalinu>
-References: <002901c33bb5$287a2a00$0100a8c0@xp400>
-Reply-To: "Catalin Tanasie" <forum@terrasat.ro>
+Message-ID: <3EFAEF5F.CC2B1243@wpcusrgrp.org>
 Mime-Version: 1.0
-Content-Type: multipart/signed;
-	boundary="----=_NextPart_000_002E_01C33BCE.71501000";
-	protocol="application/x-pkcs7-signature";
-	micalg=SHA1
+Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
 List-Id: <linux-hams.vger.kernel.org>
+Content-Type: text/plain; charset="us-ascii"
 To: linux-hams@vger.kernel.org
 
-This is a multi-part message in MIME format.
+I have an up to date Red Hat 7.3 system. Kernel 2.4.20-18.7. 512 RAM.
+What ax25 library , tools and applications do I need and  from where can
+I obtain them.
 
-------=_NextPart_000_002E_01C33BCE.71501000
-Content-Type: text/plain;
-	charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-
-winxp can be "ping-ed", go to Local Area Connection Properties, click on
-advanced tab and disable (for testing purposes) Internet Connection Firewall
-if is enabled. If this solve your problem, go to advanced settings and
-choose what services do you want to enable.
-Hope this helps.
-Catalin, yo7gqz.
-
------ Original Message ----- 
-
-------=_NextPart_000_002E_01C33BCE.71501000
-Content-Type: application/x-pkcs7-signature;
-	name="smime.p7s"
-Content-Transfer-Encoding: base64
-Content-Disposition: attachment;
-	filename="smime.p7s"
-
-MIAGCSqGSIb3DQEHAqCAMIACAQExCzAJBgUrDgMCGgUAMIAGCSqGSIb3DQEHAQAAoIII7TCCAnww
-ggHloAMCAQICAwoqUzANBgkqhkiG9w0BAQQFADCBkjELMAkGA1UEBhMCWkExFTATBgNVBAgTDFdl
-c3Rlcm4gQ2FwZTESMBAGA1UEBxMJQ2FwZSBUb3duMQ8wDQYDVQQKEwZUaGF3dGUxHTAbBgNVBAsT
-FENlcnRpZmljYXRlIFNlcnZpY2VzMSgwJgYDVQQDEx9QZXJzb25hbCBGcmVlbWFpbCBSU0EgMjAw
-MC44LjMwMB4XDTAzMDYxNzA3NTI0OVoXDTA0MDYxNjA3NTI0OVowQzEfMB0GA1UEAxMWVGhhd3Rl
-IEZyZWVtYWlsIE1lbWJlcjEgMB4GCSqGSIb3DQEJARYRZm9ydW1AdGVycmFzYXQucm8wgZ8wDQYJ
-KoZIhvcNAQEBBQADgY0AMIGJAoGBAPQhpXc9O0nKEUq+eSbEy84+SGdL1bcB6k8WeQLDjtRIbg1h
-EZ6GEsEikk4tMRa3OTPZZ6+AaNXNzOWXHJeRLUX/JZnKSIy5U/QozkJfPTjOUae8RtTTRvXvP2tT
-ZbtQ/TcHVp0ssWNOgFHYRPUACpNv+WFOM/xYCwV1UhKrCv7JAgMBAAGjLjAsMBwGA1UdEQQVMBOB
-EWZvcnVtQHRlcnJhc2F0LnJvMAwGA1UdEwEB/wQCMAAwDQYJKoZIhvcNAQEEBQADgYEAiPEAn6FZ
-gqrcnuH6hkHl5ZhZ3iwIsuF2HN0uS1lW3D/ZoFn8Hil0fGhmVlI6W3GaQBGB5LeWRpq/hf4yVBnz
-coM50r1G7X7EvZjhKDtOoKIxgz/9IF+TFPA4qR6D4GgY7eDgb6F5X4XjBMff6RAIkaanMHavBDQL
-nQ4DO3/bndkwggMtMIIClqADAgECAgEAMA0GCSqGSIb3DQEBBAUAMIHRMQswCQYDVQQGEwJaQTEV
-MBMGA1UECBMMV2VzdGVybiBDYXBlMRIwEAYDVQQHEwlDYXBlIFRvd24xGjAYBgNVBAoTEVRoYXd0
-ZSBDb25zdWx0aW5nMSgwJgYDVQQLEx9DZXJ0aWZpY2F0aW9uIFNlcnZpY2VzIERpdmlzaW9uMSQw
-IgYDVQQDExtUaGF3dGUgUGVyc29uYWwgRnJlZW1haWwgQ0ExKzApBgkqhkiG9w0BCQEWHHBlcnNv
-bmFsLWZyZWVtYWlsQHRoYXd0ZS5jb20wHhcNOTYwMTAxMDAwMDAwWhcNMjAxMjMxMjM1OTU5WjCB
-0TELMAkGA1UEBhMCWkExFTATBgNVBAgTDFdlc3Rlcm4gQ2FwZTESMBAGA1UEBxMJQ2FwZSBUb3du
-MRowGAYDVQQKExFUaGF3dGUgQ29uc3VsdGluZzEoMCYGA1UECxMfQ2VydGlmaWNhdGlvbiBTZXJ2
-aWNlcyBEaXZpc2lvbjEkMCIGA1UEAxMbVGhhd3RlIFBlcnNvbmFsIEZyZWVtYWlsIENBMSswKQYJ
-KoZIhvcNAQkBFhxwZXJzb25hbC1mcmVlbWFpbEB0aGF3dGUuY29tMIGfMA0GCSqGSIb3DQEBAQUA
-A4GNADCBiQKBgQDUadfUsJRkW3HpR9gMUbbqcpGwhF59LQ2PexLfhSV1KHQ6QixjJ5+Ve0vvfhmH
-HYbqo925zpZkGsIUbkSsfOaP6E0PcR9AOKYAo4d49vmUhl6t6sBeduvZFKNdbnp8DKVLVX8GGSl/
-npom1Wq7OCQIapjHsdqjmJH9edvlWsQcuQIDAQABoxMwETAPBgNVHRMBAf8EBTADAQH/MA0GCSqG
-SIb3DQEBBAUAA4GBAMfskn5O+PWWpWdiKqTwTRFg0G+NYFhhrCa7UjVcCM8w+6hKloofYkIjjBcP
-9LpknBesRynfnZhe0mxgcVyirNx54+duAEcftQ0o6AKd5Jr9E/Sm2Xyx+NxfIyYJkYBz0BQb3kOp
-gyXy5pwvFcr+pquKB3WLDN1RhGvk+NHOd6KBMIIDODCCAqGgAwIBAgIQZkVyt8x09c9jdkWE0C6R
-ATANBgkqhkiG9w0BAQQFADCB0TELMAkGA1UEBhMCWkExFTATBgNVBAgTDFdlc3Rlcm4gQ2FwZTES
-MBAGA1UEBxMJQ2FwZSBUb3duMRowGAYDVQQKExFUaGF3dGUgQ29uc3VsdGluZzEoMCYGA1UECxMf
-Q2VydGlmaWNhdGlvbiBTZXJ2aWNlcyBEaXZpc2lvbjEkMCIGA1UEAxMbVGhhd3RlIFBlcnNvbmFs
-IEZyZWVtYWlsIENBMSswKQYJKoZIhvcNAQkBFhxwZXJzb25hbC1mcmVlbWFpbEB0aGF3dGUuY29t
-MB4XDTAwMDgzMDAwMDAwMFoXDTA0MDgyNzIzNTk1OVowgZIxCzAJBgNVBAYTAlpBMRUwEwYDVQQI
-EwxXZXN0ZXJuIENhcGUxEjAQBgNVBAcTCUNhcGUgVG93bjEPMA0GA1UEChMGVGhhd3RlMR0wGwYD
-VQQLExRDZXJ0aWZpY2F0ZSBTZXJ2aWNlczEoMCYGA1UEAxMfUGVyc29uYWwgRnJlZW1haWwgUlNB
-IDIwMDAuOC4zMDCBnzANBgkqhkiG9w0BAQEFAAOBjQAwgYkCgYEA3jMypmPHCSVFPtJueCdngcXa
-iBmClw7jRCmKYzUqbXA8+tyu9+50bzC8M5B/+TRxoKNtmPHDT6Jl2w36S/HW3WGl+YXNVZo1Gp2S
-dagnrthy+boC9tewkd4c6avgGAOofENCUFGHgzzwObSbVIoTh/+zm51JZgAtCYnslGvpoWkCAwEA
-AaNOMEwwKQYDVR0RBCIwIKQeMBwxGjAYBgNVBAMTEVByaXZhdGVMYWJlbDEtMjk3MBIGA1UdEwEB
-/wQIMAYBAf8CAQAwCwYDVR0PBAQDAgEGMA0GCSqGSIb3DQEBBAUAA4GBADGxS0dd+QFx5fVTbF15
-1j2YwCYTYoEipxL4IpXoG0m3J3sEObr85vIk65H6vewNKjj3UFWobPcNrUwbvAP0teuiR59sogxY
-jTFCCRFssBpp0SsSskBdavl50OouJd2K5PzbDR+dAvNa28o89kTqJmmHf0iezqWf54TYyWJirQXG
-MYIB/jCCAfoCAQEwgZowgZIxCzAJBgNVBAYTAlpBMRUwEwYDVQQIEwxXZXN0ZXJuIENhcGUxEjAQ
-BgNVBAcTCUNhcGUgVG93bjEPMA0GA1UEChMGVGhhd3RlMR0wGwYDVQQLExRDZXJ0aWZpY2F0ZSBT
-ZXJ2aWNlczEoMCYGA1UEAxMfUGVyc29uYWwgRnJlZW1haWwgUlNBIDIwMDAuOC4zMAIDCipTMAkG
-BSsOAwIaBQCggbowGAYJKoZIhvcNAQkDMQsGCSqGSIb3DQEHATAcBgkqhkiG9w0BCQUxDxcNMDMw
-NjI2MDczMzU0WjAjBgkqhkiG9w0BCQQxFgQUHyiFiyDi6k7dPgQmyBLLPwcNew4wWwYJKoZIhvcN
-AQkPMU4wTDAKBggqhkiG9w0DBzAOBggqhkiG9w0DAgICAIAwDQYIKoZIhvcNAwICAUAwBwYFKw4D
-AgcwDQYIKoZIhvcNAwICASgwBwYFKw4DAh0wDQYJKoZIhvcNAQEBBQAEgYCo5K2kYfkvfz4xuEfI
-E4YSaGgWjRg0Sa+89TGC0il7aVnlYgQMzwilGkZuIvmEicRhQNun2JcdsoMnBz9E2dv8TeW0vXK+
-aHaW3k1y47o8IrYhsv9VklBEhdGrf0czKOZz5xGoA/W5a+kfeD9fKblgul3nLA90rFfp8/QZryr4
-cgAAAAAAAA==
-
-------=_NextPart_000_002E_01C33BCE.71501000--
-
+Thanks
+John A.
+VE4EI
 
