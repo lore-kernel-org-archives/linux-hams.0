@@ -1,48 +1,40 @@
-From: Hamish Moffatt <hamish@cloud.net.au>
-Subject: Re: soundmodem / "SIOCSIFFLAGS no such device"
-Date: Fri, 21 Feb 2003 08:50:08 +1100
+From: csmall@enc.com.au (Craig Small)
+Subject: Re: [PATCH] node and libax25io nonblocking
+Date: Fri, 21 Feb 2003 21:37:51 +1100
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <20030220215008.GA1876@silly.cloud.net.au>
-References: <b2veij$79l$1@main.gmane.org> <20030220120526.GA28160@silly.cloud.net.au> <b33hmu$nsm$1@main.gmane.org>
+Message-ID: <20030221103751.GA16223@enc.com.au>
+References: <20030218233527.K507@jeroen.pe1rxq.ampr.org> <Pine.LNX.4.44.0302190033590.14956-200000@oh2bns.ampr.org>
 Mime-Version: 1.0
 Return-path: <linux-hams-owner@vger.kernel.org>
 Content-Disposition: inline
-In-Reply-To: <b33hmu$nsm$1@main.gmane.org>
+In-Reply-To: <Pine.LNX.4.44.0302190033590.14956-200000@oh2bns.ampr.org>
 List-Id: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
-To: linux-hams@vger.kernel.org
+To: Tomi Manninen <tpm@prkele.tky.hut.fi>
+Cc: Jeroen Vreeken <pe1rxq@amsat.org>, csmall@small.dropbear.id.au, linux-hams@vger.kernel.org
 
-On Thu, Feb 20, 2003 at 10:41:11PM +0100, linux-hams-owner@vger.kernel.org wrote:
-> > > ifconfig sm0 hw ax25 X1ABC up
-> >
-> > Should also assign a dummy IP address.
-> So, I typed :
-> ifconfig sm0 hw ax25 X870 192.3.1.2
-> ===>>> SIOCSIFFLAGS: No such device
+On Wed, Feb 19, 2003 at 12:37:03AM +0200, Tomi Manninen wrote:
+> On Tue, 18 Feb 2003, Jeroen Vreeken wrote:
+> 
+> > Attached the same patch against what should have been in the CVS :)
+> > 
+> > btw getline changed a bit, the buffer is no longer global but in the ax25io
+> > structure so each connection has its own (this is not a problem yet, but
+> > might become one...)
+> 
+> Ok, after a very quick look this looks FB. And just in case Craig
+> misplaced the earlier patch I was talking about, I added it here. So first
+> my patch, then Jeroen's.
 
-Check the messages from the kernel with 'dmesg'. It may give you some
-extra information - is it the sound card it can't find or is it the
-serial port etc.
+Great,  I've added both patches to the CVS.  You mention some programs
+will break, what programs are they?
 
-> > Is your sound card SB-compatible?
-> How can I know that, please ?
+I'd like to release this library just with this patch but those programs
+need fixing first, or at least the maintainers to be ready.
 
-Google?
-
-> Maybe I rmmod'ed too many modules ?
-
-Unlikely.
-
-> > You could also try the user-space (non kernel) soundmodem driver. It
-> > uses your existing sound card drivers although not all cards are
-> supported.
-> Great ! Where is it ? What is its name ?
-
-http://www.baycom.org/~tom/ham/soundmodem/
-
-
-73
-Hamish
+  - Craig
 -- 
-Hamish Moffatt VK3SB <hamish@debian.org> <hamish@cloud.net.au>
+Craig Small VK2XLZ  GnuPG:1C1B D893 1418 2AF4 45EE  95CB C76C E5AC 12CA DFA5
+Eye-Net Consulting http://www.enc.com.au/                <csmall@enc.com.au>
+MIEEE <csmall@ieee.org>                 Debian developer <csmall@debian.org>
