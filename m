@@ -1,37 +1,41 @@
-From: =?iso-8859-1?Q?G=E9rard?= Parat / F6FGZ <f6fgz@free.fr>
-Subject: Re: morse decode prog
-Date: Tue, 01 Jun 2004 22:58:15 +0200
+From: "Bill Vodall" <wa7nwp@jnos.org>
+Subject: Re: BBS Software
+Date: Wed, 2 Jun 2004 15:13:32 -0700
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <40BCEDE7.4E241815@free.fr>
-References: <40BCCE1F.8080806@blueyonder.co.uk>
+Message-ID: <001001c448ee$d90de7c0$6a7ea8c0@geo>
+References: <200405271330.25402.dl4mge@darc.de> <1085680600.31191.151.camel@kronenbourg.scs.ch> <20040527201755.GX1749@mea-ext.zmailer.org> <200405311230.37550.dl4mge@darc.de> <40BB6A68.3050700@utoronto.ca>
 Mime-Version: 1.0
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="iso-8859-1"
-To: linux-hams@vger.kernel.org
-
-Richard a =E9crit :
-
-> Hi all
->
-> anyone know of a morse decode program, pref with FFT that can cope wi=
-th
-> speeds of less than 1 wpm or slower.
-> Playing with something on 10 GHz.
-
-I think you mean something as QRSS. Type QRSS as keyword into Google an=
-d you'll
-get plenty of useful info. Is that for EME ?
+Content-Type: text/plain; charset="us-ascii"
+To: Dave Stubbs <dave.stubbs@utoronto.ca>, linux hams <linux-hams@vger.kernel.org>
 
 
---
-73 G=E9rard F6FGZ
+> Would it spark a zealous flame war
+
+One could only wish...   Too many folks have turned off packet...
+
+> if I was to ask what is the most
+> feature-rich and most popular Packet BBS software out there?  I'm
+> looking to offer a full email and news gateway to my club via packet.
+
+Email and News -- you don't need a BBS.  Just hook up a Linux box
+with the AX25 system and get it on the air.  Add the UroNode or equivalent
+as a friendly user interface and you're in business.
+
+I'm currently using JNOS on Linux as a gateway between Internet Email and
+packet mailbox messaging.   The idea is to be able to send an Email note to
+ab1xyz@ampr2.net
+have have it automatically delievered to ab1xyz's personal TNC mailbox.
+There
+are probably other tools that will do the Internet to/from Packet gatewaying
+but
+I'm familar with JNOS and, best of all, the source is available.
+
+HTH.
+
+73,
+Bill - WA7NWP
 
 
-
--
-To unsubscribe from this list: send the line "unsubscribe linux-hams" i=
-n
-the body of a message to majordomo@vger.kernel.org
-More majordomo info at  http://vger.kernel.org/majordomo-info.html
