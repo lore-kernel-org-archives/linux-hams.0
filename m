@@ -1,67 +1,27 @@
-From: Arno Verhoeven <pe1icq@pi8zaa.ampr.org>
-Subject: Re: soundmodem, Cannot open PTT device "/dev/parport0"
-Date: Sat, 05 Oct 2002 23:19:16 +0200
+From: Stewart Wilkinson <g0lgs@gb7lgs.co.uk>
+Subject: Odd Message when loading AX25 / NETROM Modules
+Date: Sat, 5 Oct 2002 22:14:50 +0000 (GMT)
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <3D9F5754.6050608@pi8zaa.ampr.org>
-References: <3D9F49EF.8080405@pi8zaa.ampr.org>
+Message-ID: <Pine.LNX.4.33.0210022152150.17242-100000@gb7lgs.ampr.org>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset="us-ascii"
 Return-path: <linux-hams-owner@vger.kernel.org>
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"; format="flowed"
+Content-Transfer-Encoding: 7bit
 To: linux-hams@vger.kernel.org
 
-Arno Verhoeven wrote:
-> Hi,
-> 
-> I'm trying Thomas' userspace soundmodem but I have problem with PTT 
-> operation via the parport.
-> 
-> I'm using...
->  soundmodem-0.6
->  kernel 2.4.20-pre9
-> 
-> I've loaded the parport and parport_pc kernel modules.
-> 
-> When I start soundmodem I get the following error.
-> 
-> sm[3429]: Cannot open PTT device "/dev/parport0"
-> sm[3429]: cannot start PTT output
-> 
-> This is my soundmodem.conf
-> 
-> <?xml version="1.0"?>
-> <modem>
->   <configuration name="config0">
->     <channel name="Channel 0">
->       <mod mode="afsk" bps="1200" f0="1200" f1="2200"/>
->       <demod mode="afsk" bps="1200" f0="1200" f1="2200"/>
->       <pkt mode="MKISS" ifname="sm0" hwaddr="PE1ICQ-1" ip="10.0.0.1" 
-> netmask="255.255.255.0" broadcast="10.0.0.255" file="/dev/soundmodem0" 
-> unlink="1"/>
->     </channel>
->     <chaccess txdelay="150" slottime="100" ppersist="40" fulldup="0" 
-> txtail="10"/>
->     <audio type="soundcard" device="/dev/dsp" halfdup="1"/>
->     <ptt file="/dev/parport0"/>
->   </configuration>
-> </modem>
-> 
-> Can anybody help point me in the right direction?
-> 
 
+On one of the Systems I have recently setup I get:
 
-Problem solved...
-I forgot to compile and load ppdev.
+/lib/modules/2.4.18/kernel/net/netrom/netrom.o will taint the kernel: no 
+license
 
-Also a patch as described in
-http://groups.google.com/groups?selm=linux.hams.Pine.LNX.4.21.0207080731370.1481-100000%40aeminium.aeminium.pt&output=gplain 
-was needed to make it work.
+When loading the AX25 or NETROM modules.
+
+Anyone shed any light why ?
 
 -- 
-73, PE1ICQ  Arno Verhoeven
---------------------------------
-AX.25  pe1icq@pi8zaa.#nbo.nld.eu
-smtp   pe1icq@pi8zaa.ampr.org
-inet   pe1icq@amsat.org
+Stewart (G0LGS)
+g0lgs@gb7lgs.co.uk
+
 
