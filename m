@@ -1,22 +1,44 @@
-From: "Ruben Navarro Huedo" <eb5esx@eb5esx.ampr.org>
-Subject: mailgw + postfix
-Date: Mon, 21 Feb 2005 16:05:54 +0100 (CET)
-Message-ID: <39635.213.98.118.5.1108998354.squirrel@palotes.com>
+From: Tomi Manninen <oh2bns@sral.fi>
+Subject: ANN: gMFSK version 0.7pre1
+Date: Tue, 22 Feb 2005 22:05:40 +0200
+Message-ID: <1109102740.1260.30.camel@oh2bns.ampr.org>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7BIT
+Content-Transfer-Encoding: 7bit
 Sender: linux-hams-owner@vger.kernel.org
 List-Id: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
-To: linux-hams@vger.kernel.org
+To: Linux-hams List <linux-hams@vger.kernel.org>
 
-Hello friends:
-is anybody running mailgw with postfix?
+Hi all,
 
-i haven't found any documentation about it.
+I have uploaded the first pre-release of the upcoming gMFSK
+version 0.7 to the gMFSK web site.
 
-Thank's
+ http://gmfsk.connect.fi/
+
+A short list of new features:
+
+- CW support. Both send and receive. Send currently only
+  through the soundcard. Cwdaemon support planned...
+
+- Olivia support. For info about Olivia see
+  http://homepage.sunrise.ch/mysunrise/jalocha/mfsk.html
+  gMFSK is probably the first multimode graphical program
+  to support Olivia...
+
+- Proper Feldhell fonts.
+
+- Support for internationalization. Finnish and Slovakian
+  translations exist. Other languages welcome.
+
+- All sorts of smaller stuff, see the ChangeLog for details.
+
+Like said, this is a pre-release. Not everything is ready yet
+and there probably are some rough edges in there. Anyway I
+highly recommend people to test it!
+
+Have fun!
 
 -- 
-Ruben Navarro Huedo
-eb5esx (arroba) eb5esx.ampr.org
-http://www.cabodesantapola.org
+Tomi Manninen / OH2BNS / KP20JF74
+
