@@ -1,28 +1,50 @@
 From: wb9mjn <wb9mjn@wb9mjn-11.ampr.org>
 Subject: RE: Linux Newbie with Compiling Problems...
-Date: Sun, 2 Mar 2003 11:20:47 -0600
+Date: Sun, 2 Mar 2003 15:11:24 -0600
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <01C2E0AD.C6D4E400.wb9mjn@wb9mjn-11.ampr.org>
+Message-ID: <01C2E0CD.FDFF9C20.wb9mjn@wb9mjn-11.ampr.org>
 Reply-To: "wb9mjn@wb9mjn-11.ampr.org" <wb9mjn@wb9mjn-11.ampr.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
 List-Id: <linux-hams.vger.kernel.org>
-To: Linux Hams mailing list <linux-hams@vger.kernel.org>
+To: "'wb9mjn@wb9mjn-11.ampr.org'" <wb9mjn@wb9mjn-11.ampr.org>, Linux Hams mailing list <linux-hams@vger.kernel.org>
 
 
+    Hi All,
 
-Hi Kelly, Jean and Bernard,
+          I think I may have found a workaround. With allot of looking, I 
+found that as86 is a part of a package that does the same thing as dev86 
+ (real mode assembly). So, I started looking around in the directories that 
+dev86 deposits its files. No, 'as86' (or 'as') was not part of dev86 
+itself. But, the system had installed a program called 'as' in /usr/bin/ 
+directory. I did a 'as --help' command and the result made it clear that 
+this was indeed an assembler program. So, made a copy of 'as' renamed to 
+'as86' and did
 
-    I am stuck again. Cannot find the bin86 package in the collection of 
-Mandrake 7.2 disks here. Did find dev86, which I installed, but it had no 
-effect on the compilation. It still wants as86.
+make clean
+make bzImage
 
-    Does anybody know which package in Mandrake 7.2 one can find the as86 
-assembler program?
+       It seems to be taking allot longer than previously. Hopefully this 
+will work. Any comments?
 
-    73, Don...
+      73, Don...
+
+-----Original Message-----
+From:	wb9mjn [SMTP:wb9mjn@wb9mjn-11.ampr.org]
+Sent:	Sunday, March 02, 2003 8:42 AM
+To:	Linux Hams mailing list
+Subject:	RE: Linux Newbie with Compiling Problems...
+
+
+   Hi Kelly and Jean,
+
+      Thanks for the response. This is where my latest attempt to compile 
+in AX.25 is stalling. I will look up that package and install it.
+
+      73, Don...
+
 
 On Sat, 2003-03-01 at 18:58, wb9mjn wrote:
 >     Hi All,
@@ -43,10 +65,4 @@ sector and setup binaries).
 
 --
 Kelly Black <kelly.black@penguinpackets.com>
-
-
--
-To unsubscribe from this list: send the line "unsubscribe linux-hams" in
-the body of a message to majordomo@vger.kernel.org
-More majordomo info at  http://vger.kernel.org/majordomo-info.html
 
