@@ -1,43 +1,46 @@
-From: "Tomohiro Nishikawa" <jn3aou@jarl.com>
-Subject: Wonder protocol
-Date: Tue, 25 Feb 2003 15:40:01 +0900
+From: Bob Nielsen <nielsen@oz.net>
+Subject: Re: New Ham, New To Packet
+Date: Mon, 24 Feb 2003 22:49:29 -0800
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <006d01c2dc98$b91efa30$0401a8c0@SOTECG4170AV>
+Message-ID: <20030225064929.GA20437@n7xy.net>
+References: <1046134023.4825.17.camel@bobcp4.lingpgmr.com>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
+Content-Disposition: inline
+In-Reply-To: <1046134023.4825.17.camel@bobcp4.lingpgmr.com>
 List-Id: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 7bit
 To: linux-hams@vger.kernel.org
 
-Hello all,
-I found some wonder working on Linux2.4.20+libax25-0.0.10 and ax25-tool-0.0.9.
+On Mon, Feb 24, 2003 at 07:47:03PM -0500, Robert L Cochran wrote:
+> Hello,
+> 
+> I'm new to amateur radio -- I just received my "Technician" class
+> license. I have not been on the air yet. I want to use packet radio with
+> my Red Hat 8.0 distribution. (I also downloaded and installed Debian
+> bf2.4 on an older Dell machine.)
+> 
+> I am wondering if the AX.25 HOW-TO posted to the Linux Documentation
+> project is still accurate? If I read this How To and follow it, will I
+> be able to implement packet radio on either the Red Hat or the Debian
+> machines? I'm interested in being pointed to up to date reading
+> material, I know there is a lot for me to study.
+> 
 
-ax3: fm JN3AOU to JK3TAJ ctl I41^ pid=F0(Text) len 240 14:43:50
-0000  .Some datas..............................................
-0040  .........................................................
-ax3: fm JN3AOU to JK3TAJ ctl I42+ pid=F0(Text) len 240 14:43:50
-0000..Some datas..............................................
-0040 .........................................................
-ax3: fm JK3TAJ to JN3AOU ctl RR2v 14:43:55
-ax3: fm JN3AOU to JK3TAJ ctl I43+ pid=F0(Text) len 240 14:43:55
-0000 ..........................................................
-0040 ..........................................................
-ax3: fm JK3TAJ to JN3AOU ctl REJ2- 14:43:58
+The current HOWTO is still accurate.  You might take a look at some of
+the files on N8UR's web site (http://www.febo.com) for some additional
+information. 
 
-In AX.25 protocol,Frame(I43+) should not be sent after "RR2v" because
-JK3TAJ does not reply for "I42+" which have POLE(Marked Plus+).
+I haven't used Red Hat for several years so I can't speak to that, but
+you should be able to run AX.25 with no problems using Debian.  I don't
+know about the bf2.4 kernel, however.  The installation kernels are
+configured to fit on floppies and may not have as many drivers included
+as those which you can install from a CD or the internet.  I am running
+kernel-image-2.4.20-686 (which has the necessary drivers compiled as
+modules) with ax25-tools and libax25, all installed from Debian
+packages.
 
-In this case on the other TNC,
-it remembers that frames until "I41" are sent sucessful and
-doesn't reply it.(sent RR4+ when t1_timeout of I42 is over.)
+73,
+Bob, N7XY
 
-Is this a common action?
-I am afraid that it makes "throughput" slow.
-
-I'm not programmer and sorry to write without skill.
-(I'm a student of school.)
-
-Best Regards,
-Tomohiro Nishikawa JN3AOU
-Sysop of JN3AOU-0(XFBB) and JN3AOU-9(DXSpider).
