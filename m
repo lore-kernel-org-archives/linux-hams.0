@@ -1,52 +1,24 @@
-From: Henning Makholm <henning@makholm.net>
-Subject: Re: make-3.79.1 bug breaks linux-2.5.24/drivers/net/hamradio/soundmodem
-Date: 22 Jun 2002 15:51:24 +0200
+From: r_denis@globalnet.hn (Ricardo Denis)
+Subject: ax25 and 2.4.x
+Date: Sat, 22 Jun 2002 13:54:53 -0500
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <yahadpnifqb.fsf@pc-043.diku.dk>
-References: <200206220657.XAA21563@adam.yggdrasil.com>
-Content-Transfer-Encoding: 8bit
+Message-ID: <4.3.2.7.0.20020622134909.02544100@globalnet.hn>
+Mime-Version: 1.0
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: "Adam J. Richter"'s message of "Fri, 21 Jun 2002 23:57:38 -0700"
 List-Id: <linux-hams.vger.kernel.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-To: "Adam J. Richter" <adam@yggdrasil.com>
-Cc: bug-make@gnu.org, linux-hams@vger.kernel.org, linux-kernel@vger.kernel.org, sailer@ife.ee.ethz.ch
+Content-Type: text/plain; charset="us-ascii"; format="flowed"
+Content-Transfer-Encoding: 7bit
+To: linux-hams@vger.kernel.org
 
-Scripsit "Adam J. Richter" <adam@yggdrasil.com>
+hi all,
 
-[Warning: I am not the make maintainer; I just lurk on bug-make]
+what is the status of the ax25 for the 2.4.x kernels? does the ax25 work? i 
+want to try out the latest slackware distro which comes with 2.4.18 but 
+only if the ax25 stuff works as well as with the 2.2.x series...i have 
+enough gray hair already :-) thanks for any guidance.
 
-> $(obj)/sm_tbl_%: $(obj)/gentbl
->         $<
+73 de rick, hr2kos
 
-> 	obj was set to "." /usr/src/linux/Rules.make, which was included
-> earlier in the Makefile.
 
-> 	Until the make bug is fixed, I have worked around the problem
-> by replacing the rule with:
+Donde esta Ricky? http://www.findu.com/cgi-bin/track.cgi?hr2kos-14
 
-> $(obj)/sm_tbl_%: $(obj)/gentbl
->         PATH=$(obj):$$PATH $<
-
-That looks like an excessively complicated workaround. Why not just
-
-$(obj)/sm_tbl_%: $(obj)/gentbl
-	$(obj)/gentbl
-
-?
-
-I'm not sure this is really a bug either. It is a Good Thing that make
-tries to normalize the names of targets and dependencies internally,
-lest the build may be incomplete or redundant if make does not realize
-that foo.bar and ./foo.bar is the same file. It is quite reasonable
-for $< to unfold to the *canonical* name of the file in question, I
-think.
-
-If one absolutely wants the command to use the exact form of the
-dependency that's used in the dependency list, it's easy to simply
-reproduce that form, replacing the % by $*
-
--- 
-Henning Makholm                                "You are in a little twisting
-                                            maze of passages, all different"
