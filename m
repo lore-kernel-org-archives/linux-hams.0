@@ -1,39 +1,31 @@
-From: Tomi Manninen <tpm@prkele.tky.hut.fi>
-Subject: Re: node "Connection refused"
-Date: Sat, 22 Feb 2003 19:33:31 +0200 (EET)
+From: <ravioli@softhome.net>
+Subject: Re: soundmodem / "SIOCSIFFLAGS no such device"
+Date: Sat, 22 Feb 2003 19:42:38 +0100
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <Pine.LNX.4.44.0302221930190.1426-100000@oh2bns.ampr.org>
-References: <3E57535F.38EE1D24@free.fr>
-Reply-To: tpm@prkele.tky.hut.fi
-Mime-Version: 1.0
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Message-ID: <b38j66$jq9$1@main.gmane.org>
+References: <b2veij$79l$1@main.gmane.org> <20030220120526.GA28160@silly.cloud.net.au> <b33hmu$nsm$1@main.gmane.org> <20030220215008.GA1876@silly.cloud.net.au>
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <3E57535F.38EE1D24@free.fr>
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: TEXT/PLAIN; charset="iso-8859-1"
-To: =?iso-8859-1?Q?G=E9rard?= Parat / F6FGZ <f6fgz@free.fr>
-Cc: Linux-Hams <linux-hams@vger.kernel.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+To: linux-hams@vger.kernel.org
 
-On Sat, 22 Feb 2003, G=E9rard Parat / F6FGZ wrote:
+Hi Hamish, and thanks for your help,
 
-> uhf2: fm F4BWT-10 to F6FGZ-12 ctl I32^ pid=3DCF(NET/ROM) len 20 11:33=
-:38
-> NET/ROM: F4BWT-10->F6FGZ-12 ttl 15
->          conn ack: ur ckt 01/07 my ckt 00/00 wnd 4 CHOKE
+> > > Is your sound card SB-compatible?
+Thanks google, it is !
+http://www.fortemedia.com/products/fm801.htm
+"compatible with Microsoft Windows, Microsoft DirectX and thousands of DOS
+games and is WHQL certified. Legacy Audio supports AdLib Music Synthesizer,
+Sound Blaster Pro, MPU401 UART mode and Joystick function in order to
+provide the highest hardware compatibility for numerous PC games on real DOS
+environment. "
 
-=464BWT-10 responds with "CONN ACK / CHOKE" which is the NET/ROM equiva=
-lent=20
-for "connection refused". So I think your node works just fine.
+> > > You could also try the user-space (non kernel) soundmodem driver. It
+> http://www.baycom.org/~tom/ham/soundmodem/
+I'll do that and will tell you. Thanks !!
 
-Are you sure F4BWT-10 should answer?
 
---=20
-Tomi Manninen           Internet:  oh2bns@sral.fi
-OH2BNS                  AX.25:     oh2bns@oh2rbi.fin.eu
-KP20ME04                Amprnet:   oh2bns@oh2rbi.ampr.org
 
--
-To unsubscribe from this list: send the line "unsubscribe linux-hams" i=
-n
-the body of a message to majordomo@vger.kernel.org
-More majordomo info at  http://vger.kernel.org/majordomo-info.html
+
