@@ -1,52 +1,44 @@
-From: Alan Cox <alan@lxorguk.ukuu.org.uk>
-Subject: Re: [2.6 patch] /net/ax25/: some cleanups
-Date: Tue, 28 Dec 2004 21:54:06 +0000
-Message-ID: <1104270846.26109.3.camel@localhost.localdomain>
-References: <20041212211339.GX22324@stusta.de>
-	 <20041227185151.2a7ceb71.davem@davemloft.net>
-	 <1104237408.20944.70.camel@localhost.localdomain>
-	 <20041228100507.7b374b5e.davem@davemloft.net>
+From: "=?iso-8859-1?Q?Lic._Juan_Antonio_Chirino_L=F3pez?=" 
+	<chirino@mtz.jovenclub.cu>
+Subject: Problems with AGW
+Date: Wed, 29 Dec 2004 10:16:18 -0500
+Message-ID: <004c01c4edb9$58e7b790$0103a8c0@equipo>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
-Return-path: <netdev-bounce@oss.sgi.com>
-In-Reply-To: <20041228100507.7b374b5e.davem@davemloft.net>
-Sender: netdev-bounce@oss.sgi.com
-Errors-to: netdev-bounce@oss.sgi.com
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Return-path: <linux-hams-owner@vger.kernel.org>
+Sender: linux-hams-owner@vger.kernel.org
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"
-To: "David S. Miller" <davem@davemloft.net>
-Cc: bunk@stusta.de, ralf@linux-mips.org, linux-hams@vger.kernel.org, netdev@oss.sgi.com, Linux Kernel Mailing List <linux-kernel@vger.kernel.org>
+Content-Type: text/plain; charset="iso-8859-1"
+To: linux-hams@vger.kernel.org
 
-On Maw, 2004-12-28 at 18:05, David S. Miller wrote:
-> Send a patch to netdev and CC: me to fix this as is standard
-> procedure for getting changes into the networking.  :-)
+Hello. Excuse my language, I speak spanish.
 
-Attached - revert to 2.6.9 behaviour.
+I am a beginner in this subject of data transmission by radio. But I li=
+ke to obtain it.=20
+I have Windows 2000 Advanced Server in a PC, connected to Internet, and=
+ Windows XP in another one, in my house. I am using Kantronics PacketCo=
+mmunicator 9612 in both sides and the radios are equal also. I want to =
+connect the two PC and to use TCP/IP protocol to sail by Internet from =
+my house.
 
-I suspect given that someone made the change for a reason that there
-should probably be a sysctl to switch between AX.25 (as 2.6.9) and "kind
-of routed AX.25-ish" (as 2.6.10).
+I have installed the archives that come in drivers.zip, I have installe=
+d the network
+device and Windows recognizes it and already installs without
+problems. But when attempt to use the AGW Packet Engine, is blocked and=
+ then aborts the excecution.
 
---- ../linux.vanilla-2.6.10/net/ax25/af_ax25.c	2004-12-25 21:15:46.000000000 +0000
-+++ net/ax25/af_ax25.c	2004-12-26 22:07:44.000000000 +0000
-@@ -207,8 +207,16 @@
- 			continue;
- 		if (s->ax25_dev == NULL)
- 			continue;
--		if (ax25cmp(&s->source_addr, src_addr) == 0 &&
--		    ax25cmp(&s->dest_addr, dest_addr) == 0) {
-+		if (ax25cmp(&s->source_addr, src_addr) == 0 && ax25cmp(&s->dest_addr, dest_addr) == 0 && s->ax25_dev->dev == dev) {
-+			if (digi != NULL && digi->ndigi != 0) {
-+				if (s->digipeat == NULL)
-+					continue;
-+				if (ax25digicmp(s->digipeat, digi) != 0)
-+					continue;
-+			} else {
-+				if (s->digipeat != NULL && s->digipeat->ndigi != 0)
-+					continue;
-+			}
- 			ax25_cb_hold(s);
- 			spin_unlock_bh(&ax25_list_lock);
- 
+Somebody can help me and explain to me how to make a good configuration=
+?
 
 
+
+--=20
+Este mensaje ha sido analizado por MailScanner
+en busca de virus y otros contenidos peligrosos,
+y se considera que est=E1 limpio.
+
+-
+To unsubscribe from this list: send the line "unsubscribe linux-hams" i=
+n
+the body of a message to majordomo@vger.kernel.org
+More majordomo info at  http://vger.kernel.org/majordomo-info.html
