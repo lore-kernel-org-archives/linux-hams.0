@@ -1,73 +1,67 @@
-From: Matt McKenzie <linuxknight@attbi.com>
-Subject: Re: up2date
-Date: Sun, 17 Nov 2002 13:38:48 -0800
+From: Jorge Matias <martin@andorinha.ist.utl.pt>
+Subject: Re: Protocol error
+Date: Mon, 18 Nov 2002 00:40:51 +0000 (WET)
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <5.1.0.14.2.20021117133448.0262be00@mail.attbi.com>
-References: <NAEDJFIDPEPMDIFMJNELGEGCCDAA.john.buttery@btinternet.com>
- <NAEDJFIDPEPMDIFMJNELGEGCCDAA.john.buttery@btinternet.com>
+Message-ID: <Pine.LNX.4.33.0211180032490.25179-100000@andorinha.ist.utl.pt>
+References: <3DD7E005.25470.636F19D@localhost>
 Mime-Version: 1.0
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <02111721161601.00294@unix.pa3gcu>
+In-Reply-To: <3DD7E005.25470.636F19D@localhost>
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"; format="flowed"
+Content-Type: TEXT/PLAIN; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
-To: Linux-Hams <linux-hams@vger.kernel.org>
+To: Demetre Valaris <sv1uy@bbs.sv1uy.ampr.org>
+Cc: linux-hams <linux-hams@vger.kernel.org>
 
-Hi
+On Sun, 17 Nov 2002, Demetre Valaris wrote:
 
-No, when you download a kernel from RedHat, it is a compiled binary, and it 
-has their patches added in to the kernel.
-It would not use anything in your current kernel source tree.
+  Hi Demetre,
 
-If you want ax25 you would want to download the latest kernel source from 
-kernel.org and compile it yourself.
-If you kept your old .config file, you can probably copy it into the new 
-kernel source tree (assuming its from the same main branch, i.e. 2.4.x, not 
-2.2.x) and those options.
-But you may run into a few bumps with newer options introduced in new kernels.
+  I have the same problem for a loooong time. I also have lots af messages
+like this one in my /var/log/messages:
 
-HTH
+Nov 18 00:34:36 hamradio kernel: NET: 8 messages suppressed.
 
+  These messages arrive with a pace of 1 message every +-4 secs.
+  I suppose that the fact that I have all the traffic passing trough
+linuxnet makes this messages lots of times. (about one error for each
+frame received/sent).
 
--------------------
-73 de K6LNX
+73,
+Jorge Matias
+CT2HBZ
 
-Matt M.
-LinuxKnight
-
-
-At 09:16 PM 11/17/2002 +0000, pa3gcu wrote:
->On Sunday 17 November 2002 21:07, John Buttery wrote:
-> > Hi all
-> >
-> > Just a quick question which will probably be a yes/no answer.
-> >
-> > I use up2date to keep my version (RH 7.2) of Linux up-to-date.  I notice,
-> > though, that the latest alert is for the kernel to be updated.  When using
-> > up2date to update the kernel, does it compile with the settings that I am
-> > using at present, or do I have to reconfigure it for ax25, etc.
+> Hi guys,
 >
->I cant directly answer your question, however this is linux, you are the boss
->on your machine, you should be able to use your old .config file which
->contains you configuration and type;
->make oldconfig
->then compile further.
->Or does Redhat supply a ready compiled kernel.????
+> Ever since I started using AX25 tools I seem to be getting the foolowing error
+> message from the kernel in /var/log/messages.
 >
->If it seems i am talking mumbo jumbo please ignore this mail.
+> Nov 17 18:15:21 nest-0 kernel: protocol 0000 is buggy, dev ax0
 >
-> >
-> > Best wishes
-> >
-> > John, G7OPJ
+> This message keep repeating quite often.
 >
->--
->Regards Richard
->pa3gcu@zeelandnet.nl
->http://people.zeelandnet.nl/pa3gcu/
+> Now this is probably a warning and it does not seem to cause any problems to
+> my AX25 operation. Has anyone seen this messsage in his setup and what does it
+> mean please?
 >
->-
->To unsubscribe from this list: send the line "unsubscribe linux-hams" in
->the body of a message to majordomo@vger.kernel.org
->More majordomo info at  http://vger.kernel.org/majordomo-info.html
+> I use SUSE 7.3 with 2.4.10-GB kernel and I use the distribution AX25 tools.
+> On port ax0 I do not use TCP/IP, just AX25 because it is the ax port for my
+> APRSD. The funny thing is that I do not get any reports on interface ax1 where
+> I use TCP/IP and it has a pk6 link to AMPRnet. I also have to tell you that I
+> have assigned an IP address to port ax0 as well, but I do not use any IP on
+> ax0.
+>
+> Any ideas would be much appreciated.
+>
+> 73 de Demetre SV1UY
+> e-mail sv1uy@sv1uy.ampr.org
+> http://www.athnet.ampr.org/~sv1uy
+>
+> -
+> To unsubscribe from this list: send the line "unsubscribe linux-hams" in
+> the body of a message to majordomo@vger.kernel.org
+> More majordomo info at  http://vger.kernel.org/majordomo-info.html
+>
+
+-- 
 
