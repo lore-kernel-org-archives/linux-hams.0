@@ -1,30 +1,32 @@
-From: Tomi Manninen <tpm@prkele.tky.hut.fi>
-Subject: Re: PIC programming question
-Date: Wed, 8 Jan 2003 15:23:46 +0200 (EET)
+From: Haines Brown <brownh@hartford-hwp.com>
+Subject: a little help request (OT)
+Date: Wed, 8 Jan 2003 13:26:46 -0500
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <Pine.LNX.4.44.0301081522010.1479-100000@oh2bns.ampr.org>
-References: <200301062005.06383.phil@spiderweb.com.au>
-Reply-To: tpm@prkele.tky.hut.fi
-Mime-Version: 1.0
+Message-ID: <200301081826.h08IQkMr016456@hartford-hwp.com>
+Reply-To: brownh@hartford-hwp.com
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <200301062005.06383.phil@spiderweb.com.au>
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: TEXT/PLAIN; charset="us-ascii"
+MIME-Version: 1.0
+Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
-To: Phil <phil@spiderweb.com.au>
-Cc: linux-hams@vger.kernel.org
+To: linux-hams@hartford-hwp.com
 
-On Tue, 7 Jan 2003, Phil wrote:
+I get an error when subscribers reply to my messages sent to another
+list supported by vger.kernel.org, and so I'm asking for a little
+help to see if the problem has (in part, at least) to do with the list
+server. 
 
-> Does anyone have a favorite PIC programmer? My only interest at the moment is 
-> to be able to program PIC 16F84 and 16F876 chips.
+The problem is that the To: line in my messages (such as the one you
+are now reading) for some reason sometimes takes the form
+listnamne@mydomain name. I.e., linux-hams@hartford-hwp.com. So if you
+were to reply by hitting your Reply button, it will bounce because
+sent to an invalid address. 
 
-I have used picprog (http://www.iki.fi/hyvatti/pic/picprog.html). It's old
-and only handles the 16x84 but it works with very simple hardware which
-needs no extra power.
+Would some kind soul reply to this message and in so doing inspect its
+header's To: line to see if the false address is there, and then let
+me know? If so, you will have to change it to brownh@hartford-hwp.com
+so that your reply gets through to me instead of bouncing back at you.
 
--- 
-Tomi Manninen           Internet:  oh2bns@sral.fi
-OH2BNS                  AX.25:     oh2bns@oh2rbi.fin.eu
-KP20ME04                Amprnet:   oh2bns@oh2rbi.ampr.org
+Thanks 
 
+Haines Brown KB1GRM
