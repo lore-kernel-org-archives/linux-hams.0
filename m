@@ -1,41 +1,51 @@
-From: Jonathan Naylor <jonathan.naylor@ggaweb.ch>
-Subject: Re: wxGTK-2.4.0
-Date: Wed, 15 Jan 2003 22:12:05 +0100
+From: Wilbert Knol <zl2bsj@zl2tze.ath.cx>
+Subject: wxGTK-2.4.0 (3)
+Date: Thu, 16 Jan 2003 23:33:14 +1300 (NZDT)
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <200301152212.05203.jonathan.naylor@ggaweb.ch>
-Reply-To: g4klx@qsl.net
+Message-ID: <Pine.LNX.4.44.0301162255110.25363-100000@zl2bsj.ampr.org>
+References: <200301152212.05203.jonathan.naylor@ggaweb.ch>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 8bit
 Return-path: <linux-hams-owner@vger.kernel.org>
+In-Reply-To: <200301152212.05203.jonathan.naylor@ggaweb.ch>
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"
+Content-Type: TEXT/PLAIN; charset="us-ascii"
+Content-Transfer-Encoding: 7bit
 To: Linux Hams <linux-hams@vger.kernel.org>
 
-Hi again
 
-I've had a very enjoyable day building different version of wxGTK-2.4.0 
-and building LinWSJT and finding what does and doesn't work with it !
+I had a fiddle with the ./configure script to find out what was 
+happening.
 
-LinWSJT does work with wxGTK-2.4.0 but not with all build types:
+Installed is GTK+2
+ (gtk+2-1.3.13-2mdk and libgtk+2-devel-1.3.13-2mdk)
 
-It will work with wxGTK-2.4.0 built with GTK+ 1.x.y (in my case 1.2.10), 
-this is achieved by using "./configure --with-gtk" for wxGTK.
+And also GTK+1.2:
+ (libgtk+1.2-1.2.10-25mdk and libgtk+1.2-devel-1.2.10-25mdk)
+for some legacy stuff.
 
-It will sort of work with wxGTK-2.4.0 and GTK+ 2 (in my case 2.2.0) but 
-without Unicode support by "./configure --with-gtk --enable-gtk2". When 
-I means "sort of works", I mean that the numbers on the spectrum graph 
-(the square graph on the right) do not appear, but otherwise FSK441 
-operates correctly, JT44 is perfectly OK.
+When doing a "./configure", the script apparently assumes GTK+2.
 
-The currently released LinWSJT will not build as Unicode, the next 
-release is Unicode compliant but suffers from the same problems as 
-above. I think this is a bug in wsGTK-2.4.0 and I will report it to the 
-bug tracking database. If I build wxGTK for debugging I get an 
-assertion failure when dealing with Pango.
+It compares GTK+2 to the 'min_gtk_version' of 2.0.0
 
-So I recommend using wxGTK-2.4.0 with GTK+ 1.x.y and you should be fine, 
-of course you may have to install pkg-config to get it to build in the 
-first place.
+Mine (1.3.13) failed this test. As a result, the script then
+(for unknown reasons) doesn't run pkg-config. So, it doesn't get the 
+CFLAGS and the conftest fails with a misleading error message.
 
-Jonathan  HB9DRD/G4KLX
+The upshot is, I need GTK+2 version 2.0.0 or later.
+
+> It will work with wxGTK-2.4.0 built with GTK+ 1.x.y (in my case 1.2.10), 
+> this is achieved by using "./configure --with-gtk" for wxGTK.
+                             ^^^^^^^^^^^^^^^^^^^^^^^
+Sure enough..that worked. It is, in fact, mentioned in the wxGTK-2.4.0 
+README-GTK.txt...<sheepish grin>...but it doesn't make mention of the 
+GTK+2 requirement.
+
+Anyway, I'll carry on with wxGTK-2.4.0 and GTK+ 1.2.10 first.
+
+Many thanks for the pointers, everyone.
+
+
+Wilbert, ZL2BSJ
+
+
 
