@@ -1,41 +1,38 @@
-From: csmall@enc.com.au (Craig Small)
-Subject: Re: libax25 0.0.11
-Date: Tue, 18 Mar 2003 22:28:39 +1100
+From: pa3gcu <pa3gcu@zeelandnet.nl>
+Subject: Re: Problem...
+Date: Tue, 18 Mar 2003 15:50:13 +0000
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <20030318112839.GB13725@enc.com.au>
-References: <200303171755.47880.oh1mrr@nic.fi>
+Message-ID: <03031815501301.03692@unix.pa3gcu>
+References: <2705.213.65.101.235.1047935260.squirrel@www.ax25.org> <03031721434901.01189@unix.pa3gcu> <2758.213.65.101.235.1047938993.squirrel@www.ax25.org>
+Reply-To: pa3gcu@zeelandnet.nl
 Mime-Version: 1.0
+Content-Transfer-Encoding: 7BIT
 Return-path: <linux-hams-owner@vger.kernel.org>
-Content-Disposition: inline
-In-Reply-To: <200303171755.47880.oh1mrr@nic.fi>
+In-Reply-To: <2758.213.65.101.235.1047938993.squirrel@www.ax25.org>
 List-Id: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-To: Jarmo <oh1mrr@nic.fi>
+To: Pontus Falk <pfalk@ax25.org>
 Cc: linux-hams@vger.kernel.org
 
-On Mon, Mar 17, 2003 at 05:55:47PM +0200, Jarmo wrote:
-> 
-> Hate to make this announce...But vers 0.0.11 brakes my wavelan system..
-> 0.0.10 works fine...
-> 
-> Mar 17 17:28:06 oh1mrr kernel: NETDEV WATCHDOG: eth1: transmit timed out
-> Mar 17 17:28:06 oh1mrr kernel: eth1: Tx timeout! ALLOCFID=01f7, 
-> TXCOMPLFID=0000, EVSTAT=8000
-> Mar 17 17:28:06 oh1mrr kernel: eth1: orinoco_reset: Error -19 re-initializing 
-> firmware
-> Mar 17 17:28:07 oh1mrr kernel: NETDEV WATCHDOG: eth1: transmit timed out
-> Mar 17 17:28:07 oh1mrr kernel: eth1: Tx timeout! ALLOCFID=01f7, 
-> TXCOMPLFID=0000, EVSTAT=8000
-> Mar 17 17:28:07 oh1mrr kernel: eth1: orinoco_reset: Error -19 re-initializing 
-> firmware
+On Monday 17 March 2003 22:09, Pontus Falk wrote:
 
-The only difference in the two is that patch which fixed the io
-blocking.  My guess is that this problem either has nothing to do with
-the library or the relinking has introduced something.
+> > cat /usr/src/linux/.config | grep MKISS
+> > You should get CONFIG_MKISS=m or CONFIG_MKISS=y if you get
+> > # CONFIG_MKISS is not set
+> > that means you dont have mkiss at all.
+>
+> Yes, I have CONFIG_MKISS=y in /usr/src/linux/.config. But, I have
+> CONFIG_HAMRADIO=m if that is any problem. I don't know where to set this
+> to y in menuconfig... When I try to set it manually and recompile the
+> kernel I get an error message...
 
-  - Craig
+Why not do it the other way round, compile tham all as modules.
+
+> Pontus
+>
+
 -- 
-Craig Small VK2XLZ  GnuPG:1C1B D893 1418 2AF4 45EE  95CB C76C E5AC 12CA DFA5
-Eye-Net Consulting http://www.enc.com.au/                <csmall@enc.com.au>
-MIEEE <csmall@ieee.org>                 Debian developer <csmall@debian.org>
+Regards Richard
+pa3gcu@zeelandnet.nl
+http://people.zeelandnet.nl/pa3gcu/
+
