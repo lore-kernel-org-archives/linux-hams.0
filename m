@@ -1,48 +1,94 @@
-From: Wilbert Knol <w.knol@niwa.co.nz>
-Subject: Re: Updates & MKISS on USB serial?
-Date: Wed, 23 Jun 2004 22:55:44 +1200
+From: "Francisco" <fco2010@ca.cc.cu>
+Subject: Re: Very quick Ptt
+Date: Wed, 23 Jun 2004 12:57:02 -0400
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <200406232255.44676.w.knol@niwa.co.nz>
-References: <S265230AbUFWHpu/20040623074550Z+62@vger.kernel.org>
-Reply-To: w.knol@niwa.co.nz
+Message-ID: <000c01c45943$2424f820$0305226c@das.cav>
+References: <003301c45855$29332a60$0305226c@das.cav> <40D8499F.80701@gelm.net> <003201c4587d$5273e5e0$0305226c@das.cav> <40D96B35.9050905@gelm.net>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <S265230AbUFWHpu/20040623074550Z+62@vger.kernel.org>
-Content-Disposition: inline
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"
-To: Robert Jenkins <raj@jrw.co.uk>
+Content-Type: text/plain; charset="iso-8859-1"
+To: chuck@gelm.net
 Cc: linux-hams@vger.kernel.org
 
+Hi
 
-> Can anyone tell me if USB serial adaptors will work OK with the standard
-> AX25 serial port stuff - Kissattach / MKISS??
-> (For KISS TNC connection.)
+I am using the loopham 2.2.19
 
-Yes. It works great.
-
-> If so, any advice on make or type?
-
-I use a Keyspan USA-49W, a USB hub with 4 serial ports.
-
-http://www.keyspan.com
-
-Best piece of kit I've bought for the notebook.  It runs a KISS TNC, as well 
-as a CI-V rig interface (the excellent Hamlib rig control libraries). In 
-addition, the hub keys the radio on the 3rd port using CWdaemon.
-
-I have also successfully used a USC-1000  USB to 1 serial port 'dongle'. It 
-uses the FTDI chipset.
-
-Both gizmos are supported by Linux, although you may have to recompile the 
-kernel in order to get the drivers. Suggest you use kernel 2.4.22.. there 
-were several USB improvements over 2.4.21. Check the 2.4.22 ChangeLog.
-
-One drawback of USB: as with most modern hardware, the connectors aren't well 
-engineered. The plug-socket combination appears to have intermittents on the 
-shield and the lift in QRM is noticable. How this USB stuff ever passed basic 
-EMC tests is beyond me.
+=46co co7fg
+----- Original Message -----
+=46rom: "chuck gelm" <chuck@gelm.net>
+To: "Francisco" <fco2010@ca.cc.cu>
+Cc: <linux-hams@vger.kernel.org>
+Sent: Wednesday, June 23, 2004 7:36 AM
+Subject: Re: Very quick Ptt
 
 
-Wilbert, ZL2BSJ
+> > ----- Original Message -----
+> > From: "chuck gelm" <chuck@gelm.net>
+> > To: "Francisco" <fco2010@ca.cc.cu>
+> > Cc: <linux-hams@vger.kernel.org>
+> > Sent: Tuesday, June 22, 2004 11:00 AM
+> > Subject: Re: Very quick Ptt
+> >
+> >
+> >
+> >>Francisco wrote:
+> >>
+> >>>Cordial greetings,
+> >>>
+> >>>I have a problem with the TNC and the MODEM, when you tx the packe=
+t cut
+> >>>themselves or they don't give time completely to tx I have proven =
+to
+> >>>increase the txtail but it continues happening .
+> >>>
+>
+> >>Dear Francisco:
+> >>Which TNC and which MODEM?
+> >>Chuck nc8q
+> >>
+> >> >Hi
+> >> >Cordial greetings, and thank you to respond my query,
+> >> >I have a pk232 in way KISS, and the MODEM is M=D3DEM BAYCOM
+> >>
+> >>Is packet cut at the beginning or at the end?
+> >>What if Frames =3D 1,2,3,4,5,6,7 ?
+> >>If FRAME=3D7 is packet cut at frame 7 or frame 1 ?
+> >>Is SABM (control frames) and DIGIPEAT (& with multiple relays)
+> >>   frames cut?
+> >>Does it always happen or sometimes?
+> >>When does it always happen? SABM, POLL, DATA, DIGIPEAT, CONNECTED ?
+> >>When does it never happen?   "
+> >>
+> >>Chuck nc8q
+> >>p.s. Please, for me, always reply to the list.
+>
+> Francisco wrote:
+>  > Hi
+>  > The packet cut  at the end
+>  > always happen
+>  > "In MS-DOS and Windows I prove with BPQ and other Soft and it does=
+n't
+> happen
+>  > "
+>
+>   Oh, then the problem is likely software related.
+> What software application and version are you using to operate the
+> PK-232 is KISS mode ?
+>
+> Chuck nc8q
+>
+> -
+> To unsubscribe from this list: send the line "unsubscribe linux-hams"=
+ in
+> the body of a message to majordomo@vger.kernel.org
+> More majordomo info at  http://vger.kernel.org/majordomo-info.html
+>
+
+-
+To unsubscribe from this list: send the line "unsubscribe linux-hams" i=
+n
+the body of a message to majordomo@vger.kernel.org
+More majordomo info at  http://vger.kernel.org/majordomo-info.html
