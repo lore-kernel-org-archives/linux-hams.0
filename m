@@ -1,56 +1,39 @@
-From: Robert =?iso-8859-1?q?Steinh=E4u=DFer?= <robert@steinhaeusser.com>
-Subject: Re: Linkt deb package
-Date: Thu, 11 Nov 2004 21:52:08 +0100
-Message-ID: <200411112152.12444.robert@steinhaeusser.com>
-References: <200411102209.36457.iw7eas@virgilio.it>
+From: Wilbert Knol <w.knol@niwa.co.nz>
+Subject: QSO logger/editor (ql.pl) updated to version 0.0.4
+Date: Fri, 12 Nov 2004 11:06:40 +1300
+Message-ID: <200411121106.40453.w.knol@niwa.co.nz>
+Reply-To: w.knol@niwa.co.nz
 Mime-Version: 1.0
-Content-Type: multipart/signed;
-  boundary="nextPart2109526.M3TSQpbTHE";
-  protocol="application/pgp-signature";
-  micalg=pgp-sha1
 Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <200411102209.36457.iw7eas@virgilio.it>
+Content-Disposition: inline
 Sender: linux-hams-owner@vger.kernel.org
 List-Id: <linux-hams.vger.kernel.org>
+Content-Type: text/plain; charset="us-ascii"
 To: linux-hams@vger.kernel.org
 
---nextPart2109526.M3TSQpbTHE
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: quoted-printable
-Content-Disposition: inline
 
-Hello Marco,
+Keyboard handling improvements courtesy of Nate, N0NB. ALT-sequences 
+(8-bit metamode) are now correctly handled ( as used by Debian and 
+some X-terminals).
 
-> has anyone a dep packeg for linkt 0.6.x ?
+Fixed backspace handling on some X-terminals.
+ 
+Added .schema file with the SQLite table definition. Added sample 
+SQLite3 database file. Added comments regarding Perl bindings in 
+Hamlib 1.1.4 and later.
 
-do you mean LinKT 0.8?
+http://www.qsl.net/zl2arn/ql-0.0.4.tar.gz
 
-I released 0.8rc3 today (sources only). You can download them at=20
-http://sourceforge.net/projects/linkt/.
+The 'ql' package is a QSO logger and log editor. Intended use: QSO 
+logging and casual (CW) contesting, in a text-mode (Linux console) 
+environment, on low-spec computers.
 
-I will ask Basti DO2KSM to build a .deb package and add it to the download=
-=20
-page, if I can reach him.
+Data is stored in a fixed schema to SQLite, a simple and fast 
+database. The logger relies heavily on hot-keys, has Hamlib rig 
+support and transmits CW for you using cwdaemon, a Linux CW keyer. 
 
-> My Linux is Knoppix 3.7 (debian).
+A Perl/Tk GUI version is being tested && coming soon.
 
-I just had a look on http://www.knoppix.org and the newest version I can fi=
-nd=20
-is Knoppix 3.6.
 
-73, Robert DL1NC/N9KBK
-
---nextPart2109526.M3TSQpbTHE
-Content-Type: application/pgp-signature
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.2.6 (GNU/Linux)
-
-iD8DBQBBk9D8o4a8ramwUd8RAksWAKCia/30YlicG7qRgJ+7onu1/shyPQCdHny9
-WaGRGZl/CXOGYWfD8+fxPgo=
-=20Lj
------END PGP SIGNATURE-----
-
---nextPart2109526.M3TSQpbTHE--
+Wilbert, ZL2BSJ.
