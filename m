@@ -1,30 +1,48 @@
-From: Wilbert Knol <zl2bsj@zl2tze.ath.cx>
-Subject: XASTIR cross-port digipeating?
-Date: Fri, 18 Jul 2003 18:35:27 -1200 (GMT+12)
+From: 9a4gl@9a0tcp.ampr.org (Tihomir Heidelberg)
+Subject: [PATCH] ax25 patches for 2.4.21
+Date: Sat, 19 Jul 03 22:45:18 CEST
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <Pine.LNX.4.44.0307181818460.5497-100000@zl2bsj.ampr.org>
-Mime-Version: 1.0
+Message-ID: <7870@9A0TCP>
 Return-path: <linux-hams-owner@vger.kernel.org>
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: TEXT/PLAIN; charset="us-ascii"
+MIME-Version: 1.0
+Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
 To: linux-hams@vger.kernel.org
 
-Thanks for reading this message. I am running (amongst other things)
-XASTIR on a small, two-port packet system. Is it possible to get XASTIR to
-digipeat on one port APRS broadcasts heard on another? Or do I need the
-separate 'aprsdigi' mentioned recently? (I have same-port digipeating
-working successfully)
 
-Similarly, are there any Internet based APRS servers (preferably in
-VK/ZL). Will XASTIR re-transmit on any of the RF ports broadcasts heard on
-the Internet interface, and vice versa?
+Hi,
 
-A separate question: XASTIR 1.2.1 complains about NUM/SCROLL/CAPSLOCK
-being engaged when I right-click the desktop. My notebook keyboard only
-has a CAPSLOCK, and it is off. Is there a work-around for this?
+I made some work on 2.4.21 kernel and put my patch
+available for testing....
 
-Wilbert, ZL2BSJ
+patch is at:
+ftp://ham2.cc.fer.hr/pub/users/9a4gl
+file: 9a4gl-ax25-2421-20030719.patch
 
+on monday I am going on vacation, will be 3 weeks mostly
+without Internet... those who have time and want to try it,
+use it and please report me how it works on your machine....
+especialy those who have oopses in ax25, please try it
+because patch fixes several problems that caused oops...
 
+patch should fix ax25 and netrom (rose not, because I never
+used that)... dama is not tested at all because I also never
+run dama... all fixes I applied to standard AX.25 protocols are
+also applied to dama stuff, so it should work but is not tested
+yet... if anyone have possibolity to test dama, I will
+appreciate reports how it works...
 
+also it add some extensions to support my linsv node, also
+MTU of 1580 can be selected when configuring kernel to support
+sending and receiving larger packets... if you do not need
+that (probably not), then do not select those options
+
+DMASCC driver modified so it can use software CRC, on
+S5/DMASCC there is a problem with hardware CRC.... if you
+use DMASCC driver and you see corrupted packets in monitor,
+receive corrupted text in terminal or have CRC errors in
+file transfers, you should enable software CRC for DMASCC
+driver in kernel
+
+73 de Tihomir, 9a4gl@9a0tcp.ampr.org
