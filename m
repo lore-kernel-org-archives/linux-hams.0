@@ -1,57 +1,28 @@
-From: =?iso-8859-15?q?G=FCnther=20Montag=20?= <Safari.Doktor@addcom.de>
-Subject: new release hf-0.6 with mailbox interface
-Date: Mon, 2 Aug 2004 15:02:31 +0200
-Sender: hfterm-hackers-admin@lists.sourceforge.net
-Message-ID: <200408021502.31074.Safari.Doktor@addcom.de>
+From: Wilbert Knol <w.knol@niwa.co.nz>
+Subject: Re: Just installed RedHat 9
+Date: Wed, 4 Aug 2004 14:53:22 +1200
+Sender: linux-hams-owner@vger.kernel.org
+Message-ID: <200408041453.22056.w.knol@niwa.co.nz>
+References: <1223.192.168.1.117.1089178842.squirrel@gateway> <2498.192.168.1.117.1089215964.squirrel@gateway> <002801c4644c$0f62ecd0$6401a8c0@jeremiel>
+Reply-To: w.knol@niwa.co.nz
 Mime-Version: 1.0
-Content-Transfer-Encoding: Quoted-Printable
-Return-path: <hfterm-hackers-admin@lists.sourceforge.net>
-Errors-To: hfterm-hackers-admin@lists.sourceforge.net
-List-Unsubscribe: <https://lists.sourceforge.net/lists/listinfo/hfterm-hackers>,
-	<mailto:hfterm-hackers-request@lists.sourceforge.net?subject=unsubscribe>
+Content-Transfer-Encoding: 7bit
+Return-path: <linux-hams-owner@vger.kernel.org>
+In-Reply-To: <002801c4644c$0f62ecd0$6401a8c0@jeremiel>
+Content-Disposition: inline
 List-Id: <linux-hams.vger.kernel.org>
-List-Post: <mailto:hfterm-hackers@lists.sourceforge.net>
-List-Help: <mailto:hfterm-hackers-request@lists.sourceforge.net?subject=help>
-List-Subscribe: <https://lists.sourceforge.net/lists/listinfo/hfterm-hackers>,
-	<mailto:hfterm-hackers-request@lists.sourceforge.net?subject=subscribe>
-List-Archive: <http://sourceforge.net/mailarchive/forum.php?forum=hfterm-hackers>
-Content-Type: text/plain; charset="iso-8859-1"
-To: -HFTERMHACKERS- <hfterm-hackers@lists.sourceforge.net>, XFBB <xfbb@f6fbb.org>, suse-ham-e@suse.com, linux-hams@vger.kernel.org
-
-Hello friends!
-
-Hf-0.6 (original by Tom Sailer, Pactor Amtor GTOR RTTY ham=20
-radioprogram for linux)  is ready!
-
-New:
-- TCP-IP-Interface to the famous program F6FBB,
-can so be used as automatic pactor-amtor-mailbox on=20
-shortwave
-Thanks for help to friends from F6FBB mailing list!!
-- autiomatic rx and tx and beacon function
-- an experimental option -n to use full-duplex-soundcards=20
-that can not do mmap() (DMA access) which is a problem with=20
-some cards and / or drivers
-- improved output of DCF77rx calibration programme ,=20
-with circuit of simple-to-homebrew 77,5kHz -> 4MHz converter
-The programme can set system time to DCF77 (radio-clock)=20
-beacon now
-- and som more bugfixes, better startscript etc.
-
-Have lot of fun with testing!
-I am from today on on holiday till 12th of september.
-Please all bugs and experiences to the hfterm hackers=20
-mailing list!
-Download at http://sourceforge.net/projects/hfterm
-
-73 de G=FCnther
-dl4mge@darc.de
-Safari.Doktor@addcom.de
+Content-Type: text/plain; charset="us-ascii"
+To: linux-hams@vger.kernel.org
 
 
+> I just installed RedHat 9, and am trying to recompile the kernel to
+> include support for amateur radio.  I get a message telling me that
+> the kernel is to big to be able to make a boot disk. 
 
--------------------------------------------------------
-This SF.Net email is sponsored by OSTG. Have you noticed the changes on
-Linux.com, ITManagersJournal and NewsForge in the past few weeks? Now,
-one more big change to announce. We are now OSTG- Open Source Technology
-Group. Come see the changes on the new OSTG site. www.ostg.com
+Unless you are planning to boot off a floppy, I suggest you ignore 
+that message. Just build the kernel and use it.
+
+Most modern distros come with a kernel that is already AX25-enabled. 
+Mdk and SuSE do. Are you *sure* you need to re-compile?
+
+Wilbert, ZL2BSJ
