@@ -1,36 +1,35 @@
-From: Arno Verhoeven <pe1icq@pi8zaa.ampr.org>
-Subject: Re: Crashes
-Date: Sat, 5 Jul 2003 12:12:30 +0200 (CEST)
+From: "Pontus Falk" <pfalk@ax25.org>
+Subject: AXIP?
+Date: Sat, 5 Jul 2003 12:15:38 +0200 (CEST)
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <Pine.LNX.4.33.0307051209290.27213-100000@zoef.pe1icq.ampr.org>
-References: <03070413152600.01306@localhost.localdomain>
+Message-ID: <2042.44.140.19.34.1057400138.squirrel@ax25.org>
 Mime-Version: 1.0
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <03070413152600.01306@localhost.localdomain>
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: TEXT/PLAIN; charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-To: g.lloyd@essexpkt.co.uk
-Cc: linux-hams@vger.kernel.org
+Content-Type: text/plain; charset="iso-8859-1"
+To: linux-hams@vger.kernel.org
 
-On Fri, 4 Jul 2003, George Lloyd wrote:
+Hi!
 
-> Hi Folks,
->
-> Can someone please help me from tearing my hair out please.
->
-> I'm running Redhat 7.1 with Kernel 2.4.18, libax25-0.0.11,  ax25-tools-0.0.8,
->  ax25-apps-0.0.6 and node--.0.3.1.
->
+I'm trying to set up an AXIP link fo a friend of mine, with no success.=
+=2E.
 
-Are these netrom connects that lock-up the system upon disconnect?
-If so, then I would suggest to try again with a newer kernel.
-IIRC there is a fix in kernel 2.4.19 and later, that has something to do
-with netrom.
+I'm using 2.4.20. Everyting is running very good, so I guess it is just=
+ a
+matter of configuration.
 
-73, PE1ICQ  Arno Verhoeven
---------------------------------
-AX.25  pe1icq@pi8zaa.#nbo.nld.eu
-smtp   pe1icq@pi8zaa.ampr.org
-inet   pe1icq@amsat.org
+I've read AX25-HOWTO, but don't get it to work...
 
+Any ideas?
+
+Regards,
+
+Pontus Falk/SM=D8RUX
+
+
+-
+To unsubscribe from this list: send the line "unsubscribe linux-hams" i=
+n
+the body of a message to majordomo@vger.kernel.org
+More majordomo info at  http://vger.kernel.org/majordomo-info.html
