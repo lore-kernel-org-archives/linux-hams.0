@@ -1,31 +1,50 @@
-From: Aleksandar Ilic <ailic@gmx.net>
-Subject: Re: packet terminal programm
-Date: Wed, 24 Apr 2002 02:02:21 +0200
+From: M Taylor <mctylr@privacy.nb.ca>
+Subject: Re: Linkt instalation ?
+Date: Wed, 24 Apr 2002 03:04:11 +0100
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <02042321531802.00314@bcat>
-References: <Pine.LNX.4.33.0204230853490.17144-100000@localhost.localdomain>
+Message-ID: <20020424030411.A1351@pull.privacy.nb.ca>
+References: <OF0F9F5A8A.B0E2E10E-ONC1256BA4.006B9C42@eurotel.sk>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7BIT
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <Pine.LNX.4.33.0204230853490.17144-100000@localhost.localdomain>
+Content-Disposition: inline
+In-Reply-To: <OF0F9F5A8A.B0E2E10E-ONC1256BA4.006B9C42@eurotel.sk>; from buliscakj@eurotel.sk on Tue, Apr 23, 2002 at 09:38:17PM +0200
 List-Id: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
-To: linux-hams@vger.kernel.org
+Content-Transfer-Encoding: 7bit
+To: Juraj Buliscak <buliscakj@eurotel.sk>
+Cc: linux-hams@vger.kernel.org
 
-On Tuesday 23 April 2002 17:58, Mike Studer wrote:
-> No versions of linkt compile on RedHat 7.2.  I tried Qt 2.3.1 and 2.3.2.
+On Tue, Apr 23, 2002 at 09:38:17PM +0200, Juraj Buliscak wrote:
+> Hello all...
+> 
+> I've tried to install Linkt:
+> 
+> [root@localhost linkt]# rpm -ivh linkt-0.6.2-105.i386.rpm
+>       libstdc++-libc6.1-2.so.3 is needed for linkt-0.6.2-105
+> 
+> [root@localhost RPMS]# rpm -ivh qt-2.3.1-5.i386.rpm
+> error: unresolved dependencies:
+>       libmng.so.1   is needed for qt-2.3.1-5
+>       libstdc++-libc6.2-2.so.3   is needed for qt-2.3.1-5
 
-Here's Qt 2.3.1 (Slackware 8) and 2.4.12 kernel.
-LinKT 0.6.99 and MonKT 0.6.1 works great.
-Hint: try "make" in each directory of source, especially LinKT/src directory, 
-not just in LinKT base directory. Something's wrong in main MAKEFILE.
+this is looking for libstdc++ for glibc2.2.
+ 
+> For libstdc++ I have symbolic link to
+> libstdc++-2-libc6.1-1-2.9.0.so,
 
-> Too bad because it looks like a good program.
-Indeed it is. I can say, the uncapability for UNPROTO packets is the only 
-drawback. And linpac can only set direct UNPROTO path, without digis. 
-Everytime I work via satellite, I must reboot to DOS.
+but you have installed libstdc++ for glibc2.1 on your system.
 
-Kindly,
-Alek
--- 
-  73 de YU1IS  -=-  ailic at ptt dot yu  -=-  ICQ#:62419462
+> but does anybody know what library is libmng.so.1,
+> and in which package is it from?
+
+I'm guessing you are using an older (about 1 year or more) distribution
+of Linux, perhaps Red Hat Linux 6.2 or SuSE 6.2. 
+
+I would suggest try using the rpm for SuSE 6.2 from the LinKT download
+page <http://www.1409.org/projects/linkt/download.html>.
+
+Otherwise compiling it from source code. Though you would need to
+install the basic KDE and QT (runtime) libraries and the seperate
+KDE and QT library devel rpms (look like qt-devel-2.3.1-5.i386.rpm).
+
+I hope that helps.
