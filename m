@@ -1,40 +1,79 @@
-From: Adi Linden <adil@adis.on.ca>
+From: "John Williams" <vk5zty@bigpond.com>
 Subject: Re: ax25 support in aprsd
-Date: Mon, 26 Jan 2004 01:19:14 -0600 (CST)
+Date: Mon, 26 Jan 2004 18:52:29 +1030
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <Pine.LNX.4.44.0401260113250.3685-100000@mobile.adis.ca>
+Message-ID: <401561ED.23331.F6ED65@localhost>
 References: <20040126070735.GA20474@cloud.net.au>
+Reply-To: vk5zty@bigpond.com
 Mime-Version: 1.0
+Content-Transfer-Encoding: 7BIT
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <20040126070735.GA20474@cloud.net.au>
+In-reply-to: <Pine.LNX.4.44.0401260113250.3685-100000@mobile.adis.ca>
+Content-description: Mail message body
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: TEXT/PLAIN; charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-To: Hamish Moffatt <hamish@cloud.net.au>
-Cc: linux-hams@vger.kernel.org
+Content-Type: text/plain; charset="us-ascii"
+To: linux-hams@vger.kernel.org
 
-> Err, there's not much to it. I thought the example configuration file
-> should be enough. (I wrote the ax.25 code for aprsd.)
+WIDE is just an alias that another aprs digipeater will pick up on
+With just WIDE the WIDE will be replaced by the call sign of the digipeater that picks up on 
+your packet.
 
-Wow! That's easy but I really didn't get it from the example config.
+For example if in aprsd my aprspath was set to APD223 v WIDE
+It would look like this using 'listen' to monitor the packets.
 
-> Set your tncport to the name of the port from /etc/ax25/axports.
-> Set aprspath to "APRS v WIDE" or similar.
+1: fm VK5UJ-1 to APD223 via WIDE ctl UI^ pid=F0(Text) len 97
+0000  }VK2JPJ-1>APZ186,TCPIP*,VK5UJ-1*:!3351.89SU15112.22E#PHG5750/ Di
+0040  gi Supports RELAY, WIDE, TRACEM.M
 
-What does the aprspath do? I don't quite understand the APRS v WIDE, but 
-that could be because I should really be sleeping.
+The 223 is just the aprs version, APD is the typical prefix for aprsd. So APD223 makes up the 
+destination address and the ' v WIDE ' is the path you want the packet to attempt to digipeat 
+via.
+You need to make it compatible with what is correct for your area. It could be further than just 
+one digipeater.
 
-> Make sure AX.25 is recognised at compile time, which looks for the
-> include files in /usr/include.
+Suggest you look at monitoring frames in your area and see what is typical. Talk with the local 
+aprs groups or groups.
 
-Got that.
+If you want to gate packets to RF, you will want to look at the following to limit the amount of 
+traffic going to RF.
 
-> Which aprsd version are you using?
+An example
 
-I build aprsd-2.2.5-15 from sourceforge successfully with ax25 support. I 
-tried aprsd215b9 with the DL5DI patch but it wasn't as successful. Any 
-opinion on which one to choose?
+gate2rf VK5* PC* W3ADO* RS0ISS* ARISS* WU2Z
+#gate2rf VK5*
+#
+# Call signs of stations whose posits are gated
+# to RF every 15 minutes.  Only posit packets are
+# gated.  Posits are taken from the history list.
+# They are case sensitive! Use upper case.
+#
+posit2rf VK*
+#posit2rf VK5*
+#
+# Define a list of message destination call signs or aliases
+# to gate to RF full time.  Note: the CQGA example
+# below is CQ GA (Georgia). Edit to suite your locale.
+# Up to 64 of these may be defined. They are case sensitive.
+#
+#msgdest2rf VK5* AX5* VI5* BLN*
+msgdest2rf VK5* AX5* VI5*
+#
+#end
 
-Thanks!
-Adi
 
+Regards
+John
+VK5ZTY
+
+
+   
+
+On 26 Jan 2004 at 1:19, Adi Linden wrote:
+
+
+> > Set aprspath to "APRS v WIDE" or similar.
+> 
+> What does the aprspath do? I don't quite understand the APRS v WIDE, but 
+> that could be because I should really be sleeping.
+> 
+>
