@@ -1,53 +1,76 @@
-From: Hamish Moffatt <hamish@cloud.net.au>
+From: ariel mastracchio <ari197516@yahoo.com>
 Subject: Re: soundmodem / "SIOCSIFFLAGS no such device"
-Date: Thu, 20 Feb 2003 23:05:26 +1100
+Date: Thu, 20 Feb 2003 05:53:58 -0800 (PST)
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <20030220120526.GA28160@silly.cloud.net.au>
+Message-ID: <20030220135358.58791.qmail@web9602.mail.yahoo.com>
 References: <b2veij$79l$1@main.gmane.org>
 Mime-Version: 1.0
 Return-path: <linux-hams-owner@vger.kernel.org>
-Content-Disposition: inline
 In-Reply-To: <b2veij$79l$1@main.gmane.org>
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset="iso-8859-1"
+Content-Transfer-Encoding: quoted-printable
 To: linux-hams@vger.kernel.org
 
-On Wed, Feb 19, 2003 at 09:29:42AM +0100, linux-hams-owner@vger.kernel.org wrote:
-> For the setup, I first do a 'rmmod' of all modules related to the sound
+Remi:
+
+   I think you have to install the sound blaster
+module first, then uninstall, and then all the
+soundmodem stuff, it is for init the sound card...
+
+- ari
+
+--- "R=E9mi@yahoo.com,
+UNEXPECTED_DATA_AFTER_ADDRESS@.SYNTAX-ERROR. wrote:
+> Hi All !
+>=20
+> My config is :
+> Linux Mandrake 8.2
+> Soundcard VIA FM801
+> RPM ax25-tools 0.0.8 and ax25-apps.0.0.6
+>=20
+> For the setup, I first do a 'rmmod' of all modules
+> related to the sound
 > card.
 > Then setserial /dev/ttyS0 uart none port 0 irq 0
-
-Looks good. Only 'uart none' is needed btw.
-
-> To find the irq and dma parameters of the sound card :
+>=20
+> To find the irq and dma parameters of the sound card
+> :
 > modprobe -c | grep irq
-
-Didn't know that.
-
+>=20
+> Then:
 > modprobe hdlcdrv
-> insmod soundmodem mode="sbc:afsk1200" iobase=0x220 irq=7 dma=1
-> sethdlc -p -i sm0 mode sbc:afsk1200 io 0x200 irq 7 dma 1 serio 0x3f8
-
-Two things. Firstly no need to provide the same information twice
-(module parameters AND sethdlc); I just use sethdlc. Secondly the
-address you have to sethdlc is different - 0x200 vs 0x220. Could be your
-problem.
-
+> insmod soundmodem mode=3D"sbc:afsk1200" iobase=3D0x220
+> irq=3D7 dma=3D1
+> sethdlc -p -i sm0 mode sbc:afsk1200 io 0x200 irq 7
+> dma 1 serio 0x3f8
+>=20
 > And the final :
 > ifconfig sm0 hw ax25 X1ABC up
-
-Should also assign a dummy IP address.
-
+>=20
 > And it tells me :
 > "SIOCSIFFLAGS: No such device"
+>=20
+> Any idea will be extremely cheerfully welcomed !
+>=20
+>=20
+>=20
+>=20
+>=20
+> -
+> To unsubscribe from this list: send the line
+> "unsubscribe linux-hams" in
+> the body of a message to majordomo@vger.kernel.org
+> More majordomo info at=20
+http://vger.kernel.org/majordomo-info.html
 
-Is your sound card SB-compatible?
 
-You could also try the user-space (non kernel) soundmodem driver. It
-uses your existing sound card drivers although not all cards are
-supported.
+=3D=3D=3D=3D=3D
+amastr@mail.palermo.edu.ar
+lu9aum@amsat.org
+lu9aum@lu9aum.ampr.org
 
-Hamish
--- 
-Hamish Moffatt VK3SB <hamish@debian.org> <hamish@cloud.net.au>
+__________________________________________________
+Do you Yahoo!?
+Yahoo! Tax Center - forms, calculators, tips, more
+http://taxes.yahoo.com/
