@@ -1,27 +1,43 @@
-From: Hamish Moffatt <hamish@cloud.net.au>
+From: pa3gcu <pa3gcu@zeelandnet.nl>
 Subject: Re: Best way to Telnet in Linux SuSe 9.0?
-Date: Thu, 1 Jan 2004 12:01:49 +1100
+Date: Thu, 1 Jan 2004 11:28:41 +0100
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <20040101010149.GC5444@cloud.net.au>
+Message-ID: <200401011128.41166.pa3gcu@zeelandnet.nl>
 References: <bsuu6p$inn$1@sea.gmane.org>
+Reply-To: pa3gcu@zeelandnet.nl
 Mime-Version: 1.0
+Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
-Content-Disposition: inline
 In-Reply-To: <bsuu6p$inn$1@sea.gmane.org>
+Content-Disposition: inline
 List-Id: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-To: linux-hams@vger.kernel.org
+To: Dave <howek@vcss.k12.ca.us>, linux-hams@vger.kernel.org
 
-On Wed, Dec 31, 2003 at 08:41:25AM -0800, Dave wrote:
+On Wednesday 31 December 2003 17:41, Dave wrote:
 > I am only 3 days old in Linux, but trying to get up and walk quickly.
-> 
-> What is the best way to run Telnet in Linux?  I want to log onto a DX 
+>
+> What is the best way to run Telnet in Linux?  I want to log onto a DX
 > Spotting Telnet site.
 
-"telnet <hostname>" at a shell prompt should do it. You might have to
-install a package to get the telnet client.
+telnet host port-number
 
-Hamish
+I dont know if 7530 is the offical port for DX-clusters, but one i know of 
+uses that port.
+
+>
+> 73
+>
+> Dave
+
 -- 
-Hamish Moffatt VK3SB <hamish@debian.org> <hamish@cloud.net.au>
+If the Linux community is a bunch of theives because they
+try to imitate windows programs, then the Windows community
+is built on organized crime.
+
+Regards Richard
+pa3gcu@zeelandnet.nl
+http://people.zeelandnet.nl/pa3gcu/
+
+
+
