@@ -1,53 +1,63 @@
-From: LETANG Eric USCE DEF <eric.letang@francetelecom.com>
-Subject: Re: trouble of ptt !
-Date: Fri, 12 Apr 2002 08:10:04 +0200
+From: Shane Deering <vk3bvp@qsl.net>
+Subject: netrom
+Date: Sun, 14 Apr 2002 15:58:02 +1000
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <3CB67A3C.90970F6C@francetelecom.com>
-References: <3CB54D96.DB43F0D7@francetelecom.com>
+Message-ID: <200204140557.g3E5vZX11801@msv02-kent-syd.comindico.com.au>
+Reply-To: vk3bvp@qsl.net
 Mime-Version: 1.0
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Content-Transfer-Encoding: 7BIT
 Return-path: <linux-hams-owner@vger.kernel.org>
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="iso-8859-1"
-To: linux-hams <linux-hams@vger.kernel.org>
+Content-Type: text/plain; charset="us-ascii"
+To: linux-hams@vger.kernel.org
 
-LETANG Eric USCE DEF a =E9crit :
+G'day all.
+Wonder if someone can help me out.
+I've just set up my good computer (this one) for packet.
+Using kernel 2.4.9-31 and the latest libs, tools and apps.
+AX25 seems to work ok on the 2 test ports I've set up (call, mheard).
+But i'm having problems setting up netrom. Doing what the ax25 how-to say to 
+do (I think), but I get the following-
 
-> Hi,
->
-> I'm having similar trouble on one of my Linux machine with the 2.4.18
-> kernel.
-> The PTT-line isn't signaling correctly.
-> After initialization , the first frame is ok.
-> Then PTT-signal even two short pulse by frame .
->
-> I'ts ok in mode soundmodemconfig !
-> I'm using soundmodem-0.6. Have you tried this?
->
-> Last year, someone else emailed about this for correct file
-> soundmodem-0.4/soundcard/ptt.c (for kernel 2.4.x.)
-> but the file soundmodem-0.6/soundcard/ptt.c has modified !
->
-> Best regards
-> 73's
-> F1TVF
->
-> -
-> To unsubscribe from this list: send the line "unsubscribe linux-hams"=
- in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at  http://vger.kernel.org/majordomo-info.html
+[root@vk3bvp-6 root]# nrattach netrom
+NET/ROM port netrom bound to device nr0
+[root@vk3bvp-6 root]# /usr/sbin/netromd -i
+nrconfig: port netrom not active
+netromd: no NET/ROM ports defined
 
-Oups ! I have found the answer in the archive of linux-ham !
+My axports file-
 
-sorry !
+# /etc/ax25/axports
+#
+# The format of this file is:
+#
+# name callsign speed paclen window description
+#
+vhf	VK3BVP-8	2400	255	2	144.825 MHz (1200  bps)
+win	VK3BVP-9	57600	255	2	link to winfbb
 
-73's
-Eric F1TVF
+My nrports file-
 
+# /etc/ax25/nrports
+#
+# The format of this file is:
+#
+# name callsign alias paclen description
+#
+netrom	VK3BVP-10 LINODE	235	Switch Port
 
--
-To unsubscribe from this list: send the line "unsubscribe linux-hams" i=
-n
-the body of a message to majordomo@vger.kernel.org
-More majordomo info at  http://vger.kernel.org/majordomo-info.html
+The kissatach commands and responses have scrolled off my xterm but from 
+history I used these to create ax0 and ax1 -
+[root@vk3bvp-6 root]# /usr/sbin/kissattach /dev/ttyS0 vhf 44.135.96.242
+[root@vk3bvp-6 root]# /usr/sbin/kissattach /dev/ttyS1 win 44.135.96.241
+
+Don't worry about the IP addresses , they are just for testing.
+
+Any idea why NET/ROM isn't working?
+
+-- 
+Shane Deering
+vk3bvp@vk3bvp.#sev.vic.aus.oc / vk3bvp@qsl.net
+http://www.qsl.net/vk3bvp/
+Sent with KMail v1.3.2 on Sun Apr 14 15:31:19 EST 2002
+
