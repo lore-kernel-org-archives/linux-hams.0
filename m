@@ -1,27 +1,49 @@
-From: Tomi Manninen <oh2bns@sral.fi>
-Subject: Re: soundmodem and fedora c3
-Date: Mon, 07 Mar 2005 20:23:20 +0200
-Message-ID: <1110219800.1229.3.camel@oh2bns.ampr.org>
-References: <BAY104-F88BBA5C4050324B8618548B5F0@phx.gbl>
-	 <Pine.SUN.4.58.0503070850260.12783@eskimo.com>
+From: "Ron- VE3DTT" <ve3dtt@hotmail.com>
+Subject: soundmodem and fedora c3
+Date: Tue, 08 Mar 2005 17:35:57 +0000
+Message-ID: <BAY104-F33C8680A7BC732DF8330068B500@phx.gbl>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
-In-Reply-To: <Pine.SUN.4.58.0503070850260.12783@eskimo.com>
 Sender: linux-hams-owner@vger.kernel.org
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"
-To: Linux-hams List <linux-hams@vger.kernel.org>
+Content-Type: text/plain; format=flowed; charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+To: linux-hams@vger.kernel.org
 
-On Mon, 2005-03-07 at 19:03, Curt, WE7U wrote:
+Thanks to all who responded to my query.
 
-> There are also two variations of soundmodem:  kernel mode and
-> usermode.  Don't get them confused.  I think the supported one these
-> days is the usermode soundmodem.  Correct?
+I am aware that 'soundmodem' is usermode software but I tried loading the 
+modules anyway, out of desperation.
 
-Yes. In fact kernel soundmodem was completely removed from
-2.6 kernels so usermode is what Ronald needs. Forget the
-soundmodem modules...
+'make menuconfig' suggests that ax.25 is hard coded in my kernel.
 
--- 
-Tomi Manninen / OH2BNS / KP20JF74
+I have this sample of an 'axport' file which addresses 'sm0':
+
+"sm0 KA1FSB-8 1200 255 2 145.630 Mhz "Wellesley, MA" 1200
+bps soundmodem"
+
+but it doesn't help.  I've tried many variations on sample configurations 
+with negative results.
+
+'xastir' will allow me to bring up a 'kiss' device on any port I choose but 
+none communicate with soundmodem. The xastir manual tells me to use ax25.
+
+'Listen' informs me that my ax25 ports aren't active.
+
+--
+"Windows:  Microsoft's tax on computer illiterates." -- WE7U
+
+I, reluctantly, must include myself among the computer illiterate and when I 
+discovered that 'soundmodem' is available for windows  I downloaded 
+'soundmodem', 'flexnet32' and 'paxon' and was decoding packets within 15 
+minutes start to finish. In view of the time it takes to get anything up and 
+running with Linux, I'm inclined to counter that, perhaps,
+
+Linux is Life's tax on those of us who don't have one.
+
+It has to be it's own reward. I'll keep trying things until something works.
+
+Thanks again,
+Ron
+73 VE3DTT
+
 
