@@ -1,44 +1,25 @@
-From: ariel mastracchio <ari197516@yahoo.com>
-Subject: manchester 4800 vs. HAPN 4800
-Date: Fri, 26 Apr 2002 07:27:07 -0700 (PDT)
+From: Bob Nielsen <nielsen@oz.net>
+Subject: Kernel recommendations for AX.25?
+Date: Fri, 26 Apr 2002 13:49:57 -0700
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <20020426142707.42176.qmail@web9602.mail.yahoo.com>
+Message-ID: <20020426204957.GA2930@oz.net>
 Mime-Version: 1.0
 Return-path: <linux-hams-owner@vger.kernel.org>
+Content-Disposition: inline
 List-Id: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
 To: linux-hams@vger.kernel.org
 
-Hi!
-     I do packet with linux 2.2.16 and soundmodem,
-attached to my radio tm-731 VHF, i test the hapn-4800
-module with some radioamateurs of my area that have
-manchester-4800, i received OK, but when i transmited
-nobody heard my (the audio is OK).
+I'm about to build up a new machine for shack use (Duron 800 CPU,
+Chaintek mainboard with VIA Apollo KT133 chipset, 128 MB) and was
+wondering what kernel would be the best choice for use with AX.25
+networking.  I run 2.4.18 on one of my boxes without AX.25 and it seems
+pretty stable, but I recall seeing some messages about potential
+problems with either AX.25 or some of the device drivers.  The changes
+in the 2.4 series seem to still be coming at a fast clip.  What would
+be a recommended kernel version? I will be installing Debian 3.0 aka
+woody which is rumored to be releasing ~May 1, but have no qualms about
+compiling my own kernel.
 
-     I have not a full-duplex sound card so i cant
-heard miself...
-
-     Does anonyone know if MANCHESTER-4800 (modem) is
-compatible with HAPN-4800 (linux soundmodem)???
-
-     Thank you in advance....
-
-
-- ari
-
-
-
-
-
-
-=====
-amastr@mail.palermo.edu.ar
-lu9aum@amsat.org
-lu9aum@lu9aum.ampr.org
-
-__________________________________________________
-Do You Yahoo!?
-Yahoo! Games - play chess, backgammon, pool and more
-http://games.yahoo.com/
+Bob, N7XY
