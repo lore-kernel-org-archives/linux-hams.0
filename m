@@ -1,53 +1,84 @@
-From: "Steve Fraser" <sfraser@sierra.apana.org.au>
-Subject: Re: Simple BBS, again, sorry for asking twice.
-Date: Thu, 26 Dec 2002 08:29:08 +1030
+From: mvw@mvw.net
+Subject: Re: FBB...
+Date: Wed, 25 Dec 2002 17:02:06 -0500 (EST)
 Sender: linux-hams-owner@vger.kernel.org
-Message-ID: <004601c2ac60$da69cd40$04590cca@apana.org.au>
-References: <Pine.LNX.4.44.0212252208100.2780-100000@zl2bsj.ampr.org>
+Message-ID: <Pine.LNX.4.44.0212251656340.21106-100000@jeeves.mvw.net>
+References: <003401c2ac5d$06545000$0300a8c0@HUISKAMER>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
+In-Reply-To: <003401c2ac5d$06545000$0300a8c0@HUISKAMER>
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"
-To: Wilbert Knol <zl2bsj@zl2tze.ath.cx>, linux-hams@vger.kernel.org
+Content-Type: TEXT/PLAIN; charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+To: Cees Tool <c.tool@quicknet.nl>
+Cc: Linux-Hams <linux-hams@vger.kernel.org>
 
-Hi All,
+Cees,
 
-I wrote:
->
-> > I havent used it myself, but awznode by Stefano Noferi  IZ5AWZ  seemed
-to
-> > have simple mail capability, passwords etc. It grew out of the normal
-"node"
-> > program so should be fairly familiar.
->
-and Wilbert replied:
+Although I detect a tone of disrespect in your reply, which I 
+think is uncalled for among amateurs, I will answer seriously.
 
-> It has an 's <sysop_callsign>' command for sending mail to the sysop.
-> The sysop gets to see it as E-mail. But it's one way only. There is no
-> 'r' command for the user to read a reply.
+To answer your point, no, the normal sysadmin work is not too difficult;  
+although as the CTO of a tech company, I generally have other people do
+it. But if it WERE too difficult, I would assume you would be happy to 
+help, as I would be happy to help too.
 
-I downloaded a copy of it. From the README file:
-"Other features:
-- local users of the linux machine can be granted access to the mailreader
-  and optionally to the shell. ...............(bits omitted)
-  Users with the mail option enabled will receive messages like "New mail
-  has arrived", mostly when the stated condition is met ;-)
-- all users can send messages to a callsign associated in the kernel table
-  with a linux username ("send" command)."
+Now, I have the previous version, namely 7.03, because that is the last
+one I can find on the fbb site "last versions" page as source. As far as
+I can see, 7.04 is only available as rpm. And I am assuming 
+http://www.f6fbb.org/ is the authoritative source. If I am misreading the 
+site or just not looking right, please tell me where I can find 7.04 
+source and I'll go download it!
 
-This may be a new feature in the v0.4-pre2 version I downloaded.
+73,
+Michael VA3MVW
 
->No 3rd party mail.
->
-I think that is still true
 
-> AWZnode is really an on-demand loading node (very good), not a PMS or
-> BBS.
->
-It seems to be evolving into a PMS, going by what I've seen in the above.
 
-regards
+On Wed, 25 Dec 2002, Cees Tool wrote:
 
-Steve
+> ----- Original Message -----
+> From: <mvw@mvw.net>
+> 
+> > This is definitely not GPL:
+> >
+> ....
+> > are old and do not fit the software... took me an hour to see I had to run
+> > that script. How about a simple readme that mentions this? These are the
+> > very basics of software!
+> ....
+> >Alas, there is no standard "./configure, make, make
+> >install", and the bbs when it does come up is mysterious, needs obscure
+> >text files edited, and displays Toulouse stuff by default...
+> 
+> Wow !
+> The source-tree of the latest version I have here (7.04h) has all these
+> things in it.
+> 
+> There is a file "COPYING" with the GPL license in it, there are several
+> readme-files how you should compile the code,  there is no "configure"
+> needed, you should only check if the path of the ax25-utils/libraries
+> differs from the standard path and change it if needed. Then you can type
+> "make"  and after that "make install" and the installation script will
+> install everything in the right directory's and asks your station details.
+> If you answer all questions, you will end up with a working installation.
+> (and there is absolutely no need to remove include files from the source)
+> 
+> Looking in the sourcecode tree for a file called README or INFO only costs 1
+> minute of your time. (and is probably less then the time it took to write
+> about "bad sofware")
+> 
+> If all of this is too difficult for you, please do not even try to install
+> it. Probably the normal daily sysop work would also be too difficult ....
+> 
+> 73
+> Cees
+> 
+> 
+> 
+> -
+> To unsubscribe from this list: send the line "unsubscribe linux-hams" in
+> the body of a message to majordomo@vger.kernel.org
+> More majordomo info at  http://vger.kernel.org/majordomo-info.html
+> 
 
