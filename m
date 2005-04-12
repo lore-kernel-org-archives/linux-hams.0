@@ -1,32 +1,21 @@
-From: Bernard Pidoux <pidoux@ccr.jussieu.fr>
-Subject: Rose module and kernel 2.6.11
-Date: Mon, 11 Apr 2005 22:25:40 +0200
-Message-ID: <425ADD44.8090509@ccr.jussieu.fr>
-References: <BAY102-F35A48877CA3B5F1F485F68DB3F0@phx.gbl>
+From: "Tom Vavra" <wb8zrl@avalon.net>
+Subject: Mandrake 10.1 crashes
+Date: Tue, 12 Apr 2005 14:16:17 -0000
+Message-ID: <000701c53f6a$4c7ab2c0$404689d8@oem7paq6co5hph>
 Mime-Version: 1.0
 Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <BAY102-F35A48877CA3B5F1F485F68DB3F0@phx.gbl>
 Sender: linux-hams-owner@vger.kernel.org
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"; format="flowed"
-To: 
-Cc: linux-hams@vger.kernel.org
+Content-Type: text/plain; charset="us-ascii"
+To: Linux-Hams <linux-hams@vger.kernel.org>
 
-Hi,
+I am running ax25/netrom for DXSpider, with 4 packet ports on 3 tncs via
+serial ports.  I am experiencing crashes where responses are very slugish if
+at all.  The only clue I see is in the *top* display on the CPU line.
+Instead of the idle percentage being almost 100% it is 0.0% and the  *si*
+percentage is almost 100%.  Can anyone tell me what that *si* figure is and
+what it means.  I cannot find any info anywhere.
 
-I have noticed something strange with rose module and 2.6 kernel (at 
-least 2.6.10 and 2.6.11).
-
-When loading rose module, it loads now automatically ax25 module. Good.
-
-But, it also creates 9 interfaces from rose0 to rose9 with hardware 
-address 0000000 as seen with IP address or ifconfig.
-
-Is this what rose module should do actually ?
-With previous versions, loading rose module did not create any rose 
-interface. They were created by the application such as ROSE/FPAC.
-
-73 de Bernard, f6bvp
-
+              tu/73  Tom  WB8ZRL
 
