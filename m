@@ -1,30 +1,36 @@
-From: Hamish Moffatt <hamish@cloud.net.au>
-Subject: Re: Mandrake 10.1 crashes
-Date: Wed, 13 Apr 2005 08:32:13 +1000
-Message-ID: <20050412223213.GA21161@cloud.net.au>
-References: <000701c53f6a$4c7ab2c0$404689d8@oem7paq6co5hph>
+From: "Richard Pyne" <rpyne@kinfolk.org>
+Subject: Storage size of fdset unknown
+Date: Tue, 12 Apr 2005 14:21:41 -0600
+Message-ID: <425BD975.29343.64841DE@localhost>
 Mime-Version: 1.0
+Content-Transfer-Encoding: 7BIT
 Return-path: <linux-hams-owner@vger.kernel.org>
-Content-Disposition: inline
-In-Reply-To: <000701c53f6a$4c7ab2c0$404689d8@oem7paq6co5hph>
+Content-description: Mail message body
 Sender: linux-hams-owner@vger.kernel.org
 List-Id: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-To: Linux-Hams <linux-hams@vger.kernel.org>
+To: linux-hams@vger.kernel.org
 
-On Tue, Apr 12, 2005 at 02:16:17PM -0000, Tom Vavra wrote:
-> I am running ax25/netrom for DXSpider, with 4 packet ports on 3 tncs via
-> serial ports.  I am experiencing crashes where responses are very slugish if
-> at all.  The only clue I see is in the *top* display on the CPU line.
-> Instead of the idle percentage being almost 100% it is 0.0% and the  *si*
-> percentage is almost 100%.  Can anyone tell me what that *si* figure is and
-> what it means.  I cannot find any info anywhere.
+I am trying to compile axconv.c on a linux-2.6.11 box and 
+keep getting an error of Storage size of 'fdset' is unknown.
 
-What is your kernel version Tom?
+The offending line in axconv.c is:
+  struct fd_set fdset;
 
-(uname -r will tell you, among other ways.)
+fd_set is defined in /usr/include/sys/select.h
 
-Hamish
--- 
-Hamish Moffatt VK3SB <hamish@debian.org> <hamish@cloud.net.au>
+From the gcc preprocessor output, it looks like:
+
+typedef struct
+  {
+    __fd_mask __fds_bits[1024 / (8 * sizeof (__fd_mask))];
+  } fd_set;
+
+Any insights at fixing this will be greatly appreciated. i am 
+under the gun to get this whole thing up and running quickly for 
+an emergency exercise on thursday.
+
+Thanks.
+
+--Richard
+
