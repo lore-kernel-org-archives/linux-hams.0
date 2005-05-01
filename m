@@ -1,7 +1,7 @@
-From: Kevin <lists@gnosysllc.com>
-Subject: VHF/UHF frequency monitoring
-Date: Thu, 28 Apr 2005 15:37:09 -0400
-Message-ID: <200504281537.09707.lists@gnosysllc.com>
+From: Marco IW7EAS <iw7eas@virgilio.it>
+Subject: Linux and DPK-9600
+Date: Sun, 1 May 2005 20:38:28 +0200
+Message-ID: <200505012038.28676.iw7eas@virgilio.it>
 Mime-Version: 1.0
 Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
@@ -11,24 +11,36 @@ List-Id: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
 To: linux-hams@vger.kernel.org
 
-Hi List-
-
-I'm new to the list and have never done any radio frequency surfing with 
-Linux, but I'm a longtime (10 year) Linux enthusiast with a pretty good 
-understanding of the electromagnetic spectrum (no HAM experience although I 
-hope to change that soon) and would like to learn more about this subject and 
-in particular, would like to try and do something akin to what TiVo and 
-MythTV do for TV except with strictly radio on the VHF/UHF part of the 
-spectrum.  I've been reading and noticed a receiver (PCR-1000) and linux 
-software to work with it.  I've also read about GnuRadio and the USRP.  The 
-GnuRadio/USRP route seems like it would offer the greatest long-term 
-flexibility, but I'm not sure if the combination would allow me to do what 
-I'm after in the short term.
-
-Can anyone offer some suggestions to this linux-ham newbie on the best 
-hardware route to go with initially given my short and long-term goals?
-
-Thanks.
+Hi!
+I have a problem setting up a DPK-9600 with 
+Linux in KISS mode.
+The TNC displays only CONNECTD status, but 
+doesn't display anything else. Infact also in monitoring 
+mode (with listen -a -p uhf) it seems to be mute.
+So I tryied in Command Mode with Minicom (8,N,1),
+but I had same thing. 
+Is there a particular setting for this TNC ?
+Is there a problem in serial cable ?
+Thank you for answer
+Marco
+iw7eas
 
 -- 
-Kevin
+---
+Marco Di Martino
+Via Ariosto, 34/A - 10036 - Settimo T.se (TO)
+Cell. +393285373364
+e-mail: iw7eas@iw7eas.org
+www.marcodimartino.it
+-
+Amateur Callsign: I W 7 E A S
+Homepage: http://www.iw7eas.org/
+Ampr Hostname: iw7eas.ampr.org
+Ampr IP: 44.134.65.2
+LinuxNode: telnet://iw7eas.homeip.net/
+Tnos: telnet://iw7eas.homeip.net:4001/
+(X)net: telnet://iw7eas.homeip.net:4002/
+NET/ROM: SETTGW:IW7EAS; NODEAS:IW7EAS-3
+Packet Mail : IW7EAS @ IK1ZNW.IPIE.ITA.EU
+Ampr Mail: iw7eas@iw7eas.ampr.org
+---
