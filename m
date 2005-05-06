@@ -1,94 +1,45 @@
-From: Support <support@airwaveauctions.com>
-Subject: Your invite to new Radio Auction site
-Date: Wed, 04 May 2005 20:12:23 -0400
-Message-ID: <6.2.1.2.2.20050504201220.057541f8@pop.airwaveauctions.com>
-Mime-Version: 1.0
+From: Mikael Czerski <arcticfox@tiscali.no>
+Subject: node 0.3.2 weirdness
+Date: Fri, 6 May 2005 13:01:01 +0200
+Message-ID: <ac6126ff571bd0c140f88c066d4e432f@tiscali.no>
+Mime-Version: 1.0 (Apple Message framework v622)
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 Return-path: <linux-hams-owner@vger.kernel.org>
 Sender: linux-hams-owner@vger.kernel.org
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"; format="flowed"
-Content-Transfer-Encoding: 7bit
-To: 
+Content-Type: text/plain; charset="iso-8859-1"; format="flowed"
+To: Linux-Hams@vger.kernel.org
 
 
-ANNOUNCEMENT:
+Hello!
 
-www.airwaveauctions.com - The Marketplace for your Electronics
+I got some strange trouble with node 0.3.2.
 
-Airwave Auctions is a new site which caters to anything and everything 
-pertaining to radios
-and radio electronics. Parts, Accessories, Products, you name it.
+Seems that im able to connect, issue commands ... also run self defined=
+=20
+macros/aliases... etc...
+The problems though is the following .... there is slitch,zero output=20
+from node to the client, no prompt ..
+nothing, just a blank screen. this occurs on both ax25 and netrom=20
+connections,
+there is no error what soever on the server side, the log confirms a=20
+successful connection.
 
-Our goal has always been a simple one: To provide a viable service and 
-venue whereas buyers, sellers,
-and even traders, can interact and transact, in a safe, secure, fun, and 
-simple to use  environment, while
-maintaining a level of personal customer service and satisfaction that is 
-second to none.
+Server is a kubuntu running kernel 2.6.10 , on the client side im using=
+=20
+Linux and OSX,
+and i don=B4t think its a issue on the clients.. since they work with=20
+other servers ... using both netrom and ax25.
 
-With our principles and passions, Airwave Auctions is the end result of 
-having spent months of effort to create
-a world class auction platform, that sets the bar for the ultimate radio 
-electronics site.
+I wonder thus.. maybe this is a PAM issue or ?
 
-Some of our many features include:
+NB! i can run axspawnd and some other apps .. but not node it seems.
 
-- Create Standard, Dutch, Swap, and even Private auctions.
-- Safe and Secured 128 Bit SSL Registration & Payment options.
-- User ID verification system to help weed out the scamsters.
-- Auto Sniping Feature extends auction on last minute bids.
-- Select various currencies for true international functionality.
-- Easy to use ' Re-List' feature for any items which you may not sell.
-- Easy to use 'Sell Similar' feature based on your prior auctions.
-- Create your own custom store front, Free of charge!
-- Bulk submission functionality to submit multiple listings.
-- Live online support as well as Toll Free telephone support.
-- Customized Features & Functions not found on most auction sites.
-- NEW! - Want ads system - Are you looking for something?
-
-.... And many more new features being added regularly.
-
-Because Airwave Auctions is completely new, we are giving you the 
-opportunity to try out our
-features, free of charge.  That's right, listings are totally FREE!
-
-Whether your buying, selling, or looking to trade radio electronics, 
-Airwave Auctions is for you!
-
-Current Categories include:
-
-Amplifiers, Antennas, Antiques, Audio Processors, Books, Booms, Cables, 
-Capacitors,
-Car Stereos, CB Radios, Cellular, Clothing, Collectibles, Components, 
-Computers,
-Crystals, Filters, GPS Units, Ham Radios, Headsets, Keyers, Magazines, 
-Manuals, Meters,
-Microphones, Power Supplies, Repeaters, Rotators, Satellite Equip, 
-Scanners, Shortwave,
-Software, Speakers, SSTV, Switches, Testing Equipment, Towers, Tubes, Tuners,
-Weather Stations, Wires, and more being added  every day.
-
-Did I mention to you, its all FREE?! - No charge unless your item sells.
-
-Come on over and spread the word.  Make your listings for free, try out all 
-that we have to offer.
-No longer waste your money listing way ebay. Why? No need to! We do it for 
-FREE!
-
-Looking forward to seeing you there!
-
-Thomas
-Admin
-www.airwaveauctions.com
+						73s Mike
 
 
--------------------------------------------
-If you wish to be removed from our Mailings, reply back with the word 
-"UNSUBSCRIBE" in the subject.
-You have received this email because you have made past postings in a 
-forum/classifieds website in
-which we have operated.  If you wish not to be contact again based on this, 
-you may go to your user
-control panel in the forums, once logged in, and select 'Do not receive 
-email from admins". 
-
+-
+To unsubscribe from this list: send the line "unsubscribe linux-hams" i=
+n
+the body of a message to majordomo@vger.kernel.org
+More majordomo info at  http://vger.kernel.org/majordomo-info.html
