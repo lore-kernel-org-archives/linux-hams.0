@@ -1,45 +1,36 @@
-From: Mikael Czerski <arcticfox@tiscali.no>
-Subject: node 0.3.2 weirdness
-Date: Fri, 6 May 2005 13:01:01 +0200
-Message-ID: <ac6126ff571bd0c140f88c066d4e432f@tiscali.no>
-Mime-Version: 1.0 (Apple Message framework v622)
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+From: Phil <phil@spiderweb.com.au>
+Subject: SIOCSIFFLAGS: Input/output error
+Date: Sat, 7 May 2005 22:26:10 +1000
+Message-ID: <200505072226.11233.phil@spiderweb.com.au>
+Mime-Version: 1.0
+Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
+Content-Disposition: inline
 Sender: linux-hams-owner@vger.kernel.org
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="iso-8859-1"; format="flowed"
+Content-Type: text/plain; charset="us-ascii"
 To: Linux-Hams@vger.kernel.org
 
+Hello,
 
-Hello!
+I'm about to do the "Grey Nomad" thing and hit the road in our motorhome. I 
+thought it might be handy to have a packet system to play with.
 
-I got some strange trouble with node 0.3.2.
+I'm using a USB to serial converter which works without any problems with 
+other serial devices, however, I get the error message shown on the subject 
+line when I attempt to use my Baycom modem. This is the init script that I've 
+used for years, but with /dev/ttyS0 instead of ttyUSB0:
 
-Seems that im able to connect, issue commands ... also run self defined=
-=20
-macros/aliases... etc...
-The problems though is the following .... there is slitch,zero output=20
-from node to the client, no prompt ..
-nothing, just a blank screen. this occurs on both ax25 and netrom=20
-connections,
-there is no error what soever on the server side, the log confirms a=20
-successful connection.
+setserial /dev/ttyUSB0 uart none
+modprobe baycom_ser_fdx
+sethdlc -p -i bcsf0 mode "ser12*" io 0x3f8 irq 4
+ifconfig bcsf0 up
+ifconfig bcsf0 10.0.0.1
+axparms -setcall bcsf0 VK4BVM
 
-Server is a kubuntu running kernel 2.6.10 , on the client side im using=
-=20
-Linux and OSX,
-and i don=B4t think its a issue on the clients.. since they work with=20
-other servers ... using both netrom and ax25.
+I can see that the lines that begin with "ifconfig bcsf0" are the culprits. I 
+have /etc/ax25/parms/bcf0/. What am I missing?
 
-I wonder thus.. maybe this is a PAM issue or ?
-
-NB! i can run axspawnd and some other apps .. but not node it seems.
-
-						73s Mike
-
-
--
-To unsubscribe from this list: send the line "unsubscribe linux-hams" i=
-n
-the body of a message to majordomo@vger.kernel.org
-More majordomo info at  http://vger.kernel.org/majordomo-info.html
+-- 
+Regards,
+Phil.
