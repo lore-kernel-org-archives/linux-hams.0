@@ -1,36 +1,33 @@
-From: Phil <phil@spiderweb.com.au>
-Subject: SIOCSIFFLAGS: Input/output error
-Date: Sat, 7 May 2005 22:26:10 +1000
-Message-ID: <200505072226.11233.phil@spiderweb.com.au>
+From: Tomi Manninen <oh2bns@sral.fi>
+Subject: Re: SIOCSIFFLAGS: Input/output error
+Date: Sun, 08 May 2005 21:06:53 +0300
+Message-ID: <1115575613.1246.6.camel@oh2bns.ampr.org>
+References: <200505072226.11233.phil@spiderweb.com.au>
 Mime-Version: 1.0
 Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
-Content-Disposition: inline
+In-Reply-To: <200505072226.11233.phil@spiderweb.com.au>
 Sender: linux-hams-owner@vger.kernel.org
 List-Id: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
-To: Linux-Hams@vger.kernel.org
+To: Linux-hams List <linux-hams@vger.kernel.org>
 
-Hello,
+On Sat, 2005-05-07 at 15:26, Phil wrote:
 
-I'm about to do the "Grey Nomad" thing and hit the road in our motorhome. I 
-thought it might be handy to have a packet system to play with.
+> I'm using a USB to serial converter which works without any problems with 
+> other serial devices, however, I get the error message shown on the subject 
+> line when I attempt to use my Baycom modem. This is the init script that I've 
+> used for years, but with /dev/ttyS0 instead of ttyUSB0:
 
-I'm using a USB to serial converter which works without any problems with 
-other serial devices, however, I get the error message shown on the subject 
-line when I attempt to use my Baycom modem. This is the init script that I've 
-used for years, but with /dev/ttyS0 instead of ttyUSB0:
+Baycom serial is not a serial device. It uses the serial port in a very 
+non-standard way to do "clever" bit banging and emulate synchronous 
+serial communication. That is why it only works with ports that are 
+100% hardware compatible with the standard PC UART (8250, 16450, 16550).
 
-setserial /dev/ttyUSB0 uart none
-modprobe baycom_ser_fdx
-sethdlc -p -i bcsf0 mode "ser12*" io 0x3f8 irq 4
-ifconfig bcsf0 up
-ifconfig bcsf0 10.0.0.1
-axparms -setcall bcsf0 VK4BVM
-
-I can see that the lines that begin with "ifconfig bcsf0" are the culprits. I 
-have /etc/ax25/parms/bcf0/. What am I missing?
+I think it's pretty safe to say that you will *not* find a USB/serial
+converter that would work with the Baycom serial modem and its
+kernel driver.
 
 -- 
-Regards,
-Phil.
+Tomi Manninen / OH2BNS / KP20JF74
+
