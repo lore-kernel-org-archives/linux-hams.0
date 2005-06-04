@@ -1,52 +1,36 @@
-From: "Charles Blackburn" <charlesb@otcgaming.net>
-Subject: Inverting the parallel port pins
-Date: Mon, 16 May 2005 23:23:04 +0100
-Message-ID: <00a401c55a65$d4b84510$0500a8c0@gamemachine>
+From: oz6bl@amsat.dk
+Subject: kissattach and kernel 2.6
+Date: Sat, 4 Jun 2005 18:40:43 -0000 (UTC)
+Message-ID: <32946.83.73.68.20.1117910443.squirrel@www.amsat.dk>
 Mime-Version: 1.0
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Content-Transfer-Encoding: 7BIT
 Return-path: <linux-hams-owner@vger.kernel.org>
 Sender: linux-hams-owner@vger.kernel.org
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="windows-1252"
-To: 'Linux Parport list' <linux-parport@lists.infradead.org>
-Cc: linux-hams@vger.kernel.org
+Content-Type: text/plain; charset="us-ascii"
+To: linux-hams@vger.kernel.org
 
-I'm sending this to both lists on the off chance that someone may be
-able to help..
+Hi,
 
+I'm the developper/maintainer of PB/PG for Linux but I havn't been active
+for a while, in fact not since the kernel was 2.4.24 or something. Now I
+try to get PB/PG up and running again under a 2.6 kernel but it appears
+that quite a few things have chaned since then. Before even embarking on
+PB/PG I try to bring the 'standard' AX.25 things up and running: listen,
+call, etc, but I must admit with very little success.
 
-I have managed to get the soundmodem (user-mode) wokring now under
-2.6.11 (latest knoppix installed to HD), but the problem comes in that
-the radio is constantly keyed up.
+What I have is this: My distribution is SUSE 9.2 with a 2.6.8 kernel. The
+AX.25 tools are version 0.0.8 and the AX.25-apps are 0.0.6. My modem is a
+DSP-12 in kiss mode attached to /dev/ttyS0. My PC has a Pentium 4 and I
+normally run a SMP version, but since I learned that e.g. mkiss doesn't
+work with SMP, I use a mono-CPU version ('default' in SUSE terms). I can
+configue an ax0 interface with kissattach ('kissattach -l /dev/ttyS0 asy
+44.145.40.3'), but I can't get listen to display any packets, in fact
+'ifconfig' doesn't show any packets received. I have seen some patches
+mentioned, but they appear to apply to mkiss in userland so I am really at
+a loss as to what to do.
 
-It seems that the data0 pin on parport0 is being held high by something
-and I cant work out what.
+Could someone please help me with pointers and/or help?
 
-I've searched through the archives going back the past year or so and
-there have been several messages on the linux--hams one about this same
-subject.
+Best 73 de Bent/OZ6BL
 
-Basically what I'm asking, is there any way to invert the pin on the
-parallel port in the user-mode soundmodem driver? It was metioned by
-someone that there should be an option in sethdlc, but the problem is,
-sethdlc doesn=92t work with the user-mode soundmodem.
-
-Hopefully someone can help (btw the interface works fine under windows
-:( )
-
-Regards and 73
-Charles - 2E0GOM
-ARICC UK Co-Ordinator - http://www.aricc.org
-Kirklees RAYNET - http://www.kirkleesraynet.org.uk
-
---=20
-No virus found in this outgoing message.
-Checked by AVG Anti-Virus.
-Version: 7.0.308 / Virus Database: 266.11.8 - Release Date: 10/05/2005
-=20
-
--
-To unsubscribe from this list: send the line "unsubscribe linux-hams" i=
-n
-the body of a message to majordomo@vger.kernel.org
-More majordomo info at  http://vger.kernel.org/majordomo-info.html
