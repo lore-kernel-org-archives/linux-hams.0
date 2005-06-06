@@ -1,32 +1,37 @@
-From: oz6bl@amsat.dk
-Subject: Re: kissattach and kernel 2.6
-Date: Sun, 5 Jun 2005 08:37:50 -0000 (UTC)
-Message-ID: <33074.83.73.68.20.1117960670.squirrel@www.amsat.dk>
-References: <32946.83.73.68.20.1117910443.squirrel@www.amsat.dk>
-    <20050604235817.A20050@pull.privacy.nb.ca>
+From: Hugo Oliveira <holiveira@eid.pt>
+Subject: ax25 stability problem
+Date: Mon, 6 Jun 2005 14:16:46 +0100
+Message-ID: <74B47901BB3CD611B16E00508B6B9C7E02E709C3@EIDNTMAIL>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7BIT
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <20050604235817.A20050@pull.privacy.nb.ca>
 Sender: linux-hams-owner@vger.kernel.org
 List-Id: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
-To: M Taylor <mctylr@privacy.nb.ca>
-Cc: linux-hams@vger.kernel.org
+Content-Transfer-Encoding: 7bit
+To: "'Linux-Hams@vger.kernel.org'" <Linux-Hams@vger.kernel.org>
 
-Hi Michael,
+I'm trying to use the AX.25 protocol under Linux. For this I compile the
+latest Linux kernel (2.6.11.11) with all the flag's (because I'm not sure
+the kind of terminal that will be used) referent to AX.25 protocol. I use
+the fedora core 3 distribution. 
 
-M Taylor wrote:
->
-> I would suggest using the ax25 packages from CVS, there are some small
-> fixes for linux 2.6.x. ...
+Them I connect the 2 PC's with a simple serial cable, only 3 wires (Rx, Tx,
+GND).
+With the application ax-config-1.3.0 I configure a simple TNC terminal with
+a TCP/IP connection, and appear to work. I have the latest packages from the
+SourceForge site ax25-app, ax25-tools and libax25.
+The problem is after a short wile system is configured and working the Linux
+freeze and I have to do a manual reset.
 
-I have taken a look at the ax25 CVS repository on Sourgeforge
-(http://cvs.sourceforge.net/viewcvs.py/ax25/), but it seems to be somewhat
-old (3 to 4 years for the most part) and the newer files does not appear
-to be related to the areas where I suspect the problem lies (the mkiss
-kernel driver or the kissattach program). Is it this repository you were
-thinking of?
+And if I try to kill the kissattach application with the command:
+"kill -s SIGTERM PidFromKissattach"
+The System freeze and I have to do a manual reset.
 
-Best 73 de Bent/OZ6BL
+I like to know if I'm missing something to put the protocol to work
+correctly and if anyone test the protocol with the latest versions of the
+kernel, because the documentation I see is only for old versions of the
+kernel.
+
+Thanks in advance.
+Hugo Oliveira
 
