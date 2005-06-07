@@ -1,58 +1,36 @@
-From: "Neo Chan \(netkiller\)" <neo.chen@achievo.com>
-Subject: FT-60R with TH-G71A that is good?
-Date: Tue, 7 Jun 2005 10:26:46 +0800
-Message-ID: <SZMAILWI0AT2JveR6IH000004f8@SZMAIL.achievo.com>
+From: Wilbert Knol <w.knol@niwa.co.nz>
+Subject: Re: kissattach and kernel 2.6
+Date: Tue, 7 Jun 2005 18:05:42 +1200
+Message-ID: <200506071805.42869.w.knol@niwa.co.nz>
+References: <32946.83.73.68.20.1117910443.squirrel@www.amsat.dk>
+Reply-To: w.knol@niwa.co.nz
 Mime-Version: 1.0
-Content-Type: multipart/mixed;
-	boundary="----=_NextPart_000_003E_01C56B4B.68820D80"
+Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
+In-Reply-To: <32946.83.73.68.20.1117910443.squirrel@www.amsat.dk>
+Content-Disposition: inline
 Sender: linux-hams-owner@vger.kernel.org
 List-Id: <linux-hams.vger.kernel.org>
+Content-Type: text/plain; charset="us-ascii"
 To: linux-hams@vger.kernel.org
 
-This is a multi-part message in MIME format.
 
-------=_NextPart_000_003E_01C56B4B.68820D80
-Content-Type: text/plain;
-	charset="utf-8"
-Content-Transfer-Encoding: 7bit
+> What I have is this: My distribution is SUSE 9.2 with a 2.6.8
+> kernel. The AX.25 tools are version 0.0.8 and the AX.25-apps are
+> 0.0.6. My modem is a DSP-12 in kiss mode attached to /dev/ttyS0. My
+> PC has a Pentium 4 and I normally run a SMP version, but since I
+> learned that e.g. mkiss doesn't work with SMP, I use a mono-CPU
+> version ('default' in SUSE terms). I can configue an ax0 interface
+> with kissattach ('kissattach -l /dev/ttyS0 asy 44.145.40.3'), but I
+> can't get listen to display any packets, in fact 'ifconfig' doesn't
+> show any packets received.
 
-FT-60R with TH-G71A that is good?
+This is probably not of much help...but AX.25 works perfectly with 
+kernel 2.6.3-7mdk (Mandrake 10.0 Community), tested only with the 
+serial full-duplex 1k2 baycom driver . It is rock-solid and goes for 
+months. I should mention I don't use NET/ROM.
 
-Neo Chan
-Callsign: BG7NYT
-73
+I am contemplating an upgrade to Debian 3.1 in a week or so...I guess 
+I will find out whether AX.25 support is broken post- 2.6.3 ...
 
-
-------=_NextPart_000_003E_01C56B4B.68820D80
-Content-Type: text/x-vcard;
-	name="ChanNeo (Neo Chan).vcf"
-Content-Transfer-Encoding: 7bit
-Content-Disposition: attachment;
-	filename="ChanNeo (Neo Chan).vcf"
-
-BEGIN:VCARD
-VERSION:2.1
-N:Chan;Neo
-FN:ChanNeo (Neo Chan)
-KEY;X509;ENCODING=BASE64:
-    MIICdTCCAd6gAwIBAgIDDmrYMA0GCSqGSIb3DQEBBAUAMGIxCzAJBgNVBAYTAlpBMSUwIwYD
-    VQQKExxUaGF3dGUgQ29uc3VsdGluZyAoUHR5KSBMdGQuMSwwKgYDVQQDEyNUaGF3dGUgUGVy
-    c29uYWwgRnJlZW1haWwgSXNzdWluZyBDQTAeFw0wNTA0MDYwNzE3MjRaFw0wNjA0MDYwNzE3
-    MjRaMEYxHzAdBgNVBAMTFlRoYXd0ZSBGcmVlbWFpbCBNZW1iZXIxIzAhBgkqhkiG9w0BCQEW
-    FG5lby5jaGVuQGFjaGlldm8uY29tMIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCxKdn7
-    VSudN1NmoMtJjwMQ16mVnwZvxz6taHYaMJiHCntgR7UyGh0LJ9ZQjQ9OyxF0i2QF820QSbOB
-    juQGDo3a4NV73ccTYl8is9A0ugz+Zla4CF0E9WuvJu/9+ORjy57Jr/4OA4FKSBItTUtOyxHC
-    8uGTTKN/xne7x7SeAmjRcQIDAQABo1UwUzAPBgNVHQ8BAf8EBQMDB/mAMBEGCWCGSAGG+EIB
-    AQQEAwIFoDAfBgNVHREEGDAWgRRuZW8uY2hlbkBhY2hpZXZvLmNvbTAMBgNVHRMBAf8EAjAA
-    MA0GCSqGSIb3DQEBBAUAA4GBALtHzUkPFdrB+iLK5Zlpii1Och3g0AQjAL6IxfSNMSZeUUZp
-    yTK3ybwsGcL5JQF9Zh9vL16x6BUNFnDX8BotK5cpcXCLufPy3O15ieSd8ofqddk7zG+gpg2d
-    4P1eWYr9NtboZ2LbldHbaaUt+LYg36zxmkR+qtyMOpM+wSzX357a
-
-
-EMAIL;PREF;INTERNET:neo.chen@achievo.com
-REV:20050607T020451Z
-END:VCARD
-
-------=_NextPart_000_003E_01C56B4B.68820D80--
-
+Wilbert, ZL2BSJ
