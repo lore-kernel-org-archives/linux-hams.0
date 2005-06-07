@@ -1,37 +1,63 @@
-From: Hugo Oliveira <holiveira@eid.pt>
-Subject: ax25 stability problem
-Date: Mon, 6 Jun 2005 14:16:46 +0100
-Message-ID: <74B47901BB3CD611B16E00508B6B9C7E02E709C3@EIDNTMAIL>
+From: "Neo Chan \(netkiller\)" <neo.chen@achievo.com>
+Subject: Bear a new ham !!!
+Date: Tue, 7 Jun 2005 10:21:24 +0800
+Message-ID: <SZMAILm1joKIB5i5Qy2000004f4@SZMAIL.achievo.com>
 Mime-Version: 1.0
+Content-Type: multipart/mixed;
+	boundary="----=_NextPart_000_003B_01C56B4A.A87810C0"
 Return-path: <linux-hams-owner@vger.kernel.org>
 Sender: linux-hams-owner@vger.kernel.org
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"
+To: linux-hams@vger.kernel.org
+
+This is a multi-part message in MIME format.
+
+------=_NextPart_000_003B_01C56B4A.A87810C0
+Content-Type: text/plain;
+	charset="utf-8"
 Content-Transfer-Encoding: 7bit
-To: "'Linux-Hams@vger.kernel.org'" <Linux-Hams@vger.kernel.org>
 
-I'm trying to use the AX.25 protocol under Linux. For this I compile the
-latest Linux kernel (2.6.11.11) with all the flag's (because I'm not sure
-the kind of terminal that will be used) referent to AX.25 protocol. I use
-the fedora core 3 distribution. 
+CQCQCQ DE BG7NYT BG7NYT BG7NYT
 
-Them I connect the 2 PC's with a simple serial cable, only 3 wires (Rx, Tx,
-GND).
-With the application ax-config-1.3.0 I configure a simple TNC terminal with
-a TCP/IP connection, and appear to work. I have the latest packages from the
-SourceForge site ax25-app, ax25-tools and libax25.
-The problem is after a short wile system is configured and working the Linux
-freeze and I have to do a manual reset.
+I am new ham from China. Frequency V/UHF
 
-And if I try to kill the kissattach application with the command:
-"kill -s SIGTERM PidFromKissattach"
-The System freeze and I have to do a manual reset.
+Return the not qualified usage HF currently.
 
-I like to know if I'm missing something to put the protocol to work
-correctly and if anyone test the protocol with the latest versions of the
-kernel, because the documentation I see is only for old versions of the
-kernel.
+I to radio direction finding(hunt the fox) very interested in. 
 
-Thanks in advance.
-Hugo Oliveira
+Neo Chan
+Callsign: BG7NYT
+73
+
+------=_NextPart_000_003B_01C56B4A.A87810C0
+Content-Type: text/x-vcard;
+	name="ChanNeo (Neo Chan).vcf"
+Content-Transfer-Encoding: 7bit
+Content-Disposition: attachment;
+	filename="ChanNeo (Neo Chan).vcf"
+
+BEGIN:VCARD
+VERSION:2.1
+N:Chan;Neo
+FN:ChanNeo (Neo Chan)
+KEY;X509;ENCODING=BASE64:
+    MIICdTCCAd6gAwIBAgIDDmrYMA0GCSqGSIb3DQEBBAUAMGIxCzAJBgNVBAYTAlpBMSUwIwYD
+    VQQKExxUaGF3dGUgQ29uc3VsdGluZyAoUHR5KSBMdGQuMSwwKgYDVQQDEyNUaGF3dGUgUGVy
+    c29uYWwgRnJlZW1haWwgSXNzdWluZyBDQTAeFw0wNTA0MDYwNzE3MjRaFw0wNjA0MDYwNzE3
+    MjRaMEYxHzAdBgNVBAMTFlRoYXd0ZSBGcmVlbWFpbCBNZW1iZXIxIzAhBgkqhkiG9w0BCQEW
+    FG5lby5jaGVuQGFjaGlldm8uY29tMIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCxKdn7
+    VSudN1NmoMtJjwMQ16mVnwZvxz6taHYaMJiHCntgR7UyGh0LJ9ZQjQ9OyxF0i2QF820QSbOB
+    juQGDo3a4NV73ccTYl8is9A0ugz+Zla4CF0E9WuvJu/9+ORjy57Jr/4OA4FKSBItTUtOyxHC
+    8uGTTKN/xne7x7SeAmjRcQIDAQABo1UwUzAPBgNVHQ8BAf8EBQMDB/mAMBEGCWCGSAGG+EIB
+    AQQEAwIFoDAfBgNVHREEGDAWgRRuZW8uY2hlbkBhY2hpZXZvLmNvbTAMBgNVHRMBAf8EAjAA
+    MA0GCSqGSIb3DQEBBAUAA4GBALtHzUkPFdrB+iLK5Zlpii1Och3g0AQjAL6IxfSNMSZeUUZp
+    yTK3ybwsGcL5JQF9Zh9vL16x6BUNFnDX8BotK5cpcXCLufPy3O15ieSd8ofqddk7zG+gpg2d
+    4P1eWYr9NtboZ2LbldHbaaUt+LYg36zxmkR+qtyMOpM+wSzX357a
+
+
+EMAIL;PREF;INTERNET:neo.chen@achievo.com
+REV:20050607T020451Z
+END:VCARD
+
+------=_NextPart_000_003B_01C56B4A.A87810C0--
 
