@@ -1,10 +1,10 @@
 From: "Neo Chan \(netkiller\)" <neo.chen@achievo.com>
-Subject: Bear a new ham !!!
-Date: Tue, 7 Jun 2005 10:21:24 +0800
-Message-ID: <SZMAILm1joKIB5i5Qy2000004f4@SZMAIL.achievo.com>
+Subject: FT-60R with TH-G71A that is good?
+Date: Tue, 7 Jun 2005 10:26:46 +0800
+Message-ID: <SZMAILWI0AT2JveR6IH000004f8@SZMAIL.achievo.com>
 Mime-Version: 1.0
 Content-Type: multipart/mixed;
-	boundary="----=_NextPart_000_003B_01C56B4A.A87810C0"
+	boundary="----=_NextPart_000_003E_01C56B4B.68820D80"
 Return-path: <linux-hams-owner@vger.kernel.org>
 Sender: linux-hams-owner@vger.kernel.org
 List-Id: <linux-hams.vger.kernel.org>
@@ -12,24 +12,19 @@ To: linux-hams@vger.kernel.org
 
 This is a multi-part message in MIME format.
 
-------=_NextPart_000_003B_01C56B4A.A87810C0
+------=_NextPart_000_003E_01C56B4B.68820D80
 Content-Type: text/plain;
 	charset="utf-8"
 Content-Transfer-Encoding: 7bit
 
-CQCQCQ DE BG7NYT BG7NYT BG7NYT
-
-I am new ham from China. Frequency V/UHF
-
-Return the not qualified usage HF currently.
-
-I to radio direction finding(hunt the fox) very interested in. 
+FT-60R with TH-G71A that is good?
 
 Neo Chan
 Callsign: BG7NYT
 73
 
-------=_NextPart_000_003B_01C56B4A.A87810C0
+
+------=_NextPart_000_003E_01C56B4B.68820D80
 Content-Type: text/x-vcard;
 	name="ChanNeo (Neo Chan).vcf"
 Content-Transfer-Encoding: 7bit
@@ -59,5 +54,5 @@ EMAIL;PREF;INTERNET:neo.chen@achievo.com
 REV:20050607T020451Z
 END:VCARD
 
-------=_NextPart_000_003B_01C56B4A.A87810C0--
+------=_NextPart_000_003E_01C56B4B.68820D80--
 
