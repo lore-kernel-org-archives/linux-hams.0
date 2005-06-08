@@ -1,36 +1,34 @@
-From: Wilbert Knol <w.knol@niwa.co.nz>
+From: oz6bl@amsat.dk
 Subject: Re: kissattach and kernel 2.6
-Date: Tue, 7 Jun 2005 18:05:42 +1200
-Message-ID: <200506071805.42869.w.knol@niwa.co.nz>
+Date: Wed, 8 Jun 2005 17:50:20 -0000 (UTC)
+Message-ID: <32867.83.73.68.20.1118253020.squirrel@www.amsat.dk>
 References: <32946.83.73.68.20.1117910443.squirrel@www.amsat.dk>
-Reply-To: w.knol@niwa.co.nz
+    <200506071805.42869.w.knol@niwa.co.nz>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 7BIT
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <32946.83.73.68.20.1117910443.squirrel@www.amsat.dk>
-Content-Disposition: inline
+In-Reply-To: <200506071805.42869.w.knol@niwa.co.nz>
 Sender: linux-hams-owner@vger.kernel.org
 List-Id: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
 To: linux-hams@vger.kernel.org
 
+Hi everybody
 
-> What I have is this: My distribution is SUSE 9.2 with a 2.6.8
-> kernel. The AX.25 tools are version 0.0.8 and the AX.25-apps are
-> 0.0.6. My modem is a DSP-12 in kiss mode attached to /dev/ttyS0. My
-> PC has a Pentium 4 and I normally run a SMP version, but since I
-> learned that e.g. mkiss doesn't work with SMP, I use a mono-CPU
-> version ('default' in SUSE terms). I can configue an ax0 interface
-> with kissattach ('kissattach -l /dev/ttyS0 asy 44.145.40.3'), but I
-> can't get listen to display any packets, in fact 'ifconfig' doesn't
-> show any packets received.
+and thanks for all the replies and advice. I have it working now! It turns
+out that I had to use userspace mkiss. Most of the setups that were
+presented to me included a call to mkiss but I had ignored it, because I
+use a single port TNC (a DSP-12). When I tried the following, however, it
+worked:
 
-This is probably not of much help...but AX.25 works perfectly with 
-kernel 2.6.3-7mdk (Mandrake 10.0 Community), tested only with the 
-serial full-duplex 1k2 baycom driver . It is rock-solid and goes for 
-months. I should mention I don't use NET/ROM.
+/usr/sbin/mkiss -s 115200 /dev/ttyS0 /dev/ptyq0
+/usr/sbin/kissattach /dev/ttyq0 asy 44.145.40.3
 
-I am contemplating an upgrade to Debian 3.1 in a week or so...I guess 
-I will find out whether AX.25 support is broken post- 2.6.3 ...
+so now I have listen and call etc up and running. I guess there is a
+lesson to be learned from this but I'm not quite sure which...
 
-Wilbert, ZL2BSJ
+BTW I'm using the versions of ax25-tools (0.0.8), ax25-apps (0.0.6) etc
+that comes with SUSE 9.2, so the release versions are OK.
+
+Best 73 de Bent/OZ6BL
+
