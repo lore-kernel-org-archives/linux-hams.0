@@ -1,34 +1,35 @@
-From: oz6bl@amsat.dk
-Subject: Re: kissattach and kernel 2.6
-Date: Wed, 8 Jun 2005 17:50:20 -0000 (UTC)
-Message-ID: <32867.83.73.68.20.1118253020.squirrel@www.amsat.dk>
-References: <32946.83.73.68.20.1117910443.squirrel@www.amsat.dk>
-    <200506071805.42869.w.knol@niwa.co.nz>
+From: Chuck Hast <wchast@gmail.com>
+Subject: ax25ipd issue
+Date: Sat, 11 Jun 2005 07:38:46 -0600
+Message-ID: <620c90570506110638c4a2659@mail.gmail.com>
+Reply-To: Chuck Hast <wchast@gmail.com>
 Mime-Version: 1.0
 Content-Transfer-Encoding: 7BIT
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <200506071805.42869.w.knol@niwa.co.nz>
+Content-Disposition: inline
 Sender: linux-hams-owner@vger.kernel.org
 List-Id: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
-To: linux-hams@vger.kernel.org
+To: Linux-Hams <linux-hams@vger.kernel.org>
 
-Hi everybody
+Folks,
+I am using ax25ipd to route some connections over the wire to other sites
+while we get the RF paths back up and running. The issue I am having is
+that some of these sites do not have fixed addresses, and the lease exp-
+ires every 12 hours or so. If I use the domain name address it will pick up
+the numerical address when ax25ipd is first started but once started it
+appears to cash the address it got and continue to use it rather than try
+to resolve the domain name each time it needs to make a connection.
 
-and thanks for all the replies and advice. I have it working now! It turns
-out that I had to use userspace mkiss. Most of the setups that were
-presented to me included a call to mkiss but I had ignored it, because I
-use a single port TNC (a DSP-12). When I tried the following, however, it
-worked:
+In my particular case I am trying to make connetions to people using
+the no-ip.com domain, but I tried it with another and the same thing
+happens. It resolves the first time and continues to use that address
+even after the dhcp assignment has changed which indicates to me
+that it is only doing address resolution when ax25ipd is starting.
 
-/usr/sbin/mkiss -s 115200 /dev/ttyS0 /dev/ptyq0
-/usr/sbin/kissattach /dev/ttyq0 asy 44.145.40.3
-
-so now I have listen and call etc up and running. I guess there is a
-lesson to be learned from this but I'm not quite sure which...
-
-BTW I'm using the versions of ax25-tools (0.0.8), ax25-apps (0.0.6) etc
-that comes with SUSE 9.2, so the release versions are OK.
-
-Best 73 de Bent/OZ6BL
-
+-- 
+Chuck Hast 
+To paraphrase my flight instructor;
+"the only dumb question is the one you DID NOT ask resulting in my going
+out and having to identify your bits and pieces in the midst of torn
+and twisted metal."
