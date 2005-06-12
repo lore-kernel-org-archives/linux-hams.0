@@ -1,42 +1,62 @@
-From: Steve Fraser <sfraser@sierra.apana.org.au>
+From: Jeremy Utley <jerutley@gmail.com>
 Subject: Re: ax25ipd issue
-Date: Sun, 12 Jun 2005 08:33:20 +0930
-Message-ID: <42AB6DB8.2070604@sierra.apana.org.au>
-References: <620c90570506110638c4a2659@mail.gmail.com>	 <1118518985.1275.1.camel@oh2bns.ampr.org>	 <d5d4185b050611125459e4d41a@mail.gmail.com> <1118520574.1282.10.camel@oh2bns.ampr.org>
+Date: Sat, 11 Jun 2005 21:50:53 -0700
+Message-ID: <d5d4185b05061121502bfbdaf8@mail.gmail.com>
+References: <620c90570506110638c4a2659@mail.gmail.com>
+	 <1118518985.1275.1.camel@oh2bns.ampr.org>
+	 <d5d4185b050611125459e4d41a@mail.gmail.com>
+	 <1118520574.1282.10.camel@oh2bns.ampr.org>
+Reply-To: Jeremy Utley <jerutley@gmail.com>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 7BIT
 Return-path: <linux-hams-owner@vger.kernel.org>
 In-Reply-To: <1118520574.1282.10.camel@oh2bns.ampr.org>
+Content-Disposition: inline
 Sender: linux-hams-owner@vger.kernel.org
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"; format="flowed"
-To: Linux-hams List <linux-hams@vger.kernel.org>
+Content-Type: text/plain; charset="us-ascii"
+To: linux-hams@vger.kernel.org
 
-Hi All,
-
-Tomi Manninen wrote:
-
+On 6/11/05, Tomi Manninen <oh2bns@sral.fi> wrote:
+> On Sat, 2005-06-11 at 22:54, Jeremy Utley wrote:
+> 
+> > On 6/11/05, Tomi Manninen <oh2bns@sral.fi> wrote:
+> > > Ax25ipd is completely stateless, so the other alternative would be
+> > > to resolve for each packet. That would be braindead if you ask me...
+> 
+> > Does ax25ipd initiate a SYN/ACK handshake with the remote system only
+> > at startup, and maintain the connection, or does it initiate the
+> > connection, send it's data, and terminate the connection, reopening it
+> > later when there is more data to send?  If it's the latter, then my
+> > own personal opinion is that it should be doing a DNS lookup for each
+> > connection it initiates.  And if it's using UDP instead of TCP, then
+> > yes, each individual packet should be accompanied by a DNS lookup
+> > request.
+> 
+> AX25IP works with not TCP, not UDP, but with IP protocol 93. It's a
+> stateless protocol consisting of not much else than wrapping an
+> AX.25 packet to an IP frame. Then there are variants that use UDP
+> to do pretty much the same.
 > 
 > If doing a DNS lookup for each outgoing AX.25 packet is ok for
 > people then so be it. You have the source. Modify it.
 > 
 > I find it braindead. The fix should be something else.
-> 
-I agree. That would be a ridiculous overhead.
 
-Some time ago I prototyped a "dynamic" ax25ipd. The lookup table 
-(translating callsigns to IP's) was held in memory space that could also 
-be accessed by other programs. The idea was that ax25ipd initially 
-populated the table, then other programs (eg DNS, or a "learning" 
-listener) could amend it. Each time ax25ipd sent a packet, it looked up 
-that table, so if the entry had changed the packet went to the new 
-destination.
+Not to flame, but I find your implementation braindead.  IP addresses
+change, and the whole purpose of DNS is to make it so you don't have
+to remember ip's - you can use friendly names instead.  If your
+application cannot respect the DNS TTL value as specified by the name
+server that provides the reverse mapping (and on the dyndns services
+such as no-ip this are naturally set very low), then IMHO, it's a
+broken application.
 
-It needed a simple locking mechanism, but before I got around to that 
-someone did a major rewrite of ax25ipd and I never got around to 
-re-doing it :-(  But I'm sure it could be re-done relatively easily 
-(even if I can't find the code).
+Since the program is using a stateless mode of communication, then it
+*IS* necessary for the program to either (a) respect the TTL setting
+provided by the remote authoritative DNS server, or (b) make a call to
+gethostbyname() (If I remember my c networking code that's the
+function used) to translate the hostname to the IP each an every time.
+ Anything else is irresponsible, and broken, because you're relying on
+data that is outdated.
 
-73
-
-Steve, vk5asf
+Jeremy, NW7JU
