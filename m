@@ -1,37 +1,33 @@
-From: "Manfred Haertel, DB3HM" <Manfred.Haertel@rz-online.de>
-Subject: Re: Problems in my ax25 interface.
-Date: Sun, 12 Jun 2005 08:25:05 +0200
-Message-ID: <42ABD541.7020903@rz-online.de>
-References: <200506112158.32378.ct1drb@iol.pt>
+From: Richard Adams <pa3gcu@zeelandnet.nl>
+Subject: Re: mheard.dat file
+Date: Sun, 12 Jun 2005 09:02:08 +0200
+Message-ID: <200506120902.09080.pa3gcu@zeelandnet.nl>
+References: <620c9057050611193541d354c1@mail.gmail.com>
+Reply-To: pa3gcu@zeelandnet.nl
 Mime-Version: 1.0
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <200506112158.32378.ct1drb@iol.pt>
+In-Reply-To: <620c9057050611193541d354c1@mail.gmail.com>
+Content-Disposition: inline
 Sender: linux-hams-owner@vger.kernel.org
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="iso-8859-1"; format="flowed"
-To: Linux-hams List <linux-hams@vger.kernel.org>
+Content-Type: text/plain; charset="us-ascii"
+To: Chuck Hast <wchast@gmail.com>
+Cc: Linux-Hams <linux-hams@vger.kernel.org>
 
-David Quental wrote:
+On Sunday 12 June 2005 04:35, Chuck Hast wrote:
+> Folks,
+> I have another question for the list, I am using mheard, according to the
+> man file and other data the mheard.dat file should be in the /var/ax25
+> directory, but for some reason it is being placed in /etc/ax25.
+>
+> In running other programs that use the mheard.dat file they are looking
+> at it in the /var/ax25 file and not finding it.
+>
+> Does anyone know why it is being put in the /etc/ax25 directory instead
+> of the /var/ax25 directory? I have tried to figure out how to change the
+> path but no luck.
 
-> All runs fine, but, lately I added the samba service. Now in my liste=
-n (where=20
-> I can see traffic) I saw a lot of ip frames sending to the 1k2 device=
- (I=20
-> changed order in /etc/ax/ax25-up and now 1k2 device is in first place=
-) and if=20
-> I do rcax25 stop all system freezes.
+I have not been using ax25 for a long while so i have no idea why.
 
-The IP frames are most probably caused by mdnsd, the Multicast DNS=20
-Daemon, which uses all (broadcast?) interfaces by default. If you don't=
-=20
-need it really, shut it down (rcmdnsd stop).
-
---=20
-Manfred H=E4rtel, DB3HM    mailto:Manfred.Haertel@rz-online.de
-                          http://rz-home.de/mhaertel
--
-To unsubscribe from this list: send the line "unsubscribe linux-hams" i=
-n
-the body of a message to majordomo@vger.kernel.org
-More majordomo info at  http://vger.kernel.org/majordomo-info.html
+Surely you could create a symbolic link in /var/ax25 pointing to /etc/ax25.
