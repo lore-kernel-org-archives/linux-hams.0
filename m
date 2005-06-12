@@ -1,46 +1,32 @@
-From: David Quental <ct1drb@iol.pt>
-Subject: Re: Problems in my ax25 interface - more infos.
-Date: Sat, 11 Jun 2005 23:09:59 +0100
-Message-ID: <200506112309.59831.ct1drb@iol.pt>
-References: <OMEGIMHHANGHDCMEGEJCEEBDCCAA.g0lgs@gb7lgs.co.uk>
+From: Chuck Hast <wchast@gmail.com>
+Subject: mheard.dat file
+Date: Sat, 11 Jun 2005 20:35:45 -0600
+Message-ID: <620c9057050611193541d354c1@mail.gmail.com>
+Reply-To: Chuck Hast <wchast@gmail.com>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 7BIT
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <OMEGIMHHANGHDCMEGEJCEEBDCCAA.g0lgs@gb7lgs.co.uk>
 Content-Disposition: inline
 Sender: linux-hams-owner@vger.kernel.org
 List-Id: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
-To: Linux-hams List <linux-hams@vger.kernel.org>
+To: Linux-Hams <linux-hams@vger.kernel.org>
 
-Hello to all again.
+Folks,
+I have another question for the list, I am using mheard, according to the
+man file and other data the mheard.dat file should be in the /var/ax25
+directory, but for some reason it is being placed in /etc/ax25.
 
-I can add more infos about my setup:
-right now I am using SuSE 9.3, most of times I use KDE, it has some net 
-services under icon my network. If I open this icon there are, at least, 3 
-services:
-net services, slp services and smb shares.
+In running other programs that use the mheard.dat file they are looking
+at it in the /var/ax25 file and not finding it.
 
-If I enable all of these services I see a lot of tcpip frames in interface 
-scc1, frames from 44.158.28.12 to another ip's.
+Does anyone know why it is being put in the /etc/ax25 directory instead
+of the /var/ax25 directory? I have tried to figure out how to change the path
+but no luck.
 
-Hope this can help you, thanks in advance.
-> To stop Samba sending things on the AX25 interfaces make sure
-> your smb.conf has a line like:
->
-> 	interfaces = 192.168.21.1/24
->
-> To restrict it to using only the interfaces you need SMB to work over.
->
-> --
-> Stewart G0LGS
-Best 73s.
-
-CT1DRB
-David Quental
-
-
-> -
-> To unsubscribe from this list: send the line "unsubscribe linux-hams" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at  http://vger.kernel.org/majordomo-info.html
+-- 
+Chuck Hast 
+To paraphrase my flight instructor;
+"the only dumb question is the one you DID NOT ask resulting in my going
+out and having to identify your bits and pieces in the midst of torn
+and twisted metal."
