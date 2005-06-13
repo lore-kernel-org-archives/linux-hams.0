@@ -1,68 +1,68 @@
-From: Chuck Hast <wchast@gmail.com>
-Subject: Re: mheard.dat file
-Date: Sun, 12 Jun 2005 21:37:15 -0600
-Message-ID: <620c905705061220371b7a13e1@mail.gmail.com>
-References: <620c9057050611193541d354c1@mail.gmail.com>
-	 <200506120902.09080.pa3gcu@zeelandnet.nl>
-	 <620c9057050612043739d3ff8a@mail.gmail.com>
-	 <200506121340.27228.pa3gcu@zeelandnet.nl>
-Reply-To: Chuck Hast <wchast@gmail.com>
+From: Bernard Pidoux <pidoux@ccr.jussieu.fr>
+Subject: Re: [fpac] Re: ax25ipd issue
+Date: Mon, 13 Jun 2005 11:50:08 +0200
+Message-ID: <42AD56D0.6050705@ccr.jussieu.fr>
+References: <620c90570506110638c4a2659@mail.gmail.com>	<68826e6e97da1023788e9ddc026b6e0d@utac.net>	<42AC8791.6080401@ccr.jussieu.fr> <620c9057050612143763a373a5@mail.gmail.com>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7BIT
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <200506121340.27228.pa3gcu@zeelandnet.nl>
-Content-Disposition: inline
+In-Reply-To: <620c9057050612143763a373a5@mail.gmail.com>
 Sender: linux-hams-owner@vger.kernel.org
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"
-To: pa3gcu@zeelandnet.nl
-Cc: Linux-Hams <linux-hams@vger.kernel.org>
+Content-Type: text/plain; charset="iso-8859-1"; format="flowed"
+To: Chuck Hast <wchast@gmail.com>, List for LINUX ROSE/FPAC network switch <fpac@f6fbb.org>
+Cc: fpac@home.f6fbb.org, John Hurst <jhurst@utac.net>, Linux-Hams <linux-hams@vger.kernel.org>
 
-On 6/12/05, Richard Adams <pa3gcu@zeelandnet.nl> wrote:
-> On Sunday 12 June 2005 13:37, Chuck Hast wrote:
-> > > I have not been using ax25 for a long while so i have no idea why.
-> > >
-> > > Surely you could create a symbolic link in /var/ax25 pointing to
-> > > /etc/ax25.
-> >
-> > You know the thing about not seeing the forest for the trees. Of course
-> > that is the fix. Thank you I shall go and make it so...
-> >
-> > Still wonder why it is doing that, seems that if I recall correctly that
-> > path is hard coded into mheardd, indeed I took the mheardd which is running
-> > correctly on one machine and put it on another and still had the same
-> > problem.
-> >
-> > On the other machine it is creating the mheard.dat file in the /etc/ax25
-> > directory so no amount of file creation will fix it, but a symlink
-> > will I am sure.
-> 
-> One used to be able to define where the files should be located during compile
-> time, you use options under the ./configure program.
-> 
-> Here is part of the INSTALL file from ax25-apps-0.0.4
-> 
-> To build it you type:
->         ./configure
->         make
->         make install
-> 
-> By default, it will install the files in /usr/local.  To change this
-> so that binaries go in  /usr and the conf files go in /etc
->         ./configure --prefix=/usr --sysconfdir=/etc --localstatedir=/var
->         make
->         make install
-> 
-> Now i hope you see what you are donig correctly/incorretly....
+Chuck Hast a =E9crit :
+> Bernard,
+> Does double ax25ipd command at the bottom start up two instances of
+> ax25ipd? Also I believe that the -l4 is log level 4 correct?=20
 
-Does anyone know how that data is stored in that .dat file is there any
-other application that will read that data? I assume that is must be some
-sort of small db file but not sure what format that is being used.
+No, It starts only one instance of ax25ipd.
+The second call is in case ax25ipd will not be able to connect=20
+immediately to remote ip stations, it only gives it a second chance.=20
+Otherwise, the system would have to wait for one more hour until the=20
+script starts again.
+
+By the way, I had to introduce a small patch into ax25ipd source code=20
+for it would fail if a LAN connexion through UDP port is not reachable,=
+=20
+All the AXIP system would lock and thus FPAC.
+
+The patch is in io_error() routine.
+
+                         exit(2);
+                 } else if (mode =3D=3D UDP_MODE) {
+                         syslog(LOG_ERR, "reading from udp socket,=20
+%s\n", strerror(errno));
+//                      perror("reading from udp socket");
+//                      exit(2);
+                 } else if (mode =3D=3D TTY_MODE) {
+
+In case of read error, ax25ipd will keep on trying to read, instead of=20
+aborting.
 
 
--- 
-Chuck Hast 
-To paraphrase my flight instructor;
-"the only dumb question is the one you DID NOT ask resulting in my going
-out and having to identify your bits and pieces in the midst of torn
-and twisted metal."
+>=20
+> Sure would be nice not to have to kill the thing and restart it but I=
+ guess if
+> you do it fast enough your links may not even notice it...
+>=20
+> Need to get someone to look at coming up with perhaps a new version o=
+r
+> something that will keep things running without dropping the whole th=
+ing.
+>=20
+> I guess the only things I need to change are the call signs, IP domai=
+ne
+> names and the paths which may be different.
+>=20
+>=20
+>=20
+
+73 de Bernard, f6bvp
+-
+To unsubscribe from this list: send the line "unsubscribe linux-hams" i=
+n
+the body of a message to majordomo@vger.kernel.org
+More majordomo info at  http://vger.kernel.org/majordomo-info.html
