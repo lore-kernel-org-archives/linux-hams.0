@@ -1,52 +1,44 @@
-From: David Quental <ct1drb@iol.pt>
-Subject: Re: Problems in my ax25 interface.
-Date: Wed, 15 Jun 2005 23:01:34 +0100
-Message-ID: <200506152301.34300.ct1drb@iol.pt>
-References: <200506112158.32378.ct1drb@iol.pt> <200506121205.18849.w.knol@niwa.co.nz>
+From: Jacques Chion <Jacques.Chion@wanadoo.fr>
+Subject: soundmodem and kernel 2.6.12
+Date: Sun, 19 Jun 2005 05:41:55 +0200 (CEST)
+Message-ID: <Pine.LNX.4.44.0506190529240.2936-100000@cwoux2.cerise.fr>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <200506121205.18849.w.knol@niwa.co.nz>
-Content-Disposition: inline
 Sender: linux-hams-owner@vger.kernel.org
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"
-To: Linux-hams List <linux-hams@vger.kernel.org>
+Content-Type: TEXT/PLAIN; charset="iso-8859-1"
+To: linux-hams@vger.kernel.org
 
-Hello all
+Hello all,
 
-here still I have problems with my ax25 interface and internet,
-I configured my computer to boot without ax25 on, all runs fine (except ax25 
-of course) but when I do rcax25 start there are a lot of frames that are 
-sending via scc0 (1200 interface).
-> Hi David,
->
-> > All runs fine, but, lately I added the samba service. Now in my listen
-> > (where I can see traffic) I saw a lot of ip frames sending to the 1k2
-> > device
->
-> You need to stop SAMBA from using the packet network interfaces.
->
-> Edit /etc/smb.conf and set
->
-> bind interface only = Y
-> interfaces = 	eth0, 127.0.0.1
->
-> ...assuming eth0 is your LAN interface.
-My lan interface is wlan0, I have a wireless lan
-> Now restart (as root) smb and nmb with:
->
-> rcsmb restart
-> rcnmb restart
-It does not work, I see this:
-len 58 dbcontrol-oms->netbios-ns Data 50 inside tcpip frame.
-Maybe this helps.
-> Hope this helps...
->
-> Wilbert, ZL2BSJ
+i am using soundmodem for long times without problems (the software, no=
+t the old module).
+When i saw the new kernel 2.6.12, i tried it, of course.
 
-Best 73s.
+And the result was :
+-soundmodemconfig works always
+-soundmodem does not work, claiming a problem about TIOCSETD.
 
-CT1DRB
-David Quental
+After looking what can be wrong, i saw that the problem came from mkiss=
+=2Ec
+in drivers/net/hamradio. So, i took the file mkiss.c coming from the=20
+"old" kernel 2.6.11.12 and recompile the kernel 2.6.12.
+And now all is OK.
+Of course, i made a diff between the two mkiss.c, but i am a dummy
+in programming. Is there an expert to say how to modify
+soundmodem so that we ca use the original kernel 2.6.12 ?
 
+Best 73
+
+Jim F6CWO
+
+--=20
+Quelques HOWTO en fran=E7ais: http://perso.wanadoo.fr/jacques.chion/
+
+
+-
+To unsubscribe from this list: send the line "unsubscribe linux-hams" i=
+n
+the body of a message to majordomo@vger.kernel.org
+More majordomo info at  http://vger.kernel.org/majordomo-info.html
