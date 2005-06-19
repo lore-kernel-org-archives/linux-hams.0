@@ -1,44 +1,29 @@
-From: Jacques Chion <Jacques.Chion@wanadoo.fr>
-Subject: soundmodem and kernel 2.6.12
-Date: Sun, 19 Jun 2005 05:41:55 +0200 (CEST)
-Message-ID: <Pine.LNX.4.44.0506190529240.2936-100000@cwoux2.cerise.fr>
+From: Alexey Dobriyan <adobriyan@gmail.com>
+Subject: [PATCH] ax25: endian-annotate ax25_type_trans()
+Date: Mon, 20 Jun 2005 00:26:04 +0400
+Message-ID: <200506200026.04525.adobriyan@gmail.com>
 Mime-Version: 1.0
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
+Content-Disposition: inline
 Sender: linux-hams-owner@vger.kernel.org
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: TEXT/PLAIN; charset="iso-8859-1"
-To: linux-hams@vger.kernel.org
+Content-Type: text/plain; charset="us-ascii"
+To: Ralf Baechle <ralf@linux-mips.org>
+Cc: linux-hams@vger.kernel.org, netdev@vger.kernel.org, Al Viro <viro@parcelfarce.linux.theplanet.co.uk>
 
-Hello all,
+Signed-off-by: Alexey Dobriyan <adobriyan@gmail.com>
 
-i am using soundmodem for long times without problems (the software, no=
-t the old module).
-When i saw the new kernel 2.6.12, i tried it, of course.
-
-And the result was :
--soundmodemconfig works always
--soundmodem does not work, claiming a problem about TIOCSETD.
-
-After looking what can be wrong, i saw that the problem came from mkiss=
-=2Ec
-in drivers/net/hamradio. So, i took the file mkiss.c coming from the=20
-"old" kernel 2.6.11.12 and recompile the kernel 2.6.12.
-And now all is OK.
-Of course, i made a diff between the two mkiss.c, but i am a dummy
-in programming. Is there an expert to say how to modify
-soundmodem so that we ca use the original kernel 2.6.12 ?
-
-Best 73
-
-Jim F6CWO
-
---=20
-Quelques HOWTO en fran=E7ais: http://perso.wanadoo.fr/jacques.chion/
-
-
--
-To unsubscribe from this list: send the line "unsubscribe linux-hams" i=
-n
-the body of a message to majordomo@vger.kernel.org
-More majordomo info at  http://vger.kernel.org/majordomo-info.html
+Index: linux-sparse/include/net/ax25.h
+===================================================================
+--- linux-sparse.orig/include/net/ax25.h	2005-06-10 09:24:10.000000000 +0400
++++ linux-sparse/include/net/ax25.h	2005-06-10 15:03:30.000000000 +0400
+@@ -220,7 +220,7 @@ static __inline__ void ax25_cb_put(ax25_
+ 	}
+ }
+ 
+-static inline unsigned short ax25_type_trans(struct sk_buff *skb, struct net_device *dev)
++static inline __be16 ax25_type_trans(struct sk_buff *skb, struct net_device *dev)
+ {
+ 	skb->dev      = dev;
+ 	skb->pkt_type = PACKET_HOST;
