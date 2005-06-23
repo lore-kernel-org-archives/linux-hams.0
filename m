@@ -1,43 +1,46 @@
-From: Mike Murphree <mike@tropo.org>
-Subject: Re: Embedded Linux and Amateur Radio
-Date: Wed, 22 Jun 2005 05:54:56 -0500
-Message-ID: <3DB39211-A6C4-4D79-A3BD-B18CFE21F8CA@tropo.org>
-References: <42B84FB5.8090907@wa7v.com> <20050621175801.GA22967@braddock.com>
-Mime-Version: 1.0 (Apple Message framework v730)
+From: Steve Fraser <sfraser@sierra.apana.org.au>
+Subject: Re: ax25ipd issue
+Date: Thu, 23 Jun 2005 21:21:30 +0930
+Message-ID: <42BAA242.3000809@sierra.apana.org.au>
+References: <620c90570506110638c4a2659@mail.gmail.com>	 <1118518985.1275.1.camel@oh2bns.ampr.org>	 <d5d4185b050611125459e4d41a@mail.gmail.com>	 <1118520574.1282.10.camel@oh2bns.ampr.org>	 <6299972ae763a89e9fb7d206490cf1b7@utac.net> <620c905705061113454d208a97@mail.gmail.com>
+Mime-Version: 1.0
 Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <20050621175801.GA22967@braddock.com>
+In-Reply-To: <620c905705061113454d208a97@mail.gmail.com>
 Sender: linux-hams-owner@vger.kernel.org
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"; delsp="yes"; format="flowed"
-To: linux-hams@vger.kernel.org
+Content-Type: text/plain; charset="us-ascii"; format="flowed"
+To: Linux-hams List <linux-hams@vger.kernel.org>
 
+Hi All,
 
-On Jun 21, 2005, at 12:58 PM, Braddock Gaskill wrote:
+Regarding the problem of IP addresses changing for AXIP links, Chuck 
+Hast wrote:
 
-> On Tue, Jun 21, 2005 at 10:34:45AM -0700, Brett Mueller wrote:
->
->> like to build a system with no moving parts, using Linux as the
->> operating system, with miniPCI 802.11 radio cards, and having serial
->> ports to support KISS or 6PACK on TNCs.  I'd like the ability to run
->>
->
-> One of the niftiest ideas I can think of in this realm would be to use
-> a Linksys WRT54GS access point as a Linux Packet device.  It runs
-> Linux, with OpenWRT firmware you have a fully read/write 6MB
-> filesystem in firmware, and you can easilly hack on two serial ports
-> to talk to external TNCs (although I'm not sure they support hardware
-> handshaking).  Oh, and it would remain a 6-ethernet-port Wifi  
-> device. :)
->
-> http://www.rwhitby.net/wrt54gs/serial.html
->
-> That hack would be slashdot-worthy, and probably not TOO hard.  :)
+> Yes, we need to come up on a work around,  Stewart Wilkinson sent
+> me a set of scripts that kill and restart ax25ipd when they detect a
+> out of date address. Would be much better to figure out how to come
+> up with a solution that will get a new one and go from there. 
 
-The last time that I was in Wal-Mart, the WRT54G (no S) model is down  
-to $58 now too...
+I've done some changes to the code. I've altered it so that every five 
+minutes and after 10 seconds of inactivity (or every 15 minutes 
+regardless) the IP entries for all route lines that have hostnames 
+rather than IP numbers get requeried by DNS. (It would have been better 
+to use TTL's, but I couldnt find any way to get the TTL without a lot of 
+coding!)
 
-FYI, the Sveasoft Talisman firmware is really nice.
+Anyway, if you specify an IP number on a route line, then it's clearly 
+fixed. If you use a FQDN then the IP number may change, so is 
+re-checked. (If it is found to be invalid upon re-checking, the old IP 
+number is re-used).
 
-Mike
+I think this will work OK, (without the overhead of a DNS lookup of 
+every packet) but I dont have any partners who use dynamic dns, so I 
+guess I need a volunteer to try it out for me..........
+
+Drop me a line if you'd like to try it out.
+
+73
+
+Steve, vk5asf
 
