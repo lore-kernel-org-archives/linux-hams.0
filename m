@@ -1,65 +1,95 @@
-From: Bernard Pidoux <pidoux@ccr.jussieu.fr>
-Subject: Re: ax25ipd issue
-Date: Thu, 23 Jun 2005 18:13:11 +0200
-Message-ID: <42BADF97.8000802@ccr.jussieu.fr>
-References: <620c90570506110638c4a2659@mail.gmail.com>	 <1118518985.1275.1.camel@oh2bns.ampr.org>	 <d5d4185b050611125459e4d41a@mail.gmail.com>	 <1118520574.1282.10.camel@oh2bns.ampr.org>	 <6299972ae763a89e9fb7d206490cf1b7@utac.net> <620c905705061113454d208a97@mail.gmail.com> <42BAA242.3000809@sierra.apana.org.au>
+From: Brett Mueller <wa7v@wa7v.com>
+Subject: Re: Embedded Linux and Amateur Radio
+Date: Thu, 23 Jun 2005 16:46:12 -0700
+Message-ID: <42BB49C4.10004@wa7v.com>
+References: <42B84FB5.8090907@wa7v.com>
 Mime-Version: 1.0
 Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <42BAA242.3000809@sierra.apana.org.au>
+In-Reply-To: <42B84FB5.8090907@wa7v.com>
 Sender: linux-hams-owner@vger.kernel.org
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"; format="flowed"
-To: Steve Fraser <sfraser@sierra.apana.org.au>
-Cc: Linux-hams List <linux-hams@vger.kernel.org>
+Content-Type: text/plain; charset="us-ascii"
+To: Linux-Hams <linux-hams@vger.kernel.org>
 
-Hi Steve,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-I have two dynamic IP partners and would be glad to test your patch for 
-ax25ipd.
+On 6/21/2005 10:34, I wrote, in part:
+> I am currently brainstorming on developing and implementing a amateur
+> network in our region (northeast Oregon, southeast Washington), to
+> include using 802.11 devices running under US FCC part 97 regulations,
+<snip>
+> I'd like to build a system with no moving parts, using Linux as the
+> operating system, with miniPCI 802.11 radio cards, and having serial
+> ports to support KISS or 6PACK on TNCs.
 
-Please feel free to send me your patch.
+Hello everyone.  First off, thank you very much for your responses, both
+on list and off.  I really appreciate them.  I was directed to a number
+of good resources, some which I had previously found, and others that I
+hadn't.  As I read some of your replies, I realized that I had neglected
+to mention a key fact that can significantly impact my selection of
+hardware: the project has a decent level of funding.  As a ham, I know
+what it's like to come up with solutions on a shoestring budget --
+oftentimes "it may not be glamorous, but it works!"  In this case,
+however, I have access to a number of prime public safety sites, and can
+spend a bit more on equipment than the average ham can cough up
+(certainly more than I could on my own).  Also, equipment installed in
+those locations must be professional in appearance, and meet standards
+for grounding, lightning protection, etc.
 
-73 de Bernard, f6bvp
+For other (non-ham) projects, I have used Demarctech outdoor access
+points, which have a nicely laid-out Linux-based system (StarOS Router)
+on a PC Engines WRAP board (AMD Geode CPU).
+  http://www.demarctech.com/products/reliawave-rwv/rwv.htm
+  http://www.staros.com/
+  http://www.pcengines.ch/wrap.htm
+For this proposed ham project, I was envisioning something similar,
+while adding the ability to load amateur-related software on the system.
+ I'd like to be able to have dedicated point-to-point connections
+between the sites, perhaps on 5.8 GHz where possible.  This would
+preclude using the WRT54G for those links, although I can see great
+possibilities for the Linksys unit elsewhere -- particularly other
+"peripheral" sites that don't have the "funding" resources available.
+Thanks to those that pointed out the great capabilities and hackability
+(in the old traditional sense of the word) of the WRT54G.
 
+Compact flash cards certainly seem like the way to go (as per my
+original criteria -- no moving parts), but I think I'd probably invest
+in a CF - IDE adapter (especially if I went with an x86 based solution)
+so that I could compile/install/test from a faster machine.
 
-> Hi All,
-> 
-> Regarding the problem of IP addresses changing for AXIP links, Chuck 
-> Hast wrote:
-> 
->> Yes, we need to come up on a work around,  Stewart Wilkinson sent
->> me a set of scripts that kill and restart ax25ipd when they detect a
->> out of date address. Would be much better to figure out how to come
->> up with a solution that will get a new one and go from there. 
-> 
-> 
-> I've done some changes to the code. I've altered it so that every five 
-> minutes and after 10 seconds of inactivity (or every 15 minutes 
-> regardless) the IP entries for all route lines that have hostnames 
-> rather than IP numbers get requeried by DNS. (It would have been better 
-> to use TTL's, but I couldnt find any way to get the TTL without a lot of 
-> coding!)
-> 
-> Anyway, if you specify an IP number on a route line, then it's clearly 
-> fixed. If you use a FQDN then the IP number may change, so is 
-> re-checked. (If it is found to be invalid upon re-checking, the old IP 
-> number is re-used).
-> 
-> I think this will work OK, (without the overhead of a DNS lookup of 
-> every packet) but I dont have any partners who use dynamic dns, so I 
-> guess I need a volunteer to try it out for me..........
-> 
-> Drop me a line if you'd like to try it out.
-> 
-> 73
-> 
-> Steve, vk5asf
-> 
-> -
-> To unsubscribe from this list: send the line "unsubscribe linux-hams" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at  http://vger.kernel.org/majordomo-info.html
-> 
-> 
+Power-over-ethernet (POE) is great stuff, too, where you can easily
+mount the SBC / radio in an outdoor enclosure, use a meter or so of
+feedline to minimize your losses, and run some relatively inexpensive
+UV-rated CAT5 down the tower and into the facility (through lightning
+protection, of course).
 
+Ralf's MIPS port of (X)Net also opens up other possibilities, having the
+option of using it on SBCs based on the MIPS architecture.  He also
+correctly points out the inherent problems in the kernel AX.25 code, and
+I came to the realization that AX.25 support in the kernel would be
+unnecessary if (X)Net was running.
+
+I like the looks of the Soekris boards that a couple of people pointed
+me to.  I'd like to find one with dual Mini-PCI and dual serial ports,
+but I'm not seeing it.  (hmm, will (X)Net do something like MKISS?)
+Nevertheless, great possibilities there.
+
+Paul directed me to a "smallish" distro called Pebble Linux.  Their page
+also includes good information on setting up a Soekris access point:
+http://www.nycwireless.net/pebble
+
+I'll keep sorting through the information out there.  Thanks again...
+
+73,
+
+Brett, WA7V
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.2.4 (MingW32)
+
+iD8DBQFCu0nE+/Ps1x4JxWYRAnXOAJ456qfVPMz7AZMXEjnLyOLC6Z6XWwCfWk7D
+R0RU7ARFGx4P0TMKTJ8/3bA=
+=5YZ8
+-----END PGP SIGNATURE-----
