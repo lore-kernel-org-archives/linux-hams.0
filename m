@@ -1,73 +1,32 @@
-From: Jeremy Utley <jerutley@gmail.com>
-Subject: Re: Kissattach after change to 2.6.12
-Date: Fri, 24 Jun 2005 12:19:38 -0700
-Message-ID: <d5d4185b050624121921fe684d@mail.gmail.com>
-References: <4C3202C2-0B97-4486-9DE7-D01C3F95C449@eb5esx.ampr.org>
-	 <42BC19BC.3090102@ccr.jussieu.fr>
-Reply-To: Jeremy Utley <jerutley@gmail.com>
+From: Ralf Baechle DL5RB <ralf@linux-mips.org>
+Subject: Re: Embedded Linux and Amateur Radio
+Date: Sat, 25 Jun 2005 21:36:02 +0200
+Message-ID: <20050625193602.GA23792@linux-mips.org>
+References: <42B84FB5.8090907@wa7v.com> <42BB49C4.10004@wa7v.com>
 Mime-Version: 1.0
-Content-Transfer-Encoding: QUOTED-PRINTABLE
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <42BC19BC.3090102@ccr.jussieu.fr>
 Content-Disposition: inline
+In-Reply-To: <42BB49C4.10004@wa7v.com>
 Sender: linux-hams-owner@vger.kernel.org
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="iso-8859-1"
-To: linux-hams@vger.kernel.org
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+To: Brett Mueller <wa7v@wa7v.com>
+Cc: Linux-Hams <linux-hams@vger.kernel.org>
 
-On 6/24/05, Bernard Pidoux <pidoux@ccr.jussieu.fr> wrote:
-> Rub=E9n Navarro Huedo wrote :
-> > Hello friends:
-> > After change from 2.6.11 to 2.6.12:
-> >
-> > linux:/etc/init.d# kissattach /dev/ptyt1 xnet 44.133.3.31
-> > kissattach: Error setting line discipline: TIOCSETD: No such device
->=20
-> Just in case, look here to see if /dev/ptyt1 is present in your syste=
-m ?
->=20
-> On the same line, is devfs installed or are you running the new user
-> space udev system ?
-> Udev will sooner or later replace devfs system and thus all pty/tty
-> pseudo devices.
-> In that case, there is only one master device /dev/ptmx that creates
-> automatically a slave device (/dev/pts/xx) when openned.
-> However, there is no official mkiss and kissattach update for udev.
-> I have been experimenting a personnal patch that works quite well,
-> including a patch for ax25ipd based on the same /dev/ptmx /dev/pts
-> pseudo terminals.
->=20
-> > Are you sure you have enabled MKISS support in the kernel
-> > or, if you made it a module, that the module is loaded?
-> > linux:/etc/init.d# modprobe mkiss
-> > linux:/etc/init.d# kissattach /dev/ptyt1 xnet 44.133.3.31
-> > kissattach: Error setting line discipline: TIOCSETD: No such device
-> > Are you sure you have enabled MKISS support in the kernel
-> > or, if you made it a module, that the module is loaded?
-> >
-> > Any help?
-> > A lot of thank's
-> >
-> > ----------
-> > Rub=E9n Navarro Huedo
-> > eb5esx@eb5esx.ampr.org
-> >
-> 73 de Bernard, f6bvp
-> -
-> To unsubscribe from this list: send the line "unsubscribe linux-hams"=
- in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at  http://vger.kernel.org/majordomo-info.html
->=20
+On Thu, Jun 23, 2005 at 04:46:12PM -0700, Brett Mueller wrote:
 
-Udev will also create the /dev/tty?? and /dev/pty?? device nodes
-automatically, if you use a sufficiently new kernel and udev version,
-and the kernel is compiled with BSD PTY support.  I suspect the OP
-didn't enable BSD PTY support in his 2.6.12 kernel.
+> Ralf's MIPS port of (X)Net also opens up other possibilities, having the
+> option of using it on SBCs based on the MIPS architecture.  He also
+> correctly points out the inherent problems in the kernel AX.25 code, and
+> I came to the realization that AX.25 support in the kernel would be
+> unnecessary if (X)Net was running.
 
-Jeremy, NW7JU
--
-To unsubscribe from this list: send the line "unsubscribe linux-hams" i=
-n
-the body of a message to majordomo@vger.kernel.org
-More majordomo info at  http://vger.kernel.org/majordomo-info.html
+In the end I however consider usermode stack integrated with a whole set
+of applications and server daemons such as Xnet a design mistake for
+operating systems such as Linux that are pretending to have full blown and
+universal network stacks and I'm working - time permitting - on getting
+the kernel stack to work just as well.  Nontrivial, challenging - and
+hopefully at some point - also rewarding ...
+
+  Ralf
