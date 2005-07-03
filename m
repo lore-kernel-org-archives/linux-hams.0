@@ -1,109 +1,51 @@
-From: ariel mastracchio <ari197516@yahoo.com>
-Subject: Re: Soundmodem Not Decoding Real Packets
-Date: Sat, 2 Jul 2005 12:03:35 -0700 (PDT)
-Message-ID: <20050702190335.12000.qmail@web51004.mail.yahoo.com>
-References: <loom.20050702T065537-241@post.gmane.org>
+From: Bernard Pidoux <pidoux@ccr.jussieu.fr>
+Subject: proposed mheardd and mheard patches
+Date: Sun, 03 Jul 2005 22:27:45 +0200
+Message-ID: <42C84A41.7080308@ccr.jussieu.fr>
+References: <620c9057050702182953bb166e@mail.gmail.com>	<005301c57fa4$0b35da90$0700010a@jeanpaul>	<620c90570507030511123614d2@mail.gmail.com>	<6.2.1.2.2.20050703091801.01eb8778@mail.bellsouth.net> <620c90570507030818156ff53a@mail.gmail.com>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7BIT
+Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <loom.20050702T065537-241@post.gmane.org>
+In-Reply-To: <620c90570507030818156ff53a@mail.gmail.com>
 Sender: linux-hams-owner@vger.kernel.org
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"
-To: Jonathan Lassoff <jlassoff@gmail.com>, linux-hams@vger.kernel.org
+Content-Type: text/plain; charset="us-ascii"; format="flowed"
+To: Chuck Hast <wchast@gmail.com>
+Cc: List for LINUX ROSE/FPAC network switch <fpac@f6fbb.org>, linux-hams <linux-hams@vger.kernel.org>
 
-Hello,
- 
-  The motherboard i have with onboard sound card
-didn't work (it transmit ok, but dont decode packets,
-the scope graph show a very small bandwidth with blank
-noise) , i have to buy a sound blaste PCI, and work
-fine!!
+Chuck,
 
-hugs
-lu9aum
+As you noticed, a number of ROSE / FPAC stations have difficulties with 
+the mheard function and cannot display AX25 traffic statistics.
 
---- Jonathan Lassoff <jlassoff@gmail.com> wrote:
+This is because mheard does not find mheard.dat database file.
 
-> Dave Platt <dplatt <at> radagast.org> writes:
-> > Hmmm.
-> > 
-> > Which audio drivers are you using - OSS, or ALSA?
-> 
-> I've tried both. I'm using the i810_audio module
-> with the AC97 codec for an
-> on-board sound device on a laptop.
->  
-> > I've seen some rather bizarre things with some
-> combinations of card,
-> > driver, and software setting.  In particular,
-> problems can occur if:
-> > 
-> > [1] The card itself is only capable of supporting
-> a small selection of
-> >     sampling rates (many AC97 codes seem to want
-> to run at 48000
-> >     samples/second), and
-> > 
-> > [2] You set up the sound modem to use the
-> "natural" sampling rate for
-> >     the modulation in question (e.g. 9600
-> samples/second for 1200-baud
-> >     packet), and
-> 
-> I cannot seem to find where this is set. Are the
-> specifications for the config
-> file somewhere?
-> 
-> > [3] The soundmodem is configured to use /dev/dsp,
-> and
-> > 
-> > [4] You're using an ALSA driver with OSS
-> emulation.
-> > 
-> > What seems to happen is that the OSS emulation
-> layer quite politely
-> > lies to the soundmodem, says "Sure, 9600
-> samples/second is supported",
-> > and then tells the ALSA PCM layer to do
-> sample-rate conversion in
-> > software.  The ALSA rate converter has some
-> problems, and it ends up
-> > introducing noise into the received audio signal
-> occasionally (usually
-> > on internal buffer boundaries, I believe).  The
-> noise is sufficient to
-> > mess up the audio reception.
-> > 
-> > The solution to this involves disabling the sample
-> rate conversion
-> > process.  I _think_ (but am not sure) that the
-> best way to do this is
-> > to tell the soundmodem to use the ALSA API
-> directly, rather than using
-> > the OSS emulation via /dev/dsp - recent versions
-> of the soundmodem can
-> > do this, and are smart enough to use a sampling
-> rate that the audio
-> > chip supports directly with no conversion being
-> required.
-> 
-> Well, from some of the things you have pointed out,
-> I might suspect an audio
-> driver issue, but I'm not sure if the ALSA driver is
-> using OSS emulation with
-> the older i810_audio driver.
-> 
-> -
-> To unsubscribe from this list: send the line
-> "unsubscribe linux-hams" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at 
-> http://vger.kernel.org/majordomo-info.html
-> 
+This can occure if :
 
+- the directory, where mheard.dat file should be, does not exist.
+   (It is usually in  /var/ax25/mheard/ )
+- or mheard.dat is written into another directory.
 
-__________________________________________________
-Do You Yahoo!?
-Tired of spam?  Yahoo! Mail has the best spam protection around 
-http://mail.yahoo.com 
+In the first case, presently, mheardd does not complain if 
+/var/ax25/mheard/ directory has not been created before it is started.
+This is probably a default in the make install procedure of ax25-tools 
+and could be corrected.
+
+However, I thought it would be more user friendly if both programs where 
+more verbous when finding errors.
+
+Thus, I made two small patches.
+
+With the first one, mheardd will display the directory and file when the 
+daemon fails to write mheard.dat file. If so it will exit.
+User will know the directory to mkdir before starting mheardd again.
+
+Modified mheard client, will also display the directory and file names 
+if it does not find it.
+
+The user will thus be able to understand the situation and solve it.
+
+Proposed patch is here :
+http://f6bvp.free.fr/logiciels/fpac/mheardd.diff
+
+73 de Bernard, f6bvp
