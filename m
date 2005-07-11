@@ -1,40 +1,26 @@
-From: Ralf Baechle DL5RB <ralf@linux-mips.org>
-Subject: Re: mkiss driver patch applied ?
-Date: Mon, 11 Jul 2005 16:55:05 +0100
-Message-ID: <20050711155505.GA7176@linux-mips.org>
-References: <20050704173042.GA3090@linux-mips.org> <42CEDEFF.30304@ccr.jussieu.fr> <42D000AF.90703@ccr.jussieu.fr> <200507092313.11144.vk3heg@iinet.net.au>
+From: Bill Vodall WA7NWP <wa7nwp@jnos.org>
+Subject: YAPP File Transfer with Linux
+Date: Mon, 11 Jul 2005 14:59:36 -0700
+Message-ID: <42D2EBC8.6050409@jnos.org>
+References: <20050711082102.GA5268@linux-mips.org>
 Mime-Version: 1.0
+Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
-Content-Disposition: inline
-In-Reply-To: <200507092313.11144.vk3heg@iinet.net.au>
+In-Reply-To: <20050711082102.GA5268@linux-mips.org>
 Sender: linux-hams-owner@vger.kernel.org
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-To: Stephen <vk3heg@iinet.net.au>
-Cc: linux-hams@vger.kernel.org
+Content-Type: text/plain; charset="us-ascii"; format="flowed"
+To: linux-hams@vger.kernel.org
 
-On Sat, Jul 09, 2005 at 11:13:10PM +0000, Stephen wrote:
 
-> 
-> > I tried to apply Ralf's patch to mkiss.c without success.
-> >
-> > Did someone succeed ?
-> >
-> > I would like very much to test this version with 2.6.11mdksmp kernel.
-> >
-> > Could someone send me privately the full modified mkiss.c ?
-> 
-> the patch is only for 2.6.12.x kernels
+I'm looking for a command line YAPP file transfer
+facility for Linux.
 
-Or more accurately, it should work for 2.6.12-rc4 or newer.  The
-sympthom for kernels older than this is this warning:
+I found AFServ at Hamsoft but the links there are dead.
 
-  CC      drivers/net/hamradio/mkiss.o
-drivers/net/hamradio/mkiss.c: In function `ax_bump':
-drivers/net/hamradio/mkiss.c:267: warning: implicit declaration of function
-`ax25_type_trans'
+ 
+<http://radio.linux.org.au/pkgdetail.phtml?sectpat=All&ordpat=title&descpat=&pkgid=352>
 
-The warning unfortunately is the sympthom of a serious problem ...
+Thanks,
+Bill - WA7NWP
 
-  Ralf
