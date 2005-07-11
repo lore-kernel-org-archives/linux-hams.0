@@ -1,7 +1,7 @@
 From: "Curt, WE7U" <archer@eskimo.com>
 Subject: Re: YAPP File Transfer with Linux
-Date: Mon, 11 Jul 2005 15:06:51 -0700 (PDT)
-Message-ID: <Pine.SUN.4.58.0507111505170.6729@eskimo.com>
+Date: Mon, 11 Jul 2005 15:12:53 -0700 (PDT)
+Message-ID: <Pine.SUN.4.58.0507111511250.6729@eskimo.com>
 References: <20050711082102.GA5268@linux-mips.org> <42D2EBC8.6050409@jnos.org>
 Reply-To: "Curt Mills, WE7U" <archer@eskimo.com>
 Mime-Version: 1.0
@@ -16,21 +16,15 @@ Cc: linux-hams@vger.kernel.org
 
 On Mon, 11 Jul 2005, Bill Vodall WA7NWP wrote:
 
->
 > I'm looking for a command line YAPP file transfer
 > facility for Linux.
->
-> I found AFServ at Hamsoft but the links there are dead.
->
->
-> <http://radio.linux.org.au/pkgdetail.phtml?sectpat=All&ordpat=title&descpat=&pkgid=352>
 
-Might this work?
+Found this on my SuSE system:
 
-http://www.sm5sxl.net/~mats/src/unix/mfjterm/
+/usr/share/doc/packages/ax25-doc/yappxfer.pas and yappxfer.doc
 
-A Google search for "YAPP linux protocol WA7MBL" found it.  Found a
-few others too.
+You could either compile the pascal program or convert it to C and
+compile it.
 
 --
 Curt, WE7U.   APRS Client Comparisons: http://www.eskimo.com/~archer
