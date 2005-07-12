@@ -1,41 +1,24 @@
-From: Michael Taylor <mctaylor@privacy.nb.ca>
-Subject: Re: YAPP File Transfer with Linux
-Date: Tue, 12 Jul 2005 21:51:48 +0100
-Message-ID: <20050712205148.GA97430@coffee>
-References: <20050712152823.GA17591@oz.net> <Pine.LNX.4.44.0507121202210.19475-100000@srv01.compumont.com>
+From: Bill - WA7NWP <wa7nwp@jnos.org>
+Subject: Re: SSH and the NONE option
+Date: Tue, 12 Jul 2005 14:57:48 -0700
+Message-ID: <42D43CDC.8080102@jnos.org>
+References: <MAEBLGENFLMMCIMBCMPOOEJICKAA.la6gha@robenel.com> <Pine.LNX.4.44.0507121017130.16595-100000@srv01.compumont.com> <loom.20050712T200240-877@post.gmane.org> <42D4152E.9090405@jnos.org> <20050712204120.GB96948@coffee>
 Mime-Version: 1.0
+Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
-Content-Disposition: inline
-In-Reply-To: <Pine.LNX.4.44.0507121202210.19475-100000@srv01.compumont.com>
+In-Reply-To: <20050712204120.GB96948@coffee>
 Sender: linux-hams-owner@vger.kernel.org
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-To: Bill Vodall <wa7nwp@jnos.org>
-Cc: linux-hams@vger.kernel.org
+Content-Type: text/plain; charset="us-ascii"; format="flowed"
+To: linux-hams@vger.kernel.org
 
-On Tue, Jul 12, 2005 at 12:05:27PM -0500, Bill Vodall wrote:
-> 
-> > > FTP (and other options <wink>) work fine but I'm looking for something
-> > > that reduces the overhead to a minimum.
-> 
-> Hopefully it's per file and not per packet like TCP/IP.
-> 
-> I watched Airmail send a message (15k picture) over AX25
-> a couple weeks ago and it beautiful.   3 full packets
-> of compressed data followed by a single ACK.  3 more data
-> packets and one more ACK.   A minute or so later and it
-> was done.
-> 
-> We should be able to do the same, or better (as we have
-> better compression) with native system tools.
- 
-So what you seem to be looking for are tools that send and receive
-files using just AX.25. 'ax25send filename ve3tix' and
-'ax25receive' running on the listening ("server") side.
 
-I don't know of anything, but it wouldn't be that hard to write.
+>  
+> Netcat has no authentication or access control itself. It's simply
+> a network aware version of 'cat'. 
 
-Maybe if I find some free time.
+There's got to be something.  If not, I'm going to save all my
+.tivo files on your servers.  :-)
 
--ve3tix
+Bill
+
