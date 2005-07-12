@@ -1,40 +1,40 @@
-From: Ralf Baechle DL5RB <ralf@linux-mips.org>
-Subject: Re: SSH and the NONE option
-Date: Tue, 12 Jul 2005 17:55:58 +0100
-Message-ID: <20050712165558.GF2849@linux-mips.org>
-References: <MAEBLGENFLMMCIMBCMPOOEJICKAA.la6gha@robenel.com> <Pine.LNX.4.44.0507121017130.16595-100000@srv01.compumont.com>
+From: Bill Vodall <wa7nwp@jnos.org>
+Subject: Re: YAPP File Transfer with Linux
+Date: Tue, 12 Jul 2005 12:05:27 -0500 (CDT)
+Message-ID: <Pine.LNX.4.44.0507121202210.19475-100000@srv01.compumont.com>
+References: <20050712152823.GA17591@oz.net>
 Mime-Version: 1.0
 Return-path: <linux-hams-owner@vger.kernel.org>
-Content-Disposition: inline
-In-Reply-To: <Pine.LNX.4.44.0507121017130.16595-100000@srv01.compumont.com>
+In-Reply-To: <20050712152823.GA17591@oz.net>
 Sender: linux-hams-owner@vger.kernel.org
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"
+Content-Type: TEXT/PLAIN; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
-To: Bill Vodall <wa7nwp@jnos.org>
-Cc: linux-hams@vger.kernel.org
+To: linux-hams@vger.kernel.org
 
-On Tue, Jul 12, 2005 at 10:22:22AM -0500, Bill Vodall wrote:
 
-> > scp could handle the file transfer and compression in one step.
+> > Yes.  I'm guessing TCP/IP cuts the transfer rate in half and that's
+> > a best case without any digi's or nodes.
+> > 
+> > FTP (and other options <wink>) work fine but I'm looking for something
+> > that reduces the overhead to a minimum.
+> > 
 > 
-> While I'm at it and on to a totally separate topic -- is anybody here
-> acquainted with the folks at the openSsh project?
+> You realize, of course, that YAPP has its own overhead issues.
 > 
-> SSH (and all the 's' tools such as scp) used to have a valid encryption
-> option of "none" which I believe has been removed.
-> 
-> It would be very good for us amateurs (at least we Americans living
-> with regulations from the dark ages) if the "none" option on encryption
-> was still available.   One of these days I plan to contact the openSSH
-> folks with this request -- unless somebody here has a better
-> idea.
+> Bob
 
-Last I checked available algorithems were a compile time option; it's
-also possible to further restrict the available cyphers on the server
-side in sshd_config.
+Hopefully it's per file and not per packet like TCP/IP.
 
-73 de DL5RB op Ralf
+I watched Airmail send a message (15k picture) over AX25
+a couple weeks ago and it beautiful.   3 full packets
+of compressed data followed by a single ACK.  3 more data
+packets and one more ACK.   A minute or so later and it
+was done.
 
---
-Loc. JN47BS / CQ 14 / ITU 28 / DOK A21
+We should be able to do the same, or better (as we have
+better compression) with native system tools.
+
+Bill - WA7NWP
+
+
