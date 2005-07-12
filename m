@@ -1,26 +1,41 @@
 From: Michael Taylor <mctaylor@privacy.nb.ca>
-Subject: Re: SSH and the NONE option
-Date: Tue, 12 Jul 2005 21:43:54 +0100
-Message-ID: <20050712204354.GC96948@coffee>
-References: <MAEBLGENFLMMCIMBCMPOOEJICKAA.la6gha@robenel.com> <Pine.LNX.4.44.0507121017130.16595-100000@srv01.compumont.com> <loom.20050712T200240-877@post.gmane.org> <42D4152E.9090405@jnos.org> <e524c53205071213006f5cc0d1@mail.gmail.com>
+Subject: Re: YAPP File Transfer with Linux
+Date: Tue, 12 Jul 2005 21:51:48 +0100
+Message-ID: <20050712205148.GA97430@coffee>
+References: <20050712152823.GA17591@oz.net> <Pine.LNX.4.44.0507121202210.19475-100000@srv01.compumont.com>
 Mime-Version: 1.0
 Return-path: <linux-hams-owner@vger.kernel.org>
 Content-Disposition: inline
-In-Reply-To: <e524c53205071213006f5cc0d1@mail.gmail.com>
+In-Reply-To: <Pine.LNX.4.44.0507121202210.19475-100000@srv01.compumont.com>
 Sender: linux-hams-owner@vger.kernel.org
 List-Id: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
-To: Jim Bayer <kc9aop@gmail.com>
-Cc: Bill Vodall WA7NWP <wa7nwp@jnos.org>, linux-hams@vger.kernel.org
+To: Bill Vodall <wa7nwp@jnos.org>
+Cc: linux-hams@vger.kernel.org
 
-On Tue, Jul 12, 2005 at 03:00:05PM -0500, Jim Bayer wrote:
-> Bill,
+On Tue, Jul 12, 2005 at 12:05:27PM -0500, Bill Vodall wrote:
 > 
-> Maybe you could use samba and encrypt passwords?
+> > > FTP (and other options <wink>) work fine but I'm looking for something
+> > > that reduces the overhead to a minimum.
+> 
+> Hopefully it's per file and not per packet like TCP/IP.
+> 
+> I watched Airmail send a message (15k picture) over AX25
+> a couple weeks ago and it beautiful.   3 full packets
+> of compressed data followed by a single ACK.  3 more data
+> packets and one more ACK.   A minute or so later and it
+> was done.
+> 
+> We should be able to do the same, or better (as we have
+> better compression) with native system tools.
+ 
+So what you seem to be looking for are tools that send and receive
+files using just AX.25. 'ax25send filename ve3tix' and
+'ax25receive' running on the listening ("server") side.
 
-(to the list this time)
+I don't know of anything, but it wouldn't be that hard to write.
 
-SMB/CIFS (the protocols that samba implements) was designed 
-for LAN usage. It is painful on high speed WANs (very
-chatty) I cannot imagine using it on AX.25 over the air.
+Maybe if I find some free time.
+
+-ve3tix
