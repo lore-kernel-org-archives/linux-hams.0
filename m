@@ -1,35 +1,30 @@
-From: "Robert Eliassen" <la6gha@robenel.com>
-Subject: RE: YAPP File Transfer with Linux
-Date: Tue, 12 Jul 2005 20:07:44 +0200
-Message-ID: <MAEBLGENFLMMCIMBCMPOMEJKCKAA.la6gha@robenel.com>
+From: Jeremy Utley <jerutley@gmail.com>
+Subject: Re: YAPP File Transfer with Linux
+Date: Tue, 12 Jul 2005 11:51:00 -0700
+Message-ID: <d5d4185b050712115164b44321@mail.gmail.com>
 References: <Pine.LNX.4.44.0507121202210.19475-100000@srv01.compumont.com>
+	 <MAEBLGENFLMMCIMBCMPOMEJKCKAA.la6gha@robenel.com>
+Reply-To: Jeremy Utley <jerutley@gmail.com>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 7BIT
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <Pine.LNX.4.44.0507121202210.19475-100000@srv01.compumont.com>
+In-Reply-To: <MAEBLGENFLMMCIMBCMPOMEJKCKAA.la6gha@robenel.com>
+Content-Disposition: inline
 Sender: linux-hams-owner@vger.kernel.org
 List-Id: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
 To: linux-hams@vger.kernel.org
 
+On 7/12/05, Robert Eliassen <la6gha@robenel.com> wrote:
+> Is TCP/IP often (always?) encapsulated in NetROM or similar protocols over
+> AX.25, or is it possible (implemented somewhere) to send IP-packets right in
+> AX.25's payload? The routing has to be figured out some way...
 
-Bill - WA7NWP wrote:
+From what I remember, both are possible.  TCP/IP can be encapsulated
+into the payload of an AX.25 frame, or it can also be a part of netrom
+communication.  IIRC, when TCP/IP is sent via NET/ROM there are 3
+layers - TCP/IP encapsulated in AX.25, further encapsulated into
+NETROM, but I may be mistaken about that.  It's been a while since I
+played with JNOS and saw all that stuff.
 
-> I watched Airmail send a message (15k picture) over AX25
-> a couple weeks ago and it beautiful.   3 full packets
-> of compressed data followed by a single ACK.  3 more data
-> packets and one more ACK.   A minute or so later and it
-> was done.
-
-Is TCP/IP often (always?) encapsulated in NetROM or similar protocols over
-AX.25, or is it possible (implemented somewhere) to send IP-packets right in
-AX.25's payload? The routing has to be figured out some way...
-
-I know TCP/IP, but I'm not an expoert on AX.25. The max packet length is 256
-bytes, right? Alignment in order to send full packets should be the clue to
-an efficient transfer.
-
-Regards
-Bob - LA6GHA
-
-
+Jeremy, NW7JU
