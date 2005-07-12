@@ -1,26 +1,58 @@
-From: Dennis Boone <drb@msu.edu>
-Subject: Re: SSH and the NONE option
-Date: Tue, 12 Jul 2005 18:19:13 -0400
-Message-ID: <200507122219.j6CMJEMV028240@yagi.h-net.msu.edu>
-References: <Pine.LNX.4.44.0507121017130.16595-100000@srv01.compumont.com>
+From: Chuck Hast <wchast@gmail.com>
+Subject: Re: YAPP File Transfer with Linux
+Date: Tue, 12 Jul 2005 19:56:36 -0400
+Message-ID: <620c9057050712165657e8e0c8@mail.gmail.com>
+References: <20050712152823.GA17591@oz.net>
+	 <Pine.LNX.4.44.0507121202210.19475-100000@srv01.compumont.com>
+	 <20050712205148.GA97430@coffee> <42D43E41.8060901@jnos.org>
+Reply-To: Chuck Hast <wchast@gmail.com>
+Mime-Version: 1.0
+Content-Transfer-Encoding: 7BIT
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-reply-to: (Your message of Tue, 12 Jul 2005 10:22:22 CDT.)
-             <Pine.LNX.4.44.0507121017130.16595-100000@srv01.compumont.com> 
+In-Reply-To: <42D43E41.8060901@jnos.org>
+Content-Disposition: inline
 Sender: linux-hams-owner@vger.kernel.org
 List-Id: <linux-hams.vger.kernel.org>
-MIME-Version: 1.0
 Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-To: linux-hams@vger.kernel.org
+To: Bill - WA7NWP <wa7nwp@jnos.org>
+Cc: linux-hams@vger.kernel.org
 
- > SSH (and all the 's' tools such as scp) used to have a valid encryption
- > option of "none" which I believe has been removed.
+On 7/12/05, Bill - WA7NWP <wa7nwp@jnos.org> wrote:
+> 
+> > So what you seem to be looking for are tools that send and receive
+> > files using just AX.25. 'ax25send filename ve3tix' and
+> > 'ax25receive' running on the listening ("server") side.
+> >
+> > I don't know of anything, but it wouldn't be that hard to write.
+> 
+> Exactly.  Maybe a bit more then that if we have some scripting
+> to navigate the connections through the nodes and digis.  That
+> wouldn't even be needed as we might be able to use Expect.
+> 
+> YAPP and the files Curt found might be a good starting place.  Tieing
+> it through the AX25 system could be a bit tricky.  Also hopefully
+> it doesn't have any extraneous overhead.
+> 
+> > Maybe if I find some free time.
+> 
+> It would be appreciated.  I'm in a good situation here for a while
+> with access to a parallel Linux box across town.  That makes it
+> easy to experiment and test new techniques.
+> 
+> > -ve3tix
 
-The Version 3.4 client on one of my older Debian boxes was perfectly
-happy to take "-c NONE".  The server would have to be configured to
-accept NONE also, which I didn't try.
+Folks, I have not used it my self, but some of the fellows who maintain
+our FPAC network in Florida use YAPP to update the files on the switches.
+FPAC has YAPP built in, we use it with either one of the yapp programs
+of automated uploading using f6fbb BBS.
 
-I see no code in the source for version 4.1 which would suggest it's
-been removed as an option, or that it's a conditionally compiled one.
+The move to fpac Linux on our network brings up the question of using
+other more efficient modes of sending files, so anything that will work
+better is most certainly welcome.
 
-De
+-- 
+Chuck Hast 
+To paraphrase my flight instructor;
+"the only dumb question is the one you DID NOT ask resulting in my going
+out and having to identify your bits and pieces in the midst of torn
+and twisted metal."
