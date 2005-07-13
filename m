@@ -1,58 +1,49 @@
-From: Chuck Hast <wchast@gmail.com>
-Subject: Re: YAPP File Transfer with Linux
-Date: Tue, 12 Jul 2005 19:56:36 -0400
-Message-ID: <620c9057050712165657e8e0c8@mail.gmail.com>
-References: <20050712152823.GA17591@oz.net>
-	 <Pine.LNX.4.44.0507121202210.19475-100000@srv01.compumont.com>
-	 <20050712205148.GA97430@coffee> <42D43E41.8060901@jnos.org>
-Reply-To: Chuck Hast <wchast@gmail.com>
+From: "Robert Eliassen" <la6gha@robenel.com>
+Subject: RE: YAPP File Transfer with Linux
+Date: Wed, 13 Jul 2005 09:53:00 +0200
+Message-ID: <MAEBLGENFLMMCIMBCMPOEEJOCKAA.la6gha@robenel.com>
+References: <42D415F6.6040400@jnos.org>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7BIT
+Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <42D43E41.8060901@jnos.org>
-Content-Disposition: inline
+In-Reply-To: <42D415F6.6040400@jnos.org>
 Sender: linux-hams-owner@vger.kernel.org
 List-Id: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
-To: Bill - WA7NWP <wa7nwp@jnos.org>
-Cc: linux-hams@vger.kernel.org
+To: linux-hams@vger.kernel.org
 
-On 7/12/05, Bill - WA7NWP <wa7nwp@jnos.org> wrote:
-> 
-> > So what you seem to be looking for are tools that send and receive
-> > files using just AX.25. 'ax25send filename ve3tix' and
-> > 'ax25receive' running on the listening ("server") side.
-> >
-> > I don't know of anything, but it wouldn't be that hard to write.
-> 
-> Exactly.  Maybe a bit more then that if we have some scripting
-> to navigate the connections through the nodes and digis.  That
-> wouldn't even be needed as we might be able to use Expect.
-> 
-> YAPP and the files Curt found might be a good starting place.  Tieing
-> it through the AX25 system could be a bit tricky.  Also hopefully
-> it doesn't have any extraneous overhead.
-> 
-> > Maybe if I find some free time.
-> 
-> It would be appreciated.  I'm in a good situation here for a while
-> with access to a parallel Linux box across town.  That makes it
-> easy to experiment and test new techniques.
-> 
-> > -ve3tix
 
-Folks, I have not used it my self, but some of the fellows who maintain
-our FPAC network in Florida use YAPP to update the files on the switches.
-FPAC has YAPP built in, we use it with either one of the yapp programs
-of automated uploading using f6fbb BBS.
+Bill wrote:
 
-The move to fpac Linux on our network brings up the question of using
-other more efficient modes of sending files, so anything that will work
-better is most certainly welcome.
+> That's correct.   With TCP/IP on packet, 40 of the 256 bytes are
+> overhead.  Putting it on Netrom adds another 20 bytes.   The real killer
+> is that all the ACK packets have the same (40 or 60 bytes) of overhead.
 
--- 
-Chuck Hast 
-To paraphrase my flight instructor;
-"the only dumb question is the one you DID NOT ask resulting in my going
-out and having to identify your bits and pieces in the midst of torn
-and twisted metal."
+Right. The IP-header is 20 bytes, and the TCP-header is also 20 bytes. I
+wouldn't be surprised if NetRom adds another 20 bytes as wrapping.
+
+Now, the AX.25 protocol adds another chunk of overhead, probably close to 20
+bytes (don't remember, but both source and destination address are included
+AFAIK) or even more when digipeaters are being used.
+
+Avoiding the AX.25 overhead is close to impossible. But it should be
+possible to skip netrom and load TCP/IP right into the info-field of an
+AX.25 frame. Fragmented of course. But... Having double ACK (both AX.25 and
+TCP) is bad and a waste of bandwidth.
+
+Another problem is the routing. It would be possible to rewrite the
+ARP-protocol and replace hardware addresses (MAC) with callsigs. And of
+course we would need to broadcast the ARP protocol...  Unconnected <UI>
+frame mode perhaps... (starting to sound like netrom)
+
+But the double ACK problem is still unsolved.
+
+Another question: There is no length-field in an AX.25-frame, right? The
+payload is wrapped in 01111110-flags if I remember correct. So in theory we
+can transmit fullsize IP-frames (1500 bytes), in a single AX.25-frame ?
+
+But I guess all this has been discussed years ago.  :-)
+
+
+Bob, LA6GHA
+
