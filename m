@@ -1,53 +1,64 @@
-From: Jonathan Lassoff <jlassoff@gmail.com>
+From: Dave Platt <dplatt@radagast.org>
 Subject: Re: SSH and the NONE option
-Date: Thu, 14 Jul 2005 09:28:07 -0700
-Message-ID: <407645010507140928bbc8db8@mail.gmail.com>
-References: <MAEBLGENFLMMCIMBCMPOOEJICKAA.la6gha@robenel.com>
-	 <Pine.LNX.4.44.0507121017130.16595-100000@srv01.compumont.com>
-	 <20050714075909.GB2932@linux-mips.org> <42D634B6.7050807@home.se>
-	 <e524c532050714075327e61990@mail.gmail.com>
-	 <20050714152734.GA14641@toontown.erial.nj.us>
-Reply-To: Jonathan Lassoff <jlassoff@gmail.com>
+Date: Thu, 14 Jul 2005 10:01:03 -0700 (PDT)
+Message-ID: <20050714170103.29558.qmail@radagast.org>
+References: <1121353960.6146.1.camel@localhost>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7BIT
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <20050714152734.GA14641@toontown.erial.nj.us>
-Content-Disposition: inline
+In-Reply-To: <1121353960.6146.1.camel@localhost>
 Sender: linux-hams-owner@vger.kernel.org
 List-Id: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
-To: linux-hams@vger.kernel.org
+Content-Transfer-Encoding: 7bit
+To: abates@omeganetserv.com
+Cc: linux-hams@vger.kernel.org
 
-On 14/07/05, Bob Snyder <rsnyder@toontown.erial.nj.us> wrote:
-> Don't forget that (at least in the US) the rules state you cannot
-> obscure the meaning...
+>  
+> > Everything in Amature Radio is clear text, so any protocol for
+> > authentication has to be OK.  Your ID and password comes along in
+> > clear text and that's that.  I guess frequent password changes are the
+> > only answer to comfort with security.
+> > 
+> > Seems like ftp and rcp may be the best bet.
+> > 
 > 
-> Section 97.113 (4) "...messages in codes or ciphers intended to
-> obscure the meaning thereof, except as otherwise provided herein..."
-> Bob N2KGO
+> If a two factor authentication scheme could be used, then that's the
+> ticket.... a challenge response authentication for example... more
+> elegant would be something using a hashed password based on a passcode
+> and revolving token.  Let's be creative, there are more ways then just
+> "ssh"
 
-Why not just have a challenge and response design like Andrew Bates
-suggested. For example, what if the server sent a challenge string,
-and the user concatenated their authentication string to the challenge
-and then made an md5 hash of the whole string and sent it for
-authentication. The server would then do the same and compare the
-strings. It's kind of how APOP and Yahoo! mail work. But, to any
-monitoring party, how would they know weather or not the md5 hash is
-your password, or a crypted authentication response? I'm not sure what
-obscuring the meaning really means. Since the user really means the
-md5sum to be sent, is that hiding the underlying authentication
-scheme?
-Isn't phone and CW communication really obscuring what an operator
-means. When speaking over the radio, my brain takes concepts and
-expresses them in a crypted fashion called "language". To me, this is
-a more complex issue that isn't really explained well enough in
-97.113(4). I think that, on a more ethical level, by using crypted
-authentication, nothing is really being hidden. It's just overhead
-data in the protocol. In which case, isn't AX.25 just crypted OSI
-layer 1 and 2 traffic? It's accepted because the standard is readily
-available to the public. So why couldn't a challenge and response
-authentication scheme that is available to the public be accepted as
-well?
-Just my two cents.
+I thought this issue through when I was setting up an SMTP/IMAP
+server for TCP/IP-over-AX.25.  I came to the tentative conclusion
+that it would probably be OK to use authentication systems such as
+the CRAM-MD5 and similar hash-based schemes.  These don't actually
+send the password over the air (encrypted or otherwise);  rather,
+they're of the challenge/response sort, in which the client proves
+that s/he has a secret also known to the server, but the secret itself
+is not transmitted.
 
-Jonathan Lassoff (KG6THI)
+These algorithms do use a "large binary number to ASCII" encoding for
+transmitting the challenge from the server and the response by the
+client, but this is a publicly-documented algorithm and I think it
+can be argued that it doesn't obscure the meaning of the data being
+transmitted.
+
+Another alternative, which would be entirely in clear text, would
+be a one-time password system based on S/Key.  The standard Linux
+implementation for this would be OPIE ("One-Time Passwords in
+Everything").  There's an OPIE plugin for the Linux PAM (pluggable
+authentication module) system, which is or can be used by ssh,
+login, ftp, rcp/rsh, and so forth.  An FTP session, or a simple
+login session which invoked netcat, might be a decent way to provide
+for in-the-clear data transfer to a system which still had a
+hard-to-crack access authentication.
+
+An OPIE-based authentication system can have a place even in the
+wired-communication world where secure systems such as ssh are
+available.  A server which runs ssh, and which will accept OPIE
+or other one-time passwords for access, is a convenient thing to have
+if you think you may have to use public-access computers (libraries,
+cybercafes) to access your system, and you're concerned about
+malware such as keystroke loggers which might have been installed
+on those systems.
+
