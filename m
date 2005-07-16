@@ -1,136 +1,58 @@
-From: Ralf Baechle DL5RB <ralf@linux-mips.org>
-Subject: [PATCH] Use time_before in hamradio drivers
-Date: Fri, 15 Jul 2005 11:16:42 +0100
-Message-ID: <20050715101642.GA11823@linux-mips.org>
+From: Chuck Hast <wchast@gmail.com>
+Subject: Listen root only
+Date: Fri, 15 Jul 2005 21:02:41 -0400
+Message-ID: <620c9057050715180279131307@mail.gmail.com>
+Reply-To: Chuck Hast <wchast@gmail.com>
 Mime-Version: 1.0
+Content-Transfer-Encoding: 7BIT
 Return-path: <linux-hams-owner@vger.kernel.org>
 Content-Disposition: inline
 Sender: linux-hams-owner@vger.kernel.org
 List-Id: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-To: Jeff Garzik <jgarzik@pobox.com>
-Cc: netdev@vger.kernel.org, linux-hams@vger.kernel.org, Marcelo Feitoza Parisi <marcelo@feitoza.com.br>, domen@coderock.org
+To: linux-hams <linux-hams@vger.kernel.org>
 
-From: Marcelo Feitoza Parisi <marcelo@feitoza.com.br>
+Folks,
+I am trying to get listen to be viewable by other users than root. I have
+checked the permissions on listen and all appears OK, but when I
+try to run it as a common user, I get a failure.
+
+Here is the error message:
+kp4djt@fpac-dev:~$ listen
+socket: Operation not permitted
+kp4djt@fpac-dev:~$
+
+If I do a strace here is what I get
+
+All above the top of the capture appears the same as the strace under
+root:
+
+read(3, "", 4096)                       = 0
+close(3)                                = 0
+munmap(0x40018000, 4096)                = 0
+close(4)                                = 0
+socket(PF_PACKET, SOCK_PACKET, 512)     = -1 EPERM (Operation not permitted)
+dup(2)                                  = 3
+fcntl64(3, F_GETFL)                     = 0x8002 (flags O_RDWR|O_LARGEFILE)
+fstat64(3, {st_mode=S_IFCHR|0620, st_rdev=makedev(3, 1), ...}) = 0
+ioctl(3, SNDCTL_TMR_TIMEBASE, {B38400 opost isig icanon echo ...}) = 0
+old_mmap(NULL, 4096, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_ANONYMOUS,
+-1, 0) = 0x40018000
+_llseek(3, 0, 0xbffff580, SEEK_CUR)     = -1 ESPIPE (Illegal seek)
+write(3, "socket: Operation not permitted\n", 32socket: Operation not permitted
+) = 32
+close(3)                                = 0
+munmap(0x40018000, 4096)                = 0
+exit_group(1)                           = ?
+kp4djt@fpac-dev:~$
 
 
-Use of time_before() macro, defined at linux/jiffies.h, which deal with
-wrapping correctly and are nicer to read.
+The problem appears to be with the socket part, but am not sure how to
+deal with it.
 
-Signed-off-by: Marcelo Feitoza Parisi <marcelo@feitoza.com.br>
-Signed-off-by: Domen Puncer <domen@coderock.org>
-Signed-off-by: Ralf Baechle DL5RB <ralf@linux-mips.org>
-
- baycom_epp.c     |    3 ++-
- baycom_par.c     |    3 ++-
- baycom_ser_fdx.c |    3 ++-
- baycom_ser_hdx.c |    3 ++-
- mkiss.c          |    3 ++-
- 5 files changed, 10 insertions(+), 5 deletions(-)
-
-Index: linux-cvs/drivers/net/hamradio/mkiss.c
-===================================================================
---- linux-cvs.orig/drivers/net/hamradio/mkiss.c	2005-07-15 11:11:26.000000000 +0100
-+++ linux-cvs/drivers/net/hamradio/mkiss.c	2005-07-15 11:12:40.000000000 +0100
-@@ -46,6 +46,7 @@
- #include <linux/etherdevice.h>
- #include <linux/skbuff.h>
- #include <linux/if_arp.h>
-+#include <linux/jiffies.h>
- 
- #include <net/ax25.h>
- 
-@@ -429,7 +430,7 @@
- 		 * May be we must check transmitter timeout here ?
- 		 *      14 Oct 1994 Dmitry Gorodchanin.
- 		 */
--		if (jiffies - dev->trans_start  < 20 * HZ) {
-+		if (time_before(jiffies, dev->trans_start + 20 * HZ)) {
- 			/* 20 sec timeout not reached */
- 			return 1;
- 		}
-Index: linux-cvs/drivers/net/hamradio/baycom_ser_fdx.c
-===================================================================
---- linux-cvs.orig/drivers/net/hamradio/baycom_ser_fdx.c	2005-07-15 11:11:26.000000000 +0100
-+++ linux-cvs/drivers/net/hamradio/baycom_ser_fdx.c	2005-07-15 11:12:40.000000000 +0100
-@@ -79,6 +79,7 @@
- #include <asm/io.h>
- #include <linux/hdlcdrv.h>
- #include <linux/baycom.h>
-+#include <linux/jiffies.h>
- 
- /* --------------------------------------------------------------------- */
- 
-@@ -159,7 +160,7 @@
- 	 * measure the interrupt frequency
- 	 */
- 	bc->debug_vals.cur_intcnt++;
--	if ((cur_jiffies - bc->debug_vals.last_jiffies) >= HZ) {
-+	if (time_after_eq(cur_jiffies, bc->debug_vals.last_jiffies + HZ)) {
- 		bc->debug_vals.last_jiffies = cur_jiffies;
- 		bc->debug_vals.last_intcnt = bc->debug_vals.cur_intcnt;
- 		bc->debug_vals.cur_intcnt = 0;
-Index: linux-cvs/drivers/net/hamradio/baycom_ser_hdx.c
-===================================================================
---- linux-cvs.orig/drivers/net/hamradio/baycom_ser_hdx.c	2005-07-15 11:11:26.000000000 +0100
-+++ linux-cvs/drivers/net/hamradio/baycom_ser_hdx.c	2005-07-15 11:12:40.000000000 +0100
-@@ -69,6 +69,7 @@
- #include <asm/io.h>
- #include <linux/hdlcdrv.h>
- #include <linux/baycom.h>
-+#include <linux/jiffies.h>
- 
- /* --------------------------------------------------------------------- */
- 
-@@ -150,7 +151,7 @@
- 	 * measure the interrupt frequency
- 	 */
- 	bc->debug_vals.cur_intcnt++;
--	if ((cur_jiffies - bc->debug_vals.last_jiffies) >= HZ) {
-+	if (time_after_eq(cur_jiffies, bc->debug_vals.last_jiffies + HZ)) {
- 		bc->debug_vals.last_jiffies = cur_jiffies;
- 		bc->debug_vals.last_intcnt = bc->debug_vals.cur_intcnt;
- 		bc->debug_vals.cur_intcnt = 0;
-Index: linux-cvs/drivers/net/hamradio/baycom_epp.c
-===================================================================
---- linux-cvs.orig/drivers/net/hamradio/baycom_epp.c	2005-07-15 11:11:26.000000000 +0100
-+++ linux-cvs/drivers/net/hamradio/baycom_epp.c	2005-07-15 11:12:40.000000000 +0100
-@@ -54,6 +54,7 @@
- #include <linux/kmod.h>
- #include <linux/hdlcdrv.h>
- #include <linux/baycom.h>
-+#include <linux/jiffies.h>
- #if defined(CONFIG_AX25) || defined(CONFIG_AX25_MODULE)
- /* prototypes for ax25_encapsulate and ax25_rebuild_header */
- #include <net/ax25.h> 
-@@ -287,7 +288,7 @@
- 	 * measure the interrupt frequency
- 	 */
- 	bc->debug_vals.cur_intcnt++;
--	if ((cur_jiffies - bc->debug_vals.last_jiffies) >= HZ) {
-+	if (time_after_eq(cur_jiffies, bc->debug_vals.last_jiffies + HZ)) {
- 		bc->debug_vals.last_jiffies = cur_jiffies;
- 		bc->debug_vals.last_intcnt = bc->debug_vals.cur_intcnt;
- 		bc->debug_vals.cur_intcnt = 0;
-Index: linux-cvs/drivers/net/hamradio/baycom_par.c
-===================================================================
---- linux-cvs.orig/drivers/net/hamradio/baycom_par.c	2005-07-15 11:11:26.000000000 +0100
-+++ linux-cvs/drivers/net/hamradio/baycom_par.c	2005-07-15 11:12:40.000000000 +0100
-@@ -84,6 +84,7 @@
- #include <linux/baycom.h>
- #include <linux/parport.h>
- #include <linux/bitops.h>
-+#include <linux/jiffies.h>
- 
- #include <asm/bug.h>
- #include <asm/system.h>
-@@ -165,7 +166,7 @@
- 	 * measure the interrupt frequency
- 	 */
- 	bc->debug_vals.cur_intcnt++;
--	if ((cur_jiffies - bc->debug_vals.last_jiffies) >= HZ) {
-+	if (time_after_eq(cur_jiffies, bc->debug_vals.last_jiffies + HZ)) {
- 		bc->debug_vals.last_jiffies = cur_jiffies;
- 		bc->debug_vals.last_intcnt = bc->debug_vals.cur_intcnt;
- 		bc->debug_vals.cur_intcnt = 0;
+-- 
+Chuck Hast 
+To paraphrase my flight instructor;
+"the only dumb question is the one you DID NOT ask resulting in my going
+out and having to identify your bits and pieces in the midst of torn
+and twisted metal."
