@@ -1,7 +1,7 @@
 From: Peter <pc2a@pi4cc.nl>
 Subject: Welcome text
-Date: Sun, 17 Jul 2005 21:29:31 +0200
-Message-ID: <42DAB19B.1D4C5C96@pi4cc.nl>
+Date: Sun, 17 Jul 2005 21:54:29 +0200
+Message-ID: <42DAB775.F2A813B2@pi4cc.nl>
 Mime-Version: 1.0
 Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
