@@ -1,9 +1,9 @@
-From: Peter <pc2a@pi4cc.nl>
-Subject: Welcome text
-Date: Sun, 17 Jul 2005 21:54:29 +0200
-Message-ID: <42DAB775.F2A813B2@pi4cc.nl>
+From: oz6bl@amsat.dk
+Subject: How to 'connect' two ax25 ports?
+Date: Mon, 18 Jul 2005 11:54:11 -0000 (UTC)
+Message-ID: <32786.83.73.68.20.1121687651.squirrel@www.amsat.dk>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 7BIT
 Return-path: <linux-hams-owner@vger.kernel.org>
 Sender: linux-hams-owner@vger.kernel.org
 List-Id: <linux-hams.vger.kernel.org>
@@ -12,16 +12,37 @@ To: linux-hams@vger.kernel.org
 
 Hi
 
-I want to add a password to my node witch has an internet access to avoid abuse of the
-node.
-I can setup a password for the users via ineternet.
-But for the users who has no password, I like to make a welcome text before the login
-prompt.
-So I can inform them how to get a password.
+For various reasons I would like to use another radio connected to another
+PC to transmit to the satellites GO-32 and AO-51. It is no problem to get
+the frames to be transmitted to be sent to the other PC using ax25idp for
+this.
 
-How do I setup such a welcome text?
+My problems arise on the PC connected to the transmitter. Here I have to
+find a method to get all data arriving on one port (as defined in
+/etc/ax25/axports) to be sent out on another port. Perhaps this picture
+illustrates the situation (best read using a monospaced font);
 
-Peter
-PC2A
+           -----------------
+           |               |
+           |  APPLIC ???   |
+           |               |
+axports -> | axip      asy |
+           |---------------|
+           |        |      |
+           | ax25id | kiss |
+           |        |      |
+           -----------------
+                |      |
+    ethernet    |      |        -------
+  ------>-------        --->----| TNC |
 
+The data from the originating PC arrives over the ethernet and are
+presented to applications as incoming data on port 'axip'. This data
+should be sent to the TNC on port 'asy'
 
+I havn't run across anything in the AX.25-HOWTO that could help me  -
+except  writing my own program...
+
+Any suggestions?
+
+Best 73 de Bent/OZ6BL
