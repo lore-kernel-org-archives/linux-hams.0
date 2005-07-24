@@ -1,30 +1,20 @@
-From: "Claudieni" <pu2nzw@bol.com.br>
-Subject: RE: gMFSK and my wonky PTT driver
-Date: Sat, 23 Jul 2005 20:16:15 -0300
-Message-ID: <20050723231616.20A277768@sankara1.bol.com.br>
-References: <40764501050719150178c80167@mail.gmail.com>
+From: "Scott Weis" <kb2ear@kb2ear.net>
+Subject: What happened to mkiss module
+Date: Sun, 24 Jul 2005 02:26:36 -0400
+Message-ID: <000c01c59018$a50ec2b0$a4011fac@kb2ear1>
 Mime-Version: 1.0
 Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <40764501050719150178c80167@mail.gmail.com>
 Sender: linux-hams-owner@vger.kernel.org
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"
-To: 'Jonathan Lassoff' <jlassoff@gmail.com>, linux-hams@vger.kernel.org
+Content-Type: text/plain; format="flowed"; charset="us-ascii"; reply-type="original"
+To: linux-hams@vger.kernel.org
 
-Hi Jonathan 
+I had to reload my server due to a hard drive failure.. So I upgraded my SMP 
+server to Fedora core 4. I went to add ax25 and mkiss and found that mkiss 
+was missing.   Where did it go??  Any idea how to get around this problem?
 
+Thanks,
+Scott KB2EAR
 
-Did you tried to load the module with those parameters?
-
-
-
-insmod parport
-
-insmod parport_pc io=0x378 irq=7 
-
-
-
-Claudinei
-Pu2nzw
 
