@@ -1,36 +1,41 @@
-From: Hamish Moffatt <hamish@cloud.net.au>
-Subject: Re: Serial hub firmware and Debian 3.1
-Date: Mon, 25 Jul 2005 14:30:14 +1000
-Message-ID: <20050725043014.GA30934@cloud.net.au>
-References: <20050725035642.8055.qmail@radagast.org>
+From: Thomas Sailer <sailer@sailer.dynip.lugs.ch>
+Subject: Re: usermode soundmodem
+Date: Mon, 25 Jul 2005 10:14:50 +0200
+Message-ID: <1122279290.5240.20.camel@playstation2.hb9jnx.ampr.org>
+References: <20050724111036.GI32031@router.lan>
 Mime-Version: 1.0
+Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
-Content-Disposition: inline
-In-Reply-To: <20050725035642.8055.qmail@radagast.org>
+In-Reply-To: <20050724111036.GI32031@router.lan>
 Sender: linux-hams-owner@vger.kernel.org
 List-Id: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-To: linux-hams@vger.kernel.org
+To: Alexander Werner <awerner@wired-brain.de>
+Cc: linux-hams@vger.kernel.org
 
-On Mon, Jul 25, 2005 at 03:56:42AM -0000, Dave Platt wrote:
-> I suppose it's possible that this capability was removed from 2.6 (not
-> sure why) or is not present in the Debian-provided kernel sources.
+On Sun, 2005-07-24 at 13:10 +0200, Alexander Werner wrote:
 
-Yes, it's been removed from the Debian source tree. See
-/usr/share/doc/kernel-image-`uname -r`/Debian.src.changelog.gz.
-It was removed in 2001.
+> what do i have to do now??
+> # ifconfig ax0
+> ax0       Link encap:AMPR AX.25  HWaddr LINUX-1  
+>           inet addr:10.0.0.1  Bcast:10.0.0.255  Mask:255.255.255.0
+>           UP BROADCAST RUNNING MULTICAST  MTU:256  Metric:1
+>           RX packets:0 errors:0 dropped:0 overruns:0 frame:0
+>           TX packets:0 errors:0 dropped:0 overruns:0 carrier:0
+>           collisions:0 txqueuelen:10 
+>           RX bytes:0 (0.0 b)  TX bytes:0 (0.0 b)
+> # lsmod
+> tells me, that mkiss was loaded
+> 
+> or do i need to run kissattach?
+> it seems simple - but i did not find anything on the web
 
-> quite stern open-source-licensing rules, even though it contains a
-> license grant to use in Linux by Keyspan.
+Why do you want to run kissattach? You do have an ax25 interface, don't
+you? soundmodem does the equivalent as kissattach by itself.
 
-A license grant is not actually as good as source code though.
+Now you need to configure the AX.25 interface ax0 with your callsign and
+IP address, this should be described in the AX25 howto.
 
-Remember - although your device doesn't work, at least your freedom is
-intact. Or at least until you build your own kernel from kernel.org
-sources.
+Tom
 
 
-Hamish
--- 
-Hamish Moffatt VK3SB <hamish@debian.org> <hamish@cloud.net.au>
