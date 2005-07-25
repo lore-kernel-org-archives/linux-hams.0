@@ -1,38 +1,40 @@
-From: Wilbert Knol <w.knol@niwa.co.nz>
-Subject: Serial hub firmware and Debian 3.1
-Date: Mon, 25 Jul 2005 14:55:02 +1200
-Message-ID: <200507251455.02380.w.knol@niwa.co.nz>
-Reply-To: w.knol@niwa.co.nz
-Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
+From: "Dave Platt" <dplatt@radagast.org>
+Subject: Re: Serial hub firmware and Debian 3.1
+Date: 25 Jul 2005 03:56:42 -0000
+Message-ID: <20050725035642.8055.qmail@radagast.org>
 Return-path: <linux-hams-owner@vger.kernel.org>
-Content-Disposition: inline
 Sender: linux-hams-owner@vger.kernel.org
 List-Id: <linux-hams.vger.kernel.org>
+MIME-Version: 1.0
 Content-Type: text/plain; charset="us-ascii"
-To: linux-hams@vger.kernel.org
+Content-Transfer-Encoding: 7bit
+To: w.knol@niwa.co.nz, linux-hams@vger.kernel.org
 
-Not strictly a linux-hams issue  - although it has put me off the 
-air ;-) I have hit the wall with this one, and I know there are 
-experienced Debian users out there.
+> The keyspan driver loads, but syslog complains that 'the firmware is 
+> unavailable'. 
+> 
+> I have brewed up my own 2.6.8 kernel *(using Debian supplied 2.6.8 
+> kernel sources) but there does not seem to be a way to build firmware 
+> images.
 
-Recently, I  migrated to Debian 3.1, and I am impressed with it, 
-except for one thing: my 4-port RS232 USB hub no longer works.
+Hmmm.  In the 2.4 kernel series, the kernel configuration for USB
+serial devices allows you to specify the Keyspan USA-xxx driver, and
+then specify which versions of the firmware you want to build.
 
-This is a Keyspan USB49WLC outboard USB hub that I need for Hamlib rig 
-control, TNC access (DX-Cluster), CW-keying (cwdaemon) and PTT-keying 
-on the digi-modes.
+I suppose it's possible that this capability was removed from 2.6 (not
+sure why) or is not present in the Debian-provided kernel sources.
+The Keyspan firmware code is provided in the form of a .h file which
+contains binary data - it's not the original Keyspan source code,
+which Keyspan declines to release.  I suppose it's possible that this
+inclusion of binary-only firmware may have conflicted with Debian's
+quite stern open-source-licensing rules, even though it contains a
+license grant to use in Linux by Keyspan.
 
-The keyspan driver loads, but syslog complains that 'the firmware is 
-unavailable'. 
+First thing I'd do is check your kernel sources (look in
+drivers/usb/serial/).  See if the "keyspan_usa49wlc_fw.h" file is
+present, and if the Config.in file in that directory provides an
+option to enable the building of the firmware.
 
-I have brewed up my own 2.6.8 kernel *(using Debian supplied 2.6.8 
-kernel sources) but there does not seem to be a way to build firmware 
-images.
-
-The Keyspan device driver compiles (and loads) but firmware is still 
-'unavailable' and the hub remains QRT.
-
-Any pointers are appreciated.
-
-Wilbert, ZL2BSJ
+Another possibility is that you need to include the Debian "hotplug"
+package, in order to enable hot-plugging with firmware loading.
+This might not have been provided by default.
