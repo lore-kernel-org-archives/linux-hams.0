@@ -1,37 +1,27 @@
-From: Wilbert Knol <w.knol@niwa.co.nz>
-Subject: Re: Serial hub firmware and Debian 3.1
-Date: Wed, 27 Jul 2005 08:50:27 +1200
-Message-ID: <200507270850.28510.w.knol@niwa.co.nz>
-References: <20050725035642.8055.qmail@radagast.org> <200507260935.52267.w.knol@niwa.co.nz> <d5d4185b0507252146514598d8@mail.gmail.com>
-Reply-To: w.knol@niwa.co.nz
+From: Jonathan Lassoff <jlassoff@gmail.com>
+Subject: Hamlib: "ppdev0: claim the port first"
+Date: Tue, 26 Jul 2005 19:30:57 -0700
+Message-ID: <40764501050726193096edae3@mail.gmail.com>
+Reply-To: Jonathan Lassoff <jlassoff@gmail.com>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 7BIT
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <d5d4185b0507252146514598d8@mail.gmail.com>
 Content-Disposition: inline
 Sender: linux-hams-owner@vger.kernel.org
 List-Id: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
 To: linux-hams@vger.kernel.org
-Cc: Jeremy Utley <jerutley@gmail.com>
 
-On Tuesday 26 July 2005 16:46, Jeremy Utley wrote:
-> > Hmm...I can understand Keyspan not wanting to release the driver
-> > sources for the chipset
+Howdy. I'm trying to use hamlib to control an Icom IC-746 with a
+homebrew TTL to RS232 level converter. The level converter works great
+on my dekstop's DB9 RS-232 serial port, but not on my laptop's DB25
+RS-232 parallel port. Both run the same Debian Sarge release with very
+similar sets of software packages. The problem I'm having is that when
+any application tries to use the parallel port, ppdev gets angry. The
+specific error in the message log is:
+"ppdev0: claim the port first"
+Does anyone have an idea as to what this is alluding to? Google wasn't
+much help for me.
 
-I meant to say: 'firmware sources'.
-
-The Keyspan device driver *is* open-source, and, I believe, was 
-written by (or with assistance from) the manufacturer. This is why I 
-purchased this particular gizmo.
-
-Firmware is what programs up the chipsets inside the device.  By 
-studying what registers are being written to, it would make it easier 
-to reverse-engineer the hardware.
-
-I have another USB<>RS232 converter (USB1000 single-port ) based on 
-the FTDI chipset, which doesn't require a firmware download and works 
-with out-of-the-box Debian 3.1
-
-Wilbert, ZL2BSJ
-
+Cheers,
+Jonathan Lassoff (KG6THI)
