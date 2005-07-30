@@ -1,38 +1,25 @@
-From: "Joop Stakenborg" <pg4i@xs4all.nl>
-Subject: Re: Hamlib: PTT Broken for Icom IC-746
-Date: Fri, 29 Jul 2005 13:33:01 +0200 (CEST)
-Message-ID: <20949.192.42.124.90.1122636781.squirrel@192.42.124.90>
-References: <4076450105072816315a3f8075@mail.gmail.com>
+From: Bill - WA7NWP <wa7nwp@jnos.org>
+Subject: Re: SSH and the NONE option - more
+Date: Fri, 29 Jul 2005 18:31:09 -0700
+Message-ID: <42EAD85D.3010107@jnos.org>
+References: <MAEBLGENFLMMCIMBCMPOOEJICKAA.la6gha@robenel.com> <Pine.LNX.4.44.0507121017130.16595-100000@srv01.compumont.com> <20050714075909.GB2932@linux-mips.org> <42D634B6.7050807@home.se> <e524c532050714075327e61990@mail.gmail.com> <20050714152734.GA14641@toontown.erial.nj.us> <407645010507140928bbc8db8@mail.gmail.com> <20050714190202.GB14641@toontown.erial.nj.us> <Pine.SUN.4.58.0507141221440.15964@eskimo.com> <20050714204313.GC14641@toontown.erial.nj.us>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7BIT
+Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <4076450105072816315a3f8075@mail.gmail.com>
+In-Reply-To: <20050714204313.GC14641@toontown.erial.nj.us>
 Sender: linux-hams-owner@vger.kernel.org
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"
-To: Jonathan Lassoff <jlassoff@gmail.com>
-Cc: linux-hams@vger.kernel.org
+Content-Type: text/plain; charset="us-ascii"; format="flowed"
+To: linux-hams@vger.kernel.org
 
-> I have an Icom IC-746 connected to my linux box through a level
-> converter. I have the latest hamlib (1.2.4) all setup, and most of the
-> functions work. The only qualm I have is that it will not trigger the
-> PTT on. There is a CI-V command on the serial bus to do it, but I get
-> the error: "set_ptt: error = Feature not available"
-> I'm not much for C, so I can't really find where this would be
-> implemented. Does anyone have any ideas?
->
 
-A bit more information would be nice:
+Suppose I captured all the packets of a SSH encrypted exchange.   Would 
+it be possible to decode the contents of the exchange IF one had both 
+the public and private keys?
 
-start using rigctl with verbose flags:
+If so, then we hams should be able to use SSH for amateur radio 
+operations as long as we publish the keys - no?
 
-rigctl -vvvvv -m 323
+Bill - WA7NWP
 
-Next, type 'T' and '1', which sets PTT.
-Send the output to the hamlib-developer mailing list.
-
-> Cheers,
-> Jonathan Lassoff (KG6THI)
-
-Joop PG4I
 
