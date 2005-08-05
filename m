@@ -1,58 +1,42 @@
-From: "Curt, WE7U" <archer@eskimo.com>
-Subject: Re: Xastir version 1.6.0 released
-Date: Fri, 5 Aug 2005 08:13:52 -0700 (PDT)
-Message-ID: <Pine.SUN.4.58.0508050809081.2375@eskimo.com>
-References: <Pine.SUN.4.58.0508011252400.9302@eskimo.com>
- <42F30023.1050803@sharon.esrac.ele.tue.nl> <20050805062453.GA13216@cloud.net.au>
-Reply-To: "Curt Mills, WE7U" <archer@eskimo.com>
+From: Jeff Laughlin <jeff.laughlin@gmail.com>
+Subject: Announcing Perl module for parsing APRS packets
+Date: Fri, 5 Aug 2005 17:26:42 -0400
+Message-ID: <8ea83f405080514263ae2ec3d@mail.gmail.com>
+Reply-To: Jeff Laughlin <jeff.laughlin@gmail.com>
 Mime-Version: 1.0
+Content-Transfer-Encoding: 7BIT
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <20050805062453.GA13216@cloud.net.au>
+Content-Disposition: inline
 Sender: linux-hams-owner@vger.kernel.org
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: TEXT/PLAIN; charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-To: Hamish Moffatt <hamish@cloud.net.au>, Arno Verhoeven - PE1ICQ <linux-hams-list-rcvr@sharon.esrac.ele.tue.nl>
-Cc: linux-hams@vger.kernel.org
+Content-Type: text/plain; charset="us-ascii"
+To: Linux-Hams@vger.kernel.org
 
-On Fri, 5 Aug 2005, Hamish Moffatt wrote:
+Hello,
 
-> On Fri, Aug 05, 2005 at 07:58:59AM +0200, Arno Verhoeven - PE1ICQ wrote:
-> > Curt, WE7U wrote:
-> >
-> > >Project: XASTIR  (xastir)
-> > >Package: xastir-stable
-> > >Date   : 2005-08-01 12:30
-> > >
-> > >Project "XASTIR" ('xastir') has released the new version of package
-> > >'xastir-stable'.
-> >
-> > I prepared and submitted a Slackware binary pkg. It is now part of
-> > slackware-current and will be part of the soon to be released
-> > slackware-10.2.
->
-> Debian package is coming soon, but we are in the middle of a mass
-> transition to GCC 4.0 and currently I can't build xastir (not xastir's
-> fault).
->
-> Hamish
-> --
-> Hamish Moffatt VK3SB <hamish@debian.org> <hamish@cloud.net.au>
+I've written a Perl module, Ham::APRS::Parser, for parsing APRS
+packets, and I've released it under the GPL. You can find it here:
+http://aprs.n1ywb.com/Ham-APRS-Parser-0.01/
 
-Great to hear about both of these!
+It takes the packet string, parses it, and returns a hash with the
+data in a consistent and easy to process format. Currently it reliably
+returns position, from and to calls, digi-path, symbols, and Mic-E
+status reports from normal position reports, compressed position
+reports, and Mic-E position reports. More work is needed to fully
+implement the APRS protocol.
 
-I put SuSE 9.0 RPM's onto my site, actually just before the official
-release was put up on SourceForge.  It's linked in from the Binary
-Releases page off the Xastir homepage.
+Once the data is in a friendlier format in the hash structure, it can
+be used to generate Google Earth KML, or combined with the Google Maps
+API to create a FOSS findu.com replacement.
 
-If I can get SuSE to listen to me about the misunderstanding they
-have about Xastir licensing, perhaps we can get Xastir back into
-that distribution as well.  Without being a 5-year-old version!
+OK this is actually from my IARU 2005 contest log but these could just
+as easily be APRS stations :)
+http://www.n1ywb.com/pics/iaru05.jpg
 
-Anyone have any contacts at SuSE?
+Also I would like to start working on a complementary module to
+construct APRS packets from the hash structure returned by the parser
+module. Applications could include a highly intelligent digipeater.
 
---
-Curt, WE7U.   APRS Client Comparisons: http://www.eskimo.com/~archer
-"Lotto:    A tax on people who are bad at math." -- unknown
-"Windows:  Microsoft's tax on computer illiterates." -- WE7U
-"The world DOES revolve around me:  I picked the coordinate system!"
+Comments and suggestions are appreciated.
+
+73 de n1ywb
