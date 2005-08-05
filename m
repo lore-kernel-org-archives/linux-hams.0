@@ -1,42 +1,55 @@
-From: Jeff Laughlin <jeff.laughlin@gmail.com>
-Subject: Announcing Perl module for parsing APRS packets
-Date: Fri, 5 Aug 2005 17:26:42 -0400
-Message-ID: <8ea83f405080514263ae2ec3d@mail.gmail.com>
-Reply-To: Jeff Laughlin <jeff.laughlin@gmail.com>
+From: Jeremy Utley <jerutley@gmail.com>
+Subject: Re: Xastir version 1.6.0 released
+Date: Fri, 5 Aug 2005 15:42:13 -0700
+Message-ID: <d5d4185b05080515424c6bd65@mail.gmail.com>
+References: <Pine.SUN.4.58.0508011252400.9302@eskimo.com>
+	 <42F30023.1050803@sharon.esrac.ele.tue.nl>
+Reply-To: Jeremy Utley <jerutley@gmail.com>
 Mime-Version: 1.0
 Content-Transfer-Encoding: 7BIT
 Return-path: <linux-hams-owner@vger.kernel.org>
+In-Reply-To: <42F30023.1050803@sharon.esrac.ele.tue.nl>
 Content-Disposition: inline
 Sender: linux-hams-owner@vger.kernel.org
 List-Id: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
-To: Linux-Hams@vger.kernel.org
+To: linux-hams@vger.kernel.org
 
-Hello,
+Woah - Patrick accepted Xastir into the main Slack distro?  I've
+maintained the binary slack-packs for 10.0 and 10.1 on my FTP.
 
-I've written a Perl module, Ham::APRS::Parser, for parsing APRS
-packets, and I've released it under the GPL. You can find it here:
-http://aprs.n1ywb.com/Ham-APRS-Parser-0.01/
+Will this copy of Xastir be linked to the ax.25 libs?  IIRC, those
+aren't part of the default Slack install either.
 
-It takes the packet string, parses it, and returns a hash with the
-data in a consistent and easy to process format. Currently it reliably
-returns position, from and to calls, digi-path, symbols, and Mic-E
-status reports from normal position reports, compressed position
-reports, and Mic-E position reports. More work is needed to fully
-implement the APRS protocol.
+Jeremy, NW7JU
 
-Once the data is in a friendlier format in the hash structure, it can
-be used to generate Google Earth KML, or combined with the Google Maps
-API to create a FOSS findu.com replacement.
-
-OK this is actually from my IARU 2005 contest log but these could just
-as easily be APRS stations :)
-http://www.n1ywb.com/pics/iaru05.jpg
-
-Also I would like to start working on a complementary module to
-construct APRS packets from the hash structure returned by the parser
-module. Applications could include a highly intelligent digipeater.
-
-Comments and suggestions are appreciated.
-
-73 de n1ywb
+On 8/4/05, Arno Verhoeven - PE1ICQ
+<linux-hams-list-rcvr@sharon.esrac.ele.tue.nl> wrote:
+> Curt, WE7U wrote:
+> 
+> >Project: XASTIR  (xastir)
+> >Package: xastir-stable
+> >Date   : 2005-08-01 12:30
+> >
+> >Project "XASTIR" ('xastir') has released the new version of package 'xastir-stable'.
+> >
+> >
+> 
+> I prepared and submitted a Slackware binary pkg. It is now part of
+> slackware-current and will be part of the soon to be released
+> slackware-10.2.
+> 
+> http://www.slackware.com/changelog/current.php?cpu=i386
+> 
+> --
+> 73, PE1ICQ  Arno Verhoeven
+> --------------------------------
+> AX.25  pe1icq@pi8zaa.#nbo.nld.eu
+> smtp   pe1icq@pi8zaa.ampr.org
+> inet   pe1icq@amsat.org
+> 
+> -
+> To unsubscribe from this list: send the line "unsubscribe linux-hams" in
+> the body of a message to majordomo@vger.kernel.org
+> More majordomo info at  http://vger.kernel.org/majordomo-info.html
+>
