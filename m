@@ -1,43 +1,37 @@
-From: chuck gelm <chuck@gelm.net>
+From: "Curt, WE7U" <archer@eskimo.com>
 Subject: Re: Newbie: the easiest way to connect two PCs via HF radio
-Date: Mon, 08 Aug 2005 17:08:03 -0400
-Message-ID: <42F7C9B3.9060308@gelm.net>
+Date: Mon, 8 Aug 2005 14:36:53 -0700 (PDT)
+Message-ID: <Pine.SUN.4.58.0508081435060.15333@eskimo.com>
 References: <140.105.16.64.784501121.1123491712@webmail.katamail.com>
-Reply-To: chuck@gelm.net
+ <42F7C9B3.9060308@gelm.net>
+Reply-To: "Curt Mills, WE7U" <archer@eskimo.com>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <140.105.16.64.784501121.1123491712@webmail.katamail.com>
+In-Reply-To: <42F7C9B3.9060308@gelm.net>
 Sender: linux-hams-owner@vger.kernel.org
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"; format="flowed"
-To: "liva@katamail.com" <liva@katamail.com>
-Cc: linux-hams@vger.kernel.org
+Content-Type: TEXT/PLAIN; charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+To: chuck gelm <chuck@gelm.net>
+Cc: "liva@katamail.com" <liva@katamail.com>, linux-hams@vger.kernel.org
 
-liva@katamail.com wrote:
-> I have to connect two PCs in this way:
-> PC - HF modem - HF radio - cable with load - HF radio - HF modem - PC
-> 
-> The PCs work with Ubuntu 4.10, the HF modems are Halcomm DSP4100, the radios ICOM IC-707. Which is the easiest-to-use opensource free software to make the link works? I want only to be able to exchange files, I tried with minicom, SSH, and something else, but nothing works... Thank you for your help,
-> Marco Liva
-> 
-> ________________________________________________________________________
-> Cerchi un laboratorio fotografico aperto 24 ore su 24?
-> Stampa le tue foto digitali su Kataweb e le ricevi a domicilio in 48 ore.
-> http://www.kataweb.it/foto
+On Mon, 8 Aug 2005, chuck gelm wrote:
 
-Dear Marco Liva:
+> Dear Marco Liva:
+>
+> IMHO, 'ftp[d]',
+>   if you configure networking in the two PCs and
+>   the 'HF Modems' can be configured as network devices
+> else
+>   'xastir'
+>   but this may not be 'easy'. ;-)
 
-IMHO, 'ftp[d]',
-  if you configure networking in the two PCs and
-  the 'HF Modems' can be configured as network devices
-else
-  'xastir'
-  but this may not be 'easy'. ;-)
+I don't understand the reference to Xastir, that's likely to confuse
+the issue.  Xastir would be of interest only if Marco was intending
+to do APRS.  For file transfers it doesn't apply.
 
-Does your scheme work if you bypass the radio portion?
-
-PC - HF modem - <> - HF modem - PC
-
-HTH, Chuck
-
+--
+Curt, WE7U.   APRS Client Comparisons: http://www.eskimo.com/~archer
+"Lotto:    A tax on people who are bad at math." -- unknown
+"Windows:  Microsoft's tax on computer illiterates." -- WE7U
+"The world DOES revolve around me:  I picked the coordinate system!"
