@@ -1,40 +1,37 @@
-From: Dave Platt <dplatt@radagast.org>
-Subject: Re: Baycom modem and simple text ui
-Date: Tue, 9 Aug 2005 13:33:04 -0700 (PDT)
-Message-ID: <20050809203304.4727.qmail@radagast.org>
-References: <407645010508091213efc990f@mail.gmail.com>
+From: Stephen Kitchener <stephen@g6dzj.demon.co.uk>
+Subject: Filter for 430Mhz
+Date: Tue, 9 Aug 2005 21:51:57 +0100
+Message-ID: <200508092151.57245.stephen@g6dzj.demon.co.uk>
 Mime-Version: 1.0
+Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <407645010508091213efc990f@mail.gmail.com>
+Content-Disposition: inline
 Sender: linux-hams-owner@vger.kernel.org
 List-Id: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-To: jlassoff@gmail.com
-Cc: linux-hams@vger.kernel.org
+To: Linux Hams <linux-hams@vger.kernel.org>
 
-> Well, I can get the driver loaded just fine, but what I am interested
-> in doing is just a text connection. I want to just get some software
-> running that gives the classic "cmd:" or ":" prompt. For example, I'd
-> like to just get and send text to my local DX cluster. Any ideas?
+Hi, 
 
-In the usual Unix/Linux metaphor, these sorts of things are usually
-done via individual stand-alone programs, invoked from the shell,
-rather than from a monolithic program such as a "TNC command
-interpreter emulator."
+I have a problem with a really near 430Mz transmitter (my own) that is 
+breaking though to the TV. The Transmitter isn't off tune and as far as I 
+Know or can see, it isn't producing any side transmissions or birdies. 
 
-If the driver is loaded, and the AX.25 interface has been
-configured with a portname, then you'd probably want to try
-running commands such as:
+So, My question is, does anyone know of a really good filter design or 
+commercial filer that will block 430.625 so that it dosn't appear in the 
+downlead to the TV.
 
-   beacon -s myport -d HEADSUP "Santa Claus on 14.020 QRO"
-
-or
-
-   call myport W9ZZZ
-
-or something like that.
-
-You can run "listen -a" in another window to monitor the
-packet traffic in both directions.
-
+Thanks
+-- 
+                 O  o
+            _\_   o
+         \\/  o\ .
+         //\___=
+            ''
+RHCT 603005411793211
+RHCE 804005830215073
+Tue, 09 Aug 2005 21:47:47 +0100
+ 21:47:47 up  3:11,  1 user,  load average: 2.19, 2.38, 2.30
+One measure of friendship consists not in the number of things friends
+can discuss, but in the number of things they need no longer mention.
+		-- Clifton Fadiman
