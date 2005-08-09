@@ -1,62 +1,44 @@
-From: Jonathan Lassoff <jlassoff@gmail.com>
-Subject: Fwd: Baycom modem and simple text ui
-Date: Tue, 9 Aug 2005 15:02:04 -0700
-Message-ID: <4076450105080915022193e079@mail.gmail.com>
-References: <407645010508091213efc990f@mail.gmail.com>
-	 <20050809203304.4727.qmail@radagast.org>
-	 <40764501050809150125614ea9@mail.gmail.com>
+From: Bob Nielsen <nielsen@oz.net>
+Subject: Re: Baycom modem and simple text ui
+Date: Tue, 9 Aug 2005 15:18:25 -0700
+Message-ID: <20050809221825.GA22193@oz.net>
+References: <4076450105080900355ec82283@mail.gmail.com> <20050809165120.GA20715@oz.net> <407645010508091213efc990f@mail.gmail.com>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7BIT
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <40764501050809150125614ea9@mail.gmail.com>
 Content-Disposition: inline
+In-Reply-To: <407645010508091213efc990f@mail.gmail.com>
 Sender: linux-hams-owner@vger.kernel.org
 List-Id: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 7bit
 To: linux-hams@vger.kernel.org
 
-On 09/08/05, Dave Platt <dplatt@radagast.org> wrote:
-> If the driver is loaded, and the AX.25 interface has been
-> configured with a portname, then you'd probably want to try
-> running commands such as:
->
->    beacon -s myport -d HEADSUP "Santa Claus on 14.020 QRO"
->
-> or
->
->    call myport W9ZZZ
->
-> or something like that.
->
-> You can run "listen -a" in another window to monitor the
-> packet traffic in both directions.
+On Tue, Aug 09, 2005 at 12:13:57PM -0700, Jonathan Lassoff wrote:
+> On 09/08/05, Bob Nielsen <nielsen@oz.net> wrote:
+> > Baycom modems are supported in Linux.  Try either the baycom_ser_fdx or
+> > baycom_ser_hdx drivers (you may need to configure/compile your kernel,
+> > although they in some packaged kernels, e.g., Debian and some others).
+> > See Documentation/networking/baycom.txt in the Linux source tarball for
+> > more details.
+> > 
+> > Bob, N7XY
+> 
+> Well, I can get the driver loaded just fine, but what I am interested
+> in doing is just a text connection. I want to just get some software
+> running that gives the classic "cmd:" or ":" prompt. For example, I'd
+> like to just get and send text to my local DX cluster. Any ideas?
 
-Well, I think that that steers me in the general direction, but that
-sill doesn't really work. I wonder why there isn't a piece of software
-that just pretends to be like a TNC so that I can can fit everything
-neatly into one terminal window.
+Since the driver will make the modem look like any other network 
+interface, you should be able to do this with the telnet command if the 
+cluster supports that type of connection.  Using the 'call' command 
+(included in ax25-apps) should also work.  There are also several 
+terminal emulators available--for a pretty comprehensive list, see 
+<http://radio.linux.org.au>.  Additionally, Xdx is a specialized X 
+client for use with DX clusters.
 
-I've been following the AX25-HOWTO to get everything going. Here's what I did:
+You mentioned using SSH in your original message.  That may violate 
+rules against using encryption which exist in many countries.
 
-# setserial /dev/ttyS0 uart none
-# insmod hdlcdrv
-# insmod baycom mode="ser12*" iobase=0x3f8 irq=4
-# sethdlc -p -i bcsh0 mode "ser12*" io 0x3f8 irq 4
-#ifconfig bcsh0 hw ax25 KG6THI-2 up
+73, Bob N7XY
 
-Then I added this line to /etc/ax25/axports:
 
-1       KG6THI-2        1200    255     2       (1200  bps)
-
-Then running something like "listen -a" yields:
-
-axconfig: port 1 not active
-listen: no AX.25 port data configured
-
-I'm not really clear on the difference between a "port" and the
-"interface" bcsh0; but that is probably an 'RTFM' issue. I want to
-think that somehow I need to associate the bcsh0 interface to the
-ax.25 "port", "1".
-
-Cheers,
-joanthan - kg6thi
