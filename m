@@ -1,7 +1,7 @@
 From: Jonathan Lassoff <jlassoff@gmail.com>
 Subject: Re: Baycom modem and simple text ui
-Date: Tue, 9 Aug 2005 22:16:47 -0700
-Message-ID: <40764501050809221659a68f79@mail.gmail.com>
+Date: Tue, 9 Aug 2005 22:50:16 -0700
+Message-ID: <40764501050809225071cfb303@mail.gmail.com>
 References: <4076450105080900355ec82283@mail.gmail.com>
 	 <20050809165120.GA20715@oz.net>
 	 <407645010508091213efc990f@mail.gmail.com>
@@ -28,16 +28,6 @@ On 09/08/05, Bob Nielsen <nielsen@oz.net> wrote:
 > 
 > Bob, N7XY
 
-Well, now listen seems to be displaying RX packets, but call still
-wont work. Here is what ifconfig shows:
-
-bcsh0     Link encap:AMPR AX.25  HWaddr KG6THI-2
-          UP RUNNING  MTU:256  Metric:1
-          RX packets:9 errors:0 dropped:0 overruns:0 frame:0
-          TX packets:0 errors:0 dropped:0 overruns:0 carrier:0
-          collisions:0 txqueuelen:16
-          RX bytes:0 (0.0 b)  TX bytes:0 (0.0 b)
-          Interrupt:4 Base address:0x3f8
-
-Cheers,
-jonathan - kg6thi
+As it turns out, I just needed to set a dummy IP address for the
+interface. It connected just fine, and call is the perfect program for
+the job.
