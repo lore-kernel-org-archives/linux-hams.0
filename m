@@ -1,91 +1,41 @@
-From: Ralf Baechle DL5RB <ralf@linux-mips.org>
-Subject: [PATCH] 6pack persistence fix
-Date: Wed, 10 Aug 2005 14:23:19 +0100
-Message-ID: <20050810132319.GB10602@linux-mips.org>
-Mime-Version: 1.0
+From: "liva@katamail.com" <liva@katamail.com>
+Subject: Re: Newbie: the easiest way to connect two PCs via HF radio
+Date: Wed, 10 Aug 2005 14:02:46 +0000
+Message-ID: <140.105.16.64.1987909730.1123682566@webmail.katamail.com>
+References: <140.105.16.64.784501121.1123491712@webmail.katamail.com>
+ <42F7C9B3.9060308@gelm.net>
+ <140.105.16.64.424532175.1123577360@webmail.katamail.com>
+ <42F9DCB8.2080207@gelm.net>
+ <140.105.16.64.911782711.1123677477@webmail.katamail.com>
+ <42F9FF6E.5060804@gelm.net>
+Content-Transfer-Encoding: 8bit
 Return-path: <linux-hams-owner@vger.kernel.org>
-Content-Disposition: inline
+In-Reply-To: <42F9FF6E.5060804@gelm.net>
 Sender: linux-hams-owner@vger.kernel.org
 List-Id: <linux-hams.vger.kernel.org>
+MIME-Version: 1.0
 Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-To: linux-hams@vger.kernel.org
+To: chuck@gelm.net
+Cc: linux-hams@vger.kernel.org
 
-Resend, vger seems to had this posting for breakfast when I first sent it
-two days ago ...
+> Both the PC (minicom) and the clover modem parameters must match.
+> Both must be using hardware flow control.
+> You did not mention the parameters of the modem(s).
+> Do the clover modems use hardware flow control?
+> 
+> Does the clover modem(s) come with software capable of binary file transfers?
 
-Fix the p-persistence CSMA algorithm which in simplex mode was starting
-with a slottime delay before doing anything else as if there was carrier
-collision resulting in bad performance on simplex links.
+From the manual of my modems I read:
+"The character format is 8 bits, no parity, one stop bit at 9600 bps. Hardware flow control is always active on the serial port"
 
-Signed-off-by: Ralf Baechle DL5RB <ralf@linux-mips.org>
+Minicom does not work with Hardware flow control activated, too, as I said, but probably you're right, it has to be activated, the problem is elsewhere.
 
- drivers/net/hamradio/6pack.c |   20 ++++----------------
- 1 files changed, 4 insertions(+), 16 deletions(-)
+The only software provided is for windows, it works, but I have to use free software for Linux (it's the aim of a project).
+Marco
 
-Index: linux-cvs/drivers/net/hamradio/6pack.c
-===================================================================
---- linux-cvs.orig/drivers/net/hamradio/6pack.c
-+++ linux-cvs/drivers/net/hamradio/6pack.c
-@@ -130,12 +130,11 @@ struct sixpack {
- 
- #define AX25_6PACK_HEADER_LEN 0
- 
--static void sp_start_tx_timer(struct sixpack *);
- static void sixpack_decode(struct sixpack *, unsigned char[], int);
- static int encode_sixpack(unsigned char *, unsigned char *, int, unsigned char);
- 
- /*
-- * perform the persistence/slottime algorithm for CSMA access. If the
-+ * Perform the persistence/slottime algorithm for CSMA access. If the
-  * persistence check was successful, write the data to the serial driver.
-  * Note that in case of DAMA operation, the data is not sent here.
-  */
-@@ -143,7 +142,7 @@ static int encode_sixpack(unsigned char 
- static void sp_xmit_on_air(unsigned long channel)
- {
- 	struct sixpack *sp = (struct sixpack *) channel;
--	int actual;
-+	int actual, when = sp->slottime;
- 	static unsigned char random;
- 
- 	random = random * 17 + 41;
-@@ -159,20 +158,10 @@ static void sp_xmit_on_air(unsigned long
- 		sp->tty->driver->write(sp->tty, &sp->led_state, 1);
- 		sp->status2 = 0;
- 	} else
--		sp_start_tx_timer(sp);
-+		mod_timer(&sp->tx_t, jiffies + ((when + 1) * HZ) / 100);
- }
- 
- /* ----> 6pack timer interrupt handler and friends. <---- */
--static void sp_start_tx_timer(struct sixpack *sp)
--{
--	int when = sp->slottime;
--
--	del_timer(&sp->tx_t);
--	sp->tx_t.data = (unsigned long) sp;
--	sp->tx_t.function = sp_xmit_on_air;
--	sp->tx_t.expires = jiffies + ((when + 1) * HZ) / 100;
--	add_timer(&sp->tx_t);
--}
- 
- /* Encapsulate one AX.25 frame and stuff into a TTY queue. */
- static void sp_encaps(struct sixpack *sp, unsigned char *icp, int len)
-@@ -243,8 +232,7 @@ static void sp_encaps(struct sixpack *sp
- 		sp->xleft = count;
- 		sp->xhead = sp->xbuff;
- 		sp->status2 = count;
--		if (sp->duplex == 0)
--			sp_start_tx_timer(sp);
-+		sp_xmit_on_air((unsigned long)sp);
- 	}
- 
- 	return;
+________________________________________________________________________
+Cerchi un laboratorio fotografico aperto 24 ore su 24?
+Stampa le tue foto digitali su Kataweb e le ricevi a domicilio in 48 ore.
+http://www.kataweb.it/foto
 
------ End forwarded message -----
 
-73 de DL5RB op Ralf
-
---
-Loc. JN47BS / CQ 14 / ITU 28 / DOK A21
