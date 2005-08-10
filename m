@@ -1,7 +1,7 @@
-From: Chuck Hast <wchast@gmail.com>
+From: Jeff Laughlin <jeff.laughlin@gmail.com>
 Subject: Re: Announcing Perl module for parsing APRS packets
-Date: Wed, 10 Aug 2005 12:14:04 -0400
-Message-ID: <620c905705081009143dc3bcb0@mail.gmail.com>
+Date: Wed, 10 Aug 2005 12:21:31 -0400
+Message-ID: <8ea83f4050810092139d7034c@mail.gmail.com>
 References: <8ea83f405080514263ae2ec3d@mail.gmail.com>
 	 <Pine.SUN.4.58.0508100852220.1839@eskimo.com>
 Mime-Version: 1.0
@@ -13,7 +13,20 @@ Sender: linux-hams-owner@vger.kernel.org
 List-Id: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
 To: "Curt Mills, WE7U" <archer@eskimo.com>
-Cc: Jeff Laughlin <jeff.laughlin@gmail.com>, Linux-Hams@vger.kernel.org
+Cc: Linux-Hams@vger.kernel.org
+
+Hi Curt,
+
+Thanks for the suggestion. I wasn't aware that it existed.
+
+After thwarting a few broken links I did manage to find a copy. It
+targets perl 4, it's not a module, and it outputs formatted text
+instead of a data structure, so it doesn't exactly acheive the same
+goals that I have. However it is GPL'ed which is good, so I may be
+able to re-use some of it's parsing code without tainting my code. I
+still have quite a bit left to implement to have a complete
+implementation. And it will certainly be nice to have another GPL code
+base to reference other than XASTIR.
 
 On 8/10/05, Curt, WE7U <archer@eskimo.com> wrote:
 > On Fri, 5 Aug 2005, Jeff Laughlin wrote:
@@ -33,16 +46,10 @@ On 8/10/05, Curt, WE7U <archer@eskimo.com> wrote:
 > spec editor) created which decodes packets?  That was quite
 > complete and fully decoded everything similar to the "listen"
 > command.
-
-Could this be used to dump APRS data into a db like MySQL? I am interested
-in doing something like that, but have to learn about db. I work with them up
-to a certain point, time to learn the rest and getting APRS data into a db would
-be a neat exersize.
-
-
--- 
-Chuck Hast 
-To paraphrase my flight instructor;
-"the only dumb question is the one you DID NOT ask resulting in my going
-out and having to identify your bits and pieces in the midst of torn
-and twisted metal."
+> 
+> --
+> Curt, WE7U.   APRS Client Comparisons: http://www.eskimo.com/~archer
+> "Lotto:    A tax on people who are bad at math." -- unknown
+> "Windows:  Microsoft's tax on computer illiterates." -- WE7U
+> "The world DOES revolve around me:  I picked the coordinate system!"
+>
