@@ -1,33 +1,38 @@
-From: Jonathan Lassoff <jlassoff@gmail.com>
-Subject: Re: Baycom modem and simple text ui
-Date: Tue, 9 Aug 2005 22:50:16 -0700
-Message-ID: <40764501050809225071cfb303@mail.gmail.com>
-References: <4076450105080900355ec82283@mail.gmail.com>
-	 <20050809165120.GA20715@oz.net>
-	 <407645010508091213efc990f@mail.gmail.com>
-	 <20050809221825.GA22193@oz.net>
-	 <4076450105080915267ba96108@mail.gmail.com>
-	 <20050809225635.GA25284@oz.net>
-	 <40764501050809164372d02e7d@mail.gmail.com>
-	 <20050810004406.GA25600@oz.net>
+From: Marco Liva <liva@katamail.com>
+Subject: Re: Newbie: the easiest way to connect two PCs via HF radio
+Date: Wed, 10 Aug 2005 10:54:26 +0200
+Message-ID: <42F9C0C2.8040503@katamail.com>
+References: <140.105.16.64.784501121.1123491712@webmail.katamail.com>	<42F7C9B3.9060308@gelm.net>	<140.105.16.64.424532175.1123577360@webmail.katamail.com> <20050809105027.3a9cc646.washer@trlp.com>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7BIT
+Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <20050810004406.GA25600@oz.net>
-Content-Disposition: inline
+In-Reply-To: <20050809105027.3a9cc646.washer@trlp.com>
 Sender: linux-hams-owner@vger.kernel.org
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"
-To: linux-hams@vger.kernel.org
+Content-Type: text/plain; charset="us-ascii"; format="flowed"
+To: James Washer <washer@trlp.com>
+Cc: linux-hams@vger.kernel.org
 
-On 09/08/05, Bob Nielsen <nielsen@oz.net> wrote:
-> Not really (I use a KISS TNC, not a Baycom modem).  Do you have AX.25
-> networking set up and does the interface show up with ifconfig?  Section
-> 6.1.4 of the AX25-HOWTO (which may not be completely up-to-date for 2.6
-> kernels) should be helpful, as well as 'man sethdlc'.
-> 
-> Bob, N7XY
+James Washer ha scritto:
 
-As it turns out, I just needed to set a dummy IP address for the
-interface. It connected just fine, and call is the perfect program for
-the job.
+>Tell us a bit about the modems (and the radios). What frequency, what mode, T/R delays, etc... as much as you can.
+>
+> - jim
+>
+>On Tue, 09 Aug 2005 08:49:20 +0000
+>"liva@katamail.com" <liva@katamail.com> wrote:
+>
+>  
+>
+>>>Does your scheme work if you bypass the radio portion?
+>>>
+>>>PC - HF modem - <> - HF modem - PC
+>>>
+>>>      
+>>>
+>
+
+I usually use just the link PC - HF modem - HF modem - PC, for easiness (in any case, the frequency of the radios is 15.000.0). The modems work in clover mode.
+
+
+
