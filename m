@@ -1,35 +1,38 @@
-From: "Curt, WE7U" <archer@eskimo.com>
-Subject: Re: Announcing Ham-APRS-Parser version 0.02
-Date: Tue, 9 Aug 2005 07:46:48 -0700 (PDT)
-Message-ID: <Pine.SUN.4.58.0508090745480.828@eskimo.com>
-References: <8ea83f4050808214448996701@mail.gmail.com>
-Reply-To: "Curt Mills, WE7U" <archer@eskimo.com>
+From: Nate Bargmann <n0nb@networksplus.net>
+Subject: Re: Announcing Perl module for parsing APRS packets
+Date: Tue, 9 Aug 2005 20:30:41 -0500
+Message-ID: <20050810013041.GC3204@mail.networksplus.net>
+References: <8ea83f405080514263ae2ec3d@mail.gmail.com> <62046.80.3.246.170.1123622205.squirrel@www.otcgaming.net>
 Mime-Version: 1.0
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <8ea83f4050808214448996701@mail.gmail.com>
+Content-Disposition: inline
+In-Reply-To: <62046.80.3.246.170.1123622205.squirrel@www.otcgaming.net>
 Sender: linux-hams-owner@vger.kernel.org
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: TEXT/PLAIN; charset="us-ascii"
+Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
-To: Jeff Laughlin <jeff.laughlin@gmail.com>
-Cc: Linux-Hams@vger.kernel.org
+To: linux-hams@vger.kernel.org
 
-On Tue, 9 Aug 2005, Jeff Laughlin wrote:
+> > Hello,
+> >
+> > I've written a Perl module, Ham::APRS::Parser, for parsing APRS
+> > packets, and I've released it under the GPL. You can find it here:
+> > http://aprs.n1ywb.com/Ham-APRS-Parser-0.01/
+> >
+> > It takes the packet string, parses it, and returns a hash with the
+> > data in a consistent and easy to process format. Currently it reliably
+> > returns position, from and to calls, digi-path, symbols, and Mic-E
+> > status reports from normal position reports, compressed position
+> > reports, and Mic-E position reports. More work is needed to fully
+> > implement the APRS protocol.
 
-> http://aprs.n1ywb.com/Ham-APRS-Parser-0.02/
->
-> I've added support for a bunch more APRS data. Please check it out and
-> let me know how it goes.
->
-> Any ideas where else I could announce this to get some knowledgable
-> people to look at? Not places like eHam.com... I've posted it on
-> #hamradio on irc.freenode.net...
+Perhaps it can be included in CPAN?
 
-xastir mailing list (www.xastir.org)
-aprssig mailing list (www.tapr.org)
+73, de Nate >>
 
---
-Curt, WE7U.   APRS Client Comparisons: http://www.eskimo.com/~archer
-"Lotto:    A tax on people who are bad at math." -- unknown
-"Windows:  Microsoft's tax on computer illiterates." -- WE7U
-"The world DOES revolve around me:  I picked the coordinate system!"
+-- 
+ Wireless | Amateur Radio Station N0NB          |  Successfully Microsoft
+  Amateur radio exams; ham radio; Linux info @  | free since January 1998.
+             http://www.qsl.net/n0nb/           |  "Debian, the choice of
+             My Kawasaki KZ-650 SR @            |     a GNU generation!"
+        http://www.networksplus.net/n0nb/       |   http://www.debian.org
