@@ -1,64 +1,35 @@
-From: Marco IW7EAS <iw7eas@iw7eas.org>
-Subject: Fwd: PRD-70 at 19200bd G3RUH
-Date: Wed, 10 Aug 2005 23:48:56 +0200
-Message-ID: <200508102348.56278.iw7eas@iw7eas.org>
+From: Wilbert Knol <w.knol@niwa.co.nz>
+Subject: Re: Announcing Perl module for parsing APRS packets
+Date: Thu, 11 Aug 2005 17:34:51 +1200
+Message-ID: <200508111734.51742.w.knol@niwa.co.nz>
+References: <8ea83f405080514263ae2ec3d@mail.gmail.com> <Pine.SUN.4.58.0508100852220.1839@eskimo.com> <620c905705081009143dc3bcb0@mail.gmail.com>
+Reply-To: w.knol@niwa.co.nz
 Mime-Version: 1.0
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
+In-Reply-To: <620c905705081009143dc3bcb0@mail.gmail.com>
 Content-Disposition: inline
 Sender: linux-hams-owner@vger.kernel.org
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="iso-8859-1"
+Content-Type: text/plain; charset="us-ascii"
 To: linux-hams@vger.kernel.org
 
+On Thursday 11 August 2005 04:14, Chuck Hast wrote:
 
+> Could this be used to dump APRS data into a db like MySQL? I am
+> interested in doing something like that, but have to learn about
+> db. I work with them up to a certain point, time to learn the rest
+> and getting APRS data into a db would be a neat exersize.
 
-----------  Messaggio inoltrato  ----------
+Consider SQLite as a light-weight self-contained DB for this sort of 
+thing. It leaves MySQL/Postgres in the dust, and never misses a beat. 
+My Perl/Tk realtime logger uses it.
 
-Subject: PRD-70 at 19200bd G3RUH
-Date: 23:47, mercoled=EC 10 agosto 2005
-=46rom: Marco IW7EAS <iw7eas@virgilio.it>
-To: Linux Hams <linux-hams@vger.kernel.org>
+Have a look at the sources for example code (not necessarily state of 
+the art ;-)
 
-Hi!
+  http://zl2arn.ath.cx/zl2bsj/qle-0.0.3.tar.gz
 
-do Someone ever used PRD-70 (by wimo) for 19200bd packet operation ?
-I'm trying to use it with a tnc3 connected to a linux box.
-My problem is:
-TX works fine, but I can't receive anything. The DCD led signals traffi=
-c on
-frequency (light is on) but the TNC3 doesn't demodule the traffic.
-Other partners in the frequency can hear me, but I don't demodule their
-packets.
+HTH...
 
-do someone had similar problems ?
-
-sorry for my english.... :-)
-
-73 de IW7EAS
-Marco
-
-
---
----
-Marco Di Martino
-Via Molino prepositurale, 18 - 20017 - Rho (MI)
-Cell. +393285373364
-e-mail: iw7eas@iw7eas.org
-www.marcodimartino.it
--
-Amateur Callsign: I W 7 E A S
-Homepage: http://www.iw7eas.org/
-Ampr Hostname: iw7eas.ampr.org
-Ampr IP: 44.134.65.2
-LinuxNode: telnet://iw7eas.homeip.net/
-Tnos: telnet://iw7eas.homeip.net:4001/
-(X)net: telnet://iw7eas.homeip.net:4002/
-NET/ROM: RHOGW:IW7EAS; NODEAS:IW7EAS-3
-Packet Mail : IW7EAS @ IW7EAS.ILOM.ITA.EU
----
--
-To unsubscribe from this list: send the line "unsubscribe linux-hams" i=
-n
-the body of a message to majordomo@vger.kernel.org
-More majordomo info at  http://vger.kernel.org/majordomo-info.html
+Wilbert, ZL2BSJ
