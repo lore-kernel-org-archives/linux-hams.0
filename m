@@ -1,29 +1,25 @@
-From: Bill Vodall <wa7nwp@jnos.org>
-Subject: Re: Announcing Perl module for parsing APRS packets
-Date: Thu, 11 Aug 2005 16:36:50 -0500 (CDT)
-Message-ID: <Pine.LNX.4.44.0508111632510.12099-100000@srv01.compumont.com>
-References: <Pine.SUN.4.58.0508100937240.1839@eskimo.com>
+From: Chuck Hast <wchast@gmail.com>
+Subject: Ethereal ax25 monitoring
+Date: Sat, 13 Aug 2005 13:43:29 -0400
+Message-ID: <620c90570508131043a53b9db@mail.gmail.com>
 Mime-Version: 1.0
+Content-Transfer-Encoding: 7BIT
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <Pine.SUN.4.58.0508100937240.1839@eskimo.com>
+Content-Disposition: inline
 Sender: linux-hams-owner@vger.kernel.org
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: TEXT/PLAIN; charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-To: Linux-Hams@vger.kernel.org
+Content-Type: text/plain; charset="us-ascii"
+To: linux-hams <linux-hams@vger.kernel.org>
 
-On Wed, 10 Aug 2005, Curt, WE7U wrote:
+Is there any ability to use ethereal to monitor ax25 packets, I have poked
+around and find nothing to the effect. I see that Ethereal states that it does
+monitor 706 protocols but appears that ax25 is not one of them. 
 
-> Hey, how about working in 'C' and doing the same thing for
-> Xastir-2????  That's the direction we're wanting to go.
+Anyone have any ideas on this?
 
-I have a PERL APRS library that's about medium complete.  See 'libaxu'
-on Sourceforge.  I've not put much more effort in to it since I believe
-the real need these days is a "golden parser" for APRS in a standard
-language like C/C++. Then it can be leveraged by all platforms - including
-PERL.
-
-73,
-Bill - WA7NWP
-
-
+-- 
+Chuck Hast 
+To paraphrase my flight instructor;
+"the only dumb question is the one you DID NOT ask resulting in my going
+out and having to identify your bits and pieces in the midst of torn
+and twisted metal."
