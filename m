@@ -1,67 +1,48 @@
-From: Ralf Baechle DL5RB <ralf@linux-mips.org>
-Subject: [PATCH 2/3] Eleminate HZ from NET/ROM kernel interfaces
-Date: Thu, 18 Aug 2005 19:13:08 +0100
-Message-ID: <20050818181308.GB24742@linux-mips.org>
+From: "Scott Weis" <kb2ear@kb2ear.net>
+Subject: AX-25 software that works on Fedora Core 4?
+Date: Fri, 19 Aug 2005 14:55:42 -0400
+Message-ID: <001701c5a4ef$996db510$a4011fac@kb2ear1>
 Mime-Version: 1.0
+Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
-Content-Disposition: inline
 Sender: linux-hams-owner@vger.kernel.org
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-To: linux-hams <linux-hams@vger.kernel.org>
+Content-Type: text/plain; format="flowed"; charset="us-ascii"; reply-type="original"
+To: linux-hams@vger.kernel.org
 
-Convert all NET/ROM sysctl time values from jiffies to ms as units.
+I have been working for weeks to try and get AX-25 working with the mkiss 
+module.  Best I can figure is that there is no working AX25 for SMP kernels 
+and core 4.  The ax25-utils package has not kept up with the updates made in 
+the kernel. This is all I can manage to get when I try to start an 
+interface..
 
-Signed-off-by: Ralf Baechle <ralf@linux-mips.org>
++ /sbin/modprobe mkiss
++ sleep 5
++ /usr/local/sbin/mkiss -s 9600 /dev/ttyS0 /dev/ptya1 /dev/ptya2
++ /usr/local/sbin/kissattach /dev/ttya1 ax0 172.16.198.1
+kissattach: SIOCSIFHWADDR: Invalid argument
+unregister_netdevice: device ax%d/ddc80400 never was registered
++ ifconfig ax0 netmask 255.255.255.0 broadcast 172.16.198.255
+SIOCSIFNETMASK: No such device
+SIOCGIFADDR: No such device
+SIOCSIFBROADCAST: No such device
+SIOCSIFBRDADDR: No such device
+ax0: unknown interface: No such device
++ /usr/local/sbin/kissattach /dev/ttya2 ax1 172.16.199.1
+kissattach: open: Input/output error
++ ifconfig ax1 netmask 255.255.255.0 broadcast 172.16.199.255
+SIOCSIFNETMASK: No such device
+SIOCGIFADDR: No such device
+SIOCSIFBROADCAST: No such device
+SIOCSIFBRDADDR: No such device
+ax1: unknown interface: No such device
 
- include/net/netrom.h   |    8 ++++----
- net/netrom/af_netrom.c |   15 ++++++++++-----
- 2 files changed, 14 insertions(+), 9 deletions(-)
+I am running kernel 2.4.13-rc6, I have a kantronics KAM-XL so I can't do 
+6pack.
 
-Index: linux-cvs/include/net/netrom.h
-===================================================================
---- linux-cvs.orig/include/net/netrom.h
-+++ linux-cvs/include/net/netrom.h
-@@ -42,11 +42,11 @@ enum {
- #define	NR_COND_PEER_RX_BUSY		0x04
- #define	NR_COND_OWN_RX_BUSY		0x08
- 
--#define NR_DEFAULT_T1			(120 * HZ)	/* Outstanding frames - 120 seconds */
--#define NR_DEFAULT_T2			(5   * HZ)	/* Response delay     - 5 seconds */
-+#define NR_DEFAULT_T1			120000		/* Outstanding frames - 120 seconds */
-+#define NR_DEFAULT_T2			5000		/* Response delay     - 5 seconds */
- #define NR_DEFAULT_N2			3		/* Number of Retries - 3 */
--#define	NR_DEFAULT_T4			(180 * HZ)	/* Busy Delay - 180 seconds */
--#define	NR_DEFAULT_IDLE			(0 * 60 * HZ)	/* No Activity Timeout - none */
-+#define	NR_DEFAULT_T4			180000		/* Busy Delay - 180 seconds */
-+#define	NR_DEFAULT_IDLE			0		/* No Activity Timeout - none */
- #define	NR_DEFAULT_WINDOW		4		/* Default Window Size - 4 */
- #define	NR_DEFAULT_OBS			6		/* Default Obsolescence Count - 6 */
- #define	NR_DEFAULT_QUAL			10		/* Default Neighbour Quality - 10 */
-Index: linux-cvs/net/netrom/af_netrom.c
-===================================================================
---- linux-cvs.orig/net/netrom/af_netrom.c
-+++ linux-cvs/net/netrom/af_netrom.c
-@@ -424,11 +424,16 @@ static int nr_create(struct socket *sock
- 
- 	nr_init_timers(sk);
- 
--	nr->t1     = sysctl_netrom_transport_timeout;
--	nr->t2     = sysctl_netrom_transport_acknowledge_delay;
--	nr->n2     = sysctl_netrom_transport_maximum_tries;
--	nr->t4     = sysctl_netrom_transport_busy_delay;
--	nr->idle   = sysctl_netrom_transport_no_activity_timeout;
-+	nr->t1     =
-+		msecs_to_jiffies(sysctl_netrom_transport_timeout);
-+	nr->t2     =
-+		msecs_to_jiffies(sysctl_netrom_transport_acknowledge_delay);
-+	nr->n2     =
-+		msecs_to_jiffies(sysctl_netrom_transport_maximum_tries);
-+	nr->t4     =
-+		msecs_to_jiffies(sysctl_netrom_transport_busy_delay);
-+	nr->idle   =
-+		msecs_to_jiffies(sysctl_netrom_transport_no_activity_timeout);
- 	nr->window = sysctl_netrom_transport_requested_window_size;
- 
- 	nr->bpqext = 1;
+Any idea how to get up and running again, I don't want to go back to FC1
+
+
+Thanks & 73 de
+Scott KB2EAR 
+
