@@ -1,49 +1,29 @@
-From: "Patrick A. Ouellette" <pat@flying-gecko.net>
-Subject: Re: AX-25 software that works on Fedora Core 4?
-Date: Fri, 19 Aug 2005 16:00:09 -0400
-Message-ID: <20050819200008.GB17715@flying-gecko.net>
-References: <001701c5a4ef$996db510$a4011fac@kb2ear1> <20050819194558.GA17715@flying-gecko.net>
+From: Joe Veldhuis <kd8atu@gmail.com>
+Subject: soundmodem activates PTT on DCD
+Date: Fri, 19 Aug 2005 16:51:51 -0400
+Message-ID: <43064667.5020604@gmail.com>
 Mime-Version: 1.0
+Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
-Content-Disposition: inline
-In-Reply-To: <20050819194558.GA17715@flying-gecko.net>
 Sender: linux-hams-owner@vger.kernel.org
 List-Id: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-To: Scott Weis <kb2ear@kb2ear.net>
-Cc: linux-hams@vger.kernel.org
+To: linux-hams@vger.kernel.org
 
-On Fri, Aug 19, 2005 at 03:45:58PM -0400, Patrick A. Ouellette wrote:
-> Date: Fri, 19 Aug 2005 15:45:58 -0400
-> From: "Patrick A. Ouellette" <pat@flying-gecko.net>
-> Subject: Re: AX-25 software that works on Fedora Core 4?
-> To: Scott Weis <kb2ear@kb2ear.net>
-> Cc: linux-hams@vger.kernel.org
-> 
-> On Fri, Aug 19, 2005 at 02:55:42PM -0400, Scott Weis wrote:
-> > 
-> > I have been working for weeks to try and get AX-25 working with the mkiss 
-> > module.  Best I can figure is that there is no working AX25 for SMP kernels 
-> > and core 4.  The ax25-utils package has not kept up with the updates made 
-> > in the kernel. This is all I can manage to get when I try to start an 
-> > interface..
-> > 
-> > + /sbin/modprobe mkiss
-> > + sleep 5
-> > + /usr/local/sbin/mkiss -s 9600 /dev/ttyS0 /dev/ptya1 /dev/ptya2
-> > + /usr/local/sbin/kissattach /dev/ttya1 ax0 172.16.198.1
-> 
-> Is your device really /dev/ttya1 and not /dev/ttyS1 ???
+I have soundmodem working for the most part. It decodes and encodes just
+fine except for one problem: when I enable PTT control through the
+serial port, it keys the rig whenever it starts decoding. This makes it
+impossible to recieve anything, and also jams the signal to some extent.
 
-Make that /dev/ptya1 (helps to think when posting, not after).
+From reading through the archives, it seems that soundmodem sends some
+kind of signal on the serial port when it goes into DCD mode. This is
+probably what is keying the rig. Does anyone have any ideas as to how I
+can stop it from doing that?
 
+Pertinent config info:
+Soundmodem 0.9, kernel 2.6.11.8
+Dell Latitude CPx J650GT laptop
+Buxcomm Rascal serial/soundcard interface, Alinco DJ-596T HT
 
-Pat
-
--- 
-
-Patrick Ouellette                 pat@flying-gecko.net
-kb8pym@arrl.net                   Amateur Radio: KB8PYM 
-Living life to a Jimmy Buffett soundtrack
-"Crank the amp to 11, this needs more cowbell - and a llama wouldn't hurt either"
+TIA es 73,
+-Joe, KD8ATU
