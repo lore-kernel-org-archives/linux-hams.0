@@ -1,29 +1,50 @@
-From: Joe Veldhuis <kd8atu@gmail.com>
-Subject: Re: soundmodem activates PTT on DCD
-Date: Fri, 19 Aug 2005 17:52:45 -0400
-Message-ID: <430654AD.7040503@gmail.com>
-References: <20050819211801.2675.qmail@radagast.org>
+From: "Geoff L. Kennedy" <starwarrior@telus.net>
+Subject: Re: AX-25 software that works on Fedora Core 4?
+Date: Fri, 19 Aug 2005 18:22:30 -0700 (PDT)
+Message-ID: <Pine.LNX.4.44.0508191816550.18492-100000@stargate.gelaken.ca>
+References: <001701c5a4ef$996db510$a4011fac@kb2ear1>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <20050819211801.2675.qmail@radagast.org>
+In-Reply-To: <001701c5a4ef$996db510$a4011fac@kb2ear1>
 Sender: linux-hams-owner@vger.kernel.org
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"
-To: Dave Platt <dplatt@radagast.org>
-Cc: linux-hams@vger.kernel.org
+Content-Type: TEXT/PLAIN; charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+To: linux-hams@vger.kernel.org
 
-Dave Platt wrote:
->     Edit soundcard/kisspkt.c, find the pktsetdcd function, and change its
->     second parameter to 0.  This will ensure that the DTR signal remains
->     false at all times, and will avoid accidentally keying the radio
->     during reception.
+On Fri, 19 Aug 2005, Scott Weis wrote:
 
-That worked. Thanks!
+> I have been working for weeks to try and get AX-25 working with the mkiss 
+> module.  Best I can figure is that there is no working AX25 for SMP kernels 
+> and core 4.  The ax25-utils package has not kept up with the updates made in 
+> the kernel. This is all I can manage to get when I try to start an 
+> interface..
+ 
+> + /usr/local/sbin/mkiss -s 9600 /dev/ttyS0 /dev/ptya1 /dev/ptya2
+> + /usr/local/sbin/kissattach /dev/ttya1 ax0 172.16.198.1
+> kissattach: SIOCSIFHWADDR: Invalid argument
+> unregister_netdevice: device ax%d/ddc80400 never was registered
+> + ifconfig ax0 netmask 255.255.255.0 broadcast 172.16.198.255
+> SIOCSIFNETMASK: No such device
+	:
+	:
+> ax1: unknown interface: No such device
 
-> This will provide you with an LED which lights up whenever the soundmodem
-> signals that it's receiving/decoding a packet.
+   Fedora typically uses "udev" to set up device nodes at startup,
+perhaps this is the problem ?
 
-Sounds like something I'll have to try sometime.
+   Just a thought, I'm no expert on udev.......  ;-(
 
--Joe, KD8ATU
+
+-- 
+
+Geoff L. Kennedy        North Delta, British Columbia, Canada
+starwarrior@telus.net   Lat: +49.176  Long: -122.895
+
+Amateur Radio Call: VE7WXS
+
+Weather Satellite Imagery: http://wxsat.gelaken.ca
+Personal Webpage         : http://ve7wxs.gelaken.ca
+
+
+
