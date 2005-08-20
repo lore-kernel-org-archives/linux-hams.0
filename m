@@ -1,12 +1,12 @@
 From: Ralf Baechle DL5RB <ralf@linux-mips.org>
 Subject: Re: AX-25 software that works on Fedora Core 4?
-Date: Sat, 20 Aug 2005 18:22:04 +0100
-Message-ID: <20050820172204.GA2828@linux-mips.org>
-References: <001701c5a4ef$996db510$a4011fac@kb2ear1>
+Date: Sat, 20 Aug 2005 18:26:14 +0100
+Message-ID: <20050820172614.GB2828@linux-mips.org>
+References: <001701c5a4ef$996db510$a4011fac@kb2ear1> <20050820172204.GA2828@linux-mips.org>
 Mime-Version: 1.0
 Return-path: <linux-hams-owner@vger.kernel.org>
 Content-Disposition: inline
-In-Reply-To: <001701c5a4ef$996db510$a4011fac@kb2ear1>
+In-Reply-To: <20050820172204.GA2828@linux-mips.org>
 Sender: linux-hams-owner@vger.kernel.org
 List-Id: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
@@ -14,40 +14,19 @@ Content-Transfer-Encoding: 7bit
 To: Scott Weis <kb2ear@kb2ear.net>
 Cc: linux-hams@vger.kernel.org
 
-On Fri, Aug 19, 2005 at 02:55:42PM -0400, Scott Weis wrote:
+On Sat, Aug 20, 2005 at 06:22:04PM +0100, Ralf Baechle DL5RB wrote:
 
-> 
-> I have been working for weeks to try and get AX-25 working with the mkiss 
-> module.  Best I can figure is that there is no working AX25 for SMP kernels 
-> and core 4.  The ax25-utils package has not kept up with the updates made 
-> in the kernel. This is all I can manage to get when I try to start an 
-> interface..
-
-All it takes is the minor tweak of recompiling - at least for the rpms
-that I'm maintaining for my own use.
-
-> + /sbin/modprobe mkiss
-> + sleep 5
-> + /usr/local/sbin/mkiss -s 9600 /dev/ttyS0 /dev/ptya1 /dev/ptya2
-> + /usr/local/sbin/kissattach /dev/ttya1 ax0 172.16.198.1
-> kissattach: SIOCSIFHWADDR: Invalid argument
-> unregister_netdevice: device ax%d/ddc80400 never was registered
-                               ^^^^
-
-This sounds like you're using my previous broken mkiss patch?  I'm making
-an attempt to rewrite mkiss but unfortunately without mkiss setup for
-testing, so a very silly bug happened; find a version with that bug
-fixed below.  All I can test it is to the point that kissattach succeeds,
-however.
+Damn rush before running out of the door.  I missed to attach the change
+to a second file, so below the complete patch.
 
   Ralf
 
-PS: Before anybody is scared, it did work that way for 6pack :-)
-
 Signed-off-by: Ralf Baechle DL5RB <ralf@linux-mips.org>
 
+
+ drivers/net/hamradio/Kconfig |    2 
  drivers/net/hamradio/mkiss.c | 1088 ++++++++++++++++++++-----------------------
- 1 files changed, 525 insertions(+), 563 deletions(-)
+ 2 files changed, 526 insertions(+), 564 deletions(-)
 
 Index: linux-cvs/drivers/net/hamradio/mkiss.c
 ===================================================================
@@ -1394,3 +1373,15 @@ Index: linux-cvs/drivers/net/hamradio/mkiss.c
  module_init(mkiss_init_driver);
  module_exit(mkiss_exit_driver);
 -
+Index: linux-cvs/drivers/net/hamradio/Kconfig
+===================================================================
+--- linux-cvs.orig/drivers/net/hamradio/Kconfig
++++ linux-cvs/drivers/net/hamradio/Kconfig
+@@ -1,6 +1,6 @@
+ config MKISS
+ 	tristate "Serial port KISS driver"
+-	depends on AX25 && BROKEN_ON_SMP
++	depends on AX25
+ 	---help---
+ 	  KISS is a protocol used for the exchange of data between a computer
+ 	  and a Terminal Node Controller (a small embedded system commonly
