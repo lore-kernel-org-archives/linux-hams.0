@@ -1,85 +1,87 @@
-From: Robert =?iso-8859-1?q?Steinh=E4u=DFer?= <robert@steinhaeusser.com>
-Subject: ham radio RPMs for SUSE [was: Re: AX-25 software that works on Fedora Core 4?]
-Date: Sun, 21 Aug 2005 19:37:26 +0200
-Message-ID: <200508211937.31232.robert@steinhaeusser.com>
-References: <001701c5a4ef$996db510$a4011fac@kb2ear1> <33093.83.73.68.20.1124569837.squirrel@www.amsat.dk> <200508210844.39309.n7bfs@qwest.net>
-Mime-Version: 1.0
-Content-Type: multipart/signed;
-  boundary="nextPart5731092.p9qt8h95C8";
-  protocol="application/pgp-signature";
-  micalg=pgp-sha1
-Content-Transfer-Encoding: 7bit
+From: John Ronan <jronan@tssg.org>
+Subject: Afternoon.
+Date: Sun, 21 Aug 2005 17:16:01 +0100
+Message-ID: <1538538E-F9B4-497A-8E02-68B1ACBAC40C@tssg.org>
+Mime-Version: 1.0 (Apple Message framework v734)
+Content-Type: multipart/signed; micalg=sha1; boundary=Apple-Mail-9-304874087; protocol="application/pkcs7-signature"
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <200508210844.39309.n7bfs@qwest.net>
 Sender: linux-hams-owner@vger.kernel.org
 List-Id: <linux-hams.vger.kernel.org>
-To: linux-hams@vger.kernel.org
+To: Linux-Hams <linux-hams@vger.kernel.org>
 
---nextPart5731092.p9qt8h95C8
+
+--Apple-Mail-9-304874087
+Content-Transfer-Encoding: 7bit
 Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: quoted-printable
-Content-Disposition: inline
+	charset=US-ASCII;
+	delsp=yes;
+	format=flowed
 
-Hello all,
+I was just wondering,
 
-Douglas Cole wrote:
-> I also noticed that version 10 seems to be ignoring amateur radio as well,
-> and was wondering if anyone on the list knows why SuSE dropped the "Ham
-> Radio" package group?
+What are people using to do doppler correction for satellite  
+stations? We have an Ft-736 in the college where I work, and I'd like  
+to get it sorted out before students come back after the summer, I  
+was wondering what solution are available for linux?  I see that  
+there is a module available for gsat, one of the clients that comes  
+with predict.  I also see that there are a few that use hamlib.  Does  
+anyone have any experience with either?
 
-Joerg Reuter, DL1BKE <jreuter@suse.de> gave some information about the ham=
-=20
-radio packages in the SUSE LINUX distribution on the (German) "suse-ham"=20
-mailing list. You can find his original message in the archives or ask me; =
-I=20
-can send you a copy. Here is a rough translation from German.
+I have an Ft-847 myself (at home) and I'm in the process of getting  
+myself sorted out for satellite reception.    Any/all thoughts  
+appreciated.
 
-You can find RPMs for SUSE 9.3 here:
+Regards
+de John
+EI7IG
 
-	ftp://ftp.suse.com/pub/projects/ham/9.3-i386
 
-(or a SUSE mirror of your choice). You can add this directory as an=20
-installation source (command line: "yast install_source") and then install=
-=20
-using YaST. =20
 
-Joerg can only update these packages in his spare time. He has no time for=
-=20
-testing and calls them "highly inofficial".
 
-The main reason for no longer including ham radio programs in the distribut=
-ion=20
-is that many of these programs aren't under active development and it is=20
-getting more and more difficult to let them work under a new distribution.=
-=20
-Package maintanance is simply costing too much effort, and many programs on=
-ly=20
-compile on the PC architecture and thus require even more effort from Joerg=
-=20
-as packager and from the autobuild team. Additionally, the potential costs=
-=20
-for quick and effective handling of security problems are quite high.
+--Apple-Mail-9-304874087
+Content-Transfer-Encoding: base64
+Content-Type: application/pkcs7-signature;
+	name=smime.p7s
+Content-Disposition: attachment;
+	filename=smime.p7s
 
-Joerg also sees an advantage for himself by continuing these packages on hi=
-s=20
-own: During the last weeks of a new release's beta phase he only has to che=
-ck=20
-once that these packages compile -- and no longer (in extreme cases) weekly=
-,=20
-every time somebody checks in a new compiler, GLIBC, QT oder KDE update.
+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
 
-73, Robert DL1NC/N9KBK
-
---nextPart5731092.p9qt8h95C8
-Content-Type: application/pgp-signature
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.1 (GNU/Linux)
-
-iD8DBQBDCLvbo4a8ramwUd8RAg4sAKCpqziMkFEZMyHO/cyP98/X/CcaTACgk2Jc
-ThYYIJOI8zk51r2+KMyfUqo=
-=9/f7
------END PGP SIGNATURE-----
-
---nextPart5731092.p9qt8h95C8--
+--Apple-Mail-9-304874087--
