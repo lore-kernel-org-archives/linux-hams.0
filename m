@@ -1,71 +1,85 @@
-From: "Douglas Cole" <n7bfs@qwest.net>
-Subject: Re: AX-25 software that works on Fedora Core 4?
-Date: Sun, 21 Aug 2005 08:44:39 -0700
-Message-ID: <200508210844.39309.n7bfs@qwest.net>
-References: <001701c5a4ef$996db510$a4011fac@kb2ear1> <20050820172614.GB2828@linux-mips.org> <33093.83.73.68.20.1124569837.squirrel@www.amsat.dk>
-Reply-To: doug.n7bfs@gmail.com
+From: Robert =?iso-8859-1?q?Steinh=E4u=DFer?= <robert@steinhaeusser.com>
+Subject: ham radio RPMs for SUSE [was: Re: AX-25 software that works on Fedora Core 4?]
+Date: Sun, 21 Aug 2005 19:37:26 +0200
+Message-ID: <200508211937.31232.robert@steinhaeusser.com>
+References: <001701c5a4ef$996db510$a4011fac@kb2ear1> <33093.83.73.68.20.1124569837.squirrel@www.amsat.dk> <200508210844.39309.n7bfs@qwest.net>
 Mime-Version: 1.0
+Content-Type: multipart/signed;
+  boundary="nextPart5731092.p9qt8h95C8";
+  protocol="application/pgp-signature";
+  micalg=pgp-sha1
 Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <33093.83.73.68.20.1124569837.squirrel@www.amsat.dk>
-Content-Disposition: inline
+In-Reply-To: <200508210844.39309.n7bfs@qwest.net>
 Sender: linux-hams-owner@vger.kernel.org
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"
-To: oz6bl@amsat.dk
-Cc: linux-hams@vger.kernel.org
+To: linux-hams@vger.kernel.org
 
-On Saturday 20 August 2005 13:30, oz6bl@amsat.dk wrote:
-> Hi Ralf
->
-> I would really like to get mkiss working on a SMP machine, so I tried you
-> mkis patch on two different kernel versions (2.6.8 and 2.6.11.4), both
-> with the same result:
->
-> host# patch --dry-run -p1 <mkiss.patch
-> patching file drivers/net/hamradio/mkiss.c
-> Hunk #6 FAILED at 397.
-> Hunk #7 succeeded at 416 (offset 2 lines).
-> Hunk #8 FAILED at 438.
-> Hunk #9 FAILED at 450.
-> Hunk #10 succeeded at 475 (offset 2 lines).
-> Hunk #11 FAILED at 527.
-> Hunk #12 succeeded at 564 with fuzz 2 (offset 2 lines).
-> Hunk #13 FAILED at 577.
-> Hunk #14 FAILED at 679.
-> Hunk #15 FAILED at 887.
-> 7 out of 15 hunks FAILED -- saving rejects to file
-> drivers/net/hamradio/mkiss.c.rej
-> patching file drivers/net/hamradio/Kconfig
->
-> (I am a suspicious type so I always start with --dry-run)
->
-> What version is it actually intended for? The above are the latest Suse
-> 9.2 and 9.3 respactively. I hope the above tells you something.
+--nextPart5731092.p9qt8h95C8
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: quoted-printable
+Content-Disposition: inline
 
-Hi Bent, I noticed you are using SuSE 9.3, and am wondering if you installed 
-the AX25 stuff from packages not included with SuSE, since at least in the 
-disc's that I have (downloaded from OpenSuSE.org) there are no Amateur radio 
-packages to speak of. This I found rather discouraging since up to that point 
-SuSE has been a very amateur radio friendly distro'. 
+Hello all,
 
-And I am wondering if the 'for pay' version has the packages still (since 
-version 7 and up to version 9.2 I have paid for SuSE pro and up to that point 
-has had great selection of 'Ham' software) and its just that the downloaded 
-version has them missing...
+Douglas Cole wrote:
+> I also noticed that version 10 seems to be ignoring amateur radio as well,
+> and was wondering if anyone on the list knows why SuSE dropped the "Ham
+> Radio" package group?
 
-I also noticed that version 10 seems to be ignoring amateur radio as well, and 
-was wondering if anyone on the list knows why SuSE dropped the "Ham Radio" 
-package group?
+Joerg Reuter, DL1BKE <jreuter@suse.de> gave some information about the ham=
+=20
+radio packages in the SUSE LINUX distribution on the (German) "suse-ham"=20
+mailing list. You can find his original message in the archives or ask me; =
+I=20
+can send you a copy. Here is a rough translation from German.
 
-With that, I know that I could just download most the stuff from their 
-respective websites, but its nice to have it on the distro' that i am using, 
-that was one of the reasons that I liked SuSE so much...
+You can find RPMs for SUSE 9.3 here:
 
-tia for any input you can give :)
+	ftp://ftp.suse.com/pub/projects/ham/9.3-i386
 
+(or a SUSE mirror of your choice). You can add this directory as an=20
+installation source (command line: "yast install_source") and then install=
+=20
+using YaST. =20
 
-Douglas Cole   N7BFS
-AMSAT#26182 , K2 # 544
-http://www.users.qwest.net/~cdoug3
-Registered Linux user # 188922
+Joerg can only update these packages in his spare time. He has no time for=
+=20
+testing and calls them "highly inofficial".
+
+The main reason for no longer including ham radio programs in the distribut=
+ion=20
+is that many of these programs aren't under active development and it is=20
+getting more and more difficult to let them work under a new distribution.=
+=20
+Package maintanance is simply costing too much effort, and many programs on=
+ly=20
+compile on the PC architecture and thus require even more effort from Joerg=
+=20
+as packager and from the autobuild team. Additionally, the potential costs=
+=20
+for quick and effective handling of security problems are quite high.
+
+Joerg also sees an advantage for himself by continuing these packages on hi=
+s=20
+own: During the last weeks of a new release's beta phase he only has to che=
+ck=20
+once that these packages compile -- and no longer (in extreme cases) weekly=
+,=20
+every time somebody checks in a new compiler, GLIBC, QT oder KDE update.
+
+73, Robert DL1NC/N9KBK
+
+--nextPart5731092.p9qt8h95C8
+Content-Type: application/pgp-signature
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.1 (GNU/Linux)
+
+iD8DBQBDCLvbo4a8ramwUd8RAg4sAKCpqziMkFEZMyHO/cyP98/X/CcaTACgk2Jc
+ThYYIJOI8zk51r2+KMyfUqo=
+=9/f7
+-----END PGP SIGNATURE-----
+
+--nextPart5731092.p9qt8h95C8--
