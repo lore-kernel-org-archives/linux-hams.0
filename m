@@ -1,46 +1,50 @@
-From: oz6bl@amsat.dk
+From: Jacques Chion <Jacques.Chion@wanadoo.fr>
 Subject: Re: AX-25 software that works on Fedora Core 4?
-Date: Sat, 20 Aug 2005 20:30:37 -0000 (UTC)
-Message-ID: <33093.83.73.68.20.1124569837.squirrel@www.amsat.dk>
-References: <001701c5a4ef$996db510$a4011fac@kb2ear1>
-    <20050820172204.GA2828@linux-mips.org>
-    <20050820172614.GB2828@linux-mips.org>
+Date: Sun, 21 Aug 2005 12:05:57 +0200 (CEST)
+Message-ID: <Pine.LNX.4.44.0508211157320.12419-100000@cwoux2.cerise.fr>
+References: <20050820172614.GB2828@linux-mips.org>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7BIT
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 Return-path: <linux-hams-owner@vger.kernel.org>
 In-Reply-To: <20050820172614.GB2828@linux-mips.org>
 Sender: linux-hams-owner@vger.kernel.org
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"
+Content-Type: TEXT/PLAIN; charset="iso-8859-1"
 To: Ralf Baechle DL5RB <ralf@linux-mips.org>
-Cc: linux-hams@vger.kernel.org
+Cc: Scott Weis <kb2ear@kb2ear.net>, linux-hams@vger.kernel.org
 
-Hi Ralf
+Le Aug 20, Ralf Baechle DL5RB =E9crivait :
 
-I would really like to get mkiss working on a SMP machine, so I tried you
-mkis patch on two different kernel versions (2.6.8 and 2.6.11.4), both
-with the same result:
+> On Sat, Aug 20, 2005 at 06:22:04PM +0100, Ralf Baechle DL5RB wrote:
+>=20
+> Damn rush before running out of the door.  I missed to attach the cha=
+nge
+> to a second file, so below the complete patch.
+>=20
+>   Ralf
+>=20
 
-host# patch --dry-run -p1 <mkiss.patch
-patching file drivers/net/hamradio/mkiss.c
-Hunk #6 FAILED at 397.
-Hunk #7 succeeded at 416 (offset 2 lines).
-Hunk #8 FAILED at 438.
-Hunk #9 FAILED at 450.
-Hunk #10 succeeded at 475 (offset 2 lines).
-Hunk #11 FAILED at 527.
-Hunk #12 succeeded at 564 with fuzz 2 (offset 2 lines).
-Hunk #13 FAILED at 577.
-Hunk #14 FAILED at 679.
-Hunk #15 FAILED at 887.
-7 out of 15 hunks FAILED -- saving rejects to file
-drivers/net/hamradio/mkiss.c.rej
-patching file drivers/net/hamradio/Kconfig
+Great work !
 
-(I am a suspicious type so I always start with --dry-run)
+I applied the patch to the mkiss.c of the kernel-2.6.12.5.
+Now i can use again the ax25 and kiss mode without problems.
+Only two small problems :
 
-What version is it actually intended for? The above are the latest Suse
-9.2 and 9.3 respactively. I hope the above tells you something.
+-the patch you have sent by mail refuse to apply after line 885, but i =
+finished by hand, and no problem to compile.
+-soundmodem, that i use, is complaining about SIOCSIFHADDR, but it seem=
+s to work properly.
 
-Best 73 de Bent/OZ6BL
+So, thank you and again, great job !
 
+
+--=20
+=466CWO
+Quelques HOWTO en fran=E7ais: http://perso.wanadoo.fr/jacques.chion/
+
+
+-
+To unsubscribe from this list: send the line "unsubscribe linux-hams" i=
+n
+the body of a message to majordomo@vger.kernel.org
+More majordomo info at  http://vger.kernel.org/majordomo-info.html
