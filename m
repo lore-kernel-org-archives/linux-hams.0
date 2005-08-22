@@ -1,87 +1,108 @@
-From: John Ronan <jronan@tssg.org>
-Subject: Afternoon.
-Date: Sun, 21 Aug 2005 17:16:01 +0100
-Message-ID: <1538538E-F9B4-497A-8E02-68B1ACBAC40C@tssg.org>
-Mime-Version: 1.0 (Apple Message framework v734)
-Content-Type: multipart/signed; micalg=sha1; boundary=Apple-Mail-9-304874087; protocol="application/pkcs7-signature"
-Return-path: <linux-hams-owner@vger.kernel.org>
-Sender: linux-hams-owner@vger.kernel.org
+From: Ralf Baechle <ralf@linux-mips.org>
+Subject: [PATCH] Fix socket bitop damage
+Date: Mon, 22 Aug 2005 12:02:18 +0100
+Message-ID: <20050822110218.GA7514@linux-mips.org>
+Mime-Version: 1.0
+Return-path: <netdev-bounce@oss.sgi.com>
+Content-Disposition: inline
+Sender: netdev-bounce@oss.sgi.com
+Errors-to: netdev-bounce@oss.sgi.com
 List-Id: <linux-hams.vger.kernel.org>
-To: Linux-Hams <linux-hams@vger.kernel.org>
-
-
---Apple-Mail-9-304874087
+Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
-Content-Type: text/plain;
-	charset=US-ASCII;
-	delsp=yes;
-	format=flowed
+To: "David S. Miller" <davem@davemloft.net>, netdev@linux-mips.org
+Cc: linux-hams@vger.kernel.org
 
-I was just wondering,
+The socket flag cleanups that went into 2.6.12-rc1 are basically oring
+the flags of an old socket into the socket just being created.
+Unfortunately that one was just initialized by sock_init_data(), so already
+has SOCK_ZAPPED set.  As the result zapped sockets are created and all
+incoming connection will fail due to this bug which again was carefully
+replicated to at least AX.25, NET/ROM or ROSE.
 
-What are people using to do doppler correction for satellite  
-stations? We have an Ft-736 in the college where I work, and I'd like  
-to get it sorted out before students come back after the summer, I  
-was wondering what solution are available for linux?  I see that  
-there is a module available for gsat, one of the clients that comes  
-with predict.  I also see that there are a few that use hamlib.  Does  
-anyone have any experience with either?
+In order to keep the abstraction alive I've introduced sock_copy_flags()
+to copy the socket flags from one sockets to another and used that
+instead of the bitwise copy thing.  Anyway, the idea here has probably
+been to copy all flags, so sock_copy_flags() should be the right thing.
+With this the ham radio protocols are usable again, so I hope this will
+make it into 2.6.13.
 
-I have an Ft-847 myself (at home) and I'm in the process of getting  
-myself sorted out for satellite reception.    Any/all thoughts  
-appreciated.
+Signed-off-by: Ralf Baechle DL5RB <ralf@linux-mips.org>
 
-Regards
-de John
-EI7IG
+ include/net/sock.h     |    5 +++++
+ net/ax25/af_ax25.c     |    7 +------
+ net/netrom/af_netrom.c |    7 +------
+ net/rose/af_rose.c     |    7 +------
+ 4 files changed, 8 insertions(+), 18 deletions(-)
 
+Index: linux-cvs/net/netrom/af_netrom.c
+===================================================================
+--- linux-cvs.orig/net/netrom/af_netrom.c
++++ linux-cvs/net/netrom/af_netrom.c
+@@ -465,12 +465,7 @@ static struct sock *nr_make_new(struct s
+ 	sk->sk_sndbuf   = osk->sk_sndbuf;
+ 	sk->sk_state    = TCP_ESTABLISHED;
+ 	sk->sk_sleep    = osk->sk_sleep;
+-
+-	if (sock_flag(osk, SOCK_ZAPPED))
+-		sock_set_flag(sk, SOCK_ZAPPED);
+-
+-	if (sock_flag(osk, SOCK_DBG))
+-		sock_set_flag(sk, SOCK_DBG);
++	sock_copy_flags(sk, osk);
+ 
+ 	skb_queue_head_init(&nr->ack_queue);
+ 	skb_queue_head_init(&nr->reseq_queue);
+Index: linux-cvs/include/net/sock.h
+===================================================================
+--- linux-cvs.orig/include/net/sock.h
++++ linux-cvs/include/net/sock.h
+@@ -384,6 +384,11 @@ enum sock_flags {
+ 	SOCK_QUEUE_SHRUNK, /* write queue has been shrunk recently */
+ };
+ 
++static inline void sock_copy_flags(struct sock *nsk, struct sock *osk)
++{
++	nsk->sk_flags = osk->sk_flags;
++}
++
+ static inline void sock_set_flag(struct sock *sk, enum sock_flags flag)
+ {
+ 	__set_bit(flag, &sk->sk_flags);
+Index: linux-cvs/net/ax25/af_ax25.c
+===================================================================
+--- linux-cvs.orig/net/ax25/af_ax25.c
++++ linux-cvs/net/ax25/af_ax25.c
+@@ -884,12 +884,7 @@ struct sock *ax25_make_new(struct sock *
+ 	sk->sk_sndbuf   = osk->sk_sndbuf;
+ 	sk->sk_state    = TCP_ESTABLISHED;
+ 	sk->sk_sleep    = osk->sk_sleep;
+-
+-	if (sock_flag(osk, SOCK_DBG))
+-		sock_set_flag(sk, SOCK_DBG);
+-
+-	if (sock_flag(osk, SOCK_ZAPPED))
+-		sock_set_flag(sk, SOCK_ZAPPED);
++	sock_copy_flags(sk, osk);
+ 
+ 	oax25 = ax25_sk(osk);
+ 
+Index: linux-cvs/net/rose/af_rose.c
+===================================================================
+--- linux-cvs.orig/net/rose/af_rose.c
++++ linux-cvs/net/rose/af_rose.c
+@@ -556,12 +556,7 @@ static struct sock *rose_make_new(struct
+ 	sk->sk_sndbuf   = osk->sk_sndbuf;
+ 	sk->sk_state    = TCP_ESTABLISHED;
+ 	sk->sk_sleep    = osk->sk_sleep;
+-
+-	if (sock_flag(osk, SOCK_ZAPPED))
+-		sock_set_flag(sk, SOCK_ZAPPED);
+-
+-	if (sock_flag(osk, SOCK_DBG))
+-		sock_set_flag(sk, SOCK_DBG);
++	sock_copy_flags(sk, osk);
+ 
+ 	init_timer(&rose->timer);
+ 	init_timer(&rose->idletimer);
 
-
-
---Apple-Mail-9-304874087
-Content-Transfer-Encoding: base64
-Content-Type: application/pkcs7-signature;
-	name=smime.p7s
-Content-Disposition: attachment;
-	filename=smime.p7s
-
-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
-rtoGF8PNoBax/hzy74cv0RO4bprxDAAAAAAAAAA=
-
---Apple-Mail-9-304874087--
