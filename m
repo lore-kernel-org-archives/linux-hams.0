@@ -1,56 +1,36 @@
-From: Ralf Baechle DL5RB <ralf@linux-mips.org>
-Subject: Re: AX-25 software that works on Fedora Core 4?
-Date: Mon, 22 Aug 2005 13:03:32 +0100
-Message-ID: <20050822120332.GD3780@linux-mips.org>
-References: <20050820172614.GB2828@linux-mips.org> <Pine.LNX.4.44.0508211157320.12419-100000@cwoux2.cerise.fr>
+From: "David S. Miller" <davem@davemloft.net>
+Subject: Re: [PATCH] Fix socket bitop damage
+Date: Tue, 23 Aug 2005 09:22:34 -0700 (PDT)
+Message-ID: <20050823.092234.112408202.davem@davemloft.net>
+References: <20050822110218.GA7514@linux-mips.org>
 Mime-Version: 1.0
+Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
-Content-Disposition: inline
-In-Reply-To: <Pine.LNX.4.44.0508211157320.12419-100000@cwoux2.cerise.fr>
+In-Reply-To: <20050822110218.GA7514@linux-mips.org>
 Sender: linux-hams-owner@vger.kernel.org
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-To: Jacques Chion <Jacques.Chion@wanadoo.fr>
-Cc: Scott Weis <kb2ear@kb2ear.net>, linux-hams@vger.kernel.org
+Content-Type: Text/Plain; charset="us-ascii"
+To: ralf@linux-mips.org
+Cc: netdev@linux-mips.org, linux-hams@vger.kernel.org
 
-On Sun, Aug 21, 2005 at 12:05:57PM +0200, Jacques Chion wrote:
+From: Ralf Baechle <ralf@linux-mips.org>
+Date: Mon, 22 Aug 2005 12:02:18 +0100
 
-> I applied the patch to the mkiss.c of the kernel-2.6.12.5.
-> Now i can use again the ax25 and kiss mode without problems.
-> Only two small problems :
+> The socket flag cleanups that went into 2.6.12-rc1 are basically oring
+> the flags of an old socket into the socket just being created.
+> Unfortunately that one was just initialized by sock_init_data(), so already
+> has SOCK_ZAPPED set.  As the result zapped sockets are created and all
+> incoming connection will fail due to this bug which again was carefully
+> replicated to at least AX.25, NET/ROM or ROSE.
 > 
-> -the patch you have sent by mail refuse to apply after line 885, but i
-> finished by hand, and no problem to compile.
+> In order to keep the abstraction alive I've introduced sock_copy_flags()
+> to copy the socket flags from one sockets to another and used that
+> instead of the bitwise copy thing.  Anyway, the idea here has probably
+> been to copy all flags, so sock_copy_flags() should be the right thing.
+> With this the ham radio protocols are usable again, so I hope this will
+> make it into 2.6.13.
+> 
+> Signed-off-by: Ralf Baechle DL5RB <ralf@linux-mips.org>
 
-That is expected for this kernel version.  There has been another change
-to mkiss.c for 2.6.13-rc1:
+Applied, thanks Ralf.
 
---- linux/drivers/net/hamradio/mkiss.c	2005/05/19 12:08:26	1.29
-+++ linux/drivers/net/hamradio/mkiss.c	2005/07/11 20:47:35	1.30
-@@ -934,7 +934,7 @@ static void __exit mkiss_exit_driver(voi
- 	kfree(ax25_ctrls);
- 	ax25_ctrls = NULL;
- 
--	if ((i = tty_register_ldisc(N_AX25, NULL)))
-+	if ((i = tty_unregister_ldisc(N_AX25)))
- 		printk(KERN_ERR "mkiss: can't unregister line discipline (err = %d)\n", i);
- }
-
-My patch will only apply cleanly apply to drivers that already contain
-this change.
-
-I assume this change was the cause of your problem also?
-
-> -soundmodem, that i use, is complaining about SIOCSIFHADDR, but it seems
-> to work properly.
-
-Well, that's a different construction site.  But I may try to look into
-it if you tell me which version of soundmodem you're running.
-
-> So, thank you and again, great job !
-
-Thank you, such feedback - no matter if negative or positive is really
-important.
-
-  Ralf
