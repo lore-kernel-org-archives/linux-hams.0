@@ -1,34 +1,31 @@
-From: Salvador Caballe <ea3bkz@amsat.org>
-Subject: Baycom serial bad TX with kernel 2.6.12.5
-Date: Sun, 28 Aug 2005 12:44:50 +0200
-Message-ID: <200508281244.50349.ea3bkz@amsat.org>
+From: Jacques Chion <Jacques.Chion@wanadoo.fr>
+Subject: Re: [PATCH 3/3] Cleanup direct calls into IP stack
+Date: Sun, 28 Aug 2005 17:12:25 +0200 (CEST)
+Message-ID: <Pine.LNX.4.44.0508281709230.15482-100000@cwoux2.cerise.fr>
+References: <20050824171712.GB8367@linux-mips.org>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 Return-path: <linux-hams-owner@vger.kernel.org>
-Content-Disposition: inline
+In-Reply-To: <20050824171712.GB8367@linux-mips.org>
 Sender: linux-hams-owner@vger.kernel.org
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"
-To: Linux-Hams@vger.kernel.org
+Content-Type: TEXT/PLAIN; charset="iso-8859-1"
+To: Ralf Baechle DL5RB <ralf@linux-mips.org>
+Cc: "David S. Miller" <davem@davemloft.net>, netdev@linux-mips.org, linux-hams@vger.kernel.org
 
-I just updated my linux box to kernel 2.6.12.5 (kernel.org)
-but i have problems with baycom serial driver:
+I applied all these patches to the kernel 2.6.13-rc7
+and i recompile ax25-tools.
+All is running fine.
+Best 73's
 
-RX works OK, but TX data is not decoded by other stations 
-tested  with baycom_ser_fdx and baycom_ser_hdx drivers,
-I also check with long txtail and txdelay settings.
+--=20
+=466CWO
+Quelques HOWTO en fran=E7ais: http://perso.wanadoo.fr/jacques.chion/
 
 
-The same hardware runs ok with kernel 2.4.27
 
-I found several 2.6 kernel  patches in the list , but seems not for baycom 
-serial problems.
-
-best 73
-Salvador
-EA3BKZ
-
--- 
-
- 
-
+-
+To unsubscribe from this list: send the line "unsubscribe linux-hams" i=
+n
+the body of a message to majordomo@vger.kernel.org
+More majordomo info at  http://vger.kernel.org/majordomo-info.html
