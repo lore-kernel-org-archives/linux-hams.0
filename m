@@ -1,31 +1,30 @@
-From: Jacques Chion <Jacques.Chion@wanadoo.fr>
-Subject: Re: [PATCH 3/3] Cleanup direct calls into IP stack
-Date: Sun, 28 Aug 2005 17:12:25 +0200 (CEST)
-Message-ID: <Pine.LNX.4.44.0508281709230.15482-100000@cwoux2.cerise.fr>
-References: <20050824171712.GB8367@linux-mips.org>
+From: <iarenaza@escomposlinux.org> (=?iso-8859-1?q?I=F1aki_Arenaza?=)
+Subject: Re: [PATCH] SMP fix for 6pack driver
+Date: Sun, 28 Aug 2005 22:46:09 +0200
+Message-ID: <873botbxim.fsf@barad-dur.escomposlinux.org>
 Mime-Version: 1.0
-Content-Transfer-Encoding: QUOTED-PRINTABLE
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <20050824171712.GB8367@linux-mips.org>
 Sender: linux-hams-owner@vger.kernel.org
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: TEXT/PLAIN; charset="iso-8859-1"
-To: Ralf Baechle DL5RB <ralf@linux-mips.org>
-Cc: "David S. Miller" <davem@davemloft.net>, netdev@linux-mips.org, linux-hams@vger.kernel.org
-
-I applied all these patches to the kernel 2.6.13-rc7
-and i recompile ax25-tools.
-All is running fine.
-Best 73's
-
---=20
-=466CWO
-Quelques HOWTO en fran=E7ais: http://perso.wanadoo.fr/jacques.chion/
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+To: linux-hams@vger.kernel.org
 
 
+On Tue Jul 05 2005 - 21:12:22 EEST, Ralf Baechle wrote:
 
--
-To unsubscribe from this list: send the line "unsubscribe linux-hams" i=
-n
-the body of a message to majordomo@vger.kernel.org
-More majordomo info at  http://vger.kernel.org/majordomo-info.html
+> You could try EB6EBU's m6pack which is an application level solution
+> to the problem.
+
+Just a little correction. It's EB2EBU, not EB6EBU (otherwise Google
+will not find my patch against ax25-tools-0.0.8 ;-)
+
+You can get it at:
+
+    http://www.escomposlinux.org/iarenaza/hamradio/m6pack/files/ax25-tools-0.0.8-m6pack.diff.bz2
+
+73's de EB2EBU
+
+-- 
+  Get PGP/GPG Keys at  http://www.escomposlinux.org/iarenaza/pgpkey.php
+  I use free software / Yo uso software libre
