@@ -1,30 +1,34 @@
-From: <iarenaza@escomposlinux.org> (=?iso-8859-1?q?I=F1aki_Arenaza?=)
-Subject: Re: [PATCH] SMP fix for 6pack driver
-Date: Sun, 28 Aug 2005 22:46:09 +0200
-Message-ID: <873botbxim.fsf@barad-dur.escomposlinux.org>
+From: Richard Stearn <richard@rns-stearn.demon.co.uk>
+Subject: Re: Ethereal ax25 monitoring
+Date: Wed, 31 Aug 2005 22:46:34 +0100
+Message-ID: <4316253A.2060009@rns-stearn.demon.co.uk>
+References: <620c90570508131043a53b9db@mail.gmail.com> <42FE6C9E.2060808@rns-stearn.demon.co.uk> <42FFBDA1.6040400@rns-stearn.demon.co.uk>
 Mime-Version: 1.0
+Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
+In-Reply-To: <42FFBDA1.6040400@rns-stearn.demon.co.uk>
 Sender: linux-hams-owner@vger.kernel.org
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-To: linux-hams@vger.kernel.org
+Content-Type: text/plain; charset="us-ascii"; format="flowed"
+To: linux-hams <linux-hams@vger.kernel.org>
 
+An update on AX.25 in Ethereal.
 
-On Tue Jul 05 2005 - 21:12:22 EEST, Ralf Baechle wrote:
+I have enquired on the Ethereal list and the attitude (sample of 1) is
+that "if the protocol exists and is used then it will be accepted".
+Subject to a few pratical provisos.
 
-> You could try EB6EBU's m6pack which is an application level solution
-> to the problem.
+The deeper issue I have found is that Ethereal uses libpcap for the
+actual packet capture, and libpcap does not support AX.25 as a packet
+type.
 
-Just a little correction. It's EB2EBU, not EB6EBU (otherwise Google
-will not find my patch against ax25-tools-0.0.8 ;-)
+There appears to a replacement for libpcap in development within Ethereal
+however that is probably a long term project. So my next move is to see
+what the issues are with getting the AX.25 packet type added to libpcap.
 
-You can get it at:
-
-    http://www.escomposlinux.org/iarenaza/hamradio/m6pack/files/ax25-tools-0.0.8-m6pack.diff.bz2
-
-73's de EB2EBU
+It looks to me that AX.25 on Ethereal is going to be a long time coming.
 
 -- 
-  Get PGP/GPG Keys at  http://www.escomposlinux.org/iarenaza/pgpkey.php
-  I use free software / Yo uso software libre
+Regards
+
+	Richard
