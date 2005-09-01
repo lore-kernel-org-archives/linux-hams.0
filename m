@@ -1,55 +1,43 @@
-From: Ben Greear <greearb@candelatech.com>
-Subject: Re: Netdevice reference leak in af_ax25.c ??
-Date: Thu, 01 Sep 2005 12:42:34 -0700
-Message-ID: <431759AA.9030000@candelatech.com>
-References: <43174B67.9030109@candelatech.com> <43174ED3.6040106@trash.net> <20050901193008.GA13363@linux-mips.org>
+From: Chuck Hast <wchast@gmail.com>
+Subject: Re: [PATCH] SMP fix for 6pack driver
+Date: Thu, 1 Sep 2005 15:16:36 -0500
+Message-ID: <620c9057050901131652448c1d@mail.gmail.com>
+References: <873botbxim.fsf@barad-dur.escomposlinux.org>
+	 <20050901114542.GF2876@linux-mips.org>
+	 <620c905705090105472209fc41@mail.gmail.com>
+	 <20050901153539.GH2876@linux-mips.org>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 7BIT
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <20050901193008.GA13363@linux-mips.org>
+In-Reply-To: <20050901153539.GH2876@linux-mips.org>
+Content-Disposition: inline
 Sender: linux-hams-owner@vger.kernel.org
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"; format="flowed"
-To: Ralf Baechle <ralf@linux-mips.org>
-Cc: Patrick McHardy <kaber@trash.net>, linux-hams@vger.kernel.org, netdev@vger.kernel.org
+Content-Type: text/plain; charset="us-ascii"
+To: Ralf Baechle DL5RB <ralf@linux-mips.org>
+Cc: =?ISO-8859-1?Q?I=F1aki_Arenaza?= <iarenaza@escomposlinux.org>, linux-hams@vger.kernel.org
 
-Ralf Baechle wrote:
-> On Thu, Sep 01, 2005 at 08:56:19PM +0200, Patrick McHardy wrote:
+On 9/1/05, Ralf Baechle DL5RB <ralf@linux-mips.org> wrote:
+> On Thu, Sep 01, 2005 at 07:47:46AM -0500, Chuck Hast wrote:
 > 
+> > > >     http://www.escomposlinux.org/iarenaza/hamradio/m6pack/files/ax25-tools-0.0.8-m6pack.diff.bz2
+> > >
+> > > I'm still contemplating if this should preferably be done in userspace or
+> > > in kernelspace ...
+> > >
+> >
+> > Is there anymore on making 6pack operate in multi-tnc mode as is done with the
+> > dos drivers? We certainly can use that, I wish I could work on it, but
+> > I fear I do not
+> > know enough to do anything there.
 > 
->>>I believe the SO_BINDTODEVICE case in net/ax25/af_x25.c  (line 613 or so)
->>>leaks a reference to a net device.  It does a dev_get_by_name,
->>>which holds a reference, but since it never assigns the pointer
->>>anywhere, I do not see how it can ever free it later.
->>>
->>>Please clue me in as to where it's released if it actually is.
->>
->>I can't find the code you're talking about, there's no dev_get* in my
->>version of af_x25.c. Please paste the code you're talking about in
->>your bugreports, thanks.
-> 
-> 
-> Ben meant net/ax25/af_ax25.  The dev value is stored in the ax25_cb
-> indirectly after converting it to an ax25dev pointer and will be freed
-> what that ax25_cb (which really is the protocol-specific part of the
-> socket) is going to be closed.
+> See above URL.
 
-Ok, I'm getting hopelessly lost in the ax25 code trying to follow
-references, so I'm just going to use the generic ref counting debugging.
-
-That will still point to the right module, but not the line of code,
-should a leak occur (and should the patch be accepted) :)
-
-> You poked my nose at a bug though - it is possible to leak references by
-> performing multiple SO_BINDTODEVICE operations; we should either only
-> permit the first one to succeed or to drop the reference of the old
-> device in case of a repeated SO_BINDTODEVICE.  After the weekend ...
-
-Thanks for taking a look.
-
-Ben
+OK. will do.
 
 -- 
-Ben Greear <greearb@candelatech.com>
-Candela Technologies Inc  http://www.candelatech.com
-
+Chuck Hast 
+To paraphrase my flight instructor;
+"the only dumb question is the one you DID NOT ask resulting in my going
+out and having to identify your bits and pieces in the midst of torn
+and twisted metal."
