@@ -1,61 +1,61 @@
-From: Ralf Baechle DL5RB <ralf@linux-mips.org>
-Subject: [PATCH  6/12] Whitespace formatting changes
-Date: Sun, 11 Sep 2005 23:19:09 +0100
-Message-ID: <20050911221909.GA9308@linux-mips.org>
+From: Ingo Oeser <netdev@axxeo.de>
+Subject: Re: [PATCH  5/12] Add descriptions to constants
+Date: Mon, 12 Sep 2005 18:41:53 +0200
+Message-ID: <200509121841.53666.netdev@axxeo.de>
+References: <20050911221904.GA9301@linux-mips.org>
 Mime-Version: 1.0
+Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
+In-Reply-To: <20050911221904.GA9301@linux-mips.org>
 Content-Disposition: inline
 Sender: linux-hams-owner@vger.kernel.org
 List-Id: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-To: "David S. Miller" <davem@davemloft.net>, netdev@vger.kernel.org, linux-hams@vger.kernel.org
+To: Ralf Baechle DL5RB <ralf@linux-mips.org>
+Cc: "David S. Miller" <davem@davemloft.net>, netdev@vger.kernel.org, linux-hams@vger.kernel.org
 
-Small formatting changes.
+Hi Ralf,
 
-Signed-off-by: Ralf Baechle DL5RB <ralf@linux-mips.org>
+Ralf Baechle DL5RB wrote:
+> Comment the names used for the AX.25 state machine.
 
- net/ax25/af_ax25.c |    2 +-
- net/rose/af_rose.c |    6 +++---
- 2 files changed, 4 insertions(+), 4 deletions(-)
+What about making it even more useful by aliasing the enum elements?
 
-Index: linux-cvs/net/ax25/af_ax25.c
-===================================================================
---- linux-cvs.orig/net/ax25/af_ax25.c
-+++ linux-cvs/net/ax25/af_ax25.c
-@@ -1695,7 +1695,7 @@ static int ax25_ioctl(struct socket *soc
- 		/* These two are safe on a single CPU system as only user tasks fiddle here */
- 		if ((skb = skb_peek(&sk->sk_receive_queue)) != NULL)
- 			amount = skb->len;
--		res = put_user(amount, (int __user *)argp);
-+		res = put_user(amount, (int __user *) argp);
- 		break;
- 	}
- 
-Index: linux-cvs/net/rose/af_rose.c
-===================================================================
---- linux-cvs.orig/net/rose/af_rose.c
-+++ linux-cvs/net/rose/af_rose.c
-@@ -1243,7 +1243,7 @@ static int rose_ioctl(struct socket *soc
- 		amount = sk->sk_sndbuf - atomic_read(&sk->sk_wmem_alloc);
- 		if (amount < 0)
- 			amount = 0;
--		return put_user(amount, (unsigned int __user *)argp);
-+		return put_user(amount, (unsigned int __user *) argp);
- 	}
- 
- 	case TIOCINQ: {
-@@ -1252,11 +1252,11 @@ static int rose_ioctl(struct socket *soc
- 		/* These two are safe on a single CPU system as only user tasks fiddle here */
- 		if ((skb = skb_peek(&sk->sk_receive_queue)) != NULL)
- 			amount = skb->len;
--		return put_user(amount, (unsigned int __user *)argp);
-+		return put_user(amount, (unsigned int __user *) argp);
- 	}
- 
- 	case SIOCGSTAMP:
--		return sock_get_timestamp(sk, (struct timeval __user *)argp);
-+		return sock_get_timestamp(sk, (struct timeval __user *) argp);
- 
- 	case SIOCGIFADDR:
- 	case SIOCSIFADDR:
+> Signed-off-by: Ralf Baechle DL5RB <ralf@linux-mips.org>
+>
+>  include/net/ax25.h |   10 +++++-----
+>  1 files changed, 5 insertions(+), 5 deletions(-)
+>
+> Index: linux-cvs/include/net/ax25.h
+> ===================================================================
+> --- linux-cvs.orig/include/net/ax25.h
+> +++ linux-cvs/include/net/ax25.h
+> @@ -97,11 +97,11 @@
+>  /* Define Link State constants. */
+>
+>  enum {
+> -	AX25_STATE_0,
+> -	AX25_STATE_1,
+> -	AX25_STATE_2,
+> -	AX25_STATE_3,
+> -	AX25_STATE_4
+> +	AX25_STATE_0,			/* Listening */
+    +  AX25_STATE_LISTENING = AX25_STATE_0,
+> +	AX25_STATE_1,			/* SABM sent */
+    +  AX25_STATE_SABM_SENT = AX25_STATE_1,
+> +	AX25_STATE_2,			/* DISC sent */
+    +  AX25_STATE_DISC_SENT = AX25_STATE_2,
+> +	AX25_STATE_3,			/* Established */
+    +  AX25_STATE_ESTABLISHED = AX25_STATE_3,
+> +	AX25_STATE_4			/* Recovery */
+    +  AX25_STATE_RECOVERY = AX25_STATE_4,
+>  };
+
+That would not break backward compatibility and now the state machine can be
+self explanatory :-)
+
+
+Regards
+
+Ingo Oeser
+
