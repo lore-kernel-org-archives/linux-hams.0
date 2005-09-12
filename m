@@ -1,24 +1,18 @@
-From: Ralf Baechle <ralf@linux-mips.org>
-Subject: Re: [PATCH  5/12] Add descriptions to constants
-Date: Mon, 12 Sep 2005 17:50:29 +0100
-Message-ID: <20050912165029.GC3458@linux-mips.org>
-References: <20050911221904.GA9301@linux-mips.org> <200509121841.53666.netdev@axxeo.de>
+From: "David S. Miller" <davem@davemloft.net>
+Subject: Re: Hamradio driver cleanups
+Date: Mon, 12 Sep 2005 14:18:52 -0700 (PDT)
+Message-ID: <20050912.141852.47114653.davem@davemloft.net>
+References: <20050911212913.GA8786@linux-mips.org>
 Mime-Version: 1.0
+Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
-Content-Disposition: inline
-In-Reply-To: <200509121841.53666.netdev@axxeo.de>
+In-Reply-To: <20050911212913.GA8786@linux-mips.org>
 Sender: linux-hams-owner@vger.kernel.org
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-To: Ingo Oeser <netdev@axxeo.de>
-Cc: "David S. Miller" <davem@davemloft.net>, netdev@vger.kernel.org, linux-hams@vger.kernel.org
+Content-Type: Text/Plain; charset="us-ascii"
+To: ralf@linux-mips.org
+Cc: jgarzik@pobox.com, linux-hams@vger.kernel.org, netdev@vger.kernel.org
 
-On Mon, Sep 12, 2005 at 06:41:53PM +0200, Ingo Oeser wrote:
 
-> That would not break backward compatibility and now the state machine can be
-> self explanatory :-)
-
-The states named by numbers are actually being used in the protocol spec.
-
-  Ralf
+Jeff, I'll take care of merging all of Ralf's changes.
+Thanks.
