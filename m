@@ -1,51 +1,41 @@
-From: =?ISO-8859-1?Q?Rub=E9n_Navarro_Huedo?= <eb5esx@eb5esx.ampr.org>
-Subject: mkiss and 2.6.13
-Date: Fri, 16 Sep 2005 13:55:54 +0200
-Message-ID: <0C243101-AB86-4826-B14B-B21B01D5D336@eb5esx.ampr.org>
-Mime-Version: 1.0 (Apple Message framework v734)
-Content-Transfer-Encoding: 7bit
+From: Bob Brose <linuxhams@n0qbj-11.ampr.org>
+Subject: 2.6.14-rc1 PPC ax25 broken
+Date: 18 Sep 2005 20:44:39 -0000
+Message-ID: <20050918204439.25408.qmail@kunk.qbjnet.com>
 Return-path: <linux-hams-owner@vger.kernel.org>
 Sender: linux-hams-owner@vger.kernel.org
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"; delsp="yes"; format="flowed"
+MIME-Version: 1.0
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 7bit
 To: linux-hams@vger.kernel.org
 
-Hello friends:
-We are trying migrate from 2.6.11 to 2.6.13 kernel.
-We are having problems with mkiss under 2.6.13.
+I've 2 machines, one Pentium the other Mac PPC with as identical as 
+possible 2.6.14-rc1 kernels and exactly the same ax25 configuration.
+The x86 ax25 works, the ppc doesn't. I'm using a built in mac serial
+port, mkiss and kissattach. 
 
-Have a look:
+In trying to narrow the area of the problem down I've found that on
+the pcc the listen command sees packets coming and going and the
+counters on the interface (netstat -in) for both xmit and rcv increment
+as expected. The call (for ax25 connects) command works fine on the ppc.
 
-kissattach -m 256 /dev/ttyS1 439500 44.133.3.31
-kissattach: Error setting line discipline: TIOCSETD: No such device
-Are you sure you have enabled MKISS support in the kernel
-or, if you made it a module, that the module is loaded?
-linux:/usr/src/linux-2.6.13# lsmod
-Module                  Size  Used by
-ipt_MASQUERADE          2560  1
-ipt_REDIRECT            1792  1
-ipt_MARK                2176  6
-iptable_mangle          2304  1
-ipt_REJECT              4608  16
-iptable_filter          2304  1
-ip_nat_irc              2048  0
-iptable_nat            18900  4 ipt_MASQUERADE,ipt_REDIRECT,ip_nat_irc
-ip_tables              17280  7  
-ipt_MASQUERADE,ipt_REDIRECT,ipt_MARK,iptable_mangle,ipt_REJECT,iptable_f 
-ilter,iptable_nat
-ip_conntrack_irc       70672  1 ip_nat_irc
-ip_conntrack           36760  4  
-ipt_MASQUERADE,ip_nat_irc,iptable_nat,ip_conntrack_irc
-6pack                   8836  1
-mkiss                   8492  0
+The problem is with arp and ip on incoming packets. The arp doesn't
+add the remote ip to the arp table on the ppc. If I set it manually,
+then I see both sent and reply pings in the listen command however the
+ping still doesn't work, it looks like the packets are getting dropped
+somewhere between the ax25 and ip layers.
+
+As far as I can tell ax25 ip has never worked on 2.6 kernels. I went to
+2.6.14-rc1 to get Ralf's latest patches in place but it still doesn't
+work. It does work fine on PPC in 2.4. I've had a mac running the main
+amprnet gateway in Minnesota, US for for a couple of years and it's on 
+2.4.31 and working nicely.
+
+I'll keep hacking at trying to find the problem however it would help
+if someone in the know felt like pointing me to the module most likely
+to be causing the trouble...
+
+Bob Brose N0QBJ.
 
 
-6pack is running Ok with the same kissattach and 2.6.13.
-
-We had the same problem with 2.6.12 and not with 2.6.11.
-
-Anybody with the same problem?
-
-any help?
-
-thank's
