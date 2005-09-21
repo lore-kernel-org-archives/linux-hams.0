@@ -1,54 +1,42 @@
-From: Ralf Baechle DL5RB <ralf@linux-mips.org>
+From: Bob Brose <linuxhams@n0qbj-11.ampr.org>
 Subject: Re: 2.6.14-rc1 PPC ax25 broken
-Date: Tue, 20 Sep 2005 20:52:50 +0100
-Message-ID: <20050920195250.GB22664@linux-mips.org>
-References: <20050918204439.25408.qmail@kunk.qbjnet.com>
-Mime-Version: 1.0
+Date: 21 Sep 2005 04:29:01 -0000
+Message-ID: <20050921042901.21387.qmail@kunk.qbjnet.com>
 Return-path: <linux-hams-owner@vger.kernel.org>
-Content-Disposition: inline
-In-Reply-To: <20050918204439.25408.qmail@kunk.qbjnet.com>
 Sender: linux-hams-owner@vger.kernel.org
 List-Id: <linux-hams.vger.kernel.org>
+MIME-Version: 1.0
 Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
-To: Bob Brose <linuxhams@n0qbj-11.ampr.org>
-Cc: linux-hams@vger.kernel.org
+To: linux-hams@vger.kernel.org
 
-On Sun, Sep 18, 2005 at 08:44:39PM -0000, Bob Brose wrote:
+Ralf Baechle DL5RB said:
+> On Sun, Sep 18, 2005 at 08:44:39PM -0000, Bob Brose wrote:
+>> As far as I can tell ax25 ip has never worked on 2.6 kernels. I went to
 
-> I've 2 machines, one Pentium the other Mac PPC with as identical as 
-> possible 2.6.14-rc1 kernels and exactly the same ax25 configuration.
-> The x86 ax25 works, the ppc doesn't. I'm using a built in mac serial
-> port, mkiss and kissattach. 
-> 
-> In trying to narrow the area of the problem down I've found that on
-> the pcc the listen command sees packets coming and going and the
-> counters on the interface (netstat -in) for both xmit and rcv increment
-> as expected. The call (for ax25 connects) command works fine on the ppc.
-> 
-> The problem is with arp and ip on incoming packets. The arp doesn't
-> add the remote ip to the arp table on the ppc. If I set it manually,
-> then I see both sent and reply pings in the listen command however the
-> ping still doesn't work, it looks like the packets are getting dropped
-> somewhere between the ax25 and ip layers.
-> 
-> As far as I can tell ax25 ip has never worked on 2.6 kernels. I went to
+> You're the first to say that.
 
-You're the first to say that.
+Sorry, I meant to say ax25 ip has never worked on 2.6 PPC kernels. If I
+boot the same PPC machine with a 2.4 kernel with the same kernel Amateur radio
+driver setup and the same kissattach everything works fine. It seems to me
+that something must have gotten messed up in the transition from 2.4 to 2.6.
 
-> 2.6.14-rc1 to get Ralf's latest patches in place but it still doesn't
-> work. It does work fine on PPC in 2.4. I've had a mac running the main
-> amprnet gateway in Minnesota, US for for a couple of years and it's on 
-> 2.4.31 and working nicely.
-> I'll keep hacking at trying to find the problem however it would help
-> if someone in the know felt like pointing me to the module most likely
-> to be causing the trouble...
+>> I'll keep hacking at trying to find the problem however it would help
+>> if someone in the know felt like pointing me to the module most likely
+>> to be causing the trouble...
 
-A little odd, in case of PPC I'd at first guess the problem might be
-endianess but there really isn't much of endianess dependant code in the
-whole AX.25.
+> A little odd, in case of PPC I'd at first guess the problem might be
+> endianess but there really isn't much of endianess dependant code in the
+> whole AX.25.
 
-73 de DL5RB op Ralf
+I think you are right about the problem being endianess related since the
+2.6 kernels in intel work and the PPC ones don't. I'm wondering where the
+overlap between the PPC working in 2.4 and not in 2.6 and the intel 
+working in both points to? It seems that if the AX25 part is working at
+least for AX25 connects but not for ip/icmp there should be a fairly 
+specific area I should look, probably not mkiss and not kissattach since
+it works for 2.4. Seems like it should be in the ax25 code. Maybe it's
+a checksum calculation. I just don't know the code that well however
+I'll keep on looking...
 
---
-Loc. JN47BS / CQ 14 / ITU 28 / DOK A21
+73, Bob Brose (N0QBJ)
