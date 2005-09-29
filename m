@@ -1,36 +1,39 @@
-From: Hamish Moffatt <hamish@cloud.net.au>
-Subject: Re: PATH matter with SCC card and aprsd
-Date: Thu, 29 Sep 2005 11:24:55 +1000
-Message-ID: <20050929012455.GA10952@cloud.net.au>
-References: <20050927222532.GD25047@mipter.zuzino.mipt.ru> <20050927.154537.29000845.davem@davemloft.net> <20050928112849.GB2821@linux-mips.org> <433B2819.8030202@libero.it>
-Mime-Version: 1.0
+From: Bob Brose N0QBJ <linuxhams@n0qbj-11.ampr.org>
+Subject: Progress on PPC ax25 2.6 kernel problem
+Date: 29 Sep 2005 05:11:21 -0000
+Message-ID: <20050929051121.28669.qmail@kunk.qbjnet.com>
 Return-path: <linux-hams-owner@vger.kernel.org>
-Content-Disposition: inline
-In-Reply-To: <433B2819.8030202@libero.it>
 Sender: linux-hams-owner@vger.kernel.org
 List-Id: <linux-hams.vger.kernel.org>
+MIME-Version: 1.0
 Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
 To: linux-hams@vger.kernel.org
 
-On Thu, Sep 29, 2005 at 01:32:41AM +0200, IZ4EFN Alessio wrote:
-> I also have APRSD on a port.
-> 
-> I have to say to my "TNC" (scc0 port) that every packet must follow the 
-> TRACE,WIDE7-7 path, in order to see internet packets gated by radio 
-> digipeaters.
-> 
-> This would not be a problem with a TNC (using the path command) but how 
-> can I apply this to the scc0 port?
-> 
-> Aprsd can't handle that by itself.
+Ater inserting a bunch of printks in the ax25 code I found that there
+is a problem in ax25_rcv() in ax25_in.c. (kernel 2.6.14-rc1)
 
-Perhaps I misunderstand, but you can set the path like this in aprsd.
-You need:
+The reason packets aren't passed to the IP layer is that
+dp.lastrepeat on x86 is -1 and on PPC it's 255. So the code
+that checks to see if the packet belongs to this machine fails
+in more than one spot. Here is a chunk of code from line 217:
 
-aprspath APRS v TRACE WIDE7-7
+/*
+*      Ours perhaps ?
+*/
+if (dp.lastrepeat + 1 < dp.ndigi)  /* Not yet digipeated completely */
+
+
+It goes on to set a local var called mine based on the comparison. If 
+mine is non-zero the code then goes on to look to see if the packet is
+an ARP or IP but discards it mine is 0;
+
+If I throw in a hack to force mine to 1, ax25 ip now works on PPC.
+
+I'm not sure where this is getting messed up. It looks like I have to
+trace back from ax25_addr_parse(). it sure looks like a math/endian problem.
+
+Anyone with suggestions??
 
 73,
-Hamish
--- 
-Hamish Moffatt VK3SB <hamish@debian.org> <hamish@cloud.net.au>
+Bob
