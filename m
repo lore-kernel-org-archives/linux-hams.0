@@ -1,33 +1,45 @@
-From: Hamish Moffatt <hamish@cloud.net.au>
-Subject: kernel oops / TIOCSETD fail on kissattach
-Date: Sun, 16 Oct 2005 11:33:41 +1000
-Message-ID: <20051016013341.GA5894@cloud.net.au>
+From: David Rivenburg <driven@onr.com>
+Subject: unconnected mode operation
+Date: Sat, 15 Oct 2005 21:50:07 -0500
+Message-ID: <4351BFDF.7070106@onr.com>
+Reply-To: driven@onr.com
 Mime-Version: 1.0
+Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
-Content-Disposition: inline
 Sender: linux-hams-owner@vger.kernel.org
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset="us-ascii"; format="flowed"
 To: linux-hams@vger.kernel.org
 
-Hi,
+Hello All, Dave AD5OO here.
+Old to linux, new to ham, really new to linux-hams.
 
-I'm running 2.6.12 on amd64, and trying to set up a KISS TNC.
-The TNC is on /dev/ttyS0 and I have the serial driver loaded
-(linked into the kernel).
+My initial searches have not turned up any software that will let you 
+use an ax25 port to do interactive unconnected mode operation like you 
+are able to do when talking directly to a hardware tnc.  So I wrote a 
+short script that uses the already available tools to implement a crude 
+unconnected mode tnc which is permanently in converse mode.  Since there 
+is no flow control, incoming packets can disrupt something you may be 
+typing.  As usual, ctrl-r will re-type the input and allow you to 
+continue from there.  Ctrl-d will close the input and kill the listen 
+command.  Ctrl-c will exit immediately and leave listen running.
 
-When I run kissattach (where "APRS" is my port in /etc/ax25/axports):
+Enjoy!
 
-kissattach /dev/ttyS0 APRS 192.168.250.1
 
-it fails telling me TIOCSETD: no such device, and a few seconds later
-the kernel oopses in random places, like in the pdflush kernel thread
-and the like.
 
-Is this something already fixed with Ralf's latest patches?
+#!/bin/bash
 
-thanks
-Hamish
--- 
-Hamish Moffatt VK3SB <hamish@debian.org> <hamish@cloud.net.au>
+# your ax25 port and unproto go here
+PORT=ax0
+UNPROTO="cq via relay-1 relay-2"
+
+listen -r -p $PORT &
+
+while [ 0 ]; do
+   read INPUT
+   if [ $? == 1 ]; then break; fi
+   beacon -d "$UNPROTO" -s $PORT "$INPUT"
+done
+
+kill %1 # to stop the listen
