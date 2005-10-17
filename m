@@ -1,45 +1,86 @@
-From: David Rivenburg <driven@onr.com>
-Subject: unconnected mode operation
-Date: Sat, 15 Oct 2005 21:50:07 -0500
-Message-ID: <4351BFDF.7070106@onr.com>
-Reply-To: driven@onr.com
+From: Ralf Baechle <ralf@linux-mips.org>
+Subject: [PATCH] rcu in bpqether driver.
+Date: Mon, 17 Oct 2005 12:42:32 +0100
+Message-ID: <20051017114232.GA7888@linux-mips.org>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
+Content-Disposition: inline
 Sender: linux-hams-owner@vger.kernel.org
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"; format="flowed"
-To: linux-hams@vger.kernel.org
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+To: Jeff Garzik <jgarzik@pobox.com>
+Cc: Suzanne Wood <suzannew@cs.pdx.edu>, linux-hams@vger.kernel.org
 
-Hello All, Dave AD5OO here.
-Old to linux, new to ham, really new to linux-hams.
+From Suzanne Wood <suzannew@cs.pdx.edu>:
 
-My initial searches have not turned up any software that will let you 
-use an ax25 port to do interactive unconnected mode operation like you 
-are able to do when talking directly to a hardware tnc.  So I wrote a 
-short script that uses the already available tools to implement a crude 
-unconnected mode tnc which is permanently in converse mode.  Since there 
-is no flow control, incoming packets can disrupt something you may be 
-typing.  As usual, ctrl-r will re-type the input and allow you to 
-continue from there.  Ctrl-d will close the input and kill the listen 
-command.  Ctrl-c will exit immediately and leave listen running.
+Clarify RCU implementation in bpqether.c.
 
-Enjoy!
+Because bpq_new_device() calls list_add_rcu() and bpq_free_device() calls
+list_del_rcu(), substitute list_for_each_entry_rcu() for
+list_for_each_entry() in bpq_get_ax25_dev() and in bpq_seq_start().
 
+Add rcu dereference protection in bpq_seq_next().
 
+The rcu_read_lock()/unlock() in bpq_device_event() are removed because
+netdev event handlers are called with RTNL locking in place.
 
-#!/bin/bash
+FYI: bpq_free_device() calls list_del_rcu() which, per list.h, requires
+synchronize_rcu() which can block or call_rcu() or call_rcu_bh() which
+cannot block.  Herbert Xu notes that synchronization is done here by 
+unregister_netdevice().  This calls synchronize_net() which in turn uses
+synchronize_rcu().
 
-# your ax25 port and unproto go here
-PORT=ax0
-UNPROTO="cq via relay-1 relay-2"
+Signed-off-by: Ralf Baechle DL5RB <ralf@linux-mips.org>
 
-listen -r -p $PORT &
+ drivers/net/hamradio/bpqether.c |    9 +++------
+ 1 files changed, 3 insertions(+), 6 deletions(-)
 
-while [ 0 ]; do
-   read INPUT
-   if [ $? == 1 ]; then break; fi
-   beacon -d "$UNPROTO" -s $PORT "$INPUT"
-done
-
-kill %1 # to stop the listen
+Index: net-git/drivers/net/hamradio/bpqether.c
+===================================================================
+--- net-git.orig/drivers/net/hamradio/bpqether.c
++++ net-git/drivers/net/hamradio/bpqether.c
+@@ -144,7 +144,7 @@ static inline struct net_device *bpq_get
+ {
+ 	struct bpqdev *bpq;
+ 
+-	list_for_each_entry(bpq, &bpq_devices, bpq_list) {
++	list_for_each_entry_rcu(bpq, &bpq_devices, bpq_list) {
+ 		if (bpq->ethdev == dev)
+ 			return bpq->axdev;
+ 	}
+@@ -399,7 +399,7 @@ static void *bpq_seq_start(struct seq_fi
+ 	if (*pos == 0)
+ 		return SEQ_START_TOKEN;
+ 	
+-	list_for_each_entry(bpqdev, &bpq_devices, bpq_list) {
++	list_for_each_entry_rcu(bpqdev, &bpq_devices, bpq_list) {
+ 		if (i == *pos)
+ 			return bpqdev;
+ 	}
+@@ -418,7 +418,7 @@ static void *bpq_seq_next(struct seq_fil
+ 		p = ((struct bpqdev *)v)->bpq_list.next;
+ 
+ 	return (p == &bpq_devices) ? NULL 
+-		: list_entry(p, struct bpqdev, bpq_list);
++		: rcu_dereference(list_entry(p, struct bpqdev, bpq_list));
+ }
+ 
+ static void bpq_seq_stop(struct seq_file *seq, void *v)
+@@ -561,8 +561,6 @@ static int bpq_device_event(struct notif
+ 	if (!dev_is_ethdev(dev))
+ 		return NOTIFY_DONE;
+ 
+-	rcu_read_lock();
+-
+ 	switch (event) {
+ 	case NETDEV_UP:		/* new ethernet device -> new BPQ interface */
+ 		if (bpq_get_ax25_dev(dev) == NULL)
+@@ -581,7 +579,6 @@ static int bpq_device_event(struct notif
+ 	default:
+ 		break;
+ 	}
+-	rcu_read_unlock();
+ 
+ 	return NOTIFY_DONE;
+ }
