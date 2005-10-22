@@ -1,51 +1,42 @@
-From: Ralf Baechle DL5RB <ralf@linux-mips.org>
+From: aa6qn@aa6qn.sytes.net
 Subject: Re: 2.6.14-r4 crashing
-Date: Sat, 22 Oct 2005 13:52:27 +0100
-Message-ID: <20051022125226.GB3951@linux-mips.org>
-References: <61062.192.168.1.2.1129943887.squirrel@192.168.1.12> <200510221152.22492.oh1mrr@nic.fi>
+Date: Sat, 22 Oct 2005 11:42:29 -0700 (PDT)
+Message-ID: <61577.192.168.1.2.1130006549.squirrel@192.168.1.12>
+References: <61062.192.168.1.2.1129943887.squirrel@192.168.1.12>
+    <20051022124642.GA3951@linux-mips.org>
 Mime-Version: 1.0
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Content-Transfer-Encoding: 7BIT
 Return-path: <linux-hams-owner@vger.kernel.org>
-Content-Disposition: inline
-In-Reply-To: <200510221152.22492.oh1mrr@nic.fi>
+In-Reply-To: <20051022124642.GA3951@linux-mips.org>
 Sender: linux-hams-owner@vger.kernel.org
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="iso-8859-1"
-To: jarmo <oh1mrr@nic.fi>
+Content-Type: text/plain; charset="us-ascii"
+To: Ralf Baechle DL5RB <ralf@linux-mips.org>
 Cc: linux-hams@vger.kernel.org
 
-On Sat, Oct 22, 2005 at 11:52:22AM +0300, jarmo wrote:
+My apologies for the the short discription on my errors.
 
-> aa6qn@aa6qn.sytes.net wrote (l=E4hetysaika lauantai 22 lokakuu 2005 0=
-4:18):
-> > I could use some guidence here to stabelize the system. It crashes
-> > serveral times a day and it looks like a IRQ syncing problem. This =
-only
-> > happens when I load ax25 and its associated modules. I am not sure =
-if I
-> > missed something in the kernel configuration so I am grasping at st=
-raws at
-> > the moment.
->=20
-> Hi Ralf
-> Remember my similar problems with earlier kernels?
-> I haven't tested 14 series yet in RBF. Waiting stable.
+I did a "divide and conquer" and cut out the jnos application that was
+linked via slip attach and things seem to be working. I replaced the jnos
+with xfbb for my pbbs and it seems to be doing the job.
 
-I believe your problems are actually related to NET/ROM.  Pure AX.25,
-IP-over-AX.25, mkiss and 6pack running the usual Linux AX.25 apps and
-Wampes has turned out to be reasonably solid:
+My setup is fairly simple. Solar powered server running Gentoo 2.6 profile
+with uDev. AX25 setup is a single Kantronics Data Engine running in kiss
+mode with one port on 2m at 1200bd and the other on 70cm at 9k6. ax25ipd
+link north via iproute2 ipip (ip tunnel) over a dynamic dsl connection.
+Running Conversd and DX-Spider of the same box as well. Thats it in a
+nutshell aside from my other network and security applications.
 
-[ralf@dea ~]$ ssh db0fhn.efi.fh-nuernberg.de "uptime; uname -a"
- 14:50:55 up 25 days, 23:12, 11 users,  load average: 0.40, 0.31, 0.35
-Linux db0fhn 2.6.13 #8 Mon Sep 26 15:04:42 CEST 2005 i686 GNU/Linux
-[ralf@dea ~]$
+I had a feeling something was astray with the jnos application as I could
+not route to any other destination other than my local interfaces.
 
-This is running a 2.6.13 kernel including all the patches which I also
-put into the 2.6.14-rc.
+I do remember from some time ago a facility to collect dump data for
+forensics but can not remember what that was. In any case, it seems to be
+holding so far.
 
-  Ralf
--
-To unsubscribe from this list: send the line "unsubscribe linux-hams" i=
-n
-the body of a message to majordomo@vger.kernel.org
-More majordomo info at  http://vger.kernel.org/majordomo-info.html
+I did just emerged the latest uDev update and that may have helped some as
+well. I will keep an eye on the system and keep my fingers crossed as
+well.
+Thank you for your assistance.
+JohnF
+
