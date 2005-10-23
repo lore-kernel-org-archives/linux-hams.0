@@ -1,109 +1,57 @@
 From: "Douglas Cole" <n7bfs@qwest.net>
-Subject: Re: ham radio RPMs for SUSE [was: Re: AX-25 software that works on Fedora Core 4?]
-Date: Sun, 23 Oct 2005 09:11:45 -0700
-Message-ID: <200510230911.45303.n7bfs@qwest.net>
-References: <001701c5a4ef$996db510$a4011fac@kb2ear1> <200508210844.39309.n7bfs@qwest.net> <200508211937.31232.robert@steinhaeusser.com>
-Reply-To: n7bfs@qwest.net
+Subject: Re: Knoppix and Soundmodem
+Date: Sun, 23 Oct 2005 09:22:31 -0700
+Message-ID: <200510230922.31849.n7bfs@qwest.net>
+References: <BAY102-F16BCB936E86E91D8D94335DB3F0@phx.gbl>
+Reply-To: doug.n7bfs@gmail.com
 Mime-Version: 1.0
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <200508211937.31232.robert@steinhaeusser.com>
+In-Reply-To: <BAY102-F16BCB936E86E91D8D94335DB3F0@phx.gbl>
 Content-Disposition: inline
 Sender: linux-hams-owner@vger.kernel.org
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="utf-8"
-To: Robert =?utf-8?q?Steinh=C3=A4u=C3=9Fer?= <robert@steinhaeusser.com>
+Content-Type: text/plain; charset="us-ascii"
+To: David Hambly <webmissile@hotmail.com>
 Cc: linux-hams@vger.kernel.org
 
-On Sunday 21 August 2005 10:37, Robert Steinh=C3=A4u=C3=9Fer wrote:
-> Hello all,
+On Thursday 07 April 2005 20:34, David Hambly wrote:
+> Folks,
 >
-> Douglas Cole wrote:
-> > I also noticed that version 10 seems to be ignoring amateur radio a=
-s
-> > well, and was wondering if anyone on the list knows why SuSE droppe=
-d the
-> > "Ham Radio" package group?
+> I just got the Knoppix 3.8 CD and I think it is a good idea but...when I
+> try to configure Soundmodem, it seems that there is no way to write the
+> config to /etc/ax25.  This is true for many apps like F6FBB and HFTerm.
 >
-> Joerg Reuter, DL1BKE <jreuter@suse.de> gave some information about th=
-e ham
-> radio packages in the SUSE LINUX distribution on the (German) "suse-h=
-am"
-> mailing list. You can find his original message in the archives or as=
-k me;
-> I can send you a copy. Here is a rough translation from German.
+> Is anyone aware of a method (other than installing the whole thing to hard
+> drive) to write these configs, I presume something like a symlink to a DOS
+> partition (I don't imagine it possible with NTFS).
 >
-> You can find RPMs for SUSE 9.3 here:
+> Otherwise I would say the whole point of "Linux without installing Linux"
+> is lost.  BTW I am a Linux newbie...so be gentle.  :-)
 >
-> 	ftp://ftp.suse.com/pub/projects/ham/9.3-i386
->
-> (or a SUSE mirror of your choice). You can add this directory as an
-> installation source (command line: "yast install_source") and then in=
-stall
-> using YaST.
->
-> Joerg can only update these packages in his spare time. He has no tim=
-e for
-> testing and calls them "highly inofficial".
->
-> The main reason for no longer including ham radio programs in the
-> distribution is that many of these programs aren't under active devel=
-opment
-> and it is getting more and more difficult to let them work under a ne=
-w
-> distribution. Package maintanance is simply costing too much effort, =
-and
-> many programs only compile on the PC architecture and thus require ev=
-en
-> more effort from Joerg as packager and from the autobuild team.
-> Additionally, the potential costs for quick and effective handling of
-> security problems are quite high.
->
-> Joerg also sees an advantage for himself by continuing these packages=
- on
-> his own: During the last weeks of a new release's beta phase he only =
-has to
-> check once that these packages compile -- and no longer (in extreme c=
-ases)
-> weekly, every time somebody checks in a new compiler, GLIBC, QT oder =
-KDE
-> update.
->
-> 73, Robert DL1NC/N9KBK
+> 73
+> Dave - KG6QG
 
-Thanks for the reply Robert, sorry for taking so long to respond, email=
- is=20
-tough for me sometimes..
+Hi Dave, I know this is kind of late, but I am trying to play email 
+catch-up...
 
-I kind of figured this was the reason they were dropped, it still would=
- be=20
-nice to go back to the "good old days" where I got 7 disc's when I paye=
-d for=20
-SuSE, I would actually prefer that, and still plan on paying them, as I=
- don't=20
-like to freeload for such a solid distro'.=20
-I do want to thank all those Linux Hams on this list who do contribute =
-to us=20
-end users who can't seem to figure out how to build programs ourselves,=
- yet=20
-still enjoy using Linux on a daily basis (my pc's at home don't do wind=
-ows).
-I have had more fun with computing, and Amateur radio since I have been=
- using=20
-Linux then when I suffered through being a Windows user, so hats off to=
- all=20
-you guys who share your fun with us!
+Did you ever get any input on this?
+I am interested in getting a live Linux Amateur radio CD that will actually 
+work, but so far have had poor results with the "DX-linux" (I think its 
+actually call TLF-Linux) for doing AX25 stuff and would like to somehow come 
+up with a CD that I could save my configs to a thumb drive and then I could 
+just sit down in front of whatever pc I needed to and get going with my 
+familiar proggies and do ARES stuff with little headaches...
+I couldn't even get DX-Linux to boot for me (well it finally did after a 
+couple hours, lol) and finally gave up on it...
 
-73
---=20
+So what if anything did you come up with?
+
+
+-- 
 --
 Douglas Cole   N7BFS
 AMSAT#26182 , K2 # 544
-IRLP Node #3250 owner
+IRLP Node 3250 owner
 Registered Linux user # 188922
 --
--
-To unsubscribe from this list: send the line "unsubscribe linux-hams" i=
-n
-the body of a message to majordomo@vger.kernel.org
-More majordomo info at  http://vger.kernel.org/majordomo-info.html
