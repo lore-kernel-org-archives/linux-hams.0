@@ -1,7 +1,7 @@
 From: aa6qn@aa6qn.sytes.net
 Subject: Re: 2.6.14-r4 crashing
-Date: Sat, 22 Oct 2005 11:42:29 -0700 (PDT)
-Message-ID: <61577.192.168.1.2.1130006549.squirrel@192.168.1.12>
+Date: Sun, 23 Oct 2005 04:49:04 -0700 (PDT)
+Message-ID: <60264.192.168.1.2.1130068144.squirrel@192.168.1.12>
 References: <61062.192.168.1.2.1129943887.squirrel@192.168.1.12>
     <20051022124642.GA3951@linux-mips.org>
 Mime-Version: 1.0
@@ -14,29 +14,49 @@ Content-Type: text/plain; charset="us-ascii"
 To: Ralf Baechle DL5RB <ralf@linux-mips.org>
 Cc: linux-hams@vger.kernel.org
 
-My apologies for the the short discription on my errors.
+Ok, this time I captured the dump screen. It did stay up longer..
 
-I did a "divide and conquer" and cut out the jnos application that was
-linked via slip attach and things seem to be working. I replaced the jnos
-with xfbb for my pbbs and it seems to be doing the job.
+At the kernel panic screen:
+-------------
+call trace
+_spin_lock_irqsave
+lock_timer_
+del timer
+ax25_destroy_socket
+ax25_heartbeat_expiry
+run_timer_softirq
+__do_softirq
+do_softirq
+=====================
+irq_exit
+apic_timer
+mwait_idle
+mwait_idle
+cpu_idle
+start_kernel
 
-My setup is fairly simple. Solar powered server running Gentoo 2.6 profile
-with uDev. AX25 setup is a single Kantronics Data Engine running in kiss
-mode with one port on 2m at 1200bd and the other on 70cm at 9k6. ax25ipd
-link north via iproute2 ipip (ip tunnel) over a dynamic dsl connection.
-Running Conversd and DX-Spider of the same box as well. Thats it in a
-nutshell aside from my other network and security applications.
+kernel panic -not syncing: fatal exception in interupt
 
-I had a feeling something was astray with the jnos application as I could
-not route to any other destination other than my local interfaces.
+------------------------
+Thats it.
 
-I do remember from some time ago a facility to collect dump data for
-forensics but can not remember what that was. In any case, it seems to be
-holding so far.
+I am also having a small bit of growing pains with iproute2 ipip
+configuration and routing. I am getting a tunnel up with the remote
+destination using:
+>ip tunnel add (callsign of remote end) mode ipip remote (far end tunnel
+ip) local (my secondary 44 address for eth0) dev tunl0
 
-I did just emerged the latest uDev update and that may have helped some as
-well. I will keep an eye on the system and keep my fingers crossed as
-well.
-Thank you for your assistance.
+Some things I have set and tried:
+-I do not have to add the far end 44 address routing.
+-I have tried both tunl0 and eth0 for connection dev's
+-For my tunl0, I configured it with a local 44 domain IP address
+-I have attached ax25ipd via the ax5 device and it does allow me to
+exchange netrom data with the far end using the far ends 44 domain IP.
+-I am not doing IPv6 just IPv4
+
+I picked up pointer from this site:
+http://www.deepspace6.net/docs/iproute2tunnel-en.html
+
+Hope I am doing it right!
+
 JohnF
-
