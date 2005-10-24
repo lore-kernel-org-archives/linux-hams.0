@@ -1,77 +1,76 @@
-From: Ralf Baechle DL5RB <ralf@linux-mips.org>
-Subject: Re: 2.6.14-r4 crashing
-Date: Mon, 24 Oct 2005 12:19:56 +0100
-Message-ID: <20051024111956.GD2605@linux-mips.org>
-References: <61062.192.168.1.2.1129943887.squirrel@192.168.1.12> <20051022124642.GA3951@linux-mips.org> <60264.192.168.1.2.1130068144.squirrel@192.168.1.12>
+From: Jim Bayer <kc9aop@gmail.com>
+Subject: Re: Knoppix and Soundmodem
+Date: Mon, 24 Oct 2005 11:00:42 -0500
+Message-ID: <e524c5320510240900q6ea8080fv93c028db2025848d@mail.gmail.com>
+References: <BAY102-F16BCB936E86E91D8D94335DB3F0@phx.gbl>
+	 <200510230922.31849.n7bfs@qwest.net>
 Mime-Version: 1.0
+Content-Transfer-Encoding: 7BIT
 Return-path: <linux-hams-owner@vger.kernel.org>
+In-Reply-To: <200510230922.31849.n7bfs@qwest.net>
 Content-Disposition: inline
-In-Reply-To: <60264.192.168.1.2.1130068144.squirrel@192.168.1.12>
 Sender: linux-hams-owner@vger.kernel.org
 List-Id: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-To: aa6qn@aa6qn.sytes.net
-Cc: linux-hams@vger.kernel.org
+To: doug.n7bfs@gmail.com
+Cc: David Hambly <webmissile@hotmail.com>, linux-hams@vger.kernel.org
 
-On Sun, Oct 23, 2005 at 04:49:04AM -0700, aa6qn@aa6qn.sytes.net wrote:
+Hi,
 
-> Ok, this time I captured the dump screen. It did stay up longer..
+I don't have any experience with using AX25 with Linux, but I
+discovered a KNOPPIX distro at http://hamshack-hack.sourceforge.net/
+that has a lot of ham and digital communications "stuff" in it.
 
-It may not be the perfect method but screenshots with digital cameras
-have provent to be very useful in the past where crash messages don't
-get caught in syslog.
+I can't endorse it other than to say it does boot and seems to work.
 
-Or serial console, clearly the best thing since sliced brear ;-)
+'73
 
-> At the kernel panic screen:
-> -------------
-> call trace
-> _spin_lock_irqsave
-> lock_timer_
-> del timer
-> ax25_destroy_socket
-> ax25_heartbeat_expiry
-> run_timer_softirq
-> __do_softirq
-> do_softirq
 
-Delayed socket destruction code.  That's giving me some idea.  I tried to
-cleanup that code earlier in the hope to come up with something that can
-obviously shown to be correct but it turned out to be a non-trivial
-project.
+Jim - KC9AOP
 
-> Some things I have set and tried:
-> -I do not have to add the far end 44 address routing.
-
-Linux will automatically establish a route for every interface, that's
-why you don't have to.
-
-> -I have tried both tunl0 and eth0 for connection dev's
-> -For my tunl0, I configured it with a local 44 domain IP address
-> -I have attached ax25ipd via the ax5 device and it does allow me to
-> exchange netrom data with the far end using the far ends 44 domain IP.
-
-NET/ROM.  I guess that is the common factor between you and OH1MRR who
-is experiencing a problem that's looking vaguely similar.  Time to turn
-NET/ROM upside down; the code is certainly incorrect on any system
-running a SMP or preemptible kernel.
-
-> -I am not doing IPv6 just IPv4
-
-That just oldfashioned but not wrong :-)
-
-> I picked up pointer from this site:
-> http://www.deepspace6.net/docs/iproute2tunnel-en.html
-> 
-> Hope I am doing it right!
-
-Missconfiguration is not an acceptable cause for a crash, so yes.
-
-Btw, you may want to switch to GRE tunneling; GRE is a superior tunneling
-technology compared to IP-over-IP.
-
-73 de DL5RB op Ralf
-
---
-Loc. JN47BS / CQ 14 / ITU 28 / DOK A21
+On 10/23/05, Douglas Cole <n7bfs@qwest.net> wrote:
+> On Thursday 07 April 2005 20:34, David Hambly wrote:
+> > Folks,
+> >
+> > I just got the Knoppix 3.8 CD and I think it is a good idea but...when I
+> > try to configure Soundmodem, it seems that there is no way to write the
+> > config to /etc/ax25.  This is true for many apps like F6FBB and HFTerm.
+> >
+> > Is anyone aware of a method (other than installing the whole thing to hard
+> > drive) to write these configs, I presume something like a symlink to a DOS
+> > partition (I don't imagine it possible with NTFS).
+> >
+> > Otherwise I would say the whole point of "Linux without installing Linux"
+> > is lost.  BTW I am a Linux newbie...so be gentle.  :-)
+> >
+> > 73
+> > Dave - KG6QG
+>
+> Hi Dave, I know this is kind of late, but I am trying to play email
+> catch-up...
+>
+> Did you ever get any input on this?
+> I am interested in getting a live Linux Amateur radio CD that will actually
+> work, but so far have had poor results with the "DX-linux" (I think its
+> actually call TLF-Linux) for doing AX25 stuff and would like to somehow come
+> up with a CD that I could save my configs to a thumb drive and then I could
+> just sit down in front of whatever pc I needed to and get going with my
+> familiar proggies and do ARES stuff with little headaches...
+> I couldn't even get DX-Linux to boot for me (well it finally did after a
+> couple hours, lol) and finally gave up on it...
+>
+> So what if anything did you come up with?
+>
+>
+> --
+> --
+> Douglas Cole   N7BFS
+> AMSAT#26182 , K2 # 544
+> IRLP Node 3250 owner
+> Registered Linux user # 188922
+> --
+> -
+> To unsubscribe from this list: send the line "unsubscribe linux-hams" in
+> the body of a message to majordomo@vger.kernel.org
+> More majordomo info at  http://vger.kernel.org/majordomo-info.html
+>
