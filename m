@@ -1,76 +1,43 @@
-From: Jim Bayer <kc9aop@gmail.com>
-Subject: Re: Knoppix and Soundmodem
-Date: Mon, 24 Oct 2005 11:00:42 -0500
-Message-ID: <e524c5320510240900q6ea8080fv93c028db2025848d@mail.gmail.com>
-References: <BAY102-F16BCB936E86E91D8D94335DB3F0@phx.gbl>
-	 <200510230922.31849.n7bfs@qwest.net>
+From: "J. Lance Cotton" <joe@lightningflash.net>
+Subject: Soundmodem and sampling rate: force a rate?
+Date: Tue, 25 Oct 2005 09:22:36 -0500
+Message-ID: <435E3FAC.2080501@lightningflash.net>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7BIT
+Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <200510230922.31849.n7bfs@qwest.net>
-Content-Disposition: inline
 Sender: linux-hams-owner@vger.kernel.org
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"
-To: doug.n7bfs@gmail.com
-Cc: David Hambly <webmissile@hotmail.com>, linux-hams@vger.kernel.org
+Content-Type: text/plain; charset="us-ascii"; format="flowed"
+To: linux-hams@vger.kernel.org
 
-Hi,
+I am trying to get soundmodem (usermode) working with a Soundblaster
+Live card on SuSE 9.3 and the commercial OSS driver.
 
-I don't have any experience with using AX25 with Linux, but I
-discovered a KNOPPIX distro at http://hamshack-hack.sourceforge.net/
-that has a lot of ham and digital communications "stuff" in it.
+The problem is that apparently the SB card supports only 8k, 11.025k,
+12k, ... sampling rates. At 1200bps AFSK, soundmodem demodulator asks
+for (or gets) 9600Hz sampling rate.
 
-I can't endorse it other than to say it does boot and seems to work.
+Something, as far as I can tell, is opening the soundcard for recording at 
+9600Hz sample rate, but I've been told that that rate isn't supported by my 
+SB Live card. I thought that in that instance, the "next closest" rate would 
+be returned instead...
 
-'73
+I do not know if this is a problem with the Commercial OSS driver, the SB 
+Live card, or soundmodem. I've tried editing the soundcard/audioio.c file to 
+"force" other sample rates. It does open the card at the forced rate, but 
+the decoding still doe not work reliably. (The problem is exemplified in the 
+samples I recorded and put at 
+http://www.cmsworldwide.com/Files/soundsamples/index.html )
 
+**Question: Is there any official way to have soundmodem request a 
+user-custom sampling rate? Like a hidden config?
 
-Jim - KC9AOP
+Thanks. 73 KJ5O
 
-On 10/23/05, Douglas Cole <n7bfs@qwest.net> wrote:
-> On Thursday 07 April 2005 20:34, David Hambly wrote:
-> > Folks,
-> >
-> > I just got the Knoppix 3.8 CD and I think it is a good idea but...when I
-> > try to configure Soundmodem, it seems that there is no way to write the
-> > config to /etc/ax25.  This is true for many apps like F6FBB and HFTerm.
-> >
-> > Is anyone aware of a method (other than installing the whole thing to hard
-> > drive) to write these configs, I presume something like a symlink to a DOS
-> > partition (I don't imagine it possible with NTFS).
-> >
-> > Otherwise I would say the whole point of "Linux without installing Linux"
-> > is lost.  BTW I am a Linux newbie...so be gentle.  :-)
-> >
-> > 73
-> > Dave - KG6QG
->
-> Hi Dave, I know this is kind of late, but I am trying to play email
-> catch-up...
->
-> Did you ever get any input on this?
-> I am interested in getting a live Linux Amateur radio CD that will actually
-> work, but so far have had poor results with the "DX-linux" (I think its
-> actually call TLF-Linux) for doing AX25 stuff and would like to somehow come
-> up with a CD that I could save my configs to a thumb drive and then I could
-> just sit down in front of whatever pc I needed to and get going with my
-> familiar proggies and do ARES stuff with little headaches...
-> I couldn't even get DX-Linux to boot for me (well it finally did after a
-> couple hours, lol) and finally gave up on it...
->
-> So what if anything did you come up with?
->
->
-> --
-> --
-> Douglas Cole   N7BFS
-> AMSAT#26182 , K2 # 544
-> IRLP Node 3250 owner
-> Registered Linux user # 188922
-> --
-> -
-> To unsubscribe from this list: send the line "unsubscribe linux-hams" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at  http://vger.kernel.org/majordomo-info.html
->
+-- 
+J. Lance Cotton, KJ5O
+joe@lightningflash.net
+http://kj5o.lightningflash.net
+Three Step Plan: 1. Take over the world. 2. Get a lot of cookies. 3. Eat
+the cookies.
+
