@@ -1,43 +1,44 @@
-From: "J. Lance Cotton" <joe@lightningflash.net>
-Subject: Soundmodem and sampling rate: force a rate?
-Date: Tue, 25 Oct 2005 09:22:36 -0500
-Message-ID: <435E3FAC.2080501@lightningflash.net>
+From: aa6qn@aa6qn.sytes.net
+Subject: Re: 2.6.14-r4 crashing
+Date: Tue, 25 Oct 2005 09:09:21 -0700 (PDT)
+Message-ID: <1204.166.216.119.217.1130256561.squirrel@aa6qn.sytes.net>
+References: <61062.192.168.1.2.1129943887.squirrel@192.168.1.12>
+    <20051022124642.GA3951@linux-mips.org>
+    <60264.192.168.1.2.1130068144.squirrel@192.168.1.12>
+    <20051024111956.GD2605@linux-mips.org>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 7BIT
 Return-path: <linux-hams-owner@vger.kernel.org>
+In-Reply-To: <20051024111956.GD2605@linux-mips.org>
 Sender: linux-hams-owner@vger.kernel.org
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"; format="flowed"
-To: linux-hams@vger.kernel.org
+Content-Type: text/plain; charset="us-ascii"
+To: Ralf Baechle DL5RB <ralf@linux-mips.org>
+Cc: linux-hams@vger.kernel.org
 
-I am trying to get soundmodem (usermode) working with a Soundblaster
-Live card on SuSE 9.3 and the commercial OSS driver.
+ I changed the freq selection per earlier email to 1000hz and that seemed
+to help (at least from a tnc timing perspective). The system did have a
+kernel panic after a couple of netrom non-connections.
 
-The problem is that apparently the SB card supports only 8k, 11.025k,
-12k, ... sampling rates. At 1200bps AFSK, soundmodem demodulator asks
-for (or gets) 9600Hz sampling rate.
+I really believe you hit the nail on the head that most of my problems
+present and past where netrom based. When I loaded ax25 excluding the
+netrom application the platform did very well.( I ran netrom from jnos
+vice the ax25 utils).
 
-Something, as far as I can tell, is opening the soundcard for recording at 
-9600Hz sample rate, but I've been told that that rate isn't supported by my 
-SB Live card. I thought that in that instance, the "next closest" rate would 
-be returned instead...
+Whenever I load the ax25 netrom it seems that when I try a netrom connect
+and it fails a kernel panic results soon there after.
 
-I do not know if this is a problem with the Commercial OSS driver, the SB 
-Live card, or soundmodem. I've tried editing the soundcard/audioio.c file to 
-"force" other sample rates. It does open the card at the forced rate, but 
-the decoding still doe not work reliably. (The problem is exemplified in the 
-samples I recorded and put at 
-http://www.cmsworldwide.com/Files/soundsamples/index.html )
+So, for the moment I have removed the ax25 utils and am just running Jnos
+2.0d via a slip link ( I can not get the tun device working with uDev).
+The system is quite solid.
 
-**Question: Is there any official way to have soundmodem request a 
-user-custom sampling rate? Like a hidden config?
+I am curious where the "ip route add (network) via (gateway) dev tunl0
+static onlink" command loads but does not route anymore whereas "ip tunnel
+add (name) remote (remote gw) local (local ip) dev tunl0" does work. Did
+something change with IPROUTE2 ? The ip route add worked for me before and
+allowed ax25ipd links.
 
-Thanks. 73 KJ5O
+I would be more than happy to try any other ideas/patches that may relieve
+the ax25 kernel challanges.
 
--- 
-J. Lance Cotton, KJ5O
-joe@lightningflash.net
-http://kj5o.lightningflash.net
-Three Step Plan: 1. Take over the world. 2. Get a lot of cookies. 3. Eat
-the cookies.
-
+very best wishes, JohnF
