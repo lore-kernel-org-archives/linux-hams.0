@@ -1,78 +1,74 @@
-From: John Ronan <jronan@tssg.org>
-Subject: Re: 2.6.14-r4 crashing
-Date: Tue, 25 Oct 2005 21:46:25 +0100
-Message-ID: <DED598BC-2481-467C-8410-7AD36375989D@tssg.org>
-References: <61062.192.168.1.2.1129943887.squirrel@192.168.1.12> <20051022124642.GA3951@linux-mips.org> <60264.192.168.1.2.1130068144.squirrel@192.168.1.12> <20051024111956.GD2605@linux-mips.org> <1204.166.216.119.217.1130256561.squirrel@aa6qn.sytes.net>
-Mime-Version: 1.0 (Apple Message framework v734)
+From: David Rivenburg <driven@onr.com>
+Subject: Re: Soundmodem and sampling rate: force a rate?
+Date: Wed, 26 Oct 2005 00:46:48 -0500
+Message-ID: <435F1848.9060201@onr.com>
+References: <435E3FAC.2080501@lightningflash.net>
+Reply-To: driven@onr.com
+Mime-Version: 1.0
 Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <1204.166.216.119.217.1130256561.squirrel@aa6qn.sytes.net>
+In-Reply-To: <435E3FAC.2080501@lightningflash.net>
 Sender: linux-hams-owner@vger.kernel.org
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"; delsp="yes"; format="flowed"
-To: aa6qn@aa6qn.sytes.net
-Cc: Linux-Hams <linux-hams@vger.kernel.org>
+Content-Type: text/plain; charset="us-ascii"; format="flowed"
+To: "J. Lance Cotton" <joe@lightningflash.net>, linux-hams@vger.kernel.org
 
-Hi,
-
-I had unending difficulties when trying netrom and kernel 2.6... in  
-the end I gave up and am running 2.4 now for stability.
-
-Linux version 2.4.29 (root@ei3rcw) (gcc version 3.3.5 (Debian  
-1:3.3.5-8)) #5 Fri Apr 15 13:37:45 IST 2005
-
-to be exact.
-
-Regards
-John
-
-On 25 Oct 2005, at 17:09, aa6qn@aa6qn.sytes.net wrote:
-
->  I changed the freq selection per earlier email to 1000hz and that  
-> seemed
-> to help (at least from a tnc timing perspective). The system did  
-> have a
-> kernel panic after a couple of netrom non-connections.
->
-> I really believe you hit the nail on the head that most of my problems
-> present and past where netrom based. When I loaded ax25 excluding the
-> netrom application the platform did very well.( I ran netrom from jnos
-> vice the ax25 utils).
->
-> Whenever I load the ax25 netrom it seems that when I try a netrom  
-> connect
-> and it fails a kernel panic results soon there after.
->
-> So, for the moment I have removed the ax25 utils and am just  
-> running Jnos
-> 2.0d via a slip link ( I can not get the tun device working with  
-> uDev).
-> The system is quite solid.
->
-> I am curious where the "ip route add (network) via (gateway) dev tunl0
-> static onlink" command loads but does not route anymore whereas "ip  
-> tunnel
-> add (name) remote (remote gw) local (local ip) dev tunl0" does  
-> work. Did
-> something change with IPROUTE2 ? The ip route add worked for me  
-> before and
-> allowed ax25ipd links.
->
-> I would be more than happy to try any other ideas/patches that may  
-> relieve
-> the ax25 kernel challanges.
->
-> very best wishes, JohnF
-> -
-> To unsubscribe from this list: send the line "unsubscribe linux- 
-> hams" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at  http://vger.kernel.org/majordomo-info.html
->
-
---
-John Ronan <jronan@tssg.org>, +353-51-302938
-Telecommunications Software &  Systems Group,  http://www.tssg.org
+J. Lance Cotton wrote:
+> I am trying to get soundmodem (usermode) working with a Soundblaster
+> Live card on SuSE 9.3 and the commercial OSS driver.
+> 
+> The problem is that apparently the SB card supports only 8k, 11.025k,
+> 12k, ... sampling rates. At 1200bps AFSK, soundmodem demodulator asks
+> for (or gets) 9600Hz sampling rate.
+> 
+> Something, as far as I can tell, is opening the soundcard for recording 
+> at 9600Hz sample rate, but I've been told that that rate isn't supported 
+> by my SB Live card. I thought that in that instance, the "next closest" 
+> rate would be returned instead...
+> 
+> I do not know if this is a problem with the Commercial OSS driver, the 
+> SB Live card, or soundmodem. I've tried editing the soundcard/audioio.c 
+> file to "force" other sample rates. It does open the card at the forced 
+> rate, but the decoding still doe not work reliably. (The problem is 
+> exemplified in the samples I recorded and put at 
+> http://www.cmsworldwide.com/Files/soundsamples/index.html )
+> 
+> **Question: Is there any official way to have soundmodem request a 
+> user-custom sampling rate? Like a hidden config?
+> 
+> Thanks. 73 KJ5O
+> 
 
 
+I came across a similar thing.  Looking at the soundmodemconfig scope 
+function I saw horizontal lines in the waveform - this is clearly 
+impossible for an AC coupled signal so I suspected that 9600 was not a 
+valid sample rate for my audio codec.  Here is what I did to fix it:
 
+
+in line 233 of soundcard/main.c change
+
+unsigned int samplerate = 5000, mode;
+to
+unsigned int samplerate = 11025, mode;
+
+
+then in line 710 of configapp/src/diag.c change
+
+diagstate.samplerate = 5000;
+to
+diagstate.samplerate = 11025;
+
+
+Even though the sample rate is set to 5000 there is a selection routine 
+in audioio.c that steps it up to 9600.  I tried editing the valid sample 
+rate list there but it still used 9600.
+
+After making the above changes I have not had any trouble at all with 
+soundmodem.  Not that there aren't any, but I don't know of another way 
+to force a sample rate.
+
+Hope this helps.
+
+Dave
+AD5OO
