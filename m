@@ -1,28 +1,30 @@
-From: Joe Veldhuis <kd8atu@gmail.com>
+From: Ralf Baechle DL5RB <ralf@linux-mips.org>
 Subject: Re: KPSK install problem
-Date: Sat, 29 Oct 2005 15:58:34 -0400
-Message-ID: <4363D46A.9020206@gmail.com>
-References: <MBEEJPNKIJCJGNMGGBLBKEJDCFAA.henk@oegema.com>
+Date: Sat, 29 Oct 2005 21:04:06 +0100
+Message-ID: <20051029200406.GD6653@linux-mips.org>
+References: <MBEEJPNKIJCJGNMGGBLBKEJDCFAA.henk@oegema.com> <4363D46A.9020206@gmail.com>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <MBEEJPNKIJCJGNMGGBLBKEJDCFAA.henk@oegema.com>
+Content-Disposition: inline
+In-Reply-To: <4363D46A.9020206@gmail.com>
 Sender: linux-hams-owner@vger.kernel.org
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"; format="flowed"
-To: henk@oegema.com
-Cc: linux-hams@vger.kernel.org
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+To: Joe Veldhuis <kd8atu@gmail.com>
+Cc: henk@oegema.com, linux-hams@vger.kernel.org
 
-The preprocessor can't find the header. You might try explicitly telling 
-it where it is by passing a CPPFLAGS parameter to configure. Figure out 
-where db.h is (probably /usr/include or /usr/local/include) and specify 
-it like so:
+On Sat, Oct 29, 2005 at 03:58:34PM -0400, Joe Veldhuis wrote:
 
-$ CPPFLAGS=-I/usr/include ./configure (options)
+> The preprocessor can't find the header. You might try explicitly telling 
+> it where it is by passing a CPPFLAGS parameter to configure. Figure out 
+> where db.h is (probably /usr/include or /usr/local/include) and specify 
+> it like so:
+> 
+> $ CPPFLAGS=-I/usr/include ./configure (options)
+> 
+> Worth a try anyway.
 
-Worth a try anyway.
+Waste of time because that's the compiler default already.
 
--Joe, KD8ATU
-
-Henk Oegema wrote:
-> logcore.h::::27:16 db.h: No such file or directory
+  Ralf
