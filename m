@@ -1,23 +1,54 @@
-From: Arnaldo Carvalho de Melo <acme@ghostprotocols.net>
-Subject: Re: [PATCH] AX.25: Use constant instead of magic number.
-Date: Fri, 28 Oct 2005 20:47:01 -0200
-Message-ID: <39e6f6c70510281547ye133698v67faf9ac4aa88ae8@mail.gmail.com>
-References: <20051018203932.GA11053@linux-mips.org>
+From: "Henk Oegema" <henk@oegema.com>
+Subject: KPSK install problem
+Date: Sat, 29 Oct 2005 16:57:35 +0200
+Message-ID: <MBEEJPNKIJCJGNMGGBLBKEJBCFAA.henk@oegema.com>
+Reply-To: <henk@oegema.com>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7BIT
+Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <20051018203932.GA11053@linux-mips.org>
-Content-Disposition: inline
 Sender: linux-hams-owner@vger.kernel.org
 List-Id: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
-To: Ralf Baechle <ralf@linux-mips.org>
-Cc: "David S. Miller" <davem@davemloft.net>, Arnaldo Carvalho de Melo <acme@conectiva.com.br>, dann frazier <dannf@hp.com>, chrisw@osdl.org, netdev@vger.kernel.org, linux-hams@vger.kernel.org
+To: Linux-Hams@vger.kernel.org
 
-On 10/18/05, Ralf Baechle <ralf@linux-mips.org> wrote:
-> Signed-off-by: Ralf Baechle DL5RB <ralf@linux-mips.org>
->
->  net/rose/rose_route.c |    2 +-
->  1 files changed, 1 insertion(+), 1 deletion(-)
+I have downloaded from http://kpsk.sourceforge.net the program PSK31 for KDE
+3.x
 
-Thanks, applied and already merged by Linus.
+After installing KDE development packages, the "./configure" finished
+successfully !!
+Unfortunately the next step, command "make" created a lot of error messages,
+which (I think) are not related to missing packages.
+
+Can somebody try to download the same file, do a "./configure" and "make"
+afterwards and tell me if you get also error messages during the "make"
+command.
+
+This is the answer which I got from somebody from the newsgroup
+alt.os.linux.suse:
+
+You are right, it wouldn't compile. The errors I am getting are:
+
+,----[ Errors from compile ]
+| logcore.cpp: In constructor `logCore::logCore()':
+| logcore.cpp:33: error: cannot convert `char*' to `DB_TXN*' in argument
+passing
+| logcore.cpp:40: error: cannot convert `char*' to `DB_TXN*' in argument
+passing
+| make[3]: *** [logcore.o] Error 1
+`----
+
+Has anyone managed to get this program running ?
+
+
+73, ON4HSO
+Henk Oegema
+
+e-mail: henk@oegema.com
+Web: http://users.telenet.be/henk.oegema
+Tel. +32 16 650367
+Mobile. +32 476 378861
+
+Education is that which remains when one has forgotten everything learned in
+school.
+
+
