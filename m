@@ -1,41 +1,34 @@
 From: Ralf Baechle DL5RB <ralf@linux-mips.org>
-Subject: Re: FW: KPSK install problem
-Date: Sat, 29 Oct 2005 21:15:32 +0100
-Message-ID: <20051029201532.GE6653@linux-mips.org>
-References: <MBEEJPNKIJCJGNMGGBLBCEJECFAA.henk@oegema.com>
+Subject: Re: txdelay and kissparms hardware question
+Date: Sat, 29 Oct 2005 21:43:57 +0100
+Message-ID: <20051029204357.GD2935@linux-mips.org>
+References: <60418.192.168.1.2.1130098885.squirrel@192.168.1.12>
 Mime-Version: 1.0
 Return-path: <linux-hams-owner@vger.kernel.org>
 Content-Disposition: inline
-In-Reply-To: <MBEEJPNKIJCJGNMGGBLBCEJECFAA.henk@oegema.com>
+In-Reply-To: <60418.192.168.1.2.1130098885.squirrel@192.168.1.12>
 Sender: linux-hams-owner@vger.kernel.org
 List-Id: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
-To: Henk Oegema <henk@oegema.com>
+To: aa6qn@aa6qn.sytes.net
 Cc: linux-hams@vger.kernel.org
 
-On Sat, Oct 29, 2005 at 09:40:26PM +0200, Henk Oegema wrote:
+On Sun, Oct 23, 2005 at 01:21:25PM -0700, aa6qn@aa6qn.sytes.net wrote:
 
-> However, I still get the same errors as before:
-> (./configure was ok)
-> 
-> logcore.h::::27:16 db.h: No such file or directory
-> logcore.h:115: error: syntax error before '*' token
-> logcore.h:116: error: syntax error before '*' token
-> logcore.h:117: error: 'DBT' was not declared in this scope
-> logcore.h:117: error: 'data' was not declared in this scope
-> logcore.h:117: error: 'DBT' was not declared in this scope
-> logcore.h:117: error: 'key'was not declared in this scope
-> make[3]: ***[kpskmeter.o] Error 1
-> make[3]: ***[all-recursive] Error 1
-> make: *** [all] Error 2
-> henkoegema@linux:~/kpsk-1.0.1>
-> 
-> Any other clue ??
+> I am wondering is kissparms configuration is really working for me. I have
+> made adjustments and there seems to be no change in the tnc timing. For
+> instance if I set txdelay to -t 30 the tnc acts as if it was set to 10ms.
+> I am wondering if the timing is effected by the faster machines available
+> today. In my case its a Intel 4, 3.2Ghz hyperthreading dual channel SMP
+> image. Could this hardware also be the cause of my kernel panic's when I
+> load ax25?
 
-db.h is really /usr/include/db.h.  On FC4 that file shipes in separate
-from the db4 runtime package in db4-devel.  Debian keeps them in a package
-named like libdb4.3-devel or so.  I guess you only have the runtime but
-development files installed.
+In case you're using the kiss driver the kernel should just forward this
+setting to your TNC which then controls the actual tx delay.  Other drivers
+such as 6pack do the tx delay themselves.  So, what driver are you using?
 
-  Ralf
+73 de DL5RB op Ralf
+
+--
+Loc. JN47BS / CQ 14 / ITU 28 / DOK A21
