@@ -1,52 +1,41 @@
-From: "Henk Oegema" <henk@oegema.com>
-Subject: RE: KPSK install problem
-Date: Sat, 29 Oct 2005 22:14:23 +0200
-Message-ID: <MBEEJPNKIJCJGNMGGBLBEEJFCFAA.henk@oegema.com>
-References: <4363D46A.9020206@gmail.com>
-Reply-To: <henk@oegema.com>
+From: Ralf Baechle DL5RB <ralf@linux-mips.org>
+Subject: Re: FW: KPSK install problem
+Date: Sat, 29 Oct 2005 21:15:32 +0100
+Message-ID: <20051029201532.GE6653@linux-mips.org>
+References: <MBEEJPNKIJCJGNMGGBLBCEJECFAA.henk@oegema.com>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <4363D46A.9020206@gmail.com>
+Content-Disposition: inline
+In-Reply-To: <MBEEJPNKIJCJGNMGGBLBCEJECFAA.henk@oegema.com>
 Sender: linux-hams-owner@vger.kernel.org
 List-Id: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
-To: Joe Veldhuis <kd8atu@gmail.com>
+Content-Transfer-Encoding: 7bit
+To: Henk Oegema <henk@oegema.com>
 Cc: linux-hams@vger.kernel.org
 
-I dont have any files with a name db.h
-When I do a 'whereis db.h' I get: /usr/share/man/man3/db.3.gz
+On Sat, Oct 29, 2005 at 09:40:26PM +0200, Henk Oegema wrote:
 
-Neither in /usr/include nor /usr/local/include is db.h
-
-73, Henk
-ON4HSO
-
-
------Oorspronkelijk bericht-----
-Van: linux-hams-owner@vger.kernel.org
-[mailto:linux-hams-owner@vger.kernel.org]Namens Joe Veldhuis
-Verzonden: zaterdag 29 oktober 2005 21:59
-Aan: henk@oegema.com
-CC: linux-hams@vger.kernel.org
-Onderwerp: Re: KPSK install problem
-
-
-The preprocessor can't find the header. You might try explicitly telling 
-it where it is by passing a CPPFLAGS parameter to configure. Figure out 
-where db.h is (probably /usr/include or /usr/local/include) and specify 
-it like so:
-
-$ CPPFLAGS=-I/usr/include ./configure (options)
-
-Worth a try anyway.
-
--Joe, KD8ATU
-
-Henk Oegema wrote:
+> However, I still get the same errors as before:
+> (./configure was ok)
+> 
 > logcore.h::::27:16 db.h: No such file or directory
--
-To unsubscribe from this list: send the line "unsubscribe linux-hams" in
-the body of a message to majordomo@vger.kernel.org
-More majordomo info at  http://vger.kernel.org/majordomo-info.html
+> logcore.h:115: error: syntax error before '*' token
+> logcore.h:116: error: syntax error before '*' token
+> logcore.h:117: error: 'DBT' was not declared in this scope
+> logcore.h:117: error: 'data' was not declared in this scope
+> logcore.h:117: error: 'DBT' was not declared in this scope
+> logcore.h:117: error: 'key'was not declared in this scope
+> make[3]: ***[kpskmeter.o] Error 1
+> make[3]: ***[all-recursive] Error 1
+> make: *** [all] Error 2
+> henkoegema@linux:~/kpsk-1.0.1>
+> 
+> Any other clue ??
 
+db.h is really /usr/include/db.h.  On FC4 that file shipes in separate
+from the db4 runtime package in db4-devel.  Debian keeps them in a package
+named like libdb4.3-devel or so.  I guess you only have the runtime but
+development files installed.
+
+  Ralf
