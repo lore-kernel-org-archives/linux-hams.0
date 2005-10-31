@@ -1,74 +1,88 @@
-From: Ralf Baechle DL5RB <ralf@linux-mips.org>
-Subject: Re: txdelay and kissparms hardware question
-Date: Mon, 31 Oct 2005 11:37:37 +0000
-Message-ID: <20051031113737.GB13561@linux-mips.org>
-References: <60418.192.168.1.2.1130098885.squirrel@192.168.1.12> <20051029204357.GD2935@linux-mips.org> <63925.192.168.1.2.1130629453.squirrel@192.168.1.12>
+From: <iarenaza@escomposlinux.org> (=?iso-8859-1?q?I=F1aki_Arenaza?=)
+Subject: Re: 6pack query
+Date: Mon, 31 Oct 2005 16:10:04 +0100
+Message-ID: <87k6ft3epf.fsf@barad-dur.escomposlinux.org>
+References: <43643575.1010407@midcoast.com.au>
+	<620c90570510300437w7c9b9a8cp5a9bcc738120d638@mail.gmail.com>
+	<436524FB.1040203@midcoast.com.au>
+	<620c90570510301334y5360370bha52b44181717be02@mail.gmail.com>
 Mime-Version: 1.0
 Return-path: <linux-hams-owner@vger.kernel.org>
-Content-Disposition: inline
-In-Reply-To: <63925.192.168.1.2.1130629453.squirrel@192.168.1.12>
+In-Reply-To: <620c90570510301334y5360370bha52b44181717be02@mail.gmail.com> (Chuck
+ Hast's message of "Sun, 30 Oct 2005 17:35:00 -0400")
 Sender: linux-hams-owner@vger.kernel.org
 List-Id: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
-To: aa6qn@aa6qn.sytes.net
-Cc: linux-hams@vger.kernel.org
+To: linux-hams@vger.kernel.org
 
-On Sat, Oct 29, 2005 at 04:44:13PM -0700, aa6qn@aa6qn.sytes.net wrote:
-> Date:	Sat, 29 Oct 2005 16:44:13 -0700 (PDT)
-> Subject: Re: txdelay and kissparms hardware question
-> From:	aa6qn@aa6qn.sytes.net
-> To:	"Ralf Baechle DL5RB" <ralf@linux-mips.org>
-> Cc:	aa6qn@aa6qn.sytes.net, linux-hams@vger.kernel.org
-> Content-Type:	text/plain; charset=US-ASCII
-> 
-> > On Sun, Oct 23, 2005 at 01:21:25PM -0700, aa6qn@aa6qn.sytes.net wrote:
-> >
-> >> I am wondering is kissparms configuration is really working for me. I
-> >> have
-> >> made adjustments and there seems to be no change in the tnc timing. For
-> >> instance if I set txdelay to -t 30 the tnc acts as if it was set to
-> >> 10ms.
-> >> I am wondering if the timing is effected by the faster machines
-> >> available
-> >> today. In my case its a Intel 4, 3.2Ghz hyperthreading dual channel SMP
-> >> image. Could this hardware also be the cause of my kernel panic's when I
-> >> load ax25?
-> >
-> > In case you're using the kiss driver the kernel should just forward this
-> > setting to your TNC which then controls the actual tx delay.  Other
-> > drivers
-> > such as 6pack do the tx delay themselves.  So, what driver are you using?
-> >
-> > 73 de DL5RB op Ralf
-> >
-> > --
-> 
-> I was using kissparms to adjust the timing. The input from another person
-> did help to change the kernel timing to 1000HZ.
-> 
-> Even then the system was still not stable. I have tabled the ax25 suite in
-> favor of JNOS2 which has been very solid with the latest kernel and Gentoo
-> linux. Its all working (tunnels, netrom, iptables, snort...) with uDev
-> etc.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-The HZ value should not have any influence on stability other than maybe
-changing some statistcal patterns in the code.  Iow if it makes a
-difference on stability that would be a bug.
+>>>>> "Chuck" == Chuck Hast <wchast@gmail.com> writes:
 
-That said, a few AX.25 system interfaces are using timer ticks as their
-unit - a timer tick on i386 used to be 10ms in 2.4, then became 1ms in 2.5
-until HZ became a configuration option.  Just to make things more
-entertaining (warning: your definition of entertaining may differ ;-) the
-size also differs between architectures and even some sub-architectures.
-In short: a mess.  So I've cooked a patch that standardizes the unit of
-time on 1ms for all platforms.  I did post that a while ago, no feedback
-so it must be good.  I'm planning to submitting those patches for 2.6.15
-with small changes - 1ms is probably a way to small unit for some of the
-values, for example the T3 timer where I believe seconds would be more
-convenient.
+    Chuck> I would assume that is the token ring type of operation
+    Chuck> with multiple TNC's on a single port, which is not
+    Chuck> implemented. (I wish it was as it sure would make life
+    Chuck> easier for some of our sites)
 
-73 de DL5RB op Ralf
+In fact, I implemented it years ago in userspace. I don't know why,
+but the ax25-utils maintainers never put it on the stock version (even
+though I sent them the patch).
 
---
-Loc. JN47BS / CQ 14 / ITU 28 / DOK A21
+Get a copy of ax25-tools-0.0.8 from ax25.sourceforge.net, and save it
+somewhere (say /home/myuser/ax25-tools/). Get a copy of my patch from:
+
+   http://www.escomposlinux.org/iarenaza/hamradio/m6pack/files/ax25-tools-0.0.8-m6pack.diff.bz2 
+
+and save it in the same directory. Now untar the tools and patch them:
+
+        cd /home/myuser/ax25-tools
+        tar xzf ax25-tools-0.0.8.tar.gz
+        bzip2 -dc ax25-tools-0.0.8-m6pack.diff.bz2 | patch -p0
+
+and build the m6pack binaries (you have to build libax25 previously,
+or have it installed somewhere in your system --maybe it's the package
+called libax25-dev--):
+
+        cd ax25-tools-0.0.8
+        ./configure
+        cd kiss
+        make m6pack
+
+now you've got a new executable, called m6pack (and it's associated
+manual page).
+
+Now, let's suppose you've got your 6pack TNC ring attached to
+/dev/ttyS0 and your TNCs are configured for 19200 bps on the serial
+port. You've got 4 TNCs on your ring, so you execute:
+
+   m6pack -s 19200 /dev/ttyS0 /dev/ptyq0 /dev/ptyq1 /dev/ptyq2 /dev/ptyq3
+
+This "splits" your 4 TNC ring into 4 separate "pseudo-ports", each one
+talking to a different TNC on your ring.
+
+Now you use spattach to attach each one of them. Let's supppose your
+radio ports (as configured in axports file) are called 6pack0, 6pack1,
+etc:
+
+    spattach /dev/ttyq0 6pack0 
+    spattach /dev/ttyq1 6pack1 
+    spattach /dev/ttyq1 6pack2 
+    spattach /dev/ttyq1 6pack3 
+
+- From here on, everything works the same as usual.
+
+73's de EB2EBU.
+
+- -- 
+  Get PGP/GPG Keys at  http://www.escomposlinux.org/iarenaza/pgpkey.php
+  I use free software / Yo uso software libre
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.1 (GNU/Linux)
+Comment: Processed by Mailcrypt 3.5.8 <http://mailcrypt.sourceforge.net/>
+
+iD8DBQFDZjO3ZXLnGT1HLgcRAizUAKCP2of5dntxMvQPpNzyMlgK0/iqdwCfZBma
+2VCXW39O4VhBeotDqfYS6pk=
+=xnN3
+-----END PGP SIGNATURE-----
