@@ -1,47 +1,54 @@
-From: Ralf Baechle DL5RB <ralf@linux-mips.org>
-Subject: Re: 6pack query
-Date: Tue, 1 Nov 2005 14:31:26 +0000
-Message-ID: <20051101143126.GG2693@linux-mips.org>
-References: <43643575.1010407@midcoast.com.au> <620c90570510300437w7c9b9a8cp5a9bcc738120d638@mail.gmail.com> <436524FB.1040203@midcoast.com.au> <620c90570510301334y5360370bha52b44181717be02@mail.gmail.com> <87k6ft3epf.fsf@barad-dur.escomposlinux.org> <20051031155648.GM13561@linux-mips.org> <87d5ll1o4w.fsf@barad-dur.escomposlinux.org> <20051101134037.GF2693@linux-mips.org> <620c90570511010620y5a9ef652he61a52eabee398f4@mail.gmail.com>
+From: Jim Bayer <kc9aop@gmail.com>
+Subject: Re: KPSK install problem
+Date: Tue, 1 Nov 2005 09:51:35 -0600
+Message-ID: <e524c5320511010751g3ecd1147pc20f0459a533375b@mail.gmail.com>
+References: <4363D46A.9020206@gmail.com>
+	 <MBEEJPNKIJCJGNMGGBLBEEJFCFAA.henk@oegema.com>
+	 <20051031022838.GA3286@cloud.net.au>
 Mime-Version: 1.0
+Content-Transfer-Encoding: 7BIT
 Return-path: <linux-hams-owner@vger.kernel.org>
+In-Reply-To: <20051031022838.GA3286@cloud.net.au>
 Content-Disposition: inline
-In-Reply-To: <620c90570511010620y5a9ef652he61a52eabee398f4@mail.gmail.com>
 Sender: linux-hams-owner@vger.kernel.org
 List-Id: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-To: Chuck Hast <wchast@gmail.com>
-Cc: =?iso-8859-1?Q?I=F1aki?= Arenaza <iarenaza@escomposlinux.org>, linux-hams@vger.kernel.org
+To: linux-hams@vger.kernel.org
 
-On Tue, Nov 01, 2005 at 10:20:40AM -0400, Chuck Hast wrote:
+You should try using the locate command.  where is only returns
+executables in your path.
 
-> This is great, as soon as I get my floating dock project done (hope to have
-> it in the water today) I will pull those patches and do it, and give it a try.
-> 
-> I do have a question, I assume that since it is RS-232 the usual distance
-> (wire requirements) hold. Is there any timing limitation that I should be aware
-> of over a long (15-30m) wire? This will allow me to place the TNC's near the
-> radios and not down where the switch is located, reducing the amount of signal
-> loss in the coax. (and keeping cost of coax down.
+first as root:# updatedb  (this creates the locate database)
+then # locate db.h
 
-The RS-232 limit is given by the electric properties of your wiring and
-also the drivers.  Modern PCs frequently seem to have rather marginal
-RS323 port receiver & drivers.  Starting a certain length you may also have
-to worry if they're potencially are a receiving antenna for a shortwave
-station nearby ...
+or you could just run a find command from the root file system:
 
-> By way English is my second language too, I speak a variant of Cracker as
-> first language and Spanish and English as second ones... B=]
-> 
-> In a more serious mind... I would not worry much about the language, I
-> murder the mother tongue about as much as anyone, and will hold it against
-> no one...
+# cd /
+# find . -name "db.h" -print
 
-My every other word is "bloody" so I guess my British accent is quite
-perfect ;-)
+will search your entire disk for the file.
 
-73 de DL5RB op Ralf
 
---
-Loc. JN47BS / CQ 14 / ITU 28 / DOK A21
+Good luck and '73
+
+Jim - KC9AOP
+
+On 10/30/05, Hamish Moffatt <hamish@cloud.net.au> wrote:
+> On Sat, Oct 29, 2005 at 10:14:23PM +0200, Henk Oegema wrote:
+> > I dont have any files with a name db.h
+> > When I do a 'whereis db.h' I get: /usr/share/man/man3/db.3.gz
+> >
+> > Neither in /usr/include nor /usr/local/include is db.h
+>
+> Then you need to install a db development package for your distribution
+> eg libdb4.1-dev on Debian.
+>
+> 73
+> Hamish
+> --
+> Hamish Moffatt VK3SB <hamish@debian.org> <hamish@cloud.net.au>
+> -
+> To unsubscribe from this list: send the line "unsubscribe linux-hams" in
+> the body of a message to majordomo@vger.kernel.org
+> More majordomo info at  http://vger.kernel.org/majordomo-info.html
+>
