@@ -1,7 +1,7 @@
 From: Bob Brose N0QBJ <linuxhams@n0qbj-11.ampr.org>
-Subject: Re: Progress on PPC ax25 2.6 kernel problem
-Date: 2 Nov 2005 05:18:58 -0000
-Message-ID: <20051102051858.30406.qmail@kunk.qbjnet.com>
+Subject: Re: [PATCH] ax25 fix char type assumption in ax25_digi structure
+Date: 2 Nov 2005 05:30:48 -0000
+Message-ID: <20051102053048.30592.qmail@kunk.qbjnet.com>
 Return-path: <linux-hams-owner@vger.kernel.org>
 Sender: linux-hams-owner@vger.kernel.org
 List-Id: <linux-hams.vger.kernel.org>
@@ -10,26 +10,25 @@ Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
 To: linux-hams@vger.kernel.org
 
-Mike Murphree said:
-> Glad you were able to locate it...  I did not realize that difference
-> existed on PPC and I don't quite understand why it's so.  It seems like a
-> compiler bug but I guess someone else knows better.
+Ralf said:
+> FYI, your patch is on the way to Linus and will hopefully make it into
+> 2.6.14.  It turned out that this bug did actually exist since day one
+> of the AX.25 history, that is it's present in 2.2 and 2.4 as well.
 
-Ralf found out why. Pretty interesting...
+Thanks!
  
-> I have often wondered before if the ax.25 stuff worked on any other
-> platform than x86.  I have an old Mac clone that has run Yellow Dog Linux
-> in the past, but I never tried to make ax.25 work.  What platform and
-> distribution are using?
+> Took me a little while to figure out why 2.4 was ever working for you;
+> the reason is that PPC in 2.2 and PPC and PPC64 in 2.4 compile the
+> kernel with -fsigned-char but no longer in 2.6.
 
-I started with linuxppc R4 on a mac 7200 and migrated to YDL. Currently I'm
-using debian on a Supermac 900 with a G3 card at home and still the 7200
-and debian on the main MN, US amprnet/internet gateway.
+Great detective work. It was amusing to see my coworkers try to find
+a copy of K&R to look up the proper behavior.
  
-> Sorry for the late reply, I'm in California this week...
+> Thanks for tracking this one down!
 
-I was even slower! I was out the week after this issue then totally
-forgot to follow up...
+Thanks very much to you for working on the ax25 code. It's good 
+to know someone is maintaining and repairing it. It was starting
+to seem pretty marginal...
 
+73,
 Bob
-
