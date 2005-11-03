@@ -1,39 +1,35 @@
-From: Brett Mueller <wa7v@wa7v.com>
-Subject: Re: KPSK download problem (2)
-Date: Thu, 03 Nov 2005 13:15:52 -0800
-Message-ID: <436A7E08.707@wa7v.com>
-References: <200511032153.30673.on4hso@amsat.org>
+From: Hamish Moffatt <hamish@cloud.net.au>
+Subject: Re: gMFSK:Cannot open PTT device
+Date: Fri, 4 Nov 2005 08:52:26 +1100
+Message-ID: <20051103215226.GB12651@cloud.net.au>
+References: <200511032149.49891.on4hso@amsat.org>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <200511032153.30673.on4hso@amsat.org>
+Content-Disposition: inline
+In-Reply-To: <200511032149.49891.on4hso@amsat.org>
 Sender: linux-hams-owner@vger.kernel.org
 List-Id: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
-To: Henk Oegema <on4hso@amsat.org>
-Cc: Linux-Hams@vger.kernel.org
+Content-Transfer-Encoding: 7bit
+To: Linux-Hams@vger.kernel.org
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On Thu, Nov 03, 2005 at 09:49:49PM +0100, Henk Oegema wrote:
+> How can I activate the the PTT device in gMFSK ? (COM1)
+> I have given commands:
+> # chmod ug+rw /dev/ttyS0
+> 
+> The serial port is normally owned by group "uucp"
+> 
+> I've added myself to this group:
+> # groupmod -A username uucp
+> 
+> However: When I open gMFSK I still get:
+> "Cannot open PTT device '/dev/ttyS0' : permission denied.
 
-On 11/3/2005 12:53, Henk Oegema wrote:
-> I'm trying to download kpsk-1.0.tar.bz2 from site:
-> http://kpsk.sourceforge.net/download.html.
+Did you logout after adding yourself to the group?
+Group changes don't take effect until next login.
 
-As a follow up, there's both 1.0 and 1.0.1 on this page, and various
-download mirrors to choose from:
-  http://sourceforge.net/project/showfiles.php?group_id=25303
 
-Good luck...
-
-73,
-
-Brett, WA7V
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.2.4 (MingW32)
-
-iD8DBQFDan4I+/Ps1x4JxWYRAkf2AKCZXNKHBuaH1qmEbS3a2TMHGJQYiwCggGCw
-aDrXtCZICU+kCZ+8enQOZkM=
-=OWdV
------END PGP SIGNATURE-----
+Hamish
+-- 
+Hamish Moffatt VK3SB <hamish@debian.org> <hamish@cloud.net.au>
