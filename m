@@ -1,22 +1,41 @@
-From: Henk Oegema <on4hso@amsat.org>
-Subject: KPSK download problem.
-Date: Thu, 3 Nov 2005 21:53:30 +0100
-Message-ID: <200511032153.30673.on4hso@amsat.org>
+From: Brett Mueller <wa7v@wa7v.com>
+Subject: Re: KPSK download problem.
+Date: Thu, 03 Nov 2005 13:05:01 -0800
+Message-ID: <436A7B7D.1080407@wa7v.com>
+References: <200511032153.30673.on4hso@amsat.org>
 Mime-Version: 1.0
 Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
-Content-Disposition: inline
+In-Reply-To: <200511032153.30673.on4hso@amsat.org>
 Sender: linux-hams-owner@vger.kernel.org
 List-Id: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
-To: Linux-Hams@vger.kernel.org
+To: Henk Oegema <on4hso@amsat.org>
+Cc: Linux-Hams@vger.kernel.org
 
-I'm trying to download kpsk-1.0.tar.bz2 from site: 
-http://kpsk.sourceforge.net/download.html.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-For days I've been trying but it always times out.
+On 11/3/2005 12:53, Henk Oegema wrote:
+> I'm trying to download kpsk-1.0.tar.bz2 from site:
+> http://kpsk.sourceforge.net/download.html.
 
-Is there is problem with that server ??
+Henk,
 
-73, ON4HSO
-Henk
+I am unable to get an FTP response from ftp.1409.org, either.  If you
+can get along with version 1.0.1, try the KPSK project page:
+  http://sourceforge.net/projects/kpsk
+
+The download appears to work here.
+
+73,
+
+Brett
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.2.4 (MingW32)
+
+iD8DBQFDant9+/Ps1x4JxWYRApiMAJwM3bit7XmLhUVjHJkIR0Vl6EYCUgCdHm5x
++4U+u3cUoOiP/rSsWySoR6Q=
+=llrT
+-----END PGP SIGNATURE-----
