@@ -1,56 +1,40 @@
-From: "Henk Oegema" <henk@oegema.com>
-Subject: RE: gMFSK:Cannot open PTT device
-Date: Thu, 3 Nov 2005 23:06:22 +0100
-Message-ID: <MBEEJPNKIJCJGNMGGBLBOEKGCFAA.henk@oegema.com>
-References: <20051103215226.GB12651@cloud.net.au>
-Reply-To: <henk@oegema.com>
+From: Henk Oegema <on4hso@amsat.org>
+Subject: KPSK won't 'make'
+Date: Fri, 4 Nov 2005 12:25:05 +0100
+Message-ID: <200511041225.05381.on4hso@amsat.org>
 Mime-Version: 1.0
 Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <20051103215226.GB12651@cloud.net.au>
+Content-Disposition: inline
 Sender: linux-hams-owner@vger.kernel.org
 List-Id: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
-To: Hamish Moffatt <hamish@cloud.net.au>
-Cc: Linux-Hams@vger.kernel.org
+To: Linux-Hams@vger.kernel.org
 
+I've downloaded KPSK version 1.0.1
 
+Command  './configure'  executed OK
 
------Oorspronkelijk bericht-----
-Van: linux-hams-owner@vger.kernel.org
-[mailto:linux-hams-owner@vger.kernel.org]Namens Hamish Moffatt
-Verzonden: donderdag 3 november 2005 22:52
-Aan: Linux-Hams@vger.kernel.org
-Onderwerp: Re: gMFSK:Cannot open PTT device
+Command 'make'  gives me following error messages:
+logcore.cpp
+logcore.cpp: In constructor `logCore::logCore()':
+logcore.cpp:33: error: cannot convert `char*' to `DB_TXN*' in argument
+passing
+logcore.cpp:40: error: cannot convert `char*' to `DB_TXN*' in argument
+passing
+make[3]: *** [logcore.o] Error 1
+make[3]: Leaving directory `/home/henkoegema/ham/kpsk-1.0.1/kpsk'
+make[2]: *** [all-recursive] Error 1
+make[2]: Leaving directory `/home/henkoegema/ham/kpsk-1.0.1/kpsk'
+make[1]: *** [all-recursive] Error 1
+make[1]: Leaving directory `/home/henkoegema/ham/kpsk-1.0.1'
+make: *** [all] Error 2
+henkoegema@linux:~/ham/kpsk-1.0.1>  
 
+I have no idea how to solve these errors.
 
-On Thu, Nov 03, 2005 at 09:49:49PM +0100, Henk Oegema wrote:
-> How can I activate the the PTT device in gMFSK ? (COM1)
-> I have given commands:
-> # chmod ug+rw /dev/ttyS0
->
-> The serial port is normally owned by group "uucp"
->
-> I've added myself to this group:
-> # groupmod -A username uucp
->
-> However: When I open gMFSK I still get:
-> "Cannot open PTT device '/dev/ttyS0' : permission denied.
+Help much apprciated.
 
-Did you logout after adding yourself to the group?
-Group changes don't take effect until next login.
-
-No I didn't. Have done it in the mean time and the error message is indeed
-gone.
-THANKS for your advice !
-
-73, Henk ON4HSO
-
-Hamish
---
-Hamish Moffatt VK3SB <hamish@debian.org> <hamish@cloud.net.au>
--
-To unsubscribe from this list: send the line "unsubscribe linux-hams" in
-the body of a message to majordomo@vger.kernel.org
-More majordomo info at  http://vger.kernel.org/majordomo-info.html
-
+73, ON4HSO
+Henk
+http://users.telenet.be/henk.oegema   
