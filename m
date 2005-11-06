@@ -1,40 +1,40 @@
 From: Henk Oegema <on4hso@amsat.org>
-Subject: KPSK won't 'make'
-Date: Fri, 4 Nov 2005 12:25:05 +0100
-Message-ID: <200511041225.05381.on4hso@amsat.org>
+Subject: Re: kpsk wont make.
+Date: Sun, 6 Nov 2005 20:45:44 +0100
+Message-ID: <200511062045.44551.on4hso@amsat.org>
+References: <200511051734.45809.pa3gcu@zeelandnet.nl>
 Mime-Version: 1.0
 Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
+In-Reply-To: <200511051734.45809.pa3gcu@zeelandnet.nl>
 Content-Disposition: inline
 Sender: linux-hams-owner@vger.kernel.org
 List-Id: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
-To: Linux-Hams@vger.kernel.org
+To: pa3gcu@zeelandnet.nl, Linux-Hams@vger.kernel.org
 
-I've downloaded KPSK version 1.0.1
+On Saturday 05 November 2005 17:34, Richard Adams wrote:
+> Henk.
+>
+> This is a direct reply.
+>
+> You were told by others that you are missing /usr/include/db.h .
+>
+> You need to install development packages to be able to compile programs.
+> In this case it seems you do not have Berkeley development installed.
+> You should be able to find that package on your install medium, if not
+> start looking here;
+> http://freshmeat.net/projects/berkeleydb/
+>
+> --
+> Regards Richard.
 
-Command  './configure'  executed OK
+Richard
 
-Command 'make'  gives me following error messages:
-logcore.cpp
-logcore.cpp: In constructor `logCore::logCore()':
-logcore.cpp:33: error: cannot convert `char*' to `DB_TXN*' in argument
-passing
-logcore.cpp:40: error: cannot convert `char*' to `DB_TXN*' in argument
-passing
-make[3]: *** [logcore.o] Error 1
-make[3]: Leaving directory `/home/henkoegema/ham/kpsk-1.0.1/kpsk'
-make[2]: *** [all-recursive] Error 1
-make[2]: Leaving directory `/home/henkoegema/ham/kpsk-1.0.1/kpsk'
-make[1]: *** [all-recursive] Error 1
-make[1]: Leaving directory `/home/henkoegema/ham/kpsk-1.0.1'
-make: *** [all] Error 2
-henkoegema@linux:~/ham/kpsk-1.0.1>  
+Thanks for answering.
+I've both db.h and Berkeley development installed.
+./configure finished without any errors.(after installing above)
+It's only 'make' that compiles with (2) errors.
 
-I have no idea how to solve these errors.
-
-Help much apprciated.
-
-73, ON4HSO
-Henk
-http://users.telenet.be/henk.oegema   
+73, de Henk
+ON4HSO
