@@ -1,40 +1,29 @@
-From: Henk Oegema <on4hso@amsat.org>
-Subject: Re: kpsk wont make.
-Date: Sun, 6 Nov 2005 20:45:44 +0100
-Message-ID: <200511062045.44551.on4hso@amsat.org>
-References: <200511051734.45809.pa3gcu@zeelandnet.nl>
+From: Nate Bargmann <n0nb@networksplus.net>
+Subject: [Off-topic] The old linux.dev.hams newsgroup
+Date: Mon, 7 Nov 2005 22:43:29 -0600
+Message-ID: <20051108044329.GF14300@mail.networksplus.net>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <200511051734.45809.pa3gcu@zeelandnet.nl>
 Content-Disposition: inline
 Sender: linux-hams-owner@vger.kernel.org
 List-Id: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
-To: pa3gcu@zeelandnet.nl, Linux-Hams@vger.kernel.org
+Content-Transfer-Encoding: 7bit
+To: Linux Hams <linux-hams@vger.kernel.org>
 
-On Saturday 05 November 2005 17:34, Richard Adams wrote:
-> Henk.
->
-> This is a direct reply.
->
-> You were told by others that you are missing /usr/include/db.h .
->
-> You need to install development packages to be able to compile programs.
-> In this case it seems you do not have Berkeley development installed.
-> You should be able to find that package on your install medium, if not
-> start looking here;
-> http://freshmeat.net/projects/berkeleydb/
->
-> --
-> Regards Richard.
+I was poking around in Google groups and ran across a usenet group I
+had long forgotten about--linux.dev.hams.  What happened to the group? 
+All I see in it recently is spam and Google Groups gives an indication
+that it is no longer available for subscription although my ISP lists
+it as an active group.
 
-Richard
+Just a curious thought.
 
-Thanks for answering.
-I've both db.h and Berkeley development installed.
-./configure finished without any errors.(after installing above)
-It's only 'make' that compiles with (2) errors.
+73, de Nate >>
 
-73, de Henk
-ON4HSO
+-- 
+ Wireless | Amateur Radio Station N0NB          |  Successfully Microsoft
+  Amateur radio exams; ham radio; Linux info @  | free since January 1998.
+             http://www.qsl.net/n0nb/           |  "Debian, the choice of
+             My Kawasaki KZ-650 SR @            |     a GNU generation!"
+        http://www.networksplus.net/n0nb/       |   http://www.debian.org
