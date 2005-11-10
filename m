@@ -1,74 +1,103 @@
-From: Rodolfo Brasnarof <rodob@datafull.com>
+From: Vittorio Vallero <ik1rac@yahoo.it>
 Subject: Re: Soundmodem (userspace) problems
-Date: Thu, 10 Nov 2005 08:42:08 -0300
-Message-ID: <20051110084208.6cb0014c.rodob@datafull.com>
-References: <200511092334.55583.ik1rac@yahoo.it>
+Date: Thu, 10 Nov 2005 20:07:48 +0100
+Message-ID: <200511102007.48834.ik1rac@yahoo.it>
+References: <200511092334.55583.ik1rac@yahoo.it> <20051110084208.6cb0014c.rodob@datafull.com>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <200511092334.55583.ik1rac@yahoo.it>
+In-Reply-To: <20051110084208.6cb0014c.rodob@datafull.com>
+Content-Disposition: inline
 Sender: linux-hams-owner@vger.kernel.org
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"
+Content-Type: text/plain; charset="iso-8859-1"
 To: linux-hams@vger.kernel.org
 
-On Wed, 9 Nov 2005 23:34:55 +0100
-ik1rac@yahoo.it wrote:
+Alle 12:42, gioved=EC 10 novembre 2005, Rodolfo Brasnarof ha scritto:
+> On Wed, 9 Nov 2005 23:34:55 +0100
+>
+> ik1rac@yahoo.it wrote:
+> > Hi everybody,
+> > I am trying to set up AX.25 on a dual sound card machine. The first
+> > on-board card is a SiS 7012 delivering system sounds; the second a
+> > SoundBlaster dedicated to Ham radio.
+> > Here is the detail
+> >
+> > cat /proc/asound/cards
+> > 0 [SI7012         ]: ICH - SiS SI7012
+> >                      SiS SI7012 with ALC100,100P at 0xdc00, irq 11
+> > 1 [AudioPCI       ]: ENS1371 - Ensoniq AudioPCI
+> >                      Ensoniq AudioPCI ENS1371 at 0xd400, irq 5
+> > 2 [UART           ]: MPU-401 UART - MPU-401 UART
+> >                      MPU-401 UART at 0x300, irq 10
+> >
+> > The machine is running:
+> > Kubuntu 5.10 - Breezy Badger
+> > kernel 2.6.12
+> >
+> > ax25-apps 0.0.6
+> > ax25-tools 0.0.8
+> > libax25 0.0.11
+> > soundmodem 0.7
+> >
+> > Here are the steps so far:
+> >
+> > sudo soundmodemconfig
+> > Configured IO as soundcard /dev/dsp1 and channel access parameters
+> > then configured channel 0 as an afsk 1200 bps modem using mkiss mod=
+e
+> > and sm0 interface name.
+> > Runned diagnostics and everything works like a charm: decodes and
+> > transmit.
+> >
+> > Then configured /etc/ax25/axports as:
+> >  1       IK1RAC-1        1200    255     2       144.850 MHz (1200
+> >  bps)
+> >
+> > Then started soundmodem with:
+> > sudo soundmodem
+> > sm[9043]: ioctl: TIOCSETD: No such device (19)
+> >
+> > which, I am guessing, means that sm0 interface has not been created=
+=2E
+> >
+> > Then I checked modules and it seems they are loaded:
+> >
+> > Module                  Size  Used by
+> > mkiss                   9388  0
+> > ax25                   49644  1 mkiss
+> >
+> > So I started digging through the past list posts and found somethin=
+g
+> > relative to unloading and re-loading sound module kernel before
+> > starting soundmodem. No luck.
+> >
+> > Ok now I am at loss. Am I missing something obvious ? (surely yes!)
+>
+> Are you using alsa? Is the oss compatibility module loaded?
+>
+> Within soundmodemconfig you can generate tones and show input signal?
 
-> Hi everybody,
-> I am trying to set up AX.25 on a dual sound card machine. The first
-> on-board card is a SiS 7012 delivering system sounds; the second a
-> SoundBlaster dedicated to Ham radio. 
-> Here is the detail
-> 
-> cat /proc/asound/cards
-> 0 [SI7012         ]: ICH - SiS SI7012
->                      SiS SI7012 with ALC100,100P at 0xdc00, irq 11
-> 1 [AudioPCI       ]: ENS1371 - Ensoniq AudioPCI
->                      Ensoniq AudioPCI ENS1371 at 0xd400, irq 5
-> 2 [UART           ]: MPU-401 UART - MPU-401 UART
->                      MPU-401 UART at 0x300, irq 10
-> 
-> The machine is running:
-> Kubuntu 5.10 - Breezy Badger
-> kernel 2.6.12
-> 
-> ax25-apps 0.0.6
-> ax25-tools 0.0.8
-> libax25 0.0.11
-> soundmodem 0.7
-> 
-> Here are the steps so far:
-> 
-> sudo soundmodemconfig
-> Configured IO as soundcard /dev/dsp1 and channel access parameters
-> then configured channel 0 as an afsk 1200 bps modem using mkiss mode
-> and sm0 interface name.
-> Runned diagnostics and everything works like a charm: decodes and
-> transmit.
-> 
-> Then configured /etc/ax25/axports as:
->  1       IK1RAC-1        1200    255     2       144.850 MHz (1200
->  bps)
-> 
-> Then started soundmodem with:
-> sudo soundmodem
-> sm[9043]: ioctl: TIOCSETD: No such device (19)
-> 
-> which, I am guessing, means that sm0 interface has not been created.
-> 
-> Then I checked modules and it seems they are loaded:
-> 
-> Module                  Size  Used by
-> mkiss                   9388  0
-> ax25                   49644  1 mkiss
-> 
-> So I started digging through the past list posts and found something
-> relative to unloading and re-loading sound module kernel before
-> starting soundmodem. No luck.
-> 
-> Ok now I am at loss. Am I missing something obvious ? (surely yes!)
+Thanks for the reply but alas (for me) all the answers to your question=
+s are=20
+yes.
+ Runned soundmodem diagnostics and everything works like a charm: decod=
+es and=20
+transmit.
+Oss compatibility module loaded.
 
-Are you using alsa? Is the oss compatibility module loaded?
+lsmod | grep oss
+snd_pcm_oss            46368  0
+snd_mixer_oss          16128  1 snd_pcm_oss
+snd_pcm                78344  4=20
+snd_ens1371,snd_intel8x0,snd_ac97_codec,snd_pcm_oss
+snd                    48644  15=20
+snd_mpu401,snd_mpu401_uart,snd_ens1371,snd_rawmidi,snd_seq_device,snd_i=
+ntel8x0,snd_ac97_codec,snd_pcm_oss,snd_mixer_oss,snd_pcm,snd_timer
 
-Within soundmodemconfig you can generate tones and show input signal?
+73s
+-
+To unsubscribe from this list: send the line "unsubscribe linux-hams" i=
+n
+the body of a message to majordomo@vger.kernel.org
+More majordomo info at  http://vger.kernel.org/majordomo-info.html
