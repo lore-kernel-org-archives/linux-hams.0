@@ -1,39 +1,32 @@
-From: Ralf Baechle DL5RB <ralf@linux-mips.org>
-Subject: Re: AX25 in libpcap, tcpdump & ethereal
-Date: Fri, 11 Nov 2005 11:50:15 +0000
-Message-ID: <20051111115014.GB3137@linux-mips.org>
-References: <4373BBBD.10505@rns-stearn.demon.co.uk>
+From: oz6bl@amsat.dk
+Subject: Re: Soundmodem (userspace) problems
+Date: Fri, 11 Nov 2005 16:26:06 -0000 (UTC)
+Message-ID: <32890.83.73.68.20.1131726366.squirrel@www.amsat.dk>
+References: <20051110111910.12671.qmail@web25514.mail.ukl.yahoo.com>
+    <78C35DA8-4647-4C01-8E71-4D1937319A8A@tssg.org>
 Mime-Version: 1.0
+Content-Transfer-Encoding: 7BIT
 Return-path: <linux-hams-owner@vger.kernel.org>
-Content-Disposition: inline
-In-Reply-To: <4373BBBD.10505@rns-stearn.demon.co.uk>
+In-Reply-To: <78C35DA8-4647-4C01-8E71-4D1937319A8A@tssg.org>
 Sender: linux-hams-owner@vger.kernel.org
 List-Id: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-To: Richard Stearn <richard@rns-stearn.demon.co.uk>
-Cc: linux-hams@vger.kernel.org
+To: John Ronan <jronan@tssg.org>
+Cc: Vittorio Vallero <ik1rac@yahoo.it>, linux-hams@vger.kernel.org
 
-On Thu, Nov 10, 2005 at 09:29:33PM +0000, Richard Stearn wrote:
+Hi John
 
-> For the foolhardy, desperate or those who just like to live dangerously.
-> 
-> To play with this you will need to be comfortable with using tar, patch
-> & make at the very least and using Linux. The system I am using is a
-> Slackware 8.1 install (kernel 2.4.31)
-> 
-> Attached is a patch that adds AX.25 to:
-> 	libpcap  - recognition and capture
-> 	tcpdump  - decoding AX.25, to a limited extent
-> 		 - decoding an ARP payload
-> 		 - decoding a TCP/IP payload
-> 	ethereal - dissection of AX.25
-> 		 - dissection of an TCP/IP payload
-> 
-> All others are treated as having no L3 protocol and printed in hex
-> and ascii.
+John Ronan wrote:
+>
+> I found this happening to me before, completely inexplicably.  It was
+> something to do with the version of the kernel and the version of
+> soundmodem.
+>
+> I think I upgraded both and the problem went away.
+>
 
-This is excellent news and I hope it means we can soon retire listen(8)
-in favor of the standard tools tcpdump and ethereal!
+Out of curiosity (I experience the same problems as Vittorio): what did
+you upgrade and from which version to which version?
 
-  Ralf
+Best 73 de Bent/OZ6BL
+
