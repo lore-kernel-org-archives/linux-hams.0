@@ -1,56 +1,40 @@
-From: Jacques Chion <Jacques.Chion@wanadoo.fr>
-Subject: Re: last kernel version 2.6.15-rc1
-Date: Tue, 15 Nov 2005 21:17:32 +0100 (CET)
-Message-ID: <Pine.LNX.4.44.0511152108070.4483-100000@cwoux2.cerise.fr>
-References: <20051115110710.GA2731@linux-mips.org>
+From: Henk Oegema <on4hso@amsat.org>
+Subject: KPSK won't 'make'
+Date: Tue, 15 Nov 2005 22:59:02 +0100
+Message-ID: <200511152259.02918.on4hso@amsat.org>
 Mime-Version: 1.0
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <20051115110710.GA2731@linux-mips.org>
+Content-Disposition: inline
 Sender: linux-hams-owner@vger.kernel.org
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: TEXT/PLAIN; charset="iso-8859-1"
-To: Ralf Baechle DL5RB <ralf@linux-mips.org>
-Cc: linux-hams@vger.kernel.org
+Content-Type: text/plain; charset="us-ascii"
+To: Linux-Hams@vger.kernel.org
 
-Le Nov 15, Ralf Baechle DL5RB =E9crivait :
+I've downloaded KPSK version 1.0.1
 
-=2E......................................
->=20
-> Is this a preemptable kernel?
->=20
-=2E.......................................
-yes, the kernel was compiled with the option CONFIG_PREEMPT_VOLUNTARY=3D=
-y
+Command ./configure executed OK
 
-i tried also with the option CONFIG_PREEMPT_NONE=3Dy
-and i have the same problem.
-To be complete, after the message is ent yesterday,
-some seconds after i have another like that :
+Command make gives me following error messages:
+logcore.cpp
+logcore.cpp: In constructor `logCore::logCore()':
+logcore.cpp:33: error: cannot convert `char*' to `DB_TXN*' in argument
+passing
+logcore.cpp:40: error: cannot convert `char*' to `DB_TXN*' in argument
+passing
+make[3]: *** [logcore.o] Error 1
+make[3]: Leaving directory `/home/henkoegema/ham/kpsk-1.0.1/kpsk'
+make[2]: *** [all-recursive] Error 1
+make[2]: Leaving directory `/home/henkoegema/ham/kpsk-1.0.1/kpsk'
+make[1]: *** [all-recursive] Error 1
+make[1]: Leaving directory `/home/henkoegema/ham/kpsk-1.0.1'
+make: *** [all] Error 2
+henkoegema@linux:~/ham/kpsk-1.0.1>  
 
-kernel BUG at kernel/timer.c:469!
-invalid operand: 0000 [#1]
-Modules linked in: nfsd exportfs lockd sunrpc ...(and various modules a=
-bout sound)
-CPU: 0
-EIP: 0060:[c01213c3] Not tainted VLI
-=2E........................
+I have no idea how to solve these errors.
 
-and other things that i must copy by hand, because not recorded.
-On another hand, i received a message from oh1mrr telling he has no pro=
-blem
-with this kernel.
-So the solution i think is in my garden.. But where ?
+Help much apprciated.
 
-Best 73.
-
---=20
-=466CWO
-Quelques HOWTO en fran=E7ais: http://perso.wanadoo.fr/jacques.chion/
-
-
--
-To unsubscribe from this list: send the line "unsubscribe linux-hams" i=
-n
-the body of a message to majordomo@vger.kernel.org
-More majordomo info at  http://vger.kernel.org/majordomo-info.html
+73, ON4HSO
+Henk
+http://users.telenet.be/henk.oegema
