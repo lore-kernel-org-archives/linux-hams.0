@@ -1,36 +1,23 @@
-From: "Phil" <phillor@telstra.com>
-Subject: Does soundmodem work at 300 baud?
-Date: Thu, 17 Nov 2005 13:04:33 +1000
-Message-ID: <000101c5eb1d$d0599d40$682de80a@HOME>
+From: <sv1uy@in.gr>
+Subject: AX25 in UBUNTU Breezy
+Date: Fri, 18 Nov 2005 12:02:59 +0200
+Message-ID: <1b38301c5ec27$41874170$0a05030a@internal.ramnet.gr>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 7BIT
 Return-path: <linux-hams-owner@vger.kernel.org>
+Content-Class: urn:content-classes:message
 Sender: linux-hams-owner@vger.kernel.org
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; format="flowed"; charset="us-ascii"; reply-type="original"
+Content-Type: text/plain; charset="us-ascii"
 To: linux-hams@vger.kernel.org
 
-Hello,
+Hi all,
 
-Once again I've had the urge to try to persuade soundmodem to receive HF 
-packet at 300 baud and once again without success.
+Is anyone using AX25-tools, AX25-apps, libax25 in UBUNTU 5.10 Breezy Badger succesfully here please? 
 
-Theses are the parameters that I've experimented with:
+If yes could you tell me which versions of are working for you? UBUNTU 5.10 has kernel 2.6.12 and when I try MKISS I get input/output error. I had SLACKWARE 10.2 with kernel 2.4.31 before and AX25 worked.
 
-Bits 300
+Any help would be much appreciated (a pointer to ready made tgz or rpms is preferable please, not a Linux Guru here, just a user).
 
-Freq 0 1600
-
-Freq 1 1800 (I've tried reversing these two without any noticeable effect)
-
-There is never any DCD indication under "diagnostics" in the soundmodem 
-configurator. I have had 1200 baud packet working in the past but I don't 
-remember if the DCD indicator lit or not. Now that I'm in a remote area I 
-can't do any comparisons between 300 and 1200 baud anyway.
-
-So, should soundmodem works at 300 baud on HF frequencies?
-
-Regards,
-Phil.
-
-
+73 de Demetre SV1UY
+sv1uy@in.gr
