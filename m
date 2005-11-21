@@ -1,27 +1,33 @@
-From: Hamish Moffatt <hamish@cloud.net.au>
-Subject: Re: PSK-31 program recommendations
-Date: Mon, 21 Nov 2005 08:36:22 +1100
-Message-ID: <20051120213622.GA7705@cloud.net.au>
-References: <43808614.80502@sktc.net> <1132499913.1267.3.camel@oh2bns.ampr.org>
+From: Ralf Baechle DL5RB <ralf@linux-mips.org>
+Subject: Re: mkiss SMP-safe?
+Date: Mon, 21 Nov 2005 12:35:17 +0000
+Message-ID: <20051121123517.GA2698@linux-mips.org>
+References: <20051120004101.GB27244@cloud.net.au>
 Mime-Version: 1.0
 Return-path: <linux-hams-owner@vger.kernel.org>
 Content-Disposition: inline
-In-Reply-To: <1132499913.1267.3.camel@oh2bns.ampr.org>
+In-Reply-To: <20051120004101.GB27244@cloud.net.au>
 Sender: linux-hams-owner@vger.kernel.org
 List-Id: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
-To: Linux-hams List <linux-hams@vger.kernel.org>
+To: linux-hams@vger.kernel.org
 
-On Sun, Nov 20, 2005 at 05:18:33PM +0200, Tomi Manninen wrote:
-> What is the situation nowadays, do major distributions
-> come with FFTW3 preinstalled and without FFTW2? Would
-> supporting FFTW3 make installation significantly
-> easier for people?
+On Sun, Nov 20, 2005 at 11:41:01AM +1100, Hamish Moffatt wrote:
 
-It's no issue for Debian. Both co-exist, and I don't know of any plans
-to remove fftw2.
+> Is mkiss safe on SMP systems?
+> 
+> Debian appears to omit it from our x86 SMP kernels. I expect this is
+> just a leftover from old problems with the driver. If it's safe now,
+> I'll submit a bug report.
 
-Hamish
--- 
-Hamish Moffatt VK3SB <hamish@debian.org> <hamish@cloud.net.au>
+It should be SMP-safe on 2.6.14-rc1 and newer.
+
+This is stricly speaking about mkiss; there are locking holes in the actual
+AX.25 stack - it's just that typical usage patterns tend to not trigger
+those.
+
+73 de DL5RB op Ralf
+
+--
+Loc. JN47BS / CQ 14 / ITU 28 / DOK A21
