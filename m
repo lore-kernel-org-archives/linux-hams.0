@@ -1,35 +1,51 @@
-From: Hamish Moffatt <hamish@cloud.net.au>
-Subject: Re: mkiss SMP-safe?
-Date: Tue, 22 Nov 2005 07:29:39 +1100
-Message-ID: <20051121202939.GA24366@cloud.net.au>
-References: <20051120004101.GB27244@cloud.net.au> <20051121123517.GA2698@linux-mips.org> <4381EC50.BF4CDCD5@pi4cc.nl> <20051121161047.GA23578@linux-mips.org>
+From: David Rivenburg <driven@onr.com>
+Subject: Re: YAM/Tekk help
+Date: Tue, 22 Nov 2005 00:57:38 -0600
+Message-ID: <4382C162.7090202@onr.com>
+References: <20051116151748.GN3241@goldengate.vpizza.org>
+Reply-To: ad5oo@arrl.net
 Mime-Version: 1.0
+Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
-Content-Disposition: inline
-In-Reply-To: <20051121161047.GA23578@linux-mips.org>
+In-Reply-To: <20051116151748.GN3241@goldengate.vpizza.org>
 Sender: linux-hams-owner@vger.kernel.org
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset="us-ascii"; format="flowed"
 To: linux-hams@vger.kernel.org
+Cc: Jim Meehan <jmeehan@vpizza.org>
 
-On Mon, Nov 21, 2005 at 04:10:47PM +0000, Ralf Baechle DL5RB wrote:
-> On Mon, Nov 21, 2005 at 03:48:32PM +0000, Peter wrote:
+Jim Meehan wrote:
+> Problem 1:
 > 
-> > I have 2.6.14-2-686-smp #1 SMP Mon Nov 14 14:56:10 UTC 2005 i686 GNU/Linux
-> > installed from debian/unstable, but modprobe mkiss gives FATAL: Module mkiss not found.
-> > 
-> > So in my dual pentiumIII system, ax25  will not work.
+> If I ping from either side, that machine sends out ARP requests endlessly.
+
+Just a quick sanity check: did you set the ping interval to something 
+higher than 3 seconds?  The round trip time for radio pings is about 3 
+seconds, and if you use something less (like the default of 1 second) 
+the pingee will have a hard time getting an out an arp reply between the 
+pingers requests.
+
+> Problem 2:
 > 
-> But that's a Debian issue if they don't include all the needed modules ...
+> The link is not reliable.  Right now, I've got the txdelay set to 300 ms on
+> both sides, and I'm still getting 3 or 4 percent packet loss with 64 byte
+> pings.
 
-Yes. Debian's SMP kernel package is missing the mkiss module, but it's
-included in the non-SMP. Hence my original question, which was triggered
-by a private exchange between Peter and I.
+Only 3-4%?  That's actually pretty good.  Reliable 9600 baud packet is 
+practically nonexistant without using hardware specifically designed for 
+9600 baud baseband fsk.  I am not aware of any commercial radio or tnc 
+that is.  They may *try* to do 9600, and even have modest success with 
+it, but they are flawed from the start and cannot be counted on for 
+reliable operation.
 
-I'll submit a bug report for Debian.
+You would actually be better off with 1200 baud since that *is* 
+implemented correctly in the bulk of the hardware out there.  Fewer 
+retries = faster throughput.  If you're really adventursome, give the 
+4800bps psk soundmodem a try.  It is *much* more reliable than 9600 
+baud, and about 6x faster than 1200 baud (taking into account a longer 
+mtu with fewer retries).
 
-Thanks
-Hamish
--- 
-Hamish Moffatt VK3SB <hamish@debian.org> <hamish@cloud.net.au>
+73
+AD5OO
+
+
