@@ -1,45 +1,36 @@
-From: Thomas Sailer <sailer@sailer.dynip.lugs.ch>
-Subject: Re: Soundmodem installation problem
-Date: Tue, 29 Nov 2005 09:13:51 +0100
-Message-ID: <1133252031.5850.65.camel@unreal>
-References: <438BE0FE.1090501@irock.com.au>
+From: "sv1uy" <sv1uy@ham.depa.gr>
+Subject: SUSE 9.3
+Date: Wed, 30 Nov 2005 10:16:01 +0200
+Message-ID: <20051130080452.M79581@ham.depa.gr>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <438BE0FE.1090501@irock.com.au>
 Sender: linux-hams-owner@vger.kernel.org
 List-Id: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
-To: vk4akm@wia.org.au
-Cc: linux-hams@vger.kernel.org
+Content-Transfer-Encoding: 7bit
+To: linux-hams@vger.kernel.org
 
-On Tue, 2005-11-29 at 15:02 +1000, vk4akm wrote:
-> G'day Folks
-> 
-> This may seem an absolutely stupid question, but when I try to configure 
-> the soundmodem on my recently installed Debian system
->  using the soundmodemconfig command I get an error message "Cannot load 
-> courier".
-> My understanding is that courier is something to do with mail, what has 
-> this to do with the soundmodem?
+Hi guys,
 
-grep is your friend ;-)
+Has anyone managed to run AX25 in a SUSE 9.3 installation? I am stuck with 
+my SUSE 9.3 and I cannot make them work for me. I installed libax25-0.0.10 
+from an rpm I got from SUSE 9.2 directory of SUSE's ftp server and ax25-apps 
+and ax25-tools rpms from SUSE 9.3 directory of SUSE's ftp server but I was 
+getting an error saying that axports configuration files could not be found. 
+I made a link of /usr/local/etc/ax25 directory to point to /etc/ax25 but the 
+problem did not go away. Then I uninstalled the rpms and tried to compile 
+the latest tools form sourceforge but failed to compile ax25-apps and tools. 
+So now I reinstalled the rpms and I get another problem stating that mkiss 
+gets an IO error. BTW SUSE 9.3 installs kernel 2.6.11.
 
-GdkFont *font = gdk_font_load("-*-courier-medium-r-normal-*-*-120-*-*-m-*-*-*");
-if (!font) {
-        g_printerr("Cannot load courier\n");
-}
+If anyone is using SUSE 9.3 out there please tell me where did you get ax25-
+apps, ax25-tools and libax25 from and which version work successfully 
+without having to recompile the kernel!
 
-It tries to load the font named courier, and fails. Courier is
-supposedly available everywhere...
-
-> The soundmodemconfig internal diagnostics has "Cannot start audio IO" 
-> error message.
-
-For some reason it cannot start get the audio driver to do what it
-wants. You need to provide more info, eg. what audio driver, soundmodem
-version, strace etc.
-
-Tom
-
+---
+73 de Demetre Valaris - SV1UY
+e-mail: sv1uy@ham.depa.gr
+AX25 PBBS: SV1UY@SV1UY.ATH.GRC.EU
+http://sv1uy.ampr.org/~sv1uy
+http://www.athnet.ampr.org/~sv1uy
 
