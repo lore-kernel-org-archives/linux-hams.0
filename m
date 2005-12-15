@@ -1,46 +1,55 @@
 From: Bill Vodall WA7NWP <wa7nwp@jnos.org>
-Subject: AX25 now to dump a text file
-Date: Thu, 15 Dec 2005 10:50:17 -0800
-Message-ID: <43A1BAE9.4000009@jnos.org>
-References: <Pine.LNX.4.44.0512141122000.19350-100000@srv01.compumont.com>
+Subject: ax25 Listen as a service
+Date: Thu, 15 Dec 2005 14:23:32 -0800
+Message-ID: <43A1ECE4.1020406@jnos.org>
+References: <Pine.LNX.4.44.0512141122000.19350-100000@srv01.compumont.com> <43A1BAE9.4000009@jnos.org>
 Mime-Version: 1.0
 Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <Pine.LNX.4.44.0512141122000.19350-100000@srv01.compumont.com>
+In-Reply-To: <43A1BAE9.4000009@jnos.org>
 Sender: linux-hams-owner@vger.kernel.org
 List-Id: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"; format="flowed"
 To: linux-hams@vger.kernel.org
 
 
->>
->>Skip telnet, use axconv:
->>
->>	http://he.fi/pub/ham/unix/linux/ax25/axconv.c.gz
+Attention deficit?  Easily distracted.  Couldn't be me....
 
-That's working great at the systems I'm maintaining.  Now for the next 
-little step.
+While playing with the UroNode as a program launched from a socket, it 
+dawned on me that it might be possible to do the very same with 
+''listen.''  Often I SSH in to a remote system simply to watch the 
+packet activity in the area.  I don't need the shell for that, just the 
+listen.
 
-I'd like to have a "axhelp" ax25 alias.  So connect to "axhelp" and it 
-will dump a file of information and disconnect.
+So I gave it a try:
 
-I think that's what this was doing:
+--- in /etc/services ---
 
- > root  /usr/local/sbin/axwrapper	axwrapper /usr/bin/finger finger
+   axlisten 3695/tcp  # Linux ax25 listening
 
-but I don't want to install the finger program on all the systems.
+--- in /etc/xinetd.conf I added ---
 
-How about something like:
+service axlisten
+{
+         socket_type     = stream
+         protocol        = tcp
+         wait            = no
+         user            = root
+         server          = /usr/bin/listen
+         server_args     = -act
+}
 
-[AXHELP VIA *]
-default  * * * * * *  - root  /bin/cat axhelp /etc/ax25/axports
+---
 
-(that's displaying the axports file as a test case.)
+Then I sent a -HUP to xinetd and tried it.
 
+   telnet localhost 3695
 
-Suggestions or hints?
+Wow?  I see packets scrolling by.  Pretty cool!
+
+Now the question for the group.  Is there a better way to do this?  Is 
+there anything inherently dangerous with doing this where I'm leaving 
+the systems wide open to some exploit?
 
 Thanks,
 Bill - WA7NWP
-
-
