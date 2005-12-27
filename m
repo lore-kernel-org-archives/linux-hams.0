@@ -1,56 +1,29 @@
-From: Mika Kukkonen <mikukkon@iki.fi>
-Subject: [PATCH] NETROM: Fix three if-statements in nr_state1_machine()
-Date: Wed, 21 Dec 2005 22:15:13 +0200
-Message-ID: <20051221201513.GB24213@localhost.localdomain>
-Reply-To: mikukkon@iki.fi
+From: Ralf Baechle DL5RB <ralf@linux-mips.org>
+Subject: PCISCC4 driver
+Date: Tue, 27 Dec 2005 18:15:56 +0100
+Message-ID: <20051227171556.GA19525@linux-mips.org>
 Mime-Version: 1.0
-Return-path: <linux-kernel-owner+glk-linux-kernel-3=40m.gmane.org-S964814AbVLUUQP@vger.kernel.org>
+Return-path: <linux-hams-owner@vger.kernel.org>
 Content-Disposition: inline
-Sender: linux-kernel-owner@vger.kernel.org
+Sender: linux-hams-owner@vger.kernel.org
 List-Id: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
-To: ralf@linux-mips.org, netdev@vger.kernel.org
-Cc: linux-kernel@vger.kernel.org, linux-hams@vger.kernel.org
+To: linux-hams@vger.kernel.org
 
-I found these while compiling with extra gcc warnings;
-considering the indenting surely they are not intentional?
+A few years ago DG1KJD wrote a PCISCC4 for Linux 2.2.  F6FBB eventually
+did some work on this driver but nothing significant, so the driver
+never got into a shape where it could be included into the kernel.
+I eventually started polishing the driver but not having such a card,
+I had to stop.  This latest version of the driver has been tested
+successfully and I can send it to anybody interested.
 
-Signed-of-by: Mika Kukkonen <mikukkon@iki.fi>
+Of course I'd be most happy if I could motivate somebody to finish the
+remaining work; it's mostly about removal of the deprecated virt_to_bus
+API, so anybody with a bit of DMA driver experience should be able to
+complete the work.
 
----
+73 de DL5RB op Ralf
 
- net/netrom/nr_in.c |    6 +++---
- 1 files changed, 3 insertions(+), 3 deletions(-)
-
-diff --git a/net/netrom/nr_in.c b/net/netrom/nr_in.c
-index 004e859..a7d88b5 100644
---- a/net/netrom/nr_in.c
-+++ b/net/netrom/nr_in.c
-@@ -99,7 +99,7 @@ static int nr_state1_machine(struct sock
- 		break;
- 
- 	case NR_RESET:
--		if (sysctl_netrom_reset_circuit);
-+		if (sysctl_netrom_reset_circuit)
- 			nr_disconnect(sk, ECONNRESET);
- 		break;
- 
-@@ -130,7 +130,7 @@ static int nr_state2_machine(struct sock
- 		break;
- 
- 	case NR_RESET:
--		if (sysctl_netrom_reset_circuit);
-+		if (sysctl_netrom_reset_circuit)
- 			nr_disconnect(sk, ECONNRESET);
- 		break;
- 
-@@ -265,7 +265,7 @@ static int nr_state3_machine(struct sock
- 		break;
- 
- 	case NR_RESET:
--		if (sysctl_netrom_reset_circuit);
-+		if (sysctl_netrom_reset_circuit)
- 			nr_disconnect(sk, ECONNRESET);
- 		break;
- 
+--
+Loc. JN47BS / CQ 14 / ITU 28 / DOK A21
