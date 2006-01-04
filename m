@@ -1,58 +1,74 @@
-From: Bob Nielsen <nielsen@oz.net>
-Subject: Re: 2.6.13 mkiss update?
-Date: Wed, 4 Jan 2006 13:19:01 -0800
-Message-ID: <F207312C-FF7D-49CD-95AB-BDC8E021EF9C@oz.net>
-References: <003301c6114b$180ecb80$680ea8c0@LoJackOne.LoJack.com> <8BD9A378-7AF9-41DB-BE04-1EAD876ECB5D@oz.net> <33725.83.73.68.20.1136407583.squirrel@www.amsat.dk>
-Mime-Version: 1.0 (Apple Message framework v746.2)
-Content-Transfer-Encoding: 7bit
+From: IT3 Stuart Blake Tener <teners@bh90210.net>
+Subject: Re: Most "HAM" friendly distro ?
+Date: Wed, 04 Jan 2006 16:26:49 -0500
+Message-ID: <1136410009.43bc3d99a19e0@mgtmail.com>
+References: <9923fd660601041255o4e45fd5dw572a79848c1781ff@mail.gmail.com>
+Mime-Version: 1.0
+Content-Transfer-Encoding: 7BIT
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <33725.83.73.68.20.1136407583.squirrel@www.amsat.dk>
+In-Reply-To: <9923fd660601041255o4e45fd5dw572a79848c1781ff@mail.gmail.com>
 Sender: linux-hams-owner@vger.kernel.org
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"; delsp="yes"; format="flowed"
-To: linux-hams@vger.kernel.org
+Content-Type: text/plain; charset="us-ascii"
+To: Douglas Cole <doug.n7bfs@gmail.com>
+Cc: linux-hams@vger.kernel.org
 
-With any distribution (I think) you do not need to use their kernel  
-(although sometimes there desirable patches).  For instance, I am  
-running Ubuntu on both my Linux machines, using 2.6.14.2 kernels,  
-although Ubuntu 5.10 comes with 2.6.12.  I took the Ubuntu  
-config-2.6.12 file and copied it to /usr/src/linux/.config, ran 'make  
-menuconfig' and
-compiled my new kernels.  I think some of the distributions even  
-package up their standard patches, although the stock kernel works  
-fine for me (I needed ndiswrapper on one of the machines to use my  
-unsupported 802.11g PCI card, but was able to find a Ubuntu package  
-which allowed me to create the module with my new kernel).  I have  
-been compiling my own kernels for about 11 years (when it was  
-necessary to do so in order to  have AX.25 support) and have never  
-run into insurmountable problems.
+Quoting Douglas Cole <doug.n7bfs@gmail.com>:
 
-73, Bob N7XY
+> Well as most recent postings seem to indicate some distro's are less
+> friendly than others for updating and changing kernels and other
+> things.
+> I too am using SuSE (version 10) for my desktop OS, but still have a
+> separate pc running SuSE 8.2 for packet, since it is the one that
+> works for me, and as has been posted on here many times, 2.6 kernel
+> packet issues have been many.
 
-On Jan 4, 2006, at 12:46 PM, oz6bl@amsat.dk wrote:
+My desktop OS is MacOS, and when the new Mac/Intel machines come out, I will
+purchase one and run Linux as a secondary OS, since AX.25 is not supported by
+MacOS, and cannot be added either.
 
-> Bob Nielsen wrote:
->> I thought it was the ax25 module that was broken.  In any case,
->> 2.6.14 (and presumably 2.6.15) works, so you could try one of them.
->> If there is some other reason why you need 2.6.13, ...
 >
-> The 'problem' with Suse is that once they have made a release they  
-> stick
-> to the kernel version with which the original release was made.  
-> They will
-> provide security updates but not kernel updates. For this very  
-> reason I'm
-> seriously considering switching to e.g. Gentoo, because there you can
-> update the kernel. I use Gentoo on my router/gateway but am still  
-> on Suse
-> with my workstation.
+> So my question is, which distro' would one reccomend to someone who is
+> used to using a distro' that does not require recompiling the kernel
+> every time I turn around?
+
+I am considering the "Amateurization" of ipCop from www.ipcop.org, as it already
+contains menuized management screens for network management. It is already small
+in terms of kernel size, and can be loaded onto something like an openbrick, not
+unlike what I am considering to purchase from www.hacom.net (only the VIA unit).
+
+
 >
-> Best 73 de Bent/OZ6BL
+> I was thinking maybe Kubuntu, or one of the Debian based distro's just
+> for the sake of the ease with which APT makes updating/upgrading, but
+> since I have not spent enough time with Debian based distro's I am not
+> sure that is going to fit my needs.
+> Also I noticed that Fedora has a similar package manager that is
+> supposed to work well called YUM...
+
+Perhaps building a Unbuntu live version of Linux which was inclusive of all the
+HAM addons might be interesting to do, ay?
+
 >
+> But what 2.6 kernel-based distro' really shines for use Amateur radio
+> opp's at the moment ?
+>
+> Thanks in advance for any input you can give.
+>
+>
+> Doug
+> N7BFS
 > -
-> To unsubscribe from this list: send the line "unsubscribe linux- 
-> hams" in
+> To unsubscribe from this list: send the line "unsubscribe linux-hams" in
 > the body of a message to majordomo@vger.kernel.org
 > More majordomo info at  http://vger.kernel.org/majordomo-info.html
 >
+
+-- 
+IT3 Stuart Blake Tener
+Beverly Hills, CA
+(310) 358-0202
+teners@bh90210.net
+
+
 
