@@ -1,34 +1,31 @@
-From: Jeremy Utley <jerutley@gmail.com>
+From: Alex Flinsch <avflinsch@att.net>
 Subject: Re: Most "HAM" friendly distro ?
-Date: Wed, 4 Jan 2006 15:19:03 -0800
-Message-ID: <d5d4185b0601041519w2aafae28pec938cece0f1bd02@mail.gmail.com>
-References: <9923fd660601041255o4e45fd5dw572a79848c1781ff@mail.gmail.com>
-	 <20060104230936.GD12936@mail.networksplus.net>
-Mime-Version: 1.0
-Content-Transfer-Encoding: 7BIT
+Date: Wed, 4 Jan 2006 18:28:17 -0500
+Message-ID: <27ADAB50-15F3-4A0C-8CFB-C9B01AD97C01@att.net>
+References: <9923fd660601041255o4e45fd5dw572a79848c1781ff@mail.gmail.com> <1136410009.43bc3d99a19e0@mgtmail.com>
+Mime-Version: 1.0 (Apple Message framework v746.2)
+Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <20060104230936.GD12936@mail.networksplus.net>
-Content-Disposition: inline
+In-Reply-To: <1136410009.43bc3d99a19e0@mgtmail.com>
 Sender: linux-hams-owner@vger.kernel.org
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"
+Content-Type: text/plain; charset="us-ascii"; delsp="yes"; format="flowed"
 To: linux-hams@vger.kernel.org
 
-On 1/4/06, Nate Bargmann <n0nb@networksplus.net> wrote:
 
-> > But what 2.6 kernel-based distro' really shines for use Amateur radio
-> > opp's at the moment ?
+On Jan 4, 2006, at 4:26 PM, IT3 Stuart Blake Tener wrote:
 >
-> Check out Harv's Ham Shack.  It seems to be a ham radio oriented
-> distribution.
+> My desktop OS is MacOS, and when the new Mac/Intel machines come  
+> out, I will
 
-Just my .02 (before tax), but my favorite Linux for Ham Radio stuff
-has always been Slackware.  The kernels may not have the ax.25 support
-built in (it's been a while since I actually installed it), but Slack
-is one of the easiest distro's around to recompile the kernel for,
-IMHO.  Try a custom-compiled kernel on most modern distros, and you're
-going to end up with all kinds of odd errors as it tries to load
-modules that may no longer be there - but I've never run into this
-with Slack.
+Same here, but I run a headless Mandrake/Mandriva box for all of my  
+ham apps, and just export the display to OS X
 
-Jeremy, NW7JU
+
+
+--
+Alex / AB2RC
+avflinsch@att.net
+
+
+
