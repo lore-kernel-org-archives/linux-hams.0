@@ -1,29 +1,21 @@
-From: Ralf Baechle DL5RB <ralf@linux-mips.org>
-Subject: PCISCC4 driver
-Date: Tue, 27 Dec 2005 18:15:56 +0100
-Message-ID: <20051227171556.GA19525@linux-mips.org>
+From: "Mike McCarthy, W1NR" <lists@w1nr.net>
+Subject: 2.6.13 mkiss update?
+Date: Wed, 4 Jan 2006 11:22:44 -0500
+Message-ID: <003301c6114b$180ecb80$680ea8c0@LoJackOne.LoJack.com>
 Mime-Version: 1.0
+Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
-Content-Disposition: inline
 Sender: linux-hams-owner@vger.kernel.org
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; format="flowed"; charset="us-ascii"; reply-type="original"
 To: linux-hams@vger.kernel.org
 
-A few years ago DG1KJD wrote a PCISCC4 for Linux 2.2.  F6FBB eventually
-did some work on this driver but nothing significant, so the driver
-never got into a shape where it could be included into the kernel.
-I eventually started polishing the driver but not having such a card,
-I had to stop.  This latest version of the driver has been tested
-successfully and I can send it to anybody interested.
+I am running opensuse 10.0 with kernel 2.6.13-15.7 and the mkiss module is 
+broken.  In looking through the archives it appears that it got fixed in 
+2.6.14.  Will there be a patch released for the 2.6.13 kernel that will 
+propagate to the opensuse online update?  Where can I get the latest source 
+file for mkiss that I can manually compile it under 2.6.13?
 
-Of course I'd be most happy if I could motivate somebody to finish the
-remaining work; it's mostly about removal of the deprecated virt_to_bus
-API, so anybody with a bit of DMA driver experience should be able to
-complete the work.
+Thanks,
+Mike, W1NR
 
-73 de DL5RB op Ralf
-
---
-Loc. JN47BS / CQ 14 / ITU 28 / DOK A21
