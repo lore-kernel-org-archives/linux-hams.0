@@ -1,40 +1,58 @@
-From: Douglas Cole <doug.n7bfs@gmail.com>
-Subject: Most "HAM" friendly distro ?
-Date: Wed, 4 Jan 2006 12:55:38 -0800
-Message-ID: <9923fd660601041255o4e45fd5dw572a79848c1781ff@mail.gmail.com>
-Mime-Version: 1.0
-Content-Transfer-Encoding: 7BIT
+From: Bob Nielsen <nielsen@oz.net>
+Subject: Re: 2.6.13 mkiss update?
+Date: Wed, 4 Jan 2006 13:19:01 -0800
+Message-ID: <F207312C-FF7D-49CD-95AB-BDC8E021EF9C@oz.net>
+References: <003301c6114b$180ecb80$680ea8c0@LoJackOne.LoJack.com> <8BD9A378-7AF9-41DB-BE04-1EAD876ECB5D@oz.net> <33725.83.73.68.20.1136407583.squirrel@www.amsat.dk>
+Mime-Version: 1.0 (Apple Message framework v746.2)
+Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
-Content-Disposition: inline
+In-Reply-To: <33725.83.73.68.20.1136407583.squirrel@www.amsat.dk>
 Sender: linux-hams-owner@vger.kernel.org
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"
+Content-Type: text/plain; charset="us-ascii"; delsp="yes"; format="flowed"
 To: linux-hams@vger.kernel.org
 
-Well as most recent postings seem to indicate some distro's are less
-friendly than others for updating and changing kernels and other
-things.
-I too am using SuSE (version 10) for my desktop OS, but still have a
-separate pc running SuSE 8.2 for packet, since it is the one that
-works for me, and as has been posted on here many times, 2.6 kernel
-packet issues have been many.
+With any distribution (I think) you do not need to use their kernel  
+(although sometimes there desirable patches).  For instance, I am  
+running Ubuntu on both my Linux machines, using 2.6.14.2 kernels,  
+although Ubuntu 5.10 comes with 2.6.12.  I took the Ubuntu  
+config-2.6.12 file and copied it to /usr/src/linux/.config, ran 'make  
+menuconfig' and
+compiled my new kernels.  I think some of the distributions even  
+package up their standard patches, although the stock kernel works  
+fine for me (I needed ndiswrapper on one of the machines to use my  
+unsupported 802.11g PCI card, but was able to find a Ubuntu package  
+which allowed me to create the module with my new kernel).  I have  
+been compiling my own kernels for about 11 years (when it was  
+necessary to do so in order to  have AX.25 support) and have never  
+run into insurmountable problems.
 
-So my question is, which distro' would one reccomend to someone who is
-used to using a distro' that does not require recompiling the kernel
-every time I turn around?
+73, Bob N7XY
 
-I was thinking maybe Kubuntu, or one of the Debian based distro's just
-for the sake of the ease with which APT makes updating/upgrading, but
-since I have not spent enough time with Debian based distro's I am not
-sure that is going to fit my needs.
-Also I noticed that Fedora has a similar package manager that is
-supposed to work well called YUM...
+On Jan 4, 2006, at 12:46 PM, oz6bl@amsat.dk wrote:
 
-But what 2.6 kernel-based distro' really shines for use Amateur radio
-opp's at the moment ?
+> Bob Nielsen wrote:
+>> I thought it was the ax25 module that was broken.  In any case,
+>> 2.6.14 (and presumably 2.6.15) works, so you could try one of them.
+>> If there is some other reason why you need 2.6.13, ...
+>
+> The 'problem' with Suse is that once they have made a release they  
+> stick
+> to the kernel version with which the original release was made.  
+> They will
+> provide security updates but not kernel updates. For this very  
+> reason I'm
+> seriously considering switching to e.g. Gentoo, because there you can
+> update the kernel. I use Gentoo on my router/gateway but am still  
+> on Suse
+> with my workstation.
+>
+> Best 73 de Bent/OZ6BL
+>
+> -
+> To unsubscribe from this list: send the line "unsubscribe linux- 
+> hams" in
+> the body of a message to majordomo@vger.kernel.org
+> More majordomo info at  http://vger.kernel.org/majordomo-info.html
+>
 
-Thanks in advance for any input you can give.
-
-
-Doug
-N7BFS
