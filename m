@@ -1,84 +1,71 @@
-From: "Mike McCarthy, W1NR" <lists@w1nr.net>
-Subject: RE: Most "HAM" friendly distro ?
-Date: Wed, 4 Jan 2006 20:29:42 -0500
-Message-ID: <000001c61197$80f08ca0$3849a8c0@lan.w1nr.net>
-References: <9923fd660601041708j1e117e97y45acaa37baec1867@mail.gmail.com>
-Mime-Version: 1.0
+From: Bob Nielsen <nielsen@oz.net>
+Subject: Re: Most "HAM" friendly distro ?
+Date: Wed, 4 Jan 2006 17:31:41 -0800
+Message-ID: <F4521AF2-00EC-454A-8428-147E13F7068F@oz.net>
+References: <9923fd660601041255o4e45fd5dw572a79848c1781ff@mail.gmail.com> <20060104230936.GD12936@mail.networksplus.net>
+Mime-Version: 1.0 (Apple Message framework v746.2)
 Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <9923fd660601041708j1e117e97y45acaa37baec1867@mail.gmail.com>
+In-Reply-To: <20060104230936.GD12936@mail.networksplus.net>
 Sender: linux-hams-owner@vger.kernel.org
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"
-To: 'Douglas Cole' <doug.n7bfs@gmail.com>
-Cc: linux-hams@vger.kernel.org
-
-Here are a couple I use
-
-ftp://ftp.esat.net/mirrors/ftp.suse.com/pub/projects/ham/
-
-ftp://ftp-linux.cc.gatech.edu/pub/suse/projects/ham/
-
-There are 9.3 and 10.0 directories there.  Of course there is always
-ftp.suse.com but that site is usually too busy to give any good throughput.
-
-Mike, W1NR
+Content-Type: text/plain; charset="us-ascii"; delsp="yes"; format="flowed"
+To: linux-hams@vger.kernel.org
 
 
------Original Message-----
-From: linux-hams-owner@vger.kernel.org
-[mailto:linux-hams-owner@vger.kernel.org] On Behalf Of Douglas Cole
-Sent: Wednesday, January 04, 2006 8:08 PM
-To: Mike McCarthy, W1NR
-Cc: linux-hams@vger.kernel.org
-Subject: Re: Most "HAM" friendly distro ?
+On Jan 4, 2006, at 3:09 PM, Nate Bargmann wrote:
 
-On 1/4/06, Mike McCarthy, W1NR <lists@w1nr.net> wrote:
-> I still see SuSE as very ham friendly.  The problem with the AX25 
-> drivers is the 2.6.13 kernel across ALL distros.  SuSE 10.0 just 
-> happens to have the broken one and unless the maintainer gets the 
-> fixes into the global 2.6.13 update, all distros using it will remain
-broken.  10.1 should "hopefully"
-> fix the problem with the 2.6.15 kernel.
-I hate being on this upgrade "treadmill" but will have to give 10.1 a try
-when it comes out sounds hopeful.
-
+> * Douglas Cole <doug.n7bfs@gmail.com> [2006 Jan 04 15:21 -0600]:
 >
-> Since 9.3, SuSE has started removing some software from the CD's.  The 
-> ham software was one of the packages they decided to take out.  That 
-> does not mean they are not available.  Just point an installation 
-> source at any of the mirrors that have the "projects/ham" directory 
-> and you get all of the ham radio packages.  If you want java, extra 
-> perl libraries and much of what used to fit on a single DVD but 
-> doesn't any more, the ftp mirrors have the packages available and can 
-> be installed and maintained through YaST by adding installation 
-> sources.  AX25 is still compiled into the kernel as a module, so kernel
-recompilation is not needed.
+>> So my question is, which distro' would one reccomend to someone  
+>> who is
+>> used to using a distro' that does not require recompiling the kernel
+>> every time I turn around?
+>
+> Debian seems to have a very modular kernel with most, if not all, of
+> the ham radio support enabled.  A number of hams are active in Debian
+> which helps the ham radio support, IMO.
+>
+>> I was thinking maybe Kubuntu, or one of the Debian based distro's  
+>> just
+>> for the sake of the ease with which APT makes updating/upgrading, but
+>> since I have not spent enough time with Debian based distro's I am  
+>> not
+>> sure that is going to fit my needs.
+>
+> Unless the Kubuntu team builds a radically different kernel, it's ham
+> radio support should be about equal.
+>
 
-Yup, up until 9.3 came out I have been a paying supporter of SuSE all the
-way back to version 7 and wanted to stick with them, but this Novell thing
-has changed so much (for good and bad), so I decided to stick with 9.2 as my
-last "pay for" SuSE, and ended up downloading 10.0 since I wasn't sure it
-was going to work for me on my new hardware (SATA-DVD-RW) and didn't want to
-waste the $90.
+The Ubuntu kernels work fine and I think Kubuntu only differs in  
+using KDE instead of Gnome for X apps.  Debian (Ubuntu, Kubuntu) have  
+most ham applications already packaged (Ubuntu will even supply CDs  
+for free, including shipping).
 
-I am curious which "ftp site" you are using that has the "ham"
-packages, I have the packman site and the guru sites as well as a couple
-others I can't remember setup in YAST, but when I do a search for any "ax25"
-stuff it comes up with nothing... I understand why they no longer put the
-ham stuff on the DVD, I was tickled when I installed SuSE for the first time
-way back when and it actually had a "ham"
-package group, I thought that was so cool, I felt I had finally gotten a
-distro' that recognized my interests...
+>> But what 2.6 kernel-based distro' really shines for use Amateur radio
+>> opp's at the moment ?
+>
+> Check out Harv's Ham Shack.  It seems to be a ham radio oriented
+> distribution.
 
-Thanks for the input Mike and let me know which install source you are using
-that has the "ham" packages, I will give it a try in YAST.
+Likewise AFU-Knoppix, another live-cd based on Knoppix, which is  
+based on Debian.
 
-73
-Doug
-N7BFS
--
-To unsubscribe from this list: send the line "unsubscribe linux-hams" in the
-body of a message to majordomo@vger.kernel.org More majordomo info at
-http://vger.kernel.org/majordomo-info.html
+For AX.25, you will probably want a 2.6.14 or later kernel.  I  
+couldn't find any kernels later than 2.6.8 on the Debian site and  
+don't know if that one is prior to AX.25 breaking.  Ubuntu 6.04 will  
+be released in April with a 2.6.15 kernel (which can be used now if  
+one upgrades to the preview "dapper" distribution).  I tried  
+installing that kernel on Ubuntu 5.10, but ran into dependency  
+problems and it was easier to compile my own than to deal with these  
+(I'm running a DX spider cluster and several servers on that box and  
+it has been extremely stable).  Debian's kernel-package tool makes  
+kernel compilation quite a simple task.
+
+Ubuntu and Kubuntu are basically Debian with a more aggressive (every  
+six months) release schedule.  Many of the Ubuntu developers are also  
+Debian developers.
+
+73,
+Bob, N7XY
 
