@@ -1,40 +1,38 @@
-From: Markus Roch <dl2kmr@z14.de>
+From: "Mike McCarthy, W1NR" <lists@w1nr.net>
 Subject: Re: 2.6.13 mkiss update?
-Date: Thu, 05 Jan 2006 21:35:10 +0100
-Message-ID: <20060105213510.3ckhdco6blwg8084@webmail.roch.tv>
-References: <003301c6114b$180ecb80$680ea8c0@LoJackOne.LoJack.com>
-	<001901c61202$d3f79310$680ea8c0@LoJackOne.LoJack.com>
-	<43BD2E75.30406@connect.fi> <200601052129.26465.oh1mrr@nic.fi>
+Date: Thu, 5 Jan 2006 15:41:50 -0500
+Message-ID: <003101c61238$749b2130$680ea8c0@LoJackOne.LoJack.com>
+References: <003301c6114b$180ecb80$680ea8c0@LoJackOne.LoJack.com> <001901c61202$d3f79310$680ea8c0@LoJackOne.LoJack.com> <43BD2E75.30406@connect.fi> <200601052129.26465.oh1mrr@nic.fi>
 Mime-Version: 1.0
 Content-Transfer-Encoding: QUOTED-PRINTABLE
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <200601052129.26465.oh1mrr@nic.fi>
-Content-Disposition: inline
 Sender: linux-hams-owner@vger.kernel.org
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="utf-8"; format="flowed"
-To: linux-hams@vger.kernel.org
+Content-Type: text/plain; charset="iso-8859-1"; format="flowed	reply-type=original"
+To: jarmo <oh1mrr@nic.fi>, linux-hams@vger.kernel.org
 
-Hi,
+Jarmo,
+   You are not using the mkiss module or kissattach.  There in lies the=
+=20
+problem.
 
-I'm running Debian testing and have also some problems with mkiss since
-2.6.15. In 2.6.14 everything went fine, since 2.6.15 I get a kernel
-panic after I try to connect via the KISS Interface.
+   I have confirmed that a hard system lockup occurs with 2.6.15-defaul=
+t=20
+even when all of the ax25 tools and libraries are recompiled from sourc=
+e.=20
+2.6.14-5 appears to be OK.
 
-Setting it up with kissattach ist no problem, but when I use the
-"call" programm or LinKT to establish a connection the machine
-locks up completly!
+Mike, W1NR
 
-Any ideas?
+----- Original Message -----=20
+=46rom: "jarmo" <oh1mrr@nic.fi>
+To: <linux-hams@vger.kernel.org>
+Sent: Thursday, January 05, 2006 2:29 PM
+Subject: Re: 2.6.13 mkiss update?
 
-Best 73
-Markus, DL2KMR
 
-
-Zitat von jarmo <oh1mrr@nic.fi>:
-
-> Joni B=C3=A4cklund wrote (l=C3=A4hetysaika torstai, 5. tammikuuta 200=
-6 16:34):
+> Joni B=E4cklund wrote (l=E4hetysaika torstai, 5. tammikuuta 2006 16:3=
+4):
 >> I can confirm that running kissattach produces kernel panic with 2.6=
 =2E15.
 >> So do not use it until there is a patch available ! Seems that kerne=
@@ -83,7 +81,7 @@ l
 > All Done  !
 >
 > Jarmo
-> --
+> --=20
 > Linux is the answer.
 > What was your question?
 > (Brian Lane)
@@ -92,9 +90,7 @@ l
  in
 > the body of a message to majordomo@vger.kernel.org
 > More majordomo info at  http://vger.kernel.org/majordomo-info.html
->
-
-
+>=20
 
 -
 To unsubscribe from this list: send the line "unsubscribe linux-hams" i=
