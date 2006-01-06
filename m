@@ -1,40 +1,40 @@
-From: jarmo <oh1mrr@nic.fi>
-Subject: Re: 2.6.13 mkiss update?
-Date: Fri, 6 Jan 2006 11:48:15 +0200
-Message-ID: <200601061148.15494.oh1mrr@nic.fi>
-References: <003301c6114b$180ecb80$680ea8c0@LoJackOne.LoJack.com> <200601060558.19352.oh1mrr@nic.fi> <20060106072721.GA21387@cloud.net.au>
+From: Ralf Baechle DL5RB <ralf@linux-mips.org>
+Subject: Re: 2.6.15 ax25 system lockup with kissattach
+Date: Fri, 6 Jan 2006 13:26:50 +0100
+Message-ID: <20060106122650.GA30219@linux-mips.org>
+References: <008401c6124f$7ceed0e0$3849a8c0@lan.w1nr.net>
 Mime-Version: 1.0
-Content-Transfer-Encoding: QUOTED-PRINTABLE
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <20060106072721.GA21387@cloud.net.au>
 Content-Disposition: inline
+In-Reply-To: <008401c6124f$7ceed0e0$3849a8c0@lan.w1nr.net>
 Sender: linux-hams-owner@vger.kernel.org
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="iso-8859-1"
-To: Hamish Moffatt <hamish@cloud.net.au>
-Cc: linux-hams@vger.kernel.org
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+To: "Mike McCarthy, W1NR" <mike@w1nr.net>
+Cc: linux-hams@vger.kernel.org, linux-kernel@vger.kernel.org
 
-Hamish Moffatt wrote (l=E4hetysaika perjantai, 6. tammikuuta 2006 09:27=
-):
+On Thu, Jan 05, 2006 at 06:26:43PM -0500, Mike McCarthy, W1NR wrote:
 
-> Does your configuration use the mkiss module?
->
-> User-space (kissattach/spattach/whatever) can't make the kernel crash=
-=2E
->
->
-> Hamish
+> >worf:~ # modprobe -v mkiss
+> >insmod /lib/modules/2.6.15-20060103193109-debug/kernel/lib/crc16.ko
+> >insmod /lib/modules/2.6.15-20060103193109-debug/kernel/net/ax25/ax25.ko
+> >insmod
+> /lib/modules/2.6.15-20060103193109-debug/kernel/drivers/net/hamradio/mkiss.k
+> o
+> >worf:~ # kissattach /dev/ttyS0 2m 44.56.10.3
+> >AX.25 port 2m bound to device ax0
+> 
+> 
+> That's all folks.  System locked up hard.  Caps lock and scroll lock lights
+> flashing.  System needs a hard reset.
+> 
+> 2.6.14-5 appears to be fine.  Tried recompiled tools and libraries as well.
+> Others report similar problems on Debian systems with 2.6.15 kernel as well.
 
-No, I use 6pack.
-I have mkiss compiled as a module, but no need to call it.
+Is this a preemptable and/or SMP kernel?
 
-Jarmo=20
---=20
-Linux is the answer.
-What was your question?
-(Brian Lane)
--
-To unsubscribe from this list: send the line "unsubscribe linux-hams" i=
-n
-the body of a message to majordomo@vger.kernel.org
-More majordomo info at  http://vger.kernel.org/majordomo-info.html
+73 de DL5RB op Ralf
+
+--
+Loc. JN47BS / CQ 14 / ITU 28 / DOK A21
