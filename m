@@ -1,35 +1,44 @@
-From: Hamish Moffatt <hamish@cloud.net.au>
+From: "Curt, WE7U" <archer@eskimo.com>
 Subject: Re: Most "HAM" friendly distro ?
-Date: Sat, 7 Jan 2006 01:26:10 +1100
-Message-ID: <20060106142610.GA17583@cloud.net.au>
-References: <9923fd660601041255o4e45fd5dw572a79848c1781ff@mail.gmail.com> <20060104234631.GA20864@cloud.net.au> <9923fd660601041640n4602e3a4n304b37acfc429ce9@mail.gmail.com> <20060106131537.GA16382@cloud.net.au> <43BE7C5C.8030506@voicenet.com>
+Date: Fri, 6 Jan 2006 06:37:39 -0800 (PST)
+Message-ID: <Pine.SUN.4.58.0601060630530.12806@eskimo.com>
+References: <9923fd660601041708j1e117e97y45acaa37baec1867@mail.gmail.com>
+ <000001c61197$80f08ca0$3849a8c0@lan.w1nr.net>
+ <9923fd660601041921i423fa899s69d1fbe46e41a180@mail.gmail.com>
+ <Pine.LNX.4.58.0601042034070.26728@wapiti.we7u.net> <20060105070708.GA31150@cloud.net.au>
+Reply-To: "Curt Mills, WE7U" <archer@eskimo.com>
 Mime-Version: 1.0
 Return-path: <linux-hams-owner@vger.kernel.org>
-Content-Disposition: inline
-In-Reply-To: <43BE7C5C.8030506@voicenet.com>
+In-Reply-To: <20060105070708.GA31150@cloud.net.au>
 Sender: linux-hams-owner@vger.kernel.org
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"
+Content-Type: TEXT/PLAIN; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
-To: linux-hams@vger.kernel.org
+To: Hamish Moffatt <hamish@cloud.net.au>
+Cc: linux-hams@vger.kernel.org
 
-On Fri, Jan 06, 2006 at 09:19:08AM -0500, Margaret Leber wrote:
-> Hamish Moffatt wrote:
-> 
-> >Debian installation used to be (perceived as) hard, but that shouldn't
-> >be true any more.
-> >
-> >Ubuntu (and presumably Kubuntu) is using the new Debian installer.
-> 
-> I upgraded my aging Red Hat 7.1 installation to Ubuntu 5.10. (OK, it 
-> wasn't an upgrade install as such; I just stuck in a new HD (I needed 
-> one) and created a dual boot system.
-> 
-> I'm very, very pleased with the results. Installation was quite easy.
+On Thu, 5 Jan 2006, Hamish Moffatt wrote:
 
-Great. I'd be even more pleased if you'd gone with Debian instead. :)
+> On Wed, Jan 04, 2006 at 08:36:33PM -0800, Curt Mills wrote:
+> > Xastir is a package that used to come on the SuSE disks.  It does
+> > ham APRS & Mapping.
+>
+> It comes on the Debian disks too.
 
+Just wanted to mention:  Because Xastir is part of the Debian
+distribution and therefore easy to install on that distro, we get
+very few questions from the Debian crowd on the Xastir lists.
+Either that or the Debian users just tend to be smarter.  hi hi
 
-Hamish
--- 
-Hamish Moffatt VK3SB <hamish@debian.org> <hamish@cloud.net.au>
+Another well-known Linux distribution used to distribute Xastir, but
+they kept distributing the same exact version for years, doing the
+users a disfavor and making upgrades of the package difficult.
+
+Thanks for your work keeping things up-to-date on Debian.  It's most
+appreciated!
+
+--
+Curt, WE7U.   APRS Client Comparisons: http://www.eskimo.com/~archer
+"Lotto:    A tax on people who are bad at math." -- unknown
+"Windows:  Microsoft's tax on computer illiterates." -- WE7U
+"The world DOES revolve around me:  I picked the coordinate system!"
