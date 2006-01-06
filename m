@@ -1,57 +1,35 @@
-From: "Mike McCarthy, W1NR" <mike@w1nr.net>
-Subject: 2.6.15 ax25 system lockup with kissattach
-Date: Thu, 5 Jan 2006 18:26:43 -0500
-Message-ID: <008401c6124f$7ceed0e0$3849a8c0@lan.w1nr.net>
+From: jarmo <oh1mrr@nic.fi>
+Subject: Re: 2.6.13 mkiss update?
+Date: Fri, 6 Jan 2006 05:58:19 +0200
+Message-ID: <200601060558.19352.oh1mrr@nic.fi>
+References: <003301c6114b$180ecb80$680ea8c0@LoJackOne.LoJack.com> <200601052129.26465.oh1mrr@nic.fi> <003101c61238$749b2130$680ea8c0@LoJackOne.LoJack.com>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 Return-path: <linux-hams-owner@vger.kernel.org>
+In-Reply-To: <003101c61238$749b2130$680ea8c0@LoJackOne.LoJack.com>
+Content-Disposition: inline
 Sender: linux-hams-owner@vger.kernel.org
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"
-To: linux-hams@vger.kernel.org, linux-kernel@vger.kernel.org
-Cc: ralf@linux-mips.org
+Content-Type: text/plain; charset="iso-8859-1"
+To: linux-hams@vger.kernel.org
 
-I am using SuSE 10.0 with 2.6.15 kernel built from source or via SuSE kotd
-rpm.  The system will hang when issuing kissattach command.
+Mike McCarthy, W1NR wrote (l=E4hetysaika torstai, 5. tammikuuta 2006 22=
+:41):
+> Jarmo,
+>    You are not using the mkiss module or kissattach.  There in lies t=
+he
+> problem.
+ Nope, not mkiss, but kissattach and spattach is same?  So it has to
+be mkiss, which is broken...
+Any ideas Ralf?
 
-># /etc/ax25/ax25d.conf
->#
-># ax25d Configuration File.
->#
-># AX.25 Ports begin with a '['.
->#
->[W1NR VIA 2m]
->parameters      2 1 6 900 * 15 0
->NOCALL   * * * * * * L
->default  * * * * * * - root /spider/src/client client %s ax25
-
-># /etc/ax25/axports
->#
-># The format of this file is:
->#
-># name callsign speed paclen window description
->#
->2m      W1NR-9          19200   255     2       145.650 MHz (1200 bps)
-
-
-Following is a trace of commands issued:
-
-
->worf:~ # modprobe -v mkiss
->insmod /lib/modules/2.6.15-20060103193109-debug/kernel/lib/crc16.ko
->insmod /lib/modules/2.6.15-20060103193109-debug/kernel/net/ax25/ax25.ko
->insmod
-/lib/modules/2.6.15-20060103193109-debug/kernel/drivers/net/hamradio/mkiss.k
-o
->worf:~ # kissattach /dev/ttyS0 2m 44.56.10.3
->AX.25 port 2m bound to device ax0
-
-
-That's all folks.  System locked up hard.  Caps lock and scroll lock lights
-flashing.  System needs a hard reset.
-
-2.6.14-5 appears to be fine.  Tried recompiled tools and libraries as well.
-Others report similar problems on Debian systems with 2.6.15 kernel as well.
-
-Mike McCarthy, W1NR
-
+Jarmo
+--=20
+Linux is the answer.
+What was your question?
+(Brian Lane)
+-
+To unsubscribe from this list: send the line "unsubscribe linux-hams" i=
+n
+the body of a message to majordomo@vger.kernel.org
+More majordomo info at  http://vger.kernel.org/majordomo-info.html
