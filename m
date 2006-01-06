@@ -1,44 +1,63 @@
-From: "Curt, WE7U" <archer@eskimo.com>
+From: Douglas Cole <doug.n7bfs@gmail.com>
 Subject: Re: Most "HAM" friendly distro ?
-Date: Fri, 6 Jan 2006 06:37:39 -0800 (PST)
-Message-ID: <Pine.SUN.4.58.0601060630530.12806@eskimo.com>
-References: <9923fd660601041708j1e117e97y45acaa37baec1867@mail.gmail.com>
- <000001c61197$80f08ca0$3849a8c0@lan.w1nr.net>
- <9923fd660601041921i423fa899s69d1fbe46e41a180@mail.gmail.com>
- <Pine.LNX.4.58.0601042034070.26728@wapiti.we7u.net> <20060105070708.GA31150@cloud.net.au>
-Reply-To: "Curt Mills, WE7U" <archer@eskimo.com>
+Date: Fri, 6 Jan 2006 06:58:28 -0800
+Message-ID: <9923fd660601060658x10928fc6h5f4c8048ce4a6f95@mail.gmail.com>
+References: <9923fd660601041255o4e45fd5dw572a79848c1781ff@mail.gmail.com>
+	 <20060104234631.GA20864@cloud.net.au>
+	 <9923fd660601041640n4602e3a4n304b37acfc429ce9@mail.gmail.com>
+	 <20060106131537.GA16382@cloud.net.au>
 Mime-Version: 1.0
+Content-Transfer-Encoding: 7BIT
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <20060105070708.GA31150@cloud.net.au>
+In-Reply-To: <20060106131537.GA16382@cloud.net.au>
+Content-Disposition: inline
 Sender: linux-hams-owner@vger.kernel.org
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: TEXT/PLAIN; charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-To: Hamish Moffatt <hamish@cloud.net.au>
-Cc: linux-hams@vger.kernel.org
+Content-Type: text/plain; charset="us-ascii"
+To: linux-hams@vger.kernel.org
 
-On Thu, 5 Jan 2006, Hamish Moffatt wrote:
-
-> On Wed, Jan 04, 2006 at 08:36:33PM -0800, Curt Mills wrote:
-> > Xastir is a package that used to come on the SuSE disks.  It does
-> > ham APRS & Mapping.
+On 1/6/06, Hamish Moffatt <hamish@cloud.net.au> wrote:
+> On Wed, Jan 04, 2006 at 04:40:04PM -0800, Douglas Cole wrote:
+> > On 1/4/06, Hamish Moffatt <hamish@cloud.net.au> wrote:
+> > > How about Debian itself?
 >
-> It comes on the Debian disks too.
+> > Thanks Hamish for all you have done for Linux-Ham related  stuff and
+> > for all your opinions folks, I guess most of you have not used the
+> > "easy" distro's like SuSE, Redhat/Fedora and Mandrake recently, that
+> > make setting up the "tough" stuff like X, networking (wireless and
+> > wired) and sound a breeze, for all you folks who are programmers or
+> > have built your own distro' from scratch or have been compiling your
+> > own kernels since ver 1.1 well all I can say is I look up to you in
+> > awe, but unfortunately even though I have been using Linux since my
+> > first Yggdrsil six disc set (1996 I guess) I never did get the hang of
+> > doing all the stuff that most of you folks seem to feel is so easy. So
+>
+> Doug,
+>
+> Please try Debian's most recent release, sarge (3.1). The installation
+> process was completely rewritten (first rewrite in years) and does make
+> everything easy.
+>
+> Debian installation used to be (perceived as) hard, but that shouldn't
+> be true any more.
+>
+> Ubuntu (and presumably Kubuntu) is using the new Debian installer.
+>
+>
+> Hamish
+> --
+Thanks for the input Hamish, but I didn't really have a problem with
+installation on Debian, it was setup and hardware support, since
+Debian has such a slooooowwwww upgrade cycle, I couldn't use it on
+half my pc's in the house because it either (at the time) wouldn't
+support my usb devices or (recently) wouldn't support my SATA devices,
+and so the reason for going with the SuSE.
 
-Just wanted to mention:  Because Xastir is part of the Debian
-distribution and therefore easy to install on that distro, we get
-very few questions from the Debian crowd on the Xastir lists.
-Either that or the Debian users just tend to be smarter.  hi hi
+I will give it a try and we will see, but the learning curve may not
+make it possible, since my time is tight at the moment...
 
-Another well-known Linux distribution used to distribute Xastir, but
-they kept distributing the same exact version for years, doing the
-users a disfavor and making upgrades of the package difficult.
+Thanks again for the input!
 
-Thanks for your work keeping things up-to-date on Debian.  It's most
-appreciated!
+Doug
 
---
-Curt, WE7U.   APRS Client Comparisons: http://www.eskimo.com/~archer
-"Lotto:    A tax on people who are bad at math." -- unknown
-"Windows:  Microsoft's tax on computer illiterates." -- WE7U
-"The world DOES revolve around me:  I picked the coordinate system!"
+> Hamish Moffatt VK3SB <hamish@debian.org> <hamish@cloud.net.au>
