@@ -1,92 +1,62 @@
-From: "Mike McCarthy, W1NR" <lists@w1nr.net>
-Subject: RE: 2.6.15 ax25 system lockup with kissattach
-Date: Sat, 7 Jan 2006 12:55:11 -0500
-Message-ID: <007701c613b3$8159d660$3849a8c0@lan.w1nr.net>
-References: <20060107135047.rggpiuzyji54cc0k@webmail.roch.tv>
+From: Curt Mills <archer@eskimo.com>
+Subject: Re: Most "HAM" friendly distro ?
+Date: Sat, 7 Jan 2006 11:38:34 -0800 (PST)
+Message-ID: <Pine.LNX.4.58.0601071133360.16143@wapiti.we7u.net>
+References: <9923fd660601041708j1e117e97y45acaa37baec1867@mail.gmail.com>
+ <000001c61197$80f08ca0$3849a8c0@lan.w1nr.net>
+ <9923fd660601041921i423fa899s69d1fbe46e41a180@mail.gmail.com>
+ <Pine.LNX.4.58.0601042034070.26728@wapiti.we7u.net> <20060105070708.GA31150@cloud.net.au>
+ <Pine.SUN.4.58.0601060630530.12806@eskimo.com> <F8351A3D-A30F-4453-A26E-079C5D6C8F15@oz.net>
+ <20060106232708.GA24355@cloud.net.au> <3FEF9BDB-83F9-4B61-97E3-ED546A92A02B@oz.net>
+ <43BF85DE.1040806@btinternet.com> <20060107141023.GI10673@mail.networksplus.net>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <20060107135047.rggpiuzyji54cc0k@webmail.roch.tv>
+In-Reply-To: <20060107141023.GI10673@mail.networksplus.net>
 Sender: linux-hams-owner@vger.kernel.org
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"
-To: 'Markus Roch' <markus@roch.tv>, 'Ralf Baechle DL5RB' <ralf@linux-mips.org>
+Content-Type: TEXT/PLAIN; charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+To: Nate Bargmann <n0nb@networksplus.net>
 Cc: linux-hams@vger.kernel.org
 
-Hi Ralf,
-   It appears that the patch to mkiss.c fixes the lockup issue.  I have
-external modem issues that prevents me from testing further at the moment.
-I hope to have an RF test network set up and running by tomorrow to give it
-a complete test.
+On Sat, 7 Jan 2006, Nate Bargmann wrote:
 
-Thanks for the very quick action and 73,
-Mike, W1NR
+> I would add that if anyone really wants a GUI on older hardware, then a
+> lightweight window manager is the order of the day (IceWM being my long
+> time favorite).  One must be careful because even some of them can be
+> themed to eat a lot of resources.
 
------Original Message-----
-From: linux-hams-owner@vger.kernel.org
-[mailto:linux-hams-owner@vger.kernel.org] On Behalf Of Markus Roch
-Sent: Saturday, January 07, 2006 7:51 AM
-To: Ralf Baechle DL5RB
-Cc: linux-hams@vger.kernel.org
-Subject: Re: 2.6.15 ax25 system lockup with kissattach
-
-Hi,
-
-I've inserted "spin_unlock_bh(&ax->buflock);" from Ralf's patch to mkiss.c
-and recompiled the kernel and modules and now everything ist working again
-under 2.6.15 :-)
-
-Thanks
-73 de Markus, DL2KMR
+I run FVWM2 for exactly these reasons.  Fast, small memory image,
+reliable.  Not flashy by today's standards, but I don't need flashy.
+I'd rather have the system be fast/responsive/efficent.  I've tried
+KDE, Gnome, and many others, but always end up going back to FVWM2
+because I want fast loading and I like the mouse to be very
+responsive.
 
 
-Zitat von Ralf Baechle DL5RB <ralf@linux-mips.org>:
+> A modern KDE installation will work in 256 MB, but 512 or more is
+> better.  An advantage we have here is Linux land is that we can go
+> all-out eye candy or slim the system as required depending on needs and
+> resources.
 
-> On Thu, Jan 05, 2006 at 06:26:43PM -0500, Mike McCarthy, W1NR wrote:
->
->> That's all folks.  System locked up hard.  Caps lock and scroll lock 
->> lights flashing.  System needs a hard reset.
->>
->> 2.6.14-5 appears to be fine.  Tried recompiled tools and libraries as
-well.
->> Others report similar problems on Debian systems with 2.6.15 kernel as
-well.
->
-> Can you try below patch?  It fixes a locking bug which was affecting 
-> only preemptable or SMP kernels until the recent rewrite of the locking
-code.
->
-> 73 de DL5RB op Ralf
->
-> --
-> Loc. JN47BS / CQ 14 / ITU 28 / DOK A21
->
-> drivers/net/hamradio/mkiss.c |    1 +
-> 1 files changed, 1 insertion(+)
->
-> Index: net.git/drivers/net/hamradio/mkiss.c
-> ===================================================================
-> --- net.git.orig/drivers/net/hamradio/mkiss.c
-> +++ net.git/drivers/net/hamradio/mkiss.c
-> @@ -515,6 +515,7 @@ static void ax_encaps(struct net_device
-> 			count = kiss_esc(p, (unsigned char *)ax->xbuff,
-len);
-> 		}
->   	}
-> +	spin_unlock_bh(&ax->buflock);
->
-> 	set_bit(TTY_DO_WRITE_WAKEUP, &ax->tty->flags);
-> 	actual = ax->tty->driver->write(ax->tty, ax->xbuff, count);
-> -
-> To unsubscribe from this list: send the line "unsubscribe linux-hams" 
-> in the body of a message to majordomo@vger.kernel.org More majordomo 
-> info at  http://vger.kernel.org/majordomo-info.html
->
+I have Slackware running on a PP200 laptop with 32MB memory, running
+X11 and Xastir.  Full compile environment on there too.
 
+I also have a truck-mount PC in my Jeep at times which is a P133
+with 64MB memory, running Slackware and Xastir, doing moving maps on
+topo maps and sending/receiving APRS via a TNC/radio, plus running
+the Festival speech synthesizer (which takes 1/4 of my memory) and
+talking to me as I'm driving.  You can do a lot with a little if
+you're careful.  That box also has a full compile environment.
 
+For desktops though I tend to run SuSE.  Still with FVWM2 window
+manager though.
 
--
-To unsubscribe from this list: send the line "unsubscribe linux-hams" in the
-body of a message to majordomo@vger.kernel.org More majordomo info at
-http://vger.kernel.org/majordomo-info.html
+Lots of choices.  That's the best thing about Unix/Linux...
 
+-- 
+Curt, WE7U.				archer at eskimo dot com
+http://www.eskimo.com/~archer
+  Lotto:  A tax on people who are bad at math. - unknown
+Windows:  Microsoft's tax on computer illiterates. - WE7U.
+The world DOES revolve around me:  I picked the coordinate system!"
