@@ -1,33 +1,37 @@
-From: richard <richard.bown@blueyonder.co.uk>
-Subject: gmfsk compile
-Date: Sat, 07 Jan 2006 14:10:50 +0000
-Message-ID: <43BFCBEA.7090009@blueyonder.co.uk>
+From: Nate Bargmann <n0nb@networksplus.net>
+Subject: Re: Most "HAM" friendly distro ?
+Date: Sat, 7 Jan 2006 08:10:23 -0600
+Message-ID: <20060107141023.GI10673@mail.networksplus.net>
+References: <9923fd660601041708j1e117e97y45acaa37baec1867@mail.gmail.com> <000001c61197$80f08ca0$3849a8c0@lan.w1nr.net> <9923fd660601041921i423fa899s69d1fbe46e41a180@mail.gmail.com> <Pine.LNX.4.58.0601042034070.26728@wapiti.we7u.net> <20060105070708.GA31150@cloud.net.au> <Pine.SUN.4.58.0601060630530.12806@eskimo.com> <F8351A3D-A30F-4453-A26E-079C5D6C8F15@oz.net> <20060106232708.GA24355@cloud.net.au> <3FEF9BDB-83F9-4B61-97E3-ED546A92A02B@oz.net> <43BF85DE.1040806@btinternet.com>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
+Content-Disposition: inline
+In-Reply-To: <43BF85DE.1040806@btinternet.com>
 Sender: linux-hams-owner@vger.kernel.org
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"; format="flowed"
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 7bit
 To: linux-hams@vger.kernel.org
 
-Hi guys
-can anyone throw some light on this compile failure.
-gcc-4.0.1, kernel-2.6.12-14mdk, mandriva 2006CE, FFTW 2.1.5 and fftw3( needed for other apps)
-gmsk-0.6,hamlibs 1.2.4 + devel
+All very good points, Ian.
 
-dsp.h: In function 'void LowPass2(typeInp, LowPass2elem&, typeW, typeW, typeW)':
-dsp.h:558: error: 'Out' was not declared in this scope
-dsp.h: In function 'void LowPass2(typeInp, LowPass2elem&, LowPass2weight&)':
-dsp.h:565: error: 'Weigth' was not declared in this scope
-dsp.h:566: error: 'Out' was not declared in this scope
-make[3]: *** [dsp.o] Error 1
-make[3]: Leaving directory `/home/richard/HamApps/gmfsk-0.6/src/mt63'
-make[2]: *** [all-recursive] Error 1
-make[2]: Leaving directory `/home/richard/HamApps/gmfsk-0.6/src'
-make[1]: *** [all-recursive] Error 1
-make[1]: Leaving directory `/home/richard/HamApps/gmfsk-0.6'
-make: *** [all] Error 2
+I would add that if anyone really wants a GUI on older hardware, then a
+lightweight window manager is the order of the day (IceWM being my long
+time favorite).  One must be careful because even some of them can be
+themed to eat a lot of resources.
 
+A modern KDE installation will work in 256 MB, but 512 or more is
+better.  An advantage we have here is Linux land is that we can go
+all-out eye candy or slim the system as required depending on needs and
+resources.
 
-tnx
-Richard g8jvm
+Good Linux installin' to ya!  :-)
+
+73, de Nate >>
+
+-- 
+ Wireless | Amateur Radio Station N0NB          |  Successfully Microsoft
+  Amateur radio exams; ham radio; Linux info @  | free since January 1998.
+             http://www.qsl.net/n0nb/           |  "Debian, the choice of
+             My Kawasaki KZ-650 SR @            |     a GNU generation!"
+        http://www.networksplus.net/n0nb/       |   http://www.debian.org
