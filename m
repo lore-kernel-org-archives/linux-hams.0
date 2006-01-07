@@ -1,83 +1,43 @@
-From: richard <richard.bown@blueyonder.co.uk>
-Subject: Re: gmfsk compile
-Date: Sat, 07 Jan 2006 18:57:46 +0000
-Message-ID: <43C00F2A.9030506@blueyonder.co.uk>
-References: <43BFCBEA.7090009@blueyonder.co.uk> <Pine.LNX.4.58.0601071108450.16143@wapiti.we7u.net>
+From: Ralf Baechle DL5RB <ralf@linux-mips.org>
+Subject: Re: Most "HAM" friendly distro ?
+Date: Sat, 7 Jan 2006 20:19:51 +0100
+Message-ID: <20060107191951.GB756@linux-mips.org>
+References: <9923fd660601041255o4e45fd5dw572a79848c1781ff@mail.gmail.com> <000b01c6118e$e1b128f0$3849a8c0@lan.w1nr.net>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <Pine.LNX.4.58.0601071108450.16143@wapiti.we7u.net>
+Content-Disposition: inline
+In-Reply-To: <000b01c6118e$e1b128f0$3849a8c0@lan.w1nr.net>
 Sender: linux-hams-owner@vger.kernel.org
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"; format="flowed"
-To: Curt Mills <archer@eskimo.com>, linux-hams@vger.kernel.org
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+To: "Mike McCarthy, W1NR" <lists@w1nr.net>
+Cc: 'Douglas Cole' <doug.n7bfs@gmail.com>, linux-hams@vger.kernel.org
 
-Curt Mills wrote:
-> On Sat, 7 Jan 2006, richard wrote:
-> 
-> 
->>Hi guys
->>can anyone throw some light on this compile failure.
->>gcc-4.0.1, kernel-2.6.12-14mdk, mandriva 2006CE, FFTW 2.1.5 and fftw3( needed
->>for other apps)
->>gmsk-0.6,hamlibs 1.2.4 + devel
-> 
-> 
-> It's GCC-4 that's doing it to you.  It enforces stricter compliance
-> with the C specs.
-> 
-> You'd need to go back to the developers and have them change the
-> code so that it was in compliance with what GCC-4 expects.  We had
-> to do that for the Xastir project because defining functions inside
-> functions isn't allowed in GCC-4.x.
-> 
-Thanks Curt, I thought something like that, but found a patch for dsp.h that allowed it to compile
-on this computer, but alsa not my friends.
+On Wed, Jan 04, 2006 at 07:27:59PM -0500, Mike McCarthy, W1NR wrote:
 
-his compile fails at
-/usr/include/pango-1.0/pango/pangocairo.h:66: warning: type defaults to
-'int' in declaration of 'cairo_font_options_t'
-/usr/include/pango-1.0/pango/pangocairo.h:66: error: syntax error before
-'*' token
-/usr/include/pango-1.0/pango/pangocairo.h:67: error: syntax error before
-'*' token
-/usr/include/pango-1.0/pango/pangocairo.h:67: warning: type defaults to
-'int' in declaration of 'pango_cairo_context_get_font_options'
-/usr/include/pango-1.0/pango/pangocairo.h:67: warning: data definition
-has no type or storage class
-In file included from /usr/include/gtk-2.0/gdk/gdk.h:50,
-                  from /usr/include/gtk-2.0/gtk/gtk.h:31,
-                  from /usr/include/libgnomeui-2.0/gnome.h:4,
-                  from ../../src/main.h:32,
-                  from mfsktx.c:42:
-/usr/include/gtk-2.0/gdk/gdkscreen.h:51: error: syntax error before
-'cairo_font_options_t'
-/usr/include/gtk-2.0/gdk/gdkscreen.h:51: warning: no semicolon at end of
-struct or union
-/usr/include/gtk-2.0/gdk/gdkscreen.h:53: error: syntax error before '}'
-token
-/usr/include/gtk-2.0/gdk/gdkscreen.h:106: warning: type defaults to
-'int' in declaration of 'cairo_font_options_t'
-/usr/include/gtk-2.0/gdk/gdkscreen.h:106: error: syntax error before '*'
-token
-/usr/include/gtk-2.0/gdk/gdkscreen.h:107: error: syntax error before '*'
-token
-/usr/include/gtk-2.0/gdk/gdkscreen.h:107: warning: type defaults to
-'int' in declaration of 'gdk_screen_get_font_options_libgtk_only'
-/usr/include/gtk-2.0/gdk/gdkscreen.h:107: warning: data definition has
-no type or storage class
-mfsktx.c: In function 'sendchar':
-mfsktx.c:118: warning: pointer targets in initialization differ in
-signedness
-mfsktx.c: In function 'mfsk_txprocess':
-mfsktx.c:314: warning: pointer targets in assignment differ in signedness
-mfsktx.c:315: warning: pointer targets in passing argument 1 of
-'statusbar_set_main' differ in signedness
-make[2]: *** [mfsktx.o] Error 1
-make[2]: Leaving directory `/home/g8bhh/HamApps/gmfsk-0.6/src/mfsk'
-make[1]: *** [check-recursive] Error 1
-make[1]: Leaving directory `/home/g8bhh/HamApps/gmfsk-0.6/src'
-make: *** [check-recursive] Error 1
+> I still see SuSE as very ham friendly.  The problem with the AX25 drivers is
+> the 2.6.13 kernel across ALL distros.  SuSE 10.0 just happens to have the
+> broken one and unless the maintainer gets the fixes into the global 2.6.13
+> update, all distros using it will remain broken.  10.1 should "hopefully"
+> fix the problem with the 2.6.15 kernel.
+> 
+> Since 9.3, SuSE has started removing some software from the CD's.  The ham
+> software was one of the packages they decided to take out.  That does not
+> mean they are not available.  Just point an installation source at any of
+> the mirrors that have the "projects/ham" directory and you get all of the
+> ham radio packages.  If you want java, extra perl libraries and much of what
+> used to fit on a single DVD but doesn't any more, the ftp mirrors have the
+> packages available and can be installed and maintained through YaST by
+> adding installation sources.  AX25 is still compiled into the kernel as a
+> module, so kernel recompilation is not needed.
 
-Thanks
-Richard
+But for how much longer?  Part of the proboem is that AX.25 is relativly
+intrusive protocol.  Just enabling it as a module that is never load will
+increase - the amount of memory for every packet.  It's also not bullet-
+proof but the code is slowly getting there.  I can only encourage
+everybody to contribute again.  There are man drivers waiting to be
+written, many bug waiting to be fixed, many features waiting to be
+implemented.
+
+  Ralf
