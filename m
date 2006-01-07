@@ -1,43 +1,45 @@
-From: Ralf Baechle DL5RB <ralf@linux-mips.org>
-Subject: Re: Most "HAM" friendly distro ?
-Date: Sat, 7 Jan 2006 20:19:51 +0100
-Message-ID: <20060107191951.GB756@linux-mips.org>
-References: <9923fd660601041255o4e45fd5dw572a79848c1781ff@mail.gmail.com> <000b01c6118e$e1b128f0$3849a8c0@lan.w1nr.net>
+From: Tomi Manninen <oh2bns@sral.fi>
+Subject: Re: gmfsk compile
+Date: Sat, 07 Jan 2006 22:13:35 +0200
+Message-ID: <1136664815.2407.3.camel@oh2bns.ampr.org>
+References: <43BFCBEA.7090009@blueyonder.co.uk>
 Mime-Version: 1.0
+Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
-Content-Disposition: inline
-In-Reply-To: <000b01c6118e$e1b128f0$3849a8c0@lan.w1nr.net>
+In-Reply-To: <43BFCBEA.7090009@blueyonder.co.uk>
 Sender: linux-hams-owner@vger.kernel.org
 List-Id: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-To: "Mike McCarthy, W1NR" <lists@w1nr.net>
-Cc: 'Douglas Cole' <doug.n7bfs@gmail.com>, linux-hams@vger.kernel.org
+To: richard <richard.bown@blueyonder.co.uk>
+Cc: Linux-hams List <linux-hams@vger.kernel.org>
 
-On Wed, Jan 04, 2006 at 07:27:59PM -0500, Mike McCarthy, W1NR wrote:
+On Sat, 2006-01-07 at 16:10, richard wrote:
 
-> I still see SuSE as very ham friendly.  The problem with the AX25 drivers is
-> the 2.6.13 kernel across ALL distros.  SuSE 10.0 just happens to have the
-> broken one and unless the maintainer gets the fixes into the global 2.6.13
-> update, all distros using it will remain broken.  10.1 should "hopefully"
-> fix the problem with the 2.6.15 kernel.
-> 
-> Since 9.3, SuSE has started removing some software from the CD's.  The ham
-> software was one of the packages they decided to take out.  That does not
-> mean they are not available.  Just point an installation source at any of
-> the mirrors that have the "projects/ham" directory and you get all of the
-> ham radio packages.  If you want java, extra perl libraries and much of what
-> used to fit on a single DVD but doesn't any more, the ftp mirrors have the
-> packages available and can be installed and maintained through YaST by
-> adding installation sources.  AX25 is still compiled into the kernel as a
-> module, so kernel recompilation is not needed.
+> gmsk-0.6
 
-But for how much longer?  Part of the proboem is that AX.25 is relativly
-intrusive protocol.  Just enabling it as a module that is never load will
-increase - the amount of memory for every packet.  It's also not bullet-
-proof but the code is slowly getting there.  I can only encourage
-everybody to contribute again.  There are man drivers waiting to be
-written, many bug waiting to be fixed, many features waiting to be
-implemented.
+> dsp.h: In function 'void LowPass2(typeInp, LowPass2elem&, typeW, typeW, typeW)':
+> dsp.h:558: error: 'Out' was not declared in this scope
+> dsp.h: In function 'void LowPass2(typeInp, LowPass2elem&, LowPass2weight&)':
+> dsp.h:565: error: 'Weigth' was not declared in this scope
+> dsp.h:566: error: 'Out' was not declared in this scope
+> make[3]: *** [dsp.o] Error 1
+> make[3]: Leaving directory `/home/richard/HamApps/gmfsk-0.6/src/mt63'
+> make[2]: *** [all-recursive] Error 1
+> make[2]: Leaving directory `/home/richard/HamApps/gmfsk-0.6/src'
+> make[1]: *** [all-recursive] Error 1
+> make[1]: Leaving directory `/home/richard/HamApps/gmfsk-0.6'
+> make: *** [all] Error 2
 
-  Ralf
+This is a bug in the MT63 code (*). It's fixed in 0.7pre1 which I would 
+recommend for everyone. From the feedback it seems 0.7pre1 is just as
+stable as 0.6 if not better. And you get a few new goodies with it.
+Go to http://gmfsk.connect.fi/ to get it.
+
+/Tomi
+
+*) Yes, it's compiler dependent but I think it was somewhere around
+GCC 3.4 when this became visible...
+
+-- 
+Tomi Manninen / OH2BNS / KP20JF74
+
