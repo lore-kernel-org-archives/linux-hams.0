@@ -1,39 +1,92 @@
-From: Ralf Baechle DL5RB <ralf@linux-mips.org>
-Subject: Re: Most "HAM" friendly distro ?
-Date: Sat, 7 Jan 2006 18:43:16 +0100
-Message-ID: <20060107174316.GA756@linux-mips.org>
-References: <9923fd660601041255o4e45fd5dw572a79848c1781ff@mail.gmail.com> <1136410009.43bc3d99a19e0@mgtmail.com>
+From: "Mike McCarthy, W1NR" <lists@w1nr.net>
+Subject: RE: 2.6.15 ax25 system lockup with kissattach
+Date: Sat, 7 Jan 2006 12:55:11 -0500
+Message-ID: <007701c613b3$8159d660$3849a8c0@lan.w1nr.net>
+References: <20060107135047.rggpiuzyji54cc0k@webmail.roch.tv>
 Mime-Version: 1.0
+Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
-Content-Disposition: inline
-In-Reply-To: <1136410009.43bc3d99a19e0@mgtmail.com>
+In-Reply-To: <20060107135047.rggpiuzyji54cc0k@webmail.roch.tv>
 Sender: linux-hams-owner@vger.kernel.org
 List-Id: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-To: IT3 Stuart Blake Tener <teners@bh90210.net>
-Cc: Douglas Cole <doug.n7bfs@gmail.com>, linux-hams@vger.kernel.org
+To: 'Markus Roch' <markus@roch.tv>, 'Ralf Baechle DL5RB' <ralf@linux-mips.org>
+Cc: linux-hams@vger.kernel.org
 
-On Wed, Jan 04, 2006 at 04:26:49PM -0500, IT3 Stuart Blake Tener wrote:
+Hi Ralf,
+   It appears that the patch to mkiss.c fixes the lockup issue.  I have
+external modem issues that prevents me from testing further at the moment.
+I hope to have an RF test network set up and running by tomorrow to give it
+a complete test.
 
-> > Well as most recent postings seem to indicate some distro's are less
-> > friendly than others for updating and changing kernels and other
-> > things.
-> > I too am using SuSE (version 10) for my desktop OS, but still have a
-> > separate pc running SuSE 8.2 for packet, since it is the one that
-> > works for me, and as has been posted on here many times, 2.6 kernel
-> > packet issues have been many.
-> 
-> My desktop OS is MacOS, and when the new Mac/Intel machines come out, I will
-> purchase one and run Linux as a secondary OS, since AX.25 is not supported by
-> MacOS, and cannot be added either.
+Thanks for the very quick action and 73,
+Mike, W1NR
 
-For MacOS and others you may consider one of the integrated AX.25 stack
-and apps like JNOS, Wampes or similar.  I consider those conceptually a
-bad thing - but certainly they're easy to setup and consistent across a
-wide variety of operating systems.
+-----Original Message-----
+From: linux-hams-owner@vger.kernel.org
+[mailto:linux-hams-owner@vger.kernel.org] On Behalf Of Markus Roch
+Sent: Saturday, January 07, 2006 7:51 AM
+To: Ralf Baechle DL5RB
+Cc: linux-hams@vger.kernel.org
+Subject: Re: 2.6.15 ax25 system lockup with kissattach
 
-73 de DL5RB op Ralf
+Hi,
 
---
-Loc. JN47BS / CQ 14 / ITU 28 / DOK A21
+I've inserted "spin_unlock_bh(&ax->buflock);" from Ralf's patch to mkiss.c
+and recompiled the kernel and modules and now everything ist working again
+under 2.6.15 :-)
+
+Thanks
+73 de Markus, DL2KMR
+
+
+Zitat von Ralf Baechle DL5RB <ralf@linux-mips.org>:
+
+> On Thu, Jan 05, 2006 at 06:26:43PM -0500, Mike McCarthy, W1NR wrote:
+>
+>> That's all folks.  System locked up hard.  Caps lock and scroll lock 
+>> lights flashing.  System needs a hard reset.
+>>
+>> 2.6.14-5 appears to be fine.  Tried recompiled tools and libraries as
+well.
+>> Others report similar problems on Debian systems with 2.6.15 kernel as
+well.
+>
+> Can you try below patch?  It fixes a locking bug which was affecting 
+> only preemptable or SMP kernels until the recent rewrite of the locking
+code.
+>
+> 73 de DL5RB op Ralf
+>
+> --
+> Loc. JN47BS / CQ 14 / ITU 28 / DOK A21
+>
+> drivers/net/hamradio/mkiss.c |    1 +
+> 1 files changed, 1 insertion(+)
+>
+> Index: net.git/drivers/net/hamradio/mkiss.c
+> ===================================================================
+> --- net.git.orig/drivers/net/hamradio/mkiss.c
+> +++ net.git/drivers/net/hamradio/mkiss.c
+> @@ -515,6 +515,7 @@ static void ax_encaps(struct net_device
+> 			count = kiss_esc(p, (unsigned char *)ax->xbuff,
+len);
+> 		}
+>   	}
+> +	spin_unlock_bh(&ax->buflock);
+>
+> 	set_bit(TTY_DO_WRITE_WAKEUP, &ax->tty->flags);
+> 	actual = ax->tty->driver->write(ax->tty, ax->xbuff, count);
+> -
+> To unsubscribe from this list: send the line "unsubscribe linux-hams" 
+> in the body of a message to majordomo@vger.kernel.org More majordomo 
+> info at  http://vger.kernel.org/majordomo-info.html
+>
+
+
+
+-
+To unsubscribe from this list: send the line "unsubscribe linux-hams" in the
+body of a message to majordomo@vger.kernel.org More majordomo info at
+http://vger.kernel.org/majordomo-info.html
+
