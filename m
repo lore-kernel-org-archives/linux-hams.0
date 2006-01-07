@@ -1,45 +1,29 @@
-From: Tomi Manninen <oh2bns@sral.fi>
-Subject: Re: gmfsk compile
-Date: Sat, 07 Jan 2006 22:13:35 +0200
-Message-ID: <1136664815.2407.3.camel@oh2bns.ampr.org>
-References: <43BFCBEA.7090009@blueyonder.co.uk>
+From: David <djmunn@bigpond.com>
+Subject: Re gmfsk compile
+Date: Sun, 08 Jan 2006 07:02:00 +1000
+Message-ID: <43C02C48.6020409@bigpond.com>
 Mime-Version: 1.0
 Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <43BFCBEA.7090009@blueyonder.co.uk>
 Sender: linux-hams-owner@vger.kernel.org
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"
-To: richard <richard.bown@blueyonder.co.uk>
-Cc: Linux-hams List <linux-hams@vger.kernel.org>
+Content-Type: text/plain; charset="us-ascii"; format="flowed"
+To: Linux-hams List <linux-hams@vger.kernel.org>
 
-On Sat, 2006-01-07 at 16:10, richard wrote:
+Hi All.......Tomi has stolen some of my thunder.......with Mandriva 
+Linux 2006...you should use 0.7pre1......BUT make sure you have all the 
+DEVEL packages loaded.....i struck some problems trying to compile it 
+and found the problem was the DEVEL packages....these can be found at 
+http://rpm.pbone.net just put in the search the lib package that you are 
+looking for and set  Mandriva in the search setup and you will get the 
+list with the 2006 version plus the earlier ones....eg 
+'libgnomeprint-devel' ...there may be several lib packages that you 
+need.....a cd of devel packages may be available from the Mandriva site 
+for d/l if you are a member.....
+Have and use regulary gMFSK-0.7pre1 and find its real good for PSK31 
+which is my prime mode and if i see RTTY or other modes can swap to it 
+real easy.....even can copy CW with it....
 
-> gmsk-0.6
-
-> dsp.h: In function 'void LowPass2(typeInp, LowPass2elem&, typeW, typeW, typeW)':
-> dsp.h:558: error: 'Out' was not declared in this scope
-> dsp.h: In function 'void LowPass2(typeInp, LowPass2elem&, LowPass2weight&)':
-> dsp.h:565: error: 'Weigth' was not declared in this scope
-> dsp.h:566: error: 'Out' was not declared in this scope
-> make[3]: *** [dsp.o] Error 1
-> make[3]: Leaving directory `/home/richard/HamApps/gmfsk-0.6/src/mt63'
-> make[2]: *** [all-recursive] Error 1
-> make[2]: Leaving directory `/home/richard/HamApps/gmfsk-0.6/src'
-> make[1]: *** [all-recursive] Error 1
-> make[1]: Leaving directory `/home/richard/HamApps/gmfsk-0.6'
-> make: *** [all] Error 2
-
-This is a bug in the MT63 code (*). It's fixed in 0.7pre1 which I would 
-recommend for everyone. From the feedback it seems 0.7pre1 is just as
-stable as 0.6 if not better. And you get a few new goodies with it.
-Go to http://gmfsk.connect.fi/ to get it.
-
-/Tomi
-
-*) Yes, it's compiler dependent but I think it was somewhere around
-GCC 3.4 when this became visible...
-
--- 
-Tomi Manninen / OH2BNS / KP20JF74
-
+Best 73's
+David
+VK4BDJ
