@@ -1,47 +1,33 @@
-From: Ralf Baechle DL5RB <ralf@linux-mips.org>
-Subject: Re: 2.6.15 ax25 system lockup with kissattach
-Date: Sat, 7 Jan 2006 01:42:31 +0100
-Message-ID: <20060107004231.GB12765@linux-mips.org>
-References: <008401c6124f$7ceed0e0$3849a8c0@lan.w1nr.net>
-Mime-Version: 1.0
+From: Bob Nielsen <nielsen@oz.net>
+Subject: Re: Most "HAM" friendly distro ?
+Date: Fri, 6 Jan 2006 18:10:11 -0800
+Message-ID: <3FEF9BDB-83F9-4B61-97E3-ED546A92A02B@oz.net>
+References: <9923fd660601041708j1e117e97y45acaa37baec1867@mail.gmail.com> <000001c61197$80f08ca0$3849a8c0@lan.w1nr.net> <9923fd660601041921i423fa899s69d1fbe46e41a180@mail.gmail.com> <Pine.LNX.4.58.0601042034070.26728@wapiti.we7u.net> <20060105070708.GA31150@cloud.net.au> <Pine.SUN.4.58.0601060630530.12806@eskimo.com> <F8351A3D-A30F-4453-A26E-079C5D6C8F15@oz.net> <20060106232708.GA24355@cloud.net.au>
+Mime-Version: 1.0 (Apple Message framework v746.2)
+Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
-Content-Disposition: inline
-In-Reply-To: <008401c6124f$7ceed0e0$3849a8c0@lan.w1nr.net>
+In-Reply-To: <20060106232708.GA24355@cloud.net.au>
 Sender: linux-hams-owner@vger.kernel.org
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-To: "Mike McCarthy, W1NR" <mike@w1nr.net>
-Cc: linux-hams@vger.kernel.org
+Content-Type: text/plain; charset="us-ascii"; delsp="yes"; format="flowed"
+To: linux-hams@vger.kernel.org
 
-On Thu, Jan 05, 2006 at 06:26:43PM -0500, Mike McCarthy, W1NR wrote:
 
-> That's all folks.  System locked up hard.  Caps lock and scroll lock lights
-> flashing.  System needs a hard reset.
-> 
-> 2.6.14-5 appears to be fine.  Tried recompiled tools and libraries as well.
-> Others report similar problems on Debian systems with 2.6.15 kernel as well.
+On Jan 6, 2006, at 3:27 PM, Hamish Moffatt wrote:
 
-Can you try below patch?  It fixes a locking bug which was affecting only
-preemptable or SMP kernels until the recent rewrite of the locking code.
+> On Fri, Jan 06, 2006 at 09:39:47AM -0800, Bob Nielsen wrote:
+>> Xastir evolves so quickly that no distribution can keep up!
+>
+> Etch (Debian testing) does; it has XASTIR 1.7.0. Generally speaking a
+> new version could be in etch within 2 weeks of it being released by  
+> Curt
+> and the team.
+>
 
-73 de DL5RB op Ralf
+Yes I realize that, Hamish (good job, by the way).  I was really  
+referring to the CVS version which often seems to change several  
+times a day.
 
---
-Loc. JN47BS / CQ 14 / ITU 28 / DOK A21
+73,
+Bob, N7XY
 
- drivers/net/hamradio/mkiss.c |    1 +
- 1 files changed, 1 insertion(+)
-
-Index: net.git/drivers/net/hamradio/mkiss.c
-===================================================================
---- net.git.orig/drivers/net/hamradio/mkiss.c
-+++ net.git/drivers/net/hamradio/mkiss.c
-@@ -515,6 +515,7 @@ static void ax_encaps(struct net_device 
- 			count = kiss_esc(p, (unsigned char *)ax->xbuff, len);
- 		}
-   	}
-+	spin_unlock_bh(&ax->buflock);
- 
- 	set_bit(TTY_DO_WRITE_WAKEUP, &ax->tty->flags);
- 	actual = ax->tty->driver->write(ax->tty, ax->xbuff, count);
