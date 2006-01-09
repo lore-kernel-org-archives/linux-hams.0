@@ -1,25 +1,27 @@
-From: vk4akm <vk4akm@irock.com.au>
-Subject: Re: Help getting started with linux based packet
-Date: Mon, 09 Jan 2006 07:52:58 +1000
-Message-ID: <43C189BA.1090301@irock.com.au>
-References: <20060108114859.7281d50a.washer@trlp.com>
-Reply-To: vk4akm@wia.org.au
+From: stephen <vk3heg@iinet.net.au>
+Subject: Re: Most "HAM" friendly distro ?
+Date: Mon, 9 Jan 2006 23:01:06 +1100
+Message-ID: <200601092301.06378.vk3heg@iinet.net.au>
+References: <9923fd660601041255o4e45fd5dw572a79848c1781ff@mail.gmail.com>
 Mime-Version: 1.0
 Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <20060108114859.7281d50a.washer@trlp.com>
+In-Reply-To: <9923fd660601041255o4e45fd5dw572a79848c1781ff@mail.gmail.com>
+Content-Disposition: inline
 Sender: linux-hams-owner@vger.kernel.org
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"; format="flowed"
-To: James Washer <washer@trlp.com>, linux-hams@vger.kernel.org
+Content-Type: text/plain; charset="us-ascii"
+To: linux-hams@vger.kernel.org
 
-G'day Jim
+Hello,
 
-like you I am just getting into Linux and ax25 soundcard operation.
-I haven't got it sorted yet, but the following URL's have been a great help.
-http://www.qbjnet.com/packet.html
-http://www.febo.com/packet/linux-ax25/index.html
+with the recent info/messages etc about the most "ham" friendly disto. I have 
+been downloading debian 3.1.. I have one question though, what cd's should I 
+download as there are 14 cd images.
 
-good luck with it
-Ken
+I have sofar downloaded and burnt cd's 1-5.
 
+
+-- 
+Stephen - vk3heg
+Ph: 0409149641
