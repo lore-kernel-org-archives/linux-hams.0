@@ -1,36 +1,31 @@
-From: Tomi Manninen <oh2bns@sral.fi>
-Subject: Re: another gmfsk compile prob
-Date: Wed, 11 Jan 2006 21:28:32 +0200
-Message-ID: <1137007712.2683.3.camel@oh2bns.ampr.org>
-References: <43C4E708.3050005@blueyonder.co.uk>
+From: T + J Williams <wa0eir@mchsi.com>
+Subject: twclock 2.5 release
+Date: Wed, 11 Jan 2006 14:25:26 -0600
+Message-ID: <1137011125.1170.42.camel@localhost.localdomain>
 Mime-Version: 1.0
 Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <43C4E708.3050005@blueyonder.co.uk>
 Sender: linux-hams-owner@vger.kernel.org
 List-Id: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
-To: richard <richard.bown@blueyonder.co.uk>
-Cc: Linux-hams List <linux-hams@vger.kernel.org>
+To: Debian Hams <debian-hams@lists.debian.org>, Suse hams <suse-ham@suse.com>, Linux Hams <linux-hams@vger.kernel.org>
 
-On Wed, 2006-01-11 at 13:07, richard wrote:
+Hi,
 
-> ...
-> In file included from /usr/include/gtk-2.0/gdk/gdk.h:50,
->                   from /usr/include/gtk-2.0/gtk/gtk.h:31,
->                   from /usr/include/libgnomeui-2.0/gnome.h:4,
->                   from ../../src/main.h:32,
->                   from mfsktx.c:42:
-> /usr/include/gtk-2.0/gdk/gdkscreen.h:51: error: syntax error before
-> 'cairo_font_options_t'
-> ...
+The latest release of twclock is now available.  It is a clock designed
+for ham radio operators that can display local, GMT, and the local time
+at hundreds of cities around the world.  It also includes an I.D. timer
+that sends your call in CW via the soundcard.
 
-This is really strange. To me it looks like the (gdk?) libraries/
-headers are broken in this machine. All gmfsk does here is
-#include <gnome.h> and it results in this...
+The major changes in this version include the use of automake, so you
+use the standard ./configure, make, and make install process.  There is
+a precompiled static version too.
 
-Does any other gnome app compile cleanly on this machine?
+Both can be found at: http://wa0eir.ham.org
 
 -- 
-Tomi Manninen / OH2BNS / KP20JF74
+73,
+Ted - wa0eir
+http://wa0eir.ham.org
+
 
