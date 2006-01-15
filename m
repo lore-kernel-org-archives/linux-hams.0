@@ -1,41 +1,77 @@
-From: bernard f6bvp <f6bvp@free.fr>
-Subject: Linux FPAC MINI-HOWTO
-Date: Sat, 14 Jan 2006 18:03:33 +0100
-Message-ID: <43C92EE5.5060102@free.fr>
-References: <008401c6124f$7ceed0e0$3849a8c0@lan.w1nr.net>	<20060107004231.GB12765@linux-mips.org> <20060107135047.rggpiuzyji54cc0k@webmail.roch.tv>
+From: John Bennett <jabennett@insightbb.com>
+Subject: wxn weather server 0.1 released
+Date: Sat, 14 Jan 2006 21:02:10 -0600
+Message-ID: <1137294130.19159.24.camel@localhost>
+Reply-To: jabennett@insightbb.com
 Mime-Version: 1.0
 Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <20060107135047.rggpiuzyji54cc0k@webmail.roch.tv>
 Sender: linux-hams-owner@vger.kernel.org
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"; format="flowed"
+Content-Type: text/plain; charset="us-ascii"
 To: linux-hams@vger.kernel.org
 
-Hi,
+The first release of the Linux version of my WXN weather server, 0.1 is
+now available for download. The code is open source and is licensed
+under the GNU/GPL.
 
-I have written a Linux FPAC MINI-HOWTO to help setting an X.25 PLP 
-(rose) node station from scratch based on my own implementation.
-The document covers  step by step the way to set up a node packet-radio 
-station based on a Mandriva Linux 2006 distro with 2.6.14-4 kernel.
-The different chapters are :
+The WXN weather server is a suite of daemons that run on the Linux
+platform. It allows users to obtain real-time, archived weather data and
+other related information stored in a database via APRS on amateur
+radio, the Internet, or a Local Area Network. Most common weather
+stations are supported (listed below). The various daemons are written
+in C/C++. The RDB used is PostgreSQL.
 
-   1. Have a Linux 2.6-14-4 kernel with AX25 modules
-   2. Install AX25 libraries
-   3. Install AX25 tools
-   4. Install AX25 applications
-   5. Configure ax25ipd daemon
-   6. Install FPAC software
-   7. Install AX25 starting scripts
+Highlights of key features are as follows:
 
-Links point toward libax25, ax25tools, ax25apps, fpac327 packages that I 
-slightly modified (include headers) to allow smooth compilation with 2.6 
-kernels.
-Packages include recent advances with ax25ipd including dynamic IP and 
-af_rose.c patch for alternate rose search.
+        * SQL based
+        * Supported weather stations: Heath ID-5001 (now Questech), 
+          Peet Brothers Ultimeter stations (all), TAPR T-238/T-238+
+          and Davis Instruments Monitor II, Wizard, Perception, and
+          Vantage Pro stations.
+        * Support for additional sensors using 1-Wire technology. The
+          current list includes the following: barometer, temperature
+          (inside, outside, soil), rain gauge, EMP (lightning) sensor,
+          outside humidity, control interfaces for aspirator (used with
+          humidity sensor) and rain gauge heater, and background
+          radiation (as in nuclear). With the exception of the soil
+          temperature sensor, all features are supported in the X1W
+          series of kits available from TAPR. Instructions (with pictures)
+          on how to build a soil temperature sensor can be found on my 
+          home page.
+        * Support for the Peet Brothers Weather Picture (does not require
+          a Peet station to use).
+        * Built-in native APRS support for weather, position, PHG, and status.
+        * Built-in callbook support for callsign resolution using US and
+          Canadian data readily available over the Internet or QRZ cdrom.
+        * Query server allows polling database over radio using APRS
+          messaging protocol.
+        * Support for extended weather data over APRS (highs, lows,
+          climatological, and other data not natively supported by APRS).
 
-Here is the URL : http://rose.fpac.free.fr/MINI-HOWTO/
-Also available in french language http://rose.fpac.free.fr/MINI-HOWTO-FR/
+The system has been extensively tested on Red Hat 9, Fedora Core 3, Fedora Core 4,
+and current versions of Gentoo, Debian, Suse, and Mandrake. Fedora Core 4 is the
+main target.
 
-73 de Bernard, f6bvp
+Under development is a NWR SAME daemon that will monitor, record and broadcast 
+watches and warnings from the NWS over APRS.
+
+More information, including an on-line sysop manual, can be viewed on my web site:
+
+    http://n4xi.home.insightbb.com
+
+The code can be downloaded at my web site or from TAPR in the weather area:
+
+    http://www.tapr.org
+
+John Bennett, N4XI
+14 January 2006
+
+-- 
+John Bennett
+Evansville, IN
+Amateur Radio Web: http://n4xi.home.insightbb.com
+Where am I? http://www.findu.com/cgi-bin/find.cgi?N4XI
+Bike Racing Web: http://xibike.home.insightbb.com
+Live Strong - Lance Armstrong Foundation: http://www.laf.org/
 
