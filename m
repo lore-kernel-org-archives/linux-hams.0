@@ -1,40 +1,70 @@
-From: Nate Bargmann <n0nb@networksplus.net>
-Subject: K1JT's WSJT now GPL!
-Date: Wed, 18 Jan 2006 19:53:58 -0600
-Message-ID: <20060119015358.GA11704@mail.networksplus.net>
+From: Ralf Baechle DL5RB <ralf@linux-mips.org>
+Subject: Re: AX25 patches and how it affects the end user
+Date: Wed, 18 Jan 2006 21:52:29 +0000
+Message-ID: <20060118215229.GA3337@linux-mips.org>
+References: <9923fd660601110945p4c4ce12aw3311ae7e55111df1@mail.gmail.com> <000d01c616fc$5624f4b0$3849a8c0@lan.w1nr.net> <20060113210925.GB3516@linux-mips.org> <43CD2275.8050602@ccr.jussieu.fr> <20060118010843.GA3312@linux-mips.org> <620c90570601180426h7ae0a44dv785f2f961b894f20@mail.gmail.com>
 Mime-Version: 1.0
-Return-path: <bounce-debian-hams=debian-hams=m.gmane.org@lists.debian.org>
+Return-path: <linux-hams-owner@vger.kernel.org>
 Content-Disposition: inline
-Resent-Message-ID: <xxD7u.A.RbG.8EvzDB@murphy>
+In-Reply-To: <620c90570601180426h7ae0a44dv785f2f961b894f20@mail.gmail.com>
+Sender: linux-hams-owner@vger.kernel.org
 List-Id: <linux-hams.vger.kernel.org>
-List-Post: <mailto:debian-hams@lists.debian.org>
-List-Help: <mailto:debian-hams-request@lists.debian.org?subject=help>
-List-Subscribe: <mailto:debian-hams-request@lists.debian.org?subject=subscribe>
-List-Unsubscribe: <mailto:debian-hams-request@lists.debian.org?subject=unsubscribe>
 Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
-To: Debian Hams <debian-hams@lists.debian.org>, Linux Hams <linux-hams@vger.kernel.org>
+To: Chuck Hast <wchast@gmail.com>
+Cc: Bernard Pidoux <pidoux@ccr.jussieu.fr>, "Mike McCarthy, W1NR" <lists@w1nr.net>, Douglas Cole <doug.n7bfs@gmail.com>, linux-hams@vger.kernel.org
 
-A friend told me today that K1JT has released his WSJT source code
-under the GPL.  From what I understand K1JT made the announcement a few
-days ago and it appears a small team has been working on porting
-efforts for a little while.
+On Wed, Jan 18, 2006 at 07:26:45AM -0500, Chuck Hast wrote:
 
-The development site is at https://developer.berlios.de/projects/wsjt/
-and a development mailing list appears to be active.  I found another
-post from K1JT that announced the availability of the source back on
-01 Dec 2005:
+> > > After applying mkiss patch to kernel 2.6.15.1 I compiled it for a 3 GHz
+> > > Xeon P4 configuring it for SMP and multithread plus lock options.
+> > >
+> > > The SMP kernel seems very sensitive to AX25 configuration errors and it
+> > > locks up quite soon in that case when loading applications.
+> > >
+> > > However when ax25 is carefully initialized, mkiss, kissattach, ax25ipd
+> > > and ROSE/FPAC switch software suite) are running without problem.
+> > >
+> > > But there is still a spinlock lockup when shutting down the system.
+> > >
+> > > Here is a copy of the sequence I made by hand (subject to errors) :
+> >
+> > Thanks.  Btw, in some cases digital cameras have served well to catch
+> > messages from screens without types - just make sure the images aren't
+> > larger than necessary to be readable.
+> >
+> > > Spinlock lockup on CPU#0, kissattach / 5048, f8d68714
+> > > EIP <c01e3ba5>
+> > > rose_remove_neigh + 0x30/0xb0 [rose]
+> > > rose_rt_device_down + 0xeb / 0x120 [rose]
+> > > rose_device_event + 0x42/0x50 [rose]
+> > > notifier_call_chain + 0x2/0x50 [rose]
+> > > dev_close + 0x7b/0xb0
+> > > unregister_netdevice + 0x19e/0x250
+> > > unregister_netdev+0x16/0x1d
+> > > mkiss_close + 0x4a /0xa0 [mkiss]
+> > > release_dev....
+> > > tty_release ...
+> > >
+> > > Hope this can help.
+> > > Please suggest any more test to be done.
+> >
+> > I think the ROSE routing code is beyond recovery.  The current data
+> > structures requires extensive locking code that is easily prone to
+> > deadlocks like this.  It also is slow - fortunately nobody is using ROSE
+> > on highspeed links ...
+> >
+> > Anyway, the problem is pretty obvious in your traceback and I'll cook a
+> > patch for you to test.
+> >
+> 
+> What do you consider high speed links? We will be doing so in Florida
+> as we move the switches around the state to Linux. Some of these devices
+> will be linked over 802.11 type links.
 
-http://www.vhfdx.de/cgi-bin/yabb/YaBB.pl?board=news;action=display;num=1133431713
+That certainly would be a fast link.  There are not only the limits of
+the code itself but also the design limits of the connected mode protocols
+themselves which become a theoretical limit for what is possible with
+AX.25.
 
-This is great news.
-
-73, de Nate >>
-
--- 
- Wireless | Amateur Radio Station N0NB          |  Successfully Microsoft
-  Amateur radio exams; ham radio; Linux info @  | free since January 1998.
-             http://www.qsl.net/n0nb/           |  "Debian, the choice of
-             My Kawasaki KZ-650 SR @            |     a GNU generation!"
-        http://www.networksplus.net/n0nb/       |   http://www.debian.org
-
+  Ralf
