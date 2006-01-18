@@ -1,69 +1,75 @@
-From: Ralf Baechle DL5RB <ralf@linux-mips.org>
-Subject: Re: ROSE lockup fix
-Date: Wed, 18 Jan 2006 08:38:16 +0000
-Message-ID: <20060118083816.GA7510@linux-mips.org>
-References: <9923fd660601110945p4c4ce12aw3311ae7e55111df1@mail.gmail.com> <000d01c616fc$5624f4b0$3849a8c0@lan.w1nr.net> <20060113210925.GB3516@linux-mips.org> <43CD2275.8050602@ccr.jussieu.fr> <20060118010843.GA3312@linux-mips.org>
+From: Chuck Hast <wchast@gmail.com>
+Subject: Re: AX25 patches and how it affects the end user
+Date: Wed, 18 Jan 2006 07:26:45 -0500
+Message-ID: <620c90570601180426h7ae0a44dv785f2f961b894f20@mail.gmail.com>
+References: <9923fd660601110945p4c4ce12aw3311ae7e55111df1@mail.gmail.com>
+	 <000d01c616fc$5624f4b0$3849a8c0@lan.w1nr.net>
+	 <20060113210925.GB3516@linux-mips.org>
+	 <43CD2275.8050602@ccr.jussieu.fr>
+	 <20060118010843.GA3312@linux-mips.org>
 Mime-Version: 1.0
+Content-Transfer-Encoding: 7BIT
 Return-path: <linux-hams-owner@vger.kernel.org>
-Content-Disposition: inline
 In-Reply-To: <20060118010843.GA3312@linux-mips.org>
+Content-Disposition: inline
 Sender: linux-hams-owner@vger.kernel.org
 List-Id: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-To: Bernard Pidoux <pidoux@ccr.jussieu.fr>
-Cc: linux-hams@vger.kernel.org
+To: Ralf Baechle DL5RB <ralf@linux-mips.org>
+Cc: Bernard Pidoux <pidoux@ccr.jussieu.fr>, "Mike McCarthy, W1NR" <lists@w1nr.net>, Douglas Cole <doug.n7bfs@gmail.com>, linux-hams@vger.kernel.org
 
-On Wed, Jan 18, 2006 at 01:08:43AM +0000, Ralf Baechle DL5RB wrote:
-
+On 1/17/06, Ralf Baechle DL5RB <ralf@linux-mips.org> wrote:
+> On Tue, Jan 17, 2006 at 05:59:33PM +0100, Bernard Pidoux wrote:
+>
+> > After applying mkiss patch to kernel 2.6.15.1 I compiled it for a 3 GHz
+> > Xeon P4 configuring it for SMP and multithread plus lock options.
+> >
+> > The SMP kernel seems very sensitive to AX25 configuration errors and it
+> > locks up quite soon in that case when loading applications.
+> >
+> > However when ax25 is carefully initialized, mkiss, kissattach, ax25ipd
+> > and ROSE/FPAC switch software suite) are running without problem.
+> >
+> > But there is still a spinlock lockup when shutting down the system.
+> >
+> > Here is a copy of the sequence I made by hand (subject to errors) :
+>
+> Thanks.  Btw, in some cases digital cameras have served well to catch
+> messages from screens without types - just make sure the images aren't
+> larger than necessary to be readable.
+>
+> > Spinlock lockup on CPU#0, kissattach / 5048, f8d68714
+> > EIP <c01e3ba5>
+> > rose_remove_neigh + 0x30/0xb0 [rose]
+> > rose_rt_device_down + 0xeb / 0x120 [rose]
+> > rose_device_event + 0x42/0x50 [rose]
+> > notifier_call_chain + 0x2/0x50 [rose]
+> > dev_close + 0x7b/0xb0
+> > unregister_netdevice + 0x19e/0x250
+> > unregister_netdev+0x16/0x1d
+> > mkiss_close + 0x4a /0xa0 [mkiss]
+> > release_dev....
+> > tty_release ...
+> >
+> > Hope this can help.
+> > Please suggest any more test to be done.
+>
+> I think the ROSE routing code is beyond recovery.  The current data
+> structures requires extensive locking code that is easily prone to
+> deadlocks like this.  It also is slow - fortunately nobody is using ROSE
+> on highspeed links ...
+>
 > Anyway, the problem is pretty obvious in your traceback and I'll cook a
 > patch for you to test.
+>
 
-Can you test the patch below?
+What do you consider high speed links? We will be doing so in Florida
+as we move the switches around the state to Linux. Some of these devices
+will be linked over 802.11 type links.
 
-  Ralf
-
- net/rose/rose_route.c |    7 -------
- 1 files changed, 7 deletions(-)
-
-Index: linux-mips/net/rose/rose_route.c
-===================================================================
---- linux-mips.orig/net/rose/rose_route.c
-+++ linux-mips/net/rose/rose_route.c
-@@ -48,8 +48,6 @@ static DEFINE_SPINLOCK(rose_route_list_l
- 
- struct rose_neigh *rose_loopback_neigh;
- 
--static void rose_remove_neigh(struct rose_neigh *);
--
- /*
-  *	Add a new route to a node, and in the process add the node and the
-  *	neighbour if it is new.
-@@ -235,11 +233,8 @@ static void rose_remove_neigh(struct ros
- 
- 	skb_queue_purge(&rose_neigh->queue);
- 
--	spin_lock_bh(&rose_neigh_list_lock);
--
- 	if ((s = rose_neigh_list) == rose_neigh) {
- 		rose_neigh_list = rose_neigh->next;
--		spin_unlock_bh(&rose_neigh_list_lock);
- 		kfree(rose_neigh->digipeat);
- 		kfree(rose_neigh);
- 		return;
-@@ -248,7 +243,6 @@ static void rose_remove_neigh(struct ros
- 	while (s != NULL && s->next != NULL) {
- 		if (s->next == rose_neigh) {
- 			s->next = rose_neigh->next;
--			spin_unlock_bh(&rose_neigh_list_lock);
- 			kfree(rose_neigh->digipeat);
- 			kfree(rose_neigh);
- 			return;
-@@ -256,7 +250,6 @@ static void rose_remove_neigh(struct ros
- 
- 		s = s->next;
- 	}
--	spin_unlock_bh(&rose_neigh_list_lock);
- }
- 
- /*
+--
+Chuck Hast  -- KP4DJT --
+To paraphrase my flight instructor;
+"the only dumb question is the one you DID NOT ask resulting in my going
+out and having to identify your bits and pieces in the midst of torn
+and twisted metal."
