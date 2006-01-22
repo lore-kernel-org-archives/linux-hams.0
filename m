@@ -1,114 +1,45 @@
-From: Bernard Pidoux <pidoux@ccr.jussieu.fr>
-Subject: Re: ROSE lockup fix
-Date: Thu, 19 Jan 2006 17:44:58 +0100
-Message-ID: <43CFC20A.4060600@ccr.jussieu.fr>
-References: <9923fd660601110945p4c4ce12aw3311ae7e55111df1@mail.gmail.com> <000d01c616fc$5624f4b0$3849a8c0@lan.w1nr.net> <20060113210925.GB3516@linux-mips.org> <43CD2275.8050602@ccr.jussieu.fr> <20060118010843.GA3312@linux-mips.org> <20060118083816.GA7510@linux-mips.org>
+From: Douglas Cole <doug.n7bfs@gmail.com>
+Subject: Resource help with Debian
+Date: Sun, 22 Jan 2006 14:59:41 -0800
+Message-ID: <9923fd660601221459p6d4d7c8dr5275bf53247ba021@mail.gmail.com>
 Mime-Version: 1.0
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Content-Transfer-Encoding: 7BIT
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <20060118083816.GA7510@linux-mips.org>
+Content-Disposition: inline
 Sender: linux-hams-owner@vger.kernel.org
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="iso-8859-1"; format="flowed"
-To: Ralf Baechle DL5RB <ralf@linux-mips.org>
-Cc: linux-hams@vger.kernel.org
+Content-Type: text/plain; charset="us-ascii"
+To: linux-hams@vger.kernel.org
 
-Hi Ralf,
+Ok, so I finally installed Debian Sarge (3.1r1) with the 2.6.8.x
+kernel, the installer has certainly improved from when I tried it a
+few years back, but unfortunately I am at a loss as to where to start,
+so will need some input from those on this list that can give me some
+sites that will possibly list tools to configure and make Debian
+useable for me, a spoiled SuSE user of 6 years, so please be gentle
+and don't tell me "RTFM will do it all" I need a wiki or something
+like that so that I can get a listing of setup tools that will make it
+work for me, I didn't realize how steep the learning curve would be
+until I couldn't even find ax25 packages to install from the menu, so
+I am in need of some resources besides the Debian site to give me some
+input on how to make Deb' work for me and not the other way around...
 
-Sorry but I applied the patch and it did not change the problem.
-When shutting down the system there is still a spinlock error.
+I hope to make this my main Amateur radio distro', but am concerned
+right off the bat because it installed the 2.6.8x kernel (old), but am
+going to try and keep my mind open to this...
+Also I thought the DVD I downloaded was supposed to have the Amateur
+packages already there, but no such luck, maybe it was on DVD#2, which
+I haven't downloaded yet...
 
-I made some pictures of the different trials in order to compare.
+Maybe a list of apt repositories for amateur packages would be nice,
+since it doesn't seem to list any with the default install...
 
-The message actually starts with for example :
+My appologies if I could "just do a google" search and find what I
+need, I have to run up to a Mountaintop and try and troubleshoot our
+9600bps node and thought I would throw out my line  and see if I had
+something on my hook when I got back home tonight ;^)
 
-BUG: spinlock recursion on CPU#1, kissattach/5094
-  lock: f8d68714, .magic: dead4ead, .owner: kissattach/5094, .owner_cpu=
-: 1
+Ok, off to the snowy mountain...
 
-Even if the name of the program may change i.e. kissattach or ax25ipd,=20
-the associated /5094 and address after lock remains the same.
-Also it can be CPU#0 or CPU#1
-
-The rest of the track displays exactly the same sequence I reported on=20
-the previous message.
-
-Do we have another chance to track this "spinlock recursion" ?
-
----------------
-
-Ralf Baechle DL5RB a =E9crit :
-> On Wed, Jan 18, 2006 at 01:08:43AM +0000, Ralf Baechle DL5RB wrote:
->=20
->=20
->>Anyway, the problem is pretty obvious in your traceback and I'll cook=
- a
->>patch for you to test.
->=20
->=20
-> Can you test the patch below?
->=20
->   Ralf
->=20
->  net/rose/rose_route.c |    7 -------
->  1 files changed, 7 deletions(-)
->=20
-> Index: linux-mips/net/rose/rose_route.c
-> =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-> --- linux-mips.orig/net/rose/rose_route.c
-> +++ linux-mips/net/rose/rose_route.c
-> @@ -48,8 +48,6 @@ static DEFINE_SPINLOCK(rose_route_list_l
-> =20
->  struct rose_neigh *rose_loopback_neigh;
-> =20
-> -static void rose_remove_neigh(struct rose_neigh *);
-> -
->  /*
->   *	Add a new route to a node, and in the process add the node and th=
-e
->   *	neighbour if it is new.
-> @@ -235,11 +233,8 @@ static void rose_remove_neigh(struct ros
-> =20
->  	skb_queue_purge(&rose_neigh->queue);
-> =20
-> -	spin_lock_bh(&rose_neigh_list_lock);
-> -
->  	if ((s =3D rose_neigh_list) =3D=3D rose_neigh) {
->  		rose_neigh_list =3D rose_neigh->next;
-> -		spin_unlock_bh(&rose_neigh_list_lock);
->  		kfree(rose_neigh->digipeat);
->  		kfree(rose_neigh);
->  		return;
-> @@ -248,7 +243,6 @@ static void rose_remove_neigh(struct ros
->  	while (s !=3D NULL && s->next !=3D NULL) {
->  		if (s->next =3D=3D rose_neigh) {
->  			s->next =3D rose_neigh->next;
-> -			spin_unlock_bh(&rose_neigh_list_lock);
->  			kfree(rose_neigh->digipeat);
->  			kfree(rose_neigh);
->  			return;
-> @@ -256,7 +250,6 @@ static void rose_remove_neigh(struct ros
-> =20
->  		s =3D s->next;
->  	}
-> -	spin_unlock_bh(&rose_neigh_list_lock);
->  }
-> =20
->  /*
->=20
->=20
-
---=20
-
-73 de Bernard, f6bvp
-
-http://f6bvp.free.fr
-http://f6bvp.org (mirror)
-http://rose.fpac.free.fr/
--
-To unsubscribe from this list: send the line "unsubscribe linux-hams" i=
-n
-the body of a message to majordomo@vger.kernel.org
-More majordomo info at  http://vger.kernel.org/majordomo-info.html
+Doug
+N7BFS
