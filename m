@@ -1,31 +1,31 @@
-From: "AE5PL Lists" <HamLists@ametx.com>
-Subject: RE: Unwanted packets on AX25 interface
-Date: Tue, 24 Jan 2006 15:39:37 -0600
-Message-ID: <478F6623898BBC4DBD692A223D28298A165991@amewebsrvr.webametx.local>
+From: Ralf Baechle DL5RB <ralf@linux-mips.org>
+Subject: Re: Unwanted packets on AX25 interface
+Date: Wed, 25 Jan 2006 14:00:27 +0000
+Message-ID: <20060125140027.GC3454@linux-mips.org>
+References: <96cafccb0601241332w67b8f3bewa5052694619f3e98@mail.gmail.com>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 8BIT
 Return-path: <linux-hams-owner@vger.kernel.org>
-Content-class: urn:content-classes:message
+Content-Disposition: inline
+In-Reply-To: <96cafccb0601241332w67b8f3bewa5052694619f3e98@mail.gmail.com>
 Sender: linux-hams-owner@vger.kernel.org
 List-Id: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
-To: linux-hams@vger.kernel.org
+Content-Transfer-Encoding: 7bit
+To: Josh Freeman <cpe.jfreeman@gmail.com>
+Cc: linux-hams@vger.kernel.org
 
-Are you running Samba (standard in FC4)?  If so, restrict it to your LAN
-interface or it will send packets out your AX.25 interface.
+On Tue, Jan 24, 2006 at 03:32:51PM -0600, Josh Freeman wrote:
 
-73,
-
-Pete Loveall AE5PL
-mailto:pete@ae5pl.net 
-
-> -----Original Message-----
-> From: Josh Freeman
-> Posted At: Tuesday, January 24, 2006 3:36 PM
-> Subject: Unwanted packets on AX25 interface
-> 
-> I'm running Fedora Core 4 and user-mode Soundmodem 0.10.1 in 
-> MKISS mode to operate APRS, primarily with XASTIR. When I 
-> start up Soundmodem, it creates interface ax0 with an IP 
-> address of 10.0.0.1.
+> I'm running Fedora Core 4 and user-mode Soundmodem 0.10.1 in MKISS
+> mode to operate APRS, primarily with XASTIR. When I start up
+> Soundmodem, it creates interface ax0 with an IP address of 10.0.0.1.
 > It immediately sends a packet
+
+This is a known problem.  For unknown reasons ages ago the use of an IP
+address with every AX.25 address was made mandatory and recently DL9SAU
+started undoing that again.
+
+Until then you may try to limit the problem by setting up a packet filter
+blocking all ARP/IP traffic over your mkiss interface.
+
+  Ralf
