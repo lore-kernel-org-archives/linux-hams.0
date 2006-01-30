@@ -1,84 +1,56 @@
-From: Bernard Pidoux <pidoux@ccr.jussieu.fr>
-Subject: Re: kernel panic w/ax25 in FC4
-Date: Mon, 30 Jan 2006 09:32:09 +0100
-Message-ID: <43DDCF09.3050400@ccr.jussieu.fr>
-References: <1138587184.10860.57.camel@localhost>
+From: Ted Gervais <ve1drg@av.eastlink.ca>
+Subject: Re: tncs and kiss mode
+Date: Mon, 30 Jan 2006 05:47:59 -0400 (AST)
+Message-ID: <Pine.LNX.4.63.0601300547050.1325@ve1drg.ampr.org>
+References: <5.2.1.1.0.20060129225800.0117b6e8@pop.av.eastlink.ca>
+ <d5d4185b0601291929r3193867nd1e8292455427be2@mail.gmail.com>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 7BIT
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <1138587184.10860.57.camel@localhost>
+In-reply-to: <d5d4185b0601291929r3193867nd1e8292455427be2@mail.gmail.com>
 Sender: linux-hams-owner@vger.kernel.org
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"; format="flowed"
-To: jabennett@insightbb.com
+Content-Type: TEXT/PLAIN; charset="us-ascii"; format="flowed"
+To: Jeremy Utley <jerutley@gmail.com>
 Cc: linux-hams@vger.kernel.org
 
-Hi John,
+On Sun, 29 Jan 2006, Jeremy Utley wrote:
 
-I suggest you download 2.6.14.4 kernel source and install it on your 
-Linux box.
+> On 1/29/06, Ted Gervais <ve1drg@av.eastlink.ca> wrote:
+>> What is the command to take my kpc-9612 out of kiss mode and also to put it
+>> back in kiss.
+>> I want to do this from a linux console rather than through an
+>> application.  Just a simple way of bringing up an empty terminal  on my
+>> linux machine and typing in something that will talk to the tnc.
+>
+> I don't know about the 9612, but on both the KAM and KPC3 to drop out
+> of KISS mode into normal mode, you sent a series of 3 ASCII characters
+> - ASC 192, ASC 255, ASC192.  In the old days I did this via the
+> Alt+numeric keypad method.  I suspect the 9612 is the same, as
+> Kantronics has usually stayed pretty stable with their command set.
 
-I did it using a Mandriva 2006 official distro which comes with 2.6.12 
-then installed vanilla 2.6.14.4 on three different PCs.
+Alright.  I remember that.
 
-There was no kernel panics using Mkiss with this kernel. In fact I have 
-tested 2.6.14.3 and 4 with good success.
+>
+> To shift back into KISS mode, you must have the "command" prompt, not
+> be in convers mode - then just sending the commands "interface kiss"
+> followed by "reset" will place the KAM into KISS mode.
 
-73 de Bernard, f6bvp
 
-http://f6bvp.free.fr
-http://f6bvp.org (mirror)
-http://rose.fpac.free.fr/
+Yes.  But can you get into the "command" prompt from a linux console??
+Or is that only possible using Dos.??
 
--------------
+>
+> Hope this helps!
+>
+> Jeremy
+> -
+> To unsubscribe from this list: send the line "unsubscribe linux-hams" in
+> the body of a message to majordomo@vger.kernel.org
+> More majordomo info at  http://vger.kernel.org/majordomo-info.html
+>
 
-John Bennett wrote :
-> Hey guys,
-> 
-> I routinely read the emails in this list and don't remember seeing
-> anything like this before. If this issue has been previously discussed,
-> my apologies.
-> 
-> FC4 built from CDs. Updated everything with yum. Latest libax25,
-> ax25-tools built from tarballs. Rebuilt kernel using
-> 'kernel-2.6.14-1.1656_FC4.src.rpm' sources. Rebuilt kernel because I
-> needed mkiss for a TNC attached to a serial port. TNC is an MFJ-1274
-> using TAPR firmware 1.1.8 or 1.1.7b (can't remember which).
-> 
-> Machine in question was a P3-500 w/256 MB. Previously installed and ran
-> RH9 with a 2.4 kernel on it for the last year with no problems. This was
-> an 'upgrade' which is actually a new install (never have found that
-> upgrade paths work well). Due to time constraints, I had to leave and
-> finish building and configuring the machine remotely.
-> 
-> This build/hardware configuration was similar to several other builds
-> completed in the last two months.
-> 
-> When starting ax25 (kissattach), there was a kernel panic every time.
-> Tried 2.6.11 and 2.6.12, but the TIOCSETD error kept popping up. Went
-> back to 2.6.14. Finally decided there must be a hardware problem with
-> this particular box that was not on the others. Grabbed another machine
-> that was identical to an installation running at another QTH (P3-866
-> w/512MB). Built and checked on the bench here. All worked as it should.
-> 
-> Today I drove to the remote site, installed the new box, and immediately
-> got a kernel panic. After some investigation, I discovered that the TNC
-> had dropped out of the KISS mode. If the TNC was disconnected or the
-> power was off when doing a kissattach, no problems. The instant the TNC
-> was switched on or was on when invoking kissattach there was a kernel
-> panic. Using minicom, I put the errant TNC back into the KISS mode.
-> Everything now works.
-> 
-> I suspect that when mkiss receives certain characters from the TNC when
-> in the normal (?) mode, it is causing a segmentation fault of some kind
-> that causes the panic. I know this has not been an issue in the past
-> with other kernels (i.e., 2.4). While it doesn't happen very often, TNCs
-> do drop out of KISS if something screwy happens. Hopefully someone on
-> this list is the maintainer and can take a look at the code. I scanned
-> through 'kissattach' and didn't see anything that could cause the
-> problem. It's fairly simple program.
-> 
-> At least the week-long siege of frustration is finally over...
-> 
-> 73
-> 
+---
+Ted Gervais
+Coldbrook, Nova Scotia
+Canada. (ve1drg)
