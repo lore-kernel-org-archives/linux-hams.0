@@ -1,7 +1,7 @@
-From: Oliver Hohlfeld <Oliver.Hohlfeld@gmx.de>
+From: Oliver Hohlfeld <Oliver.Hohlfeld@web.de>
 Subject: Re: tncs and kiss mode
-Date: Mon, 30 Jan 2006 22:05:20 +0100
-Message-ID: <200601302205.21585.Oliver.Hohlfeld@gmx.de>
+Date: Mon, 30 Jan 2006 22:07:15 +0100
+Message-ID: <200601302207.16313.Oliver.Hohlfeld@web.de>
 References: <5.2.1.1.0.20060129225800.0117b6e8@pop.av.eastlink.ca> <43DE5851.33E01B71@free.fr> <9923fd660601301230w15ab6f53ufb50ca0d78af4065@mail.gmail.com>
 Mime-Version: 1.0
 Content-Transfer-Encoding: 7bit
