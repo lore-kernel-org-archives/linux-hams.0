@@ -1,45 +1,52 @@
-From: Oliver Hohlfeld <Oliver.Hohlfeld@web.de>
+From: "Curt, WE7U" <archer@eskimo.com>
 Subject: Re: tncs and kiss mode
-Date: Mon, 30 Jan 2006 22:07:15 +0100
-Message-ID: <200601302207.16313.Oliver.Hohlfeld@web.de>
-References: <5.2.1.1.0.20060129225800.0117b6e8@pop.av.eastlink.ca> <43DE5851.33E01B71@free.fr> <9923fd660601301230w15ab6f53ufb50ca0d78af4065@mail.gmail.com>
+Date: Mon, 30 Jan 2006 13:08:19 -0800 (PST)
+Message-ID: <Pine.SUN.4.58.0601301303330.7020@eskimo.com>
+References: <5.2.1.1.0.20060129225800.0117b6e8@pop.av.eastlink.ca> 
+ <d5d4185b0601291929r3193867nd1e8292455427be2@mail.gmail.com> 
+ <Pine.LNX.4.63.0601300547050.1325@ve1drg.ampr.org> <1138629532.7628.2.camel@CO>
+ <43DE5851.33E01B71@free.fr> <43DE7B4B.5040509@jnos.org>
+Reply-To: "Curt Mills, WE7U" <archer@eskimo.com>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <9923fd660601301230w15ab6f53ufb50ca0d78af4065@mail.gmail.com>
-Content-Disposition: inline
+In-Reply-To: <43DE7B4B.5040509@jnos.org>
 Sender: linux-hams-owner@vger.kernel.org
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"
-To: linux-hams@vger.kernel.org
+Content-Type: TEXT/PLAIN; charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+To: Bill Vodall WA7NWP <wa7nwp@jnos.org>
+Cc: linux-hams@vger.kernel.org
 
-Hi,
+On Mon, 30 Jan 2006, Bill Vodall WA7NWP wrote:
 
-> > echo -e "\300\377\300\r" >/dev/ttyS0
 >
-> I am not sure what the "\300\377\300\r" is doing for me, I know the
-> numbers are equivelants to something, but they aren't decimal
-> equivelants to ASCII characters, so what are they and where can I find
-> a chart that can give me a listing of this type of thing?
- 
-You're right, the numbers above aren't decimal numbers. In fact these
-are backslash-escaped characters whose ASCII code is NNN (octal) (see
-man echo for further details) - whereas NNN is the representation of
-the ASCII code to base 8 (Octal). There're lots of calculators available
-which let you convert those numbers between different bases, such as
-8 and 10 (used in this example).
+> Once kissattach has grabbed a serial port, it's apparently not possible
+> to do the "echo's" or minicom operations to that port without killing
+> the kissattach.
 
-By using such a calculator you will get the following results:
-300 = 192 and 377 = 255. The letter representation might look more
-familiar to you.
+Here's a trick that somebody just tried with Xastir in order to
+share a serial port with another application:
 
-The last escaped r is just a carriage return.
 
-Cheers,
-Oliver
+  "Running now ok with :
 
--- 
-Oliver Hohlfeld | DO1FDK | http://www.ohohlfeld.com
-http://dk0td.afthd.tu-darmstadt.de/~do1fdk/ | www.ohohlfeld.com/gpgkey.txt
-                 - long long ago; /* in a galaxy far far away */ -
-                  - I am not a bug I am a undocumented feature -
+   tee /dev/ptyt0 /dev/ptyt1 < /dev/ttyS0 > /dev/null &
+
+   I can have now 2 software : one attached to /dev/ttyt0 and the
+   other one to ttyt1."
+
+
+Interesting trick!  I have not done this myself, but suggested it to
+him originally as something to try.
+
+We have instructions in our docs for hooking to a serial port across
+a network, but he's the first user that wanted more than one app
+trying to talk to the same serial port.
+
+Your mileage may vary.
+
+--
+Curt, WE7U.   APRS Client Comparisons: http://www.eskimo.com/~archer
+"Lotto:    A tax on people who are bad at math." -- unknown
+"Windows:  Microsoft's tax on computer illiterates." -- WE7U
+"The world DOES revolve around me:  I picked the coordinate system!"
