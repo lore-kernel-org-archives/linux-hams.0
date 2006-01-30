@@ -1,36 +1,70 @@
-From: Josh Freeman <cpe.jfreeman@gmail.com>
-Subject: Re: Unwanted packets on AX25 interface
-Date: Wed, 25 Jan 2006 16:22:53 -0600
-Message-ID: <96cafccb0601251422l78d31119oc8e45c7275d3e34f@mail.gmail.com>
-References: <478F6623898BBC4DBD692A223D28298A165991@amewebsrvr.webametx.local>
-	 <96cafccb0601250711n63221f4xc537bbc5290579e0@mail.gmail.com>
-	 <43D7BD3F.4060401@lightningflash.net>
+From: John Bennett <jabennett@insightbb.com>
+Subject: kernel panic w/ax25 in FC4
+Date: Sun, 29 Jan 2006 20:13:04 -0600
+Message-ID: <1138587184.10860.57.camel@localhost>
+Reply-To: jabennett@insightbb.com
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7BIT
+Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <43D7BD3F.4060401@lightningflash.net>
-Content-Disposition: inline
 Sender: linux-hams-owner@vger.kernel.org
 List-Id: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
 To: linux-hams@vger.kernel.org
 
-On 1/25/06, J. Lance Cotton <joe@lightningflash.net> wrote:
->
-> Also turn off the mdns service. It's not related to samba. It's some kind of
-> auto-finding name service. Apple calls it "Rendezvous", but it has a generic
-> name, too; I just can't remember it.
->
+Hey guys,
 
-Ah-ha! Killing mDNS got rid of the first
+I routinely read the emails in this list and don't remember seeing
+anything like this before. If this issue has been previously discussed,
+my apologies.
 
-Tx: fm KI4ITI-9 to QST-0 UI  pid=CC
-F..(..@................."...............
+FC4 built from CDs. Updated everything with yum. Latest libax25,
+ax25-tools built from tarballs. Rebuilt kernel using
+'kernel-2.6.14-1.1656_FC4.src.rpm' sources. Rebuilt kernel because I
+needed mkiss for a TNC attached to a serial port. TNC is an MFJ-1274
+using TAPR firmware 1.1.8 or 1.1.7b (can't remember which).
 
-packet, anyway. I'll have to use it a bit to see if the others show up
-again - from what I've seen so far I can't predict when they'll come
-out. I'd wager, though, that mDNS is the culprit there too.
+Machine in question was a P3-500 w/256 MB. Previously installed and ran
+RH9 with a 2.4 kernel on it for the last year with no problems. This was
+an 'upgrade' which is actually a new install (never have found that
+upgrade paths work well). Due to time constraints, I had to leave and
+finish building and configuring the machine remotely.
 
-Thanks for the help!
+This build/hardware configuration was similar to several other builds
+completed in the last two months.
 
-Josh KI4ITI
+When starting ax25 (kissattach), there was a kernel panic every time.
+Tried 2.6.11 and 2.6.12, but the TIOCSETD error kept popping up. Went
+back to 2.6.14. Finally decided there must be a hardware problem with
+this particular box that was not on the others. Grabbed another machine
+that was identical to an installation running at another QTH (P3-866
+w/512MB). Built and checked on the bench here. All worked as it should.
+
+Today I drove to the remote site, installed the new box, and immediately
+got a kernel panic. After some investigation, I discovered that the TNC
+had dropped out of the KISS mode. If the TNC was disconnected or the
+power was off when doing a kissattach, no problems. The instant the TNC
+was switched on or was on when invoking kissattach there was a kernel
+panic. Using minicom, I put the errant TNC back into the KISS mode.
+Everything now works.
+
+I suspect that when mkiss receives certain characters from the TNC when
+in the normal (?) mode, it is causing a segmentation fault of some kind
+that causes the panic. I know this has not been an issue in the past
+with other kernels (i.e., 2.4). While it doesn't happen very often, TNCs
+do drop out of KISS if something screwy happens. Hopefully someone on
+this list is the maintainer and can take a look at the code. I scanned
+through 'kissattach' and didn't see anything that could cause the
+problem. It's fairly simple program.
+
+At least the week-long siege of frustration is finally over...
+
+73
+
+-- 
+John Bennett
+Evansville, IN
+Amateur Radio Web: http://n4xi.home.insightbb.com
+Where am I? http://www.findu.com/cgi-bin/find.cgi?N4XI
+Bike Racing Web: http://xibike.home.insightbb.com
+Live Strong - Lance Armstrong Foundation: http://www.laf.org/
+
