@@ -1,48 +1,45 @@
-From: "J. Lance Cotton" <joe@lightningflash.net>
+From: Oliver Hohlfeld <Oliver.Hohlfeld@gmx.de>
 Subject: Re: tncs and kiss mode
-Date: Mon, 30 Jan 2006 15:00:52 -0600
-Message-ID: <43DE7E84.4070406@lightningflash.net>
-References: <5.2.1.1.0.20060129225800.0117b6e8@pop.av.eastlink.ca>	 <d5d4185b0601291929r3193867nd1e8292455427be2@mail.gmail.com>	 <Pine.LNX.4.63.0601300547050.1325@ve1drg.ampr.org>	 <1138629532.7628.2.camel@CO> <43DE5851.33E01B71@free.fr>	 <9923fd660601301230w15ab6f53ufb50ca0d78af4065@mail.gmail.com> <9923fd660601301248r49d34f64g76dc09246dbad341@mail.gmail.com>
+Date: Mon, 30 Jan 2006 22:05:20 +0100
+Message-ID: <200601302205.21585.Oliver.Hohlfeld@gmx.de>
+References: <5.2.1.1.0.20060129225800.0117b6e8@pop.av.eastlink.ca> <43DE5851.33E01B71@free.fr> <9923fd660601301230w15ab6f53ufb50ca0d78af4065@mail.gmail.com>
 Mime-Version: 1.0
 Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <9923fd660601301248r49d34f64g76dc09246dbad341@mail.gmail.com>
+In-Reply-To: <9923fd660601301230w15ab6f53ufb50ca0d78af4065@mail.gmail.com>
+Content-Disposition: inline
 Sender: linux-hams-owner@vger.kernel.org
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"; format="flowed"
-To: Douglas Cole <doug.n7bfs@gmail.com>
-Cc: linux-hams@vger.kernel.org
+Content-Type: text/plain; charset="us-ascii"
+To: linux-hams@vger.kernel.org
 
-Douglas Cole wrote:
-d
-> Ok, I still don't know what the character values mean, but I read the
-> man page for "echo" and figured that you must be using octal and know
-> that 300 is octal for 192 decimal and 377 is octal for 255 decimal...
-> 
-> But the ASCII charts I have don't explain what 192 and 255 are ,
-> anyone can point me to a chart that does ?
+Hi,
 
-They're pretty much just arbitrary values. KISS is an 8-bit clean protocol. 
-It doesn't operate from an "ascii characters" point of view, it operates in 
-a "bytes of data" POV.
+> > echo -e "\300\377\300\r" >/dev/ttyS0
+>
+> I am not sure what the "\300\377\300\r" is doing for me, I know the
+> numbers are equivelants to something, but they aren't decimal
+> equivelants to ASCII characters, so what are they and where can I find
+> a chart that can give me a listing of this type of thing?
+ 
+You're right, the numbers above aren't decimal numbers. In fact these
+are backslash-escaped characters whose ASCII code is NNN (octal) (see
+man echo for further details) - whereas NNN is the representation of
+the ASCII code to base 8 (Octal). There're lots of calculators available
+which let you convert those numbers between different bases, such as
+8 and 10 (used in this example).
 
-There are a few "reserved" bytes for special functions like sending commands 
-to the TNC rather than sending data to be transmitted.
+By using such a calculator you will get the following results:
+300 = 192 and 377 = 255. The letter representation might look more
+familiar to you.
 
-192 is called "FEND" for "Frame End" and is used to bracket (front and back) 
-all packets to and from a KISS device.
+The last escaped r is just a carriage return.
 
-255 is essentially the "KISS OFF" command, if the TNC supports it.
-
-There is another special byte called FESC "Frame Escape". If one of the 
-reserved bytes happens to appear in the data stream, you prefix it with FESC 
-and then the KISS device knows that the byte following FESC should be 
-treated as plain data rather than a command.
+Cheers,
+Oliver
 
 -- 
-J. Lance Cotton, KJ5O
-joe@lightningflash.net
-http://kj5o.lightningflash.net
-Three Step Plan: 1. Take over the world. 2. Get a lot of cookies. 3. Eat the 
-cookies.
-
+Oliver Hohlfeld | DO1FDK | http://www.ohohlfeld.com
+http://dk0td.afthd.tu-darmstadt.de/~do1fdk/ | www.ohohlfeld.com/gpgkey.txt
+                 - long long ago; /* in a galaxy far far away */ -
+                  - I am not a bug I am a undocumented feature -
