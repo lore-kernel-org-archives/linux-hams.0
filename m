@@ -1,49 +1,45 @@
-From: "Albert Duane Lawson" <wb7awl@comcast.net>
-Subject: RE: tncs and kiss mode
-Date: Mon, 30 Jan 2006 04:58:45 -0800
-Message-ID: <002101c6259c$e83437e0$0201a8c0@LAWSONPC.COM>
+From: =?iso-8859-1?Q?G=E9rard?= / F6FGZ <f6fgz@free.fr>
+Subject: Re: tncs and kiss mode
+Date: Mon, 30 Jan 2006 19:17:53 +0100
+Message-ID: <43DE5851.33E01B71@free.fr>
+References: <5.2.1.1.0.20060129225800.0117b6e8@pop.av.eastlink.ca>
+		<d5d4185b0601291929r3193867nd1e8292455427be2@mail.gmail.com>
+		<Pine.LNX.4.63.0601300547050.1325@ve1drg.ampr.org> <1138629532.7628.2.camel@CO>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 Return-path: <linux-hams-owner@vger.kernel.org>
 Sender: linux-hams-owner@vger.kernel.org
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; format="flowed"; charset="us-ascii"; reply-type="original"
+Content-Type: text/plain; charset="iso-8859-1"
 To: linux-hams@vger.kernel.org
 
-This should do what you want....
+"Wilson G. Hein" wrote :
 
-kisson:
+> Easiest way is to use minicom (terminal program) to make the changes =
+in
+> the tnc. There maybe ways to do this using echo to send data to the
+> serial line (/dev/ttyS0), I find it just as easy to use minicom.
 
-#!/bin/bash
-#
-#  Simple Script to put TNC's into KISS mode or
-#  take them out of KISS mode.
-#
-BAUD="9600"
+(1) To exit:
 
-/bin/stty $BAUD < /dev/ttyS0
-/bin/echo -e "kiss on\rrestart\r" > /dev/ttyS0
-/bin/sleep 2
+echo "Exiting KISS mode on port COM1"
+echo -e "\300\377\300\r" >/dev/ttyS0
 
-kissoff
+(2) To enter again, the same kind of script might work with KPC-9612 (n=
+ot tested):
 
-#!/bin/bash
-#
-#  Simple Script to put TNC's into KISS mode or
-#  take them out of KISS mode.
-#
-BAUD="9600"
+echo "Entering KISS mode on port COM1"
+echo -e "INTFACE KISS\r" >/dev/ttyS0
 
-stty $BAUD < /dev/ttyS0
-echo -e "\r\xC0\xFF\r" > /dev/ttyS0
-sleep 2
+Then do a reset.
 
-Substitute the appropriate command in parantheses for your brand of TNC. 
-The above
-works on MFJ's.
+--
+73 G=E9rard F6FGZ
 
-73's
 
-Albert - WB7AWL
- 
 
+-
+To unsubscribe from this list: send the line "unsubscribe linux-hams" i=
+n
+the body of a message to majordomo@vger.kernel.org
+More majordomo info at  http://vger.kernel.org/majordomo-info.html
