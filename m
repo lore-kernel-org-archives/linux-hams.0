@@ -1,52 +1,37 @@
-From: "Curt, WE7U" <archer@eskimo.com>
+From: Oliver Hohlfeld <Oliver.Hohlfeld@web.de>
 Subject: Re: tncs and kiss mode
-Date: Mon, 30 Jan 2006 13:08:19 -0800 (PST)
-Message-ID: <Pine.SUN.4.58.0601301303330.7020@eskimo.com>
-References: <5.2.1.1.0.20060129225800.0117b6e8@pop.av.eastlink.ca> 
- <d5d4185b0601291929r3193867nd1e8292455427be2@mail.gmail.com> 
- <Pine.LNX.4.63.0601300547050.1325@ve1drg.ampr.org> <1138629532.7628.2.camel@CO>
- <43DE5851.33E01B71@free.fr> <43DE7B4B.5040509@jnos.org>
-Reply-To: "Curt Mills, WE7U" <archer@eskimo.com>
+Date: Mon, 30 Jan 2006 22:37:03 +0100
+Message-ID: <200601302237.05868.Oliver.Hohlfeld@web.de>
+References: <5.2.1.1.0.20060129225800.0117b6e8@pop.av.eastlink.ca> <9923fd660601301230w15ab6f53ufb50ca0d78af4065@mail.gmail.com> <9923fd660601301248r49d34f64g76dc09246dbad341@mail.gmail.com>
 Mime-Version: 1.0
+Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <43DE7B4B.5040509@jnos.org>
+In-Reply-To: <9923fd660601301248r49d34f64g76dc09246dbad341@mail.gmail.com>
+Content-Disposition: inline
 Sender: linux-hams-owner@vger.kernel.org
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: TEXT/PLAIN; charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-To: Bill Vodall WA7NWP <wa7nwp@jnos.org>
-Cc: linux-hams@vger.kernel.org
+Content-Type: text/plain; charset="us-ascii"
+To: linux-hams@vger.kernel.org
 
-On Mon, 30 Jan 2006, Bill Vodall WA7NWP wrote:
+Hi,
 
->
-> Once kissattach has grabbed a serial port, it's apparently not possible
-> to do the "echo's" or minicom operations to that port without killing
-> the kissattach.
+> Ok, I still don't know what the character values mean
 
-Here's a trick that somebody just tried with Xastir in order to
-share a serial port with another application:
+These are specific KISS Mode commands which are interpreted by the TNC.
+You can try to look them up in a KISS related document such as [1].
+Basically, the decimal value 192 stands for the end of a frame. The
+next one, 255, is the most important value to achieve your goal - this
+one exists the KISS mode. The repeated usage of Frame End at the end
+of the sequence is just a little workaround for some TNCs, as they
+'wait too long' before interpreting the frame.
 
+Cheers,
+Oliver
 
-  "Running now ok with :
+[1] http://people.qualcomm.com/karn/papers/kiss.html
 
-   tee /dev/ptyt0 /dev/ptyt1 < /dev/ttyS0 > /dev/null &
-
-   I can have now 2 software : one attached to /dev/ttyt0 and the
-   other one to ttyt1."
-
-
-Interesting trick!  I have not done this myself, but suggested it to
-him originally as something to try.
-
-We have instructions in our docs for hooking to a serial port across
-a network, but he's the first user that wanted more than one app
-trying to talk to the same serial port.
-
-Your mileage may vary.
-
---
-Curt, WE7U.   APRS Client Comparisons: http://www.eskimo.com/~archer
-"Lotto:    A tax on people who are bad at math." -- unknown
-"Windows:  Microsoft's tax on computer illiterates." -- WE7U
-"The world DOES revolve around me:  I picked the coordinate system!"
+-- 
+Oliver Hohlfeld | DO1FDK | http://www.ohohlfeld.com
+http://dk0td.afthd.tu-darmstadt.de/~do1fdk/ | www.ohohlfeld.com/gpgkey.txt
+                 - long long ago; /* in a galaxy far far away */ -
+                  - I am not a bug I am a undocumented feature -
