@@ -1,35 +1,27 @@
-From: Bill Vodall <wa7nwp@jnos.org>
-Subject: Re: Net2kiss - multiple ports
-Date: Wed, 22 Feb 2006 10:11:30 -0600 (CST)
-Message-ID: <Pine.LNX.4.44.0602221009310.13424-100000@srv01.compumont.com>
-References: <200602220832.25816.pa3gcu@zeelandnet.nl>
+From: "Luigi - IK5ZUK" <ik5zuk@tiscali.it>
+Subject: LinuxNode
+Date: Wed, 22 Feb 2006 17:21:52 +0100
+Message-ID: <001101c637cc$175e7440$1501a8c0@ik5zuk.org>
 Mime-Version: 1.0
+Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <200602220832.25816.pa3gcu@zeelandnet.nl>
 Sender: linux-hams-owner@vger.kernel.org
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: TEXT/PLAIN; charset="us-ascii"
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset="us-ascii"
 To: linux-hams@vger.kernel.org
 
+Hello the list !
 
-> > Has anybody looked at tweaking net2kiss to handle multiple net streams?
-> >   This would be the reverse of mkiss...   I have two ax25 ports.  APRS
-> > and EOC.  It would be neat to be able able to merge them on to a single
-> > KISS stream with different KISS channel id's -- like the KISS output of
-> > a dual port TNC such as a KAM or 9612.
-> >
-> 
-> Its been a long tine since i used ax25 but would kissnetd not help you 
-> here.???
+I'm playing around LinuxNode (ver. 0.3.2) and when I connect the node by
+telnet, I see the following two error messages:
 
+nrconfig: port netrom not active
+rsconfig: port rose not active
 
-It looks like that's close.  I'm guessing it would be an every packet
-to every interface setup.  If kissnetd was used on two or more AXn ports,
-wouldn't everything heard on one be sent out the others?   Also it
-doesn't appear to deal with the KISS stream numbers (0..7)
+I am a relatively good linux boy, but I haven't more experience with AX.25
+on linux before...
+Can someone help me ??
 
-Thanks,
-Bill - WA7NWP
-
+73's and thanks,
+Luigi - IK5ZUK
 
