@@ -1,29 +1,41 @@
-From: Vittorio Vallero <ik1rac@yahoo.it>
-Subject: ax.25 on pocket pc
-Date: Thu, 23 Feb 2006 11:50:27 +0100 (CET)
-Message-ID: <20060223105027.46070.qmail@web25514.mail.ukl.yahoo.com>
+From: Hamish Moffatt <hamish@cloud.net.au>
+Subject: Re: Installing ham packages
+Date: Fri, 24 Feb 2006 00:10:20 +1100
+Message-ID: <20060223131020.GB8873@cloud.net.au>
+References: <Pine.LNX.4.44.0602221009310.13424-100000@srv01.compumont.com> <43FD5C52.8080808@jnos.org>
 Mime-Version: 1.0
 Return-path: <linux-hams-owner@vger.kernel.org>
+Content-Disposition: inline
+In-Reply-To: <43FD5C52.8080808@jnos.org>
 Sender: linux-hams-owner@vger.kernel.org
 List-Id: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
-To: Linux-Hams@vger.kernel.org
+To: linux-hams@vger.kernel.org
 
-Hi all,
-has anybody tried to put ax.25 and soundmodem on
-pocket pc or similar device ?
+On Wed, Feb 22, 2006 at 10:55:14PM -0800, Bill Vodall WA7NWP wrote:
+> Ok ---  where do they go.
+> 
+>  conversd goes in /opt/converd/(etc|bin...)
+>  aprsd
+>  jnos
+>  digi_ned
+> 
+> etc?
+[...]
+> What's the gospel these days?  Where should we be installing the ham 
+> packages and putting their configuration files?
 
-I've just started the process and was curios to know
-of any former success or trial. HI
+You, as the system admin, are encouraged to install into /usr/local.
 
-73s
+/usr is reserved for your distribution to use.
+/opt is reserved for third party packages (although your distribution
+might use them too). Or you could use it.
 
-de IK1RAC / WH2W 
-Vittorio
+/usr/local is definitely reserved for you to install things directly
+from source code.
 
 
-		
-___________________________________ 
-Yahoo! Messenger with Voice: chiama da PC a telefono a tariffe esclusive 
-http://it.messenger.yahoo.com
+Hamish
+-- 
+Hamish Moffatt VK3SB <hamish@debian.org> <hamish@cloud.net.au>
