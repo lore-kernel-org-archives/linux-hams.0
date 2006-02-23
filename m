@@ -1,45 +1,35 @@
-From: Bill Vodall <wa7nwp@jnos.org>
-Subject: Re: Installing ham packages
-Date: Thu, 23 Feb 2006 08:34:48 -0600 (CST)
-Message-ID: <Pine.LNX.4.44.0602230830510.5175-100000@srv01.compumont.com>
-References: <20060223131020.GB8873@cloud.net.au>
+From: "Luigi - IK5ZUK" <ik5zuk@tiscali.it>
+Subject: LinuxNode (2)
+Date: Thu, 23 Feb 2006 16:39:52 +0100
+Message-ID: <000b01c6388f$63e26ce0$1501a8c0@ik5zuk.org>
+References: <Pine.LNX.4.44.0602230830510.5175-100000@srv01.compumont.com>
 Mime-Version: 1.0
+Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <20060223131020.GB8873@cloud.net.au>
 Sender: linux-hams-owner@vger.kernel.org
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: TEXT/PLAIN; charset="us-ascii"
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset="us-ascii"
 To: linux-hams@vger.kernel.org
 
-On Fri, 24 Feb 2006, Hamish Moffatt wrote:
+Hello the list !
 
-> On Wed, Feb 22, 2006 at 10:55:14PM -0800, Bill Vodall WA7NWP wrote:
-> > Ok ---  where do they go.
-> > 
-> >  conversd goes in /opt/converd/(etc|bin...)
-> > 
-> > etc?
-> [...]
-> 
-> You, as the system admin, are encouraged to install into /usr/local.
-> 
-> /usr is reserved for your distribution to use.
-> /opt is reserved for third party packages (although your distribution
-> might use them too). Or you could use it.
-> 
-> /usr/local is definitely reserved for you to install things directly
-> from source code.
+I'm playing around LinuxNode (ver. 0.3.2) again, and now when I do the
+R(oute) command, I obtain the following error message:
+"do_nodes: read_proc_nr_nodes: No such file or directory"
+If I do the N(odes) command, I obtain the following error message:
+"do_nodes: read_proc_nr_nodes: No such file or directory"
 
-Slowly the light comes through.   This makes sense.  On my own systems
-I'd put a package, for example - conversd, in /usr/local/*.   On the
-"community Internet packet servers" around the region where I help
-out with packet stuff -- then it would be good to use /opt since that
-separates what I'm doing from local sys-admin.   Might even make sense
-to have a /opt/RADIO (or similar) for these packages..
+My LinuxNode is running alone on my system, i.e. it is not linked to any
+other LinuxNode...
 
+So, I have another question: what I can do to link my linuxnode to another
+linuxnode via internet ??
+How can I make a new link to another similar system ??
 
-Thanks Hamish and everybody for your replies.
+Is there a sysop manual for the LinuxNode's administration ??
 
-Bill - WA7NWP
+Hoping someone can help me....
+
+73's and TKS
+Luigi - IK5ZUK
 
