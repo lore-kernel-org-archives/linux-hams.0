@@ -1,28 +1,38 @@
-From: "Luigi - IK5ZUK" <ik5zuk@tiscali.it>
-Subject: Re: LinuxNode
-Date: Wed, 22 Feb 2006 22:07:00 +0100
-Message-ID: <001c01c637f3$ec5127c0$1501a8c0@ik5zuk.org>
-References: <001101c637cc$175e7440$1501a8c0@ik5zuk.org> <1140626961.8290.2.camel@oh2bns.ampr.org>
+From: Bill Vodall WA7NWP <wa7nwp@jnos.org>
+Subject: Installing ham packages
+Date: Wed, 22 Feb 2006 22:55:14 -0800
+Message-ID: <43FD5C52.8080808@jnos.org>
+References: <Pine.LNX.4.44.0602221009310.13424-100000@srv01.compumont.com>
 Mime-Version: 1.0
 Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
+In-Reply-To: <Pine.LNX.4.44.0602221009310.13424-100000@srv01.compumont.com>
 Sender: linux-hams-owner@vger.kernel.org
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"
+Content-Type: text/plain; charset="us-ascii"; format="flowed"
 To: linux-hams@vger.kernel.org
 
-Hello Tomi, hello Chuck !
 
-I've done what you suggest and now all works fine !!
+Ok ---  where do they go.
 
-Tomi, can I contact you off-list ?? I have some more question to ask you
-about LinuxNode...
+  conversd goes in /opt/converd/(etc|bin...)
 
-73's and thank you very much !
-Luigi - IK5ZUK
+  aprsd
 
-> Assuming you don't want to use NET/ROM or Rose and just want to get
-> rid of the above (warning) messages, you need to go and edit the
-> files /etc/ax25/nrports and /etc/ax25/rsports and delete or
-> comment out the definitions of the ports mentioned in the message.
+  jnos
+
+  digi_ned
+
+etc?
+
+The AX25 packages and tools config setup goes in /etc/ax25.  I like that 
+because it makes it easy to backup everything.  Copy /etc and the fruit 
+of the endless configuration battle is saved.  Hunting down packages and 
+info from /opt, /usr/local, etc is a pain.
+
+What's the gospel these days?  Where should we be installing the ham 
+packages and putting their configuration files?
+
+Thanks,
+Bill
 
