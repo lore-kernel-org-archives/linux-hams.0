@@ -1,40 +1,51 @@
-From: Curt Mills <archer@eskimo.com>
-Subject: Re: Installing ham packages
-Date: Thu, 23 Feb 2006 12:04:03 -0800 (PST)
-Message-ID: <Pine.LNX.4.58.0602231201380.18215@wapiti.we7u.net>
-References: <Pine.LNX.4.44.0602221009310.13424-100000@srv01.compumont.com>
- <43FD5C52.8080808@jnos.org>
+From: Stephane Fillod <f8cfe@free.fr>
+Subject: [ANN] Hamlib 1.2.5 released
+Date: Sun, 26 Feb 2006 23:44:32 +0100
+Message-ID: <20060226224432.GU7491@charybde.local>
 Mime-Version: 1.0
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <43FD5C52.8080808@jnos.org>
+Content-Disposition: inline
 Sender: linux-hams-owner@vger.kernel.org
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: TEXT/PLAIN; charset="us-ascii"
+Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
-To: Bill Vodall WA7NWP <wa7nwp@jnos.org>
-Cc: linux-hams@vger.kernel.org
+To: Hamlib developers <hamlib-developer@lists.sourceforge.net>
+Cc: Linux HAMs <Linux-hams@vger.kernel.org>
 
-On Wed, 22 Feb 2006, Bill Vodall WA7NWP wrote:
+Good news everyone!
 
-> The AX25 packages and tools config setup goes in /etc/ax25.  I like that
-> because it makes it easy to backup everything.  Copy /etc and the fruit of the
-> endless configuration battle is saved.  Hunting down packages and info from
-> /opt, /usr/local, etc is a pain.
-> 
-> What's the gospel these days?  Where should we be installing the ham packages
-> and putting their configuration files?
+Hamlib-1.2.5 has been released.
 
-You might want to check out the Linux Standard Base.  They install
-things in /opt, and the config files and such for each package go
-into that area as well.  If you comply with their directory
-structure it'll make it easier to port the application to LSB later
-on.  The biggest trick with LSB is getting the application compiled
-against only the LSB libraries, statically compiling in any other
-libraries that aren't part of LSB.
+Hamlib provides a unified environment for the development of radio and
+rotator control applications. Release 1.2.5 includes many improvements 
+since last official version.  
+ 
+Check it out at http://hamlib.org !  
+ 
+New in 1.2.5:
+* frontend API: support for clonable rigs 
+  - rigmem: CSV format change 
+  - rigctl: new send_cmd for protocol debugging purpose 
+  - easy USB devices support 
+* new models: AR8600, AR2700, DWT (DLL based under Windows,
+		libusb based under other OS, need test) 
+* fixes: big AOR update, AR7030, Orion, NRD-545, RX-320, 
+	 FT-817, FT-990, TS-2000, Easycomm 
+* port: BSD fix of parallel port support 
+ 
+ 
+Download pages are accessible at http://sourceforge.net/projects/hamlib  
+i386 rpms, .deb and Win32 DLL's coming soon.  
+ 
+ 
+Please, test it out and report to hamlib-developer@lists.sourceforge.net  
+Developers are also invited to join the Hamlib team by subscribing to
+this mailing list. If your favorite rig is not in the supported list,
+feel free to ask.
+ 
+Many thanks to all the developers and testers who participated
+in this release. They are listed in the AUTHORS file.
 
--- 
-Curt, WE7U.				archer at eskimo dot com
-http://www.eskimo.com/~archer
-  Lotto:  A tax on people who are bad at math. - unknown
-Windows:  Microsoft's tax on computer illiterates. - WE7U.
-The world DOES revolve around me:  I picked the coordinate system!"
+Have fun and let us know!  
+ 
+73's de Stephane - F8CFE / the Hamlib team
