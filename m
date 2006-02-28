@@ -1,33 +1,70 @@
-From: "Patrick A. Ouellette" <pat@flying-gecko.net>
+From: Ricardo Saiz Villoria <rsaizv@yahoo.es>
 Subject: Re: [ANN] Hamlib 1.2.5 released
-Date: Tue, 28 Feb 2006 16:29:02 -0500
-Message-ID: <20060228212901.GA14530@flying-gecko.net>
-References: <4403823C.2090603@yahoo.es> <9923fd660602280739j7feda442ofb1315bf5d748bc9@mail.gmail.com> <20060228210401.GA12763@flying-gecko.net> <9923fd660602281309m67c792eai32ee5b5352367e83@mail.gmail.com>
+Date: Tue, 28 Feb 2006 23:52:55 +0100
+Message-ID: <4404D447.2050609@yahoo.es>
+References: <4403823C.2090603@yahoo.es> <9923fd660602280739j7feda442ofb1315bf5d748bc9@mail.gmail.com> <20060228210401.GA12763@flying-gecko.net>
 Mime-Version: 1.0
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 Return-path: <linux-hams-owner@vger.kernel.org>
-Content-Disposition: inline
-In-Reply-To: <9923fd660602281309m67c792eai32ee5b5352367e83@mail.gmail.com>
+In-Reply-To: <20060228210401.GA12763@flying-gecko.net>
 Sender: linux-hams-owner@vger.kernel.org
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-To: Douglas Cole <doug.n7bfs@gmail.com>
-Cc: Linux HAMs <linux-hams@vger.kernel.org>
+Content-Type: text/plain; charset="iso-8859-1"; format="flowed"
+To: Linux HAMs <linux-hams@vger.kernel.org>
 
-On Tue, Feb 28, 2006 at 01:09:42PM -0800, Douglas Cole wrote:
-> but I wanted to remove that part of it, so my audio would have a
-> simpler route via VOIP/ROIP conversion, since I will already have that
-> 802.11b link why not send it all over that link...
-> 
 
-Just ran across http://www.openh323.org
 
-There is a command line H.323 client listed called OhPhone that might
-handle the audio for you.
+Patrick A. Ouellette wrote:
+> At the risk of sounding low tech, you could use a telnet/ssh session =
+to
+> the remote PC and run rigctl to change settings.  Not the flashy
+> monitoring of grig or an ncurses interface, but it would get the job
+> done.
+>=20
+> You still have to get the audio to and from the radio....
+>=20
+> 73,
+>=20
+> Pat KB8PYM
 
--- 
+It is easier than that: the hamlib can talk to grig by rpc via udp=20
+packets across a network. So the required network bandwidth is close to=
+=20
+that of the rs232 link.
 
-Patrick Ouellette                 pat@flying-gecko.net
-kb8pym@arrl.net                   Amateur Radio: KB8PYM 
-Living life to a Jimmy Buffett soundtrack
-"Crank the amp to 11, this needs more cowbell - and a llama wouldn't hurt either"
+You can control your rig in these ways:
+
+rigctl   : with commands
+grig     : graphically; grig calls rigctl in the background
+rpc.rigd : the daemon stays listening for udp packets
+followed by:
+grig -m 1901 -r <host>    : grig in local or remote machine
+or:
+rigctl -m 1901 -r <host>  : command line in local or remote machine
+
+ophone and gnomemeeting both use h.323
+
+=46or one-way audio broadcast you can use liveice/icecast and listen wi=
+th=20
+an mp3 player as xmms.
+
+73 Ricardo
+
+--=20
+Ricardo Saiz Villoria
+WEB:	http://www.qsl.net/ea1apm
+E-MAIL: mailto:rsaizv@yahoo.es
+public PGP key available at/clave p=FAblica PGP disponible en:
+http://pgp.mit.edu/
+
+
+	=09
+______________________________________________=20
+LLama Gratis a cualquier PC del Mundo.=20
+Llamadas a fijos y m=F3viles desde 1 c=E9ntimo por minuto.=20
+http://es.voice.yahoo.com=0D
+-
+To unsubscribe from this list: send the line "unsubscribe linux-hams" i=
+n
+the body of a message to majordomo@vger.kernel.org
+More majordomo info at  http://vger.kernel.org/majordomo-info.html
