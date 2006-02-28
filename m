@@ -1,92 +1,69 @@
-From: Ricardo Saiz Villoria <rsaizv@yahoo.es>
+From: "Douglas Cole" <doug.n7bfs@gmail.com>
 Subject: Re: [ANN] Hamlib 1.2.5 released
-Date: Mon, 27 Feb 2006 23:50:36 +0100
-Message-ID: <4403823C.2090603@yahoo.es>
+Date: Tue, 28 Feb 2006 07:39:37 -0800
+Message-ID: <9923fd660602280739j7feda442ofb1315bf5d748bc9@mail.gmail.com>
+References: <4403823C.2090603@yahoo.es>
 Mime-Version: 1.0
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Content-Transfer-Encoding: 7BIT
 Return-path: <linux-hams-owner@vger.kernel.org>
+In-Reply-To: <4403823C.2090603@yahoo.es>
+Content-Disposition: inline
 Sender: linux-hams-owner@vger.kernel.org
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="iso-8859-1"; format="flowed"
-To: Linux HAMs <Linux-hams@vger.kernel.org>
+Content-Type: text/plain; charset="us-ascii"
+To: Ricardo Saiz Villoria <rsaizv@yahoo.es>
+Cc: Linux HAMs <linux-hams@vger.kernel.org>
+
+On 2/27/06, Ricardo Saiz Villoria <rsaizv@yahoo.es> wrote:
+> Hello
+>
+> I am trying to do exactly the same thing. I cannot drill the walls in my
+> apartment so I will leave my rig (yaesu 817) close to the antenna, with
+> its serial port and mic/spk connected to an old pentium.
+>
+> I have managed to make grig-hamlib work under debian 3.1 with my ft 817,
+> see: http://sourceforge.net/forum/forum.php?thread_id=1449631&forum_id=80395
+
+I like the idea of Grig, but I think it requires running X and Gnome,
+which I had hoped not to do, since what I am going to be doing will be
+on a low bandwidth link, but I will give it a look and see if I can
+run it via an VNC session, I was hoping to get something going with an
+ncurses interface so that X did not have to be running...
+
+>
+> A straight-through way to solve the audio link is gnomemeeting, which
+> works very fine in a lan. You can even have the rig, swr meter or
+> anything else monitored with a webcam. There are other ways to send
+> audio between linux machines through a network, in a kind of "virtual
+> soundcard", but I have not explored them.
+>
+this is something I have considered, but then for that matter there
+are allot of other ways to do it too, I was hoping for something that
+did not require too many proggies 'strung' together, so that I could
+make it run fairly easy in an emergency...
 
 
-Douglas Cole wrote:
+> As an alternative, you could use a wireless rs232 link via ISM
+> transceivers and you could also send the audio with the help of a
+> cordless phone just like here:
+>
+> http://www.grynx.com/index.php/projects/siemens-skype/
 
- > Thanks so much for yours and others hard work Stephane, I wish I was=
- a
- > programmer and could actually do something with Hamlib, but since I =
-am
- > just a Linux user, and still have not figured out how to send comman=
-ds
- > to my radio's (FT100d and FT847) using minicom, I am not able to
- > utilize them (hamlib)...
- >
- > But then again, I may be missing something, and just have not spent
- > enough time on this, but what I would like is to remotely control my
- > radio's with a graphical interface (ncurses) and have a PTT button o=
-n
- > the screen and running some sort of VOIP software so I can remotely
- > control and talk through my desktop pc via 802.11x  to my radio
- > remotely located at a location in an area where I can have large
- > antenna's .
- >
- > But then again, I guess I just need to spend more time on it, I
- > suppose all the tools are there, I just need to learn how to use
- > them...
- >
- > Any pointers on tools that may allow me to fulfill my dream?
- >
- > Oh and they have to be Linux tools, not Microsoft ones...
- >
- > tia for any input!
- > Doug
- > N7BFS
- > -
+Since the proximity of the FT100d would be about 10 miles or greater,
+I don't think the above would work for me, but is worth looking at, my
+goal is to use an private 802.11b link via vpn tunnel, so all I would
+have to link to the remote site would be TCP/IP, and then at the site
+would be the pc and the radio and the interface between them. I was
+hoping there might be something out there similar to what is being
+done in the Microsoft Windows world with remote controlled radio's via
+TCP/IP, but I guess its just not there with Linux yet.
 
+I can't complain though, as you have indicated, all the tools are
+there, I just need to figure out how to glue them all together to get
+the results I need...
 
-Hello
+Thanks for the input!
 
-I am trying to do exactly the same thing. I cannot drill the walls in m=
-y
-apartment so I will leave my rig (yaesu 817) close to the antenna, with
-its serial port and mic/spk connected to an old pentium.
-
-I have managed to make grig-hamlib work under debian 3.1 with my ft 817=
-,=20
-see: http://sourceforge.net/forum/forum.php?thread_id=3D1449631&forum_i=
-d=3D80395
-
-A straight-through way to solve the audio link is gnomemeeting, which=20
-works very fine in a lan. You can even have the rig, swr meter or=20
-anything else monitored with a webcam. There are other ways to send=20
-audio between linux machines through a network, in a kind of "virtual=20
-soundcard", but I have not explored them.
-
-As an alternative, you could use a wireless rs232 link via ISM=20
-transceivers and you could also send the audio with the help of a=20
-cordless phone just like here:
-
-http://www.grynx.com/index.php/projects/siemens-skype/
-
-regards
-
---=20
-Ricardo Saiz Villoria
-WEB:    http://www.qsl.net/ea1apm
-E-MAIL: mailto:ea1apm@yahoo.es
-public PGP key available at/clave p=FAblica PGP disponible en:
-http://pgp.mit.edu/
-
-
-
-	=09
-______________________________________________=20
-LLama Gratis a cualquier PC del Mundo.=20
-Llamadas a fijos y m=F3viles desde 1 c=E9ntimo por minuto.=20
-http://es.voice.yahoo.com=0D
--
-To unsubscribe from this list: send the line "unsubscribe linux-hams" i=
-n
-the body of a message to majordomo@vger.kernel.org
-More majordomo info at  http://vger.kernel.org/majordomo-info.html
+73
+Doug
+N7BFS
