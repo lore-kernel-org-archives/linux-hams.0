@@ -1,43 +1,55 @@
-From: "Curt, WE7U" <archer@eskimo.com>
-Subject: Re: Hard Drive Ghosting
-Date: Fri, 3 Mar 2006 07:22:14 -0800 (PST)
-Message-ID: <Pine.SUN.4.58.0603030719200.1056@eskimo.com>
-References: <6.1.2.0.2.20060302182940.025531c0@mail.sasktel.net>
- <9923fd660603021700j12b44602xc4e329d71ed7927a@mail.gmail.com>
- <44079AEC.2070905@wa7v.com>
-Reply-To: "Curt Mills, WE7U" <archer@eskimo.com>
-Mime-Version: 1.0
+From: Bob Nielsen <nielsen@oz.net>
+Subject: Error compiling gmfsk
+Date: Sat, 4 Mar 2006 16:24:23 -0800
+Message-ID: <73DDFD02-BF11-4AE3-922D-56A19AD410EE@oz.net>
+Mime-Version: 1.0 (Apple Message framework v746.2)
+Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <44079AEC.2070905@wa7v.com>
 Sender: linux-hams-owner@vger.kernel.org
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: TEXT/PLAIN; charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-To: Brett Mueller <wa7v@wa7v.com>
-Cc: linux-hams@vger.kernel.org, appld@sasktel.net
+Content-Type: text/plain; charset="us-ascii"; delsp="yes"; format="flowed"
+To: linux-hams@vger.kernel.org
 
-On Thu, 2 Mar 2006, Brett Mueller wrote:
+I tried to compile gmfsk using the latest hamlib, but get the  
+following error:
 
-> As Curt and Doug both mention, "dd" is perfect for doing sector-level
-> copying under native Linux.  "cp -a" and/or "rsync -a" (if you are
-> updating an archive) are good tools for copying at the filesystem level...
+make[3]: Entering directory `/home/n7xy/gmfsk-0.6/src/mt63'
+if g++ -DHAVE_CONFIG_H -I. -I. -I../.. -DPACKAGE_DATA_DIR=\""/usr/ 
+local/share"\" -DPACKAGE_LOCALE_DIR=\""/usr/local/share/locale"\" - 
+DORBIT2=1 -pthread -I/usr/local/include -I/usr/include/libgnomeui-2.0  
+-I/usr/include/libgnome-2.0 -I/usr/include/libgnomecanvas-2.0 -I/usr/ 
+include/gtk-2.0 -I/usr/include/libart-2.0 -I/usr/include/gconf/2 -I/ 
+usr/include/libbonoboui-2.0 -I/usr/include/gnome-vfs-2.0 -I/usr/lib/ 
+gnome-vfs-2.0/include -I/usr/include/gnome-keyring-1 -I/usr/include/ 
+glib-2.0 -I/usr/lib/glib-2.0/include -I/usr/include/orbit-2.0 -I/usr/ 
+include/libbonobo-2.0 -I/usr/include/bonobo-activation-2.0 -I/usr/ 
+include/pango-1.0 -I/usr/include/freetype2 -I/usr/lib/gtk-2.0/include  
+-I/usr/include/atk-1.0 -I/usr/include/cairo -I/usr/include/libxml2 - 
+I../../src -I../../src/misc    -g -O2 -Wall -MT dsp.o -MD -MP -MF  
+".deps/dsp.Tpo" \
+   -c -o dsp.o `test -f 'dsp.cc' || echo './'`dsp.cc; \
+then mv -f ".deps/dsp.Tpo" ".deps/dsp.Po"; \
+else rm -f ".deps/dsp.Tpo"; exit 1; \
+fi
+dsp.h: In function 'void LowPass2(typeInp, LowPass2elem&, typeW,  
+typeW, typeW)':
+dsp.h:558: error: 'Out' was not declared in this scope
+dsp.h: In function 'void LowPass2(typeInp, LowPass2elem&,  
+LowPass2weight&)':
+dsp.h:565: error: 'Weigth' was not declared in this scope
+dsp.h:566: error: 'Out' was not declared in this scope
+make[3]: *** [dsp.o] Error 1
+make[3]: Leaving directory `/home/n7xy/gmfsk-0.6/src/mt63'
+make[2]: *** [all-recursive] Error 1
+make[2]: Leaving directory `/home/n7xy/gmfsk-0.6/src'
+make[1]: *** [all-recursive] Error 1
+make[1]: Leaving directory `/home/n7xy/gmfsk-0.6'
+make: *** [all] Error 2
 
-I've done it via booting from a Tom's Root/Boot floppy disk, copying
-a 6.4GB drive to an identical 6.4GB drive.
+Any ideas?
 
-I might not get the command exactly right here, but it was something
-like this
+Bob, N7XY
 
-    dd if=/dev/hda of=/dev/hdb bs=512
 
-It copies every sector until it runs out of sectors, so it copies
-all of the empty space, windows partitions, linux partitions, boot
-sectors, etc.  From the hda drive to the hdb drive in the above
-command, in case that isn't obvious (don't want to copy in the wrong
-direction now do we?).
 
---
-Curt, WE7U.   APRS Client Comparisons: http://www.eskimo.com/~archer
-"Lotto:    A tax on people who are bad at math." -- unknown
-"Windows:  Microsoft's tax on computer illiterates." -- WE7U
-"The world DOES revolve around me:  I picked the coordinate system!"
+
