@@ -1,55 +1,35 @@
-From: Hamish Moffatt <hamish@cloud.net.au>
-Subject: Re: Error compiling gmfsk
-Date: Sun, 5 Mar 2006 12:58:33 +1100
-Message-ID: <20060305015833.GA5261@cloud.net.au>
-References: <73DDFD02-BF11-4AE3-922D-56A19AD410EE@oz.net>
+From: Paul Lewis <paul@skywaves.demon.co.uk>
+Subject: KPTC RPM required for MANDRIVA 2005LE
+Date: Sun, 5 Mar 2006 17:48:59 +0000
+Message-ID: <Aca0hFBLSyCEFwbQ@skywaves.demon.co.uk>
 Mime-Version: 1.0
 Return-path: <linux-hams-owner@vger.kernel.org>
-Content-Disposition: inline
-In-Reply-To: <73DDFD02-BF11-4AE3-922D-56A19AD410EE@oz.net>
 Sender: linux-hams-owner@vger.kernel.org
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"
+Content-Type: text/plain; charset="us-ascii"; format="flowed"
 Content-Transfer-Encoding: 7bit
 To: linux-hams@vger.kernel.org
 
-On Sat, Mar 04, 2006 at 04:24:23PM -0800, Bob Nielsen wrote:
-> I tried to compile gmfsk using the latest hamlib, but get the  
-> following error:
+Hello All
 
-> dsp.h: In function 'void LowPass2(typeInp, LowPass2elem&, typeW,  
-> typeW, typeW)':
-> dsp.h:558: error: 'Out' was not declared in this scope
-[..]
+Can anyone point me to were I can get hold of KPTC program in RPM format 
+for running under MANDRIVA(Mandrake) 2005LE on a laptop. (My first 
+experience of RPM Distributions and X) (As I have run Slackware non 
+windows  system for 10+ years)
 
-Here's the patch that Debian uses for this. The error is due to the
-newer g++ which is stricter.
+Have not been able to compile it. So giving up as many search engine 
+hits (for missing KDE headers) reported by others trying to compile 
+other source code on this distribution.
 
-The 0.7pre1 release of gmfsk does not need this patch.
+I do have the development code installed during the installation of this 
+distribution.  Following some advice I read, doing urmpi kdebase-devel 
+and for kdelibs-devel  seem to error with missing files off ISO disk 
+images.
 
-Hamish
+Or my other choice is to wait until a later version 2006 (i586 32 bit) 
+becomes available.
 
---- gmfsk-0.6.orig/src/mt63/dsp.h
-+++ gmfsk-0.6/src/mt63/dsp.h
-@@ -555,15 +555,15 @@
-  inline void LowPass2(typeInp Inp, LowPass2elem &Elem,
- 		typeW W1, typeW W2, typeW W5)
- { double Sum, Diff;
--  Sum=Elem.Mid+Elem.Out; Diff=Elem.Mid-Elem.Out; Elem.Mid+=W2*Inp-W1*Sum; Out+=W5*Diff; }
-+  Sum=Elem.Mid+Elem.Out; Diff=Elem.Mid-Elem.Out; Elem.Mid+=W2*Inp-W1*Sum; Elem.Out+=W5*Diff; }
- 
- template <class typeInp>
-  inline void LowPass2(typeInp Inp, LowPass2elem &Elem, LowPass2weight &Weight)
- { double Sum, Diff;
-   Sum=Elem.Mid+Elem.Out;
-   Diff=Elem.Mid-Elem.Out;
--  Elem.Mid+=Weight.W2*Inp-Weigth.W1*Sum;
--  Out+=Weight.W5*Diff; }
-+  Elem.Mid+=Weight.W2*Inp-Weight.W1*Sum;
-+  Elem.Out+=Weight.W5*Diff; }
- 
- /*
- inline void LowPass2(float Inp, double &Mid, double &Out,
+Paul g4apl
 
 -- 
-Hamish Moffatt VK3SB <hamish@debian.org> <hamish@cloud.net.au>
+paul@skywaves.demon.co.uk
