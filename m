@@ -1,32 +1,33 @@
-From: Doug <appld@sasktel.net>
-Subject: Ax25 start up
-Date: Mon, 06 Mar 2006 10:49:28 -0600
-Message-ID: <6.1.2.0.2.20060306103220.03189fd0@mail.sasktel.net>
+From: "Douglas Cole" <doug.n7bfs@gmail.com>
+Subject: Re: Hard Drive Ghosting .. Thanks
+Date: Mon, 6 Mar 2006 11:59:34 -0800
+Message-ID: <9923fd660603061159q5d2238c4k7fe91a176903d3ca@mail.gmail.com>
+References: <6.1.2.0.2.20060306101137.024943f0@mail.sasktel.net>
 Mime-Version: 1.0
 Content-Transfer-Encoding: 7BIT
 Return-path: <linux-hams-owner@vger.kernel.org>
+In-Reply-To: <6.1.2.0.2.20060306101137.024943f0@mail.sasktel.net>
+Content-Disposition: inline
 Sender: linux-hams-owner@vger.kernel.org
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"; format="flowed"
-To: linux-hams@vger.kernel.org
+Content-Type: text/plain; charset="us-ascii"
+To: Doug <appld@sasktel.net>
+Cc: linux-hams@vger.kernel.org
 
-I have managed to re configure the 2.4 kernel for Ham Radio. The next
-problem I must overcome, is the start up of the Ax25 stuff. I loaded
-the Ax25,Netrom, and Mkiss as modules. I load these modules using the
-etc/rc.d/ rc.local file. However during the boot process, when it comes
-to Ax25 it flashes the failed message. When I try to copy packets
-using the /usr/bin/ listen command it tells me the ax25 port information
-is not configured. If I go into /etc/rc.d/ and run the file rc.ax25 in
-a terminal, the listen command then works as it should. It would appear
-that the modules are loaded after the initialization of the rc.ax25
-file. The question is, how can I start the modules earlier or start
-the rc.ax25 after the modules?? All necessary RPMs have been previously
-loaded.
+On 3/6/06, Doug <appld@sasktel.net> wrote:
+> I want to thank all those who responded to my request for help
+> on hard drive ghosting. I have sufficient information now to
+> give it a try. I greatly appreciate your help.
+>
+> 73
+> Doug VE5DA
+>
+Just remember to get back to the list with what you ended up doing and
+how it worked for you, that way the rest of us and those out there in
+the future can learn too ;^}
 
-I am using RH8 and kernel 2.4.18-14 on a Compaq PII/400.
+73
 
-Any suggestions would be appreciated.
-
-Doug VE5DA
-
-
+--
+Doug
+N7BFS
