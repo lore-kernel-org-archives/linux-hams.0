@@ -1,55 +1,22 @@
-From: Paul Lewis <paul@skywaves.demon.co.uk>
-Subject: Re: KPTC RPM required for MANDRIVA 2005LE
-Date: Mon, 6 Mar 2006 23:11:21 +0000
-Message-ID: <TCvQ2YBZGMDEFwxr@skywaves.demon.co.uk>
-References: <Aca0hFBLSyCEFwbQ@skywaves.demon.co.uk>
- <440B57E0.3020702@ccr.jussieu.fr>
+From: "David D. Hagood" <wowbagger@sktc.net>
+Subject: Band dropdown missing in GMFSK
+Date: Mon, 06 Mar 2006 21:11:58 -0600
+Message-ID: <440CF9FE.7050206@sktc.net>
 Mime-Version: 1.0
+Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <440B57E0.3020702@ccr.jussieu.fr>
 Sender: linux-hams-owner@vger.kernel.org
 List-Id: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"; format="flowed"
-Content-Transfer-Encoding: 7bit
-To: Bernard Pidoux <pidoux@ccr.jussieu.fr>
-Cc: linux-hams@vger.kernel.org
+To: linux-hams@vger.kernel.org
 
-Ok Bernard
+I'm seeing a strange thing with GMFSK V0.71 - the band dropdown is 
+missing. I'd not noticed it until I got my Icom tied into Hamlib, and 
+noticed that I couldn't change the band from the program. Sure, I can 
+spin the knob, but...
 
-Many thanks for the advice. Will revisit this again and see how I get 
-on. Thanks for the pointers.
-Paul
+Also, when I then create a log entry to XLog, the band is not set. 
+Again, I could set the band manually, but ....
 
-In message <440B57E0.3020702@ccr.jussieu.fr>, Bernard Pidoux 
-<pidoux@ccr.jussieu.fr> writes
->Paul Lewis wrote :
->> Hello All
->>  Can anyone point me to were I can get hold of KPTC program in RPM 
->>format  for running under MANDRIVA(Mandrake) 2005LE on a laptop. (My 
->>first  experience of RPM Distributions and X) (As I have run Slackware 
->>non  windows  system for 10+ years)
->>  Have not been able to compile it. So giving up as many search engine 
->>hits (for missing KDE headers) reported by others trying to compile 
->>other source code on this distribution.
->
->KDE headers are part of libkdecore4-devel that you should obtain using 
->the following command from a root Konsol terminal :
->
->urpmi libkdecore4-devel
->
->To be sure I just dowloaded kptc-0.2 from http://kptc.sourceforge.net/ 
->and after installing the development library above I was able to 
->compile and run it on a Mandriva 2006 official (cooker).
->
->>  I do have the development code installed during the installation of 
->>this  distribution.  Following some advice I read, doing urmpi 
->>kdebase-devel  and for kdelibs-devel  seem to error with missing files 
->>off ISO disk  images.
->>  Or my other choice is to wait until a later version 2006 (i586 32 
->>bit)  becomes available.
->>  Paul g4apl
->>
->
-
--- 
-paul@skywaves.demon.co.uk
+Is this just because of some silly thing when I rebuilt the source RPM, 
+or is this a problem with the .71pre version?
