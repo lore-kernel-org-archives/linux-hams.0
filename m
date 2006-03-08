@@ -1,38 +1,41 @@
-From: "David D. Hagood" <wowbagger@sktc.net>
-Subject: Re: Band dropdown missing in GMFSK
-Date: Tue, 07 Mar 2006 17:35:05 -0600
-Message-ID: <440E18A9.30407@sktc.net>
-References: <440CF9FE.7050206@sktc.net> <1141741387.4175.11.camel@oh2bns.ampr.org>
+From: Doug <appld@sasktel.net>
+Subject: Ax25 start up
+Date: Tue, 07 Mar 2006 21:44:56 -0600
+Message-ID: <6.1.2.0.2.20060307213820.031c78c8@mail.sasktel.net>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 7BIT
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <1141741387.4175.11.camel@oh2bns.ampr.org>
 Sender: linux-hams-owner@vger.kernel.org
 List-Id: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"; format="flowed"
-To: Tomi Manninen <oh2bns@sral.fi>
-Cc: linux-hams@vger.kernel.org
+To: linux-hams@vger.kernel.org
 
-Tomi Manninen wrote:
+I have managed to re configure the 2.4 kernel for Ham Radio. The next
+problem I must overcome, is the start up of the Ax25 stuff. I loaded
+the Ax25,Netrom, and Mkiss as modules. I load these modules using the
+etc/rc.d/ rc.local file. However during the boot process, when it comes
+to Ax25 it flashes the failed message. When I try to copy packets
+using the /usr/bin/ listen command it tells me the ax25 port information
+is not configured. If I go into /etc/rc.d/ and run the file rc.ax25 in
+a terminal, the listen command then works as it should. It would appear
+that the modules are loaded after the initialization of the rc.ax25
+file. The question is, how can I start the modules earlier or start
+the rc.ax25 after the modules?? All necessary RPMs have been previously
+loaded.
 
-> Check Settings->Preferences->Hamlib->Features->Set QSO data frequency.
-That was it.
-> Note that gMFSK won't actually set the band. 
-And that was my misunderstanding - that given hamlib gmfsk would set the 
-frequency if asked. Another good reason why "Expected results" is so 
-important on a bug report - to see if the user is expecting something 
-other than what the program is designed to do.
+I am using RH8 and kernel 2.4.18-14 on a Compaq PII/400.
+
+---------------
+I have come up with a work around solution. It appears the error on
+the original boot up when the ax25 stuff is being loaded or looked at,
+the system was looking for mkiss to set up my ports. mkiss was set to
+run via modprobe in the /etc/rd.d/rc.local file along with ax25 and
+netrom. I moved the command modprobe mkiss to the top of the
+/etc/rc.d/rc.ax25 file and now the system boots up just fine with
+no error flag and the listen command works as it should. Can anyone
+see a problem with this solution??
+
+Cheers
+Doug VE5DA
 
 
->> Also, when I then create a log entry to XLog, the band is not set. 
->> Again, I could set the band manually, but ....
-> 
-> Hmm.. This seems to work for me, although the behaviour depends on
-
-I found this one out - I needed to turn OFF using a Optionmenu for the 
-band, and use an editbox - that way the real frequency gets written to 
-the log.
-
-Thanks a log, er, lot!
-
-73 de N0YKG
