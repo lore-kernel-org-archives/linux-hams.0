@@ -1,53 +1,43 @@
-From: Bill Vodall WA7NWP <wa7nwp@jnos.org>
-Subject: Re: Serial extenion cable...
-Date: Thu, 09 Mar 2006 09:13:29 -0800
-Message-ID: <44106239.1000902@jnos.org>
-References: <!&!AAAAAAAAAAAYAAAAAAAAAOEHnGq+Wf1PksDlzJEv6TzCgAAAEAAAABhvz93VzM5Ktcs9EAQKUtMBAAAAAA==@arrl.net> <Pine.SUN.4.58.0602210817400.27517@eskimo.com> <440FBEBF.9020908@nwp.ampr2.net> <Pine.SUN.4.58.0603090657250.12513@eskimo.com>
+From: Bill Vodall <wa7nwp@jnos.org>
+Subject: Re: Serial extenion cable - now CONVAPRS
+Date: Fri, 10 Mar 2006 09:20:22 -0600 (CST)
+Message-ID: <Pine.LNX.4.44.0603100910580.3966-100000@srv01.compumont.com>
+References: <440FBEBF.9020908@nwp.ampr2.net>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <Pine.SUN.4.58.0603090657250.12513@eskimo.com>
+In-Reply-To: <440FBEBF.9020908@nwp.ampr2.net>
 Sender: linux-hams-owner@vger.kernel.org
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"; format="flowed"
+Content-Type: TEXT/PLAIN; charset="us-ascii"
+Content-Transfer-Encoding: 7bit
 To: linux-hams@vger.kernel.org
 
+On Wed, 8 Mar 2006, Bill wrote:
 
-
-Curt, WE7U wrote:
-> On Wed, 8 Mar 2006, Bill wrote:
 > 
+> for an "serial tunnel" has again come up.
 > 
->>Sorry to bug folks again if I brought this up last summer, but the need
->>for an "serial tunnel" has again come up.
->>
-> Answered in Xastir FAQ, question 4.20.  "netcat" is probably your
-> best bet.
 
-Faq is at: 
-<http://cvs.sourceforge.net/viewcvs.py/xastir/xastir/FAQ?&view=auto>
+It looks like the serial tunnels are going to work.  This is
+going to really open up the network around here now that we can
+interlink linux boxes and RF ports.  Far out!  (Best of all,
+it's more ammo to 'blame' Curt - after all, he pointed me
+at the write up in Xastir...)
 
-Netcat puts a serial or parallel port on an IP channel.  Useful but not 
-what I needed.  'remserial' from the Xastir faq was the solution and 
-it's working.
+Time to move on to the next project..  (Next - singular?  Hah!
+The list of projects is in the hundreds and growing daily...)
 
-   http://lpccomp.bc.ca/remserial/
+Anyway, thanks to the AXCONV tool and ease of setting up CONVERS
+nodes, use is growing here.  Now to add the next twist and
+connect it to APRS chat.  The idea is that CONVERS port 9800, for
+example, would be broadcast locally as an APRS message group.
+Likewise, messages to the message group on RF would be sent
+to that channel on the CONVERS system.  So the question
+at hand is - does anyone here have or know of any existing
+scripts or 'bots' for the CONVERS system to use as a
+building block starting place for this CONVAPRS project?
 
-Here's a packet from the remote YYDIGI Linux box as heard on the 
-'listen' screen of my miniItx.
-
----
-axyy: fm KB7UVC-3 to APW251 via OLY* KOPEAK* WIDE2 ctl UIv id=F0(Text) 
-len 37 08:51:11
-0000  Mason County WA EOC Computer On-LineM
----
-
-More notes on the wiki:
-
-   http://wiki.ampr2.net/jnos/RemoteSerial
-
-Thanks for the bandwidth.  Always good to start a day with a step forward.
-
-73
+Thanks again!
 Bill - WA7NWP
+
 
