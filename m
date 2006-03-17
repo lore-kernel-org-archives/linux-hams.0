@@ -1,43 +1,43 @@
-From: Bill Vodall <wa7nwp@jnos.org>
-Subject: Re: Serial extenion cable - now CONVAPRS
-Date: Fri, 10 Mar 2006 09:20:22 -0600 (CST)
-Message-ID: <Pine.LNX.4.44.0603100910580.3966-100000@srv01.compumont.com>
-References: <440FBEBF.9020908@nwp.ampr2.net>
+From: Laurent Wandrebeck <l.wandrebeck@free.fr>
+Subject: [patch 1/1] request_region() return value missing check
+Date: Fri, 17 Mar 2006 13:30:40 +0100
+Message-ID: <200603171330.40614.l.wandrebeck@free.fr>
 Mime-Version: 1.0
+Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <440FBEBF.9020908@nwp.ampr2.net>
+Content-Disposition: inline
 Sender: linux-hams-owner@vger.kernel.org
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: TEXT/PLAIN; charset="us-ascii"
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset="us-ascii"
 To: linux-hams@vger.kernel.org
 
-On Wed, 8 Mar 2006, Bill wrote:
+Hi,
+Here is a simple patch against 2.6.16-rc6-git8.
+Is adds checks about return value for two request_region() in drivers/net/hamradio/scc.c.
+Please CC me on replies.
+Regards.
 
-> 
-> for an "serial tunnel" has again come up.
-> 
+Signed-off-by: Laurent Wandrebeck <l.wandrebeck@free.fr>
 
-It looks like the serial tunnels are going to work.  This is
-going to really open up the network around here now that we can
-interlink linux boxes and RF ports.  Far out!  (Best of all,
-it's more ammo to 'blame' Curt - after all, he pointed me
-at the write up in Xastir...)
+--- linux-2.6.16-rc6/drivers/net/hamradio/scc.c.ori     2006-03-17 13:11:52.000000000 +0100
++++ linux-2.6.16-rc6/drivers/net/hamradio/scc.c 2006-03-17 13:09:38.000000000 +0100
+@@ -1815,8 +1815,16 @@ static int scc_net_ioctl(struct net_devi
 
-Time to move on to the next project..  (Next - singular?  Hah!
-The list of projects is in the hundreds and growing daily...)
+                                if (found)
+                                {
+-                                       request_region(SCC_Info[2*Nchips+chan].ctrl, 1, "scc ctrl");
+-                                       request_region(SCC_Info[2*Nchips+chan].data, 1, "scc data");
++                                       if (!request_region(SCC_Info[2*Nchips+chan].ctrl, 1, "scc ctrl")) {
++                                           printk(KERN_ERR "scc: unable to reserve region %d for scc ctrl\n",
++                                                            SCC_Info[2*Nchips+chan].ctrl);
++                                           return -EBUSY;
++                                       }
++                                       if (!request_region(SCC_Info[2*Nchips+chan].data, 1, "scc data")) {
++                                           printk(KERN_ERR "scc: unable to reserve region %d for scc data\n",
++                                                            SCC_Info[2*Nchips+chan].data);
++                                           return -EBUSY;
++                                       }
 
-Anyway, thanks to the AXCONV tool and ease of setting up CONVERS
-nodes, use is growing here.  Now to add the next twist and
-connect it to APRS chat.  The idea is that CONVERS port 9800, for
-example, would be broadcast locally as an APRS message group.
-Likewise, messages to the message group on RF would be sent
-to that channel on the CONVERS system.  So the question
-at hand is - does anyone here have or know of any existing
-scripts or 'bots' for the CONVERS system to use as a
-building block starting place for this CONVAPRS project?
-
-Thanks again!
-Bill - WA7NWP
-
+                                        if (Nchips+chan != 0 &&
+                                            scc_net_alloc(device_name,
 
