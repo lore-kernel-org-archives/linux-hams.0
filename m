@@ -1,43 +1,62 @@
-From: Laurent Wandrebeck <l.wandrebeck@free.fr>
-Subject: [patch 1/1] request_region() return value missing check
-Date: Fri, 17 Mar 2006 13:30:40 +0100
-Message-ID: <200603171330.40614.l.wandrebeck@free.fr>
+From: Ralf Baechle DL5RB <ralf@linux-mips.org>
+Subject: [AX.25] Fix potencial memory hole.
+Date: Sun, 19 Mar 2006 12:42:46 +0000
+Message-ID: <20060319124246.GA6261@linux-mips.org>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
 Content-Disposition: inline
 Sender: linux-hams-owner@vger.kernel.org
 List-Id: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
-To: linux-hams@vger.kernel.org
+Content-Transfer-Encoding: 7bit
+To: "David S. Miller" <davem@davemloft.net>, netdev@vger.kernel.org, linux-hams@vger.kernel.org
 
-Hi,
-Here is a simple patch against 2.6.16-rc6-git8.
-Is adds checks about return value for two request_region() in drivers/net/hamradio/scc.c.
-Please CC me on replies.
-Regards.
+If the AX.25 dialect chosen by the sysadmin is set to DAMA master / 3
+(or DAMA slave / 2, if CONFIG_AX25_DAMA_SLAVE=n) ax25_kick() will fall
+through the switch statement without calling ax25_send_iframe() or any
+other function that would eventually free skbn thus leaking the packet.
 
-Signed-off-by: Laurent Wandrebeck <l.wandrebeck@free.fr>
+Fix by restricting the sysctl inferface to allow only actually supported
+AX.25 dialects.
 
---- linux-2.6.16-rc6/drivers/net/hamradio/scc.c.ori     2006-03-17 13:11:52.000000000 +0100
-+++ linux-2.6.16-rc6/drivers/net/hamradio/scc.c 2006-03-17 13:09:38.000000000 +0100
-@@ -1815,8 +1815,16 @@ static int scc_net_ioctl(struct net_devi
+The system administration mistake needed for this to happen is rather
+unlikely, so this is an uncritical hole.
 
-                                if (found)
-                                {
--                                       request_region(SCC_Info[2*Nchips+chan].ctrl, 1, "scc ctrl");
--                                       request_region(SCC_Info[2*Nchips+chan].data, 1, "scc data");
-+                                       if (!request_region(SCC_Info[2*Nchips+chan].ctrl, 1, "scc ctrl")) {
-+                                           printk(KERN_ERR "scc: unable to reserve region %d for scc ctrl\n",
-+                                                            SCC_Info[2*Nchips+chan].ctrl);
-+                                           return -EBUSY;
-+                                       }
-+                                       if (!request_region(SCC_Info[2*Nchips+chan].data, 1, "scc data")) {
-+                                           printk(KERN_ERR "scc: unable to reserve region %d for scc data\n",
-+                                                            SCC_Info[2*Nchips+chan].data);
-+                                           return -EBUSY;
-+                                       }
+Coverity #651.
 
-                                        if (Nchips+chan != 0 &&
-                                            scc_net_alloc(device_name,
+Signed-off-by: Ralf Baechle DL5RB <ralf@linux-mips.org>
 
+diff --git a/include/net/ax25.h b/include/net/ax25.h
+index 2250a18..d052b22 100644
+--- a/include/net/ax25.h
++++ b/include/net/ax25.h
+@@ -110,8 +110,15 @@ enum { 
+ enum {
+ 	AX25_PROTO_STD_SIMPLEX,
+ 	AX25_PROTO_STD_DUPLEX,
++#ifdef CONFIG_AX25_DAMA_SLAVE
+ 	AX25_PROTO_DAMA_SLAVE,
+-	AX25_PROTO_DAMA_MASTER
++#ifdef CONFIG_AX25_DAMA_MASTER
++	AX25_PROTO_DAMA_MASTER,
++#define AX25_PROTO_MAX AX25_PROTO_DAMA_MASTER
++#endif
++#endif
++	__AX25_PROTO_MAX,
++	AX25_PROTO_MAX = __AX25_PROTO_MAX -1
+ };
+ 
+ enum {
+diff --git a/net/ax25/sysctl_net_ax25.c b/net/ax25/sysctl_net_ax25.c
+index f67711f..894a225 100644
+--- a/net/ax25/sysctl_net_ax25.c
++++ b/net/ax25/sysctl_net_ax25.c
+@@ -24,7 +24,7 @@ static int min_t3[1],   		max_t3[] = {36
+ static int min_idle[1],  		max_idle[] = {65535 * HZ};
+ static int min_n2[] = {1},		max_n2[] = {31};
+ static int min_paclen[] = {1},		max_paclen[] = {512};
+-static int min_proto[1],		max_proto[] = {3};
++static int min_proto[1],		max_proto[] = { AX25_PROTO_MAX };
+ static int min_ds_timeout[1],   	max_ds_timeout[] = {65535 * HZ};
+ 
+ static struct ctl_table_header *ax25_table_header;
