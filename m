@@ -1,94 +1,143 @@
-From: Al Scanandoah <k2zn@rochester.rr.com>
+From: Joop Stakenborg <pg4i@xs4all.nl>
 Subject: Re: Any glfer users?
-Date: Sun, 16 Apr 2006 18:32:57 -0400
-Message-ID: <4442C619.5030801@rochester.rr.com>
-References: <44427B4F.5010009@rochester.rr.com> <190E15D0-BFED-42F9-9216-7E53F5E25366@att.net>
+Date: Mon, 17 Apr 2006 07:29:27 +0200
+Message-ID: <1145251767.16709.5.camel@localhost.localdomain>
+References: <44427B4F.5010009@rochester.rr.com>
+	 <190E15D0-BFED-42F9-9216-7E53F5E25366@att.net>
+	 <4442C619.5030801@rochester.rr.com>
 Mime-Version: 1.0
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Content-Type: multipart/mixed; boundary="=-HcxJxl7gBb8DLT6DIJGR"
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <190E15D0-BFED-42F9-9216-7E53F5E25366@att.net>
+In-Reply-To: <4442C619.5030801@rochester.rr.com>
 Sender: linux-hams-owner@vger.kernel.org
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="windows-1252"; format="flowed"
-To: Alex Flinsch <avflinsch@att.net>
-Cc: linux-hams@vger.kernel.org
-
-It looks like it may be getting closer, but still no cigar.  The error=20
-messages have changed.
-
-I didn't have any problems with glfer back when I ran Mandrake, but I=20
-could never get all my HW to play well together.
+To: Al Scanandoah <k2zn@rochester.rr.com>
+Cc: Alex Flinsch <avflinsch@att.net>, linux-hams@vger.kernel.org
 
 
-al@linux:~/glfer-0.3.4> make
-make  all-am
-make[1]: Entering directory `/home/al/glfer-0.3.4'
-if gcc -DHAVE_CONFIG_H -I. -I. -I. -I/usr/include/cairo=20
--I/usr/include/freetype2 -I/usr/X11R6/include -I/usr/include/libpng12=20
--I/opt/gnome/include/gtk-2.0 -I/opt/gnome/lib/gtk-2.0/include=20
--I/opt/gnome/include/atk-1.0 -I/opt/gnome/include/pango-1.0=20
--I/opt/gnome/include/glib-2.0 -I/opt/gnome/lib/glib-2.0/include=20
--ggdb -O2 -Wall -MT g_main.o -MD -MP -MF ".deps/g_main.Tpo" -c -o=20
-g_main.o g_main.c; \
-then mv -f ".deps/g_main.Tpo" ".deps/g_main.Po"; else rm -f=20
-".deps/g_main.Tpo"; exit 1; fi
-In file included from g_main.c:34:
-g_save_image.h:25: error: conflicting types for=20
-=91gdk_pixbuf_get_from_drawable=92
-/opt/gnome/include/gtk-2.0/gdk/gdkpixbuf.h:97: error: previous=20
-declaration of =91gdk_pixbuf_get_from_drawable=92 was here
-g_main.c: In function =91get_main_menu=92:
-g_main.c:151: warning: implicit declaration of function=20
-=91gtk_accel_group_attach=92
-g_main.c: In function =91spect_save_ok=92:
-g_main.c:182: warning: assignment discards qualifiers from pointer=20
-target type
-g_main.c: In function =91open_file_ok=92:
-g_main.c:206: warning: assignment discards qualifiers from pointer=20
-target type
-make[1]: *** [g_main.o] Error 1
-make[1]: Leaving directory `/home/al/glfer-0.3.4'
-make: *** [all] Error 2
-al@linux:~/glfer-0.3.4>
+--=-HcxJxl7gBb8DLT6DIJGR
+Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
 
-Alex Flinsch wrote:
->=20
-> On Apr 16, 2006, at 1:13 PM, Al Scanandoah wrote:
->=20
->>
->> g_main.c: In function =91save_full_pixmap=92:
->> g_main.c:1037: warning: pointer targets in passing argument 3 of=20
->> =91write_jpeg_file=92 differ in signedness
->> make[1]: *** [g_main.o] Error 1
->> make[1]: Leaving directory `/home/al/glfer-0.3.4'
->> make: *** [all] Error 2
->> al@linux:~/glfer-0.3.4>
->>
->>
->> Has anyone encountered this before?
->=20
-> This compiles just fine on my mandrake system... but I have seen this=
-=20
-> error before
-> change the define of  write_jpeg_file in g_save_image.h and g_save_im=
-age.c
-> from (char *filename, int quality, char *image_buffer, int image_widt=
-h,=20
-> int image_height)
-> to     (char *filename, int quality, guchar *image_buffer, int=20
-> image_width, int image_height)
->=20
-> and it should work
->=20
->=20
-> --=20
-> Alex / AB2RC
-> avflinsch@att.net
->=20
->=20
->=20
+Op zo, 16-04-2006 te 18:32 -0400, schreef Al Scanandoah:
+> It looks like it may be getting closer, but still no cigar.  The error 
+> messages have changed.
+
+You can't compile glfer against version 2.0 of the GTK+ libraries. It is
+an application written for version 1.2 of these libraries. In order to
+get it working with GTK+-2.0 you need the attached patch.
+
+I have sent this to the glfer author a while back, but he never replied
+to my mail...
+
+Regards,
+Joop PG4I
+
+--=-HcxJxl7gBb8DLT6DIJGR
+Content-Disposition: attachment; filename=diff.gtk2.glfer
+Content-Type: text/x-patch; name=diff.gtk2.glfer; charset=utf-8
+Content-Transfer-Encoding: 7bit
+
+diff -u -r glfer-0.3.4/g_about.c glfer-0.3.4gtk2/g_about.c
+--- glfer-0.3.4/g_about.c	2004-08-23 21:20:45.000000000 +0200
++++ glfer-0.3.4gtk2/g_about.c	2005-08-20 19:55:06.000000000 +0200
+@@ -464,7 +464,9 @@
+ void show_license(GtkWidget * widget, gpointer data)
+ {
+   static GdkFont *font = NULL;
+-  GtkWidget *bu, *hb, *te, *sb;
++  GtkWidget *bu, *hb, *te, *sw;
++  GtkTextBuffer *b;
++  GtkTextIter end;
+ 
+   if (license_dialog && license_dialog->window) {
+     gdk_window_show(license_dialog->window);
+@@ -492,15 +494,15 @@
+   gtk_box_pack_start(GTK_BOX(GTK_DIALOG(license_dialog)->vbox), hb, TRUE, TRUE, 0);
+   gtk_widget_show(hb);
+ 
+-  te = gtk_text_new(NULL, NULL);
++  sw = gtk_scrolled_window_new (NULL, NULL);
++  gtk_widget_show(sw);
++  te = gtk_text_view_new();
++  gtk_container_add (GTK_CONTAINER (sw), te);
+   gtk_widget_set_usize(te, 81 * gdk_char_width(font, ' '), 400);
+-  gtk_text_set_word_wrap(GTK_TEXT(te), FALSE);
++  gtk_text_view_set_wrap_mode (GTK_TEXT_VIEW (te), GTK_WRAP_WORD);
+   gtk_box_pack_start(GTK_BOX(hb), te, TRUE, TRUE, 0);
+   gtk_widget_show(te);
 -
-To unsubscribe from this list: send the line "unsubscribe linux-hams" i=
-n
-the body of a message to majordomo@vger.kernel.org
-More majordomo info at  http://vger.kernel.org/majordomo-info.html
+-  sb = gtk_vscrollbar_new(GTK_TEXT(te)->vadj);
+-  gtk_box_pack_start(GTK_BOX(hb), sb, FALSE, FALSE, 0);
+-  gtk_widget_show(sb);
++  gtk_box_pack_start(GTK_BOX(hb), sw, FALSE, FALSE, 0);
+ 
+   bu = gtk_button_new_with_label("Ok");
+   gtk_tooltips_set_tip(glfer.tt, bu, "Close window", NULL);
+@@ -511,5 +513,7 @@
+   gtk_widget_show(bu);
+ 
+   gtk_widget_show(license_dialog);
+-  gtk_text_insert(GTK_TEXT(te), font, NULL, NULL, gpl_text, strlen(gpl_text));
++  b = gtk_text_view_get_buffer (GTK_TEXT_VIEW (te));
++  gtk_text_buffer_get_end_iter (b, &end);
++  gtk_text_buffer_insert (b, &end, gpl_text, -1);
+ }
+diff -u -r glfer-0.3.4/g_main.c glfer-0.3.4gtk2/g_main.c
+--- glfer-0.3.4/g_main.c	2004-09-01 18:52:40.000000000 +0200
++++ glfer-0.3.4gtk2/g_main.c	2005-08-20 19:46:06.000000000 +0200
+@@ -148,7 +148,7 @@
+     gtk_widget_set_sensitive(glfer.test_menu_item, FALSE);
+   }
+ 
+-  gtk_accel_group_attach(accel_group, GTK_OBJECT(window));
++  gtk_window_add_accel_group (GTK_WINDOW (window), accel_group);
+ 
+   if (menu_bar)
+     *menu_bar = gtk_item_factory_get_widget(item_factory, "<main>");
+@@ -468,7 +468,7 @@
+   D(printf("x_left = %f, y_top = %f, x_right = %f, y_bottom = %f\n", x_left, y_top, x_right, y_bottom));	/* for debug */
+ 
+   if (event->button == 1) {
+-    pixels = gdk_pixbuf_get_from_drawable(pixels, pixmap, gdk_rgb_get_cmap(), x_left, y_top, sel_width, sel_height);
++    pixels = mygdk_pixbuf_get_from_drawable(pixels, pixmap, gdk_rgb_get_cmap(), x_left, y_top, sel_width, sel_height);
+     save_spect_dialog(widget, NULL);
+   }
+ }
+@@ -1033,7 +1033,7 @@
+   guchar *pixels = NULL;
+   int quality = 75;
+ 
+-  pixels = gdk_pixbuf_get_from_drawable(pixels, pixmap, gdk_rgb_get_cmap(), 0, 0, pixmap_width, pixmap_height);
++  pixels = mygdk_pixbuf_get_from_drawable(pixels, pixmap, gdk_rgb_get_cmap(), 0, 0, pixmap_width, pixmap_height);
+   write_jpeg_file("glfer.jpg", quality, pixels, pixmap_width, pixmap_height);
+ }
+ 
+diff -u -r glfer-0.3.4/g_save_image.c glfer-0.3.4gtk2/g_save_image.c
+--- glfer-0.3.4/g_save_image.c	2004-08-23 21:20:45.000000000 +0200
++++ glfer-0.3.4gtk2/g_save_image.c	2005-08-20 19:46:37.000000000 +0200
+@@ -229,7 +229,8 @@
+  * the latter case, NULL will be returned if not enough memory could be
+  * allocated for the pixbuf to be created.
+  **/
+-guchar *gdk_pixbuf_get_from_drawable(guchar * dest, GdkDrawable * src, GdkColormap * cmap, int src_x, int src_y, int width, int height)
++
++guchar *mygdk_pixbuf_get_from_drawable(guchar * dest, GdkDrawable * src, GdkColormap * cmap, int src_x, int src_y, int width, int height)
+ {
+   GdkWindowType window_type;
+   int src_width, src_height;
+diff -u -r glfer-0.3.4/g_save_image.h glfer-0.3.4gtk2/g_save_image.h
+--- glfer-0.3.4/g_save_image.h	2004-08-23 21:20:45.000000000 +0200
++++ glfer-0.3.4gtk2/g_save_image.h	2005-08-20 19:45:34.000000000 +0200
+@@ -22,7 +22,7 @@
+ 
+ #include <gtk/gtk.h>
+ 
+-guchar *gdk_pixbuf_get_from_drawable(guchar * dest, GdkDrawable * src, GdkColormap * cmap, int src_x, int src_y, int width, int height);
++guchar *mygdk_pixbuf_get_from_drawable(guchar * dest, GdkDrawable * src, GdkColormap * cmap, int src_x, int src_y, int width, int height);
+ 
+ int write_jpeg_file(char *filename, int quality, char *image_buffer, int image_height, int image_width);
+ 
+
+--=-HcxJxl7gBb8DLT6DIJGR--
+
