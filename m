@@ -1,26 +1,42 @@
 From: "Mike McCarthy, W1NR" <lists@w1nr.net>
-Subject: Re: error when trying to run kissattach on 2.6.13-15.8 Suse Kernel
-Date: Tue, 18 Apr 2006 07:51:31 -0400
-Message-ID: <000c01c662de$6f80c690$650ea8c0@LoJackOne.LoJack.com>
-References: <200604172021.01888.jjgpg@cet.com>
+Subject: RE: error when trying to run kissattach on 2.6.13-15.8 Suse Kernel
+Date: Tue, 18 Apr 2006 19:33:51 -0400
+Message-ID: <000701c66340$8cacf600$3849a8c0@lan.w1nr.net>
+References: <000c01c662de$6f80c690$650ea8c0@LoJackOne.LoJack.com>
 Mime-Version: 1.0
 Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
+In-Reply-To: <000c01c662de$6f80c690$650ea8c0@LoJackOne.LoJack.com>
 Sender: linux-hams-owner@vger.kernel.org
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; format="flowed"; charset="us-ascii"; reply-type="original"
-To: Jeremiah <jjgpg@cet.com>, linux-hams@vger.kernel.org
+Content-Type: text/plain; charset="us-ascii"
+To: 'Jeremiah' <jjgpg@cet.com>, linux-hams@vger.kernel.org
 
-It is broken and I don't know of a reliable patch other than getting the 
-latest kernel from kernel.org.  You have 3 choices.
-
-1. Back off to SuSE 9.3.
-2. Try SuSE 10.1 RC1 (See www.opensuse.org)
-3. Update the kernel to 2.6.16 from kernel.org sources.
+There is one other possible cure I forgot to mention...
+Point a YaST install source to
+ftp://ftp.esat.net/mirrors/ftp.suse.com/pub/projects/kernel/kotd/i386/HEAD/
+and try the "kotd - kernel of the day"
 
 Mike, W1NR
 
------ Original Message ----- 
+
+-----Original Message-----
+From: linux-hams-owner@vger.kernel.org
+[mailto:linux-hams-owner@vger.kernel.org] On Behalf Of Mike McCarthy, W1NR
+Sent: Tuesday, April 18, 2006 7:52 AM
+To: Jeremiah; linux-hams@vger.kernel.org
+Subject: Re: error when trying to run kissattach on 2.6.13-15.8 Suse Kernel
+
+It is broken and I don't know of a reliable patch other than getting the
+latest kernel from kernel.org.  You have 3 choices.
+
+1. Back off to SuSE 9.3.
+2. Try SuSE 10.1 RC1 (See www.opensuse.org) 3. Update the kernel to 2.6.16
+from kernel.org sources.
+
+Mike, W1NR
+
+----- Original Message -----
 From: "Jeremiah" <jjgpg@cet.com>
 To: <linux-hams@vger.kernel.org>
 Sent: Monday, April 17, 2006 11:21 PM
@@ -57,4 +73,10 @@ Subject: error when trying to run kissattach on 2.6.13-15.8 Suse Kernel
 > the body of a message to majordomo@vger.kernel.org
 > More majordomo info at  http://vger.kernel.org/majordomo-info.html
 > 
+
+-
+To unsubscribe from this list: send the line "unsubscribe linux-hams" in
+the body of a message to majordomo@vger.kernel.org
+More majordomo info at  http://vger.kernel.org/majordomo-info.html
+
 
