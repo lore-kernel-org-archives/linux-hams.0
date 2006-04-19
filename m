@@ -1,52 +1,39 @@
-From: Jarmo <oh1mrr@nic.fi>
-Subject: Re: Broadcasting unwanted UDP messages
-Date: Wed, 19 Apr 2006 15:55:53 +0300
-Message-ID: <200604191555.53320.oh1mrr@nic.fi>
-References: <4445B27F.5050206@irock.com.au> <Pine.LNX.4.58.0604182049520.18174@wapiti.we7u.net> <0BEBA6C7-D164-4F4C-AEE9-EE7BF24C9741@tssg.org>
+From: "Douglas Cole" <doug.n7bfs@gmail.com>
+Subject: Re: error when trying to run kissattach on 2.6.13-15.8 Suse Kernel
+Date: Wed, 19 Apr 2006 06:25:13 -0700
+Message-ID: <9923fd660604190625l2aae0562k6581637d9bd12ffc@mail.gmail.com>
+References: <000701c66340$8cacf600$3849a8c0@lan.w1nr.net>
+	 <200604190504.26842.jjgpg@cet.com>
+	 <002701c663ac$b82dc590$650ea8c0@LoJackOne.LoJack.com>
 Mime-Version: 1.0
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Content-Transfer-Encoding: 7BIT
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <0BEBA6C7-D164-4F4C-AEE9-EE7BF24C9741@tssg.org>
+In-Reply-To: <002701c663ac$b82dc590$650ea8c0@LoJackOne.LoJack.com>
 Content-Disposition: inline
 Sender: linux-hams-owner@vger.kernel.org
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="iso-8859-1"
-To: Linux-Hams <linux-hams@vger.kernel.org>
+Content-Type: text/plain; charset="us-ascii"
+To: "Mike McCarthy, W1NR" <lists@w1nr.net>
+Cc: Jeremiah <jjgpg@cet.com>, linux-hams@vger.kernel.org
 
-John Ronan kirjoitti viestiss=E4=E4n (l=E4hetysaika keskiviikko, 19. hu=
-htikuuta 2006=20
->          interfaces =3D 10.0.4.162
->          ^^^^^^^^^^^^^^^^^^^^
-> [snip]
+On 4/19/06, Mike McCarthy, W1NR <lists@w1nr.net> wrote:
+> Kernel versions that I know about:
 >
-> Try that.
+> 2.6.14 is broken.
+> 2.6.15.2 Was patched.
+> 2.6.16.x is good (from RC1).
+>
+> Note these are the official release numbers from kernel.org.  They are not
+> the same sub version numbers that SuSE uses.  Assuming SuSE picked up the
+> standard 2.6.16 sources, the 10.1 release should be just fine.
+>
+> Mike, W1NR
 
-If you use 10 series subnet, you have change "remote announce" into 10.=
-x.x.255
-If 192 series something like below.
+After downloading the ISO images of 10.1rc1 and searching disc one, it
+uses 2.6.16.20 as the "default" kernel, so would that have a fair
+chance of working with ax25 and mkiss ?
 
-;   interfaces =3D 192.168.12.2/24 192.168.13.2/24
-# *** merged from original smb.conf: ***
-   interfaces =3D 192.168.0.1/24
+tnx for any input/help
 
-# Configure remote browse list synchronisation here
-#  request announcement to, or browse list sync from:
-#       a specific host or from / to a whole subnet (see below)
-;   remote browse sync =3D 192.168.3.25 192.168.5.255
-# Cause this host to announce itself to local subnets here
-;   remote announce =3D 192.168.1.255 192.168.2.44
-# *** merged from original smb.conf: ***
-   remote announce =3D 192.168.0.255
-
-Jarmo
-
-
---=20
-Linux is the answer.
-What was your question?
-(Brian Lane)
--
-To unsubscribe from this list: send the line "unsubscribe linux-hams" i=
-n
-the body of a message to majordomo@vger.kernel.org
-More majordomo info at  http://vger.kernel.org/majordomo-info.html
+Doug
+N7BFS
