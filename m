@@ -1,136 +1,94 @@
-From: Kristoff Bonne <kristoff.bonne@compaqnet.be>
-Subject: navtex (amtor-fec/sitor-b)
-Date: Wed, 19 Apr 2006 10:05:44 +0200
-Message-ID: <4445EF58.3040608@compaqnet.be>
-Mime-Version: 1.0
-Content-Type: multipart/signed; protocol="application/x-pkcs7-signature"; micalg=sha1; boundary="------------ms060009040802040705000902"
+From: John Ronan <jronan@tssg.org>
+Subject: Re: Broadcasting unwanted UDP messages
+Date: Wed, 19 Apr 2006 09:29:20 +0100
+Message-ID: <0BEBA6C7-D164-4F4C-AEE9-EE7BF24C9741@tssg.org>
+References: <4445B27F.5050206@irock.com.au> <Pine.LNX.4.58.0604182049520.18174@wapiti.we7u.net>
+Mime-Version: 1.0 (Apple Message framework v749.3)
+Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
+In-Reply-To: <Pine.LNX.4.58.0604182049520.18174@wapiti.we7u.net>
 Sender: linux-hams-owner@vger.kernel.org
 List-Id: <linux-hams.vger.kernel.org>
-To: linux-hams@vger.kernel.org
+Content-Type: text/plain; charset="us-ascii"; delsp="yes"; format="flowed"
+To: Linux-Hams <linux-hams@vger.kernel.org>
 
-This is a cryptographically signed message in MIME format.
+In the Configuration file there is a line "Interfaces"
 
---------------ms060009040802040705000902
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+i.e.
 
-Gegroet,
+[snip]
+# Date: 2003-11-04
+[global]
+         workgroup = TASMANIA
+         Netbios Name = spirit
+#       Netbios Aliases = jukebox
+         os level = 65
+         log level = 3
+         security = share
+         time server = Yes
+         passdb backend = tdbsam guest
+
+    obey pam restrictions = yes
+
+         unix extensions = Yes
+         encrypt passwords = Yes
+         guest account = Nobody
+         map to guest = Bad User
+         printing = CUPS
+         printcap name = CUPS
+         socket options = SO_KEEPALIVE IPTOS_LOWDELAY TCP_NODELAY
+#       wins support = No
+         veto files = /*.eml/*.nws/riched20.dll/*.{*}/
+         hosts allow = 10.0.4.
+         wins support = yes
+         local master = yes
+         preferred master = yes
+         domain master = yes
+         interfaces = 10.0.4.162
+         ^^^^^^^^^^^^^^^^^^^^
+[snip]
+
+Try that.
+
+Regards
+John
+
+On 19 Apr 2006, at 04:50, Curt Mills wrote:
+
+> On Wed, 19 Apr 2006, Ken Moore wrote:
+>
+>> G'day Folk,
+>>
+>> My ax25 system (Debian system with Linpac and Soundcard modem) is  
+>> broadcasting
+>> network Samba and Netbios UDP messages.
+>> Being almost illiterate with Linux could someone point me in the  
+>> right
+>> direction to stop this.
+>> I have checked the files in /etc/ax25/ but nothing seems to relate.
+>>
+>> Where should I start looking?
+>
+> www.samba.org perhaps.  There's a Samba config file setting that
+> tells it not to broadcast on certain ports.  I can't remember what
+> it is, sorry, but a Google search should find it.  It's a common
+> problem with AX.25 interfaces.
+>
+> -- 
+> Curt, WE7U.				archer at eskimo dot com
+> http://www.eskimo.com/~archer
+>   Lotto:  A tax on people who are bad at math. - unknown
+> Windows:  Microsoft's tax on computer illiterates. - WE7U.
+> The world DOES revolve around me:  I picked the coordinate system!"
+> -
+> To unsubscribe from this list: send the line "unsubscribe linux- 
+> hams" in
+> the body of a message to majordomo@vger.kernel.org
+> More majordomo info at  http://vger.kernel.org/majordomo-info.html
+
+--
+John Ronan <jronan@tssg.org>, +353-51-302938
+Telecommunications Software &  Systems Group,  http://www.tssg.org
 
 
-I don't know if this the correct mailing-list for this, but I have been 
-trying to decode the broadcasts from the local navtex-station here in 
-Ostend.
 
-(navtex is a maritime service broadcasting safety-related information on 
-490 or 518 Khz, 100 baud/170 Hz FSK; see 
-http://home.cogeco.ca/~dxinfo/navtex.htm)
-
-I seems to have two options:
--> "hfterm", which *sometimes* works with quite a lot of errors in it 
-and has a lot of problems syncronising to the datastream.
-(althou the radio-signal is very good))
-
-Note that I have the same problems using the native soundcard of my 
-laptop (compaq evo N610c) and using a Griffin iMic (which I use on my mac).
-I also have very bad performance when using hfterm on rtty (like the 
-service from the Deutsche Wetterdienst at 147.3 Khz); so it might be 
-related to my system or to hfterm itself.
-
-
-Does anybody have any hints on getting "hfterm" to work correctly? (my 
-receiver -a sony 7600- only goes as log as 150 Khz, so I cannot use the 
-"DCF77"-syncronisation test).
-
-
--> A second option is to hack the sitor-B/amtor-fec protocol into 
-another program.
-
-My choice would be gmfsk as it already has a very good GUI 
-(waterfall-display, AFC); and it works very good for other protocols 
-(like RTTY). This means it already has the code for FSK-demodulation in it.
-
-It would be nice if there would a way to "hook" code for other protocols 
-after the demodulation-process (be it FSK, MF, xPSK, ...) and use gmfsk 
-as "frontend" and write additional protocols or applications on top of 
-it. (in fact, designing a kind of general "toolkit" of code for 
-digital-mode programs).
-
-
-Does anybody know if there is a specialised mailing-list on gmfsk or on 
-coding digital-mode related ham-programs?
-
-Or is this mailing-list also usable for this?
-
-
-
-Cheerio! Kr. Bonne.
-
---------------ms060009040802040705000902
-Content-Type: application/x-pkcs7-signature; name="smime.p7s"
-Content-Transfer-Encoding: base64
-Content-Disposition: attachment; filename="smime.p7s"
-Content-Description: S/MIME Cryptographic Signature
-
-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
---------------ms060009040802040705000902--
