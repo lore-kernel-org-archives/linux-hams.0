@@ -1,90 +1,42 @@
 From: Jeremiah <jjgpg@cet.com>
-Subject: Re: error when trying to run kissattach on 2.6.13-15.8 Suse Kernel
-Date: Wed, 19 Apr 2006 05:04:26 -0700
-Message-ID: <200604190504.26842.jjgpg@cet.com>
-References: <000701c66340$8cacf600$3849a8c0@lan.w1nr.net>
+Subject: Re: Broadcasting unwanted UDP messages
+Date: Wed, 19 Apr 2006 05:16:15 -0700
+Message-ID: <200604190516.16416.jjgpg@cet.com>
+References: <4445B27F.5050206@irock.com.au>
 Mime-Version: 1.0
 Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <000701c66340$8cacf600$3849a8c0@lan.w1nr.net>
+In-Reply-To: <4445B27F.5050206@irock.com.au>
 Content-Disposition: inline
 Sender: linux-hams-owner@vger.kernel.org
 List-Id: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
-To: "Mike McCarthy, W1NR" <lists@w1nr.net>
-Cc: linux-hams@vger.kernel.org
+To: linux-hams@vger.kernel.org
 
-I didn't know about that one, cool. Now is that bleeding edge kernels, or do 
-they have stable builds on there too??
+On Tuesday 18 April 2006 20:46, Ken Moore wrote:
+> G'day Folk,
+>
+> My ax25 system (Debian system with Linpac and Soundcard modem) is
+> broadcasting network Samba and Netbios UDP messages.
+> Being almost illiterate with Linux could someone point me in the right
+> direction to stop this.
+> I have checked the files in /etc/ax25/ but nothing seems to relate.
+>
+> Where should I start looking?
 
-Do you know what kernel ax25 is working on??
+You want to look at /etc/samba/samba.conf. Or what I have done is to use swat. 
+I think it is installed with the samba packages, but I'm not sure. (Suse has 
+it installed when you install webmin) 
+With webmin installed you go to "your-ip":10000 and log in as root. Then go to 
+servers, samba, swat. Then when in swat go to global and under base options 
+there is "interfaces" you need to set that for the IP of the interface you 
+want samba to be on. Then hit commit changes, restart smbd and after that 
+samba will only use the interface that has the IP addres that you put into 
+that filed. 
 
-thanks
+There at lest is the GUI way to do it for those who don't like command lines. 
+Webmin is a wonderful thing ^_^
+
+
 Jeremiah
 KD7DMP
-
-On Tuesday 18 April 2006 16:33, Mike McCarthy, W1NR wrote:
-> There is one other possible cure I forgot to mention...
-> Point a YaST install source to
-> ftp://ftp.esat.net/mirrors/ftp.suse.com/pub/projects/kernel/kotd/i386/HEAD/
-> and try the "kotd - kernel of the day"
->
-> Mike, W1NR
->
->
-> -----Original Message-----
-> From: linux-hams-owner@vger.kernel.org
-> [mailto:linux-hams-owner@vger.kernel.org] On Behalf Of Mike McCarthy, W1NR
-> Sent: Tuesday, April 18, 2006 7:52 AM
-> To: Jeremiah; linux-hams@vger.kernel.org
-> Subject: Re: error when trying to run kissattach on 2.6.13-15.8 Suse Kernel
->
-> It is broken and I don't know of a reliable patch other than getting the
-> latest kernel from kernel.org.  You have 3 choices.
->
-> 1. Back off to SuSE 9.3.
-> 2. Try SuSE 10.1 RC1 (See www.opensuse.org) 3. Update the kernel to 2.6.16
-> from kernel.org sources.
->
-> Mike, W1NR
->
-> ----- Original Message -----
-> From: "Jeremiah" <jjgpg@cet.com>
-> To: <linux-hams@vger.kernel.org>
-> Sent: Monday, April 17, 2006 11:21 PM
-> Subject: error when trying to run kissattach on 2.6.13-15.8 Suse Kernel
->
-> > Hello all,
-> >
-> > I get an error when trying to start up kissattach on my Suse 10 box.
-> > I'm running the Suse 2.6.13-15.8 kernel, no changes made to it.
-> >
-> > When I run
-> > "kissattach /dev/ttyS0 vhf 10.0.0.1"
-> > I get back
-> > "kissattach: Error setting line discipline: TIOCSETD: No such device
-> > Are you sure you have enabled MKISS support in the kernel
-> > or, if you made it a module, that the module is loaded?"
-> >
-> > I get no other error other than suse complaning that I didn't configure
-> > and
-> > AX0 port.
-> > Any ideas, Do I need to patch?
-> >
-> > I do have the AX.25 stuff downloaded from suse linux ham YAST source.
-> >
-> > Any input would be of help.
-> >
-> > Thanks
-> >
-> > Jeremiah
-> > KD7DMP
-> > -
-> > To unsubscribe from this list: send the line "unsubscribe linux-hams" in
-> > the body of a message to majordomo@vger.kernel.org
-> > More majordomo info at  http://vger.kernel.org/majordomo-info.html
->
-> -
-> To unsubscribe from this list: send the line "unsubscribe linux-hams" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at  http://vger.kernel.org/majordomo-info.h
