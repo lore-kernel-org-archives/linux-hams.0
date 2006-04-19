@@ -1,33 +1,42 @@
-From: "Mike McCarthy, W1NR" <lists@w1nr.net>
-Subject: Re: error when trying to run kissattach on 2.6.13-15.8 Suse Kernel
-Date: Wed, 19 Apr 2006 12:02:10 -0400
-Message-ID: <005601c663ca$9dfd3ac0$650ea8c0@LoJackOne.LoJack.com>
-References: <000701c66340$8cacf600$3849a8c0@lan.w1nr.net> <200604190504.26842.jjgpg@cet.com> <002701c663ac$b82dc590$650ea8c0@LoJackOne.LoJack.com> <9923fd660604190625l2aae0562k6581637d9bd12ffc@mail.gmail.com>
+From: Ken Moore <vk4akm@irock.com.au>
+Subject: Re: Broadcasting unwanted UDP messages
+Date: Thu, 20 Apr 2006 07:46:10 +1000
+Message-ID: <4446AFA2.2090208@irock.com.au>
+Reply-To: vk4akm@wia.org.au
 Mime-Version: 1.0
 Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
 Sender: linux-hams-owner@vger.kernel.org
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; format="flowed"; charset="us-ascii"; reply-type="original"
-To: Douglas Cole <doug.n7bfs@gmail.com>
-Cc: Jeremiah <jjgpg@cet.com>, linux-hams@vger.kernel.org
+Content-Type: text/plain; charset="us-ascii"; format="flowed"
+To: linux-hams@vger.kernel.org
 
-Yes.
+Thanks to all those who offered suggestions, It certainly helped me move 
+a little up the learning curve.
+I decided to try the iptables solution(figuring a knowledge of iptables 
+will help in future protection from the nasties on the Inet).
 
------ Original Message ----- 
-From: "Douglas Cole" <doug.n7bfs@gmail.com>
-To: "Mike McCarthy, W1NR" <lists@w1nr.net>
-Cc: "Jeremiah" <jjgpg@cet.com>; <linux-hams@vger.kernel.org>
-Sent: Wednesday, April 19, 2006 9:25 AM
-Subject: Re: error when trying to run kissattach on 2.6.13-15.8 Suse Kernel
+The command
+"iptables -A OUTPUT -i sm0 -p udp --dport 137 -j DROP"       failed but
+"iptables -A OUTPUT -o sm0 -p udp --dport 137 -j DROP"      worked fine.
 
+However       "iptables -L OUTPUT"     revealed
 
-After downloading the ISO images of 10.1rc1 and searching disc one, it
-uses 2.6.16.20 as the "default" kernel, so would that have a fair
-chance of working with ax25 and mkiss ?
+"target     prot     opt    source        destination"
+"DROP       udp      --     anywhere     anywhere         udp 
+dpt:netbios-ns"
 
-tnx for any input/help
+this appears to not identify the "sm0" destination specified in the 
+APPEND command.
+I guess I need the netbios for communication with Windoz PC's on my 
+network so this does not look like a
+fix.
+What am I doing wrong?.
 
-Doug
-N7BFS
+-- 
+Regards - Ken VK4AKM
+          Yeppoon, Queensland
+          -= Use Open Source Software =-
+                 GNU\Linux Debian.
+
 
