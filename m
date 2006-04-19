@@ -1,29 +1,57 @@
 From: Jeremiah <jjgpg@cet.com>
 Subject: Re: error when trying to run kissattach on 2.6.13-15.8 Suse Kernel
-Date: Wed, 19 Apr 2006 04:59:26 -0700
-Message-ID: <200604190459.27032.jjgpg@cet.com>
-References: <200604172021.01888.jjgpg@cet.com> <000701c6629a$f803c4c0$e14689d8@oem7paq6co5hph>
+Date: Wed, 19 Apr 2006 05:04:26 -0700
+Message-ID: <200604190504.26842.jjgpg@cet.com>
+References: <000701c66340$8cacf600$3849a8c0@lan.w1nr.net>
 Mime-Version: 1.0
 Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <000701c6629a$f803c4c0$e14689d8@oem7paq6co5hph>
+In-Reply-To: <000701c66340$8cacf600$3849a8c0@lan.w1nr.net>
 Content-Disposition: inline
 Sender: linux-hams-owner@vger.kernel.org
 List-Id: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
-To: Tom Vavra <wb8zrl@avalon.net>, linux-hams@vger.kernel.org
+To: "Mike McCarthy, W1NR" <lists@w1nr.net>
+Cc: linux-hams@vger.kernel.org
 
-On Monday 17 April 2006 20:47, you wrote:
-> Did you check to see if MKISS is loaded, assuming you made it a module?
-> lsmod        should list the loaded modules.
+I didn't know about that one, cool. Now is that bleeding edge kernels, or do 
+they have stable builds on there too??
+
+Do you know what kernel ax25 is working on??
+
+thanks
+Jeremiah
+KD7DMP
+
+On Tuesday 18 April 2006 16:33, Mike McCarthy, W1NR wrote:
+> There is one other possible cure I forgot to mention...
+> Point a YaST install source to
+> ftp://ftp.esat.net/mirrors/ftp.suse.com/pub/projects/kernel/kotd/i386/HEAD/
+> and try the "kotd - kernel of the day"
 >
->        Tom     WB8ZRL
+> Mike, W1NR
 >
+>
+> -----Original Message-----
+> From: linux-hams-owner@vger.kernel.org
+> [mailto:linux-hams-owner@vger.kernel.org] On Behalf Of Mike McCarthy, W1NR
+> Sent: Tuesday, April 18, 2006 7:52 AM
+> To: Jeremiah; linux-hams@vger.kernel.org
+> Subject: Re: error when trying to run kissattach on 2.6.13-15.8 Suse Kernel
+>
+> It is broken and I don't know of a reliable patch other than getting the
+> latest kernel from kernel.org.  You have 3 choices.
+>
+> 1. Back off to SuSE 9.3.
+> 2. Try SuSE 10.1 RC1 (See www.opensuse.org) 3. Update the kernel to 2.6.16
+> from kernel.org sources.
+>
+> Mike, W1NR
 >
 > ----- Original Message -----
 > From: "Jeremiah" <jjgpg@cet.com>
 > To: <linux-hams@vger.kernel.org>
-> Sent: Tuesday, April 18, 2006 3:21 AM
+> Sent: Monday, April 17, 2006 11:21 PM
 > Subject: error when trying to run kissattach on 2.6.13-15.8 Suse Kernel
 >
 > > Hello all,
@@ -39,9 +67,7 @@ On Monday 17 April 2006 20:47, you wrote:
 > > or, if you made it a module, that the module is loaded?"
 > >
 > > I get no other error other than suse complaning that I didn't configure
->
-> and
->
+> > and
 > > AX0 port.
 > > Any ideas, Do I need to patch?
 > >
@@ -57,8 +83,8 @@ On Monday 17 April 2006 20:47, you wrote:
 > > To unsubscribe from this list: send the line "unsubscribe linux-hams" in
 > > the body of a message to majordomo@vger.kernel.org
 > > More majordomo info at  http://vger.kernel.org/majordomo-info.html
-Yep, I made sure that Mkiss and ax25 are getting loaded, and they are. I 
-should have knowen better then to leave that out of my posting, lol
-
-Jeremiah
-KD7DMP
+>
+> -
+> To unsubscribe from this list: send the line "unsubscribe linux-hams" in
+> the body of a message to majordomo@vger.kernel.org
+> More majordomo info at  http://vger.kernel.org/majordomo-info.h
