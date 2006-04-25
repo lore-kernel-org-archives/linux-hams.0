@@ -1,34 +1,121 @@
-From: Ralf Baechle DL5RB <ralf@linux-mips.org>
-Subject: Re: New Linux hamradio related website.
-Date: Mon, 24 Apr 2006 16:03:49 +0100
-Message-ID: <20060424150349.GG3811@linux-mips.org>
-References: <20060418102150.GA662@linux-mips.org> <44564.10.0.0.4.1145356055.squirrel@10.0.0.4> <20060418103952.GA1015@linux-mips.org> <44598.10.0.0.4.1145357903.squirrel@10.0.0.4>
+From: Kristoff Bonne <kristoff.bonne@compaqnet.be>
+Subject: new yahoo-group: gmfsk-devel
+Date: Tue, 25 Apr 2006 21:30:24 +0200
+Message-ID: <444E78D0.8080704@compaqnet.be>
 Mime-Version: 1.0
+Content-Type: multipart/signed; protocol="application/x-pkcs7-signature"; micalg=sha1; boundary="------------ms080308070701010406060106"
 Return-path: <linux-hams-owner@vger.kernel.org>
-Content-Disposition: inline
-In-Reply-To: <44598.10.0.0.4.1145357903.squirrel@10.0.0.4>
 Sender: linux-hams-owner@vger.kernel.org
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"
+To: linux-hams@vger.kernel.org
+
+This is a cryptographically signed message in MIME format.
+
+--------------ms080308070701010406060106
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-To: Vic <radio@beer.org.uk>
-Cc: linux-hams@vger.kernel.org
 
-On Tue, Apr 18, 2006 at 11:58:23AM +0100, Vic wrote:
+Gegroet,
 
-> > I have some infrastructure behind my mediawikis (the physical server
-> > machine is hosting other projects, too) and some software will need a
-> > rewrite before an upgrade is possible.  Later this week, I hope.
-> 
-> I have RPMs and SRPMs for RHEL3, if that's any use to you...
 
-The Fedora extras repository for FC4 has a mediawiki 1.5.8, the FC5
-extras repository currently has a 1.5.7 rpm package, btw.
+With this email, I would like to announce the existence of a new 
+mailing-list on yahoo-groups called "gmfsk-devel".
 
-Aside of being too old to be useful as an upgrade it doesn't really help
-in my situation because I modify the code anyway.
 
-73 de DL5RB op Ralf
+The goal of this list is the discuss the further developement of gmfsk, 
+the HAM digital-mode program originally written by Tomi Manninen OH2BNS.
+(see http://gmfsk.connect.fi/ for more info on gmfsk).
 
---
-Loc. JN47BS / CQ 14 / ITU 28 / DOK A21
+As the official developement of the program by Tommi has stopped for
+some time now, some people have started to addapt and extend the program
+by themself. This mailing-list is aimed to bring all these people
+together.
+
+gmfsk provides a great GUI for some HAM-related digital modes; and -as
+it is published under the GPL-licence- it can be concidered a good
+starting-point for people interested in programming digital modes or
+extending the program with other modes.
+
+
+More info:
+http://groups.yahoo.com/group/gmfsk-devel/
+
+To join the list via email, sent a message to
+"gmdsk-devel-subscribe@yahoogroups.com".
+
+
+Membership to the list is modurated for anti-spamming reasons; but 
+-appart from that- the list is open to anybody.
+
+
+Cheerio! Kr. Bonne
+on1arf
+
+--------------ms080308070701010406060106
+Content-Type: application/x-pkcs7-signature; name="smime.p7s"
+Content-Transfer-Encoding: base64
+Content-Disposition: attachment; filename="smime.p7s"
+Content-Description: S/MIME Cryptographic Signature
+
+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
+--------------ms080308070701010406060106--
