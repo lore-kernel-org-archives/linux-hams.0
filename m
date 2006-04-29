@@ -1,27 +1,45 @@
-From: Ralf Baechle <ralf@linux-mips.org>
-Subject: [PATCH 0/3] Eleminate HZ from AX.25, NETROM and ROSE kernel interfaces
-Date: Sat, 29 Apr 2006 15:03:27 +0100
-Message-ID: <20060429140327.GA2173@linux-mips.org>
+From: Ralf Baechle DL5RB <ralf@linux-mips.org>
+Subject: [AX25, ROSE] Remove useless SET_MODULE_OWNER calls.
+Date: Sat, 29 Apr 2006 15:29:43 +0100
+Message-ID: <20060429142943.GA4402@linux-mips.org>
 Mime-Version: 1.0
-Return-path: <linux-hams-owner@vger.kernel.org>
+Return-path: <netdev-owner@vger.kernel.org>
 Content-Disposition: inline
-Sender: linux-hams-owner@vger.kernel.org
+Sender: netdev-owner@vger.kernel.org
 List-Id: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
 To: "David S. Miller" <davem@davemloft.net>, netdev@vger.kernel.org, linux-hams@vger.kernel.org
 
-AX.25, NET/ROM and ROSE unfortunately still use jiffies as the unit of
-time for all their timeouts that can be configured through sysctl and
-it's procfs equivalents.  This did result in a change of these kernel
-interfaces going from Linux 2.4 to 2.6 for anybody who was unlucky enough
-to use an affected platform such as i386 and most MIPS but not Alpha.
-Making matters worse, it required the sysadmin of the particular system
-to know the timing value making it very, very broken inteface design.
-The timer interrupt frequency recently becoming configurable made things
-even worse, so this really needed to be fixed.  The following series
-of patches contains three patches, one for each of the three packet radio
-protocols to switch the unit used by the sysadmin to miliseconds thus
-resulting in a deterministic interface.
+Signed-off-by: Ralf Baechle <ralf@linux-mips.org>
 
-  Ralf
+--
+
+ net/netrom/nr_dev.c |    1 -
+ net/rose/rose_dev.c |    1 -
+ 2 files changed, 2 deletions(-)
+
+Index: linux-net.git/net/netrom/nr_dev.c
+===================================================================
+--- linux-net.git.orig/net/netrom/nr_dev.c	2006-04-29 01:43:47.000000000 +0100
++++ linux-net.git/net/netrom/nr_dev.c	2006-04-29 11:38:00.000000000 +0100
+@@ -185,7 +185,6 @@ static struct net_device_stats *nr_get_s
+ 
+ void nr_setup(struct net_device *dev)
+ {
+-	SET_MODULE_OWNER(dev);
+ 	dev->mtu		= NR_MAX_PACKET_SIZE;
+ 	dev->hard_start_xmit	= nr_xmit;
+ 	dev->open		= nr_open;
+Index: linux-net.git/net/rose/rose_dev.c
+===================================================================
+--- linux-net.git.orig/net/rose/rose_dev.c	2006-04-29 01:43:47.000000000 +0100
++++ linux-net.git/net/rose/rose_dev.c	2006-04-29 11:38:00.000000000 +0100
+@@ -135,7 +135,6 @@ static struct net_device_stats *rose_get
+ 
+ void rose_setup(struct net_device *dev)
+ {
+-	SET_MODULE_OWNER(dev);
+ 	dev->mtu		= ROSE_MAX_PACKET_SIZE - 2;
+ 	dev->hard_start_xmit	= rose_xmit;
+ 	dev->open		= rose_open;
