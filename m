@@ -1,33 +1,32 @@
 From: Ralf Baechle DL5RB <ralf@linux-mips.org>
-Subject: Re: [patch 1/1] request_region() return value missing check
-Date: Sat, 29 Apr 2006 12:58:05 +0100
-Message-ID: <20060429115805.GA26183@linux-mips.org>
-References: <200603171330.40614.l.wandrebeck@free.fr>
+Subject: [AX.25] Spelling fix
+Date: Sat, 29 Apr 2006 15:24:27 +0100
+Message-ID: <20060429142427.GA3684@linux-mips.org>
 Mime-Version: 1.0
 Return-path: <linux-hams-owner@vger.kernel.org>
 Content-Disposition: inline
-In-Reply-To: <200603171330.40614.l.wandrebeck@free.fr>
 Sender: linux-hams-owner@vger.kernel.org
 List-Id: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
-To: Laurent Wandrebeck <l.wandrebeck@free.fr>
-Cc: linux-hams@vger.kernel.org
+To: "David S. Miller" <davem@davemloft.net>, netdev@vger.kernel.org, linux-hams@vger.kernel.org
 
-On Fri, Mar 17, 2006 at 01:30:40PM +0100, Laurent Wandrebeck wrote:
+Signed-off-by: Ralf Baechle <ralf@linux-mips.org>
 
-> Here is a simple patch against 2.6.16-rc6-git8.
-> Is adds checks about return value for two request_region() in drivers/net/hamradio/scc.c.
+---
+ net/ax25/ax25_route.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-Several things:
-
- o Your mailer garbles patches, so I couldn't apply it anymore.
- o If the second request_region your patches will abort initialization
-   leaving the first one region allocated.
- o The potencial abort happens in a loop so if we abort anytime other than
-   during the first iteration the resources will stay allocated and the
-   driver won't drive instances found earlier.
-
-Thanks,
-
-  Ralf
+Index: linux-net.git/net/ax25/ax25_route.c
+===================================================================
+--- linux-net.git.orig/net/ax25/ax25_route.c	2006-04-29 11:52:12.000000000 +0100
++++ linux-net.git/net/ax25/ax25_route.c	2006-04-29 15:23:13.000000000 +0100
+@@ -360,7 +360,7 @@ struct file_operations ax25_route_fops =
+ /*
+  *	Find AX.25 route
+  *
+- *	Only routes with a refernce rout of zero can be destroyed.
++ *	Only routes with a reference count of zero can be destroyed.
+  */
+ static ax25_route *ax25_get_route(ax25_address *addr, struct net_device *dev)
+ {
