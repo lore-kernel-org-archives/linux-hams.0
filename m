@@ -1,7 +1,7 @@
 From: Ralf Baechle DL5RB <ralf@linux-mips.org>
-Subject: [AX25, ROSE] Remove useless SET_MODULE_OWNER calls.
-Date: Sat, 29 Apr 2006 15:29:43 +0100
-Message-ID: <20060429142943.GA4402@linux-mips.org>
+Subject: [HAMRADIO] Remove remaining SET_MODULE_OWNER calls from hamradio drivers.
+Date: Sat, 29 Apr 2006 15:34:13 +0100
+Message-ID: <20060429143413.GA4630@linux-mips.org>
 Mime-Version: 1.0
 Return-path: <netdev-owner@vger.kernel.org>
 Content-Disposition: inline
@@ -9,37 +9,50 @@ Sender: netdev-owner@vger.kernel.org
 List-Id: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
-To: "David S. Miller" <davem@davemloft.net>, netdev@vger.kernel.org, linux-hams@vger.kernel.org
+To: Jeff Garzik <jeff@garzik.org>, netdev@vger.kernel.org, linux-hams@vger.kernel.org
 
-Signed-off-by: Ralf Baechle <ralf@linux-mips.org>
+Signed-off-by: Ralf Baechle DL5RB <ralf@linux-mips.org>
 
 --
 
- net/netrom/nr_dev.c |    1 -
- net/rose/rose_dev.c |    1 -
- 2 files changed, 2 deletions(-)
+ drivers/net/hamradio/dmascc.c |    1 -
+ drivers/net/hamradio/scc.c    |    1 -
+ drivers/net/hamradio/yam.c    |    1 -
+ 3 files changed, 3 deletions(-)
 
-Index: linux-net.git/net/netrom/nr_dev.c
+Index: linux-net.git/drivers/net/hamradio/dmascc.c
 ===================================================================
---- linux-net.git.orig/net/netrom/nr_dev.c	2006-04-29 01:43:47.000000000 +0100
-+++ linux-net.git/net/netrom/nr_dev.c	2006-04-29 11:38:00.000000000 +0100
-@@ -185,7 +185,6 @@ static struct net_device_stats *nr_get_s
+--- linux-net.git.orig/drivers/net/hamradio/dmascc.c	2006-04-29 01:54:04.000000000 +0100
++++ linux-net.git/drivers/net/hamradio/dmascc.c	2006-04-29 11:38:06.000000000 +0100
+@@ -582,7 +582,6 @@ static int __init setup_adapter(int card
+ 		INIT_WORK(&priv->rx_work, rx_bh, priv);
+ 		dev->priv = priv;
+ 		sprintf(dev->name, "dmascc%i", 2 * n + i);
+-		SET_MODULE_OWNER(dev);
+ 		dev->base_addr = card_base;
+ 		dev->irq = irq;
+ 		dev->open = scc_open;
+Index: linux-net.git/drivers/net/hamradio/scc.c
+===================================================================
+--- linux-net.git.orig/drivers/net/hamradio/scc.c	2006-04-29 01:43:47.000000000 +0100
++++ linux-net.git/drivers/net/hamradio/scc.c	2006-04-29 11:38:06.000000000 +0100
+@@ -1550,7 +1550,6 @@ static unsigned char ax25_nocall[AX25_AD
  
- void nr_setup(struct net_device *dev)
+ static void scc_net_setup(struct net_device *dev)
  {
 -	SET_MODULE_OWNER(dev);
- 	dev->mtu		= NR_MAX_PACKET_SIZE;
- 	dev->hard_start_xmit	= nr_xmit;
- 	dev->open		= nr_open;
-Index: linux-net.git/net/rose/rose_dev.c
-===================================================================
---- linux-net.git.orig/net/rose/rose_dev.c	2006-04-29 01:43:47.000000000 +0100
-+++ linux-net.git/net/rose/rose_dev.c	2006-04-29 11:38:00.000000000 +0100
-@@ -135,7 +135,6 @@ static struct net_device_stats *rose_get
+ 	dev->tx_queue_len    = 16;	/* should be enough... */
  
- void rose_setup(struct net_device *dev)
- {
+ 	dev->open            = scc_net_open;
+Index: linux-net.git/drivers/net/hamradio/yam.c
+===================================================================
+--- linux-net.git.orig/drivers/net/hamradio/yam.c	2006-04-29 01:43:47.000000000 +0100
++++ linux-net.git/drivers/net/hamradio/yam.c	2006-04-29 11:38:06.000000000 +0100
+@@ -1098,7 +1098,6 @@ static void yam_setup(struct net_device 
+ 
+ 	dev->base_addr = yp->iobase;
+ 	dev->irq = yp->irq;
 -	SET_MODULE_OWNER(dev);
- 	dev->mtu		= ROSE_MAX_PACKET_SIZE - 2;
- 	dev->hard_start_xmit	= rose_xmit;
- 	dev->open		= rose_open;
+ 
+ 	dev->open = yam_open;
+ 	dev->stop = yam_close;
