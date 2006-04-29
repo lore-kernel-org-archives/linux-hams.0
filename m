@@ -1,38 +1,33 @@
 From: Ralf Baechle DL5RB <ralf@linux-mips.org>
-Subject: Re: new yahoo-group: gmfsk-devel
-Date: Wed, 26 Apr 2006 16:09:40 +0100
-Message-ID: <20060426150940.GA9542@linux-mips.org>
-References: <444E78D0.8080704@compaqnet.be> <73d0f4790604251237k70b78cc2rb01eaebc153a93e@mail.gmail.com>
+Subject: Re: [patch 1/1] request_region() return value missing check
+Date: Sat, 29 Apr 2006 12:58:05 +0100
+Message-ID: <20060429115805.GA26183@linux-mips.org>
+References: <200603171330.40614.l.wandrebeck@free.fr>
 Mime-Version: 1.0
 Return-path: <linux-hams-owner@vger.kernel.org>
 Content-Disposition: inline
-In-Reply-To: <73d0f4790604251237k70b78cc2rb01eaebc153a93e@mail.gmail.com>
+In-Reply-To: <200603171330.40614.l.wandrebeck@free.fr>
 Sender: linux-hams-owner@vger.kernel.org
 List-Id: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
-To: Robb Romans <killsoft@gmail.com>
-Cc: Kristoff Bonne <kristoff.bonne@compaqnet.be>, linux-hams@vger.kernel.org
+To: Laurent Wandrebeck <l.wandrebeck@free.fr>
+Cc: linux-hams@vger.kernel.org
 
-On Tue, Apr 25, 2006 at 02:37:59PM -0500, Robb Romans wrote:
+On Fri, Mar 17, 2006 at 01:30:40PM +0100, Laurent Wandrebeck wrote:
 
-> I think it would be better to find a real mailing list for open source
-> software development, rather than use the closed Yahoo system.
-> Perhaps moving the project to Sourceforge or similar is a good idea.
+> Here is a simple patch against 2.6.16-rc6-git8.
+> Is adds checks about return value for two request_region() in drivers/net/hamradio/scc.c.
 
-Sourceforge is a _giant_ pain in the ass.  Since several weeks they don't
-update their external CVS servers anymore nor is there an easy way to get
-the ,v files to migrate projects elsewhere.  Their ftp servers are
-unusable, web downloads are a pain to use and the general reaction to
-problem reports shows little cooperation.
+Several things:
 
-I don't have tons of resources to throw at hosting projects atm but I
-guess I can offer hosting for a small number of interesting projects at
-linux-ax25.org.  The domain btw. was setup as reaction of sourceforge
-becoming essentially useless for hosting projects this month as explained
-above.
+ o Your mailer garbles patches, so I couldn't apply it anymore.
+ o If the second request_region your patches will abort initialization
+   leaving the first one region allocated.
+ o The potencial abort happens in a loop so if we abort anytime other than
+   during the first iteration the resources will stay allocated and the
+   driver won't drive instances found earlier.
 
-73 de DL5RB op Ralf
+Thanks,
 
---
-Loc. JN47BS / CQ 14 / ITU 28 / DOK A21
+  Ralf
