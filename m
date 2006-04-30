@@ -1,69 +1,46 @@
-From: Bernard Pidoux <pidoux@ccr.jussieu.fr>
-Subject: Re: [PATCH 3/3] Eleminate HZ from ROSE kernel interfaces
-Date: Sun, 30 Apr 2006 11:35:54 +0200
-Message-ID: <445484FA.6050008@ccr.jussieu.fr>
-References: <20060429141924.GA2941@linux-mips.org>
+From: Dan Williams <dcbw@redhat.com>
+Subject: Re: [AX25, ROSE] Remove useless SET_MODULE_OWNER calls.
+Date: Sun, 30 Apr 2006 08:03:26 -0400
+Message-ID: <1146398606.2252.1.camel@localhost.localdomain>
+References: <20060429142943.GA4402@linux-mips.org>
 Mime-Version: 1.0
-Content-Type: multipart/mixed;
- boundary="------------090802090601000706050501"
-Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <20060429141924.GA2941@linux-mips.org>
-Sender: linux-hams-owner@vger.kernel.org
+Content-Transfer-Encoding: 7bit
+Return-path: <netdev-owner@vger.kernel.org>
+In-Reply-To: <20060429142943.GA4402@linux-mips.org>
+Sender: netdev-owner@vger.kernel.org
 List-Id: <linux-hams.vger.kernel.org>
-To: Ralf Baechle <ralf@linux-mips.org>
+Content-Type: text/plain; charset="us-ascii"
+To: Ralf Baechle DL5RB <ralf@linux-mips.org>
 Cc: "David S. Miller" <davem@davemloft.net>, netdev@vger.kernel.org, linux-hams@vger.kernel.org
 
-This is a multi-part message in MIME format.
---------------090802090601000706050501
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-
-
-Ralf Baechle wrote :
-
-> Index: linux-net.git/net/rose/af_rose.c
+On Sat, 2006-04-29 at 15:29 +0100, Ralf Baechle DL5RB wrote:
+> Signed-off-by: Ralf Baechle <ralf@linux-mips.org>
+> 
+> --
+> 
+>  net/netrom/nr_dev.c |    1 -
+>  net/rose/rose_dev.c |    1 -
+>  2 files changed, 2 deletions(-)
+> 
+> Index: linux-net.git/net/netrom/nr_dev.c
 > ===================================================================
-> --- linux-net.git.orig/net/rose/af_rose.c	2006-04-29 01:54:21.000000000 +0100
-> +++ linux-net.git/net/rose/af_rose.c	2006-04-29 11:37:34.000000000 +0100
+> --- linux-net.git.orig/net/netrom/nr_dev.c	2006-04-29 01:43:47.000000000 +0100
+> +++ linux-net.git/net/netrom/nr_dev.c	2006-04-29 11:38:00.000000000 +0100
+> @@ -185,7 +185,6 @@ static struct net_device_stats *nr_get_s
+>  
+>  void nr_setup(struct net_device *dev)
+>  {
+> -	SET_MODULE_OWNER(dev);
+>  	dev->mtu		= NR_MAX_PACKET_SIZE;
+>  	dev->hard_start_xmit	= nr_xmit;
+>  	dev->open		= nr_open;
 
-While patching af_rose.c, would you consider the following patch 
-ROSE/FPAC users have introduced a year ago with good success.
+Are these done by anything else now?  Did something change to make
+SET_MODULE_OWNER useless in individual drivers?  I'm asking because I
+was fairly sure that SET_MODULE_OWNER set up some sysfs links and such
+that HAL depends on to figure out information about the driver and
+hardware device, much like SET_NETDEV_DEV.
 
-73 de Bernard, f6bvp
-
-http://f6bvp.org
-http://rose.fpac.free.fr/MINI-HOWTO/
-http://rose.fpac.free.fr/MINI-HOWTO-FR/
+Dan
 
 
---------------090802090601000706050501
-Content-Type: text/x-patch;
- name="af_rose.diff"
-Content-Transfer-Encoding: 7bit
-Content-Disposition: inline;
- filename="af_rose.diff"
-
---- linux/net/rose/af_rose.c.orig	2006-04-30 11:30:48.000000000 +0200
-+++ linux/net/rose/af_rose.c	2006-04-30 11:27:35.000000000 +0200
-@@ -753,6 +753,7 @@
- 
- 		rose_insert_socket(sk);		/* Finish the bind */
- 	}
-+rose_try_next_neigh:
- 	rose->dest_addr   = addr->srose_addr;
- 	rose->dest_call   = addr->srose_call;
- 	rose->rand        = ((long)rose & 0xFFFF) + rose->lci;
-@@ -810,6 +811,11 @@
- 	}
- 
- 	if (sk->sk_state != TCP_ESTABLISHED) {
-+	/* Try next neighbour */
-+		rose->neighbour = rose_get_neigh(&addr->srose_addr, &cause, &diagnostic);
-+		if (rose->neighbour)
-+			goto rose_try_next_neigh;
-+	/* No more neighbour */
- 		sock->state = SS_UNCONNECTED;
- 		return sock_error(sk);	/* Always set at this point */
- 	}
-
---------------090802090601000706050501--
