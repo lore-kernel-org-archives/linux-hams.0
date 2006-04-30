@@ -1,46 +1,33 @@
-From: Dan Williams <dcbw@redhat.com>
+From: Herbert Xu <herbert@gondor.apana.org.au>
 Subject: Re: [AX25, ROSE] Remove useless SET_MODULE_OWNER calls.
-Date: Sun, 30 Apr 2006 08:03:26 -0400
-Message-ID: <1146398606.2252.1.camel@localhost.localdomain>
-References: <20060429142943.GA4402@linux-mips.org>
-Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
+Date: Sun, 30 Apr 2006 23:38:02 +1000
+Message-ID: <E1FaC7e-0003Cj-00@gondolin.me.apana.org.au>
+References: <1146398606.2252.1.camel@localhost.localdomain>
 Return-path: <netdev-owner@vger.kernel.org>
-In-Reply-To: <20060429142943.GA4402@linux-mips.org>
+In-Reply-To: <1146398606.2252.1.camel@localhost.localdomain>
 Sender: netdev-owner@vger.kernel.org
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"
-To: Ralf Baechle DL5RB <ralf@linux-mips.org>
-Cc: "David S. Miller" <davem@davemloft.net>, netdev@vger.kernel.org, linux-hams@vger.kernel.org
+MIME-Version: 1.0
+Content-Type: text/plain; charset="hz-gb-2312"
+Content-Transfer-Encoding: base64
+To: Dan Williams <dcbw@redhat.com>
+Cc: ralf@linux-mips.org, davem@davemloft.net, netdev@vger.kernel.org, linux-hams@vger.kernel.org
 
-On Sat, 2006-04-29 at 15:29 +0100, Ralf Baechle DL5RB wrote:
-> Signed-off-by: Ralf Baechle <ralf@linux-mips.org>
-> 
-> --
-> 
->  net/netrom/nr_dev.c |    1 -
->  net/rose/rose_dev.c |    1 -
->  2 files changed, 2 deletions(-)
-> 
-> Index: linux-net.git/net/netrom/nr_dev.c
-> ===================================================================
-> --- linux-net.git.orig/net/netrom/nr_dev.c	2006-04-29 01:43:47.000000000 +0100
-> +++ linux-net.git/net/netrom/nr_dev.c	2006-04-29 11:38:00.000000000 +0100
-> @@ -185,7 +185,6 @@ static struct net_device_stats *nr_get_s
->  
->  void nr_setup(struct net_device *dev)
->  {
-> -	SET_MODULE_OWNER(dev);
->  	dev->mtu		= NR_MAX_PACKET_SIZE;
->  	dev->hard_start_xmit	= nr_xmit;
->  	dev->open		= nr_open;
-
-Are these done by anything else now?  Did something change to make
-SET_MODULE_OWNER useless in individual drivers?  I'm asking because I
-was fairly sure that SET_MODULE_OWNER set up some sysfs links and such
-that HAL depends on to figure out information about the driver and
-hardware device, much like SET_NETDEV_DEV.
-
-Dan
-
-
+RGFuIFdpbGxpYW1zIDxkY2J3QHJlZGhhdC5jb20+IHdyb3RlOgo+IAo+IEFyZSB0aGVzZSBkb25l
+IGJ5IGFueXRoaW5nIGVsc2Ugbm93PyAgRGlkIHNvbWV0aGluZyBjaGFuZ2UgdG8gbWFrZQo+IFNF
+VF9NT0RVTEVfT1dORVIgdXNlbGVzcyBpbiBpbmRpdmlkdWFsIGRyaXZlcnM/ICBJJ20gYXNraW5n
+IGJlY2F1c2UgSQoKU0VUX01PRFVMRV9PV05FUiBoYXMgYmVlbiBhIG5vLW9wIGV2ZXIgc2luY2Ug
+RGF2ZSBtYWRlIGxpdmUgbmV0d29yawpkZXZpY2UgZHJpdmVyIG1vZHVsZXMgdW5sb2FkYWJsZSBu
+ZWFybHkgdGhyZWUgeWVhcnMgYWdvLgoKPiB3YXMgZmFpcmx5IHN1cmUgdGhhdCBTRVRfTU9EVUxF
+X09XTkVSIHNldCB1cCBzb21lIHN5c2ZzIGxpbmtzIGFuZCBzdWNoCj4gdGhhdCBIQUwgZGVwZW5k
+cyBvbiB0byBmaWd1cmUgb3V0IGluZm9ybWF0aW9uIGFib3V0IHRoZSBkcml2ZXIgYW5kCj4gaGFy
+ZHdhcmUgZGV2aWNlLCBtdWNoIGxpa2UgU0VUX05FVERFVl9ERVYuCgpGb3IgUENJIGRyaXZlcnMg
+dGhlIG1vZHVsZSBpbmZvcm1hdGlvbiBpcyBpbmplY3RlZCBieSBwY2lfcmVnaXN0ZXJfZHJpdmVy
+LgoKQ2hlZXJzLAotLSAKVmlzaXQgT3BlbnN3YW4gYXQgaHR0cDovL3d3dy5vcGVuc3dhbi5vcmcv
+CkVtYWlsOiBIZXJiZXJ0IFh1IH57UG1WPkhJfn0gPGhlcmJlcnRAZ29uZG9yLmFwYW5hLm9yZy5h
+dT4KSG9tZSBQYWdlOiBodHRwOi8vZ29uZG9yLmFwYW5hLm9yZy5hdS9+aGVyYmVydC8KUEdQIEtl
+eTogaHR0cDovL2dvbmRvci5hcGFuYS5vcmcuYXUvfmhlcmJlcnQvcHVia2V5LnR4dAotClRvIHVu
+c3Vic2NyaWJlIGZyb20gdGhpcyBsaXN0OiBzZW5kIHRoZSBsaW5lICJ1bnN1YnNjcmliZSBuZXRk
+ZXYiIGluCnRoZSBib2R5IG9mIGEgbWVzc2FnZSB0byBtYWpvcmRvbW9Admdlci5rZXJuZWwub3Jn
+Ck1vcmUgbWFqb3Jkb21vIGluZm8gYXQgIGh0dHA6Ly92Z2VyLmtlcm5lbC5vcmcvbWFqb3Jkb21v
+LWluZm8uaHRtbAo=
