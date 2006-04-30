@@ -1,33 +1,29 @@
-From: Herbert Xu <herbert@gondor.apana.org.au>
+From: Dan Williams <dcbw@redhat.com>
 Subject: Re: [AX25, ROSE] Remove useless SET_MODULE_OWNER calls.
-Date: Sun, 30 Apr 2006 23:38:02 +1000
-Message-ID: <E1FaC7e-0003Cj-00@gondolin.me.apana.org.au>
-References: <1146398606.2252.1.camel@localhost.localdomain>
+Date: Sun, 30 Apr 2006 13:04:20 -0400
+Message-ID: <1146416660.2336.0.camel@localhost.localdomain>
+References: <E1FaC7e-0003Cj-00@gondolin.me.apana.org.au>
+Mime-Version: 1.0
+Content-Transfer-Encoding: 7bit
 Return-path: <netdev-owner@vger.kernel.org>
-In-Reply-To: <1146398606.2252.1.camel@localhost.localdomain>
+In-Reply-To: <E1FaC7e-0003Cj-00@gondolin.me.apana.org.au>
 Sender: netdev-owner@vger.kernel.org
 List-Id: <linux-hams.vger.kernel.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset="hz-gb-2312"
-Content-Transfer-Encoding: base64
-To: Dan Williams <dcbw@redhat.com>
+Content-Type: text/plain; charset="us-ascii"
+To: Herbert Xu <herbert@gondor.apana.org.au>
 Cc: ralf@linux-mips.org, davem@davemloft.net, netdev@vger.kernel.org, linux-hams@vger.kernel.org
 
-RGFuIFdpbGxpYW1zIDxkY2J3QHJlZGhhdC5jb20+IHdyb3RlOgo+IAo+IEFyZSB0aGVzZSBkb25l
-IGJ5IGFueXRoaW5nIGVsc2Ugbm93PyAgRGlkIHNvbWV0aGluZyBjaGFuZ2UgdG8gbWFrZQo+IFNF
-VF9NT0RVTEVfT1dORVIgdXNlbGVzcyBpbiBpbmRpdmlkdWFsIGRyaXZlcnM/ICBJJ20gYXNraW5n
-IGJlY2F1c2UgSQoKU0VUX01PRFVMRV9PV05FUiBoYXMgYmVlbiBhIG5vLW9wIGV2ZXIgc2luY2Ug
-RGF2ZSBtYWRlIGxpdmUgbmV0d29yawpkZXZpY2UgZHJpdmVyIG1vZHVsZXMgdW5sb2FkYWJsZSBu
-ZWFybHkgdGhyZWUgeWVhcnMgYWdvLgoKPiB3YXMgZmFpcmx5IHN1cmUgdGhhdCBTRVRfTU9EVUxF
-X09XTkVSIHNldCB1cCBzb21lIHN5c2ZzIGxpbmtzIGFuZCBzdWNoCj4gdGhhdCBIQUwgZGVwZW5k
-cyBvbiB0byBmaWd1cmUgb3V0IGluZm9ybWF0aW9uIGFib3V0IHRoZSBkcml2ZXIgYW5kCj4gaGFy
-ZHdhcmUgZGV2aWNlLCBtdWNoIGxpa2UgU0VUX05FVERFVl9ERVYuCgpGb3IgUENJIGRyaXZlcnMg
-dGhlIG1vZHVsZSBpbmZvcm1hdGlvbiBpcyBpbmplY3RlZCBieSBwY2lfcmVnaXN0ZXJfZHJpdmVy
-LgoKQ2hlZXJzLAotLSAKVmlzaXQgT3BlbnN3YW4gYXQgaHR0cDovL3d3dy5vcGVuc3dhbi5vcmcv
-CkVtYWlsOiBIZXJiZXJ0IFh1IH57UG1WPkhJfn0gPGhlcmJlcnRAZ29uZG9yLmFwYW5hLm9yZy5h
-dT4KSG9tZSBQYWdlOiBodHRwOi8vZ29uZG9yLmFwYW5hLm9yZy5hdS9+aGVyYmVydC8KUEdQIEtl
-eTogaHR0cDovL2dvbmRvci5hcGFuYS5vcmcuYXUvfmhlcmJlcnQvcHVia2V5LnR4dAotClRvIHVu
-c3Vic2NyaWJlIGZyb20gdGhpcyBsaXN0OiBzZW5kIHRoZSBsaW5lICJ1bnN1YnNjcmliZSBuZXRk
-ZXYiIGluCnRoZSBib2R5IG9mIGEgbWVzc2FnZSB0byBtYWpvcmRvbW9Admdlci5rZXJuZWwub3Jn
-Ck1vcmUgbWFqb3Jkb21vIGluZm8gYXQgIGh0dHA6Ly92Z2VyLmtlcm5lbC5vcmcvbWFqb3Jkb21v
-LWluZm8uaHRtbAo=
+On Sun, 2006-04-30 at 23:38 +1000, Herbert Xu wrote:
+> Dan Williams <dcbw@redhat.com> wrote:
+> > 
+> > Are these done by anything else now?  Did something change to make
+> > SET_MODULE_OWNER useless in individual drivers?  I'm asking because I
+> 
+> SET_MODULE_OWNER has been a no-op ever since Dave made live network
+> device driver modules unloadable nearly three years ago.
+
+Ah, thanks for the clarification.
+
+dan
+
+
