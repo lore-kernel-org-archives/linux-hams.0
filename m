@@ -1,39 +1,38 @@
-From: Bernard Pidoux <pidoux@ccr.jussieu.fr>
+From: "David S. Miller" <davem@davemloft.net>
 Subject: Re: [PATCH 2/3] Eleminate HZ from NET/ROM kernel interfaces
-Date: Sun, 30 Apr 2006 21:34:32 +0200
-Message-ID: <44551148.5010503@ccr.jussieu.fr>
+Date: Sun, 30 Apr 2006 17:21:36 -0700 (PDT)
+Message-ID: <20060430.172136.99531184.davem@davemloft.net>
 References: <20060429141613.GA2811@linux-mips.org>
+	<44551148.5010503@ccr.jussieu.fr>
 Mime-Version: 1.0
 Content-Transfer-Encoding: 7bit
-Return-path: <netdev-owner@vger.kernel.org>
-In-Reply-To: <20060429141613.GA2811@linux-mips.org>
-Sender: netdev-owner@vger.kernel.org
+Return-path: <linux-hams-owner@vger.kernel.org>
+In-Reply-To: <44551148.5010503@ccr.jussieu.fr>
+Sender: linux-hams-owner@vger.kernel.org
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"; format="flowed"
-To: Ralf Baechle <ralf@linux-mips.org>
-Cc: "David S. Miller" <davem@davemloft.net>, netdev@vger.kernel.org, linux-hams@vger.kernel.org
+Content-Type: Text/Plain; charset="us-ascii"
+To: pidoux@ccr.jussieu.fr
+Cc: ralf@linux-mips.org, netdev@vger.kernel.org, linux-hams@vger.kernel.org
 
-Ralf Baechle wrote :
+From: Bernard Pidoux <pidoux@ccr.jussieu.fr>
+Date: Sun, 30 Apr 2006 21:34:32 +0200
 
-> Convert all NET/ROM sysctl time values from jiffies to ms as units.
+> Ralf Baechle wrote :
 > 
-> Signed-off-by: Ralf Baechle <ralf@linux-mips.org>
+> > Convert all NET/ROM sysctl time values from jiffies to ms as units.
+> > 
+> > Signed-off-by: Ralf Baechle <ralf@linux-mips.org>
+> > 
 > 
+> With such extensive patches for netrom and rose modules that will go 
+> into a future 2.6.x kernel, I think it would be justified to update the 
+> following banners in af_rose.c and af_netrom.c respectively for they 
+> appear during boot :
 
-With such extensive patches for netrom and rose modules that will go 
-into a future 2.6.x kernel, I think it would be justified to update the 
-following banners in af_rose.c and af_netrom.c respectively for they 
-appear during boot :
+It might be worthwhile to remove the messages altogether.
 
-static const char banner[] = KERN_INFO "F6FBB/G4KLX ROSE for Linux. 
-Version 0.62 for AX25.037 Linux 2.4\n";
+IPV4 and the core networking used to output similar initialization
+log messages and it really doesn't really add anything but pollute
+the already voluminous kernel log.
 
-static char banner[] __initdata = KERN_INFO "G4KLX NET/ROM for Linux. 
-Version 0.7 for AX25.037 Linux 2.4\n";
-
-73 de Bernard, f6bvp
-
-http://f6bvp.org
-http://rose.fpac.free.fr/MINI-HOWTO/
-http://rose.fpac.free.fr/MINI-HOWTO-FR/
-
+So I say we just remove it.
