@@ -1,38 +1,21 @@
 From: "David S. Miller" <davem@davemloft.net>
-Subject: Re: [PATCH 2/3] Eleminate HZ from NET/ROM kernel interfaces
-Date: Sun, 30 Apr 2006 17:21:36 -0700 (PDT)
-Message-ID: <20060430.172136.99531184.davem@davemloft.net>
-References: <20060429141613.GA2811@linux-mips.org>
-	<44551148.5010503@ccr.jussieu.fr>
+Subject: Re: [PATCH 0/3] Eleminate HZ from AX.25, NETROM and ROSE kernel
+ interfaces
+Date: Mon, 01 May 2006 01:00:29 -0700 (PDT)
+Message-ID: <20060501.010029.71024948.davem@davemloft.net>
+References: <20060429140327.GA2173@linux-mips.org>
 Mime-Version: 1.0
 Content-Transfer-Encoding: 7bit
-Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <44551148.5010503@ccr.jussieu.fr>
-Sender: linux-hams-owner@vger.kernel.org
+Return-path: <netdev-owner@vger.kernel.org>
+In-Reply-To: <20060429140327.GA2173@linux-mips.org>
+Sender: netdev-owner@vger.kernel.org
 List-Id: <linux-hams.vger.kernel.org>
 Content-Type: Text/Plain; charset="us-ascii"
-To: pidoux@ccr.jussieu.fr
-Cc: ralf@linux-mips.org, netdev@vger.kernel.org, linux-hams@vger.kernel.org
+To: ralf@linux-mips.org
+Cc: netdev@vger.kernel.org, linux-hams@vger.kernel.org
 
-From: Bernard Pidoux <pidoux@ccr.jussieu.fr>
-Date: Sun, 30 Apr 2006 21:34:32 +0200
 
-> Ralf Baechle wrote :
-> 
-> > Convert all NET/ROM sysctl time values from jiffies to ms as units.
-> > 
-> > Signed-off-by: Ralf Baechle <ralf@linux-mips.org>
-> > 
-> 
-> With such extensive patches for netrom and rose modules that will go 
-> into a future 2.6.x kernel, I think it would be justified to update the 
-> following banners in af_rose.c and af_netrom.c respectively for they 
-> appear during boot :
+Ralf, I have all of your patches queued up, I'll review them
+and merge them in soon.
 
-It might be worthwhile to remove the messages altogether.
-
-IPV4 and the core networking used to output similar initialization
-log messages and it really doesn't really add anything but pollute
-the already voluminous kernel log.
-
-So I say we just remove it.
+Thanks a lot.
