@@ -1,25 +1,21 @@
-From: "Jose Ng Lee" <jng@psi.net.pa>
-Subject: FEDORA CORE 4
-Date: Tue, 2 May 2006 09:22:41 -0500
-Message-ID: <008001c66df3$dfeefda0$2201a8c0@psi.net.pa>
-References: <S964835AbWEBOJK/20060502140910Z+56@vger.kernel.org>
-Reply-To: "Jose Ng Lee" <jng@psi.net.pa>
+From: Ralf Baechle DL5RB <ralf@linux-mips.org>
+Subject: SO_BINDTODEVICE
+Date: Tue, 2 May 2006 22:42:39 +0100
+Message-ID: <20060502214239.GA6007@linux-mips.org>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
+Content-Disposition: inline
 Sender: linux-hams-owner@vger.kernel.org
 List-Id: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 7bit
 To: linux-hams@vger.kernel.org
 
-Hi,
+A question to the programmers on this list.  I'm looking for applications
+that are using the setsockopt syscall to set the SO_BINDTODEVICE option
+and the level argument set to another value than SOL_SOCKET.  Anybody?
 
-I like to recompile a new kernel with AX25 for a Fedora Core 4 installation.
-Does anyone has the easiest instructions or steps to accomplish the
-compilation.  Also, what version of AX25 tools, libs, and net tools are
-needed for AX25 to work on Fedora Core 4.
+73 de DL5RB op Ralf
 
-Thanks,
-
-JOSE/HP2AT
-
+--
+Loc. JN47BS / CQ 14 / ITU 28 / DOK A21
