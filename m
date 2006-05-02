@@ -1,83 +1,79 @@
-From: Ralf Baechle <ralf@linux-mips.org>
-Subject: Re: [PATCH 2/3] Eleminate HZ from NET/ROM kernel interfaces
-Date: Tue, 2 May 2006 00:52:35 +0100
-Message-ID: <20060501235235.GA18868@linux-mips.org>
-References: <20060429141613.GA2811@linux-mips.org> <44551148.5010503@ccr.jussieu.fr> <20060430.172136.99531184.davem@davemloft.net>
+From: Jeremiah <jjgpg@cet.com>
+Subject: Re: error when trying to run kissattach on 2.6.13-15.8 Suse Kernel
+Date: Tue, 2 May 2006 05:35:55 -0700
+Message-ID: <200605020535.56134.jjgpg@cet.com>
+References: <000701c66340$8cacf600$3849a8c0@lan.w1nr.net> <005601c663ca$9dfd3ac0$650ea8c0@LoJackOne.LoJack.com> <002401c664ae$c436a340$650ea8c0@LoJackOne.LoJack.com>
 Mime-Version: 1.0
+Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
+In-Reply-To: <002401c664ae$c436a340$650ea8c0@LoJackOne.LoJack.com>
 Content-Disposition: inline
-In-Reply-To: <20060430.172136.99531184.davem@davemloft.net>
 Sender: linux-hams-owner@vger.kernel.org
 List-Id: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-To: "David S. Miller" <davem@davemloft.net>
-Cc: pidoux@ccr.jussieu.fr, netdev@vger.kernel.org, linux-hams@vger.kernel.org
+To: linux-hams@vger.kernel.org
 
-On Sun, Apr 30, 2006 at 05:21:36PM -0700, David S. Miller wrote:
+Hello all:
 
-> > With such extensive patches for netrom and rose modules that will go 
-> > into a future 2.6.x kernel, I think it would be justified to update the 
-> > following banners in af_rose.c and af_netrom.c respectively for they 
-> > appear during boot :
-> 
-> It might be worthwhile to remove the messages altogether.
-> 
-> IPV4 and the core networking used to output similar initialization
-> log messages and it really doesn't really add anything but pollute
-> the already voluminous kernel log.
-> 
-> So I say we just remove it.
+Well I'm a happy guy today, I got 2.6.16 installed from the RPM on my Suse 
+10.0 box, and so far it seems to run happy. I had to do the install a few 
+times, but after doing a "rpm -iv --nodeps ..." to keep it from complaning 
+that it didn't have the right version of perl-bootloader it seems to work. 
 
-Agreed, patch to remove the messages is below.
+So I can have my packet base station back, YEAH!!!!
 
-  Ralf
+I'll keep every one up to date on this if I find any problems with running 
+this non-distro stander kernel.
 
-Signed-off-by: Ralf Baechle <ralf@linux-mips.org>
+Thanks all for that help ^_^
 
- net/netrom/af_netrom.c |    3 ---
- net/rose/af_rose.c     |    3 ---
- 2 files changed, 6 deletions(-)
+Jeremiah
+KD7DMP
 
-Index: linux-net.git/net/netrom/af_netrom.c
-===================================================================
---- linux-net.git.orig/net/netrom/af_netrom.c	2006-04-30 10:28:32.000000000 +0100
-+++ linux-net.git/net/netrom/af_netrom.c	2006-05-02 00:48:59.000000000 +0100
-@@ -1370,8 +1370,6 @@ static struct notifier_block nr_dev_noti
- 
- static struct net_device **dev_nr;
- 
--static char banner[] __initdata = KERN_INFO "G4KLX NET/ROM for Linux. Version 0.7 for AX25.037 Linux 2.4\n";
--
- static int __init nr_proto_init(void)
- {
- 	int i;
-@@ -1419,7 +1417,6 @@ static int __init nr_proto_init(void)
- 	}
- 		
- 	register_netdevice_notifier(&nr_dev_notifier);
--	printk(banner);
- 
- 	ax25_protocol_register(AX25_P_NETROM, nr_route_frame);
- 	ax25_linkfail_register(nr_link_failed);
-Index: linux-net.git/net/rose/af_rose.c
-===================================================================
---- linux-net.git.orig/net/rose/af_rose.c	2006-04-30 13:29:58.000000000 +0100
-+++ linux-net.git/net/rose/af_rose.c	2006-05-02 00:48:28.000000000 +0100
-@@ -1469,8 +1469,6 @@ static struct notifier_block rose_dev_no
- 
- static struct net_device **dev_rose;
- 
--static const char banner[] = KERN_INFO "F6FBB/G4KLX ROSE for Linux. Version 0.62 for AX25.037 Linux 2.4\n";
--
- static int __init rose_proto_init(void)
- {
- 	int i;
-@@ -1519,7 +1517,6 @@ static int __init rose_proto_init(void)
- 
- 	sock_register(&rose_family_ops);
- 	register_netdevice_notifier(&rose_dev_notifier);
--	printk(banner);
- 
- 	ax25_protocol_register(AX25_P_ROSE, rose_route_frame);
- 	ax25_linkfail_register(rose_link_failed);
+On Thursday 20 April 2006 12:15, Mike McCarthy, W1NR wrote:
+> There is another gotcha...
+>
+> SuSE 10.1 RC1 does not include libax25 any longer.  However, the kernel is
+> still built with the mkiss and ax25 modules so no kernel recompile is
+> needed.  This causes the current 10.0 packages to fail dependencies when
+> you try and install them through YaST.
+>
+> There is hope.  I am attempting to build a libax25 rpm file.  I am also
+> looking at creating an "add-on" for all of the packages using the new 10.1
+> features of YaST.
+>
+> More later.
+>
+> Mike, W1NR
+>
+> ----- Original Message -----
+> From: "Mike McCarthy, W1NR" <lists@w1nr.net>
+> To: "Douglas Cole" <doug.n7bfs@gmail.com>
+> Cc: "Jeremiah" <jjgpg@cet.com>; <linux-hams@vger.kernel.org>
+> Sent: Wednesday, April 19, 2006 12:02 PM
+> Subject: Re: error when trying to run kissattach on 2.6.13-15.8 Suse Kernel
+>
+> > Yes.
+> >
+> > ----- Original Message -----
+> > From: "Douglas Cole" <doug.n7bfs@gmail.com>
+> > To: "Mike McCarthy, W1NR" <lists@w1nr.net>
+> > Cc: "Jeremiah" <jjgpg@cet.com>; <linux-hams@vger.kernel.org>
+> > Sent: Wednesday, April 19, 2006 9:25 AM
+> > Subject: Re: error when trying to run kissattach on 2.6.13-15.8 Suse
+> > Kernel
+> >
+> >
+> > After downloading the ISO images of 10.1rc1 and searching disc one, it
+> > uses 2.6.16.20 as the "default" kernel, so would that have a fair
+> > chance of working with ax25 and mkiss ?
+> >
+> > tnx for any input/help
+> >
+> > Doug
+> > N7BFS
+> >
+> > -
+> > To unsubscribe from this list: send the line "unsubscribe linux-hams" in
+> > the body of a message to majordomo@vger.kernel.org
+> > More majordomo info at  http://vger.kernel.org/majordomo-info.html
