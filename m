@@ -1,21 +1,21 @@
-From: Ralf Baechle DL5RB <ralf@linux-mips.org>
-Subject: SO_BINDTODEVICE
-Date: Tue, 2 May 2006 22:42:39 +0100
-Message-ID: <20060502214239.GA6007@linux-mips.org>
+From: "David S. Miller" <davem@davemloft.net>
+Subject: Re: [AX.25] Spelling fix
+Date: Wed, 03 May 2006 23:22:42 -0700 (PDT)
+Message-ID: <20060503.232242.36292498.davem@davemloft.net>
+References: <20060429142427.GA3684@linux-mips.org>
 Mime-Version: 1.0
+Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
-Content-Disposition: inline
+In-Reply-To: <20060429142427.GA3684@linux-mips.org>
 Sender: linux-hams-owner@vger.kernel.org
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-To: linux-hams@vger.kernel.org
+Content-Type: Text/Plain; charset="us-ascii"
+To: ralf@linux-mips.org
+Cc: netdev@vger.kernel.org, linux-hams@vger.kernel.org
 
-A question to the programmers on this list.  I'm looking for applications
-that are using the setsockopt syscall to set the SO_BINDTODEVICE option
-and the level argument set to another value than SOL_SOCKET.  Anybody?
+From: Ralf Baechle DL5RB <ralf@linux-mips.org>
+Date: Sat, 29 Apr 2006 15:24:27 +0100
 
-73 de DL5RB op Ralf
+> Signed-off-by: Ralf Baechle <ralf@linux-mips.org>
 
---
-Loc. JN47BS / CQ 14 / ITU 28 / DOK A21
+Applied.
