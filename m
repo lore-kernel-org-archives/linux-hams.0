@@ -1,22 +1,22 @@
 From: "David S. Miller" <davem@davemloft.net>
-Subject: Re: [PATCH 2/3] Eleminate HZ from NET/ROM kernel interfaces
-Date: Wed, 03 May 2006 23:27:55 -0700 (PDT)
-Message-ID: <20060503.232755.84120517.davem@davemloft.net>
-References: <20060429141613.GA2811@linux-mips.org>
+Subject: Re: [PATCH 3/3] Eleminate HZ from ROSE kernel interfaces
+Date: Wed, 03 May 2006 23:28:27 -0700 (PDT)
+Message-ID: <20060503.232827.21922298.davem@davemloft.net>
+References: <20060429141924.GA2941@linux-mips.org>
 Mime-Version: 1.0
 Content-Transfer-Encoding: 7bit
-Return-path: <netdev-owner@vger.kernel.org>
-In-Reply-To: <20060429141613.GA2811@linux-mips.org>
-Sender: netdev-owner@vger.kernel.org
+Return-path: <linux-hams-owner@vger.kernel.org>
+In-Reply-To: <20060429141924.GA2941@linux-mips.org>
+Sender: linux-hams-owner@vger.kernel.org
 List-Id: <linux-hams.vger.kernel.org>
 Content-Type: Text/Plain; charset="us-ascii"
 To: ralf@linux-mips.org
 Cc: netdev@vger.kernel.org, linux-hams@vger.kernel.org
 
 From: Ralf Baechle <ralf@linux-mips.org>
-Date: Sat, 29 Apr 2006 15:16:13 +0100
+Date: Sat, 29 Apr 2006 15:19:24 +0100
 
-> Convert all NET/ROM sysctl time values from jiffies to ms as units.
+> Convert all ROSE sysctl time values from jiffies to ms as units.
 > 
 > Signed-off-by: Ralf Baechle <ralf@linux-mips.org>
 
