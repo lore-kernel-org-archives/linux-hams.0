@@ -1,42 +1,28 @@
-From: "David S. Miller" <davem@davemloft.net>
-Subject: Re: [PATCH 2/3] Eleminate HZ from NET/ROM kernel interfaces
-Date: Fri, 05 May 2006 17:19:46 -0700 (PDT)
-Message-ID: <20060505.171946.52849109.davem@davemloft.net>
-References: <44551148.5010503@ccr.jussieu.fr>
-	<20060430.172136.99531184.davem@davemloft.net>
-	<20060501235235.GA18868@linux-mips.org>
+From: Ralf Baechle DL5RB <ralf@linux-mips.org>
+Subject: AX.25, NETROM and ROSE changes in 2.6.17
+Date: Sat, 6 May 2006 23:38:00 +0100
+Message-ID: <20060506223800.GA4419@linux-mips.org>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <20060501235235.GA18868@linux-mips.org>
+Content-Disposition: inline
 Sender: linux-hams-owner@vger.kernel.org
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: Text/Plain; charset="us-ascii"
-To: ralf@linux-mips.org
-Cc: pidoux@ccr.jussieu.fr, netdev@vger.kernel.org, linux-hams@vger.kernel.org
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+To: linux-hams@vger.kernel.org
 
-From: Ralf Baechle <ralf@linux-mips.org>
-Date: Tue, 2 May 2006 00:52:35 +0100
+For those who haven't read my recent patches I'd like to point out that
+in the next kernel release, 2.6.17 the units for the AX.25 timers T1,
+T2 and T3 will change to use ms for all platforms away from the
+previous chaos of version, architecture, platform and configuration
+dependentant chaos.  I've tried to explain things on
 
-> On Sun, Apr 30, 2006 at 05:21:36PM -0700, David S. Miller wrote:
-> 
-> > > With such extensive patches for netrom and rose modules that will go 
-> > > into a future 2.6.x kernel, I think it would be justified to update the 
-> > > following banners in af_rose.c and af_netrom.c respectively for they 
-> > > appear during boot :
-> > 
-> > It might be worthwhile to remove the messages altogether.
-> > 
-> > IPV4 and the core networking used to output similar initialization
-> > log messages and it really doesn't really add anything but pollute
-> > the already voluminous kernel log.
-> > 
-> > So I say we just remove it.
-> 
-> Agreed, patch to remove the messages is below.
-> 
->   Ralf
-> 
-> Signed-off-by: Ralf Baechle <ralf@linux-mips.org>
+  http://www.linux-ax25.org/wiki/Run_time_configurable_parameters
+  http://de.linux-ax25.org/wiki/Laufzeiteinstellungen
 
-Applied, thanks a lot Ralf.
+  (1st page in English, 2nd in German)
+
+This matters to any sysadmin that is modiyfing the values from their
+defaults.
+
+  Ralf
