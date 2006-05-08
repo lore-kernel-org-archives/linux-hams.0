@@ -1,48 +1,47 @@
-From: Ralf Baechle DL5RB <ralf@linux-mips.org>
-Subject: Re: ax25-tools-0.0.8src.tgz
-Date: Sun, 7 May 2006 03:25:13 +0100
-Message-ID: <20060507022513.GA4291@linux-mips.org>
-References: <20060506223800.GA4419@linux-mips.org> <001701c67163$21a76f80$ce6ee0c9@j1dxhp>
+From: "Jose Ng Lee" <jng@psi.net.pa>
+Subject: FC4 pty device kissattach
+Date: Mon, 8 May 2006 10:26:56 -0500
+Message-ID: <006201c672b3$d77acea0$2201a8c0@psi.net.pa>
+Reply-To: "Jose Ng Lee" <jng@psi.net.pa>
 Mime-Version: 1.0
+Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
-Content-Disposition: inline
-In-Reply-To: <001701c67163$21a76f80$ce6ee0c9@j1dxhp>
 Sender: linux-hams-owner@vger.kernel.org
 List-Id: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-To: Jose Ng Lee <jng@psi.net.pa>
-Cc: linux-hams@vger.kernel.org
+To: linux-hams@vger.kernel.org
 
-On Sat, May 06, 2006 at 06:16:40PM -0500, Jose Ng Lee wrote:
+Hi,
 
-(Emily Postnews recommend learning about the difference between a fresh
-posting and a reply.  Your posting has nothing to do with the my you've
-replied to)
+I am trying to upgrade my old Redhat Linux 8.0 2.4.25 to Fedora Core 4
+2.6.16.14.
 
-> I compiled OK a new kernel 2.6.16.14 with AX25 for my FEDORA CORE 4 and
-> downloaded from FTP site ftp://f6bvp.org/pub
-> 
-> ax25-apps-0.0.6src.tgz
-> ax25-tools-0.0.8src.tgz
-> libax25-0.0.11src.tgz
-> 
-> I make and installed OK ax25-apps-0.0.6src.tgz and libax25-0.0.11src.tgz.
-> 
-> But with ax25-tools-0.0.8src.tgz have the following ERROR on make below at
-> the end of the e-mail.
-> 
-> When I unpacked ax25-tools-0.0.8src.tgz, I see inside in the directory
-> ax25-tools-0.008-2.6.tgz file.  I tried tar xvfz ax25-tools-0.008-2.6.tgz
-> and see nothing.  What is that file?  Is that a patch and how do I apply it?
-> 
-> If somebody can help me. Thanks.
+So far have recompiled the kernel with AX25 and installed the AX25 tools,
+apps, libs.
 
-I've dumped a few packages I built for FC4 into
+On rc.local included /sbin/MAKEDEV pty and /sbin/MAKEDEV tty to create de
+devices each times the PC boots.
 
-  ftp://ftp.linux-mips.org/pub/linux/mips/people/ralf/ax25/
+But, my problem is attaching the dev ptypf.
 
-They used to work fine for me on FC4 but I switched to FC5 so there won't
-be any FC4 updates for these packages anymore.
+I confirmed on dev directory that the device is there:
 
-  Ralf
+crw-rw-rw-  1 root tty 2,  15 May  8 09:20 ptypf
+
+Then I tried this line from my old RH8 and get and error:
+
+[root@fedora dev]# /usr/sbin/kissattach /dev/ptypf lan 44.163.22.3
+kissattach: open: No such device or address
+
+Reading at man MAKEDEV it said something that:
+
+       No such device normally means the kernel does not have the
+       driver configured or loaded.
+
+Does someone knows how to configure or load the driver?  Or where to look on
+menuconfig to turn the dev ON to re-compile a new kernel.
+
+Thanks,
+
+JOSE / HP2AT
+
