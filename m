@@ -1,65 +1,51 @@
-From: "Jeremy Utley" <jerutley@gmail.com>
-Subject: Re: FC4 pty device kissattach
-Date: Mon, 8 May 2006 12:13:56 -0700
-Message-ID: <d5d4185b0605081213l19d3a9c2u7c37b38eace37303@mail.gmail.com>
-References: <006201c672b3$d77acea0$2201a8c0@psi.net.pa>
+From: Bernard Pidoux <pidoux@ccr.jussieu.fr>
+Subject: Re: AX.25, NETROM and ROSE changes in 2.6.17
+Date: Sat, 13 May 2006 14:31:11 +0200
+Message-ID: <4465D18F.5070405@ccr.jussieu.fr>
+References: <20060506223800.GA4419@linux-mips.org>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7BIT
+Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <006201c672b3$d77acea0$2201a8c0@psi.net.pa>
-Content-Disposition: inline
+In-Reply-To: <20060506223800.GA4419@linux-mips.org>
 Sender: linux-hams-owner@vger.kernel.org
 List-Id: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"; format="flowed"
-To: Jose Ng Lee <jng@psi.net.pa>
-Cc: Linux-Hams <linux-hams@vger.kernel.org>
+To: Ralf Baechle DL5RB <ralf@linux-mips.org>
+Cc: linux-hams@vger.kernel.org
 
-In menuconfig, you need to enable the option for "Legacy" or
-"BSD-Style" pty's.  There's 2 pseudo-tty options within the kernel -
-Unix98 PTY's and Legacy ones.  Unix98 are the PTY's  handled by the
-devpts filesystem, and Legacy use the /dev/pty?? and /dev/tty?? nodes.
 
-Hope this helps!
+Ralf Baechle DL5RB wrote :
+> For those who haven't read my recent patches I'd like to point out that
+> in the next kernel release, 2.6.17 the units for the AX.25 timers T1,
+> T2 and T3 will change to use ms for all platforms away from the
+> previous chaos of version, architecture, platform and configuration
+> dependentant chaos.  I've tried to explain things on
+> 
+>   http://www.linux-ax25.org/wiki/Run_time_configurable_parameters
+>   http://de.linux-ax25.org/wiki/Laufzeiteinstellungen
+> 
+>   (1st page in English, 2nd in German)
+> 
+> This matters to any sysadmin that is modiyfing the values from their
+> defaults.
+> 
+>   Ralf
 
-Jeremy, NW7JU
+By the way, its a long time since I want to ask if there is any reason 
+to keep the same name for different ax25.h include files.
 
-On 5/8/06, Jose Ng Lee <jng@psi.net.pa> wrote:
-> Hi,
->
-> I am trying to upgrade my old Redhat Linux 8.0 2.4.25 to Fedora Core 4
-> 2.6.16.14.
->
-> So far have recompiled the kernel with AX25 and installed the AX25 tools,
-> apps, libs.
->
-> On rc.local included /sbin/MAKEDEV pty and /sbin/MAKEDEV tty to create de
-> devices each times the PC boots.
->
-> But, my problem is attaching the dev ptypf.
->
-> I confirmed on dev directory that the device is there:
->
-> crw-rw-rw-  1 root tty 2,  15 May  8 09:20 ptypf
->
-> Then I tried this line from my old RH8 and get and error:
->
-> [root@fedora dev]# /usr/sbin/kissattach /dev/ptypf lan 44.163.22.3
-> kissattach: open: No such device or address
->
-> Reading at man MAKEDEV it said something that:
->
->        No such device normally means the kernel does not have the
->        driver configured or loaded.
->
-> Does someone knows how to configure or load the driver?  Or where to look on
-> menuconfig to turn the dev ON to re-compile a new kernel.
->
-> Thanks,
->
-> JOSE / HP2AT
->
-> -
-> To unsubscribe from this list: send the line "unsubscribe linux-hams" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at  http://vger.kernel.org/majordomo-info.html
->
+-rw-r--r--  1 root root 4877 mar 21 01:26 /usr/include/netax25/ax25.h
+[root@bernard tools]# ll /usr/src/linux/include/linux/ax25.h
+-rw-rw-rw-  1 root root 2752 mar 20 06:53 
+/usr/src/linux/include/linux/ax25.h
+[root@bernard tools]# ll /usr/src/linux/include/net/ax25.h
+-rw-rw-rw-  1 root root 14842 avr 30 11:27 /usr/src/linux/include/net/ax25.h
+
+Somehow it may be confusing.
+
+73 de Bernard, f6bvp
+
+http://f6bvp.org
+http://rose.fpac.free.fr/MINI-HOWTO/
+http://rose.fpac.free.fr/MINI-HOWTO-FR/
+
