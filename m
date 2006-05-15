@@ -1,38 +1,73 @@
-From: "Mike McCarthy, W1NR" <lists@w1nr.net>
-Subject: SUSE Linux 10.1 Ham Radio RPM's
-Date: Mon, 15 May 2006 09:57:55 -0400
-Message-ID: <006c01c67827$9117c6b0$690ea8c0@LoJackOne.LoJack.com>
+From: Jesper Juhl <jesper.juhl@gmail.com>
+Subject: Re: [PATCH] fix potential NULL pointer dereference in yam
+Date: Mon, 15 May 2006 22:19:36 +0200
+Message-ID: <200605152219.37265.jesper.juhl@gmail.com>
+References: <200605141512.50923.jesper.juhl@gmail.com> <20060514140946.GA23387@mipter.zuzino.mipt.ru>
 Mime-Version: 1.0
 Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
+In-Reply-To: <20060514140946.GA23387@mipter.zuzino.mipt.ru>
+Content-Disposition: inline
 Sender: linux-hams-owner@vger.kernel.org
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; format="flowed"; charset="us-ascii"; reply-type="original"
-To: linux-hams@vger.kernel.org
+Content-Type: text/plain; charset="us-ascii"
+To: Alexey Dobriyan <adobriyan@gmail.com>
+Cc: linux-kernel@vger.kernel.org, Frederic Rible <frible@teaser.fr>, Jean-Paul Roubelat <jpr@f6fbb.org>, linux-hams@vger.kernel.org, Ralf Baechle <ralf@linux-mips.org>, Jesper Juhl <jesper.juhl@gmail.com>
 
-With the latest release of SUSE Linux 10.1, the libax25 rpm is no longer
-shipped on the CD's.  This means that the current 10.0 ham radio files will
-fail dependencies.  To solve this temporarily, until Joerg Reuter, DL1BKE
-has a chance to rebuild the Ham project for 10.1, I have created an
-installation source and iso image combining the 10.0 Ham Radio rpm's along
-with the 10.0 libax25 rpm's.
+On Sunday 14 May 2006 16:09, Alexey Dobriyan wrote:
+> On Sun, May 14, 2006 at 03:12:50PM +0200, Jesper Juhl wrote:
+> > Testing a pointer for NULL after it has already been dereferenced is not
+> > very safe.
+> > Patch below to rework yam_open() so that `dev' is not dereferenced until
+> > after it has been tested for NULL.
+> 
+> > Found by coverity checker as #787
+> 
+> > --- linux-2.6.17-rc4-git2-orig/drivers/net/hamradio/yam.c
+> > +++ linux-2.6.17-rc4-git2/drivers/net/hamradio/yam.c
+> > @@ -845,15 +845,25 @@ static struct net_device_stats *yam_get_
+> >  
+> >  static int yam_open(struct net_device *dev)
+> >  {
+> > -	struct yam_port *yp = netdev_priv(dev);
+> > +	struct yam_port *yp;
+> >  	enum uart u;
+> >  	int i;
+> > -	int ret=0;
+> > +	int ret = 0;
+> 
+> Please, don't make unrelated changes.
+> 
+Sorry.
 
-The iso is available at
-ftp://ftp.w1nr.net/suse-ham/SUSE-Linux-10.1-Ham-i386.iso.
 
-With this you can create a CD image and use it as an add-on or installation
-source.  Also available is the installation tree at
-ftp://ftp.w1nr.net/suse-ham/10.1-i386/.  I would suggest that you use the
-iso or copy the directory tree to your local disk and use it from there.  My
-server does not have a lot of upload bandwidth (640k) so be patient it
-transfers seem slow.
+> > -	printk(KERN_INFO "Trying %s at iobase 0x%lx irq %u\n", dev->name, dev->base_addr, dev->irq);
+> > +	if (!dev) {
+> > +		printk(KERN_ERR "yam_open() called without device\n");
+> > +		return -ENXIO;
+> > +	}
+> 
+> How can it be NULL here? The whole array of valid net_devices was
+> allocated at module init time.
+> 
 
-I have only done some simple tests so far.   It looks like this kernel is
-working with mkiss again.  The new YaST does complain about the archive not
-being "signed".  Getting my personal key into your trusted sources for YaST
-is not a simple matter, so just ignore the warnings or turn them off.  If
-you have any problems, I'll see what I can do but I guarantee nothing!  Use
-these files at your own risk!
+It cannot. You are right, I'm wrong.
+I guess removing the check makes sense then ?
 
-73 de Mike, W1NR
+
+Signed-off-by: Jesper Juhl <jesper.juhl@gmail.com>
+---
+
+--- linux-2.6.17-rc4-mm1-orig/drivers/net/hamradio/yam.c	2006-05-13 21:28:27.000000000 +0200
++++ linux-2.6.17-rc4-mm1/drivers/net/hamradio/yam.c	2006-05-15 22:16:32.000000000 +0200
+@@ -852,7 +852,7 @@ static int yam_open(struct net_device *d
+ 
+ 	printk(KERN_INFO "Trying %s at iobase 0x%lx irq %u\n", dev->name, dev->base_addr, dev->irq);
+ 
+-	if (!dev || !yp->bitrate)
++	if (!yp->bitrate)
+ 		return -ENXIO;
+ 	if (!dev->base_addr || dev->base_addr > 0x1000 - YAM_EXTENT ||
+ 		dev->irq < 2 || dev->irq > 15) {
+
 
