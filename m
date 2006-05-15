@@ -1,71 +1,38 @@
-From: Ralf Baechle DL5RB <ralf@linux-mips.org>
-Subject: Re: [ROSE] Fix dereference of skb pointer after free.
-Date: Sun, 14 May 2006 11:25:58 +0100
-Message-ID: <20060514102558.GA6509@linux-mips.org>
-References: <20060513115015.GA19232@linux-mips.org>
+From: "Mike McCarthy, W1NR" <lists@w1nr.net>
+Subject: SUSE Linux 10.1 Ham Radio RPM's
+Date: Mon, 15 May 2006 09:57:55 -0400
+Message-ID: <006c01c67827$9117c6b0$690ea8c0@LoJackOne.LoJack.com>
 Mime-Version: 1.0
+Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
-Content-Disposition: inline
-In-Reply-To: <20060513115015.GA19232@linux-mips.org>
 Sender: linux-hams-owner@vger.kernel.org
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; format="flowed"; charset="us-ascii"; reply-type="original"
 To: linux-hams@vger.kernel.org
 
-Please don't use the previous patch; it's broken.  Here's the right one.
+With the latest release of SUSE Linux 10.1, the libax25 rpm is no longer
+shipped on the CD's.  This means that the current 10.0 ham radio files will
+fail dependencies.  To solve this temporarily, until Joerg Reuter, DL1BKE
+has a chance to rebuild the Ham project for 10.1, I have created an
+installation source and iso image combining the 10.0 Ham Radio rpm's along
+with the 10.0 libax25 rpm's.
 
-  Ralf
+The iso is available at
+ftp://ftp.w1nr.net/suse-ham/SUSE-Linux-10.1-Ham-i386.iso.
 
-[NETROM] Fix possible null pointer dereference.
+With this you can create a CD image and use it as an add-on or installation
+source.  Also available is the installation tree at
+ftp://ftp.w1nr.net/suse-ham/10.1-i386/.  I would suggest that you use the
+iso or copy the directory tree to your local disk and use it from there.  My
+server does not have a lot of upload bandwidth (640k) so be patient it
+transfers seem slow.
 
-If in nr_link_failed the neighbour list is non-empty but the node list
-is empty we'll end dereferencing a  in a NULL pointer.
+I have only done some simple tests so far.   It looks like this kernel is
+working with mkiss again.  The new YaST does complain about the archive not
+being "signed".  Getting my personal key into your trusted sources for YaST
+is not a simple matter, so just ignore the warnings or turn them off.  If
+you have any problems, I'll see what I can do but I guarantee nothing!  Use
+these files at your own risk!
 
-This fixes coverity 362.
+73 de Mike, W1NR
 
-Signed-off-by: Ralf Baechle <ralf@linux-mips.org>
-
- net/netrom/nr_route.c |   12 ++++++++----
- 1 file changed, 8 insertions(+), 4 deletions(-)
-
-Index: linux-net/net/netrom/nr_route.c
-===================================================================
---- linux-net.orig/net/netrom/nr_route.c	2006-05-14 11:09:19.000000000 +0100
-+++ linux-net/net/netrom/nr_route.c	2006-05-14 11:10:46.000000000 +0100
-@@ -725,15 +725,17 @@ void nr_link_failed(ax25_cb *ax25, int r
- 	struct nr_node  *nr_node = NULL;
- 
- 	spin_lock_bh(&nr_neigh_list_lock);
--	nr_neigh_for_each(s, node, &nr_neigh_list)
-+	nr_neigh_for_each(s, node, &nr_neigh_list) {
- 		if (s->ax25 == ax25) {
- 			nr_neigh_hold(s);
- 			nr_neigh = s;
- 			break;
- 		}
-+	}
- 	spin_unlock_bh(&nr_neigh_list_lock);
- 
--	if (nr_neigh == NULL) return;
-+	if (nr_neigh == NULL)
-+		return;
- 
- 	nr_neigh->ax25 = NULL;
- 	ax25_cb_put(ax25);
-@@ -743,11 +745,13 @@ void nr_link_failed(ax25_cb *ax25, int r
- 		return;
- 	}
- 	spin_lock_bh(&nr_node_list_lock);
--	nr_node_for_each(nr_node, node, &nr_node_list)
-+	nr_node_for_each(nr_node, node, &nr_node_list) {
- 		nr_node_lock(nr_node);
--		if (nr_node->which < nr_node->count && nr_node->routes[nr_node->which].neighbour == nr_neigh)
-+		if (nr_node->which < nr_node->count &&
-+		    nr_node->routes[nr_node->which].neighbour == nr_neigh)
- 			nr_node->which++;
- 		nr_node_unlock(nr_node);
-+	}
- 	spin_unlock_bh(&nr_node_list_lock);
- 	nr_neigh_put(nr_neigh);
- }
