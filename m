@@ -1,49 +1,47 @@
 From: Ralf Baechle <ralf@linux-mips.org>
-Subject: Re: [PATCH] fix potential NULL pointer dereference in yam
-Date: Tue, 16 May 2006 10:57:37 +0100
-Message-ID: <20060516095737.GA23397@linux-mips.org>
-References: <200605141512.50923.jesper.juhl@gmail.com> <20060514140946.GA23387@mipter.zuzino.mipt.ru> <200605152219.37265.jesper.juhl@gmail.com>
+Subject: Re: different AX25.H files with same names
+Date: Thu, 18 May 2006 15:49:54 +0100
+Message-ID: <20060518144954.GA1063@linux-mips.org>
+References: <20060506223800.GA4419@linux-mips.org> <4465D18F.5070405@ccr.jussieu.fr> <20060513144258.GA3640@linux-mips.org> <44670260.2050105@ccr.jussieu.fr>
 Mime-Version: 1.0
 Return-path: <linux-hams-owner@vger.kernel.org>
 Content-Disposition: inline
-In-Reply-To: <200605152219.37265.jesper.juhl@gmail.com>
+In-Reply-To: <44670260.2050105@ccr.jussieu.fr>
 Sender: linux-hams-owner@vger.kernel.org
 List-Id: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
-To: Jesper Juhl <jesper.juhl@gmail.com>
-Cc: Alexey Dobriyan <adobriyan@gmail.com>, linux-kernel@vger.kernel.org, Frederic Rible <frible@teaser.fr>, Jean-Paul Roubelat <jpr@f6fbb.org>, linux-hams@vger.kernel.org
+To: Bernard Pidoux <pidoux@ccr.jussieu.fr>
+Cc: linux-hams@vger.kernel.org
 
-On Mon, May 15, 2006 at 10:19:36PM +0200, Jesper Juhl wrote:
+On Sun, May 14, 2006 at 12:11:44PM +0200, Bernard Pidoux wrote:
 
-> > How can it be NULL here? The whole array of valid net_devices was
-> > allocated at module init time.
-> > 
+> Ralf Baechle DL5RB wrote :
+> >On Sat, May 13, 2006 at 02:31:11PM +0200, Bernard Pidoux wrote:
+> >
+> >>By the way, its a long time since I want to ask if there is any reason 
+> >>to keep the same name for different ax25.h include files.
+> >>
+> >>/usr/include/netax25/ax25.h
+> >>/usr/src/linux/include/linux/ax25.h
+> >>/usr/src/linux/include/net/ax25.h
+> >>
+> >>Somehow it may be confusing.
+> >
+> >One for building applications, one for the kernel itself.
+> >
+> >73 de DL5RB op Ralf
+> >
+> >--
+> >Loc. JN47BS / CQ 14 / ITU 28 / DOK A21
 > 
-> It cannot. You are right, I'm wrong.
-> I guess removing the check makes sense then ?
+> I understand that these files have different usage.
+> This is why I think that they should have different names.
 
-Yes.
+> So why not rename it ax25_kernel.h
 
-Acked-by: Ralf Baechle <ralf@linux-mips.org>
+I just don't see a convcingint reason for it.  If it aint broke don't
+fix it.  Chances are renaming will break some software which against
+good advice is using the kernel header file anyway.
 
-> Signed-off-by: Jesper Juhl <jesper.juhl@gmail.com>
-> ---
-> 
-> --- linux-2.6.17-rc4-mm1-orig/drivers/net/hamradio/yam.c	2006-05-13 21:28:27.000000000 +0200
-> +++ linux-2.6.17-rc4-mm1/drivers/net/hamradio/yam.c	2006-05-15 22:16:32.000000000 +0200
-> @@ -852,7 +852,7 @@ static int yam_open(struct net_device *d
->  
->  	printk(KERN_INFO "Trying %s at iobase 0x%lx irq %u\n", dev->name, dev->base_addr, dev->irq);
->  
-> -	if (!dev || !yp->bitrate)
-> +	if (!yp->bitrate)
->  		return -ENXIO;
->  	if (!dev->base_addr || dev->base_addr > 0x1000 - YAM_EXTENT ||
->  		dev->irq < 2 || dev->irq > 15) {
-> 
-
-73 de DL5RB op Ralf
-
---
-Loc. JN47BS / CQ 14 / ITU 28 / DOK A21
+  Ralf
