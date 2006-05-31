@@ -1,61 +1,74 @@
-From: Matti Aarnio <matti.aarnio@zmailer.org>
+From: Bob Nielsen <nielsen@oz.net>
 Subject: Re: callsign limit
-Date: Wed, 31 May 2006 17:02:15 +0300
-Message-ID: <20060531140215.GI27502@mea-ext.zmailer.org>
-References: <200605310927.56706.vk3heg@iinet.net.au> <20060531130203.GH27502@mea-ext.zmailer.org> <1149081171.3361.10.camel@playstation2.hb9jnx.ampr.org>
-Mime-Version: 1.0
+Date: Wed, 31 May 2006 07:57:25 -0700
+Message-ID: <068D0B6A-DBE7-4E94-9E3A-DA2FF45FC9A8@oz.net>
+References: <1149077523.447d881344509@mgtmail.com> <20060531131500.GA16753@hugh.borg>
+Mime-Version: 1.0 (Apple Message framework v750)
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 Return-path: <linux-hams-owner@vger.kernel.org>
-Content-Disposition: inline
-In-Reply-To: <1149081171.3361.10.camel@playstation2.hb9jnx.ampr.org>
+In-Reply-To: <20060531131500.GA16753@hugh.borg>
 Sender: linux-hams-owner@vger.kernel.org
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-To: Thomas Sailer <sailer@sailer.dynip.lugs.ch>
-Cc: linux-hams@vger.kernel.org
-
-Hello Thomas,
-
-On Wed, May 31, 2006 at 03:12:50PM +0200, Thomas Sailer wrote:
-> On Wed, 2006-05-31 at 16:02 +0300, Matti Aarnio wrote:
-> 
-> > FM radio transmitter/limittered receiver, but with slight 2 dB backoff
-> > things do improve a lot..)
-> 
-> 2dB backoff is kinda hard to achieve with an ALC in the signal path. And
-> it doesn't help when transceivers "forget" to disconnect the internal
-> microphone when you connect an external modulation signal.
-
-Of course I would not use normal built-in modulator at all.
-One can perhaps use some components out of surplus NBFM radios,
-but not original modulator, nor (of course) FM demodulator.
-
-I spotted recently also TI's  CC1100 (et.al.) chips.
-Nice sets of features for a data radio in a very cheap package - but
-it does not look very sensitive in itself... (about 15 dB of "deafness"
-in our (oh2mqk, oh3bk, oh3nwq, oh2bns) opinnion about it..)
-
-On the other hand - adding narrowband low-noise preamp for Rx, and
-some real PA for Tx should make it  quite interesting thing all in
-its own right.
-
-> I still think it would be good to have some form of MAC layer ARQ
-> capability...
-
-The ARQ makes sense when your transmission is very slow.
-(E.g. HF AMTOR).   TCP retry timers are somewhat ARQ incompatible...
-
-Having a 9600 bps TCP running at 99% packet transmit reliability 
-gives you so good a result, that you don't want extra ARQ there
-to spoil things.
-
-Now ALE (Automatic Link Establishment), and ways to self-organize
-the network, those would be neat....
+Content-Type: text/plain; charset="iso-8859-1"; delsp="yes	format=flowed"
+To: linux-hams@vger.kernel.org
 
 
-> 73s,
-> Tom
+On May 31, 2006, at 6:15 AM, Robert Steinh=E4u=DFer wrote:
 
-73 de Matti, OH2MQK
+> Hi!
+>
+> We're no longer on a linux subject (linux-hams), but I suppose enough
+> here are interested.
+>
+> On Wed, May 31, 2006 at 12:12:03PM +0000, IT3 Stuart Blake Tener =20
+> wrote:
+>> Though only Canada has started issuing 2x4's as far as I know.
+>>
+>> While special event stations (even for Packet) are able to get 2x1 =20
+>> callsigns in
+>> the United States.
+>
+> 2x1 in the US aren't only for special events, see KA9Q etc. But I
+> haven't seen other countries issuing 2x1 or 1xN (e.g. N9KBK) in the
+> past. That seems to have changed recently.
 
-PS: "73s" is plural of plural
+I think he meant 1X1 for special events.  Many countries have 1XN =20
+callsigns (G, F, I, W, etc.)
+
+>> Jordon also issued 1x1 calls too.
+>
+> Do you mean JY1 etc.? Using this terminology that would be a 2x0 ;-)
+>
+> These special calls are becoming quite common in many countries now,
+> also here in Germany, from 2x1s for contest/clubstations (e.g. DR6A)
+> to the short-time stations during the soccer World Cup with calls lik=
+e
+> DR2006N and DQ2006J (which would be "2x1" as well).
+>
+> Perhaps somebody could check which syntax is valid now? I don't know
+> where to look. Was there any statement made on how calls longer than
+> 6 chars are to be used on packet? Perhaps just use a different ID
+> (which one?) and additionally set a beacon with the correct call in =20
+> the
+> data part? How do other modes (was it AMTOR?) handle this?
+
+That is probably the best way (for now, at least).  Although I =20
+haven't encountered it, I suspect that is the way it is handled by =20
+stations operating from other than their home country (using =20
+designators such as DL/W1AAA).
+
+There may be a need for a change to AX.25. TAPR (as custodian of the =20
+AX.25 specification) has a mailing list which is already discussing =20
+this issue:
+
+  <https://lists.tapr.org/cgi-bin/mailman/listinfo/ax25-layer2>.
+
+73,
+Bob, N7XY
+
+
+-
+To unsubscribe from this list: send the line "unsubscribe linux-hams" i=
+n
+the body of a message to majordomo@vger.kernel.org
+More majordomo info at  http://vger.kernel.org/majordomo-info.html
