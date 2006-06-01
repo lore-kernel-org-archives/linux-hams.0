@@ -1,54 +1,35 @@
-From: "Chuck Hast" <wchast@gmail.com>
+From: Ralf Baechle DL5RB <ralf@linux-mips.org>
 Subject: Re: callsign limit
-Date: Thu, 1 Jun 2006 06:54:33 -0400
-Message-ID: <620c90570606010354y1ddd0fb4p4326860171acfda3@mail.gmail.com>
-References: <200605310927.56706.vk3heg@iinet.net.au>
-	 <20060531093716.GA21395@cloud.net.au>
-	 <200606011034.38339.vk3heg@iinet.net.au>
+Date: Thu, 1 Jun 2006 02:40:48 +0100
+Message-ID: <20060601014047.GB27504@linux-mips.org>
+References: <200605310927.56706.vk3heg@iinet.net.au> <20060531093716.GA21395@cloud.net.au> <620c90570605310403o1e4b94bcgf4ab922ef26983e4@mail.gmail.com> <20060531111919.GA22980@cloud.net.au>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <200606011034.38339.vk3heg@iinet.net.au>
 Content-Disposition: inline
+In-Reply-To: <20060531111919.GA22980@cloud.net.au>
 Sender: linux-hams-owner@vger.kernel.org
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"; format="flowed"
-To: stephen <vk3heg@iinet.net.au>
-Cc: linux-hams@vger.kernel.org
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+To: linux-hams@vger.kernel.org
 
-On 6/1/06, stephen <vk3heg@iinet.net.au> wrote:
-> On Wed, 31 May 2006 09:37 am, Hamish Moffatt wrote:
->
-> > > When I enter in vk3fdcs at the bbs prompt I get this error:
-> > >
-> > > VK3HEG BBS>eu vk3fdcs
-> > > *** Error : The callsign is missing.
-> > >
-> > > The windows remote linux program will let me add the vk3fdcs callsign,
-> > > but when listing the users the ending 's' is cut off/missing.
-> > >
-> > > Is it posable to set call sign lengths in fbb or is this going to require
-> > > a re-compile/editing of the source code?
-> >
-> > Good question. AX.25 callsigns are at most 6 characters long, so you
-> > won't be able to use those callsigns on the air.
->
-> That does in deed seam to be a limiting factor, and is going to be a pain to
-> fix (ie: There's a lot of old gear around)
->
-> > Foundation licensees aren't allowed on packet btw.
->
-> Thanks Hamish, wasn't sure on that bit.'
->
+On Wed, May 31, 2006 at 09:19:19PM +1000, Hamish Moffatt wrote:
 
-I assume that these licenses are some sort of celebratory license?
-Foundation sounds like a SciFi book series that Issac Asimov
-wrote. (Don't laugh they are a classic)
+> > I believe (I maybe taking one in the wind but so far my digging around the
+> > web would show this correct) that the ITU format for amateur calls is a max-
+> > imum of 6 alpha-numerics, 
+> 
+> I think that's no longer true as of WRC 2003. It's a bit late to change
+> AX.25 though!
 
+Indeed.  And the problem isn't even new.  The ITU has always assigned
+callsigns blocks with three characters (such as DAA-DRZ to Germany).  It
+was just a courtesy to the ham community that only 1 and 2 character
+prefixes were ever issued with Swaziland (3DA) as the only exception
+I know of.
 
--- 
-Chuck Hast  -- KP4DJT --
-To paraphrase my flight instructor;
-"the only dumb question is the one you DID NOT ask resulting in my going
-out and having to identify your bits and pieces in the midst of torn
-and twisted metal."
+One of my crazier ideas to deal with the issue of the longer callsigns
+was using a hash value instead.  The probability of colissions is low but
+how to do the reverse mapping from hash to callsign ...
+
+  Ralf
