@@ -1,102 +1,29 @@
-From: "Jim Bayer" <kc9aop@gmail.com>
+From: Ralf Baechle DL5RB <ralf@linux-mips.org>
 Subject: Re: Listen on a consol
-Date: Sun, 4 Jun 2006 18:07:46 -0500
-Message-ID: <e524c5320606041607k18438f33ia2403d5d78294bd4@mail.gmail.com>
+Date: Mon, 5 Jun 2006 00:18:59 +0100
+Message-ID: <20060604231859.GA20158@linux-mips.org>
 References: <620c90570606031248i6b02af9ao4c872b96e53e3359@mail.gmail.com>
-	 <014001c68752$5a9f86b0$687ba8c0@COMPAQ>
-	 <620c90570606031444m5229588fh2a97ea68f5c8bb70@mail.gmail.com>
-	 <4D782A5B-969F-41D5-9D9F-0A04C2856786@oz.net>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <4D782A5B-969F-41D5-9D9F-0A04C2856786@oz.net>
 Content-Disposition: inline
+In-Reply-To: <620c90570606031248i6b02af9ao4c872b96e53e3359@mail.gmail.com>
 Sender: linux-hams-owner@vger.kernel.org
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"; format="flowed"
-To: linux-hams@vger.kernel.org
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+To: Chuck Hast <wchast@gmail.com>
+Cc: linux-hams <linux-hams@vger.kernel.org>
 
-Or your terminal type is set to linux.  Try "echo $TERM" at a shell
-prompt.  If it is not vt100, try "export TERM=vt100".  I assume you
-are using bash or ksh.  Otherwise use "setenv term vt100" for csh.
+On Sat, Jun 03, 2006 at 03:48:42PM -0400, Chuck Hast wrote:
 
-That may be all you need.  Also, sometimes it works if you hit the
-scroll lock, make sure the scroll lock light is lit, and then hit page
-up.  If that fails, make sure to hit scroll lock again to get your
-terminal back to normal scroll (unlocked) mode.
+> Folks,
+> I use the listen command at times remotely. When I run it as a terminal
+> window, I notice that I can no longer page back and look at what has
+> scrolled off of the screen. I am trying to figure out what I have missed,
+> but so far am hitting zero.
 
-Jim, KC9AOP
+I suggest you run it in screen, which will give you scrollback even if the
+OS doesn't such as in case of the limited scrollback abilities of the
+Linux console.
 
-
-On 6/3/06, Bob Nielsen <nielsen@oz.net> wrote:
->
-> On Jun 3, 2006, at 2:44 PM, Chuck Hast wrote:
->
-> > On 6/3/06, bud Thompson <budt@cfl.rr.com> wrote:
-> >>
-> >> ----- Original Message -----
-> >> From: "Chuck Hast" <wchast@gmail.com>
-> >> To: "linux-hams" <linux-hams@vger.kernel.org>
-> >> Sent: Saturday, June 03, 2006 15:48
-> >> Subject: Listen on a consol
-> >>
-> >>
-> >> > Folks,
-> >> > I use the listen command at times remotely. When I run it as a
-> >> terminal
-> >> > window, I notice that I can no longer page back and look at what
-> >> has
-> >> > scrolled off of the screen. I am trying to figure out what I
-> >> have missed,
-> >> > but so far am hitting zero.
-> >> >
-> >> > --
-> >> > Chuck Hast  -- KP4DJT --
-> >>
-> >> * * *
-> >> Chuck - I use the following from putty after logging into the
-> >> Orlando Linux
-> >> FPAC with user/password and the moving to Super User / password
-> >> and cd to
-> >> the ax25 subdirectory:
-> >>
-> >> root@Orlando:/etc/ax25# listen -artc
-> >>
-> >> That gets me the listen screen and a scroll-back on the right side.
-> >>
-> >> However - I cannot change the size/aspect ratio of that screen
-> >> once active -
-> >> it drops the putty link if I mess with that.
-> >>
-> >> Once listen -artc is running, I start a 2nd Putty session the same
-> >> way and
-> >> then:
-> >>
-> >> root@Orlando:/etc/ax25# fpacnode
-> >>
-> >> so i can play as a user!
-> >
-> > That is what I am doing, but when I run listen in a consol session
-> > on a
-> > linux machine it appears to change the terminal setup and no longer
-> > allow me to view the history of incoming data, this is a listen vs
-> > terminal
-> > issue, probably something that I need to set somewhere in the terminal
-> > or the listen attributes. As soon as I start the listen session my
-> > history
-> > slider goes away, so it is some interaction with the two apps.
->
-> Trying listen via a ssh connection from my Mac Mini, it appears that
-> if I don't use the 'c' parameter (which invokes ncurses) it will
-> scroll back properly, but if 'c' invoked, the whole screen scrolls
-> out of the window.  The slider is there in either case.
->
-> Bob, N7XY
->
->
->
-> -
-> To unsubscribe from this list: send the line "unsubscribe linux-hams" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at  http://vger.kernel.org/majordomo-info.html
->
+  Ralf
