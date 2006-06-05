@@ -1,29 +1,45 @@
-From: Ralf Baechle DL5RB <ralf@linux-mips.org>
-Subject: Re: Listen on a consol
-Date: Mon, 5 Jun 2006 00:18:59 +0100
-Message-ID: <20060604231859.GA20158@linux-mips.org>
-References: <620c90570606031248i6b02af9ao4c872b96e53e3359@mail.gmail.com>
+From: "Chuck Hast" <wchast@gmail.com>
+Subject: Sequencing of USB Serial ports
+Date: Sun, 4 Jun 2006 20:13:41 -0400
+Message-ID: <620c90570606041713s638711e4oe0fdb48667836ae7@mail.gmail.com>
 Mime-Version: 1.0
+Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
 Content-Disposition: inline
-In-Reply-To: <620c90570606031248i6b02af9ao4c872b96e53e3359@mail.gmail.com>
 Sender: linux-hams-owner@vger.kernel.org
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-To: Chuck Hast <wchast@gmail.com>
-Cc: linux-hams <linux-hams@vger.kernel.org>
+Content-Type: text/plain; charset="us-ascii"; format="flowed"
+To: linux-hams <linux-hams@vger.kernel.org>
 
-On Sat, Jun 03, 2006 at 03:48:42PM -0400, Chuck Hast wrote:
+Folks,
+I want to set up a machine with multiple USB serial ports, I have found that
+these devices do not always come on line as planned.
 
-> Folks,
-> I use the listen command at times remotely. When I run it as a terminal
-> window, I notice that I can no longer page back and look at what has
-> scrolled off of the screen. I am trying to figure out what I have missed,
-> but so far am hitting zero.
+I have a test machine that has ttyUSB0 and ttyUSB1, each one is assigned
+to a TNC and should always come up talking to the same hardware. At
+times the one that has been set up to be USB0 will take USB1 and visa-
+versa, if I plug a 3rd usb serial port on the machine it really becomes a
+crap shoot.
 
-I suggest you run it in screen, which will give you scrollback even if the
-OS doesn't such as in case of the limited scrollback abilities of the
-Linux console.
+I have been trying to figure out how to tie a particular piece of hardware
+(in this case a serial device) to a single device driver. So far have not
+been lucky, it appears that these things come up sort of randomly.
+I seem to recall seeing a code being read from each usb serial device,
+I am wondering if there is a way to get that code to be mapped to the
+tty device driver so say device with code (for grins) 1ab3dc will be
+mapped to ttyUSB0 regardless of what else is plugged into the thing,
+and if for some reason that device is removed USB0 is kept in reserve
+until the proper device is plugged back in or I go in and manually
+release it (if possible)
 
-  Ralf
+This is a FPAC switch running Knoppix (Kernel 2.4.22-xfs). It has all of
+the ax25 stuff installed in it, since each tnc represents a link and the
+link is of course referenced to the ttyUSBn I need to keep the going to
+the right place...
+
+-- 
+Chuck Hast  -- KP4DJT --
+To paraphrase my flight instructor;
+"the only dumb question is the one you DID NOT ask resulting in my going
+out and having to identify your bits and pieces in the midst of torn
+and twisted metal."
