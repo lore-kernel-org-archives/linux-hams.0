@@ -1,89 +1,40 @@
-From: Bob Nielsen <nielsen@oz.net>
-Subject: Re: Linlink
-Date: Mon, 5 Jun 2006 14:07:15 -0700
-Message-ID: <FD82B5D7-5513-4653-9B14-49C192E461C6@oz.net>
-References: <1CBE59FBA02D8940B2EC4230CAE72E4B054D3C9B@fstymx45.randolph.aetc.ds.af.mil> <33053.66.156.98.168.1149531402.squirrel@blackhawk.radio.org>
-Mime-Version: 1.0 (Apple Message framework v750)
+From: "Chuck Hast" <wchast@gmail.com>
+Subject: A issue of permissions?
+Date: Mon, 5 Jun 2006 23:45:47 -0400
+Message-ID: <620c90570606052045j7da27a40tebfd9446c5798346@mail.gmail.com>
+Mime-Version: 1.0
 Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <33053.66.156.98.168.1149531402.squirrel@blackhawk.radio.org>
+Content-Disposition: inline
 Sender: linux-hams-owner@vger.kernel.org
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"; delsp="yes"; format="flowed"
-To: linux-hams@vger.kernel.org
+Content-Type: text/plain; charset="us-ascii"; format="flowed"
+To: linux-hams <linux-hams@vger.kernel.org>
 
-That question typically begs for a subjective answer :^)
+I am trying to use the netrom function on my FPAC linux box, I know that it
+works because others have it working just fine.
 
-IMHO, Debian (and its offspring) and Suse have had the best support  
-for ham applications, although I have heard that Suse doesn't support  
-these as much as before.  I have used Slackware, Red Hat, Debian and  
-Ubuntu (based on Debian) over the past 12 years.  I now prefer Ubuntu  
-and they will even mail you a free CD.  A new version (6.06) was  
-released last week.
+I can do FPAC connections from FPACNODE just fine, but when I attempt
+to do a netrom connect I get the following message:
 
-73,
-Bob, N7XY
+KP4DJT-8 (Commands = ?) : c kempc
+KP4DJT-8} connect_to: bind: Permission denied
 
-On Jun 5, 2006, at 11:16 AM, Marty wrote:
+When I look at the syslog I see that the message is coming from fpacnode:
 
-> RGR,
->
-> TNX! for the info as soon as I get my linux box back up and running  
-> I will
-> get that installed. My laptop has some issues. I have a Sony  
-> notebook that
-> I have to reinstall linux on that I really want it to work on. I am  
-> using
-> Mandrake 10.1. What do you think is the better of the distributions of
-> linux? I have used Red Hat and Suse.
->
-> 73,
-> Marty-KD4HLV
-> www.kd4hlv.radio.org
->
-> <quote who="DuBose Walt Civ AETC CONS/LGCA">
->> I am in agreement with Bob.  Its a very good place to start.
->>
->> Walt/K5YFW
->>
->> -----Original Message-----
->> From: linlink-bounces@wetnet.net [mailto:linlink- 
->> bounces@wetnet.net]On
->> Behalf Of Bob Nielsen
->> Sent: Sunday, June 04, 2006 11:05 PM
->> To: kd4hlv@radio.org
->> Cc: linlink@wetnet.net
->> Subject: Re: Linlink
->>
->>
->>
->> On May 23, 2006, at 4:59 AM, Marty wrote:
->>
->>> We are starting a new Walton County ARES here in Loganville GA. I
->>> figure
->>> since we are starting from scrach might as well use a Linux base
->>> app that
->>> works wire an open source OS. I alos do not like the use of a
->>> proprietary
->>> closed system. I have been using Linux since 1998.
->>>
->>> Where can I find learn more about what is available for Linux. Can
->>> that be
->>> found on sourceforge?
->>>
->>
->> You might take a look at pskmail <http://pskmail.wikispaces.com>  
->> or JNOS
->> <http://www.langelaar.net/projects/jnos2/>.
->>
->> 73 - Bob, N7XY
->>
->>
->> _______________________________________________
->> Linlink mailing list
->> Linlink@wetnet.net
->> http://wetnet.net/mailman/listinfo/linlink
->>
->
->
+Jun  5 23:41:54 fpac-dev node[22629]: connect_to: bind: Permission denied
 
+From a ps -AL process 22629 belongs to fpacnode:
+
+22629 22629 ttyp0    00:00:00 fpacnode
+
+I have looked at the permissions and all look correct, but perhaps I am
+missing something, I see that in the past with LinuxNode there was some
+comments about a similar error but never saw what the fix was.
+
+-- 
+Chuck Hast  -- KP4DJT --
+To paraphrase my flight instructor;
+"the only dumb question is the one you DID NOT ask resulting in my going
+out and having to identify your bits and pieces in the midst of torn
+and twisted metal."
