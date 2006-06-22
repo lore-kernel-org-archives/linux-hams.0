@@ -1,7 +1,7 @@
 From: "Chuck Hast" <wchast@gmail.com>
 Subject: Re: APRS Parser
-Date: Tue, 20 Jun 2006 22:34:54 -0400
-Message-ID: <620c90570606201934g5dc3ac15j718c1e177168d8f2@mail.gmail.com>
+Date: Wed, 21 Jun 2006 23:52:01 -0400
+Message-ID: <620c90570606212052r640a020aq1a488f9b2217d0c2@mail.gmail.com>
 References: <620c90570606191918h7605ecbax20325ecffe1546e2@mail.gmail.com>
 	 <8ea83f40606192129t28c742y94299329b8548076@mail.gmail.com>
 	 <Pine.SUN.4.58.0606200356580.19102@eskimo.com>
@@ -25,11 +25,16 @@ On 6/20/06, Curt, WE7U <archer@eskimo.com> wrote:
 > Here's another link:
 >
 >     http://www.tapr.org/~g3nrw/
+>
 
-Just drove into Ft Lauderdale for the night... I will go look at it all a soon
-as I get settled into this room or tomorrow prior to driving back to Tampa.
+OK, went and found them all and pulled them down. How would you reco-
+mend that I put the data into a db? Or is there a piece for that too? I though
+that the aprsworld site had one but what I found was the piece that converts
+the data to shp files. (sql2shp).
 
-Thanks again for the info, and am going to look and poke at it all.
+Once I have it poked into something like mysql then I will be able to do what
+I really want with it.
+
 
 -- 
 Chuck Hast  -- KP4DJT --
