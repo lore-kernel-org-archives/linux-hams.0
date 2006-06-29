@@ -1,53 +1,58 @@
-From: Arnau Sanchez <arnau@ehas.org>
-Subject: Re: Software Radio-Phonepatch for Asterisk
-Date: Thu, 29 Jun 2006 00:38:42 +0200
-Message-ID: <44A304F2.1030503@ehas.org>
-References: <1151524875.17671E1F@dg11.dngr.org>  <Pine.SUN.4.58.0606051233310.12282@eskimo.com> <44A27928.20700@sharon.esrac.ele.tue.nl> <44A2DEDB.4040603@ehas.org> <200606282041.k5SKf5JA024139@yagi.h-net.msu.edu>
+From: Bernard Pidoux <pidoux@ccr.jussieu.fr>
+Subject: spinlock in kernel 2.6.17.1
+Date: Thu, 29 Jun 2006 13:09:23 +0200
+Message-ID: <44A3B4E3.3090306@ccr.jussieu.fr>
+References: <620c90570606031248i6b02af9ao4c872b96e53e3359@mail.gmail.com> <20060604231859.GA20158@linux-mips.org>
 Mime-Version: 1.0
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <200606282041.k5SKf5JA024139@yagi.h-net.msu.edu>
+In-Reply-To: <20060604231859.GA20158@linux-mips.org>
 Sender: linux-hams-owner@vger.kernel.org
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="iso-8859-1"; format="flowed"
-To: 
-Cc: linux-hams@vger.kernel.org
+Content-Type: text/plain; charset="us-ascii"; format="flowed"
+To: Ralf Baechle DL5RB <ralf@linux-mips.org>
+Cc: linux-hams <linux-hams@vger.kernel.org>
 
-Dennis Boone escribi=F3:
+Hi Ralf,
 
->> I am working on a software Radio-Phonepatch for Asterisk (developed =
-in=20
->> Python). It's still on beta state, but there may be someone interest=
-ed=20
->> on testing. Source and a binary package for Debian/Ubuntu are availa=
-ble=20
->> for download. Bug reporting or ideas for new features would be=20
->> appreciated.
->=20
-> I'm curious what functionality you needed that isn't available from
-> the existing * repeater module?
+I installed linux kernel 2.6.17.1 on my ROSE-FPAC switch box and get 
+systematically spinlocks within a few minutes, that did not came out 
+with previous 2.6.16.18 and your patched applied.
 
-Hello Dennis,
+After enabling compilation of sysrq for spinlocks and allowing sysrq 
+options (see linux/Documentation/sysrq.txt) I found that rose module was 
+involved.
 
-Excuse my ignorance, but does already exist software that interfaces=20
-asterisk with a radio-transceiver using a soundcard?
+Here is a summary of the screen dump obtained using console level 5 and 
+'t' key action :
 
-Do you refer to rpt? I didn't find soundcard support on the rpt asteris=
-k=20
-module. Anyway, I also wanted to add some features I think rpt don't=20
-have (I have hardly used it, so correct me):
+            softlockup_tick
+            update_process_times
+            timer_interrupt
+            handle_IRQ_event
+            __do_IRQ
+            do_IRQ
+            common_interrupt
+            delay_tsc
+            delay_tsc
+            _raw_spin_lock
+            _spin_lock_bh
+<c8a25646> rose_get_neigh   +0x16 /0xa0  [rose]
+<c8a25c2c> rose_route_frame +0x41c/0x580 [rose]
+<c89d3bfe> ax25_check_iframes_acked +0x5e/0x70 [ax25]
+<c89d55e1> ax25_std_frame_in +0x741/0x7e0 [ax25]
+            ax25_find_cb
+            ax25_kiss_rcv
+            autoremove_wake_function
 
-- Very tolerant DTMF decoding (enabling also HF users to call)
-- Each user has its own extension: when you call a radio-user extension=
-,=20
-an audio inform about that the call if for that particular user (of=20
-course, there is no way to prevent any other user in the channel from=20
-answering it)
-- Generic PTT/Carrier-detection support (although includes serial,=20
-parallel built-in). That means you can use the interface board you want=
-=2E
--
-To unsubscribe from this list: send the line "unsubscribe linux-hams" i=
-n
-the body of a message to majordomo@vger.kernel.org
-More majordomo info at  http://vger.kernel.org/majordomo-info.html
+Since spinlock address is always lock: c8a2b3a4
+I guess that the problem is in rose_route_frame ?
+
+What other report can I provide in order to help ?
+
+73 de Bernard, f6bvp
+
+http://f6bvp.org
+http://rose.fpac.free.fr/MINI-HOWTO/
+http://rose.fpac.free.fr/MINI-HOWTO-FR/
+
