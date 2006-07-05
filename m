@@ -1,38 +1,63 @@
-From: Cathryn Mataga <cathrynm@junglevision.com>
-Subject: kissattach/kissnetd versus ptyq ttyq and ptmx/pts
-Date: Wed, 05 Jul 2006 00:38:14 -0700
-Message-ID: <44AB6C66.4050000@junglevision.com>
-References: <20060623130355.9211a397.washer@trlp.com>	 <e524c5320606231517s2079aaa7uae807c7c657effdc@mail.gmail.com>	 <Pine.LNX.4.58.0606232331580.961@server.palaemon.co.uk>	 <44AB00AC.7000708@junglevision.com> <620c90570607041948l150297b6ue70236ee277d5ce8@mail.gmail.com>
+From: Bernard Pidoux <pidoux@ccr.jussieu.fr>
+Subject: spinlock in ROSE module with kernel 2.6.17
+Date: Wed, 05 Jul 2006 16:59:52 +0200
+Message-ID: <44ABD3E8.6040305@ccr.jussieu.fr>
+References: <620c90570606031248i6b02af9ao4c872b96e53e3359@mail.gmail.com> <20060604231859.GA20158@linux-mips.org>
 Mime-Version: 1.0
 Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <620c90570607041948l150297b6ue70236ee277d5ce8@mail.gmail.com>
+In-Reply-To: <20060604231859.GA20158@linux-mips.org>
 Sender: linux-hams-owner@vger.kernel.org
 List-Id: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"; format="flowed"
-To: 
-Cc: linux-hams@vger.kernel.org
+To: Ralf Baechle DL5RB <ralf@linux-mips.org>
+Cc: linux-hams <linux-hams@vger.kernel.org>
 
-In my original Linux ham radio setup, I had the following...
+Hi Ralf,
 
-/sbin/kissnetd -f 1064 /dev/ptyq3 /dev/ptyq4&
-sleep 4
-/sbin/kissattach -l /dev/ttyq3 lb1 192.168.0.2&
-/sbin/kissattach -l /dev/ttyq4 lb2 192.168.0.3&
+I amnot sure this message go through, so I send it again.
 
-for creating the loopback device.
+I installed linux kernel 2.6.17.1 (now -3) on my ROSE-FPAC switch box 
+and got systematically spinlocks within a few minutes, that did not came 
+out with previous 2.6.16.23 and your patched applied.
 
-Seems that in Fedora 4 ptyq3 and ttyq3 don't exist anymore.  I tried using
-MAKENODE ptyq3 and ttyq3 to create these device files, but I don't think 
-they're
-working?  I get this error.
+After enabling compilation of sysrq for spinlocks and allowing sysrq
+options (see linux/Documentation/sysrq.txt) I found that rose module was
+involved.
 
-kissattach: open: No such device or address
+Here is a summary of the screen dump obtained using console level 5 and
+'t' key action :
 
-I've been googling the pseudo terminals for Linux and it seems that the 
-new way is
-with ptmx/pts and ptyq3 and ttyq3 are the old style.  But I'm not sure, 
-will kissattach
-works with these? Or is there a way to get ptyq3 ttyq3 working in Fedora 5?
+            softlockup_tick
+            update_process_times
+            timer_interrupt
+            handle_IRQ_event
+            __do_IRQ
+            do_IRQ
+            common_interrupt
+            delay_tsc
+            delay_tsc
+            _raw_spin_lock
+            _spin_lock_bh
+<c8a25646> rose_get_neigh   +0x16 /0xa0  [rose]
+<c8a25c2c> rose_route_frame +0x41c/0x580 [rose]
+<c89d3bfe> ax25_check_iframes_acked +0x5e/0x70 [ax25]
+<c89d55e1> ax25_std_frame_in +0x741/0x7e0 [ax25]
+            ax25_find_cb
+            ax25_kiss_rcv
+            autoremove_wake_function
 
-What's the right way to go about this, these days?
+Since spinlock address is always lock: c8a2b3a4
+I guess that the problem is in rose_route_frame ?
+
+EIP is at delay_tsc + 0x16/0x20
+
+What other report can I provide in order to help ?
+
+73 de Bernard, f6bvp
+
+http://f6bvp.org
+http://rose.fpac.free.fr/MINI-HOWTO/
+http://rose.fpac.free.fr/MINI-HOWTO-FR/
+
+
