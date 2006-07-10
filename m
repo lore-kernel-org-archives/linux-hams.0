@@ -1,28 +1,34 @@
-From: David Miller <davem@davemloft.net>
-Subject: Re: [NETROM] adsf
-Date: Mon, 10 Jul 2006 16:22:35 -0700 (PDT)
-Message-ID: <20060710.162235.31259939.davem@davemloft.net>
-References: <20060710231446.GA8579@linux-mips.org>
-Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
-Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <20060710231446.GA8579@linux-mips.org>
-Sender: linux-hams-owner@vger.kernel.org
-List-Id: <linux-hams.vger.kernel.org>
-Content-Type: Text/Plain; charset="us-ascii"
-To: ralf@linux-mips.org
-Cc: netdev@vger.kernel.org, linux-hams@vger.kernel.org
-
 From: Ralf Baechle <ralf@linux-mips.org>
-Date: Tue, 11 Jul 2006 00:14:46 +0100
+Subject: [NETROM] Drop lock before calling nr_destroy_socket
+Date: Tue, 11 Jul 2006 00:25:45 +0100
+Message-ID: <20060710232545.GA8866@linux-mips.org>
+Mime-Version: 1.0
+Return-path: <netdev-owner@vger.kernel.org>
+Content-Disposition: inline
+Sender: netdev-owner@vger.kernel.org
+List-Id: <linux-hams.vger.kernel.org>
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+To: "David S. Miller" <davem@davemloft.net>, netdev@vger.kernel.org, linux-hams@vger.kernel.org
 
-> When establishing a new circuit in nr_rx_frame the locks are taken in a
-> different order than in the rest of the stack.  This should be harmless
-> but triggers lockdep.  Either way, reordering the code a little solves
-> the issue.
-> 
-> Signed-off-by: Ralf Baechle <ralf@linux-mips.org>
+nr_destroy_socket takes the socket lock itself so it should better be
+called with the socket unlocked.
 
-Care to give me a better header line than "[NETROM]: adsf"? :-)
+Signed-off-by: Ralf Baechle <ralf@linux-mips.org>
 
-Thanks.
+---
+
+diff --git a/net/netrom/nr_timer.c b/net/netrom/nr_timer.c
+index 75b72d3..ddba1c1 100644
+--- a/net/netrom/nr_timer.c
++++ b/net/netrom/nr_timer.c
+@@ -138,8 +138,8 @@ static void nr_heartbeat_expiry(unsigned
+ 		if (sock_flag(sk, SOCK_DESTROY) ||
+ 		    (sk->sk_state == TCP_LISTEN && sock_flag(sk, SOCK_DEAD))) {
+ 			sock_hold(sk);
+-			nr_destroy_socket(sk);
+ 			bh_unlock_sock(sk);
++			nr_destroy_socket(sk);
+ 			sock_put(sk);
+ 			return;
+ 		}
