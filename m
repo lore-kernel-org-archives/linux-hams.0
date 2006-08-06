@@ -1,35 +1,35 @@
-From: Joe Veldhuis <electrode@garandnet.net>
-Subject: Re: soundmodem won't decode 300 baud signals?
-Date: Sun, 06 Aug 2006 10:25:04 -0400
-Message-ID: <44D5FBC0.7010504@garandnet.net>
-References: <courier.44D13059.000019AF@radagast.org>
+From: wa7nwp@jnos.org
+Subject: AX25 on SUSE 10.0
+Date: Sun, 6 Aug 2006 12:24:32 -0500 (CDT)
+Message-ID: <3107.24.17.80.88.1154885072.squirrel@www.jnos.org>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 7BIT
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <courier.44D13059.000019AF@radagast.org>
 Sender: linux-hams-owner@vger.kernel.org
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"; format="flowed"
+Content-Type: text/plain; charset="us-ascii"
 To: linux-hams@vger.kernel.org
 
-I tried tuning 100 Hz up and down in 10 Hz steps from what should have
-put the bounds of the signal at 900 and 1100 Hz and was not able to
-decode even 10db+S9 300 baud signals at any point.
 
-I would speculate that soundmodem's decoder is unable to cope with the
-background noise present in sideband mode, but it decodes both 300 and
-1200 baud signals just fine through a microphone held up to the speaker
-of another computer running the same software, and that's quite a bit
-noisier than a strong sideband signal.
+We tried to turn on AX25 in a SuSE 10.0 system yesterday.  It was an
+educational experience.
 
-Anyone have any other ideas?
+Suse no longer directly supports or includes the AX25 packages.
 
--Joe, KD8ATU
+AX25 is indirectly supported as a 'project' by one of the SUSE folk.
 
-Dave Platt wrote:
-> You might want to fiddle with your rig's RIT function, while
-> trying to receive/demodulate an HF packet signal.  Adjust the
-> tuning in increments of as small as you can - 10 Hz or so at
-> a time - and see if there's a point at which the demodulator
-> manages to lock onto the signal and give you a recognizable
-> bitstream.
+That AX25 project is missing one little piece 'libax25.so'
+
+Even if that all worked, it's using kernel 2.6.13 which I believe is
+broken for MKISS.
+
+Do anybody have AX25 working on a recent SUSE system?   Is there a
+cookbook checklist of how to install and get it going?
+
+Is there any Linux distributions today that are AX25 ready without any
+futzing around?  It appears the system we were working on is going to go
+with XP-Pro since it's so much easier to set up and use.
+
+Thanks,
+Bill - WA7NWP
+
