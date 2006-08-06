@@ -1,28 +1,35 @@
-From: David <djmunn@bigpond.com>
-Subject: Compile Grig-0.7.1
-Date: Sun, 06 Aug 2006 18:14:44 +1000
-Message-ID: <44D5A4F4.2050407@bigpond.com>
+From: Joe Veldhuis <electrode@garandnet.net>
+Subject: Re: soundmodem won't decode 300 baud signals?
+Date: Sun, 06 Aug 2006 10:25:04 -0400
+Message-ID: <44D5FBC0.7010504@garandnet.net>
+References: <courier.44D13059.000019AF@radagast.org>
 Mime-Version: 1.0
 Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
+In-Reply-To: <courier.44D13059.000019AF@radagast.org>
 Sender: linux-hams-owner@vger.kernel.org
 List-Id: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"; format="flowed"
-To: Linux-hams List <linux-hams@vger.kernel.org>
+To: linux-hams@vger.kernel.org
 
-Hi All....Tnx for reading this.....
-I have just installed Hamlib-1.2.5 from tarball on my Mandriva Linux 
-2006 system.....works ok with most programs wanting Hamlib...
-However i am trying to compile Grig-0.7.1 and when i go ./configure it 
-says Hamlib 1.2.5 is not installed.....the README
-in the Grig tarball says that the devel file which has the headers is 
-needed....have scoured the net but cant find a Hamlib-devel file for 
-1.2.5...there was for Hamlib-1.2.4.....
-Does anyone know how to overcome the compile problem with Grig-0.7.1 and 
-and where it looks for Hamlib-1.2.5....
-Ive also looked for any forums or mail on this subject but cant seem to 
-find any....
+I tried tuning 100 Hz up and down in 10 Hz steps from what should have
+put the bounds of the signal at 900 and 1100 Hz and was not able to
+decode even 10db+S9 300 baud signals at any point.
 
-Tnx for your help
+I would speculate that soundmodem's decoder is unable to cope with the
+background noise present in sideband mode, but it decodes both 300 and
+1200 baud signals just fine through a microphone held up to the speaker
+of another computer running the same software, and that's quite a bit
+noisier than a strong sideband signal.
 
-David Munn VK4BDJ
+Anyone have any other ideas?
+
+-Joe, KD8ATU
+
+Dave Platt wrote:
+> You might want to fiddle with your rig's RIT function, while
+> trying to receive/demodulate an HF packet signal.  Adjust the
+> tuning in increments of as small as you can - 10 Hz or so at
+> a time - and see if there's a point at which the demodulator
+> manages to lock onto the signal and give you a recognizable
+> bitstream.
