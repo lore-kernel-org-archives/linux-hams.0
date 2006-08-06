@@ -1,79 +1,36 @@
-From: "Chuck Hast" <wchast@gmail.com>
-Subject: Re: AX25 on SUSE 10.0
-Date: Sun, 6 Aug 2006 14:40:43 -0400
-Message-ID: <620c90570608061140l1af032adofa6ef27d6d0a046f@mail.gmail.com>
-References: <3107.24.17.80.88.1154885072.squirrel@www.jnos.org>
+From: David Quental <ct1drb@iol.pt>
+Subject: Problems with PTT on GMFSK.HKJ.51.
+Date: Sun, 06 Aug 2006 20:48:32 +0100
+Message-ID: <44D64790.7000303@iol.pt>
 Mime-Version: 1.0
 Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <3107.24.17.80.88.1154885072.squirrel@www.jnos.org>
-Content-Disposition: inline
 Sender: linux-hams-owner@vger.kernel.org
 List-Id: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"; format="flowed"
-To: "wa7nwp@jnos.org" <wa7nwp@jnos.org>
-Cc: linux-hams@vger.kernel.org
+To: linux-hams@vger.kernel.org
 
-On 8/6/06, wa7nwp@jnos.org <wa7nwp@jnos.org> wrote:
->
-> We tried to turn on AX25 in a SuSE 10.0 system yesterday.  It was an
-> educational experience.
->
-> Suse no longer directly supports or includes the AX25 packages.
->
-> AX25 is indirectly supported as a 'project' by one of the SUSE folk.
->
-> That AX25 project is missing one little piece 'libax25.so'
->
-> Even if that all worked, it's using kernel 2.6.13 which I believe is
-> broken for MKISS.
->
-> Do anybody have AX25 working on a recent SUSE system?   Is there a
-> cookbook checklist of how to install and get it going?
->
-> Is there any Linux distributions today that are AX25 ready without any
-> futzing around?  It appears the system we were working on is going to go
-> with XP-Pro since it's so much easier to set up and use.
->
+Hello all,
 
-What are you trying to do with it? If it is being used a a network device or
-BBS, I can not see where XP is any gain, but I guess it it is some sort of
-terminal device that the public has access to then I guess it probably would
-look better with XP. You need to move to SuSE 10.1 in order to get the
-kernel that works correctly I believe. I am moving my machines to 10.1
-so as to be able to play with it.
+name is David qth near Lisbon loc IM58KO.
 
-Here in Florida we are working on a Knoppix version that will be quite
-near plug and play for setting up our FPAC switches. It will install all
-of the AX25 stuff along with the fpac and netrom stuff. There will also
-be fbb on there for those who are running a bbs and want that facility.
+For some time I use GMFSK and I think it is a fine digital pgr, some 
+time ago I discovered that there is another ham, in case W1HKJ, that is 
+developing software, my congrats for him & others.
 
-Here is the latest, it is a 2.4 kernel, Charlie is working on a 2.6 kernel
-release, and I think it is almost done. There was I think a script problem
-with the fpac install.
------------------------------------------------------------- From
-k4gbb -----------------------------------------------
+I have no major problems but now I discovered a strange behavior with 
+GMFSK, I was in tests on vhf and  saw that  GMFSK can receive but it 
+does not PTT, did several tests and nothing, finally I did a test with  
+another GFMSK, but modified by VK3SB, and PTT works.
 
-It is available now @ ftp://n4zkf.com./fadca
-The file name is FADCA-1.7.4.iso (approx 500Mb)
-This will be the last version with the 2.4.27 Kernel.
+In case of my GMFSK from W1HKJ, is there a bug or another problem????
 
-The next version will be based on Knoppix 10.01, with the 2.6.17 kernel.
-The preliminary work has already been done, but not tested.
+Vhf rig is a kenwood ts-790.
 
-<<Charlie>>
-     k4gbb
------------------------------------------------------------- End k4gbb
--------------------------------------------------
+Hope have answer soon :) :) :)
 
-Since this has come out he has been working on the script problem
-and I believe he is almost done, or maybe done with it. So 2.6 maybe
-ready by now.
+Best regards.
 
+CT1DRB
+David Quental
 
--- 
-Chuck Hast  -- KP4DJT --
-To paraphrase my flight instructor;
-"the only dumb question is the one you DID NOT ask resulting in my going
-out and having to identify your bits and pieces in the midst of torn
-and twisted metal."
