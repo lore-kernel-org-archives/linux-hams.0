@@ -1,7 +1,7 @@
-From: "Mike McCarthy, W1NR" <lists@w1nr.net>
-Subject: RE: AX25 on SUSE 10.0
-Date: Sun, 6 Aug 2006 20:47:12 -0400
-Message-ID: <000c01c6b9bb$0555cd90$3a49a8c0@lan.w1nr.net>
+From: Bernard Pidoux <pidoux@ccr.jussieu.fr>
+Subject: Re: AX25 on SUSE 10.0
+Date: Mon, 07 Aug 2006 19:04:07 +0200
+Message-ID: <44D77287.4080901@ccr.jussieu.fr>
 References: <3107.24.17.80.88.1154885072.squirrel@www.jnos.org>
 Mime-Version: 1.0
 Content-Transfer-Encoding: 7bit
@@ -9,61 +9,76 @@ Return-path: <linux-hams-owner@vger.kernel.org>
 In-Reply-To: <3107.24.17.80.88.1154885072.squirrel@www.jnos.org>
 Sender: linux-hams-owner@vger.kernel.org
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"
-To: wa7nwp@jnos.org, linux-hams@vger.kernel.org
-
-SuSE 10.0 uses kernel 2.6.13 which has a broken mkiss interface as you
-suspect.
-
-I am running 10.1 with AX.25 on three systems including my DXSpider cluster
-node just fine.  The AX.25 stuff is compiled into the default kernel as
-modules.  Ham software like the AX.25 utilities is now packaged by others.
-libax25.so is on the ftp installation sources or you can use my repackaging
-of the 10.0 stuff with libax25.so included at ftp://ftp.w1nr.net/suse-ham/.
-
-SuSE seems to have decided to go with no more than 5 CD's, therefore there
-are many packages left off the CD's but are available via ftp.
-
-You basically add ftp installation sources with YaST to point to the ham
-packages and an "inst-source" and "non-oss-inst-source" off a mirror and
-everything will be available to you.
-
-Mike, W1NR
+Content-Type: text/plain; charset="us-ascii"; format="flowed"
+To: wa7nwp@jnos.org
+Cc: linux-hams@vger.kernel.org
 
 
------Original Message-----
-From: linux-hams-owner@vger.kernel.org
-[mailto:linux-hams-owner@vger.kernel.org] On Behalf Of wa7nwp@jnos.org
-Sent: Sunday, August 06, 2006 1:25 PM
-To: linux-hams@vger.kernel.org
-Subject: AX25 on SUSE 10.0
+
+wa7nwp@jnos.org wrote :
+> We tried to turn on AX25 in a SuSE 10.0 system yesterday.  It was an
+> educational experience.
+> 
+> Suse no longer directly supports or includes the AX25 packages.
+> 
+> AX25 is indirectly supported as a 'project' by one of the SUSE folk.
+> 
+> That AX25 project is missing one little piece 'libax25.so'
+> 
+> Even if that all worked, it's using kernel 2.6.13 which I believe is
+> broken for MKISS.
+> 
+> Do anybody have AX25 working on a recent SUSE system?   Is there a
+> cookbook checklist of how to install and get it going?
+> 
+> Is there any Linux distributions today that are AX25 ready without any
+> futzing around?  It appears the system we were working on is going to go
+> with XP-Pro since it's so much easier to set up and use.
+
+I have been using Mandriva Linux (formerly Mandrake) for a long time and 
+recently shifted to 2.6 kernel for my AX25 packet radio.
+
+Mandriva distro include all AX25 drivers and kernels are compiled with 
+AX25 option set by default.
+
+2006 official distro has 2.6.12 kernel that is not perfect for AX25.
+It can be updated with a more recent kernel like 2.6.17.1 easy to 
+install as there is a rpm file available.
+
+I am presently using Mandriva 2006 official and kernel 2.6.16.18 on my 
+AX25 BBS/Rose-FPAC/DxNet station.
+
+However, there is a 2007 distro to be released in october that is based 
+on kernel 2.6.17 witch includes a number of recent AX25 patchs by Ralf 
+DL5RB. The beta 1 version is available for free download on CDs or one 
+4,7Gb DVD.
+
+Mandriva has its own live distro on a CD, called Mandriva One. It is in 
+beta 1 step of development with 2.6.17 kernel. This live version could 
+be used for AX25 as it can be easily installed on HD. Although it does 
+not include development software (gcc compiler) it may be interesting to 
+experiment with for AX25 installing AX25 libraries and utilities from 
+binary executable files. See my ROSE-FPAC Mini Howto.
 
 
-We tried to turn on AX25 in a SuSE 10.0 system yesterday.  It was an
-educational experience.
+73 de Bernard, f6bvp.
 
-Suse no longer directly supports or includes the AX25 packages.
+> 
+> Thanks,
+> Bill - WA7NWP
+> 
+> -
+> To unsubscribe from this list: send the line "unsubscribe linux-hams" in
+> the body of a message to majordomo@vger.kernel.org
+> More majordomo info at  http://vger.kernel.org/majordomo-info.html
+> 
+> 
 
-AX25 is indirectly supported as a 'project' by one of the SUSE folk.
+-- 
 
-That AX25 project is missing one little piece 'libax25.so'
+73 de Bernard, f6bvp
 
-Even if that all worked, it's using kernel 2.6.13 which I believe is broken
-for MKISS.
-
-Do anybody have AX25 working on a recent SUSE system?   Is there a
-cookbook checklist of how to install and get it going?
-
-Is there any Linux distributions today that are AX25 ready without any
-futzing around?  It appears the system we were working on is going to go
-with XP-Pro since it's so much easier to set up and use.
-
-Thanks,
-Bill - WA7NWP
-
--
-To unsubscribe from this list: send the line "unsubscribe linux-hams" in the
-body of a message to majordomo@vger.kernel.org More majordomo info at
-http://vger.kernel.org/majordomo-info.html
-
+http://f6bvp.org
+http://rose.fpac.free.fr/MINI-HOWTO/
+http://rose.fpac.free.fr/MINI-HOWTO-FR/
 
