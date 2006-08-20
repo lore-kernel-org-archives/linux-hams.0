@@ -1,61 +1,27 @@
-From: "Michel Beaudry" <ve2bcw@gmail.com>
-Subject: Re: gMFSK Ptt
-Date: Fri, 18 Aug 2006 09:39:39 -0400
-Message-ID: <c17fc8440608180639v3dc3e2d0ta739f6a06accc8b2@mail.gmail.com>
-References: <c17fc8440608161756x5342651fsacc241dce6c78601@mail.gmail.com>
-	 <44E41569.9070801@bfs.de>
+From: wa7nwp@jnos.org
+Subject: Re: AX25 on SUSE 10.0
+Date: Sun, 20 Aug 2006 17:52:03 -0500 (CDT)
+Message-ID: <3970.71.227.135.166.1156114323.squirrel@www.jnos.org>
+References: <3107.24.17.80.88.1154885072.squirrel@www.jnos.org>
+    <44D77287.4080901@ccr.jussieu.fr>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 7BIT
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <44E41569.9070801@bfs.de>
-Content-Disposition: inline
+In-Reply-To: <44D77287.4080901@ccr.jussieu.fr>
 Sender: linux-hams-owner@vger.kernel.org
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"; format="flowed"
+Content-Type: text/plain; charset="us-ascii"
 To: linux-hams@vger.kernel.org
 
-Thanks for the reply Walter,
+>
+>
+> wa7nwp@jnos.org wrote :
+>> We tried to turn on AX25 in a SuSE 10.0 system yesterday.  It was an
+>> educational experience.
 
-The lp module is not loaded, I tried load and unload the parport
-module but always with the same results.
-I re-installed the original version of gmfsk and it works fine with
-the parallel port.
-Must be something with  gmfsk.hkj.51 or the way i compiled it.
+Thanks everybody for the comments on SuSE and AX25.  It looks like it's
+possible but not as easy as using Ubuntu or similar Debian distribution.
 
-73,
-Michel
-ve2bcw
+73
+Bill - WA7NWP
 
-> hi michel,
-> no idea what the problem is but there is a problem
-> when you load the lp and parport module.
-> perhaps if you 'rmmod lp' you have a better change.
->
-> re,
->   wh
->
->
-> Michel Beaudry wrote:
-> > Hi all,
-> >
-> > I installed and compiled gmfsk.hkj.51 on Debian testing.
-> > The program works ok except for the parallel port ptt
-> >
-> > I now get the error message device parport0 is not a serial port.
-> >
-> > Before I was using gmfsk-0.7pre1 on the same machine and the parallel
-> > port worked fine.
-> > I use the serial port for hamlib.
-> >
-> > What am I missing to get the parallel port working ?
-> >
-> > thanks,
-> > Michel
-> > ve2bcw
-> > -
-> > To unsubscribe from this list: send the line "unsubscribe linux-hams" in
-> > the body of a message to majordomo@vger.kernel.org
-> > More majordomo info at  http://vger.kernel.org/majordomo-info.html
-> >
-> >
->
