@@ -1,27 +1,19 @@
-From: wa7nwp@jnos.org
-Subject: Re: AX25 on SUSE 10.0
-Date: Sun, 20 Aug 2006 17:52:03 -0500 (CDT)
-Message-ID: <3970.71.227.135.166.1156114323.squirrel@www.jnos.org>
-References: <3107.24.17.80.88.1154885072.squirrel@www.jnos.org>
-    <44D77287.4080901@ccr.jussieu.fr>
+From: wa7nwp <wa7nwp@jnos.org>
+Subject: AX25 + Colinux
+Date: Mon, 21 Aug 2006 08:04:58 -0700
+Message-ID: <44E9CB9A.9060709@jnos.org>
+References: <3107.24.17.80.88.1154885072.squirrel@www.jnos.org>    <44D77287.4080901@ccr.jussieu.fr> <3970.71.227.135.166.1156114323.squirrel@www.jnos.org>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7BIT
+Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <44D77287.4080901@ccr.jussieu.fr>
+In-Reply-To: <3970.71.227.135.166.1156114323.squirrel@www.jnos.org>
 Sender: linux-hams-owner@vger.kernel.org
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"
+Content-Type: text/plain; charset="us-ascii"; format="flowed"
 To: linux-hams@vger.kernel.org
 
->
->
-> wa7nwp@jnos.org wrote :
->> We tried to turn on AX25 in a SuSE 10.0 system yesterday.  It was an
->> educational experience.
 
-Thanks everybody for the comments on SuSE and AX25.  It looks like it's
-possible but not as easy as using Ubuntu or similar Debian distribution.
+Has anybody tried the AX25 packet system on a colinux system? 
+http://www.colinux.org
 
-73
-Bill - WA7NWP
 
