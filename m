@@ -1,46 +1,52 @@
-From: wa7nwp <wa7nwp@jnos.org>
-Subject: Re: AX25 + Colinux - now Virtual PC
-Date: Wed, 23 Aug 2006 08:22:07 -0700
-Message-ID: <44EC729F.7020801@jnos.org>
-References: <3107.24.17.80.88.1154885072.squirrel@www.jnos.org>	<44D77287.4080901@ccr.jussieu.fr>	<3970.71.227.135.166.1156114323.squirrel@www.jnos.org>	<44E9CB9A.9060709@jnos.org> <87wt91crwl.wl%coda@post.kek.jp>
+From: "Bent Bagger" <bbagger@gmail.com>
+Subject: Re: Unwanted packets on AX25 interface
+Date: Sat, 9 Sep 2006 19:42:49 +0200
+Message-ID: <2e19719f0609091042p778dc8aaq76550e2a88ef5984@mail.gmail.com>
 Mime-Version: 1.0
 Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <87wt91crwl.wl%coda@post.kek.jp>
+Content-Disposition: inline
 Sender: linux-hams-owner@vger.kernel.org
 List-Id: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"; format="flowed"
 To: linux-hams@vger.kernel.org
 
- >> Has anybody tried the AX25 packet system on a colinux system?
- >> http://www.colinux.org
+Hi all,
 
-> Though I haven't been trying to use colinux on amateure radio,
-> I can say there are many difficulties to work them out.
-> 
-> An effort to develop the virtual serial device seems to have
-> gone away.
-> There is no way to get out/into except the virtual network device,
-> at this stage.
-> 
-> However, as you may notice, colinux is still under development.
-> You can build and add some special devices for amateure radio,
-> if you like.
-> 
-> 73,
-> Aki
+I have to pick up this thread again, because I'm being plagued by this
+thing. What I experience is that when I configure my AX25 interface
+with kissattach, my modem, which is a DSP-12, gets taken out of KISS
+mode. The DSP-12 is taken out of KISS mode by receiving 3 ctrl-C
+character within 3 seconds.
 
-Hmm.  Without the serial port we don't gain anything we don't already 
-have.   Hmmm.  Maybe the free Microsoft Virtual PC will work...
+Ralf,  DL5RB, wrote on Wed Jan 25 2006 :
+> This is a known problem. For unknown reasons ages ago the use of an IP
+> address with every AX.25 address was made mandatory and recently DL9SAU
+> started undoing that again.
+>
+> Until then you may try to limit the problem by setting up a packet filter
+> blocking all ARP/IP traffic over your mkiss interface.
 
-http://www.microsoft.com/windows/virtualpc/default.mspx
+I have gotten rid of the initial IGMP and MDNS packages by using these
+rules in my firewall:
 
-It appears there are some great opportunities here with all the virtual 
-systems showing up - everything from XEN to JNOS...
+iptables -A OUTPUT -o ax0 -j LOG
+iptables -A OUTPUT -p igmp -o ax0 -j DROP
+iptables -A OUTPUT -p udp -o ax0 -j DROP
+(the LOG rule is only there because I am curious as to what actually
+goes out ax0)
 
-73
-Bill - WA7NWP
+Now my modem is not reset until I send the first ax25 frame, e.g. by
+using the call program, so something is still going out the ax0
+interface. iptables does not log 'real' ax25 frames for some reason.
 
+I actually have two questions in this connection:
 
+1) How do I get iptables to access frams at the protocol layers below
+IP? I know how to get at the MAC addess, but how do you get at other
+protocol than IP?
 
-
+2) It would probably be a good idea to be able to actually see what
+goes on the serial line from my PC to the DSP-12 modem, but apart from
+a fullblown hardware protocol analyzer (which I do not have) what tool
+are awailable for that kind of sniffing?
