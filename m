@@ -1,55 +1,60 @@
-From: Hamish Moffatt <hamish@cloud.net.au>
-Subject: Re: gmfsk
-Date: Mon, 30 Oct 2006 08:31:57 +1100
-Message-ID: <20061029213157.GA25286@cloud.net.au>
-References: <4544D1A7.3010103@blueyonder.co.uk>
+From: Tomi Manninen <oh2bns@sral.fi>
+Subject: Re: struggling with gMFSK setup
+Date: Sun, 29 Oct 2006 23:52:00 +0200
+Message-ID: <1162158720.30446.16.camel@oh2bns.ampr.org>
+References: <20061029205046.947DA11F4@teufel.hartford-hwp.com>
 Mime-Version: 1.0
+Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
-Content-Disposition: inline
-In-Reply-To: <4544D1A7.3010103@blueyonder.co.uk>
+In-Reply-To: <20061029205046.947DA11F4@teufel.hartford-hwp.com>
 Sender: linux-hams-owner@vger.kernel.org
 List-Id: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-To: linux-hams@vger.kernel.org
+To: "H.Haines Brown" <brownh@hartford-hwp.com>
+Cc: linux-hams@vger.kernel.org
 
-On Sun, Oct 29, 2006 at 04:07:03PM +0000, richard wrote:
-> Cant seem to get audio routed to GMFSK , it compiled OK as far as I 
-> know, no errors .
-> In settings , selecting device /dev/dsp  /dev/dsp1 /dev/dsp2 doesn't 
-> route audio to the program.
-> I've determined that /dev/dsp2 is the mic input off the webcam, so that 
-> can be ignored.
+On Sun, 2006-10-29 at 15:50 -0500, Haines Brown wrote:
 
-Is /dev/dsp actually the ALSA emulation, ie you are using ALSA natively?
-Can you send the results of "aplay -l" so we can see how ALSA has
-detected your devices?
+> Despite some generous help, I'm not doing well setting levels for
+> transmit from my FT-817. I am using a SignaLink interface and am
+> following the suggestions that came with it. 
 
-> There never seems to be any input directed  from /dev/dsp, bur /dev/dsp1 
-> has an input even when everything has been muted.
-> I've had problems trying to get the sound from the TV card which is hard 
-> wired to AUX i/p on the mobo to route through the digital mixer
-> to get routed out of the delta 66 breakout box to a diddy little hifi 
-> system in the shack. So I'm aware that the two cards don't talk to each 
-> other very well.
+I don't know signalink but it seems it's based on some sort of VOX 
+(voice operated relay/transmit) to operate PTT (not a good idea if you
+ask me btw).
 
-There's no way that sound can get from one card to the other via the
-mixer alone. Either you need a cable from a line-out to a line-in, or
-you need a program to copy samples from one card to the other. I think
-this is irrelevant to your use of gMFSK though.
+> When I set gMFSK to Transmit/Tune, I hear a tone. Although neither my
+> Master volume nor PCM volume are muted, increasing the playback levels
+> should turn on the SignaLink PTT LED, but that never
+> happens. Reception is fine. 
 
-> Is this behaviour I'm seeing on GMFSK normal , ie displaying garbage on 
-> /dev/dsp1  ??
+If you hear a tone, then gMFSK should be ok. Now you have to figure
+out why your signalink doesn't "hear the tone", ie. why doesn't it
+trigger PTT for you.
 
-Not sure what you mean by garbage?
+> Under Devices, Sound, 
+> 
+>       Sound card device: /dev/dsp
+>       Requested sample rate: 8000 (default) 
+>       Tx rate offset (ppm): 0 (default)
+>       Rx rate offset (ppm): 0 
+> 
+> I checked 8-bit sound in/out, and left stereo and full duplex
+> unchecked.  
 
-> Yet I can run winrad using wine to use the delta66 card as the input and 
-> the VIA 8253 as the output device
+8-bit sound should not be needed for any modern hardware. If you
+don't get any errors then don't check that. (It's a good idea to 
+start gMFSK from a command line, ie. type "gmfsk" to an xterm or
+equivalent. That way you see if it gives any warning messages etc.)
 
-Is that the configuration you want? I don't think there is any support
-in gMFSK for input and output on different devices. Your setup sounds
-unusual (perhaps unusually complicated?).
+> Under Devices, PTT, for device I use /dev/ttyS0, and for PTT line
+> (serial), I have both RTS and DTR checked. I leave unchecked the Use
+> inverted PTT logic.
 
-Hamish
+PTT settings in gMFSK should not be relevant to you as your interface
+relies on VOX for PTT. Just set PTT device to "none".
+
 -- 
-Hamish Moffatt VK3SB <hamish@debian.org> <hamish@cloud.net.au>
+Tomi Manninen / OH2BNS / KP20JF74
+
+
