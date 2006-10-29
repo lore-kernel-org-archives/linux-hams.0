@@ -1,49 +1,70 @@
-From: brownh@hartford-hwp.com (Haines Brown)
-Subject: ALSA audio levels for digital modes
-Date: Thu, 26 Oct 2006 15:52:53 -0400 (EDT)
-Message-ID: <20061026195253.D58AC990@teufel.hartford-hwp.com>
-Reply-To: "H.Haines Brown" <brownh@hartford-hwp.com>
+From: richard <richard.bown@blueyonder.co.uk>
+Subject: gmfsk
+Date: Sun, 29 Oct 2006 16:07:03 +0000
+Message-ID: <4544D1A7.3010103@blueyonder.co.uk>
+Mime-Version: 1.0
+Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
 Sender: linux-hams-owner@vger.kernel.org
 List-Id: <linux-hams.vger.kernel.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset="us-ascii"; format="flowed"
 To: linux-hams@vger.kernel.org
 
-Directions for tuning audio levels for digital modes seem to have
-little relation with my alsamixer options. I have no experience with
-ham radio. 
+Hi all
+System here
+Mandriva 2007 Gnome 2.16
+GMFSK 0.7 pre1
+sound cards M-audio delta 66
+on board  VIA 8253
 
-I can receive signals on 20 meters PSK31 with my Audigy sound card,
-SignaLink interface, and FT-817 transceiver. I plug the received
-signal from the SignaLink into the Audigy's Mike input and adjust the
-Capture Make to get a decent waterfall with signals. 
 
-However, I find that Playback Mike +20 dB boost has a big effect on the
-waterfall. How can Playback Mike level affect the level of signal
-input? "Playback" sound like it refers to signal output. 
+Problem:-
 
-To tune for transmit, I've attached a dummy load to my FT-817 and
-turn transmit power to a minimum (0.5W). 
+Cant seem to get audio routed to GMFSK , it compiled OK as far as I 
+know, no errors .
+In settings , selecting device /dev/dsp  /dev/dsp1 /dev/dsp2 doesn't 
+route audio to the program.
+I've determined that /dev/dsp2 is the mic input off the webcam, so that 
+can be ignored.
+There never seems to be any input directed  from /dev/dsp, bur /dev/dsp1 
+has an input even when everything has been muted.
+I've had problems trying to get the sound from the TV card which is hard 
+wired to AUX i/p on the mobo to route through the digital mixer
+to get routed out of the delta 66 breakout box to a diddy little hifi 
+system in the shack. So I'm aware that the two cards don't talk to each 
+other very well.
 
-To configure transmit volume level, I'm told to mute the Playback
-Mike. I can set the Playback Mike gain to zero, but there's no "mute"
-for the Playback Mike. To configure transmission, should I also cut
-out the +20 dB playback boost?
+Is this behaviour I'm seeing on GMFSK normal , ie displaying garbage on 
+/dev/dsp1  ??
 
-The directions say to set Playback Master Volume to about 75%, and
-make sure "Wave Volume" is not muted. What is the equivalent of "wave
-volume" in ALSA? Regardless of what Playback control I increase, I the
-PTT LED never goes on.
+Yet I can run winrad using wine to use the delta66 card as the input and 
+the VIA 8253 as the output device
 
-Next, I am supposed to set my digital software to "Tune". My gMFSK
-does not have a tune, but I can change it to transmit mode. Is this
-the same thing? I suspect so, but wanted to be sure. 
+the output from lspci -v below
+00:0d.0 Multimedia audio controller: VIA Technologies Inc. ICE1712 
+[Envy24] PCI Multi-Channel I/O Controller (rev 02)
+        Subsystem: VIA Technologies Inc. M-Audio Delta 66
+        Flags: bus master, medium devsel, latency 32, IRQ 17
+        I/O ports at d800 [size=32]
+        I/O ports at d400 [size=16]
+        I/O ports at d000 [size=16]
+        I/O ports at b800 [size=64]
+        Capabilities: [80] Power Management version 1
+00:11.5 Multimedia audio controller: VIA Technologies, Inc. 
+VT8233/A/8235/8237 AC97 Audio Controller (rev 50)
+        Subsystem: ASUSTeK Computer Inc. A7V8X-X Motherboard
+        Flags: medium devsel, IRQ 18
+        I/O ports at e000 [size=256]
+        Capabilities: [c0] Power Management version 2
 
-Next, I am supposed to advance my "Wave Volume" control until
-SignaLink's PTT LED goes on. However, no Playback control that I
-advance seems to have this effect.
+I'm using the envy24 patch bay as well as the alsa control thing.
+It used to be easy to determine which dsp was in use by selecting them 
+with other software like skype, which now lists devices not by which dsp 
+they are connected to, but by a list of device types.
 
-Haines Brown KB1GRM
- 
+Any help appreciated
+73
+Richard g8jvm
+
+
+
