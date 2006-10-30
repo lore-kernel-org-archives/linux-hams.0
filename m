@@ -1,67 +1,40 @@
-From: Al Bolduc <a.bolduc@comcast.net>
-Subject: Re: gmfsk
-Date: Mon, 30 Oct 2006 17:47:27 -0500 (EST)
-Message-ID: <Pine.LNX.4.62.0610301743440.25026@mars.local.net>
-References: <4544D1A7.3010103@blueyonder.co.uk>  <20061029213157.GA25286@cloud.net.au>
- <45452E68.9060601@blueyonder.co.uk>  <454636E0.6090009@blueyonder.co.uk> 
- <20061030213843.GB25496@cloud.net.au> <1162246448.5345.5.camel@oh2bns.ampr.org>
-Reply-To: Al Bolduc <a.bolduc@comcast.net>
+From: "Eric W. Davenport" <kz5ed@certin.com>
+Subject: gMFSK & QSSTV
+Date: Mon, 30 Oct 2006 18:17:12 -0500
+Message-ID: <454687F8.9010303@certin.com>
 Mime-Version: 1.0
+Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <1162246448.5345.5.camel@oh2bns.ampr.org>
 Sender: linux-hams-owner@vger.kernel.org
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: TEXT/PLAIN; charset="us-ascii"; format="flowed"
-Content-Transfer-Encoding: 7bit
-To: Tomi Manninen <oh2bns@sral.fi>
-Cc: Hamish Moffatt <hamish@cloud.net.au>, linux-hams@vger.kernel.org
+Content-Type: text/plain; charset="us-ascii"; format="flowed"
+To: linux-hams@vger.kernel.org, a.bolduc@comcast.net
 
-On Tue, 31 Oct 2006, Tomi Manninen wrote:
+I too have a box with 2 sound cards and a TV Card in it. 
+The Radio connections are through the SoundBlaster Audigy (dev/dsp1 ) 
+mounted in a PCI Slot the computer speakers are on the MB Sound Card.
+Radio In is to Line IN and Radio OUT is through the Headphone 
+connection.  I am using a rigblaster to interface.
 
->
-> This is a good suggestion. I've heard lots of complaints about the
-> sample rate conversion stuff in ALSA.
->
+Once I figured out which one was the SB Audigy gMFSK works great in all 
+modes. I have not changed any of the default conditions.  All I did was 
+set up the audio card to the proper unit bring up the mixer make sure 
+that I was changing the SB Card and everything started working.
 
-I have luck with alsa using the following script
 
-#!/bin/sh
-#
-#       Configure alsa oss emulation for soundapps
-#
+I am however having trouble with QSSTV.  I cannot get a picture. (Ver 
+5.03c) I am getting video but it is distorted looks like it lying down.  
+Slant will not help.  I have been playing with my sampling rates and 
+nothing helps I have been up at 11000 where MixW was and as low as 7000 
+nothing seems to change it.
 
-#	Configuration
+I saw the script that Al uses and would like to try it but.. I have 
+never created a script so I do not know where to use it.  User a 
+terminal program and run it from there then launch QSSTV, does not seem 
+like it will work since it requires SU.  If I am in SU then if I launch 
+QSSTV it will not find the config file.
 
-PLAYBACK=/proc/asound/card0/pcm0p/oss
-CAPTURE=/proc/asound/card0/pcm0p/oss
-SOUNDAPPS="qsstv twpsk gpsk31 multimon p3dtelem xdemorse xdemorse-fft"
+So I am confused and if anybody can help me I would appreciate it.
 
-#       Check if root is performing the operation
-
-id | grep "(root)" > /dev/null
-if [ "$?" != "0" ]
-then
-         echo "You must be root or super-user to run $0."
-         exit 1
-fi
-
-#	Erase current configuration
-
-echo "erase" > $PLAYBACK
-echo "erase" > $CAPTURE
-
-#	Configure
-
-for app in $SOUNDAPPS
-do
- 	echo "$app 0 0 direct" > $PLAYBACK
- 	echo "$app 0 0 direct" > $CAPTURE
-done
-#cat $PLAYBACK
-#cat $CAPTURE
-
---
-
-Al - ka1as
-
-#  Al Bolduc - a.bolduc@comcast.net - ka1as@amsat.org
+Eric
+KZ5ED
