@@ -1,37 +1,39 @@
-From: brownh@hartford-hwp.com (Haines Brown)
-Subject: Re: struggling with gMFSK setup
-Date: Sun, 29 Oct 2006 17:47:50 -0500 (EST)
-Message-ID: <20061029224750.851831400@teufel.hartford-hwp.com>
-References: <20061029205046.947DA11F4@teufel.hartford-hwp.com> <1162158720.30446.16.camel@oh2bns.ampr.org>
-Reply-To: "H.Haines Brown" <brownh@hartford-hwp.com>
+From: richard <richard.bown@blueyonder.co.uk>
+Subject: Re: gmfsk
+Date: Mon, 30 Oct 2006 17:31:12 +0000
+Message-ID: <454636E0.6090009@blueyonder.co.uk>
+References: <4544D1A7.3010103@blueyonder.co.uk> <20061029213157.GA25286@cloud.net.au> <45452E68.9060601@blueyonder.co.uk>
+Mime-Version: 1.0
+Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-reply-to: <1162158720.30446.16.camel@oh2bns.ampr.org> (message from Tomi
-	Manninen on Sun, 29 Oct 2006 23:52:00 +0200)
+In-Reply-To: <45452E68.9060601@blueyonder.co.uk>
 Sender: linux-hams-owner@vger.kernel.org
 List-Id: <linux-hams.vger.kernel.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-To: oh2bns@sral.fi
+Content-Type: text/plain; charset="us-ascii"; format="flowed"
+To: 
 Cc: linux-hams@vger.kernel.org
 
-> > Despite some generous help, I'm not doing well setting levels for
-> > transmit from my FT-817. I am using a SignaLink interface and am
-> > following the suggestions that came with it. 
- 
-> If you hear a tone, then gMFSK should be ok. Now you have to figure
-> out why your signalink doesn't "hear the tone", ie. why doesn't it
-> trigger PTT for you.
+<Humungus snip>
 
-Thank you for the advice on gMFSK preferences and for the assurance
-that a tone at least shows the gMFSK is sending something to the
-soundcard. 
+I'm gradually getting hold of whats happening, I have managed to decode 
+bpsk31, rtty looks garbidge still, and cw is much the same.
+What is giving me a real problem is that if I go to TX I get the box up 
+with:-
+"sound_open_for_write:opensnd: /dev/dsp: Deviceor resource busy"
+If I then click on the RX box the waterfall display speed increases 2 to 
+3 times faster than the previous working RX session, and the
+RX window gets gradually filled with random letters.
+The only way to get back to a working RX session is to shutdown GMFSK 
+and restart it.
+I've checked to see if and other processes are usingh /dev/dsp and its 
+permissions are :-
+ ls -la /dev/dsp
+crw-rw---- 1 richard-g8jvm audio 14, 3 Oct 30 09:29 /dev/dsp
 
-I'll seek some advice from Tigertronics/SignaLink. 
 
--- 
- 
-       Haines Brown, KB1GRM
-        
-	 
-        
+Any ideas 
+??????????????????????????????????????????????????????????????????????????????????
+
+TIA
+Richard g8jvm
+
