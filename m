@@ -1,40 +1,38 @@
-From: "Eric W. Davenport" <kz5ed@certin.com>
-Subject: gMFSK & QSSTV
-Date: Mon, 30 Oct 2006 18:17:12 -0500
-Message-ID: <454687F8.9010303@certin.com>
+From: Al Bolduc <a.bolduc@comcast.net>
+Subject: Re: gMFSK & QSSTV
+Date: Mon, 30 Oct 2006 18:22:27 -0500 (EST)
+Message-ID: <Pine.LNX.4.62.0610301818460.25123@mars.local.net>
+References: <454687F8.9010303@certin.com>
+Reply-To: Al Bolduc <a.bolduc@comcast.net>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
+In-Reply-To: <454687F8.9010303@certin.com>
 Sender: linux-hams-owner@vger.kernel.org
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"; format="flowed"
-To: linux-hams@vger.kernel.org, a.bolduc@comcast.net
+Content-Type: TEXT/PLAIN; charset="us-ascii"; format="flowed"
+Content-Transfer-Encoding: 7bit
+To: "Eric W. Davenport" <kz5ed@certin.com>
+Cc: linux-hams@vger.kernel.org, a.bolduc@comcast.net
 
-I too have a box with 2 sound cards and a TV Card in it. 
-The Radio connections are through the SoundBlaster Audigy (dev/dsp1 ) 
-mounted in a PCI Slot the computer speakers are on the MB Sound Card.
-Radio In is to Line IN and Radio OUT is through the Headphone 
-connection.  I am using a rigblaster to interface.
+On Mon, 30 Oct 2006, Eric W. Davenport wrote:
 
-Once I figured out which one was the SB Audigy gMFSK works great in all 
-modes. I have not changed any of the default conditions.  All I did was 
-set up the audio card to the proper unit bring up the mixer make sure 
-that I was changing the SB Card and everything started working.
+>
+> I saw the script that Al uses and would like to try it but.. I have never 
+> created a script so I do not know where to use it.  User a terminal program 
+> and run it from there then launch QSSTV, does not seem like it will work 
+> since it requires SU.  If I am in SU then if I launch QSSTV it will not find 
+> the config file.
+>
+> So I am confused and if anybody can help me I would appreciate it.
+>
+> Eric
+> KZ5ED
+>
 
+You can run the script as SU, then run qsstv as a regular user.  I run the
+script from rc.local during boot.  It only has to be run once per boot.
+If you want to add another ap to the list, you can run it again as root.
 
-I am however having trouble with QSSTV.  I cannot get a picture. (Ver 
-5.03c) I am getting video but it is distorted looks like it lying down.  
-Slant will not help.  I have been playing with my sampling rates and 
-nothing helps I have been up at 11000 where MixW was and as low as 7000 
-nothing seems to change it.
+Al
 
-I saw the script that Al uses and would like to try it but.. I have 
-never created a script so I do not know where to use it.  User a 
-terminal program and run it from there then launch QSSTV, does not seem 
-like it will work since it requires SU.  If I am in SU then if I launch 
-QSSTV it will not find the config file.
-
-So I am confused and if anybody can help me I would appreciate it.
-
-Eric
-KZ5ED
+#  Al Bolduc - a.bolduc@comcast.net - ka1as@amsat.org
