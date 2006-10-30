@@ -1,51 +1,72 @@
-From: Hamish Moffatt <hamish@cloud.net.au>
-Subject: Re: gmfsk
-Date: Tue, 31 Oct 2006 08:38:44 +1100
-Message-ID: <20061030213843.GB25496@cloud.net.au>
-References: <4544D1A7.3010103@blueyonder.co.uk> <20061029213157.GA25286@cloud.net.au> <45452E68.9060601@blueyonder.co.uk> <454636E0.6090009@blueyonder.co.uk>
+From: "IT3 Stuart Blake Tener, USN" <teners@bh90210.net>
+Subject: Some packet questions...
+Date: Mon, 30 Oct 2006 13:56:54 -0800
+Message-ID: <C16BB526.A2B7%teners@bh90210.net>
 Mime-Version: 1.0
+Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
-Content-Disposition: inline
-In-Reply-To: <454636E0.6090009@blueyonder.co.uk>
 Sender: linux-hams-owner@vger.kernel.org
 List-Id: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 7bit
 To: linux-hams@vger.kernel.org
 
-On Mon, Oct 30, 2006 at 05:31:12PM +0000, richard wrote:
-> I'm gradually getting hold of whats happening, I have managed to decode 
-> bpsk31, rtty looks garbidge still, and cw is much the same.
+To whom it shall concern:
 
-If RTTY is garbage you might have it reversed. You need to be on LSB
-with the "REV" box unchecked, or USB with the "REV" box checked.
+    It has been an exceeding long time since I have been active in the what
+was "a new mode" back in the day, Packet Radio! Since the late 90s it seems
+a lot has changed, and the word on the street is that packet has all but in
+most cases evaporated from the once large network it was (at least from the
+few people I spoke to at a Hamfest recently in the East Coast).
 
-I don't think there is a CW decoder anyway.
+    Now, personally, I do not know if the evaporation of packet has, indeed
+really become occurrent, but I am curious to find out if there will be much
+of an activity level in most major metropolitan areas that I should I think
+about rebuilding a packet station, and how well it works these days.
 
-I had more success when I set the sampling rate to 48000. My sound card
-doesn't really have the lower rates and the sample rate converter inside
-gMFSK seems to do a better job than the ALSA one which is providing
-/dev/dsp.
+    I plan to use a W32A that I have (for the moment) as the radio with the
+olde 5w/35w amplifier I have from (gasp) RF Concepts/Kantronics, as well as
+an IC-91AD and/or D700A.
 
-> What is giving me a real problem is that if I go to TX I get the box up 
-> with:-
-> "sound_open_for_write:opensnd: /dev/dsp: Deviceor resource busy"
+    There is an AX.25 How-To which is very olde that is instructive to the
+concerns of asserting AX.25 protocol via the Linux Kernel. I am interested
+to configure a Linux box for the purposes of having an AX.25 router, has a
+copy of this document been updated anytime lately?
 
-Could be that gMFSK requires (inadvertently?) a full duplex sound card
-which yours is not? Unlikely though.
+    I was reading in Page 83 of the November 2006 CQ Magazine that someone
+used a metalized windshield sunshade, and since I was in the kitchen making
+some pasta at the time, how workable would it be to put a mag-mount on top
+of a large pasta pot as a ground plane, any comments on that? The antenna
+under consideration for the "Pasta Pot Ground Plane" would be an SG7900A.
 
-At any command prompt, can you output to the device? just
-cat /dev/random > /dev/dsp
-
-You should hear garbage.
-
-> If I then click on the RX box the waterfall display speed increases 2 to 
-> 3 times faster than the previous working RX session, and the
-> RX window gets gradually filled with random letters.
-
-That sounds like a bug.
+Stuart, N3GWG (Amateur Extra)
 
 
-Hamish
 -- 
-Hamish Moffatt VK3SB <hamish@debian.org> <hamish@cloud.net.au>
+
+Very Respectfully,
+
+IT3 Stuart Blake Tener, USN
+Beverly Hills, California
+Amateur Radio Call Sign: N3GWG (Extra)
+email: teners@bh90210.net
+phone: +(1) 310.358.0202 (Beverly Hills, CA)
+phone: +(1) 215.338.6005 (Philadelphia, PA)
+E-Fax: +(1) 915.773.0935 (Telecopier)
+
+Military emails (checked monthly until remote NMCI access is secured)
+NIPRNET: stuart.tener@navy.mil / tenerstu@nro.mil / stuart.tener@dia.mil
+SIPRNET: NONE
+TS/SCI:  cntensb@dia.ic.gov (JWICS) / tenerstu@nro.ic.gov (GWAN)
+TS/SCI:  cntensb@mail.dia.us.qlat (Stone Ghost, TS//SI/REL AUS/CAN/GBR/USA)
+
+One must like the horse to ride.
+
+Confidentiality Notice: This e-mail message, including any attachments, is
+for the sole use of the intended recipient(s) and may contain confidential
+and/or privileged information. Any unauthorized review, use, disclosure or
+distribution is prohibited. If you are not the intended recipient, please
+contact the sender by reply e-mail and destroy all copies of the original
+message.
+
+
+
