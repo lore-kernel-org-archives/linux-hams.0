@@ -1,72 +1,55 @@
-From: "IT3 Stuart Blake Tener, USN" <teners@bh90210.net>
-Subject: Some packet questions...
-Date: Mon, 30 Oct 2006 13:56:54 -0800
-Message-ID: <C16BB526.A2B7%teners@bh90210.net>
+From: Tomi Manninen <oh2bns@sral.fi>
+Subject: Re: gmfsk
+Date: Tue, 31 Oct 2006 00:14:07 +0200
+Message-ID: <1162246448.5345.5.camel@oh2bns.ampr.org>
+References: <4544D1A7.3010103@blueyonder.co.uk>
+	 <20061029213157.GA25286@cloud.net.au> <45452E68.9060601@blueyonder.co.uk>
+	 <454636E0.6090009@blueyonder.co.uk>  <20061030213843.GB25496@cloud.net.au>
 Mime-Version: 1.0
 Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
+In-Reply-To: <20061030213843.GB25496@cloud.net.au>
 Sender: linux-hams-owner@vger.kernel.org
 List-Id: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
-To: linux-hams@vger.kernel.org
+To: Hamish Moffatt <hamish@cloud.net.au>
+Cc: linux-hams@vger.kernel.org
 
-To whom it shall concern:
+On Tue, 2006-10-31 at 08:38 +1100, Hamish Moffatt wrote:
 
-    It has been an exceeding long time since I have been active in the what
-was "a new mode" back in the day, Packet Radio! Since the late 90s it seems
-a lot has changed, and the word on the street is that packet has all but in
-most cases evaporated from the once large network it was (at least from the
-few people I spoke to at a Hamfest recently in the East Coast).
+> I don't think there is a CW decoder anyway.
 
-    Now, personally, I do not know if the evaporation of packet has, indeed
-really become occurrent, but I am curious to find out if there will be much
-of an activity level in most major metropolitan areas that I should I think
-about rebuilding a packet station, and how well it works these days.
+0.7pre1 has one.
 
-    I plan to use a W32A that I have (for the moment) as the radio with the
-olde 5w/35w amplifier I have from (gasp) RF Concepts/Kantronics, as well as
-an IC-91AD and/or D700A.
+> I had more success when I set the sampling rate to 48000. My sound card
+> doesn't really have the lower rates and the sample rate converter inside
+> gMFSK seems to do a better job than the ALSA one which is providing
+> /dev/dsp.
 
-    There is an AX.25 How-To which is very olde that is instructive to the
-concerns of asserting AX.25 protocol via the Linux Kernel. I am interested
-to configure a Linux box for the purposes of having an AX.25 router, has a
-copy of this document been updated anytime lately?
+This is a good suggestion. I've heard lots of complaints about the
+sample rate conversion stuff in ALSA.
 
-    I was reading in Page 83 of the November 2006 CQ Magazine that someone
-used a metalized windshield sunshade, and since I was in the kitchen making
-some pasta at the time, how workable would it be to put a mag-mount on top
-of a large pasta pot as a ground plane, any comments on that? The antenna
-under consideration for the "Pasta Pot Ground Plane" would be an SG7900A.
+> > What is giving me a real problem is that if I go to TX I get the box up 
+> > with:-
+> > "sound_open_for_write:opensnd: /dev/dsp: Deviceor resource busy"
+> 
+> Could be that gMFSK requires (inadvertently?) a full duplex sound card
+> which yours is not? Unlikely though.
 
-Stuart, N3GWG (Amateur Extra)
+It shouldn't. I've tried to make gMFSK as simple as possible here:
 
+- open card for reading
+  - listen and decode
+- close card
+- open card for writing
+  - send
+- close card
+
+... and so on.
+
+That should be pretty fool proof, but I guess anything is possible.
 
 -- 
-
-Very Respectfully,
-
-IT3 Stuart Blake Tener, USN
-Beverly Hills, California
-Amateur Radio Call Sign: N3GWG (Extra)
-email: teners@bh90210.net
-phone: +(1) 310.358.0202 (Beverly Hills, CA)
-phone: +(1) 215.338.6005 (Philadelphia, PA)
-E-Fax: +(1) 915.773.0935 (Telecopier)
-
-Military emails (checked monthly until remote NMCI access is secured)
-NIPRNET: stuart.tener@navy.mil / tenerstu@nro.mil / stuart.tener@dia.mil
-SIPRNET: NONE
-TS/SCI:  cntensb@dia.ic.gov (JWICS) / tenerstu@nro.ic.gov (GWAN)
-TS/SCI:  cntensb@mail.dia.us.qlat (Stone Ghost, TS//SI/REL AUS/CAN/GBR/USA)
-
-One must like the horse to ride.
-
-Confidentiality Notice: This e-mail message, including any attachments, is
-for the sole use of the intended recipient(s) and may contain confidential
-and/or privileged information. Any unauthorized review, use, disclosure or
-distribution is prohibited. If you are not the intended recipient, please
-contact the sender by reply e-mail and destroy all copies of the original
-message.
-
+Tomi Manninen / OH2BNS / KP20JF74
 
 
