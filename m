@@ -1,38 +1,55 @@
-From: Al Bolduc <a.bolduc@comcast.net>
-Subject: Re: gMFSK & QSSTV
-Date: Mon, 30 Oct 2006 18:22:27 -0500 (EST)
-Message-ID: <Pine.LNX.4.62.0610301818460.25123@mars.local.net>
-References: <454687F8.9010303@certin.com>
-Reply-To: Al Bolduc <a.bolduc@comcast.net>
+From: Hamish Moffatt <hamish@cloud.net.au>
+Subject: Re: gmfsk
+Date: Tue, 31 Oct 2006 10:34:13 +1100
+Message-ID: <20061030233413.GA2108@cloud.net.au>
+References: <4544D1A7.3010103@blueyonder.co.uk> <20061029213157.GA25286@cloud.net.au> <45452E68.9060601@blueyonder.co.uk> <454636E0.6090009@blueyonder.co.uk> <20061030213843.GB25496@cloud.net.au> <1162246448.5345.5.camel@oh2bns.ampr.org>
 Mime-Version: 1.0
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <454687F8.9010303@certin.com>
+Content-Disposition: inline
+In-Reply-To: <1162246448.5345.5.camel@oh2bns.ampr.org>
 Sender: linux-hams-owner@vger.kernel.org
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: TEXT/PLAIN; charset="us-ascii"; format="flowed"
+Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
-To: "Eric W. Davenport" <kz5ed@certin.com>
-Cc: linux-hams@vger.kernel.org, a.bolduc@comcast.net
+To: linux-hams@vger.kernel.org
 
-On Mon, 30 Oct 2006, Eric W. Davenport wrote:
+On Tue, Oct 31, 2006 at 12:14:07AM +0200, Tomi Manninen wrote:
+> On Tue, 2006-10-31 at 08:38 +1100, Hamish Moffatt wrote:
+> > I don't think there is a CW decoder anyway.
+> 0.7pre1 has one.
 
->
-> I saw the script that Al uses and would like to try it but.. I have never 
-> created a script so I do not know where to use it.  User a terminal program 
-> and run it from there then launch QSSTV, does not seem like it will work 
-> since it requires SU.  If I am in SU then if I launch QSSTV it will not find 
-> the config file.
->
-> So I am confused and if anybody can help me I would appreciate it.
->
-> Eric
-> KZ5ED
->
+Neat!
 
-You can run the script as SU, then run qsstv as a regular user.  I run the
-script from rc.local during boot.  It only has to be run once per boot.
-If you want to add another ap to the list, you can run it again as root.
+> > I had more success when I set the sampling rate to 48000. My sound card
+> > doesn't really have the lower rates and the sample rate converter inside
+> > gMFSK seems to do a better job than the ALSA one which is providing
+> > /dev/dsp.
+> 
+> This is a good suggestion. I've heard lots of complaints about the
+> sample rate conversion stuff in ALSA.
 
-Al
+ISTR that I could hear clicking in the Tx audio until I changed the
+sample rate. No problem with gMFSK's internal converter.
 
-#  Al Bolduc - a.bolduc@comcast.net - ka1as@amsat.org
+> > Could be that gMFSK requires (inadvertently?) a full duplex sound card
+> > which yours is not? Unlikely though.
+> 
+> It shouldn't. I've tried to make gMFSK as simple as possible here:
+> 
+> - open card for reading
+>   - listen and decode
+> - close card
+> - open card for writing
+>   - send
+> - close card
+> 
+> ... and so on.
+> 
+> That should be pretty fool proof, but I guess anything is possible.
+
+It also seems unlikely to me that Richard's M-Audio card is half duplex.
+More likely something is using the playback device already.
+
+Hamish
+-- 
+Hamish Moffatt VK3SB <hamish@debian.org> <hamish@cloud.net.au>
