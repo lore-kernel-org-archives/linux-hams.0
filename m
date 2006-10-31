@@ -1,113 +1,49 @@
-From: "Mike McCarthy, W1NR" <lists@w1nr.net>
-Subject: Re: Some packet questions...
-Date: Tue, 31 Oct 2006 07:50:31 -0500
-Message-ID: <000301c6fceb$26ee8dc0$05fcfc0a@LoJackOne.LoJack.com>
-References: <C16BB526.A2B7%teners@bh90210.net>
-Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
+From: brownh@hartford-hwp.com (Haines Brown)
+Subject: Re: struggling with gMFSK setup
+Date: Tue, 31 Oct 2006 14:25:55 -0500 (EST)
+Message-ID: <20061031192555.780641768@teufel.hartford-hwp.com>
+References: <20061029205046.947DA11F4@teufel.hartford-hwp.com> <1162158720.30446.16.camel@oh2bns.ampr.org> <20061029224750.851831400@teufel.hartford-hwp.com>
+Reply-To: "H.Haines Brown" <brownh@hartford-hwp.com>
 Return-path: <linux-hams-owner@vger.kernel.org>
+In-reply-to: <20061029224750.851831400@teufel.hartford-hwp.com>
+	(brownh@hartford-hwp.com)
 Sender: linux-hams-owner@vger.kernel.org
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; format="flowed"; charset="us-ascii"; reply-type="original"
-To: "IT3 Stuart Blake Tener, USN" <teners@bh90210.net>, linux-hams@vger.kernel.org
+MIME-Version: 1.0
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+To: brownh@hartford-hwp.com
+Cc: oh2bns@sral.fi, linux-hams@vger.kernel.org
 
-Nothing has really changed in many years, so the documentation hasn't had 
-any reason to be revised.
+Kind of a progress report on my initial query. 
 
-I found my local IP address coordinator very helpful in getting IP over 
-AX.25 running.
+I had to do some stumbling about to get myself set up my soundcard to
+record so that I might perform a test on my soundcard. I was
+eventually able to record and playback sound from my transceiver, and
+so the soundcard is working. 
 
-There have been major changes to the Kernel drivers for many of the AX.25 
-protocols having to do with SMP.  With dual core processor based systems 
-common, this was really needed.
+However, I found that if my transceiver (FT-817) audio was at all up,
+it triggered the PTT LED on my SignaLink interface, at which point it
+blocked sound getting to my sound cards' Mike conenction. As a result,
+the volume level on my transceiver had to be turned most of the way
+down, and as a result, only a very weak signal was recorded. However,
+by cranking Playback volume levels up very high for my soundcard
+driver and the Play volume high on my sound recording software, I was
+able to hear the signal. It seems the soundcard is working, but not
+absolutely sure the levels were adjusted right.
 
-Do you know what Linux distribution you plan to use?  I prefer openSUSE 
-(www.opensuse.org) because the AX.25 kernel modules are built in by default. 
-No Kernel rebuilding required.  The Ham Radio packages are also available at 
-ftp.w1nr.net.  If you go that route, use 10.1 "remastered".  The kernel that 
-shipped with 10.0 was broken as the AX.25 SMP modifications were not quite 
-fully debugged.  The management interface in SUSE can't be beat.
+I set my FT-817 to Dig Mode and have my SignaLink interface connected
+as directed. For my soundcard driver, I set the Playback mike level to
+zero, master volume to 75% and PCM/Wave Volume initially to zero. I
+then advance it to the point the SignaLink PTT LED goes on - it never
+does. 
 
-Mike, W1NR
+So I'm back to where I started, only with the assurance that my
+soundcard _seems_ to be working. I'm about to check with SignaLink
+tech support.
 
------ Original Message ----- 
-From: "IT3 Stuart Blake Tener, USN" <teners@bh90210.net>
-To: <linux-hams@vger.kernel.org>
-Sent: Monday, October 30, 2006 4:56 PM
-Subject: Some packet questions...
-
-
-> To whom it shall concern:
->
->    It has been an exceeding long time since I have been active in the what
-> was "a new mode" back in the day, Packet Radio! Since the late 90s it 
-> seems
-> a lot has changed, and the word on the street is that packet has all but 
-> in
-> most cases evaporated from the once large network it was (at least from 
-> the
-> few people I spoke to at a Hamfest recently in the East Coast).
->
->    Now, personally, I do not know if the evaporation of packet has, indeed
-> really become occurrent, but I am curious to find out if there will be 
-> much
-> of an activity level in most major metropolitan areas that I should I 
-> think
-> about rebuilding a packet station, and how well it works these days.
->
->    I plan to use a W32A that I have (for the moment) as the radio with the
-> olde 5w/35w amplifier I have from (gasp) RF Concepts/Kantronics, as well 
-> as
-> an IC-91AD and/or D700A.
->
->    There is an AX.25 How-To which is very olde that is instructive to the
-> concerns of asserting AX.25 protocol via the Linux Kernel. I am interested
-> to configure a Linux box for the purposes of having an AX.25 router, has a
-> copy of this document been updated anytime lately?
->
->    I was reading in Page 83 of the November 2006 CQ Magazine that someone
-> used a metalized windshield sunshade, and since I was in the kitchen 
-> making
-> some pasta at the time, how workable would it be to put a mag-mount on top
-> of a large pasta pot as a ground plane, any comments on that? The antenna
-> under consideration for the "Pasta Pot Ground Plane" would be an SG7900A.
->
-> Stuart, N3GWG (Amateur Extra)
->
->
-> -- 
->
-> Very Respectfully,
->
-> IT3 Stuart Blake Tener, USN
-> Beverly Hills, California
-> Amateur Radio Call Sign: N3GWG (Extra)
-> email: teners@bh90210.net
-> phone: +(1) 310.358.0202 (Beverly Hills, CA)
-> phone: +(1) 215.338.6005 (Philadelphia, PA)
-> E-Fax: +(1) 915.773.0935 (Telecopier)
->
-> Military emails (checked monthly until remote NMCI access is secured)
-> NIPRNET: stuart.tener@navy.mil / tenerstu@nro.mil / stuart.tener@dia.mil
-> SIPRNET: NONE
-> TS/SCI:  cntensb@dia.ic.gov (JWICS) / tenerstu@nro.ic.gov (GWAN)
-> TS/SCI:  cntensb@mail.dia.us.qlat (Stone Ghost, TS//SI/REL 
-> AUS/CAN/GBR/USA)
->
-> One must like the horse to ride.
->
-> Confidentiality Notice: This e-mail message, including any attachments, is
-> for the sole use of the intended recipient(s) and may contain confidential
-> and/or privileged information. Any unauthorized review, use, disclosure or
-> distribution is prohibited. If you are not the intended recipient, please
-> contact the sender by reply e-mail and destroy all copies of the original
-> message.
->
->
->
-> -
-> To unsubscribe from this list: send the line "unsubscribe linux-hams" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at  http://vger.kernel.org/majordomo-info.html
-> 
-
+-- 
+ 
+       Haines Brown, KB1GRM        
+	 
+        
