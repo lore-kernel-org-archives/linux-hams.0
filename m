@@ -1,33 +1,61 @@
-From: Hamish Moffatt <hamish@cloud.net.au>
-Subject: Re: gmfsk
-Date: Tue, 31 Oct 2006 12:26:04 +1100
-Message-ID: <20061031012604.GB6698@cloud.net.au>
-References: <20061030233413.GA2108@cloud.net.au> <courier.45468D24.00003D73@radagast.org>
+From: richard <richard.bown@blueyonder.co.uk>
+Subject: Re: permissions
+Date: Tue, 31 Oct 2006 10:50:44 +0000
+Message-ID: <45472A84.6000709@blueyonder.co.uk>
+References: <454655BC.30606@blueyonder.co.uk> <20061030213355.GA25496@cloud.net.au> <45469110.4070108@blueyonder.co.uk> <20061031012432.GA6698@cloud.net.au>
 Mime-Version: 1.0
+Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
-Content-Disposition: inline
-In-Reply-To: <courier.45468D24.00003D73@radagast.org>
+In-Reply-To: <20061031012432.GA6698@cloud.net.au>
 Sender: linux-hams-owner@vger.kernel.org
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-To: linux-hams@vger.kernel.org
+Content-Type: text/plain; charset="us-ascii"; format="flowed"
+To: Hamish Moffatt <hamish@cloud.net.au>
+Cc: linux-hams@vger.kernel.org
 
-On Mon, Oct 30, 2006 at 03:39:16PM -0800, Dave Platt wrote:
-> There are a number of ways around this sort of problem.  The
-> simplest is to disable the desktop (e.g. KDE or Gnome) sound
-> feature entirely, so that it never opens the audio driver.
+Hamish Moffatt wrote:
+> On Mon, Oct 30, 2006 at 11:56:00PM +0000, richard wrote:
+>   
+>>> Still, the error "Device or resource busy" means that something is using
+>>> the device, not that you don't have permission to access it (which would
+>>> just be "Permission denied.") As root you might try using lsof to find
+>>> out which program is using it
+>>>
+>>> eg "lsof /dev/dsp
+>>>  
+>>>       
+>> I let gmfsk fail and produce the error message then ran the following:-
+>> [root@gb7tf Desktop]# lsof /dev/dsp
+>> [root@gb7tf Desktop]# lsof|grep /dev/dsp
+>>     
+>
+> Maybe something is using the underlying ALSA device which is blocking
+> /dev/dsp. lsof | grep /dev/snd ?
+>
+>
+> Hamish
+>   
+Its only the mixer app Hamish
+mixer_app  6382 richard-g8jvm   17u      CHR      116,0                
+7895 /dev/snd/controlC0
 
-Good idea. Richard's run lsof and not found anything else using
-/dev/dsp, but maybe the sound server is using the ALSA device directly
-and that's preventing playback on /dev/dsp.
+I've also tried recompiling gmfsk as me and not as root
+-rwxr-xr-x 1 root root 1283122 Oct 31 09:06 gmfsk*
+-rwxr-xr-x 1 root root 1453277 Oct 23 12:17 gpredict*
+-rwxr-xr-x 1 root root  822682 Oct 20 14:46 xlog*
 
-> This is probably the best approach to use if you're going
-> to be using the sound card for ham radio purposes, since
-> transmitting UI feedback sounds over the air would be Bad.
+Added the line that Al suggested in rc.local
+chmod 666 /dev/dsp /dev/audio /dev/mixer /dev/cdrom
 
-A good reason not to use VOX..
+no immediate effect, but worked after rebooting, so it looks like the 
+permissions
+are only read at startup on the above files, which is a bit strange as 
+normally you can change file permissions
+on the hoof and take immediate effect.
+Must be some Mandriva security measure that been added in MDV2007.
 
-Hamish
--- 
-Hamish Moffatt VK3SB <hamish@debian.org> <hamish@cloud.net.au>
+Thanks for all the help
+
+73 Richard
+
+
