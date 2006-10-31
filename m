@@ -1,61 +1,113 @@
-From: richard <richard.bown@blueyonder.co.uk>
-Subject: Re: permissions
-Date: Tue, 31 Oct 2006 10:50:44 +0000
-Message-ID: <45472A84.6000709@blueyonder.co.uk>
-References: <454655BC.30606@blueyonder.co.uk> <20061030213355.GA25496@cloud.net.au> <45469110.4070108@blueyonder.co.uk> <20061031012432.GA6698@cloud.net.au>
+From: "Mike McCarthy, W1NR" <lists@w1nr.net>
+Subject: Re: Some packet questions...
+Date: Tue, 31 Oct 2006 07:50:31 -0500
+Message-ID: <000301c6fceb$26ee8dc0$05fcfc0a@LoJackOne.LoJack.com>
+References: <C16BB526.A2B7%teners@bh90210.net>
 Mime-Version: 1.0
 Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <20061031012432.GA6698@cloud.net.au>
 Sender: linux-hams-owner@vger.kernel.org
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"; format="flowed"
-To: Hamish Moffatt <hamish@cloud.net.au>
-Cc: linux-hams@vger.kernel.org
+Content-Type: text/plain; format="flowed"; charset="us-ascii"; reply-type="original"
+To: "IT3 Stuart Blake Tener, USN" <teners@bh90210.net>, linux-hams@vger.kernel.org
 
-Hamish Moffatt wrote:
-> On Mon, Oct 30, 2006 at 11:56:00PM +0000, richard wrote:
->   
->>> Still, the error "Device or resource busy" means that something is using
->>> the device, not that you don't have permission to access it (which would
->>> just be "Permission denied.") As root you might try using lsof to find
->>> out which program is using it
->>>
->>> eg "lsof /dev/dsp
->>>  
->>>       
->> I let gmfsk fail and produce the error message then ran the following:-
->> [root@gb7tf Desktop]# lsof /dev/dsp
->> [root@gb7tf Desktop]# lsof|grep /dev/dsp
->>     
+Nothing has really changed in many years, so the documentation hasn't had 
+any reason to be revised.
+
+I found my local IP address coordinator very helpful in getting IP over 
+AX.25 running.
+
+There have been major changes to the Kernel drivers for many of the AX.25 
+protocols having to do with SMP.  With dual core processor based systems 
+common, this was really needed.
+
+Do you know what Linux distribution you plan to use?  I prefer openSUSE 
+(www.opensuse.org) because the AX.25 kernel modules are built in by default. 
+No Kernel rebuilding required.  The Ham Radio packages are also available at 
+ftp.w1nr.net.  If you go that route, use 10.1 "remastered".  The kernel that 
+shipped with 10.0 was broken as the AX.25 SMP modifications were not quite 
+fully debugged.  The management interface in SUSE can't be beat.
+
+Mike, W1NR
+
+----- Original Message ----- 
+From: "IT3 Stuart Blake Tener, USN" <teners@bh90210.net>
+To: <linux-hams@vger.kernel.org>
+Sent: Monday, October 30, 2006 4:56 PM
+Subject: Some packet questions...
+
+
+> To whom it shall concern:
 >
-> Maybe something is using the underlying ALSA device which is blocking
-> /dev/dsp. lsof | grep /dev/snd ?
+>    It has been an exceeding long time since I have been active in the what
+> was "a new mode" back in the day, Packet Radio! Since the late 90s it 
+> seems
+> a lot has changed, and the word on the street is that packet has all but 
+> in
+> most cases evaporated from the once large network it was (at least from 
+> the
+> few people I spoke to at a Hamfest recently in the East Coast).
+>
+>    Now, personally, I do not know if the evaporation of packet has, indeed
+> really become occurrent, but I am curious to find out if there will be 
+> much
+> of an activity level in most major metropolitan areas that I should I 
+> think
+> about rebuilding a packet station, and how well it works these days.
+>
+>    I plan to use a W32A that I have (for the moment) as the radio with the
+> olde 5w/35w amplifier I have from (gasp) RF Concepts/Kantronics, as well 
+> as
+> an IC-91AD and/or D700A.
+>
+>    There is an AX.25 How-To which is very olde that is instructive to the
+> concerns of asserting AX.25 protocol via the Linux Kernel. I am interested
+> to configure a Linux box for the purposes of having an AX.25 router, has a
+> copy of this document been updated anytime lately?
+>
+>    I was reading in Page 83 of the November 2006 CQ Magazine that someone
+> used a metalized windshield sunshade, and since I was in the kitchen 
+> making
+> some pasta at the time, how workable would it be to put a mag-mount on top
+> of a large pasta pot as a ground plane, any comments on that? The antenna
+> under consideration for the "Pasta Pot Ground Plane" would be an SG7900A.
+>
+> Stuart, N3GWG (Amateur Extra)
 >
 >
-> Hamish
->   
-Its only the mixer app Hamish
-mixer_app  6382 richard-g8jvm   17u      CHR      116,0                
-7895 /dev/snd/controlC0
-
-I've also tried recompiling gmfsk as me and not as root
--rwxr-xr-x 1 root root 1283122 Oct 31 09:06 gmfsk*
--rwxr-xr-x 1 root root 1453277 Oct 23 12:17 gpredict*
--rwxr-xr-x 1 root root  822682 Oct 20 14:46 xlog*
-
-Added the line that Al suggested in rc.local
-chmod 666 /dev/dsp /dev/audio /dev/mixer /dev/cdrom
-
-no immediate effect, but worked after rebooting, so it looks like the 
-permissions
-are only read at startup on the above files, which is a bit strange as 
-normally you can change file permissions
-on the hoof and take immediate effect.
-Must be some Mandriva security measure that been added in MDV2007.
-
-Thanks for all the help
-
-73 Richard
-
+> -- 
+>
+> Very Respectfully,
+>
+> IT3 Stuart Blake Tener, USN
+> Beverly Hills, California
+> Amateur Radio Call Sign: N3GWG (Extra)
+> email: teners@bh90210.net
+> phone: +(1) 310.358.0202 (Beverly Hills, CA)
+> phone: +(1) 215.338.6005 (Philadelphia, PA)
+> E-Fax: +(1) 915.773.0935 (Telecopier)
+>
+> Military emails (checked monthly until remote NMCI access is secured)
+> NIPRNET: stuart.tener@navy.mil / tenerstu@nro.mil / stuart.tener@dia.mil
+> SIPRNET: NONE
+> TS/SCI:  cntensb@dia.ic.gov (JWICS) / tenerstu@nro.ic.gov (GWAN)
+> TS/SCI:  cntensb@mail.dia.us.qlat (Stone Ghost, TS//SI/REL 
+> AUS/CAN/GBR/USA)
+>
+> One must like the horse to ride.
+>
+> Confidentiality Notice: This e-mail message, including any attachments, is
+> for the sole use of the intended recipient(s) and may contain confidential
+> and/or privileged information. Any unauthorized review, use, disclosure or
+> distribution is prohibited. If you are not the intended recipient, please
+> contact the sender by reply e-mail and destroy all copies of the original
+> message.
+>
+>
+>
+> -
+> To unsubscribe from this list: send the line "unsubscribe linux-hams" in
+> the body of a message to majordomo@vger.kernel.org
+> More majordomo info at  http://vger.kernel.org/majordomo-info.html
+> 
 
