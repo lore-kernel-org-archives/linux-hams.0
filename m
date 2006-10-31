@@ -1,37 +1,68 @@
-From: richard <richard.bown@blueyonder.co.uk>
-Subject: envy24 contoller  & linux
-Date: Tue, 31 Oct 2006 22:45:43 +0000
-Message-ID: <4547D217.8060007@blueyonder.co.uk>
+From: Dave Platt <dplatt@radagast.org>
+Subject: Re: struggling with gMFSK setup
+Date: Tue, 31 Oct 2006 14:58:20 -0800 (PST)
+Message-ID: <courier.4547D50C.00001533@radagast.org>
+References: <20061031192555.780641768@teufel.hartford-hwp.com>
 Mime-Version: 1.0
 Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
+In-Reply-To: <20061031192555.780641768@teufel.hartford-hwp.com>
 Sender: linux-hams-owner@vger.kernel.org
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"; format="flowed"
-To: linux-hams@vger.kernel.org
-Cc: perex@suse.cz
+Content-Type: text/plain; charset="us-ascii"
+To: brownh@hartford-hwp.com
+Cc: linux-hams@vger.kernel.org
 
-Hi All
-I'm using a M-Audio delta 66 sound card with gmfsk, and the envy24 
-control utility 0.6.0
-I hope there are a few with same setup as I've found something a bit 
-strange and wondered if anyone else has seen the same
-and found a fix for it.
-You can direct audio from any of the four analogue inputs to any one of 
-the four analogue output and control the levels.
-But looking at the wee booklet that comes with the board it looks like 
-the proprietary driver( a windows thing ) is able to switch the input
-sensitivity by about 14dB.
-Now if a signal is applied to input one the sensitivity on that input is 
-about 20dB ish more than the other inputs, I would like to be able to 
-have the same
-input sensitivity across all the inputs, with the linux driver, envy24 
-control utility 0.6.0, I can't find any control to do this.
-Has any one found a way of controlling this parameter ??. It's not a 
-killer problem as I could take the audio from the rigs after the volume
- control where the levels are higher, but I prefer to take the output 
-from the hot end of the volume control on each rig.
+brownh@hartford-hwp.com (Haines Brown) wrote:
+> Kind of a progress report on my initial query. 
+> 
+> I had to do some stumbling about to get myself set up my soundcard to
+> record so that I might perform a test on my soundcard. I was
+> eventually able to record and playback sound from my transceiver, and
+> so the soundcard is working. 
+> 
+> However, I found that if my transceiver (FT-817) audio was at all up,
+> it triggered the PTT LED on my SignaLink interface, at which point it
+> blocked sound getting to my sound cards' Mike conenction.    As a result,
+> the volume level on my transceiver had to be turned most of the way
+> down, and as a result, only a very weak signal was recorded.
 
-TIA
-73 Richard g8jvm
+It's common for a soundcard's mic input to have two different audio
+routing pathways associated with it.
 
+When the input is in the "play" mode, the signal coming from it is
+mixed into the outgoing (speaker or headphone) audio output, at the
+level controlled by the input's software volume control.  The
+signal may also be digitized and captured.
+
+When the input is in the "record" or "capture" mode, the signal
+coming from it doesn't go to the outgoing audio output, but 
+only to the digitize-and-capture logic.
+
+The same is usually true for the line-level input(s).
+
+On some cards, these two signal pathways have a common volume
+control setting, and there's just a mode switch (record or
+playback) which controls the particular pathway which is enabled
+at any given time.  On other cards, the two pathways have
+individual enable/disable switches as well as individual volume
+controls.
+
+What you want, for computer-to-rig hookup, is to put whatever input
+you're using into the "record" mode.  This will prevent the rig's
+audio signal (fed to the sound card) from being fed back into the
+rig via the speaker pathway, and will ensure that you won't get
+accidental or inappropriate triggering of the vox (whether that's
+on the rig, or in your audio interface box).
+
+When using ALSA, you can manipulate the input's mode via the
+GUI in the "amixer" program.  What you'd want to do, I think, is
+select the input that you're using (MIC, probably), hit the M key
+to mute it (the display will show MM to indicate that it's muted),
+and enable capture with the space bar (the display will show
+CAPTUR rather than ------).
+
+This should let you set your rig's audio output level high enough
+to permit a high-quality signal capture and digitization, without
+inadvertently feeding back the audio into the transmit side and
+triggering the vox/PTT.
