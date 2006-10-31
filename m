@@ -1,37 +1,37 @@
-From: "Eric W. Davenport" <kz5ed@certin.com>
-Subject: Re: gMFSK & QSSTV
-Date: Tue, 31 Oct 2006 17:41:08 -0500
-Message-ID: <4547D104.3070604@certin.com>
-References: <454687F8.9010303@certin.com> <Pine.LNX.4.62.0610301818460.25123@mars.local.net>
+From: richard <richard.bown@blueyonder.co.uk>
+Subject: envy24 contoller  & linux
+Date: Tue, 31 Oct 2006 22:45:43 +0000
+Message-ID: <4547D217.8060007@blueyonder.co.uk>
 Mime-Version: 1.0
 Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <Pine.LNX.4.62.0610301818460.25123@mars.local.net>
 Sender: linux-hams-owner@vger.kernel.org
 List-Id: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"; format="flowed"
-To: Al Bolduc <a.bolduc@comcast.net>
-Cc: linux-hams@vger.kernel.org
+To: linux-hams@vger.kernel.org
+Cc: perex@suse.cz
 
-Well I implemented Al's Script.  Here is what I noticed.  In gMFSK my 
-levels were way down from the night before.  I had to crank in more 
-volume than I had to have the night before.  This could have been 
-conditions but I do not think so.
+Hi All
+I'm using a M-Audio delta 66 sound card with gmfsk, and the envy24 
+control utility 0.6.0
+I hope there are a few with same setup as I've found something a bit 
+strange and wondered if anyone else has seen the same
+and found a fix for it.
+You can direct audio from any of the four analogue inputs to any one of 
+the four analogue output and control the levels.
+But looking at the wee booklet that comes with the board it looks like 
+the proprietary driver( a windows thing ) is able to switch the input
+sensitivity by about 14dB.
+Now if a signal is applied to input one the sensitivity on that input is 
+about 20dB ish more than the other inputs, I would like to be able to 
+have the same
+input sensitivity across all the inputs, with the linux driver, envy24 
+control utility 0.6.0, I can't find any control to do this.
+Has any one found a way of controlling this parameter ??. It's not a 
+killer problem as I could take the audio from the rigs after the volume
+ control where the levels are higher, but I prefer to take the output 
+from the hot end of the volume control on each rig.
 
-I qSSTV I still get garbage video.  I get video but the picture looks to 
-be skewed diagonally does anyone have 5.03c running and getting 
-pictures.  If so what frequency are you using? Is there a way to use WWV 
-to set the proper frequency as there is in MixW?  How else can I get 
-this to work.  The computer is a dual boot and on the Windows side MixW 
-SSTV works fine with the same card.
-
-Any help is appreciated.
-
-Eric
-KZ5ED
-
-
->
-> #  Al Bolduc - a.bolduc@comcast.net - ka1as@amsat.org
->
+TIA
+73 Richard g8jvm
 
