@@ -1,27 +1,33 @@
-From: Margaret Leber <maggie@voicenet.com>
-Subject: Re: digital modes ID
-Date: Wed, 01 Nov 2006 23:40:39 -0500
-Message-ID: <454976C7.3040808@voicenet.com>
-References: <45489445.9090003@blueyonder.co.uk>
+From: "Curt, WE7U" <archer@eskimo.com>
+Subject: xastir : xastir-stable
+Date: Thu, 2 Nov 2006 13:31:32 -0800 (PST)
+Message-ID: <Pine.SUN.4.58.0611021330220.29496@eskimo.com>
+Reply-To: "Curt Mills, WE7U" <archer@eskimo.com>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <45489445.9090003@blueyonder.co.uk>
 Sender: linux-hams-owner@vger.kernel.org
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"; format="flowed"
-To: richard <richard.bown@blueyonder.co.uk>
-Cc: linux-hams@vger.kernel.org
+Content-Type: TEXT/PLAIN; charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+To: linux-hams@vger.kernel.org
 
-richard wrote:
-> Hi ,
-> is there anywhere a list of digital modes and what the sound like, I can 
-> recognise a few,
-> but a sound file as example would be useful.
 
-Try http://www.kb9ukd.com/digital/
+Project: XASTIR  (xastir)
+Package: xastir-stable
+Date   : 2006-11-02 11:57
 
-73 de Maggie K3XS
-Editor, Phil-Mont Mobile Radio Club Blurb - http://www.phil-mont.org
-Elecraft K2 #1641
+Project "XASTIR" ('xastir') has released the new version of package 'xastir-stable'.
+You can download it from SourceForge.net by following this link:
+<https://sourceforge.net/project/showfiles.php?group_id=45562&release_id=460421>
+or browse Release Notes and ChangeLog by visiting this link:
+<https://sourceforge.net/project/shownotes.php?release_id=460421>
+
+Homepage:  <http://www.xastir.org>
+
+--
+Curt, WE7U.   APRS Client Comparisons: http://www.eskimo.com/~archer
+"Lotto:    A tax on people who are bad at math." -- unknown
+"Windows:  Microsoft's tax on computer illiterates." -- WE7U
+"The world DOES revolve around me:  I picked the coordinate system!"
+
 
