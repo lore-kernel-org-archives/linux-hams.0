@@ -1,7 +1,7 @@
 From: Harry Popov <lz1bb@mail.bg>
 Subject: Re: struggling with gMFSK setup
-Date: Fri, 03 Nov 2006 20:48:48 +0200
-Message-ID: <1162579729.4376.18.camel@ham>
+Date: Fri, 03 Nov 2006 21:07:27 +0200
+Message-ID: <1162580847.4376.27.camel@ham>
 References: <courier.454A6BB0.000072D7@radagast.org>
 	 <20061103140739.06C951173@teufel.hartford-hwp.com>
 Mime-Version: 1.0
@@ -14,40 +14,22 @@ Content-Type: text/plain; charset="us-ascii"
 To: "H.Haines Brown" <brownh@hartford-hwp.com>
 Cc: dplatt@radagast.org, linux-hams@vger.kernel.org
 
-Haines,
+BTW...
 
 > The FT-817 manual says nothing about limiting power for digital
 > modes. So apparently it's safe to run a full 5-watts, but based on
 > what you say about IMD, 2.5 would be a good idea.
 
-All said befor is corect in principe. Particularly for FT817 do not wory
-so much for IMD and thermal problems. Just have in mind the radio is
-prepared for FM chatters on VHF. If it is engeniered to survive 5W FM
-carier it should do on PSK too.
-
-I use FT817 for several years on digi modes HF and WSJT VHF. I worked
-DXCC on all bands except 80m with 5W and 20m LW just about 5 meters
-above ground. Here is how I adjust PSK31 level. I turn down audio from
-sound card. Go on TX and encrease gradually until I have full 5W. There
-is a point where more encrease of audio do not produce more power. That
-is so called "point of compression". You should always be just on it or
-strace down. IMD is good due to good ALC of transmit unit of FT817.
-Later if I need QRP down I just use FT817's own power levels without
-touching any more the audio level from sound card. At least I tune in
-this way. I never had splatter complains. And I have several neighbours
-just about 200 to 800m away from me.
-
-According mith that PSK31 does not need power. The explanation is only
-one. Majority of stations use between 10 and 30W and our 5W QRP is
-compeating very well with other stations. It should be the same on CW
-and almost the same on SSB if all used the minimum necessary power. You
-know reality is much different. Every one and his brother use QRO and
-that is only problem for QRP stations to compeat during pile ups. But
-not impossible!!! While using QRP one gain knoledge and one day take the
-pleasure when overshout all the QRO gung. That is real pleasure. Beleave
-me I had it many many times.
-
-Excuse my spare English. I think you got the point.
+One good hint for FT817 users. Radio is getting hot on 5W. But most of
+heat is coming not from power transistors but 7V inside voltage
+regulator. Solution is to power it from low voltage. I use around 10V.
+With 10V you still have 5 Watts power but much less heat. If your supply
+is with fixed 13.8V output just connect 4 silicon diodes in series.
+Connect one end to the power suplay and second to radio. You have
+roughly 0.7 V dropping in a single diode. So 4x0.7=2.8V.
+13.8-2.8=11V. You will be surprised how cool is FT817. Diodes should be
+capable to pass 2A. I use 5A/30V diodes.
 
 73, Harry LZ1BB
+
 
