@@ -1,50 +1,57 @@
-From: "Wilson G. Hein" <wilson.hein@verizon.net>
-Subject: Re: Coupling a scope to transmitter output
-Date: Sat, 04 Nov 2006 17:06:00 -0500
-Message-ID: <1162677960.31762.94.camel@CO>
-References: <20061104201458.8A520D15@teufel.hartford-hwp.com>
+From: "Jeff Laughlin (RV Melville)" <jlaughlin@ucsd.edu>
+Subject: Ham::APRS::Parser v0.03 released
+Date: Sat, 04 Nov 2006 15:54:32 -0800
+Message-ID: <454D2838.6040307@ucsd.edu>
 Mime-Version: 1.0
 Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-reply-to: <20061104201458.8A520D15@teufel.hartford-hwp.com>
 Sender: linux-hams-owner@vger.kernel.org
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"
+Content-Type: text/plain; charset="us-ascii"; format="flowed"
 To: Linux Hams Mailing list <linux-hams@vger.kernel.org>
 
-How about a simple pickup loop? Tak a piece of coax, on onme end put
-your connector to go to the spec an, and on the other strip the coax
-back enough to have enough of the insulated inner conductor to make 3 or
-more loops, strip about 1/4 inch of insulation off of the end of the
-center conductor and solder it back onto the shield where it goes back
-into the outer insulator. Put the loop around the coax between the
-transmitter and antenna. Should be satisfactory coupling to read the
-tx'd signal.
+Get it from http://sourceforge.net/projects/ham-aprs-parser/
 
-Willie, WJ3G
+Release notes:
+* Fixed a bug in the MIC-E decoder that would sometimes cause small 
+errors of up to 1 minute in longitude, affecting approximately 1 in 10 
+packets.
+* Fixed an error in the readme.txt command line example
+* Moved Ham/aprs to Ham/APRS
 
-On Sat, 2006-11-04 at 15:14 -0500, Haines Brown wrote:
-> I have the feeling this question will be a bit OT, and so let me first
-> ask to what forum it should have been directed.
-> 
-> I have a Tektronix 2235 I'd like to use to monitor the PSK31 signal
-> from a FT-817. I googled a bit and looked in the Handbook, but no
-> clue. 
-> 
-> The simplest coupling would be a coax T connector between the FT-817
-> and the antenna coax, and a length of coax to the scope's External
-> Input BNC connector.  
-> 
-> This connector is 1 meg-Ohm, 20 mFd, 400 V peak max, about 100 mV/div.  
-> 
-> But I have no reason to think this simple coupling would work. Any
-> advice?
-> 
-> Haines Brown KB1GRM 
-> -
-> To unsubscribe from this list: send the line "unsubscribe linux-hams" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at  http://vger.kernel.org/majordomo-info.html
--- 
-Wilson G. Hein <wilson.hein@verizon.net>
+NAME
+    Ham::APRS::Parser - Perl module for parsing APRS packets into a
+    consistent and easy to work with format
+
+SYNOPSIS
+            use Ham::APRS::Parser;
+
+            my $aprsPacket = 
+parseAPRSPacket("EA1EKE-8>TR3UTW,EC1H-12,EA1A-3*,qAo,EA1URO-10:`|@+ 
+,>/>"9f}");
+
+            while( my ($k, $v) = each %$aprsPacket ) {
+                    print "key: $k, value: $v\n";
+            }
+
+DESCRIPTION
+    Insert plaintext aprs packets from APRS-IS, get back a reference to a
+    hash containing the APRS data in a consistent and easy to process
+    format.
+
+    The above code will yield the following hash:
+
+            %$aprsPacket = {
+                    'AMBIGUITY' => 0,
+                    'COMMENT' => '"9f',
+                    'COURSE' => 234,
+                    'FROM' => 'EA1EKE-8',
+                    'LAT' => '42.5911666666667',
+                    'LON' => '-6.6025',
+                    'MICE_CURRENTNESS' => 'CURRENT',
+                    'MICE_MSG' => 'En Route',
+                    'PATH' => 'EC1H-12,EA1A-3*,qAo,EA1URO-10',
+                    'SPEED' => '75.932',
+                    'TO' => 'TR3UTW'
+            };
 
