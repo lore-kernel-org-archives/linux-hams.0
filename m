@@ -1,35 +1,43 @@
-From: Harry Popov <lz1bb@mail.bg>
-Subject: Re: struggling with gMFSK setup
-Date: Fri, 03 Nov 2006 21:07:27 +0200
-Message-ID: <1162580847.4376.27.camel@ham>
-References: <courier.454A6BB0.000072D7@radagast.org>
-	 <20061103140739.06C951173@teufel.hartford-hwp.com>
+From: richard <richard.bown@blueyonder.co.uk>
+Subject: gmsk & fldigi inputs
+Date: Sat, 04 Nov 2006 01:16:47 +0000
+Message-ID: <454BE9FF.7060106@blueyonder.co.uk>
 Mime-Version: 1.0
 Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <20061103140739.06C951173@teufel.hartford-hwp.com>
 Sender: linux-hams-owner@vger.kernel.org
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"
-To: "H.Haines Brown" <brownh@hartford-hwp.com>
-Cc: dplatt@radagast.org, linux-hams@vger.kernel.org
+Content-Type: text/plain; charset="us-ascii"; format="flowed"
+To: linux-hams@vger.kernel.org
 
-BTW...
+Hi all
+First a warning if you are using Mandriva 2007 and a sound card using 
+the VIA envy24 chip, this applies to Terratec and M-audio cards.delta 44 
+delta 66
+and so on.
+Avoid loading the multimedia kernel, especially the "hack"version, 
+kernel-multimedia-desktop-latest-2.6.17.13-3mdv2007
+This and its associated dependent files cause any PCM audio to be 
+clocked at half speed, and what ever it installs is NOT removable
+by using rpm-e or urpme.
+This bug has been seen on Ubuntu and Suse 10.1, and now on mdv2007, its 
+listed on bugzilla on both distros, once its on the system I found it 
+also altered
+the PCM clocking speed on the on board sound card VIA 8235, the only 
+common thing I can see is both chips are VIA and sound is ALSA.
+The only way I've found is to reload the whole stem, I know that a bit 
+defeatist, but I've done battle with that bug for days when using suse 10.1,
+its quicker to reload the system.
 
-> The FT-817 manual says nothing about limiting power for digital
-> modes. So apparently it's safe to run a full 5-watts, but based on
-> what you say about IMD, 2.5 would be a good idea.
+now the main bit applicable to both fldigi and gmfsk pre0.7 and ver 53
 
-One good hint for FT817 users. Radio is getting hot on 5W. But most of
-heat is coming not from power transistors but 7V inside voltage
-regulator. Solution is to power it from low voltage. I use around 10V.
-With 10V you still have 5 Watts power but much less heat. If your supply
-is with fixed 13.8V output just connect 4 silicon diodes in series.
-Connect one end to the power suplay and second to radio. You have
-roughly 0.7 V dropping in a single diode. So 4x0.7=2.8V.
-13.8-2.8=11V. You will be surprised how cool is FT817. Diodes should be
-capable to pass 2A. I use 5A/30V diodes.
+How do you get incoming audio from  inputs 2 to 4 to be seem by both 
+programs ?
+from the patch panel each input can be switched from each input to each 
+output, what does get through to the dsp from inputs 2 to 4 on a Delta 
+66 card
+looks to be crosstalk, which part of the build on each controls where 
+each app take its input from ?
 
-73, Harry LZ1BB
-
+TIA Richard g8jvm
 
