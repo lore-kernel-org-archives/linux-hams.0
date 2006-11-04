@@ -1,43 +1,30 @@
-From: richard <richard.bown@blueyonder.co.uk>
-Subject: gmsk & fldigi inputs
-Date: Sat, 04 Nov 2006 01:16:47 +0000
-Message-ID: <454BE9FF.7060106@blueyonder.co.uk>
-Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
+From: brownh@hartford-hwp.com (Haines Brown)
+Subject: Coupling a scope to transmitter output
+Date: Sat,  4 Nov 2006 15:14:58 -0500 (EST)
+Message-ID: <20061104201458.8A520D15@teufel.hartford-hwp.com>
+Reply-To: "H.Haines Brown" <brownh@hartford-hwp.com>
 Return-path: <linux-hams-owner@vger.kernel.org>
 Sender: linux-hams-owner@vger.kernel.org
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"; format="flowed"
+MIME-Version: 1.0
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 7bit
 To: linux-hams@vger.kernel.org
 
-Hi all
-First a warning if you are using Mandriva 2007 and a sound card using 
-the VIA envy24 chip, this applies to Terratec and M-audio cards.delta 44 
-delta 66
-and so on.
-Avoid loading the multimedia kernel, especially the "hack"version, 
-kernel-multimedia-desktop-latest-2.6.17.13-3mdv2007
-This and its associated dependent files cause any PCM audio to be 
-clocked at half speed, and what ever it installs is NOT removable
-by using rpm-e or urpme.
-This bug has been seen on Ubuntu and Suse 10.1, and now on mdv2007, its 
-listed on bugzilla on both distros, once its on the system I found it 
-also altered
-the PCM clocking speed on the on board sound card VIA 8235, the only 
-common thing I can see is both chips are VIA and sound is ALSA.
-The only way I've found is to reload the whole stem, I know that a bit 
-defeatist, but I've done battle with that bug for days when using suse 10.1,
-its quicker to reload the system.
+I have the feeling this question will be a bit OT, and so let me first
+ask to what forum it should have been directed.
 
-now the main bit applicable to both fldigi and gmfsk pre0.7 and ver 53
+I have a Tektronix 2235 I'd like to use to monitor the PSK31 signal
+from a FT-817. I googled a bit and looked in the Handbook, but no
+clue. 
 
-How do you get incoming audio from  inputs 2 to 4 to be seem by both 
-programs ?
-from the patch panel each input can be switched from each input to each 
-output, what does get through to the dsp from inputs 2 to 4 on a Delta 
-66 card
-looks to be crosstalk, which part of the build on each controls where 
-each app take its input from ?
+The simplest coupling would be a coax T connector between the FT-817
+and the antenna coax, and a length of coax to the scope's External
+Input BNC connector.  
 
-TIA Richard g8jvm
+This connector is 1 meg-Ohm, 20 mFd, 400 V peak max, about 100 mV/div.  
 
+But I have no reason to think this simple coupling would work. Any
+advice?
+
+Haines Brown KB1GRM 
