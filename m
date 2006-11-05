@@ -1,57 +1,70 @@
-From: "Jeff Laughlin (RV Melville)" <jlaughlin@ucsd.edu>
-Subject: Ham::APRS::Parser v0.03 released
-Date: Sat, 04 Nov 2006 15:54:32 -0800
-Message-ID: <454D2838.6040307@ucsd.edu>
+From: Dave Platt <dplatt@radagast.org>
+Subject: Re: struggling with gMFSK setup
+Date: Sat, 04 Nov 2006 20:35:15 -0800
+Message-ID: <courier.454D6A03.0000497C@radagast.org>
+References: <courier.454A6BB0.000072D7@radagast.org>
+ <20061103140739.06C951173@teufel.hartford-hwp.com>
 Mime-Version: 1.0
 Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
+In-Reply-To: <20061103140739.06C951173@teufel.hartford-hwp.com>
 Sender: linux-hams-owner@vger.kernel.org
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"; format="flowed"
-To: Linux Hams Mailing list <linux-hams@vger.kernel.org>
+Content-Type: text/plain; charset="us-ascii"
+To: dplatt@radagast.org, brownh@hartford-hwp.com
+Cc: linux-hams@vger.kernel.org
 
-Get it from http://sourceforge.net/projects/ham-aprs-parser/
+> Today, because I fiddled with soundcard mixer settings, my soundcard
+> does not function at all, even to play a simple sound file, so I'm
+> back to scratch, but at least I know what to do once I get my card to
+> word again.
 
-Release notes:
-* Fixed a bug in the MIC-E decoder that would sometimes cause small 
-errors of up to 1 minute in longitude, affecting approximately 1 in 10 
-packets.
-* Fixed an error in the readme.txt command line example
-* Moved Ham/aprs to Ham/APRS
+I've had a similar experience enough times, that I've taken to
+storing my sound card configuration setup in a script file (e.g.
+running "amixer" with a bunch of "set" commands) so that I can always
+get the card back to a known good state.
 
-NAME
-    Ham::APRS::Parser - Perl module for parsing APRS packets into a
-    consistent and easy to work with format
+> Which brings up another naive question. On 20-meters, communications
+> principally rely on F2 layer skip, and that means I can hear stations
+> from about 500 miles to several throusand miles away. That's great,
+> but it would also be nice to communicate with folks in my own state
+> (within 100 miles) by PSK31. Is there any ground wave communication?
 
-SYNOPSIS
-            use Ham::APRS::Parser;
+In my experiences, groundwave on HF is good for very short distances
+only.  It'll sometimes work out to a few miles, or to a few tens of
+miles, but poops out after that.  It doesn't have much range advantage
+(if any) over VHF.
 
-            my $aprsPacket = 
-parseAPRSPacket("EA1EKE-8>TR3UTW,EC1H-12,EA1A-3*,qAo,EA1URO-10:`|@+ 
-,>/>"9f}");
+Groundwave propagation works much better for vertically polarized
+signals than for horizontally polarized.  That's one reason why
+HF verticals have a reputation for being noisy - they pick up the
+vertically-polarized groundwave QRM from manmade sources (power poles,
+neon lights, etc.).  Horizontal antennas tend to reject this V-P
+noise, and since horizontally-polarized noise (and signal) doesn't
+propagate well by groundwave the horizontal antennas tend to notice
+local QRM sources less.
 
-            while( my ($k, $v) = each %$aprsPacket ) {
-                    print "key: $k, value: $v\n";
-            }
+There are a number of propagation tricks you can try:
 
-DESCRIPTION
-    Insert plaintext aprs packets from APRS-IS, get back a reference to a
-    hash containing the APRS data in a consistent and easy to process
-    format.
+-  Local groundwave from a 20-meter vertical.  Probably works best if
+   both stations use verticals.
+   
+-  NVIS (near-vertical-incidence skywave).  A horizontal dipole at a
+   low height (say, 1/8 wavelength) radiates most of its energy
+   upwards, and enough may refract back for local and area
+   communication.  The military has become fond of NVIS HF for
+   tactical communication, I understand.
+   
+Sometimes NVIS works, sometimes it doesn't.  20 meters is probably a
+bit harder to work via NVIS than 40 or 80, especially in the low part
+of the sunspot cycle.
 
-    The above code will yield the following hash:
-
-            %$aprsPacket = {
-                    'AMBIGUITY' => 0,
-                    'COMMENT' => '"9f',
-                    'COURSE' => 234,
-                    'FROM' => 'EA1EKE-8',
-                    'LAT' => '42.5911666666667',
-                    'LON' => '-6.6025',
-                    'MICE_CURRENTNESS' => 'CURRENT',
-                    'MICE_MSG' => 'En Route',
-                    'PATH' => 'EC1H-12,EA1A-3*,qAo,EA1URO-10',
-                    'SPEED' => '75.932',
-                    'TO' => 'TR3UTW'
-            };
+I've had some odd experiences doing local PSK31 on 20.  On one
+occasion I was barely able to raise a station 15 miles away, even
+though we were both working at about 50 watts.  His signal strength
+seemed OK and there wasn't much noise, but my software couldn't get a
+decent lock on it.  He had a similar problem copying me.  My best
+guess is that we were receiving a combination of groundwave and NVIS,
+and that the two pathways were interfering enough to mess up the phase
+of the PSK31 carrier and prevent proper decoding.
 
