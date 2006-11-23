@@ -1,29 +1,36 @@
-From: Nate Bargmann <n0nb@networksplus.net>
-Subject: WTHOT - Bruce Perens' Open Petition to Novell
-Date: Wed, 22 Nov 2006 22:31:44 -0600
-Message-ID: <20061123043144.GD10884@mail.networksplus.net>
+From: Jean Delvare <khali@linux-fr.org>
+Subject: [PATCH] Masking bug in 6pack driver?
+Date: Thu, 23 Nov 2006 18:58:10 +0100
+Message-ID: <20061123185810.f86d7225.khali@linux-fr.org>
 Mime-Version: 1.0
+Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
-Content-Disposition: inline
 Sender: linux-hams-owner@vger.kernel.org
 List-Id: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-To: Linux Hams <linux-hams@vger.kernel.org>
+To: Andreas Koensgen <ajk@iehk.rwth-aachen.de>
+Cc: linux-hams@vger.kernel.org, Ralf Baechle <ralf@linux-mips.org>
 
-This list is not normally given to politics, but in this case, our very 
-ability to carry on ham radio Free Software may be in jeopardy.
+Looks like a broken masking to me, binary not is used where bitwise not
+was intended.
 
-Bruce Perens, K6BP, has authored an Open Petition to Protest the 
-Microsoft-Novell Patent Agreement:
+Signed-off-by: Jean Delvare <khali@linux-fr.org>
+---
+ drivers/net/hamradio/6pack.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-http://techp.org/petition/show/1
+--- linux-2.6.19-rc6.orig/drivers/net/hamradio/6pack.c	2006-09-21 21:27:38.000000000 +0200
++++ linux-2.6.19-rc6/drivers/net/hamradio/6pack.c	2006-11-23 18:46:37.000000000 +0100
+@@ -914,7 +914,7 @@
+ 					printk(KERN_DEBUG "6pack: protocol violation\n");
+ 				else
+ 					sp->status = 0;
+-				cmd &= !SIXP_RX_DCD_MASK;
++				cmd &= ~SIXP_RX_DCD_MASK;
+ 		}
+ 		sp->status = cmd & SIXP_PRIO_DATA_MASK;
+ 	} else { /* output watchdog char if idle */
 
-73, de Nate >>
 
 -- 
- Wireless | Amateur Radio Station N0NB          |  Successfully Microsoft
-  Amateur radio exams; ham radio; Linux info @  | free since January 1998.
-             http://www.qsl.net/n0nb/           |  "Debian, the choice of
-             My Kawasaki KZ-650 SR @            |     a GNU generation!"
-        http://www.networksplus.net/n0nb/       |   http://www.debian.org
+Jean Delvare
