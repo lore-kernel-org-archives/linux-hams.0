@@ -1,34 +1,29 @@
-From: Ralf Baechle DL5RB <ralf@linux-mips.org>
-Subject: Re: WTHOT - Bruce Perens' Open Petition to Novell
-Date: Thu, 23 Nov 2006 21:42:27 +0000
-Message-ID: <20061123214227.GB8912@linux-mips.org>
-References: <20061123043144.GD10884@mail.networksplus.net>
+From: "Chuck Hast" <wchast@gmail.com>
+Subject: pseudo ports
+Date: Tue, 28 Nov 2006 00:39:09 -0500
+Message-ID: <620c90570611272139x2af03a66p7857197733702394@mail.gmail.com>
 Mime-Version: 1.0
+Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
 Content-Disposition: inline
-In-Reply-To: <20061123043144.GD10884@mail.networksplus.net>
 Sender: linux-hams-owner@vger.kernel.org
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-To: Linux Hams <linux-hams@vger.kernel.org>
+Content-Type: text/plain; charset="us-ascii"; format="flowed"
+To: linux-hams <linux-hams@vger.kernel.org>
 
-On Wed, Nov 22, 2006 at 10:31:44PM -0600, Nate Bargmann wrote:
+I need to set up two pseudo ports, one on the call application and the
+other on my node stack. I want to do this to test some user <> network
+stuff. I am trying to figure out how to set up a pseudo port on both ends
+so I can just connect the two devices internally.
 
-> This list is not normally given to politics, but in this case, our very 
-> ability to carry on ham radio Free Software may be in jeopardy.
-> 
-> Bruce Perens, K6BP, has authored an Open Petition to Protest the 
-> Microsoft-Novell Patent Agreement:
+I of course have set them up for the node stack, but not sure how to
+set one up so I can use the call app to call the node stack so I can
+check some level 2 stuff.
 
-Bruce Perens has a long tradition of polemising, take the whole petition
-with alot of salt.  Much more salt than you would want your doctor to know.
 
-Perens also claims we kernel developers are taking a fresh look at the GPLv3
-after what the Novell-Microsoft deal which is a pretty funny claim since
-those discussions have largely happened under the seal of privacy i.e.
-without him.  But to summarize those discussions, so far neither the goals
-we're trying to achieve with the license nor our evaluation of the GPL v3
-nor the situation have significantly been influenced by the MS-Novell deal.
-
-  Ralf
+-- 
+Chuck Hast  -- KP4DJT --
+To paraphrase my flight instructor;
+"the only dumb question is the one you DID NOT ask resulting in my going
+out and having to identify your bits and pieces in the midst of torn
+and twisted metal."
