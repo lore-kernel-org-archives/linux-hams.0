@@ -1,71 +1,33 @@
-From: Hamish Moffatt <hamish@cloud.net.au>
+From: Bob Nielsen <nielsen@oz.net>
 Subject: Re: gmfsk - fftw lib not found
-Date: Wed, 6 Dec 2006 09:59:48 +1100
-Message-ID: <20061205225948.GA10338@cloud.net.au>
-References: <200612041412.46659.kb7no@sbcglobal.net> <200612041940.10406.kb7no@sbcglobal.net> <20061205034404.GA15572@cloud.net.au> <200612051349.27432.kb7no@sbcglobal.net>
-Mime-Version: 1.0
+Date: Tue, 5 Dec 2006 18:56:07 -0800
+Message-ID: <F4DA2EDF-758D-4436-9C2F-EEC1AB5D6DFD@oz.net>
+References: <200612041412.46659.kb7no@sbcglobal.net> <200612041940.10406.kb7no@sbcglobal.net> <20061205034404.GA15572@cloud.net.au> <200612051349.27432.kb7no@sbcglobal.net> <20061205225948.GA10338@cloud.net.au>
+Mime-Version: 1.0 (Apple Message framework v752.2)
+Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
-Content-Disposition: inline
-In-Reply-To: <200612051349.27432.kb7no@sbcglobal.net>
+In-Reply-To: <20061205225948.GA10338@cloud.net.au>
 Sender: linux-hams-owner@vger.kernel.org
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset="us-ascii"; delsp="yes"; format="flowed"
 To: linux-hams@vger.kernel.org
 
-Hi Jack,
 
-You have to edit your sources.list to add the universe section - it is
-not a core package. I think Ubuntu may have a tool for configuring your
-package sections.
+On Dec 5, 2006, at 2:59 PM, Hamish Moffatt wrote:
 
-gmfsk is in universe in edgy (6.10) also.
+> Debian and its derivatives (including Ubuntu) are much more robust  
+> with
+> regard to partial upgrades. No reinstalls required - ever.
+>
 
-Debian and its derivatives (including Ubuntu) are much more robust with
-regard to partial upgrades. No reinstalls required - ever.
+I wish that were universally true.  After ~10 years of using Debian  
+and its derivatives I finally had an upgrade go wrong--Ubuntu 6.06 ->  
+6.10 (I used apt-get instead of update-manager, which apparently  
+handles this one better, but I tend to prefer non-gui solutions).   
+Fortunately I learned long ago to keep /home and /usr/local on  
+separate partitions so recovery was somewhat painless.  Besides, an  
+occasional reinstall reduces cruft.
 
-cheers
-Hamish
+Bob, N7XY
 
-On Tue, Dec 05, 2006 at 01:49:27PM -0800, Jack Heller wrote:
-> Thanks again Hamish,
-> 	I attempted to get/install gmfsk but am using 6.06 Dapper.  Not found error. 
-> 
-> 	So, decided to chance the upgrade to 6.10 -- Failed because (I think) the 
-> Internet connection interrupted.  Have a few corrupt files so the install 
-> didn't succeed.  Luckily, 6.06 is still working.  (Not noticeably wrecked.)  
-> Had a much worse experience with Red Hat Fedora a few months ago on upgrade.  
-> This Ubuntu seems to be more nearly bullet-proof.
-> 
-> 	Will try again.  Just wanted you to know I am still trying.  
-> 
-> 	Thanks for your input Hamish.
-> 
-> 	Jack   KB7NO
-> 
-> On Monday 04 December 2006 19:44, Hamish Moffatt wrote:
-> > On Mon, Dec 04, 2006 at 07:40:10PM -0800, Jack Heller wrote:
-> > > Thanks Hamish,
-> > > 	I am working on getting the dev file.  A small confusion exists.  I will
-> > > sort out the apt-get commands and get this done.  Found some nice
-> > > instructions, decided to print them and had to stop and fill print
-> > > cartridges.  Will persevere.  Thanks a bunch -- Really want to see this
-> > > work.
-> >
-> > By the way Jack, gmfsk is included in Ubuntu and so there's no need to
-> > compile it yourself (unless you want to).
-> >
-> > apt-get install gmfsk
-> >
-> > should do the trick as long as you have the "universe" section in your
-> > sources.list. edgy has 0.7pre1.
-> >
-> > Hamish
-> -
-> To unsubscribe from this list: send the line "unsubscribe linux-hams" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at  http://vger.kernel.org/majordomo-info.html
-> 
 
--- 
-Hamish Moffatt VK3SB <hamish@debian.org> <hamish@cloud.net.au>
