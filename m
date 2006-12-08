@@ -1,57 +1,48 @@
-From: Bob Nielsen <nielsen@oz.net>
+From: Tomi Manninen <oh2bns@sral.fi>
 Subject: Re: gmfsk - finally! - thanks
-Date: Thu, 7 Dec 2006 18:58:56 -0800
-Message-ID: <328763D7-821F-44E8-9BB0-D53EF53287A8@oz.net>
+Date: Sat, 09 Dec 2006 00:30:04 +0200
+Message-ID: <1165617004.7000.5.camel@oh2bns.ampr.org>
 References: <200612071805.52698.kb7no@sbcglobal.net>
-Mime-Version: 1.0 (Apple Message framework v752.2)
+	 <328763D7-821F-44E8-9BB0-D53EF53287A8@oz.net>
+Mime-Version: 1.0
 Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <200612071805.52698.kb7no@sbcglobal.net>
+In-Reply-To: <328763D7-821F-44E8-9BB0-D53EF53287A8@oz.net>
 Sender: linux-hams-owner@vger.kernel.org
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"; delsp="yes"; format="flowed"
-To: Jack Heller <kb7no@sbcglobal.net>
-Cc: linux-hams@vger.kernel.org
+Content-Type: text/plain; charset="us-ascii"
+To: Bob Nielsen <nielsen@oz.net>
+Cc: Jack Heller <kb7no@sbcglobal.net>, linux-hams@vger.kernel.org
 
+On Thu, 2006-12-07 at 18:58 -0800, Bob Nielsen wrote:
 
-On Dec 7, 2006, at 6:05 PM, Jack Heller wrote:
+> > One small problem (I hope) is the Preferences pulldown displays  
+> > only a panel
+> > with 6 clickable choices to the left and large pane to the right  
+> > with gMFSK
+> > on it, but that pane never opens by clicking the choices at left.   
+> > I did find
+> > that a pane would open for a particular mode displayed in the lower  
+> > right
+> > corner and the pane is then responsive (alive and adjustable), but  
+> > that is
+> > the only action I get.  I am sure that if this much works, then  
+> > there is
+> > simply a switch set wrong in a file.
 
-> Thanks to the several helpful replies, I now have gmfsk installed  
-> and up
-> running.  It transmits and receives -- so far - so good.
->
-> One small problem (I hope) is the Preferences pulldown displays  
-> only a panel
-> with 6 clickable choices to the left and large pane to the right  
-> with gMFSK
-> on it, but that pane never opens by clicking the choices at left.   
-> I did find
-> that a pane would open for a particular mode displayed in the lower  
-> right
-> corner and the pane is then responsive (alive and adjustable), but  
-> that is
-> the only action I get.  I am sure that if this much works, then  
-> there is
-> simply a switch set wrong in a file.
->
-> 	Hope you can help on this.
->
-> 	And . . . The ubuntu 6.10 was a disaster.  Reloaded 6.06 and it is  
-> a keeper.
-> Worked with Synaptic to get the Universe parameter set and found  
-> the compiled
-> gmfsk.  Thanks again.
->
-> 	Jack    KB7NO
+> That one fooled me for a while as well, Jack.  You have to click on  
+> the right-facing triangle and it will rotate to down facing with a  
+> series of parameters shown.  Click on them to display the settings  
+> and/or change them.
 
-That one fooled me for a while as well, Jack.  You have to click on  
-the right-facing triangle and it will rotate to down facing with a  
-series of parameters shown.  Click on them to display the settings  
-and/or change them.
+This is the default gnome treeview behaviour. I never saw anything
+wrong with it but quite a few people complained about it :)
+Version 0.7pre1 should "fix" this by executing the "collapse
+tree" function when clicking the text.
 
-After reinstalling 6.10 (see my previous message) it seems to be  
-working quite well for me, although I haven't tried all that many  
-applications yet.
+Anyway, you are not the first to notice this.. :)
 
-Bob, N7XY
+-- 
+Tomi Manninen / OH2BNS / KP20JF74
+
 
