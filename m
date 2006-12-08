@@ -1,33 +1,31 @@
-From: Bob Nielsen <nielsen@oz.net>
-Subject: Re: gmfsk - fftw lib not found
-Date: Tue, 5 Dec 2006 18:56:07 -0800
-Message-ID: <F4DA2EDF-758D-4436-9C2F-EEC1AB5D6DFD@oz.net>
-References: <200612041412.46659.kb7no@sbcglobal.net> <200612041940.10406.kb7no@sbcglobal.net> <20061205034404.GA15572@cloud.net.au> <200612051349.27432.kb7no@sbcglobal.net> <20061205225948.GA10338@cloud.net.au>
-Mime-Version: 1.0 (Apple Message framework v752.2)
+From: Jack Heller <kb7no@sbcglobal.net>
+Subject: gmfsk - finally! - thanks
+Date: Thu, 7 Dec 2006 18:05:52 -0800
+Message-ID: <200612071805.52698.kb7no@sbcglobal.net>
+Mime-Version: 1.0
 Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <20061205225948.GA10338@cloud.net.au>
+Content-Disposition: inline
 Sender: linux-hams-owner@vger.kernel.org
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"; delsp="yes"; format="flowed"
+Content-Type: text/plain; charset="us-ascii"
 To: linux-hams@vger.kernel.org
 
+Thanks to the several helpful replies, I now have gmfsk installed and up 
+running.  It transmits and receives -- so far - so good.
 
-On Dec 5, 2006, at 2:59 PM, Hamish Moffatt wrote:
+One small problem (I hope) is the Preferences pulldown displays only a panel 
+with 6 clickable choices to the left and large pane to the right with gMFSK 
+on it, but that pane never opens by clicking the choices at left.  I did find 
+that a pane would open for a particular mode displayed in the lower right 
+corner and the pane is then responsive (alive and adjustable), but that is 
+the only action I get.  I am sure that if this much works, then there is 
+simply a switch set wrong in a file.
 
-> Debian and its derivatives (including Ubuntu) are much more robust  
-> with
-> regard to partial upgrades. No reinstalls required - ever.
->
+	Hope you can help on this.
 
-I wish that were universally true.  After ~10 years of using Debian  
-and its derivatives I finally had an upgrade go wrong--Ubuntu 6.06 ->  
-6.10 (I used apt-get instead of update-manager, which apparently  
-handles this one better, but I tend to prefer non-gui solutions).   
-Fortunately I learned long ago to keep /home and /usr/local on  
-separate partitions so recovery was somewhat painless.  Besides, an  
-occasional reinstall reduces cruft.
+	And . . . The ubuntu 6.10 was a disaster.  Reloaded 6.06 and it is a keeper.  
+Worked with Synaptic to get the Universe parameter set and found the compiled 
+gmfsk.  Thanks again.
 
-Bob, N7XY
-
-
+	Jack    KB7NO
