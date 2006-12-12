@@ -1,48 +1,37 @@
-From: Tomi Manninen <oh2bns@sral.fi>
-Subject: Re: gmfsk - finally! - thanks
-Date: Sat, 09 Dec 2006 00:30:04 +0200
-Message-ID: <1165617004.7000.5.camel@oh2bns.ampr.org>
-References: <200612071805.52698.kb7no@sbcglobal.net>
-	 <328763D7-821F-44E8-9BB0-D53EF53287A8@oz.net>
+From: Nate Bargmann <n0nb@networksplus.net>
+Subject: Hamlib 1.2.6rc1 released
+Date: Mon, 11 Dec 2006 21:39:23 -0600
+Message-ID: <20061212033923.GH23393@mail.networksplus.net>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
-Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <328763D7-821F-44E8-9BB0-D53EF53287A8@oz.net>
-Sender: linux-hams-owner@vger.kernel.org
+Return-path: <bounce-debian-hams=debian-hams=m.gmane.org@lists.debian.org>
+Content-Disposition: inline
+Resent-Message-ID: <XXIRo.A.NYG.TSifFB@murphy>
 List-Id: <linux-hams.vger.kernel.org>
+List-Post: <mailto:debian-hams@lists.debian.org>
+List-Help: <mailto:debian-hams-request@lists.debian.org?subject=help>
+List-Subscribe: <mailto:debian-hams-request@lists.debian.org?subject=subscribe>
+List-Unsubscribe: <mailto:debian-hams-request@lists.debian.org?subject=unsubscribe>
 Content-Type: text/plain; charset="us-ascii"
-To: Bob Nielsen <nielsen@oz.net>
-Cc: Jack Heller <kb7no@sbcglobal.net>, linux-hams@vger.kernel.org
+Content-Transfer-Encoding: 7bit
+To: Linux Hams <linux-hams@vger.kernel.org>, Debian Hams <debian-hams@lists.debian.org>
 
-On Thu, 2006-12-07 at 18:58 -0800, Bob Nielsen wrote:
+Hello everyone.
 
-> > One small problem (I hope) is the Preferences pulldown displays  
-> > only a panel
-> > with 6 clickable choices to the left and large pane to the right  
-> > with gMFSK
-> > on it, but that pane never opens by clicking the choices at left.   
-> > I did find
-> > that a pane would open for a particular mode displayed in the lower  
-> > right
-> > corner and the pane is then responsive (alive and adjustable), but  
-> > that is
-> > the only action I get.  I am sure that if this much works, then  
-> > there is
-> > simply a switch set wrong in a file.
+The Hamlib Group is pleased to announce the release of Hamlib 1.2.6rc1,
+a release candidate of the forthcoming 1.2.6 release.  It is available
+from:
 
-> That one fooled me for a while as well, Jack.  You have to click on  
-> the right-facing triangle and it will rotate to down facing with a  
-> series of parameters shown.  Click on them to display the settings  
-> and/or change them.
+http://sourceforge.net/projects/hamlib/
 
-This is the default gnome treeview behaviour. I never saw anything
-wrong with it but quite a few people complained about it :)
-Version 0.7pre1 should "fix" this by executing the "collapse
-tree" function when clicking the text.
+Please report bugs to hamlib-developer@lists.sourceforge.net  Patches
+are most welcome as well.
 
-Anyway, you are not the first to notice this.. :)
+73, de Nate >>
 
 -- 
-Tomi Manninen / OH2BNS / KP20JF74
-
+ Wireless | Amateur Radio Station N0NB          |  Successfully Microsoft
+  Amateur radio exams; ham radio; Linux info @  | free since January 1998.
+             http://www.qsl.net/n0nb/           |  "Debian, the choice of
+             My Kawasaki KZ-650 SR @            |     a GNU generation!"
+        http://www.networksplus.net/n0nb/       |   http://www.debian.org
 
