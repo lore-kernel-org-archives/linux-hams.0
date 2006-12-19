@@ -1,37 +1,24 @@
-From: Harry Popov <lz1bb@mail.bg>
-Subject: WSJT RPM for Mandriva 2007
-Date: Mon, 18 Dec 2006 00:57:26 +0200
-Message-ID: <1166396246.4307.58.camel@ham>
+From: "Mike McCarthy, W1NR" <lists@w1nr.net>
+Subject: OpenSUSE ham radio packages
+Date: Mon, 18 Dec 2006 19:04:52 -0500
+Message-ID: <000701c72301$4f0e5fb0$3749a8c0@lan.w1nr.net>
 Mime-Version: 1.0
 Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
 Sender: linux-hams-owner@vger.kernel.org
 List-Id: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
-To: Linux Hams <linux-hams@vger.kernel.org>
+To: linux-hams@vger.kernel.org
 
-Hi All,
+The openSUSE version 10.2 Ham Radio packages are now available at
 
-Today I made preliminary test version of WSJT RPM package for Mandriva
-2007. If some one is using Mandriva and is interested, please download,
-test and report for bugs so I could correct them in the final package.
+http://dg7gt.osth.de/openSUSE-10.2-ham/
 
-WSJT needs portaudio19. IMPORTANT . It does not work with portaudio18
-included in most distributions. So download and install libportaudio2
-package first:
+And mirrored at
 
-http://lz1bb.bfra.org/wsjt/libportaudio2-19-3mdv2007.0.i586.rpm
-http://lz1bb.bfra.org/wsjt/wsjt-5.9.6.r314-0mdv2007.0.i586.rpm
+http://ftp.w1nr.net/suse-ham/dg7gt.osth.de/openSUSE-10.2-ham/
 
-If some one would like to install portaudio19 from source, compile it
-without jack:
+Thanks Tim, DG7GT, for putting these together for us.
 
-./configure --with-jack=no
-
-I still have some work to do on wsjt.src.rpm so will distribute a bit
-later. I will be more than happy if some of you test and report results
-of this WSJT RPM package.
-
-73, Harry LZ1BB
-
+73 de Mike, W1NR
 
