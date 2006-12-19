@@ -1,24 +1,35 @@
-From: "Mike McCarthy, W1NR" <lists@w1nr.net>
-Subject: OpenSUSE ham radio packages
-Date: Mon, 18 Dec 2006 19:04:52 -0500
-Message-ID: <000701c72301$4f0e5fb0$3749a8c0@lan.w1nr.net>
+From: Harry Popov <lz1bb@mail.bg>
+Subject: Re: WSJT RPM for Mandriva 2007
+Date: Tue, 19 Dec 2006 03:50:49 +0200
+Message-ID: <1166493049.4589.19.camel@ham>
+References: <1166396246.4307.58.camel@ham>
 Mime-Version: 1.0
 Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
+In-Reply-To: <1166396246.4307.58.camel@ham>
 Sender: linux-hams-owner@vger.kernel.org
 List-Id: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
-To: linux-hams@vger.kernel.org
+To: Linux Hams <linux-hams@vger.kernel.org>
+Cc: debian-hams@lists.debian.org
 
-The openSUSE version 10.2 Ham Radio packages are now available at
+Hi All,
 
-http://dg7gt.osth.de/openSUSE-10.2-ham/
+> WSJT needs portaudio19. IMPORTANT . It does not work with portaudio18
+> included in most distributions. So download and install libportaudio2
+> package first:
+> 
+> http://lz1bb.bfra.org/wsjt/libportaudio2-19-3mdv2007.0.i586.rpm
+> http://lz1bb.bfra.org/wsjt/wsjt-5.9.6.r314-0mdv2007.0.i586.rpm
 
-And mirrored at
+WSJT needs libg2c also. I received two complains for finding
+difficulties to find this package. In Mandriva 2007 libg2c is provided
+by package libf2c0 which is not on Mandriva DVD or CDs. To make life
+easier I uploaded the package on my server. So you can download from
+here:
 
-http://ftp.w1nr.net/suse-ham/dg7gt.osth.de/openSUSE-10.2-ham/
+http://lz1bb.bfra.org/wsjt/libf2c0-3.3.6-3mdk.i586.rpm
 
-Thanks Tim, DG7GT, for putting these together for us.
+73, Harry LZ1BB
 
-73 de Mike, W1NR
 
