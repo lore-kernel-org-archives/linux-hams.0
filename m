@@ -1,29 +1,30 @@
-From: Harry Popov <lz1bb@mail.bg>
-Subject: WSJT RPM package
-Date: Thu, 21 Dec 2006 05:11:09 +0200
-Message-ID: <1166670670.6945.52.camel@ham>
+From: "Chuck Hast" <wchast@gmail.com>
+Subject: On a sad note
+Date: Wed, 20 Dec 2006 23:24:15 -0500
+Message-ID: <620c90570612202024t3e82056dl118df0cf7dd2c136@mail.gmail.com>
 Mime-Version: 1.0
 Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
+Content-Disposition: inline
 Sender: linux-hams-owner@vger.kernel.org
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"
-To: Linux Hams <linux-hams@vger.kernel.org>
-Cc: debian-hams@lists.debian.org
+Content-Type: text/plain; charset="us-ascii"; format="flowed"
+To: FADCA <fadca@mailman.qth.net>, Linux FPAC <fpac@f6fbb.org>, linux-hams <linux-hams@vger.kernel.org>
 
-Hi all. I prepared a new WSJT rpm package. It uses the ported in the
-wsjt code portaudio19 so the package libportaudio2 is no more needed.
-Besides that this package should work on other rpm based distributions
-and not only on Mandriva. It was succesfully tested on Mandriva 2007 and
-Fedora Core 5 so far. The package is here:
+Folks,
+Linda Reedy asked me to inform the ham community of the passing of
+Gwyn Reedy W1BEL (SK). Gwyn was involved in a traffic accident in up
+state New York. Appears that he was cut off by a car and lost control of
+the truck he was driving, avoiding the car that caused the problem but
+loosing his life in the process.
 
- http://lz1bb.bfra.org/wsjt/wsjt-5.9.6.r309-1.i586.rpm
+Linda Reedy will provide more information as soon as possible. Gwyn
+who was retired from the U.S. Airforce will be given a full military burial
+at the Veterans Cemetary in Bushnell, FL. The date is still to be set.
 
-WSJT is a program for weak signal communications. Mainly used on VHF and
-up for Meteor Scatter and EME QSOs. Even if you are not interested from
-these type of propagations I would appreciate your help with testing.
-
-Please download, install and report any result good or bad.
-
-73, Harry LZ1BB
-
+-- 
+Chuck Hast  -- KP4DJT --
+To paraphrase my flight instructor;
+"the only dumb question is the one you DID NOT ask resulting in my going
+out and having to identify your bits and pieces in the midst of torn
+and twisted metal."
