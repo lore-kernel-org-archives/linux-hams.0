@@ -1,50 +1,39 @@
-From: Harry Popov <lz1bb@mail.bg>
-Subject: Re: WSJT RPM package
-Date: Thu, 21 Dec 2006 14:09:43 +0200
-Message-ID: <1166702984.6945.76.camel@ham>
-References: <1166670670.6945.52.camel@ham>
-	 <2409.80.229.68.130.1166697252.squirrel@80.229.68.130>
+From: "Chuck Hast" <wchast@gmail.com>
+Subject: Re: On a sad note
+Date: Thu, 21 Dec 2006 08:31:48 -0500
+Message-ID: <620c90570612210531k6d1b92b4k50f5cf86640471c8@mail.gmail.com>
+References: <620c90570612202024t3e82056dl118df0cf7dd2c136@mail.gmail.com>
+	 <458A89F6.7050005@febo.com>
 Mime-Version: 1.0
 Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <2409.80.229.68.130.1166697252.squirrel@80.229.68.130>
+In-Reply-To: <458A89F6.7050005@febo.com>
+Content-Disposition: inline
 Sender: linux-hams-owner@vger.kernel.org
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"
-To: radio@beer.org.uk
-Cc: Linux Hams <linux-hams@vger.kernel.org>
+Content-Type: text/plain; charset="us-ascii"; format="flowed"
+To: John Ackermann N8UR <jra@febo.com>
+Cc: FADCA <fadca@mailman.qth.net>, Linux FPAC <fpac@f6fbb.org>, linux-hams <linux-hams@vger.kernel.org>
 
-On Thu, 2006-12-21 at 10:34 +0000, Vic wrote:
-> http://lz1bb.bfra.org/wsjt/wsjt-5.9.6.r309-1.i586.rpm
-> Got a SRPM handy?
+On 12/21/06, John Ackermann N8UR <jra@febo.com> wrote:
+> That's sad news.  Gwyn was an important figure in packet's formative
+> years, and a nice guy to boot.
+>
 
-Yes:
+Yes, I guess if there is a happy note in it, he died doing what he enjoyed.
+After flying airplanes for the USAF and then running PacComm for many
+years he had always dreamed of driving a truck and indeed had been doing
+so for quite some time. He was even trying to get me to do it, but I helped
+my wife with her business driving a little box truck pulling a load of bait
+and got cut off many a time by some idiot who never thought about how
+much weight I was carrying and how fast I could stop, all he/she could
+see while talking on the cellphone was that space in front of my bumper.
+So I did not accept the invite. We will miss him as he always had a fix
+or recommendation to make something better.
 
-http://lz1bb.bfra.org/wsjt/wsjt-5.9.6.r309-1.src.i586.rpm
-
-But I am afraid the wsjt.spec file should need additional work to use it
-on distribution different than mine. In general if you can compile
-original wsjt code locally the wsjt.spec will work without changes. You
-might have a look for HowTo compile wsjt on Mandriva 2007 and FC5 and 6
-here:
-
-http://lz1bb.bfra.org
-
-And the original wsjt-5.9.6.r309.tgz file is here:
-
-http://download.berlios.de/wsjt/wsjt-5.9.6.r309.tgz
-
-And if you are interesting to join development team or just to follow
-development process please join the devel list. You must be registered
-to the list to send messages but can read unregistered:
-
-
-Wsjt-devel mailing list
-Wsjt-devel@lists.berlios.de
-https://lists.berlios.de/mailman/listinfo/wsjt-devel
-
-
-Please report any success or the oposite with the rpm package.
-
-73, Harry LZ1BB
-
+-- 
+Chuck Hast  -- KP4DJT --
+To paraphrase my flight instructor;
+"the only dumb question is the one you DID NOT ask resulting in my going
+out and having to identify your bits and pieces in the midst of torn
+and twisted metal."
