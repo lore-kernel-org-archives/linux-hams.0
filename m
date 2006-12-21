@@ -1,34 +1,30 @@
-From: John Ackermann N8UR <jra@febo.com>
-Subject: Re: On a sad note
-Date: Thu, 21 Dec 2006 08:19:50 -0500
-Message-ID: <458A89F6.7050005@febo.com>
-References: <620c90570612202024t3e82056dl118df0cf7dd2c136@mail.gmail.com>
+From: Harry Popov <lz1bb@mail.bg>
+Subject: Re: WSJT RPM package
+Date: Thu, 21 Dec 2006 18:18:59 +0200
+Message-ID: <1166717939.6945.84.camel@ham>
+References: <1166670670.6945.52.camel@ham>
+	 <2409.80.229.68.130.1166697252.squirrel@80.229.68.130>
+	 <1166702984.6945.76.camel@ham>
 Mime-Version: 1.0
 Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <620c90570612202024t3e82056dl118df0cf7dd2c136@mail.gmail.com>
+In-Reply-To: <1166702984.6945.76.camel@ham>
 Sender: linux-hams-owner@vger.kernel.org
 List-Id: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
-To: Chuck Hast <wchast@gmail.com>
-Cc: FADCA <fadca@mailman.qth.net>, Linux FPAC <fpac@f6fbb.org>, linux-hams <linux-hams@vger.kernel.org>
+To: radio@beer.org.uk
+Cc: Linux Hams <linux-hams@vger.kernel.org>
 
-That's sad news.  Gwyn was an important figure in packet's formative
-years, and a nice guy to boot.
-
-John
-----
-
-Chuck Hast said the following on 12/20/2006 11:24 PM:
-> Folks,
-> Linda Reedy asked me to inform the ham community of the passing of
-> Gwyn Reedy W1BEL (SK). Gwyn was involved in a traffic accident in up
-> state New York. Appears that he was cut off by a car and lost control of
-> the truck he was driving, avoiding the car that caused the problem but
-> loosing his life in the process.
+On Thu, 2006-12-21 at 14:09 +0200, Harry Popov wrote:
+> On Thu, 2006-12-21 at 10:34 +0000, Vic wrote:
+> > http://lz1bb.bfra.org/wsjt/wsjt-5.9.6.r309-1.i586.rpm
+> > Got a SRPM handy?
 > 
-> Linda Reedy will provide more information as soon as possible. Gwyn
-> who was retired from the U.S. Airforce will be given a full military burial
-> at the Veterans Cemetary in Bushnell, FL. The date is still to be set.
+> Yes:
 > 
+Shame on me, I sent a wrong link. Here is the correct link for SRPM:
+
+http://lz1bb.bfra.org/wsjt/wsjt-5.9.6.r309-1.src.rpm
+
+73, Harry LZ1BB
 
