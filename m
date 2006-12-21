@@ -1,30 +1,23 @@
-From: "Chuck Hast" <wchast@gmail.com>
-Subject: On a sad note
-Date: Wed, 20 Dec 2006 23:24:15 -0500
-Message-ID: <620c90570612202024t3e82056dl118df0cf7dd2c136@mail.gmail.com>
+From: "Vic" <radio@beer.org.uk>
+Subject: Re: WSJT RPM package
+Date: Thu, 21 Dec 2006 10:34:12 -0000 (GMT)
+Message-ID: <2409.80.229.68.130.1166697252.squirrel@80.229.68.130>
+References: <1166670670.6945.52.camel@ham>
+Reply-To: radio@beer.org.uk
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 7BIT
 Return-path: <linux-hams-owner@vger.kernel.org>
-Content-Disposition: inline
+In-Reply-To: <1166670670.6945.52.camel@ham>
 Sender: linux-hams-owner@vger.kernel.org
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"; format="flowed"
-To: FADCA <fadca@mailman.qth.net>, Linux FPAC <fpac@f6fbb.org>, linux-hams <linux-hams@vger.kernel.org>
+Content-Type: text/plain; charset="us-ascii"
+To: Linux Hams <linux-hams@vger.kernel.org>
 
-Folks,
-Linda Reedy asked me to inform the ham community of the passing of
-Gwyn Reedy W1BEL (SK). Gwyn was involved in a traffic accident in up
-state New York. Appears that he was cut off by a car and lost control of
-the truck he was driving, avoiding the car that caused the problem but
-loosing his life in the process.
+> Hi all. I prepared a new WSJT rpm package.
+>
+>  http://lz1bb.bfra.org/wsjt/wsjt-5.9.6.r309-1.i586.rpm
 
-Linda Reedy will provide more information as soon as possible. Gwyn
-who was retired from the U.S. Airforce will be given a full military burial
-at the Veterans Cemetary in Bushnell, FL. The date is still to be set.
+Got a SRPM handy?
 
--- 
-Chuck Hast  -- KP4DJT --
-To paraphrase my flight instructor;
-"the only dumb question is the one you DID NOT ask resulting in my going
-out and having to identify your bits and pieces in the midst of torn
-and twisted metal."
+Vic.
+
