@@ -1,30 +1,59 @@
-From: Harry Popov <lz1bb@mail.bg>
-Subject: Re: WSJT RPM package
-Date: Thu, 21 Dec 2006 18:18:59 +0200
-Message-ID: <1166717939.6945.84.camel@ham>
-References: <1166670670.6945.52.camel@ham>
-	 <2409.80.229.68.130.1166697252.squirrel@80.229.68.130>
-	 <1166702984.6945.76.camel@ham>
+From: Nate Bargmann <n0nb@networksplus.net>
+Subject: Hamlib 1.2.6 released
+Date: Fri, 22 Dec 2006 09:06:21 -0600
+Message-ID: <20061222150621.GA3388@mail.networksplus.net>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
-Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <1166702984.6945.76.camel@ham>
-Sender: linux-hams-owner@vger.kernel.org
+Return-path: <bounce-debian-hams=debian-hams=m.gmane.org@lists.debian.org>
+Content-Disposition: inline
+Resent-Message-ID: <6-dIHB.A.OYE.-R_iFB@murphy>
 List-Id: <linux-hams.vger.kernel.org>
+List-Post: <mailto:debian-hams@lists.debian.org>
+List-Help: <mailto:debian-hams-request@lists.debian.org?subject=help>
+List-Subscribe: <mailto:debian-hams-request@lists.debian.org?subject=subscribe>
+List-Unsubscribe: <mailto:debian-hams-request@lists.debian.org?subject=unsubscribe>
 Content-Type: text/plain; charset="us-ascii"
-To: radio@beer.org.uk
-Cc: Linux Hams <linux-hams@vger.kernel.org>
+Content-Transfer-Encoding: 7bit
+To: Debian Hams <debian-hams@lists.debian.org>, Linux Hams <linux-hams@vger.kernel.org>
 
-On Thu, 2006-12-21 at 14:09 +0200, Harry Popov wrote:
-> On Thu, 2006-12-21 at 10:34 +0000, Vic wrote:
-> > http://lz1bb.bfra.org/wsjt/wsjt-5.9.6.r309-1.i586.rpm
-> > Got a SRPM handy?
-> 
-> Yes:
-> 
-Shame on me, I sent a wrong link. Here is the correct link for SRPM:
+The Hamlib Group is pleased to announce the release of Hamlib 1.2.6.
+This release has no code or build changes from 1.2.6rc1.  
+ 
+Here is the excerpt from the NEWS file: 
+ 
+Version 1.2.6 
+2006-12-22 
+* Bump version to 1.2.6 
+* no changes from 1.2.6rc1 
+ 
+Version 1.2.6rc1 
+2006-12-10 
+* Python 2.4 compatibility 
+* Improved TS570 functionality 
+* Improved Argonaut V functionality 
+* New models: IC7000, G313i/G313e 
+* Many Icom, Kenwood, and Tentec fixes. 
+* Build system fixes 
 
-http://lz1bb.bfra.org/wsjt/wsjt-5.9.6.r309-1.src.rpm
+The Hamlib source archive may be downloaded from:
 
-73, Harry LZ1BB
+http://prdownloads.sourceforge.net/hamlib/hamlib-1.2.6.tar.gz
+
+The latest daily CVS snapshots are available from:
+
+http://www.hamlib.org/bleeding-edge/
+
+Please report any bugs/submit any patches to:
+
+hamlib-developer@lists.sourceforge.net
+
+Have fun!
+
+73, de Nate & The Hamlib Group
+
+-- 
+ Wireless | Amateur Radio Station N0NB          |  Successfully Microsoft
+  Amateur radio exams; ham radio; Linux info @  | free since January 1998.
+             http://www.qsl.net/n0nb/           |  "Debian, the choice of
+             My Kawasaki KZ-650 SR @            |     a GNU generation!"
+        http://www.networksplus.net/n0nb/       |   http://www.debian.org
 
