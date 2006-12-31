@@ -1,65 +1,21 @@
-From: Cathryn Mataga <cathrynm@junglevision.com>
-Subject: Re: Writing raw ax25 packets -- "no buffer space available"
-Date: Sat, 30 Dec 2006 20:27:22 -0800
-Message-ID: <45973C2A.3010805@junglevision.com>
-References: <20060418102150.GA662@linux-mips.org> <45966961.2030909@junglevision.com>
+From: richard <richard.bown@blueyonder.co.uk>
+Subject: Wanted  audio file
+Date: Sun, 31 Dec 2006 12:17:46 +0000
+Message-ID: <4597AA6A.6090204@blueyonder.co.uk>
 Mime-Version: 1.0
 Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <45966961.2030909@junglevision.com>
 Sender: linux-hams-owner@vger.kernel.org
 List-Id: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"; format="flowed"
-To: 
-Cc: linux-hams@vger.kernel.org
+To: linux-hams@vger.kernel.org
 
-Cathryn Mataga wrote:
+HI & HNY
 
-Okay, sorry, never mind.  I restarted the Linux machine and it works 
-now.  I think
-my Kam ports got confused due to some other unrelated issue. 
+Has anyone got an audio file .wav or .mp3 of a few minutes of auroral
+cw, preferable pure tone A, that they would be willing to
+send me please.
+TIA & HNY
+Richard g8jvm
 
-Right now it looks like sending RAW ax25 is working on all my RF ports.
-
-> I'm working on a little program that needs to out put raw ax25. And it's
-> working somewhat, though not completely. Basically the code uses
-> socket(PF_PACKET, SOCK_RAW, IPPROTO_AX25);. It builds
-> a kiss header of one byte, and then fills in a packet. I bind( and then
-> send(. That's basically the whole thing.
->
-> (For the curious I thought it'd be fun to print out messages on
-> my TS2000 using the CLuster feature, but this needs 'connected
-> packets' on DX Cluster format, and I seem to need to go raw for this.
-> I do have this working and I have it setup now so I type a comand line
-> and a message pops up on the LCD on the TS2000.)
->
-> Here's the deal. I have a sound modem setup and also a PK232 in
-> KISS which I can test hooked to the system. These both work fine.
->
-> But, I also have a 'KPC-9612' with 3 ports plugged in , and when I send
-> raw packets to this, I get a "No buffer space available" error. This is
-> on the first and only send(
->
-> I'm using /sbin/mkiss to plug create the three ports from one serial
-> port, and I was thinking it's somehow related to this. Though I'm
-> not really sure. I guess SOCK_RAW would just send data to
-> mkiss just like the other ports. It seems like it wouldn't be a problem.
->
-> In the kernel, I only see one ENOBUFS in ax25 and that's in AF_AX25
-> after a kmalloc, but this doesn't make any sense. It must be coming from
-> somewhere else I think. The issue is not a 'flakey' at all here, and it
-> just doesn't work on mkiss. It shows an error consistently. The send(
-> call gets ENOBUFS returned to it, but 'listen' never sees anything 
-> going out
-> at all.
->
-> Anyway, I'm posing this in case someone else has information on
-> how to write raw AX25. I didn't really find what looked like a recent
-> simple example of this in any of the AX5 libraries or tools.
->
-> Thank you.
-> -
-> To unsubscribe from this list: send the line "unsubscribe linux-hams" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at  http://vger.kernel.org/majordomo-info.html
 
