@@ -1,26 +1,29 @@
-From: "Chuck Hast" <wchast@gmail.com>
-Subject: NR Worst_qual
-Date: Sat, 13 Jan 2007 23:47:18 -0500
-Message-ID: <620c90570701132047t70785f54o9f5eb1a045e73d14@mail.gmail.com>
+From: richard <richard.bown@blueyonder.co.uk>
+Subject: antenna design software
+Date: Thu, 18 Jan 2007 14:05:26 +0000
+Message-ID: <45AF7EA6.6080306@blueyonder.co.uk>
 Mime-Version: 1.0
 Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
-Content-Disposition: inline
 Sender: linux-hams-owner@vger.kernel.org
 List-Id: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"; format="flowed"
-To: linux-hams <linux-hams@vger.kernel.org>
+To: linux-hams@vger.kernel.org, microwave@echo.valinet.com
 
-I am trying to figure out where the worst quality info is stored in the /proc
-area? I can see all of the rest of them but not that one or at least it is not
-where it should be. For some reason the worst_qual data is not being
-read from the nrbroadcast file figured I would try to stuff it in there my
-self and see if that fixed things.
+Hi All
 
+Just had the high winds shear the 2" diameter thick walled ali stub mast 
+on the tower ;(
+Which means I've lost a few antennas 23 cms half the 2mtr and 70 cms arrays.
+I'm looking for some antenna design software to optimise a 46 element 23 
+cms yagi I purchased about 8 years ago,
+mechanically OK but the driven element was an abortion.
+I'm running Mandriva 2007, (linux), here and being a Ham I'd naturally 
+prefer something free, or at least an evaluaton
+copy.
 
--- 
-Chuck Hast  -- KP4DJT --
-To paraphrase my flight instructor;
-"the only dumb question is the one you DID NOT ask resulting in my going
-out and having to identify your bits and pieces in the midst of torn
-and twisted metal."
+TIA
+73 Richard g8jvm
+Sods law states that when the winds subside there will be a hell of a 
+tropo openings, as I have no antennas up below 9 cms.
+
