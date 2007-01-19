@@ -1,29 +1,21 @@
-From: richard <richard.bown@blueyonder.co.uk>
-Subject: antenna design software
-Date: Thu, 18 Jan 2007 14:05:26 +0000
-Message-ID: <45AF7EA6.6080306@blueyonder.co.uk>
+From: Nuno Sucena Almeida <slug@aeminium.org>
+Subject: Re: antenna design software
+Date: Thu, 18 Jan 2007 19:30:35 -0500
+Message-ID: <200701181930.36090.slug@aeminium.org>
+References: <45AF7EA6.6080306@blueyonder.co.uk>
 Mime-Version: 1.0
 Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
+In-Reply-To: <45AF7EA6.6080306@blueyonder.co.uk>
+Content-Disposition: inline
 Sender: linux-hams-owner@vger.kernel.org
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"; format="flowed"
-To: linux-hams@vger.kernel.org, microwave@echo.valinet.com
+Content-Type: text/plain; charset="us-ascii"
+To: linux-hams@vger.kernel.org
 
-Hi All
 
-Just had the high winds shear the 2" diameter thick walled ali stub mast 
-on the tower ;(
-Which means I've lost a few antennas 23 cms half the 2mtr and 70 cms arrays.
-I'm looking for some antenna design software to optimise a 46 element 23 
-cms yagi I purchased about 8 years ago,
-mechanically OK but the driven element was an abortion.
-I'm running Mandriva 2007, (linux), here and being a Ham I'd naturally 
-prefer something free, or at least an evaluaton
-copy.
+maybe NEC would be overkill ?
 
-TIA
-73 Richard g8jvm
-Sods law states that when the winds subside there will be a hell of a 
-tropo openings, as I have no antennas up below 9 cms.
-
+On Thursday 18 January 2007 09:05, richard wrote:
+> arrays. I'm looking for some antenna design software to optimise a 46
+> element 23 cms yagi I purchased about 8 years ago,
