@@ -1,41 +1,26 @@
-From: EA7UU Jesus <ea7uu@yahoo.es>
-Subject: Re: antenna design software
-Date: Fri, 19 Jan 2007 08:54:24 +0000
-Message-ID: <45B08740.3040905@yahoo.es>
-References: <45AF7EA6.6080306@blueyonder.co.uk>    <200701181930.36090.slug@aeminium.org> <13839.192.42.124.90.1169189797.squirrel@webmail.xs4all.nl>
+From: "Phil" <phillor@telstra.com>
+Subject: Xlog 1.5 compiler error question
+Date: Wed, 31 Jan 2007 16:52:15 +0900
+Message-ID: <000801c745a6$c9de5f70$5d30e80a@MOTORHOME>
 Mime-Version: 1.0
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <13839.192.42.124.90.1169189797.squirrel@webmail.xs4all.nl>
 Sender: linux-hams-owner@vger.kernel.org
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="iso-8859-1"
+Content-Type: text/plain; format="flowed"; charset="us-ascii"; reply-type="original"
 To: linux-hams@vger.kernel.org
 
-    Hello I'm  Jesus EA7UU
+Thank you for reading this.
 
-    I use in windows "MMANA", you could try execute it on linux with
-wine or vmware..  You can obtain it here: http://mmhamsoft.amateur-radi=
-o.ca
+Can anyone offer a cure for this Xlog 1.5 compiler error?
 
---=20
-----------------------------------------
-       EA7UU Jes=FAs Ortiz Fern=E1ndez
+In file included from /usr/include/gtk-2.0/gtk/gtk.h:152,
 
-       http://www.ure.es/ea7uu
-----------------------------------------
-on-line incoming call:
-	Skype	   : ninio_cw
-----------------------------------------
+from main.c:32:
 
+/usr/include/gtk-2.0/gtk/gtkstatusbar.h:68: error: expected 
+specifier-qualifier-list before 'GMemChunk'
 
-	=09
-______________________________________________=20
-LLama Gratis a cualquier PC del Mundo.=20
-Llamadas a fijos y m=F3viles desde 1 c=E9ntimo por minuto.=20
-http://es.voice.yahoo.com=0D
--
-To unsubscribe from this list: send the line "unsubscribe linux-hams" i=
-n
-the body of a message to majordomo@vger.kernel.org
-More majordomo info at  http://vger.kernel.org/majordomo-info.html
+Regards,
+Phil.
+
