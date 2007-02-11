@@ -1,64 +1,97 @@
-From: "bud Thompson" <budt@cfl.rr.com>
-Subject: Re: Trouble connecting to KPC3P-8.3-HM$
-Date: Sat, 10 Feb 2007 16:39:51 -0500
-Message-ID: <0e0301c74d5c$02320130$687ba8c0@COMPAQ>
-References: <20070209220235.GA8814@reid1.localdomain> <20070210164708.GA11043@reid1.localdomain>
+From: =?iso-8859-1?q?G=FCnther_Montag?= <Safaridoktor@compuserve.de>
+Subject: new version: hf 0.8
+Date: Sun, 11 Feb 2007 10:07:28 +0000 (UTC)
+Message-ID: <200702142142.41660.Safaridoktor@compuserve.de>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 Return-path: <linux-hams-owner@vger.kernel.org>
+Content-Disposition: inline
+Date: Wed, 14 Feb 2007 21:42:41 +0100
 Sender: linux-hams-owner@vger.kernel.org
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; format="flowed"; charset="us-ascii"; reply-type="original"
-To: don <don_reid@comcast.net>
-Cc: linux-hams <linux-hams@vger.kernel.org>
+Content-Type: text/plain; charset="iso-8859-1"
+To: linux-hams@vger.kernel.org
 
-Don - On 1200b VHF packet 500ms is quite long for a TXD.  When used with a 
-firmware-based TNC such as a KPC3 such long TXD values are only required by 
-the oldest of old radios with coil/armature relays for change-over from 
-TX/RX on one end or the other of the link.
+Hello friends
 
-If the two radios on the link are more modern with solid state change over 
-(or even more modern fast-switching relays - such as reeds, etc.) then 500ms 
-TXD is wasting a lot of channel time in terms of optimization.
-
-Keeping in mind that I've had zero experience with sound card packet -
-
-If the radios on the link are modern - no T/R relays, etc, - then the need 
-for such a long TXD may be a function of the sound card interface, or the 
-relationship between the sound card packet program and the processor speed - 
-The "buzzzzzzzsqwak" is the "diddle" (alternating 1s and 0s) being sent 
-prior to data being sent so that (1) the TX can come up to full power, and 
-(2) the receiver end can be changed from TX to RX and the link get 
-synchronized.)
-
-At 1200b with modern radios and firmware-based TNCs a TXD > 250ms is seldom 
-required.  TXD of 200-250 is often realized where S/N is good.
-
-73,
-
-bud N0IA
+Version 0.8 of hf is released.
+(the linux multimode program with "historic" fsk modes like opactor 1=20
+amtor and gtor, rtty, mt63).
+More stable I hope.=20
+The cw-elbug is nice.=20
+It uses the pc speaker, because the soundcard reacts too slow.
+Chose a serial in the config menu / general,=20
+=463, then click into the rx window.
 
 
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 
------ Original Message ----- 
-From: "don" <don_reid@comcast.net>
-To: <linux-hams@vger.kernel.org>
-Sent: Saturday, February 10, 2007 11:47
-Subject: Re: Trouble connecting to KPC3P-8.3-HM$
+=46rom Change Log:
+by G=FCnther Montag=20
 
+V.0.8  of 15.02.2007
+I am back again after timeout
+I do it slowly... (because my family & job is Nr. 1)
+I now see: so much cryptic things due to historicy growth...
+I tried to de-cryptify.
+hfkernel:
+hardware detect! Should now find out if '-n' (no mmap, no DMA)
+option is needed, and if RDTSC not working ('-R' option).
+CW:
+The elbug decodes now your own keying.
+PC speaker output. Sounds nice.
+I moved from inb/outb to IOCTL's so it works not only on pentiums.
+Docs:=20
+Simplified.
+man hf and hfterm is now the same.
+Howtos have been shortened. I removed old rubbish.
+start script:=20
+The hf start script starts now only hfterm, and hfterm starts=20
+hfkernel.
+hfkernel has no mode running at start. The modes are controlled by=20
+hfterm only.
+Newer kernels (2.6...) do a different thread handling.
+hfkernel and hfterm have both to be started with the prefix=20
+LD_ASSUME_KERNEL=3D2.2.5
+I worked this into the hf start script.
+Configuration:
+Now /etc/hf.conf is obsolete.
+All configuration is done from within hfterm's config menu.
+The calibration programs reffreq and dcf77rx now write their outoput=20
+into
+/usr/etc/calibrations. They have to be taken by hand into hfterm's=20
+config menu.
+Cleared makefiles and configure.ac.
+Now only one configure.ac in the main dir.
+=46ixes:
+Integrated parts of Diane's patch for free BSD, thanks!
+Many bugfixes, as usual.
+Especially in changing modes, now it seems to give less crashes.=20
+Anyway, do not click too often, do not change modes while=20
+transmitting!
+MT63:=20
+I switched back to Pawel's original soundcard approach=20
+(half duplex only, switches between read and write)=20
+because my glue to Tom's full-duplex code resulted in hangs sometimes.
+At the same time Diane corrected this glue in his patch=20
+so now 2 versions of code (patched 0.7.3 versus 0.8) can be compared.
 
-> The Ctrl. Op. figured it out by listening to my signal.  The default
-> soundmodem.conf has txdelay=150 (ms).  Apparently this is too short at
-> least for local systems.  Increasing it to 500 fixed things nicely.
->
-> He said you should be able to hear a distinct start up part of the
-> transmission "buzzzzzzzsqwak".
->
-> -- 
-> Don
-> -
-> To unsubscribe from this list: send the line "unsubscribe linux-hams" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at  http://vger.kernel.org/majordomo-info.html
-> 
+hardware detect: (MMAP error) is still a 1 problem sometimes
+(because some soundcards do not tell the truth...)
+If fsk modes do not run:
+Enter the option
+'-n'
+into the config menu/General/kerneloptions.
 
+Have a lot of fun !!!
+
+73 de G=FCnther dl4mge=20
+
+--=20
+G=FCnther Montag
+Safaridoktor@compuserve.de
+-
+To unsubscribe from this list: send the line "unsubscribe linux-hams" i=
+n
+the body of a message to majordomo@vger.kernel.org
+More majordomo info at  http://vger.kernel.org/majordomo-info.html
