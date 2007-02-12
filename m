@@ -1,97 +1,36 @@
-From: =?iso-8859-1?q?G=FCnther_Montag?= <Safaridoktor@compuserve.de>
-Subject: new version: hf 0.8
-Date: Sun, 11 Feb 2007 10:07:28 +0000 (UTC)
-Message-ID: <200702142142.41660.Safaridoktor@compuserve.de>
+From: don <don_reid@comcast.net>
+Subject: Re: Trouble connecting to KPC3P-8.3-HM$
+Date: Mon, 12 Feb 2007 11:39:08 -0800
+Message-ID: <20070212193908.GA22876@reid1.localdomain>
+References: <20070209220235.GA8814@reid1.localdomain> <20070210164708.GA11043@reid1.localdomain> <0e0301c74d5c$02320130$687ba8c0@COMPAQ>
 Mime-Version: 1.0
-Content-Transfer-Encoding: QUOTED-PRINTABLE
 Return-path: <linux-hams-owner@vger.kernel.org>
 Content-Disposition: inline
-Date: Wed, 14 Feb 2007 21:42:41 +0100
+In-Reply-To: <0e0301c74d5c$02320130$687ba8c0@COMPAQ>
 Sender: linux-hams-owner@vger.kernel.org
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="iso-8859-1"
-To: linux-hams@vger.kernel.org
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+To: bud Thompson <budt@cfl.rr.com>
+Cc: linux-hams <linux-hams@vger.kernel.org>
 
-Hello friends
+Thanks for the info.
 
-Version 0.8 of hf is released.
-(the linux multimode program with "historic" fsk modes like opactor 1=20
-amtor and gtor, rtty, mt63).
-More stable I hope.=20
-The cw-elbug is nice.=20
-It uses the pc speaker, because the soundcard reacts too slow.
-Chose a serial in the config menu / general,=20
-=463, then click into the rx window.
+On Sat, Feb 10, 2007 at 04:39:51PM -0500, bud Thompson wrote:
+> Don - On 1200b VHF packet 500ms is quite long for a TXD.  When used with a 
+> firmware-based TNC such as a KPC3 such long TXD values are only required by 
+> the oldest of old radios with coil/armature relays for change-over from 
+> TX/RX on one end or the other of the link.
 
+The radios on both ends are quite new.
 
-@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+> At 1200b with modern radios and firmware-based TNCs a TXD > 250ms is seldom 
+> required.  TXD of 200-250 is often realized where S/N is good.
 
-=46rom Change Log:
-by G=FCnther Montag=20
+250 seems to work mostly but a few packets don't get seen.  300 is as
+good as 500 was.
 
-V.0.8  of 15.02.2007
-I am back again after timeout
-I do it slowly... (because my family & job is Nr. 1)
-I now see: so much cryptic things due to historicy growth...
-I tried to de-cryptify.
-hfkernel:
-hardware detect! Should now find out if '-n' (no mmap, no DMA)
-option is needed, and if RDTSC not working ('-R' option).
-CW:
-The elbug decodes now your own keying.
-PC speaker output. Sounds nice.
-I moved from inb/outb to IOCTL's so it works not only on pentiums.
-Docs:=20
-Simplified.
-man hf and hfterm is now the same.
-Howtos have been shortened. I removed old rubbish.
-start script:=20
-The hf start script starts now only hfterm, and hfterm starts=20
-hfkernel.
-hfkernel has no mode running at start. The modes are controlled by=20
-hfterm only.
-Newer kernels (2.6...) do a different thread handling.
-hfkernel and hfterm have both to be started with the prefix=20
-LD_ASSUME_KERNEL=3D2.2.5
-I worked this into the hf start script.
-Configuration:
-Now /etc/hf.conf is obsolete.
-All configuration is done from within hfterm's config menu.
-The calibration programs reffreq and dcf77rx now write their outoput=20
-into
-/usr/etc/calibrations. They have to be taken by hand into hfterm's=20
-config menu.
-Cleared makefiles and configure.ac.
-Now only one configure.ac in the main dir.
-=46ixes:
-Integrated parts of Diane's patch for free BSD, thanks!
-Many bugfixes, as usual.
-Especially in changing modes, now it seems to give less crashes.=20
-Anyway, do not click too often, do not change modes while=20
-transmitting!
-MT63:=20
-I switched back to Pawel's original soundcard approach=20
-(half duplex only, switches between read and write)=20
-because my glue to Tom's full-duplex code resulted in hangs sometimes.
-At the same time Diane corrected this glue in his patch=20
-so now 2 versions of code (patched 0.7.3 versus 0.8) can be compared.
+I'll double check on what equipment is on the other end.
 
-hardware detect: (MMAP error) is still a 1 problem sometimes
-(because some soundcards do not tell the truth...)
-If fsk modes do not run:
-Enter the option
-'-n'
-into the config menu/General/kerneloptions.
-
-Have a lot of fun !!!
-
-73 de G=FCnther dl4mge=20
-
---=20
-G=FCnther Montag
-Safaridoktor@compuserve.de
--
-To unsubscribe from this list: send the line "unsubscribe linux-hams" i=
-n
-the body of a message to majordomo@vger.kernel.org
-More majordomo info at  http://vger.kernel.org/majordomo-info.html
+-- 
+Don
