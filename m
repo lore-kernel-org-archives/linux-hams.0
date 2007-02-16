@@ -1,70 +1,132 @@
-From: Bernard Pidoux <pidoux@ccr.jussieu.fr>
-Subject: Re: multiple kiss ports
-Date: Thu, 15 Feb 2007 11:29:59 +0100
-Message-ID: <45D43627.5040705@ccr.jussieu.fr>
-References: <1171459986.3039.12.camel@localhost.localdomain>
+From: Joe Perches <joe@perches.com>
+Subject: [PATCH] - drivers/net/hamradio remove local random function, use
+	random32()
+Date: Thu, 15 Feb 2007 19:36:18 -0800
+Message-ID: <1171596978.29021.64.camel@localhost>
 Mime-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-Return-path: <bounce-debian-hams=debian-hams=m.gmane.org@lists.debian.org>
-In-Reply-To: <1171459986.3039.12.camel@localhost.localdomain>
-Resent-Message-ID: <65m6d.A.7BB.QnD1FB@murphy>
+Content-Transfer-Encoding: 7bit
+Return-path: <netdev-owner@vger.kernel.org>
+Sender: netdev-owner@vger.kernel.org
 List-Id: <linux-hams.vger.kernel.org>
-List-Post: <mailto:debian-hams@lists.debian.org>
-List-Help: <mailto:debian-hams-request@lists.debian.org?subject=help>
-List-Subscribe: <mailto:debian-hams-request@lists.debian.org?subject=subscribe>
-List-Unsubscribe: <mailto:debian-hams-request@lists.debian.org?subject=unsubscribe>
-Content-Type: text/plain; charset="iso-8859-1"; format="flowed"
-To: vk5hsx@wia.org.au
-Cc: Debian Hams List <debian-hams@lists.debian.org>, linux-hams@vger.kernel.org
+Content-Type: text/plain; charset="us-ascii"
+To: netdev@vger.kernel.org
+Cc: linux-hams@vger.kernel.org, jpr@f6fbb.org, t.sailer@alumni.ethz.ch
 
-Stef Daniels VK5HSX a =E9crit :
-> Greetings,
->
-> 	I am in the process of trying to get a BBS back operational. The
-> following is the setup:
->
-> P4 1.2Ghz Celeron
-> MSI Motherboard
-> 512MB RAM
-> 40GB ATA Drive
-> ttyS0 ->  9600bd -MFJ 1270b (1200bd TNC) axport '2'
-> ttyS1 ->  4800bd - AEA PK232 (4800bd TNC) axport '3'
-> Debian GNU\linux 3.1  (2.4.27 kernel)
-> using: libax25-0.0.11, ax25-apps-0.0.6, aax25-tools-0.0.8, node-0.3.2,
-> fbb7.04j
->
-> The problem is after we run our ax25 script to call up modules, tnc int=
-o
-> kiss and kissattach devices (which all work fine), upon connect using
-> port '2' the tnc "sta" LED comes on and tnc hangs.
->
-> We have tried the following:
->
-> Different- Computers, Cables, TNC's, O\S's, kernel's, hardrive, P\Suppl=
-y
-> and Serial ports (PCI Serial Cards), to NO avail.
->
-> Any ideas, help, comments greatfully and most appreciatedly received!!
->
->
->  =20
-Are you sure that your TNCs are set in KISS mode before using mkiss=20
-driver for AX25 ?
+remove local random function, use random32() instead
 
-You must put them into KISS mode manually while no mkiss driver is=20
-loaded and using a terminal program
-such as MINICOM.
+Signed-off-by: Joe Perches <joe@perches.com>
 
-I used minicom to adjust my KPC9612 dual port TNC serial baud rate and=20
-calibrate the modulation
-level of 1200 and 9600 baud radio ports.
+diff --git a/drivers/net/hamradio/baycom_epp.c b/drivers/net/hamradio/baycom_epp.c
+index 153b6dc..84aa211 100644
+--- a/drivers/net/hamradio/baycom_epp.c
++++ b/drivers/net/hamradio/baycom_epp.c
+@@ -52,6 +52,7 @@
+ #include <linux/hdlcdrv.h>
+ #include <linux/baycom.h>
+ #include <linux/jiffies.h>
++#include <linux/random.h>
+ #include <net/ax25.h> 
+ #include <asm/uaccess.h>
+ 
+@@ -433,16 +434,6 @@ static void encode_hdlc(struct baycom_state *bc)
+ 
+ /* ---------------------------------------------------------------------- */
+ 
+-static unsigned short random_seed;
+-
+-static inline unsigned short random_num(void)
+-{
+-	random_seed = 28629 * random_seed + 157;
+-	return random_seed;
+-}
+-
+-/* ---------------------------------------------------------------------- */
+-
+ static int transmit(struct baycom_state *bc, int cnt, unsigned char stat)
+ {
+ 	struct parport *pp = bc->pdev->port;
+@@ -464,7 +455,7 @@ static int transmit(struct baycom_state *bc, int cnt, unsigned char stat)
+ 			if ((--bc->hdlctx.slotcnt) > 0)
+ 				return 0;
+ 			bc->hdlctx.slotcnt = bc->ch_params.slottime;
+-			if ((random_num() % 256) > bc->ch_params.ppersist)
++			if ((random32() % 256) > bc->ch_params.ppersist)
+ 				return 0;
+ 		}
+ 	}
+diff --git a/drivers/net/hamradio/hdlcdrv.c b/drivers/net/hamradio/hdlcdrv.c
+index 452873e..f5a17ad 100644
+--- a/drivers/net/hamradio/hdlcdrv.c
++++ b/drivers/net/hamradio/hdlcdrv.c
+@@ -56,6 +56,7 @@
+ #include <linux/if_arp.h>
+ #include <linux/skbuff.h>
+ #include <linux/hdlcdrv.h>
++#include <linux/random.h>
+ #include <net/ax25.h> 
+ #include <asm/uaccess.h>
+ 
+@@ -371,16 +372,6 @@ static void start_tx(struct net_device *dev, struct hdlcdrv_state *s)
+ 
+ /* ---------------------------------------------------------------------- */
+ 
+-static unsigned short random_seed;
+-
+-static inline unsigned short random_num(void)
+-{
+-	random_seed = 28629 * random_seed + 157;
+-	return random_seed;
+-}
+-
+-/* ---------------------------------------------------------------------- */
+-
+ void hdlcdrv_arbitrate(struct net_device *dev, struct hdlcdrv_state *s)
+ {
+ 	if (!s || s->magic != HDLCDRV_MAGIC || s->hdlctx.ptt || !s->skb) 
+@@ -396,7 +387,7 @@ void hdlcdrv_arbitrate(struct net_device *dev, struct hdlcdrv_state *s)
+ 	if ((--s->hdlctx.slotcnt) > 0)
+ 		return;
+ 	s->hdlctx.slotcnt = s->ch_params.slottime;
+-	if ((random_num() % 256) > s->ch_params.ppersist)
++	if ((random32() % 256) > s->ch_params.ppersist)
+ 		return;
+ 	start_tx(dev, s);
+ }
+diff --git a/drivers/net/hamradio/yam.c b/drivers/net/hamradio/yam.c
+index 6d74f08..efc0bcd 100644
+--- a/drivers/net/hamradio/yam.c
++++ b/drivers/net/hamradio/yam.c
+@@ -50,6 +50,7 @@
+ #include <linux/slab.h>
+ #include <linux/errno.h>
+ #include <linux/bitops.h>
++#include <linux/random.h>
+ #include <asm/io.h>
+ #include <asm/system.h>
+ #include <linux/interrupt.h>
+@@ -566,14 +567,6 @@ static void yam_start_tx(struct net_device *dev, struct yam_port *yp)
+ 	ptt_on(dev);
+ }
+ 
+-static unsigned short random_seed;
+-
+-static inline unsigned short random_num(void)
+-{
+-	random_seed = 28629 * random_seed + 157;
+-	return random_seed;
+-}
+-
+ static void yam_arbitrate(struct net_device *dev)
+ {
+ 	struct yam_port *yp = netdev_priv(dev);
+@@ -600,7 +593,7 @@ static void yam_arbitrate(struct net_device *dev)
+ 	yp->slotcnt = yp->slot / 10;
+ 
+ 	/* is random > persist ? */
+-	if ((random_num() % 256) > yp->pers)
++	if ((random32() % 256) > yp->pers)
+ 		return;
+ 
+ 	yam_start_tx(dev, yp);
 
-
-73 de Bernard, f6bvp
-
-
---=20
-To UNSUBSCRIBE, email to debian-hams-REQUEST@lists.debian.org
-with a subject of "unsubscribe". Trouble? Contact listmaster@lists.debian=
-.org
 
