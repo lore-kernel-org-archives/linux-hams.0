@@ -1,105 +1,102 @@
-From: "m a a kastrinou-theodoro@durham ac uk" 
-	<m.a.a.kastrinou-theodoro@durham.ac.uk>
-Subject: anthropology of linux: help needed
-Date: Thu, 22 Feb 2007 12:14:55 +0000
-Message-ID: <45DD893F.5060106@durham.ac.uk>
+From: brownh@hartford-hwp.com (Haines Brown)
+Subject: Re: anthropology of linux: help needed
+Date: Sat, 24 Feb 2007 05:00:46 -0500 (EST)
+Message-ID: <20070224100046.C6851E21@teufel.hartford-hwp.com>
+References: <45DD893F.5060106@durham.ac.uk>
+Reply-To: "H.Haines Brown" <brownh@hartford-hwp.com>
 Mime-Version: 1.0
 Content-Transfer-Encoding: QUOTED-PRINTABLE
 Return-path: <linux-gcc-owner@vger.kernel.org>
+In-reply-to: <45DD893F.5060106@durham.ac.uk>
+	(m.a.a.kastrinou-theodoro@durham.ac.uk)
 Sender: linux-gcc-owner@vger.kernel.org
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="utf-8"; format="flowed"
-To: netdev@vger.kernel.org, linux-hams@vger.kernel.org, linux-doc@vger.kernel.org, linux-net@vger.kernel.org, linux-newbie@vger.kernel.org, linux-gcc@vger.kernel.org, linux-word@vger.kernel.org, linux-lugnuts@vger.kernel.org, linux-new-lists@vger.kernel.org
+Content-Type: TEXT/PLAIN; charset="utf-8"
+To: m.a.a.kastrinou-theodoro@durham.ac.uk
+Cc: netdev@vger.kernel.org, linux-hams@vger.kernel.org, linux-doc@vger.kernel.org, linux-net@vger.kernel.org, linux-newbie@vger.kernel.org, linux-gcc@vger.kernel.org, linux-word@vger.kernel.org, linux-lugnuts@vger.kernel.org, linux-new-lists@vger.kernel.org
 
-Hello,
+>=20
+> 1. When did you start using GNU/Linux OS?
 
-This is a rather strange e-mail for these mailing
-lists, I know. I am a third year Social Anthropology
-student in the University of Durham doing my
-dissertation (thesis) on the Anthropology of
-GNU/Linux. I would really appreciate if you could help
-me out and offer some of your time to fill in the
-questionnaire below- it will only take 2 minutes.
-Replies will be confidential and everything in the
-dissertation will be anonymous. Results will be
-e-mailed to participants upon request.
+Not sure. Perhaps 2000.=20
 
-Thanks in advance, and... enjoy!
-Maria Kastrinou
+> 2. What is your level of involvement?
+> newbie/ user/ developer (delete as appropriate)
 
+user
 
+> 3. Why are you using Linux?
 
-QUESTIONS:
+Stability, keyboard-orientation (don't run a  desktop), more fun.=20
 
-1. When did you start using GNU/Linux OS?
+> 4. Is Linux fun? How?
 
+Yes. Modularization, file configuration give sense of understanding
+and control.
 
-2. What is your level of involvement?
-newbie/ user/ developer (delete as appropriate)
+> 5. Which distribution of Linux do you use?
 
+Debian Sarge
+=20
+> 6. What in your opinion constitutes a =C2=A1good hack=C2=A2?
 
-3. Why are you using Linux?
+Not sure how to answer this.
 
+> 7. Would you describe yourself as a =C2=A1hacker=C2=A2?
 
-4. Is Linux fun? How?
+No.
 
+> 8. Which super-hero (apart from Tux) do you think
+> would represent Linux best?
 
-5. Which distribution of Linux do you use?
+no opinion
 
+> 9. Describe Microsoft OS in one word.
 
-6. What in your opinion constitutes a =C2=A1good hack=C2=A2?
+Clunky
 
+> 10. How do you view the recent patent agreement
+> between Microsoft and Novell?
 
-7. Would you describe yourself as a =C2=A1hacker=C2=A2?
+Well, no strong opionion.
 
+> 11. GNU GPL, copyleft and freedom of speech: good, bad
+> or irrelevant?
 
-8. Which super-hero (apart from Tux) do you think
-would represent Linux best?
+Good. Most of my work depends on fair use doctrine.
 
+> 12. How many Linux mailing lists are you a member of?
 
-9. Describe Microsoft OS in one word.
+Not sure. Perhaps four.
 
+> 13. Would you reply to a question sent through Linux
+> mailing lists and why?
 
-10. How do you view the recent patent agreement
-between Microsoft and Novell?
+Yes. Desire to be helpful.
 
+> 14. Microsoft vs. Linux: cathedral vs. bazaar or
+> something altogether different?
 
-11. GNU GPL, copyleft and freedom of speech: good, bad
-or irrelevant?
+Good question. I felt "cathedral vs. bazaar" was a bit rhetorical and
+inflated. I see MS as example of capitalism, while Linux is more petit
+bourgeois. Their difference is not my concern.
 
+> 15. Open Source or Free Software?
 
-12. How many Linux mailing lists are you a member of?
+Not either or. Not being a developer, I can only support open source
+at a distance as a good idea. Free software does affect me because I'm
+low income. The two seem interdependent.
 
+> Personal Information:
+> a) Age: 71
+> b) Gender: M
+> c) Occupation: retire teacher
+> d) Your current geographic location: Connecticut, US
+>=20
+> Any other comments?
+>=20
+>=20
+> Would you like me to e-mail you the results? YES/ NO
 
-13. Would you reply to a question sent through Linux
-mailing lists and why?
-
-
-14. Microsoft vs. Linux: cathedral vs. bazaar or
-something altogether different?
-
-
-15. Open Source or Free Software?
-
-
-Personal Information:
-a) Age:
-b) Gender:
-c) Occupation:
-d) Your current geographic location:
-
-Any other comments?
-
-
-Would you like me to e-mail you the results? YES/ NO
-
-
-Hope you enjoyed it!
-
-THANK YOU!
-
-Maria
-
-
-
-
+yes
+>=20
