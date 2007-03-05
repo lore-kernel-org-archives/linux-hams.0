@@ -1,46 +1,29 @@
-From: Stef Daniels VK5HSX <vk5hsx@wia.org.au>
-Subject: Problems ax25 with 1270b (TF27 chip)
-Date: Mon, 05 Mar 2007 15:59:11 +1030
-Message-ID: <1173072551.3328.52.camel@localhost.localdomain>
-Reply-To: vk5hsx@wia.org.au
+From: Folkert van Heusden <folkert@vanheusden.com>
+Subject: tips for setting volume of radio for baycom modem?
+Date: Mon, 5 Mar 2007 09:37:33 +0100
+Message-ID: <20070305083729.GF10782@vanheusden.com>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
+Content-Disposition: inline
 Sender: linux-hams-owner@vger.kernel.org
 List-Id: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
-To: Linux-Hams Mailing List <linux-hams@vger.kernel.org>
+Content-Transfer-Encoding: 7bit
+To: linux-hams@vger.kernel.org
+Cc: henk.termeer@gmail.com, udovdh@xs4all.nl
 
-Greetings,
+Hi,
 
-	A fellow sysop and myself have been working trying to get MFJ 1270b TNC
-(using TF27 Hostmode chip) with Debian GNU\Linux (Stable).  The problem
-is the fact that when we try to use 'call' command on that port the
-TNC's 'STA' led comes on and hangs.  We have tried it with different O\S
-(ie. Slackware, Debian), different kernels (2.4.33 & 2.6.14, 2.6.19)
-without any luck. The TNC does work, as we have tested it on another
-machine with packet.  The only change from the last system that worked
-was now we are using modems as apposed to DRSI cards.
+Does anyone have tips for setting the volume of the radio (27mc) for the
+baycom-modem? It seems I'm not receiving anything which MIGHT be caused
+by an incorrect volume of the radio.
 
-	Has anyone else come across this problem?
 
-We are wondering if it has something to do with crc-mkiss or ax25. We
-have compiled the ax25 libs, tools & apps from source and installed
-binaries.
+Folkert van Heusden
 
-Any ideas, comments would be welcome..  ( I haven't given any scripts,
-as the scripts were fine from last installation. However, it was more of
-a question if someone else has come across this problem.
-
-Thanks in advance..
 -- 
-Regards,
-
-Stef Daniels VK5HSX             (OpenPGP:0x82BE2EB0)
-Amateur Radio Station
-Adelaide, South Australia
-E-mail: vk5hsx@wia.org.au
-Member Wireless Inst. of Aust.  (www.wia.org.au)
-Proud Debian GNU\Linux User.    (www.au.debian.org)
-
-
+MultiTail is een flexibele tool voor het volgen van logfiles en
+uitvoer van commando's. Filteren, van kleur voorzien, mergen,
+'diff-view', etc. http://www.vanheusden.com/multitail/
+----------------------------------------------------------------------
+Phone: +31-6-41278122, PGP-key: 1F28D8AE, www.vanheusden.com
