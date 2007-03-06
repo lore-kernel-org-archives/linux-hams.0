@@ -1,48 +1,58 @@
-From: John Ronan <jronan@tssg.org>
-Subject: Questions.
-Date: Tue, 6 Mar 2007 11:36:55 +0000
-Message-ID: <B01D5789-9A34-4587-812D-CF0BE49E9697@tssg.org>
-Mime-Version: 1.0 (Apple Message framework v752.3)
-Content-Transfer-Encoding: 7bit
+From: Hamish Moffatt <hamish@cloud.net.au>
+Subject: Re: OS info please
+Date: Wed, 7 Mar 2007 07:53:40 +1100
+Message-ID: <20070306205340.GA32042@cloud.net.au>
+References: <45ED64DC.7070209@blueyonder.co.uk>
+Mime-Version: 1.0
 Return-path: <linux-hams-owner@vger.kernel.org>
+Content-Disposition: inline
+In-Reply-To: <45ED64DC.7070209@blueyonder.co.uk>
 Sender: linux-hams-owner@vger.kernel.org
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"; delsp="yes"; format="flowed"
-To: Linux-Hams <linux-hams@vger.kernel.org>
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+To: richard <richard.bown@blueyonder.co.uk>
+Cc: linux-hams@vger.kernel.org
 
-Hi Folks,
+On Tue, Mar 06, 2007 at 12:55:56PM +0000, richard wrote:
+> Hi Hamish, I sent this to linux-hams, but it hasn't appeared.
+> As I expect it would be you who could answer this I'm sending direct to 
+> you as well.
+> 
+> Hi all,
+> I'm pretty sure I've hit a problem with the way Mandriva dynamically
+> handle devices and also a
+> lib that isn't packaged libasound2-devel.
+> I've looked for it on the ALSA site, but dont know which of the packages
+> includes it.
+> The alternative is to move OS s as libasound2-devel. is available as .deb
 
-I'm about to build a new node here, and I've actually now got time to  
-do it properly (rather than having to rush it).  I want to enable IP  
-on all interfaces/APRS on some normal Packet forwarding on another.
+I'm sure that it is available, but probably the name is different.
 
-I'm waiting to see if our National TCP/IP Co-Ordinator is still co- 
-ordinating ;), but I can still go on and do the design on paper.
+I think it may be "libalsa2-devel"? I found mention of such a thing at
+http://www.cyberknights.com.au/mdv2007p0/Development%7CC.phtml
 
-2m Port will be 144.800 primarily APRS and will have TCP/IP
-4m Port will be for forwarding to local FBB BBS (and TCP/IP) & APRS
-UHF port will be 9K6, my plan for this port is to act as a TCP/IP  
-port, but it will also allow ax25 connects & APRS
+> If I did which of the debian versions/clones can be configured to allow
+> 
+> running of gnome 2.16, K3b some of the KDE photo apps,
+> as well as having wsjt , I think that has been packaged as a .deb
+> and as I like sitting in the shack watching the occasional film
+> LinDVD.
+> recent kernel
+> And hasn't got that horrible bug of alsa resetting on Delta 44/66 cards
+> to a clock speed of 8 KHz
+> so all pcm sources playback at nearly half speed
+> 
+> don't ask for much do I ?
 
-We've never really 'done' TCP/IP around here, so no real thought ever  
-went into the network IP address allocation scheme (Anyone tried IPv6  
-over AX25 btw).
+Debian etch (to be released very soon, but you can run it now) has GNOME
+2.14, wsjt, recent KDE (I don't know the exact version). No idea about
+the ALSA bugs.
 
-If this was a wired network, I'd look for a /24 for each interface,  
-but I don't know if thats the 'done thing', also the AX25 HOWTO seems  
-out of date, I've emailed the author to as if its possible to suggest  
-updates to the document
+I couldn't even find a way to get a list of included packages on
+mandriva.com. Frankly I think you would be better off with a
+distribution that has a bit of community behind it.
 
-Any thoughts appreciated.
-
-Regards
-de John
-EI7IG
-
-
---
-John Ronan <jronan@tssg.org>, +353-51-302938
-Telecommunications Software &  Systems Group,  http://www.tssg.org
-
-
-
+Hamish
+-- 
+Hamish Moffatt VK3SB <hamish@debian.org> <hamish@cloud.net.au>
