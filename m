@@ -1,39 +1,40 @@
-From: richard <richard.bown@blueyonder.co.uk>
-Subject: OS info please
-Date: Tue, 06 Mar 2007 10:24:51 +0000
-Message-ID: <45ED4173.70709@blueyonder.co.uk>
-Mime-Version: 1.0
+From: John Ronan <jronan@tssg.org>
+Subject: Ping Success.
+Date: Thu, 8 Mar 2007 09:20:22 +0000
+Message-ID: <D5578225-E29B-412F-BB8F-C0A448D0ABEA@tssg.org>
+Mime-Version: 1.0 (Apple Message framework v752.3)
 Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
 Sender: linux-hams-owner@vger.kernel.org
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"; format="flowed"
-To: linux-hams@vger.kernel.org
+Content-Type: text/plain; charset="us-ascii"; delsp="yes"; format="flowed"
+To: Linux-Hams <linux-hams@vger.kernel.org>
 
-Hi all,
-I'm pretty sure I've hit a problem with the way Mandriva dynamically 
-handle devices and also a
-lib that isn't packaged libasound2-devel.
-I've looked for it on the ALSA site, but dont know which of the packages 
-includes it.
-The alternative is to move OS s as libasound2-devel. is available as .deb
+Morning,
 
-If I did which of the debian versions/clones can be configured to allow
+After realising that I had the local IP gateway configured  
+incorrectly all along I finally managed to get a ping between the two  
+machines.
 
-running of gnome 2.16, K3b some of the KDE photo apps,
-as well as having wsjt , I think that has been packaged as a .deb
-and as I like sitting in the shack watching the occasional film
-LinDVD.
-recent kernel
-And hasn't got that horrible bug of alsa resetting on Delta 44/66 cards 
-to a clock speed of 8 KHz
-so all pcm sources playback at nearly half speed
+Assuming that we take care to optimise txdelay and other channel  
+parameters, are there any IP parameters can can be optimised for data  
+throughput?
 
-don't ask for much do I ?
+I found various posts showing an irtt of between 1500 and 3000 which  
+makes perfect sense.
 
-TIA
+The settings here
+http://www.febo.com/hamdocs/intronos.html
+seem reasonable to me and I was wondering if anyone has any real  
+world experience to validate or refute those settings?
 
-Richard g8jvm
+Regards
+de John
+EI7IG
+
+--
+John Ronan <jronan@tssg.org>, +353-51-302938
+Telecommunications Software &  Systems Group,  http://www.tssg.org
 
 
 
