@@ -1,31 +1,36 @@
-From: Richard Bown <richard.bown@blueyonder.co.uk>
-Subject: SDR software
-Date: Sat, 10 Mar 2007 18:44:07 +0000
-Message-ID: <45F2FC77.6030307@blueyonder.co.uk>
-Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
+From: ralf@linux-mips.org
+Subject: [PATCH 1/3] Remove ourselves from waitqueue when receiving a signal
+Date: Sun, 11 Mar 2007 22:53:20 +0000
+Message-ID: <20070311225739.679006723@denk.linux-mips.net>
+References: <20070311225319.673076841@denk.linux-mips.net>
 Return-path: <linux-hams-owner@vger.kernel.org>
+Content-Disposition: inline; filename=rose-remove-from-wait-queue.patch
 Sender: linux-hams-owner@vger.kernel.org
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"; format="flowed"
-To: linux-hams@vger.kernel.org
+MIME-Version: 1.0
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+To: "David S. Miller" <davem@davemloft.net>
+Cc: netdev@vger.kernel.org, linux-hams@vger.kernel.org
 
-Greetings
-I've managed to get the dttsp variants to run on Mandriva 2007, It was 
-originally written for debian and it clones.
-asdr-core has two variants one runs and uses jackd to route to the alsa 
-sound card driver, the other uses
-portaudio. This does not need jackd to connect to the sound card driver, 
-but requires the latest version of portaudio,
-and the v19.3 libs from cooker.
-This should run without problems on Suse.
-The sdr-core is very nice, written by Robert McGwier,  its the first 
-sdr-core that  I used that allows you to see something on a waterfall
- display you cant hear. The are several GUIs , sdr-shell, gsdr is a GTK 
-interfacce, there is also a java GUI..
-If anyone wants the details of use on Mandriva, e-mail me at  
-richard.bown@blueyonder.co.uk
-73 richard g8jvm
+Signed-off-by: Ralf Baechle <ralf@linux-mips.org>
 
+ net/rose/af_rose.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
+Index: linux-net/net/rose/af_rose.c
+===================================================================
+--- linux-net.orig/net/rose/af_rose.c
++++ linux-net/net/rose/af_rose.c
+@@ -877,6 +877,8 @@ static int rose_accept(struct socket *so
+ 			lock_sock(sk);
+ 			continue;
+ 		}
++		current->state = TASK_RUNNING;
++		remove_wait_queue(sk->sk_sleep, &wait);
+ 		return -ERESTARTSYS;
+ 	}
+ 	current->state = TASK_RUNNING;
+
+-- 
 
