@@ -1,49 +1,34 @@
-From: Matti Aarnio <matti.aarnio@zmailer.org>
-Subject: Re: APRS - protocol analysis of
-Date: Wed, 14 Mar 2007 00:03:08 +0200
-Message-ID: <20070313220308.GH3883@mea-ext.zmailer.org>
-References: <45F703F8.1070802@rns-stearn.demon.co.uk>
+From: Richard Stearn <richard@rns-stearn.demon.co.uk>
+Subject: Re: AX25 in libpcap & wireshark (was ethereal)
+Date: Tue, 13 Mar 2007 22:05:56 +0000
+Message-ID: <45F72044.9000207@rns-stearn.demon.co.uk>
+References: <45F6FE23.8040306@rns-stearn.demon.co.uk> <620c90570703131407m6372026fh605a78dcc2ae162c@mail.gmail.com>
 Mime-Version: 1.0
+Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
-Content-Disposition: inline
-In-Reply-To: <45F703F8.1070802@rns-stearn.demon.co.uk>
+In-Reply-To: <620c90570703131407m6372026fh605a78dcc2ae162c@mail.gmail.com>
 Sender: linux-hams-owner@vger.kernel.org
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-To: Richard Stearn <richard@rns-stearn.demon.co.uk>
-Cc: linux-hams@vger.kernel.org
+Content-Type: text/plain; charset="us-ascii"; format="flowed"
+To: linux-hams@vger.kernel.org
 
-On Tue, Mar 13, 2007 at 08:05:12PM +0000, Richard Stearn wrote:
-> Greetings all
-> 
-> I am in the process of creating a wireshark dissector for APRS.  My
-> primary information source to date has been the APRS 1.01 spec,
-> supplemented by the 1.1 & 1.2 errata.
-> 
-> I note when analysing packet captures that many of the position,
-> object & item packets do not comform to the specification.  Is this
-> me misreading the specification or what?
+Chuck Hast wrote:
 
-  Sanctifying APRS by calling it "protocol" is a bit much, but
-  there are published specifications, and then there are experience
-  based implementations that work more often...
+> There are those of us who use ROSE/FPAC, did you just forget to
+> list it or did you leave it out? Listen decodes it, so it should not be
+> a big deal to add it?
 
-  The APRS is a collection of ad-hoc message encodings without
-  any sort of coherent protocol-id at wrapping AX.25 header.
-  Using "this is UI frame" tagging at AX.25 level does not embed
-  any sort of data about the protocol inside it.  Even TCP/IP
-  in AX.25 UI frame has a sort of protocol ID, but APRS does not.
-  Nobody has bothered to specify one at day one, and now it is way
-  too late..
+Chuck
 
-  There are couple excellent perl engines to decode APRS positions
-  including MICe compressed variants.
+Neither and both :-)
 
+Trying to figure if ROSE is the same as (or derivitive of)
+	"X.880 OSI Remote Operations Service"
 
-> Thoughts please.
-> -- 
-> Regards
-> 	Richard
+I am also wary of using listen code due to licensing issues.
+IIRC most of listen is Phil Karns code and not released under
+GPL (don't quote me on that, it is a year since I looked last).
 
-73 de Matti, OH2MQK
+-- 
+Regards
+	Richard
