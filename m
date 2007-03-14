@@ -1,34 +1,50 @@
-From: Richard Stearn <richard@rns-stearn.demon.co.uk>
-Subject: Re: AX25 in libpcap & wireshark (was ethereal)
-Date: Tue, 13 Mar 2007 22:05:56 +0000
-Message-ID: <45F72044.9000207@rns-stearn.demon.co.uk>
-References: <45F6FE23.8040306@rns-stearn.demon.co.uk> <620c90570703131407m6372026fh605a78dcc2ae162c@mail.gmail.com>
+From: Brett Mueller <wa7v@wa7v.com>
+Subject: Re: Problems using MKISS
+Date: Wed, 14 Mar 2007 13:09:17 -0700
+Message-ID: <45F8566D.10206@wa7v.com>
+References: <dd22fa9c0703111705g306f77f7i1140c23c0793a3a9@mail.gmail.com>
 Mime-Version: 1.0
 Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <620c90570703131407m6372026fh605a78dcc2ae162c@mail.gmail.com>
+In-Reply-To: <dd22fa9c0703111705g306f77f7i1140c23c0793a3a9@mail.gmail.com>
 Sender: linux-hams-owner@vger.kernel.org
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"; format="flowed"
+Content-Type: text/plain; charset="us-ascii"
 To: linux-hams@vger.kernel.org
 
-Chuck Hast wrote:
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-> There are those of us who use ROSE/FPAC, did you just forget to
-> list it or did you leave it out? Listen decodes it, so it should not be
-> a big deal to add it?
+Stephen Brown Jr wrote the following on 03/11/2007 17:05:
+> I am trying to share a KISS tnc on a serial port for APRS and MKISS
+> seems to be the way to do it, but I can't get it work for whatever
+> reason. I have two machines, Im using AXIP to carry traffic back and
+> forth between them. Here is my setup:
+> 
+> Debian linux "Sarge" 3.1 using stock 2.4 kernel (this the box the TNC
+> is located on)
+> KISS mode TNC on /dev/ttyS4, AX25 and MKISS modules loaded and working
+> Ran mkiss -s 9600 /dev/ttyS4 /dev/ptyp0, then ran kissattach
+> /dev/ttyp0 aprs 192.168.1.6, port successfully binds to ax0
 
-Chuck
+Is your TNC a single or dual port unit?  Maybe it doesn't matter, but it
+looks like your mkiss command is lacking a second pseudo-tty specification.
+If your TNC is single port, perhaps using "rxecho" would work better for your
+situation than mkiss?  I have several apps sharing a TNC on my BBS; only one
+of them is actually attached to the TNC, but the others talk AX.25 "directly"
+through the TNC via rxecho on the appropriate shared interfaces.
 
-Neither and both :-)
+Hope this helps somehow...
 
-Trying to figure if ROSE is the same as (or derivitive of)
-	"X.880 OSI Remote Operations Service"
+73,
 
-I am also wary of using listen code due to licensing issues.
-IIRC most of listen is Phil Karns code and not released under
-GPL (don't quote me on that, it is a year since I looked last).
+Brett, WA7V
 
--- 
-Regards
-	Richard
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.6 (GNU/Linux)
+
+iD8DBQFF+FZt+/Ps1x4JxWYRAlsaAKCqUAcQK1wV1+viSNeulgv5yr6WTgCeKVBd
+PYa51okbm3dcWlSR3VDTEfk=
+=Ld5g
+-----END PGP SIGNATURE-----
