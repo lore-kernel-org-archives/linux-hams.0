@@ -1,45 +1,40 @@
-From: Folkert van Heusden <folkert@vanheusden.com>
+From: Richard Stearn <richard@rns-stearn.demon.co.uk>
 Subject: Re: Document request - ROSE protocol specification
-Date: Wed, 14 Mar 2007 23:36:36 +0100
-Message-ID: <20070314223636.GK31960@vanheusden.com>
-References: <45F87682.8010206@rns-stearn.demon.co.uk>
+Date: Wed, 14 Mar 2007 23:27:21 +0000
+Message-ID: <45F884D9.2050500@rns-stearn.demon.co.uk>
+References: <45F87682.8010206@rns-stearn.demon.co.uk> <20070314223636.GK31960@vanheusden.com>
 Mime-Version: 1.0
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
-Content-Disposition: inline
-In-Reply-To: <45F87682.8010206@rns-stearn.demon.co.uk>
+In-Reply-To: <20070314223636.GK31960@vanheusden.com>
 Sender: linux-hams-owner@vger.kernel.org
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="iso-8859-1"
-To: Richard Stearn <richard@rns-stearn.demon.co.uk>
-Cc: linux-hams@vger.kernel.org
+Content-Type: text/plain; charset="us-ascii"; format="flowed"
+To: linux-hams@vger.kernel.org
 
-Hi,
+Folkert van Heusden wrote:
 
-> Greeting all
-> I am attempting to add ROSE to wireshark (ethereal).  My preference i=
-s
-> to code the protocol analyser from the specification document rather
-> than reverse engineer an existing driver stack.
-> The RATS web site www.rats.org now goes to a holding site.  Does anyo=
-ne
-> have either an electronic copy of the ROSE spec or a URL to a current
-> copy?
+> Would you please also consider integrating all this work into tcpdump?
+> Because as far as I know wireshark is for x11.
 
-Would you please also consider integrating all this work into tcpdump?
-Because as far as I know wireshark is for x11.
+You can build and run tshark which is the terminal version of wireshark.
 
+I have a patch for tcpdump that contains the changes to support:
+	AX.25
+	AX.25 ARP
+	Netrom
+	Flexnet (such as it is)
+	ROSE (such as it is)
 
-=46olkert van Heusden
+I will release that at the same time as the wireshark one.  The full set of 
+patches is:
+	libpcap - for protocol 3 (AX.25) capture
+	tcpdump
+	wireshark
 
-MultiTail er et flexible tool for =E5 kontrolere Logfiles og commandoer=
-=2E
-Med filtrer, farger, sammenf=F8ringer, forskeliger ansikter etc.
-http://www.vanheusden.com/multitail/
-----------------------------------------------------------------------
-Phone: +31-6-41278122, PGP-key: 1F28D8AE, www.vanheusden.com
--
-To unsubscribe from this list: send the line "unsubscribe linux-hams" i=
-n
-the body of a message to majordomo@vger.kernel.org
-More majordomo info at  http://vger.kernel.org/majordomo-info.html
+I originally started by adding to tcpdump as it is a simpler system and I could 
+then use the experience gained when porting to wireshark.
+
+-- 
+Regards
+	Richard
