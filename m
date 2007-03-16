@@ -1,31 +1,39 @@
 From: Richard Stearn <richard@rns-stearn.demon.co.uk>
 Subject: Re: Document request - ROSE protocol specification
-Date: Fri, 16 Mar 2007 20:42:24 +0000
-Message-ID: <45FB0130.6080206@rns-stearn.demon.co.uk>
-References: <45F87682.8010206@rns-stearn.demon.co.uk>	 <620c90570703141711v444bd67dqd9cf8e86a6fc1b54@mail.gmail.com>	 <45F92C62.2030707@ccr.jussieu.fr> <620c90570703150642q76cfb326scdca89934a9593a1@mail.gmail.com>
+Date: Fri, 16 Mar 2007 20:37:21 +0000
+Message-ID: <45FB0001.8080102@rns-stearn.demon.co.uk>
+References: <45F87682.8010206@rns-stearn.demon.co.uk> <620c90570703141711v444bd67dqd9cf8e86a6fc1b54@mail.gmail.com> <45F92C62.2030707@ccr.jussieu.fr>
 Mime-Version: 1.0
 Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <620c90570703150642q76cfb326scdca89934a9593a1@mail.gmail.com>
+In-Reply-To: <45F92C62.2030707@ccr.jussieu.fr>
 Sender: linux-hams-owner@vger.kernel.org
 List-Id: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"; format="flowed"
 To: linux-hams@vger.kernel.org
 
-Chuck Hast wrote:
-> See, I told you that Bernard would have some good stuff... What listen does
-> not show is the GFI, it does show the LCI and in the call request packet 
-> the
-> random number  (NbAlea) which is used to assign the LCI. Nor does it show
-> the cause/diag code data when there is a error or a disconnect.
+Bernard Pidoux wrote:
+
+> ROSE has been described by Tom Moulton W2VY in different ARRL Computer
+> Networking Conference proceedings available on CDs (google ROSE W2VY).
+> Sorry I only have 3rd (1984), 9th (1990) and 13th (1994) books
+>                                                      without ROSE
+> protocole descripion.
 > 
-> So any work you do in this direction will be a big help for us.
+> ROSE adressing follows the X.121 specs and uses 14 digits.
+> 
+> There is a good description here :
+> http://www.rhyshaden.com/x25.htm
+> 
+> Linux kernel source provides diagnostic codes and specs.
+> For example in /linux/include/net/rose.h :
 
-Chuck
+Bernard
 
-There is an X.25 dissector in wireshark, I am looking at either calling or 
-cloning the relevant parts.  The good news from your perspective is that it 
-appears to be a comprehensive dissection.
+Thank you for your reply.  I think I am going have to follow the X.25
+protocol stack upwards and find out what was changed the hard way.  The
+good bit is that there is code in wireshark already (in the X.25 dissector)
+that implements the PLP, so I will start from there.
 
 -- 
 Regards
