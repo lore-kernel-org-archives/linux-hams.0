@@ -1,63 +1,70 @@
-From: "Chuck Hast" <wchast@gmail.com>
-Subject: Re: Document request - ROSE protocol specification
-Date: Sun, 18 Mar 2007 11:07:04 -0400
-Message-ID: <620c90570703180807r587aab45g60268305089e9529@mail.gmail.com>
-References: <45F87682.8010206@rns-stearn.demon.co.uk>
-	 <620c90570703141711v444bd67dqd9cf8e86a6fc1b54@mail.gmail.com>
-	 <45F92C62.2030707@ccr.jussieu.fr>
-	 <620c90570703150642q76cfb326scdca89934a9593a1@mail.gmail.com>
-	 <45FD1873.403@ccr.jussieu.fr>
+From: don <don_reid@comcast.net>
+Subject: Re: soundmodem problem with ./configure
+Date: Sun, 18 Mar 2007 09:03:50 -0700
+Message-ID: <20070318160350.GA19979@reid1.localdomain>
+References: <45FD2F4F.5060302@ccr.jussieu.fr>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
-DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=lMlMNpTwPMqWIF0aoo2YXewas+0nU+Tbbb9DTO9QzD+Z6TzLIjPM3xMitnIullRPH6IUe/oYpqqrQVwVXsW5C33jWfINukMbEFCxuRWjWUclxFt4s7fU0WB+q564TJYZNaaZ8VZU4P6KU/Zn7Erb0cSfxDe98hjkouVuC9mcpso=
-In-Reply-To: <45FD1873.403@ccr.jussieu.fr>
 Content-Disposition: inline
+In-Reply-To: <45FD2F4F.5060302@ccr.jussieu.fr>
 Sender: linux-hams-owner@vger.kernel.org
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"; format="flowed"
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 7bit
 To: Bernard Pidoux <pidoux@ccr.jussieu.fr>
-Cc: Richard Stearn <richard@rns-stearn.demon.co.uk>, linux-hams@vger.kernel.org
+Cc: linux-hams <linux-hams@vger.kernel.org>
 
-On 3/18/07, Bernard Pidoux <pidoux@ccr.jussieu.fr> wrote:
->
->
-> Chuck Hast wrote:
->
-> >...What listen does
-> > not show is the GFI, it does show the LCI and in the call request packet
-> > the
-> > random number  (NbAlea) which is used to assign the LCI. Nor does it show
-> > the cause/diag code data when there is a error or a disconnect.
-> >
-> > So any work you do in this direction will be a big help for us.
-> >
-> >
->
-> Actually, listen provides some error diagnostic including the point
-> where the link failed as shown here :
->
-> 0: fm KP4DJT-9 to F6BVP-11 ctl I72^ pid=1(X.25) len 26
-> X.25: LCI 031 : CLEAR REQUEST - Cause DTE Originated - Diag 0
-> at N3PPC-9 @3100,386335
-> 0: fm KP4DJT-9 to F6BVP-11 ctl RR0v
->
-> Not so bad.
+On Sun, Mar 18, 2007 at 01:23:43PM +0100, Bernard Pidoux wrote:
+> Hi,
+> 
+> An OM from a RadioClub had some warning when doing ./configure
+> before compiling soundmodem.
 
-Yes, that is how I knew that we were getting the error location information,
-I was watching it in Listen and observed that on the fpac console it did
-not match.  But being able to have a full set of tools in WireShark (was
-Etherreal) for data collection and analysis would be a very good thing,
-so I encourage him to get as much info as possible to integrate X.25 PLP
-so we have one more tool to use.
+For now this is just a warning, it should still compile.  In the long
+run someone needs to fix the packages configure script.  The last line
+you posted "checking for linux/ax25.h... yes" shows that it is still
+acting like it was happy with this file (for now).
 
+The configure script builds a small c program that includes the
+file to be tested and sees if there are errors when it is compiled.
+Apparently this test program isn't good enough for that file (on your
+system).
 
--- 
-Chuck Hast  -- KP4DJT --
-To paraphrase my flight instructor;
-"the only dumb question is the one you DID NOT ask resulting in my going
-out and having to identify your bits and pieces in the midst of torn
-and twisted metal."
+Look in "config.log".  That will show the test program, the command used
+and the results.  
+
+For example I see the same error with "if.h" and see this in config.log:
+
+------------------------------------
+configure:7197: checking linux/if.h usability
+configure:7209: gcc -c -g -O2  conftest.c >&5
+In file included from conftest.c:72:
+/usr/include/linux/if.h:162: error: field 'ifru_addr' has incomplete type
+/usr/include/linux/if.h:163: error: field 'ifru_dstaddr' has incomplete type
+/usr/include/linux/if.h:164: error: field 'ifru_broadaddr' has incomplete type
+/usr/include/linux/if.h:165: error: field 'ifru_netmask' has incomplete type
+/usr/include/linux/if.h:166: error: field 'ifru_hwaddr' has incomplete type
+configure:7215: $? = 1
+configure: failed program was:
+| /* confdefs.h.  */
+...
+| #include <linux/if.h>
+configure:7238: result: no
+configure:7242: checking linux/if.h presence
+configure:7252: gcc -E  conftest.c
+configure:7258: $? = 0
+configure:7278: result: yes
+configure:7291: WARNING: linux/if.h: present but cannot be compiled
+configure:7293: WARNING: linux/if.h:     check for missing prerequisite headers?
+configure:7295: WARNING: linux/if.h: see the Autoconf documentation
+configure:7297: WARNING: linux/if.h:     section "Present But Cannot Be Compiled"
+configure:7299: WARNING: linux/if.h: proceeding with the preprocessor's result
+configure:7301: WARNING: linux/if.h: in the future, the compiler will take precedence
+configure:7313: checking for linux/if.h
+configure:7320: result: yes
+------------------------------------
+
+Yet soundmodem compiles just fine (although there are far too many
+warnings).
+
+Don - W7DMR
