@@ -1,116 +1,34 @@
-From: Richard Stearn <richard@rns-stearn.demon.co.uk>
-Subject: AX25 in libpcap, tcpdump & wireshark
-Date: Sun, 18 Mar 2007 22:01:52 +0000
-Message-ID: <45FDB6D0.8010000@rns-stearn.demon.co.uk>
+From: Ralf Baechle DL5RB <ralf@linux-mips.org>
+Subject: Re: Document request - ROSE protocol specification
+Date: Mon, 19 Mar 2007 04:25:20 +0000
+Message-ID: <20070319042520.GB25380@linux-mips.org>
+References: <45F87682.8010206@rns-stearn.demon.co.uk> <620c90570703141711v444bd67dqd9cf8e86a6fc1b54@mail.gmail.com> <45F92C62.2030707@ccr.jussieu.fr>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
+Content-Disposition: inline
+In-Reply-To: <45F92C62.2030707@ccr.jussieu.fr>
 Sender: linux-hams-owner@vger.kernel.org
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"; format="flowed"
-To: linux-hams@vger.kernel.org
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+To: Bernard Pidoux <pidoux@ccr.jussieu.fr>
+Cc: Chuck Hast <wchast@gmail.com>, Richard Stearn <richard@rns-stearn.demon.co.uk>, linux-hams@vger.kernel.org
 
-For the foolhardy, desperate or those who just like to live dangerously.
+On Thu, Mar 15, 2007 at 12:22:10PM +0100, Bernard Pidoux wrote:
 
-	http://www.rns-stearn.demon.co.uk/
+> > Also perhaps Bernard F6BVP can provide you information or Jean-Paul
+> 
+> ROSE adressing follows the X.121 specs and uses 14 digits.
+> 
+> There is a good description here :
+> http://www.rhyshaden.com/x25.htm
+> 
+> Linux kernel source provides diagnostic codes and specs.
+> For example in /linux/include/net/rose.h :
 
-These are source code patches.
+I would warn to take the Linux kernel code as a proper definition of the
+ROSE protocol.  While Linux may be the dominant ROSE implementation today
+the protocol code contains quite a few oddities that make me scratch the
+head to say the least.
 
-The patches add to:
-     libpcap
-	- recognition and capture of AX.25
-
-     tcpdump
-	- decoding AX.25
-	- extraction from BPQ
-	- decoding an ARP payload
-	- decoding a TCP/IP payload
-	- decoding NetROM
-	- recognition of Flexnet
-	- recognition of ROSE
-
-     wireshark
-	- dissection of AX.25
-	- extraction from BPQ
-	- extraction from AXIP (untested)
-	- dissection of ARP payload
-	- dissection of an TCP/IP payload
-	- dissection of NetROM
-	- recognition of Flexnet
-	- dissection of ROSE
-	- dissection of "No layer 3" payloads
-		APRS (by the book)
-		recognition of DX cluster
-
-The dissection of APRS & DX in wireshark is controlled via your
-preferences:
-	Edit->Preferences->Protocols->AX25 No L3
-
-All others are treated as having no L3 protocol and printed in hex
-and ascii.
-
-The patch is against:
-	libpcap-0.9.5
-	tcpdump-3.9.5
-	wireshark-0.99.5
-
-This is an alpha release.
-
-My testing is limited to vanilla AX.25 over non-radio mkiss serial link
-and a few donated capture files.
-
-To build these patched versions:
-     1.  Download libpcap, tcpdump &  sources
-     2.  Create a directory to work in (I use /usr/src/modified)
-     3.  cd into that directory
-     4.  Unpack the sources into this directory
-     5.  Save and uncompress the patches into this directory
-     6.  Apply each patch by running:
-         patch -p1 < <patch name>
-     7.  cd into libpcap-0.9.5
-     8.  Run:
-		./configure
-     9.  Run:
-		make
-     10. cd into tcpdump-3.9.5
-     11. Run:
-		./configure
-     12. Run:
-		make
-     13. cd into wireshark-0.99.5
-     14. Run:
-		./autogen.sh
-     15. Run:
-		./configure
-     16. Run:
-		make
-
-To use tcpdump cd into the tcpdump directory and run:
-     ./tcpdump -eni <ax.25 interface name>
-
-To capture with tcpdump:
-     ./tcpdump -eni <ax.25 interface name> -w <capture filename>
-
-To use  cd into the wireshark directory and run:
-     ./wireshark
-
-To use either of the tools for "off-the-wire" capture you will need
-to be logged in as root as both tools access network interfaces and
-root priviledges are need for that.
-
-You can view captures in either tool with needing root priviledges.
-
-Currently there is no way to filter on AX.25 addresses.
-
-In both tcpdump and wireshark I have used existing functions to
-decode AX.25 control info, ARP, IP & X.25 packets.  These appear
-to give the correct answers but a more extended checking is needed.
-
-I you compile and run it please tell me.  Bug reports welcomed,
-comments on what is and is not display welcomed.  Please remember
-that tcpdump and wireshark are protocol analysers, they are not a
-replacement for "listen".
-
--- 
-Regards
-	Richard
+   Ralf
