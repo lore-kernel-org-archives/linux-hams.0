@@ -1,29 +1,43 @@
-From: Hamish Moffatt <hamish@cloud.net.au>
-Subject: Re: Error compiling aprsd-2.2.6-4 from CVS
-Date: Wed, 18 Apr 2007 08:14:43 +1000
-Message-ID: <20070417221443.GB29489@cloud.net.au>
-References: <20070313115537.GA10921@linux-mips.org> <20070324.125436.115921208.davem@davemloft.net> <4624D993.1060006@ccr.jussieu.fr> <4624FB5F.1030508@ccr.jussieu.fr> <462505B9.3020402@ccr.jussieu.fr>
-Mime-Version: 1.0
+From: Jim Tittsler <7J1AJH@OnJapan.net>
+Subject: Re: Error compiling aprsd-2.2.5-15
+Date: Wed, 18 Apr 2007 11:40:06 +1200
+Message-ID: <F754A7D0-3D8A-4F72-B235-4F0D0A6E28EF@OnJapan.net>
+References: <20070313115537.GA10921@linux-mips.org> <20070324.125436.115921208.davem@davemloft.net> <4624D993.1060006@ccr.jussieu.fr>
+Mime-Version: 1.0 (Apple Message framework v752.3)
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 Return-path: <linux-hams-owner@vger.kernel.org>
-Content-Disposition: inline
-In-Reply-To: <462505B9.3020402@ccr.jussieu.fr>
+In-Reply-To: <4624D993.1060006@ccr.jussieu.fr>
 Sender: linux-hams-owner@vger.kernel.org
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset="windows-1252"; delsp="yes	format=flowed"
 To: linux-hams@vger.kernel.org
 
-On Tue, Apr 17, 2007 at 07:36:57PM +0200, Bernard Pidoux wrote:
-> I looked at configure.log file and found some error report that could be
-> interesting for aprsd developpers.
-> I will report here only the errors or warnings lines :
+On Apr 18, 2007, at 02:28, Bernard Pidoux wrote:
 
-That's how autoconf works - it compiles various test programs to see
-what header files and libraries are required to access certain OS
-functions. Errors are perfectly normal. You only have a problem if
-configure ends in failure.
+> I did ./configure without problem but got g++ warning and the =20
+> following
+> error :
+>
+> deprecated header <iostream.h>. To disable this warning use -Wno-=20
+> deprecated.
+> aprsString.h:199: error: extra qualification =91aprsd::aprsString::=92=
+ on
+> member =91getMsgText=92
+
+If you don't want to update the aprsd source, an easy way out is to =20
+install an older version of g++.  Many linux distributions keep an =20
+old gcc 3.4.x era g++ (which can be installed alongside the current =20
+release) around for just such occasions.
 
 
-Hamish
--- 
-Hamish Moffatt VK3SB <hamish@debian.org> <hamish@cloud.net.au>
+--=20
+Jim Tittsler  ZL2IA/AI8A    Gisborne                GPG: 0x01159DB6
+http://www.qsl.net/7j1ajh/                       QRP/Satellites/APRS
+                                                          AMSAT/NZART
+
+
+-
+To unsubscribe from this list: send the line "unsubscribe linux-hams" i=
+n
+the body of a message to majordomo@vger.kernel.org
+More majordomo info at  http://vger.kernel.org/majordomo-info.html
