@@ -1,38 +1,41 @@
-From: Richard Stearn <richard@rns-stearn.demon.co.uk>
-Subject: AX25 in libpcap & wireshark
-Date: Mon, 02 Apr 2007 20:30:18 +0100
-Message-ID: <461159CA.5080301@rns-stearn.demon.co.uk>
+From: Bernard Pidoux <pidoux@ccr.jussieu.fr>
+Subject: Error compiling aprsd-2.2.5-15
+Date: Tue, 17 Apr 2007 16:28:35 +0200
+Message-ID: <4624D993.1060006@ccr.jussieu.fr>
+References: <20070313115537.GA10921@linux-mips.org> <20070324.125436.115921208.davem@davemloft.net>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 Return-path: <linux-hams-owner@vger.kernel.org>
+In-Reply-To: <20070324.125436.115921208.davem@davemloft.net>
 Sender: linux-hams-owner@vger.kernel.org
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"; format="flowed"
+Content-Type: text/plain; charset="windows-1252"
 To: linux-hams@vger.kernel.org
 
-Another set of patches for the foolhardy, desperate or those who just
-like to live dangerously.
+Hi All,
 
-At:
-     http://www.rns-stearn.demon.co.uk/
+Is aprsd-2.2.5-15.tar.gz the last available source for aprsd ?
 
-	Changelog_2007-03-25
-	README_2007-03-25
-	libpcap-0.9.5_ax25_patch_2007-03-28.gz
-	wireshark-0.99.5_ax25_patch_2007-03-25.gz
+I did ./configure without problem but got g++ warning and the following
+error :
 
- From the Changelog
-         APRS    - now a plugin.
-         APRS    - MIC-E pass through of AX.25 dest header added.
-                         Dissection of MIC-E extended.
-         APRS    - general tidy up of indicated protocol & information.
-         NetROM  - IP frames passed to existing IP dissector.
-         AXIP    - now handled withing packet-ax25.c
-         BPQ     - now handled withing packet-ax25.c
+deprecated header <iostream.h>. To disable this warning use -Wno-deprec=
+ated.
+aprsString.h:199: error: extra qualification =91aprsd::aprsString::=92 =
+on
+member =91getMsgText=92
 
-My thanks to those who have tested and commented, they have got much of
-what they wanted, them as didn't, haven't.
+I also tried CVS source tree but got stuck as running autoconf to make =
+a
+configure file gave error :
 
--- 
-Regards
-	Richard
+configure.ac:8 error: possibly undefined macro: AM_INIT_AUTOMAKE
+
+Can someone help ?
+
+73 de Bernard, f6bvp
+-
+To unsubscribe from this list: send the line "unsubscribe linux-hams" i=
+n
+the body of a message to majordomo@vger.kernel.org
+More majordomo info at  http://vger.kernel.org/majordomo-info.html
