@@ -1,53 +1,75 @@
-From: "Curt, WE7U" <archer@eskimo.com>
-Subject: Re: Error compiling aprsd-2.2.5-15
-Date: Tue, 17 Apr 2007 09:08:20 -0700 (PDT)
-Message-ID: <Pine.SUN.4.58.0704170841280.12032@eskimo.com>
-References: <20070313115537.GA10921@linux-mips.org>
- <20070324.125436.115921208.davem@davemloft.net> <4624D993.1060006@ccr.jussieu.fr>
-Reply-To: "Curt Mills, WE7U" <archer@eskimo.com>
+From: Bernard Pidoux <pidoux@ccr.jussieu.fr>
+Subject: Error compiling aprsd-2.2.6-4 from CVS
+Date: Tue, 17 Apr 2007 18:52:47 +0200
+Message-ID: <4624FB5F.1030508@ccr.jussieu.fr>
+References: <20070313115537.GA10921@linux-mips.org> <20070324.125436.115921208.davem@davemloft.net> <4624D993.1060006@ccr.jussieu.fr>
 Mime-Version: 1.0
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 Return-path: <linux-hams-owner@vger.kernel.org>
 In-Reply-To: <4624D993.1060006@ccr.jussieu.fr>
 Sender: linux-hams-owner@vger.kernel.org
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: TEXT/PLAIN; charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-To: Bernard Pidoux <pidoux@ccr.jussieu.fr>
-Cc: linux-hams@vger.kernel.org
+Content-Type: text/plain; charset="windows-1252"
+To: linux-hams@vger.kernel.org
 
-On Tue, 17 Apr 2007, Bernard Pidoux wrote:
+Hi All,
 
-> Is aprsd-2.2.5-15.tar.gz the last available source for aprsd ?
+In aprsd directory captured from CVS sourceforge (aprsd-2.2.6-4)
+I changed boostrap.sh file permission to a+x and ran the script.
+It built configure script and then I was able to run ./configure and ma=
+ke.
 
-If you're talking SourceForge aprsd, then yes, it appears so.
-Others have released aprsd before as well, typically doing so by
-adding their callsign into the package name if they did mods.
+However I got an error during compile :
+
+if g++ -DHAVE_CONFIG_H -I. -I. -I.. -I../src    -g -O2 -Wall
+-march=3Dpentium -fPIC -DPIC -pedantic -pipe -pthread -MT aprsd.o -MD -=
+MP
+-MF ".deps/aprsd.Tpo" -c -o aprsd.o aprsd.cpp; \
+         then mv -f ".deps/aprsd.Tpo" ".deps/aprsd.Po"; else rm -f
+".deps/aprsd.Tpo"; exit 1; fi
+refcount.hpp:185: error: extra =91;=92
+make[2]: *** [aprsd.o] Erreur 1
+
+I removed extra ';' on line 185 of src/refcount.hpp
+and also replaced in all concerned files
+
+#include <iostream>
+by
+#include <sstream>
+
+to remove warnings about deprecated header <iostream>.
+
+Then I ran make and I have still error messages :
 
 
-> I did ./configure without problem but got g++ warning and the following
-> error :
->
-> deprecated header <iostream.h>. To disable this warning use -Wno-deprecated.
-> aprsString.h:199: error: extra qualification ?aprsd::aprsString::? on
-> member ?getMsgText?
+if g++ -DHAVE_CONFIG_H -I. -I. -I.. -I../src    -g -O2 -Wall
+-march=3Dpentium -fPIC -DPIC -pedantic -pipe -pthread -MT aprsd.o -MD -=
+MP
+-MF ".deps/aprsd.Tpo" -c -o aprsd.o aprsd.cpp; \
+         then mv -f ".deps/aprsd.Tpo" ".deps/aprsd.Po"; else rm -f
+".deps/aprsd.Tpo"; exit 1; fi
+ aprsd.cpp: In function =91void serverQuit()=92:
+ aprsd.cpp:139: error: =91cout=92 was not declared in this scope
+ aprsd.cpp: In function =91int serverConfig(const std::string&)=92:
+ aprsd.cpp:212: error: =91cout=92 was not declared in this scope
+ aprsd.cpp:565: error: =91cerr=92 was not declared in this scope
+ aprsd.cpp:569: error: =91cerr=92 was not declared in this scope
+ aprsd.cpp: In function =91int daemonInit()=92:
+ aprsd.cpp:645: error: =91cout=92 was not declared in this scope
+ aprsd.cpp:660: error: =91cout=92 was not declared in this scope
+ aprsd.cpp: In function =91int main(int, char**)=92:
+ aprsd.cpp:732: error: =91cout=92 was not declared in this scope
+ aprsd.cpp:942: error: =91cerr=92 was not declared in this scope
+ aprsd.cpp:976: error: =91cerr=92 was not declared in this scope
+ aprsd.cpp:980: error: =91cerr=92 was not declared in this scope
+ make[2]: *** [aprsd.o] Erreur 1
 
-I'm not a C++ guy so I can't help you there.  If it were me I'd try
-looking at the header files and the source code to see where the
-mismatch was.
+I would appreciate any help for compiling aprsd.
 
+73 de Bernard, f6bvp
 
-> I also tried CVS source tree but got stuck as running autoconf to make a
-> configure file gave error :
->
-> configure.ac:8 error: possibly undefined macro: AM_INIT_AUTOMAKE
-
-You might need to update your version of "automake" and "autoconf"
-on that box.  Or downgrade them.  Note that they work well as a
-pair, so sometimes upgrading/downgrading one will require you to do
-the same to the other package to make things work smoothly.
-
---
-Curt, WE7U.   APRS Client Comparisons: http://www.eskimo.com/~archer
-"Lotto:    A tax on people who are bad at math." -- unknown
-"Windows:  Microsoft's tax on computer illiterates." -- WE7U
-"The world DOES revolve around me:  I picked the coordinate system!"
+-
+To unsubscribe from this list: send the line "unsubscribe linux-hams" i=
+n
+the body of a message to majordomo@vger.kernel.org
+More majordomo info at  http://vger.kernel.org/majordomo-info.html
