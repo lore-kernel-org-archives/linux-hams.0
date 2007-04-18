@@ -1,43 +1,23 @@
-From: Jim Tittsler <7J1AJH@OnJapan.net>
-Subject: Re: Error compiling aprsd-2.2.5-15
-Date: Wed, 18 Apr 2007 11:40:06 +1200
-Message-ID: <F754A7D0-3D8A-4F72-B235-4F0D0A6E28EF@OnJapan.net>
-References: <20070313115537.GA10921@linux-mips.org> <20070324.125436.115921208.davem@davemloft.net> <4624D993.1060006@ccr.jussieu.fr>
-Mime-Version: 1.0 (Apple Message framework v752.3)
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+From: "Phillip L. DePorter" <n1ki@arrl.net>
+Subject: WSJT questions
+Date: Tue, 17 Apr 2007 20:42:21 -0400
+Message-ID: <4625696D.2020104@arrl.net>
+Mime-Version: 1.0
+Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <4624D993.1060006@ccr.jussieu.fr>
 Sender: linux-hams-owner@vger.kernel.org
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="windows-1252"; delsp="yes	format=flowed"
-To: linux-hams@vger.kernel.org
+Content-Type: text/plain; charset="us-ascii"
+To: Linuxhams <linux-hams@vger.kernel.org>
 
-On Apr 18, 2007, at 02:28, Bernard Pidoux wrote:
+I have WSJT running, but I have two problems.  My interface is set up to
+  key my transceiver under Windows through COM1 via the DTR pin.  I have
+tried using ttyS0 and ttyS1 under Fedora Core 6, but it does not key the
+transmitter.  Also, SpecJT is displaying only the first 6 seconds of a
+30 second period on the horizontal display before running into the right
+border of the display.
 
-> I did ./configure without problem but got g++ warning and the =20
-> following
-> error :
->
-> deprecated header <iostream.h>. To disable this warning use -Wno-=20
-> deprecated.
-> aprsString.h:199: error: extra qualification =91aprsd::aprsString::=92=
- on
-> member =91getMsgText=92
+Any help resolving these problems would be appreciated.
 
-If you don't want to update the aprsd source, an easy way out is to =20
-install an older version of g++.  Many linux distributions keep an =20
-old gcc 3.4.x era g++ (which can be installed alongside the current =20
-release) around for just such occasions.
+Phil - N1KI
 
-
---=20
-Jim Tittsler  ZL2IA/AI8A    Gisborne                GPG: 0x01159DB6
-http://www.qsl.net/7j1ajh/                       QRP/Satellites/APRS
-                                                          AMSAT/NZART
-
-
--
-To unsubscribe from this list: send the line "unsubscribe linux-hams" i=
-n
-the body of a message to majordomo@vger.kernel.org
-More majordomo info at  http://vger.kernel.org/majordomo-info.html
