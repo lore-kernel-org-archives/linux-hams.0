@@ -1,73 +1,54 @@
-From: Bernard Pidoux <pidoux@ccr.jussieu.fr>
+From: "Curt, WE7U" <archer@eskimo.com>
 Subject: Re: New Xastir Release
-Date: Thu, 03 May 2007 22:23:06 +0200
-Message-ID: <463A44AA.9070007@ccr.jussieu.fr>
+Date: Fri, 4 May 2007 09:56:33 -0700 (PDT)
+Message-ID: <Pine.SUN.4.58.0705040953170.22929@eskimo.com>
 References: <Pine.SUN.4.58.0705021237070.12989@eskimo.com>
+ <463A44AA.9070007@ccr.jussieu.fr>
+Reply-To: "Curt Mills, WE7U" <archer@eskimo.com>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <Pine.SUN.4.58.0705021237070.12989@eskimo.com>
+In-Reply-To: <463A44AA.9070007@ccr.jussieu.fr>
 Sender: linux-hams-owner@vger.kernel.org
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"
-To: "Curt Mills, WE7U" <archer@eskimo.com>
+Content-Type: TEXT/PLAIN; charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+To: Bernard Pidoux <pidoux@ccr.jussieu.fr>
 Cc: linux-hams@vger.kernel.org
 
-Curt, WE7U wrote:
-> Project: XASTIR  (xastir)
-> Package: xastir-stable
-> Date   : 2007-05-02 12:20
-> 
-> Project "XASTIR" ('xastir') has released the new version of package
-> 'xastir-stable'.
-> You can download it from SourceForge.net by following this link:
-> <https://sourceforge.net/project/showfiles.php?group_id=45562&release_id=505433>
-> or browse Release Notes and ChangeLog by visiting this link:
-> <https://sourceforge.net/project/shownotes.php?release_id=505433>
-> 
-> Homepage:  <http://www.xastir.org>
-> 
-> --
-> Curt, WE7U.   APRS Client Comparisons: http://www.eskimo.com/~archer
-> "Lotto:    A tax on people who are bad at math." -- unknown
-> "Windows:  Microsoft's tax on computer illiterates." -- WE7U
-> "The world DOES revolve around me:  I picked the coordinate system!"
+On Thu, 3 May 2007, Bernard Pidoux wrote:
 
-Hi Curt,
+> The only difficulty I encountered was in setting the Station
+> configuration for Power, HAAT, Gain and directivity menu.
+> As I am not sure about the exact significance of HAAT height, I did not
+> select any. But selecting only power, gain and directivity resulted in a
+> not saved configuration. I tried a few times without success until I
+> decided to select also some HAAT height. At this time saving the
+> configuration would work.
+>
+> Then my question ? What is exactly HAAT eight ? Is it above sea level or
+> above the ground or anything else ?
 
-Thank you for xastir 1.9.0 release.
+Height Above Average Terrain.  The U.S. FCC has a specific
+definition of this that they use for computing HAAT for any given
+transmitter, and the HAAT must be specified in some of the license
+applications, at least for commercial stations.  Some programs such
+as Radio Mobile (I think) and Splat! (definitely) can compute the
+HAAT for your station if you feed them certain data files, but you
+can also compute it from topographic maps for your site.
 
-Late april I had just downloaded and installed Xastir V1.8.5 on a
-Mandriva Linux 2007.0 distro. Xastir was completely new to me.
 
-The only problem was a complaint from ./configure for the lack of Xm.h
-include file.
+> And finally, I would suggest that some values should be selected by
+> default in order to avoid the impossibility to save this part of station
+> configuration if not all are selected.
 
-I found that it could be fulfilled after installing lesstif-devel rpm
-package with urpmi Mandriva utility script.
+I respectfully disagree:  The APRS spec requires all of the values
+be specified if you transmit this as part of your packet, and
+putting a default in there for any of the values would make some
+transmitted values incorrect.  I'd rather see the values not get
+transmitted than to have them transmitted and me incorrect.
 
-Finally I got a working xastir using ax25, libProj, Geotiff, ShapeLib,
-PCRE, Dbfawk, rtree, GNU/Lesstif Version 2.1 Release 0.93.94 libraries.
-
-The install is too fresh to give me the time to configure a
-sophisticated map showing Europe and more specifically France rather
-than the default one. However, xastir functionality is already giving me
-a lot of satisfactions.
-
-The only difficulty I encountered was in setting the Station
-configuration for Power, HAAT, Gain and directivity menu.
-As I am not sure about the exact significance of HAAT height, I did not
-select any. But selecting only power, gain and directivity resulted in a
-not saved configuration. I tried a few times without success until I
-decided to select also some HAAT height. At this time saving the
-configuration would work.
-
-Then my question ? What is exactly HAAT eight ? Is it above sea level or
-above the ground or anything else ?
-
-And finally, I would suggest that some values should be selected by
-default in order to avoid the impossibility to save this part of station
-configuration if not all are selected.
-
-73 de Bernard, f6bvp
-
+--
+Curt, WE7U.   APRS Client Comparisons: http://www.eskimo.com/~archer
+"Lotto:    A tax on people who are bad at math." -- unknown
+"Windows:  Microsoft's tax on computer illiterates." -- WE7U
+"The world DOES revolve around me:  I picked the coordinate system!"
