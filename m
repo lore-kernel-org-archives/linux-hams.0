@@ -1,44 +1,25 @@
-From: Don Koch <aardvark@krl.com>
-Subject: Re: New Xastir Release
-Date: Fri, 4 May 2007 12:33:24 -0400
-Message-ID: <200705041633.l44GXOXj019733@p-chan.krl.com>
-References: <Pine.SUN.4.58.0705021237070.12989@eskimo.com>
-	<463A44AA.9070007@ccr.jussieu.fr>
+From: Harry Popov <lz1bb@mail.bg>
+Subject: WSJT 5.9.7 r385 new release
+Date: Thu, 10 May 2007 11:25:57 +0300
+Message-ID: <1178785558.4540.9.camel@ham>
 Mime-Version: 1.0
 Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <463A44AA.9070007@ccr.jussieu.fr>
 Sender: linux-hams-owner@vger.kernel.org
 List-Id: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
-To: Bernard Pidoux <pidoux@ccr.jussieu.fr>
-Cc: linux-hams@vger.kernel.org
+To: Linuxhams <linux-hams@vger.kernel.org>
 
-On Thu, 03 May 2007 22:23:06 +0200
-Bernard Pidoux wrote:
+WSJT team released a new version 5.9.7 a few days ago. Here is rpm for
+this new version. It should work on all rpm based GNU/Linux
+distributions:
+http://lz1bb.bfra.org/wsjt/wsjt-5.9.7.r385-1.i586.rpm
 
-> Curt, WE7U wrote:
-> > Project: XASTIR  (xastir)
-> > Package: xastir-stable
-> > Date   : 2007-05-02 12:20
-> > 
-> > Project "XASTIR" ('xastir') has released the new version of package
-> > 'xastir-stable'.
-[...]
-> The only difficulty I encountered was in setting the Station
-> configuration for Power, HAAT, Gain and directivity menu.
-> As I am not sure about the exact significance of HAAT height, I did not
-> select any. But selecting only power, gain and directivity resulted in a
-> not saved configuration. I tried a few times without success until I
-> decided to select also some HAAT height. At this time saving the
-> configuration would work.
-> 
-> Then my question ? What is exactly HAAT eight ? Is it above sea level or
-> above the ground or anything else ?
+If some one wants to rebuild rpm here is the SRPM:
+http://lz1bb.bfra.org/wsjt/wsjt-5.9.7.r385-1.src.rpm
 
-HAAT is Height Above Average Terrain.
-See: http://www.fcc.gov/mb/audio/bickel/haat_calculator.html
-There is an explanation on how HAAT is determined at the bottom.
+In case one needs the source code of WSJT:
+http://lz1bb.bfra.org/wsjt/wsjt-5.9.7.r385.tar.gz
 
--d
-nt1l
+73, Harry LZ1BB
+
