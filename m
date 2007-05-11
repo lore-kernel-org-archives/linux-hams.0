@@ -1,25 +1,30 @@
-From: Harry Popov <lz1bb@mail.bg>
-Subject: WSJT 5.9.7 r385 new release
-Date: Thu, 10 May 2007 11:25:57 +0300
-Message-ID: <1178785558.4540.9.camel@ham>
+From: T + J Williams <wa0eir@mchsi.com>
+Subject: new twpsk release
+Date: Thu, 10 May 2007 23:46:58 -0500
+Message-ID: <1178858818.2156.6.camel@localhost.localdomain>
 Mime-Version: 1.0
 Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
 Sender: linux-hams-owner@vger.kernel.org
 List-Id: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
-To: Linuxhams <linux-hams@vger.kernel.org>
+To: Linux Hams <linux-hams@vger.kernel.org>
 
-WSJT team released a new version 5.9.7 a few days ago. Here is rpm for
-this new version. It should work on all rpm based GNU/Linux
-distributions:
-http://lz1bb.bfra.org/wsjt/wsjt-5.9.7.r385-1.i586.rpm
+Hi All
 
-If some one wants to rebuild rpm here is the SRPM:
-http://lz1bb.bfra.org/wsjt/wsjt-5.9.7.r385-1.src.rpm
+There is a new release of twlog  - Version 2.4.
+Twlog is a simple ham log program intended for basic 
+everyday use. It includes a log editor, automatic call 
+look up, a log search window, and searchable help.
 
-In case one needs the source code of WSJT:
-http://lz1bb.bfra.org/wsjt/wsjt-5.9.7.r385.tar.gz
+For more information, please see my website below. 
+Enjoy.
+-- 
+73,
+Ted - wa0eir
+http://wa0eir.ham.org
 
-73, Harry LZ1BB
+-- 
+T + J Williams
+
 
