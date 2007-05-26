@@ -1,30 +1,34 @@
-From: T + J Williams <wa0eir@mchsi.com>
-Subject: new twpsk release
-Date: Thu, 10 May 2007 23:46:58 -0500
-Message-ID: <1178858818.2156.6.camel@localhost.localdomain>
+From: John Agar <dukewas3@shaw.ca>
+Subject: Most useful/easy flavour of Linux for Ham Radio Applications
+Date: Sat, 26 May 2007 16:22:06 -0400
+Message-ID: <000001c79fd3$88056800$7802a8c0@ADMIN>
 Mime-Version: 1.0
 Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
 Sender: linux-hams-owner@vger.kernel.org
 List-Id: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
-To: Linux Hams <linux-hams@vger.kernel.org>
+To: linux-hams@vger.kernel.org
 
-Hi All
+Hello all,
 
-There is a new release of twlog  - Version 2.4.
-Twlog is a simple ham log program intended for basic 
-everyday use. It includes a log editor, automatic call 
-look up, a log search window, and searchable help.
+It's been a long time since I checked in to this group.
 
-For more information, please see my website below. 
-Enjoy.
--- 
-73,
-Ted - wa0eir
-http://wa0eir.ham.org
+Have been unable to play with Linux for some time.
+As a result I'm way behind.
 
--- 
-T + J Williams
+Please - opinions on which is the best flavour of Linux for
+ham radio applications. Ease of configuration(good documentation)
+is my major concern.
 
+Thank you.
+
+73 de John Agar
+VE4EI
+
+No virus found in this outgoing message.
+Checked by AVG Free Edition. 
+Version: 7.5.467 / Virus Database: 269.8.0/817 - Release Date: 24/05/2007
+4:01 PM
+ 
 
