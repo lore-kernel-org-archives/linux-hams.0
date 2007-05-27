@@ -1,53 +1,29 @@
-From: Larry Holden <kc5klm@valornet.com>
+From: Bob Nielsen <nielsen@oz.net>
 Subject: Re: Most useful/easy flavour of Linux for Ham Radio Applications
-Date: Sat, 26 May 2007 19:15:27 -0500
-Message-ID: <4658CD9F.5070105@valornet.com>
-References: <000001c79fd3$88056800$7802a8c0@ADMIN>
-Mime-Version: 1.0
+Date: Sat, 26 May 2007 17:32:50 -0700
+Message-ID: <03FFE49A-186B-4AB3-B6D8-D21C53AFCCC4@oz.net>
+References: <000001c79fd3$88056800$7802a8c0@ADMIN> <20070526215529.GG20047@mea-ext.zmailer.org>
+Mime-Version: 1.0 (Apple Message framework v752.2)
 Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <000001c79fd3$88056800$7802a8c0@ADMIN>
+In-Reply-To: <20070526215529.GG20047@mea-ext.zmailer.org>
 Sender: linux-hams-owner@vger.kernel.org
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"; format="flowed"
-To: John Agar <dukewas3@shaw.ca>
-Cc: linux-hams@vger.kernel.org
+Content-Type: text/plain; charset="us-ascii"; delsp="yes"; format="flowed"
+To: linux-hams@vger.kernel.org
 
-John Agar wrote:
-> Hello all,
->
-> It's been a long time since I checked in to this group.
->
-> Have been unable to play with Linux for some time.
-> As a result I'm way behind.
->
-> Please - opinions on which is the best flavour of Linux for
-> ham radio applications. Ease of configuration(good documentation)
-> is my major concern.
->
-> Thank you.
->
-> 73 de John Agar
-> VE4EI
->
-> No virus found in this outgoing message.
-> Checked by AVG Free Edition. 
-> Version: 7.5.467 / Virus Database: 269.8.0/817 - Release Date: 24/05/2007
-> 4:01 PM
->  
->
-> -
-> To unsubscribe from this list: send the line "unsubscribe linux-hams" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at  http://vger.kernel.org/majordomo-info.html
->
->   
 
-I use Slackware and compile my own packages with checkinstall. 
-Everything  seems to work great! The list is as follows: GMFsk, Kpsk, 
-TWpsk, HF rtty, Qgrid, Gsat, Xlog, Grig, predict, Qsstv, TWclock, 
-Xastir, Xcall. Slackware is one of oldest around with plenty of 
-documentation.  Hamshack live cd is a good way to try it. Go to 
-http://hamshack-hack.sourceforge.net/.
+On May 26, 2007, at 2:55 PM, Matti Aarnio wrote:
 
-73, KC5KLM
+>
+> There are tons and tons of other Linux distributions, like
+> various flavours of Ubuntu, which is Debian derivative.
+> But do they have HAM-suites ? That I don't know.
+>
+
+Ubuntu includes kernels with AX.25, mkiss, etc. as modules, as well  
+as a large number of ham radio packages (probably the same ones as  
+Debian itself).
+
+73 - Bob, N7XY
+
