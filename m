@@ -1,43 +1,44 @@
-From: Curt Mills <archer@eskimo.com>
+From: "Mike McCarthy, W1NR" <lists@w1nr.net>
 Subject: Re: Most useful/easy flavour of Linux for Ham Radio Applications
-Date: Sat, 26 May 2007 21:45:13 -0700 (PDT)
-Message-ID: <Pine.LNX.4.58.0705262143080.29960@wapiti.we7u.net>
-References: <000001c79fd3$88056800$7802a8c0@ADMIN> <20070526215529.GG20047@mea-ext.zmailer.org>
+Date: Sun, 27 May 2007 07:27:07 -0400
+Message-ID: <46596B0B.7030008@w1nr.net>
+References: <000001c79fd3$88056800$7802a8c0@ADMIN>
 Mime-Version: 1.0
+Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <20070526215529.GG20047@mea-ext.zmailer.org>
+In-Reply-To: <000001c79fd3$88056800$7802a8c0@ADMIN>
 Sender: linux-hams-owner@vger.kernel.org
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: TEXT/PLAIN; charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-To: Matti Aarnio <matti.aarnio@zmailer.org>
-Cc: John Agar <dukewas3@shaw.ca>, linux-hams@vger.kernel.org
+Content-Type: text/plain; charset="us-ascii"
+To: John Agar <dukewas3@shaw.ca>
+Cc: linux-hams@vger.kernel.org
 
-On Sun, 27 May 2007, Matti Aarnio wrote:
-
-> "Vendors" that supply AX.25 in binary delivered kernel are
-> in my quick survey:
->   - Debian (4.0)
->   - SuSE (9.x, probably same with 10.x)
+John Agar wrote:
+> Hello all,
 > 
-> Vendors that don't supply:
->   - Redhat / Fedora
+> It's been a long time since I checked in to this group.
 > 
-> If you don't need AX.25, that is meaningless difference.
-> (It is meaningfull when you want to make RF-to-net APRS igate.)
+> Have been unable to play with Linux for some time.
+> As a result I'm way behind.
+> 
+> Please - opinions on which is the best flavour of Linux for
+> ham radio applications. Ease of configuration(good documentation)
+> is my major concern.
+> 
+> Thank you.
+> 
+> 73 de John Agar
+> VE4EI
 
-But... You can still do an APRS igate without having AX.25 in the
-kernel.  Xastir can do it via a Serial TNC or a Serial KISS TNC
-interface.
+See http://www.linux-ax25.org/wiki/Distributions for some descriptions
+of the various distributions.
 
-Where the AX.25 interface comes in really handy is when you want to
-connect multiple pieces of software to the same TNC, or of course
-when you want to do TCP/IP networking or some other networking
-protocol over RF.
+Personally, I use SUSE because of the superior installation, packaging
+and management tools.  I have had a lot of issues with Ubuntu and
+Debian.  Forget about Fedora unless you want to build your own kernel
+and packages.
 
--- 
-Curt, WE7U.				archer at eskimo dot com
-http://www.eskimo.com/~archer
-  Lotto:  A tax on people who are bad at math. - unknown
-Windows:  Microsoft's tax on computer illiterates. - WE7U.
-The world DOES revolve around me:  I picked the coordinate system!"
+Mike, W1NR
+
+SUSE HAM packages mirrored at http://ftp.w1nr.net/
+
