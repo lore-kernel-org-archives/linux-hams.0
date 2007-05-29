@@ -1,37 +1,45 @@
-From: Bob Nielsen <nielsen@oz.net>
+From: Nate Bargmann <n0nb@networksplus.net>
 Subject: Re: Manual printing
-Date: Tue, 29 May 2007 15:48:09 -0700
-Message-ID: <35B60BF6-9E09-4488-80E1-A8503480D12F@oz.net>
+Date: Tue, 29 May 2007 18:21:45 -0500
+Message-ID: <20070529232145.GC31727@mail.networksplus.net>
 References: <7.0.1.0.2.20070529145327.0566f9b8@sasktel.net>
-Mime-Version: 1.0 (Apple Message framework v752.2)
-Content-Transfer-Encoding: 7bit
+Mime-Version: 1.0
 Return-path: <linux-hams-owner@vger.kernel.org>
+Content-Disposition: inline
 In-Reply-To: <7.0.1.0.2.20070529145327.0566f9b8@sasktel.net>
 Sender: linux-hams-owner@vger.kernel.org
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"; delsp="yes"; format="flowed"
-To: Doug <appld@sasktel.net>
-Cc: linux-hams@vger.kernel.org
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+To: linux-hams@vger.kernel.org
 
-
-On May 29, 2007, at 1:57 PM, Doug wrote:
-
-> I would like to print out the complete manual for a topic. ie  
-> Node.conf
+* Doug <appld@sasktel.net> [2007 May 29 16:24 -0500]:
+> I would like to print out the complete manual for a topic. ie Node.conf
 > I can view the manual page by page using the man command, but I do not
 > seem to be able to print the entire manual. You can print the screen,
 > but I can't figure out how to print the total document. The one I am
 > presently looking at is node.conf (5).
->
+> 
 > Can anyone explain how I can get the whole document printed??
 > I am using Mepis 6.0 on a PIV.
->
-> Thanks
->
-> Doug VE5DA
->
 
-Try 'man -t node.conf |lpr'.
+I like the a2ps utility as it allows printing in various formats.  The
+easiest I use is:
 
-73 - Bob, N7XY
+man 8 fubar | a2ps -P printer
 
+(the -P option is only needed for a non default printer)
+
+BTW, I use CUPS and its lpr emulation.
+
+By default, a2ps will print two pages to a sheet and can do even more
+or only one plus many more ways to enhance the print.
+
+- Nate >>
+
+-- 
+ Wireless | Amateur Radio Station N0NB          |  Successfully Microsoft
+  Amateur radio exams; ham radio; Linux info @  | free since January 1998.
+             http://www.qsl.net/n0nb/           |  "Debian, the choice of
+             My Kawasaki KZ-650 SR @            |     a GNU generation!"
+        http://www.networksplus.net/n0nb/       |   http://www.debian.org
