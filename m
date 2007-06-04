@@ -1,20 +1,29 @@
-From: Doug <appld@sasktel.net>
-Subject: SKULL AND CROSS BONES
-Date: Tue, 29 May 2007 18:27:08 -0600
-Message-ID: <7.0.1.0.2.20070529182442.05674138@sasktel.net>
+From: Paul Lewis <paul@skywaves.demon.co.uk>
+Subject: ax25ipd dynamic address refresh linux 2.2
+Date: Mon, 4 Jun 2007 16:51:41 +0100
+Message-ID: <yaFtADBNUDZGFwd6@skywaves.demon.co.uk>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7BIT
 Return-path: <linux-hams-owner@vger.kernel.org>
 Sender: linux-hams-owner@vger.kernel.org
 List-Id: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"; format="flowed"
+Content-Transfer-Encoding: 7bit
 To: linux-hams@vger.kernel.org
 
-In the middle of my MEPIS 6 screen is a yellow triangle with a skull and
-cross bones. Not sure what it means, but I have a feeling it ain't good!!
-Any body know what it is about??
+Hello All
 
-Cheers
+I am searching again for a version of ax25ipd that will do a dns refresh 
+that will work with a 2.2.# Kernel.
 
-Doug VE5DA
+I see from the search engines that reference is made to patch for 
+ax25ipd under 2.4# kernels
 
+Can anyone point me to where I can find this version of ax25ipd.  As I 
+have a couple of partners that have dynamic addresses that change at 
+least once a day.
+
+Paul g4apl (SysOp gb7cip)
+
+
+-- 
+paul@skywaves.demon.co.uk
