@@ -1,28 +1,33 @@
-From: Sysop VK5TTY Packet BBS <sysop@scarc.org.au>
-Subject: DXnet Manual
-Date: Thu, 19 Jul 2007 14:34:49 +0930
-Message-ID: <1184821489.4016.1.camel@jill.vk5hsx.ampr.org>
-Reply-To: sysop@scarc.org.au
+From: T + J Williams <wa0eir@mchsi.com>
+Subject: new twclock release
+Date: Fri, 20 Jul 2007 00:18:00 -0500
+Message-ID: <1184908680.2584.27.camel@localhost.localdomain>
 Mime-Version: 1.0
 Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
 Sender: linux-hams-owner@vger.kernel.org
 List-Id: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
-To: Linux-Hams Mailing LIst <linux-hams@vger.kernel.org>
+To: Debian Hams <debian-hams@lists.debian.org>, Linux Hams <linux-hams@vger.kernel.org>, "Psk31 at qth.net" <psk31@mailman.qth.net>, Suse hams <suse-ham-e@suse.com>, Yahoo linux hams <linuxhams@yahoogroups.com>
 
-Greetings,
 
-	I am after a copy of the English DXnet manual. I have been to the DXnet
-site, which has a link to english documents, however, not active and
-times out.
+Hi
 
-	If someone could email me a copy that would be great. Thanks.
+Version 2.6 of twclock has just been release and can be found at
+http://wa0eir.ham.org
+
+Twclock will displays local, GMT, and the time in major cities around
+the world.  It also has an alarm and
+ID timer.  The alarm can be set to beep, flash, and/or send your call in
+CW via the soundcard.  Just hook the sound card to your rig for an
+automatic CW ID.
+
+This version has improved audio for the CW ID. thanks to some code from
+"qrq" by DJ1YFK.
+
 -- 
-Regards,
+73,
+Ted - wa0eir
+http://wa0eir.ham.org
 
-Stef Daniels VK5HSX
-SysOp VK5TTY Packet BBS               -(44.136.176.220)
-South Coast Amateur Radio Club Inc.   -(www.scarc.org.au)
-Adelaide , Sth Australia              -(sysop@scarc.org.au)
 
