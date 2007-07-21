@@ -1,7 +1,7 @@
 From: Doug <appld@sasktel.net>
 Subject: Re: BayPac BP-1 Modem and Linux
-Date: Sat, 21 Jul 2007 10:06:27 -0600
-Message-ID: <0JLJ00AHNE4IFY50@bgmpomr2.sasknet.sk.ca>
+Date: Sat, 21 Jul 2007 10:09:23 -0600
+Message-ID: <0JLJ00AFHE7WFX50@bgmpomr2.sasknet.sk.ca>
 Mime-Version: 1.0
 Content-Transfer-Encoding: 7BIT
 Return-path: <linux-hams-owner@vger.kernel.org>
@@ -10,28 +10,43 @@ List-Id: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"; format="flowed"
 To: linux-hams@vger.kernel.org
 
-At 08:25 PM 20/07/2007, you wrote:
->Doug, I was running (up till last month) the German Baycom 3105 serial
->modem on linux. it was running there for about 10 years, doing APRS
->Igate the last 5 on Suse. Before that I ran it on a Debian and Slackware
->system.
->  I used a setserial script to bring it up under ax25, and it worked
->great all the time. -pat
------------
-Hello Pat. Well I googled around a bit and found all sorts of stuff, but
-it seemed to be kernel dependent. I had to recompile the kernel for my
-last RH system and am bound and determined not to get into that again. It
-was my first and I hope last time for that. Every thing seemed so easy with
-Mepis 6.5. Most of the ham stuff is in the depository and it loads it with
-out any problem at all. I am not linux savvy and am struggling to learn.
-I just tried my Listen command and not too happy what I see on the screen.
-"no ax25 port data configured". I got them in and simlink is there so I
-guess I gotta look at it again...
+At 08:34 PM 20/07/2007, you wrote:
+>Doug wrote:
+>>Is there anyway to connect a BayPac BP-1 modem to a linux system. I 
+>>seem to find drivers
+>>for only the epp and usb variety. I need a modem to check my port 
+>>configiration via the
+>>"LISTEN" command and I have run out unless I shut down the cluster 
+>>and the bbs.
+>>Fbb is not loaded onto the system just yet. This is a new system 
+>>(Mepis 6.5) and nothing
+>>else is loaded on to it yet except the ax25 stuff. The BP-1 is a 
+>>serial device.
+>
+>Do you have the kernel modules baycom_ser_fdx and/or baycom_ser_hdx 
+>? Those should be the kernel modules for baycom serial-port devices 
+>-- fdx is full duplex and should work for all but the stubborn UARTs.
+>
+>I don't have experience with the BP-1, but I have successfully 
+>loaded the parallel-port PICPAR (Tiger BP-96 modem) with the kernel 
+>module baycom_par
+>
+>-Lance KJ5O
+>
+>-----------------
 
-Tried to send this direct to you, but your ISP refused it... Pretty tough
-spam filter!!
+Lance they do not appear to be in the depository for Mepis. I just 
+don't want to start recompiling kernels and
+I think possibly those two drivers might need some kernel work. But I 
+will look for those and see what I have to
+do. I have never used the BP-1 before but I just happened to have one 
+on the shelf. This is my first attempt at
+getting a packet system going on anything but a Red Hat package... 
+With the depository, it looked so simple!!
 
-Thanks Pat.
+Thanks very much,
+
 Doug VE5DA
+
 
 
