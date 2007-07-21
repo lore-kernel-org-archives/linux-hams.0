@@ -1,37 +1,36 @@
-From: Lance Cotton <joe@lightningflash.net>
+From: Bob Nielsen <nielsen@oz.net>
 Subject: Re: BayPac BP-1 Modem and Linux
-Date: Fri, 20 Jul 2007 21:34:27 -0500
-Message-ID: <46A170B3.60302@lightningflash.net>
+Date: Fri, 20 Jul 2007 19:48:47 -0700
+Message-ID: <A6FEE2F8-48F7-4994-8B3D-447C0DD66221@oz.net>
 References: <0JLI003UK9USAD00@bgmpomr1.sasknet.sk.ca>
-Mime-Version: 1.0
+Mime-Version: 1.0 (Apple Message framework v752.2)
 Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
 In-Reply-To: <0JLI003UK9USAD00@bgmpomr1.sasknet.sk.ca>
 Sender: linux-hams-owner@vger.kernel.org
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"; format="flowed"
-To: Doug <appld@sasktel.net>
-Cc: linux-hams@vger.kernel.org
+Content-Type: text/plain; charset="us-ascii"; delsp="yes"; format="flowed"
+To: linux-hams@vger.kernel.org
 
-Doug wrote:
-> Is there anyway to connect a BayPac BP-1 modem to a linux system. I seem 
-> to find drivers
-> for only the epp and usb variety. I need a modem to check my port 
+
+On Jul 20, 2007, at 6:37 PM, Doug wrote:
+
+> Is there anyway to connect a BayPac BP-1 modem to a linux system. I  
+> seem to find drivers
+> for only the epp and usb variety. I need a modem to check my port  
 > configiration via the
-> "LISTEN" command and I have run out unless I shut down the cluster and 
-> the bbs.
-> Fbb is not loaded onto the system just yet. This is a new system (Mepis 
-> 6.5) and nothing
-> else is loaded on to it yet except the ax25 stuff. The BP-1 is a serial 
-> device.
+> "LISTEN" command and I have run out unless I shut down the cluster  
+> and the bbs.
+> Fbb is not loaded onto the system just yet. This is a new system  
+> (Mepis 6.5) and nothing
+> else is loaded on to it yet except the ax25 stuff. The BP-1 is a  
+> serial device.
 
-Do you have the kernel modules baycom_ser_fdx and/or baycom_ser_hdx ? 
-Those should be the kernel modules for baycom serial-port devices -- fdx 
-is full duplex and should work for all but the stubborn UARTs.
+My Ubuntu 7.04 stock kernel includes the baycom_ser_hdx.ko module.   
+If this one isn't included with Mepis, you need to recompile the  
+kernel and make sure the configuration file includes:
 
-I don't have experience with the BP-1, but I have successfully loaded 
-the parallel-port PICPAR (Tiger BP-96 modem) with the kernel module 
-baycom_par
+CONFIG_BAYCOM_SER_HDX=m (or y)
 
--Lance KJ5O
+Bob, N7XY
 
