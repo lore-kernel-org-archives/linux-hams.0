@@ -1,29 +1,21 @@
-From: Stef Daniels VK5HSX <vk5hsx@wia.org.au>
-Subject: email VK2ZXQ
-Date: Fri, 27 Jul 2007 02:23:05 +0930
-Message-ID: <1185468785.4176.11.camel@jill.vk5hsx.ampr.org>
-Reply-To: vk5hsx@wia.org.au
+From: "Bill Vodall WA7NWP" <wa7nwp@gmail.com>
+Subject: AX25 tools and packages
+Date: Thu, 26 Jul 2007 17:23:32 +0000
+Message-ID: <5abd436b0707261023nada8cf5n90532459745cd2ac@mail.gmail.com>
 Mime-Version: 1.0
 Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
+        b=jp686okFxBuXsNLpVZHOhoGRvgyZZGl4kGD0+VhXADDtv7Mw+54B9YUlA8Wrd6D7VoEBPFEPDfwbmJ156K7ZBbhtnGqSYCfzcyULFIRYaz1RO5nmv8eYJodlzpQIuJPFXlvw6IieOOmUdRhcxEzBtZl/gcQxsx2XzAgsdVtEQJg=
+Content-Disposition: inline
 Sender: linux-hams-owner@vger.kernel.org
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"
-To: Linux-Hams Mailing LIst <linux-hams@vger.kernel.org>
+Content-Type: text/plain; charset="us-ascii"; format="flowed"
+To: linux-hams@vger.kernel.org
 
-Hi there,
+Is sourceforge still the primary repository for the ax25 library and tools?
 
-	I am wondering whether someone would have a current email address for
-John VK2ZXQ? If you have something more recent than
-jtanner@grivel.une.edu.au which have not been replied.
-
-Many thanks in advance..
--- 
-Regards & Best 73,
-
-Stef Daniels VK5HSX            - (OpenPGP: 0x828E2EB0)
-Amateur Radio Station           
-Adelaide, Sth Australia        - (vk5hsx@wia.org.au)
-Member South Coast ARC Inc.    - (www.scarc.org.au)
-Member Wireless Inst. of Aust  - (www.wia.org.au)
-
+Thanks,
+Bill - WA7NWP
