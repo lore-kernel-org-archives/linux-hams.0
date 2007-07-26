@@ -1,21 +1,31 @@
-From: "Bill Vodall WA7NWP" <wa7nwp@gmail.com>
-Subject: AX25 tools and packages
-Date: Thu, 26 Jul 2007 17:23:32 +0000
-Message-ID: <5abd436b0707261023nada8cf5n90532459745cd2ac@mail.gmail.com>
+From: "Mike McCarthy, W1NR" <lists@w1nr.net>
+Subject: Re: AX25 tools and packages
+Date: Thu, 26 Jul 2007 17:04:49 -0400
+Message-ID: <46A90C71.4010300@w1nr.net>
+References: <5abd436b0707261023nada8cf5n90532459745cd2ac@mail.gmail.com>
 Mime-Version: 1.0
 Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
-DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
-        b=jp686okFxBuXsNLpVZHOhoGRvgyZZGl4kGD0+VhXADDtv7Mw+54B9YUlA8Wrd6D7VoEBPFEPDfwbmJ156K7ZBbhtnGqSYCfzcyULFIRYaz1RO5nmv8eYJodlzpQIuJPFXlvw6IieOOmUdRhcxEzBtZl/gcQxsx2XzAgsdVtEQJg=
-Content-Disposition: inline
+In-Reply-To: <5abd436b0707261023nada8cf5n90532459745cd2ac@mail.gmail.com>
 Sender: linux-hams-owner@vger.kernel.org
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"; format="flowed"
-To: linux-hams@vger.kernel.org
+Content-Type: text/plain; charset="us-ascii"
+To: Bill Vodall WA7NWP <wa7nwp@gmail.com>
+Cc: linux-hams@vger.kernel.org
 
-Is sourceforge still the primary repository for the ax25 library and tools?
+Bill Vodall WA7NWP wrote:
+> Is sourceforge still the primary repository for the ax25 library and
+> tools?
+>
+> Thanks,
+> Bill - WA7NWP
+> -
+> To unsubscribe from this list: send the line "unsubscribe linux-hams" in
+> the body of a message to majordomo@vger.kernel.org
+> More majordomo info at  http://vger.kernel.org/majordomo-info.html
+>
+Yes.  Nothing has changed in years.  Only changes have been to the
+kernel for SMP and optimizations.
 
-Thanks,
-Bill - WA7NWP
+Mike, W1NR
+
