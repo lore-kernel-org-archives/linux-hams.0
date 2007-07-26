@@ -1,48 +1,31 @@
-From: aa6qn@aa6qn.sytes.net
+From: Hamish Moffatt <hamish@cloud.net.au>
 Subject: Re: AX25 tools and packages
-Date: Thu, 26 Jul 2007 15:19:43 -0700 (PDT)
-Message-ID: <1169.66.126.66.223.1185488383.squirrel@aa6qn.sytes.net>
-References: <5abd436b0707261023nada8cf5n90532459745cd2ac@mail.gmail.com>
-    <46A90C71.4010300@w1nr.net>
+Date: Fri, 27 Jul 2007 08:29:30 +1000
+Message-ID: <20070726222930.GC16836@cloud.net.au>
+References: <5abd436b0707261023nada8cf5n90532459745cd2ac@mail.gmail.com> <46A90C71.4010300@w1nr.net> <1169.66.126.66.223.1185488383.squirrel@aa6qn.sytes.net>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7BIT
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <46A90C71.4010300@w1nr.net>
+Content-Disposition: inline
+In-Reply-To: <1169.66.126.66.223.1185488383.squirrel@aa6qn.sytes.net>
 Sender: linux-hams-owner@vger.kernel.org
 List-Id: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
-To: "Mike McCarthy, W1NR" <lists@w1nr.net>
-Cc: Bill Vodall WA7NWP <wa7nwp@gmail.com>, linux-hams@vger.kernel.org
+Content-Transfer-Encoding: 7bit
+To: linux-hams@vger.kernel.org
 
-I just downloaded a newer suite from:
-http://fpac.free.fr
+On Thu, Jul 26, 2007 at 03:19:43PM -0700, aa6qn@aa6qn.sytes.net wrote:
+> I just downloaded a newer suite from:
+> http://fpac.free.fr
 
-There were some changes to the ax25 suite to work with the later 2.6
-kernels. There is also nice MINIHOWTO.
+? Host does not exist?
 
-JohnF
+> There were some changes to the ax25 suite to work with the later 2.6
+> kernels. There is also nice MINIHOWTO.
 
-> Bill Vodall WA7NWP wrote:
->> Is sourceforge still the primary repository for the ax25 library and
->> tools?
->>
->> Thanks,
->> Bill - WA7NWP
->> -
->> To unsubscribe from this list: send the line "unsubscribe linux-hams" in
->> the body of a message to majordomo@vger.kernel.org
->> More majordomo info at  http://vger.kernel.org/majordomo-info.html
->>
-> Yes.  Nothing has changed in years.  Only changes have been to the
-> kernel for SMP and optimizations.
->
-> Mike, W1NR
->
-> -
-> To unsubscribe from this list: send the line "unsubscribe linux-hams" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at  http://vger.kernel.org/majordomo-info.html
->
->
+What changes are required? I don't think the ax25 maintainers know about
+them, if they are not on sourceforge..
 
 
+Hamish
+-- 
+Hamish Moffatt VK3SB <hamish@debian.org> <hamish@cloud.net.au>
