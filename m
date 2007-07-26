@@ -1,52 +1,29 @@
-From: Doug <appld@sasktel.net>
-Subject: Re: BayPac BP-1 Modem and Linux
-Date: Sat, 21 Jul 2007 10:09:23 -0600
-Message-ID: <0JLJ00AFHE7WFX50@bgmpomr2.sasknet.sk.ca>
+From: Stef Daniels VK5HSX <vk5hsx@wia.org.au>
+Subject: email VK2ZXQ
+Date: Fri, 27 Jul 2007 02:23:05 +0930
+Message-ID: <1185468785.4176.11.camel@jill.vk5hsx.ampr.org>
+Reply-To: vk5hsx@wia.org.au
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7BIT
+Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
 Sender: linux-hams-owner@vger.kernel.org
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"; format="flowed"
-To: linux-hams@vger.kernel.org
+Content-Type: text/plain; charset="us-ascii"
+To: Linux-Hams Mailing LIst <linux-hams@vger.kernel.org>
 
-At 08:34 PM 20/07/2007, you wrote:
->Doug wrote:
->>Is there anyway to connect a BayPac BP-1 modem to a linux system. I 
->>seem to find drivers
->>for only the epp and usb variety. I need a modem to check my port 
->>configiration via the
->>"LISTEN" command and I have run out unless I shut down the cluster 
->>and the bbs.
->>Fbb is not loaded onto the system just yet. This is a new system 
->>(Mepis 6.5) and nothing
->>else is loaded on to it yet except the ax25 stuff. The BP-1 is a 
->>serial device.
->
->Do you have the kernel modules baycom_ser_fdx and/or baycom_ser_hdx 
->? Those should be the kernel modules for baycom serial-port devices 
->-- fdx is full duplex and should work for all but the stubborn UARTs.
->
->I don't have experience with the BP-1, but I have successfully 
->loaded the parallel-port PICPAR (Tiger BP-96 modem) with the kernel 
->module baycom_par
->
->-Lance KJ5O
->
->-----------------
+Hi there,
 
-Lance they do not appear to be in the depository for Mepis. I just 
-don't want to start recompiling kernels and
-I think possibly those two drivers might need some kernel work. But I 
-will look for those and see what I have to
-do. I have never used the BP-1 before but I just happened to have one 
-on the shelf. This is my first attempt at
-getting a packet system going on anything but a Red Hat package... 
-With the depository, it looked so simple!!
+	I am wondering whether someone would have a current email address for
+John VK2ZXQ? If you have something more recent than
+jtanner@grivel.une.edu.au which have not been replied.
 
-Thanks very much,
+Many thanks in advance..
+-- 
+Regards & Best 73,
 
-Doug VE5DA
-
-
+Stef Daniels VK5HSX            - (OpenPGP: 0x828E2EB0)
+Amateur Radio Station           
+Adelaide, Sth Australia        - (vk5hsx@wia.org.au)
+Member South Coast ARC Inc.    - (www.scarc.org.au)
+Member Wireless Inst. of Aust  - (www.wia.org.au)
 
