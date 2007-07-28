@@ -1,46 +1,32 @@
-From: Michael Taylor <mctaylor@mctaylor.com>
+From: Ralf Baechle DL5RB <ralf@linux-mips.org>
 Subject: Re: AX25 tools and packages
-Date: Fri, 27 Jul 2007 10:05:17 -0400
-Message-ID: <20070727140517.GA54437@mctaylor.blacknosugar.com>
-References: <5abd436b0707261023nada8cf5n90532459745cd2ac@mail.gmail.com> <46A90C71.4010300@w1nr.net> <1169.66.126.66.223.1185488383.squirrel@aa6qn.sytes.net> <20070726222930.GC16836@cloud.net.au> <620c90570707261723m33afd476y8eab11e15456d539@mail.gmail.com>
+Date: Sat, 28 Jul 2007 14:35:58 +0100
+Message-ID: <20070728133557.GA30168@linux-mips.org>
+References: <5abd436b0707261023nada8cf5n90532459745cd2ac@mail.gmail.com>
 Mime-Version: 1.0
 Return-path: <linux-hams-owner@vger.kernel.org>
 Content-Disposition: inline
-In-Reply-To: <620c90570707261723m33afd476y8eab11e15456d539@mail.gmail.com>
+In-Reply-To: <5abd436b0707261023nada8cf5n90532459745cd2ac@mail.gmail.com>
 Sender: linux-hams-owner@vger.kernel.org
 List-Id: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
-To: linux-hams@vger.kernel.org
+To: Bill Vodall WA7NWP <wa7nwp@gmail.com>
+Cc: linux-hams@vger.kernel.org
 
-On Thu, Jul 26, 2007 at 08:23:22PM -0400, Chuck Hast wrote:
-> On 7/26/07, Hamish Moffatt <hamish@cloud.net.au> wrote:
-> >On Thu, Jul 26, 2007 at 03:19:43PM -0700, aa6qn@aa6qn.sytes.net wrote:
-> >> I just downloaded a newer suite from:
-> >> http://fpac.free.fr
+On Thu, Jul 26, 2007 at 05:23:32PM +0000, Bill Vodall WA7NWP wrote:
 
-http://www.f6fbb.org/
+> Is sourceforge still the primary repository for the ax25 library and tools?
 
-> >> There were some changes to the ax25 suite to work with the later 2.6
-> >> kernels. There is also nice MINIHOWTO.
-> >
-> Bernard has been supplying them to the maintainer so they should be in
-> there, most of them deal with ax25ipd, ROSE and FPAC. Bernard has been
+Actually DL9SAU and me have moved the development away to another
+machine a while ago when Sourceforge was basically unusable for weeks.
+The new site is {cvs,www,ftp}.linux-ax25.org.  Thomas DL9SAU has done
+various improvments and plenty of bugfixing as necessary to keep the
+tools in shape for newer Linux distributions, but what we haven't done
+yet and what is really overdue is a formal release.
 
-As one of the developers with access to ax25, I didn't know about
-this. I see that there were a couple of bugs/patches/requests since
-I last looked at the ax25 software in 2002-03, but I don't think that
-includes everything such as any 2.6 related issues. I may of missed
-any dicussion about this, so please don't think I'm blaming anyone.
-Life's too short to waste time assigning fault.
+73 de DL5RB op Ralf
 
-I would like to work with Jean-Paul F6FBB, and everyone else to try
-and prevent any unnecessary fragmentation (code forks) within our 
-already small community. 
-
-I guess this means I should setup my own packet station again,
-which I haven't done after my last time I moved...
-
-Thanks,
-Michael, VE3TIX (ex. VE1MCT)
-
+--
+Loc.    JN47BS / CQ 14 / ITU 28 / DOK A21
+Packet: DL5RB@DB0FHN.#BAY.DEU.EU
