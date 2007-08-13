@@ -1,28 +1,30 @@
 From: joe@perches.com
-Subject: [PATCH] [9/2many] MAINTAINERS - 6PACK NETWORK DRIVER FOR AX.25
-Date: Sun, 12 Aug 2007 23:21:40 -0700
-Message-ID: <46bff874.VWfwdJpJrRFP796r%joe@perches.com>
+Subject: [PATCH] [83/2many] MAINTAINERS - AX.25 NETWORK LAYER
+Date: Sun, 12 Aug 2007 23:24:00 -0700
+Message-ID: <46bff900.apRd8gxouba0kSsi%joe@perches.com>
 Mime-Version: 1.0
 Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
 Sender: linux-hams-owner@vger.kernel.org
 List-Id: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
-To: torvalds@linux-foundation.org, linux-kernel@vger.kernel.org, linux-hams@vger.kernel.org, akpm@linux-foundation.org, ajk@iehk.rwth-aachen.de
+To: torvalds@linux-foundation.org, ralf@linux-mips.org, linux-kernel@vger.kernel.org, linux-hams@vger.kernel.org, akpm@linux-foundation.org
 
 Add file pattern to MAINTAINER entry
 
 Signed-off-by: Joe Perches <joe@perches.com>
 
 diff --git a/MAINTAINERS b/MAINTAINERS
-index ad55112..ef6c7c3 100644
+index cb74477..f8fe034 100644
 --- a/MAINTAINERS
 +++ b/MAINTAINERS
-@@ -140,6 +140,7 @@ P:	Andreas Koensgen
- M:	ajk@iehk.rwth-aachen.de
+@@ -834,6 +834,9 @@ M:	ralf@linux-mips.org
  L:	linux-hams@vger.kernel.org
+ W:	http://www.linux-ax25.org/
  S:	Maintained
-+F:	drivers/net/hamradio/6pack.c
++F:	include/linux/ax25.h
++F:	include/net/ax25.h
++F:	net/ax25/
  
- 8139CP 10/100 FAST ETHERNET DRIVER
- P:	Jeff Garzik
+ BACKLIGHT CLASS/SUBSYSTEM
+ P:	Richard Purdie
