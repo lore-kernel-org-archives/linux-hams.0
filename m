@@ -1,28 +1,28 @@
-From: John Ronan <jronan@tssg.org>
-Subject: Linux & DAMA.
-Date: Wed, 8 Aug 2007 22:48:13 +0100
-Message-ID: <2B86FD6A-0A6F-4181-9604-13AB7A014563@tssg.org>
-Mime-Version: 1.0 (Apple Message framework v752.3)
+From: joe@perches.com
+Subject: [PATCH] [9/2many] MAINTAINERS - 6PACK NETWORK DRIVER FOR AX.25
+Date: Sun, 12 Aug 2007 23:21:40 -0700
+Message-ID: <46bff874.VWfwdJpJrRFP796r%joe@perches.com>
+Mime-Version: 1.0
 Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
 Sender: linux-hams-owner@vger.kernel.org
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"; delsp="yes"; format="flowed"
-To: Linux-Hams <linux-hams@vger.kernel.org>
+Content-Type: text/plain; charset="us-ascii"
+To: torvalds@linux-foundation.org, linux-kernel@vger.kernel.org, linux-hams@vger.kernel.org, akpm@linux-foundation.org, ajk@iehk.rwth-aachen.de
 
-Hi,
+Add file pattern to MAINTAINER entry
 
-I know that Linux can act as a DAMA slave, but what about a DAMA  
-master?  We've looking at putting a node on a nice high site, and  
-were wondering about a DAMA master for the site (and running split  
-frequency/full duplex as well).
+Signed-off-by: Joe Perches <joe@perches.com>
 
-Just wondering.
-John
-EI7IG
---
-John Ronan <jronan@tssg.org>, +353-51-302938
-Telecommunications Software &  Systems Group,  http://www.tssg.org
-
-
-
+diff --git a/MAINTAINERS b/MAINTAINERS
+index ad55112..ef6c7c3 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -140,6 +140,7 @@ P:	Andreas Koensgen
+ M:	ajk@iehk.rwth-aachen.de
+ L:	linux-hams@vger.kernel.org
+ S:	Maintained
++F:	drivers/net/hamradio/6pack.c
+ 
+ 8139CP 10/100 FAST ETHERNET DRIVER
+ P:	Jeff Garzik
