@@ -1,35 +1,26 @@
-From: David Miller <davem@davemloft.net>
-Subject: Re: [PATCH] ax25: don't free pointers to statically allocated data
-Date: Tue, 14 Aug 2007 17:25:56 -0700 (PDT)
-Message-ID: <20070814.172556.106263629.davem@davemloft.net>
-References: <20070814193038.GA5873@martell.zuzino.mipt.ru>
+From: Ralf Baechle DL5RB <ralf@linux-mips.org>
+Subject: Re: Linux & DAMA.
+Date: Wed, 15 Aug 2007 14:36:08 +0100
+Message-ID: <20070815133608.GA24327@linux-mips.org>
+References: <2B86FD6A-0A6F-4181-9604-13AB7A014563@tssg.org>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <20070814193038.GA5873@martell.zuzino.mipt.ru>
+Content-Disposition: inline
+In-Reply-To: <2B86FD6A-0A6F-4181-9604-13AB7A014563@tssg.org>
 Sender: linux-hams-owner@vger.kernel.org
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: Text/Plain; charset="us-ascii"
-To: adobriyan@gmail.com
-Cc: akpm@osdl.org, netdev@vger.kernel.org, linux-hams@vger.kernel.org
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+To: John Ronan <jronan@tssg.org>
+Cc: Linux-Hams <linux-hams@vger.kernel.org>
 
-From: Alexey Dobriyan <adobriyan@gmail.com>
-Date: Tue, 14 Aug 2007 23:30:38 +0400
+On Wed, Aug 08, 2007 at 10:48:13PM +0100, John Ronan wrote:
 
-> commit 8d5cf596d10d740b69b5f4bbdb54b85abf75810d started to add statically
-> allocated ax25_protocol's to list. However kfree() was still in place waiting
-> for unsuspecting ones on module removal.
-> 
-> Steps to reproduce:
-> 
-> 	modprobe netrom
-> 	rmmod netrom
-> 
-> P.S.: code would benefit greatly from list_add/list_del usage
-> 
-> kernel BUG at mm/slab.c:592!
-> invalid opcode: 0000 [1] PREEMPT SMP 
- ...
-> Signed-off-by: Alexey Dobriyan <adobriyan@gmail.com>
+> I know that Linux can act as a DAMA slave, but what about a DAMA  
+> master?  We've looking at putting a node on a nice high site, and  
+> were wondering about a DAMA master for the site (and running split  
+> frequency/full duplex as well).
 
-Also applied, thanks a lot.
+DAMA master mode isn't currently supported.
+
+  Ralf
