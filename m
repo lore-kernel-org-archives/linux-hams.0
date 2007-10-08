@@ -1,45 +1,46 @@
-From: Tihomir Heidelberg - 9a4gl <9a4gl@hamradio.hr>
+From: Hamish Moffatt <hamish@cloud.net.au>
 Subject: Re: AX.25 Kernel - problem - ax25_sendmsg returns EMSGSIZE !
-Date: Mon, 08 Oct 2007 21:38:25 +0200
-Message-ID: <470A8731.3040109@hamradio.hr>
-References: <47093A4E.5040409@hamradio.hr> <20071008082900.GB24782@cloud.net.au> <470A1035.5070900@hamradio.hr> <20071008134447.GA30451@cloud.net.au> <470A4456.6000703@hamradio.hr> <courier.470A5218.00002492@radagast.org>
-Reply-To: 9a4gl@hamradio.hr
+Date: Tue, 9 Oct 2007 08:36:46 +1000
+Message-ID: <20071008223646.GC15879@cloud.net.au>
+References: <47093A4E.5040409@hamradio.hr> <20071008082900.GB24782@cloud.net.au> <470A1035.5070900@hamradio.hr> <20071008134447.GA30451@cloud.net.au> <470A4456.6000703@hamradio.hr>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <courier.470A5218.00002492@radagast.org>
+Content-Disposition: inline
+In-Reply-To: <470A4456.6000703@hamradio.hr>
 Sender: linux-hams-owner@vger.kernel.org
 List-Id: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
-To: Dave Platt <dplatt@radagast.org>
-Cc: linux-hams@vger.kernel.org
+Content-Transfer-Encoding: 7bit
+To: linux-hams@vger.kernel.org
 
-Hi,
+On Mon, Oct 08, 2007 at 04:53:10PM +0200, Tihomir Heidelberg - 9a4gl wrote:
+> Hi,
+> 
+> Hamish Moffatt wrote:
+> > socket(7) doesn't make any distinction between SOCK_DGRAM and
+> > SOCK_SEQPACKET with regard to fragmentation. SOCK_SEQPACKET just adds
+> > reliability and order.
+> 
+> Hm, socket(2) or (7) ? Both documents do not mention fragmentation. But,
+> according to socket(2), difference between SOCK_STREAM and
+> SOCK_SEQPACKET is that first one supports out-of-band data which is not
+> (easy) doable in AX.25 world. So, it is ok to use SOCK_SEQPACKET for
+> what we/I call AX.25 connection.
 
-Dave Platt wrote:
-> It is more usual to use SOCK_STREAM to establish connections, in which
-> you wish to write arbitrary amounts of data across the connection, and
-> don't care whether the data is received in precisely the same
-> chunk-sizes as it was written.  Fragmentation of SOCK_STREAM data is
-> fine... but it's probably best done by the protocol layers up above
-> the raw-packet level, by the same code which does flow control and
-> packet acknowledgement.
->   
-Yes, but we do not have SOCK_STREAM for AX.25 :-(
-> Applications which wish to use SOCK_SEQPACKET rather than SOCK_STREAM,
-> but wish to write arbitrary amounts of data... well, I'm not certain
-> why they would wish to do this, but if they do they should probably
-> query the MTU value out of the network interface/stack, and limit
-> their write() calls to that amount of data, just as they would have to
-> do if they were using SOCK_DGRAM.
->   
-I think that in AX.25 world there is no real situation for
-SOCK_SEQPACKET, because any node in chain may have lower MTU and can
-fragment your frame and you do not have any guarantee that packet will
-reach end as you sent it. So you just define what will be in first hop.
-Actually, you always have stream.
+Yes I meant socket(2).
 
-Anyway, why checking MTU, why not PACLEN ? Because PACLEN is the one
-which limits maximum length of frame, not MTU ! Right ?
+> What I want is to have SOCK_SEQPACKET reliable, accepting any amount of
+> data and on write returning number of bytes accepted. I do not care much
+> if fragmentation will take place or not, but currently I do not see any
+> reason why not.
 
-73 de Tihomir Heidelberg, 9a4gl
+I think you want SOCK_STREAM. You just want a byte stream which is
+arbitrarily split into packets; SOCK_DGRAM and SEQPACKET are intended
+for applications which care about packet boundaries.
+
+Since SOCK_STREAM is apparently not so different from SOCK_SEQPACKET,
+perhaps you could implement it for AX.25?
+
+Hamish
+-- 
+Hamish Moffatt VK3SB <hamish@debian.org> <hamish@cloud.net.au>
