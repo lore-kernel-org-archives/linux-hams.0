@@ -1,56 +1,55 @@
-From: Dave Platt <dplatt@radagast.org>
+From: Stephen Hemminger <shemminger@linux-foundation.org>
 Subject: Re: AX.25 Kernel - problem - ax25_sendmsg returns EMSGSIZE !
-Date: Mon, 08 Oct 2007 08:51:52 -0700
-Message-ID: <courier.470A5218.00002492@radagast.org>
+Date: Mon, 8 Oct 2007 09:55:22 -0700
+Message-ID: <20071008095522.5c68aacf@freepuppy.rosehill>
 References: <47093A4E.5040409@hamradio.hr>
- <20071008082900.GB24782@cloud.net.au> <470A1035.5070900@hamradio.hr>
- <20071008134447.GA30451@cloud.net.au> <470A4456.6000703@hamradio.hr>
+	<20071008104541.GA4924@linux-mips.org>
 Mime-Version: 1.0
 Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <470A4456.6000703@hamradio.hr>
+In-Reply-To: <20071008104541.GA4924@linux-mips.org>
 Sender: linux-hams-owner@vger.kernel.org
 List-Id: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
-To: linux-hams@vger.kernel.org, 9a4gl@hamradio.hr
+To: Ralf Baechle DL5RB <ralf@linux-mips.org>
+Cc: Tihomir Heidelberg - 9a4gl <9a4gl_MAKNI_OVO@hamradio.hr>, linux-hams@vger.kernel.org
 
-> Hm, as I see AX.25 sockets supports SOCK_DGRAM, SOCK_SEQPACKET and
-> SOCK_RAW. I am not talking about raw and I am not using raw socket.
-> IMHO, users of raw sockets should be aware of MTU and I would not
-> fragment raw sockets in kernel.
+On Mon, 8 Oct 2007 11:45:41 +0100
+Ralf Baechle DL5RB <ralf@linux-mips.org> wrote:
+
+> On Sun, Oct 07, 2007 at 09:58:06PM +0200, Tihomir Heidelberg - 9a4gl wrote:
+> 
+> > Using kernel 2.6.21.6 here. If you write to AX.25 socket bytes more then
+> > MTU, write will return -1 and errno will be set to 90 (EMSGSIZE =
+> > [Message too long]).
+> > 
+> > This happend in net/ax25/af_ax25.c in function ax25_sendmsg at:
+> > 
+> >         if (len > ax25->ax25_dev->dev->mtu) {
+> >                 err = -EMSGSIZE;
+> >                 goto out;
+> >         }
+> 
+> This is a Linux 2.6.2 change, I append the patch which introduced the
+> change below.  I'm cc'ing Stephen Hemminger who hopefully recalls why his
+> patch did introduce this change.
+> 
 >
-> What I want is to have SOCK_SEQPACKET reliable, accepting any amount of
-> data and on write returning number of bytes accepted. I do not care much
-> if fragmentation will take place or not, but currently I do not see any
-> reason why not.
+I have no memory of adding this, as long as lower layers handle it
+the check should be there.
 
-As I understand it, SOCK_SEQPACKET is intended to be used in protocols
-where the packet-to-packet boundary is significant - that is, each
-packet is supposed to be interpreted as a whole entity, and the packet
-length is significant to the application.  It is probably not a transport 
-method which should be fragmented by the lower layers of the protocol
-stack, unless the stack can reassemble the fragments into a single
-packet of the correct boundary and size before presenting it to the
-application at the receiving end.  For the same reason, it's probably
-appropriate for the kernel to return a "size exceeds MTU error",
-rather than writing as much as it can and returning MTU to the
-application, since this would fragment the packet and thus violate the
-intended semantics of SOCK_SEQPACKET.
+> > Also, as I see, currently ax25 stack is not checking if dev_queue_xmit
+> > fails. Does this means that AX.25 kernel can loose some frames when
+> > device queue is full ?  
+> 
+> Yes.  This isn't a bug - packet delivery is unreliable.  But what I'd
+> really like to see is the AX.25 stack to throttle itself instead of
+> continuing to stuff packets into an overflowing queue.
 
-It is more usual to use SOCK_STREAM to establish connections, in which
-you wish to write arbitrary amounts of data across the connection, and
-don't care whether the data is received in precisely the same
-chunk-sizes as it was written.  Fragmentation of SOCK_STREAM data is
-fine... but it's probably best done by the protocol layers up above
-the raw-packet level, by the same code which does flow control and
-packet acknowledgement.
+The traditional definition of X.25 was reliable (except for network
+resets), so it seems odd that AX.25 would change that. It might be that
+AX.25 doesn't really implement traditional X.25 but just uses the formatting
+and framing??
 
-Applications which wish to use SOCK_SEQPACKET rather than SOCK_STREAM,
-but wish to write arbitrary amounts of data... well, I'm not certain
-why they would wish to do this, but if they do they should probably
-query the MTU value out of the network interface/stack, and limit
-their write() calls to that amount of data, just as they would have to
-do if they were using SOCK_DGRAM.
-
-That's my $.02 worth :-)
-
+-- 
+Stephen Hemminger <shemminger@linux-foundation.org>
