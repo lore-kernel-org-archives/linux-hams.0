@@ -1,75 +1,53 @@
-From: "Mike McCarthy, W1NR" <lists@w1nr.net>
-Subject: =?ISO-8859-1?Q?=5BFwd=3A_=5Bopensuse-ham=5D_Ham_Radio_Pa?=
- =?ISO-8859-1?Q?ckages_for_openSUSE_10=2E3_//_Amateurfunkpakete?=
- =?ISO-8859-1?Q?_f=FCr_openSUSE_10=2E3=5D?=
-Date: Fri, 12 Oct 2007 09:26:39 -0400
-Message-ID: <470F760F.6040009@w1nr.net>
+From: Ralf Baechle DL5RB <ralf@linux-mips.org>
+Subject: Re: linux-ax25.org website issues
+Date: Fri, 12 Oct 2007 18:16:01 +0100
+Message-ID: <20071012171601.GA10256@linux-mips.org>
+References: <470F751D.9000303@w1nr.net>
 Mime-Version: 1.0
-Content-Transfer-Encoding: QUOTED-PRINTABLE
 Return-path: <linux-hams-owner@vger.kernel.org>
+Content-Disposition: inline
+In-Reply-To: <470F751D.9000303@w1nr.net>
 Sender: linux-hams-owner@vger.kernel.org
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="iso-8859-1"
-To: linux-hams@vger.kernel.org
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+To: "Mike McCarthy, W1NR" <lists@w1nr.net>
+Cc: opensuse-ham@opensuse.org, linux-hams@vger.kernel.org
 
+On Fri, Oct 12, 2007 at 09:22:37AM -0400, Mike McCarthy, W1NR wrote:
 
-Hi there,
-the ham radio packages for openSUSE 10.3 are ready for download.
-Please download them at:
-http://download.opensuse.org/repositories/hamradio/openSUSE_10.3/
-or one of the numerous mirrors around the world.
-At the moment we (that's Jan-Simon, DL9PF and me, DG7GT) implemented 74=
-=20
-packages into the build service. So all the packages are ready for open=
-SUSE=20
-10.1, 10.2 and 10.3 and even the outdated version SUSE 10.0!
-Also in future we will try to implement more packages. But it would be =
-nice to=20
-get more feedback! Are the packages usable? If a package is broken, ple=
-ase=20
-write us an error report. If possible, we will try to fix the mistake o=
-r talk=20
-to the developer of the program.
-Suggestions for new packages are also welcome just like hints for old=20
-versions...
-Have fun with the packages!
+> There seems to be a database problem at the www.linux-ax25.org website. 
+> Does anyone have the contact info for the webmaster to let them know
+> there is a problem?
 
-73 de Tim, DG7GT
+You might try webmaster@linux-ax25.org ;-)
 
-Hallo zusammen,
-nach mehrfacher Nachfrage: die Amateurfunkpakete f=FCr openSUSE 10.3 si=
-nd fertig=20
-zum Download.
-Herunterladbar sind sie von:
-http://download.opensuse.org/repositories/hamradio/openSUSE_10.3/
-oder einem der zahlreichen Spiegelserver.
-Im Moment haben wir (Jan-Simon, DL9PF und ich, DG7GT) 74 Pakete in den=20
-Buildservice importiert. Somit sind alle Pakete f=FCr die Versionen ope=
-nSUSE=20
-10.1, 10.2 und 10.3 verf=FCgbar. Sogar f=FCr die betagte Version SUSE 1=
-0.0 sind=20
-die meisten Pakete verf=FCgbar.
-Wir werden uns auch in Zunkunft bem=FChen, weitere Pakete zu integriere=
-n. Es=20
-w=E4re aber sehr nett, wenn von den Nutzern etwas mehr Feedback k=E4me.=
- Sind die=20
-Pakete benutzbar? Wenn etwas nicht geht, dann schreibt uns gerne einen=20
-=46ehlerbericht, wenn wir k=F6nnen, werden wir die Fehler beseitigen od=
-er mit dem=20
-Entwickler des jeweiligen Programms Kontakt aufnehmen...
-Auch Vorschl=E4ge f=FCr neue Programme sind willkommen oder Hinweise au=
-f veraltete=20
-Versionen...
-Viel Spa=DF mit den Paketen!
+What happened is that mysql once more shot itself into the foot:
 
-73 de Tim, DG7GT
---=20
-Tim Fischer
---=20
+[root@ftp wikidb_ham]# myisamchk text.MYI 
+Checking MyISAM file: text.MYI
+Data records:    2253   Deleted blocks:      10
+myisamchk: warning: Table is marked as crashed
+- check file-size
+- check record delete-chain
+- check key delete-chain
+- check index reference
+- check data record references index: 1
+myisamchk: error: Found 2252 keys of 2253
+- check record links
+myisamchk: error: Keypointers and record positions doesn't match
+MyISAM-table 'text.MYI' is corrupted
+Fix it using switch "-r" or "-o"
+[root@ftp wikidb_ham]# 
 
+MySQL marking one of its tables as crashed without crashing itself has
+unfortunately become a somewhat regular event.  I think it may have
+started around the time when the system got migrated from a dual P3 to a
+Xeon P4 running all 64-bit software so already quite a while ago.  Maybe
+somebody here has seen the same sort of issue?
 
--
-To unsubscribe from this list: send the line "unsubscribe linux-hams" i=
-n
-the body of a message to majordomo@vger.kernel.org
-More majordomo info at  http://vger.kernel.org/majordomo-info.html
+73 de DL5RB op Ralf
+
+--
+Loc.    JN47BS / CQ 14 / ITU 28 / DOK A21
+Packet: DL5RB@DB0FHN.#BAY.DEU.EU
