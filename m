@@ -1,7 +1,7 @@
-From: Erik Jakobsen <erik_ja@mail.tele.dk>
+From: Peter <pc2a@pi4cc.nl>
 Subject: Re: TNC3
-Date: Sat, 20 Oct 2007 11:42:29 +0200
-Message-ID: <4719CD85.9010108@mail.tele.dk>
+Date: Sat, 20 Oct 2007 14:41:39 +0000
+Message-ID: <471A13A3.8090206@pi4cc.nl>
 References: <4718F3B1.1020401@pi4cc.nl> <4719CDDB.3030604@ccr.jussieu.fr>
 Mime-Version: 1.0
 Content-Transfer-Encoding: 7bit
@@ -9,27 +9,38 @@ Return-path: <linux-hams-owner@vger.kernel.org>
 In-Reply-To: <4719CDDB.3030604@ccr.jussieu.fr>
 Sender: linux-hams-owner@vger.kernel.org
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"
-To: linux-hams@vger.kernel.org
+Content-Type: text/plain; charset="us-ascii"; format="flowed"
+To: Bernard Pidoux <pidoux@ccr.jussieu.fr>
+Cc: linux-hams@vger.kernel.org
 
-Bernard Pidoux wrote:
+Hi all
+
+The trick is/was to put the TNC in KISS mode.
+The TNC3S has serveral programmas that can put into the memory. With the 
+right dipswitch on the back you can startup a programma In my case 
+rskiss. This put the TNC in KISS mode on the rs232 port at boot-up. 
+Thanks for the emails!
+
+Peter
+
+Bernard Pidoux schreef:
 > Hi Peter,
 >
 >
 > Your info is absolutely right.
 >
-> However, you should put your TNC into kiss mode manually i.e. using a
-> terminal program to instruct it to change into kiss mode (see the
+> However, you should put your TNC into kiss mode manually i.e. using a 
+> terminal program to instruct it to change into kiss mode (see the 
 > TNC3S manual).
 >
-> Communicating with the terminal program through serial port with TNC
+> Communicating with the terminal program through serial port with TNC 
 > is only possible if AX25 driver is NOT loaded.
 >
 > Then the order of operation is :
 >
 > Enter into your terminal program.
 > Choose the appropriate port and speed.
-> Reboot your TNC3S in order to make it detect your serial port speed
+> Reboot your TNC3S in order to make it detect your serial port speed 
 > when pressing ENTER key (autobaud routine when TNC powerer up).
 >
 > Type the commands :
@@ -43,15 +54,15 @@ Bernard Pidoux wrote:
 > RESET        and press return
 >
 >
-> Now your TNC is in kiss mode and you cannot communicate any more via
+> Now your TNC is in kiss mode and you cannot communicate any more via 
 > the terminal program. You will only see garbage on the screen.
 >
-> You can now load the AX25 mkiss driver and continue with AX25
+> You can now load the AX25 mkiss driver and continue with AX25 
 > applications.
 >
 >
-> Note ; since I did not perform these commands for years (I left my
-> TNC2 in KISS mode forever) I may have forgotten the syntax) I do not
+> Note ; since I did not perform these commands for years (I left my 
+> TNC2 in KISS mode forever) I may have forgotten the syntax) I do not 
 > remember the name of Linux simple serial communication program...
 >
 > 73 de Bernard, f6bvp
@@ -87,4 +98,5 @@ Bernard Pidoux wrote:
 > the body of a message to majordomo@vger.kernel.org
 > More majordomo info at  http://vger.kernel.org/majordomo-info.html
 >
-minicom is the program :-)
+>
+>
