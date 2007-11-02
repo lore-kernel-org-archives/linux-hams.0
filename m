@@ -1,29 +1,28 @@
-From: "Michel Beaudry" <ve2bcw@gmail.com>
-Subject: aprsdigi
-Date: Mon, 29 Oct 2007 20:24:45 -0400
-Message-ID: <c17fc8440710291724g264808e1xabbedab2fea9b41a@mail.gmail.com>
+From: T + J Williams <wa0eir@mchsi.com>
+Subject: twcw 1.3 release
+Date: Fri, 02 Nov 2007 01:24:53 -0500
+Message-ID: <1193984694.7103.14.camel@localhost.localdomain>
 Mime-Version: 1.0
 Content-Transfer-Encoding: 7bit
-Return-path: <linux-hams-owner@vger.kernel.org>
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
-        bh=F8/UxYqHGPUYRoHgMt/+uj/CQ54uDWPGw3BFVQneWnY=;
-        b=oQ1gsK/7BZCtgHZLICWFgge4RMFD+47LXUew/whVuRa16UvQqF3pgJXPI+Zsm09VbCvxgUZ1uk0NiMWUK+ISSW7OewRQnlezWmhDp3ZBF94dju3rZ/2pJCvj4xTVPCJMAcBUBD8efpEx0hbw07zG6282NS+T7tB28fW1gVsHsrc=
-Content-Disposition: inline
-Sender: linux-hams-owner@vger.kernel.org
+Return-path: <opensuse-ham+bounces-39-suse-ham-e=m.gmane.org@opensuse.org>
+List-Post: <mailto:opensuse-ham@opensuse.org>
+List-Help: <mailto:opensuse-ham+help@opensuse.org>
+List-Subscribe: <mailto:opensuse-ham+subscribe@opensuse.org>
+List-Unsubscribe: <mailto:opensuse-ham+unsubscribe@opensuse.org>
+List-Owner: <mailto:opensuse-ham+owner@opensuse.org>
 List-Id: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
-To: linux-hams@vger.kernel.org
+To: Debian Hams <debian-hams@lists.debian.org>, "Ham Software - QTH.net" <ham-software@mailman.qth.net>, Linux Hams <linux-hams@vger.kernel.org>, Open Suse Ham <opensuse-ham@opensuse.org>
 
-Hi,
+Hi
+Version 1.3 of twcw has been release and can be found at:
+http://wa0eir.ham.org
 
-I have been asked to setup a aprs digi and igate in our area; xastir
-seems to function well for Igate purposes.
+This version has improved audio thanks to some code from
+"qrq" by DJ1YFK.
+For a complete description and screen shots, see the web site.
 
-Does aprsdigi support the new paradgim widen-N path and the SSn-N PATH and how
-to configure it?
-
-thanks,
-Michel
-ve2bcw
+-- 
+73,
+Ted - wa0eir
+http://wa0eir.ham.org
