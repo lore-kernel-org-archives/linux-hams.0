@@ -1,33 +1,38 @@
-From: Matti Aarnio <matti.aarnio@zmailer.org>
-Subject: listen -utility vs. aprsd and its treatment of AX.25 sockets..
-Date: Tue, 6 Nov 2007 22:52:47 +0200
-Message-ID: <20071106205247.GO6372@mea-ext.zmailer.org>
+From: Hamish Moffatt <hamish@cloud.net.au>
+Subject: Re: aprsdigi
+Date: Wed, 7 Nov 2007 08:00:27 +1100
+Message-ID: <20071106210027.GA30845@cloud.net.au>
+References: <c17fc8440710291724g264808e1xabbedab2fea9b41a@mail.gmail.com> <20071106194925.GL6372@mea-ext.zmailer.org>
 Mime-Version: 1.0
 Return-path: <linux-hams-owner@vger.kernel.org>
 Content-Disposition: inline
+In-Reply-To: <20071106194925.GL6372@mea-ext.zmailer.org>
 Sender: linux-hams-owner@vger.kernel.org
 List-Id: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
 To: linux-hams@vger.kernel.org
 
+On Tue, Nov 06, 2007 at 09:49:25PM +0200, Matti Aarnio wrote:
+> On Mon, Oct 29, 2007 at 08:24:45PM -0400, Michel Beaudry wrote:
+> > Hi,
+> > 
+> > I have been asked to setup a aprs digi and igate in our area; xastir
+> > seems to function well for Igate purposes.
+> > 
+> > Does aprsdigi support the new paradgim widen-N path and the SSn-N PATH and how
+> > to configure it?
+> 
+> If all you really need is receive-only, then a very early test version might
+> interest you:
+> 
+>        http://ham.zmailer.org/oh2mqk/aprsazel/aprsg-ng-v0.02.tar.gz
 
+If you only need read-only gating, then aprsmon from the aprsdigi package 
+would also suit.
 
-   rx_socket = socket(PF_PACKET, SOCK_PACKET, htons(proto));
+What will aprsg-ng do eventually?
 
-   tx_socket = socket(PF_AX25, SOCK_DGRAM, 0)
-
-
-Where the 'proto' is either ETH_P_AX25  or ETH_P_ALL.
-
-
-In the  'listen'  utility the proto is  ETH_P_AX25  unless '-a' option
-is given, then it is ETH_P_ALL.  In  'aprsd' it is always ETH_P_ALL.
-
-
-Given explanation is that ETH_P_AX25 sees only incoming packets, while
-ETH_P_ALL sees also outgoing ones.   Presuming that I am only interested
-in AX.25 packets but do want to know also outgoing frames, which one
-I should use -- or is the commentary on this utilities sources wrong ?
-
-  73 de Matti, OH2MQK
+Hamish
+-- 
+Hamish Moffatt VK3SB <hamish@debian.org> <hamish@cloud.net.au>
