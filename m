@@ -1,28 +1,32 @@
-From: T + J Williams <wa0eir@mchsi.com>
-Subject: twcw 1.3 release
-Date: Fri, 02 Nov 2007 01:24:53 -0500
-Message-ID: <1193984694.7103.14.camel@localhost.localdomain>
+From: "Curt, WE7U" <archer@eskimo.com>
+Subject: New Xastir Release
+Date: Tue, 6 Nov 2007 10:55:31 -0800 (PST)
+Message-ID: <Pine.SUN.4.58.0711061055130.22074@eskimo.com>
+Reply-To: "Curt Mills, WE7U" <archer@eskimo.com>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
-Return-path: <opensuse-ham+bounces-39-suse-ham-e=m.gmane.org@opensuse.org>
-List-Post: <mailto:opensuse-ham@opensuse.org>
-List-Help: <mailto:opensuse-ham+help@opensuse.org>
-List-Subscribe: <mailto:opensuse-ham+subscribe@opensuse.org>
-List-Unsubscribe: <mailto:opensuse-ham+unsubscribe@opensuse.org>
-List-Owner: <mailto:opensuse-ham+owner@opensuse.org>
+Return-path: <linux-hams-owner@vger.kernel.org>
+Sender: linux-hams-owner@vger.kernel.org
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"
-To: Debian Hams <debian-hams@lists.debian.org>, "Ham Software - QTH.net" <ham-software@mailman.qth.net>, Linux Hams <linux-hams@vger.kernel.org>, Open Suse Ham <opensuse-ham@opensuse.org>
+Content-Type: TEXT/PLAIN; charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+To: linux-hams@vger.kernel.org
 
-Hi
-Version 1.3 of twcw has been release and can be found at:
-http://wa0eir.ham.org
 
-This version has improved audio thanks to some code from
-"qrq" by DJ1YFK.
-For a complete description and screen shots, see the web site.
+Project: XASTIR  (xastir)
+Package: xastir-stable
+Date   : 2007-11-06 09:20
 
--- 
-73,
-Ted - wa0eir
-http://wa0eir.ham.org
+Project "XASTIR" ('xastir') has released the new version of package
+'xastir-stable'.
+You can download it from SourceForge.net by following this link:
+<https://sourceforge.net/project/showfiles.php?group_id=45562&release_id=552245>
+or browse Release Notes and ChangeLog by visiting this link:
+<https://sourceforge.net/project/shownotes.php?release_id=552245>
+
+Xastir Homepage:  <http://www.xastir.org>
+
+--
+Curt, WE7U: <www.eskimo.com/~archer/>     XASTIR: <www.xastir.org>
+  "Lotto:  A tax on people who are bad at math." -- unknown
+"Windows:  Microsoft's tax on computer illiterates." -- WE7U
+The world DOES revolve around me:  I picked the coordinate system!
