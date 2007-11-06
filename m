@@ -1,37 +1,37 @@
 From: Hamish Moffatt <hamish@cloud.net.au>
-Subject: Re: aprsdigi
-Date: Wed, 7 Nov 2007 08:00:27 +1100
-Message-ID: <20071106210027.GA30845@cloud.net.au>
-References: <c17fc8440710291724g264808e1xabbedab2fea9b41a@mail.gmail.com> <20071106194925.GL6372@mea-ext.zmailer.org>
+Subject: Re: listen -utility vs. aprsd and its treatment of AX.25 sockets..
+Date: Wed, 7 Nov 2007 08:04:56 +1100
+Message-ID: <20071106210456.GC30845@cloud.net.au>
+References: <20071106205247.GO6372@mea-ext.zmailer.org>
 Mime-Version: 1.0
 Return-path: <linux-hams-owner@vger.kernel.org>
 Content-Disposition: inline
-In-Reply-To: <20071106194925.GL6372@mea-ext.zmailer.org>
+In-Reply-To: <20071106205247.GO6372@mea-ext.zmailer.org>
 Sender: linux-hams-owner@vger.kernel.org
 List-Id: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
 To: linux-hams@vger.kernel.org
 
-On Tue, Nov 06, 2007 at 09:49:25PM +0200, Matti Aarnio wrote:
-> On Mon, Oct 29, 2007 at 08:24:45PM -0400, Michel Beaudry wrote:
-> > Hi,
-> > 
-> > I have been asked to setup a aprs digi and igate in our area; xastir
-> > seems to function well for Igate purposes.
-> > 
-> > Does aprsdigi support the new paradgim widen-N path and the SSn-N PATH and how
-> > to configure it?
+On Tue, Nov 06, 2007 at 10:52:47PM +0200, Matti Aarnio wrote:
+>    rx_socket = socket(PF_PACKET, SOCK_PACKET, htons(proto));
 > 
-> If all you really need is receive-only, then a very early test version might
-> interest you:
+>    tx_socket = socket(PF_AX25, SOCK_DGRAM, 0)
 > 
->        http://ham.zmailer.org/oh2mqk/aprsazel/aprsg-ng-v0.02.tar.gz
+> Where the 'proto' is either ETH_P_AX25  or ETH_P_ALL.
+> 
+> 
+> In the  'listen'  utility the proto is  ETH_P_AX25  unless '-a' option
+> is given, then it is ETH_P_ALL.  In  'aprsd' it is always ETH_P_ALL.
 
-If you only need read-only gating, then aprsmon from the aprsdigi package 
-would also suit.
+When I added AX.25 sockets functionality to aprsd, I "leveraged" the
+code from listen, so you should expect them to be the same.
 
-What will aprsg-ng do eventually?
+I can't think now why aprsd would need to monitor outgoing frames
+though. Perhaps so that it hears packets sent by other AX.25
+applications running on the same host eg aprsdigi. However it does add
+the requirement to run as root which aprsd might not have otherwise.
+
 
 Hamish
 -- 
