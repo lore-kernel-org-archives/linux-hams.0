@@ -1,32 +1,75 @@
-From: "Curt, WE7U" <archer@eskimo.com>
-Subject: New Xastir Release
-Date: Tue, 6 Nov 2007 10:55:31 -0800 (PST)
-Message-ID: <Pine.SUN.4.58.0711061055130.22074@eskimo.com>
-Reply-To: "Curt Mills, WE7U" <archer@eskimo.com>
+From: Matti Aarnio <matti.aarnio@zmailer.org>
+Subject: Re: aprsdigi
+Date: Tue, 6 Nov 2007 21:49:25 +0200
+Message-ID: <20071106194925.GL6372@mea-ext.zmailer.org>
+References: <c17fc8440710291724g264808e1xabbedab2fea9b41a@mail.gmail.com>
 Mime-Version: 1.0
 Return-path: <linux-hams-owner@vger.kernel.org>
+Content-Disposition: inline
+In-Reply-To: <c17fc8440710291724g264808e1xabbedab2fea9b41a@mail.gmail.com>
 Sender: linux-hams-owner@vger.kernel.org
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: TEXT/PLAIN; charset="us-ascii"
+Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
-To: linux-hams@vger.kernel.org
+To: Michel Beaudry <ve2bcw@gmail.com>
+Cc: linux-hams@vger.kernel.org
+
+On Mon, Oct 29, 2007 at 08:24:45PM -0400, Michel Beaudry wrote:
+> Hi,
+> 
+> I have been asked to setup a aprs digi and igate in our area; xastir
+> seems to function well for Igate purposes.
+> 
+> Does aprsdigi support the new paradgim widen-N path and the SSn-N PATH and how
+> to configure it?
 
 
-Project: XASTIR  (xastir)
-Package: xastir-stable
-Date   : 2007-11-06 09:20
+If all you really need is receive-only, then a very early test version might
+interest you:
 
-Project "XASTIR" ('xastir') has released the new version of package
-'xastir-stable'.
-You can download it from SourceForge.net by following this link:
-<https://sourceforge.net/project/showfiles.php?group_id=45562&release_id=552245>
-or browse Release Notes and ChangeLog by visiting this link:
-<https://sourceforge.net/project/shownotes.php?release_id=552245>
+       http://ham.zmailer.org/oh2mqk/aprsazel/aprsg-ng-v0.02.tar.gz
 
-Xastir Homepage:  <http://www.xastir.org>
+It is very small ANSI-C program (or perhaps C90 standard), which on Linux
+system can also receive packets from local AX.25 network (apparently).
+Will relay everything (sans couple simple rules) to configured APRS-IS
+server.
 
---
-Curt, WE7U: <www.eskimo.com/~archer/>     XASTIR: <www.xastir.org>
-  "Lotto:  A tax on people who are bad at math." -- unknown
-"Windows:  Microsoft's tax on computer illiterates." -- WE7U
-The world DOES revolve around me:  I picked the coordinate system!
+It does not use _any_ external libraries aside of glibc on Linux.
+It runs at _any_ POSIX system with serial port(s)[*] and IP network stack.
+At Linux it will listen on internal AX.25 network if such is available.
+
+*) I use USB serial port cable to my KISS TNC.
+
+It is so early a beast that I got it running for the most part a week ago,
+and now it has been doing my local  Rx -> KISSTNC -> Rx-i-gate -> APRS-IS
+processing.   At the moment the TNC must be talking plain basic KISS.
+The TODO -file has many important things, like usage manual...
+
+
+You may rightly wonder, why no threads, widget-libraries, C++ ?
+I wanted to show that even "old" methodologies can be used for successfull
+and especially lightweight end result.   One which can be placed on very
+small and low-power gadget computer drinking up from 48V batteries at a ham
+site.  Rack-PC:s with spinning disks don't survive Finnish winters..
+Fanless small machines may survive.
+
+Like this one:
+   http://ham.zmailer.org/gallery2/v/oh2mqk/2007/06/16-a/img_0320.jpg.html
+
+That one is actually a bit on the hefty side of things, but has read-only
+mounted flash disk, and 128 MB RAM.  It runs OH2RDY APRS GW.
+
+The radio of OH2RAY + TNC are on the low edge of this photo:
+   http://ham.zmailer.org/gallery2/v/oh2mqk/2007/06/16-a/img_0312.jpg.html
+
+rest is OH2RAY repeater (70 cm band), and common 24V/14V DC supplies.
+
+
+
+> thanks,
+> Michel
+> ve2bcw
+
+73 de Matti, OH2MQK
+
+    http://aprs.fi/info/OH2MQK-1
