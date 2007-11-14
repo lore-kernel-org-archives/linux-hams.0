@@ -1,53 +1,33 @@
-From: "Bill Vodall WA7NWP" <wa7nwp@gmail.com>
+From: "Curt, WE7U" <archer@eskimo.com>
 Subject: Re: KISS packets and NetCat
-Date: Wed, 14 Nov 2007 17:20:29 +0000
-Message-ID: <5abd436b0711140920u1cce82c8v201ffa9f83e94bbb@mail.gmail.com>
-References: <5abd436b0711131050o1563c9fh468cb1c1c1660c84@mail.gmail.com>
-	 <15109.141.129.1.98.1194982763.squirrel@mckeehan.homeip.net>
+Date: Wed, 14 Nov 2007 09:26:04 -0800 (PST)
+Message-ID: <Pine.SUN.4.58.0711140923470.18929@eskimo.com>
+References: <5abd436b0711131050o1563c9fh468cb1c1c1660c84@mail.gmail.com> 
+ <15109.141.129.1.98.1194982763.squirrel@mckeehan.homeip.net>
+ <5abd436b0711140920u1cce82c8v201ffa9f83e94bbb@mail.gmail.com>
+Reply-To: "Curt Mills, WE7U" <archer@eskimo.com>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        bh=Di/sdn4WGm97wIvQBwIwAyWBQYka0tyFu5W2cZPONM4=;
-        b=ryy7UiapO2tDQD0brN4J0C9gA4ZON2Bs399AY5aCpy/Phhr95CYewaBvwyNpw5W7wP3YEdaYHtA8Mh4GDkwpNh3RprvKEeBM49dt9RLmwMSjhPTS4aqtdpHse3ZPGvBPkZv1yS52HKdMQeWUa0ajkuzFNrUR1C21rRRnIn9/f5A=
-In-Reply-To: <15109.141.129.1.98.1194982763.squirrel@mckeehan.homeip.net>
-Content-Disposition: inline
+In-Reply-To: <5abd436b0711140920u1cce82c8v201ffa9f83e94bbb@mail.gmail.com>
 Sender: linux-hams-owner@vger.kernel.org
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"
-To: linux-hams@vger.kernel.org
+Content-Type: TEXT/PLAIN; charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+To: Bill Vodall WA7NWP <wa7nwp@gmail.com>
+Cc: linux-hams@vger.kernel.org
 
-Thanks for the reference to the Wiki page.  Good info and it led me to
-discover the Remote Serial client for Windows.
+On Wed, 14 Nov 2007, Bill Vodall WA7NWP wrote:
 
-I've use Remserial and it works well.  The missing piece is that I'd
-like to have multiple clients connect to the exported serial port.  I
-believe that's possible with Netcat but isn't with remserial.
+> Thanks for the reference to the Wiki page.  Good info and it led me to
+> discover the Remote Serial client for Windows.
 
-Hmmm.  I bet we can add remserial to NOS...
+Also check out the FAQ file in Xastir, question 4.20.  Runs through
+some of the options:
 
-73
-Bill WA7NWP
+<http://xastir.cvs.sourceforge.net/xastir/xastir/FAQ?revision=1.76&view=markup>
 
-> I'm doing something similar, but using remserial.
->
-> Details are here:
-> http://mckeehan.homeip.net/wiki/wikka.php?wakka=PacketRadioRemoteSerial
->
-> --
-> William McKeehan
-> KI4HDU
-> http://mckeehan.homeip.net
->
->
-> On Tue, November 13, 2007 1:50 pm, Bill Vodall WA7NWP wrote:
-> > Has anybody tried creating a KISS serial stream with NET2KISS and then
-> > exporting that to multiple other systems with NETCAT?
-> >
-> > Maybe even doing something similar without AX25 using KISSNET2 to
-> > create multiple serial ports and hooking one of them to NETCAT..
-> >
-> > Thanks,
-> > Bill - WA7NWP
+--
+Curt, WE7U: <www.eskimo.com/~archer/>     XASTIR: <www.xastir.org>
+  "Lotto:  A tax on people who are bad at math." -- unknown
+"Windows:  Microsoft's tax on computer illiterates." -- WE7U
+The world DOES revolve around me:  I picked the coordinate system!
