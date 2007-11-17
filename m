@@ -1,45 +1,32 @@
-From: "J. Lance Cotton" <joe@lightningflash.net>
-Subject: Re: Soundmodem - suppresing initial xmit
-Date: Fri, 16 Nov 2007 11:04:39 -0600
-Message-ID: <473DCDA7.8010101@lightningflash.net>
-References: <20071116163231.GA9559@reid1.localdomain> <Pine.SUN.4.58.0711160846190.29303@eskimo.com>
+From: Bent <bbagger@gmail.com>
+Subject: Which slave with Unix98 master-slave pseudo ttys?
+Date: Sat, 17 Nov 2007 20:20:52 +0100
+Message-ID: <2e19719f0711171120q129dbd51s8c0aebe45b4e4273@mail.gmail.com>
 Mime-Version: 1.0
 Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <Pine.SUN.4.58.0711160846190.29303@eskimo.com>
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
+        bh=VXUJVAithSvzg3mu8+gQXzRtIecZ1CJdXiTxHVN3fec=;
+        b=SZj/yE4svMRBZtLfctddslpcyH6+WMBZl230CXc7gODtzqJi4zE7gyyQBrCcv3SrrlI0GFDLO2ls/Rl22PXSvOmj1/C+qckEkiKVtwVG3T3Isvc7b8xCbf2QfY5Bu1Wb6be7HzCki4kf76m4cxQHBFzXfMYDl9G8nCXRvQ28PxY=
+Content-Disposition: inline
 Sender: linux-hams-owner@vger.kernel.org
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"; format="flowed"
-To: "Curt Mills, WE7U" <archer@eskimo.com>
-Cc: don <don_reid@comcast.net>, linux-hams@vger.kernel.org
+Content-Type: text/plain; charset="us-ascii"
+To: linux-hams@vger.kernel.org
 
-on 11/16/2007 10:48 AM Curt, WE7U said the following:
-> On Fri, 16 Nov 2007, don wrote:
-> 
->> When I start soundmodem, it sends out several transmissions.
->> They are addressed to "QST-0" and identify my workstation.
->>
->> Is there a simple way to suppres these?  They are fairly long
->> and sometimes I just want to listen to packets (like on an APRS freq).
-> 
-> Just a guess (and I'm probably totally wrong on this), but do you
-> have Samba configured on that machine?
-> 
-> I remember some people ended up with SMB broadcasts going out on
-> that interface.  The fix was to tweak the Samba configuration so
-> that it didn't use that networking interface.  By default Samba
-> broadcasts on all interfaces as I recall.
+Hi
 
-That's right. Also, on many newer distributions, I've also found that the 
-mDNS service (the generic name for Apple's "Bonjour" auto-discovery 
-protocol) broadcasts on all interfaces, too.
+How do you find out which slave to use when you have created a Unix98
+pseudo tty on /dev/ptmx?
 
--Lance KJ5O
+I have searched high and low and not found much. The script by
+Bernard, F6BVP (http://f6bvp.free.fr/logiciels/Unix98-pseudo-tty/pseudo_tty.sh)
+apparently assumes that the slaves are called 0 and 1, but what do you
+do when some other program may have created its own set(s) of pseudo
+ttys? In that case your slaves can be at any number, say 9 and 10. Do
+you do ls -l on /dev/pts and use he newest? or how do you find *your*
+slave?
 
--- 
-J. Lance Cotton, KJ5O
-joe@lightningflash.net
-http://kj5o.lightningflash.net
-Three Step Plan: 1. Take over the world. 2. Get a lot of cookies. 3. Eat the 
-cookies.
-
+73 de Bent/OZ6BL
