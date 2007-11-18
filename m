@@ -1,32 +1,72 @@
-From: Bent <bbagger@gmail.com>
-Subject: Which slave with Unix98 master-slave pseudo ttys?
-Date: Sat, 17 Nov 2007 20:20:52 +0100
-Message-ID: <2e19719f0711171120q129dbd51s8c0aebe45b4e4273@mail.gmail.com>
+From: don <don_reid@comcast.net>
+Subject: Re: Soundmodem - suppresing initial xmit
+Date: Sat, 17 Nov 2007 19:59:58 -0800
+Message-ID: <20071118035958.GA17161@reid1.localdomain>
+References: <20071116163231.GA9559@reid1.localdomain>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
-        bh=VXUJVAithSvzg3mu8+gQXzRtIecZ1CJdXiTxHVN3fec=;
-        b=SZj/yE4svMRBZtLfctddslpcyH6+WMBZl230CXc7gODtzqJi4zE7gyyQBrCcv3SrrlI0GFDLO2ls/Rl22PXSvOmj1/C+qckEkiKVtwVG3T3Isvc7b8xCbf2QfY5Bu1Wb6be7HzCki4kf76m4cxQHBFzXfMYDl9G8nCXRvQ28PxY=
 Content-Disposition: inline
+In-Reply-To: <20071116163231.GA9559@reid1.localdomain>
 Sender: linux-hams-owner@vger.kernel.org
 List-Id: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 7bit
 To: linux-hams@vger.kernel.org
 
-Hi
+Thanks for the replies on my soundmodem question.  However I don't think
+they covered what is happening.
 
-How do you find out which slave to use when you have created a Unix98
-pseudo tty on /dev/ptmx?
+Here is what comes out whenever I start soundmodem:
 
-I have searched high and low and not found much. The script by
-Bernard, F6BVP (http://f6bvp.free.fr/logiciels/Unix98-pseudo-tty/pseudo_tty.sh)
-apparently assumes that the slaves are called 0 and 1, but what do you
-do when some other program may have created its own set(s) of pseudo
-ttys? In that case your slaves can be at any number, say 9 and 10. Do
-you do ls -l on /dev/pts and use he newest? or how do you find *your*
-slave?
+-----------------------------------------------------------------------
+Tx: fm W7DMR-0 to QST-0 UI  pid=CC
+E..~..@....r.............j..............._services._dns-sd._udp.local............_workstation._tcp.#.4...........reidmob1 [].4
 
-73 de Bent/OZ6BL
+Tx: fm W7DMR-0 to QST-0 UI  pid=CC
+E.....@....................9.............reidmob1 []._workstation._tcp.local......reidmob1.*.....1.0.0.10.in-addr.arpa......5.......x.......D.......x...5.5.
+.....x...I686.LINUX...!.....x.........5.............
+
+Tx: fm W7DMR-0 to QST-0 UI  pid=CC
+E.....@....................9.............reidmob1 []._workstation._tcp.local......reidmob1.*.....1.0.0.10.in-addr.arpa......5.......x.......D.......x...5.5.
+.....x...I686.LINUX...!.....x.........5.............
+
+Tx: fm W7DMR-0 to QST-0 UI  pid=CC
+E.....@....1.............................reidmob1 []._workstation._tcp.local.............reidmob1.*.......x.......1.0.0.10.in-addr.arpa........x...<.<.
+.....x...I686.LINUX...!.....x.........<
+
+Tx: fm W7DMR-0 to QST-0 UI  pid=CC
+E..~..@....r.............j..............._services._dns-sd._udp.local............_workstation._tcp.#.4...........reidmob1 [].4
+
+Tx: fm W7DMR-0 to QST-0 UI  pid=CC
+E.....@....1.............................reidmob1 []._workstation._tcp.local.............reidmob1.*.......x.......1.0.0.10.in-addr.arpa........x...<.<.
+.....x...I686.LINUX...!.....x.........<
+
+Tx: fm W7DMR-0 to QST-0 UI  pid=CC
+E.....@....8...............]............._services._dns-sd._udp.local............_workstation._tcp.#.4...........reidmob1 [].4.T............T.!.....x.........reidmob1.#.........x......
+
+Tx: fm W7DMR-0 to QST-0 UI  pid=CC
+E.....@....1.............................reidmob1 []._workstation._tcp.local.............reidmob1.*.......x.......1.0.0.10.in-addr.arpa........x...<.<.
+.....x...I686.LINUX...!.....x.........<
+
+Tx: fm W7DMR-0 to QST-0 UI  pid=CC
+F..(..@................."...............
+-----------------------------------------------------------------------
+
+This mostly looks like some sort of networking stuff.
+
+Don - W7DMR
+
+
+On Fri, Nov 16, 2007 at 08:32:31AM -0800, don wrote:
+> When I start soundmodem, it sends out several transmissions.
+> They are addressed to "QST-0" and identify my workstation.
+> 
+> Is there a simple way to suppres these?  They are fairly long
+> and sometimes I just want to listen to packets (like on an APRS freq).
+> 
+> Don - W7DMR
+> -
+> To unsubscribe from this list: send the line "unsubscribe linux-hams" in
+> the body of a message to majordomo@vger.kernel.org
+> More majordomo info at  http://vger.kernel.org/majordomo-info.html
+> 
