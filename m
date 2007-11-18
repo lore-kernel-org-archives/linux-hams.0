@@ -1,72 +1,41 @@
-From: don <don_reid@comcast.net>
+From: "Manfred Haertel, DB3HM" <Manfred.Haertel@rz-online.de>
 Subject: Re: Soundmodem - suppresing initial xmit
-Date: Sat, 17 Nov 2007 19:59:58 -0800
-Message-ID: <20071118035958.GA17161@reid1.localdomain>
-References: <20071116163231.GA9559@reid1.localdomain>
+Date: Sun, 18 Nov 2007 08:23:11 +0100
+Message-ID: <473FE85F.5070702@rz-online.de>
+References: <20071116163231.GA9559@reid1.localdomain> <20071118035958.GA17161@reid1.localdomain>
 Mime-Version: 1.0
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 Return-path: <linux-hams-owner@vger.kernel.org>
-Content-Disposition: inline
-In-Reply-To: <20071116163231.GA9559@reid1.localdomain>
+In-Reply-To: <20071118035958.GA17161@reid1.localdomain>
 Sender: linux-hams-owner@vger.kernel.org
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-To: linux-hams@vger.kernel.org
+Content-Type: text/plain; charset="iso-8859-1"; format="flowed"
+To: Linux-hams List <linux-hams@vger.kernel.org>
 
-Thanks for the replies on my soundmodem question.  However I don't think
-they covered what is happening.
+don wrote:
+> Thanks for the replies on my soundmodem question.  However I don't th=
+ink
+> they covered what is happening.
+>=20
+> Here is what comes out whenever I start soundmodem:
+>=20
+> ---------------------------------------------------------------------=
+--
+> Tx: fm W7DMR-0 to QST-0 UI  pid=3DCC
+> E..~..@....r.............j..............._services._dns-sd._udp.local=
+=2E..........._workstation._tcp.#.4...........reidmob1 [].4
 
-Here is what comes out whenever I start soundmodem:
+This looks like the "Multicast DNS daemon". It broadcasts on every
+network device which is available. In most cases you don't need this
+deaemon and can safeley remove it from the startup ("insserv -r mdnsd")=
+=2E
 
------------------------------------------------------------------------
-Tx: fm W7DMR-0 to QST-0 UI  pid=CC
-E..~..@....r.............j..............._services._dns-sd._udp.local............_workstation._tcp.#.4...........reidmob1 [].4
+--=20
+Manfred H=E4rtel, DB3HM    mailto:Manfred.Haertel@rz-online.de
+                          http://rz-home.de/mhaertel
 
-Tx: fm W7DMR-0 to QST-0 UI  pid=CC
-E.....@....................9.............reidmob1 []._workstation._tcp.local......reidmob1.*.....1.0.0.10.in-addr.arpa......5.......x.......D.......x...5.5.
-.....x...I686.LINUX...!.....x.........5.............
-
-Tx: fm W7DMR-0 to QST-0 UI  pid=CC
-E.....@....................9.............reidmob1 []._workstation._tcp.local......reidmob1.*.....1.0.0.10.in-addr.arpa......5.......x.......D.......x...5.5.
-.....x...I686.LINUX...!.....x.........5.............
-
-Tx: fm W7DMR-0 to QST-0 UI  pid=CC
-E.....@....1.............................reidmob1 []._workstation._tcp.local.............reidmob1.*.......x.......1.0.0.10.in-addr.arpa........x...<.<.
-.....x...I686.LINUX...!.....x.........<
-
-Tx: fm W7DMR-0 to QST-0 UI  pid=CC
-E..~..@....r.............j..............._services._dns-sd._udp.local............_workstation._tcp.#.4...........reidmob1 [].4
-
-Tx: fm W7DMR-0 to QST-0 UI  pid=CC
-E.....@....1.............................reidmob1 []._workstation._tcp.local.............reidmob1.*.......x.......1.0.0.10.in-addr.arpa........x...<.<.
-.....x...I686.LINUX...!.....x.........<
-
-Tx: fm W7DMR-0 to QST-0 UI  pid=CC
-E.....@....8...............]............._services._dns-sd._udp.local............_workstation._tcp.#.4...........reidmob1 [].4.T............T.!.....x.........reidmob1.#.........x......
-
-Tx: fm W7DMR-0 to QST-0 UI  pid=CC
-E.....@....1.............................reidmob1 []._workstation._tcp.local.............reidmob1.*.......x.......1.0.0.10.in-addr.arpa........x...<.<.
-.....x...I686.LINUX...!.....x.........<
-
-Tx: fm W7DMR-0 to QST-0 UI  pid=CC
-F..(..@................."...............
------------------------------------------------------------------------
-
-This mostly looks like some sort of networking stuff.
-
-Don - W7DMR
-
-
-On Fri, Nov 16, 2007 at 08:32:31AM -0800, don wrote:
-> When I start soundmodem, it sends out several transmissions.
-> They are addressed to "QST-0" and identify my workstation.
-> 
-> Is there a simple way to suppres these?  They are fairly long
-> and sometimes I just want to listen to packets (like on an APRS freq).
-> 
-> Don - W7DMR
-> -
-> To unsubscribe from this list: send the line "unsubscribe linux-hams" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at  http://vger.kernel.org/majordomo-info.html
-> 
+-
+To unsubscribe from this list: send the line "unsubscribe linux-hams" i=
+n
+the body of a message to majordomo@vger.kernel.org
+More majordomo info at  http://vger.kernel.org/majordomo-info.html
