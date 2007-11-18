@@ -1,31 +1,46 @@
-From: don <don_reid@comcast.net>
-Subject: Re: Soundmodem - suppresing initial xmit
-Date: Sun, 18 Nov 2007 14:53:43 -0800
-Message-ID: <20071118225343.GA21146@reid1.localdomain>
-References: <20071116163231.GA9559@reid1.localdomain> <20071118035958.GA17161@reid1.localdomain>
+From: "Phil" <phillor@telstra.com>
+Subject: USB to serial converter question
+Date: Mon, 19 Nov 2007 07:16:19 +1000
+Message-ID: <001201c82a28$a670d510$cf59ef0a@MOTORHOME>
 Mime-Version: 1.0
+Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
-Content-Disposition: inline
-In-Reply-To: <20071118035958.GA17161@reid1.localdomain>
 Sender: linux-hams-owner@vger.kernel.org
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; format="flowed"; charset="us-ascii"; reply-type="original"
 To: linux-hams@vger.kernel.org
 
-Thanks all for the help.  Yes it was the avahi daemon doing mDNS.
+Thank you for reading this.
 
-I ended up setting the following in /etc/avahi/avahi-daemon.conf
+At first sight this may appear to be an off-topic question but it does 
+relate to amateur radio because without a functioning serial port I don't 
+have any useful amateur radio applications.
 
-  publish-addresses=no
-  publish-hinfo=no
-  publish-workstation=no
-  publish-domain=no
+I have a USB to serial converter that worked out of the box with successive 
+Mandriva versions up until Mandriva 2008. Plugging the USB converter into a 
+USB slot used to automatically generate a /dev/ttyUSB0 device; now it 
+doesn't. Also, now my PCMCIA modem isn't working, no doubt, for the same 
+reason.
 
-That stops the broadcasts when soundmodem starts.
+modprobe ftdi_sio, which is the module for the converter, causes the 
+following error messages to be displayed:
 
-It remains to be seen if anything else on the system (Ubuntu Gutsy
-Gibbon) needs them.  The ubuntu-desktop package depends on avahi-daemon.
+WARNING: Error inserting usbserial 
+(/lib/modules/2.6.22.9-laptop-1mdv/kernel/drivers/usb/serial/usbserial.ko.gz): 
+Unknown symbol in module, or unknown parameter (see dmesg)
 
-73
-Don - W7DMR
+FATAL: Error inserting ftdi_sio 
+(/lib/modules/2.6.22.9-laptop-1mdv/kernel/drivers/usb/serial/ftdi_sio.ko.gz): 
+Unknown symbol in module, or unknown parameter (see dmesg)
+
+lsusb -v displays information about the converter, so it is known to the 
+system.
+
+I can't see anything in dmesg that relates to either module. I have scoured 
+the Internet as well as posted questions to the Mandriva mailing list and 
+haven't found anything that might lead to the answer. Can anyone offer a 
+suggestion?
+
+Regards,
+Phil.
+
