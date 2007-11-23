@@ -1,35 +1,34 @@
-From: Geoff Bagley <geoff.bagley@btinternet.com>
-Subject: Sound card programming for LINUX.
-Date: Fri, 23 Nov 2007 11:03:15 +0000
-Message-ID: <4746B373.5000009@btinternet.com>
+From: Thomas Sailer <sailer@sailer.dynip.lugs.ch>
+Subject: Re: Sound card programming for LINUX.
+Date: Fri, 23 Nov 2007 12:42:58 +0100
+Message-ID: <1195818178.5090.35.camel@xbox360>
+References: <4746B373.5000009@btinternet.com>
 Mime-Version: 1.0
 Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
+In-Reply-To: <4746B373.5000009@btinternet.com>
 Sender: linux-hams-owner@vger.kernel.org
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"; format="flowed"
-To: LINUX-HAMS <linux-hams@vger.kernel.org>
+Content-Type: text/plain; charset="us-ascii"
+To: Geoff Bagley <geoff.bagley@btinternet.com>
+Cc: LINUX-HAMS <linux-hams@vger.kernel.org>
 
-I would be interested to hear from any other ham who is experienced in 
-writing low-level code for
-any of the sound-cards commonly found in a PC.
+> Can the erratic timing of a multi-task system be overcome,  perhaps by  
+> altering "nice" numbers ?
 
-Most of the stuff I have seen is for a Microsoft environment, which I  
-no longer  have.
+If you just want to write a demodulator (which doesn't need low latency,
+just no missing samples), you don't need to play with any scheduler, it
+will just work (if you have enough memory, and don't send your machine
+into swap death).
 
-I now run Debian GNU/LINUX 4.0,   and would be interested in writing an  
-IQ demodulator for SDR.
+Just avoid ALSA's OSS compatibility layer, it is broken for DSP stuff.
+Use ALSA directly.
 
-Can the erratic timing of a multi-task system be overcome,  perhaps by  
-altering "nice" numbers ?
+If you need low latency, you can use the POSIX 4 API (i.e.
+sched_setscheduler and friends).
 
-This is an area of programming where my experience is poor.  I have in 
-the past used a Motorola DSP
-card, but that was in my M$  days more than six years ago.
-
-73
-
-Geoff
-G3FHL
+73,
+Tom
+HB9JNX / AE4WA
 
 
