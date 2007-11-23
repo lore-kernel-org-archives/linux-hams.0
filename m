@@ -1,46 +1,35 @@
-From: "Phil" <phillor@telstra.com>
-Subject: USB to serial converter question
-Date: Mon, 19 Nov 2007 07:16:19 +1000
-Message-ID: <001201c82a28$a670d510$cf59ef0a@MOTORHOME>
+From: Geoff Bagley <geoff.bagley@btinternet.com>
+Subject: Sound card programming for LINUX.
+Date: Fri, 23 Nov 2007 11:03:15 +0000
+Message-ID: <4746B373.5000009@btinternet.com>
 Mime-Version: 1.0
 Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
 Sender: linux-hams-owner@vger.kernel.org
 List-Id: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; format="flowed"; charset="us-ascii"; reply-type="original"
-To: linux-hams@vger.kernel.org
+Content-Type: text/plain; charset="us-ascii"; format="flowed"
+To: LINUX-HAMS <linux-hams@vger.kernel.org>
 
-Thank you for reading this.
+I would be interested to hear from any other ham who is experienced in 
+writing low-level code for
+any of the sound-cards commonly found in a PC.
 
-At first sight this may appear to be an off-topic question but it does 
-relate to amateur radio because without a functioning serial port I don't 
-have any useful amateur radio applications.
+Most of the stuff I have seen is for a Microsoft environment, which I  
+no longer  have.
 
-I have a USB to serial converter that worked out of the box with successive 
-Mandriva versions up until Mandriva 2008. Plugging the USB converter into a 
-USB slot used to automatically generate a /dev/ttyUSB0 device; now it 
-doesn't. Also, now my PCMCIA modem isn't working, no doubt, for the same 
-reason.
+I now run Debian GNU/LINUX 4.0,   and would be interested in writing an  
+IQ demodulator for SDR.
 
-modprobe ftdi_sio, which is the module for the converter, causes the 
-following error messages to be displayed:
+Can the erratic timing of a multi-task system be overcome,  perhaps by  
+altering "nice" numbers ?
 
-WARNING: Error inserting usbserial 
-(/lib/modules/2.6.22.9-laptop-1mdv/kernel/drivers/usb/serial/usbserial.ko.gz): 
-Unknown symbol in module, or unknown parameter (see dmesg)
+This is an area of programming where my experience is poor.  I have in 
+the past used a Motorola DSP
+card, but that was in my M$  days more than six years ago.
 
-FATAL: Error inserting ftdi_sio 
-(/lib/modules/2.6.22.9-laptop-1mdv/kernel/drivers/usb/serial/ftdi_sio.ko.gz): 
-Unknown symbol in module, or unknown parameter (see dmesg)
+73
 
-lsusb -v displays information about the converter, so it is known to the 
-system.
+Geoff
+G3FHL
 
-I can't see anything in dmesg that relates to either module. I have scoured 
-the Internet as well as posted questions to the Mandriva mailing list and 
-haven't found anything that might lead to the answer. Can anyone offer a 
-suggestion?
-
-Regards,
-Phil.
 
