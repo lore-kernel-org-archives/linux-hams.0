@@ -1,40 +1,34 @@
-From: Nate Bargmann <n0nb@networksplus.net>
+From: "Frank Brickle" <brickle@pobox.com>
 Subject: Re: Sound card programming for LINUX.
-Date: Fri, 23 Nov 2007 07:10:52 -0600
-Message-ID: <20071123131052.GN9131@mail.networksplus.net>
+Date: Fri, 23 Nov 2007 09:24:18 -0500
+Message-ID: <fc22d18f0711230624y72ecfefcw188a4dee108050ec@mail.gmail.com>
 References: <4746B373.5000009@btinternet.com>
 Mime-Version: 1.0
+Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
-Content-Disposition: inline
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:sender:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references:x-google-sender-auth;
+        bh=Q2b1zR2t3nYLaZPfg1w9qnSah06VomQ34NnParhTtec=;
+        b=nfRfsPT6nzzi3W1bYttDLWKfGf6eY4JC74zR1rOYwRgl1+/+isKJPK+fRA0SCH2LwkvaSn/2TgAzQIAplkixh5EGDY/io+upVINEf+SsVVaq3gBvPEil94jn1Quxm4n0QG8PZ2BdQpDbH6d0TW9YHhYE7yPJEKbkoCj/zNsDBXQ=
 In-Reply-To: <4746B373.5000009@btinternet.com>
+Content-Disposition: inline
 Sender: linux-hams-owner@vger.kernel.org
 List-Id: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-To: LINUX-HAMS <linux-hams@vger.kernel.org>
+To: Geoff Bagley <geoff.bagley@btinternet.com>
+Cc: LINUX-HAMS <linux-hams@vger.kernel.org>
 
-* Geoff Bagley <geoff.bagley@btinternet.com> [2007 Nov 23 05:15 -0600]:
+On Nov 23, 2007 6:03 AM, Geoff Bagley <geoff.bagley@btinternet.com> wrote:
 
-> This is an area of programming where my experience is poor.  I have in the 
-> past used a Motorola DSP
-> card, but that was in my M$  days more than six years ago.
+> I now run Debian GNU/LINUX 4.0,   and would be interested in writing an
+> IQ demodulator for SDR.
 
-Hi Geoff.
+You might be interested by DttSP:
 
-Welcome to Linux in general and Debian specifically.
+http://groups.yahoo.com/group/dttsp-linux
+http://www.dttsp.org
 
-Right now the digi modes program that seems to be receiving the most
-active development is Fldigi by W1HKJ, http://www.w1hkj.com and with a
-support mailing list at Yahoo Groups under LinuxHam.  It's a GPL
-program and seems to employ some high performance concepts.  I'm sure
-Dave and his team would be quite willing to share their knowledge of
-sound card programming.
-
-73, de Nate >>
-
--- 
- Wireless | Amateur Radio Station N0NB          |  Successfully Microsoft
-  Amateur radio exams; ham radio; Linux info @  | free since January 1998.
-             http://www.qsl.net/n0nb/           |  "Debian, the choice of
-             My Kawasaki KZ-650 SR @            |     a GNU generation!"
-        http://www.networksplus.net/n0nb/       |   http://www.debian.org
+73
+Frank
+AB2KT
