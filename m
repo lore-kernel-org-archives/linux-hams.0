@@ -1,34 +1,44 @@
-From: "Frank Brickle" <brickle@pobox.com>
-Subject: Re: Sound card programming for LINUX.
-Date: Fri, 23 Nov 2007 09:24:18 -0500
-Message-ID: <fc22d18f0711230624y72ecfefcw188a4dee108050ec@mail.gmail.com>
-References: <4746B373.5000009@btinternet.com>
+From: Pavel Emelyanov <xemul@openvz.org>
+Subject: [PATCH][ROSE] Trivial compilation CONFIG_INET=n case
+Date: Tue, 04 Dec 2007 18:11:05 +0300
+Message-ID: <47556E09.1050007@openvz.org>
 Mime-Version: 1.0
 Content-Transfer-Encoding: 7bit
-Return-path: <linux-hams-owner@vger.kernel.org>
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:sender:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references:x-google-sender-auth;
-        bh=Q2b1zR2t3nYLaZPfg1w9qnSah06VomQ34NnParhTtec=;
-        b=nfRfsPT6nzzi3W1bYttDLWKfGf6eY4JC74zR1rOYwRgl1+/+isKJPK+fRA0SCH2LwkvaSn/2TgAzQIAplkixh5EGDY/io+upVINEf+SsVVaq3gBvPEil94jn1Quxm4n0QG8PZ2BdQpDbH6d0TW9YHhYE7yPJEKbkoCj/zNsDBXQ=
-In-Reply-To: <4746B373.5000009@btinternet.com>
-Content-Disposition: inline
-Sender: linux-hams-owner@vger.kernel.org
-List-Id: <linux-hams.vger.kernel.org>
+Return-path: <netdev-owner@vger.kernel.org>
+Sender: netdev-owner@vger.kernel.org
+List-ID: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
-To: Geoff Bagley <geoff.bagley@btinternet.com>
-Cc: LINUX-HAMS <linux-hams@vger.kernel.org>
+To: David Miller <davem@davemloft.net>
+Cc: Ralf Baechle <ralf@linux-mips.org>, linux-hams@vger.kernel.org, Linux Netdev List <netdev@vger.kernel.org>, devel@openvz.org
 
-On Nov 23, 2007 6:03 AM, Geoff Bagley <geoff.bagley@btinternet.com> wrote:
+The rose_rebuild_header() consists only of some variables in
+case INET=n, and gcc will warn us about it.
 
-> I now run Debian GNU/LINUX 4.0,   and would be interested in writing an
-> IQ demodulator for SDR.
+Fits both net-2.6 and net-2.6.25.
 
-You might be interested by DttSP:
+Signed-off-by: Pavel Emelyanov <xemul@openvz.org>
 
-http://groups.yahoo.com/group/dttsp-linux
-http://www.dttsp.org
+---
 
-73
-Frank
-AB2KT
+diff --git a/net/rose/rose_dev.c b/net/rose/rose_dev.c
+index 1b6741f..12cfcf0 100644
+--- a/net/rose/rose_dev.c
++++ b/net/rose/rose_dev.c
+@@ -55,13 +55,13 @@ static int rose_header(struct sk_buff *skb, struct net_device *dev,
+ 
+ static int rose_rebuild_header(struct sk_buff *skb)
+ {
++#ifdef CONFIG_INET
+ 	struct net_device *dev = skb->dev;
+ 	struct net_device_stats *stats = netdev_priv(dev);
+ 	unsigned char *bp = (unsigned char *)skb->data;
+ 	struct sk_buff *skbn;
+ 	unsigned int len;
+ 
+-#ifdef CONFIG_INET
+ 	if (arp_find(bp + 7, skb)) {
+ 		return 1;
+ 	}
+-- 
+1.5.3.4
+
