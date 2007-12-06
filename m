@@ -1,26 +1,34 @@
-From: David Miller <davem@davemloft.net>
-Subject: Re: [PATCH][ROSE] Trivial compilation CONFIG_INET=n case
-Date: Wed, 05 Dec 2007 02:17:41 -0800 (PST)
-Message-ID: <20071205.021741.176966054.davem@davemloft.net>
-References: <47556E09.1050007@openvz.org>
+From: "Phil" <phillor@telstra.com>
+Subject: Gmfsk and Mandriva 2008
+Date: Thu, 6 Dec 2007 16:30:11 +1000
+Message-ID: <000f01c837d2$f4351b00$4544a30a@MOTORHOME>
 Mime-Version: 1.0
 Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <47556E09.1050007@openvz.org>
 Sender: linux-hams-owner@vger.kernel.org
 List-ID: <linux-hams.vger.kernel.org>
-Content-Type: Text/Plain; charset="us-ascii"
-To: xemul@openvz.org
-Cc: ralf@linux-mips.org, linux-hams@vger.kernel.org, netdev@vger.kernel.org, devel@openvz.org
+Content-Type: text/plain; format="flowed"; charset="us-ascii"; reply-type="original"
+To: linux-hams@vger.kernel.org
 
-From: Pavel Emelyanov <xemul@openvz.org>
-Date: Tue, 04 Dec 2007 18:11:05 +0300
+Thank you for reading this.
 
-> The rose_rebuild_header() consists only of some variables in
-> case INET=n, and gcc will warn us about it.
-> 
-> Fits both net-2.6 and net-2.6.25.
-> 
-> Signed-off-by: Pavel Emelyanov <xemul@openvz.org>
+During the process of compiling gmfsk I have come to the stage where I need 
+to install libgnomeui2-devel. I've spent the past two weeks in dependency 
+hell and I'm now at the point where I have to seek help.
 
-Applied to net-2.6, thanks.
+The final package, and surly it is near the end of the list, is 
+libgnome2-devel. It won't install because it requires another package 
+(libbonobo-devel, I think it was), which in turn requires libgnome2-devel; a 
+circular dependency.
+
+I've been using gmfsk for many years and each time I upgrade Mandriva I have 
+to go through a fairly easy process of installing a short list of packages, 
+but not this time! The process is more difficult than it needs to be because 
+I now have to connect to the Internet under Windows, download a package, 
+restart Linux only to discover that I need another package.
+
+Is there anyone on the list that uses gmfsk under Mandriva 2008?
+
+Regards,
+Phil.
+
