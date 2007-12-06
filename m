@@ -1,34 +1,44 @@
-From: "Phil" <phillor@telstra.com>
-Subject: Gmfsk and Mandriva 2008
-Date: Thu, 6 Dec 2007 16:30:11 +1000
-Message-ID: <000f01c837d2$f4351b00$4544a30a@MOTORHOME>
+From: Bernard Pidoux <pidoux@ccr.jussieu.fr>
+Subject: [PATCH]  ax25ipd (ax25-apps-0.0.6.2)
+Date: Thu, 06 Dec 2007 12:18:35 +0100
+Message-ID: <4757DA8B.50905@ccr.jussieu.fr>
+References: <47556E09.1050007@openvz.org> <20071205.021741.176966054.davem@davemloft.net>
 Mime-Version: 1.0
 Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
+In-Reply-To: <20071205.021741.176966054.davem@davemloft.net>
 Sender: linux-hams-owner@vger.kernel.org
 List-ID: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; format="flowed"; charset="us-ascii"; reply-type="original"
-To: linux-hams@vger.kernel.org
+Content-Type: text/plain; charset="us-ascii"; format="flowed"
+To: 
+Cc: linux-hams <linux-hams@vger.kernel.org>
 
-Thank you for reading this.
+Hi,
 
-During the process of compiling gmfsk I have come to the stage where I need 
-to install libgnomeui2-devel. I've spent the past two weeks in dependency 
-hell and I'm now at the point where I have to seek help.
+Rose network is using extensively AX25 IP encapsulation for
+routing AX25 packet radio frames via Internet nodes such FPAC nodes.
 
-The final package, and surly it is near the end of the list, is 
-libgnome2-devel. It won't install because it requires another package 
-(libbonobo-devel, I think it was), which in turn requires libgnome2-devel; a 
-circular dependency.
+ax25ipd (from ax25-apps) is doing frame encapsulation and decapsulation.
 
-I've been using gmfsk for many years and each time I upgrade Mandriva I have 
-to go through a fairly easy process of installing a short list of packages, 
-but not this time! The process is more difficult than it needs to be because 
-I now have to connect to the Internet under Windows, download a package, 
-restart Linux only to discover that I need another package.
+Since version 1.0.3 patch by vk5asf ax25ipd is checking every 5 minutes 
+hostnames for dynamic DNS.
 
-Is there anyone on the list that uses gmfsk under Mandriva 2008?
+There was still a failure possibility when the program is started in 
+case of unsuccessful resolving remote host ip from its hostname was 
+unsuccessful.
 
-Regards,
-Phil.
+I introduced a simple error warning instead of an exit as the remote 
+host could be temporary down and the address will be checked again 
+periodically later.
+
+The patch against ax25-apps-0.0.6.2 (kernel 2.6 compatible) can be found 
+here :
+
+http://f6bvp.free.fr/logiciels/ax25/ax25-apps-0.0.6.2.diff
+
+and ax25-apps-0.0.6.2 is here :
+http://f6bvp.free.fr/logiciels/ax25/ax25-apps-0.0.6.2src_f6bvp.tgz
+
+
+73 de Bernard, f6bvp
 
