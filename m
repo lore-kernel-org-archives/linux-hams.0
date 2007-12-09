@@ -1,37 +1,35 @@
-From: Paul Lewis <paul@skywaves.demon.co.uk>
+From: "Vic" <radio@beer.org.uk>
 Subject: Re: Cloning Hard drives
-Date: Sun, 9 Dec 2007 21:09:47 +0000
-Message-ID: <L8eD5tBbmFXHFwMF@skywaves.demon.co.uk>
+Date: Sun, 9 Dec 2007 22:34:55 -0000 (GMT)
+Message-ID: <60437.127.0.0.1.1197239695.squirrel@127.0.0.1>
 References: <0JSS00MBZU39P300@bgmpomr1.sasknet.sk.ca>
+Reply-To: radio@beer.org.uk
 Mime-Version: 1.0
+Content-Transfer-Encoding: 7BIT
 Return-path: <linux-hams-owner@vger.kernel.org>
 In-Reply-To: <0JSS00MBZU39P300@bgmpomr1.sasknet.sk.ca>
 Sender: linux-hams-owner@vger.kernel.org
 List-ID: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"; format="flowed"
-Content-Transfer-Encoding: 7bit
-To: Doug <appld@sasktel.net>
-Cc: linux-hams@vger.kernel.org
+Content-Type: text/plain; charset="us-ascii"
+To: linux-hams@vger.kernel.org
 
-Hi Doug
+> Is there a way to clone or ghost a Linux hard drive??
 
-I have installed a temporary  second harddrive
-and run up a program called "driveimage" under dos (loaded from Floppy) 
-to copy the harddrive to the second hardrive as a backup.  Boots up OK 
-on a second machine.
-Paul g4apl(gb7cip)
+Yes.
 
-In message <0JSS00MBZU39P300@bgmpomr1.sasknet.sk.ca>, Doug 
-<appld@sasktel.net> writes
->Is there a way to clone or ghost a Linux hard drive??
->
->Doug VE5DA
->
->
->-
->To unsubscribe from this list: send the line "unsubscribe linux-hams" in
->the body of a message to majordomo@vger.kernel.org
->More majordomo info at  http://vger.kernel.org/majordomo-info.html
+dd is the best way IMO - just make sure you've got DMA turned on & use a
+decent blocksize, or it takes forever.
 
--- 
-paul@skywaves.demon.co.uk
+There are a couple of utilities that do stuff like this - such as FOG
+http://freshmeat.net/projects/freeghost/ . I don't use apps like this;
+they're just fluff as far as I'm concerned.
+
+If you're trying to move between different filesystems, consider using
+rsync. You ought really to do this from a liveCD, but TBH, I've done it
+loads of times with no problems. You just get a warning next time you
+boot...
+
+HTH
+
+Vic.
+
