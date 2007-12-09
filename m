@@ -1,72 +1,72 @@
-From: Bernard Pidoux <pidoux@ccr.jussieu.fr>
-Subject: [PATCH]  ax25ipd (ax25-apps-0.0.6.2)
-Date: Sun, 09 Dec 2007 21:59:32 +0100
-Message-ID: <475C5734.4060306@ccr.jussieu.fr>
-References: <47556E09.1050007@openvz.org> <20071205.021741.176966054.davem@davemloft.net>
+From: "Jeff Laughlin" <jeff.laughlin@gmail.com>
+Subject: Re: Cloning Hard drives
+Date: Sun, 9 Dec 2007 13:11:29 -0800
+Message-ID: <8ea83f40712091311n425fe0b6m369b21a98340c130@mail.gmail.com>
+References: <0JSS00MBZU39P300@bgmpomr1.sasknet.sk.ca>
 Mime-Version: 1.0
 Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <20071205.021741.176966054.davem@davemloft.net>
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        bh=zbW991T+Igoen0RJZ4f0kL0sRnNFPNCau7w/DZftYfs=;
+        b=Ousham90S8LdHbvw4409oJA4mYOy1nxmRKX7aGg/ToZ/adRwn3RwSPiiwrR9JBW5fRuyQt5Uzn1OxGkV/sR6XmW11BB9hCNqWLJO6cQE+fXrEcP7kkIcBuLlraFEFN0TrEVPEi07f20Z53jFKzFAVLLCwUusBNy7cZ2ZKBtOklY=
+In-Reply-To: <0JSS00MBZU39P300@bgmpomr1.sasknet.sk.ca>
+Content-Disposition: inline
 Sender: linux-hams-owner@vger.kernel.org
 List-ID: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"; format="flowed"
-To: linux-hams <linux-hams@vger.kernel.org>
-Cc: C Schuman <k4gbb1@earthlink.net>, Ray Wells <vk2tv@exemail.com.au>, "kd4yal@tampabay.rr.com" <kd4yal@tampabay.rr.com>
+Content-Type: text/plain; charset="us-ascii"
+To: linux-hams@vger.kernel.org
 
-Hi,
+AFAIK there is nothing exactly like Ghost for Linux, at least not yet.
+Last I checked there were some alpha projects. They could me more
+mature by now...
 
-I found that my previous patch for ax25ipd did not give good results.
-Here is the new patch.
+The dd command can copy an entire hard drive or a single partition
+byte for byte. It's not as flexable as ghost however. It knows nothing
+about the size or partitioning of the hard drive and will also copy
+all of the empty blocks, so you can only restore a dd image to a
+drive/partition of the same or larger size, and if it's larger you
+will not be able to access the extra space.
 
+dd if=/dev/hda of=hdaimage bs=10M
 
-diff -ruN ax25-apps-0.0.6.2/ax25ipd/ax25ipd.h 
-ax25-apps-0.0.6.2b/ax25ipd/ax25ipd.h
---- ax25ipd/ax25ipd.h	2005-12-23 21:21:40.000000000 +0100
-+++ ax25ipd/ax25ipd.h	2007-12-06 11:21:58.000000000 +0100
-@@ -41,7 +41,7 @@
-   *
-   */
+This will create an image of the entire hda drive including all
+partitions in the file hdaimage in the current directory (don't create
+this file on hda obviously). The bs makes dd copy 10 meg chunks at a
+time, greatly speeding up the copy.
 
--#define VERS2 "Version 1.0.3"
-+#define VERS2 "Version 1.0.5"
+dd if=/dev/hda1 of=hda1image bs=10M
 
-  #define IPPROTO_AX25 93
-  #define DEFAULT_UDP_PORT 10093
-diff -ruN ax25-apps-0.0.6.2/ax25ipd/config.c 
-ax25-apps-0.0.6.2b/ax25ipd/config.c
---- ax25ipd/config.c	2005-12-23 21:21:41.000000000 +0100
-+++ ax25ipd/config.c	2007-12-09 13:55:41.000000000 +0100
-@@ -310,8 +310,8 @@
-                          strncpy(thost,q,255);
-                          thost[255]=0;
-                     } else {
--                        return -5;
--                        }
-+			fprintf(stderr,"ax25ipd: %s host IP address unknown - will probe it 
-again later\n",q);
-+		   }
-  		}
+This will create an image of just the first partition on hda. man dd
+for more info.
 
-  		while ((q = strtok(NULL, " \t\n\r")) != NULL) {
-diff -ruN ax25-apps-0.0.6.2/ax25ipd/HISTORY.ax25ipd 
-ax25-apps-0.0.6.2b/ax25ipd/HISTORY.ax25ipd
---- ax25ipd/HISTORY.ax25ipd	2005-12-23 21:21:41.000000000 +0100
-+++ ax25ipd/HISTORY.ax25ipd	2007-12-06 11:27:02.000000000 +0100
-@@ -49,6 +49,11 @@
-   *              on UDP port. Also deleted exit(3) for errors occuring 
-with
-   *		kiss serial port (f6bvp).
-   *
-+ *	1.0.4	when started the program stopped if resolving host ip from
-+ *		its hostname was unsuccessful (f6bvp).
-+ *		Replaced this by a simple error warning as the remote host could
-+ *		be temporary down and the address will be checked again later.
-+ *
-   *      July97  Added support for broadcast addresses and routes.
-   *              Converted route array to a linked list and removed the
-   *              maximum route limitations. (vk2ktj)
+Tar works perfectly for copying a single partition. It captures all of
+the file system metadata. If you are using SE Linux you need to make
+sure you are using a version of Tar that captures SE Linux info and
+you may need to pass a command line switch to turn it on. Of course if
+you are trying to restore a system from tarballs you will have to
+partition and format by hand first and then restore each tarball for
+each partition.
+
+I'm confused about tarring /dev. It used to be that /dev was a normal
+folder with normal files. Then came devfs and now udev. I think some
+of the files in /dev are created at boot by the kernel and maybe some
+are real or something, I'm not sure.
+
+On Dec 9, 2007 12:24 PM, Doug <appld@sasktel.net> wrote:
+> Is there a way to clone or ghost a Linux hard drive??
+>
+> Doug VE5DA
+>
+>
+> -
+> To unsubscribe from this list: send the line "unsubscribe linux-hams" in
+> the body of a message to majordomo@vger.kernel.org
+> More majordomo info at  http://vger.kernel.org/majordomo-info.html
+>
 
 
-73 de Bernard, f6bvp
 
-
+-- 
+73 de n1ywb
