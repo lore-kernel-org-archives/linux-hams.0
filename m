@@ -1,44 +1,37 @@
-From: "Robert Jenkins" <raj@jrw.co.uk>
-Subject: RE: Cloning Hard drives
-Date: Mon, 10 Dec 2007 00:01:33 -0000
-Message-ID: <005801c83abf$d3a3c8b0$0a00a8c0@jrws3>
+From: "Robin Gilks" <g8ecj@gilks.org>
+Subject: Re: Cloning Hard drives"
+Date: Mon, 10 Dec 2007 11:06:39 +1300 (NZDT)
+Message-ID: <59028.202.37.96.11.1197237999.squirrel@gilks.ath.cx>
 References: <0JSS00MBZU39P300@bgmpomr1.sasknet.sk.ca>
+Reply-To: g8ecj@gilks.org
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 7BIT
 Return-path: <linux-hams-owner@vger.kernel.org>
 In-Reply-To: <0JSS00MBZU39P300@bgmpomr1.sasknet.sk.ca>
 Sender: linux-hams-owner@vger.kernel.org
 List-ID: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
-To: 'Doug' <appld@sasktel.net>, linux-hams@vger.kernel.org
+To: Doug <appld@sasktel.net>
+Cc: linux-hams@vger.kernel.org
 
-Yes, Ghost..
 
-Norton Ghost (up to the 2005 version) will happily clone a Linux system.
+> Is there a way to clone or ghost a Linux hard drive??
+>
+> Doug VE5DA
+>
 
-Make a Ghost floppy on a Win machine with Ghost installed & boot from that,
-or if you don't have a floppy drive on the target machine make the floppy
-anyway then do a ghost copy (of anything) to DVD and opt to make it
-bootable, copying from the Ghost floppy.
+I'd recommend dar - like tar but designed from scratch to back up to disk
+(CD or DVD) rather than tape. It allows directories to be easily excluded
+(eg. /proc and /sys) and there are GUIs available such as kdar for KDE.
+The archives created can be compressed with gzip or bzip2 to save space
+(but it takes a LOT longer to so the backup then). It, like tar, maintains
+soft/hard links, ownership and permissions.
 
-You can then boot Ghost from the DVD on the target machine.
+I usually use the command line for backup but if I only want to restore a
+couple of files then kdar allows me to pull whatever files I like from the
+archive without all the rest.
 
-After copying, you will have to reinstall Grub. Run the linux CD/DVD in
-rescue mode, chroot to the mounted drive & run grub.
-Then do 
-find /grub/stage2
-Which should return something like hd0,0
-Enter
-root(hd0,0)
-setup(hd0)
-
-(that's from memory, it should be approximately correct..)
-
-The later versions of 'Ghost' are Windows-only in every sense, it must be a
-version that allows itself to be put on a floppy disk.
-
-You can also replicate a drive in Linux, but this is rather more complex.
-
-Robert, G8TBF.
+-- 
+Robin Gilks
 
 
