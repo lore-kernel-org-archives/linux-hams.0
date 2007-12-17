@@ -1,43 +1,35 @@
-From: "Phil" <phillor@telstra.com>
-Subject: Re: Gmfsk and Mandriva 2008
-Date: Tue, 11 Dec 2007 17:33:06 +1000
-Message-ID: <001b01c83bc8$1fb34740$714eef0a@MOTORHOME>
-References: <000f01c837d2$f4351b00$4544a30a@MOTORHOME> <4757E612.7000908@ccr.jussieu.fr> <4757E73D.9080505@ccr.jussieu.fr>
+From: Andreas Weller <weller@andreas-weller.de>
+Subject: Yaesu VX-6 programming
+Date: Mon, 17 Dec 2007 13:27:29 +0100
+Message-ID: <47666B31.3080107@andreas-weller.de>
 Mime-Version: 1.0
 Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
 Sender: linux-hams-owner@vger.kernel.org
 List-ID: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; format="flowed"; charset="us-ascii"; reply-type="original"
+Content-Type: text/plain; charset="us-ascii"
 To: linux-hams@vger.kernel.org
 
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: RIPEMD160
 
------ Original Message ----- 
-From: "Bernard Pidoux" <pidoux@ccr.jussieu.fr>
-To: "Phil" <phillor@telstra.com>
-Cc: <linux-hams@vger.kernel.org>
-Sent: Thursday, December 06, 2007 10:12 PM
-Subject: Re: Gmfsk and Mandriva 2008
+Hi!
+I'm using a Yaesu VX-6 handheld transceiver. For simplifying programming
+hundreds of memories, scan frequencies settings etc. I'm looking for a
+PC software.
+There's Yaesu's ADMS and KC8UNJ's VX-6 commander - but both are Windows
+tools :-(
 
+Is there any Linux/open-source Yaesu programming software?
 
-> Asking directly for install of libgnomeui2-devel would need 3 more
-> packages :
->
-> [root@bernard ax25]# urpmi libgnomeui2-devel
-
-Thank you for the list Bernard, it was very helpful. I was missing two RPMs
-and a third was an earlier version. Mandriva 2008 also requires
-libgail-devel.
-
-Gmfsk now works, once again.
-
-Thank you for your reply as well Richard. I don't think it's a good idea to
-force the installation of an RPM. You can end up in more trouble than Flash
-Gordon
-
-Of course, I wouldn't have to go through all of this rigmarole if I could
-establish an Internet connection under Linux.
 
 Regards,
-Phil.
+  Andreas Weller, DF1PAW
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.6 (GNU/Linux)
+Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org
 
+iD8DBQFHZmswZAUSLfjKnkYRA0zkAKCFRr/t61/Hrhq3DZhHaYqVTsx2hACgjz/g
+62PTVA1J4lteFX7ZubRsT3g=
+=NOES
+-----END PGP SIGNATURE-----
