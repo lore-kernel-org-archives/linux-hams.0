@@ -1,10 +1,10 @@
 From: Joe Perches <joe@perches.com>
 Subject: [PATCH] include/net/: Spelling fixes
 Date: Mon, 17 Dec 2007 11:40:25 -0800
-Message-ID: <5703e57f925f31fc0eb38873bd7f10fc44f99cb4.1197918894.git.joe__4197.58350258252$1197920711$gmane$org@perches.com>
-Return-path: <linux-hams-owner@vger.kernel.org>
+Message-ID: <5703e57f925f31fc0eb38873bd7f10fc44f99cb4.1197918894.git.joe__32504.654400009$1197921703$gmane$org@perches.com>
+Return-path: <linux-kernel-owner+glk-linux-kernel-3=40m.gmane.org-S1761813AbXLQT75@vger.kernel.org>
 Message-Id: <5703e57f925f31fc0eb38873bd7f10fc44f99cb4.1197918894.git.joe@perches.com>
-Sender: linux-hams-owner@vger.kernel.org
+Sender: linux-kernel-owner@vger.kernel.org
 List-ID: <linux-hams.vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="us-ascii"
