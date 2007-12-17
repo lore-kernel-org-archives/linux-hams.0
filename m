@@ -1,66 +1,96 @@
-From: Geoff Blake <geoff@palaemon.demon.co.uk>
-Subject: Re: Yaesu VX-6 programming
-Date: Mon, 17 Dec 2007 17:50:25 +0000 (GMT)
-Message-ID: <Pine.LNX.4.58.0712171743020.24518@server.palaemon.co.uk>
-References: <47666B31.3080107@andreas-weller.de> <20071217171246.GA30936@flying-gecko.net>
-Mime-Version: 1.0
-Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <20071217171246.GA30936@flying-gecko.net>
-Sender: linux-hams-owner@vger.kernel.org
+From: Joe Perches <joe@perches.com>
+Subject: [PATCH] include/net/: Spelling fixes
+Date: Mon, 17 Dec 2007 11:40:25 -0800
+Message-ID: <1197920439-5455-19-git-send-email-joe@perches.com>
+Return-path: <netdev-owner@vger.kernel.org>
+Message-Id: <5703e57f925f31fc0eb38873bd7f10fc44f99cb4.1197918894.git.joe@perches.com>
+Sender: netdev-owner@vger.kernel.org
 List-ID: <linux-hams.vger.kernel.org>
-Content-Type: TEXT/PLAIN; charset="us-ascii"
+MIME-Version: 1.0
+Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
-To: Patrick Ouellette <pat@flying-gecko.net>
-Cc: Andreas Weller <weller@andreas-weller.de>, linux-hams@vger.kernel.org
-
-On Mon, 17 Dec 2007, Patrick Ouellette wrote:
-
-> On Mon, Dec 17, 2007 at 01:27:29PM +0100, Andreas Weller wrote:
-> >
-> > Hi!
-> > I'm using a Yaesu VX-6 handheld transceiver. For simplifying programming
-> > hundreds of memories, scan frequencies settings etc. I'm looking for a
-> > PC software.
-> > There's Yaesu's ADMS and KC8UNJ's VX-6 commander - but both are Windows
-> > tools :-(
-> >
-> > Is there any Linux/open-source Yaesu programming software?
-> >
-> Andreas,
->
-> I didn't find any when I was looking for my VX-7.  I ended up using
-> KC8UNJ's software on a Windows machine.  I didn't try, but it might work
-> under Wine.
->
-
-FWIW, Bob G4HFQ has written some pretty good (for Windows :-) )
-sofware for programming various Yaesu rigs which he sells for a
-very reasonable price. The support for his software is rather good
-too!
+To: linux-kernel@vger.kernel.org
+Cc: Andrew Morton <akpm@linux-foundation.org>, "Pekka Savola (ipv6)" <pekkas@netcore.fi>, Alexey Kuznetsov <kuznet@ms2.inr.ac.ru>, "David S. Miller" <davem@davemloft.net>, Hideaki YOSHIFUJI <yoshfuji@linux-ipv6.org>, James Morris <jmorris@namei.org>, Patrick McHardy <kaber@trash.net>, Ralf Baechle <ralf@linux-mips.org>, Samuel Ortiz <samuel@sortiz.org>, Sridhar Samudrala <sri@us.ibm.com>, Vlad Yasevich <vladislav.yasevich@hp.com>, linux-hams@vger.kernel.org, lksctp-developers@lists.sourceforge.net, netdev@vger.kernel.org
 
 
-I would like to think that Bob would be approachable for a port to
-Linux. www.g4hfq.co.uk is the link.
+Signed-off-by: Joe Perches <joe@perches.com>
+---
+ include/net/ax25.h           |    2 +-
+ include/net/ip6_tunnel.h     |    2 +-
+ include/net/irda/discovery.h |    2 +-
+ include/net/sctp/structs.h   |    6 +++---
+ 4 files changed, 6 insertions(+), 6 deletions(-)
 
-
-Geoff
-
+diff --git a/include/net/ax25.h b/include/net/ax25.h
+index 4e3cd93..32a57e1 100644
+--- a/include/net/ax25.h
++++ b/include/net/ax25.h
+@@ -35,7 +35,7 @@
+ #define AX25_P_ATALK			0xca	/* Appletalk                  */
+ #define AX25_P_ATALK_ARP		0xcb	/* Appletalk ARP              */
+ #define AX25_P_IP			0xcc	/* ARPA Internet Protocol     */
+-#define AX25_P_ARP			0xcd	/* ARPA Adress Resolution     */
++#define AX25_P_ARP			0xcd	/* ARPA Address Resolution    */
+ #define AX25_P_FLEXNET			0xce	/* FlexNet                    */
+ #define AX25_P_NETROM 			0xcf	/* NET/ROM                    */
+ #define AX25_P_TEXT 			0xF0	/* No layer 3 protocol impl.  */
+diff --git a/include/net/ip6_tunnel.h b/include/net/ip6_tunnel.h
+index 29c9da7..c17fa1f 100644
+--- a/include/net/ip6_tunnel.h
++++ b/include/net/ip6_tunnel.h
+@@ -23,7 +23,7 @@ struct ip6_tnl {
+ 	struct net_device *dev;	/* virtual device associated with tunnel */
+ 	struct net_device_stats stat;	/* statistics for tunnel device */
+ 	int recursion;		/* depth of hard_start_xmit recursion */
+-	struct ip6_tnl_parm parms;	/* tunnel configuration paramters */
++	struct ip6_tnl_parm parms;	/* tunnel configuration parameters */
+ 	struct flowi fl;	/* flowi template for xmit */
+ 	struct dst_entry *dst_cache;    /* cached dst */
+ 	u32 dst_cookie;
+diff --git a/include/net/irda/discovery.h b/include/net/irda/discovery.h
+index eb0f9de..e4efad1 100644
+--- a/include/net/irda/discovery.h
++++ b/include/net/irda/discovery.h
+@@ -80,7 +80,7 @@ typedef struct discovery_t {
+ 	irda_queue_t	q;		/* Must be first! */
+ 
+ 	discinfo_t	data;		/* Basic discovery information */
+-	int		name_len;	/* Lenght of nickname */
++	int		name_len;	/* Length of nickname */
+ 
+ 	LAP_REASON	condition;	/* More info about the discovery */
+ 	int		gen_addr_bit;	/* Need to generate a new device
+diff --git a/include/net/sctp/structs.h b/include/net/sctp/structs.h
+index 002a00a..bb96574 100644
+--- a/include/net/sctp/structs.h
++++ b/include/net/sctp/structs.h
+@@ -301,7 +301,7 @@ struct sctp_sock {
+ 	/* The default SACK delay timeout for new associations. */
+ 	__u32 sackdelay;
+ 
+-	/* Flags controling Heartbeat, SACK delay, and Path MTU Discovery. */
++	/* Flags controlling Heartbeat, SACK delay, and Path MTU Discovery. */
+ 	__u32 param_flags;
+ 
+ 	struct sctp_initmsg initmsg;
+@@ -955,7 +955,7 @@ struct sctp_transport {
+ 	/* PMTU	      : The current known path MTU.  */
+ 	__u32 pathmtu;
+ 
+-	/* Flags controling Heartbeat, SACK delay, and Path MTU Discovery. */
++	/* Flags controlling Heartbeat, SACK delay, and Path MTU Discovery. */
+ 	__u32 param_flags;
+ 
+ 	/* The number of times INIT has been sent on this transport. */
+@@ -1638,7 +1638,7 @@ struct sctp_association {
+ 	 */
+ 	__u32 pathmtu;
+ 
+-	/* Flags controling Heartbeat, SACK delay, and Path MTU Discovery. */
++	/* Flags controlling Heartbeat, SACK delay, and Path MTU Discovery. */
+ 	__u32 param_flags;
+ 
+ 	/* SACK delay timeout */
 -- 
-    Geoff Blake G8GNZ      located  near  Chelmsford,  Essex,  U.K.
-    Please reply to:      geoff(at)palaemon(dot)demon(dot)co(dot)uk
-    Using Linux on  Intel & Linux  or NetBSD on Sun Sparc platforms
+1.5.3.7.949.g2221a6
 
-    Please  avoid  sending  me  Word  or  PowerPoint  attachments.
-    See    <http://www.gnu.org/philosophy/no-word-attachments.html>
-------------------------------------------------------------------------------
-
-    This  E-mail  and any  attachment(s) are strictly  confidential
-    and is intended solely for the addressee(s). If you are not the
-    intended recipient please notify <postmaster(at)palaemon.co.uk>
-    and the sender by return and permanently delete the message.
-
-    You may not disclose, forward or copy this E-mail or any of its
-    attachments to any third party without the prior consent of the
-    sender.
-
-------------------------------------------------------------------------------
