@@ -1,24 +1,24 @@
-From: Doug <appld@sasktel.net>
-Subject: HARD DRIVE CLONING
-Date: Mon, 17 Dec 2007 14:58:04 -0600
-Message-ID: <0JT700AYPP06SNC0@bgmpomr2.sasknet.sk.ca>
+From: "Vic" <radio@beer.org.uk>
+Subject: Re: HARD DRIVE CLONING
+Date: Mon, 17 Dec 2007 22:18:51 -0000 (GMT)
+Message-ID: <43348.10.0.0.4.1197929931.squirrel@10.0.0.4>
+References: <0JT700AYPP06SNC0@bgmpomr2.sasknet.sk.ca>
+Reply-To: radio@beer.org.uk
 Mime-Version: 1.0
 Content-Transfer-Encoding: 7BIT
 Return-path: <linux-hams-owner@vger.kernel.org>
+In-Reply-To: <0JT700AYPP06SNC0@bgmpomr2.sasknet.sk.ca>
 Sender: linux-hams-owner@vger.kernel.org
 List-ID: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"; format="flowed"
+Content-Type: text/plain; charset="us-ascii"
 To: linux-hams@vger.kernel.org
 
-Thanks to a lot of help received from folks on the list, I have
-been able to clone my small RH8 hard drive to a larger drive
-and get my bbs back on the air... I tried several solutions, and
-the one that worked first was the use of G4U hard disk image
-cloning and then GPARTED. I will try some of the other methods that
-I received at a later date.
+> I have
+> been able to clone my small RH8 hard drive to a larger drive
 
-Thanks folks..
+Ewww - RH8 is a *long* time dead...
 
-Doug  VE5DA
+You really ought to consider upgrading to something current.
 
+Vic.
 
