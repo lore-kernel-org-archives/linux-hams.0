@@ -1,27 +1,32 @@
-From: T + J Williams <wa0eir@mchsi.com>
-Subject: New Release of Twclock
-Date: Thu, 20 Dec 2007 17:55:41 -0600
-Message-ID: <1198194941.2200.21.camel@localhost.localdomain>
-Mime-Version: 1.0
+From: John Ronan <jronan@tssg.org>
+Subject: TCP/IP question.
+Date: Sun, 30 Dec 2007 20:00:01 +0000
+Message-ID: <C3E52AF6-BEDB-4055-BFF4-11EC720CF5F1@tssg.org>
+Mime-Version: 1.0 (Apple Message framework v753)
 Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
 Sender: linux-hams-owner@vger.kernel.org
 List-ID: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"
-To: Debian Hams <debian-hams@lists.debian.org>, Linux Hams <linux-hams@vger.kernel.org>, "Psk31 at qth.net" <psk31@mailman.qth.net>, Yahoo linux hams <linuxhams@yahoogroups.com>, Yahoo
+Content-Type: text/plain; charset="us-ascii"; delsp="yes"; format="flowed"
+To: Linux-Hams <linux-hams@vger.kernel.org>
 
-Hi All,
+Hi folks,
 
-There is a new version of twclock at http://wa0eir.ham.org
-This version fixes a couple bugs, including a permission problem
-on some systems that prevented beeping the PC speaker.
+Has anyone done a configuration for a KISS TNC recently?  I'm trying  
+to test two KISS tnc's/two radio's between two linux boxes.
 
-The makefile also supports DESTDIR, which should make life
-easier for distro maintainers.
+On one side (Side B say ) of the connection, the TNC seems to key up  
+and begin transmitting even though the other side is still sending...
 
--- 
-73 and Happy Holidays,
-Ted - wa0eir
-http://wa0eir.ham.org
+Any suggestions?
+
+Regards
+de John
+EI7IG
+
+--
+John Ronan <jronan@tssg.org>, +353-51-302938
+Telecommunications Software &  Systems Group,  http://www.tssg.org
+
 
 
