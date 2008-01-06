@@ -1,38 +1,30 @@
-From: Patrick Ouellette <pat@flying-gecko.net>
-Subject: Re: DXCal - a DX calendar...
-Date: Wed, 2 Jan 2008 10:57:57 -0500
-Message-ID: <20080102155757.GA3440@flying-gecko.net>
-References: <35060.81.33.214.253.1199280683.squirrel@correo.robles.nu>
+From: Erik Jakobsen <erik_ja@mail.tele.dk>
+Subject: DCF receiver as frequency normal ?
+Date: Sun, 06 Jan 2008 12:15:32 +0100
+Message-ID: <4780B854.5020306@mail.tele.dk>
 Mime-Version: 1.0
+Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
-Content-Disposition: inline
-In-Reply-To: <35060.81.33.214.253.1199280683.squirrel@correo.robles.nu>
 Sender: linux-hams-owner@vger.kernel.org
 List-ID: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-To: Jaime Robles <jaime@robles.nu>
-Cc: linux-hams@vger.kernel.org
+To: linux-hams@vger.kernel.org
 
-On Wed, Jan 02, 2008 at 02:31:23PM +0100, Jaime Robles wrote:
-> 
-> I just wanted to announce you my very last project. DXCal - a DX Calendar.
-> http://dxcal.com
-> 
+Hi.
 
-Jaime,
+Up here in Denmark we used to use the Kalundborg Longwave transmitter as
+frequency normal for frequency coumters.
+This did stop at the first of year 2007 as the station closed.
 
-Nice idea and nice implementation.
+I then thought, if I could use many of the DCF clocks I have here in the
+house.
 
-Seems to me if you could tie in a propagation prediction program you
-would have a really fantastic resource.
+Has anyone made that, or know where to find information about such a
+project ?
 
-Thanks & 73,
-
-Pat KB8PYM
 -- 
+Venlig hilsen - Best regards - Erik Jakobsen
+Licensed HAM-RADIO with the callsign OZ4KK
+http://www.urbakken.dk
+Registered Linux user #114875 with http://counter.li.org
 
-Patrick Ouellette                 pat@flying-gecko.net
-kb8pym@arrl.net                   Amateur Radio: KB8PYM 
-Living life to a Jimmy Buffett soundtrack
-"Crank the amp to 11, this needs more cowbell - and a llama wouldn't hurt either"
