@@ -1,33 +1,36 @@
 From: Tomi Manninen <oh2bns@sral.fi>
 Subject: Re: Amateur Radio -> MacOS?
-Date: Thu, 31 Jan 2008 22:35:04 +0200
-Message-ID: <47A230F8.5030403@sral.fi>
-References: <1201798150.47a1fc062d0bc@mgtmail.com> <20080131184108.GR2537@mea-ext.zmailer.org>
+Date: Thu, 31 Jan 2008 23:53:59 +0200
+Message-ID: <47A24377.8020905@sral.fi>
+References: <1201798150.47a1fc062d0bc@mgtmail.com>	 <20080131184108.GR2537@mea-ext.zmailer.org> <47A230F8.5030403@sral.fi> <fc22d18f0801311255q570b490ay4f0e50b0a602c288@mail.gmail.com>
 Mime-Version: 1.0
 Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <20080131184108.GR2537@mea-ext.zmailer.org>
+In-Reply-To: <fc22d18f0801311255q570b490ay4f0e50b0a602c288@mail.gmail.com>
 Sender: linux-hams-owner@vger.kernel.org
 List-ID: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"; format="flowed"
 To: linux-hams@vger.kernel.org
 
-Matti Aarnio wrote:
+Frank Brickle wrote:
 
-> Several applications exist for HF data modulations, and EME work with
-> Joe Taylor's softwares.   Those need in essence some way to listen using
-> line mode (or even microphone) input, and transmit with line out (or
-> headphones) plus some way to key the transmitter.
+> Applications that use JACK move smoothly between Linux and OSX. They can 
+> also take good advantage of FireWire sound systems like the Edirol 
+> FA-66.  Please see http://dttsp.org/wiki for an example of an SDR 
+> application that runs on Linux and OSX without pain.
 
-FWIW, I once took a quick look at how audio is implemented in OSX.
-My understanding was that the native interface only supports
-callback based audio.
+Yes, but IIRC, Jack is also callback based *) and that is the key in my
+argument. Doable but non-trivial changes are needed. That requires
+someone with the motivation and hardware to do it.
 
-My gMFSK, and I believe most other linux soundcard programs use
-blocking or polling for audio data and thus need non-trivial
-modifications to be ported to OSX.
+This is not meant to be an excuse why ham radio software is lacking
+from OSX (and I don't even know if it really is), just a possible
+explanation why at least some soundcard based Linux ham radio programs
+are not trivial to port to OSX.
 
-The changes needed shouldn't be rocket science, but lacking
-hardware to experiment on, I soon lost interest...
+
+*) I might be mistaking here as well. I remember taking a look at
+Jack as well, exactly because it was portable between Linux and OSX.
+But IIRC, it too would have required the same architecture change.
 
 /Tomi
