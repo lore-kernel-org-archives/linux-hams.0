@@ -1,68 +1,47 @@
-From: Matti Aarnio <matti.aarnio@zmailer.org>
-Subject: Re: Help with Fedora Core and AX25
-Date: Thu, 31 Jan 2008 11:20:32 +0200
-Message-ID: <20080131092032.GO2537@mea-ext.zmailer.org>
-References: <47A14E83.5000606@guegue.com>
+From: Bent <bbagger@gmail.com>
+Subject: Vers 2.2.1 of PB/PG for Linux released
+Date: Thu, 31 Jan 2008 17:35:43 +0100
+Message-ID: <2e19719f0801310835t6a5ce9ackb9889ff29fa5f9b7@mail.gmail.com>
 Mime-Version: 1.0
+Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
+        bh=NSLQQpFshg7zUqiBNLDokn8brCTGAoYeB1MGpNUbYSw=;
+        b=ThFl11XmVRien/RL6H2RbfsFTCqKq2RuKWFSIiwwGHuJ6XOf+zEGtYi6G5jq8i7zBZpiIhK9AyNj2/5MxmNmQzoIKLONw/BqD3lskFNBTA5J2e/GqQyJ2yBGxSNxNoByujXJJPBylSk/d+hCSoYDcvfugSfOdyWYo0ljxqzjNM4=
 Content-Disposition: inline
-In-Reply-To: <47A14E83.5000606@guegue.com>
 Sender: linux-hams-owner@vger.kernel.org
 List-ID: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-To: "Neville A. Cross" <neville@guegue.com>
-Cc: linux-hams@vger.kernel.org
+To: linux-hams@vger.kernel.org
 
-On Wed, Jan 30, 2008 at 10:28:51PM -0600, Neville A. Cross wrote:
-> Hello,
-> First of all, I am a bit clueless!
-> I have been trying to set up AX25 under Fedora Core 8 .
-> Fedora 8 has the ax25 already in the kernel.
+I'm happy to announce release 2.2.1 of PB/PG for Linux.
 
-Yup..  I got the AX25 enabled into kernel by default couple weeks before
-FC8's release :-)    I even noted that "at this time, userspace tools are
-difficult to use, and are not included into FC8, but with kernel support
-in place, we can finally make same progress on the tools too."
+PB and PG for Linux are programs used for download from and upload to
+digital satellites (Pacsats) supporting the FTL0 protocol. This
+software allows you to directly communicate with the Microsat series
+of satellites. It provides a Curses (Ncurses) based user interface. It
+features automatic directory fill requests and simple, rules based
+file download requests.
 
-> The problems come with the installs of the ax25-apps, ax25-tools and
-> libax25 packages, apparently they do not use a standard tree.
-> For example there is not /etc/ax25 directory and there fore there is
-> not axports file.
+This release serves two purposes:
 
-libax25 should bring the  /etc/ax25/axports  into system.
+1) To show that the project is still alive and kicking
 
+2) To correct a number of small 'inconveniencec' and to add a few new
+features. These changes/additions are described in the document
+'ReleaseNotes' q.v. (included in the release)
 
-I have done some work on porting the tools to FC-devel, but my system
-compiles only x86_64 correctly, and i386 libraries get wrong library
-directory..  nevertheless, see:
+PB/PG for Linux may be downloaded (in source form only) from one of
+these places:
 
-  http://ham.zmailer.org/oh2mqk/libax25/
+- www.fern.dk /pgpg/pbpg-2.2.1.tar.gz
+- ibiblio.org /pub/linux/apps/ham/pbpg-2.2.1.tar.gz
+- ftp.amsat.org   /amsat/software/Linux/pbpg-2.2.1.tar.gz
 
-The  libax25  is packaged into runtime and development versions.
-The tarballs are compilable into packages by command like this:
+I may be contacted using this address:  oz6bl (at) amsat (dot) org
 
-         rpmbuild  -tb  libax25-0.0.12.tar.gz
+Happy hamming
 
-I have not yet gotten around to drag ax25-utils to current era, thus
-it is not there packaged.
-
-
-Anyhow, the existing init-scripts that people use with Debian, SuSE etc.
-are very much lacking decent fluent configuration.
-
-What is really needed are some decent init-scripts that start things
-like kissattach in nice coherent manner, something similar to RH/FC
-network subsystem scripts which really are quite decent.
-
-That too is in my todo-list, and keeping me back from making real
-publication of these packages.
-
-
-> More details can be found on:
-> http://forums.fedoraforum.org/showthread.php?t=178719&highlight=ax25
->
-> Any help or hints may be appreciated.
-> Neville YN1V
-
-73 de Matti, OH2MQK
+Best 73 de Bent/OZ6BL
