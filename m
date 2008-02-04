@@ -1,40 +1,48 @@
 From: Matti Aarnio <matti.aarnio@zmailer.org>
-Subject: Re: What were the reasons of having IP address at AX.25 interfaces
-	?
-Date: Sun, 3 Feb 2008 22:28:19 +0200
-Message-ID: <20080203202819.GX2537@mea-ext.zmailer.org>
-References: <S3540591AbYBCSQN/20080203181613Z+1592@mail.zmailer.org> <47A60A57.5080402@digitalrealm.net>
+Subject: Re: What were the reasons of having mandatory IP address at AX.25
+	interfaces ?
+Date: Mon, 4 Feb 2008 15:02:52 +0200
+Message-ID: <20080204130252.GA2537@mea-ext.zmailer.org>
+References: <S3540591AbYBCSQN/20080203181613Z+1592@mail.zmailer.org> <47A60A57.5080402@digitalrealm.net> <20080203202819.GX2537@mea-ext.zmailer.org>
 Mime-Version: 1.0
-Return-path: <linux-hams-owner@vger.kernel.org>
+Return-path: <netdev-owner@vger.kernel.org>
 Content-Disposition: inline
-In-Reply-To: <47A60A57.5080402@digitalrealm.net>
-Sender: linux-hams-owner@vger.kernel.org
+In-Reply-To: <20080203202819.GX2537@mea-ext.zmailer.org>
+Sender: netdev-owner@vger.kernel.org
 List-ID: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
-To: Glenn Wright <gw.ka8e@digitalrealm.net>
-Cc: linux-hams@vger.kernel.org
+To: linux-hams@vger.kernel.org
+Cc: netdev@vger.kernel.org
 
-On Sun, Feb 03, 2008 at 06:39:19PM +0000, Glenn Wright wrote:
-> For the HAMS like me that run TCP/IP.
+.. the original reason was apparently that _ifconfig_ blew up
+when it saw protocols that it didn't understand on network
+interfaces.  Possibly when there was no IP protocol on an
+interface.
 
-Sure, but that does not mean that _all_ interfaces must have IP address.
-In my specific present application scope the question is APRS -- those
-radio channels do not run IP at all, and therefore forcing the interfaces
-to have IP is superflous at best.
+This happened on DECNET, and apparently on others too.
 
-> Matti Aarnio wrote:
-> > I can well understand that the IP address is OPTIONAL, but
-> > not that it is MANDATORY.
+Thus the  SIOCGIFCONF  ioctl is not returning much else
+than interfaces with IP addresses on them, and to get
+_all_ interfaces, one must read thru  /proc/net/dev  file.
 
-Thus the question: is there a reason to have the IP address
-as MANDATORY parameter for things like  kissattach ?
+Some reason like that is possibly behind the reason why
+SIOCGIFCONF does not find anything but PF_INET sockets
+even when it is run on  PF_AX25 type socket..
 
 
-Related: at present there are no ready-made init-scripts for
-AX.25/ROSE/etc.   Or perhaps I just have failed to spot any
-in any Debian variations, or RedHat/SuSE...
+The "fun" part is that  ifconfig  does look for all devices
+in /proc/net/dev.   Perhaps we should just make all devices
+findable with  SIOCGIFCONF regardless of what protocols
+they may support ?   And if the  ifconfig  blows up, the
+bug is in ifconfig tool, not kernel.
 
-Something like what there exists for IP settings.
+Alternatively one could iterate all network devices of
+protocol family X being enabled when  ioctl() is called
+on socket with PF_x  (like PF_AX25.)
 
-73 de Matti, OH2MQK
+
+Can anyone recall any real reason why this would not be
+acceptable ?
+
+/Matti Aarnio
