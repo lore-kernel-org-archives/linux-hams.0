@@ -1,60 +1,95 @@
-From: Matti Aarnio <matti.aarnio@zmailer.org>
-Subject: Re: What were the reasons of having mandatory IP address at AX.25
-	interfaces ?
-Date: Mon, 4 Feb 2008 17:02:40 +0200
-Message-ID: <20080204150240.GB2537@mea-ext.zmailer.org>
-References: <S3540591AbYBCSQN/20080203181613Z+1592@mail.zmailer.org> <47A60A57.5080402@digitalrealm.net> <20080203202819.GX2537@mea-ext.zmailer.org> <20080204130252.GA2537@mea-ext.zmailer.org> <p731w7s4wic.fsf@bingen.suse.de>
+From: "Pino Zollo" <pinozollo@gmail.com>
+Subject: New Realease of DBLog V. 0.6.3
+Date: Wed, 6 Feb 2008 10:51:54 -0300
+Message-ID: <001201c868c7$75fa55e0$b5ca10ac@tower>
 Mime-Version: 1.0
+Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
-Content-Disposition: inline
-In-Reply-To: <p731w7s4wic.fsf@bingen.suse.de>
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:from:to:subject:date:mime-version:content-type:content-transfer-encoding:x-priority:x-msmail-priority:x-mailer:x-mimeole;
+        bh=19y1Gg3HZy3yZ6DJlhM1mcbozm+iJvvRwImK+MXwctw=;
+        b=VgrG/nhZH7yaAEdsE/C3zLmi3by93GKZ3uyiVMYRmVgRRLvSRxbg1DRFLSDaSaQSd7mFH9VW+UW6Ysv1gKU66bbaf79lqiixLHx8Hw0Q5VIv7qw68/IZa5n0Rs+2E46/9v7vTNohCkLRHYua6uH7m81FZjrwosvzCTjaR8jrB4Y=
 Sender: linux-hams-owner@vger.kernel.org
 List-ID: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-To: Andi Kleen <andi@firstfloor.org>
-Cc: linux-hams@vger.kernel.org, netdev@vger.kernel.org
-
-On Mon, Feb 04, 2008 at 03:38:35PM +0100, Andi Kleen wrote:
-> Matti Aarnio <matti.aarnio@zmailer.org> writes:
-> 
-> > .. the original reason was apparently that _ifconfig_ blew up
-> > when it saw protocols that it didn't understand on network
-> > interfaces.  Possibly when there was no IP protocol on an
-> > interface.
-> 
-> It's not only ifconfig, a lot of programs use SIOCGIFCONF
-> to query ip addresses.
-
-So ?   My codes do too, and filter away things they are not
-interested in.  (When they specifically look for IP addresses.)
-
-Of course I may be in minority by expecting the unexpected,
-and handling such "weird" multiprotocol systems...
+To: Linux Hams <linux-hams@vger.kernel.org>
 
 
-I found original explanation for that mandatoryness finally.
-It was in order to silence bug reports in certain cases when
-real fix would have been to really find all interfaces instead
-of complaining.
-
-In the end I used same trick that  ifconfig  tool uses to find
-all interfaces, and filter away those that AX.25 subsystems
-are not interested in - end of  "SIOCGIFCONF problems".
 
 
-netdev:ish developemnt thing would be, that we ( = myself probably )
-make SIOCGIFCONF to return those devices that have addresses
-in the protocol family that the socket used for the query has.
+ It is available the version Beta 0.6.3 of DBLog for Linux on the site
+ http://www.qsl.net/zp4kfx/Linux
 
-For PF_INET we might return also PF_INET6 values to lessen
-the spanish-inquisition -impact...
+ Comments and bug reports are welcome.
+ 73 de Pino ZP4KFX
+ ---------------------------------------------------------------------------
+-
 
-.. or do you know any who looks up interface IP addresses with
-PF_FILE ( = AF_UNIX ) socket ?
+                         Presentation of DBLog
 
-What do the competitor systems B, S, and W do ?
+ DBLog is a logging program for radio amateurs based on a relational Data
+ Base.
 
-> -Andi
+ It has been developed in Gambas, a sort of Visual Basic for Linux, and
+ the relational database PostgreSQL.
 
-/Matti Aarnio
+ It has been tested on MySQL by Antonio, IW2OAZ (iw2oaz at eutelia.com).
+
+ It should work also with SQLite, but this has not been tested yet.
+
+ It allows to log QSOs and export a range of them in ADIF format.
+
+ It can read the radio frequency via CAT interface
+
+ It includes a CW Keyer based on cwdaemon.
+
+ The advantages of using a relational data base both for qso datas and
+ configuration datas are:
+
+ -- The code of DBLog is much simpler.
+
+ -- The user can do any kind of fancy query on datas using the standard SQL
+    language.
+
+ -- The client-sever structure (PostgreSQL and MySQL only) allows a
+multi-operator
+    club station or DX expedition to have many operators logging into the
+same log.
+    The log server can even be remote.
+
+ -- data back-up can be done using the database features.
+
+ -- Other program can be used to analyse datas like psql, pgAdmin III, TOra
+for
+    PostgreSQL, or Emma, MySQL query browser, MySQL-navigator for MySQL.
+
+ -- Anybody can write other programs ( for digimodes, EME, Meteorscatter
+etc.)
+    who log into the same log, without the need of been integrated into
+DBLog.
+
+  The author (me ZP4KFX) endorse the idea that the radio amateur software
+ should  be open and free to allow the "home made" also in this area.
+
+  He foresees also an open architecture for all radio amateur programs based
+on
+  the separation of functions. Datas should be managed by an single data
+base
+  server for all the shack. The various applications should gravitate around
+  this data tank, possibly standardised (ADIF fields for the log for
+instance).
+  This will simplify greatly life both for developers and users.
+
+ DBLog is using free software and it is released in source code under the
+GNU GPL
+ licence, so anybody can modify it and improve it.
+
+ Beta testers and Gambas programmers are welcome !
+
+ 73 de  Pino ZP4KFX
+ pinozollo at gmail.com
+ http://www.qsl.net/zp4kfx
+
+
+
