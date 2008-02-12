@@ -1,69 +1,56 @@
-From: Matti Aarnio <matti.aarnio@zmailer.org>
-Subject: Re: [BUG] [AX25] in libax25
-Date: Tue, 12 Feb 2008 13:20:11 +0200
-Message-ID: <20080212112011.GC2537@mea-ext.zmailer.org>
-References: <47093A4E.5040409@hamradio.hr> <20071008082900.GB24782@cloud.net.au> <470A1035.5070900@hamradio.hr> <20071008134447.GA30451@cloud.net.au> <47B1779B.3000600@free.fr>
-Mime-Version: 1.0
+From: Darren Long <darren.long@mac.com>
+Subject: Puzzled by AX.25 socket state problem
+Date: Tue, 12 Feb 2008 22:36:00 +0000
+Message-ID: <D0E6D043-89CD-4A0B-81CF-94139F0B4419@mac.com>
+Mime-Version: 1.0 (Apple Message framework v919.2)
+Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
-Content-Disposition: inline
-In-Reply-To: <47B1779B.3000600@free.fr>
 Sender: linux-hams-owner@vger.kernel.org
 List-ID: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-To: Bernard Pidoux F6BVP <f6bvp@free.fr>
-Cc: linux-hams@vger.kernel.org
+Content-Type: text/plain; charset="us-ascii"; format="flowed"; delsp="yes"
+To: linux-hams@vger.kernel.org
 
-On Tue, Feb 12, 2008 at 11:40:27AM +0100, Bernard Pidoux F6BVP wrote:
-> Hi,
->
-> I found a bug in libax25./proc/net/rose_neigh "use" field not read by
-> read_proc_rs_neigh and was missing in struct declaration.
->
-> For ROSE FPAC application development with 2.6 kernel I needed to check 
-> 'restart' in rose_neigh and found that it was not correctly read by the 
-> library.I was getting 'mode' state instead of 'restart. This was because
-> 'use' field was not taken into account. Of course, t0 and tf timers were
-> also no read correctly.
->
-> Here is an extract of ChangeLog file.
->
-> libax25 0.0.11.4
->         * BUG in procutils.h and procutils.c
->           in structure proc_rs_neigh field "use" was missing,
->           in function read_proc_rs_neigh proc_rs_neigh use was not read,
->           corrected.
->
-> Patched libax25 package can be downloaded from here :
->
-> http://f6bvp.free.fr/logiciels/ax25/libax25-0.0.11.4src_f6bvp.tgz
+Hi all,
 
-I merged your fix to my libax25 changes:
+I've implemented an AX.25 connected mode  'convergence layer'  for the  
+Delay Tolerant Networking reference implementation (see dtnrg.org).   
+I'd like to submit it upstream soon, but I've observed some quirks in  
+testing that I'd like to understand better.
 
-  http://ham.zmailer.org/oh2mqk/libax25/libax25-0.0.13-6.tar.gz
+My implementation of the AX.25 Connected mode convergence layer  
+(ax25cm-CL)  uses Linux support for AX.25 sockets and has been mostly  
+tested using a PK-232 (KISS mode)  with a hard-wired loop-back cable,  
+although a little OTA testing has been done elsewhere with no  
+detrimental reports.
 
-the package is buildable in RPM systems with command:
+The quirk I'm observing has symptoms which prevent subsequent  
+communications between two SSIDs on the same host.  The problem shows  
+up in netstat output as a socket in the listening state, but unusually  
+it has call/SSID in both source and dest fields, which strikes me as  
+being an anomaly.  This entry in netstat output is in addition to the  
+original listening socket, from which the connection threads with  
+their own connected sockets are spawned.
 
-   rpmbuild -tb libax25-0.0.13-6.tar.gz
+When further attempts are made to set up a connection between the two  
+call/SSIDs, an "Address already in use" error occurs. Note please that  
+the error message is from recollection, not verbatim, as I don't have  
+access to the TNC at the moment.
 
-and something similar in Debian systems.
+Can anyone shed any light on this behaviour.  I've noticed similar  
+error messages when dabbling with Bluetooth connections under  
+circumstances where I already have an rfcomm connection established  
+and erroneously try to bring up another identical one.  This makes me  
+wonder if there is a  resource leak for an AX.25 socket in my ax25cm- 
+CL implementation, when a connection 'closes' due to errors.  In my  
+loopback testing, I get quite a few errors, which seem to be mitigated  
+somewhat by adjustment of the timing parameters.
+
+FYI, the test system with the PK-232 is running Ubuntu 7.10.
+
+Any help would be appreciated.
+
+Cheers,
+
+Darren, G0HWW
 
 
-I did rewrite the  ax25_config_load_ports()  (and nr- and rose-versions too)
-so that there is no longer mandatory need to have IP addresses in interfaces,
-and those functions still find all AX25/NETROM/ROSE ports that system has.
-
-I have in that same directory also  ax25-tools  where  kissattach does not
-mandate IP address, and mkiss has changed radically -- not that I have had
-opportunity to test the mkiss properly.  (mkiss uses dynamic pty:s and forks
-individual kissattach commands for demuxed sub-interfaces.)
-
-> After compiling new libraries, AX25 applications must be re-compiled too 
-> and restarted in order to take into account the newly built libax25.
-
-.. unless they are dynamically linked, where just restart is enough after
-rebuilt library is installed.
-
-> 73 de Bernard, f6bvp
-
-73 de Matti, OH2MQK
