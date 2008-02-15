@@ -1,56 +1,60 @@
-From: Darren Long <darren.long@mac.com>
-Subject: Puzzled by AX.25 socket state problem
-Date: Tue, 12 Feb 2008 22:36:00 +0000
-Message-ID: <D0E6D043-89CD-4A0B-81CF-94139F0B4419@mac.com>
-Mime-Version: 1.0 (Apple Message framework v919.2)
+From: Stephane Fillod <f8cfe@free.fr>
+Subject: [ANN] Hamlib 1.2.7 released
+Date: Fri, 15 Feb 2008 14:09:53 +0100
+Message-ID: <20080215130953.GB6206@charybde.local>
+Mime-Version: 1.0
+Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
-Return-path: <linux-hams-owner@vger.kernel.org>
-Sender: linux-hams-owner@vger.kernel.org
-List-ID: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"; format="flowed"; delsp="yes"
-To: linux-hams@vger.kernel.org
+Return-path: <hamlib-developer-bounces@lists.sourceforge.net>
+Content-Disposition: inline
+List-Id: <linux-hams.vger.kernel.org>
+List-Unsubscribe: <https://lists.sourceforge.net/lists/listinfo/hamlib-developer>,
+	<mailto:hamlib-developer-request@lists.sourceforge.net?subject=unsubscribe>
+List-Archive: <http://sourceforge.net/mailarchive/forum.php?forum_name=hamlib-developer>
+List-Post: <mailto:hamlib-developer@lists.sourceforge.net>
+List-Help: <mailto:hamlib-developer-request@lists.sourceforge.net?subject=help>
+List-Subscribe: <https://lists.sourceforge.net/lists/listinfo/hamlib-developer>,
+	<mailto:hamlib-developer-request@lists.sourceforge.net?subject=subscribe>
+Sender: hamlib-developer-bounces@lists.sourceforge.net
+Errors-To: hamlib-developer-bounces@lists.sourceforge.net
+To: Hamlib developers <hamlib-developer@lists.sourceforge.net>
+Cc: Linux HAMs <Linux-hams@vger.kernel.org>
 
-Hi all,
+Good news everyone!
 
-I've implemented an AX.25 connected mode  'convergence layer'  for the  
-Delay Tolerant Networking reference implementation (see dtnrg.org).   
-I'd like to submit it upstream soon, but I've observed some quirks in  
-testing that I'd like to understand better.
+Hamlib-1.2.7 has been released.
 
-My implementation of the AX.25 Connected mode convergence layer  
-(ax25cm-CL)  uses Linux support for AX.25 sockets and has been mostly  
-tested using a PK-232 (KISS mode)  with a hard-wired loop-back cable,  
-although a little OTA testing has been done elsewhere with no  
-detrimental reports.
+Hamlib provides a unified environment for the development of radio and
+rotator control applications. The release 1.2.7 includes many improvements
+since last official version.
 
-The quirk I'm observing has symptoms which prevent subsequent  
-communications between two SSIDs on the same host.  The problem shows  
-up in netstat output as a socket in the listening state, but unusually  
-it has call/SSID in both source and dest fields, which strikes me as  
-being an anomaly.  This entry in netstat output is in addition to the  
-original listening socket, from which the connection threads with  
-their own connected sockets are spawned.
+Check it out at http://hamlib.org !
 
-When further attempts are made to set up a connection between the two  
-call/SSIDs, an "Address already in use" error occurs. Note please that  
-the error message is from recollection, not verbatim, as I don't have  
-access to the TNC at the moment.
+New in 1.2.7:
+* Much Improved Documentation
+* New models: IC-820H, DttSP, Elektor SDR-USB, DDS-60,
+              FT-450, FT-767GX
+* Fixes: IC-746, IC-765, IC-910, Kenwood's, FT1000MP, FT817, ..
+* New rigsmtr toy to graph polar signal strength
+* New experimental rigctld rig daemon, with simple protocol
 
-Can anyone shed any light on this behaviour.  I've noticed similar  
-error messages when dabbling with Bluetooth connections under  
-circumstances where I already have an rfcomm connection established  
-and erroneously try to bring up another identical one.  This makes me  
-wonder if there is a  resource leak for an AX.25 socket in my ax25cm- 
-CL implementation, when a connection 'closes' due to errors.  In my  
-loopback testing, I get quite a few errors, which seem to be mitigated  
-somewhat by adjustment of the timing parameters.
+Download pages are accessible at http://sourceforge.net/projects/hamlib
+rpms, .deb and Win32 DLL's coming soon.
 
-FYI, the test system with the PK-232 is running Ubuntu 7.10.
+Please, test it out and report to hamlib-developer@lists.sourceforge.net
+Developers are also invited to join the Hamlib team by subscribing to
+this mailing list. If your favorite rig is not in the supported list,
+feel free to ask.
 
-Any help would be appreciated.
+Many thanks to all the developers and testers who participated
+in this release, especially regarding the documentation.
+Contributors and backend maintainers are listed in the AUTHORS file.
 
-Cheers,
+Have fun and let us know!
 
-Darren, G0HWW
+73's de Stephane - F8CFE & the Hamlib team
 
-
+-------------------------------------------------------------------------
+This SF.net email is sponsored by: Microsoft
+Defy all challenges. Microsoft(R) Visual Studio 2008.
+http://clk.atdmt.com/MRT/go/vse0120000070mrt/direct/01/
