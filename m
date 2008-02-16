@@ -1,62 +1,32 @@
-From: "IT2 Stuart Blake Tener, USNR" <teners@bh90210.net>
-Subject: Re: D-STAR Rig Control
-Date: Fri, 15 Feb 2008 17:21:23 +0000
-Message-ID: <1203096083.47b5ca13b9626@mgtmail.com>
-References: <1203091364.47b5b7a4ddb56@mgtmail.com> <20080215162556.GA26354@reid1.localdomain>
+From: "Pino Zollo" <pinozollo@gmail.com>
+Subject: Help pppd
+Date: Sat, 16 Feb 2008 07:30:12 -0300
+Message-ID: <000a01c87086$f4f98160$98cc10ac@tower>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7BIT
+Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <20080215162556.GA26354@reid1.localdomain>
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:from:to:subject:date:mime-version:content-type:content-transfer-encoding:x-priority:x-msmail-priority:x-mailer:x-mimeole;
+        bh=oUX6s8HMpHU8tV+ByYZSoSNhJOw7bueS2BDcR/TEJ1g=;
+        b=l4iu3s+KGk2Dkvc741v8GJrgLqioMJt65zgTZ1m2RoTUVxhusKVkg81H6NAnj/kWEjuNj1eRPVcshd14TMAECrSZXRY6ujlIzjV/fto9nhNGAuRxCamSsFW7l68lbvQ/bY0TUIgx7xfekzsnsMqnK4Dkh1ZS1Y1RhmD9yjtzeuw=
 Sender: linux-hams-owner@vger.kernel.org
 List-ID: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
-To: don <don_reid@comcast.net>
-Cc: Linux HAMs <Linux-hams@vger.kernel.org>
+To: Yahoo linux hams <linuxhams@yahoogroups.com>, Linux Hams <linux-hams@vger.kernel.org>
 
-Quoting don <don_reid@comcast.net>:
+Please can somebody help me in configuring Gnome ppp on Debian 4.0r1 ?
 
-> On Fri, Feb 15, 2008 at 04:02:44PM +0000, IT2 Stuart Blake Tener, USNR wrote:
-> > ALCON:
-> >
-> > I am curious what (if any) integration is existent with controlling rigs
-> such as
-> > the ICOM IC-2820H, IC-91AD, etc..., that are D-STAR radios.
-> >
-> > Being able to read and write memories, etc.., would be quite useful to say
-> the
-> > least.
->
-> I have an IC-2820 and have looked into what it can do over the computer
-> interface.  It appears that it can only upload or download the entire memory
-> as one large chunk.  The data is in hex format and is a bit over 100k bytes.
+I connec to trough a cellular phone on USB.
+It connects and for 2 minutes I can even log to a DX Cluster, then pppd dies
+with error 15:
+"Lack of LCP responses"
 
-Excellent! My goal (initially) would be to design a software for programming the
-2820H, and IC-91AD that would be usable on a MacOS/Linux environment.
+I have tryed some changes in the config file in /etc/ppp but no result.
 
-May I respectfully request if you could publish the information regarding how
-one would accomplish this, and if the HamLib supports provisionment of an API
-to do same?
+Haw can I convince pppd to stay alive ?
 
->
-> It doesn't seem to respond to any other commands.
+Thanks for the help
 
-At the moment, programming the radio would be my first interest.
+73 de Pino ZP4KFX
 
->
-> If someone knows differently I'd be very happy to be wrong.
-
-Well, I am sure if anyone knows, Robin (AA4RC) does, and I plan to try to get
-some time with him at the Hamvention.
-
->
->
-> Don Reid - W7DMR
->
-
-
--- 
-IT2 Stuart Blake Tener, USNR, N3GWG (Extra), MROP
-Beverly Hills, CA / Las Vegas, NV / Philadelphia, PA / Washington, DC
-mobile: (310) 358-0202
-Nextel: 124*233172*14 (direct connect)
-e-mail: teners@bh90210.net
