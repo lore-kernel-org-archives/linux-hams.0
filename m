@@ -1,42 +1,34 @@
-From: Jack Heller <kb7no@sbcglobal.net>
-Subject: hamlib parameters in gMFSK and xlog for Icom
-Date: Tue, 4 Mar 2008 23:02:04 -0800
-Message-ID: <200803042302.04710.kb7no@sbcglobal.net>
+From: Pino Zollo <pinozollo@gmail.com>
+Subject: DBLog updated
+Date: Wed, 5 Mar 2008 17:23:00 -0300
+Message-ID: <200803051723.04962.pinozollo@gmail.com>
+Reply-To: pinozollo@gmail.com
 Mime-Version: 1.0
 Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:from:reply-to:organization:to:subject:date:user-agent:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        bh=xJpkIgau/9Plv4gqc997/M3hm2EI1OZD+sYhLx+5vMM=;
+        b=TTkX+3LmshfnPD9ubCtG6eptmKxaMBoFgdT730hbLz2bAvXG2is+sEDHkj5BWx5ZI43XmUfQLsMcQES/hrEwKnkDoEJVEFUXep4RqjUyxLsr2rUwQYXuvfnm/me/B6bwcSdELlitUPikqmBzZ0GiQYkjUOKAHTOqxIxJ9c65LFs=
 Content-Disposition: inline
 Sender: linux-hams-owner@vger.kernel.org
 List-ID: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
-To: linux-hams@vger.kernel.org
+To: Yahoo linux hams <linuxhams@yahoogroups.com>, PG4I <pg4i@amsat.org>, pa0r <rein@couperus.com>, Open Suse Ham <opensuse-ham@opensuse.org>, "Marco Di Martino (IW2OHX)" <iw2ohx@eutelia.c>
 
-Hi to all,
+The new version of DBLog, the 0.7.17 is available on
 
-	I have been struggling with hamlib.  I have the 1.2.6.1 installed and appears 
-to work.  At least in verbose mode I can retrieve data from the Icom 756PRO.  
-I am using Kubuntu 6.06.  gMFSK works very well, the PTT switch works through 
-the serial port OK, but I cannot find the correct set of "parameter=value" to 
-place in the config line so the get_freq can retrieve rig frequency plus 
-other features.
-	I came close to good info in xlog, but not quite enough. The xlog Help file 
-sent me to a Sourceforge FAQ website that scratched the surface, but not 
-deeply enough.
-	During another experiment, I discovered I could get grig to almost work by 
-using sudo in the start-up command -- Must have been the port needed a little 
-help although that is not for sure. It is hard to say if grig works with this 
-rig, but some action was observed -- Just not complete.  Anyway, have been 
-attempting to get some results as root.  I think I had gone to root before 
-invoking verbose for rigctl.
-	To say this is wearing on me is a true understatement.  I have spent many 
-hours over some months trying to solve this dilemma and I am now sure the 
-only way is to ask for instructions and plead for a few examples.
-	There are no examples that I have found in numerous searches.  Then I found a 
-comment by a developer that perhaps examples would be good.  I think that if 
-you successfully write a program and it works well because you know how to 
-make it make it work, that is all that is necessary.  Ah well, life.
+http://www.qsl.net/zp4kfx/Linux 
 
-	So I hope there is someone who has a handle on this who can help or direct me 
-to a listing of "How to do it."  Thanks much for whatever you can do.
+Now DBLog integrates with xdx by PG4I, the cluster access program.
 
-        Jack   KB7NO
+DBLog receives spots from xdx, checks them against local statistics and
+shows the results in a dedicated window.
+
+A Screeshot is available on the downloading page.
+
+Comments and bug reports are aways welcome.
+
+73 de
+Pino ZP4KFX
