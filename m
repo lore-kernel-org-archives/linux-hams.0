@@ -1,32 +1,23 @@
-From: =?ISO-8859-9?B?3XNrZW5kZXIgWd3Q3VRFTA==?= 
-	<iskender.yigitel@uzay.tubitak.gov.tr>
-Subject: ax.25 using WAN cards
-Date: Fri, 21 Mar 2008 16:21:17 +0200
-Message-ID: <20080321142120.50720434121@mail.bilten.metu.edu.tr>
+From: N1UAN Bob <bobbru@chartertn.net>
+Subject: ubuntu 7.04 and uronode
+Date: Sat, 22 Mar 2008 17:12:25 +0000 (GMT)
+Message-ID: <Pine.LNX.4.33.0803221709240.10528-100000@n1uan.ampr.org>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
 Sender: linux-hams-owner@vger.kernel.org
 List-ID: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"
-To: Linux-Hams@vger.kernel.org
+Content-Type: TEXT/PLAIN; charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+To: linux-hams@vger.kernel.org
 
-Hi everybody. I am curious about using a PC + PCI HDLC card + Modem instead
-of PC+TNC+Modem configuration. What is the most suitable solution (I mean
-hardware and drivers) for this kind of approach. Can you suggest any cards
-and where can I find them? 
-
-I wonder if is it possible to use a WAN card (supporting HDLC, PPP, X25) for
-AX.25. There are many HDLC cards that are currently being sold but most of
-the cards nowadays are not based on Z8530 or Z85130. Although the prices of
-these cards are high, these new generation WAN cards support HDLC, cisco
-HDLC, X25 etc. at very high speeds. Is it possible to use such a card for
-ax.25? If yes which drivers must be used?
-
- 
-
-Thanks.
-Iskender Yigitel
-
+ Hi
+have an ? for for the list maybe you can give me some ideas on what is
+causing this
+i have ubuntu 7.04 running here i have fbb and the uronode 1.04 running on
+it the fbb when it makes an ax25 connect works just fine but when i make
+an connect to uronode 1.04 it makes the connect and then it drops the
+connect it gets an DM any if why this might be happening do you know of
+anything special that needs to be done thanks for any info and help
+Bob
 
 
