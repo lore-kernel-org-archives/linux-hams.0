@@ -1,114 +1,27 @@
-From: N1UAN Bob <bobbru@chartertn.net>
-Subject: Re: ubuntu 7.04 and uronode
-Date: Sat, 22 Mar 2008 21:06:41 +0000 (GMT)
-Message-ID: <Pine.LNX.4.33.0803222106040.12257-100000@n1uan.ampr.org>
-References: <47E572AA.3060705@exemail.com.au>
-Mime-Version: 1.0
+From: John Ronan <jronan@tssg.org>
+Subject: conversd
+Date: Thu, 27 Mar 2008 11:13:32 +0000
+Message-ID: <A85C934B-8B0B-4CCB-AFE9-3FEBD3AED4AC@tssg.org>
+Mime-Version: 1.0 (Apple Message framework v753)
+Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <47E572AA.3060705@exemail.com.au>
 Sender: linux-hams-owner@vger.kernel.org
 List-ID: <linux-hams.vger.kernel.org>
-Content-Type: TEXT/PLAIN; charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-To: Ray Wells <vk2tv@exemail.com.au>
-Cc: linux-hams@vger.kernel.org
+Content-Type: text/plain; charset="us-ascii"; delsp="yes"; format="flowed"
+To: Linux-Hams <linux-hams@vger.kernel.org>
 
-No Ray it doesnt it is running but just connects get dropped after
-connecting
-Thanks again
-Bob
+Hi,
 
-On Sun, 23 Mar 2008, Ray Wells wrote:
+I've been googling and can't find an answer to what the 'de-facto'  
+convers server is.  (Or is it a religious question?).
 
-> Bob,
->
-> Does this (from that URL I sent, have any relevance ....
->
->    1.
->
->       make
->
->             lots of warnings that need to be fixed...
->    2.
->
->       sudo make -k install
->
-> (sudo runs install as root...   -k option tells it to keep running after errors.  A
-> manual directory has changed and breaks the install...)
->
-> and this ....
->
-> *** problems when installing without the -k option...
->
-> ERROR: /var/ax25/mheard/mheard.dat: No such file or directory
-> ERROR: /var/ax25/mheard/mheard.dat: No such file or directory
-> /var/lib/ax25/mheard/mheard.dat
->
-> ln -s /var/lib/ax25/mheard/ /var/ax25/mheard
->
-> ERROR: /var/ax25/node/loggedin: No such file or directory
->
-> vodall@ac7yy:~/src/uronode-0.5-R2> touch /var/ax25/node/lastlog
-> vodall@ac7yy:~/src/uronode-0.5-R2> chmod 777 /var/ax25/node/lastlog
->
-> Just a few thoughts.
->
-> Ray vk2tv
->
-> N1UAN Bob wrote:
->
-> >Thanks Ray for the reply i have ran uronode for an few years now
-> >just not on ubuntu 7.04 so something is different and trying to find what
-> >it is
-> >Bob
-> >
-> >On Sun, 23 Mar 2008, Ray Wells wrote:
-> >
-> >
-> >
-> >>N1UAN Bob wrote:
-> >>
-> >>
-> >>
-> >>>Hi
-> >>>have an ? for for the list maybe you can give me some ideas on what is
-> >>>causing this
-> >>>i have ubuntu 7.04 running here i have fbb and the uronode 1.04 running on
-> >>>it the fbb when it makes an ax25 connect works just fine but when i make
-> >>>an connect to uronode 1.04 it makes the connect and then it drops the
-> >>>connect it gets an DM any if why this might be happening do you know of
-> >>>anything special that needs to be done thanks for any info and help
-> >>>Bob
-> >>>
-> >>>
-> >>>--
-> >>>To unsubscribe from this list: send the line "unsubscribe linux-hams" in
-> >>>the body of a message to majordomo@vger.kernel.org
-> >>>More majordomo info at  http://vger.kernel.org/majordomo-info.html
-> >>>
-> >>>
-> >>>
-> >>>
-> >>>
-> >>Bob,
-> >>
-> >>I don't know much about uronode except what Iread this morning.
-> >>
-> >>I'd be looking at the things required to set up Linuxnode - node.conf,
-> >>node.perms, ax25d.conf. You could also take a look here
-> >>http://nwp.ampr2.net/jnos/UroNode
-> >>
-> >>Ray vk2tv
-> >>
-> >>
-> >>
-> >
-> >--
-> >To unsubscribe from this list: send the line "unsubscribe linux-hams" in
-> >the body of a message to majordomo@vger.kernel.org
-> >More majordomo info at  http://vger.kernel.org/majordomo-info.html
-> >
-> >
-> >
->
+Regards
+de John
+EI7IG
+
+--
+John Ronan <jronan@tssg.org>, +353-51-302938
+Telecommunications Software &  Systems Group,  http://www.tssg.org
+
+
 
