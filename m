@@ -1,98 +1,57 @@
-From: =?iso-8859-9?B?3XNrZW5kZXIgWd3Q3VRFTA==?= 
-	<iskender.yigitel@uzay.tubitak.gov.tr>
-Subject: RE: ax.25 using WAN cards
-Date: Wed, 2 Apr 2008 15:33:10 +0300
-Message-ID: <20080402123313.1AAD0434105@mail.bilten.metu.edu.tr>
-References: <20080331212156.GA21500@linux-mips.org>
+From: Stephane Fillod <f8cfe@free.fr>
+Subject: memory programming, was Re: D-STAR Rig Control
+Date: Fri, 11 Apr 2008 14:50:41 +0200
+Message-ID: <20080411125041.GG6021@charybde.local>
+References: <1203091364.47b5b7a4ddb56@mgtmail.com> <20080215162556.GA26354@reid1.localdomain> <1203096083.47b5ca13b9626@mgtmail.com>
 Mime-Version: 1.0
-Content-Transfer-Encoding: QUOTED-PRINTABLE
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <20080331212156.GA21500@linux-mips.org>
+Content-Disposition: inline
+In-Reply-To: <1203096083.47b5ca13b9626@mgtmail.com>
 Sender: linux-hams-owner@vger.kernel.org
 List-ID: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="iso-8859-1"
-To: 'Ralf Baechle DL5RB' <ralf@linux-mips.org>
-Cc: Linux-Hams@vger.kernel.org
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+To: "IT2 Stuart Blake Tener, USNR" <teners@bh90210.net>
+Cc: don <don_reid@comcast.net>, Linux HAMs <Linux-hams@vger.kernel.org>
 
-Hi, in fact I don't want to use such a card as a dumb high speed UART. =
-My
-aim is different. I have found some cards that have Linux drivers to se=
-nd
-and receive HDLC frames. For example there are drivers for Farsync WAN =
-cards
-in the kernel source tree. By the use of this cards and drivers it is
-possible to send and receive HDLC frames. And if we can put the AX.25 d=
-ata
-in an HDLC frame (by changing and hacking the driver code) it may be
-possible to achieve AX25. I don't know the correct strategy but this ki=
-nd of
-approach seemed reasonable to me (Well I am not an expert. Too optimist=
-ic
-maybe).For example think about the KISS TNC usage, The kernel sends the=
- AX25
-frame bytes to the TNC asynchronously by the use of KISS protocol and
-driver. And the TNC puts the coming bytes into an HDLC frame and sends =
-to
-the modem. Here we already have a card that that can send and receive H=
-DLC
-frames. If we can find a way to pass the AX25 data to this card instead=
- of
-the TNC (a new kernel module acting as a bridge between the kernel and =
-the
-HDLC driver maybe), it is done. I don't know. Just an idea. Any comment=
-s?
+Fri, Feb 15, 2008, IT2 Stuart Blake Tener, USNR skribis:
+> Quoting don <don_reid@comcast.net>:
+> 
+> > On Fri, Feb 15, 2008 at 04:02:44PM +0000, IT2 Stuart Blake Tener, USNR wrote:
+> > > ALCON:
+> > >
+> > > I am curious what (if any) integration is existent with controlling rigs
+> > such as
+> > > the ICOM IC-2820H, IC-91AD, etc..., that are D-STAR radios.
+> > >
+> > > Being able to read and write memories, etc.., would be quite useful to say
+> > the
+> > > least.
+> >
+> > I have an IC-2820 and have looked into what it can do over the computer
+> > interface.  It appears that it can only upload or download the entire memory
+> > as one large chunk.  The data is in hex format and is a bit over 100k bytes.
+> 
+> Excellent! My goal (initially) would be to design a software for programming the
+> 2820H, and IC-91AD that would be usable on a MacOS/Linux environment.
 
------Original Message-----
-=46rom: Ralf Baechle DL5RB [mailto:ralf@linux-mips.org]=20
-Sent: Tuesday, April 01, 2008 12:22 AM
-To: =DDskender Y=DD=D0=DDTEL
-Cc: Linux-Hams@vger.kernel.org
-Subject: Re: ax.25 using WAN cards
+Do you have the documentation of the protocol/format of the memory data?
 
-On Fri, Mar 21, 2008 at 04:21:17PM +0200, =DDskender Y=DD=D0=DDTEL wrot=
-e:
+> May I respectfully request if you could publish the information regarding how
+> one would accomplish this, and if the HamLib supports provisionment of an API
+> to do same?
 
-> Hi everybody. I am curious about using a PC + PCI HDLC card + Modem
-instead
-> of PC+TNC+Modem configuration. What is the most suitable solution (I =
-mean
-> hardware and drivers) for this kind of approach. Can you suggest any =
-cards
-> and where can I find them?=20
->=20
-> I wonder if is it possible to use a WAN card (supporting HDLC, PPP, X=
-25)
-for
-> AX.25. There are many HDLC cards that are currently being sold but mo=
-st of
-> the cards nowadays are not based on Z8530 or Z85130. Although the pri=
-ces
-of
-> these cards are high, these new generation WAN cards support HDLC, ci=
-sco
-> HDLC, X25 etc. at very high speeds. Is it possible to use such a card=
- for
-> ax.25? If yes which drivers must be used?
+Hamlib already has the API to program memory of rigs[1]. However, we're
+badly missing memory programming GUI. Is there's anyone into GUI around
+here? It should be done easily cross-platform with FLTK[2] or wxPython[3],
+or with any other framework. You will find help on programming with Hamlib
+by joining the mailing list here[4].
 
-=46or the hardware which I'm familiar with the support for higher level
-protocols such as HDLC would need to be disabled running them effectivl=
-y
-as dumb highspeed UARTs.  Some of such interfaces have reloadable firmw=
-are
-but the architecture and interfaces rarely seem to be documented.  So
-what you suggest isn't impossible but it's not (always?) quite trivial.
+[1] http://hamlib.sourceforge.net/manuals/1.2.7/html/mem_8c.html
+[2] http://www.fltk.org/
+[3] http://wxPython.org/
+[4] https://lists.sourceforge.net/lists/listinfo/hamlib-developer
 
-73 de DL5RB op Ralf
-
----
-DL5RB / M0LRB / AB1IN
-Loc.    JN47BS / CQ 14 / ITU 28 / DOK A21
-Packet: DL5RB@DB0FHN.#BAY.DEU.EU
-
-
-
---
-To unsubscribe from this list: send the line "unsubscribe linux-hams" i=
-n
-the body of a message to majordomo@vger.kernel.org
-More majordomo info at  http://vger.kernel.org/majordomo-info.html
+73
+-- 
+Stephane - F8CFE
