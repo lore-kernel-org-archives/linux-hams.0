@@ -1,57 +1,61 @@
 From: Stephane Fillod <f8cfe@free.fr>
-Subject: memory programming, was Re: D-STAR Rig Control
-Date: Fri, 11 Apr 2008 14:50:41 +0200
-Message-ID: <20080411125041.GG6021@charybde.local>
-References: <1203091364.47b5b7a4ddb56@mgtmail.com> <20080215162556.GA26354@reid1.localdomain> <1203096083.47b5ca13b9626@mgtmail.com>
+Subject: [ANN] Hamlib 1.2.7.1 released
+Date: Sat, 12 Apr 2008 13:27:52 +0200
+Message-ID: <20080412112752.GQ6021@charybde.local>
 Mime-Version: 1.0
-Return-path: <linux-hams-owner@vger.kernel.org>
-Content-Disposition: inline
-In-Reply-To: <1203096083.47b5ca13b9626@mgtmail.com>
-Sender: linux-hams-owner@vger.kernel.org
-List-ID: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
-To: "IT2 Stuart Blake Tener, USNR" <teners@bh90210.net>
-Cc: don <don_reid@comcast.net>, Linux HAMs <Linux-hams@vger.kernel.org>
+Return-path: <hamlib-developer-bounces@lists.sourceforge.net>
+Content-Disposition: inline
+List-Id: <linux-hams.vger.kernel.org>
+List-Unsubscribe: <https://lists.sourceforge.net/lists/listinfo/hamlib-developer>,
+	<mailto:hamlib-developer-request@lists.sourceforge.net?subject=unsubscribe>
+List-Archive: <http://sourceforge.net/mailarchive/forum.php?forum_name=hamlib-developer>
+List-Post: <mailto:hamlib-developer@lists.sourceforge.net>
+List-Help: <mailto:hamlib-developer-request@lists.sourceforge.net?subject=help>
+List-Subscribe: <https://lists.sourceforge.net/lists/listinfo/hamlib-developer>,
+	<mailto:hamlib-developer-request@lists.sourceforge.net?subject=subscribe>
+Sender: hamlib-developer-bounces@lists.sourceforge.net
+Errors-To: hamlib-developer-bounces@lists.sourceforge.net
+To: Hamlib developers <hamlib-developer@lists.sourceforge.net>
+Cc: Linux HAMs <Linux-hams@vger.kernel.org>
 
-Fri, Feb 15, 2008, IT2 Stuart Blake Tener, USNR skribis:
-> Quoting don <don_reid@comcast.net>:
-> 
-> > On Fri, Feb 15, 2008 at 04:02:44PM +0000, IT2 Stuart Blake Tener, USNR wrote:
-> > > ALCON:
-> > >
-> > > I am curious what (if any) integration is existent with controlling rigs
-> > such as
-> > > the ICOM IC-2820H, IC-91AD, etc..., that are D-STAR radios.
-> > >
-> > > Being able to read and write memories, etc.., would be quite useful to say
-> > the
-> > > least.
-> >
-> > I have an IC-2820 and have looked into what it can do over the computer
-> > interface.  It appears that it can only upload or download the entire memory
-> > as one large chunk.  The data is in hex format and is a bit over 100k bytes.
-> 
-> Excellent! My goal (initially) would be to design a software for programming the
-> 2820H, and IC-91AD that would be usable on a MacOS/Linux environment.
+Good news everyone!
 
-Do you have the documentation of the protocol/format of the memory data?
+Hamlib-1.2.7.1 has been released.
 
-> May I respectfully request if you could publish the information regarding how
-> one would accomplish this, and if the HamLib supports provisionment of an API
-> to do same?
+Hamlib provides a unified environment for the development of radio and
+rotator control applications. The release 1.2.7.1 is a maintenance
+release. Owners of a FT1000MP definitely need to upgrade in order
+to fix a regression introduced by version 1.2.7. 
 
-Hamlib already has the API to program memory of rigs[1]. However, we're
-badly missing memory programming GUI. Is there's anyone into GUI around
-here? It should be done easily cross-platform with FLTK[2] or wxPython[3],
-or with any other framework. You will find help on programming with Hamlib
-by joining the mailing list here[4].
+Check it out at http://hamlib.org !
 
-[1] http://hamlib.sourceforge.net/manuals/1.2.7/html/mem_8c.html
-[2] http://www.fltk.org/
-[3] http://wxPython.org/
-[4] https://lists.sourceforge.net/lists/listinfo/hamlib-developer
+New in 1.2.7.1:
+* New model: miniVNA 
+* Fixes: FT1000MP, Tentec Orion, Omni VI Plus 
+* AOR: implemented scanning 
+* Kenwood models TS2000, TS870S can now get/set antenna. 
+  TS2000 gained strength meter calibration. 
 
-73
--- 
-Stephane - F8CFE
+Download pages are accessible at http://sourceforge.net/projects/hamlib
+rpms, .deb and Win32 DLL's coming soon.
+
+Please, test it out and report to hamlib-developer@lists.sourceforge.net
+Developers are also invited to join the Hamlib team by subscribing to
+this mailing list. If your favorite rig is not in the supported list,
+feel free to ask.
+
+Many thanks to all the developers and testers who participated
+in this release. Contributors and backend maintainers are listed
+in the AUTHORS file.
+
+Have fun and let us know!
+
+73's de Stephane - F8CFE & the Hamlib team
+
+-------------------------------------------------------------------------
+This SF.net email is sponsored by the 2008 JavaOne(SM) Conference 
+Don't miss this year's exciting event. There's still time to save $100. 
+Use priority code J8TL2D2. 
+http://ad.doubleclick.net/clk;198757673;13503038;p?http://java.sun.com/javaone
