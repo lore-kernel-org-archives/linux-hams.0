@@ -1,41 +1,43 @@
-From: Pavel Emelyanov <xemul@openvz.org>
-Subject: [PATCH][AX25]: Potential ax25_uid_assoc-s leaks on module unload.
-Date: Sat, 12 Apr 2008 16:05:44 +0400
-Message-ID: <4800A598.10506@openvz.org>
+From: Nate Bargmann <n0nb@bluevalley.net>
+Subject: Re: [ANN] Hamlib 1.2.7.1 released
+Date: Sat, 12 Apr 2008 07:47:00 -0500
+Message-ID: <200804120747.00381.n0nb@bluevalley.net>
+References: <20080412112752.GQ6021@charybde.local>
+Reply-To: n0nb@bluevalley.net
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
-Return-path: <netdev-owner@vger.kernel.org>
-Sender: netdev-owner@vger.kernel.org
-List-ID: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
-To: Ralf Baechle <ralf@linux-mips.org>
-Cc: David Miller <davem@davemloft.net>, Linux Netdev List <netdev@vger.kernel.org>, linux-hams@vger.kernel.org
+Content-Transfer-Encoding: 7bit
+Return-path: <hamlib-developer-bounces@lists.sourceforge.net>
+In-Reply-To: <20080412112752.GQ6021@charybde.local>
+Content-Disposition: inline
+List-Id: <linux-hams.vger.kernel.org>
+List-Unsubscribe: <https://lists.sourceforge.net/lists/listinfo/hamlib-developer>,
+	<mailto:hamlib-developer-request@lists.sourceforge.net?subject=unsubscribe>
+List-Archive: <http://sourceforge.net/mailarchive/forum.php?forum_name=hamlib-developer>
+List-Post: <mailto:hamlib-developer@lists.sourceforge.net>
+List-Help: <mailto:hamlib-developer-request@lists.sourceforge.net?subject=help>
+List-Subscribe: <https://lists.sourceforge.net/lists/listinfo/hamlib-developer>,
+	<mailto:hamlib-developer-request@lists.sourceforge.net?subject=subscribe>
+Sender: hamlib-developer-bounces@lists.sourceforge.net
+Errors-To: hamlib-developer-bounces@lists.sourceforge.net
+To: Stephane Fillod <f8cfe@free.fr>, Hamlib developers <hamlib-developer@lists.sourceforge.net>, Linux HAMs <Linux-hams@vger.kernel.org>
 
-The ax25_uid_free call walks the ax25_uid_list and releases
-entries from it. The problem is that after the fisrt call to
-hlist_del_init the hlist_for_each_entry (which hides behind
-the ax25_uid_for_each) will consider the current position to
-be the last and will return.
+On Saturday 12 April 2008 06:27:52 Stephane Fillod wrote:
+> Good news everyone!
+>
+> Hamlib-1.2.7.1 has been released.
 
-Thus, the whole list will be left not freed.
+Thanks, Stephane.
 
-Signed-off-by: Pavel Emelyanov <xemul@openvz.org>
+73, de Nate >>
 
----
+-- 
 
-diff --git a/net/ax25/ax25_uid.c b/net/ax25/ax25_uid.c
-index 5f4eb73..57aeba7 100644
---- a/net/ax25/ax25_uid.c
-+++ b/net/ax25/ax25_uid.c
-@@ -218,9 +218,11 @@ void __exit ax25_uid_free(void)
- 	struct hlist_node *node;
- 
- 	write_lock(&ax25_uid_lock);
-+again:
- 	ax25_uid_for_each(ax25_uid, node, &ax25_uid_list) {
- 		hlist_del_init(&ax25_uid->uid_node);
- 		ax25_uid_put(ax25_uid);
-+		goto again;
- 	}
- 	write_unlock(&ax25_uid_lock);
- }
+"The optimist proclaims that we live in the best of all
+possible worlds.  The pessimist fears this is true."
+
+-------------------------------------------------------------------------
+This SF.net email is sponsored by the 2008 JavaOne(SM) Conference 
+Don't miss this year's exciting event. There's still time to save $100. 
+Use priority code J8TL2D2. 
+http://ad.doubleclick.net/clk;198757673;13503038;p?http://java.sun.com/javaone
