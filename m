@@ -1,61 +1,41 @@
-From: Stephane Fillod <f8cfe@free.fr>
-Subject: [ANN] Hamlib 1.2.7.1 released
-Date: Sat, 12 Apr 2008 13:27:52 +0200
-Message-ID: <20080412112752.GQ6021@charybde.local>
+From: Pavel Emelyanov <xemul@openvz.org>
+Subject: [PATCH][AX25]: Potential ax25_uid_assoc-s leaks on module unload.
+Date: Sat, 12 Apr 2008 16:05:44 +0400
+Message-ID: <4800A598.10506@openvz.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
-Return-path: <hamlib-developer-bounces@lists.sourceforge.net>
-Content-Disposition: inline
-List-Id: <linux-hams.vger.kernel.org>
-List-Unsubscribe: <https://lists.sourceforge.net/lists/listinfo/hamlib-developer>,
-	<mailto:hamlib-developer-request@lists.sourceforge.net?subject=unsubscribe>
-List-Archive: <http://sourceforge.net/mailarchive/forum.php?forum_name=hamlib-developer>
-List-Post: <mailto:hamlib-developer@lists.sourceforge.net>
-List-Help: <mailto:hamlib-developer-request@lists.sourceforge.net?subject=help>
-List-Subscribe: <https://lists.sourceforge.net/lists/listinfo/hamlib-developer>,
-	<mailto:hamlib-developer-request@lists.sourceforge.net?subject=subscribe>
-Sender: hamlib-developer-bounces@lists.sourceforge.net
-Errors-To: hamlib-developer-bounces@lists.sourceforge.net
-To: Hamlib developers <hamlib-developer@lists.sourceforge.net>
-Cc: Linux HAMs <Linux-hams@vger.kernel.org>
+Return-path: <netdev-owner@vger.kernel.org>
+Sender: netdev-owner@vger.kernel.org
+List-ID: <linux-hams.vger.kernel.org>
+Content-Type: text/plain; charset="us-ascii"
+To: Ralf Baechle <ralf@linux-mips.org>
+Cc: David Miller <davem@davemloft.net>, Linux Netdev List <netdev@vger.kernel.org>, linux-hams@vger.kernel.org
 
-Good news everyone!
+The ax25_uid_free call walks the ax25_uid_list and releases
+entries from it. The problem is that after the fisrt call to
+hlist_del_init the hlist_for_each_entry (which hides behind
+the ax25_uid_for_each) will consider the current position to
+be the last and will return.
 
-Hamlib-1.2.7.1 has been released.
+Thus, the whole list will be left not freed.
 
-Hamlib provides a unified environment for the development of radio and
-rotator control applications. The release 1.2.7.1 is a maintenance
-release. Owners of a FT1000MP definitely need to upgrade in order
-to fix a regression introduced by version 1.2.7. 
+Signed-off-by: Pavel Emelyanov <xemul@openvz.org>
 
-Check it out at http://hamlib.org !
+---
 
-New in 1.2.7.1:
-* New model: miniVNA 
-* Fixes: FT1000MP, Tentec Orion, Omni VI Plus 
-* AOR: implemented scanning 
-* Kenwood models TS2000, TS870S can now get/set antenna. 
-  TS2000 gained strength meter calibration. 
-
-Download pages are accessible at http://sourceforge.net/projects/hamlib
-rpms, .deb and Win32 DLL's coming soon.
-
-Please, test it out and report to hamlib-developer@lists.sourceforge.net
-Developers are also invited to join the Hamlib team by subscribing to
-this mailing list. If your favorite rig is not in the supported list,
-feel free to ask.
-
-Many thanks to all the developers and testers who participated
-in this release. Contributors and backend maintainers are listed
-in the AUTHORS file.
-
-Have fun and let us know!
-
-73's de Stephane - F8CFE & the Hamlib team
-
--------------------------------------------------------------------------
-This SF.net email is sponsored by the 2008 JavaOne(SM) Conference 
-Don't miss this year's exciting event. There's still time to save $100. 
-Use priority code J8TL2D2. 
-http://ad.doubleclick.net/clk;198757673;13503038;p?http://java.sun.com/javaone
+diff --git a/net/ax25/ax25_uid.c b/net/ax25/ax25_uid.c
+index 5f4eb73..57aeba7 100644
+--- a/net/ax25/ax25_uid.c
++++ b/net/ax25/ax25_uid.c
+@@ -218,9 +218,11 @@ void __exit ax25_uid_free(void)
+ 	struct hlist_node *node;
+ 
+ 	write_lock(&ax25_uid_lock);
++again:
+ 	ax25_uid_for_each(ax25_uid, node, &ax25_uid_list) {
+ 		hlist_del_init(&ax25_uid->uid_node);
+ 		ax25_uid_put(ax25_uid);
++		goto again;
+ 	}
+ 	write_unlock(&ax25_uid_lock);
+ }
