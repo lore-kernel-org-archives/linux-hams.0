@@ -1,121 +1,186 @@
-From: "Neville Cross" <neville@guegue.com>
-Subject: FPAC and Fedora8
-Date: Sun, 20 Apr 2008 12:43:39 -0600 (CST)
-Message-ID: <9891.165.98.185.2.1208717019.squirrel@mail.guegue.com>
-References: <480A6034.1080806@ccr.jussieu.fr>
+From: Bernard Pidoux <pidoux@ccr.jussieu.fr>
+Subject: [PATCH] soft lockup rose_node_list_lock
+Date: Sun, 20 Apr 2008 19:09:23 +0200
+Message-ID: <480B78C3.4040205@ccr.jussieu.fr>
+References: <480A6034.1080806@ccr.jussieu.fr> <20080419.184010.113401925.davem@davemloft.net>
 Mime-Version: 1.0
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <480A6034.1080806@ccr.jussieu.fr>
+In-Reply-To: <20080419.184010.113401925.davem@davemloft.net>
 Sender: linux-hams-owner@vger.kernel.org
 List-ID: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="windows-1252"
-To: linux-hams <linux-hams@vger.kernel.org>
+Content-Type: text/plain; charset="us-ascii"; format="flowed"
+To: David Miller <davem@davemloft.net>
+Cc: ralf@linux-mips.org, linux-kernel@vger.kernel.org, linux-hams@vger.kernel.org
 
-Hello,
+ From f40c15d0ea5a22178e6cbb0331486d2297abeeb7 Mon Sep 17 00:00:00 2001
+From: Bernard Pidoux <f6bvp@amsat.org>
+Date: Sun, 20 Apr 2008 18:19:06 +0200
+Subject: [PATCH] soft lockup rose_node_list_lock
 
-I have trying to setup a FBB station using Fedora 8. The good thing is
-that Fedora has the ax25 protocol already configured as module, it is
-matter only to call it up. I already have working ax25 outbound
-connections via RF.
+[ INFO: possible recursive locking detected ]
+2.6.25 #3
+---------------------------------------------
+ax25ipd/3811 is trying to acquire lock:
+  (rose_node_list_lock){-+..}, at: [<f8d31f1a>] rose_get_neigh+0x1a/0xa0 
+[rose]
 
-In my different test I came to the problem of configuring other  items =
-as
-ax25d and and ax25ipd. A friend TI2HAS commented to me that a good way =
-to
-ensure the connections was using FPAC as node, and it will also serve a=
-s
-gateway.
+but task is already holding lock:
+  (rose_node_list_lock){-+..}, at: [<f8d31fed>] 
+rose_route_frame+0x4d/0x620 [rose]
 
-So I gave a try to FPAC looking the mini-howto at
-http://rose.fpac.free.fr/MINI-HOWTO
-and also looking the howto at http://ftp.f6fbb.org/fpac/doc/FPAC-HOWTO.=
-html
+other info that might help us debug this:
+6 locks held by ax25ipd/3811:
+  #0:  (&tty->atomic_write_lock){--..}, at: [<c0259a1c>] 
+tty_write_lock+0x1c/0x50
+  #1:  (rcu_read_lock){..--}, at: [<c02aea36>] net_rx_action+0x96/0x230
+  #2:  (rcu_read_lock){..--}, at: [<c02ac5c0>] netif_receive_skb+0x100/0x2f0
+  #3:  (rose_node_list_lock){-+..}, at: [<f8d31fed>] 
+rose_route_frame+0x4d/0x620 [rose]
+  #4:  (rose_neigh_list_lock){-+..}, at: [<f8d31ff7>] 
+rose_route_frame+0x57/0x620 [rose]
+  #5:  (rose_route_list_lock){-+..}, at: [<f8d32001>] 
+rose_route_frame+0x61/0x620 [rose]
 
-Some of the questions that I have are:
-How do I know numbers to use? There is any coordinator to ask?
+stack backtrace:
+Pid: 3811, comm: ax25ipd Not tainted 2.6.25 #3
+  [<c0147e27>] print_deadlock_bug+0xc7/0xd0
+  [<c0147eca>] check_deadlock+0x9a/0xb0
+  [<c0149cd2>] validate_chain+0x1e2/0x310
+  [<c0149b95>] ? validate_chain+0xa5/0x310
+  [<c010a7d8>] ? native_sched_clock+0x88/0xc0
+  [<c0149fa1>] __lock_acquire+0x1a1/0x750
+  [<c014a5d1>] lock_acquire+0x81/0xa0
+  [<f8d31f1a>] ? rose_get_neigh+0x1a/0xa0 [rose]
+  [<c03201a3>] _spin_lock_bh+0x33/0x60
+  [<f8d31f1a>] ? rose_get_neigh+0x1a/0xa0 [rose]
+  [<f8d31f1a>] rose_get_neigh+0x1a/0xa0 [rose]
+  [<f8d32404>] rose_route_frame+0x464/0x620 [rose]
+  [<c031ffdd>] ? _read_unlock+0x1d/0x20
+  [<f8d31fa0>] ? rose_route_frame+0x0/0x620 [rose]
+  [<f8d1c396>] ax25_rx_iframe+0x66/0x3b0 [ax25]
+  [<f8d1f42f>] ? ax25_start_t3timer+0x1f/0x40 [ax25]
+  [<f8d1e65b>] ax25_std_frame_in+0x7fb/0x890 [ax25]
+  [<c0320005>] ? _spin_unlock_bh+0x25/0x30
+  [<f8d1bdf6>] ax25_kiss_rcv+0x2c6/0x800 [ax25]
+  [<c02a4769>] ? sock_def_readable+0x59/0x80
+  [<c014a8a7>] ? __lock_release+0x47/0x70
+  [<c02a4769>] ? sock_def_readable+0x59/0x80
+  [<c031ffdd>] ? _read_unlock+0x1d/0x20
+  [<c02a4769>] ? sock_def_readable+0x59/0x80
+  [<c02a4d3a>] ? sock_queue_rcv_skb+0x13a/0x1d0
+  [<c02a4c45>] ? sock_queue_rcv_skb+0x45/0x1d0
+  [<f8d1bb30>] ? ax25_kiss_rcv+0x0/0x800 [ax25]
+  [<c02ac715>] netif_receive_skb+0x255/0x2f0
+  [<c02ac5c0>] ? netif_receive_skb+0x100/0x2f0
+  [<c02af05c>] process_backlog+0x7c/0xf0
+  [<c02aeb0c>] net_rx_action+0x16c/0x230
+  [<c02aea36>] ? net_rx_action+0x96/0x230
+  [<c012bd53>] __do_softirq+0x93/0x120
+  [<f8d2a68a>] ? mkiss_receive_buf+0x33a/0x3f0 [mkiss]
+  [<c012be37>] do_softirq+0x57/0x60
+  [<c012c265>] local_bh_enable_ip+0xa5/0xe0
+  [<c0320005>] _spin_unlock_bh+0x25/0x30
+  [<f8d2a68a>] mkiss_receive_buf+0x33a/0x3f0 [mkiss]
+  [<c025ea37>] pty_write+0x47/0x60
+  [<c025c620>] write_chan+0x1b0/0x220
+  [<c0259a1c>] ? tty_write_lock+0x1c/0x50
+  [<c011fec0>] ? default_wake_function+0x0/0x10
+  [<c0259bea>] tty_write+0x12a/0x1c0
+  [<c025c470>] ? write_chan+0x0/0x220
+  [<c018bbc6>] vfs_write+0x96/0x130
+  [<c0259ac0>] ? tty_write+0x0/0x1c0
+  [<c018c24d>] sys_write+0x3d/0x70
+  [<c0104d1e>] sysenter_past_esp+0x5f/0xa5
+  =======================
+BUG: soft lockup - CPU#0 stuck for 61s! [ax25ipd:3811]
 
-But beyond those question I got stuck with the command make. I got erro=
-rs,
-I am not sure what they meant. I tried to modify the make.confs file to
-adapt the path to my setup but still no luck. I think that I may have a
-problem with something that I have installed or I have not installed.
+Pid: 3811, comm: ax25ipd Not tainted (2.6.25 #3)
+EIP: 0060:[<c010a9db>] EFLAGS: 00000246 CPU: 0
+EIP is at native_read_tsc+0xb/0x20
+EAX: b404aa2c EBX: b404a9c9 ECX: 017f1000 EDX: 0000076b
+ESI: 00000001 EDI: 00000000 EBP: ecc83afc ESP: ecc83afc
+  DS: 007b ES: 007b FS: 00d8 GS: 0033 SS: 0068
+CR0: 8005003b CR2: b7f5f000 CR3: 2cd8e000 CR4: 000006f0
+DR0: 00000000 DR1: 00000000 DR2: 00000000 DR3: 00000000
+DR6: ffff0ff0 DR7: 00000400
+  [<c0204937>] delay_tsc+0x17/0x30
+  [<c02048e9>] __delay+0x9/0x10
+  [<c02127f6>] __spin_lock_debug+0x76/0xf0
+  [<c0212618>] ? spin_bug+0x18/0x100
+  [<c0147923>] ? __lock_contended+0xa3/0x110
+  [<c0212998>] _raw_spin_lock+0x68/0x90
+  [<c03201bf>] _spin_lock_bh+0x4f/0x60
+  [<f8d31f1a>] ? rose_get_neigh+0x1a/0xa0 [rose]
+  [<f8d31f1a>] rose_get_neigh+0x1a/0xa0 [rose]
+  [<f8d32404>] rose_route_frame+0x464/0x620 [rose]
+  [<c031ffdd>] ? _read_unlock+0x1d/0x20
+  [<f8d31fa0>] ? rose_route_frame+0x0/0x620 [rose]
+  [<f8d1c396>] ax25_rx_iframe+0x66/0x3b0 [ax25]
+  [<f8d1f42f>] ? ax25_start_t3timer+0x1f/0x40 [ax25]
+  [<f8d1e65b>] ax25_std_frame_in+0x7fb/0x890 [ax25]
+  [<c0320005>] ? _spin_unlock_bh+0x25/0x30
+  [<f8d1bdf6>] ax25_kiss_rcv+0x2c6/0x800 [ax25]
+  [<c02a4769>] ? sock_def_readable+0x59/0x80
+  [<c014a8a7>] ? __lock_release+0x47/0x70
+  [<c02a4769>] ? sock_def_readable+0x59/0x80
+  [<c031ffdd>] ? _read_unlock+0x1d/0x20
+  [<c02a4769>] ? sock_def_readable+0x59/0x80
+  [<c02a4d3a>] ? sock_queue_rcv_skb+0x13a/0x1d0
+  [<c02a4c45>] ? sock_queue_rcv_skb+0x45/0x1d0
+  [<f8d1bb30>] ? ax25_kiss_rcv+0x0/0x800 [ax25]
+  [<c02ac715>] netif_receive_skb+0x255/0x2f0
+  [<c02ac5c0>] ? netif_receive_skb+0x100/0x2f0
+  [<c02af05c>] process_backlog+0x7c/0xf0
+  [<c02aeb0c>] net_rx_action+0x16c/0x230
+  [<c02aea36>] ? net_rx_action+0x96/0x230
+  [<c012bd53>] __do_softirq+0x93/0x120
+  [<f8d2a68a>] ? mkiss_receive_buf+0x33a/0x3f0 [mkiss]
+  [<c012be37>] do_softirq+0x57/0x60
+  [<c012c265>] local_bh_enable_ip+0xa5/0xe0
+  [<c0320005>] _spin_unlock_bh+0x25/0x30
+  [<f8d2a68a>] mkiss_receive_buf+0x33a/0x3f0 [mkiss]
+  [<c025ea37>] pty_write+0x47/0x60
+  [<c025c620>] write_chan+0x1b0/0x220
+  [<c0259a1c>] ? tty_write_lock+0x1c/0x50
+  [<c011fec0>] ? default_wake_function+0x0/0x10
+  [<c0259bea>] tty_write+0x12a/0x1c0
+  [<c025c470>] ? write_chan+0x0/0x220
+  [<c018bbc6>] vfs_write+0x96/0x130
+  [<c0259ac0>] ? tty_write+0x0/0x1c0
+  [<c018c24d>] sys_write+0x3d/0x70
+  [<c0104d1e>] sysenter_past_esp+0x5f/0xa5
+  =======================
 
-I will appreciate any comments, ideas or suggestions. Please see below =
-the
-response from the system.
+Since rose_route_frame() does not use rose_node_list we can safely
+remove rose_node_list_lock spin lock here and let it be free for
+rose_get_neigh().
 
-Thanks in advance.
+Signed-off-by: Bernard Pidoux <f6bvp@amsat.org>
+---
+  net/rose/rose_route.c |    2 --
+  1 files changed, 0 insertions(+), 2 deletions(-)
 
-Neville - YN1V
-Sysop of YN1BBS
+diff --git a/net/rose/rose_route.c b/net/rose/rose_route.c
+index fb9359f..5053a53 100644
+--- a/net/rose/rose_route.c
++++ b/net/rose/rose_route.c
+@@ -857,7 +857,6 @@ int rose_route_frame(struct sk_buff *skb, ax25_cb *ax25)
+         src_addr  = (rose_address *)(skb->data + 9);
+         dest_addr = (rose_address *)(skb->data + 4);
 
-----------------------------------------------
+-       spin_lock_bh(&rose_node_list_lock);
+         spin_lock_bh(&rose_neigh_list_lock);
+         spin_lock_bh(&rose_route_list_lock);
 
-[root@localhost fpac327.13]# make
-make[1]: Entering directory `/usr/local/src/ax25/fpac327.13/lib'
-gcc -Wall -Wstrict-prototypes -I../lib -I/usr/include -c libwp.c
-In file included from /usr/include/netax25/axlib.h:29,
-                 from ax25compat.h:33,
-                 from libwp.c:22:
-/usr/include/netax25/ax25.h:74: error: conflicting types for =91ax25_ad=
-dress=92
-/usr/include/linux/ax25.h:47: error: previous declaration of
-=91ax25_address=92 was here
-/usr/include/netax25/ax25.h:77: error: redefinition of =91struct sockad=
-dr_ax25=92
-/usr/include/netax25/ax25.h:87: error: redefinition of =91struct
-full_sockaddr_ax25=92
-/usr/include/netax25/ax25.h:94: error: redefinition of =91struct
-ax25_routes_struct=92
-/usr/include/netax25/ax25.h:103: error: redefinition of =91struct
-ax25_ctl_struct=92
-/usr/include/netax25/ax25.h:114: error: redefinition of =91struct
-ax25_info_struct=92
-/usr/include/netax25/ax25.h:125: error: redefinition of =91struct
-ax25_fwd_struct=92
-/usr/include/netax25/ax25.h:132: error: redefinition of =91struct
-ax25_route_opt_struct=92
-In file included from /usr/include/netax25/axlib.h:30,
-                 from ax25compat.h:33,
-                 from libwp.c:22:
-/usr/include/netrose/rose.h:68: error: conflicting types for =91rose_ad=
-dress=92
-/usr/include/linux/rose.h:44: error: previous declaration of
-=91rose_address=92 was here
-/usr/include/netrose/rose.h:71: error: redefinition of =91struct sockad=
-dr_rose=92
-/usr/include/netrose/rose.h:80: error: redefinition of =91struct
-full_sockaddr_rose=92
-/usr/include/netrose/rose.h:89: error: redefinition of =91struct
-rose_route_struct=92
-/usr/include/netrose/rose.h:99: error: redefinition of =91struct
-rose_cause_struct=92
-/usr/include/netrose/rose.h:105: error: redefinition of =91struct
-rose_facilities_struct=92
-libwp.c: In function =91wp_update_addr=92:
-libwp.c:762: warning: passing argument 1 of =91wp_get=92 from incompati=
-ble
-pointer type
-libwp.c: At top level:
-libwp.c:776: error: conflicting types for =91wp_search=92
-wp.h:116: error: previous declaration of =91wp_search=92 was here
-libwp.c: In function =91wp_search=92:
-libwp.c:780: warning: passing argument 1 of =91wp_get=92 from incompati=
-ble
-pointer type
-libwp.c: At top level:
-libwp.c:870: error: conflicting types for =91wp_get=92
-wp.h:110: error: previous declaration of =91wp_get=92 was here
-libwp.c: In function =91wp_get=92:
-libwp.c:880: error: incompatible types in assignment
-make[1]: *** [libwp.o] Error 1
-make[1]: Leaving directory `/usr/local/src/ax25/fpac327.13/lib'
-make: *** [all] Error 2
-[root@localhost fpac327.13]#
+@@ -1060,7 +1059,6 @@ int rose_route_frame(struct sk_buff *skb, ax25_cb 
+*ax25)
+  out:
+         spin_unlock_bh(&rose_route_list_lock);
+         spin_unlock_bh(&rose_neigh_list_lock);
+-       spin_unlock_bh(&rose_node_list_lock);
 
+         return res;
+  }
 --
-To unsubscribe from this list: send the line "unsubscribe linux-hams" i=
-n
-the body of a message to majordomo@vger.kernel.org
-More majordomo info at  http://vger.kernel.org/majordomo-info.html
+1.5.5
