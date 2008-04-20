@@ -1,8 +1,8 @@
 From: David Miller <davem@davemloft.net>
 Subject: Re: [PATCH] rose_node_list_lock was not released before returning
  to user space
-Date: Sat, 19 Apr 2008 18:38:34 -0700 (PDT)
-Message-ID: <20080419.183834.238901544.davem@davemloft.net>
+Date: Sat, 19 Apr 2008 18:40:10 -0700 (PDT)
+Message-ID: <20080419.184010.113401925.davem@davemloft.net>
 References: <480A6034.1080806@ccr.jussieu.fr>
 Mime-Version: 1.0
 Content-Transfer-Encoding: 7bit
@@ -17,7 +17,7 @@ Cc: ralf@linux-mips.org, linux-kernel@vger.kernel.org, linux-hams@vger.kernel.or
 From: Bernard Pidoux <pidoux@ccr.jussieu.fr>
 Date: Sat, 19 Apr 2008 23:12:20 +0200
 
-> I have already submited this patch on January 11, 2008.
-> As the bug is still present, I resend it.
+> Subject: [PATCH] rose_node_list_lock was not released before returning to user space
 
-I'll apply this fix, thanks a lot Bernard.
+BTW, I had to fix the commit message because it's not the
+rose_node_list_lock that isn't being released, it's the socket lock.
