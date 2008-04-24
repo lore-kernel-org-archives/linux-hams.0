@@ -1,37 +1,67 @@
-From: Stephane Fillod <f8cfe@free.fr>
-Subject: Re: memory programming, was Re: D-STAR Rig Control
-Date: Thu, 24 Apr 2008 23:01:06 +0200
-Message-ID: <20080424210106.GJ6759@charybde.local>
-References: <1203091364.47b5b7a4ddb56@mgtmail.com> <20080215162556.GA26354@reid1.localdomain> <1203096083.47b5ca13b9626@mgtmail.com> <20080411125041.GG6021@charybde.local> <20080411165735.GA2371@reid1.localdomain>
+From: Pino Zollo <pinozollo@gmail.com>
+Subject: DBLog 0.9.10
+Date: Thu, 24 Apr 2008 16:59:54 -0400
+Message-ID: <200804241659.57537.pinozollo@gmail.com>
+Reply-To: pinozollo@gmail.com
 Mime-Version: 1.0
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 Return-path: <linux-hams-owner@vger.kernel.org>
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:from:reply-to:organization:to:subject:date:user-agent:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        bh=lfDP+pmPID953RBLZ6I8fPkUKam4W/w4zMbz+Eo6b40=;
+        b=LHQZc/Ifo3640hcufiyCGIrZqlnpl9d1Vj1CZOW70IUO/zmp8DlA/NnZ5UHW520jvubhmP0WXd1oCYNGfaFxWZBdHOsT2yDVwR3CIbWD4v7PyyURDeiz9Mm5TlnJAENEnDgfJdv1t5UYmqNZCtcLmQoKw+tBIVtUMJ6AoYHeXrI=
 Content-Disposition: inline
-In-Reply-To: <20080411165735.GA2371@reid1.localdomain>
 Sender: linux-hams-owner@vger.kernel.org
 List-ID: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-To: don <don_reid@comcast.net>
-Cc: Linux HAMs <Linux-hams@vger.kernel.org>
+Content-Type: text/plain; charset="iso-8859-1"
+To: Yahoo linux hams <linuxhams@yahoogroups.com>, pa0r <rein@couperus.com>, "Marco Di Martino (IW2OHX)" <iw2ohx@eutelia.com>, Linux Hams <linux-hams@vger.kernel.org>, Joop Stakenborg <pg>
 
-Hi Don,
 
-don skribis:
-> On Fri, Apr 11, 2008 at 02:50:41PM +0200, Stephane Fillod wrote:
-> > Do you have the documentation of the protocol/format of the memory data?
-> 
-> I don't have any documentation, I have some captured data from using the
-> MS-Win program.  In these files, the first column is the sender (1=PC,
-> 2=Radio), the second column is the time (not much use), then the data.
-> 
-> The protocol seems to use CV-I commands not covered in the documents I
-> have seen. 
+The new version of DBLog, the 0.9.10 is available on
 
-Sorry, without protocol documentation, it's going to be very uneasy for
-me, esp. without real hardware. Maybe you can try to reverse engineer
-the protocol under "faire use". You could also try to bug your radio
-dealer/manufacturer.
+http://www.qsl.net/zp4kfx/Linux=20
 
-73
--- 
-Stephane - F8CFE
+News:
+Added a table and a window which shows spots on the band tuned by the r=
+adio=20
+ordered by frequency.
+This window shows and remembers also the CQ frequency if in RUN mode an=
+d heard=20
+or worked stations if in S&P mode.
+Added entry for State and County to agree to ADIF specs.
+Minor inprovements and bug reduction.
+A second screenshot is available on the download site.
+
+DBLog uses rigctld daemon from hamlib 1.2.7 to read and set frequency a=
+n=20
+modes of the radio.
+This allows the use of all hamlib supported radios.
+
+DBLog is written in GAMBAS (2) and distributed in source code under the=
+ GPL=20
+licence.=20
+It stores all the data in a RDBM: PostgreSQL is used in the development=
+, but=20
+MySQL, QSLite3 and Firebird should work too.
+
+DBLog receives cluster spots from xdx, checks them against local statis=
+tics=20
+and shows the results in a dedicated window.
+Clicking on a spot sets the radio RX frequency and eventually the split=
+ TX=20
+one.
+Can transmit CW using cwdaemon.
+An azimuthal map centred =A0on the QTH is available via xplanet, showin=
+g also=20
+the position of the other station.
+
+Comments and bug reports are aways welcome.
+
+73 de
+Pino ZP4KFX
+--
+To unsubscribe from this list: send the line "unsubscribe linux-hams" i=
+n
+the body of a message to majordomo@vger.kernel.org
+More majordomo info at  http://vger.kernel.org/majordomo-info.html
