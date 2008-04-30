@@ -1,28 +1,57 @@
-From: Pino Zollo <pinozollo@gmail.com>
-Subject: DBLog 0.9.14
-Date: Tue, 29 Apr 2008 17:39:54 -0400
-Message-ID: <200804291739.57106.pinozollo@gmail.com>
-Reply-To: pinozollo@gmail.com
+From: Bernard Pidoux <bpidoux@free.fr>
+Subject: [PATCH] Wrong list_lock argument in rose_node seqops
+Date: Wed, 30 Apr 2008 22:08:56 +0200
+Message-ID: <200804302208.56925.bpidoux@free.fr>
 Mime-Version: 1.0
 Content-Transfer-Encoding: 7bit
-Return-path: <linux-hams-owner@vger.kernel.org>
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:reply-to:organization:to:subject:date:user-agent:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        bh=9Yizy3ohZ3yzR2SSx7pI/bKBGT/gGxBw4RGO0lM3aJQ=;
-        b=I7osdaaP5puD4gDA5ln4HXRZ7bqFtEpONpjw9mzqwcPyZtzQ8K6wjI1LNGcxxbKy/Pu87dtiGvYdatoq22ZZp4Yj6yhWo8jwI8oeMzCfXHqDrnt2nWE00fXQ1DUxVlsEy0Fc3f7AWDRFBJV8CdDOJbyb7DDSNO3Op5cd8l1OWNw=
+Return-path: <netdev-owner@vger.kernel.org>
 Content-Disposition: inline
-Sender: linux-hams-owner@vger.kernel.org
+Sender: netdev-owner@vger.kernel.org
 List-ID: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
-To: Yahoo linux hams <linuxhams@yahoogroups.com>, pa0r <rein@couperus.com>, "Marco Di Martino (IW2OHX)" <iw2ohx@eutelia.com>, Linux Hams <linux-hams@vger.kernel.org>, Joop Stakenborg <pg>
+To: David Miller <davem@davemloft.net>
+Cc: Ralf Baechle DL5RB <ralf@linux-mips.org>, Linux Netdev List <netdev@vger.kernel.org>, linux-hams <linux-hams@vger.kernel.org>
 
-The new version of DBLog, the 0.9.14 is available on
+In rose_node_start() as well as in rose_node_stop()
+__acquires() and spin_lock_bh() were wrongly passing
+rose_neigh_list_lock instead of rose_node_list_lock arguments.
 
-http://www.qsl.net/zp4kfx/Linux 
+Signed-off-by: Bernard Pidoux <f6bvp@amsat.org>
+---
+ net/rose/rose_route.c |    8 ++++----
+ 1 files changed, 4 insertions(+), 4 deletions(-)
 
-News:
-Many improvements, embellishments and bug reduction.
+diff --git a/net/rose/rose_route.c b/net/rose/rose_route.c
+index 5053a53..bd59387 100644
+--- a/net/rose/rose_route.c
++++ b/net/rose/rose_route.c
+@@ -1066,12 +1066,12 @@ out:
+ #ifdef CONFIG_PROC_FS
+ 
+ static void *rose_node_start(struct seq_file *seq, loff_t *pos)
+-	__acquires(rose_neigh_list_lock)
++	__acquires(rose_node_list_lock)
+ {
+ 	struct rose_node *rose_node;
+ 	int i = 1;
+ 
+-	spin_lock_bh(&rose_neigh_list_lock);
++	spin_lock_bh(&rose_node_list_lock);
+ 	if (*pos == 0)
+ 		return SEQ_START_TOKEN;
+ 
+@@ -1090,9 +1090,9 @@ static void *rose_node_next(struct seq_file *seq, void *v, loff_t *pos)
+ }
+ 
+ static void rose_node_stop(struct seq_file *seq, void *v)
+-	__releases(rose_neigh_list_lock)
++	__releases(rose_node_list_lock)
+ {
+-	spin_unlock_bh(&rose_neigh_list_lock);
++	spin_unlock_bh(&rose_node_list_lock);
+ }
+ 
+ static int rose_node_show(struct seq_file *seq, void *v)
+-- 
+1.5.5
 
-73
-Pino ZP4KFX
