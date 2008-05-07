@@ -1,116 +1,31 @@
-From: Paulius Zaleckas <paulius.zaleckas@teltonika.lt>
-Subject: [PATCH] baycom_epp: use netstats in net_device structure
-Date: Thu, 08 May 2008 00:42:35 +0300
-Message-ID: <4822224B.4020706@teltonika.lt>
+From: Pino Zollo <pinozollo@gmail.com>
+Subject: DBLog 0.10.2
+Date: Wed, 7 May 2008 16:26:47 -0400
+Message-ID: <200805071626.52036.pinozollo@gmail.com>
+Reply-To: pinozollo@gmail.com
 Mime-Version: 1.0
-Content-Type: multipart/mixed;
- boundary="------------070800090701010003030007"
-Return-path: <netdev-owner@vger.kernel.org>
-Sender: netdev-owner@vger.kernel.org
+Content-Transfer-Encoding: 7bit
+Return-path: <linux-hams-owner@vger.kernel.org>
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:from:reply-to:organization:to:subject:date:user-agent:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        bh=VDVfGP3SzFDkVRhBzJOQxr75w039wo7f7cc2QvqaYhE=;
+        b=hYjQkQWcpib5td2eRPbDviB9Qubnk8DN7vtU+WWGo172VQXmwVopitILZm5PlvKUR5cgd/hGppfCyqpcdmuwfLPrP6P0DPu4+bt5O5qC9hal3w73Whe/T+Oy8h7VzSYtDXxsXiQ8lGG9hqPwh5vIU1TICOFpkRPOHcaPRrAM46Q=
+Content-Disposition: inline
+Sender: linux-hams-owner@vger.kernel.org
 List-ID: <linux-hams.vger.kernel.org>
-To: netdev@vger.kernel.org
-Cc: linux-hams@vger.kernel.org
+Content-Type: text/plain; charset="us-ascii"
+To: Yahoo linux hams <linuxhams@yahoogroups.com>, pa0r <rein@couperus.com>, "Marco Di Martino (IW2OHX)" <iw2ohx@eutelia.com>, Linux Hams <linux-hams@vger.kernel.org>, Joop Stakenborg <pg>
 
-This is a multi-part message in MIME format.
---------------070800090701010003030007
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
+The new version of DBLog, the 0.10.2 is available on
 
-Use net_device_stats from net_device structure instead of local.
-Kill baycom_get_stats function, because by default it is used
-identical internal_stats function from net/core/dev.c
+http://www.qsl.net/zp4kfx/Linux 
 
-Signed-off-by: Paulius Zaleckas <paulius.zaleckas@teltonika.lt>
+News:
+Two configuration windows added, one for choosing the configuration record, 
+the second to edit, delete or add configuration records.
 
---------------070800090701010003030007
-Content-Type: text/x-patch;
- name="baycom_epp_netstats.patch"
-Content-Transfer-Encoding: 7bit
-Content-Disposition: inline;
- filename="baycom_epp_netstats.patch"
+Beta testers feed back appreciated.
 
-diff --git a/drivers/net/hamradio/baycom_epp.c b/drivers/net/hamradio/baycom_epp.c
-index dde9c7e..91be84c 100644
---- a/drivers/net/hamradio/baycom_epp.c
-+++ b/drivers/net/hamradio/baycom_epp.c
-@@ -203,7 +203,6 @@ struct baycom_state {
- 		unsigned char buf[TXBUFFER_SIZE];
-         } hdlctx;
- 
--        struct net_device_stats stats;
- 	unsigned int ptt_keyed;
- 	struct sk_buff *skb;  /* next transmit packet  */
- 
-@@ -423,7 +422,7 @@ static void encode_hdlc(struct baycom_state *bc)
- 	bc->hdlctx.bufptr = bc->hdlctx.buf;
- 	bc->hdlctx.bufcnt = wp - bc->hdlctx.buf;
- 	dev_kfree_skb(skb);
--	bc->stats.tx_packets++;
-+	bc->dev->stats.tx_packets++;
- }
- 
- /* ---------------------------------------------------------------------- */
-@@ -547,7 +546,7 @@ static void do_rxpacket(struct net_device *dev)
- 	pktlen = bc->hdlcrx.bufcnt-2+1; /* KISS kludge */
- 	if (!(skb = dev_alloc_skb(pktlen))) {
- 		printk("%s: memory squeeze, dropping packet\n", dev->name);
--		bc->stats.rx_dropped++;
-+		dev->stats.rx_dropped++;
- 		return;
- 	}
- 	cp = skb_put(skb, pktlen);
-@@ -556,7 +555,7 @@ static void do_rxpacket(struct net_device *dev)
- 	skb->protocol = ax25_type_trans(skb, dev);
- 	netif_rx(skb);
- 	dev->last_rx = jiffies;
--	bc->stats.rx_packets++;
-+	dev->stats.rx_packets++;
- }
- 
- static int receive(struct net_device *dev, int cnt)
-@@ -803,19 +802,6 @@ static int baycom_set_mac_address(struct net_device *dev, void *addr)
- 
- /* --------------------------------------------------------------------- */
- 
--static struct net_device_stats *baycom_get_stats(struct net_device *dev)
--{
--	struct baycom_state *bc = netdev_priv(dev);
--
--	/* 
--	 * Get the current statistics.  This may be called with the
--	 * card open or closed. 
--	 */
--	return &bc->stats;
--}
--
--/* --------------------------------------------------------------------- */
--
- static void epp_wakeup(void *handle)
- {
-         struct net_device *dev = (struct net_device *)handle;
-@@ -1066,10 +1052,10 @@ static int baycom_ioctl(struct net_device *dev, struct ifreq *ifr, int cmd)
- 		hi.data.cs.ptt = !!(bc->stat & EPP_PTTBIT);
- 		hi.data.cs.dcd = !(bc->stat & EPP_DCDBIT);
- 		hi.data.cs.ptt_keyed = bc->ptt_keyed;
--		hi.data.cs.tx_packets = bc->stats.tx_packets;
--		hi.data.cs.tx_errors = bc->stats.tx_errors;
--		hi.data.cs.rx_packets = bc->stats.rx_packets;
--		hi.data.cs.rx_errors = bc->stats.rx_errors;
-+		hi.data.cs.tx_packets = dev->stats.tx_packets;
-+		hi.data.cs.tx_errors = dev->stats.tx_errors;
-+		hi.data.cs.rx_packets = dev->stats.rx_packets;
-+		hi.data.cs.rx_errors = dev->stats.rx_errors;
- 		break;		
- 
- 	case HDLCDRVCTL_OLDGETSTAT:
-@@ -1148,7 +1134,6 @@ static void baycom_probe(struct net_device *dev)
- 	dev->stop = epp_close;
- 	dev->do_ioctl = baycom_ioctl;
- 	dev->hard_start_xmit = baycom_send_packet;
--	dev->get_stats = baycom_get_stats;
- 
- 	/* Fill in the fields of the device structure */
- 	bc->skb = NULL;
-
---------------070800090701010003030007--
-
+73
+Pino ZP4KFX
