@@ -1,56 +1,32 @@
-From: Julia Lawall <julia@diku.dk>
-Subject: [PATCH 5/6] drivers/net/hamradio: remove null pointer dereference
-Date: Mon, 12 May 2008 15:38:49 +0200 (CEST)
-Message-ID: <Pine.LNX.4.64.0805121538270.3694@ask.diku.dk>
+From: Pino Zollo <pinozollo@gmail.com>
+Subject: DBLog 0.11.6
+Date: Mon, 12 May 2008 18:21:03 -0400
+Message-ID: <200805121821.04971.pinozollo@gmail.com>
+Reply-To: pinozollo@gmail.com
 Mime-Version: 1.0
+Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:from:reply-to:organization:to:subject:date:user-agent:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        bh=/lh4v5wXjXTjLlGBeKU6iMt+LKDzuufcMB+9LzZmC1w=;
+        b=OcrRzOiw0S/UGpaRtwaPZD79WGAoXqVHNeZ5if/NU3Grj3nAfyKplwXyatTphmYPWo2ZWnzFYNDJFd4UVSM4TLID6ILzdIOJ08lsgBb9C/oPXQ9Yo9FFGM+zFetYhZOmhyI3JyzQP0H/TxJ0YxE62kH1j38FfKM2nFLKGoBTDp4=
+Content-Disposition: inline
 Sender: linux-hams-owner@vger.kernel.org
 List-ID: <linux-hams.vger.kernel.org>
-Content-Type: TEXT/PLAIN; charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-To: jpr@f6fbb.org, linux-hams@vger.kernel.org, linux-kernel@vger.kernel.org, kernel-janitors@vger.kernel.org
+Content-Type: text/plain; charset="us-ascii"
+To: Yahoo linux hams <linuxhams@yahoogroups.com>, pa0r <rein@couperus.com>, "Marco Di Martino (IW2OHX)" <iw2ohx@eutelia.com>, Linux Hams <linux-hams@vger.kernel.org>, Joop Stakenborg <pg>
 
-From: Julia Lawall <julia@diku.dk>
+The new version of DBLog, the 0.11.6 is available on
 
-If dev is NULL, it is not possible to access its name field.  So I have
-simply modified the error message to drop the printing of the name field.
+http://www.qsl.net/zp4kfx/Linux 
 
+News:
+Added NCDXF beacons scanning for band or for beacon. Azimuthal map showing
+beacons position. New screenshot showing this is available.
+Bugs reduction.
 
-This problem was found using the following semantic match
-(http://www.emn.fr/x-info/coccinelle/)
+Beta testers feed back appreciated.
 
-// <smpl>
-@@
-expression E, E1;
-identifier f;
-statement S1,S2,S3;
-@@
-
-* if (E == NULL)
-{
-  ... when != if (E == NULL) S1 else S2
-      when != E = E1
-* E->f
-  ... when any
-  return ...;
-}
-else S3
-// </smpl>
-
-Signed-off-by: Julia Lawall <julia@diku.dk>
-
----
-
-diff -u -p a/drivers/net/hamradio/yam.c b/drivers/net/hamradio/yam.c
---- a/drivers/net/hamradio/yam.c	2008-04-07 13:50:26.000000000 +0200
-+++ b/drivers/net/hamradio/yam.c	2008-05-12 09:52:58.000000000 +0200
-@@ -1123,8 +1123,7 @@ static int __init yam_init_driver(void)
- 		dev = alloc_netdev(sizeof(struct yam_port), name,
- 				   yam_setup);
- 		if (!dev) {
--			printk(KERN_ERR "yam: cannot allocate net device %s\n",
--			       dev->name);
-+			printk(KERN_ERR "yam: cannot allocate net device\n");
- 			err = -ENOMEM;
- 			goto error;
- 		}
+73
+Pino ZP4KFX
