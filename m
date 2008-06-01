@@ -1,39 +1,34 @@
-From: "Mike McCarthy, W1NR" <lists@w1nr.net>
-Subject: Re: SCC Card Driver
-Date: Sun, 01 Jun 2008 17:25:53 -0400
-Message-ID: <484313E1.706@w1nr.net>
-References: <4841C45E.7010405@exemail.com.au> <48420B85.10601@exemail.com.au> <200806010845.05055.m.kozlowski@tuxland.pl> <48424D60.5080308@exemail.com.au> <48428FFD.2080802@w1nr.net> <4843123E.2000008@exemail.com.au>
+From: Pino Zollo <pinozollo@gmail.com>
+Subject: DBLog beta  0.12.4
+Date: Sun, 1 Jun 2008 17:16:19 -0400
+Message-ID: <200806011716.21915.pinozollo@gmail.com>
+Reply-To: pinozollo@gmail.com
 Mime-Version: 1.0
 Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <4843123E.2000008@exemail.com.au>
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:from:reply-to:organization:to:subject:date:user-agent:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        bh=C/DmFeUpRElAEibCZow+AeUbDJ01s7KQUoGxwwJO7MQ=;
+        b=lY8fP9kg9WJB7t9jjX3eici63zxoMhaE4dY4yXT7yE2E5F0Ac+JB01fOOSKg8sD4obyc/0/4iUxtcd5t4ZBUvq02BrlM4Ul/hdI1RRFv2tiaCmnd43Lz7vWaX0Yi1eKY9E+CVrTq9bMZsJn6/raXoktFw7iAy8HFW8gWY77M/OI=
+Content-Disposition: inline
 Sender: linux-hams-owner@vger.kernel.org
 List-ID: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"; format="flowed"
-To: Ray Wells <vk2tv@exemail.com.au>
-Cc: Mariusz Kozlowski <m.kozlowski@tuxland.pl>, linux-hams@vger.kernel.org
+Content-Type: text/plain; charset="us-ascii"
+To: Yahoo linux hams <linuxhams@yahoogroups.com>, pa0r <rein@couperus.com>, "Marco Di Martino (IW2OHX)" <iw2ohx@eutelia.com>, Linux Hams <linux-hams@vger.kernel.org>, Joop Stakenborg <pg>
 
->>
-> Mike,
-> 
-> I'm compiling on Debian 4.0 but as you say, it shouldn't be relevant. 
-> The kernel source came from kernel.org.
-> 
-> Just to be sure I wasn't fooling myself, with both 2.6.25.1 and 2.6.25.4 
-> I deleted the unzipped source and unzipped again. For each source I ran 
-> make menuconfig. The ax25 options were not selected by default in 
-> 2.6.25.4 but they were in 2.6.25.1.
-> 
-> I haven't been able to go back into 2.6.25.4 to see if ISA was selected 
-> re the SCC problem but I'll do that probably today.
-> 
-> Ray vk2tv
-> 
+The new version of DBLog, the 0.12.4 is available on
 
-The raw kernel from kernel.org has bare minimum enabled.  You need to 
-get a "config" file from your running system to enable all that the 
-distro does by default.  I have also found that there are usually a lot 
-of other drivers that need to be enabled just to make it run at all.
+http://www.qsl.net/zp4kfx/Linux 
 
-Mike, W1NR
+News:
+It implements a graphic band map when rigctld is active.
 
+If the cluster is active the band map also shows spots.
+Clicking on the band map sets the VFO frequency.
+
+Beta testers feed back appreciated.
+
+73
+
+Pino ZP4KFX
