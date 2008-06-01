@@ -1,34 +1,59 @@
-From: Pino Zollo <pinozollo@gmail.com>
-Subject: DBLog beta  0.12.4
-Date: Sun, 1 Jun 2008 17:16:19 -0400
-Message-ID: <200806011716.21915.pinozollo@gmail.com>
-Reply-To: pinozollo@gmail.com
+From: Bernard Pidoux <bernard.pidoux@upmc.fr>
+Subject: BUGs into libax25
+Date: Mon, 02 Jun 2008 00:26:19 +0200
+Message-ID: <4843220B.20703@upmc.fr>
 Mime-Version: 1.0
 Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:reply-to:organization:to:subject:date:user-agent:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        bh=C/DmFeUpRElAEibCZow+AeUbDJ01s7KQUoGxwwJO7MQ=;
-        b=lY8fP9kg9WJB7t9jjX3eici63zxoMhaE4dY4yXT7yE2E5F0Ac+JB01fOOSKg8sD4obyc/0/4iUxtcd5t4ZBUvq02BrlM4Ul/hdI1RRFv2tiaCmnd43Lz7vWaX0Yi1eKY9E+CVrTq9bMZsJn6/raXoktFw7iAy8HFW8gWY77M/OI=
-Content-Disposition: inline
 Sender: linux-hams-owner@vger.kernel.org
 List-ID: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"
-To: Yahoo linux hams <linuxhams@yahoogroups.com>, pa0r <rein@couperus.com>, "Marco Di Martino (IW2OHX)" <iw2ohx@eutelia.com>, Linux Hams <linux-hams@vger.kernel.org>, Joop Stakenborg <pg>
+Content-Type: text/plain; charset="us-ascii"; format="flowed"
+To: linux-hams <linux-hams@vger.kernel.org>
+Cc: Ray Wells <vk2tv@exemail.com.au>, Charlie k4gbb <k4gbb1@earthlink.net>, Jerry DeLong <KD4YAL@tampabay.rr.com>, F1TE <f1te@f1te.org>, f8arr <f8arr@f8arr.org>, Ralf Baechle DL5RB <ralf@linux-mips.org>
 
-The new version of DBLog, the 0.12.4 is available on
+Hi All,
 
-http://www.qsl.net/zp4kfx/Linux 
+I found a number of BUGs into libax25 that may affect nearly ALL AX25 
+applications for it is in ax25_aton_entry() function that is used to 
+translate a callsign into AX25 format.
+Programs like kissattach, listen, ax25ipd, FPAC, xfbbd are concerned.
 
-News:
-It implements a graphic band map when rigctld is active.
+The code would return an error with 6 letters callsigns.
 
-If the cluster is active the band map also shows spots.
-Clicking on the band map sets the VFO frequency.
 
-Beta testers feed back appreciated.
+The second set of errors is in /proc/ax25/ timers format description.
+since timers are now in millisec, they require a larger storage size.
+This results in using unsigned long integers rather than unsigned short 
+integers.
 
-73
+Ax25-tools and ax25-apps must be recompiled after recompilation and 
+installation of this new libax25 version.
+FPAC and LinuxFBB also.
 
-Pino ZP4KFX
+I patched my own source of libax25 and uploaded it here :
+
+http://f6bvp.free.fr/logiciels/ax25/libax25-0.0.11.5src_f6bvp.tgz
+
+Here is the new ChangeLog entry :
+
+libax25 0.0.11.5
+         * BUG in axutils.c
+           function ax25_aton_entry() was only testing 5 callsign 
+
+           characters.
+           A lot of ax25-tools and AX25 applications using this library
+           function, including FPAC, could have problems with 6 letters
+           callsigns. Corrected.
+
+         * BUG in proc_ax25 structure timers members size declared in
+           procutils.h. Since in kernel 2.6 the timers are now in 
+milliseconds,
+           they need more place to be saved (unsigned short --> unsigned 
+long).
+         * corrected, together with functions reading proc files in 
+procutils.c.
+
+  -- Bernard Pidoux <f6bvp@amsat.org>  Jun 1 2008
+
+
+73 de bernard, f6bvp
