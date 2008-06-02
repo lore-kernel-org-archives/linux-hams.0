@@ -1,74 +1,62 @@
-From: "Mike McCarthy, W1NR" <lists@w1nr.net>
-Subject: Re: BUGs into libax25
-Date: Sun, 01 Jun 2008 22:14:54 -0400
-Message-ID: <4843579E.8030003@w1nr.net>
-References: <4843220B.20703@upmc.fr>
+From: Ray Wells <vk2tv@exemail.com.au>
+Subject: Re: SCC Card Driver
+Date: Mon, 02 Jun 2008 15:03:45 +1000
+Message-ID: <48437F31.80909@exemail.com.au>
+References: <4841C45E.7010405@exemail.com.au> <48420B85.10601@exemail.com.au> <200806010845.05055.m.kozlowski@tuxland.pl> <48424D60.5080308@exemail.com.au> <48428FFD.2080802@w1nr.net> <4843123E.2000008@exemail.com.au> <484313E1.706@w1nr.net>
 Mime-Version: 1.0
 Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <4843220B.20703@upmc.fr>
+In-Reply-To: <484313E1.706@w1nr.net>
 Sender: linux-hams-owner@vger.kernel.org
 List-ID: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"; format="flowed"
-To: Bernard Pidoux <bernard.pidoux@upmc.fr>
-Cc: linux-hams <linux-hams@vger.kernel.org>, Ray Wells <vk2tv@exemail.com.au>, Charlie k4gbb <k4gbb1@earthlink.net>, Jerry DeLong <KD4YAL@tampabay.rr.com>, F1TE <f1te@f1te.org>, f8arr <f8arr@f8arr.org>, Ralf Baechle DL5RB <ralf@linux-mips.org>
+To: "Mike McCarthy, W1NR" <lists@w1nr.net>
+Cc: Mariusz Kozlowski <m.kozlowski@tuxland.pl>, linux-hams@vger.kernel.org
 
-As I recall, there is a limit to the size of a callsign in the AX.25 
-protocol specification.  Will changing it create an incompatibility with 
-standard TNC protocol stacks?
+Mike McCarthy, W1NR wrote:
 
-Mike, W1NR
-
-
-Bernard Pidoux wrote:
-> Hi All,
-> 
-> I found a number of BUGs into libax25 that may affect nearly ALL AX25 
-> applications for it is in ax25_aton_entry() function that is used to 
-> translate a callsign into AX25 format.
-> Programs like kissattach, listen, ax25ipd, FPAC, xfbbd are concerned.
-> 
-> The code would return an error with 6 letters callsigns.
-> 
-> 
-> The second set of errors is in /proc/ax25/ timers format description.
-> since timers are now in millisec, they require a larger storage size.
-> This results in using unsigned long integers rather than unsigned short 
-> integers.
-> 
-> Ax25-tools and ax25-apps must be recompiled after recompilation and 
-> installation of this new libax25 version.
-> FPAC and LinuxFBB also.
-> 
-> I patched my own source of libax25 and uploaded it here :
-> 
-> http://f6bvp.free.fr/logiciels/ax25/libax25-0.0.11.5src_f6bvp.tgz
-> 
-> Here is the new ChangeLog entry :
-> 
-> libax25 0.0.11.5
->         * BUG in axutils.c
->           function ax25_aton_entry() was only testing 5 callsign
->           characters.
->           A lot of ax25-tools and AX25 applications using this library
->           function, including FPAC, could have problems with 6 letters
->           callsigns. Corrected.
-> 
->         * BUG in proc_ax25 structure timers members size declared in
->           procutils.h. Since in kernel 2.6 the timers are now in 
-> milliseconds,
->           they need more place to be saved (unsigned short --> unsigned 
-> long).
->         * corrected, together with functions reading proc files in 
-> procutils.c.
-> 
->  -- Bernard Pidoux <f6bvp@amsat.org>  Jun 1 2008
-> 
-> 
-> 73 de bernard, f6bvp
+>>>
+>> Mike,
+>>
+>> I'm compiling on Debian 4.0 but as you say, it shouldn't be relevant. 
+>> The kernel source came from kernel.org.
+>>
+>> Just to be sure I wasn't fooling myself, with both 2.6.25.1 and 
+>> 2.6.25.4 I deleted the unzipped source and unzipped again. For each 
+>> source I ran make menuconfig. The ax25 options were not selected by 
+>> default in 2.6.25.4 but they were in 2.6.25.1.
+>>
+>> I haven't been able to go back into 2.6.25.4 to see if ISA was 
+>> selected re the SCC problem but I'll do that probably today.
+>>
+>> Ray vk2tv
+>>
+>
+> The raw kernel from kernel.org has bare minimum enabled.  You need to 
+> get a "config" file from your running system to enable all that the 
+> distro does by default.  I have also found that there are usually a 
+> lot of other drivers that need to be enabled just to make it run at all.
+>
+> Mike, W1NR
+>
 > -- 
 > To unsubscribe from this list: send the line "unsubscribe linux-hams" in
 > the body of a message to majordomo@vger.kernel.org
 > More majordomo info at  http://vger.kernel.org/majordomo-info.html
-> 
+>
+Mike,
 
+I normally use my old config file but because I'm jumping quite a few 
+kernel releases I decided to start from scratch.
+
+I did some more investigating this morning and this is what I found.....
+1. The SCC driver not appearing in 2.6.25.4 is due to ISA not being 
+selected - my oversight.
+2. In kernel 2.6.25.1 ISA is preslected, and all ax25 is preselected as 
+modules
+3. In kernel 2.6.25.4 ISA is not preslected and all ax25 is not preselected
+
+Looks like there has been some serious culling of unessential drivers 
+between 2.6.25.1 and 2.6.25.4. Takes me back to 2.0.x kernels.
+
+Ray vk2tv
