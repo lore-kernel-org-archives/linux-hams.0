@@ -1,72 +1,49 @@
-From: "DL5DI" <dl5di@prgm.org>
-Subject: BUGs into libax25
-Date: Mon, 2 Jun 2008 11:36:25 +0200
-Message-ID: <1K36Sn-0OkOu00@fwd26.aul.t-online.de>
+From: Matti Aarnio <matti.aarnio@zmailer.org>
+Subject: Re: BUGs into libax25
+Date: Mon, 2 Jun 2008 13:41:49 +0300
+Message-ID: <20080602104149.GS3700@mea-ext.zmailer.org>
+References: <1K36Sn-0OkOu00@fwd26.aul.t-online.de>
 Mime-Version: 1.0
-Content-Transfer-Encoding: QUOTED-PRINTABLE
 Return-path: <linux-hams-owner@vger.kernel.org>
+Content-Disposition: inline
+In-Reply-To: <1K36Sn-0OkOu00@fwd26.aul.t-online.de>
 Sender: linux-hams-owner@vger.kernel.org
 List-ID: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="iso-8859-1"
-To: linux-hams@vger.kernel.org
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+To: DL5DI <dl5di@prgm.org>
+Cc: linux-hams@vger.kernel.org
 
-This special event station callsign that we sometimes find like
-DQ2008ANYEVENT will never work in packet radio.
-The protocol header of ax25 frames only allows 6 bytes of callsign and =
-1
-halfbyte of SSID.
-Not only for the destiantion, also for all digipeaters inbetween.
-We would need to change the whole protocol and all digipeaters and stat=
-ions
-using it worldwide to get that covered.
-I expect that packet radio will be dead before that happens. :-)
+On Mon, Jun 02, 2008 at 11:36:25AM +0200, DL5DI wrote:
+> This special event station callsign that we sometimes find like
+> DQ2008ANYEVENT will never work in packet radio.
+> The protocol header of ax25 frames only allows 6 bytes of callsign and 1
+> halfbyte of SSID.
+> Not only for the destiantion, also for all digipeaters inbetween.
+> We would need to change the whole protocol and all digipeaters and stations
+> using it worldwide to get that covered.
+> I expect that packet radio will be dead before that happens. :-)
 
-73 de Hans, DL5DI
+Arbitrary long callsigns...   Only OSI stack can handle that, and even it
+has some upper limits on address lengths.
 
-> -----Urspr=FCngliche Nachricht-----
-> Von: linux-hams-owner@vger.kernel.org=20
-> [mailto:linux-hams-owner@vger.kernel.org] Im Auftrag von Ralf Baechle=
-=20
-> DL5RB
-> Gesendet: Montag, 2. Juni 2008 11:16
-> An: Mike McCarthy, W1NR
-> Cc: Bernard Pidoux; linux-hams; Ray Wells; Charlie k4gbb; Jerry=20
-> DeLong; F1TE; f8arr
-> Betreff: Re: BUGs into libax25
->=20
-> On Sun, Jun 01, 2008 at 10:14:54PM -0400, Mike McCarthy, W1NR wrote:
->=20
-> > As I recall, there is a limit to the size of a callsign in
-> the AX.25
-> > protocol specification.  Will changing it create an incompatibility=
-=20
-> > with standard TNC protocol stacks?
->=20
-> Afaik the currently only user of 6-letter callsigns aside of special=20
-> event stations are Australien foundation license which look like=20
-> VK3FABC so 4-letter suffix and those are not permitted to use packet=20
-> radio anyway.
-> I was wondering if Swaziland which only has a half-series assignment=20
-> is possibly using 3+3 calls.
->=20
-> Anyway, the maximum callsign length in the AX.25 spec is 6 characters=
-=20
-> and (I looked into that ...) there is no way of extending that withou=
-t=20
-> causing large scale software breakage :-(  It's almost like=20
-> retrofitting 128-bit addresses into
-> IPv4 - it took a new protocol.
->=20
->   Ralf
-> --
-> To unsubscribe from this list: send the line "unsubscribe linux-hams"=
-=20
-> in the body of a message to majordomo@vger.kernel.org More majordomo=20
-> info at http://vger.kernel.org/majordomo-info.html
->=20
+On IPv6 the addresses are 16 bytes long, and low 8 bytes (64 bits) of them
+are reserved for "link local" use.    Considering that..  one can encode
+any callsign with 38 characters, add couple codes for things like
+"no character here", and "next is ssid", that would be 40 codes.
+Using 6 bits per character one could encode 10 characters + 4 bits on IPv6-
+address "local half".  With arithmetic encoding (see APRS mic-e) maybe
+17 code bytes.
 
---
-To unsubscribe from this list: send the line "unsubscribe linux-hams" i=
-n
-the body of a message to majordomo@vger.kernel.org
-More majordomo info at  http://vger.kernel.org/majordomo-info.html
+Would that be AX.25 ?  Definitely not.  That would be IPv6.
+
+On IPv6 the basic assumption is that link local area is /64 size slice,
+and thus "AX.25 space" would be something smaller..  like  /32.
+
+How could we implement smooth transition from AX.25 to IPv6 on data links ?
+Very good question...  old legacy junk will want to live a long time.
+(we are way too willing to recycle obsolete hardware...)
+
+> 73 de Hans, DL5DI
+
+73 de Matti, OH2MQK
