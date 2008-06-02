@@ -1,49 +1,38 @@
-From: Matti Aarnio <matti.aarnio@zmailer.org>
-Subject: Re: BUGs into libax25
-Date: Mon, 2 Jun 2008 13:41:49 +0300
-Message-ID: <20080602104149.GS3700@mea-ext.zmailer.org>
-References: <1K36Sn-0OkOu00@fwd26.aul.t-online.de>
+From: "Patrick A. Ouellette" <pat@flying-gecko.net>
+Subject: Re: SCC Card Driver
+Date: Mon, 2 Jun 2008 09:19:44 -0400
+Message-ID: <20080602131944.GA4458@flying-gecko.net>
+References: <4841C45E.7010405@exemail.com.au> <48420B85.10601@exemail.com.au> <200806010845.05055.m.kozlowski@tuxland.pl> <48424D60.5080308@exemail.com.au> <48428FFD.2080802@w1nr.net> <4843123E.2000008@exemail.com.au> <484313E1.706@w1nr.net> <48437F31.80909@exemail.com.au>
 Mime-Version: 1.0
 Return-path: <linux-hams-owner@vger.kernel.org>
 Content-Disposition: inline
-In-Reply-To: <1K36Sn-0OkOu00@fwd26.aul.t-online.de>
+In-Reply-To: <48437F31.80909@exemail.com.au>
 Sender: linux-hams-owner@vger.kernel.org
 List-ID: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
-To: DL5DI <dl5di@prgm.org>
-Cc: linux-hams@vger.kernel.org
+To: Ray Wells <vk2tv@exemail.com.au>
+Cc: "Mike McCarthy, W1NR" <lists@w1nr.net>, Mariusz Kozlowski <m.kozlowski@tuxland.pl>, linux-hams@vger.kernel.org
 
-On Mon, Jun 02, 2008 at 11:36:25AM +0200, DL5DI wrote:
-> This special event station callsign that we sometimes find like
-> DQ2008ANYEVENT will never work in packet radio.
-> The protocol header of ax25 frames only allows 6 bytes of callsign and 1
-> halfbyte of SSID.
-> Not only for the destiantion, also for all digipeaters inbetween.
-> We would need to change the whole protocol and all digipeaters and stations
-> using it worldwide to get that covered.
-> I expect that packet radio will be dead before that happens. :-)
+On Mon, Jun 02, 2008 at 03:03:45PM +1000, Ray Wells wrote:
+>
+> I normally use my old config file but because I'm jumping quite a few  
+> kernel releases I decided to start from scratch.
+>
 
-Arbitrary long callsigns...   Only OSI stack can handle that, and even it
-has some upper limits on address lengths.
+Ray,
 
-On IPv6 the addresses are 16 bytes long, and low 8 bytes (64 bits) of them
-are reserved for "link local" use.    Considering that..  one can encode
-any callsign with 38 characters, add couple codes for things like
-"no character here", and "next is ssid", that would be 40 codes.
-Using 6 bits per character one could encode 10 characters + 4 bits on IPv6-
-address "local half".  With arithmetic encoding (see APRS mic-e) maybe
-17 code bytes.
+Are you aware of the kernel makefile target "oldconfig"?
 
-Would that be AX.25 ?  Definitely not.  That would be IPv6.
+Put your old config file in the proper directory for the kernel build and
+do a make oldconfig and you will get prompted for the new stuff without changing 
+already selected kernel options.
 
-On IPv6 the basic assumption is that link local area is /64 size slice,
-and thus "AX.25 space" would be something smaller..  like  /32.
+Pat
+-- 
 
-How could we implement smooth transition from AX.25 to IPv6 on data links ?
-Very good question...  old legacy junk will want to live a long time.
-(we are way too willing to recycle obsolete hardware...)
-
-> 73 de Hans, DL5DI
-
-73 de Matti, OH2MQK
+Patrick Ouellette                 pat@flying-gecko.net
+ne4po (at) arrl (dot) net         Amateur Radio: NE4PO 
+"Crank the amp to 11, this needs more cowbell - and a llama wouldn't hurt either"
+"Your arguments are an odd mix of overly optimistic on one side and overly 
+pessimistic on the other"
