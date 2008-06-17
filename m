@@ -1,76 +1,67 @@
-From: Tihomir Heidelberg - 9a4gl <9a4gl@hamradio.hr>
-Subject: Re: [PATCH]: Consolidate ax25 socket grafting.
-Date: Tue, 17 Jun 2008 14:11:36 +0200
-Message-ID: <4857A9F8.7040208@hamradio.hr>
-References: <20080617.023201.14122891.davem@davemloft.net>
+From: Bernard Pidoux <bpidoux@free.fr>
+Subject: [PATCH] ax25.h unsigned long type for ax25 timers
+Date: Tue, 17 Jun 2008 15:04:38 +0200
+Message-ID: <200806171504.38702.bpidoux@free.fr>
 Mime-Version: 1.0
 Content-Transfer-Encoding: 7bit
 Return-path: <netdev-owner@vger.kernel.org>
-In-Reply-To: <20080617.023201.14122891.davem@davemloft.net>
+Content-Disposition: inline
 Sender: netdev-owner@vger.kernel.org
 List-ID: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"; format="flowed"
-To: linux-hams@vger.kernel.org
-Cc: David Miller <davem@davemloft.net>, netdev@vger.kernel.org, ralf@linux-mips.org
+Content-Type: text/plain; charset="us-ascii"
+To: "David S. Miller" <davem@davemloft.net>
+Cc: Ralf Baechle DL5RB <ralf@linux-mips.org>, linux-hams <linux-hams@vger.kernel.org>, Linux Netdev List <netdev@vger.kernel.org>
 
-Hi linux-hams,
+In linux/include/linux/ax25.h
+ax25_info_struct timers types remain unsigned
 
-David Miller wrote:
-> The way that listening sockets work in ax25 is that the packet input
-> code path creates new socks via ax25_make_new() and attaches them
-> to the incoming SKB.  This SKB gets queued up into the listening
-> socket's receive queue.
->
-> When accept()'d the sock gets hooked up to the real parent socket.
-> Alternatively, if the listening socket is closed and released, any
-> unborn socks stuff up in the receive queue get released.
->
-> So during this time period these sockets are unreachable in any
-> other way, so no wakeup events nor references to their ->sk_socket
-> and ->sk_sleep members can occur.  And even if they do, all such
-> paths have to make NULL checks.
->   
-Yes, but...
+struct ax25_info_struct {
+	unsigned int	n2, n2count;
+	unsigned int	t1, t1timer;
+	unsigned int	t2, t2timer;
+	unsigned int	t3, t3timer;
+	unsigned int	idle, idletimer;
+        .....
+};
 
-I would like to direct you attention to one problem existing in ax.25 
-kernel since 2.4. If listening socket is closed and its SKB queue is 
-released but those sockets get weird. Those "unAccepted()" sockets 
-should be destroyed in ax25_std_heartbeat_expiry, but it will not 
-happen. And there is also a note about that in ax25_std_timer.c:
-/* Magic here: If we listen() and a new link dies before it
-is accepted() it isn't 'dead' so doesn't get removed. */
+while in linux/include/net/ax25.h timers are unsigned long according
+to kernel 2.6 timers.
 
-This issue cause ax25d to stop accepting new connections and I had to 
-restarted ax25d approximately each day and my services were unavailable. 
-Also netstat -n -l shows invalid source and device for those listening 
-sockets. It is strange why ax25d's listening socket get weird because of 
-this issue, but definitely when I solved this bug I do not have problems 
-with ax25d anymore and my ax25d can run for months without problems.
+typedef struct ax25_cb {
+        .....
+        struct timer_list       t1timer, t2timer, t3timer, idletimer;
+        unsigned long           t1, t2, t3, idle, rtt;
+        ....
 
-Actually I didn't fix the bug, I made a hack. In af_ax25.c file, 
-function ax25_destroy_socket in while loop:
-        if (ax25->sk != NULL) {
-                while ((skb = skb_dequeue(&ax25->sk->sk_receive_queue)) 
-!= NULL
-                        if (skb->sk != ax25->sk) {
-                                /* A pending connection */
-                                ax25_cb *sax25 = ax25_sk(skb->sk);
+Although ax25_info_struct is not much used it is refered at least
+into libax25 and xfbb BBS application program.
 
-                                /* Queue the unaccepted socket for death */
-                                sock_orphan(skb->sk);
+It seems thus reasonable to make the change.
 
-+                                /* 9A4GL: hack to release unaccepted 
-sockets */
-+                                skb->sk->sk_state = TCP_LISTEN;
+Signed-off-by: Bernard Pidoux <f6bvp@amsat.org>
+---
+ include/linux/ax25.h |    8 ++++----
+ 1 files changed, 4 insertions(+), 4 deletions(-)
 
-                                ax25_start_heartbeat(sax25);
-                                sax25->state = AX25_STATE_0;
-                        }
-
-                        kfree_skb(skb);
-                }
-                skb_queue_purge(&ax25->sk->sk_write_queue);
-        }
-
-73 de Tihomir, 9a4gl
+diff --git a/include/linux/ax25.h b/include/linux/ax25.h
+index 56c11f0..75282bb 100644
+--- a/include/linux/ax25.h
++++ b/include/linux/ax25.h
+@@ -97,10 +97,10 @@ struct ax25_info_struct_deprecated {
+ 
+ struct ax25_info_struct {
+ 	unsigned int	n2, n2count;
+-	unsigned int	t1, t1timer;
+-	unsigned int	t2, t2timer;
+-	unsigned int	t3, t3timer;
+-	unsigned int	idle, idletimer;
++	unsigned long	t1, t1timer;
++	unsigned long	t2, t2timer;
++	unsigned long	t3, t3timer;
++	unsigned long	idle, idletimer;
+ 	unsigned int	state;
+ 	unsigned int	rcv_q, snd_q;
+ 	unsigned int	vs, vr, va, vs_max;
+-- 
+1.5.5
 
