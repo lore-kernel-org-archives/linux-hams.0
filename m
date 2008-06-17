@@ -1,45 +1,52 @@
 From: David Miller <davem@davemloft.net>
-Subject: [PATCH]: Fix open-coded sock_orphan() in x25.
-Date: Tue, 17 Jun 2008 03:06:46 -0700 (PDT)
-Message-ID: <20080617.030646.266233676.davem@davemloft.net>
+Subject: [PATCH]: Kill spurious sk->sk_socket NULL assignments in netrom.
+Date: Tue, 17 Jun 2008 03:24:09 -0700 (PDT)
+Message-ID: <20080617.032409.216520881.davem@davemloft.net>
 Mime-Version: 1.0
 Content-Transfer-Encoding: 7bit
 Return-path: <netdev-owner@vger.kernel.org>
 Sender: netdev-owner@vger.kernel.org
 List-ID: <linux-hams.vger.kernel.org>
 Content-Type: Text/Plain; charset="us-ascii"
-To: eis@baty.hanse.de
-Cc: linux-x25@vger.kernel.org, netdev@vger.kernel.org, ralf@linux-mips.org, linux-hams@vger.kernel.org
+To: netdev@vger.kernel.org
+Cc: ralf@linux-mips.org, linux-hams@vger.kernel.org
 
 
-This is similar to the AF_ECONET patch I just posted.
+Both of these assignments are spurious, so we can delete them.
 
-Applied and pushed to net-next-2.6
+Applied and pushed out to net-next-2.6
 
-x25: Use sock_orphan() instead of open-coded (and buggy) variant.
+netrom: Kill spurious NULL'ing of sk->sk_socket.
 
-It doesn't grab the sk_callback_lock, it doesn't NULL out
-the sk->sk_sleep waitqueue pointer, etc.
+In nr_release(), one code path calls sock_orphan() which
+will NULL out sk->sk_socket already.
+
+In the other case, handling states other than NR_STATE_{0,1,2,3},
+seems to not be possible other than due to bugs.  Even for an
+uninitialized nr->state value, that would be zero or NR_STATE_0.
+It might be wise to stick a WARN_ON() here.
 
 Signed-off-by: David S. Miller <davem@davemloft.net>
 ---
- net/x25/af_x25.c |    3 +--
- 1 files changed, 1 insertions(+), 2 deletions(-)
+ net/netrom/af_netrom.c |    2 --
+ 1 files changed, 0 insertions(+), 2 deletions(-)
 
-diff --git a/net/x25/af_x25.c b/net/x25/af_x25.c
-index bcb091f..7b1c6ef 100644
---- a/net/x25/af_x25.c
-+++ b/net/x25/af_x25.c
-@@ -612,8 +612,7 @@ static int x25_release(struct socket *sock)
- 			break;
+diff --git a/net/netrom/af_netrom.c b/net/netrom/af_netrom.c
+index 5877962..74884f4 100644
+--- a/net/netrom/af_netrom.c
++++ b/net/netrom/af_netrom.c
+@@ -536,11 +536,9 @@ static int nr_release(struct socket *sock)
+ 		sk->sk_state_change(sk);
+ 		sock_orphan(sk);
+ 		sock_set_flag(sk, SOCK_DESTROY);
+-		sk->sk_socket   = NULL;
+ 		break;
+ 
+ 	default:
+-		sk->sk_socket = NULL;
+ 		break;
  	}
  
--	sock->sk	= NULL;
--	sk->sk_socket	= NULL;	/* Not used, but we should do this */
-+	sock_orphan(sk);
- out:
- 	return 0;
- }
 -- 
 1.5.5.1.308.g1fbb5
 
