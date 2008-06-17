@@ -1,67 +1,59 @@
-From: Bernard Pidoux <bpidoux@free.fr>
-Subject: [PATCH] ax25.h unsigned long type for ax25 timers
-Date: Tue, 17 Jun 2008 15:04:38 +0200
-Message-ID: <200806171504.38702.bpidoux@free.fr>
+From: Bernard Pidoux <bernard.pidoux@upmc.fr>
+Subject: Re: [PATCH]: Kill spurious sk->sk_socket NULL assignments in netrom.
+Date: Tue, 17 Jun 2008 15:58:59 +0200
+Message-ID: <4857C323.5040402@upmc.fr>
+References: <20080617.032409.216520881.davem@davemloft.net>
 Mime-Version: 1.0
 Content-Transfer-Encoding: 7bit
-Return-path: <netdev-owner@vger.kernel.org>
-Content-Disposition: inline
-Sender: netdev-owner@vger.kernel.org
+Return-path: <linux-hams-owner@vger.kernel.org>
+In-Reply-To: <20080617.032409.216520881.davem@davemloft.net>
+Sender: linux-hams-owner@vger.kernel.org
 List-ID: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"
-To: "David S. Miller" <davem@davemloft.net>
-Cc: Ralf Baechle DL5RB <ralf@linux-mips.org>, linux-hams <linux-hams@vger.kernel.org>, Linux Netdev List <netdev@vger.kernel.org>
+Content-Type: text/plain; charset="us-ascii"; format="flowed"
+To: David Miller <davem@davemloft.net>
+Cc: netdev@vger.kernel.org, ralf@linux-mips.org, linux-hams@vger.kernel.org
 
-In linux/include/linux/ax25.h
-ax25_info_struct timers types remain unsigned
+David,
 
-struct ax25_info_struct {
-	unsigned int	n2, n2count;
-	unsigned int	t1, t1timer;
-	unsigned int	t2, t2timer;
-	unsigned int	t3, t3timer;
-	unsigned int	idle, idletimer;
-        .....
-};
+All patches applied and running.
+Thanks.
 
-while in linux/include/net/ax25.h timers are unsigned long according
-to kernel 2.6 timers.
+Bernard, f6bvp
 
-typedef struct ax25_cb {
-        .....
-        struct timer_list       t1timer, t2timer, t3timer, idletimer;
-        unsigned long           t1, t2, t3, idle, rtt;
-        ....
 
-Although ax25_info_struct is not much used it is refered at least
-into libax25 and xfbb BBS application program.
-
-It seems thus reasonable to make the change.
-
-Signed-off-by: Bernard Pidoux <f6bvp@amsat.org>
----
- include/linux/ax25.h |    8 ++++----
- 1 files changed, 4 insertions(+), 4 deletions(-)
-
-diff --git a/include/linux/ax25.h b/include/linux/ax25.h
-index 56c11f0..75282bb 100644
---- a/include/linux/ax25.h
-+++ b/include/linux/ax25.h
-@@ -97,10 +97,10 @@ struct ax25_info_struct_deprecated {
- 
- struct ax25_info_struct {
- 	unsigned int	n2, n2count;
--	unsigned int	t1, t1timer;
--	unsigned int	t2, t2timer;
--	unsigned int	t3, t3timer;
--	unsigned int	idle, idletimer;
-+	unsigned long	t1, t1timer;
-+	unsigned long	t2, t2timer;
-+	unsigned long	t3, t3timer;
-+	unsigned long	idle, idletimer;
- 	unsigned int	state;
- 	unsigned int	rcv_q, snd_q;
- 	unsigned int	vs, vr, va, vs_max;
--- 
-1.5.5
-
+David Miller wrote:
+> Both of these assignments are spurious, so we can delete them.
+> 
+> Applied and pushed out to net-next-2.6
+> 
+> netrom: Kill spurious NULL'ing of sk->sk_socket.
+> 
+> In nr_release(), one code path calls sock_orphan() which
+> will NULL out sk->sk_socket already.
+> 
+> In the other case, handling states other than NR_STATE_{0,1,2,3},
+> seems to not be possible other than due to bugs.  Even for an
+> uninitialized nr->state value, that would be zero or NR_STATE_0.
+> It might be wise to stick a WARN_ON() here.
+> 
+> Signed-off-by: David S. Miller <davem@davemloft.net>
+> ---
+>  net/netrom/af_netrom.c |    2 --
+>  1 files changed, 0 insertions(+), 2 deletions(-)
+> 
+> diff --git a/net/netrom/af_netrom.c b/net/netrom/af_netrom.c
+> index 5877962..74884f4 100644
+> --- a/net/netrom/af_netrom.c
+> +++ b/net/netrom/af_netrom.c
+> @@ -536,11 +536,9 @@ static int nr_release(struct socket *sock)
+>  		sk->sk_state_change(sk);
+>  		sock_orphan(sk);
+>  		sock_set_flag(sk, SOCK_DESTROY);
+> -		sk->sk_socket   = NULL;
+>  		break;
+>  
+>  	default:
+> -		sk->sk_socket = NULL;
+>  		break;
+>  	}
+>  
