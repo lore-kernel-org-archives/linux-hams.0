@@ -1,36 +1,48 @@
-From: David Miller <davem@davemloft.net>
-Subject: Re: [PATCH] ax25.h unsigned long type for ax25 timers
-Date: Fri, 27 Jun 2008 19:33:40 -0700 (PDT)
-Message-ID: <20080627.193340.51998365.davem@davemloft.net>
-References: <20080619.144621.120746379.davem@davemloft.net>
-	<485ADFDF.1070509@free.fr>
-	<485BADF3.10704@free.fr>
+From: Pidoux <f6bvp@free.fr>
+Subject: [ROSE] unregister_netdevice: waiting for rose0 to become free
+Date: Sun, 29 Jun 2008 21:25:21 +0200
+Message-ID: <4867E1A1.2000702@free.fr>
+References: <20080617.024224.160706790.davem@davemloft.net>
 Mime-Version: 1.0
 Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <485BADF3.10704@free.fr>
+In-Reply-To: <20080617.024224.160706790.davem@davemloft.net>
 Sender: linux-hams-owner@vger.kernel.org
 List-ID: <linux-hams.vger.kernel.org>
-Content-Type: Text/Plain; charset="us-ascii"
-To: f6bvp@free.fr
-Cc: bpidoux@free.fr, ralf@linux-mips.org, linux-hams@vger.kernel.org, netdev@vger.kernel.org
+Content-Type: text/plain; charset="us-ascii"; format="flowed"
+To: David Miller <davem@davemloft.net>
+Cc: netdev@vger.kernel.org, ralf@linux-mips.org, linux-hams@vger.kernel.org
 
-From: Bernard Pidoux F6BVP <f6bvp@free.fr>
-Date: Fri, 20 Jun 2008 15:17:39 +0200
+A bug in ROSE protocol is preventing removal of rose module.
 
-> The second solution is to declare a new structure
-> 
-> * new ax25 info struct */
-> struct ax25_info_long_timers_struct {
- ...
-> 
-> adding another case SIOCAX25GETNEWINFO
-> that would be defined
-> #define SIOCAX25GETNEWINFO         (SIOCPROTOPRIVATE+14)
-> 
-> and trigger warning message by calls to SIOCAX25GETINFOOLD and
-> SIOCAX25GETINFO.
-> 
-> It that the right way to do it ?
+After killing all ROSE and AX25 applications, there are no more sockets and
+rose usage count is correctly decreased to null as seen in /proc/modules :
 
-Yes.
+rose 40120 0 - Live 0xe1071000
+
+However, issuing command rmmod rose displays the following message in loop forever :
+
+kernel: unregister_netdevice: waiting for rose0 to become free. Usage count = 2
+
+Usage count can be different and seems random (not correlated with module usage count reached when ROSE
+applications are loaded).
+
+Tracing the problem shows that above message is sent by core/dev.c
+
+Here is the loop :
+
+while (atomic_read(&dev->refcnt) !=0) {
+....
+}
+
+Obviously, displayed usage count (dev->refcnt) is not the same as in /proc/modules or given by command
+lsmod and also it is not decremented, i.e. it stays at the same, and probably not relevant, value.
+
+A comment in core/dev.c says that buggy protocol don't correctly call dev_put().
+
+I tried to review rose module source but I have not been able to find a correct place where dev_put(dev) could be 
+missing either in af_rose.c or rose_route.c.
+
+Maybe the problem is elsewhere ?
+
+Bernard Pidoux, f6bvp
