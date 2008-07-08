@@ -1,58 +1,105 @@
-From: Stef Daniels VK5HSX <vk5hsx@wia.org.au>
-Subject: Re: debian /ubuntu repository entry
-Date: Thu, 03 Jul 2008 09:50:13 +0930
-Message-ID: <1215044413.22906.3.camel@jill.vk5hsx.ampr.org>
-References: <20080702225913.2b12e66b@gb7tf>
-Reply-To: vk5hsx@wia.org.au
+From: Erik Jakobsen <erik_ja@mail.tele.dk>
+Subject: gMFSK ?
+Date: Tue, 08 Jul 2008 21:55:58 +0200
+Message-ID: <4873C64E.2000105@mail.tele.dk>
 Mime-Version: 1.0
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <20080702225913.2b12e66b@gb7tf>
 Sender: linux-hams-owner@vger.kernel.org
 List-ID: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="iso-8859-1"
-To: Richard Bown <richard.bown@blueyonder.co.uk>
-Cc: linux-hams@vger.kernel.org
+Content-Type: text/plain; charset="us-ascii"; format="flowed"
+To: linux-hams <linux-hams@vger.kernel.org>
 
-Hi Richard,
+Hi.
 
-On Wed, 2008-07-02 at 22:59 +0100, Richard Bown wrote:
-> Hi All
-> I've switched distros due to a nasty bug that appeared in mandriva
-> 2008.1 x86_64.
->=20
-> It effects all the apps that use a waterfall display, by incorrectly=20
-> showing the frequency and showing frequency drift which isn't there.
->=20
-> I checked ubuntu and it doesn't seem effected by it,  gmfsk works OK.
-> How do I add the following:-http://packages.ubuntu.com/hardy/hamradio=
-/
->  source as APT line in the software sources.
+I have installed gMFSK on my openSUSE 11.0.
 
-The best thing for you to read is this. The file you are referring to i=
-s
-the /etc/apt/sources.list  The link below explains
+It works nice, and now I want to set up hamlib.
 
-http://www.debian.org/doc/manuals/apt-howto/ch-basico.en.html#s-sources=
-=2Elist
+I have tested the connection to the scanport with rigctl and the command IF:
 
+# rigctl -vvvvv -r /dev/ttyS0 -s 9600 -m 204
+rigctl, Hamlib version 1.2.7.1
+Report bugs to <hamlib-developer@lists.sourceforge.net>
 
-> TIA
-> Richard G8jvm
+rig:rig_init called
+rig: loading backend kenwood
+kenwood: _init called
+rig_register (213)
+rig_register (201)
+rig_register (225)
+rig_register (203)
+rig_register (204)
+rig_register (216)
+rig_register (224)
+rig_register (205)
+rig_register (207)
+rig_register (209)
+rig_register (210)
+rig_register (222)
+rig_register (214)
+rig_register (221)
+rig_register (202)
+rig_register (211)
+rig_register (206)
+rig_register (208)
+rig_register (215)
+rig_register (226)
+rig_register (217)
+rig_register (220)
+rig_register (223)
+rig_register (227)
+rig_register (228)
+rig:rig_open called
+TX 3 bytes
+0000     49 46 3b       IF;
+RX 38 characters
+0000     49 46 30 30 30 31 34 30 38 30 37 38 30 20 20 20        
+IF00014080780
+0010     20 20 20 30 30 39 30 30 30 20 39 30 30 32 30 30           
+009000 900200
+0020     30 30 30 38 20 3b                                      0008 ;
+Opened rig model 204, 'TS-570D'
+Backend version: 0.6.1, Status: Stable
 
---=20
-Regards 73,
+Rig command: if
+TX 3 bytes
+0000     49 46 3b       IF;
+RX 38 characters
+0000     49 46 30 30 30 31 34 30 38 30 37 38 30 20 20 20        
+IF00014080780
+0010     20 20 20 30 30 39 30 30 30 20 39 30 30 32 30 30           
+009000 900200
+0020     30 30 30 38 20 3b                                      0008 ;
+TX 4 bytes
+0000     46 52 30 3b    FR0;
+TX 4 bytes
+0000     46 54 30 3b    FT0;
+Tx frequency: 14080780
 
-Stef Daniels VK5HSX           =20
-Amateur Radio Station=EF=BB=BF          (vk5hsx@wia.org.au)
-Adelaide, Sth Australia
----------------------------------------------------    =20
-Member South Coast ARC Inc.    (www.scarc.org.au)
-Member Wireless Inst. of Aust  (www.wia.org.au)
----------------------------------------------------
+TX 3 bytes
+0000     49 46 3b       IF;
+RX 38 characters
+0000     49 46 30 30 30 31 34 30 38 30 37 38 30 20 20 20        
+IF00014080780
+0010     20 20 20 30 30 39 30 30 30 20 39 30 30 32 30 30           
+009000 900200
+0020     30 30 30 38 20 3b                                      0008 ;
+Rig command: Frequency: 14080780
 
---
-To unsubscribe from this list: send the line "unsubscribe linux-hams" i=
-n
-the body of a message to majordomo@vger.kernel.org
-More majordomo info at  http://vger.kernel.org/majordomo-info.html
+Rig command:                                       
+
+In the gMFSK hamlib setup I have this:
+
+Kenwood TS570D
+Port /dev/ttyS0
+Speed 9600
+
+What more shal I have in here to get that part to work ?.
+When I start up gMFSK it complains abot the port settings
+
+Hamlib init: rig_open failed: IO error
+
+What to do here ?
+
+73 de Erik OZ4KK
