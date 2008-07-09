@@ -1,45 +1,37 @@
-From: Erik Jakobsen <erik_ja@mail.tele.dk>
-Subject: Re: gMFSK ?
-Date: Wed, 09 Jul 2008 16:37:32 +0200
-Message-ID: <4874CD2C.3060905@mail.tele.dk>
-References: <4873C64E.2000105@mail.tele.dk> <20080708213400.GN8136@n0nb.us> <48744F4A.60705@mail.tele.dk> <courier.4874558A.00001E9A@radagast.org> <48745CDB.8030009@mail.tele.dk> <48749367.8070701@mail.tele.dk> <20080709110558.GA4283@n0nb.us>
+From: Pino Zollo <pinozollo@gmail.com>
+Subject: DBLog 0.12.12
+Date: Wed, 9 Jul 2008 17:43:21 -0400
+Message-ID: <200807091743.25277.pinozollo@gmail.com>
+Reply-To: pinozollo@gmail.com
 Mime-Version: 1.0
 Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <20080709110558.GA4283@n0nb.us>
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:from:reply-to:organization:to
+         :subject:date:user-agent:mime-version:content-type
+         :content-transfer-encoding:content-disposition:message-id;
+        bh=7FSnkwdovU/cVMn6aI9rbyE4TSAuPEvUfvDW0xLIakk=;
+        b=HMFJ5k5T5G+2H9yEmpZB82jHcTFw25Sc93jngEX7vr1h0vK1/rNHaG7prUbpWOsMV+
+         /YHibFKrdqOekSNbDlU7CUfJHyiJpEmmFCxgqlnPySTsXSS7QIncTx0UPytq2X3+fswB
+         dHj3z3EVaosXOymVTfWCVvN0YttrOll3r7fEs=
+Content-Disposition: inline
 Sender: linux-hams-owner@vger.kernel.org
 List-ID: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"; format="flowed"
-To: linux-hams@vger.kernel.org
+Content-Type: text/plain; charset="us-ascii"
+To: Yahoo linux hams <linuxhams@yahoogroups.com>, pa0r <rein@couperus.com>, "Marco Di Martino (IW2OHX)" <iw2ohx@eutelia.com>, Linux Hams <linux-hams@vger.kernel.org>, Joop Stakenborg <pg>
 
-Nate Bargmann wrote:
->
->
-> Please go to http://groups.yahoo.com/group/linuxham/ and sign up for
-> that mailing list which is the support list for Fldigi.  There are many
-> knowledgable members on that list including the Fldigi developers. 
-> They can really help you.
->
-> As one of the Hamlib developers, I'm puzzled why you're having a
-> problem.  As Dave wrote, it could be an obscure setting.  Looking at
-> the CVS source for the ts570.c I see that post_write_delay = 30 by
-> default.  Since I work with Yaseu code, I'm not much help here either.
->
-> Sometimes these things can be maddening as a lot of pieces must work
-> together perfectly.  Don't give up and do just the linuxham group.
->
-> HTH,
->
-> 73, de Nate >>
->
->   
-I'm now a member of the group.
 
-I have been inside the ts570.c too, and have edit the value to 50.
-But at that time I had not in mind, that I have installed openSUSE11.0.
-I used 10.3 before, and haven't installed th4e gcc :-(
-I will try to compile make make install again.
-Tnx Nate
+The new version of DBLog, the 0.12.12 is available on
 
-73,
-Erik, OZ4KK
+http://www.qsl.net/zp4kfx/Linux 
+
+News:
+Removed 3 bugs.
+Added permanent store of frequencies/spots.
+
+Beta testers feed back appreciated.
+
+73
+
+Pino ZP4KFX
