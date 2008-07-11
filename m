@@ -1,66 +1,120 @@
-From: Pino Zollo <pinozollo@gmail.com>
-Subject: DBLog 0.13.2
-Date: Fri, 11 Jul 2008 13:07:23 -0400
-Message-ID: <200807111307.27192.pinozollo@gmail.com>
-Reply-To: pinozollo@gmail.com
+From: Bernard Pidoux <bpidoux@free.fr>
+Subject: [PATCH] [AX25] unsigned long timers in ax25_info_struct_new
+Date: Fri, 11 Jul 2008 20:30:21 +0200
+Message-ID: <200807112030.22162.bpidoux@free.fr>
 Mime-Version: 1.0
 Content-Transfer-Encoding: 7bit
-Return-path: <linux-hams-owner@vger.kernel.org>
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:reply-to:organization:to
-         :subject:date:user-agent:cc:mime-version:content-type
-         :content-transfer-encoding:content-disposition:message-id;
-        bh=6tPEimHWriNVAuMK5OkU2jNZ2ps2nkIwoW4gxNcoNTg=;
-        b=E4RAPomlh1d/r93aZrm3+kOAp6s+tDreIFSoTCF9v0LjWeUNguAvdZpaeO4aAbPZgT
-         9UAPJYdw5j9ZIB4SFo0tPTCr24RyweUT3NEbJnwtOTd+6JClhYFVDwGXDF7Lq7fk4H9s
-         C5fP81kvkVGzhsDuo6DoxDuB+MGu2IN4cNj3Y=
+Return-path: <netdev-owner@vger.kernel.org>
 Content-Disposition: inline
-Sender: linux-hams-owner@vger.kernel.org
+Sender: netdev-owner@vger.kernel.org
 List-ID: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
-To: Yahoo linux hams <linuxhams@yahoogroups.com>, pa0r <rein@couperus.com>, "Marco Di Martino (IW2OHX)" <iw2ohx@eutelia.com>, Linux Hams <linux-hams@vger.kernel.org>, Joop Stakenborg <pg>
-Cc: I2PHD <i2phd@weaksignals.com>, "INFO Sezione A.R.I. di Milano" <info@arimi.it>, "Psk31 at qth.net" <psk31@mailman.qth.net>
+To: "David S. Miller" <davem@davemloft.net>
+Cc: Ralf Baechle DL5RB <ralf@linux-mips.org>, Linux Netdev List <netdev@vger.kernel.org>, linux-hams <linux-hams@vger.kernel.org>
 
-The new version of DBLog, the 0.13.2 is available on
+A new structure is proposed with unsigned long types
+for AX25 timers, in order to be compliant with kernel 2.6.
+These timers are listed in /proc/net/ax25/
 
-http://www.qsl.net/zp4kfx/Linux 
+AX25 info can be copied into user space via ioctl call using
+a new argument SIOCAX25GETINFONEW.
 
-News:
-Special for developers of other HAM radio applications as programs for 
-digimodes, EME or Meteorscatter.
+A KERN_INFO warning is printed if ioctl is called using
+deprecated structure and argument.
 
-DBLog now works also as 'Log server': another program can send commands to 
-DBLog via TCP on port 3164 to fill fields and to log QSOs. DBLog replies 
-with 'Name' and 'QTH' if the call has been worked before. More infos in the 
-file SERVER_DOC included into the distribution.
-------
-DBLog is a logging program for radio amateurs based on a relational Data Base.
-The main table conforms to ADIF specifications.
-It allows to log QSOs, export a range of them in ADIF format and import from 
-an ADIF file.
-It keeps statistics of DXCC worked countries in mixed mode.
-It reads the VFO frequency via the hamlib daemon rigctld, so all radios 
-supported by hamlib can be used.
-When rigctld is active appears the Band Map graphic windows which shows an 
-analogical representation of the radio tune. Clicking on the tune scale will 
-set the radio VFO.
-It includes a CW Keyer based on cwdaemon.
-Receives cluster spots from xdx by PG4I, checks them against local statistics 
-and shows the results in a dedicated window.
-If Cluster is active spots are shown also on the Band Map.
-The Band Map can store permanently spots or frequencies.
-Clicking on a cluster spot sets the radio VFO, honouring QSX an UP information 
-in case of split.
-In RUN mode it will remember the CQ frequency, while in S&P a call written 
-into the entry window will be remembered. 
-Shows the azimuthal map of the earth centred on the QTH using xplanet. If  the 
-other station call is present, his position is also shown.
-The NCDXF beacons can be monitored by band or by beacon. A map is available
-to see where beacons are located.
+Signed-off-by: Bernard Pidoux <f6bvp@amsat.org>
+---
+ include/linux/ax25.h |   16 +++++++++++++++-
+ net/ax25/af_ax25.c   |   16 +++++++++++-----
+ 2 files changed, 26 insertions(+), 6 deletions(-)
 
-Beta testers and feedbacks appreciated.
+diff --git a/include/linux/ax25.h b/include/linux/ax25.h
+index 56c11f0..5b4ee2f 100644
+--- a/include/linux/ax25.h
++++ b/include/linux/ax25.h
+@@ -36,6 +36,7 @@
+ #define SIOCAX25DELFWD		(SIOCPROTOPRIVATE+11)
+ #define SIOCAX25DEVCTL          (SIOCPROTOPRIVATE+12)
+ #define SIOCAX25GETINFO         (SIOCPROTOPRIVATE+13)
++#define SIOCAX25GETINFONEW      (SIOCPROTOPRIVATE+14)
+ 
+ #define AX25_SET_RT_IPMODE	2
+ 
+@@ -94,7 +95,7 @@ struct ax25_info_struct_deprecated {
+ 	unsigned int	state;
+ 	unsigned int	rcv_q, snd_q;
+ };
+-
++/* deprecated */
+ struct ax25_info_struct {
+ 	unsigned int	n2, n2count;
+ 	unsigned int	t1, t1timer;
+@@ -108,6 +109,19 @@ struct ax25_info_struct {
+ 	unsigned int	window;
+ };
+ 
++struct ax25_info_struct_new {
++	unsigned int	n2, n2count;
++	unsigned long	t1, t1timer;
++	unsigned long	t2, t2timer;
++	unsigned long	t3, t3timer;
++	unsigned long	idle, idletimer;
++	unsigned int	state;
++	unsigned int	rcv_q, snd_q;
++	unsigned int	vs, vr, va, vs_max;
++	unsigned int	paclen;
++	unsigned int	window;
++};
++
+ struct ax25_fwd_struct {
+ 	ax25_address	port_from;
+ 	ax25_address	port_to;
+diff --git a/net/ax25/af_ax25.c b/net/ax25/af_ax25.c
+index 2712544..e52c6af 100644
+--- a/net/ax25/af_ax25.c
++++ b/net/ax25/af_ax25.c
+@@ -1769,9 +1769,10 @@ static int ax25_ioctl(struct socket *sock, unsigned int cmd, unsigned long arg)
+ 		break;
+ 
+ 	case SIOCAX25GETINFO:
++	case SIOCAX25GETINFONEW:
+ 	case SIOCAX25GETINFOOLD: {
+ 		ax25_cb *ax25 = ax25_sk(sk);
+-		struct ax25_info_struct ax25_info;
++		struct ax25_info_struct_new ax25_info;
+ 
+ 		ax25_info.t1        = ax25->t1   / HZ;
+ 		ax25_info.t2        = ax25->t2   / HZ;
+@@ -1793,11 +1794,11 @@ static int ax25_ioctl(struct socket *sock, unsigned int cmd, unsigned long arg)
+ 		ax25_info.paclen    = ax25->paclen;
+ 		ax25_info.window    = ax25->window;
+ 
+-		/* old structure? */
+-		if (cmd == SIOCAX25GETINFOOLD) {
++		/* old structure ? */
++		if (cmd != SIOCAX25GETINFONEW) {
+ 			static int warned = 0;
+ 			if (!warned) {
+-				printk(KERN_INFO "%s uses old SIOCAX25GETINFO\n",
++				printk(KERN_INFO "%s uses deprecated SIOCAX25GETINFOOLD or SIOCAX25GETINFO\n",
+ 					current->comm);
+ 				warned=1;
+ 			}
+@@ -1806,8 +1807,13 @@ static int ax25_ioctl(struct socket *sock, unsigned int cmd, unsigned long arg)
+ 				res = -EFAULT;
+ 				break;
+ 			}
+-		} else {
++
+ 			if (copy_to_user(argp, &ax25_info, sizeof(struct ax25_info_struct))) {
++				res = -EFAULT;
++				break;
++			}
++		} else {
++			if (copy_to_user(argp, &ax25_info, sizeof(struct ax25_info_struct_new))) {
+ 				res = -EINVAL;
+ 				break;
+ 			}
+-- 
+1.5.5
 
-73
-
-Pino ZP4KFX
