@@ -1,120 +1,60 @@
 From: Bernard Pidoux <bpidoux@free.fr>
-Subject: [PATCH] [AX25] unsigned long timers in ax25_info_struct_new
-Date: Fri, 11 Jul 2008 20:30:21 +0200
-Message-ID: <200807112030.22162.bpidoux@free.fr>
+Subject: [PATCH] [ROSE] improving AX25 routing frames
+Date: Sat, 12 Jul 2008 11:32:56 +0200
+Message-ID: <48787A48.5030907@free.fr>
+References: <200804251659.47510.bpidoux@free.fr>	<20080426.230111.49125483.davem@davemloft.net>	<4836E223.8080003@upmc.fr> <20080603.145827.170048802.davem@davemloft.net>
 Mime-Version: 1.0
 Content-Transfer-Encoding: 7bit
-Return-path: <netdev-owner@vger.kernel.org>
-Content-Disposition: inline
-Sender: netdev-owner@vger.kernel.org
+Return-path: <linux-hams-owner@vger.kernel.org>
+In-Reply-To: <20080603.145827.170048802.davem@davemloft.net>
+Sender: linux-hams-owner@vger.kernel.org
 List-ID: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"
-To: "David S. Miller" <davem@davemloft.net>
-Cc: Ralf Baechle DL5RB <ralf@linux-mips.org>, Linux Netdev List <netdev@vger.kernel.org>, linux-hams <linux-hams@vger.kernel.org>
+Content-Type: text/plain; charset="us-ascii"; format="flowed"
+To: David Miller <davem@davemloft.net>
+Cc: ralf@linux-mips.org, Linux Netdev List <netdev@vger.kernel.org>, linux-hams <linux-hams@vger.kernel.org>
 
-A new structure is proposed with unsigned long types
-for AX25 timers, in order to be compliant with kernel 2.6.
-These timers are listed in /proc/net/ax25/
+Hi David,
 
-AX25 info can be copied into user space via ioctl call using
-a new argument SIOCAX25GETINFONEW.
+You probably did not notice the following patch I re-sent a while ago at 
+your request:
 
-A KERN_INFO warning is printed if ioctl is called using
-deprecated structure and argument.
+200806071944.07304.bpidoux () free ! fr
 
-Signed-off-by: Bernard Pidoux <f6bvp@amsat.org>
----
- include/linux/ax25.h |   16 +++++++++++++++-
- net/ax25/af_ax25.c   |   16 +++++++++++-----
- 2 files changed, 26 insertions(+), 6 deletions(-)
+Although it is not critical for Linux kernel and for general users, it 
+it of valuable interest for the digital hamradio community as it repairs 
+the rose network routing and gives us the connectivity we are lacking.
 
-diff --git a/include/linux/ax25.h b/include/linux/ax25.h
-index 56c11f0..5b4ee2f 100644
---- a/include/linux/ax25.h
-+++ b/include/linux/ax25.h
-@@ -36,6 +36,7 @@
- #define SIOCAX25DELFWD		(SIOCPROTOPRIVATE+11)
- #define SIOCAX25DEVCTL          (SIOCPROTOPRIVATE+12)
- #define SIOCAX25GETINFO         (SIOCPROTOPRIVATE+13)
-+#define SIOCAX25GETINFONEW      (SIOCPROTOPRIVATE+14)
- 
- #define AX25_SET_RT_IPMODE	2
- 
-@@ -94,7 +95,7 @@ struct ax25_info_struct_deprecated {
- 	unsigned int	state;
- 	unsigned int	rcv_q, snd_q;
- };
--
-+/* deprecated */
- struct ax25_info_struct {
- 	unsigned int	n2, n2count;
- 	unsigned int	t1, t1timer;
-@@ -108,6 +109,19 @@ struct ax25_info_struct {
- 	unsigned int	window;
- };
- 
-+struct ax25_info_struct_new {
-+	unsigned int	n2, n2count;
-+	unsigned long	t1, t1timer;
-+	unsigned long	t2, t2timer;
-+	unsigned long	t3, t3timer;
-+	unsigned long	idle, idletimer;
-+	unsigned int	state;
-+	unsigned int	rcv_q, snd_q;
-+	unsigned int	vs, vr, va, vs_max;
-+	unsigned int	paclen;
-+	unsigned int	window;
-+};
-+
- struct ax25_fwd_struct {
- 	ax25_address	port_from;
- 	ax25_address	port_to;
-diff --git a/net/ax25/af_ax25.c b/net/ax25/af_ax25.c
-index 2712544..e52c6af 100644
---- a/net/ax25/af_ax25.c
-+++ b/net/ax25/af_ax25.c
-@@ -1769,9 +1769,10 @@ static int ax25_ioctl(struct socket *sock, unsigned int cmd, unsigned long arg)
- 		break;
- 
- 	case SIOCAX25GETINFO:
-+	case SIOCAX25GETINFONEW:
- 	case SIOCAX25GETINFOOLD: {
- 		ax25_cb *ax25 = ax25_sk(sk);
--		struct ax25_info_struct ax25_info;
-+		struct ax25_info_struct_new ax25_info;
- 
- 		ax25_info.t1        = ax25->t1   / HZ;
- 		ax25_info.t2        = ax25->t2   / HZ;
-@@ -1793,11 +1794,11 @@ static int ax25_ioctl(struct socket *sock, unsigned int cmd, unsigned long arg)
- 		ax25_info.paclen    = ax25->paclen;
- 		ax25_info.window    = ax25->window;
- 
--		/* old structure? */
--		if (cmd == SIOCAX25GETINFOOLD) {
-+		/* old structure ? */
-+		if (cmd != SIOCAX25GETINFONEW) {
- 			static int warned = 0;
- 			if (!warned) {
--				printk(KERN_INFO "%s uses old SIOCAX25GETINFO\n",
-+				printk(KERN_INFO "%s uses deprecated SIOCAX25GETINFOOLD or SIOCAX25GETINFO\n",
- 					current->comm);
- 				warned=1;
- 			}
-@@ -1806,8 +1807,13 @@ static int ax25_ioctl(struct socket *sock, unsigned int cmd, unsigned long arg)
- 				res = -EFAULT;
- 				break;
- 			}
--		} else {
-+
- 			if (copy_to_user(argp, &ax25_info, sizeof(struct ax25_info_struct))) {
-+				res = -EFAULT;
-+				break;
-+			}
-+		} else {
-+			if (copy_to_user(argp, &ax25_info, sizeof(struct ax25_info_struct_new))) {
- 				res = -EINVAL;
- 				break;
- 			}
--- 
-1.5.5
+I applied this patch to all kernel versions since it was written without 
+any problem.
 
+Could you look at it ?
+
+Best regards,
+
+
+Bernard Pidoux
+
+
+David Miller wrote:
+> From: "bernard.pidoux" <bernard.pidoux@upmc.fr>
+> Date: Fri, 23 May 2008 17:26:27 +0200
+> 
+>> You may have seen that I actually condensed things by finally having 
+>> incorporated the search
+>> for an already connected node into existing rose_get_neigh() function.
+>> This has the advantage to avoid creating a new function and not to use 
+>> more spinlocks.
+>> Is there any chance that you accept the patch submitted in its resulting 
+>> form ?
+> 
+> In the time that has passed I am confused as to which of
+> several pending patches I should look at and apply.
+> 
+> Could you simply resubmit (CC:'ing the proper lists, don't
+> take discussions private like this again please) the patches
+> that you think should be looked at seriously right now?
+> 
+> Thanks.
+> 
+> 
+> 
