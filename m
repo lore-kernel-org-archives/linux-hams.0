@@ -1,60 +1,21 @@
-From: Bernard Pidoux <bpidoux@free.fr>
-Subject: [PATCH] [ROSE] improving AX25 routing frames
-Date: Sat, 12 Jul 2008 11:32:56 +0200
-Message-ID: <48787A48.5030907@free.fr>
-References: <200804251659.47510.bpidoux@free.fr>	<20080426.230111.49125483.davem@davemloft.net>	<4836E223.8080003@upmc.fr> <20080603.145827.170048802.davem@davemloft.net>
-Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
+From: Brian Tew <btew@nyx.net>
+Subject: software for hw32a
+Date: Sat, 12 Jul 2008 11:57:04 -0600 (MDT)
+Message-ID: <200807121757.m6CHv4W8014249@nyx.nyx.net>
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <20080603.145827.170048802.davem@davemloft.net>
 Sender: linux-hams-owner@vger.kernel.org
 List-ID: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"; format="flowed"
-To: David Miller <davem@davemloft.net>
-Cc: ralf@linux-mips.org, Linux Netdev List <netdev@vger.kernel.org>, linux-hams <linux-hams@vger.kernel.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+To: linux-hams@vger.kernel.org
 
-Hi David,
+Hello,
+Is there linux software to program the hw32a handy-talky?
+I need it to work from the console--no xwindows.
+If you can steer me toward that I would be greatful.
 
-You probably did not notice the following patch I re-sent a while ago at 
-your request:
+73,
+n 8 l a g
 
-200806071944.07304.bpidoux () free ! fr
-
-Although it is not critical for Linux kernel and for general users, it 
-it of valuable interest for the digital hamradio community as it repairs 
-the rose network routing and gives us the connectivity we are lacking.
-
-I applied this patch to all kernel versions since it was written without 
-any problem.
-
-Could you look at it ?
-
-Best regards,
-
-
-Bernard Pidoux
-
-
-David Miller wrote:
-> From: "bernard.pidoux" <bernard.pidoux@upmc.fr>
-> Date: Fri, 23 May 2008 17:26:27 +0200
-> 
->> You may have seen that I actually condensed things by finally having 
->> incorporated the search
->> for an already connected node into existing rose_get_neigh() function.
->> This has the advantage to avoid creating a new function and not to use 
->> more spinlocks.
->> Is there any chance that you accept the patch submitted in its resulting 
->> form ?
-> 
-> In the time that has passed I am confused as to which of
-> several pending patches I should look at and apply.
-> 
-> Could you simply resubmit (CC:'ing the proper lists, don't
-> take discussions private like this again please) the patches
-> that you think should be looked at seriously right now?
-> 
-> Thanks.
-> 
-> 
-> 
+btew at bresnan period net
