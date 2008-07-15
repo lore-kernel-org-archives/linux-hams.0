@@ -1,32 +1,31 @@
-From: Nate Bargmann <n0nb@n0nb.us>
-Subject: Re: software for hw32a
-Date: Sat, 12 Jul 2008 20:23:01 -0500
-Message-ID: <20080713012301.GJ4283@n0nb.us>
-References: <200807121757.m6CHv4W8014249@nyx.nyx.net>
+From: David Miller <davem@davemloft.net>
+Subject: Re: [PATCH] [ROSE] improving AX25 routing frames
+Date: Mon, 14 Jul 2008 23:14:23 -0700 (PDT)
+Message-ID: <20080714.231423.94246492.davem@davemloft.net>
+References: <4836E223.8080003@upmc.fr>
+	<20080603.145827.170048802.davem@davemloft.net>
+	<48787A48.5030907@free.fr>
 Mime-Version: 1.0
+Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
-Content-Disposition: inline
-In-Reply-To: <200807121757.m6CHv4W8014249@nyx.nyx.net>
+In-Reply-To: <48787A48.5030907@free.fr>
 Sender: linux-hams-owner@vger.kernel.org
 List-ID: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-To: linux-hams@vger.kernel.org
+Content-Type: Text/Plain; charset="us-ascii"
+To: bpidoux@free.fr
+Cc: ralf@linux-mips.org, netdev@vger.kernel.org, linux-hams@vger.kernel.org
 
-* Brian Tew <btew@nyx.net> [2008 Jul 12 13:08 -0500]:
-> Hello,
-> Is there linux software to program the hw32a handy-talky?
-> I need it to work from the console--no xwindows.
-> If you can steer me toward that I would be greatful.
+From: Bernard Pidoux <bpidoux@free.fr>
+Date: Sat, 12 Jul 2008 11:32:56 +0200
 
-Theoretically, Hamlib could do the trick if the command protocol is
-documented.  Our test program `rigctl' works from the command line.
+> You probably did not notice the following patch I re-sent a while ago at 
+> your request:
+> 
+> 200806071944.07304.bpidoux () free ! fr
+> 
+> Although it is not critical for Linux kernel and for general users, it 
+> it of valuable interest for the digital hamradio community as it repairs 
+> the rose network routing and gives us the connectivity we are lacking.
 
-73, de Nate >>
-
--- 
-
-"The optimist proclaims that we live in the best of all
-possible worlds.  The pessimist fears this is true."
-
-Ham radio, Linux, bikes, and more: http://n0nb.us/index.html
+It's been in my net-next-2.6 GIT tree for weeks, and I will merge it
+in during the 2.6.27 merge window.
