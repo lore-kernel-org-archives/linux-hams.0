@@ -1,51 +1,46 @@
-From: Pidoux <f6bvp@free.fr>
-Subject: Re: [PATCH] [ROSE] improving AX25 routing frames
-Date: Wed, 16 Jul 2008 19:29:50 +0200
-Message-ID: <487E300E.3020601@free.fr>
-References: <4836E223.8080003@upmc.fr>	<20080603.145827.170048802.davem@davemloft.net>	<48787A48.5030907@free.fr> <20080714.231423.94246492.davem@davemloft.net>
+From: David Robb <ender@paradise.gen.nz>
+Subject: baycom_ser_fdx - fixed under 2.6
+Date: Sat, 19 Jul 2008 10:50:51 +1200 (NZST)
+Message-ID: <alpine.DEB.1.10.0807191042050.21295@tombstone.paradise.gen.nz>
 Mime-Version: 1.0
-Content-Transfer-Encoding: QUOTED-PRINTABLE
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <20080714.231423.94246492.davem@davemloft.net>
 Sender: linux-hams-owner@vger.kernel.org
 List-ID: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="iso-8859-1"; format="flowed"
-To: David Miller <davem@davemloft.net>
-Cc: bpidoux@free.fr, ralf@linux-mips.org, netdev@vger.kernel.org, linux-hams@vger.kernel.org
+Content-Type: TEXT/PLAIN; format="flowed"; charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+To: linux-hams@vger.kernel.org
 
-David,
+So it seems that I might be the only person in the world who's still 
+attempting to use a Baycom bp-1 pocket modem under Linux, but oh well..
 
-This is great news indeed.
-I am not pulling net-next-2.6 GIT tree, but only net-2.6.
-As I did not received any acknowledgement I thought you did not had tim=
-e to review my patch.
-Thanks a lot.
+As a number of people noticed back in about 2005 (and some even earlier), 
+the baycom_ser_fdx driver hasn't worked under Linux 2.6 for a few 
+years (possibly ever).
 
-Bernard
+Various people poked around 
+(http://osdir.com/ml/hams/2005-05/msg00022.html) and determined that there 
+was some kind of packet corruption going on, and that the CRC was mangled.
 
-David Miller a =E9crit :
-> From: Bernard Pidoux <bpidoux@free.fr>
-> Date: Sat, 12 Jul 2008 11:32:56 +0200
->=20
->> You probably did not notice the following patch I re-sent a while ag=
-o at=20
->> your request:
->>
->> 200806071944.07304.bpidoux () free ! fr
->>
->> Although it is not critical for Linux kernel and for general users, =
-it=20
->> it of valuable interest for the digital hamradio community as it rep=
-airs=20
->> the rose network routing and gives us the connectivity we are lackin=
-g.
->=20
-> It's been in my net-next-2.6 GIT tree for weeks, and I will merge it
-> in during the 2.6.27 merge window.
-> --
+Well, after bashing my head against it a few times over the last few 
+months (I guess I was bored), and finally thinking that it mightn't be in 
+the baycom_ser_fdx driver that the problem actually was, I tracked it down 
+to the hdlcdrv code instead...
 
---
-To unsubscribe from this list: send the line "unsubscribe linux-hams" i=
-n
-the body of a message to majordomo@vger.kernel.org
-More majordomo info at  http://vger.kernel.org/majordomo-info.html
+Someone called Micah actually figured this out in 2004, and submitted a 
+patch, but it never made it into the kernel (at least in my 2.6.25.7 it's 
+still broken):
+
+http://linux.derkeiler.com/Mailing-Lists/Kernel/2004-11/2929.html
+
+The CRC's overwriting some of the packet...
+
+So anyway, applying the patch listed at that URL (1 line! Just one little 
+line!) my BP-1 now works again under 2.6.25.
+
+Perhaps I'm strange for wanting this working in these days of high speed 
+links, but hey... it seems sad to have broken code and no support where 
+there used to be a functional device.
+
+Anyway, share and enjoy.
+
+--David ZL3UDR
