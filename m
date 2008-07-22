@@ -1,34 +1,31 @@
-From: Ralf Baechle <ralf@linux-mips.org>
-Subject: Re: baycom_ser_fdx - fixed under 2.6
-Date: Tue, 22 Jul 2008 13:08:46 +0100
-Message-ID: <20080722120846.GA26093@linux-mips.org>
-References: <alpine.DEB.1.10.0807191042050.21295@tombstone.paradise.gen.nz> <4885A8F6.7090109@free.fr>
+From: T + J Williams <wa0eir@mchsi.com>
+Subject: TWCW 2.0 Release
+Date: Tue, 22 Jul 2008 12:08:25 -0500
+Message-ID: <1216746505.2224.17.camel@localhost.localdomain>
 Mime-Version: 1.0
+Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
-Content-Disposition: inline
-In-Reply-To: <4885A8F6.7090109@free.fr>
 Sender: linux-hams-owner@vger.kernel.org
 List-ID: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-To: Pidoux <f6bvp@free.fr>, Jeff Garzik <jeff@garzik.org>, stable@kernel.org
-Cc: David Robb <ender@paradise.gen.nz>, linux-hams@vger.kernel.org, David Miller <davem@davemloft.net>, Linux Netdev List <netdev@vger.kernel.org>
+To: Debian Hams <debian-hams@lists.debian.org>, "Ham Software - QTH.net" <ham-software@mailman.qth.net>, Linux Hams <linux-hams@vger.kernel.org>, Open Suse Ham <opensuse-ham@opensuse.org>
 
-On Tue, Jul 22, 2008 at 11:31:34AM +0200, Pidoux wrote:
+Hello All,
 
-> This is a trivial but very important bug fix. Thanks David.
-> It was probably not submitted to the right destination and thus never applied.
->
-> This bug may have discouraged more than one radioamateur wishing to experiment baycom style modems under Linux.
-> Fortunately you have done a very good historical search.
->
-> I rebuilt the patch against 2.6.26 kernel (the only source I have here on my laptop at my remote location during vacation).
->
-> I Cc: to David Miller and Ralf Baechle DL5RB maintainers of Linux net devices drivers and Linux AX25 drivers, respectively.
+There is a new release of TWCW 2.0 available at the URL below.  It can
+be used on the air as a keyer, on the internet as key for CWIRC under
+XCHAT, or to generate code practice via your soundcard.
 
-Correct, the CRC should go at the end of the frame, not corrupt the first
-header bytes.  So this one should also go into -stable.
+This version has a new window that allows you to select the letters,
+numbers and punctuation you want to send for code practice. It then
+sends random, five letter groups of the selected characters.  
 
-Acked-by: Ralf Baechle <ralf@linux-mips.org>
+See the ChangeLog file for a complete list of changes.
 
-  Ralf
+
+-- 
+73,
+Ted W. -  wa0eir
+http://wa0eir.ham.org
+
+
