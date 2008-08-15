@@ -1,30 +1,32 @@
-From: Matti Aarnio <matti.aarnio@zmailer.org>
-Subject: Re: Fwd: DEAR: WEBMAIL ACCOUNT OWNER
-Date: Fri, 15 Aug 2008 09:58:07 +0300
-Message-ID: <20080815065807.GG18620@mea-ext.zmailer.org>
-References: <200808142036.56098.pinozollo@gmail.com>
+From: "Curt, WE7U" <archer@eskimo.com>
+Subject: Xastir 1.9.4 Released
+Date: Fri, 15 Aug 2008 13:18:38 -0700 (PDT)
+Message-ID: <alpine.LNX.1.10.0808151318170.13970@wapiti2.we7u.net>
 Mime-Version: 1.0
 Return-path: <linux-hams-owner@vger.kernel.org>
-Content-Disposition: inline
-In-Reply-To: <200808142036.56098.pinozollo@gmail.com>
 Sender: linux-hams-owner@vger.kernel.org
 List-ID: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"
+Content-Type: TEXT/PLAIN; format="flowed"; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
-To: Pino Zollo <pinozollo@gmail.com>
-Cc: Linux Hams <linux-hams@vger.kernel.org>
+To: linux-hams@vger.kernel.org
 
-On Thu, Aug 14, 2008 at 08:36:54PM -0400, Pino Zollo wrote:
-> 
-> Is this a spam ? or is true ?
-> 
 
-If you have to ask, you are one of the reasons those scams
-are filling everybodys email boxes.  So many people are being
-successfully fooled every day that spamming scams like these
-is worthwhile.
+Project: XASTIR  (xastir)
+Package: xastir-stable
+Date   : 2008-08-15 12:59
 
-> Regards
-> Pino
+Project "XASTIR" ('xastir') has released the new version of package
+'xastir-stable'.
+You can download it from SourceForge.net by following this link:
+<https://sourceforge.net/project/showfiles.php?group_id=45562&release_id=620057>
+or browse Release Notes and ChangeLog by visiting this link:
+<https://sourceforge.net/project/shownotes.php?release_id=620057>
 
-  73 de  <postmaster@vger.kernel.org>
+Homepage <http://www.xastir.org>
+
+-- 
+Curt, WE7U.				archer at eskimo dot com
+http://www.eskimo.com/~archer
+   Lotto:  A tax on people who are bad at math. - unknown
+Windows:  Microsoft's tax on computer illiterates. - WE7U.
+The world DOES revolve around me:  I picked the coordinate system!"
