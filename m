@@ -1,8 +1,7 @@
 From: David Howells <dhowells@redhat.com>
-Subject: [PATCH 52/59] CRED: Wrap task credential accesses in the netrom
-	protocol
-Date: Wed, 27 Aug 2008 14:50:10 +0100
-Message-ID: <20080827135010.19980.95710.stgit@warthog.procyon.org.uk>
+Subject: [PATCH 53/59] CRED: Wrap task credential accesses in the ROSE protocol
+Date: Wed, 27 Aug 2008 14:50:16 +0100
+Message-ID: <20080827135015.19980.44538.stgit@warthog.procyon.org.uk>
 References: <20080827134541.19980.61042.stgit@warthog.procyon.org.uk>
 Mime-Version: 1.0
 Content-Transfer-Encoding: 7bit
@@ -30,30 +29,30 @@ Cc: Ralf Baechle <ralf@linux-mips.org>
 Cc: linux-hams@vger.kernel.org
 ---
 
- net/netrom/af_netrom.c |    4 ++--
+ net/rose/af_rose.c |    4 ++--
  1 files changed, 2 insertions(+), 2 deletions(-)
 
 
-diff --git a/net/netrom/af_netrom.c b/net/netrom/af_netrom.c
-index 532e4fa..a75e072 100644
---- a/net/netrom/af_netrom.c
-+++ b/net/netrom/af_netrom.c
-@@ -609,7 +609,7 @@ static int nr_bind(struct socket *sock, struct sockaddr *uaddr, int addr_len)
- 	} else {
- 		source = &addr->fsa_ax25.sax25_call;
+diff --git a/net/rose/af_rose.c b/net/rose/af_rose.c
+index a7f1ce1..d902e2d 100644
+--- a/net/rose/af_rose.c
++++ b/net/rose/af_rose.c
+@@ -690,7 +690,7 @@ static int rose_bind(struct socket *sock, struct sockaddr *uaddr, int addr_len)
  
--		user = ax25_findbyuid(current->euid);
-+		user = ax25_findbyuid(current_euid());
- 		if (user) {
- 			nr->user_addr   = user->call;
- 			ax25_uid_put(user);
-@@ -683,7 +683,7 @@ static int nr_connect(struct socket *sock, struct sockaddr *uaddr,
+ 	source = &addr->srose_call;
+ 
+-	user = ax25_findbyuid(current->euid);
++	user = ax25_findbyuid(current_euid());
+ 	if (user) {
+ 		rose->source_call = user->call;
+ 		ax25_uid_put(user);
+@@ -791,7 +791,7 @@ static int rose_connect(struct socket *sock, struct sockaddr *uaddr, int addr_le
+ 			goto out_release;
  		}
- 		source = (ax25_address *)dev->dev_addr;
  
 -		user = ax25_findbyuid(current->euid);
 +		user = ax25_findbyuid(current_euid());
- 		if (user) {
- 			nr->user_addr   = user->call;
- 			ax25_uid_put(user);
+ 		if (!user) {
+ 			err = -EINVAL;
+ 			goto out_release;
 
