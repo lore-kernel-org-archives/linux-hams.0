@@ -1,7 +1,7 @@
 From: David Howells <dhowells@redhat.com>
-Subject: [PATCH 53/59] CRED: Wrap task credential accesses in the ROSE protocol
-Date: Wed, 27 Aug 2008 14:50:16 +0100
-Message-ID: <20080827135015.19980.44538.stgit@warthog.procyon.org.uk>
+Subject: [PATCH 50/59] CRED: Wrap task credential accesses in the AX25 protocol
+Date: Wed, 27 Aug 2008 14:50:00 +0100
+Message-ID: <20080827135000.19980.11411.stgit@warthog.procyon.org.uk>
 References: <20080827134541.19980.61042.stgit@warthog.procyon.org.uk>
 Mime-Version: 1.0
 Content-Transfer-Encoding: 7bit
@@ -29,30 +29,35 @@ Cc: Ralf Baechle <ralf@linux-mips.org>
 Cc: linux-hams@vger.kernel.org
 ---
 
- net/rose/af_rose.c |    4 ++--
- 1 files changed, 2 insertions(+), 2 deletions(-)
+ net/ax25/af_ax25.c    |    2 +-
+ net/ax25/ax25_route.c |    2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
 
 
-diff --git a/net/rose/af_rose.c b/net/rose/af_rose.c
-index a7f1ce1..d902e2d 100644
---- a/net/rose/af_rose.c
-+++ b/net/rose/af_rose.c
-@@ -690,7 +690,7 @@ static int rose_bind(struct socket *sock, struct sockaddr *uaddr, int addr_len)
- 
- 	source = &addr->srose_call;
+diff --git a/net/ax25/af_ax25.c b/net/ax25/af_ax25.c
+index 01c83e2..f3e5217 100644
+--- a/net/ax25/af_ax25.c
++++ b/net/ax25/af_ax25.c
+@@ -1042,7 +1042,7 @@ static int ax25_bind(struct socket *sock, struct sockaddr *uaddr, int addr_len)
+ 	if (addr->fsa_ax25.sax25_family != AF_AX25)
+ 		return -EINVAL;
  
 -	user = ax25_findbyuid(current->euid);
 +	user = ax25_findbyuid(current_euid());
  	if (user) {
- 		rose->source_call = user->call;
+ 		call = user->call;
  		ax25_uid_put(user);
-@@ -791,7 +791,7 @@ static int rose_connect(struct socket *sock, struct sockaddr *uaddr, int addr_le
- 			goto out_release;
- 		}
+diff --git a/net/ax25/ax25_route.c b/net/ax25/ax25_route.c
+index 8672cd8..c833ba4 100644
+--- a/net/ax25/ax25_route.c
++++ b/net/ax25/ax25_route.c
+@@ -421,7 +421,7 @@ int ax25_rt_autobind(ax25_cb *ax25, ax25_address *addr)
+ 		goto put;
+ 	}
  
--		user = ax25_findbyuid(current->euid);
-+		user = ax25_findbyuid(current_euid());
- 		if (!user) {
- 			err = -EINVAL;
- 			goto out_release;
+-	user = ax25_findbyuid(current->euid);
++	user = ax25_findbyuid(current_euid());
+ 	if (user) {
+ 		ax25->source_addr = user->call;
+ 		ax25_uid_put(user);
 
