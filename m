@@ -1,106 +1,92 @@
-From: Christof Bodner <oe8bck@gmx.net>
-Subject: Re: Ubuntu 8.10 and AX25
-Date: Mon, 06 Oct 2008 19:53:32 +0200
-Message-ID: <1223315612.6823.13.camel@rosi>
-References: <1223228054.9867.13.camel@rosi>  <20081005180939.GA22423@reid1>
-Mime-Version: 1.0
-Content-Type: multipart/mixed; boundary="=-6CBmiqudacbrUmtV5A4R"
+From: John Ronan <jronan@tssg.org>
+Subject: ax25 route question.
+Date: Sat, 11 Oct 2008 19:25:24 +0100
+Message-ID: <E2CCEDF0-B717-4266-AAA3-06AC1B1E3B9C@tssg.org>
+Mime-Version: 1.0 (Apple Message framework v753.1)
+Content-Type: multipart/signed; micalg=sha1; boundary=Apple-Mail-47-629188675; protocol="application/pkcs7-signature"
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <20081005180939.GA22423@reid1>
 Sender: linux-hams-owner@vger.kernel.org
 List-ID: <linux-hams.vger.kernel.org>
-To: don <don_reid@comcast.net>
-Cc: linux-hams@vger.kernel.org
+To: Linux-Hams <linux-hams@vger.kernel.org>
 
 
---=-6CBmiqudacbrUmtV5A4R
-Content-Type: text/plain
+--Apple-Mail-47-629188675
 Content-Transfer-Encoding: 7bit
+Content-Type: text/plain;
+	charset=US-ASCII;
+	delsp=yes;
+	format=flowed
 
-Hi!
+Could someone give an example of how ax25 routes are supposed to  
+work? I've been trying to figure this out.
 
-Thanks for your answer! IIRC, it worked for me in Ubuntu 7.10. But I
-would like to see it working again. 
+My understanding (which could be wrong) was that If I did
 
-dpkg -l | grep alsa
-ii  alsa-base                                 1.0.17.dfsg-2ubuntu1
-ALSA driver configuration files
-ii  alsa-utils                                1.0.17-0ubuntu2
-ALSA utilities
-ii  gstreamer0.10-alsa                        0.10.20-1
-GStreamer plugin for ALSA
-ii  libesd-alsa0                              0.2.40-0ubuntu1
-Enlightened Sound Daemon (ALSA) - Shared libr
-ii  libpt-1.10.10-plugins-alsa                1.10.10-2ubuntu2
-Portable Windows Library Audio Plugin for the
-ii  libsdl1.2debian-alsa                      1.2.13-2ubuntu1
-Simple DirectMedia Layer (with X11 and ALSA o
+axparms -route add myport calla digia
 
-I also attached my /etc/ax25/soundmodem.conf. There you can see that I
-use mkiss at /dev/dsp2, as I do not exactly know te difference to kiss
-(besides I have to use kissattach in the latter). I also tried to use
-soundmodem -R -M. It worls a little bit longer, but not very much.
+that if I did
+axcall calla
 
-73 de oe8bck
+that the outgoing connect would be directed through digia
 
-Am Sonntag, den 05.10.2008, 11:09 -0700 schrieb don:
-> On Sun, Oct 05, 2008 at 07:34:14PM +0200, Christof Bodner wrote:
-> > Hi!
-> > 
-> > I have a SignaLink USB device and it's working fine, except AX25 in
-> > Linux (mhm, so it's not really working fine, isn't it?)
-> 
-> I too have been having problems with Ubuntu 8.04, while 7.10 worked.
-> 
-> > ...
-> > Tx: fm OE8BCK-1 to QST-0 UI  pid=CC
-> > ...
-> > ---
-> > 
-> > Then a lot of Tx frames are sent (would be sent if I would switch in
-> > TX) 
-> > 
-> > Does anybody know hoe to turn it off at Ubuntu 8.10? 
-> 
-> Some of these can be turned off in /etc/avahi/avahi-daemon.conf
-> I will attach my file.
-> 
-> With that, I stll get some messages about gpgkeys which I have
-> not figured out yet.
-> 
-> 
-> > And then, exactly ONE RX frame is captured, e.g.
-> > 
-> > Rx: fm OE1UHA-9 to TX0R18-0 via OE1XQR-0,WIDE2-0 UIv pid=F0
-> > `,.Xmz3>/ON THE ROAD
-> 
-> My other problem is not getting any Rx (under 8.04).
-> 
-> Can you tell me what alsa packages you have?
-> I ran "dpkg -l | grep alsa".  
-> 
--- 
-             (0-0)
----------oOO--(_)--OOo-----------------------------------------------
- Christof Bodner <oe8bck@gmx.net>
-   Linux - Life is too short for reboots
-         - First they ignore you. Then they laugh at you. Then they
-           fight you(*). Then you win. -- Ghandi
----------------------------------------------------------------------
-email: mailto:oe8bck@gmx.net
----------------------------------------------------------------------
-GnuPG public key: 0xB15DA60F (http://wwwkeys.eu.pgp.net)
-Fingerprint 5222 4DEA 773A 60B3 22F9  D244 15EF 6645 B15D A60F
----------------------------------------------------------------------
+Is my understanding incorrect?
+
+Regards
+de John
+EI7IG
+
+--
+John Ronan <jronan@tssg.org>, +353-51-302938
+Telecommunications Software &  Systems Group,  http://www.tssg.org
 
 
---=-6CBmiqudacbrUmtV5A4R
-Content-Disposition: attachment; filename="soundmodem.conf"
-Content-Type: application/xml; name="soundmodem.conf"
-Content-Transfer-Encoding: 7bit
 
-<?xml version="1.0"?>
-<modem><configuration name="radio"><chaccess txdelay="150" slottime="100" ppersist="40" fulldup="0" txtail="10"/><audio type="soundcard" device="/dev/dsp2" halfdup="0" capturechannelmode="Mono"/><ptt file="none"/><channel name="Channel 0"><mod mode="afsk" bps="1200" f0="1200" f1="2200" diffenc="1"/><demod mode="afsk" bps="1200" f0="1200" f1="2200" diffdec="1"/><pkt mode="KISS" ifname="ax0" hwaddr="OE8BCK-1" ip="10.0.0.1" netmask="255.255.255.0" broadcast="10.0.0.255" file="/dev/soundmodem0" unlink="1"/></channel></configuration></modem>
 
---=-6CBmiqudacbrUmtV5A4R--
+--Apple-Mail-47-629188675
+Content-Transfer-Encoding: base64
+Content-Type: application/pkcs7-signature;
+	name=smime.p7s
+Content-Disposition: attachment;
+	filename=smime.p7s
 
+MIAGCSqGSIb3DQEHAqCAMIACAQExCzAJBgUrDgMCGgUAMIAGCSqGSIb3DQEHAQAAoIIFKzCCBScw
+ggMPoAMCAQICAwNp/jANBgkqhkiG9w0BAQUFADB5MRAwDgYDVQQKEwdSb290IENBMR4wHAYDVQQL
+ExVodHRwOi8vd3d3LmNhY2VydC5vcmcxIjAgBgNVBAMTGUNBIENlcnQgU2lnbmluZyBBdXRob3Jp
+dHkxITAfBgkqhkiG9w0BCQEWEnN1cHBvcnRAY2FjZXJ0Lm9yZzAeFw0wNzAzMzAxMzAyNTBaFw0w
+OTAzMjkxMzAyNTBaMDUxEzARBgNVBAMTCkpvaG4gUm9uYW4xHjAcBgkqhkiG9w0BCQEWD2pyb25h
+bkB0c3NnLm9yZzCCASIwDQYJKoZIhvcNAQEBBQADggEPADCCAQoCggEBAKqiWl/gwyfDOlnA9Vmp
+7aIiODrUWvhi9x8mjeZxGLcQQ0S2JdcX2zMUFoWAlWMTB6s0SXnbRTs1P0Na14AgS81iQg0fIc1L
+GfAEWpa+WPU4wvbrPdYyzmKwMhWalaBoKH960IA5Z/5vCJNYREIh8fyHEgYAt2eIMCyMfkNw2Zui
+mh8AfuR0vbkQqBdgPj6NhzrXWd5ljt40cHm7PeELITZMfRhBaqv8d3DiP/yP4sfNfLn/Z9gdd2Nl
+N2sLrg8yftGduTtB9hrRadLtdXxth67GGzHA+B3WD89hJjMLcfWZMMRCCXwBIH/W6LQH5qtdTo+G
+C0mQeIGEpEn7kTvUqgECAwEAAaOB+zCB+DAMBgNVHRMBAf8EAjAAMFYGCWCGSAGG+EIBDQRJFkdU
+byBnZXQgeW91ciBvd24gY2VydGlmaWNhdGUgZm9yIEZSRUUgaGVhZCBvdmVyIHRvIGh0dHA6Ly93
+d3cuQ0FjZXJ0Lm9yZzBABgNVHSUEOTA3BggrBgEFBQcDBAYIKwYBBQUHAwIGCisGAQQBgjcKAwQG
+CisGAQQBgjcKAwMGCWCGSAGG+EIEATAyBggrBgEFBQcBAQQmMCQwIgYIKwYBBQUHMAGGFmh0dHA6
+Ly9vY3NwLmNhY2VydC5vcmcwGgYDVR0RBBMwEYEPanJvbmFuQHRzc2cub3JnMA0GCSqGSIb3DQEB
+BQUAA4ICAQBGRn3+ACaCGytCgarlW3k/rOD6ht8Y7GjUYTJw6uj+GMi6CXR+XUd5bdPc5c8IIlkl
+Wj2OgFAAlGxEtrYtb9WEDuyDNmo+uqSS0VDnmv3lyvaCpw4InvbulQncAVY6W4UGr+INZXUkmeRq
+Hqr6i4p3rahKgW7w5bFZgBGys8DcdrIbDKbshK5gWqfhLPKZcuLD9Xl4xjumkRkvdFz0bn+Xuucl
+JEIvJlxNJLia9VNk3PCF1E+1JFYanAe+xlUL/h8V+TMX54n9OMcXsvc6Aif7Uv4HKRAviOqIrZOC
+gk+9EZQfQity+7XZXyyoB7hxgHi1C6Yd+KsO/nslgQ5krnHgpxYgTrb8Ciav6QMXdJxG3rRTovcd
+rSB0K7uzOH403+UIzHLIRRgjXsD72GNEvFaLideSWtPt8ygJ2WReR1teal8ZcPtZ1NxjAuW+/xyY
+MAJyRRU72G62a77lfpfoh6eKuQjIOYeMKCxJ85n9F7Vg1MIW9spUu9xx+pR6vsuOX8aopU7uXYYk
+HIROYZcAlsaVbsZaiRDfcH71QEthdxSVLdycy3L3DiFIKoE4ZJstcF+bDOKWtgQtXgAxXcSln/42
+pKEq+z99aGT79bVXlZhO7N2PKPMRIeoBJM4F0M17uM/OQY3pCtTvRlBxqZkdvmXO+f3Glmfr209n
+Kvw7C/byWTGCAzMwggMvAgEBMIGAMHkxEDAOBgNVBAoTB1Jvb3QgQ0ExHjAcBgNVBAsTFWh0dHA6
+Ly93d3cuY2FjZXJ0Lm9yZzEiMCAGA1UEAxMZQ0EgQ2VydCBTaWduaW5nIEF1dGhvcml0eTEhMB8G
+CSqGSIb3DQEJARYSc3VwcG9ydEBjYWNlcnQub3JnAgMDaf4wCQYFKw4DAhoFAKCCAYcwGAYJKoZI
+hvcNAQkDMQsGCSqGSIb3DQEHATAcBgkqhkiG9w0BCQUxDxcNMDgxMDExMTgyNTI0WjAjBgkqhkiG
+9w0BCQQxFgQUbnkMXiwHUN8ftrtX89znfg1zOOQwgZEGCSsGAQQBgjcQBDGBgzCBgDB5MRAwDgYD
+VQQKEwdSb290IENBMR4wHAYDVQQLExVodHRwOi8vd3d3LmNhY2VydC5vcmcxIjAgBgNVBAMTGUNB
+IENlcnQgU2lnbmluZyBBdXRob3JpdHkxITAfBgkqhkiG9w0BCQEWEnN1cHBvcnRAY2FjZXJ0Lm9y
+ZwIDA2n+MIGTBgsqhkiG9w0BCRACCzGBg6CBgDB5MRAwDgYDVQQKEwdSb290IENBMR4wHAYDVQQL
+ExVodHRwOi8vd3d3LmNhY2VydC5vcmcxIjAgBgNVBAMTGUNBIENlcnQgU2lnbmluZyBBdXRob3Jp
+dHkxITAfBgkqhkiG9w0BCQEWEnN1cHBvcnRAY2FjZXJ0Lm9yZwIDA2n+MA0GCSqGSIb3DQEBAQUA
+BIIBAFGA8A/corn1XjrfBy337FOtFPTLPmDgPZF8m4dyXIzWg3LUUD6nxAPFmVRnuHD+ovJwuONJ
+6R+zEFYuyIgzlC/+fr6XHfBqSChZTOJKaDxu3tcquca0NuhQZ8fR3AHAA3BUStft5J4jrY0aomoh
+dnG8JAGJlremzr8YFZW/Ki4CjtySDkutZRQUN57685TAm2d8v5wOT1edUO9hF02+VIwD3t/3KIm3
+tqVD7h3b1crQY73imTqlc4usYF+kfAPejHWDCZQab6yzTmkMrAX9la2jucebJVQ9fF1FnEMdhDNG
+lYaHWf4NKbL9vNY4YZVMUKKXeWqRI22HMFj6gL8r3/QAAAAAAAA=
+
+--Apple-Mail-47-629188675--
