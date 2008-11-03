@@ -1,92 +1,70 @@
-From: John Ronan <jronan@tssg.org>
-Subject: ax25 route question.
-Date: Sat, 11 Oct 2008 19:25:24 +0100
-Message-ID: <E2CCEDF0-B717-4266-AAA3-06AC1B1E3B9C@tssg.org>
-Mime-Version: 1.0 (Apple Message framework v753.1)
-Content-Type: multipart/signed; micalg=sha1; boundary=Apple-Mail-47-629188675; protocol="application/pkcs7-signature"
-Return-path: <linux-hams-owner@vger.kernel.org>
-Sender: linux-hams-owner@vger.kernel.org
-List-ID: <linux-hams.vger.kernel.org>
-To: Linux-Hams <linux-hams@vger.kernel.org>
-
-
---Apple-Mail-47-629188675
+From: Stephane Fillod <f8cfe@free.fr>
+Subject: [ANN] Hamlib 1.2.8 released
+Date: Mon, 3 Nov 2008 22:17:57 +0100
+Message-ID: <20081103211757.GJ12042@charybde.local>
+Mime-Version: 1.0
+Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
-Content-Type: text/plain;
-	charset=US-ASCII;
-	delsp=yes;
-	format=flowed
+Return-path: <hamlib-developer-bounces@lists.sourceforge.net>
+Content-Disposition: inline
+List-Id: <linux-hams.vger.kernel.org>
+List-Unsubscribe: <https://lists.sourceforge.net/lists/listinfo/hamlib-developer>,
+	<mailto:hamlib-developer-request@lists.sourceforge.net?subject=unsubscribe>
+List-Archive: <http://sourceforge.net/mailarchive/forum.php?forum_name=hamlib-developer>
+List-Post: <mailto:hamlib-developer@lists.sourceforge.net>
+List-Help: <mailto:hamlib-developer-request@lists.sourceforge.net?subject=help>
+List-Subscribe: <https://lists.sourceforge.net/lists/listinfo/hamlib-developer>,
+	<mailto:hamlib-developer-request@lists.sourceforge.net?subject=subscribe>
+Errors-To: hamlib-developer-bounces@lists.sourceforge.net
+To: Hamlib developers <hamlib-developer@lists.sourceforge.net>
+Cc: Linux HAMs <Linux-hams@vger.kernel.org>
 
-Could someone give an example of how ax25 routes are supposed to  
-work? I've been trying to figure this out.
+Good news everyone!
 
-My understanding (which could be wrong) was that If I did
+Hamlib-1.2.8 has been released.
 
-axparms -route add myport calla digia
+Hamlib provides a unified environment for the development of radio and
+rotator control applications. The release 1.2.8 includes many
+improvements since last official version.
 
-that if I did
-axcall calla
+Check it out at http://hamlib.org !
 
-that the outgoing connect would be directed through digia
+New in 1.2.8:
+* New models: BC235, BC250, BC780, PRO-2052,
+  BCD396T, BCD996T, K3, FT950
+* New pseudo models: netrigctl/netrotctl, backends ala
+  rpcrig/rpcrot, but based on rigctld/rotctld
+* New rotator backend: GS232A, PcRotor
+* Removed microtune backend
+* Fixes: DttSP, IC-275, IC-475, IC-725, IC-735, IC-756PRO,
+  IC-761, IC-775, IC-781, IC-706*, Kenwood TH/TM models, Orion,
+  BC245, BC895, FT-100, FT757GX, FT-857, FT-897, FT-920
+* Numerous bindings fixes, esp. for memory channel works
+* New commands available in rigctl
+* New rotctld to go with rigctld rig daemon.
+  The protocol changed, but there's the compatibility
+  option -e to pass to the daemon for previous protocol.
 
-Is my understanding incorrect?
 
-Regards
-de John
-EI7IG
+Download pages are accessible at http://sourceforge.net/projects/hamlib
+rpms, .deb and Win32 DLL's coming soon (MinGW32 build needs a fix)
 
---
-John Ronan <jronan@tssg.org>, +353-51-302938
-Telecommunications Software &  Systems Group,  http://www.tssg.org
+Please, test it out and report to hamlib-developer@lists.sourceforge.net
+Developers are also invited to join the Hamlib team by subscribing to
+this mailing list. If your favorite rig is not in the supported list,
+feel free to ask. We need more beta-testers, so all the backends can
+reach the stable and fully supported state.
 
+Many thanks to all the developers and testers who participated
+in this release, and esp. to the ARRL for giving access to rigs.
+Contributors and backend maintainers are listed in the AUTHORS file.
 
+Have fun and let us know!
 
+73's de Stephane - F8CFE & the Hamlib team
 
---Apple-Mail-47-629188675
-Content-Transfer-Encoding: base64
-Content-Type: application/pkcs7-signature;
-	name=smime.p7s
-Content-Disposition: attachment;
-	filename=smime.p7s
-
-MIAGCSqGSIb3DQEHAqCAMIACAQExCzAJBgUrDgMCGgUAMIAGCSqGSIb3DQEHAQAAoIIFKzCCBScw
-ggMPoAMCAQICAwNp/jANBgkqhkiG9w0BAQUFADB5MRAwDgYDVQQKEwdSb290IENBMR4wHAYDVQQL
-ExVodHRwOi8vd3d3LmNhY2VydC5vcmcxIjAgBgNVBAMTGUNBIENlcnQgU2lnbmluZyBBdXRob3Jp
-dHkxITAfBgkqhkiG9w0BCQEWEnN1cHBvcnRAY2FjZXJ0Lm9yZzAeFw0wNzAzMzAxMzAyNTBaFw0w
-OTAzMjkxMzAyNTBaMDUxEzARBgNVBAMTCkpvaG4gUm9uYW4xHjAcBgkqhkiG9w0BCQEWD2pyb25h
-bkB0c3NnLm9yZzCCASIwDQYJKoZIhvcNAQEBBQADggEPADCCAQoCggEBAKqiWl/gwyfDOlnA9Vmp
-7aIiODrUWvhi9x8mjeZxGLcQQ0S2JdcX2zMUFoWAlWMTB6s0SXnbRTs1P0Na14AgS81iQg0fIc1L
-GfAEWpa+WPU4wvbrPdYyzmKwMhWalaBoKH960IA5Z/5vCJNYREIh8fyHEgYAt2eIMCyMfkNw2Zui
-mh8AfuR0vbkQqBdgPj6NhzrXWd5ljt40cHm7PeELITZMfRhBaqv8d3DiP/yP4sfNfLn/Z9gdd2Nl
-N2sLrg8yftGduTtB9hrRadLtdXxth67GGzHA+B3WD89hJjMLcfWZMMRCCXwBIH/W6LQH5qtdTo+G
-C0mQeIGEpEn7kTvUqgECAwEAAaOB+zCB+DAMBgNVHRMBAf8EAjAAMFYGCWCGSAGG+EIBDQRJFkdU
-byBnZXQgeW91ciBvd24gY2VydGlmaWNhdGUgZm9yIEZSRUUgaGVhZCBvdmVyIHRvIGh0dHA6Ly93
-d3cuQ0FjZXJ0Lm9yZzBABgNVHSUEOTA3BggrBgEFBQcDBAYIKwYBBQUHAwIGCisGAQQBgjcKAwQG
-CisGAQQBgjcKAwMGCWCGSAGG+EIEATAyBggrBgEFBQcBAQQmMCQwIgYIKwYBBQUHMAGGFmh0dHA6
-Ly9vY3NwLmNhY2VydC5vcmcwGgYDVR0RBBMwEYEPanJvbmFuQHRzc2cub3JnMA0GCSqGSIb3DQEB
-BQUAA4ICAQBGRn3+ACaCGytCgarlW3k/rOD6ht8Y7GjUYTJw6uj+GMi6CXR+XUd5bdPc5c8IIlkl
-Wj2OgFAAlGxEtrYtb9WEDuyDNmo+uqSS0VDnmv3lyvaCpw4InvbulQncAVY6W4UGr+INZXUkmeRq
-Hqr6i4p3rahKgW7w5bFZgBGys8DcdrIbDKbshK5gWqfhLPKZcuLD9Xl4xjumkRkvdFz0bn+Xuucl
-JEIvJlxNJLia9VNk3PCF1E+1JFYanAe+xlUL/h8V+TMX54n9OMcXsvc6Aif7Uv4HKRAviOqIrZOC
-gk+9EZQfQity+7XZXyyoB7hxgHi1C6Yd+KsO/nslgQ5krnHgpxYgTrb8Ciav6QMXdJxG3rRTovcd
-rSB0K7uzOH403+UIzHLIRRgjXsD72GNEvFaLideSWtPt8ygJ2WReR1teal8ZcPtZ1NxjAuW+/xyY
-MAJyRRU72G62a77lfpfoh6eKuQjIOYeMKCxJ85n9F7Vg1MIW9spUu9xx+pR6vsuOX8aopU7uXYYk
-HIROYZcAlsaVbsZaiRDfcH71QEthdxSVLdycy3L3DiFIKoE4ZJstcF+bDOKWtgQtXgAxXcSln/42
-pKEq+z99aGT79bVXlZhO7N2PKPMRIeoBJM4F0M17uM/OQY3pCtTvRlBxqZkdvmXO+f3Glmfr209n
-Kvw7C/byWTGCAzMwggMvAgEBMIGAMHkxEDAOBgNVBAoTB1Jvb3QgQ0ExHjAcBgNVBAsTFWh0dHA6
-Ly93d3cuY2FjZXJ0Lm9yZzEiMCAGA1UEAxMZQ0EgQ2VydCBTaWduaW5nIEF1dGhvcml0eTEhMB8G
-CSqGSIb3DQEJARYSc3VwcG9ydEBjYWNlcnQub3JnAgMDaf4wCQYFKw4DAhoFAKCCAYcwGAYJKoZI
-hvcNAQkDMQsGCSqGSIb3DQEHATAcBgkqhkiG9w0BCQUxDxcNMDgxMDExMTgyNTI0WjAjBgkqhkiG
-9w0BCQQxFgQUbnkMXiwHUN8ftrtX89znfg1zOOQwgZEGCSsGAQQBgjcQBDGBgzCBgDB5MRAwDgYD
-VQQKEwdSb290IENBMR4wHAYDVQQLExVodHRwOi8vd3d3LmNhY2VydC5vcmcxIjAgBgNVBAMTGUNB
-IENlcnQgU2lnbmluZyBBdXRob3JpdHkxITAfBgkqhkiG9w0BCQEWEnN1cHBvcnRAY2FjZXJ0Lm9y
-ZwIDA2n+MIGTBgsqhkiG9w0BCRACCzGBg6CBgDB5MRAwDgYDVQQKEwdSb290IENBMR4wHAYDVQQL
-ExVodHRwOi8vd3d3LmNhY2VydC5vcmcxIjAgBgNVBAMTGUNBIENlcnQgU2lnbmluZyBBdXRob3Jp
-dHkxITAfBgkqhkiG9w0BCQEWEnN1cHBvcnRAY2FjZXJ0Lm9yZwIDA2n+MA0GCSqGSIb3DQEBAQUA
-BIIBAFGA8A/corn1XjrfBy337FOtFPTLPmDgPZF8m4dyXIzWg3LUUD6nxAPFmVRnuHD+ovJwuONJ
-6R+zEFYuyIgzlC/+fr6XHfBqSChZTOJKaDxu3tcquca0NuhQZ8fR3AHAA3BUStft5J4jrY0aomoh
-dnG8JAGJlremzr8YFZW/Ki4CjtySDkutZRQUN57685TAm2d8v5wOT1edUO9hF02+VIwD3t/3KIm3
-tqVD7h3b1crQY73imTqlc4usYF+kfAPejHWDCZQab6yzTmkMrAX9la2jucebJVQ9fF1FnEMdhDNG
-lYaHWf4NKbL9vNY4YZVMUKKXeWqRI22HMFj6gL8r3/QAAAAAAAA=
-
---Apple-Mail-47-629188675--
+-------------------------------------------------------------------------
+This SF.Net email is sponsored by the Moblin Your Move Developer's challenge
+Build the coolest Linux based applications with Moblin SDK & win great prizes
+Grand prize is a trip for two to an Open Source event anywhere in the world
+http://moblin-contest.org/redirect.php?banner_id=100&url=/
