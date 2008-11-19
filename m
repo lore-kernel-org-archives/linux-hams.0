@@ -1,30 +1,32 @@
-From: cathrynham <cathrynm@junglevision.com>
-Subject: Re: netromd + AF_PACKET/PF_PACKET
-Date: Sun, 16 Nov 2008 19:14:02 -0800
-Message-ID: <4920E17A.9070006@junglevision.com>
-References: <1222244947.6886.5.camel@zaba> <4920DE24.5090707@junglevision.com>
+From: Nate Bargmann <n0nb@n0nb.us>
+Subject: Fldigi 3.03 hits Debian Sid!
+Date: Tue, 18 Nov 2008 19:52:16 -0600
+Message-ID: <20081119015216.GA26600@n0nb.us>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <4920DE24.5090707@junglevision.com>
+Content-Disposition: inline
 Sender: linux-hams-owner@vger.kernel.org
 List-ID: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"; format="flowed"
-To: 
-Cc: linux-hams@vger.kernel.org
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+To: Linux Hams <linux-hams@vger.kernel.org>
 
-cathrynham wrote:
-> netromd is giving me an error "netromr: SIOCADDRT"
->
-> I just swapped AF_PACKET for PF_PACKET, SOCK_RAW and
-> that made the error go away, but I'm pretty sure that's not enough.
->
-> Is this correct, that AF_PACKET going away is the
-> source of this error?  If so, what are my options.  Has someone
-> fixed this code yet, or can I still recompile the kernel to include 
-> AF_PACKET?
-No, no, wait a second.  Sorry, I see other programs like listen
- are accessing AF_PACKET fine.  Maybe it's a config issue? Hmm.
+The bug report has been closed and I'm happy to say that Fldigi 3.03 is
+now in the official Debian Sid repository.  My thanks to Hamish and
+Joop for getting the package built and uploaded.
 
+After playing with 2.10 a bit this evening I've now had the pleasure of
+opening 3.03.  Very good work, folks.  Very good.  I'm playing with it
+just to see what has changed and one thing I like is the FLTK allows
+KDE to apply my colors and look to itself.  It's integrating quite well
+into my desktop and I look forward to learning more about the new
+version (okay, old to some, but new to me!).
 
+73, de Nate >>
 
+-- 
+
+"The optimist proclaims that we live in the best of all
+possible worlds.  The pessimist fears this is true."
+
+Ham radio, Linux, bikes, and more: http://n0nb.us/index.html
