@@ -1,92 +1,106 @@
-From: Bernard Pidoux <bpidoux@free.fr>
-Subject: [PATCH] [ROSE] zero length frame filtering in af_rose.c
-Date: Sat, 22 Nov 2008 11:08:52 +0100
-Message-ID: <200811221108.54242.bpidoux@free.fr>
-Reply-To: f6bvp@amsat.org
+From: Pidoux <f6bvp@free.fr>
+Subject: Re: netromd + AF_PACKET/PF_PACKET
+Date: Sat, 22 Nov 2008 21:58:40 +0100
+Message-ID: <49287280.4020304@free.fr>
+References: <1222244947.6886.5.camel@zaba> <4920DE24.5090707@junglevision.com> <4920E17A.9070006@junglevision.com>
 Mime-Version: 1.0
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Return-path: <netdev-owner@vger.kernel.org>
-Content-Disposition: inline
-Sender: netdev-owner@vger.kernel.org
+Return-path: <linux-hams-owner@vger.kernel.org>
+In-Reply-To: <4920E17A.9070006@junglevision.com>
+Sender: linux-hams-owner@vger.kernel.org
 List-ID: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="iso-8859-1"
-To: Linux Netdev <netdev@vger.kernel.org>, Linux Hams <linux-hams@vger.kernel.org>
-Cc: Ralf DL5RB <ralf@linux-mips.org>, David Miller <davem@davemloft.net>
+Content-Type: text/plain; charset="iso-8859-1"; format="flowed"
+To: cathrynham <cathrynm@junglevision.com>
+Cc: linux-hams@vger.kernel.org
 
-Since changeset e79ad711a0108475c1b3a03815527e7237020b08 from =A0mainli=
-ne.
-=46rom: David S. Miller <davem@davemloft.net>
-empty packet can be transmitted on connected socket for datagram protoc=
-ols.
+Hi,
 
-However, this patch broke a high level application using ROSE network=20
-protocole with connected datagram.
+Actually netromd was using obsolete PF_INET, SOCK_PACKET and I changed =
+it
+to PF_PACKET, SOCK_PACKET in ax25-tools.0.0.8.3 version.
 
-Bulletin Board Stations perform bulletins forwarding between BBS statio=
-ns by =A0
-radio and ROSE network using a forward protocole.
-Now, if for some reason, a sending buffer in the application software h=
-appens=20
-to be empty at a specific moment, ROSE relays an empty packet via unfil=
-tred=20
-packet socket.
-When received, this ROSE packet introduces perturbations of BBS data=20
-forwarding protocole, for the application protocole is waiting for some=
-thing=20
-else than an empty packet.
-We agree that a more carefull programming of the application protocole =
-would=20
-avoid this situation and we are willing to debug it.
-But, as an empty frame is no use, and does not have any meaning for ROS=
-E=20
-protocole, we may consider filtering zero length data both when sending=
- and=20
-receiving socket data.
+Like you reported I can observe also netromr "bad argument"
 
-The proposed patch repairs BBS data exchange through ROSE network that =
-were=20
-broken since 2.6.22.11 kernel.
+Thus I added some modification in netromd code to make it display debug=
+ing log messages correctly.
+This lead to version ax25-tools.0.0.8.4 that can be downloaded from hre=
+ :
 
-Signed-off-by: Bernard Pidoux <f6bvp@amsat.org>
----
-=A0net/rose/af_rose.c | =A0 10 ++++++++++
-=A01 files changed, 10 insertions(+), 0 deletions(-)
+http://f6bvp.free.fr/logiciels/ax25/ax25-tools-0.0.8.4src_f6bvp.tgz
 
-diff --git a/net/rose/af_rose.c b/net/rose/af_rose.c
-index 8a54cff..92af3a6 100644
---- a/net/rose/af_rose.c
-+++ b/net/rose/af_rose.c
-@@ -1075,6 +1075,10 @@ static int rose_sendmsg(struct kiocb *iocb, stru=
-ct=20
-socket *sock,
-=A0=A0=A0=A0=A0=A0=A0=A0unsigned char *asmptr;
-=A0=A0=A0=A0=A0=A0=A0=A0int n, size, qbit =3D 0;
-=A0
-+=A0=A0=A0=A0=A0=A0=A0/* ROSE empty frame has no meaning : don't send *=
-/
-+=A0=A0=A0=A0=A0=A0=A0if (len =3D=3D 0)
-+=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0return 0;
-+
-=A0=A0=A0=A0=A0=A0=A0=A0if (msg->msg_flags & ~(MSG_DONTWAIT|MSG_EOR|MSG=
-_CMSG_COMPAT))
-=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0return -EINVAL;
-=A0
-@@ -1268,6 +1272,12 @@ static int rose_recvmsg(struct kiocb *iocb, stru=
-ct=20
-socket *sock,
-=A0=A0=A0=A0=A0=A0=A0=A0skb_reset_transport_header(skb);
-=A0=A0=A0=A0=A0=A0=A0=A0copied =A0 =A0 =3D skb->len;
-=A0
-+=A0=A0=A0=A0=A0=A0=A0/* ROSE empty frame has no meaning : ignore it */
-+=A0=A0=A0=A0=A0=A0=A0if (copied =3D=3D 0) {
-+=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0skb_free_datagram(sk, skb=
-);
-+=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0return copied;
-+=A0=A0=A0=A0=A0=A0=A0}
-+
-=A0=A0=A0=A0=A0=A0=A0=A0if (copied > size) {
-=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0copied =3D size;
-=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0msg->msg_flags |=3D MSG=
-_TRUNC;
---=20
-1.5.5
+Here is an extract from ChangeLog file :
+
+  ax25-tools (0.0.8.4)
+          * netrom debug info was not correctly reported.
+            Starting netromd -lid will now
+            write useful information into /var/log/messages
+
+   -- Bernard Pidoux <f6bvp@amsat.org>
+
+  ax25-tools (0.0.8.3)
+          * kernel info (/var/log/kernel/info) tells PF_INET, SOCK_PACK=
+ET is
+          obsolete. net/socket.c  says it should be replaced by PF_PACK=
+ET.
+          This is done in hdrvcom.c, net2kiss.c, yamcfg.c
+          * PF_INET =3D AF_INET. Thus (AF_INET, SOCK_PACKET) is also re=
+placed by
+          AF_PACKET in netromd.c, mheardd.c, rxecho.c and kissparms.c.
+          ax25/ax25.4 file updated accordingly.
+
+   -- Bernard Pidoux <f6bvp@amsat.org>
+
+
+This is a listing of /var/log/messages when using ax25d version 0.0.8.4=
+ :
+=2E..
+Nov 22 20:45:00 f6bvp-11 netromd[4996]: netromr: add_node: route to me
+Nov 22 20:48:04 f6bvp-11 netromd[4996]: Add Node : FE6BVP-1:FEBBS
+Nov 22 20:48:04 f6bvp-11 netromd[4996]: Neighbour: VK2XB-14 device: ax0
+Nov 22 20:48:04 f6bvp-11 netromd[4996]: Quality: 154 obs: 6 ndigis: 0
+Nov 22 20:48:04 f6bvp-11 netromd[4996]: netromr: SIOCADDRT: Invalid arg=
+ument
+Nov 22 20:48:09 f6bvp-11 netromd[4996]: netromr: add_node: quality less=
+ than worst_qual
+Nov 22 20:48:14 f6bvp-11 netromd[4996]: Add Node : F6BVP-3:BVPCLS
+Nov 22 20:48:14 f6bvp-11 netromd[4996]: Neighbour: VK2XB-14 device: ax0
+Nov 22 20:48:14 f6bvp-11 netromd[4996]: Quality: 154 obs: 6 ndigis: 0
+Nov 22 20:48:14 f6bvp-11 netromd[4996]: netromr: SIOCADDRT: Invalid arg=
+ument
+Nov 22 20:54:47 f6bvp-11 netromd[4996]: netromr: add_node: quality less=
+ than worst_qual
+Nov 22 20:55:03 f6bvp-11 netromd[4996]: netromr: add_node: route to me
+Nov 22 20:58:00 f6bvp-11 netromd[4996]: Add Node : F6BVP-3:BVPDX
+Nov 22 20:58:00 f6bvp-11 netromd[4996]: Neighbour: F6BVP-14 device: ax0
+Nov 22 20:58:00 f6bvp-11 netromd[4996]: Quality: 254 obs: 6 ndigis: 0
+Nov 22 20:58:00 f6bvp-11 netromd[4996]: netromr: SIOCADDRT: Invalid arg=
+ument
+Nov 22 20:58:05 f6bvp-11 netromd[4996]: netromr: add_node: route to me
+=2E..
+Hope this will help finding the invalid argument received by netromd.
+
+
+73 de Bernard, f6bvp
+
+
+
+cathrynham a =E9crit :
+> cathrynham wrote:
+>> netromd is giving me an error "netromr: SIOCADDRT"
+>>
+>> I just swapped AF_PACKET for PF_PACKET, SOCK_RAW and
+>> that made the error go away, but I'm pretty sure that's not enough.
+>>
+>> Is this correct, that AF_PACKET going away is the
+>> source of this error?  If so, what are my options.  Has someone
+>> fixed this code yet, or can I still recompile the kernel to include=20
+>> AF_PACKET?
+> No, no, wait a second.  Sorry, I see other programs like listen
+> are accessing AF_PACKET fine.  Maybe it's a config issue? Hmm.
+>=20
+
+--
+To unsubscribe from this list: send the line "unsubscribe linux-hams" i=
+n
+the body of a message to majordomo@vger.kernel.org
+More majordomo info at  http://vger.kernel.org/majordomo-info.html
