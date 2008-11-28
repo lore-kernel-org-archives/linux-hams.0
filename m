@@ -1,24 +1,22 @@
-From: Chris Kantarjiev <cak@dimebank.com>
-Subject: Re: debugging KISS basics
-Date: Fri, 28 Nov 2008 08:32:59 -0800 (PST)
-Message-ID: <200811281632.mASGWxi3021582@moose.dimebank.com>
+From: Willie Hein WJ3G <wj3g@comcast.net>
+Subject: txdelay
+Date: Fri, 28 Nov 2008 12:15:21 -0500
+Message-ID: <49302729.2080109@comcast.net>
+Mime-Version: 1.0
+Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
 Sender: linux-hams-owner@vger.kernel.org
 List-ID: <linux-hams.vger.kernel.org>
-MIME-Version: 1.0
 Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-To: vk2tv@exemail.com.au
-Cc: linux-hams@vger.kernel.org
+To: Linux Hams Mailing list <linux-hams@vger.kernel.org>
 
-> 
-> 
-> Wade through this document http://rose.fpac.free.fr/MINI-HOWTO/
+Greetings all,
 
-Thanks, Ray - that was very useful for learning about config
-and startup.
+Since i don't see it as an option in axctl or axparms, how do I set the
+txdelay using linux ax25?
 
-I'm still trying to figure out how to debug the fact that
-my basic KISS commands won't cause the TNC to do anything...
+tia
 
-73 de chris K6DBG
+Willie, WJ3G
+
+
