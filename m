@@ -1,49 +1,16 @@
-From: Ray Wells <vk2tv@exemail.com.au>
-Subject: Re: debugging KISS basics
-Date: Fri, 28 Nov 2008 09:33:02 +1100
-Message-ID: <492F201E.2010406@exemail.com.au>
-References: <200811271410.mAREAO6t019051@moose.dimebank.com>
+From: AA6QN <aa6qn@aa6qn.sytes.net>
+Subject: Conversd USAHub ? SPAMNET ?
+Date: Fri, 28 Nov 2008 05:59:04 -0800
+Message-ID: <492FF928.70207@aa6qn.sytes.net>
 Mime-Version: 1.0
 Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <200811271410.mAREAO6t019051@moose.dimebank.com>
 Sender: linux-hams-owner@vger.kernel.org
 List-ID: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"; format="flowed"
-To: Chris Kantarjiev <cak@dimebank.com>
-Cc: linux-hams@vger.kernel.org
+To: Linux Hams Mailing list <linux-hams@vger.kernel.org>
 
-Chris,
+I was wondering if we have a US connection back in place. My link to the 
+UK seems to be broken.
 
-Wade through this document http://rose.fpac.free.fr/MINI-HOWTO/
-
-Although it's primarily aimed at fpac, the underlying stuff is valid for 
-any ax25 application.
-
-Ray vk2tv
-
-Chris Kantarjiev wrote:
-> Sorry for the n00b questions, but: how do I go about debugging
-> the basic KISS functionality? As I said, I can talk to my
-> FTDI-based TNC with minicom and it works to control the radio
-> and pass packets in CONV mode. But any attempt to use, say,
-> the call program in KISS mode fails. 
->
-> Since it's a USB modem, I really don't have any good way to tap 
-> into the signal lines going to the TNC (and wouldn't know
-> how to interpret them). Are there options that I can use
-> to debug the communications?
->
-> And while I'm asking ... what's the typical way of putting
-> a TNC into KISS mode at boot time, and what do people use
-> to get things started from /etc/rc? I had sort of expected
-> to find a prototype /etc/init.d script for ax25d, but didn't...
->
-> 73 de chris K6DBG
-> --
-> To unsubscribe from this list: send the line "unsubscribe linux-hams" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at  http://vger.kernel.org/majordomo-info.html
->
->   
-
+73, JohnF
