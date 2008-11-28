@@ -1,50 +1,49 @@
-From: Ray Wells <vk2tv@exemail.com.au>
+From: Willie Hein WJ3G <wj3g@comcast.net>
 Subject: Re: txdelay
-Date: Sat, 29 Nov 2008 07:32:30 +1100
-Message-ID: <4930555E.10109@exemail.com.au>
-References: <49302729.2080109@comcast.net>
+Date: Fri, 28 Nov 2008 15:37:17 -0500
+Message-ID: <4930567D.40708@comcast.net>
+References: <49302729.2080109@comcast.net> <f1706c1e0811280923i517eccdeh5c21a415113099e1@mail.gmail.com>
 Mime-Version: 1.0
 Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <49302729.2080109@comcast.net>
+In-Reply-To: <f1706c1e0811280923i517eccdeh5c21a415113099e1@mail.gmail.com>
 Sender: linux-hams-owner@vger.kernel.org
 List-ID: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"; format="flowed"
-To: Willie Hein WJ3G <wj3g@comcast.net>
-Cc: Linux Hams Mailing list <linux-hams@vger.kernel.org>
+Content-Type: text/plain; charset="us-ascii"
+To: Linux Hams Mailing list <linux-hams@vger.kernel.org>
 
-Willie Hein WJ3G wrote:
-> Greetings all,
->
-> Since i don't see it as an option in axctl or axparms, how do I set the
-> txdelay using linux ax25?
->
-> tia
->
-> Willie, WJ3G
->
->
-> --
-> To unsubscribe from this list: send the line "unsubscribe linux-hams" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at  http://vger.kernel.org/majordomo-info.html
->
+Thank you Neville and Tom,
+
+That is exactly what I was looking for. I tend to believe that KISS over
+rides the firmware set commands. But things are working better now. Now
+to figure out why netrom won't work.
+
+73, Willie
+
+Neville A. Cross wrote:
+> On Fri, Nov 28, 2008 at 11:15 AM, Willie Hein WJ3G <wj3g@comcast.net> wrote:
 >   
-Have you tried kissparms? From my rc.ax25 .....
-
-echo -n "Setting KISS parameters for aprs"
-    /usr/local/sbin/kissparms -p aprs -r 32 -t 200 -s 20 -f n -l 20
-
--p port name from axports
--r  persistance
--t  txd
--s  slottime
--f  duplex/not duplex (y/n)
--l  tx tail (deprecated but useful(essential) on 0k3 HF)
-
-To fix other port parameters (maxframe, paclen, etc) change the entries 
-in /proc/sys/net/ax25/<port> and have that entry restored on boot from 
-rc.ax25. This may not be important for you but it is here where I run 
-max 1 and paclen 64 on 0k3 HF.
-
-Ray vk2tv
+>> Greetings all,
+>>
+>> Since i don't see it as an option in axctl or axparms, how do I set the
+>> txdelay using linux ax25?
+>>
+>> tia
+>>
+>> Willie, WJ3G
+>>
+>>     
+>
+> You have to use teh following command:
+>
+> kissparms -p 1 -t 300 -r 128 -s 100 -l 30
+>
+> where -t is the txdelay
+>
+> in fedora I use it like:
+> /usr/sbin/kissparms -p 1 -t 300 -r 128 -s 100 -l 30
+>
+> because of the different path that are use among distros
+>
+> Hope it helps
+>   
