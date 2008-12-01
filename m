@@ -1,42 +1,63 @@
-From: "Bill Vodall WA7NWP" <wa7nwp@gmail.com>
-Subject: Re: debugging KISS basics
-Date: Sun, 30 Nov 2008 16:37:24 -0800
-Message-ID: <5abd436b0811301637m7ea9ee3aiec6815eda7774dcf@mail.gmail.com>
-References: <200811302334.mAUNYA4v031188@moose.dimebank.com>
-Mime-Version: 1.0
+From: John Ronan <jpronans@gmail.com>
+Subject: standard_window_size.
+Date: Mon, 1 Dec 2008 20:32:59 +0000
+Message-ID: <90EE0427-2E1B-4C07-9966-B2D79D3F399B@gmail.com>
+Mime-Version: 1.0 (Apple Message framework v753.1)
 Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to
-         :subject:cc:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:references;
-        bh=v/aQS2B8QbizLbD4DiWkzv3g1zVMv0jJCwM8/SD0fHg=;
-        b=QhNsKOpbg5vnx9RJGo1ZC8rTkhnAl2+JcxKRQNg73+1H0KlgjHEUiXf7BwCyBSmtpP
-         04CilrXjdkdi04ov7xOVKHcTFqe0fVyxAfTVIx9OoJ9u03hP3KVZJw4QFayur2u31pwj
-         8lGQiCtYrQeAPLKo1RGshYIH7DbPJK4mqszSg=
-In-Reply-To: <200811302334.mAUNYA4v031188@moose.dimebank.com>
-Content-Disposition: inline
+        h=domainkey-signature:received:received:mime-version
+         :content-transfer-encoding:message-id:content-type:to:from:subject
+         :date:x-mailer;
+        bh=pm5XtTJ+nWvmGcIKFWS0TwtsZY7Dfti9R+oseZumB2g=;
+        b=l/DYVX1F+A+cG0IcsIpPk6zMjByGY1DG73K1i/1nK9GUldehkA16CLvcALScq7LyKN
+         izotJXMt93F76NCdWK9kvcNwpLHiXesAxomCZeTes3qfS8Gtx/dgYHJk1taqU6rZBwkY
+         2rkvo00XxdNK21PpjE2hegEtTLuMkKEdQtrQw=
 Sender: linux-hams-owner@vger.kernel.org
 List-ID: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"
-To: linux-hams@vger.kernel.org
-Cc: cak@dimebank.com
+Content-Type: text/plain; charset="us-ascii"; delsp="yes"; format="flowed"
+To: Linux-Hams <linux-hams@vger.kernel.org>
 
-Here's KISS chiseled in stone..   Ask Elcom which of the section 4
-parameters it supports.   In particular, ask if it supports the
-"required" parameters...
+Hi,
 
-  http://www.ka9q.net/papers/kiss.html
+I've stumbled across a problem and I'm not sure where to look next.
 
-On Sun, Nov 30, 2008 at 3:34 PM, Chris Kantarjiev <cak@dimebank.com> wrote:
->
->>
->> Chris, if your TNC is TNC2 compatible you might consider a KISS only
->> EPROM. Then you know it's always in KISS.
->
-> Thanks - an interesting idea, but it's not TNC2 hardware. This is
-> the second USB-connected TNC that Elcom Research did...
->
-> I'm trying to get them to tell me how via their support email list.
-> So far, I've got a script that tries to put it into KISS mode at boot.
+I've been attempting to do some testing over ax25.  I've been using  
+kiss mode on both ends.  Now, when I attempt to transfer data using a  
+window size of 3, it seems that the kernel seems to think that the  
+window size is still 2, even though I've set it to three.
+
+In the example below I've connected using axcall -w 3 to a PTCIIex  
+TNC's PMS (EI7IG-8)that has maxframe set to 3.  I've asked if I can  
+read a message, it attempts to dump three packets, but this end  
+replies after only 2.
+
+1200: fm EI7IG to EI7IG-8 ctl I32^ pid=F0(Text) len 4 20:29:42
+0000  r 1.
+1200: fm EI7IG-8 to EI7IG ctl I33^ pid=F0(Text) len 49 20:29:44
+0000  ..file: EI7IG  nr: 1  from: EI7IG  title: .-----.
+1200: fm EI7IG-8 to EI7IG ctl I34^ pid=F0(Text) len 255 20:29:46
+0000  test.OSCAR III [-]           ..1 01293U 65016F   07002.23646176
+0040  -.00000070  00000-0 -98573-5 0  8666..2 01293  70.0715 309.6096
+0080  0021217 281.7228  78.1502 14.04522134133852..AO-5 [-]
+00C0       ..1 04321U 70008B   06364.97899830 -.00000031  00000-0  10
+1200: fm EI7IG to EI7IG-8 ctl RR5v 20:29:47
+1200: fm EI7IG-8 to EI7IG ctl I35^ pid=F0(Text) len 255 20:29:47
+0000  000-3 0  8153..2 04321 102.0762 344.1977 0027719 242.8215 117.00
+0040  30 12.52148418688218..AO-6 [-]                ..1 06236U 72082B
+0080    07001.53324891 -.00000027  00000-0  10000-3 0  7711..2 06236 1
+00C0  01.4761  37.7834 0004002 202.4746 157.6152 12.53069131564971..A
+1200: fm EI7IG-8 to EI7IG ctl I35^ pid=F0(Text) len 255 20:29:50
+0000  000-3 0  8153..2 04321 102.0762 344.1977 0027719 242.8215 117.00
+0040  30 12.52148418688218..AO-6 [-]                ..1 06236U 72082B
+0080    07001.53324891 -.00000027  00000-0  10000-3 0  7711..2 06236 1
+00C0  01.4761  37.7834 0004002 202.4746 157.6152 12.53069131564971..A
+1200: fm EI7IG to EI7IG-8 ctl REJ6v 20:29:50
+
+If standard_window_size doesn't set the window size, where else can I  
+do it?  I've tried several kernels and two TNC's at this stage.
+
+Help appreciated,
+de John
+EI7IG
