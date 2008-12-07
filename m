@@ -1,49 +1,102 @@
-From: John Ronan <jronan@tssg.org>
-Subject: Re: standard_window_size.
-Date: Wed, 3 Dec 2008 22:33:16 +0000
-Message-ID: <F5C50AA2-F675-4280-B079-0662CAAA8349@tssg.org>
-References: <90EE0427-2E1B-4C07-9966-B2D79D3F399B@gmail.com> <BC4729C5-6006-40C4-83BC-3858C71E2EE0@tssg.org> <2e19719f0812021350y2855cd0fh4eec6280b8b4f1a8@mail.gmail.com> <B445944EF6334806BCD4A50D81BC7CFC@arkalmus.com> <50DA4EB2-D38C-4512-B382-F2F5903B3310@gmail.com>
-Mime-Version: 1.0 (Apple Message framework v753.1)
+From: "Daniel Perup" <daniel@perup.net>
+Subject: Re: [Hamlib-developer] [ANN] Hamlib 1.2.8 released
+Date: Sun, 7 Dec 2008 21:49:10 +0100
+Message-ID: <5659421a0812071249w628a4e3cq1a32165e11bf8643@mail.gmail.com>
+References: <20081103211757.GJ12042@charybde.local>
+Mime-Version: 1.0
 Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <50DA4EB2-D38C-4512-B382-F2F5903B3310@gmail.com>
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:sender
+         :to:subject:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:references
+         :x-google-sender-auth;
+        bh=fHvfZCYsq8I+1EDqoMkORqewsHJwLuOVHnkLb4P+4xs=;
+        b=Zr41NTJlfjiM9lihpqb6I/YjcZdI10EncKYjdmq5llebW0Pegg27b8tX/RUjijQqQm
+         +T6dgJMclp8zsMzYUBpeqa4XO0hY037t6QlDVuB1NF7nVRk/jxR3Fxt8omU6quQcgDgn
+         47V41AbxvPpWqRMpI5sIIds60V+kQ/ih/ffiI=
+In-Reply-To: <20081103211757.GJ12042@charybde.local>
+Content-Disposition: inline
 Sender: linux-hams-owner@vger.kernel.org
 List-ID: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"; delsp="yes"; format="flowed"
-To: Linux-Hams <linux-hams@vger.kernel.org>
+Content-Type: text/plain; charset="us-ascii"
+To: Hamlib developers <hamlib-developer@lists.sourceforge.net>, Linux HAMs <Linux-hams@vger.kernel.org>
 
-Ok,
+Hi,
 
-Now I'm even more baffled, and I think digging in the code is going  
-to have to be the answer here.
+This is great news, though I have tried to use the 1.2.8 version with
+my FT-950, without success. My FT-897 works as it should.
 
-Kernel updated to be the same on both (2.6.24.3), my serial ports are  
-working. Now, both ends are behaving the same protocol wise. That is  
-after the data source sends two packets, the sink sends a RR.
+My problem is that when I try to send some command I get this:
 
-both sides have standard_window_size set to 7, and in axports &  
-ax25d.conf, the window is set to 7
+---8<---
 
-However the behaviour is different on both ends, let me try and explain
-NodeA  sends the RR1 after 2 packets, RR2 after next 2, RR3 after  
-next 2 and RR4 after next 2 (looking at axlisten -t -a on the host)
+Rig command: m
+read_string: timedout without reading a character
+get_mode: error = Communication timed out
 
-Node B sees RR1 & RR4
+---8<---
 
-NodeB sends RR1 after 2 packets, transmitting over NodeA, etc as I've  
-already described (even though the TNC isn't in full-duplex mode as  
-far as I can tell).
+I use the correct port and speed, verfied to work with the FT-897. The
+FT-950 is configured to use the same port speed.
 
-Thoughts appreciated. Tomorrow I'll rebuild the kernel on one side  
-with the default window size set to 7 to see what happens.
+Thanks for any help!
 
-Cheers
-de John
-EI7IG
+       SA5AQO Daniel
 
---
-John Ronan <jronan@tssg.org>, +353-51-302938
-Telecommunications Software &  Systems Group,  http://www.tssg.org
-
-
-
+2008/11/3 Stephane Fillod <f8cfe@free.fr>:
+> Good news everyone!
+>
+> Hamlib-1.2.8 has been released.
+>
+> Hamlib provides a unified environment for the development of radio and
+> rotator control applications. The release 1.2.8 includes many
+> improvements since last official version.
+>
+> Check it out at http://hamlib.org !
+>
+> New in 1.2.8:
+> * New models: BC235, BC250, BC780, PRO-2052,
+>  BCD396T, BCD996T, K3, FT950
+> * New pseudo models: netrigctl/netrotctl, backends ala
+>  rpcrig/rpcrot, but based on rigctld/rotctld
+> * New rotator backend: GS232A, PcRotor
+> * Removed microtune backend
+> * Fixes: DttSP, IC-275, IC-475, IC-725, IC-735, IC-756PRO,
+>  IC-761, IC-775, IC-781, IC-706*, Kenwood TH/TM models, Orion,
+>  BC245, BC895, FT-100, FT757GX, FT-857, FT-897, FT-920
+> * Numerous bindings fixes, esp. for memory channel works
+> * New commands available in rigctl
+> * New rotctld to go with rigctld rig daemon.
+>  The protocol changed, but there's the compatibility
+>  option -e to pass to the daemon for previous protocol.
+>
+>
+> Download pages are accessible at http://sourceforge.net/projects/hamlib
+> rpms, .deb and Win32 DLL's coming soon (MinGW32 build needs a fix)
+>
+> Please, test it out and report to hamlib-developer@lists.sourceforge.net
+> Developers are also invited to join the Hamlib team by subscribing to
+> this mailing list. If your favorite rig is not in the supported list,
+> feel free to ask. We need more beta-testers, so all the backends can
+> reach the stable and fully supported state.
+>
+> Many thanks to all the developers and testers who participated
+> in this release, and esp. to the ARRL for giving access to rigs.
+> Contributors and backend maintainers are listed in the AUTHORS file.
+>
+> Have fun and let us know!
+>
+> 73's de Stephane - F8CFE & the Hamlib team
+>
+> -------------------------------------------------------------------------
+> This SF.Net email is sponsored by the Moblin Your Move Developer's challenge
+> Build the coolest Linux based applications with Moblin SDK & win great prizes
+> Grand prize is a trip for two to an Open Source event anywhere in the world
+> http://moblin-contest.org/redirect.php?banner_id=100&url=/
+> _______________________________________________
+> Hamlib-developer mailing list
+> Hamlib-developer@lists.sourceforge.net
+> https://lists.sourceforge.net/lists/listinfo/hamlib-developer
+>
