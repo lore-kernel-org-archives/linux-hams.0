@@ -1,39 +1,42 @@
-From: Pino Zollo <pinozollo@gmail.com>
-Subject: Re: hamlib/beacon code?
-Date: Mon, 8 Dec 2008 08:37:36 -0300
-Message-ID: <200812080837.48601.pinozollo@gmail.com>
-References: <20081103211757.GJ12042@charybde.local> <5659421a0812071249w628a4e3cq1a32165e11bf8643@mail.gmail.com> <493C3FFE.7080505@linux-it.nl>
-Reply-To: pinozollo@gmail.com
+From: "Daniel Perup" <daniel@perup.net>
+Subject: Re: [Hamlib-developer] [ANN] Hamlib 1.2.8 released
+Date: Mon, 8 Dec 2008 18:02:54 +0100
+Message-ID: <5659421a0812080902x3ba265a4n69fd99e390bcbdec@mail.gmail.com>
+References: <20081103211757.GJ12042@charybde.local>
+	 <5659421a0812071249w628a4e3cq1a32165e11bf8643@mail.gmail.com>
+	 <20081208003421.GC4301@n0nb.us>
 Mime-Version: 1.0
 Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:reply-to:organization:to
-         :subject:date:user-agent:references:in-reply-to:mime-version
-         :content-type:content-transfer-encoding:content-disposition
-         :message-id;
-        bh=WAl52f2lim5KUMXqKo7bnRX2By8v6RkrBL3JllzDclk=;
-        b=cZ+tSJOkNo2wGtIdlfcq3Bl19vw/S/T+0NkQ+TDTh0VoU8qUAS1WYNq9rk/7bxEuJC
-         c9k4V1tSrRdGc8HmHqIkVIINvN9h9f5AzcXDM6tf5O4lAt/96lySDYrK8aDri8yfh828
-         P+1jWDXCJ/UvRJGQTZM05fnzK4y6lHLKI7ns8=
-In-Reply-To: <493C3FFE.7080505@linux-it.nl>
+        h=domainkey-signature:received:received:message-id:date:from:sender
+         :to:subject:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:references
+         :x-google-sender-auth;
+        bh=jCxMzLeecQa0bbWB6tM0JlHyJBwqu08W0Qw/sc5K4LM=;
+        b=qGrfqql9da6v2RtIU6bcyjm9P8eM1t7KIqIzEBJe834A1Hn6TCugwVEpUfINPf7Gkn
+         VEmP4MbAGje7VFrsmA901oPuk1WGxRj6Fv6dhUBwA1kTUcHVqj3DpvHZSGiZXFViLNjM
+         rFt6GCIT0l5DSPTm1BPPLfDM+tkGYmQePkXc0=
+In-Reply-To: <20081208003421.GC4301@n0nb.us>
 Content-Disposition: inline
 Sender: linux-hams-owner@vger.kernel.org
 List-ID: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
-To: "Roeland Th. Jansen" <hamlib@linux-it.nl>, "Hams, Linux" <linux-hams@vger.kernel.org>
+To: Daniel Perup <daniel@perup.net>, Hamlib developers <hamlib-developer@lists.sourceforge.net>, Linux HAMs <Linux-hams@vger.kernel.org>
 
-Alle 18:28, domenica 7 dicembre 2008, hai scritto:
-> before I am wasting my time too much -- are there people out here who
-> have or know of software that is interfacing with hamlib and can be used
-> to control a suitable radio for beacon functionality?
+2008/12/8 Nate Bargmann <n0nb@n0nb.us>:
+> * Daniel Perup <daniel@perup.net> [2008 Dec 07 14:50 -0600]:
+>> Hi,
+>>
+>> This is great news, though I have tried to use the 1.2.8 version with
+>> my FT-950, without success. My FT-897 works as it should.
 >
-> I have written some code that uses the TX line to send out a CW message
-> hardcoded. For me it's just fine but I am thinking of making it more
-> general purpose and think that the hamlib interface could be a nice
-> start to use.
- cwdaemon does it very well at kernel priority.
-It works fine also on my old  500 MHz clock PC.
+> The initial '950 code in 1.2.8 did have errors since I had no radio to
+> test.  Much new code for the '950 has been added to Hamlib in recent
+> weeks.  If you're comfortable compiling from source code, I can send
+> you a snapshot of the CVS repository that you can test with.
 
-73 Pino ZP4KFX
+Yeah, please. I noticed the CVS snapshot link on the home page did not work.
+
+      73 de Daniel
