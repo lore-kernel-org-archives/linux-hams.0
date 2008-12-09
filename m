@@ -1,42 +1,50 @@
-From: "Daniel Perup" <daniel@perup.net>
-Subject: Re: [Hamlib-developer] [ANN] Hamlib 1.2.8 released
-Date: Mon, 8 Dec 2008 18:02:54 +0100
-Message-ID: <5659421a0812080902x3ba265a4n69fd99e390bcbdec@mail.gmail.com>
-References: <20081103211757.GJ12042@charybde.local>
-	 <5659421a0812071249w628a4e3cq1a32165e11bf8643@mail.gmail.com>
-	 <20081208003421.GC4301@n0nb.us>
-Mime-Version: 1.0
+From: John Ronan <jronan@tssg.org>
+Subject: Re: standard_window_size.
+Date: Tue, 9 Dec 2008 08:34:24 +0000
+Message-ID: <D4E78BFF-CD8E-4281-B40D-D006E1090768@tssg.org>
+References: <90EE0427-2E1B-4C07-9966-B2D79D3F399B@gmail.com> <BC4729C5-6006-40C4-83BC-3858C71E2EE0@tssg.org> <2e19719f0812021350y2855cd0fh4eec6280b8b4f1a8@mail.gmail.com> <B445944EF6334806BCD4A50D81BC7CFC@arkalmus.com> <50DA4EB2-D38C-4512-B382-F2F5903B3310@gmail.com> <F5C50AA2-F675-4280-B079-0662CAAA8349@tssg.org>
+Mime-Version: 1.0 (Apple Message framework v753.1)
 Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:sender
-         :to:subject:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:references
-         :x-google-sender-auth;
-        bh=jCxMzLeecQa0bbWB6tM0JlHyJBwqu08W0Qw/sc5K4LM=;
-        b=qGrfqql9da6v2RtIU6bcyjm9P8eM1t7KIqIzEBJe834A1Hn6TCugwVEpUfINPf7Gkn
-         VEmP4MbAGje7VFrsmA901oPuk1WGxRj6Fv6dhUBwA1kTUcHVqj3DpvHZSGiZXFViLNjM
-         rFt6GCIT0l5DSPTm1BPPLfDM+tkGYmQePkXc0=
-In-Reply-To: <20081208003421.GC4301@n0nb.us>
-Content-Disposition: inline
+In-Reply-To: <F5C50AA2-F675-4280-B079-0662CAAA8349@tssg.org>
 Sender: linux-hams-owner@vger.kernel.org
 List-ID: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"
-To: Daniel Perup <daniel@perup.net>, Hamlib developers <hamlib-developer@lists.sourceforge.net>, Linux HAMs <Linux-hams@vger.kernel.org>
+Content-Type: text/plain; charset="us-ascii"; delsp="yes"; format="flowed"
+To: Linux-Hams <linux-hams@vger.kernel.org>
 
-2008/12/8 Nate Bargmann <n0nb@n0nb.us>:
-> * Daniel Perup <daniel@perup.net> [2008 Dec 07 14:50 -0600]:
->> Hi,
->>
->> This is great news, though I have tried to use the 1.2.8 version with
->> my FT-950, without success. My FT-897 works as it should.
+
+Morning,
+
+I tested over the weekend (and I though I had posted it already).
+
+After changing the kernel header to have the standard window size =  
+3. This was verified when I booted the machine as the entry in /proc  
+was 3.  However, once I connected to it and started passing data, it  
+again behaved as though it was set to 2.
+
+RR after every second packet
+
+Suggestions as to where to look next appreciated.
+
+Regards
+de John
+EI7IG
+
+On 3 Dec 2008, at 22:33, John Ronan wrote:
+
+> Ok,
 >
-> The initial '950 code in 1.2.8 did have errors since I had no radio to
-> test.  Much new code for the '950 has been added to Hamlib in recent
-> weeks.  If you're comfortable compiling from source code, I can send
-> you a snapshot of the CVS repository that you can test with.
+> Now I'm even more baffled, and I think digging in the code is going  
+> to have to be the answer here.
+>
+> Kernel updated to be the same on both (2.6.24.3), my serial ports  
+> are working. Now, both ends are behaving the same protocol wise.  
+> That is after the data source sends two packets, the sink sends a RR.
+>
 
-Yeah, please. I noticed the CVS snapshot link on the home page did not work.
+--
+John Ronan <jronan@tssg.org>, +353-51-302938
+Telecommunications Software &  Systems Group,  http://www.tssg.org
 
-      73 de Daniel
+
+
