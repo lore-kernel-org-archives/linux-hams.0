@@ -1,20 +1,72 @@
-From: Alan Crosswell <n2ygk@weca.org>
-Subject: USB sound adapter for use with Tom's soundmodem?
-Date: Fri, 12 Dec 2008 21:53:11 -0500
-Message-ID: <49432397.8060304@weca.org>
+From: Dave Platt <dplatt@radagast.org>
+Subject: Re: USB sound adapter for use with Tom's soundmodem?
+Date: Fri, 12 Dec 2008 19:59:42 -0800
+Message-ID: <courier.4943332E.0000255C@radagast.org>
+References: <49432397.8060304@weca.org>
 Mime-Version: 1.0
 Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
+In-Reply-To: <49432397.8060304@weca.org>
 Sender: linux-hams-owner@vger.kernel.org
 List-ID: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
-To: linux-hams@vger.kernel.org
+To: n2ygk@weca.org
+Cc: linux-hams@vger.kernel.org
 
-Can anyone recommend a USB sound adapter for use with Tom's soundmodem? 
-I'm building an aprsdigi with a newer server I was given that has no
-motherboard sound and no PCI slots (and no parallel port to do an easy
-PTT with either:-(  I see there's a few choices out there and was hoping
-one of you had already found one that you could recommend.  Thanks.
+> Can anyone recommend a USB sound adapter for use with Tom's soundmodem? 
+> I'm building an aprsdigi with a newer server I was given that has no
+> motherboard sound and no PCI slots (and no parallel port to do an easy
+> PTT with either:-(  I see there's a few choices out there and was hoping
+> one of you had already found one that you could recommend.  Thanks.
 
-73 de Alan N2YGK
+I've just been spending some time trying to get the SignaLink USB to
+work with the soundmodem.  Have run into a few problems, think I
+understand their cause, and am working on fixes.
+
+First problem noted:  the AFSK modem would not even start to receive
+when using soundmodemconfig.  The ALSA audio glue complained about the
+RX and TX sample rates being different (and the code has a comment in
+it to the effect of "Make different-rate configurations work, or
+take them out.")
+
+The cause:  apparently, the TI USB sound chip in this device publishes
+a different set of sample rates as being available for its input and
+output endpoints.  When the device is opened using the "hw:" ALSA
+specifier (as is suggested by the setup dialog), only the actual
+adapter sample rates are available, and since none of them happens to
+match the sample rate that the Soundmodem asks for, the
+closest-available rates are offered to the soundmodem.  These offered
+rates are different and the Soundmodem balks.
+
+Workaround:  type in "plughw:1,0" as the device to use.  The "plughw:"
+module will do software sample-rate conversion when necessary, and in
+this case it allows the Soundmodem to use the sample rate it wants.
+The same rate is used for both the RX and TX channels, and all is well.
+
+At this point, incoming AFSK packets started being decoded reliably
+(as long as the receiver squelch was opened).
+
+[Possible alternative - use the ALSA/OSS emulation module, the
+ SoundModem OSS interface, and open /dev/dsp1.  I don't recommend
+ this, as I've observed numerous problems and data glitches in the OSS
+ emulation sample rate converter.]
+
+Second problem noted:  the soundmodem app would either stop receiving
+and transmitting, or exit abruptly with a "closed pipe" error.
+
+The cause:  the ALSA drivers will report a "closed pipe" any time the
+internal audio state machine goes into the XRUN state, which occurs if
+there's a buffer overflow (on receive) or underflow (on transmit).
+This apparently can occur due to timing / race conditions during TX/RX
+turnaround.  It's necessary to restart the TX or RX channel with a
+"prepare" call, and it appears that the Soundmodem code doesn't do
+this if an EPIPE error occurs... instead, it bails out and dies.
+
+I haven't yet modified the Soundmodem code to do what's necessary but
+I don't think it'll be difficult.
+
+I've had good results with the SignaLink USB using other sound
+packages, for PSK31 and other digital modes, and I believe it'll work
+well for AFSK packet once the driver-interface glitches are dealt with.
+
 
