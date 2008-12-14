@@ -1,42 +1,43 @@
-From: Matti Aarnio <oh2mqk@sral.fi>
+From: Thomas Sailer <t.sailer@alumni.ethz.ch>
 Subject: Re: soundmodem patches for various distros?
-Date: Sun, 14 Dec 2008 03:08:57 +0200
-Message-ID: <20081214010857.GP30968@mea-ext.zmailer.org>
+Date: Sun, 14 Dec 2008 17:22:22 +0100
+Message-ID: <1229271742.29241.5.camel@localhost.localdomain>
 References: <49445246.4050104@columbia.edu>
+	 <20081214010857.GP30968@mea-ext.zmailer.org>
 Mime-Version: 1.0
+Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
-Content-Disposition: inline
-In-Reply-To: <49445246.4050104@columbia.edu>
+In-Reply-To: <20081214010857.GP30968@mea-ext.zmailer.org>
 Sender: linux-hams-owner@vger.kernel.org
 List-ID: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-To: Alan Crosswell <alan@columbia.edu>
-Cc: linux-hams@vger.kernel.org
+To: Matti Aarnio <oh2mqk@sral.fi>
+Cc: Alan Crosswell <alan@columbia.edu>, linux-hams@vger.kernel.org
 
-On Sat, Dec 13, 2008 at 07:24:38PM -0500, Alan Crosswell wrote:
-> Are soundmodem patches for various distros being kept in sync?  I
-> experienced a known bug with Tx switching in ALSA mode which is patched
-> in debian 0.10-6 but I don't see it patched in Fedora yet, nor at Tom's
-> baycom home page.  I guess that means there's a fair amount of duplicate
-> effort.....
-> /a
+On Sun, 2008-12-14 at 03:08 +0200, Matti Aarnio wrote:
 
-No, they are not.   If Tom does not collect updates, then they
-have divergent evolution..
+> No, they are not.   If Tom does not collect updates, then they
+> have divergent evolution..
 
-If you have time, do push things to Tom, and get things distributed.
+Ok, a first attempt at collecting patches (from debian and fedora)
+http://www.baycom.org/~tom/ham/soundmodem/soundmodem-0.11.tar.gz
 
-And while you are at it, do get rid of the graphical configurator,
-and the whole package of XML configuration.  Just unnecessary junk.
+> If you have to have some "standard way" to configure, try Java Properties,
+> which are lines like this:
+> 
+>         keyword  \s+  parameters
 
-If you have to have some "standard way" to configure, try Java Properties,
-which are lines like this:
+How exactly would you represent a tree in a non sucking way with this
+format?
 
-        keyword  \s+  parameters
+soundmodem is essentially a tree where each node (not only leaves) can
+have properties - sounds like xml to me. And it's not that xml cannot be
+typed into a standard text editor...
 
-(of course those configuration statements are of much older origin than Java,
-but for people with excessive modernity fixations, it is nice to be able to
-claim otherwise...)
+Also, the graphical configurator is not only a configurator, it allows
+you to also display scope like curves. For this, X seems natural - I'm
+not going to port this to aalib 8-)
 
-73 de Matti, OH2MQK
+73, Tom
+
+
