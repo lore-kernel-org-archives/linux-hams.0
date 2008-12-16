@@ -1,52 +1,61 @@
-From: don <don_reid@comcast.net>
-Subject: Re: USB sound adapter for use with Tom's soundmodem?
-Date: Mon, 15 Dec 2008 17:42:08 -0800
-Message-ID: <20081216014208.GA11613@reid1.localdomain>
-References: <49432397.8060304@weca.org> <courier.4943332E.0000255C@radagast.org> <4388.219.89.148.235.1229141951.squirrel@webmail02.lancs.ac.uk> <courier.4943435B.000044D7@radagast.org> <2916.219.89.148.235.1229158504.squirrel@webmail02.lancs.ac.uk> <courier.4946EC74.00003B45@radagast.org>
+From: Julia Lawall <julia@diku.dk>
+Subject: [PATCH 5/11] drivers/net/hamradio/6pack.c: Move a dereference below
+ a NULL test
+Date: Tue, 16 Dec 2008 16:13:31 +0100 (CET)
+Message-ID: <Pine.LNX.4.64.0812161613100.20444@pc-004.diku.dk>
 Mime-Version: 1.0
-Return-path: <linux-hams-owner@vger.kernel.org>
-Content-Disposition: inline
-In-Reply-To: <courier.4946EC74.00003B45@radagast.org>
-Sender: linux-hams-owner@vger.kernel.org
+Return-path: <linux-kernel-owner+glk-linux-kernel-3=40m.gmane.org-S1758240AbYLPPNt@vger.kernel.org>
+Sender: linux-kernel-owner@vger.kernel.org
 List-ID: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"
+Content-Type: TEXT/PLAIN; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
-To: Dave Platt <dplatt@radagast.org>
-Cc: linux-hams@vger.kernel.org, a.errington@lancaster.ac.uk
+To: ajk@iehk.rwth-aachen.de, linux-hams@vger.kernel.org, linux-kernel@vger.kernel.org, kernel-janitors@vger.kernel.org
 
-On Mon, Dec 15, 2008 at 03:47:00PM -0800, Dave Platt wrote:
-> > How exciting!  Of course, it's hit and miss as to whether you get this
-> > chip in any particular adaptor, but it's possible that the LEDs are hooked
-> > up to some fixed function (as you have discovered) but that the GPIO pins
-> > are free.  It's also possible that the vendor has chosen to disable this
-> > function as the chips are highly customisable.
-> >
-> > Wishful thinking perhaps, especially as I haven't looked for a datasheet
-> > yet (more to the point, I don't actually have one of these doodads
-> > either.)
-> >
-> > Actually, reading your email again, are these the GPIO endpoints that you
-> > can't yet work out how to write to?
-> 
-> Yup.  Those are the ones.
-> 
-> There may be some light a'glimmering, though.  In another discussion
-> today I ran across an open-source project for a general-purpose
-> programmer board for PIC and AVR and I2C and SPI devices, which uses a
-> USB-enabled PIC as its basis.  The PIC presents a 64-byte HID packet
-> interface, and the developer has provided source code for the
-> Linux software needed to communicate with it and send the packets that
-> its firmware expects.
-> 
-> By studying this I hope to be able to figure out the magic involved in
-> accessing one of the CMedia chips' HID endpoints and twizzling its
-> GPIOs.
+From: Julia Lawall <julia@diku.dk>
 
-Another source of info on HID might be the AVR-USB project (which does
-USB in firmware), and its HIDKeys example 
+In each case, if the NULL test is necessary, then the dereference should be
+moved below the NULL test.
 
-	http://www.obdev.at/products/avrusb/index.html
-	http://www.obdev.at/products/avrusb/hidkeys.html
+The semantic patch that makes this change is as follows:
+(http://www.emn.fr/x-info/coccinelle/)
+
+// <smpl>
+@@
+type T;
+expression E;
+identifier i,fld;
+statement S;
+@@
+
+- T i = E->fld;
++ T i;
+  ... when != E
+      when != i
+  if (E == NULL) S
++ i = E->fld;
+// </smpl>
+
+Signed-off-by: Julia Lawall <julia@diku.dk>
+
+---
+ drivers/net/hamradio/6pack.c        |    3 ++-
+ 1 files changed, 2 insertions(+), 1 deletions(-)
+
+diff --git a/drivers/net/hamradio/6pack.c b/drivers/net/hamradio/6pack.c
+index 0f501d2..df7e8de 100644
+--- a/drivers/net/hamradio/6pack.c
++++ b/drivers/net/hamradio/6pack.c
+@@ -718,11 +718,12 @@ static int sixpack_ioctl(struct tty_struct *tty, struct file *file,
+ 	unsigned int cmd, unsigned long arg)
+ {
+ 	struct sixpack *sp = sp_get(tty);
+-	struct net_device *dev = sp->dev;
++	struct net_device *dev;
+ 	unsigned int tmp, err;
  
-73
-Don - W7DMR
+ 	if (!sp)
+ 		return -ENXIO;
++	dev = sp->dev;
+ 
+ 	switch(cmd) {
+ 	case SIOCGIFNAME:
