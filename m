@@ -1,83 +1,61 @@
-From: Dave Platt <dplatt@radagast.org>
-Subject: Re: USB sound adapter for use with Tom's soundmodem?
-Date: Tue, 16 Dec 2008 12:14:53 -0800
-Message-ID: <49480C3D.2000203@radagast.org>
-References: <49432397.8060304@weca.org> <courier.4943332E.0000255C@radagast.org> <4388.219.89.148.235.1229141951.squirrel@webmail02.lancs.ac.uk> <courier.4943435B.000044D7@radagast.org> <2916.219.89.148.235.1229158504.squirrel@webmail02.lancs.ac.uk>
+From: "Curt, WE7U" <archer@eskimo.com>
+Subject: KPC3+ open-source code?
+Date: Fri, 19 Dec 2008 12:08:31 -0800 (PST)
+Message-ID: <alpine.LNX.1.10.0812191204230.20748@wapiti2.we7u.net>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <2916.219.89.148.235.1229158504.squirrel@webmail02.lancs.ac.uk> 
 Sender: linux-hams-owner@vger.kernel.org
 List-ID: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"; format="flowed"
+Content-Type: TEXT/PLAIN; charset="us-ascii"; format="flowed"
+Content-Transfer-Encoding: 7bit
 To: linux-hams@vger.kernel.org
 
 
-> By studying this I hope to be able to figure out the magic involved in
-> accessing one of the CMedia chips' HID endpoints and twizzling its
-> GPIOs.
+Sending this to the linux-hams list as well.  Any interest in the
+project?  Perhaps development of a KISS-only ROM for the KPC-3+ as a
+start?
 
-Well, phooey.
+I don't have a lot of time to help, but have HC11 hardware to play
+with (MIT Handyboards where I can download/test code via serial
+port) and can get the compiler and toolchain going again on my home
+system.  I can also burn EPROM's to test with.  I'd pitch in where I
+could.
 
-I did some digging last night and determined a few things:
+---------- Forwarded message ----------
+Date: Fri, 19 Dec 2008 10:52:29 -0800 (PST)
+From: "Curt, WE7U" <archer@eskimo.com>
+Reply-To: TAPR APRS Mailing List <aprssig@tapr.org>
+To: TAPR APRS Mailing List <aprssig@tapr.org>
+Subject: Re: [aprssig] KPC-3+ KISS mode delayed packet issue?
 
--  The USB audio dongle I have doesn't use a CMedia chip.  Rather,
-    its chip is from TenX Technologies.
+On Fri, 19 Dec 2008, Curt, WE7U wrote:
 
--  The TenX chip is, basically, a USB-enabled 8051 micro with some
-    analog capabilities:  a single-channel ADC with differential
-    inputs, and a pair of PWM outputs that are filtered down to create
-    a continuous analog signal for headphones or speakers.
+> KD7NM near me has the same problem periodically.  Power-cycling the
+> TNC fixes it for him too.  He's running it in KISS mode with Xastir.
+> It's happened at least 2 or 3 times that I can recall, but seems to
+> take months to reappear.
+>
+> It could be that a KISS frame END character gets missed or
+> corrupted, requiring a new KISS frame to come through to supply it,
+> but then that one gets stuck because of not enough framing
+> characters, awaiting the next packet to come through, etc.
+>
+> It could also be a memory leak or counters overflowing and losing
+> track.  Could be all kinds of things.
 
--  The USB endpoints appear to be managed via the 8051 firmware,
-    which is in OTP.
+Is anyone interested in an open-source replacement that would run on
+KPC3+ hardware?  I happen to know where to find an HC11
+cross-compiler for Linux and a GPL'ed library to get started with...
 
--  The sample rates supported by the audio-in and audio-out
-    streaming endpoints are different, and disjoint - there doesn't
-    not appear to be a common sound rate for the two interfaces!
-    This is unlike the TI chip used in the SignaLink USB, whose input
-    sample rates are a superset of the output sample rates.  Use of
-    the plughw: ALSA sample rate converter would be required.
+      ftp://ftp.eskimo.com/u/a/archer/hc11/
 
--  The chip has plenty of GPIO pins, two of which appear to be wired
-    up to the power and activity LEDs on the dongle.
+I don't have time/energy to do this myself, but perhaps a largish
+group could accomplish it, perhaps with GPL'ed code thrown in from
+the digi_ned and opentracker/tracker2 projects?
 
--  Some GPIO pins are intended to be hooked up a keyboard scanning
-    matrix.  The HID input-report descriptor provided by this version
-    of the chip identifies features like VOLUME UP, MUTE, and so
-    forth.  There's also a second HID input report which seems to have
-    a bunch of unspecified input flags in it.
-
--  There is no HID output endpoint, and no output HID reports defined...
-    and thus no ability to control any of the GPIO pins from the USB
-    host.
-
-Hence, no PTT control in software.  This particular brand of chip
-doesn't appear to be suitable for a simple "all in one" packet audio
-USB interface, unless chips can be sourced directly from the manufacturer
-and some different firmware programmed into them... seems excessive.
-
-The CMedia chips might be a better choice... I'll have to see if I
-can find a local cheap source for a USB dongle with one of these in it.
-
-A third alternative would be a USB audio interface which uses one of
-the TI streaming audio controller chips... these are also 8051-core
-micros, but it appears that the main code is located from an external
-EPROM rather than from OTP within the chip.  The SignaLink USB uses
-one of these chips - I'll try interrogating its HID report structure
-and see whether there are any output reports which might control one
-of the GPIO pins.
-
-If so, there may be a very interesting prospect for homebrewers:
-the Behringer UCA202.  This is a stereo USB/audio adapter which
-(from what I've read) uses one of these TI chips internally... and
-it's available for $25-$30 from numerous online sources.  If there's
-a way to write its GPIO pins, then a board scavenged from a UCA202,
-plus a couple of isolation transformers and an optoisolator for PTT,
-might make a very nice packet interface.  And, what's more, it has
-stereo-audio goesintas and goesoutas, which means that it could be used
-with an I/Q modulator/demodulator front end... software DSP single
-sideband or OFDM, anyone?
-
-
-
+-- 
+Curt, WE7U.				archer at eskimo dot com
+http://www.eskimo.com/~archer
+    Lotto:  A tax on people who are bad at math. - unknown
+Windows:  Microsoft's tax on computer illiterates. - WE7U.
+The world DOES revolve around me:  I picked the coordinate system!"
