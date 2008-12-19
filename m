@@ -1,37 +1,44 @@
-From: "Bill Vodall WA7NWP" <wa7nwp@jnos.org>
+From: "Curt, WE7U" <archer@eskimo.com>
 Subject: Re: KPC3+ open-source code?
-Date: Fri, 19 Dec 2008 12:35:50 -0800
-Message-ID: <5abd436b0812191235v72f98762ub9d578fb06ab53cb@mail.gmail.com>
-References: <alpine.LNX.1.10.0812191204230.20748@wapiti2.we7u.net>
+Date: Fri, 19 Dec 2008 12:51:28 -0800 (PST)
+Message-ID: <alpine.LNX.1.10.0812191247290.23228@wapiti2.we7u.net>
+References: <alpine.LNX.1.10.0812191204230.20748@wapiti2.we7u.net> <5abd436b0812191235v72f98762ub9d578fb06ab53cb@mail.gmail.com>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:sender
-         :to:subject:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:references
-         :x-google-sender-auth;
-        bh=GQr2NKg68hR8Ql3dlkmrGqmLzaWG2hoNLkOd6/+rN/M=;
-        b=kG/aTCDS4q9SUHQbjL/x885rbMdU0mGCL94XIhbsGFXS9IHl+K5PQNBCHK5VeELVMF
-         sOmmGgBQqbSwFCE9gJSg0NQmUY0Uz6Wr1TQV3kGuQLwwdET31w04nh1g+97oh9QNm+Yp
-         k6yWVjrTD9b8BB8wnRXZyofBL2IEAmJZtCQdo=
-In-Reply-To: <alpine.LNX.1.10.0812191204230.20748@wapiti2.we7u.net>
-Content-Disposition: inline
+In-Reply-To: <5abd436b0812191235v72f98762ub9d578fb06ab53cb@mail.gmail.com>
 Sender: linux-hams-owner@vger.kernel.org
 List-ID: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"
-To: linux-hams@vger.kernel.org
+Content-Type: TEXT/PLAIN; charset="us-ascii"; format="flowed"
+Content-Transfer-Encoding: 7bit
+To: Bill Vodall WA7NWP <wa7nwp@jnos.org>
+Cc: linux-hams@vger.kernel.org
 
-On Fri, Dec 19, 2008 at 12:08 PM, Curt, WE7U <archer@eskimo.com> wrote:
->
-> Sending this to the linux-hams list as well.  Any interest in the
-> project?  Perhaps development of a KISS-only ROM for the KPC-3+ as a
-> start?
->
-> I don't have a lot of time to help, but have HC11 hardware to play
+On Fri, 19 Dec 2008, Bill Vodall WA7NWP wrote:
 
-What would be the advantage of investing all this effort in the KPC3
-instead of supporting the existing new TT and OT hardware?
+> What would be the advantage of investing all this effort in the KPC3
+> instead of supporting the existing new TT and OT hardware?
 
-Bill
+Lots of them in the field?
+
+As far as the Opentrackers, the compilers still cost $$.  To me
+that's an impediment to writing open-source code to go on them.  The
+up-and-coming ARM-based Opentracker may be a suitable candidate
+though.  Also, the Opentrackers up through the Tracker2 and T2-135
+don't have a lot of RAM, so back-to-back packets and a full window's
+worth of packets is impossible.
+
+TinyTrak's are much in the same boat except for the TinyTrak4.  I
+have a cross-compiler for the Atmel Mega processors running on
+Linux, and development boards with some Mega processors on them.  I
+suspect there's a special bootloader on Byon's systems that'd have
+to be replaced if one wanted to start from scratch with his
+hardware, but that'd be the only tricky part (for people without a
+burner).  I haven't looked to see how much memory and flash comes
+with the TT4.
+
+-- 
+Curt, WE7U.				archer at eskimo dot com
+http://www.eskimo.com/~archer
+   Lotto:  A tax on people who are bad at math. - unknown
+Windows:  Microsoft's tax on computer illiterates. - WE7U.
+The world DOES revolve around me:  I picked the coordinate system!"
