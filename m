@@ -1,50 +1,50 @@
-From: "Curt, WE7U" <archer@eskimo.com>
+From: Ray Wells <vk2tv@exemail.com.au>
 Subject: Re: ax25d not hearing incoming connection requests
-Date: Fri, 2 Jan 2009 10:34:27 -0800 (PST)
-Message-ID: <alpine.LNX.1.10.0901021027040.416@wapiti2.we7u.net>
+Date: Sat, 03 Jan 2009 07:47:44 +1100
+Message-ID: <495E7D70.1050802@exemail.com.au>
 References: <21253389.post@talk.nabble.com>
 Mime-Version: 1.0
+Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
 In-Reply-To: <21253389.post@talk.nabble.com>
 Sender: linux-hams-owner@vger.kernel.org
 List-ID: <linux-hams.vger.kernel.org>
-Content-Type: TEXT/PLAIN; charset="us-ascii"; format="flowed"
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset="us-ascii"; format="flowed"
 To: GeForce <jon.sowman@gmail.com>
 Cc: linux-hams@vger.kernel.org
 
-On Fri, 2 Jan 2009, GeForce wrote:
-
+GeForce wrote:
+> Hi all, need a hand here if you would be so kind. I have ax25d running, with
+> ax25d.conf looking like this:
+>
+> [M3XYZ-1 VIA tncx]
+> default 1 * * * * * *  root /usr/sbin/axspawn axspawn %u
+>
+> Using the "listen" command I can see the incoming connection request
+> packets, which look like:
+>
+> tncx: fm M3XYZ-3 to M3XYZ-1 ctl SABM+
+>
+> But ax25d seems to be doing nothing with them! ax25d is set to log, but
+> there are no entries in the syslog  related to the incoming connection. The
+> only ax25d entries are "starting" and "loaded config successfully" ones.
+>
+> I can transmit a packet using
+> beacon -s tncx "hello"
+> without any problems, so I know both stations can tx and rx correctly.
+>
 > Anyone got any ideas as to why ax25d is not responding to the connection
 > request?
+>
+> Thanks,
+> Jon
+>   
+Jon,
 
-It's been a while since I've played with that stuff, but I seem to
-recall that you need to send a line first so that the protocol is
-known to the AX.25 kernel-mode layer.  Once the protocol is known
-then the packets start getting fed to whatever applications have
-registered to receive that protocol.
+My only use for ax25d these days is to steer Netrom connections to 
+fpacnode. All other applications (ax25 and Rose) do their own listening 
+so entries in ax25d.conf aren't needed.
 
-"Listen" is a special case in that it has registered to receive
-everything.
+If you wish to contact me off list I try to help you out.
 
-For instance a ROSE packet might get routed to one application,
-connected mode info packet to another (aprsd in this case).  Extend
-this to APRS, NET/ROM, TCP, UDP, etc.
-
-The connection packet itself doesn't specify the upper-level
-protocol being used, therefore there's nothing to send to the
-application at that point.
-
-Send a blank packet immediately after the connect packet which
-should pass a LF or a CRLF off to aprsd.  Aprsd should then respond.
-
-That was one thing I had to get used to compared to similar
-non-Linux systems way back when:  Sending an extra packet before the
-stuff would respond to me in connected mode.
-
--- 
-Curt, WE7U.				archer at eskimo dot com
-http://www.eskimo.com/~archer
-   Lotto:  A tax on people who are bad at math. - unknown
-Windows:  Microsoft's tax on computer illiterates. - WE7U.
-The world DOES revolve around me:  I picked the coordinate system!"
+Ray vk2tv
