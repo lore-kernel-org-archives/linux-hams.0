@@ -1,39 +1,41 @@
-From: Dave Platt <dplatt@radagast.org>
-Subject: Re: soundmodem patch for ALSA compatibility issues
-Date: Fri, 26 Dec 2008 16:06:14 -0800
-Message-ID: <49557176.6010304@radagast.org>
-References: <49544E37.9000506@radagast.org> <1230311229.29241.222.camel@localhost.localdomain>
+From: GeForce <jon.sowman@gmail.com>
+Subject: ax25d not hearing incoming connection requests
+Date: Fri, 2 Jan 2009 08:22:49 -0800 (PST)
+Message-ID: <21253389.post@talk.nabble.com>
 Mime-Version: 1.0
 Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <1230311229.29241.222.camel@localhost.localdomain>
 Sender: linux-hams-owner@vger.kernel.org
 List-ID: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"; format="flowed"
+Content-Type: text/plain; charset="us-ascii"
 To: linux-hams@vger.kernel.org
 
 
-> Thanks for the patch! I've applied it to my current tree, and put the
-> result here:
-> http://www.baycom.org/~tom/ham/soundmodem/soundmodem-0.11.tar.gz
-> 
-> It did not apply cleanly, though, I manually fixed it up, maybe you can
-> check I did it correctly.
+Hi all, need a hand here if you would be so kind. I have ax25d running, with
+ax25d.conf looking like this:
 
-It looks correct to me, it builds OK, and it seems to be working fine
-with my SignaLinK USB.  I just logged into my city ARES BBS and checked
-for mail - the connection stayed up and no errors were seen.  I think
-your manual fixup was correct.
+[M3XYZ-1 VIA tncx]
+default 1 * * * * * *  root /usr/sbin/axspawn axspawn %u
 
-One thing I've noticed (with this new version and all versions of
-0.10 I tried) - when I first start up the soundmodem, there appears
-to be a long latency before it will send the first packet for
-a connection - somewhere around 30 seconds.  This occurs even if the
-channel is entirely idle.  However, if an inbound packet is received
-successfully, the first outbound packet will be sent within a second
-or so thereafter.
+Using the "listen" command I can see the incoming connection request
+packets, which look like:
 
-Feels to me as if the channel-inactivity timer isn't being initialized
-successfully, but I haven't yet dug into the code to figure out why.
+tncx: fm M3XYZ-3 to M3XYZ-1 ctl SABM+
 
+But ax25d seems to be doing nothing with them! ax25d is set to log, but
+there are no entries in the syslog  related to the incoming connection. The
+only ax25d entries are "starting" and "loaded config successfully" ones.
+
+I can transmit a packet using
+beacon -s tncx "hello"
+without any problems, so I know both stations can tx and rx correctly.
+
+Anyone got any ideas as to why ax25d is not responding to the connection
+request?
+
+Thanks,
+Jon
+-- 
+View this message in context: http://www.nabble.com/ax25d-not-hearing-incoming-connection-requests-tp21253389p21253389.html
+Sent from the linux-hams mailing list archive at Nabble.com.
 
