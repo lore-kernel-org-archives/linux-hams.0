@@ -1,57 +1,60 @@
 From: Stephen Hemminger <shemminger@linux-foundation.org>
-Subject: [patch 41/45] yam: convert to net_device_ops
-Date: Fri, 09 Jan 2009 15:01:38 -0800
-Message-ID: <20090109230139.766864365@linux-foundation.org>
+Subject: [patch 39/45] hdlcdrv: convert to net_device_ops
+Date: Fri, 09 Jan 2009 15:01:36 -0800
+Message-ID: <20090109230139.625427535@linux-foundation.org>
 References: <20090109230057.575650817@linux-foundation.org>
 Return-path: <netdev-owner@vger.kernel.org>
-Content-Disposition: inline; filename=yam-netdev.patch
+Content-Disposition: inline; filename=hdlcdrv-netdev.patch
 Sender: netdev-owner@vger.kernel.org
 List-ID: <linux-hams.vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
-To: David Miller <davem@davemloft.net>, jpr@f6fbb.org
+To: David Miller <davem@davemloft.net>, t.sailer@alumni.ethz.ch
 Cc: netdev@vger.kernel.org, linux-hams@vger.kernel.org
 
 Signed-off-by: Stephen Hemminger <shemminger@vyatta.com>
 
 
---- a/drivers/net/hamradio/yam.c	2009-01-09 12:54:25.000000000 -0800
-+++ b/drivers/net/hamradio/yam.c	2009-01-09 12:54:26.000000000 -0800
-@@ -1044,6 +1044,14 @@ static int yam_set_mac_address(struct ne
+--- a/drivers/net/hamradio/hdlcdrv.c	2009-01-09 12:52:18.000000000 -0800
++++ b/drivers/net/hamradio/hdlcdrv.c	2009-01-09 12:52:27.000000000 -0800
+@@ -617,6 +617,14 @@ static int hdlcdrv_ioctl(struct net_devi
  
  /* --------------------------------------------------------------------- */
  
-+static const struct net_device_ops yam_netdev_ops = {
-+	.ndo_open	     = yam_open,
-+	.ndo_stop	     = yam_close,
-+	.ndo_start_xmit      = yam_send_packet,
-+	.ndo_do_ioctl 	     = yam_ioctl,
-+	.ndo_set_mac_address = yam_set_mac_address,
++static const struct net_device_ops hdlcdrv_netdev = {
++	.ndo_open	= hdlcdrv_open,
++	.ndo_stop	= hdlcdrv_close,
++	.ndo_start_xmit = hdlcdrv_send_packet,
++	.ndo_do_ioctl	= hdlcdrv_ioctl,
++	.ndo_set_mac_address = hdlcdrv_set_mac_address,
 +};
 +
- static void yam_setup(struct net_device *dev)
- {
- 	struct yam_port *yp = netdev_priv(dev);
-@@ -1064,18 +1072,11 @@ static void yam_setup(struct net_device 
- 	dev->base_addr = yp->iobase;
- 	dev->irq = yp->irq;
+ /*
+  * Initialize fields in hdlcdrv
+  */
+@@ -656,21 +664,13 @@ static void hdlcdrv_setup(struct net_dev
+ 	s->bitbuf_hdlc.shreg = 0x80;
+ #endif /* HDLCDRV_DEBUG */
  
--	dev->open = yam_open;
--	dev->stop = yam_close;
--	dev->do_ioctl = yam_ioctl;
--	dev->hard_start_xmit = yam_send_packet;
--	dev->get_stats = yam_get_stats;
--
- 	skb_queue_head_init(&yp->send_queue);
+-	/*
+-	 * initialize the device struct
+-	 */
+-	dev->open = hdlcdrv_open;
+-	dev->stop = hdlcdrv_close;
+-	dev->do_ioctl = hdlcdrv_ioctl;
+-	dev->hard_start_xmit = hdlcdrv_send_packet;
+-	dev->get_stats = hdlcdrv_get_stats;
  
-+	dev->netdev_ops = &yam_netdev_ops;
+ 	/* Fill in the fields of the device structure */
+ 
+ 	s->skb = NULL;
+ 	
++	dev->netdev_ops = &hdlcdrv_netdev;
  	dev->header_ops = &ax25_header_ops;
- 
--	dev->set_mac_address = yam_set_mac_address;
--
- 	dev->type = ARPHRD_AX25;
- 	dev->hard_header_len = AX25_MAX_HEADER_LEN;
- 	dev->mtu = AX25_MTU;
+-	dev->set_mac_address = hdlcdrv_set_mac_address;
+ 	
+ 	dev->type = ARPHRD_AX25;           /* AF_AX25 device */
+ 	dev->hard_header_len = AX25_MAX_HEADER_LEN + AX25_BPQ_HEADER_LEN;
 
 
