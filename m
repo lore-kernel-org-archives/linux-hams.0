@@ -1,26 +1,27 @@
-From: Ralf Baechle DL5RB <ralf@linux-mips.org>
-Subject: Re: [patch 07/45] netrom: convert to net_device_ops
-Date: Sat, 10 Jan 2009 12:55:00 +0000
-Message-ID: <20090110125500.GC12807@linux-mips.org>
-References: <20090109230057.575650817@linux-foundation.org> <20090109230137.222386644@linux-foundation.org>
+From: David Miller <davem@davemloft.net>
+Subject: Re: [patch 06/45] netrom: convert to internal net_device_stats
+Date: Sun, 11 Jan 2009 00:15:12 -0800 (PST)
+Message-ID: <20090111.001512.107482802.davem@davemloft.net>
+References: <20090109230057.575650817@linux-foundation.org>
+	<20090109230137.149310736@linux-foundation.org>
+	<20090110125448.GB12807@linux-mips.org>
 Mime-Version: 1.0
-Return-path: <netdev-owner@vger.kernel.org>
-Content-Disposition: inline
-In-Reply-To: <20090109230137.222386644@linux-foundation.org>
-Sender: netdev-owner@vger.kernel.org
-List-ID: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
-To: Stephen Hemminger <shemminger@linux-foundation.org>
-Cc: David Miller <davem@davemloft.net>, netdev@vger.kernel.org, linux-hams@vger.kernel.org
+Return-path: <linux-hams-owner@vger.kernel.org>
+In-Reply-To: <20090110125448.GB12807@linux-mips.org>
+Sender: linux-hams-owner@vger.kernel.org
+List-ID: <linux-hams.vger.kernel.org>
+Content-Type: Text/Plain; charset="us-ascii"
+To: ralf@linux-mips.org
+Cc: shemminger@linux-foundation.org, netdev@vger.kernel.org, linux-hams@vger.kernel.org
 
-On Fri, Jan 09, 2009 at 03:01:04PM -0800, Stephen Hemminger wrote:
-> From: Stephen Hemminger <shemminger@linux-foundation.org>
-> Date: Fri, 09 Jan 2009 15:01:04 -0800
-> To: David Miller <davem@davemloft.net>, Ralf Baechle <ralf@linux-mips.org>
-> Cc: netdev@vger.kernel.org, linux-hams@vger.kernel.org
-> Subject: [patch 07/45] netrom: convert to net_device_ops
+From: Ralf Baechle DL5RB <ralf@linux-mips.org>
+Date: Sat, 10 Jan 2009 12:54:48 +0000
+
+> On Fri, Jan 09, 2009 at 03:01:03PM -0800, Stephen Hemminger wrote:
 > 
-> Signed-off-by: Stephen Hemminger <shemminger@vyatta.com>
+> > Signed-off-by: Stephen Hemminger <shemminger@vyatta.com>
+> 
+> Acked-by: Ralf Baechle <ralf@linux-mips.org>
 
-Acked-by: Ralf Baechle <ralf@linux-mips.org>
+I've added your ACKs for these 4 patches, thanks Ralf.
