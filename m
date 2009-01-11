@@ -1,27 +1,28 @@
-From: David Miller <davem@davemloft.net>
-Subject: Re: [patch 06/45] netrom: convert to internal net_device_stats
-Date: Sun, 11 Jan 2009 00:15:12 -0800 (PST)
-Message-ID: <20090111.001512.107482802.davem@davemloft.net>
-References: <20090109230057.575650817@linux-foundation.org>
-	<20090109230137.149310736@linux-foundation.org>
-	<20090110125448.GB12807@linux-mips.org>
+From: Willie Hein WJ3G <wj3g@comcast.net>
+Subject: Supported platform
+Date: Sun, 11 Jan 2009 08:36:30 -0500
+Message-ID: <4969F5DE.1020806@comcast.net>
 Mime-Version: 1.0
 Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <20090110125448.GB12807@linux-mips.org>
 Sender: linux-hams-owner@vger.kernel.org
 List-ID: <linux-hams.vger.kernel.org>
-Content-Type: Text/Plain; charset="us-ascii"
-To: ralf@linux-mips.org
-Cc: shemminger@linux-foundation.org, netdev@vger.kernel.org, linux-hams@vger.kernel.org
+Content-Type: text/plain; charset="us-ascii"
+To: Linux Hams Mailing list <linux-hams@vger.kernel.org>
 
-From: Ralf Baechle DL5RB <ralf@linux-mips.org>
-Date: Sat, 10 Jan 2009 12:54:48 +0000
+Greetings All.
 
-> On Fri, Jan 09, 2009 at 03:01:03PM -0800, Stephen Hemminger wrote:
-> 
-> > Signed-off-by: Stephen Hemminger <shemminger@vyatta.com>
-> 
-> Acked-by: Ralf Baechle <ralf@linux-mips.org>
+Don't want to start a religious war, but I've been having issues where
+openSUSE looses my ethernet card, so I'm look for an alternative distro
+that meets a few simple requirements.
 
-I've added your ACKs for these 4 patches, thanks Ralf.
+   1. Preferably rpm based
+   2. Supports ax25 and amateur apps
+   3. Supports software RAID 1 boot
+
+Any suggestions?
+
+Thanks,
+
+Willie, WJ3G
+
