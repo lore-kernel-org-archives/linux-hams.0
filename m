@@ -1,26 +1,35 @@
-From: Ken Koster <n7ipb@wetnet.net>
-Subject: ax25-tools and apps
-Date: Sun, 18 Jan 2009 13:50:34 -0800
-Message-ID: <200901181350.36246.n7ipb@wetnet.net>
+From: "Curt, WE7U" <archer@eskimo.com>
+Subject: Re: Problems with ax25d/axspawn on OpenSuSE 11.0 32-bit
+Date: Mon, 19 Jan 2009 13:49:53 -0800 (PST)
+Message-ID: <alpine.LNX.1.10.0901191336440.22828@wapiti2.we7u.net>
+References: <alpine.LNX.1.10.0901172222000.22616@wapiti2.we7u.net>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
-Content-Disposition: inline
+In-Reply-To: <alpine.LNX.1.10.0901172222000.22616@wapiti2.we7u.net>
 Sender: linux-hams-owner@vger.kernel.org
 List-ID: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"
+Content-Type: TEXT/PLAIN; charset="us-ascii"; format="flowed"
+Content-Transfer-Encoding: 7bit
 To: linux-hams@vger.kernel.org
 
-So just where are the official sources for ax25-tools and ax25-apps?
+On Sun, 18 Jan 2009, Curt, WE7U wrote:
 
-I've been pulling them from Debian and using their patches  since the
-Sourceforge project seemed stuck at 0.0.8 and 0.0.6 and Debian had patches
-on top of those baselines.  Now I find  that the SuSE hamradio repository is at
-0.0.9 for ax25-tools and 0.0.8 for ax25-apps.
+> I saw several bugs in the AX.25 stuff yesterday/today.
 
-I need a non rpm archive somewhere to pull these down from for my openwrt
-embedded builds and while I can host my own I'd rather not.
+An update:  I figured newer versions of the AX.25 bits in the SuSE
+ham repository but my update methods were not snagging them.  The
+SuSE update methods need a bit of revision as neither "Online
+Update", nor "zypper ref; zypper up --type package" gets everything.
+The only method that does (thanks Ken!) is Software Management ->
+Package -> All Packages -> Update if newer version available.
 
-Ken,  N7IPB
-(Who's now very glad he didn't submit his packages to OpenWRT last week as
-he'd originally planned :-) 
+So... I need to repeat my on-air tests with Bob using the newer
+AX.25 modules and tools to see if any or all of the bugs reported
+are still evident.  Stay tuned.
+
+-- 
+Curt, WE7U.				archer at eskimo dot com
+http://www.eskimo.com/~archer
+   Lotto:  A tax on people who are bad at math. - unknown
+Windows:  Microsoft's tax on computer illiterates. - WE7U.
+The world DOES revolve around me:  I picked the coordinate system!"
