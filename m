@@ -1,64 +1,41 @@
-From: Pidoux <f6bvp@free.fr>
+From: "Curt, WE7U" <archer@eskimo.com>
 Subject: Re: ax25-tools and apps
-Date: Tue, 20 Jan 2009 15:59:49 +0100
-Message-ID: <4975E6E5.4000108@free.fr>
-References: <200901181350.36246.n7ipb@wetnet.net>
+Date: Tue, 20 Jan 2009 10:17:18 -0800 (PST)
+Message-ID: <alpine.LNX.1.10.0901201008010.32731@wapiti2.we7u.net>
+References: <200901181350.36246.n7ipb@wetnet.net> <4975E6E5.4000108@free.fr>
 Mime-Version: 1.0
-Content-Transfer-Encoding: QUOTED-PRINTABLE
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <200901181350.36246.n7ipb@wetnet.net>
+In-Reply-To: <4975E6E5.4000108@free.fr>
 Sender: linux-hams-owner@vger.kernel.org
 List-ID: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="iso-8859-1"; format="flowed"
-To: Ken Koster <n7ipb@wetnet.net>
+Content-Type: TEXT/PLAIN; charset="us-ascii"; format="flowed"
+Content-Transfer-Encoding: 7bit
+To: Pidoux <f6bvp@free.fr>
 Cc: linux-hams@vger.kernel.org
 
-Hi All,
+On Tue, 20 Jan 2009, Pidoux wrote:
 
-Unfortunately, as you have noticed, there are no more official sources =
-for libax25, ax25-tools and ax25-apps, since=20
-sourceforge repository has been abandonned.
+> Unfortunately, as you have noticed, there are no more official sources for 
+> libax25, ax25-tools and ax25-apps, since sourceforge repository has been 
+> abandonned.
 
-The sad consequence is an emergence of uncoordinated revisions and pack=
-ages.
-The ones I am aware of are Debian, Suse and mine. But there are others.
+For what it's worth, SourceForge moved to a new datacenter over in
+Chicago I think.  Since then their service has been better than ever
+before.  Evidently they have better/faster/more servers and a better
+infrastructure to support them than they've had in the past.
 
-Each of them has certainly valuable bug fixes, maybe directed to the sa=
-me bugs but also correcting different bugs.
-Thus it would be a constructive work to perform a general revue of all =
-different patches by discussing them on this list=20
-  and then restart creating new official versions that could be uploade=
-d to new Linux AX25 site maintained by Ralf DL5RB :
+I contribute to a few projects on SourceForge and have had zero
+problems with them since they've moved.  CVS has been blindingly
+fast, and even the anonCVS has been synced to the developer's CVS
+within just a few seconds after a commit.
 
-http://www.linux-ax25.org/wiki/Main_Page
+Perhaps the SF site could be "unabandoned" and it could be the
+official repository again?  It's the first place a lot of people
+look for code.
 
-The packages available on this page are from Debian team.
-
-73 de Bernard, f6bvp
-
-
-
-Ken Koster a =E9crit :
-> So just where are the official sources for ax25-tools and ax25-apps?
->=20
-> I've been pulling them from Debian and using their patches  since the
-> Sourceforge project seemed stuck at 0.0.8 and 0.0.6 and Debian had pa=
-tches
-> on top of those baselines.  Now I find  that the SuSE hamradio reposi=
-tory is at
-> 0.0.9 for ax25-tools and 0.0.8 for ax25-apps.
->=20
-> I need a non rpm archive somewhere to pull these down from for my ope=
-nwrt
-> embedded builds and while I can host my own I'd rather not.
->=20
-> Ken,  N7IPB
-> (Who's now very glad he didn't submit his packages to OpenWRT last we=
-ek as
-> he'd originally planned :-)=20
-
---
-To unsubscribe from this list: send the line "unsubscribe linux-hams" i=
-n
-the body of a message to majordomo@vger.kernel.org
-More majordomo info at  http://vger.kernel.org/majordomo-info.html
+-- 
+Curt, WE7U.				archer at eskimo dot com
+http://www.eskimo.com/~archer
+   Lotto:  A tax on people who are bad at math. - unknown
+Windows:  Microsoft's tax on computer illiterates. - WE7U.
+The world DOES revolve around me:  I picked the coordinate system!"
