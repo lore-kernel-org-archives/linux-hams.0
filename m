@@ -1,33 +1,40 @@
 From: "Curt, WE7U" <archer@eskimo.com>
 Subject: Re: Problems with ax25d/axspawn on OpenSuSE 11.0 32-bit
-Date: Thu, 22 Jan 2009 08:51:58 -0800 (PST)
-Message-ID: <alpine.LNX.1.10.0901220849330.20215@wapiti2.we7u.net>
-References: <alpine.LNX.1.10.0901172222000.22616@wapiti2.we7u.net> <alpine.LNX.1.10.0901191336440.22828@wapiti2.we7u.net> <497501B2.7060209@exemail.com.au> <alpine.LNX.1.10.0901210934190.5210@wapiti2.we7u.net>
- <C7333E54-EE08-4560-A754-673C9CEC8F4B@tssg.org>
+Date: Fri, 23 Jan 2009 10:19:18 -0800 (PST)
+Message-ID: <alpine.LNX.1.10.0901231008510.23524@wapiti2.we7u.net>
+References: <alpine.LNX.1.10.0901172222000.22616@wapiti2.we7u.net> <alpine.LNX.1.10.0901191336440.22828@wapiti2.we7u.net>
 Mime-Version: 1.0
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <C7333E54-EE08-4560-A754-673C9CEC8F4B@tssg.org>
+In-Reply-To: <alpine.LNX.1.10.0901191336440.22828@wapiti2.we7u.net>
 Sender: linux-hams-owner@vger.kernel.org
 List-ID: <linux-hams.vger.kernel.org>
-Content-Type: TEXT/PLAIN; charset="us-ascii"; format="flowed"
+Content-Type: TEXT/PLAIN; format="flowed"; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
-To: John Ronan <jronan@tssg.org>
-Cc: Linux-Hams <linux-hams@vger.kernel.org>
+To: linux-hams@vger.kernel.org
 
-On Thu, 22 Jan 2009, John Ronan wrote:
+On Mon, 19 Jan 2009, Curt, WE7U wrote:
 
-> I guess I could say "Snap"... I've not been really too interested, as what is 
-> bundled with ubuntu seems to be ok/enough for my purposes.
->
-> Should be be trying to test it on different Distro's or, what exactly 
-> 'should' we be doing?  From seeing posts from Bernard go by, it seems to me 
-> that he's being doing a solid enough job in keeping his sources current.
+> So... I need to repeat my on-air tests with Bob using the newer
+> AX.25 modules and tools to see if any or all of the bugs reported
+> are still evident.  Stay tuned.
 
-For my purposes on OpenSuSE it wasn't working.  As I discover
-OS-specific tweaks and/or what modules work with what, it'd be nice
-to update a Wiki page to alert others that may be using the same OS.
-Similar to the OS-specific instructions we have on the Xastir Wiki.
-Ok, had...  The site has been down for a bit.
+The RF tests were repeated with ALL of the SuSE-11.0 updates
+applied, no differences were seen.  Each of the bugs described in my
+first post on this thread were experienced again.
+
+I've upgraded all machines but this one to OpenSuSE 11.1.  After I
+upgrade it too I'll probably ask Bob to help me repeat the tests.
+
+As things stand now:
+
+*) Unproto packets to/from Xastir over the port are working fine.
+
+*) Ax25d and/or axspawn have problems with respect to the automatic
+    account creation.
+
+*) Connected mode using axspawn loses LOTS of data.  It might be
+    useful to test another connected-mode AX.25 app to see where the
+    problem lies, in the AX.25 modules or in axspawn.
 
 -- 
 Curt, WE7U.				archer at eskimo dot com
