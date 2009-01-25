@@ -1,44 +1,62 @@
-From: Ken Koster <n7ipb@wetnet.net>
-Subject: Re: Problems with ax25d/axspawn on OpenSuSE 11.0 32-bit
-Date: Sun, 25 Jan 2009 14:33:24 -0800
-Message-ID: <200901251433.26055.n7ipb@wetnet.net>
-References: <alpine.LNX.1.10.0901172222000.22616@wapiti2.we7u.net> <alpine.LNX.1.10.0901231008510.23524@wapiti2.we7u.net> <alpine.LNX.1.10.0901242044100.4122@wapiti.we7u.net>
+From: Tomi Manninen <oh2bns@sral.fi>
+Subject: Re: ax25-apps/-tools: clarification about the project status
+Date: Mon, 26 Jan 2009 01:43:22 +0200
+Message-ID: <497CF91A.5000001@sral.fi>
+References: <20090125144334.GA9629@x-berg.in-berlin.de> <497CD9B9.4090500@sral.fi> <200901251411.57323.n7ipb@wetnet.net>
 Mime-Version: 1.0
 Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <alpine.LNX.1.10.0901242044100.4122@wapiti.we7u.net>
-Content-Disposition: inline
+In-Reply-To: <200901251411.57323.n7ipb@wetnet.net>
 Sender: linux-hams-owner@vger.kernel.org
 List-ID: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"
-To: linux-hams@vger.kernel.org
+Content-Type: text/plain; charset="us-ascii"; format="flowed"
+To: Ken Koster <n7ipb@wetnet.net>
+Cc: ax25@x-berg.in-berlin.de, linux-hams@vger.kernel.org
 
-On Saturday 24 January 2009, Curt, WE7U wrote:
-> On Fri, 23 Jan 2009, Curt, WE7U wrote:
+Hi again,
+
+I have to say it's only now that I really read what's written on the
+linux-ax25 wiki page and especially on the "History" page.
+
+And now I'm somewhat less enthusiastic about what is going on with
+the stuff..
+
+ From the wiki page, I get the feeling that the maintainers do not
+want things to be discussed openly in a centralized place. They want
+people to contact them, not discuss openly with other people.
+
+And then they wonder:
+
+'We really wonder why over the years nobody came to the idea to say
+"Hey dear maintainers, i'm in an important discussion on the
+mailinglist xyz, you're requested to join in".'
+
+Well, you might just want to ponder on that for a while longer.
+Perhaps the problem is not in the people that simply do not know
+how to play to your tune.
+
+Finally:
+
+'Collaboration work means working together, not against each other.'
+
+Yes, and that should begin from the maintainers doing real
+maintainership, gathering people to some common medium and encouraging
+people to participate and share. Not requiring "the mountain come
+to mohammed", especially when the mountain doesn't seem to know where
+mohammed is...
+
+Ken Koster wrote:
+>> *) Like I said, I don't feel very strongly about linux ax.25
+>> anymore, but I do feel _very_ strongly about using wikis and
+>> web forums for discussion on open source software. It sucks!
+>> I just hope that isn't happening here...
 > 
-> > As things stand now:
-> >
-> > *) Unproto packets to/from Xastir over the port are working fine.
-> >
-> > *) Ax25d and/or axspawn have problems with respect to the automatic
-> >   account creation.
+> And to that I'll add 'IRC' channels.
 
-The account creation issues should be relatively easy to troubleshoot but I
-was more intrigued by the data loss issues so I'm not looking at account
-creation.
+Well, apparently wconvers is on the supported list according to the
+wiki. I don't want to even get started on that one.
 
-> > *) Connected mode using axspawn loses LOTS of data.  It might be
-> >   useful to test another connected-mode AX.25 app to see where the
-> >   problem lies, in the AX.25 modules or in axspawn.
+I'm really happy I don't care about Linux AX.25 anymore...
 
-To follow up on Curt's comment,  it's probably not really axspawn or ax25d
-since ultimately they just use execve to execute 'login'.   
-
-...
-
-I spent several hours last night with a bench test setup verifying what we saw, 
-and verifying that the old releases worked.
-
-I'm going to try again with the latest CVS now that I know where it is.
-
-Ken,  N7IPB
+-- 
+Tomi Manninen / OH2BNS / KP20JE01FK
