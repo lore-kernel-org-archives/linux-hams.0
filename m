@@ -1,44 +1,86 @@
-From: "Curt, WE7U" <archer@eskimo.com>
-Subject: Re: Problems with ax25d/axspawn on OpenSuSE 11.0 32-bit
-Date: Sat, 24 Jan 2009 22:02:15 -0800 (PST)
-Message-ID: <alpine.LNX.1.10.0901242044100.4122@wapiti.we7u.net>
-References: <alpine.LNX.1.10.0901172222000.22616@wapiti2.we7u.net> <alpine.LNX.1.10.0901191336440.22828@wapiti2.we7u.net> <alpine.LNX.1.10.0901231008510.23524@wapiti2.we7u.net>
+From: Thomas Osterried <thomas-ampr@x-berg.in-berlin.de>
+Subject: ax25-apps/-tools: clarification about the project status
+Date: Sun, 25 Jan 2009 15:43:34 +0100
+Message-ID: <20090125144334.GA9629@x-berg.in-berlin.de>
+Reply-To: ax25@x-berg.in-berlin.de
 Mime-Version: 1.0
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <alpine.LNX.1.10.0901231008510.23524@wapiti2.we7u.net>
+Content-Disposition: inline
 Sender: linux-hams-owner@vger.kernel.org
 List-ID: <linux-hams.vger.kernel.org>
-Content-Type: TEXT/PLAIN; charset="us-ascii"; format="flowed"
+Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
 To: linux-hams@vger.kernel.org
 
-On Fri, 23 Jan 2009, Curt, WE7U wrote:
+Dear OMs and YLs at "linux-hams",
 
-> As things stand now:
->
-> *) Unproto packets to/from Xastir over the port are working fine.
->
-> *) Ax25d and/or axspawn have problems with respect to the automatic
->   account creation.
->
-> *) Connected mode using axspawn loses LOTS of data.  It might be
->   useful to test another connected-mode AX.25 app to see where the
->   problem lies, in the AX.25 modules or in axspawn.
+we need to correct some legends seen here on the list these days.
 
-Today at the ham brunch n7ipb and kd7nm were present among others.
-N7ipb and myself connected our laptops with a null-modem cable and
-had KISS ports configured on each.  I ran ax25d and had axspawn
-configured to launch from it.
+First let's point out that the project is _not_ dead and that we always
+respond to e-mail, mostly within 24h. There's active development, and
+all changes made are well-documented in the CVS system.
 
-Ken had no problems running SSH over that connection after he
-created his initial account via connected-mode and I manually
-changed his password as root.
 
-Ax25d and axspawn demonstrated the same bugs I reported before.
+Ralf <dl5rb> and I (Thomas <dl9sau>) are the maintainers of the
+linux AX.25 project, aka libax25, ax25-apps and ax25-tools.
 
--- 
-Curt, WE7U.				archer at eskimo dot com
-http://www.eskimo.com/~archer
-   Lotto:  A tax on people who are bad at math. - unknown
-Windows:  Microsoft's tax on computer illiterates. - WE7U.
-The world DOES revolve around me:  I picked the coordinate system!"
+As you remember, we took over the project from Craig Small (who was
+highly pleased about it), after the project was inactive for many years.
+
+We worked hard during these years to make it a stable and modern
+software package.
+And indeed, sometimes we felt very alone with that large stuff.
+
+
+linux-hams is a mixed mailing-list for all kind of ham related linux
+applications, kernel problems, beginner questions, etc.
+
+And in the special case of issues with libax25, ax25-apps and
+ax25-tools, it's doubtless *one* possible place in the world where
+problems and solutions *may* be discussed.
+
+But here's the point where your own responsibility starts: if you find
+a bug, if you have problems compiling or configuring, if you need a
+new feature, if you have traced a problem down, if you luckily have a
+patch, if you like to contribute, then *please* send an e-mail to us,
+the maintainers of the software!
+
+We're sure you understand that it's not possible for us to follow and
+participate in all discussions in all the known and all the unkonwn
+places in cyberspace.
+Btw, if more users whould have acted as informer, we'd have visited
+that place.
+
+
+As far as we know, every developer knows who we are, how to contact
+us, and where's the place for the software tree.
+
+We really cannot understand,
+  - why none of the debaters contacted us, or why no one invited us to
+    participate in an arised discussion-thread.
+  - why nobody asked the OMs who did and published own changes to contact us,
+    for getting them to the upstream version - for the benefit of all.
+    Even more, there a packages around which look like be official versions,
+    even with incremented version numbers(!). That's not cewl.
+    In other cases changes were made to central components (like libax25)
+    with the risk of incompatibility for other ham-software that depends on it.
+  - that there was an inacceptable discussion about overtaking sourceforge.net.
+  - why all that obviously abound power can not be used in a purposive
+    way for our common goal.
+
+This is really not the way (and must not be the way) software
+development goes.
+
+Although, it's a common misunderstanding in the free software scene.
+Despite all the endeavours we read here (which are positive!), it's a
+fact that everyone rather does his own thing (maybe together with his
+immediate peers) than actively forming the community or joining the
+team. This is the point we've to start from.
+
+
+In order get rid of all uncertainties, we've revised our homepage
+at www.linux-ax25.org: http://www.linux-ax25.org/wiki/LinuxAX25
+
+
+vy 73,
+	- Thomas  dl9sau
