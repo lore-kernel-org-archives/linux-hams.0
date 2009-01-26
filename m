@@ -1,78 +1,51 @@
-From: Ray Wells <vk2tv@exemail.com.au>
-Subject: Re: ax25-tools and apps
-Date: Mon, 26 Jan 2009 17:02:21 +1100
-Message-ID: <497D51ED.40909@exemail.com.au>
-References: <200901181350.36246.n7ipb@wetnet.net> <20090126001955.GA78660@mctaylor.blacknosugar.com>
+From: Thomas Osterried <ax25@x-berg.in-berlin.de>
+Subject: Re: Problems with ax25d/axspawn on OpenSuSE 11.0 32-bit
+Date: Mon, 26 Jan 2009 17:51:46 +0100
+Message-ID: <20090126165146.GA9887@x-berg.in-berlin.de>
+References: <alpine.LNX.1.10.0901172222000.22616@wapiti2.we7u.net> <alpine.LNX.1.10.0901231008510.23524@wapiti2.we7u.net> <alpine.LNX.1.10.0901242044100.4122@wapiti.we7u.net> <200901251433.26055.n7ipb@wetnet.net>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <20090126001955.GA78660@mctaylor.blacknosugar.com>
+Content-Disposition: inline
+In-Reply-To: <200901251433.26055.n7ipb@wetnet.net>
 Sender: linux-hams-owner@vger.kernel.org
 List-ID: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"; format="flowed"
-To: Michael Taylor <mctaylor@mctaylor.com>
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+To: Ken Koster <n7ipb@wetnet.net>
 Cc: linux-hams@vger.kernel.org
 
-Michael Taylor wrote:
-> On Sun, Jan 18, 2009 at 01:50:34PM -0800, Ken Koster wrote:
->   
->> So just where are the official sources for ax25-tools and ax25-apps?
->>     
->  
-> As a previous developer (that is a minor contributor) for the linux
-> ax25 software, I am sorry that the issue has been more confusing than
-> it ought to be. I have not been running any AX.25 software since about
-> 2003 and don't have an active station to test and evaluate development 
-> and patch submissions.
->
-> Hopefully we can all contribute to moving the linux-ax25 software and
-> community forward in a productive manner.
->
-> Michael, VE3TIX (ex-VE1MCT)
-> --
-> To unsubscribe from this list: send the line "unsubscribe linux-hams" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at  http://vger.kernel.org/majordomo-info.html
->
->   
-If I may be permitted to make a comment or two as a long time ax25 user. 
-My bbs has been using ax25 continuously since 1999. I still have six 
-ax25 radio ports, use axudp links, and handle telnet, rose, netrom and 
-garden variety ax25 on a system that has a bbs, node, and aprs HF and 
-VHF Igate. By today's packet standards it is a big system.
+On 2009-01-25 14:33:24 -0800, Ken Koster <n7ipb@wetnet.net>
+wrote in <200901251433.26055.n7ipb@wetnet.net>:
+> > > *) Connected mode using axspawn loses LOTS of data.  It might be
+> > >   useful to test another connected-mode AX.25 app to see where the
+> > >   problem lies, in the AX.25 modules or in axspawn.
+> 
+> To follow up on Curt's comment,  it's probably not really axspawn or ax25d
+> since ultimately they just use execve to execute 'login'.   
 
-As a user rather than a programmer or developer, I consider myself 
-unqualified to lodge bug reports because my in-depth knowledge of the 
-"inner workings" is insufficient for me to reach a logical conclusion. 
-What may appear as a bug may be operator error. I always compile kernel 
-ax25, but I know my limitations, even though I push them.
+the old axspawn had the issue that write()'s return value was not used
+correctly.
 
-As a user of ax25, however, I am not alone, being one of a considerable 
-number of bbs stations in France, the United States and Australia. There 
-may be others outside of "my" circle. Every bbs with which I forward 
-uses ax25. We all use fpacnode (from f6fbb) which is based on Linuxnode, 
-but containing considerable improvements for handling Rose protocol. 
-fpacnode also handles Netrom in an almost identical manner to Linuxnode.
+The new axspawn is even compatible with the #BIN# protocol.
 
-What started out as an fpac mailing list seems to have collapsed to just 
-four of us exchanging emails.
+I have written the tools bput and bget, which enables you to up/download
+any file with your favourite packet program to the shell session at the
+remote site.
 
-Bernard f6bvp has taken over ongoing maintenance of xfbb (minor fixes) 
-and fpac (good improvements and fixes). Bernard has also released 
-patches for kernel ax25 and kernel Rose. The email group of four 
-previously mentioned, tend to be beta testers for Bernard's work.
 
-I wonder how many ax25 users (and potential users) there are who aren't 
-in the know, and who plod away with broken code, or just give up?
+An issue concerning the kernel-ax25 we found a few days past:
 
-As old as ax25 is, I remain optimistic that it will still be in use for 
-many years to come, and I would like to see a return to a coordinated 
-approach to maintaining the code.
+we observed, that it could happen that the rf transmission did not has
+incremented the session number of the I-frame. This means, that there
+may be two or more different data-packets with the same sequence number -
+with the result that the receiving site misses that data.
 
-Am I of any value as a beta tester beyond my current circle for those 
-developers who don't have test facilities? I don't know, but I do run a 
-number of Linux systems with kernel ax25, so setting up for testing 
-something I currently don't use ( axspawn, e.g.) is totally possible, if 
-it's of any use and it advances the cause.
+We think it's a smp-problem: non-smp kernels did not show this behaviour
+(or at least it is rare that we still have not seen it when testing).
 
-Ray vk2tv
+We testet this least with kernel 2.6.24 to 2.6.28.1, but also heard that
+the problem was seen many years past with kernel 2.4.x.
+
+73,
+	- Thomas  dl9sau
+
