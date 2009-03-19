@@ -1,42 +1,38 @@
-From: Matti Aarnio <oh2mqk@sral.fi>
-Subject: Re: Debian 5.0
-Date: Tue, 10 Mar 2009 19:10:43 +0200
-Message-ID: <20090310171043.GM28512@mea-ext.zmailer.org>
-References: <49B4F318.1010106@xnet.co.nz> <alpine.LNX.1.10.0903091305150.10297@wapiti2.we7u.net> <alpine.LNX.1.10.0903100953190.30377@wapiti2.we7u.net>
+From: bernard pidoux <f6bvp@free.fr>
+Subject: [PATCH 1/3] [AX25] SOCK_DEBUG message simplification
+Date: Thu, 19 Mar 2009 19:15:03 +0100
+Message-ID: <1237486504.30285.15.camel@f6bvp-11>
 Mime-Version: 1.0
+Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
-Content-Disposition: inline
-In-Reply-To: <alpine.LNX.1.10.0903100953190.30377@wapiti2.we7u.net>
 Sender: linux-hams-owner@vger.kernel.org
 List-ID: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-To: "Curt, WE7U" <archer@eskimo.com>
-Cc: Peter Mallett <zl2bau@xnet.co.nz>, linux-hams@vger.kernel.org
+To: linux-hams@vger.kernel.org
 
-On Tue, Mar 10, 2009 at 09:54:32AM -0700, Curt, WE7U wrote:
-> On Mon, 9 Mar 2009, Curt, WE7U wrote:
->
->> *) Run "glxgears" before/after each change to see if frames/second
->>   is degrading or improving.
->
-> Sorry, that last tip is only for 3D stuff.  If you're not gaming in
-> 3D mode that won't be of much use to you.  I doubt the video players
-> use OpenGL to do their video, but of course I could be wrong.
+This patch condenses two debug messages in one.
 
-Practically all _fast_ 2D graphics mappers (like those on  some SDR
-softwares) use 3D API to push out 3D primitives to plot the multi-
-hued waterfalls on display.  The "fun" of the thing is that modern
-graphics cards do this far faster than with plain 2D primitives.
+Signed-off-by: Bernard Pidoux <f6bvp@amsat.org>
+---
+ net/ax25/af_ax25.c |    4 +---
+ 1 files changed, 1 insertions(+), 3 deletions(-)
 
-> -- 
-> Curt, WE7U.				archer at eskimo dot com
-> http://www.eskimo.com/~archer
->   Lotto:  A tax on people who are bad at math. - unknown
-> Windows:  Microsoft's tax on computer illiterates. - WE7U.
-> The world DOES revolve around me:  I picked the coordinate system!"
+diff --git a/net/ax25/af_ax25.c b/net/ax25/af_ax25.c
+index 00d9e5e..532a031 100644
+--- a/net/ax25/af_ax25.c
++++ b/net/ax25/af_ax25.c
+@@ -1529,10 +1529,8 @@ static int ax25_sendmsg(struct kiocb *iocb, struct socket *sock,
+ 		dp = ax25->digipeat;
+ 	}
+ 
+-	SOCK_DEBUG(sk, "AX.25: sendto: Addresses built.\n");
+-
+ 	/* Build a packet */
+-	SOCK_DEBUG(sk, "AX.25: sendto: building packet.\n");
++	SOCK_DEBUG(sk, "AX.25: sendto: Addresses built. Building packet.\n");
+ 
+ 	/* Assume the worst case */
+ 	size = len + ax25->ax25_dev->dev->hard_header_len;
+-- 
+1.6.0.6
 
-One Ernst and other Albert might have had something witty to say
-along these lines...
-
-73 de Matti, OH2MQK
