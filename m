@@ -1,61 +1,33 @@
-From: bernard pidoux <f6bvp@free.fr>
-Subject: [PATCH 3/3] [NETROM] zero length frame filtering in NetRom
-Date: Thu, 19 Mar 2009 19:18:52 +0100
-Message-ID: <1237486732.30285.18.camel@f6bvp-11>
+From: Peter Mallett <zl2bau@xnet.co.nz>
+Subject: fbb 7.04r
+Date: Sat, 21 Mar 2009 00:19:54 +1300
+Message-ID: <49C37BDA.5060205@xnet.co.nz>
 Mime-Version: 1.0
 Content-Transfer-Encoding: 7bit
-Return-path: <netdev-owner@vger.kernel.org>
-Sender: netdev-owner@vger.kernel.org
+Return-path: <linux-hams-owner@vger.kernel.org>
+Sender: linux-hams-owner@vger.kernel.org
 List-ID: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"
-To: Linux netdev <netdev@vger.kernel.org>, Linux Hams <linux-hams@vger.kernel.org>, David Miller <davem@davemloft.net>
+Content-Type: text/plain; charset="us-ascii"; format="flowed"
+To: linux-hams@vger.kernel.org
 
-A zero length frame filter was recently introduced in ROSE protocole.
-Previous commit makes the same at AX25 protocole level.
-This patch has the same purpose for NetRom  protocole.
-The reason is that empty frames have no meaning in NetRom protocole.
 
-Signed-off-by: Bernard Pidoux <f6bvp@amsat.org>
----
- net/netrom/af_netrom.c |   11 ++++++++++-
- 1 files changed, 10 insertions(+), 1 deletions(-)
+Hi All,
 
-diff --git a/net/netrom/af_netrom.c b/net/netrom/af_netrom.c
-index e9c05b8..ec6c898 100644
---- a/net/netrom/af_netrom.c
-+++ b/net/netrom/af_netrom.c
-@@ -1037,6 +1037,10 @@ static int nr_sendmsg(struct kiocb *iocb, struct socket *sock,
- 	unsigned char *asmptr;
- 	int size;
- 
-+	/* Netrom empty data frame has no meaning : don't send */
-+	if (len == 0)
-+		return 0;
-+
- 	if (msg->msg_flags & ~(MSG_DONTWAIT|MSG_EOR|MSG_CMSG_COMPAT))
- 		return -EINVAL;
- 
-@@ -1167,6 +1171,11 @@ static int nr_recvmsg(struct kiocb *iocb, struct socket *sock,
- 	skb_reset_transport_header(skb);
- 	copied     = skb->len;
- 
-+	/* NetRom empty data frame has no meaning : ignore it */
-+	if (copied == 0) {
-+		goto out;
-+	}
-+
- 	if (copied > size) {
- 		copied = size;
- 		msg->msg_flags |= MSG_TRUNC;
-@@ -1182,7 +1191,7 @@ static int nr_recvmsg(struct kiocb *iocb, struct socket *sock,
- 
- 	msg->msg_namelen = sizeof(*sax);
- 
--	skb_free_datagram(sk, skb);
-+out:	skb_free_datagram(sk, skb);
- 
- 	release_sock(sk);
- 	return copied;
--- 
-1.6.0.6
+         I have a problem with the later versions of fbb (7.04r) that I 
+have not been able to find an answer to.
+
+The problem is with housekeep, everytime I have tried the later versions 
+to what I currently run (7.04j-6) as in 7.04r, it appears to not be 
+doing the nightly housekeep as it is not creating any *.bak or *.res 
+files as my current version (7.04j-6) does.
+
+At the moment I am running Debian 4.0r7 with fbb 7.04j-6.
+
+Is this a problem with the later versions ?
+Is the problem with the later kernels ?
+Is the problem with my setup ?
+
+Any help would be greatly accepted.
+
+Regards ..... Peter
 
