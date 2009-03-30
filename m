@@ -1,47 +1,31 @@
-From: Geoff Bagley <geoff.bagley@btinternet.com>
-Subject: Re: PCB design.  W7DMR DE G3FHL =
-Date: Sun, 22 Mar 2009 10:27:33 +0000
-Message-ID: <49C61295.3010303@btinternet.com>
-References: <49C4A0ED.4080304@btinternet.com>    <20090321165809.GA9631@reid1.localdomain>    <49C54337.4050402@btinternet.com> <1551.211.50.232.15.1237710730.squirrel@webmail01.lancs.ac.uk>
+From: T + J Williams <wa0eir@mchsi.com>
+Subject: psk31lx release
+Date: Mon, 30 Mar 2009 17:19:46 -0500
+Message-ID: <1238451587.2122.68.camel@localhost.localdomain>
 Mime-Version: 1.0
 Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <1551.211.50.232.15.1237710730.squirrel@webmail01.lancs.ac.uk>
+DKIM-Signature: v=1; q=dns/txt; d=mchsi.com; s=dkim01; a=rsa-sha256;
+      c=relaxed/relaxed; t=1238451594; h=Content-Transfer-Encoding:
+     Mime-Version:Message-Id:Date:Content-Type:To:From:Subject; bh=kM/CS
+     4ijsnGoQCSnvQY0q+3DoaAs7pkHgJDCS1YxRKA=; b=VDbwG5vQyFALzmHyXV4s0DZn
+     R8lR412SK83CQl/EJvajLXqACboZW+nsmpKSL/x7dO+1hhahSOyAQZD2eP6Vxw==
 Sender: linux-hams-owner@vger.kernel.org
 List-ID: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"; format="flowed"
-To: Andrew Errington <a.errington@lancaster.ac.uk>
-Cc: don <don_reid@comcast.net>, Linux HAMs <linux-hams@vger.kernel.org>
+Content-Type: text/plain; charset="us-ascii"
+To: Debian Hams <debian-hams@lists.debian.org>, Linux Hams <linux-hams@vger.kernel.org>, Xlog <xlog-discussion@nongnu.org>, Yahoo linux hams <linuxhams@yahoogroups.com>, Open Suse Ham <o>
 
-Thanks Andrew,
+Hi,
 
-I have just downloaded it from Debian and will give it a try !
-Thanks to all for help.
+There is a new release of psk31lx.  A spectrum display has been added to
+this version and it makes tuning much easier.  Since psk31lx does not
+have a GUI (it uses ncurses), it will run in an xterm or even on a
+system without the X Window system.   It needs very little CPU time,
+which makes it perfect for slower and smaller hardware.  See my website
+for the download.
 
-73
-
-Geoff  G3FHL
-
-Andrew Errington wrote:
-> Hi Geoff,
->
-> If you haven't started your project yet then take a look at KiCd.  I am
-> not sure if it is in a Debian repository, but if not it is easy to
-> download and install.
->
-> Kicad is a full schematic capture and layout program.  If you take a look
-> you will see that the features are quite impressive and not just limited
-> to PCB artwork.  In addition it is Free and Cross Platform.
->
-> Executive summary here:
-> http://en.wikipedia.org/wiki/Kicad
->
-> Home page here:
-> http://kicad.sourceforge.net/wiki/index.php/Main_Page
->
-> 73,
->
-> Andrew
-> ZL3AME
->   
+-- 
+73,
+Ted W  -  wa0eir
+http://wa0eir.ham.org
 
