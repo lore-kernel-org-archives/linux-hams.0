@@ -1,42 +1,40 @@
-From: "Rick Bolen (GM)" <rickbolgm@gmail.com>
-Subject: aprsd not responding to queries
-Date: Fri, 03 Apr 2009 20:30:11 -0400
-Message-ID: <1238805011.12060.7.camel@fourwinds-lenny.bolenworks.net>
+From: richard <richard.bown@blueyonder.co.uk>
+Subject: wsjt
+Date: Sat, 11 Apr 2009 12:00:39 +0100
+Message-ID: <20090411120039.0d7a1daf@richard-g8jvm>
 Mime-Version: 1.0
 Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:subject:from:to:content-type
-         :date:message-id:mime-version:x-mailer:content-transfer-encoding;
-        bh=xS0DktPmwUMT+xec4pDMTc0BKYSDLSLZPT9guDKIT0I=;
-        b=s9YzMp6ph+rgBUW2u8j+9CPEhk+0GdZjNr3/eNbOZzJJFo4UwdQkoanF++5Xj62T2y
-         O3bo1i6iN8Oilh9PK0YuBFuRkRF2WyG/LWQu9+VpY7tFSl5W+sKakVOodoOQtGIOvfGY
-         5sCm8YTvBl/dcmGmaH/frdYmdNzvq8HMh1uog=
 Sender: linux-hams-owner@vger.kernel.org
 List-ID: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
-To: linux-hams@vger.kernel.org
+To: Linux HAMs <linux-hams@vger.kernel.org>
 
-I'm trying to query aprsd from xastir message, and I get nothing back
-from aprsd.
+Hi
+and before anyone tells me this is the wrong group, I'm not running a
+steam powered machine with with an ancient P3 processor.
+Those who also subscribe to the wsjt group will know exactly what I'm
+on about..
 
-I've tried
+Who's the Debian/Ubuntu maintainer for wsjt, the last issue was 5.9.7
+(WSJT6).
+I've never been able to get wsjt to compile on a 64bit machine, I would
+at least like to get up to version 7.
+I'm in the position that I now have enough power and antenna gain, but
+let down by s/w. I can hear weak signals off the moon.
+Has anyone successfully managed to compile a recent copy of wsjt on a
+64 bit machine
 
-?APRST
-?APRST?
-?IGATE
-?IGATE?
-?PING
-?PING?
+TIA
 
-and I've sent to both the mycall (KG4OFO-10) and servercall (KG4OFOsvr)
-from my mobile, KG4OFO-1.
+-- 
+Best wishes
 
-I'm needing to ping from a distance to check out routing, but I'm not
-getting any response from aprsd from ~20ft.
+Richard Bown
 
-Thanks,
-
-Rick - KG4OFO 
+#########################################################################
+Registered Linux User 36561
+OS: Ubuntu 9.04, Jaunty -dev, on AMD Dual Athlon 64 +4400: 8 GB RAM DDR2
+Ham Call: G8JVM , QRA IO82SP, Interests Microwave
+#########################################################################
 
