@@ -1,56 +1,60 @@
-From: Roel Kluin <roel.kluin@gmail.com>
-Subject: ax25: non working tests on unsigned ax25_ctl.arg
-Date: Tue, 21 Apr 2009 14:55:23 +0200
-Message-ID: <49EDC23B.4070900@gmail.com>
+From: David Miller <davem@davemloft.net>
+Subject: Re: [PATCH] net/netrom: Fix socket locking
+Date: Wed, 22 Apr 2009 00:50:27 -0700 (PDT)
+Message-ID: <20090422.005027.65381788.davem@davemloft.net>
+References: <200904212249.46323.jdelvare@suse.de>
 Mime-Version: 1.0
 Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from
-         :user-agent:mime-version:to:subject:content-type
-         :content-transfer-encoding;
-        bh=6iArn+qD2Dg+2zTuU8eJUdtZ19jZ3tAH3eqNrquDn5U=;
-        b=x971VMY/sq4xO4RbNxKu5302TlPIT/gXqoGuibe4qW5IUipOALgVO/dKRxRRWd6vXY
-         S9Mh1kjLcpQxlAYf5pNnnDgjmFXa84Y6BCdQgO6lzHEVM9BwO3L5oH1tuXO8ywttEhb5
-         CNzsbUmOz9osk0DmWZaOP4ztFhs7oy/VVjhtE=
+In-Reply-To: <200904212249.46323.jdelvare@suse.de>
 Sender: linux-hams-owner@vger.kernel.org
 List-ID: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"
-To: jreuter@yaina.de, linux-hams@vger.kernel.org
+Content-Type: Text/Plain; charset="us-ascii"
+To: jdelvare@suse.de
+Cc: ralf@linux-mips.org, linux-hams@vger.kernel.org, alan@lxorguk.ukuu.org.uk
 
-vi include/linux/ax25.h +77
-and note that ax25_ctl.arg is unsigned, should there maybe be a test
+From: Jean Delvare <jdelvare@suse.de>
+Date: Tue, 21 Apr 2009 22:49:45 +0200
 
-if (ax25_ctl.arg > MAX)
-	return -EINVAL;
+> Patch "af_rose/x25: Sanity check the maximum user frame size"
+> (commit 83e0bbcbe2145f160fbaa109b0439dae7f4a38a9) from Alan Cox got
+> locking wrong. If we bail out due to user frame size being too large,
+> we must unlock the socket beforehand.
+> 
+> Signed-off-by: Jean Delvare <jdelvare@suse.de>
+> Cc: Ralf Baechle <ralf@linux-mips.org>
+> Cc: Alan Cox <alan@lxorguk.ukuu.org.uk>
+> Cc: David S. Miller <davem@davemloft.net>
 
-(and what should MAX be then?)
+Applied, thanks.
 
-Otherwise you may want to apply the cleanup patch below
+Please CC: netdev@vger.kernel.org on all networking patches in
+the future.  Otherwise it won't get tracked properly at:
 
-Roel
------------------------------->8-------------8<---------------------------------
-Remove redundant tests on unsigned
+	http://patchwork.ozlabs.org/project/netdev/list/
 
-Signed-off-by: Roel Kluin <roel.kluin@gmail.com> 
----
-diff --git a/net/ax25/af_ax25.c b/net/ax25/af_ax25.c
-index fd9d06f..9964df3 100644
---- a/net/ax25/af_ax25.c
-+++ b/net/ax25/af_ax25.c
-@@ -418,14 +418,10 @@ static int ax25_ctl_ioctl(const unsigned int cmd, void __user *arg)
- 		break;
- 
- 	case AX25_T3:
--		if (ax25_ctl.arg < 0)
--			return -EINVAL;
- 		ax25->t3 = ax25_ctl.arg * HZ;
- 		break;
- 
- 	case AX25_IDLE:
--		if (ax25_ctl.arg < 0)
--			return -EINVAL;
- 		ax25->idle = ax25_ctl.arg * 60 * HZ;
- 		break;
- 
+Thanks.
+
+> ---
+>  net/netrom/af_netrom.c |    6 ++++--
+>  1 file changed, 4 insertions(+), 2 deletions(-)
+> 
+> --- linux-2.6.30-rc2.orig/net/netrom/af_netrom.c	2009-04-08 08:54:00.000000000 +0200
+> +++ linux-2.6.30-rc2/net/netrom/af_netrom.c	2009-04-21 21:57:01.000000000 +0200
+> @@ -1084,8 +1084,10 @@ static int nr_sendmsg(struct kiocb *iocb
+>  
+>  	/* Build a packet - the conventional user limit is 236 bytes. We can
+>  	   do ludicrously large NetROM frames but must not overflow */
+> -	if (len > 65536)
+> -		return -EMSGSIZE;
+> +	if (len > 65536) {
+> +		err = -EMSGSIZE;
+> +		goto out;
+> +	}
+>  
+>  	SOCK_DEBUG(sk, "NET/ROM: sendto: building packet.\n");
+>  	size = len + NR_NETWORK_LEN + NR_TRANSPORT_LEN;
+> 
+> -- 
+> Jean Delvare
+> Suse L3
