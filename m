@@ -1,102 +1,73 @@
-From: C Schuman <k4gbb1@embarqmail.com>
+From: Patrick Ouellette <pat@flying-gecko.net>
 Subject: Re: AX25 in /etc/init.d
-Date: Fri, 01 May 2009 16:40:02 -0400
-Message-ID: <49FB5E22.2070000@embarqmail.com>
-References: <49FA6FB8.1030706@embarqmail.com> <20090501200629.GB4652@flying-gecko.net>
-Reply-To: k4gbb1@embarqmail.com
+Date: Fri, 1 May 2009 17:47:29 -0400
+Message-ID: <20090501214729.GA12084@flying-gecko.net>
+References: <49FA6FB8.1030706@embarqmail.com> <20090501200629.GB4652@flying-gecko.net> <49FB5E22.2070000@embarqmail.com>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
-DKIM-Signature: v=1; a=rsa-sha1; d=embarqmail.com; s=s012408; c=relaxed/simple;
-	q=dns/txt; i=@embarqmail.com; t=1241210408;
-	h=From:Subject:Date:To:MIME-Version:Content-Type;
-	bh=nZJl+zhZflDcIdNoARsVXKntCLw=;
-	b=QA3/gOxMl5hJ2HbRTIkvoOfxs3GRA+n5k5jsYY6xwbsKHQteP1/EWOFF68cZjMYg
-	evH3T8JIr5Kgx9zJ4mo9aSUWxlSf24/F9AHToYJhPjfDUeSZwV7qMTF7YEHdUw5t;
-In-Reply-To: <20090501200629.GB4652@flying-gecko.net>
+Content-Disposition: inline
+In-Reply-To: <49FB5E22.2070000@embarqmail.com>
 Sender: linux-hams-owner@vger.kernel.org
 List-ID: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"; format="flowed"
-To: Patrick Ouellette <pat@flying-gecko.net>
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+To: C Schuman <k4gbb1@embarqmail.com>
 Cc: Linux-Hams <linux-hams@vger.kernel.org>
 
-
-Patrick Ouellette wrote:
-> On Thu, Apr 30, 2009 at 11:42:48PM -0400, C Schuman wrote:
->   
->> I installed AX.25 on a system a couple of days ago and when I copied my  
->> usual ax25 script into /etc/init.d/ I received a message saying that the  
->> script did not have a proper header. The script worked without any  
->> problem, but it started me thinking.  Most Ax.25 Howto Docs make little  
->> of the bootup process. Some even suggest that the kissattach and other  
->> config commands be placed in the rc.local file.
+On Fri, May 01, 2009 at 04:40:02PM -0400, C Schuman wrote:
 >>
->> AX.25 is becoming a major work in Linux systems. It deserves to have  
->> it's own boot script. I have been using the same script for years and I  
->> recently added the the requested header. I would like to suggest that  
->> AX.25 How to docs include the use of such a script and have attached my  
->> script as an example.
+>> FWIW, Debian includes a startup script in the ax25-tools package.  It sets up
+>> the mheardd, ax25d, and netromd.
 >>
->> 73
->> <<Charley>>
->>      k4gbb
+>> 73,
 >>
->> #! /bin/bash
->> # Provided by Charles S Schuman ( K4GBB )
->> # 04/29/09
->>
->> ### BEGIN INIT INFO
->> # Provides: ax25
->> # Required-Start: /etc/ax25/ax25-up
->> # Required-Stop: /etc/ax25/ax25-down
->> # Default-Start: 3 4 5
->> # Default-Stop: 0 1 2 6
->> # Short-Description: Ax.25 initialization
->> # Description: This script provides the control for the ax.25 packet  
->> radio service.
->> #           The fine tuneing is accomplished via /etc/ax25/ax25-up and  
->> /etc/ax25/ax25-down.
->> #
->> ### END INIT INFO
->>
->>     
+>> Pat
+>>   
+> Thanks Pat,
+> Yes, your assumption is correct.
 >
-> I assume the lines between "BEGIN INIT INFO" and "END INIT INFO" are the 
-> header lines you are referring to.  If so, please understand that not all
-> Linux distributions use the same startup process and so do not necessarily
-> use or require those headers.  
+> I use Ubuntu and Debian.  I have never seen any of the Debian Startup  
+> scripts for AX.25. 
 >
-> FWIW, Debian includes a startup script in the ax25-tools package.  It sets up
-> the mheardd, ax25d, and netromd.
+> The problem with with most of the supplied or example start scripts is  
+> that they never do what you want them to do.
+> The Linux HAM Radio community are an assorted lot.  I have approx 14  
+> Packet Radio servers and no two are the same.
+> I have been Elmering a number of individuals who are attempting their  
+> first installion of Linux. Some just want a RMS Gate.
+> Others want a BBS, Node and an assortment of other apps.
 >
-> 73,
+> My point was not really "We need to add Header Info", but more toward  
+> the "We need a more versatile script"
+> By pointing our start up script at /etc/ax25/ax25-up & down we can use a  
+> common script to transition to an uncommon system initialization.
 >
-> Pat
->   
-Thanks Pat,
-Yes, your assumption is correct.
 
- I use Ubuntu and Debian.  I have never seen any of the Debian Startup 
-scripts for AX.25. 
+Well, I just checked, and the most recent ax25-tools does not install
+the startup script.  There used to be one in the debian source package.
 
-The problem with with most of the supplied or example start scripts is 
-that they never do what you want them to do.
-The Linux HAM Radio community are an assorted lot.  I have approx 14 
-Packet Radio servers and no two are the same.
-I have been Elmering a number of individuals who are attempting their 
-first installion of Linux. Some just want a RMS Gate.
-Others want a BBS, Node and an assortment of other apps.
+Anyway, I agree in principle that ax25 should have startup scripts - BUT
+as you point out, each system is different.  Several (> 7) years ago I
+looked at creating comprehensive set up scripts for Debian's ax25 packages
+and decided there were just too many variables and not enough interest to
+make it worth the time.  It was easier and faster to set up the boxes 
+individually.
 
-My point was not really "We need to add Header Info", but more toward 
-the "We need a more versatile script"
-By pointing our start up script at /etc/ax25/ax25-up & down we can use a 
-common script to transition to an uncommon system initialization.
+The upstream ax25 package has *almost* not changed for a very long time.
+Either it is completely debugged, there is not a bug that hits anyone's
+"button," or there are not enough users to push for lots of activity there.
+(I'm not saying it is unmaintained, but that there has been little change
+in both the ax25 apps/tools and the kernel ax25 code for quite some time.)
 
-73
-<<Charley>>
-      k4gbb
+There is a wiki at www.linux-ax25.org and a few other efforts around.
 
+73,
+Pat
 
+-- 
 
-
-
+Patrick Ouellette                 pat@flying-gecko.net
+ne4po (at) arrl (dot) net         Amateur Radio: NE4PO 
+"Crank the amp to 11, this needs more cowbell - and a llama wouldn't hurt either"
+"Your arguments are an odd mix of overly optimistic on one side and overly 
+pessimistic on the other"
