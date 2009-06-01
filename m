@@ -1,56 +1,30 @@
-From: Dave Platt <dplatt@radagast.org>
-Subject: Re: Xastir Development Snapshot + Soundmodem/AX.25 HOWTO's
-Date: Thu, 21 May 2009 10:47:13 -0700
-Message-ID: <4A1593A1.4000806@radagast.org>
-References: <alpine.LNX.2.00.0905210902280.12303@wapiti.we7u.net> <4A1585AA.5000300@columbia.edu>
+From: Phil <phillor@telstra.com>
+Subject: /dev/dsp busy
+Date: Mon, 1 Jun 2009 10:59:15 +1000
+Message-ID: <200906011059.15279.phillor@telstra.com>
 Mime-Version: 1.0
 Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <4A1585AA.5000300@columbia.edu>
+Content-Disposition: inline
 Sender: linux-hams-owner@vger.kernel.org
 List-ID: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"; format="flowed"
-To: Alan Crosswell <alan@columbia.edu>
-Cc: "Curt, WE7U" <archer@eskimo.com>, linux-hams@vger.kernel.org, linux-hams-using-ax25@yahoogroups.com
+Content-Type: text/plain; charset="us-ascii"
+To: linux-hams@vger.kernel.org
 
+Thank you for reading this.
 
-> Somewhat OT: but has anyone successfully used a USB sound "card" with
-> soundmodem?
+I've recently upgraded to Mandriva 2009.1 and now none of my 
+Amateur Radio applications will run because /dev/dsp is busy. Yet, 
+"fuser -v dev/dsp" shows that nothing is using the resource.
 
-I've been able to make a soundmodem 1200-baud connection using a
-SignaLink USB (setting the soundmodem PTT to /dev/null, since
-the SignaLink USB has its own vox-driven PTT circuit).
+I've disabled Pulse Audio in case that was a problem and I don't have 
+any sound applications sitting on the task bar. I had this problem four 
+years ago and that was due to a music player sitting on the task bar.
 
-Some tricks:
+The driver in use is: "intel HDA (snd_hda_intel [ALSA])"
 
--  If possible, use the direct ALSA "hw:" interface, and set
-    the soundmodem's sample rate equal to one of the "native"
-    rates supported by your USB sound card.  This ensures that
-    no DSP- or CPU-based sample rate conversion needs to be
-    done.
-
--  With some USB sound cards this may not be possible... there
-    are those which have *different* sample rate sets for input
-    and output, and might not even have a single rate in common
-    which works in both directions.  In this case, specify the
-    ALSA "plughw:" interface, so that ALSA's sample-rate conversion
-    plugin does the necessary rate conversions... it seems to work
-    quite well.
-
--  Do *not* use the OSS compatibility driver for ALSA (e.g.
-    the /dev/dsp interface).  Although this driver does
-    attempt to perform sample-rate conversion, it doesn't do
-    so at all well... I've seen periodic dropouts in the
-    incoming data (sequences of sample values of zero) whenever
-    the buffer wraps around.  This really mucks up digital
-    modes!
-
--  Make sure you've got the most recent version of the
-    soundmodem code (it looks as if it's up to version
-    0.13).  There were some important patches to ALSA
-    support a few months ago, which eliminate a bunch of
-    errors and freezes during TX/RX switching... versions
-    0.10 and earlier did not work well with ALSA USB.
-
-
-
+Can anyone offer any suggestions?
+ 
+-- 
+Regards,
+Phil
