@@ -1,27 +1,32 @@
-From: Geoff Bagley <geoff.bagley@btinternet.com>
-Subject: ICOM PCR1000
-Date: Mon, 01 Jun 2009 14:35:37 +0100
-Message-ID: <4A23D929.4020201@btinternet.com>
-References: <49432397.8060304@weca.org> <courier.4943332E.0000255C@radagast.org>
+From: Phil <phillor@telstra.com>
+Subject: Re: /dev/dsp busy
+Date: Tue, 2 Jun 2009 12:43:54 +1000
+Message-ID: <200906021243.54409.phillor@telstra.com>
+References: <200906011059.15279.phillor@telstra.com> <200906011450.38388.phillor@telstra.com> <4A236947.8070602@radagast.org>
 Mime-Version: 1.0
 Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <courier.4943332E.0000255C@radagast.org>
+In-Reply-To: <4A236947.8070602@radagast.org>
+Content-Disposition: inline
 Sender: linux-hams-owner@vger.kernel.org
 List-ID: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"; format="flowed"
-To: Linux HAMs <linux-hams@vger.kernel.org>
+Content-Type: Text/Plain; charset="us-ascii"
+To: linux-hams@vger.kernel.org
 
-Hi.
+On Monday 01 June 2009 15:38:15 Dave Platt wrote:
+<cut>
+> I've observed something like this when:
+>
+> -  The sound card has an ALSA driver, and
+>
+> -  The sound card supports only a limited set of audio sample
+>     rates, and
+>
 
-I have just revives my old ICOM PCR1000 after a period of rest.
+Thank you for your detailed reply Dave.
 
-It used to be contrlled with Windo$e in the bad old days, but now I have 
-put away childish things and am using Debian Lennie.
+I'll experiment further and see what results.
 
-I have qpcr1k  which controls it well from the command-line.
-Can anyone recommend a spectrum display that runs well with the PCR1000 ?
-
-73
-
-Geoff G3FHL
+-- 
+Regards,
+Phil
