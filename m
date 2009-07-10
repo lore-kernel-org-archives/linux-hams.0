@@ -1,7 +1,7 @@
 From: Pino Zollo <pinozollo@gmail.com>
-Subject: fldigi and DBLog
-Date: Tue, 23 Jun 2009 13:21:15 -0400
-Message-ID: <200906231321.16195.pinozollo@gmail.com>
+Subject: Proposal for coding in UTF-8
+Date: Fri, 10 Jul 2009 16:16:25 -0400
+Message-ID: <200907101616.26422.pinozollo@gmail.com>
 Reply-To: pinozollo@gmail.com
 Mime-Version: 1.0
 Content-Transfer-Encoding: 7bit
@@ -11,42 +11,51 @@ DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         h=domainkey-signature:received:received:from:reply-to:organization:to
          :subject:date:user-agent:cc:mime-version:content-type
          :content-transfer-encoding:content-disposition:message-id;
-        bh=78ibvlf57pLe7faBeDtSz9Jknpkse+3NCzVnRj5BBGg=;
-        b=Bd+agVlB0TFsxpEZBmb6g+djop/8tkeJhb8GqRZWjG+V1ZipgIfqP5tw8kUXlKFLzj
-         qd4dJEh7VpcnfOhCe8dPPjsqt5ydgOwktPi32ns35q6obGJF4ZnJ2a+4oP1Y4rJiY2Fd
-         sdUQr+Lw2c2o41C/DZug75YmcjbibJFOfHB8g=
+        bh=xgLAeu++Z4zU+to7m9WLqRkaco/9LTiCGDa7/FnSALE=;
+        b=YbFdiPuWh5NPxWL2JLGQ6px+Pif/IjOLcvFUEnGBeBMp5s+Zad8JNOL++0Nq3v88qV
+         feo5ZB25pIiVFZdt9Itp4AJjHIDHR+eTaZ0/kHdwnbOdDGle/i+pn34Yl2J/e/Nk2s/U
+         SiPjhshSyEdvdqlp6ujQiPhprAM1uRPBJ1H60=
 Content-Disposition: inline
 Sender: linux-hams-owner@vger.kernel.org
 List-ID: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
-To: fldigi-alpha@lists.berlios.de
-Cc: Alberto Guglielmo <a.guglielmo@tcpsas.com>, Vlad <ua6jd@vfemail.net>, ham-linux@mailman.qth.net, Forum Logger32 <hamlogger@yahoogroups.com>, Linux Hams <linux-hams@vger.kernel.org>
+To: ADIF <adifdev@yahoogroups.com>
+Cc: ham-linux@mailman.qth.net, Linux Hams <linux-hams@vger.kernel.org>, Debian Hams <debian-hams@lists.debian.org>
 
-Hi everybody,
+Hi de ZP4KFX
 
-I have just uploaded the version 0.15.2 of DBLog on
+I propose to include into the standard the following tag for the header:
 
-http://www.qsl.net/zp4kfx/Linux/dblog.html
+<ENCODING:5>UTF-8 
 
-DBLog is a logger program for Linux inspired to Logger32 and to M1NN_Logger.
+ENCODING can be absent or can be <ENCODING:10>ISO-8859-1
 
-It works in harmony with fldigi for operating digi-modes.
+This is already implemented in my DBLog...see http://www.qsl.net/zp4kfx/Linux
 
-DBLog  is UTF-8 compliant and sensitive to the 'locale'. 
 
-It stores all data's in the RDBM PostgreSQL.
+http://www.qsl.net/zp4kfx/Linux/TestUTF8.html
 
-Beyond sources for GAMBAS2 ( http://gambas.sf.net ) there are available the 
-installation packages for Debian, OpenSuSE, Fedora, Mandriva and Ubuntu.
+http://www.qsl.net/zp4kfx/Linux/DBLog/Shot-QSO%20List-utf8-%20test.png
 
-It is also available an "Autotool" package.
+DBLog works on Linux and stores data's on PosgreSQL, both of which are UTF-8 
+compliant.
 
-All of these need to be tested, so I invite experimenters to give it a try.
+DBLog can export both in ISO-8859-1 or in UTF-8.
 
-Have fun !
+Importing, if it  finds into the header <ENCODING:5>UTF-8  then does not do 
+any coversion.
+If it  finds  <ENCODING:10>ISO-8859-1 or no ENCODING tag, then converts into 
+UTF-8.
 
-73 de Pino
-ZP4KFX
+The difference is mainly for the accented vowels (from 128 to 256) that come 
+mainly by N1MM or Logger32 ADIF files.
+
+Also other loggers could follow this method or be aware of the ENCODING tag to 
+avoid errors.
+
+Best 73 de
+
+Pino ZP4KFX
 
 -- 
 Key ID: 0xF6768208 
