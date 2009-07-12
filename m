@@ -1,17 +1,19 @@
-From: Ralf Baechle <ralf@linux-mips.org>
-Subject: NET: Fix locking issues in PPP, 6pack, mkiss and strip line
-	disciplines.
-Date: Sun, 12 Jul 2009 18:27:20 +0100
-Message-ID: <20090712172720.GA7313@linux-mips.org>
+From: Ralf Baechle DL5RB <ralf@linux-mips.org>
+Subject: [PATCH] NET: Fix locking issues in PPP, 6pack, mkiss and strip
+	line disciplines.
+Date: Sun, 12 Jul 2009 23:26:58 +0100
+Message-ID: <20090712222658.GC26798@linux-mips.org>
+References: <20090712172720.GA7313@linux-mips.org>
 Mime-Version: 1.0
-Return-path: <netdev-owner@vger.kernel.org>
+Return-path: <linux-hams-owner@vger.kernel.org>
 Content-Disposition: inline
-Sender: netdev-owner@vger.kernel.org
+In-Reply-To: <20090712172720.GA7313@linux-mips.org>
+Sender: linux-hams-owner@vger.kernel.org
 List-ID: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
 To: "David S. Miller" <davem@davemloft.net>, netdev@vger.kernel.org
-Cc: Guido Trentalancia <guido@trentalancia.com>, Paul Mackerras <paulus@samba.org>, Alan Cox <alan@lxorguk.ukuu.org.uk>, Andreas Koensgen <ajk@iehk.rwth-aachen.de>, linux-hams@vger.kernel.org, Hans Albas PE1AYX <hans@esrac.ele.tue.nl>
+Cc: Guido Trentalancia <guido@trentalancia.com>, Paul Mackerras <paulus@samba.org>, Alan Cox <alan@lxorguk.ukuu.org.uk>, linux-hams@vger.kernel.org, Hans Albas PE1AYX <hans@esrac.ele.tue.nl>
 
 Guido Trentalancia reports:
 
@@ -104,28 +106,30 @@ mkiss: ax0: Trying crc-smack
 mkiss: ax0: Trying crc-flexnet
 
 The issue was, that the locking code in mkiss was assuming it was only
-ever being called in process or bh context but some tty drivers such as
-the USB serial driver may call it in interrupt context.  Fixed by
-converting the involved locking code to use irq-safe locks.
+ever being called in process or bh context.  Fixed by converting the
+involved locking code to use irq-safe locks.
 
-Review of similar networking line disciplines shows that 6pack, both sync
-and async PPP and STRIP have similar issues.  The PPP ones are the most
-interesting ones as half of the issue was sorted out as far back as 2004
-in commit http://git.kernel.org/?p=linux/kernel/git/tglx/history.git;a=commitdiff;h=2996d8deaeddd01820691a872550dc0cfba0c37d
+Review of other networking line disciplines shows that 6pack, both sync
+and async PPP and STRIP have similar issues.  The ppp_async one is the
+most interesting one as it sorts out half of the issue as far back as
+2004 in commit http://git.kernel.org/?p=linux/kernel/git/tglx/history.git;a=commitdiff;h=2996d8deaeddd01820691a872550dc0cfba0c37d
 
 Signed-off-by: Ralf Baechle <ralf@linux-mips.org>
 Reported-by: Guido Trentalancia <guido@trentalancia.com>
 Cc: Paul Mackerras <paulus@samba.org>
-Cc: Alan Cox <alan@lxorguk.ukuu.org.uk>
-Cc: Andreas Koensgen <ajk@iehk.rwth-aachen.de>
+Cc: Alan Cox <alan@linux.intel.com>
+Cc: linux-hams@vger.kernel.org
+Cc: netdev@vger.kernel.org
 Cc: Hans Albas PE1AYX <hans@esrac.ele.tue.nl>
 ---
+v2 - convert some more mkiss.c _bh locks to irq-save locks.
+
  drivers/net/hamradio/6pack.c |   10 ++++++----
- drivers/net/hamradio/mkiss.c |   15 +++++++++------
+ drivers/net/hamradio/mkiss.c |   41 ++++++++++++++++++++++++-----------------
  drivers/net/ppp_async.c      |   11 +++++++----
  drivers/net/ppp_synctty.c    |   11 +++++++----
  drivers/net/wireless/strip.c |   39 ++++++++++++++++++++++++---------------
- 5 files changed, 53 insertions(+), 33 deletions(-)
+ 5 files changed, 68 insertions(+), 44 deletions(-)
 
 diff --git a/drivers/net/hamradio/6pack.c b/drivers/net/hamradio/6pack.c
 index 1551600..913a564 100644
@@ -165,10 +169,84 @@ index 1551600..913a564 100644
  		return;
  
 diff --git a/drivers/net/hamradio/mkiss.c b/drivers/net/hamradio/mkiss.c
-index fda2fc8..671257a 100644
+index fda2fc8..a728650 100644
 --- a/drivers/net/hamradio/mkiss.c
 +++ b/drivers/net/hamradio/mkiss.c
-@@ -367,6 +367,7 @@ static void ax_changedmtu(struct mkiss *ax)
+@@ -244,15 +244,16 @@ static int kiss_esc_crc(unsigned char *s, unsigned char *d, unsigned short crc,
+ /* Send one completely decapsulated AX.25 packet to the AX.25 layer. */
+ static void ax_bump(struct mkiss *ax)
+ {
++	unsigned long flags;
+ 	struct sk_buff *skb;
+ 	int count;
+ 
+-	spin_lock_bh(&ax->buflock);
++	spin_lock_irqsave(&ax->buflock, flags);
+ 	if (ax->rbuff[0] > 0x0f) {
+ 		if (ax->rbuff[0] & 0x80) {
+ 			if (check_crc_16(ax->rbuff, ax->rcount) < 0) {
+ 				ax->dev->stats.rx_errors++;
+-				spin_unlock_bh(&ax->buflock);
++				spin_unlock_irqrestore(&ax->buflock, flags);
+ 
+ 				return;
+ 			}
+@@ -267,7 +268,7 @@ static void ax_bump(struct mkiss *ax)
+ 		} else if (ax->rbuff[0] & 0x20)  {
+ 			if (check_crc_flex(ax->rbuff, ax->rcount) < 0) {
+ 				ax->dev->stats.rx_errors++;
+-				spin_unlock_bh(&ax->buflock);
++				spin_unlock_irqrestore(&ax->buflock, flags);
+ 				return;
+ 			}
+ 			if (ax->crcmode != CRC_MODE_FLEX && ax->crcauto) {
+@@ -294,7 +295,7 @@ static void ax_bump(struct mkiss *ax)
+ 		printk(KERN_ERR "mkiss: %s: memory squeeze, dropping packet.\n",
+ 		       ax->dev->name);
+ 		ax->dev->stats.rx_dropped++;
+-		spin_unlock_bh(&ax->buflock);
++		spin_unlock_irqrestore(&ax->buflock, flags);
+ 		return;
+ 	}
+ 
+@@ -303,11 +304,13 @@ static void ax_bump(struct mkiss *ax)
+ 	netif_rx(skb);
+ 	ax->dev->stats.rx_packets++;
+ 	ax->dev->stats.rx_bytes += count;
+-	spin_unlock_bh(&ax->buflock);
++	spin_unlock_irqrestore(&ax->buflock, flags);
+ }
+ 
+ static void kiss_unesc(struct mkiss *ax, unsigned char s)
+ {
++	unsigned long flags;
++
+ 	switch (s) {
+ 	case END:
+ 		/* drop keeptest bit = VSV */
+@@ -334,18 +337,18 @@ static void kiss_unesc(struct mkiss *ax, unsigned char s)
+ 		break;
+ 	}
+ 
+-	spin_lock_bh(&ax->buflock);
++	spin_lock_irqsave(&ax->buflock, flags);
+ 	if (!test_bit(AXF_ERROR, &ax->flags)) {
+ 		if (ax->rcount < ax->buffsize) {
+ 			ax->rbuff[ax->rcount++] = s;
+-			spin_unlock_bh(&ax->buflock);
++			spin_unlock_irqrestore(&ax->buflock, flags);
+ 			return;
+ 		}
+ 
+ 		ax->dev->stats.rx_over_errors++;
+ 		set_bit(AXF_ERROR, &ax->flags);
+ 	}
+-	spin_unlock_bh(&ax->buflock);
++	spin_unlock_irqrestore(&ax->buflock, flags);
+ }
+ 
+ static int ax_set_mac_address(struct net_device *dev, void *addr)
+@@ -367,6 +370,7 @@ static void ax_changedmtu(struct mkiss *ax)
  {
  	struct net_device *dev = ax->dev;
  	unsigned char *xbuff, *rbuff, *oxbuff, *orbuff;
@@ -176,7 +254,7 @@ index fda2fc8..671257a 100644
  	int len;
  
  	len = dev->mtu * 2;
-@@ -392,7 +393,7 @@ static void ax_changedmtu(struct mkiss *ax)
+@@ -392,7 +396,7 @@ static void ax_changedmtu(struct mkiss *ax)
  		return;
  	}
  
@@ -185,7 +263,7 @@ index fda2fc8..671257a 100644
  
  	oxbuff    = ax->xbuff;
  	ax->xbuff = xbuff;
-@@ -423,7 +424,7 @@ static void ax_changedmtu(struct mkiss *ax)
+@@ -423,7 +427,7 @@ static void ax_changedmtu(struct mkiss *ax)
  	ax->mtu      = dev->mtu + 73;
  	ax->buffsize = len;
  
@@ -194,7 +272,42 @@ index fda2fc8..671257a 100644
  
  	kfree(oxbuff);
  	kfree(orbuff);
-@@ -704,13 +705,14 @@ static DEFINE_RWLOCK(disc_data_lock);
+@@ -433,6 +437,7 @@ static void ax_changedmtu(struct mkiss *ax)
+ static void ax_encaps(struct net_device *dev, unsigned char *icp, int len)
+ {
+ 	struct mkiss *ax = netdev_priv(dev);
++	unsigned long flags;
+ 	unsigned char *p;
+ 	int actual, count;
+ 
+@@ -449,7 +454,7 @@ static void ax_encaps(struct net_device *dev, unsigned char *icp, int len)
+ 
+ 	p = icp;
+ 
+-	spin_lock_bh(&ax->buflock);
++	spin_lock_irqsave(&ax->buflock, flags);
+ 	if ((*p & 0x0f) != 0) {
+ 		/* Configuration Command (kissparms(1).
+ 		 * Protocol spec says: never append CRC.
+@@ -479,7 +484,7 @@ static void ax_encaps(struct net_device *dev, unsigned char *icp, int len)
+ 				ax->crcauto = (cmd ? 0 : 1);
+ 				printk(KERN_INFO "mkiss: %s: crc mode %s %d\n", ax->dev->name, (len) ? "set to" : "is", cmd);
+ 			}
+-			spin_unlock_bh(&ax->buflock);
++			spin_unlock_irqrestore(&ax->buflock, flags);
+ 			netif_start_queue(dev);
+ 
+ 			return;
+@@ -512,7 +517,7 @@ static void ax_encaps(struct net_device *dev, unsigned char *icp, int len)
+ 			count = kiss_esc(p, (unsigned char *)ax->xbuff, len);
+ 		}
+   	}
+-	spin_unlock_bh(&ax->buflock);
++	spin_unlock_irqrestore(&ax->buflock, flags);
+ 
+ 	set_bit(TTY_DO_WRITE_WAKEUP, &ax->tty->flags);
+ 	actual = ax->tty->ops->write(ax->tty, ax->xbuff, count);
+@@ -704,13 +709,14 @@ static DEFINE_RWLOCK(disc_data_lock);
  
  static struct mkiss *mkiss_get(struct tty_struct *tty)
  {
@@ -211,7 +324,7 @@ index fda2fc8..671257a 100644
  
  	return ax;
  }
-@@ -809,12 +811,13 @@ out:
+@@ -809,12 +815,13 @@ out:
  
  static void mkiss_close(struct tty_struct *tty)
  {
