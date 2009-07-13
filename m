@@ -1,51 +1,67 @@
-From: Alan Cox <alan@lxorguk.ukuu.org.uk>
+From: David Miller <davem@davemloft.net>
 Subject: Re: [PATCH] NET: Fix locking issues in PPP, 6pack, mkiss and strip
  line disciplines.
-Date: Mon, 13 Jul 2009 09:19:28 +0100
-Message-ID: <20090713091928.7e89bab8@lxorguk.ukuu.org.uk>
-References: <20090712172720.GA7313@linux-mips.org>
-	<20090712222658.GC26798@linux-mips.org>
-	<20090712234854.10cfcef2@lxorguk.ukuu.org.uk>
+Date: Mon, 13 Jul 2009 10:31:39 -0700 (PDT)
+Message-ID: <20090713.103139.188324296.davem@davemloft.net>
+References: <20090712234854.10cfcef2@lxorguk.ukuu.org.uk>
 	<20090712.210730.170014470.davem@davemloft.net>
+	<20090713091928.7e89bab8@lxorguk.ukuu.org.uk>
 Mime-Version: 1.0
 Content-Transfer-Encoding: 7bit
-Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <20090712.210730.170014470.davem@davemloft.net>
-Sender: linux-hams-owner@vger.kernel.org
+Return-path: <netdev-owner@vger.kernel.org>
+In-Reply-To: <20090713091928.7e89bab8@lxorguk.ukuu.org.uk>
+Sender: netdev-owner@vger.kernel.org
 List-ID: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"
-To: David Miller <davem@davemloft.net>
+Content-Type: Text/Plain; charset="us-ascii"
+To: alan@lxorguk.ukuu.org.uk
 Cc: ralf@linux-mips.org, netdev@vger.kernel.org, guido@trentalancia.com, paulus@samba.org, linux-hams@vger.kernel.org, hans@esrac.ele.tue.nl
 
-On Sun, 12 Jul 2009 21:07:30 -0700 (PDT)
-David Miller <davem@davemloft.net> wrote:
+From: Alan Cox <alan@lxorguk.ukuu.org.uk>
+Date: Mon, 13 Jul 2009 09:19:28 +0100
 
-> From: Alan Cox <alan@lxorguk.ukuu.org.uk>
-> Date: Sun, 12 Jul 2009 23:48:54 +0100
+> Historically it went
 > 
-> >> The issue was, that the locking code in mkiss was assuming it was only
-> >> ever being called in process or bh context.  Fixed by converting the
-> >> involved locking code to use irq-safe locks.
-> > 
-> > Which historically of course was correct until the networking layer
-> > changed behaviour some years ago.
+> 		network bh
+> 			transmit packet
+> 				ldisc layer
+> 					tty write method
 > 
-> Networking layer?  Surely you mean the TTY layer or USB because I
-> don't see anything networking in his traces :-)
+> and lots of code assumed that.
 
-No I mean the network layer.
+They still can assume such things.  All locking is BH based, all
+networking transmit paths occur in BH or with BH's disabled, never in
+hardware interrupt context.
 
+Even TX reclaim hardware interrupts that free SKBs reschedule that
+work to BH context.
 
-Historically it went
+> Today the network bits get kicked off at IRQ level.
 
-		network bh
-			transmit packet
-				ldisc layer
-					tty write method
+That would be news to me :)
 
-and lots of code assumed that. Today the network bits get kicked off at
-IRQ level.
+Where do you see that in the traces that Ralf posted?  His trace was
+in fact a TTY receive path via USB:
 
-Most tty stuff now handles it, some of it has been broken with ppp for
-ages but its been so long its hardly a regression any more and its dumb
-stuff like jtag consoles and i2c serial ports that break.
+cpu_idle()
+	handle_IRQ_event()
+	uhci_irq()
+	ftdi_read_bulk_callback()
+	ftdi_process_read()
+	tty_flip_buffer()
+		flush_to_ldisc()
+		mkiss_receive_buf()
+		spin_lock_bh() --> BH disable in hard IRQ, OH NOEZ!
+
+And, as Ralf's changelog stated:
+
+--------------------
+The issue was, that the locking code in mkiss was assuming it was only
+ever being called in process or bh context.  Fixed by converting the
+involved locking code to use irq-safe locks.
+--------------------
+
+mkiss_receive_buf(), the problematic code path, is invoked by
+the TTY layer directly from LDISC flushing and the TTY device's
+IRQ handler here.
+
+How does networking's TX policy have anything to do with this?
