@@ -1,67 +1,37 @@
-From: David Miller <davem@davemloft.net>
+From: Alan Cox <alan@lxorguk.ukuu.org.uk>
 Subject: Re: [PATCH] NET: Fix locking issues in PPP, 6pack, mkiss and strip
  line disciplines.
-Date: Mon, 13 Jul 2009 10:31:39 -0700 (PDT)
-Message-ID: <20090713.103139.188324296.davem@davemloft.net>
+Date: Mon, 13 Jul 2009 20:27:25 +0100
+Message-ID: <20090713202725.32618249@lxorguk.ukuu.org.uk>
 References: <20090712234854.10cfcef2@lxorguk.ukuu.org.uk>
 	<20090712.210730.170014470.davem@davemloft.net>
 	<20090713091928.7e89bab8@lxorguk.ukuu.org.uk>
+	<20090713.103139.188324296.davem@davemloft.net>
 Mime-Version: 1.0
 Content-Transfer-Encoding: 7bit
 Return-path: <netdev-owner@vger.kernel.org>
-In-Reply-To: <20090713091928.7e89bab8@lxorguk.ukuu.org.uk>
+In-Reply-To: <20090713.103139.188324296.davem@davemloft.net>
 Sender: netdev-owner@vger.kernel.org
 List-ID: <linux-hams.vger.kernel.org>
-Content-Type: Text/Plain; charset="us-ascii"
-To: alan@lxorguk.ukuu.org.uk
+Content-Type: text/plain; charset="us-ascii"
+To: David Miller <davem@davemloft.net>
 Cc: ralf@linux-mips.org, netdev@vger.kernel.org, guido@trentalancia.com, paulus@samba.org, linux-hams@vger.kernel.org, hans@esrac.ele.tue.nl
 
-From: Alan Cox <alan@lxorguk.ukuu.org.uk>
-Date: Mon, 13 Jul 2009 09:19:28 +0100
+>	spin_lock_bh() --> BH disable in hard IRQ, OH NOEZ!
 
-> Historically it went
+No I didn't see his original message just the patch - his original is a
+fixed bug.
+
+> mkiss_receive_buf(), the problematic code path, is invoked by
+> the TTY layer directly from LDISC flushing and the TTY device's
+> IRQ handler here.
 > 
-> 		network bh
-> 			transmit packet
-> 				ldisc layer
-> 					tty write method
-> 
-> and lots of code assumed that.
+> How does networking's TX policy have anything to do with this?
 
-They still can assume such things.  All locking is BH based, all
-networking transmit paths occur in BH or with BH's disabled, never in
-hardware interrupt context.
+Sorry I'd been looking at the other side stuff with ppp which is a
+sleeping v bh issue and misinterpreted Ralf's post.
 
-Even TX reclaim hardware interrupts that free SKBs reschedule that
-work to BH context.
+In fact Ralf's fix isn't needed. The incorrect uses of tty->low_latency
+all got killed and the pty code got rewritten which was the other case
+that could occur.
 
-> Today the network bits get kicked off at IRQ level.
-
-That would be news to me :)
-
-Where do you see that in the traces that Ralf posted?  His trace was
-in fact a TTY receive path via USB:
-
-cpu_idle()
-	handle_IRQ_event()
-	uhci_irq()
-	ftdi_read_bulk_callback()
-	ftdi_process_read()
-	tty_flip_buffer()
-		flush_to_ldisc()
-		mkiss_receive_buf()
-		spin_lock_bh() --> BH disable in hard IRQ, OH NOEZ!
-
-And, as Ralf's changelog stated:
-
---------------------
-The issue was, that the locking code in mkiss was assuming it was only
-ever being called in process or bh context.  Fixed by converting the
-involved locking code to use irq-safe locks.
---------------------
-
-mkiss_receive_buf(), the problematic code path, is invoked by
-the TTY layer directly from LDISC flushing and the TTY device's
-IRQ handler here.
-
-How does networking's TX policy have anything to do with this?
