@@ -1,37 +1,78 @@
-From: Alan Cox <alan@lxorguk.ukuu.org.uk>
-Subject: Re: [PATCH] NET: Fix locking issues in PPP, 6pack, mkiss and strip
- line disciplines.
-Date: Mon, 13 Jul 2009 20:27:25 +0100
-Message-ID: <20090713202725.32618249@lxorguk.ukuu.org.uk>
-References: <20090712234854.10cfcef2@lxorguk.ukuu.org.uk>
-	<20090712.210730.170014470.davem@davemloft.net>
-	<20090713091928.7e89bab8@lxorguk.ukuu.org.uk>
-	<20090713.103139.188324296.davem@davemloft.net>
+From: Pino Zollo <pinozollo@gmail.com>
+Subject: DBLog 1.0
+Date: Tue, 14 Jul 2009 13:26:49 -0400
+Message-ID: <200907141326.50196.pinozollo@gmail.com>
+Reply-To: pinozollo@gmail.com
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
-Return-path: <netdev-owner@vger.kernel.org>
-In-Reply-To: <20090713.103139.188324296.davem@davemloft.net>
-Sender: netdev-owner@vger.kernel.org
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Return-path: <linux-hams-owner@vger.kernel.org>
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:from:reply-to:organization:to
+         :subject:date:user-agent:cc:mime-version:content-type
+         :content-transfer-encoding:content-disposition:message-id;
+        bh=qiCaN5Y2Kwt+ltpmZvQkaPEXtnHrsRYeDcXWL6vkXro=;
+        b=wkAfrl7eRGuOLXSRaqWhS/tW/AGLLt3dXlXOMewYITOg9iw7iQx3K9yW807VB/ivkg
+         lPGf6m73vAshIzmruV88OHe5WOQDUe5cmo0b8EePZC78KT2hBwlkZYdjmb3foVk+yD3w
+         VBGv3YO6kCG5H5FoG7L4eOuHSEf7IQDBV4wwM=
+Content-Disposition: inline
+Sender: linux-hams-owner@vger.kernel.org
 List-ID: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"
-To: David Miller <davem@davemloft.net>
-Cc: ralf@linux-mips.org, netdev@vger.kernel.org, guido@trentalancia.com, paulus@samba.org, linux-hams@vger.kernel.org, hans@esrac.ele.tue.nl
+Content-Type: text/plain; charset="iso-8859-1"
+To: fldigi-alpha@lists.berlios.de
+Cc: Vlad <ua6jd@vfemail.net>, ham-linux@mailman.qth.net, Forum Logger32 <hamlogger@yahoogroups.com>, Linux Hams <linux-hams@vger.kernel.org>, adifdev@yahoogroups.com
 
->	spin_lock_bh() --> BH disable in hard IRQ, OH NOEZ!
 
-No I didn't see his original message just the patch - his original is a
-fixed bug.
+Hi everybody,
 
-> mkiss_receive_buf(), the problematic code path, is invoked by
-> the TTY layer directly from LDISC flushing and the TTY device's
-> IRQ handler here.
-> 
-> How does networking's TX policy have anything to do with this?
+I have just uploaded the version 1.0 of DBLog on
 
-Sorry I'd been looking at the other side stuff with ppp which is a
-sleeping v bh issue and misinterpreted Ralf's post.
+http://www.qsl.net/zp4kfx/Linux/dblog.html
 
-In fact Ralf's fix isn't needed. The incorrect uses of tty->low_latency
-all got killed and the pty code got rewritten which was the other case
-that could occur.
+DBLog is a logger program for Linux inspired to Logger32 and to M1NN_Lo=
+gger.
 
+It works in harmony with fldigi for operating digi-modes.
+
+DBLog =A0is UTF-8 compliant and sensitive to the 'locale'.=20
+
+It stores all data's in the RDBM PostgreSQL.
+
+Beyond sources for GAMBAS2 ( http://gambas.sf.net ) there are available=
+ the=20
+installation packages for Debian, OpenSuSE, Fedora, Mandriva, Ubuntu an=
+d=20
+Slackware.
+
+It is also available an "Autotool" package.
+
+Changes from the previous release:
+
+-- Simplified database installation: writing  in the database access wi=
+ndow
+    the name of a new database, it will be created.
+-- Improved QSO List window: can not be closed and it is possible to br=
+owse
+   the  full log
+-- Reorganisation of the main logging window: using fldigi it remains v=
+isible
+   the "worked before" table.
+-- Some decoration added.
+
+
+Bug reports and comments are wellcome.
+
+73 de
+Pino ZP4KFX
+
+
+
+--=20
+Key ID: 0xF6768208=20
+Key fingerprint =3D B16D 0A7C 5B29 A334 CE6A  71F6 EAF8 3D88 F676 8208
+Key server: hkp://wwwkeys.eu.pgp.net
+--
+To unsubscribe from this list: send the line "unsubscribe linux-hams" i=
+n
+the body of a message to majordomo@vger.kernel.org
+More majordomo info at  http://vger.kernel.org/majordomo-info.html
