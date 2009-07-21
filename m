@@ -1,11 +1,11 @@
 From: "Curt, WE7U" <archer@eskimo.com>
 Subject: Re: Linux-based CW Reader?
-Date: Tue, 21 Jul 2009 14:06:08 -0700 (PDT)
-Message-ID: <alpine.LNX.2.00.0907211405530.6631@wapiti.we7u.net>
-References: <4A66398A.2030200@kd4e.com>
+Date: Tue, 21 Jul 2009 14:13:34 -0700 (PDT)
+Message-ID: <alpine.LNX.2.00.0907211410040.25048@wapiti.we7u.net>
+References: <4A66398A.2030200@kd4e.com> <alpine.LNX.2.00.0907211405530.6631@wapiti.we7u.net> <4A663C24.6050003@kd4e.com>
 Mime-Version: 1.0
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <4A66398A.2030200@kd4e.com>
+In-Reply-To: <4A663C24.6050003@kd4e.com>
 Sender: linux-hams-owner@vger.kernel.org
 List-ID: <linux-hams.vger.kernel.org>
 Content-Type: TEXT/PLAIN; charset="us-ascii"; format="flowed"
@@ -15,11 +15,22 @@ Cc: Linux Hams <linux-hams@vger.kernel.org>
 
 On Tue, 21 Jul 2009, kd4e wrote:
 
-> I saw a posting for a MFJ device which translates CW to letters.
+> Thanks Pino and Curt - forgot about that!
 >
-> Is there a sound card-based app to do the same for Linux?
+> I think I have a version that works under Puppy Linux
+> around here somewhere.
+>
+> The 20WPM for my Extra has long-since faded for lack
+> of use.  :-/
 
-fldigi works very well.
+I'm in that same boat... It was 22 years ago!  I was copying 25+
+back then.  Rx now is abt 10wpm (with 25wpm char spacing).  TX is
+25+ now after a lot of practice and I'm working on the RX actively.
+I bought an AEA MorseMachine3 at the Seaside, OR, hamfest and it's
+hooked to my bencher within easy access of my armchair.  Watch out
+on the CW bands 'cuz I'm a'comin!
+
+P.S.  I still love my Bencher!
 
 -- 
 Curt, WE7U.                         <http://www.eskimo.com/~archer>
