@@ -1,23 +1,26 @@
-From: Thomas Osterried <thomas@x-berg.in-berlin.de>
-Subject: Re: Problems with net2kiss
-Date: Sat, 25 Jul 2009 20:06:29 +0200
-Message-ID: <20090725180629.GE16812@x-berg.in-berlin.de>
-References: <8390870f0907250837j13e27ce4ga4f91609ea53cd6c@mail.gmail.com> <20090725175224.GD16812@x-berg.in-berlin.de>
+From: David Miller <davem@davemloft.net>
+Subject: Re: [PATCH 1/2] NET: NETROM: Don't use static buffer.
+Date: Sun, 26 Jul 2009 19:09:27 -0700 (PDT)
+Message-ID: <20090726.190927.145496853.davem@davemloft.net>
+References: <cover.1248620197.git.ralf@linux-mips.org>
+	<65cb898f276a2dc3c56e6a78b5bc422303e6856f.1248620197.git.ralf@linux-mips.org>
 Mime-Version: 1.0
+Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
-Content-Disposition: inline
-In-Reply-To: <20090725175224.GD16812@x-berg.in-berlin.de>
+In-Reply-To: <65cb898f276a2dc3c56e6a78b5bc422303e6856f.1248620197.git.ralf@linux-mips.org>
 Sender: linux-hams-owner@vger.kernel.org
 List-ID: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-To: Stephen - K1LNX <k1lnx@k1lnx.net>
-Cc: linux-hams@vger.kernel.org
+Content-Type: Text/Plain; charset="us-ascii"
+To: ralf@linux-mips.org
+Cc: netdev@vger.kernel.org, linux-hams@vger.kernel.org
 
-> debian has given with lenny, like other distributions earlier,
-> support for BSD-type PTYs.
+From: Ralf Baechle <ralf@linux-mips.org>
+Date: Sat, 25 Jul 2009 11:38:17 +0100
 
-s/given/given up/
+> The use of a static buffer in nr_call_to_digi() to return its result is
+> not threadproof and can result in corruption if multiple threads are
+> trying to perform SIOCADDRT ioctls.
+> 
+> Signed-off-by: Ralf Baechle <ralf@linux-mips.org>
 
-sri
-
+So what frees up these now-dynamically-allocated digi objects?
