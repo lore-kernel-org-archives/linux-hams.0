@@ -1,105 +1,50 @@
-From: kd4e <doc@kd4e.com>
-Subject: Re: [Ham-Linux] Take ACER Off your Linux-Friendly List
-Date: Thu, 30 Jul 2009 15:46:20 -0500
-Message-ID: <4A72069C.1080406@kd4e.com>
-References: <4A710CCA.7000907@kd4e.com> <4A726840.70408@woodfam.homedns.org>
-Reply-To: doc@kd4e.com
+From: Nate Bargmann <n0nb@n0nb.us>
+Subject: Re: Take ACER Off your Linux-Friendly List
+Date: Thu, 30 Jul 2009 16:37:59 -0500
+Message-ID: <20090730213759.GC1447@n0nb.us>
+References: <4A710CCA.7000907@kd4e.com> <alpine.LNX.2.00.0907291931000.8804@wapiti.we7u.net> <8ea83f40907291943v41f90ab3h9cea4f07c2ef0cb2@mail.gmail.com> <4A711B58.2060605@kd4e.com> <4A716E28.5070204@bfs.de> <4A7178D7.4050301@blueyonder.co.uk>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <4A726840.70408@woodfam.homedns.org>
+Content-Disposition: inline
+In-Reply-To: <4A7178D7.4050301@blueyonder.co.uk>
 Sender: linux-hams-owner@vger.kernel.org
 List-ID: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"; format="flowed"
-To: dtx <dtx@woodfam.homedns.org>
-Cc: Ham-Linux <ham-linux@mailman.qth.net>, Linux Hams <linux-hams@vger.kernel.org>, ham-computers <ham-computers@mailman.qth.net>
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+To: Linux Hams <linux-hams@vger.kernel.org>
 
-Puppy has a version optimized for the Acer Netbook - 
-designed by
-volunteers - not Acer.
+* richard.bown@blueyonder.co.uk <richard.bown@blueyonder.co.uk> [2009 Jul 30 07:16 -0500]:
+> walter harms wrote:>
+>>
+>> send it back because you can not use it
+>> most people i know simply use a usb-stick (or a boot-cd)
+>> and buy only computer that work.
+>>
+>> re,
+>>  wh
+>>
+>>
+>>
+>>
+>>
+> Under European consumer law, if they haven't stated that it will only  
+> run winblows vista, they have stated by default it should operate on  
+> other OS s that will run on that processor.
+> So its not fit for purpose and they would have to either change it for  
+> one that will or refund your money.
+> I'd be very surprised if the US does not have similar legislation.
 
-As for the model: 5535 ...
+Prepare to be surprised, then.  There may be a state or two with
+something similar in law, but I doubt it.  As most USA computer users
+really don't understand that the OS and applications can be separate
+from the hardware, there is hardly a demand for any sort of similar
+legislation except from the fringes (like us).
 
-I have succssfully gotten Puppy Linux to run on three old 
-Panasonic
-Toughbooks using external USB and USB-via-PCMCIA devices -
-but these are not current laptops.
+73, de Nate >>
 
-I also have had Linux running on an older Quanta Z500 with an
-added wireless mini-pci card and on a desktop with a pci b/g/n
-card.
-
-The point is that *Acer* could not be bothered to be helpful to
-a buyer who preferred Linux over MS.
-
-They are free to make that choice and I am free to warn 
-people that
-such is their bad attitude toward Linux users.
-
- >> Their Acer Aspire 5535 laptop locks-out the wireless modem
- >> and Bluetooth from any access unless a MS version of window
- >> is installed.
-
-I was not able to even "see" the wireless modem and 
-Bluetooth because
-the "ON" switches for them is in a separate sub-panel which 
-is bonded
-to the Acer-specific MS-dependent OS.
-
-When I re-partitioned the HDD I first left all four default 
-partitions in
-place - I just shrunk them - which for no good technological 
-reason
-caused the laptop to refuse to boot -- and the wireless and 
-Bluetooth
-buttons dead.
-
-I then deleted the MS-specific petitions but left the 
-Acer-specific partition
-intact -- which also left the wireless and Bluetooth buttons 
-dead.
-
-It's kind of a ridiculous design choice copied from HP.
-
-I finally found a Linux app that discovered that the 
-wireless modem is
-an Atheros, but not the model number.  The Bluetooth is 
-still incognito.
-
-They could have made their hardware information more accessible
-through the BIOS or a OS-neutral app but they did not.  It 
-is not this
-hard on any other PC I have ever used.  If it's not 
-deliberate it is inept.
-
-> Well, I don't have Aspire 5535, but I do have an Aspire one series, the 
-> little 2.2 lb laptop.  It installed Mepis current and had no trouble 
-> with the wifi.  However, Puppy current was not happy.  I doubt they go 
-> to the trouble to actually "lock out" the wireless hardware....they 
-> simply do not offer to support it.
-> 
-> It sounds like you just got the standard tech support response of "We do 
-> care at all about anything exccpt  M$" which has been standard for 
-> years.  Only just very recently have you been able to get Linux (BSD or 
-> any other OS) installed on a store bought system.
-> 
-> What system were you installing?  Did you try any other version than 
-> your favorite distro?
-> 
-> Gary WA6DTX
 -- 
 
-Thanks! & 73, doc, KD4E
-FS/Swap/Wanted: http://kd4e.com/swapn.html
-Free OS : http://www.PuppyLinux.com
-Personal: http://kd4e.com
-             |_|___|_|
-             | | & | |
-        /\      {|
-       /  \     {|
-      /    \    {|
-     /   @  \   {|
-     |   |~_|~~~~|
-     |   -| |    |
-============\ # KD4E
-Have an http://ultrafidian.com day!
+"The optimist proclaims that we live in the best of all
+possible worlds.  The pessimist fears this is true."
+
+Ham radio, Linux, bikes, and more: http://n0nb.us/index.html
