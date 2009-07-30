@@ -1,91 +1,105 @@
-From: "Mike McCarthy, W1NR" <lists@w1nr.net>
+From: kd4e <doc@kd4e.com>
 Subject: Re: [Ham-Linux] Take ACER Off your Linux-Friendly List
-Date: Thu, 30 Jul 2009 15:48:44 -0400
-Message-ID: <4A71F91C.5020000@w1nr.net>
+Date: Thu, 30 Jul 2009 15:46:20 -0500
+Message-ID: <4A72069C.1080406@kd4e.com>
 References: <4A710CCA.7000907@kd4e.com> <4A726840.70408@woodfam.homedns.org>
+Reply-To: doc@kd4e.com
 Mime-Version: 1.0
 Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
 In-Reply-To: <4A726840.70408@woodfam.homedns.org>
 Sender: linux-hams-owner@vger.kernel.org
 List-ID: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"
-To: 
-Cc: Linux Hams <linux-hams@vger.kernel.org>, ham-computers <ham-computers@mailman.qth.net>, Ham-Linux <ham-linux@mailman.qth.net>
+Content-Type: text/plain; charset="us-ascii"; format="flowed"
+To: dtx <dtx@woodfam.homedns.org>
+Cc: Ham-Linux <ham-linux@mailman.qth.net>, Linux Hams <linux-hams@vger.kernel.org>, ham-computers <ham-computers@mailman.qth.net>
 
-It is likely that the wireless card is too new to be recognized. 
-Eventually, it will probably get Linux support, even for the Linux
-unfriendly cards by Broadcom.
+Puppy has a version optimized for the Acer Netbook - 
+designed by
+volunteers - not Acer.
 
-As for there support, usually, if they can't get the script on their
-teleprompter, then they can't help you and M$ gets all the support $ and
-Linux gets crap.
+As for the model: 5535 ...
 
-Try another distro or blow off Acer and get a Dell.
+I have succssfully gotten Puppy Linux to run on three old 
+Panasonic
+Toughbooks using external USB and USB-via-PCMCIA devices -
+but these are not current laptops.
 
-Mike, W1NR
+I also have had Linux running on an older Quanta Z500 with an
+added wireless mini-pci card and on a desktop with a pci b/g/n
+card.
 
-dtx wrote:
-> Well, I don't have Aspire 5535, but I do have an Aspire one series,
-> the little 2.2 lb laptop.  It installed Mepis current and had no
-> trouble with the wifi.  However, Puppy current was not happy.  I doubt
-> they go to the trouble to actually "lock out" the wireless
-> hardware....they simply do not offer to support it.
->
-> It sounds like you just got the standard tech support response of "We
-> do care at all about anything exccpt  M$" which has been standard for
-> years.  Only just very recently have you been able to get Linux (BSD
-> or any other OS) installed on a store bought system.
->
-> What system were you installing?  Did you try any other version than
+The point is that *Acer* could not be bothered to be helpful to
+a buyer who preferred Linux over MS.
+
+They are free to make that choice and I am free to warn 
+people that
+such is their bad attitude toward Linux users.
+
+ >> Their Acer Aspire 5535 laptop locks-out the wireless modem
+ >> and Bluetooth from any access unless a MS version of window
+ >> is installed.
+
+I was not able to even "see" the wireless modem and 
+Bluetooth because
+the "ON" switches for them is in a separate sub-panel which 
+is bonded
+to the Acer-specific MS-dependent OS.
+
+When I re-partitioned the HDD I first left all four default 
+partitions in
+place - I just shrunk them - which for no good technological 
+reason
+caused the laptop to refuse to boot -- and the wireless and 
+Bluetooth
+buttons dead.
+
+I then deleted the MS-specific petitions but left the 
+Acer-specific partition
+intact -- which also left the wireless and Bluetooth buttons 
+dead.
+
+It's kind of a ridiculous design choice copied from HP.
+
+I finally found a Linux app that discovered that the 
+wireless modem is
+an Atheros, but not the model number.  The Bluetooth is 
+still incognito.
+
+They could have made their hardware information more accessible
+through the BIOS or a OS-neutral app but they did not.  It 
+is not this
+hard on any other PC I have ever used.  If it's not 
+deliberate it is inept.
+
+> Well, I don't have Aspire 5535, but I do have an Aspire one series, the 
+> little 2.2 lb laptop.  It installed Mepis current and had no trouble 
+> with the wifi.  However, Puppy current was not happy.  I doubt they go 
+> to the trouble to actually "lock out" the wireless hardware....they 
+> simply do not offer to support it.
+> 
+> It sounds like you just got the standard tech support response of "We do 
+> care at all about anything exccpt  M$" which has been standard for 
+> years.  Only just very recently have you been able to get Linux (BSD or 
+> any other OS) installed on a store bought system.
+> 
+> What system were you installing?  Did you try any other version than 
 > your favorite distro?
->
+> 
 > Gary WA6DTX
->
-> kd4e wrote:
->> Take ACER Off your Linux-Friendly List.
->>
->> Their Acer Aspire 5535 laptop locks-out the wireless modem
->> and Blue tooth from any access unless a MS version of window
->> is installed.
->>
->> See Acer's "tough luck for you" reply below.
->>
->> Oh, they did offer to let me call their paid support - so they
->> could tell me the same thing.
->>
->> ------------------------------------------------------------------------
->> Response (Mary LincyKM) - 07/29/2009 07:34 PM
->>
->> Having reviewed your e-mail I understand that you are facing
->> an issue using wireless with Linux.
->>
->> As per our record the operating system shipped with the
->> system was Vista.
->>
->> Please note that Acer does not support changing an Operating
->> System. Changing the Operating System may cause driver
->> conflicts. You have the option of upgrading or changing your
->> Operating System at your own discretion. However, it is
->> preferred that you keep to the original configuration of
->> your system so that all the programs and applications in
->> your computer will recognize all the hardware installed in it.
->>
->> We are sorry to inform that we are unable to offer support
->> since you have changed the operating system.
->>
->> Have a great day!
->>
->> Respectfully,
->> Acer America
->> Online Technical Support
->> ------------------------------------------------------------------------
->>
->>   
->
-> -- 
-> To unsubscribe from this list: send the line "unsubscribe linux-hams" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at  http://vger.kernel.org/majordomo-info.html
->
+-- 
 
+Thanks! & 73, doc, KD4E
+FS/Swap/Wanted: http://kd4e.com/swapn.html
+Free OS : http://www.PuppyLinux.com
+Personal: http://kd4e.com
+             |_|___|_|
+             | | & | |
+        /\      {|
+       /  \     {|
+      /    \    {|
+     /   @  \   {|
+     |   |~_|~~~~|
+     |   -| |    |
+============\ # KD4E
+Have an http://ultrafidian.com day!
