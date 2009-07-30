@@ -1,86 +1,59 @@
 From: kd4e <doc@kd4e.com>
 Subject: Re: Take ACER Off your Linux-Friendly List
-Date: Wed, 29 Jul 2009 22:55:14 -0500
-Message-ID: <4A7119A2.9030709@kd4e.com>
-References: <4A710CCA.7000907@kd4e.com> <alpine.LNX.2.00.0907291931000.8804@wapiti.we7u.net>
+Date: Wed, 29 Jul 2009 23:02:32 -0500
+Message-ID: <4A711B58.2060605@kd4e.com>
+References: <4A710CCA.7000907@kd4e.com>	 <alpine.LNX.2.00.0907291931000.8804@wapiti.we7u.net> <8ea83f40907291943v41f90ab3h9cea4f07c2ef0cb2@mail.gmail.com>
 Reply-To: doc@kd4e.com
 Mime-Version: 1.0
 Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <alpine.LNX.2.00.0907291931000.8804@wapiti.we7u.net>
+In-Reply-To: <8ea83f40907291943v41f90ab3h9cea4f07c2ef0cb2@mail.gmail.com>
 Sender: linux-hams-owner@vger.kernel.org
 List-ID: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"; format="flowed"
-To: "Curt, WE7U" <archer@eskimo.com>
-Cc: Linux Hams <linux-hams@vger.kernel.org>, ChristianHams@yahoogroups.com, ham-computers <ham-computers@mailman.qth.net>, Ham-Linux <ham-linux@mailman.qth.net>
+To: Jeff Laughlin <jeff.laughlin@gmail.com>
+Cc: "Curt, WE7U" <archer@eskimo.com>, Linux Hams <linux-hams@vger.kernel.org>, ChristianHams@yahoogroups.com, ham-computers <ham-computers@mailman.qth.net>, Ham-Linux <ham-linux@mailman.qth.net>
 
-Actually, I have done those things, no thanks of any sort to 
-Acer
-whose policy is obviously to discourage Linux usage.
+Acer chooses with whom they sign contracts for sub-devices 
+like wireless
+nics.  If they had insisted on nics with Linux drivers they 
+would have
+received them.  Other companies have.  I already own 
+Linux-friendly
+b/g/n devices, so it is nothing bleeding-edge to do so.
 
-It would have been easy for Acer to make the identity of their
-wireless nic and Bluetooth easily accessible to Linux - even if
-they did not provide a driver - though they should have 
-provided
-a Linux driver. (How hard can that be?)  Instead, unlike other
-computers and wireless nics theirs is almost "invisible" to 
-Linux.
+There are drivers out there for Atheros b/g/n nics but I 
+don't have the
+time to chase them down and fuss with Alpha drivers - this 
+laptop was
+to be a productivity tool - right now it's a defective piece 
+of hardware.
 
-I have four laptops and one desktop here at the moment - 
-only the
-Acer is this Linux-unfriendly.  If it is not deliberate it 
-is is gross
-incompetence.  Volunteers write Linux drivers and corporations
-cannot?  Sigh.
+Since I told the salesman it was for Linux and was not 
+warned it was
+non-Linux compatible they will get it back.
 
-Finding and adapting drivers on your own time for hardware
-sold for profit by a corporation is ones choice - holding Acer
-accountable for being Linux-unfriendly may encourage them to
-take a new look.
+Manufactures need to stop wasting the time of customers and 
+give
+us what we want - in this economy customers are getting 
+harder to
+find - and Linux use is growing like crazy.
 
-I will probably return the Acer later in the week and 
-instead buy a
-Samsung or Toshiba.  The choices of manufacturers need to have
-consequences, or else they will not learn.
-
- > Curt, WE7U wrote:
-> On Wed, 29 Jul 2009, kd4e wrote:
+ > Jeff Laughlin wrote:
+> Vendors don't hate Linux, they just don't like it enough.
 > 
->> Take ACER Off your Linux-Friendly List.
->>
->> Their Acer Aspire 5535 laptop locks-out the wireless modem
->> and Blue tooth from any access unless a MS version of window
->> is installed.
+> Usually wireless or other devices are unsupported by Linux because
+> 1. Vendor doesn't care
+> 2. Driver loads firmware or VHDL code or something at initialization 
+> which the vendor has licensed from a 3rd party under restrictive terms
+> 3. Vendor intentionally locks out FOSS drivers because of silly FCC 
+> rules about frequency agility
 > 
-> The correct wording might be something like:  The Linux I installed
-> doesn't appear to support the wireless modem or bluetooth.  It
-> doesn't mean that the laptop locks-out those device unless MS
-> drivers are installed.  It just means that your drivers you're using
-> now, or the configuration for the drivers you're using now, doesn't
-> appear to work for you.
+> It can be neigh on impossible to create clean room drivers based on 
+> reverse engineering for stuff like that.
 > 
-> Have you tried Google for "acer aspire 5535 wireless"?  I get quite
-> a few hits on that.  You might find something of interest that would
-> work, as in changing drivers, changing your driver settings, or
-> installing a different version or brand of Linux.
-> 
-> Wireless and portable devices are often the hardest to get every
-> little thing working on under Linux.  Manufacturers often take
-> shortcuts in the hardware and/or change the circuit ever so slightly
-> compared to desktop units.  Often drivers don't handle these
-> differences unless some driver author specifically targets that
-> device.
-> 
-> Good luck!
-> 
-> 
->> See Acer's "tough luck for you" reply below.
-> 
-> That sort of reply is normal for any company, sorry to tell you.  It
-> just means they don't have people hired and trained to support other
-> configurations than what they ship.  I'm surprised that it's a
-> surprise to you.
-> 
+> Anyway, while Acer is complicit, they are really just a middle man. It's 
+> really the device vendor that is ultimately to blame.
 
 -- 
 
