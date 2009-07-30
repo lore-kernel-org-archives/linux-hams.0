@@ -1,72 +1,91 @@
-From: dtx <dtx@woodfam.homedns.org>
+From: "Mike McCarthy, W1NR" <lists@w1nr.net>
 Subject: Re: [Ham-Linux] Take ACER Off your Linux-Friendly List
-Date: Thu, 30 Jul 2009 19:42:56 -0800
-Message-ID: <4A726840.70408@woodfam.homedns.org>
-References: <4A710CCA.7000907@kd4e.com>
+Date: Thu, 30 Jul 2009 15:48:44 -0400
+Message-ID: <4A71F91C.5020000@w1nr.net>
+References: <4A710CCA.7000907@kd4e.com> <4A726840.70408@woodfam.homedns.org>
 Mime-Version: 1.0
 Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <4A710CCA.7000907@kd4e.com>
+In-Reply-To: <4A726840.70408@woodfam.homedns.org>
 Sender: linux-hams-owner@vger.kernel.org
 List-ID: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"; format="flowed"
-To: doc@kd4e.com
+Content-Type: text/plain; charset="us-ascii"
+To: 
 Cc: Linux Hams <linux-hams@vger.kernel.org>, ham-computers <ham-computers@mailman.qth.net>, Ham-Linux <ham-linux@mailman.qth.net>
 
-Well, I don't have Aspire 5535, but I do have an Aspire one series, the 
-little 2.2 lb laptop.  It installed Mepis current and had no trouble 
-with the wifi.  However, Puppy current was not happy.  I doubt they go 
-to the trouble to actually "lock out" the wireless hardware....they 
-simply do not offer to support it.
+It is likely that the wireless card is too new to be recognized. 
+Eventually, it will probably get Linux support, even for the Linux
+unfriendly cards by Broadcom.
 
-It sounds like you just got the standard tech support response of "We do 
-care at all about anything exccpt  M$" which has been standard for 
-years.  Only just very recently have you been able to get Linux (BSD or 
-any other OS) installed on a store bought system.
+As for there support, usually, if they can't get the script on their
+teleprompter, then they can't help you and M$ gets all the support $ and
+Linux gets crap.
 
-What system were you installing?  Did you try any other version than 
-your favorite distro?
+Try another distro or blow off Acer and get a Dell.
 
-Gary WA6DTX
+Mike, W1NR
 
-kd4e wrote:
-> Take ACER Off your Linux-Friendly List.
+dtx wrote:
+> Well, I don't have Aspire 5535, but I do have an Aspire one series,
+> the little 2.2 lb laptop.  It installed Mepis current and had no
+> trouble with the wifi.  However, Puppy current was not happy.  I doubt
+> they go to the trouble to actually "lock out" the wireless
+> hardware....they simply do not offer to support it.
 >
-> Their Acer Aspire 5535 laptop locks-out the wireless modem
-> and Blue tooth from any access unless a MS version of window
-> is installed.
+> It sounds like you just got the standard tech support response of "We
+> do care at all about anything exccpt  M$" which has been standard for
+> years.  Only just very recently have you been able to get Linux (BSD
+> or any other OS) installed on a store bought system.
 >
-> See Acer's "tough luck for you" reply below.
+> What system were you installing?  Did you try any other version than
+> your favorite distro?
 >
-> Oh, they did offer to let me call their paid support - so they
-> could tell me the same thing.
+> Gary WA6DTX
 >
-> ------------------------------------------------------------------------
-> Response (Mary LincyKM) - 07/29/2009 07:34 PM
+> kd4e wrote:
+>> Take ACER Off your Linux-Friendly List.
+>>
+>> Their Acer Aspire 5535 laptop locks-out the wireless modem
+>> and Blue tooth from any access unless a MS version of window
+>> is installed.
+>>
+>> See Acer's "tough luck for you" reply below.
+>>
+>> Oh, they did offer to let me call their paid support - so they
+>> could tell me the same thing.
+>>
+>> ------------------------------------------------------------------------
+>> Response (Mary LincyKM) - 07/29/2009 07:34 PM
+>>
+>> Having reviewed your e-mail I understand that you are facing
+>> an issue using wireless with Linux.
+>>
+>> As per our record the operating system shipped with the
+>> system was Vista.
+>>
+>> Please note that Acer does not support changing an Operating
+>> System. Changing the Operating System may cause driver
+>> conflicts. You have the option of upgrading or changing your
+>> Operating System at your own discretion. However, it is
+>> preferred that you keep to the original configuration of
+>> your system so that all the programs and applications in
+>> your computer will recognize all the hardware installed in it.
+>>
+>> We are sorry to inform that we are unable to offer support
+>> since you have changed the operating system.
+>>
+>> Have a great day!
+>>
+>> Respectfully,
+>> Acer America
+>> Online Technical Support
+>> ------------------------------------------------------------------------
+>>
+>>   
 >
-> Having reviewed your e-mail I understand that you are facing
-> an issue using wireless with Linux.
+> -- 
+> To unsubscribe from this list: send the line "unsubscribe linux-hams" in
+> the body of a message to majordomo@vger.kernel.org
+> More majordomo info at  http://vger.kernel.org/majordomo-info.html
 >
-> As per our record the operating system shipped with the
-> system was Vista.
->
-> Please note that Acer does not support changing an Operating
-> System. Changing the Operating System may cause driver
-> conflicts. You have the option of upgrading or changing your
-> Operating System at your own discretion. However, it is
-> preferred that you keep to the original configuration of
-> your system so that all the programs and applications in
-> your computer will recognize all the hardware installed in it.
->
-> We are sorry to inform that we are unable to offer support
-> since you have changed the operating system.
->
-> Have a great day!
->
-> Respectfully,
-> Acer America
-> Online Technical Support
-> ------------------------------------------------------------------------
->
->   
 
