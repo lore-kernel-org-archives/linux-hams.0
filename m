@@ -1,38 +1,36 @@
-From: match@ece.utah.edu
-Subject: Re: [Ham-Linux] Take ACER Off your Linux-Friendly List
-Date: Thu, 30 Jul 2009 08:48:32 -0600
-Message-ID: <4A715E60.17126.34F2B8@match.ece.utah.edu>
-References: <4A710CCA.7000907@kd4e.com>, <alpine.LNX.2.00.0907291931000.8804@wapiti.we7u.net>, <4A7119A2.9030709@kd4e.com>
+From: "Robert Eliassen" <robel@vktv.no>
+Subject: RE: [Ham-Linux] Take ACER Off your Linux-Friendly List
+Date: Thu, 30 Jul 2009 17:23:41 +0200
+Message-ID: <20090730152341.CB9C11036001@mail.vktv.no>
+References: <4A715E60.17126.34F2B8@match.ece.utah.edu>
+Reply-To: <robel@vktv.no>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7BIT
+Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-reply-to: <4A7119A2.9030709@kd4e.com>
-Content-description: Mail message body
+In-Reply-To: <4A715E60.17126.34F2B8@match.ece.utah.edu>
 Sender: linux-hams-owner@vger.kernel.org
 List-ID: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
-To: Ham-Linux <ham-linux@mailman.qth.net>, Linux Hams <linux-hams@vger.kernel.org>, ChristianHams@yahoogroups.com, ham-computers <ham-computers@mailman.qth.net>
+To: 'Linux Hams' <linux-hams@vger.kernel.org>
 
-On 29 Jul 2009 at 22:55, kd4e wrote:
 
-> Actually, I have done those things, no thanks of any sort to 
-> Acer
-> whose policy is obviously to discourage Linux usage.
+Marvin, KA7TPH, wrote:
 
-Maybe so, and maybe no. 
+> So, you won't buy another Acer. Niether will I. And we are not even a blip
+on Acers sales radar.
 
-I think more likely, since Linux is such a minor player, why bother? What 
-percentage of the OS market does Linux own, something like 0.3%? (yeah, I 
-knoww... it's growing. But Linux is not even close to becoming a threat)
+Well, after reading this I'm pretty sure I'll never buy an Acer. How many
+other readers on this list would agree? Soon someone blogs about Acer and
+how it doesn't fit Linux very well. The snowball is on the move. When
+journalists starts writing about this issue, things are getting really bad
+for Acer.
 
-And, as others have pointed out, every decision has a downside. Writing 
-Linux drivers is not going to increase Acers sales enough to warrant the 
-expenditure, and it would threaten their relationship with Microsoft, who is 
-their REAL bread and butter.
+Buy an Acer if you're absolutely sure you would never install Linux on it.
+Now, the vast majority are using Windows, but many Windows users would never
+say they'll stick to Windows for the rest og their lives...
 
-So, you won't buy another Acer. Niether will I. And we are not even a blip on 
-Acers sales radar.
+Cheers!
 
-Marvin
-KA7TPH
+Bob
+LA6GHA
 
