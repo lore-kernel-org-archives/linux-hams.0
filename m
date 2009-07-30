@@ -1,60 +1,64 @@
-From: kd4e <doc@kd4e.com>
-Subject: Re: Take ACER Off your Linux-Friendly List
-Date: Thu, 30 Jul 2009 12:10:20 -0500
-Message-ID: <4A71D3FC.4060507@kd4e.com>
-References: <4A710CCA.7000907@kd4e.com>	 <alpine.LNX.2.00.0907291931000.8804@wapiti.we7u.net> <8ea83f40907291943v41f90ab3h9cea4f07c2ef0cb2@mail.gmail.com> <4A711B58.2060605@kd4e.com> <4A716E28.5070204@bfs.de>
-Reply-To: doc@kd4e.com
-Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
+From: F8arr <f8arr@f8arr.org>
+Subject: Re: [Ham-Linux] Take ACER Off your Linux-Friendly List
+Date: Thu, 30 Jul 2009 18:19:46 +0200
+Message-ID: <C5AFCB61-20EC-49CA-8017-5FA5B7790ED4@f8arr.org>
+References: <20090730152341.CB9C11036001@mail.vktv.no>
+Mime-Version: 1.0 (iPhone Mail 7A341)
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <4A716E28.5070204@bfs.de>
+In-reply-to: <20090730152341.CB9C11036001@mail.vktv.no>
 Sender: linux-hams-owner@vger.kernel.org
 List-ID: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"; format="flowed"
-To: wharms@bfs.de, Linux Hams <linux-hams@vger.kernel.org>
+Content-Type: text/plain; charset="utf-8"; format="flowed	delsp=yes"
+To: "<robel@vktv.no>" <robel@vktv.no>
+Cc: Linux Hams <linux-hams@vger.kernel.org>
 
-I don't give up quite that easily - but Acer should not be 
-off the hook for
-being so lazy and unhelpful toward Linux users.
+And we don't talk about the poor support (Linux or original Windows)
 
+Hi!
+=468arr
 
->> Acer chooses with whom they sign contracts for sub-devices like wireless
->> nics.  If they had insisted on nics with Linux drivers they would have
->> received them.  Other companies have.  I already own Linux-friendly
->> b/g/n devices, so it is nothing bleeding-edge to do so.
->>
->> There are drivers out there for Atheros b/g/n nics but I don't have the
->> time to chase them down and fuss with Alpha drivers - this laptop was
->> to be a productivity tool - right now it's a defective piece of hardware.
->>
->> Since I told the salesman it was for Linux and was not warned it was
->> non-Linux compatible they will get it back.
->>
->> Manufactures need to stop wasting the time of customers and give
->> us what we want - in this economy customers are getting harder to
->> find - and Linux use is growing like crazy.
->>
-> 
-> send it back because you can not use it
-> most people i know simply use a usb-stick (or a boot-cd)
-> and buy only computer that work.
-> 
-> re,
->  wh
+Envoy=C3=A9 de mon t=C3=A9l=C3=A9phone.
 
--- 
+Le 30 juil. 2009 =C3=A0 17:23, "Robert Eliassen" <robel@vktv.no> a =C3=A9=
+crit :
 
-Thanks! & 73, doc, KD4E
-FS/Swap/Wanted: http://kd4e.com/swapn.html
-Free OS : http://www.PuppyLinux.com
-Personal: http://kd4e.com
-             |_|___|_|
-             | | & | |
-        /\      {|
-       /  \     {|
-      /    \    {|
-     /   @  \   {|
-     |   |~_|~~~~|
-     |   -| |    |
-============\ # KD4E
-Have an http://ultrafidian.com day!
+>
+> Marvin, KA7TPH, wrote:
+>
+>> So, you won't buy another Acer. Niether will I. And we are not even =
+=20
+>> a blip
+> on Acers sales radar.
+>
+> Well, after reading this I'm pretty sure I'll never buy an Acer. How =
+=20
+> many
+> other readers on this list would agree? Soon someone blogs about =20
+> Acer and
+> how it doesn't fit Linux very well. The snowball is on the move. When
+> journalists starts writing about this issue, things are getting =20
+> really bad
+> for Acer.
+>
+> Buy an Acer if you're absolutely sure you would never install Linux =20
+> on it.
+> Now, the vast majority are using Windows, but many Windows users =20
+> would never
+> say they'll stick to Windows for the rest og their lives...
+>
+> Cheers!
+>
+> Bob
+> LA6GHA
+>
+> --
+> To unsubscribe from this list: send the line "unsubscribe linux-=20
+> hams" in
+> the body of a message to majordomo@vger.kernel.org
+> More majordomo info at  http://vger.kernel.org/majordomo-info.html
+--
+To unsubscribe from this list: send the line "unsubscribe linux-hams" i=
+n
+the body of a message to majordomo@vger.kernel.org
+More majordomo info at  http://vger.kernel.org/majordomo-info.html
