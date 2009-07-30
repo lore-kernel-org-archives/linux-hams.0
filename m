@@ -1,47 +1,38 @@
-From: "richard.bown@blueyonder.co.uk" <richard.bown@blueyonder.co.uk>
-Subject: Re: Take ACER Off your Linux-Friendly List
-Date: Thu, 30 Jul 2009 11:41:27 +0100
-Message-ID: <4A7178D7.4050301@blueyonder.co.uk>
-References: <4A710CCA.7000907@kd4e.com>	 <alpine.LNX.2.00.0907291931000.8804@wapiti.we7u.net> <8ea83f40907291943v41f90ab3h9cea4f07c2ef0cb2@mail.gmail.com> <4A711B58.2060605@kd4e.com> <4A716E28.5070204@bfs.de>
+From: match@ece.utah.edu
+Subject: Re: [Ham-Linux] Take ACER Off your Linux-Friendly List
+Date: Thu, 30 Jul 2009 08:48:32 -0600
+Message-ID: <4A715E60.17126.34F2B8@match.ece.utah.edu>
+References: <4A710CCA.7000907@kd4e.com>, <alpine.LNX.2.00.0907291931000.8804@wapiti.we7u.net>, <4A7119A2.9030709@kd4e.com>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 7BIT
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <4A716E28.5070204@bfs.de>
+In-reply-to: <4A7119A2.9030709@kd4e.com>
+Content-description: Mail message body
 Sender: linux-hams-owner@vger.kernel.org
 List-ID: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"; format="flowed"
-To: 
-Cc: Linux Hams <linux-hams@vger.kernel.org>
+Content-Type: text/plain; charset="us-ascii"
+To: Ham-Linux <ham-linux@mailman.qth.net>, Linux Hams <linux-hams@vger.kernel.org>, ChristianHams@yahoogroups.com, ham-computers <ham-computers@mailman.qth.net>
 
-walter harms wrote:>
-> 
-> send it back because you can not use it
-> most people i know simply use a usb-stick (or a boot-cd)
-> and buy only computer that work.
-> 
-> re,
->  wh
-> 
-> 
-> 
-> 
->
-Under European consumer law, if they haven't stated that it will only 
-run winblows vista, they have stated by default it should operate on 
-other OS s that will run on that processor.
-So its not fit for purpose and they would have to either change it for 
-one that will or refund your money.
-I'd be very surprised if the US does not have similar legislation.
+On 29 Jul 2009 at 22:55, kd4e wrote:
 
+> Actually, I have done those things, no thanks of any sort to 
+> Acer
+> whose policy is obviously to discourage Linux usage.
 
--- 
-Best wishes
+Maybe so, and maybe no. 
 
-Richard Bown
+I think more likely, since Linux is such a minor player, why bother? What 
+percentage of the OS market does Linux own, something like 0.3%? (yeah, I 
+knoww... it's growing. But Linux is not even close to becoming a threat)
 
-#####################################################################
-Registered Linux User 36561
-OS: Mandriva 2009.1 x86_64, on AMD Dual Athlon 64 +4400: 8 GB RAM DDR2
-Ham Call: G8JVM , QRA IO82SP, Interests Microwave
-####################################################################
+And, as others have pointed out, every decision has a downside. Writing 
+Linux drivers is not going to increase Acers sales enough to warrant the 
+expenditure, and it would threaten their relationship with Microsoft, who is 
+their REAL bread and butter.
+
+So, you won't buy another Acer. Niether will I. And we are not even a blip on 
+Acers sales radar.
+
+Marvin
+KA7TPH
 
