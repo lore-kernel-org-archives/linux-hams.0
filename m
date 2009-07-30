@@ -1,82 +1,67 @@
-From: Pino Zollo <pinozollo@gmail.com>
-Subject: DBLog 1.1
-Date: Wed, 29 Jul 2009 12:54:40 -0400
-Message-ID: <200907291254.40782.pinozollo@gmail.com>
-Reply-To: pinozollo@gmail.com
+From: kd4e <doc@kd4e.com>
+Subject: Take ACER Off your Linux-Friendly List
+Date: Wed, 29 Jul 2009 22:00:26 -0500
+Message-ID: <4A710CCA.7000907@kd4e.com>
+Reply-To: doc@kd4e.com
 Mime-Version: 1.0
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:reply-to:organization:to
-         :subject:date:user-agent:cc:mime-version:content-disposition
-         :message-id:content-type:content-transfer-encoding;
-        bh=aRUhrhuUoH8zL+uPblHMnCR1Ij97DJPbL9c1BDk051E=;
-        b=mfgazoQVmPNvHdDDP86ozStBjgygBc75JmYlSoV0XR0b8d6XrOSCePVTt9Dx9+OiiC
-         Y6VlCrMvEwmZjYwSHkaHqxqzMo6Xnk9Gb30lX7LmjDcfRA50h80H5JY9flGFnITNvvKJ
-         mCEuufXkMuOg/XvbZ1KEkSoYfO0IrAIGht5b0=
-Content-Disposition: inline
 Sender: linux-hams-owner@vger.kernel.org
 List-ID: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="iso-8859-1"
-To: fldigi-alpha@lists.berlios.de
-Cc: ham-linux@mailman.qth.net, Forum Logger32 <hamlogger@yahoogroups.com>, Linux Hams <linux-hams@vger.kernel.org>, adifdev@yahoogroups.com, dblog-Linux-logger@googlegroups.com
+Content-Type: text/plain; charset="us-ascii"; format="flowed"
+To: Linux Hams <linux-hams@vger.kernel.org>, ChristianHams@yahoogroups.com, ham-computers <ham-computers@mailman.qth.net>, Ham-Linux <ham-linux@mailman.qth.net>
 
+Take ACER Off your Linux-Friendly List.
 
-Hi everybody,
+Their Acer Aspire 5535 laptop locks-out the wireless modem
+and Blue tooth from any access unless a MS version of window
+is installed.
 
-I have just uploaded the version 1.1 of DBLog on
+See Acer's "tough luck for you" reply below.
 
-http://www.qsl.net/zp4kfx/Linux/DBLog/dblog.html
+Oh, they did offer to let me call their paid support - so they
+could tell me the same thing.
 
-NEW: Added the possibility of archiving QSL pictures together with QSO =
-infos.
-         Corrected a bug in "Worked before" table.
-         Improved QSL infos handling.
-         A simple manual is now available.
+------------------------------------------------------------------------
+Response (Mary LincyKM) - 07/29/2009 07:34 PM
 
-          Works with GAMBAS 2.15=20
-          Three columns added into the table 'qso'
+Having reviewed your e-mail I understand that you are facing
+an issue using wireless with Linux.
 
-     * Group home page: http://groups.google.com/group/dblog-Linux-logg=
-er
-=20
-     * Group email address dblog-Linux-logger@googlegroups.com
+As per our record the operating system shipped with the
+system was Vista.
 
------------------------------------------------------------------------=
-------------------------------------------------
-DBLog is a logger program for Linux inspired to Logger32 and to M1NN_Lo=
-gger.
+Please note that Acer does not support changing an Operating
+System. Changing the Operating System may cause driver
+conflicts. You have the option of upgrading or changing your
+Operating System at your own discretion. However, it is
+preferred that you keep to the original configuration of
+your system so that all the programs and applications in
+your computer will recognize all the hardware installed in it.
 
-It works in harmony with fldigi for operating digi-modes.
+We are sorry to inform that we are unable to offer support
+since you have changed the operating system.
 
-DBLog =A0is UTF-8 compliant and sensitive to the 'locale'.=20
+Have a great day!
 
-It stores all data's and QSL pictures  in the RDBM PostgreSQL.
+Respectfully,
+Acer America
+Online Technical Support
+------------------------------------------------------------------------
 
-Beyond sources for GAMBAS2 ( http://gambas.sf.net ) there are available=
- the=20
-installation packages for Debian, OpenSuSE, Fedora, Mandriva, Ubuntu an=
-d=20
-Slackware.
+-- 
 
-It is also available an "Autotool" package.
-
-
-
-Bug reports and comments are welcome.
-
-73 de
-Pino ZP4KFX
-
-
-
---=20
-Key ID: 0xF6768208=20
-Key fingerprint =3D B16D 0A7C 5B29 A334 CE6A  71F6 EAF8 3D88 F676 8208
-Key server: hkp://wwwkeys.eu.pgp.net
---
-To unsubscribe from this list: send the line "unsubscribe linux-hams" i=
-n
-the body of a message to majordomo@vger.kernel.org
-More majordomo info at  http://vger.kernel.org/majordomo-info.html
+Thanks! & 73, doc, KD4E
+FS/Swap/Wanted: http://kd4e.com/swapn.html
+Free OS : http://www.PuppyLinux.com
+Personal: http://kd4e.com
+             |_|___|_|
+             | | & | |
+        /\      {|
+       /  \     {|
+      /    \    {|
+     /   @  \   {|
+     |   |~_|~~~~|
+     |   -| |    |
+============\ # KD4E
+Have an http://ultrafidian.com day!
