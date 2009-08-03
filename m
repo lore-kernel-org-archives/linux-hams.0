@@ -1,66 +1,87 @@
-From: Stef Daniels VK5HSX <vk5hsx@wia.org.au>
-Subject: Re: Take ACER Off your Linux-Friendly List
-Date: Sun, 02 Aug 2009 13:36:03 +0930
-Message-ID: <4A7510AB.6030201@wia.org.au>
-References: <4A710CCA.7000907@kd4e.com> <alpine.LNX.2.00.0907291931000.8804@wapiti.we7u.net> <4A7119A2.9030709@kd4e.com>
+From: Pino Zollo <pinozollo@gmail.com>
+Subject: DBLog 1.2
+Date: Mon, 3 Aug 2009 15:01:51 -0400
+Message-ID: <200908031501.51932.pinozollo@gmail.com>
+Reply-To: pinozollo@gmail.com
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <4A7119A2.9030709@kd4e.com>
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:from:reply-to:organization:to
+         :subject:date:user-agent:cc:mime-version:content-type
+         :content-transfer-encoding:content-disposition:message-id;
+        bh=oaemtDaJaGwL1++2P3r0RBauvDDBAOF8f7H0/dbgNEM=;
+        b=w6LwRuiSWfgL4w4+FsJI0e5VT6aYKio4W+0VhcANsROjciR+JrtBFYHdSyBDJu/1rc
+         iKgUzFcXeAu3aIxTvP78Bq9rF9oUA5CtSRMJKTBycujvwM9yzl/LERRr4sYRfx+4nJ3V
+         lNFU9QSiIYICdZShnzucb6NofMx5pLckqs8Bo=
+Content-Disposition: inline
 Sender: linux-hams-owner@vger.kernel.org
 List-ID: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"; format="flowed"
-To: doc@kd4e.com
-Cc: "Curt, WE7U" <archer@eskimo.com>, Linux Hams <linux-hams@vger.kernel.org>, ChristianHams@yahoogroups.com, ham-computers <ham-computers@mailman.qth.net>, Ham-Linux <ham-linux@mailman.qth.net>
+Content-Type: text/plain; charset="iso-8859-1"
+To: wsjt-devel@lists.berlios.de
+Cc: Debian Hams <debian-hams@lists.debian.org>, "Ham Software - QTH.net" <ham-software@mailman.qth.net>, ham-linux@mailman.qth.net, Linux Hams <linux-hams@vger.kernel.org>, dblog-Linux-logger@googlegroups.com, fldigi-alpha@lists.berlios.de, Forum Logger32 <hamlogger@yahoogroups.com>
 
-Greetings,
+Hi everybody,
 
-kd4e wrote:
-> Actually, I have done those things, no thanks of any sort to Acer
-> whose policy is obviously to discourage Linux usage.
+I have just uploaded the version 1.2 of DBLog on
 
-This is to their own detriment !!
+http://www.qsl.net/zp4kfx/Linux/DBLog/dblog.html
 
-You have other manufacturers who have embraced Linux on various systems 
-with success.  Their loss!!  Bye bye !!
+NEW: Corrected a bug that was causing a crash clicking into an empty WB=
+4
+          table.
 
-> It would have been easy for Acer to make the identity of their
-> wireless nic and Bluetooth easily accessible to Linux - even if
-> they did not provide a driver - though they should have provided
-> a Linux driver. (How hard can that be?)  Instead, unlike other
-> computers and wireless nics theirs is almost "invisible" to Linux.
-
-There are loads of other options out there, whose devices work fine.
-
-> I have four laptops and one desktop here at the moment - only the
-> Acer is this Linux-unfriendly.  If it is not deliberate it is is gross
-> incompetence.  Volunteers write Linux drivers and corporations
-> cannot?  Sigh.
-
-It is showing that they are putting their head in the sand !!
-
-sort of "...nah, nah, ....not listening !!"
-
-> Finding and adapting drivers on your own time for hardware
-> sold for profit by a corporation is ones choice - holding Acer
-> accountable for being Linux-unfriendly may encourage them to
-> take a new look.
-> 
-> I will probably return the Acer later in the week and instead buy a
-> Samsung or Toshiba.  The choices of manufacturers need to have
-> consequences, or else they will not learn.
-
-Will see what happens.. perhaps their reasons are a certain request from 
-a software company for this to happen.
--- 
-Regards,
-
-Stef Daniels (VK5HSX)            QRA-Loc: PF94gv
-Amateur Radio Station            Email:  vk5hsx@gmail.com
-Adelaide, Sth Australia          AX25:  VK5HSX@VK5TTY.#ADL.#SA.AUS.OC
-Member: South Coast ARC Inc.     Website: http://www.scarc.org.au
-Member: Wireless Inst. of Aust.  Website: http://www.wia.org.au
-
-Debian GNU\Linux User            Website: http://www.au.debian.org
+         Added a more precise computation of distance and bearing when=20
+         the locator is introduced.
 
 
+=A0 =A0 =A0* Group home page: http://groups.google.com/group/dblog-Linu=
+x-logger
+=A0
+=A0 =A0 =A0* Group email address dblog-Linux-logger@googlegroups.com
+
+-----------------------------------------------------------------------=
+------------------------------------------------
+DBLog is a logger program for Linux inspired to Logger32 and to N1MM_Lo=
+gger.
+
+It works in harmony with fldigi for operating digi-modes.
+
+DBLog =A0is UTF-8 compliant and sensitive to the 'locale'.=20
+
+It stores all QSO data's and QSL pictures =A0into the RDBM PostgreSQL.
+
+It uses cwdaemon to send CW code, hamlibs to control the radio and xdx
+to receive cluster spots.
+
+Can be used by other ham-radio programs as a logger-server (EME or othe=
+r=20
+digimodes)
+
+Has a Client/Server architecture, so multi-operators stations can log a=
+t the=20
+same time into the same log.
+
+Beyond sources for GAMBAS2 ( http://gambas.sf.net ) there are available=
+ the=20
+installation packages for Debian, OpenSuSE, Fedora, Mandriva, Ubuntu an=
+d=20
+Slackware.
+It is also available an "Autotool" package.
+
+It is distributed under the GPL licence.=20
+
+Bug reports and comments are welcome.
+
+73 de
+Pino ZP4KFX
+--=20
+Key ID: 0xF6768208=20
+Key fingerprint =3D B16D 0A7C 5B29 A334 CE6A  71F6 EAF8 3D88 F676 8208
+Key server: hkp://wwwkeys.eu.pgp.net
+--
+To unsubscribe from this list: send the line "unsubscribe linux-hams" i=
+n
+the body of a message to majordomo@vger.kernel.org
+More majordomo info at  http://vger.kernel.org/majordomo-info.html
