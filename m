@@ -1,55 +1,85 @@
-From: "Curt, WE7U" <archer@eskimo.com>
-Subject: Kernel NULL pointer vulnerability:  AX.25 module
-Date: Fri, 14 Aug 2009 10:59:00 -0700 (PDT)
-Message-ID: <Pine.LNX.4.64.0908141052000.9150@shell.eskimo.com>
-Reply-To: "Curt Mills, WE7U" <archer@eskimo.com>
+From: Ralf Baechle <ralf@linux-mips.org>
+Subject: NETROM: Fix use of static buffer
+Date: Mon, 17 Aug 2009 17:16:36 +0100
+Message-ID: <20090817161636.GA26151@linux-mips.org>
 Mime-Version: 1.0
 Return-path: <linux-hams-owner@vger.kernel.org>
+Content-Disposition: inline
 Sender: linux-hams-owner@vger.kernel.org
 List-ID: <linux-hams.vger.kernel.org>
-Content-Type: TEXT/PLAIN; charset="us-ascii"; format="flowed"
+Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
-To: linux-hams@vger.kernel.org
+To: netdev@vger.kernel.org, "David S. Miller" <davem@davemloft.net>
+Cc: linux-hams@vger.kernel.org
 
+The static variable used by nr_call_to_digi might result in corruption if
+multiple threads are trying to usee a node or neighbour via ioctl.  Fixed
+by having the caller pass a structure in.  This is safe because nr_add_node
+rsp. nr_add_neigh will allocate a permanent structure, if needed.
 
-FYI:  My CentOS 5.x systems appear to be ok.  CentOS 4.x systems are
-supposed to be vulnerable.  My OpenSuSE 11.x systems appear to be
-vulnerable but I'm only running AX.25 on one machine and only
-occasionally.  Note that there's a type in the net-pf-24 line below
-also.  Read the LWM link or Google for additional info.  --we7u
+Signed-off-by: Ralf Baechle <ralf@linux-mips.org>
 
----------- Forwarded message ----------
-Date: Fri, 14 Aug 2009 14:24:39 +0200
-From: Marcus Moeller <mail@marcus-moeller.de>
-To: CentOS mailing list <centos@centos.org>
-Subject: [CentOS] Kernel NULL pointer vulnerability
+ net/netrom/nr_route.c |   21 ++++++++++++---------
+ 1 files changed, 12 insertions(+), 9 deletions(-)
 
-Hi all.
-
-Julien Tinnes and Tavis Ormandy from the Google Security Team have
-recently found a Linux kernel vulnerability which affects all 2.4 and
-2.6 kernels since 2001 on all architectures. Please read the
-announcement on LWM: http://lwn.net/Articles/347006/ for further
-information about the vulnerability and the exploit which has been
-provided by Brad Spengler (you will find updates on his twitter site).
-
-The only workaroud that is known to me atm is to disable the affected
-kernel modules (which should be handled with care as some of them may
-provide necessary functionality in your operating environment):
-
-echo "alias net-pf-3 off # Amateur Radio AX.25
-alias net-pf-4 ipx # IPX
-alias net-pf-5 off # DDP / AppleTalk
-alias net-pf-9 off # X.25
-# alias net-pf-10 off # IPv6
-alias net-pf-23 off  # IrDA
-alias net-pf-24 # PPPoE
-alias net-pf-31 off # Bluetooth" >> /etc/modprobe.conf
-
-Best Regards
-Marcus
-_______________________________________________
-CentOS mailing list
-CentOS@centos.org
-http://lists.centos.org/mailman/listinfo/centos
-
+diff --git a/net/netrom/nr_route.c b/net/netrom/nr_route.c
+index e943c16..4eb1ac9 100644
+--- a/net/netrom/nr_route.c
++++ b/net/netrom/nr_route.c
+@@ -630,23 +630,23 @@ out:
+ 	return dev;
+ }
+ 
+-static ax25_digi *nr_call_to_digi(int ndigis, ax25_address *digipeaters)
++static ax25_digi *nr_call_to_digi(ax25_digi *digi, int ndigis,
++	ax25_address *digipeaters)
+ {
+-	static ax25_digi ax25_digi;
+ 	int i;
+ 
+ 	if (ndigis == 0)
+ 		return NULL;
+ 
+ 	for (i = 0; i < ndigis; i++) {
+-		ax25_digi.calls[i]    = digipeaters[i];
+-		ax25_digi.repeated[i] = 0;
++		digi->calls[i]    = digipeaters[i];
++		digi->repeated[i] = 0;
+ 	}
+ 
+-	ax25_digi.ndigi      = ndigis;
+-	ax25_digi.lastrepeat = -1;
++	digi->ndigi      = ndigis;
++	digi->lastrepeat = -1;
+ 
+-	return &ax25_digi;
++	return digi;
+ }
+ 
+ /*
+@@ -656,6 +656,7 @@ int nr_rt_ioctl(unsigned int cmd, void __user *arg)
+ {
+ 	struct nr_route_struct nr_route;
+ 	struct net_device *dev;
++	ax25_digi digi;
+ 	int ret;
+ 
+ 	switch (cmd) {
+@@ -673,13 +674,15 @@ int nr_rt_ioctl(unsigned int cmd, void __user *arg)
+ 			ret = nr_add_node(&nr_route.callsign,
+ 				nr_route.mnemonic,
+ 				&nr_route.neighbour,
+-				nr_call_to_digi(nr_route.ndigis, nr_route.digipeaters),
++				nr_call_to_digi(&digi, nr_route.ndigis,
++						nr_route.digipeaters),
+ 				dev, nr_route.quality,
+ 				nr_route.obs_count);
+ 			break;
+ 		case NETROM_NEIGH:
+ 			ret = nr_add_neigh(&nr_route.callsign,
+-				nr_call_to_digi(nr_route.ndigis, nr_route.digipeaters),
++				nr_call_to_digi(&digi, nr_route.ndigis,
++						nr_route.digipeaters),
+ 				dev, nr_route.quality);
+ 			break;
+ 		default:
