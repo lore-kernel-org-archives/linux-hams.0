@@ -1,56 +1,54 @@
 From: kd4e <doc@kd4e.com>
-Subject: Proprietary Web Site Interface is Unacceptable
-Date: Tue, 18 Aug 2009 15:44:27 -0500
-Message-ID: <4A8B12AB.9020706@kd4e.com>
+Subject: FDMDV digital voice mode
+Date: Tue, 25 Aug 2009 08:56:41 -0500
+Message-ID: <4A93ED99.7030104@kd4e.com>
+References: <4A93B7C2.8000501@conacher.co.za>
 Reply-To: doc@kd4e.com
 Mime-Version: 1.0
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
+In-Reply-To: <4A93B7C2.8000501@conacher.co.za>
 Sender: linux-hams-owner@vger.kernel.org
 List-ID: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="iso-8859-1"; format="flowed"
-To: webmaster@blackberry.net
+Content-Type: text/plain; charset="us-ascii"; format="flowed"
+To: Announcements for all amateur software releases <ham-software@mailman.qth.net>, Linux Hams <linux-hams@vger.kernel.org>, Ham- Linux reflector <Ham-Linux@mailman.qth.net>, ham-comput
 
-Dear RIM/Blackberry:
+Non-proprietary!  Runs under either Linux or one of the
+MS versions of windows, cool.
 
-Why is it that your Web site designers are so incompetent=20
-that they
-cannot do what most amateur Web designers can do?
+Here is the home page:
+http://n1su.com/fdmdv/
 
-Any entry-level Web site designer can build a site that is=20
-OS-independent and browser-independent.
+Latest version appears to be over a year old.  Has it been
+abandoned?
 
-Your MS-exclusive interface is intolerable to the 24+=20
-million Linux
-users all over the world and you should be ashamed to=20
-present such
-a low-tech user-unfriendly site.
+Download FDMDV 20-jul-08: fdmdv-20-jul-08.zip ( 58kB )
 
-It seems that Linux users are unwelcome in the RIM world -=20
-so I will
-be looking to replace my BlackBerry with a different device=20
-and will
-recommend that others do so as well.
+Here is a 2008 eHam article:
+http://www.eham.net/articles/19862
+http://www2.arrl.org/news/stories/2008/07/31/10237/
 
-Disappointed soon-to-be-former BlackBerry owner and user.
+Google group here:
+http://groups-beta.google.com/group/digitalvoice
 
-doc
+Here's a Yahoo group:
+http://groups.yahoo.com/group/digitalradio/message/24860?l=1
 
------------------------------------------------------------------------=
-----------------------------------
-Other BlackBerry Smartphone Users
-This page requires Windows=AE Internet Explorer=AE v5.5 or=20
-later, running on Windows=AE.
-If you want to update your BlackBerry Device Software, you=20
-will need to revisit this page using Windows Internet Explorer.
------------------------------------------------------------------------=
-----------------------------------
+> Catching up on reading I see there is a newish digital voice mode known
+> as FDMDV (Frequency Dividion Multiplex Digital Voice that has been
+> release by HB9TLK.
+> 
+> Please use your favourite search engine to find out more and download
+> the software.
+> 
+> 73 de ZR1HPC
+> Hylton
 
---=20
+-- 
 
 Thanks! & 73, doc, KD4E
-=46S/Swap/Wanted: http://kd4e.com/swapn.html
-=46ree OS : http://www.PuppyLinux.com
+FS/Swap/Wanted: http://kd4e.com/swapn.html
+Free OS : http://www.PuppyLinux.com
 Personal: http://kd4e.com
              |_|___|_|
              | | & | |
@@ -60,10 +58,5 @@ Personal: http://kd4e.com
      /   @  \   {|
      |   |~_|~~~~|
      |   -| |    |
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D\ # KD4E
+============\ # KD4E
 Have an http://ultrafidian.com day!
---
-To unsubscribe from this list: send the line "unsubscribe linux-hams" i=
-n
-the body of a message to majordomo@vger.kernel.org
-More majordomo info at  http://vger.kernel.org/majordomo-info.html
