@@ -1,11 +1,20 @@
-From: Alan Crosswell <alan@columbia.edu>
+From: Frank Smith <frankiansmith@gmail.com>
 Subject: Re: debugging KISS basics
-Date: Sat, 29 Aug 2009 19:11:08 -0400
-Message-ID: <4A73508C-FE9A-41CD-A48B-F483E32F1706@columbia.edu>
+Date: Sat, 29 Aug 2009 20:50:48 -0300
+Message-ID: <02E88D3E-63AA-4450-A3DD-FC31AF631371@gmail.com>
 References: <200811271410.mAREAO6t019051@moose.dimebank.com> <4A99AAC2.9050805@exemail.com.au>
-Mime-Version: 1.0 (iPhone Mail 7A400)
+Mime-Version: 1.0 (iPod Mail 7A341)
 Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:from:to:in-reply-to:x-mailer
+         :subject:references:message-id:content-type
+         :content-transfer-encoding:mime-version:date:cc;
+        bh=m+Etpp/4Kq7mfWpxw3KQSCLga5q923zFCOtP9FqZs08=;
+        b=N197hUGRTG9JPAkTqNp7HOuUrp5b3YNmBOaDRJ5Q1Er9DUTNuZh5sVj7Rex19VgImJ
+         OjvFyTaH6zfksfpCTJkocCo6lDL2unIGEpLEA9p9qgeXeCAW53z6exfDe+q5TgmuQFPm
+         piu7111IKbP0OXt6FUIVOM7XURtM7VxZ79e70=
 In-Reply-To: <4A99AAC2.9050805@exemail.com.au>
 Sender: linux-hams-owner@vger.kernel.org
 List-ID: <linux-hams.vger.kernel.org>
@@ -13,18 +22,10 @@ Content-Type: text/plain; charset="us-ascii"; format="flowed"; delsp="yes"
 To: Ray Wells <vk2tv@exemail.com.au>
 Cc: Chris Kantarjiev <cak@dimebank.com>, "linux-hams@vger.kernel.org" <linux-hams@vger.kernel.org>
 
-Chris,
+Have you tried using 'strace' to see what data is being sent to and  
+received from the TNC?
 
-Have you considered using a soundmodem instead of that 1980's  
-technology TNC?  With a sound card and parallel or serial port for PTT  
-you can get better results than most TNCs.
-
-I run 3, soon to be 4 digipeaters 7x24 with both PCI and USB sound  
-cards.
-/a
-
-
-On Aug 29, 2009, at 6:25 PM, Ray Wells <vk2tv@exemail.com.au> wrote:
+On 2009-08-29, at 7:25 PM, Ray Wells <vk2tv@exemail.com.au> wrote:
 
 > Chris,
 >
@@ -67,5 +68,3 @@ On Aug 29, 2009, at 6:25 PM, Ray Wells <vk2tv@exemail.com.au> wrote:
 > hams" in
 > the body of a message to majordomo@vger.kernel.org
 > More majordomo info at  http://vger.kernel.org/majordomo-info.html
->
->
