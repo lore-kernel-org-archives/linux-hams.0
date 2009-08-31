@@ -1,41 +1,42 @@
-From: Douglas Cole <doug.n7bfs@gmail.com>
-Subject: AX25 help site
-Date: Mon, 31 Aug 2009 07:27:40 -0700
-Message-ID: <9923fd660908310727o354e03dqaf90abe05b4ea800@mail.gmail.com>
+From: "Curt, WE7U" <archer@eskimo.com>
+Subject: Re: AX25 help site
+Date: Mon, 31 Aug 2009 15:48:39 -0700 (PDT)
+Message-ID: <alpine.LNX.2.00.0908311546470.17194@wapiti.we7u.net>
+References: <9923fd660908310727o354e03dqaf90abe05b4ea800@mail.gmail.com>
 Mime-Version: 1.0
 Return-path: <linux-hams-owner@vger.kernel.org>
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:date:message-id:subject
-         :from:to:content-type;
-        bh=C7ux7LU3kkNUVzViaVqkntsGBLC/pADKCdwr/F0f2h0=;
-        b=nT5NxRlJhsgoEcD+UmHv66PG09sregwucmYZT/6OrDDwjCPrMNSQdYgxUwXgEIOoxu
-         zjiRnGWrdXiY6ZYJLhd9WyjomciKXXibT3AZZVzR7JoX6cPBXmN3ghceqIeFCZeemjKP
-         O6gA0a6jPytvwtSZdVKOYAWYKfHkYGVN1KvfA=
+In-Reply-To: <9923fd660908310727o354e03dqaf90abe05b4ea800@mail.gmail.com>
 Sender: linux-hams-owner@vger.kernel.org
 List-ID: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"
+Content-Type: TEXT/PLAIN; charset="us-ascii"; format="flowed"
 Content-Transfer-Encoding: 7bit
-To: Linux HAMs <linux-hams@vger.kernel.org>
+To: Douglas Cole <doug.n7bfs@gmail.com>
+Cc: Linux HAMs <linux-hams@vger.kernel.org>
 
-For those just getting their Linux packet station going this page may
-help you with that, these articles have an OpenSuSE focus but should
-work for most distributions....
+On Mon, 31 Aug 2009, Douglas Cole wrote:
 
-http://n7bfs.net/mediawiki/index.php/Ax25
+> For those just getting their Linux packet station going this page may
+> help you with that, these articles have an OpenSuSE focus but should
+> work for most distributions....
+>
+> http://n7bfs.net/mediawiki/index.php/Ax25
+>
+> Also I thought I saw a posting asking for an init.d script to bring up
+> an AX0 interface, here is what my friend KD7DMP has made that works
+> very well:
+>
+> http://n7bfs.net/mediawiki/index.php/AX25_init.d
+>
+> And of course the very useful AX25 wiki
+> http://www.linux-ax25.org/wiki/Main_Page
 
-Also I thought I saw a posting asking for an init.d script to bring up
-an AX0 interface, here is what my friend KD7DMP has made that works
-very well:
+Also the HowTo section at:  http://www.xastir.org
 
-http://n7bfs.net/mediawiki/index.php/AX25_init.d
-
-And of course the very useful AX25 wiki
-http://www.linux-ax25.org/wiki/Main_Page
-
-
-Hope this helps.
+And the APRS wiki:  http://info.aprs.net
 
 -- 
-Douglas Cole
-N7BFS
+Curt, WE7U.                         <http://www.eskimo.com/~archer>
+    APRS:  Where it's at!                    <http://www.xastir.org>
+   Lotto:  A tax on people who are bad at math. - unknown
+Windows:  Microsoft's tax on computer illiterates. - WE7U.
+The world DOES revolve around me:  I picked the coordinate system!"
