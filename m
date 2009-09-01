@@ -1,24 +1,19 @@
-From: Thomas Sailer <sailer@sailer.dynip.lugs.ch>
-Subject: Re: [PATCH 04/19] convert hamradio drivers to netdev_txreturnt_t
-Date: Tue, 01 Sep 2009 17:30:56 +0200
-Message-ID: <1251819056.29032.0.camel@xbox360.hq.axsem.com>
-References: <20090901055039.824876937@vyatta.com>
-	 <20090901055128.780933432@vyatta.com>
+From: w8iss <w8iss@wideopenwest.com>
+Subject: Re: AX25 help site
+Date: Tue, 01 Sep 2009 18:06:47 -0400
+Message-ID: <1251842807.8971.1.camel@w8iss-desktop>
+References: <9923fd660908310727o354e03dqaf90abe05b4ea800@mail.gmail.com>
 Mime-Version: 1.0
 Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <20090901055128.780933432@vyatta.com>
+In-Reply-To: <9923fd660908310727o354e03dqaf90abe05b4ea800@mail.gmail.com>
 Sender: linux-hams-owner@vger.kernel.org
 List-ID: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
-To: Stephen Hemminger <shemminger@vyatta.com>
-Cc: David Miller <davem@davemloft.net>, linux-hams@vger.kernel.org, netdev@vger.kernel.org
+To: Linux-Hams <linux-hams@vger.kernel.org>
 
-On Mon, 2009-08-31 at 22:50 -0700, Stephen Hemminger wrote:
-> plain text document attachment (hamradio-tx.patch)
-> Signed-off-by: Stephen Hemminger <shemminger@vyatta.com>
+Wondering if anyone has used the tnc-x either serial port or USB
+with their AX25 setup?
 
-for drivers/net/hamradio/hdlcdrv.c:
-Acked-by: Thomas Sailer <t.sailer@alumni.ethz.ch>
-
+James W8ISS
 
