@@ -1,42 +1,36 @@
-From: David Miller <davem@davemloft.net>
-Subject: Re: [PATCH] NET: Fix possible corruption in bpqether driver
-Date: Wed, 02 Sep 2009 23:10:33 -0700 (PDT)
-Message-ID: <20090902.231033.243002174.davem@davemloft.net>
-References: <20090902085841.GA5910@linux-mips.org>
+From: "Curt, WE7U" <archer@eskimo.com>
+Subject: Re: AX25 help site
+Date: Fri, 4 Sep 2009 18:01:47 -0700 (PDT)
+Message-ID: <alpine.LNX.2.00.0909041758000.29631@wapiti.we7u.net>
+References: <9923fd660908310727o354e03dqaf90abe05b4ea800@mail.gmail.com> <1251842807.8971.1.camel@w8iss-desktop>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <20090902085841.GA5910@linux-mips.org>
+In-Reply-To: <1251842807.8971.1.camel@w8iss-desktop>
 Sender: linux-hams-owner@vger.kernel.org
 List-ID: <linux-hams.vger.kernel.org>
-Content-Type: Text/Plain; charset="us-ascii"
-To: ralf@linux-mips.org
-Cc: netdev@vger.kernel.org, linux-hams@vger.kernel.org, thomas@osterried.de, jann@gmx.de
+Content-Type: TEXT/PLAIN; charset="us-ascii"; format="flowed"
+Content-Transfer-Encoding: 7bit
+To: w8iss <w8iss@wideopenwest.com>
+Cc: Linux-Hams <linux-hams@vger.kernel.org>
 
-From: Ralf Baechle <ralf@linux-mips.org>
-Date: Wed, 2 Sep 2009 09:58:52 +0100
+On Tue, 1 Sep 2009, w8iss wrote:
 
-> The bpq ether driver is modifying the data art of the skb by first
-> dropping the KISS byte (a command byte for the radio) then prepending the
-> length + 4 of the remaining AX.25 packet to be transmitted as a little
-> endian 16-bit number.  If the high byte of the length has a different
-> value than the dropped KISS byte users of clones of the skb may observe
-> this as corruption.  This was observed with by running listen(8) -a which
-> uses a packet socket which clones transmit packets.  The corruption will
-> then typically be displayed for as a KISS "TX Delay" command for AX.25
-> packets in the range of 252..508 bytes or any other KISS command for
-> yet larger packets.
-> 
-> Fixed by using skb_cow to create a private copy should the skb be cloned.
-> Using skb_cow also allows us to cleanup the old logic to ensure sufficient
-> headroom in the skb.
-> 
-> While at it, replace a return of 0 from bpq_xmit with the proper constant
-> NETDEV_TX_OK which is now being used everywhere else in this function.
-> 
-> Affected: all 2.2, 2.4 and 2.6 kernels.
-> 
-> Signed-off-by: Ralf Baechle <ralf@linux-mips.org>
-> Reported-by: Jann Traschewski <jann@gmx.de>
+> Wondering if anyone has used the tnc-x either serial port or USB
+> with their AX25 setup?
 
-Applied to net-next-2.6, thanks!
+I've been using one for quite a while with serial port and with
+serial-to-USB adapter cable.  Have used it with the kernel AX.25
+networking and with the Serial KISS TNC code, both from within
+Xastir (APRS).
+
+I've also done a bit of TCP/IP using the TNC-X and the kernel AX.25
+driver, but only for limited testing, making sure the Xastir Wiki
+instructions for installing/configuring AX.25 were correct.  Same
+for the Soundmodem instructions.
+
+-- 
+Curt, WE7U.                         <http://www.eskimo.com/~archer>
+    APRS:  Where it's at!                    <http://www.xastir.org>
+   Lotto:  A tax on people who are bad at math. - unknown
+Windows:  Microsoft's tax on computer illiterates. - WE7U.
+The world DOES revolve around me:  I picked the coordinate system!"
