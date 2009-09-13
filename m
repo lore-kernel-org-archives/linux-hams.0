@@ -1,213 +1,100 @@
-From: Christof Bodner <christof.bodner@gmx.net>
-Subject: Re: Problem with soundmodem on Eee PC
-Date: Sun, 13 Sep 2009 21:28:01 +0200
-Message-ID: <1252870081.20295.16.camel@rosi-atom>
-References: <984e45570909091532n34cb261hd9cdd6f30d448bf7@mail.gmail.com>
-	 <4AA85757.8010105@lightningflash.net>  <4AAC2AE1.9090609@radagast.org>
-	 <1252825877.5127.7.camel@rosi-atom>  <4AAD3964.3040605@radagast.org>
-Mime-Version: 1.0
+From: Bob Nielsen <n7xy@clearwire.net>
+Subject: Re: MacOS Support for Hams
+Date: Sun, 13 Sep 2009 12:38:12 -0700
+Message-ID: <8A08E5CC-BE47-49BB-9AE5-862E34D46824@clearwire.net>
+References: <C6D28375.29C05%teners@bh90210.net>
+Mime-Version: 1.0 (Apple Message framework v753.1)
 Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <4AAD3964.3040605@radagast.org>
+In-Reply-To: <C6D28375.29C05%teners@bh90210.net>
 Sender: linux-hams-owner@vger.kernel.org
 List-ID: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"
-To: Dave Platt <dplatt@radagast.org>
-Cc: linux-hams <linux-hams@vger.kernel.org>
+Content-Type: text/plain; charset="us-ascii"; delsp="yes"; format="flowed"
+To: "IT2 Stuart Blake Tener, USNR" <teners@bh90210.net>
+Cc: "linux-hams@vger.kernel.org" <linux-hams@vger.kernel.org>
 
-Hi Dave,
+I am not aware of anyone who has implemented AX.25 in FreeBSD (on  
+which OS X is built).  Regarding drivers, you could probably find  
+some answers on the ham-mac mailing list:
 
-I am using the soundmodem provided by the Ubuntu team
-$ dpkg-query -W soundmodem
-soundmodem	0.10-6
+http://mailman.qth.net/mailman/listinfo/ham-mac
 
-This is the output of soundmodemconfig:
+73, Bob N7XY
 
-on_configtree_selection_changed
-selection: cfg: default  chan: Channel 0
-Modulator: afsk Demodulator: afsk
-Modulator: parameter bps value 1200
-Modulator: parameter f0 value 1200
-Modulator: parameter f1 value 2200
-Modulator: parameter diffenc value 1
-Demodulator: parameter bps value 1200
-Demodulator: parameter f0 value 1200
-Demodulator: parameter f1 value 2200
-Demodulator: parameter diffdec value 1
-Minimum sampling rate: 9600
-Audio IO: type alsa
-ALSA: Using sample rate 9600, sample format 2, significant bits 16,
-buffer size 3276, period size 102
-ALSA: Using sample rate 9600, sample format 2, significant bits 16,
-buffer size 3276, period size 102
-Real sampling rate: 9600
-Joining TxThread
-Joining RxThread
-Releasing IO
-Modulator: afsk Demodulator: afsk
-Modulator: parameter bps value 1200
-Modulator: parameter f0 value 1200
-Modulator: parameter f1 value 2200
-Modulator: parameter diffenc value 1
-Demodulator: parameter bps value 1200
-Demodulator: parameter f0 value 1200
-Demodulator: parameter f1 value 2200
-Demodulator: parameter diffdec value 1
-Minimum sampling rate: 9600
-Audio IO: type alsa
-ALSA: Using sample rate 9600, sample format 2, significant bits 16,
-buffer size 3276, period size 102
-ALSA: Using sample rate 9600, sample format 2, significant bits 16,
-buffer size 3276, period size 102
-Real sampling rate: 9600
-delete event
-on_configtree_selection_changed
-Modulator mode: afsk
-Demodulator mode: afsk
-Packet IO mode: MKISS
-Joining TxThread
-Joining RxThread
-Releasing IO
-selection: cfg: -  chan: -
-podex@rosi-atom:~$ sudo soundmodemconfig -v 4
-on_configtree_selection_changed
-selection: cfg: default  chan: Channel 0
-Modulator: afsk Demodulator: afsk
-Modulator: parameter bps value 1200
-Modulator: parameter f0 value 1200
-Modulator: parameter f1 value 2200
-Modulator: parameter diffenc value 1
-Demodulator: parameter bps value 1200
-Demodulator: parameter f0 value 1200
-Demodulator: parameter f1 value 2200
-Demodulator: parameter diffdec value 1
-Minimum sampling rate: 9600
-Audio IO: type alsa
-ALSA: Using sample rate 9600, sample format 2, significant bits 16,
-buffer size 3276, period size 102
-ALSA: Using sample rate 9600, sample format 2, significant bits 16,
-buffer size 3276, period size 102
-Real sampling rate: 9600
-Joining TxThread
-Joining RxThread
-Releasing IO
-Modulator: afsk Demodulator: afsk
-Modulator: parameter bps value 1200
-Modulator: parameter f0 value 1200
-Modulator: parameter f1 value 2200
-Modulator: parameter diffenc value 1
-Demodulator: parameter bps value 1200
-Demodulator: parameter f0 value 1200
-Demodulator: parameter f1 value 2200
-Demodulator: parameter diffdec value 1
-Minimum sampling rate: 9600
-Audio IO: type alsa
-ALSA: Using sample rate 9600, sample format 2, significant bits 16,
-buffer size 3276, period size 102
-ALSA: Using sample rate 9600, sample format 2, significant bits 16,
-buffer size 3276, period size 102
-Real sampling rate: 9600
-Joining TxThread
-Joining RxThread
-Releasing IO
-Modulator: afsk Demodulator: afsk
-Modulator: parameter bps value 1200
-Modulator: parameter f0 value 1200
-Modulator: parameter f1 value 2200
-Modulator: parameter diffenc value 1
-Demodulator: parameter bps value 1200
-Demodulator: parameter f0 value 1200
-Demodulator: parameter f1 value 2200
-Demodulator: parameter diffdec value 1
-Minimum sampling rate: 9600
-Audio IO: type alsa
-ALSA: Using sample rate 9600, sample format 2, significant bits 16,
-buffer size 3276, period size 102
-ALSA: Using sample rate 9600, sample format 2, significant bits 16,
-buffer size 3276, period size 102
-Real sampling rate: 9600
-Joining TxThread
-Joining RxThread
-Releasing IO
-delete event
-on_configtree_selection_changed
-Modulator mode: afsk
-Demodulator mode: afsk
-Packet IO mode: MKISS
-selection: cfg: -  chan: -
+On Sep 13, 2009, at 10:09 AM, IT2 Stuart Blake Tener, USNR wrote:
 
-I started the oscilloscope twice and the spectrum analyzer once. The
-display got stuck after the first packet arrived. The output of
-soundmodem itself is
-
-$ sudo soundmodem -v 4
-sm[20838]: unknown node "text"
-sm[20838]: unknown node "text"
-sm[20838]: unknown node "text"
-sm[20838]: unknown node "text"
-sm[20838]: unknown node "text"
-sm[20838]: unknown node "text"
-sm[20838]: unknown node "text"
-sm[20838]: unknown node "text"
-sm[20838]: mkiss: ifname sm0 mtu 256 hwaddr OE8BCK-2 ipaddr 10.0.0.1
-netmask 255.255.255.0 broadcast 10.0.0.255
-sm[20838]: unknown node "text"
-ALSA: Using sample rate 9600, sample format 2, significant bits 16,
-buffer size 3276, period size 102
-ALSA: Using sample rate 9600, sample format 2, significant bits 16,
-buffer size 3276, period size 102
-sm[20838]: unknown kiss packet: 0x80 0xa2
-sm[20838]: unknown kiss packet: 0x20 0xa2
-
-$ dmesg
-[45458.558881] mkiss: AX.25 Multikiss, Hans Albas PE1AYX
-[45458.562150] mkiss: ax0: crc mode is auto.
-[45458.576058] mkiss: sm0: Trying crc-smack
-[45458.668378] mkiss: sm0: Trying crc-flexnet
-[45591.993672] mkiss: ax0: crc mode is auto.
-[45592.005084] mkiss: sm0: Trying crc-smack
-[45592.099000] mkiss: sm0: Trying crc-flexnet
-
-It decoded not a single packet, but transmitting was a little bit
-strange. No, I did not transmit to the ether, only to my loudspeakers.
-It seemed that there was a holdup, as there were no packets for some
-secondes and then came a lot of them. But it could also be sent this way
-from the ahavi and cups daemons which produce them. It did not change
-the behaviour after restarting having unloaded the ax25 and mkiss
-modules. 
-
-73 de OE8BCK,
-Christof
-
-Am Sonntag, den 13.09.2009, 11:26 -0700 schrieb Dave Platt:
-> Christof Bodner wrote:
-> > Hi,
-> > 
-> > Soundmodem stopped to work in Ubuntu 8.04, in 7.10 it works fine with
-> > OSS. Today I tried it again with ALSA plughw: and it stopped after
-> > receiving the first packet. That was reproduceable and occured in the
-> > soundmodemconfig modem diagnostic as well as in the soundmodem itself.
-> 
-> Two questions:
-> 
-> - Which version are you using?
-> 
-> - If you run it from the command line, are there any diagnostic
->    or error messages printed when it receives or transmits?
--- 
-             (0-0)
----------oOO--(_)--OOo-----------------------------------------------
- Christof Bodner <Christof.Bodner@gmx.net>
-   Linux - Life is too short for reboots
-         - First they ignore you. Then they laugh at you. Then they
-           fight you(*). Then you win. -- Ghandi
----------------------------------------------------------------------
-email: mailto:Christof.Bodner@gmx.net
-Tel.:  +43-650-7215383
-ICQ:   22085157
-QTH:   JN76DO
----------------------------------------------------------------------
-GnuPG public key: 0xB15DA60F (http://wwwkeys.eu.pgp.net)
-Fingerprint 5222 4DEA 773A 60B3 22F9  D244 15EF 6645 B15D A60F
----------------------------------------------------------------------
+> ALCON,
+>
+>     I have been a Unix Administrator for years, and over the last  
+> few years
+> have more or less centralized the greater apportionment of my Unix  
+> usage to
+> be within a MacOS based environment. Sure, I still run Linux  
+> sometimes, but
+> in general MacOS is the Unix Workstation of choice for me.
+>
+>     That being said, it is my understanding the parts of MacOS are  
+> currently
+> open source, and thus I wonder what efforts are or could be  
+> underway to make
+> support for MacOS based Amateur Radio protocols available?
+>
+>     I know there are websites for MacOS based application products  
+> for Apple
+> hardware, but I am talking about such things as:
+>
+>     1) AX.25 support for MacOS
+>     2) Drivers to provision modem modulations in the way that Linux  
+> has such
+> support using the audio cards in PCs?
+>
+>     Indeed I realize that it might be considerably off topic for  
+> this list,
+> I also realize that many of the developer in the Linux community  
+> are surely
+> involved with other Unix development projects, and thus the driver  
+> to me
+> proffering my queries here within.
+>
+>     Thanks in advance, and do have a most blessed day!
+>
+>
+> -- 
+>
+> Very Respectfully,
+>
+> IT2 Stuart Blake Tener, USNR
+> Las Vegas, NV / Beverly Hills, CA / Philadelphia, PA / Washington, DC
+> Amateur Radio Call Sign: N3GWG (Extra) / Marine Radio Operator  
+> Permit (MROP)
+> email: teners@bh90210.net (also carbon copies to my Blackberry)
+> phone: +(1) 310.358.0202 (Beverly Hills, CA, forwards to mobile phone)
+> phone: +(1) 215.338.6005 (Philadelphia, PA, voice mail only)
+> E-Fax: +(1) 928.437.4505 (Telecopier, fax to email gateway)
+>
+> Military emails (checked monthly until remote NMCI access is secured)
+> NIPRNET: stuart.tener@navy.mil
+> NIPRNET: stuart.b.tener@us.army.mil
+> NRO:     teners@nro.mil
+> TS/SCI:  tenerstu@nro.ic.gov (GWAN)
+>
+> Confidentiality Notice: This e-mail message, including any  
+> attachments, is
+> for the sole use of the intended recipient(s) and may contain  
+> confidential
+> and/or privileged information, though strictly at the UNCLASSIFIED  
+> level.
+> Any unauthorized review, use, disclosure or distribution is  
+> prohibited. If
+> you are not the intended recipient, please contact the sender by reply
+> e-mail and destroy all copies of the originate message.
+>
+>
+>
+>
+> --
+> To unsubscribe from this list: send the line "unsubscribe linux- 
+> hams" in
+> the body of a message to majordomo@vger.kernel.org
+> More majordomo info at  http://vger.kernel.org/majordomo-info.html
 
