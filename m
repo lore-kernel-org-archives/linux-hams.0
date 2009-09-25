@@ -1,128 +1,36 @@
-From: Jarek Poplawski <jarkao2@gmail.com>
-Subject: [PATCH] ax25: Fix ax25_cb refcounting in ax25_ctl_ioctl
-Date: Fri, 25 Sep 2009 13:10:38 +0000
-Message-ID: <20090925131038.GA14778@ff.dom.local>
-References: <20090921201157.GA5460@del.dom.local> <4ABA9058.3010605@free.fr>
+From: Ralf Baechle DL5RB <ralf@linux-mips.org>
+Subject: Re: [PATCH] ax25: Fix ax25_cb refcounting in ax25_ctl_ioctl
+Date: Fri, 25 Sep 2009 14:40:52 +0100
+Message-ID: <20090925134052.GA1661@linux-mips.org>
+References: <20090921201157.GA5460@del.dom.local> <4ABA9058.3010605@free.fr> <20090925131038.GA14778@ff.dom.local>
 Mime-Version: 1.0
-Return-path: <netdev-owner@vger.kernel.org>
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :in-reply-to:user-agent;
-        bh=aW9KjO4R1q9MPpFC4Yl8zYrxKOdi4jz6379sOP9pqgs=;
-        b=LMzgM9fLfgNDyyreEvLTvdLK9AsX2OsV3/Gxo4/0qFIrA+qzxrDGxSspOhV+xv6FFu
-         LXwoJkoD8e4v7cxnxKo21YGIi+dVxFHNMi2blFPC0AmlrZoD5q+qn37SY5AlVpSOGPE6
-         tfHuwK9IdSnUApMmQq6AtSLzqeIg8U8F3OHHI=
+Return-path: <linux-hams-owner@vger.kernel.org>
 Content-Disposition: inline
-In-Reply-To: <4ABA9058.3010605@free.fr>
-Sender: netdev-owner@vger.kernel.org
+In-Reply-To: <20090925131038.GA14778@ff.dom.local>
+Sender: linux-hams-owner@vger.kernel.org
 List-ID: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
-To: David Miller <davem@davemloft.net>
-Cc: Bernard Pidoux F6BVP <f6bvp@free.fr>, Bernard Pidoux <bernard.pidoux@upmc.fr>, Ralf Baechle DL5RB <ralf@linux-mips.org>, Linux Netdev List <netdev@vger.kernel.org>, linux-hams <linux-hams@vger.kernel.org>
+To: Jarek Poplawski <jarkao2@gmail.com>
+Cc: David Miller <davem@davemloft.net>, Bernard Pidoux F6BVP <f6bvp@free.fr>, Bernard Pidoux <bernard.pidoux@upmc.fr>, Linux Netdev List <netdev@vger.kernel.org>, linux-hams <linux-hams@vger.kernel.org>
 
-This bug isn't responsible for these oopses here, but looks quite
-obviously. (I'm not sure if it's easy to test/hit with the common
-tools.)
+On Fri, Sep 25, 2009 at 01:10:38PM +0000, Jarek Poplawski wrote:
 
-Jarek P.
------------->
-[PATCH] ax25: Fix ax25_cb refcounting in ax25_ctl_ioctl
+> This bug isn't responsible for these oopses here, but looks quite
+> obviously. (I'm not sure if it's easy to test/hit with the common
+> tools.)
 
-Use ax25_cb_put after ax25_find_cb in ax25_ctl_ioctl.
+The issue your patch fixes is obvious enough.
 
-Reported-by: Bernard Pidoux F6BVP <f6bvp@free.fr>
-Signed-off-by: Jarek Poplawski <jarkao2@gmail.com>
----
+> Jarek P.
+> ------------>
+> [PATCH] ax25: Fix ax25_cb refcounting in ax25_ctl_ioctl
+> 
+> Use ax25_cb_put after ax25_find_cb in ax25_ctl_ioctl.
+> 
+> Reported-by: Bernard Pidoux F6BVP <f6bvp@free.fr>
+> Signed-off-by: Jarek Poplawski <jarkao2@gmail.com>
 
- net/ax25/af_ax25.c |   27 +++++++++++++++++----------
- 1 files changed, 17 insertions(+), 10 deletions(-)
+Reviewed-by: Ralf Baechle <ralf@linux-mips.org>
 
-diff --git a/net/ax25/af_ax25.c b/net/ax25/af_ax25.c
-index d6b1b05..fbcac76 100644
---- a/net/ax25/af_ax25.c
-+++ b/net/ax25/af_ax25.c
-@@ -358,6 +358,7 @@ static int ax25_ctl_ioctl(const unsigned int cmd, void __user *arg)
- 	ax25_dev *ax25_dev;
- 	ax25_cb *ax25;
- 	unsigned int k;
-+	int ret = 0;
- 
- 	if (copy_from_user(&ax25_ctl, arg, sizeof(ax25_ctl)))
- 		return -EFAULT;
-@@ -388,57 +389,63 @@ static int ax25_ctl_ioctl(const unsigned int cmd, void __user *arg)
- 	case AX25_WINDOW:
- 		if (ax25->modulus == AX25_MODULUS) {
- 			if (ax25_ctl.arg < 1 || ax25_ctl.arg > 7)
--				return -EINVAL;
-+				goto einval_put;
- 		} else {
- 			if (ax25_ctl.arg < 1 || ax25_ctl.arg > 63)
--				return -EINVAL;
-+				goto einval_put;
- 		}
- 		ax25->window = ax25_ctl.arg;
- 		break;
- 
- 	case AX25_T1:
- 		if (ax25_ctl.arg < 1)
--			return -EINVAL;
-+			goto einval_put;
- 		ax25->rtt = (ax25_ctl.arg * HZ) / 2;
- 		ax25->t1  = ax25_ctl.arg * HZ;
- 		break;
- 
- 	case AX25_T2:
- 		if (ax25_ctl.arg < 1)
--			return -EINVAL;
-+			goto einval_put;
- 		ax25->t2 = ax25_ctl.arg * HZ;
- 		break;
- 
- 	case AX25_N2:
- 		if (ax25_ctl.arg < 1 || ax25_ctl.arg > 31)
--			return -EINVAL;
-+			goto einval_put;
- 		ax25->n2count = 0;
- 		ax25->n2 = ax25_ctl.arg;
- 		break;
- 
- 	case AX25_T3:
- 		if (ax25_ctl.arg < 0)
--			return -EINVAL;
-+			goto einval_put;
- 		ax25->t3 = ax25_ctl.arg * HZ;
- 		break;
- 
- 	case AX25_IDLE:
- 		if (ax25_ctl.arg < 0)
--			return -EINVAL;
-+			goto einval_put;
- 		ax25->idle = ax25_ctl.arg * 60 * HZ;
- 		break;
- 
- 	case AX25_PACLEN:
- 		if (ax25_ctl.arg < 16 || ax25_ctl.arg > 65535)
--			return -EINVAL;
-+			goto einval_put;
- 		ax25->paclen = ax25_ctl.arg;
- 		break;
- 
- 	default:
--		return -EINVAL;
-+		goto einval_put;
- 	  }
- 
--	return 0;
-+out_put:
-+	ax25_cb_put(ax25);
-+	return ret;
-+
-+einval_put:
-+	ret = -EINVAL;
-+	goto out_put;
- }
- 
- static void ax25_fillin_cb_from_dev(ax25_cb *ax25, ax25_dev *ax25_dev)
+  Ralf
