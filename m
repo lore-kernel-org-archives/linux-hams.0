@@ -1,33 +1,39 @@
-From: Alan Crosswell <alan@columbia.edu>
+From: Frank Smith <frankiansmith@gmail.com>
 Subject: Re: soundmodem on OpenWRT on ASUS WL-520gU router with USB audio
-Date: Sat, 26 Sep 2009 11:25:29 -0400
-Message-ID: <4ABE3269.4000709@columbia.edu>
-References: <e741d6300909260513g4a6f29bal9cc2484e7c52159d@mail.gmail.com> <CAA31203-51EC-4575-ADB0-45D6683B3F46@columbia.edu> <e741d6300909260648t7bd45106odaefdf74725c810d@mail.gmail.com> <0074D064-BA95-45EC-B65D-236611D801DC@columbia.edu> <4ABE283D.3040303@columbia.edu> <alpine.LNX.2.00.0909260748410.16303@wapiti.we7u.net>
+Date: Sat, 26 Sep 2009 12:26:02 -0300
+Message-ID: <e741d6300909260826ue351ac2ka8d6c47b61b6be4f@mail.gmail.com>
+References: <200909261522.n8QFMF2O007440@moose.dimebank.com>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <alpine.LNX.2.00.0909260748410.16303@wapiti.we7u.net>
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type;
+        bh=/mG1wxrhh38jbVFbWfO65/aD9bVz/B3b9qHhgj2Uzho=;
+        b=uJPTgTCg0pKBKcrs6jK0srIRb6BtJv6iufQOE+c+okZjYvxpvqpCqg87qwNuN6RCWv
+         WK33oph53gVY/LLN4tHWmEgumNwJfXDFLgmWiY3StOkXsAX5U6Yj0jGuLvy+J2Zqz/rI
+         6DydGDX1KlyGZslLdE+KZjeuCOnRCIHuw4BU4=
+In-Reply-To: <200909261522.n8QFMF2O007440@moose.dimebank.com>
 Sender: linux-hams-owner@vger.kernel.org
 List-ID: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
-To: "Curt, WE7U" <archer@eskimo.com>
-Cc: Frank Smith <frankiansmith@gmail.com>, "linux-hams@vger.kernel.org" <linux-hams@vger.kernel.org>
+Content-Transfer-Encoding: 7bit
+To: Chris Kantarjiev <cak@dimebank.com>
+Cc: linux-hams@vger.kernel.org
 
-Why would you plug in a hardware TNC when you get a better TNC with
-soundmodem?
+Fine by me, as long as I don't have to learn Ruby or re-learn Perl :-)
 
-Curt, WE7U wrote:
-> On Sat, 26 Sep 2009, Alan Crosswell wrote:
+A leaner Kamikaze would be nice. I keep hitting the wall whenever I
+want to add something new. Try adding alsamixer... hit the wall. Try
+adding bluetooth (to talk to a GPS logger)... hit the wall.
+
+On Sat, Sep 26, 2009 at 12:22 PM, Chris Kantarjiev <cak@dimebank.com> wrote:
+>>
+>> As much as I would love to develop Python-based software for this, in
+>> order to make this thing as useful to as many as possible I don't
+>> think any scripting-language-based software like Perl, Python or Ruby
+>> is practical, at least for now, until 8M-flash routers become the
+>> norm.
 >
->> ... also as a replacement for TNC-based digipeaters such as Kantronics,
->> PacComm, etc. since the alternative right now is a normal PC rather than
->> a small appliance.
->
-> Check out the ArgentData Tracker2 products...
->
-> Or...  Throw a TNC-X or some other TNC in KISS mode onto one of the
-> routers running OpenWRT plus the AX.25 stuff and you're good.  I
-> have a couple of WRT-54GS wireless routers that are headed for
-> serial port mods real soon now.  Each one will get two real serial
-> ports and a firmware change.
+> Or we could work on shrinking Kamikaze back to a sane size.
 >
