@@ -1,34 +1,62 @@
-From: "Curt, WE7U" <archer@eskimo.com>
-Subject: Re: soundmodem on OpenWRT on ASUS WL-520gU router with USB audio
-Date: Sat, 26 Sep 2009 15:29:50 -0700 (PDT)
-Message-ID: <alpine.LNX.2.00.0909261529060.1172@wapiti.we7u.net>
-References: <e741d6300909260513g4a6f29bal9cc2484e7c52159d@mail.gmail.com> <CAA31203-51EC-4575-ADB0-45D6683B3F46@columbia.edu> <e741d6300909260648t7bd45106odaefdf74725c810d@mail.gmail.com> <03D6BDDE-CBEC-4A91-AACC-8EF84A43CEEB@clearwire.net>
- <1253982428.3847.5.camel@podex-laptop> <A98BB2CD-F3B3-48F4-AA99-5E9FFBCB30E6@clearwire.net>
+From: Jeremiah <jjgpg@cet.com>
+Subject: Linux NetRom Node Question
+Date: Sat, 26 Sep 2009 16:35:07 -0700
+Message-ID: <200909261635.07472.jjgpg@cet.com>
 Mime-Version: 1.0
+Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <A98BB2CD-F3B3-48F4-AA99-5E9FFBCB30E6@clearwire.net>
+Content-Disposition: inline
 Sender: linux-hams-owner@vger.kernel.org
 List-ID: <linux-hams.vger.kernel.org>
-Content-Type: TEXT/PLAIN; charset="us-ascii"; format="flowed"
-Content-Transfer-Encoding: 7bit
-To: Bob Nielsen <n7xy@clearwire.net>
-Cc: Christof Bodner <christof.bodner@gmx.net>, "linux-hams@vger.kernel.org HAMs" <linux-hams@vger.kernel.org>
+Content-Type: text/plain; charset="us-ascii"
+To: linux-hams <linux-hams@vger.kernel.org>
 
-On Sat, 26 Sep 2009, Bob Nielsen wrote:
+Hello all,
 
-> I am not running soundmodem, just thinking about it.  I didn't realize it 
-> wasn't working on Ubuntu.  There are a few things which haven't worked for me 
-> on that box, such as tlf, but I haven't yet found the problem.  I also have 
-> Ubuntu 9.04 installed on a PC, so I can hopefully see if it is related to the 
-> ARM vs i386 differences.
+I have been working on setting up a RMS WinLink2000 gateway on Linux for our 
+local club. I wanted to set the box up to send out NetRom Broadcasts so it 
+would so up on the node list on all the local nodes. I have setup the nrports 
+and nrbroadcast files up per the man pages(see config files below), but when 
+I run the nrattach command I can't get it to bring up the nr0 interface. It 
+gives me no errors when I run nrattach, but when I cat /proc/net/nr_nodes 
+afterwards I see no node info. Also if I ifconfig nr0 after running nrattach 
+it shows up with no callsign.
+Is there something I'm missing?
 
-I thought I saw a thread somewhere about Ubuntu going to pulse
-audio which broke a few audio things like soundmodem.  Worth a quick
-Google search to those with the problem.
+The box is running openSuse 11.1 with the 2.6.27.25-0.1-pae kernel.
 
--- 
-Curt, WE7U.                         <http://www.eskimo.com/~archer>
-    APRS:  Where it's at!                    <http://www.xastir.org>
-   Lotto:  A tax on people who are bad at math. - unknown
-Windows:  Microsoft's tax on computer illiterates. - WE7U.
-The world DOES revolve around me:  I picked the coordinate system!"
+Thanks all and 73's
+
+Jeremiah Puhek
+KD7DMP
+-------------------------
+uname -a
+Linux wr7vhf-rms 2.6.27.25-0.1-pae #1 SMP 2009-07-01 15:37:09 +0200 i686 i686 
+i386 GNU/Linux
+------------------------------------
+# /etc/ax25/nrbroadcast
+#
+# The format of this file is:
+#
+# ax25_name min_obs def_qual worst_qual verbose
+#
+pk96    10      192     100     1
+
+---------------------------------------
+# /etc/ax25/nrports
+#
+# The format of this file is:
+#
+# name callsign alias paclen description
+#
+winl2k  WR7VHF  WINL2k  236     node for the RMS
+
+----------------------------------------
+# /etc/ax25/axports
+#
+# The format of this file is:
+#
+# name callsign speed paclen window description
+#
+pk96    wr7vhf          19200   255     4       BackBone Port
+
