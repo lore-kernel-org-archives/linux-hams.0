@@ -1,11 +1,8 @@
 From: Frank Smith <frankiansmith@gmail.com>
 Subject: Re: soundmodem on OpenWRT on ASUS WL-520gU router with USB audio
-Date: Sat, 26 Sep 2009 12:13:44 -0300
-Message-ID: <e741d6300909260813i39efea30vb4239a0f4c1ccb74@mail.gmail.com>
-References: <e741d6300909260513g4a6f29bal9cc2484e7c52159d@mail.gmail.com>
-	 <CAA31203-51EC-4575-ADB0-45D6683B3F46@columbia.edu>
-	 <e741d6300909260648t7bd45106odaefdf74725c810d@mail.gmail.com>
-	 <alpine.LNX.2.00.0909260740410.16303@wapiti.we7u.net>
+Date: Sat, 26 Sep 2009 12:21:00 -0300
+Message-ID: <e741d6300909260821g729d736el1bbde395fd2a6c24@mail.gmail.com>
+References: <200909261508.n8QF806T030693@moose.dimebank.com>
 Mime-Version: 1.0
 Content-Transfer-Encoding: QUOTED-PRINTABLE
 Return-path: <linux-hams-owner@vger.kernel.org>
@@ -14,58 +11,48 @@ DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         h=domainkey-signature:mime-version:received:in-reply-to:references
          :date:message-id:subject:from:to:cc:content-type
          :content-transfer-encoding;
-        bh=fnl528pZ1tD8Wb/QjoGX0LX8tC6bfT6vT2acBPi6oLk=;
-        b=LI805IrISUPO2ndn7PsjdncTDehi9rqDVGIp7tHDiJ0CWV7lPTCRGA94gPCMdA+7Ts
-         Z0KoW16j/TXFzezjszCAmUozTyzg0ULr9OlGF4bpwPcZEr4BMIPXy+kdBH5npWkRFVJ7
-         pOBNAZlnoEVVqQbziom4l8IZpe7M39jRpqIb8=
-In-Reply-To: <alpine.LNX.2.00.0909260740410.16303@wapiti.we7u.net>
+        bh=hA0tGpbjtiGVk6EYwF4EivIqvW5tH642p2P4G2cjLPk=;
+        b=a8rz4t6mjz9GecCtqU4PnWM3UxurkLebmDfZct6/uiRMOjFlB27PKUOkMgvdIpdh+N
+         jXpzle+6ug6Ks20mnrphkoDnX8c6qozIwlq1OMIMaKq9lnH5NKUp/Cj06+eVtc6SZTYB
+         oHIrdnIDmlOvNRNMMXYl2PR80QNfy0H4EuYmQ=
+In-Reply-To: <200909261508.n8QF806T030693@moose.dimebank.com>
 Sender: linux-hams-owner@vger.kernel.org
 List-ID: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="iso-8859-1"
-To: "Curt, WE7U" <archer@eskimo.com>
-Cc: Alan Crosswell <alan@columbia.edu>, "linux-hams@vger.kernel.org" <linux-hams@vger.kernel.org>
+To: Chris Kantarjiev <cak@dimebank.com>
+Cc: alan@columbia.edu, linux-hams@vger.kernel.org
 
-Exactly. Wetnet.net packages were a big help to me with this project.
+That's one of the first things I discovered when I started playing
+with these routers, aprs4r just didn't fit.
 
-I see two types of client access here: one using a protocol such as
-AGWPE that is already supported by existing clients, and another
-web-based interface where any IP-based client can do packet from a web
-browser. This opens up packet and APRS to iPod touch type devices.
+As much as I would love to develop Python-based software for this, in
+order to make this thing as useful to as many as possible I don't
+think any scripting-language-based software like Perl, Python or Ruby
+is practical, at least for now, until 8M-flash routers become the
+norm.
 
-Stick a router and a radio in your trunk, and you can do APRS on your
-laptop or touch from the front seat.
+Adding a USB flash stick is a possibility, but too clunky I think.
+Just another potential point of failure.
 
-On Sat, Sep 26, 2009 at 11:42 AM, Curt, WE7U <archer@eskimo.com> wrote:
-> On Sat, 26 Sep 2009, Frank Smith wrote:
->
->> My key interest, and the reason for mentioning ldsped in particular,
->> is that I am interested in creating a "packet radio engine" box out =
-of
->> a cheap router,
->
-> Like the stuff at wetnet.net. =A0Intended to go on a cheap router.
-> Linux. =A0Web configuration of everything.
->
->
+On Sat, Sep 26, 2009 at 12:08 PM, Chris Kantarjiev <cak@dimebank.com> w=
+rote:
+>>
 >> It would be nice if existing APRS clients such as UI-View and Xastir
 >> could use this "packet radio engine" using existing mechanisms, such
->> as the AGWPE TCP/IP protocol.
+>> as the AGWPE TCP/IP protocol. =A0I am fairly new to packet so if any=
+one
+>> has any suggestions for other ways that I could accomplish what I wa=
+nt
+>> to do I would be very interested in hearing them.
 >
-> Xastir has the capability to use AGWPE. =A0I coded up that particular
-> capability myself.
+> The aprs4r digi software package provides, among other things, the
+> ability to export the packet stream on socket that Xastir & UI-View
+> will understand.
 >
-> The main thing is to keep talking about what you want and what
-> you've accomplished, so that the discussion moves along and we all
-> learn.
+> It used to run in the 4MB routers (WRT54GL) but the recent Kamikaze
+> releases have gotten just a bit too big.
 >
-> --
-> Curt, WE7U. =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 <http://w=
-ww.eskimo.com/~archer>
-> =A0 APRS: =A0Where it's at! =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0<h=
-ttp://www.xastir.org>
-> =A0Lotto: =A0A tax on people who are bad at math. - unknown
-> Windows: =A0Microsoft's tax on computer illiterates. - WE7U.
-> The world DOES revolve around me: =A0I picked the coordinate system!"
+> 73 de chris K6DBG
 >
 --
 To unsubscribe from this list: send the line "unsubscribe linux-hams" i=
