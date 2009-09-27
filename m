@@ -1,87 +1,32 @@
-From: Jeremiah <jjgpg@cet.com>
-Subject: Re: Linux NetRom Node Question
-Date: Sat, 26 Sep 2009 23:54:26 -0700
-Message-ID: <200909262354.26909.jjgpg@cet.com>
-References: <200909261635.07472.jjgpg@cet.com> <4ABEADE5.7050103@exemail.com.au>
+From: Ralf Baechle DL5RB <ralf@linux-mips.org>
+Subject: Re: [PATCH] ax25: Fix ax25_cb refcounting in ax25_ctl_ioctl
+Date: Sun, 27 Sep 2009 08:23:19 +0100
+Message-ID: <20090927072319.GA28089@linux-mips.org>
+References: <20090921201157.GA5460@del.dom.local> <4ABA9058.3010605@free.fr> <20090925131038.GA14778@ff.dom.local> <20090925134052.GA1661@linux-mips.org> <20090925183504.GA3307@del.dom.local>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
-Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <4ABEADE5.7050103@exemail.com.au>
+Return-path: <netdev-owner@vger.kernel.org>
 Content-Disposition: inline
-Sender: linux-hams-owner@vger.kernel.org
+In-Reply-To: <20090925183504.GA3307@del.dom.local>
+Sender: netdev-owner@vger.kernel.org
 List-ID: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
-To: Ray Wells <vk2tv@exemail.com.au>
-Cc: linux-hams <linux-hams@vger.kernel.org>
+Content-Transfer-Encoding: 7bit
+To: Jarek Poplawski <jarkao2@gmail.com>
+Cc: David Miller <davem@davemloft.net>, Bernard Pidoux F6BVP <f6bvp@free.fr>, Bernard Pidoux <bernard.pidoux@upmc.fr>, Linux Netdev List <netdev@vger.kernel.org>, linux-hams <linux-hams@vger.kernel.org>
 
-I guess I did forget that part. 
-Yes I have loaded the netrom module.
+On Fri, Sep 25, 2009 at 08:35:04PM +0200, Jarek Poplawski wrote:
 
+> > > This bug isn't responsible for these oopses here, but looks quite
+> > > obviously. (I'm not sure if it's easy to test/hit with the common
+> > > tools.)
+> > 
+> > The issue your patch fixes is obvious enough.
+> 
+> Yes, with new code there would be no doubt. But here, if you know it's
+> worked for some time, you wonder if you're not blind. |-)
 
-On Saturday 26 September 2009 17:12:21 Ray Wells wrote:
-> Just to clarify a point, have you loaded the netrom module?
->
-> Ray vk2tv
->
-> Jeremiah wrote:
-> > Hello all,
-> >
-> > I have been working on setting up a RMS WinLink2000 gateway on Linux for
-> > our local club. I wanted to set the box up to send out NetRom Broadcasts
-> > so it would so up on the node list on all the local nodes. I have setup
-> > the nrports and nrbroadcast files up per the man pages(see config files
-> > below), but when I run the nrattach command I can't get it to bring up
-> > the nr0 interface. It gives me no errors when I run nrattach, but when I
-> > cat /proc/net/nr_nodes afterwards I see no node info. Also if I ifconfig
-> > nr0 after running nrattach it shows up with no callsign.
-> > Is there something I'm missing?
-> >
-> > The box is running openSuse 11.1 with the 2.6.27.25-0.1-pae kernel.
-> >
-> > Thanks all and 73's
-> >
-> > Jeremiah Puhek
-> > KD7DMP
-> > -------------------------
-> > uname -a
-> > Linux wr7vhf-rms 2.6.27.25-0.1-pae #1 SMP 2009-07-01 15:37:09 +0200 i686
-> > i686 i386 GNU/Linux
-> > ------------------------------------
-> > # /etc/ax25/nrbroadcast
-> > #
-> > # The format of this file is:
-> > #
-> > # ax25_name min_obs def_qual worst_qual verbose
-> > #
-> > pk96    10      192     100     1
-> >
-> > ---------------------------------------
-> > # /etc/ax25/nrports
-> > #
-> > # The format of this file is:
-> > #
-> > # name callsign alias paclen description
-> > #
-> > winl2k  WR7VHF  WINL2k  236     node for the RMS
-> >
-> > ----------------------------------------
-> > # /etc/ax25/axports
-> > #
-> > # The format of this file is:
-> > #
-> > # name callsign speed paclen window description
-> > #
-> > pk96    wr7vhf          19200   255     4       BackBone Port
-> >
-> > --
-> > To unsubscribe from this list: send the line "unsubscribe linux-hams" in
-> > the body of a message to majordomo@vger.kernel.org
-> > More majordomo info at  http://vger.kernel.org/majordomo-info.html
->
-> --
-> To unsubscribe from this list: send the line "unsubscribe linux-hams" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at  http://vger.kernel.org/majordomo-info.html
+Most of of the ioctls are used by AX.25 userland which does error
+checking on user supplied values so userland will never attempt invalid
+ioctl calls.  So no surprise this went unnoticed.
 
-
-
+  Ralf
