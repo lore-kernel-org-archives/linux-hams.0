@@ -1,60 +1,49 @@
 From: Jarek Poplawski <jarkao2@gmail.com>
-Subject: [PATCH] ax25: Fix possible oops in ax25_make_new
-Date: Sun, 27 Sep 2009 22:57:02 +0200
-Message-ID: <20090927205701.GA7205@del.dom.local>
-References: <20090921201157.GA5460@del.dom.local>
- <4ABA9058.3010605@free.fr>
- <20090925131038.GA14778@ff.dom.local>
- <20090925134052.GA1661@linux-mips.org>
+Subject: [PATCH] ax25: Add missing dev_put in ax25_setsockopt
+Date: Mon, 28 Sep 2009 07:12:11 +0000
+Message-ID: <20090928071211.GA8658@ff.dom.local>
+References: <20090921201157.GA5460@del.dom.local> <4ABA9058.3010605@free.fr>
 Mime-Version: 1.0
-Return-path: <netdev-owner@vger.kernel.org>
+Return-path: <linux-hams-owner@vger.kernel.org>
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:received:received:date:from:to:cc:subject
          :message-id:references:mime-version:content-type:content-disposition
          :in-reply-to:user-agent;
-        bh=tajQHGnQCrqfZCFUT+L97Ac4M0dmFPSPzLlJ0OnfKhY=;
-        b=BEbLQ4FIcxRTCDOqjQKKE+PZw7Cx05l+OpJI2eaG98ph+yBFdCHcD0R0bQn+bnw/Kf
-         TphpC60EDzmzV+fCV5l4gdqwrkVzxY6yJwMQ8VNz22j/CFtoXE5zOUvHlTBe7ozWrGDu
-         G9PCG1S11tX1/oXkxJjjqVQoGA8iyoZ3nQkPk=
+        bh=fX5lomy90Bp4ACfa7Hfrs1MnaAgHjcNeG3/8lRdql5M=;
+        b=YAIpX/zUYdsn6j9cDeTfKAlCiux1u152YuBMoBugZG1Yf2jJImfQ43VH2tolYyxxz3
+         7SwBDJ9dEEUA+QVV2UWaDfz+aC7Tq10G6gzLrwbw1+YL45zUfIzt6mRL1vEAARs19U2l
+         lHDmuQX8IZ8cv+foG5EPs6CS17Ry6UllNfFwM=
 Content-Disposition: inline
-In-Reply-To: <20090925134052.GA1661@linux-mips.org>
-Sender: netdev-owner@vger.kernel.org
+In-Reply-To: <4ABA9058.3010605@free.fr>
+Sender: linux-hams-owner@vger.kernel.org
 List-ID: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
-To: Ralf Baechle DL5RB <ralf@linux-mips.org>
-Cc: David Miller <davem@davemloft.net>, Bernard Pidoux F6BVP <f6bvp@free.fr>, Bernard Pidoux <bernard.pidoux@upmc.fr>, Linux Netdev List <netdev@vger.kernel.org>, linux-hams <linux-hams@vger.kernel.org>
+To: David Miller <davem@davemloft.net>
+Cc: Bernard Pidoux F6BVP <f6bvp@free.fr>, Bernard Pidoux <bernard.pidoux@upmc.fr>, Ralf Baechle DL5RB <ralf@linux-mips.org>, Linux Netdev List <netdev@vger.kernel.org>, linux-hams <linux-hams@vger.kernel.org>
 
-In ax25_make_new, if kmemdup of digipeat returns an error, there would
-be an oops in sk_free while calling sk_destruct, because sk_protinfo
-is NULL at the moment; move sk->sk_destruct initialization after this.
+There is no dev_put ending positive SO_BINDTODEVICE call in
+ax25_setsockopt and no matching dev_put later. This ref isn't used by
+ax25_cb's because it's handled with up and down device events.
 
 BTW of reported-by: Bernard Pidoux F6BVP <f6bvp@free.fr>
 
 Signed-off-by: Jarek Poplawski <jarkao2@gmail.com>
 ---
 
- net/ax25/af_ax25.c |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
+ net/ax25/af_ax25.c |    1 +
+ 1 files changed, 1 insertions(+), 0 deletions(-)
 
 diff --git a/net/ax25/af_ax25.c b/net/ax25/af_ax25.c
-index fbcac76..9884639 100644
+index fbcac76..3eee8eb 100644
 --- a/net/ax25/af_ax25.c
 +++ b/net/ax25/af_ax25.c
-@@ -900,7 +900,6 @@ struct sock *ax25_make_new(struct sock *osk, struct ax25_dev *ax25_dev)
+@@ -663,6 +663,7 @@ static int ax25_setsockopt(struct socket *sock, int level, int optname,
  
- 	sock_init_data(NULL, sk);
+ 		ax25->ax25_dev = ax25_dev_ax25dev(dev);
+ 		ax25_fillin_cb(ax25, ax25->ax25_dev);
++		dev_put(dev);
+ 		break;
  
--	sk->sk_destruct = ax25_free_sock;
- 	sk->sk_type     = osk->sk_type;
- 	sk->sk_priority = osk->sk_priority;
- 	sk->sk_protocol = osk->sk_protocol;
-@@ -938,6 +937,7 @@ struct sock *ax25_make_new(struct sock *osk, struct ax25_dev *ax25_dev)
- 	}
- 
- 	sk->sk_protinfo = ax25;
-+	sk->sk_destruct = ax25_free_sock;
- 	ax25->sk    = sk;
- 
- 	return sk;
+ 	default:
