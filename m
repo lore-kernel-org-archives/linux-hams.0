@@ -1,79 +1,47 @@
-From: Matti Aarnio <matti.aarnio@zmailer.org>
-Subject: Re: mkiss kernel driver problems
-Date: Thu, 1 Oct 2009 17:33:17 +0300
-Message-ID: <20091001143317.GD22922@mea-ext.zmailer.org>
-References: <20091001115809.GC22922@mea-ext.zmailer.org>
+From: Alexey Dobriyan <adobriyan-Re5JQEeQqe8AvxtiuMwx3w@public.gmane.org>
+Subject: Re: [PATCH 1/1] net: mark net_proto_ops as
+	const
+Date: Sat, 3 Oct 2009 04:00:06 +0400
+Message-ID: <20091003000006.GA2020@x200>
+References: <20091002232520.925496630@vyatta.com>
+	<20091002232721.385245919@vyatta.com>
 Mime-Version: 1.0
-Return-path: <linux-hams-owner@vger.kernel.org>
-Content-Disposition: inline
-In-Reply-To: <20091001115809.GC22922@mea-ext.zmailer.org>
-Sender: linux-hams-owner@vger.kernel.org
-List-ID: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
-To: linux-hams@vger.kernel.org
+Return-path: <linux-zigbee-devel-bounces-5NWGOfrQmneRv+LV9MX5uipxlwaOVQ5f@public.gmane.org>
+Content-Disposition: inline
+In-Reply-To: <20091002232721.385245919-ZtmgI6mnKB3QT0dZR+AlfA@public.gmane.org>
+List-Id: <linux-hams.vger.kernel.org>
+List-Unsubscribe: <https://lists.sourceforge.net/lists/listinfo/linux-zigbee-devel>,
+	<mailto:linux-zigbee-devel-request-5NWGOfrQmneRv+LV9MX5uipxlwaOVQ5f@public.gmane.org?subject=unsubscribe>
+List-Archive: <http://sourceforge.net/mailarchive/forum.php?forum_name=linux-zigbee-devel>
+List-Post: <mailto:linux-zigbee-devel-5NWGOfrQmneRv+LV9MX5uipxlwaOVQ5f@public.gmane.org>
+List-Help: <mailto:linux-zigbee-devel-request-5NWGOfrQmneRv+LV9MX5uipxlwaOVQ5f@public.gmane.org?subject=help>
+List-Subscribe: <https://lists.sourceforge.net/lists/listinfo/linux-zigbee-devel>,
+	<mailto:linux-zigbee-devel-request-5NWGOfrQmneRv+LV9MX5uipxlwaOVQ5f@public.gmane.org?subject=subscribe>
+Errors-To: linux-zigbee-devel-bounces-5NWGOfrQmneRv+LV9MX5uipxlwaOVQ5f@public.gmane.org
+To: Stephen Hemminger <shemminger-ZtmgI6mnKB3QT0dZR+AlfA@public.gmane.org>
+Cc: Bernard Pidoux F6BVP <f6bvp-GANU6spQydw@public.gmane.org>, Dan Carpenter <error27-Re5JQEeQqe8AvxtiuMwx3w@public.gmane.org>, Andy Grover <andy.grover-QHcLZuEGTsvQT0dZR+AlfA@public.gmane.org>, Henner Eisen <eis-oJ2yeFfzEm5olqkO4TVVkw@public.gmane.org>, Christine Caulfield <christine.caulfield-gM/Ye1E23mwN+BqQ9rBEUg@public.gmane.org>, Ursula Braun <ursula.braun-tA70FqPdS9bQT0dZR+AlfA@public.gmane.org>, James Morris <jmorris-gx6/JNMH7DfYtjvyW6yDsg@public.gmane.org>, David Howells <dhowells-H+wXaHxf7aLQT0dZR+AlfA@public.gmane.org>, Hendrik Brueckner <brueckner-23VcF4HTsmIX0ybBhKVfKdBPR1lH4CV8@public.gmane.org>, Matthias Urlichs <matthias-+qxcz+fHsVSELgA04lAiVw@public.gmane.org>, "Denis V. Lunev" <den-GEFAQzZX7r8dnm+yROfE0A@public.gmane.org>, linux-afs-IAPFreCvJWM7uuMidbF8XUB+6BGkLq7r@public.gmane.org, Alan Cox <alan-qBU/x9rampVanCEyBjwyrvXRex20P6io@public.gmane.org>, Harvey Harrison <harvey.harrison-Re5JQEeQqe8AvxtiuMwx3w@public.gmane.org>, Chas Williams <chas-vT06rRrALxcmhCb6mdbn6A@public.gmane.org>, linux-s390-u79uwXL29TY76Z2rM5mHXA@public.gmane.org, Mark Smith <markzzzsmith-/E1597aS9LT0CCvOHzKKcA@public.gmane.org>, "Pekka Savola (ipv6)" <pekkas-UjJjq++bwZ7HOG6cAo2yLw@public.gmane.org>, Eric Dumazet <eric.dumazet-Re5JQEeQqe8AvxtiuMwx3w@public.gmane.org>, Huang Weiyi <weiyi.huang-Re5JQEeQqe8AvxtiuMwx3w@public.gmane.org>, James Chapman <jchapman-Bm0nJX+W7e9BDgjK7y7TUQ@public.gmane.org>, Johan Hedberg <johan.hedberg-xNZwKgViW5gAvxtiuMwx3w@public.gmane.org>, Arnaldo
 
-On Thu, Oct 01, 2009 at 02:58:09PM +0300, Matti Aarnio wrote:
-> Mostly the mkiss line discipline module seems to work, but..
-> 
->   mkiss: ax0: crc mode is auto.
->   mkiss: ax0: Switchting to crc-smack
-> 
-> that typo (extra 't') is obvious, but I am wondering,
-> why it has growing error counter:
+On Fri, Oct 02, 2009 at 04:25:21PM -0700, Stephen Hemminger wrote:
+> --- a/net/can/af_can.c
+> +++ b/net/can/af_can.c
+> @@ -842,7 +842,7 @@ static struct packet_type can_packet __r
+>  	.func = can_rcv,
+>  };
+>  
+> -static struct net_proto_family can_family_ops __read_mostly = {
+> +static const struct net_proto_family can_family_ops __read_mostly = {
+						       ^^^^^^^^^^^^^
+>  	.family = PF_CAN,
+>  	.create = can_create,
+>  	.owner  = THIS_MODULE,
 
-Aargh..  error rate is near 4/256 - meaning I forgot to KISS encode
-the SMACK CRC bytes...  
+ACK, except this chunk: const already means read-only.
 
-But this Brown Paper Bag  type "user error" is no excuse for
-that kernel typo.
-
-
-Why do I need to feed AX.25 frames from user program to kernel
-with SMACK code variant?  My  aprx  software reads async serial
-ports itself, and does all manner of port re-init in case of
-for example an USB serial dongle needing it.
-
-To live with kernel AX.25 network, serial ports that are not
-attached to kernel with kissattach/mkiss do need to be fed
-to kernel.  However the feed method may sometimes write incomplete
-frame to kernel, and having 1-(2^-16) change of spotting that
-is better than without SMACK -- plain KISS has 0 change of spotting
-incomplete frame.
-
-What I really would like is to use socket to feed to kernel
-AX.25 packets that I got from somewhere, but somehow it does
-look like it is not possible at all.  I would do AX.25 socket
-creation,  bind() it with callsign I want, and then to send()
-using that socket _without_ destination address having ever
-been defined.  But I do not think that is really possible, all
-sockets are "application" side, never "network devices".
-Or can somebody come up with a fancy way to use for example
-the raw socket for this ?
-
-That is, a socket which says "I am device N0NNN-5", and sends
-raw AX.25 frame to kernel AX.25 "network."
-
-Heck..  I would like to bridge AX.25 network using SCTP's
-reliable datagram protocol (or IP/UDP).  The Bridge software
-would reside in userspace, but how could I pass a packet
-most easily to kernel without going via pty+kiss mess ?
-
-
-> ax0       Link encap:AMPR AX.25  HWaddr OH2MQK-1
->           UP BROADCAST RUNNING NOARP  MTU:512  Metric:1
->           RX packets:9325 errors:152 dropped:0 overruns:0 frame:0
->           TX packets:0 errors:0 dropped:0 overruns:0 carrier:0
->           collisions:0 txqueuelen:10
->           RX bytes:622232 (607.6 KiB)  TX bytes:0 (0.0 b)
-> 
-> I am feeding this interface from my own software via pty interface,
-> where the client side is turned on to KISS line discipline.
-> 
-> My own software is not complaining about incomplete writes,
-> thus I wonder what the kernel is doing ?  Also my software
-> is sending on only AX.25 frames that it considers to be valid.
-> 
-> Does anybody remember how the  mkiss.c  is supposed to work?
-
-  73 de Matti, OH2MQK
+------------------------------------------------------------------------------
+Come build with us! The BlackBerry&reg; Developer Conference in SF, CA
+is the only developer event you need to attend this year. Jumpstart your
+developing skills, take BlackBerry mobile applications to market and stay 
+ahead of the curve. Join us from November 9&#45;12, 2009. Register now&#33;
+http://p.sf.net/sfu/devconf
