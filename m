@@ -1,76 +1,36 @@
-From: Roel Kluin <roel.kluin@gmail.com>
+From: Kevin Dawson <kevind@esi.com.au>
 Subject: Re: [PATCH] ax25: unsigned cannot be less than 0 in ax25_ctl_ioctl()
-Date: Mon, 12 Oct 2009 21:02:28 +0200
-Message-ID: <4AD37D44.9050207@gmail.com>
-References: <4AD0FB0B.8050609@gmail.com> <4AD34D3C.1060206@bfs.de>
+Date: Tue, 13 Oct 2009 08:58:19 +1100
+Message-ID: <4AD3A67B.6070703@cerebellum.kd>
+References: <4AD0FB0B.8050609@gmail.com> <4AD34D3C.1060206@bfs.de> <4AD37D44.9050207@gmail.com>
 Mime-Version: 1.0
 Content-Transfer-Encoding: 7bit
-Return-path: <linux-hams-owner@vger.kernel.org>
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from
-         :user-agent:mime-version:to:cc:subject:references:in-reply-to
-         :content-type:content-transfer-encoding;
-        bh=0XYe8R1/vLcimIMrvjNVDCQ0qZDiy7FIna+lcZd3j60=;
-        b=W6GLpcHTuaE+EHta9iW1otC2UKRif7dIpOstsWauIXCQoZgCADWHp466+i8ltEud9U
-         tTLds0+kOQy7MLbOq/UW8x8JDZYiGMlAHmq3mP2oG9+PmAv8rW5/BldvuUBrBAWxHpsW
-         a8oVf58+CWcfE6BxWK0f75WSgJnNjLfosD9U0=
-In-Reply-To: <4AD34D3C.1060206@bfs.de>
-Sender: linux-hams-owner@vger.kernel.org
+Return-path: <netdev-owner@vger.kernel.org>
+In-Reply-To: <4AD37D44.9050207@gmail.com>
+Sender: netdev-owner@vger.kernel.org
 List-ID: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"
-To: wharms@bfs.de
-Cc: linux-hams@vger.kernel.org, netdev <netdev@vger.kernel.org>, Joerg Reuter <jreuter@yaina.de>, Andrew Morton <akpm@linux-foundation.org>
+Content-Type: text/plain; charset="us-ascii"; format="flowed"
+To: Roel Kluin <roel.kluin@gmail.com>
+Cc: wharms@bfs.de, linux-hams@vger.kernel.org, netdev <netdev@vger.kernel.org>, Joerg Reuter <jreuter@yaina.de>, Andrew Morton <akpm@linux-foundation.org>
 
-struct ax25_ctl_struct member `arg' is unsigned and cannot be less
-than 0.
+Roel Kluin wrote:
 
-Signed-off-by: Roel Kluin <roel.kluin@gmail.com>
----
->> If the ax25_ctl.arg limit is known to be lower, please suggest
->> other values.
+>>  tmp_arg=ax25_ctl.arg * HZ;
+>>
+>>   if (arg == 0 || arg >  ULONG_MAX )
+>> 		goto einval_put;
+>
+> I'm not sure, I think this would only work if we made `arg' an
+> unsigned long long.
 
-> what is about something like:
-> 
->  tmp_arg=ax25_ctl.arg * HZ;
-> 
->   if (arg == 0 || arg >  ULONG_MAX )
-> 		goto einval_put;
-> 
-> re,
->  wh
+That depends on the possible values of ax25_ctl.arg.
 
-I'm not sure, I think this would only work if we made `arg' an
-unsigned long long.
+> +	if (ax25_ctl.arg * HZ > ULONG_MAX && ax25_ctl.cmd != AX25_KILL)
+> +		return -EINVAL;
 
-How about this?
+Why the need to change arg before comparing it with a constant?  Let the 
+compiler do the work:
 
-diff --git a/net/ax25/af_ax25.c b/net/ax25/af_ax25.c
-index f454607..20ff0f3 100644
---- a/net/ax25/af_ax25.c
-+++ b/net/ax25/af_ax25.c
-@@ -369,6 +369,9 @@ static int ax25_ctl_ioctl(const unsigned int cmd, void __user *arg)
- 	if (ax25_ctl.digi_count > AX25_MAX_DIGIS)
- 		return -EINVAL;
- 
-+	if (ax25_ctl.arg * HZ > ULONG_MAX && ax25_ctl.cmd != AX25_KILL)
-+		return -EINVAL;
-+
- 	digi.ndigi = ax25_ctl.digi_count;
- 	for (k = 0; k < digi.ndigi; k++)
- 		digi.calls[k] = ax25_ctl.digi_addr[k];
-@@ -418,14 +421,10 @@ static int ax25_ctl_ioctl(const unsigned int cmd, void __user *arg)
- 		break;
- 
- 	case AX25_T3:
--		if (ax25_ctl.arg < 0)
--			goto einval_put;
- 		ax25->t3 = ax25_ctl.arg * HZ;
- 		break;
- 
- 	case AX25_IDLE:
--		if (ax25_ctl.arg < 0)
--			goto einval_put;
- 		ax25->idle = ax25_ctl.arg * 60 * HZ;
- 		break;
- 
+	if (ax25_ctl.arg > ULONG_MAX / HZ && ...
+
+Kevin
