@@ -1,33 +1,80 @@
-From: Kevin Dawson <kevind@esi.com.au>
+From: Roel Kluin <roel.kluin@gmail.com>
 Subject: Re: [PATCH] ax25: unsigned cannot be less than 0 in ax25_ctl_ioctl()
-Date: Wed, 14 Oct 2009 08:50:15 +1100
-Message-ID: <4AD4F617.4090300@cerebellum.kd>
-References: <4AD0FB0B.8050609@gmail.com> <4AD34D3C.1060206@bfs.de> <4AD37D44.9050207@gmail.com> <4AD3A67B.6070703@cerebellum.kd> <4AD44CF6.1070801@bfs.de>
+Date: Wed, 14 Oct 2009 17:26:30 +0200
+Message-ID: <4AD5EDA6.4040709@gmail.com>
+References: <4AD0FB0B.8050609@gmail.com> <4AD34D3C.1060206@bfs.de> <4AD37D44.9050207@gmail.com> <4AD3A67B.6070703@cerebellum.kd>
 Mime-Version: 1.0
 Content-Transfer-Encoding: 7bit
-Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <4AD44CF6.1070801@bfs.de>
-Sender: linux-hams-owner@vger.kernel.org
+Return-path: <netdev-owner@vger.kernel.org>
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from
+         :user-agent:mime-version:to:cc:subject:references:in-reply-to
+         :content-type:content-transfer-encoding;
+        bh=2I6EZoPRmP/kIlN3Ak7mAY6Qe2YjwQ1iy38JaQTMy+c=;
+        b=tSiR9HL6HPoaOJtdNku50k96BSpRZbXDEsiuy9P1QO+Dmu/9fQdW/GqEJo0Sklzjzk
+         dzl979DqaVOu4WMxfPSSnPTAHQnSFLcAAGXS9Xjio+wj9yILl2OzKWFX7yGziysqsxMJ
+         YXPInLDwlC9cAuW/S0OiAtoY+73ChGD4LetMA=
+In-Reply-To: <4AD3A67B.6070703@cerebellum.kd>
+Sender: netdev-owner@vger.kernel.org
 List-ID: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"; format="flowed"
-To: wharms@bfs.de
-Cc: linux-hams@vger.kernel.org, netdev <netdev@vger.kernel.org>, Andrew Morton <akpm@linux-foundation.org>
+Content-Type: text/plain; charset="us-ascii"
+To: Kevin Dawson <kevind@esi.com.au>
+Cc: wharms@bfs.de, linux-hams@vger.kernel.org, netdev <netdev@vger.kernel.org>, Joerg Reuter <jreuter@yaina.de>, Andrew Morton <akpm@linux-foundation.org>
 
-walter harms wrote:
+struct ax25_ctl_struct member `arg' is unsigned and cannot be less
+than 0.
+
+Signed-off-by: Roel Kluin <roel.kluin@gmail.com>
+---
+Op 12-10-09 23:58, Kevin Dawson schreef:
+
+>>>  tmp_arg=ax25_ctl.arg * HZ;
+>>>
+>>>   if (arg == 0 || arg >  ULONG_MAX )
+>>>         goto einval_put;
+>>
+>> I'm not sure, I think this would only work if we made `arg' an
+>> unsigned long long.
 > 
-> Kevin Dawson schrieb:
->> 
->>     if (ax25_ctl.arg > ULONG_MAX / HZ && ...
+> That depends on the possible values of ax25_ctl.arg.
 > 
-> i like this because it prevents a wrap around for stupid ax25_ctl.arg values but will not help when
-> ax25_ctl.arg * HZ is used later. NTL i think HZ does not need to be constant these days but i am not an
-> expert on that area.
+>> +    if (ax25_ctl.arg * HZ > ULONG_MAX && ax25_ctl.cmd != AX25_KILL)
+>> +        return -EINVAL;
+> 
+> Why the need to change arg before comparing it with a constant?  Let the
+> compiler do the work:
+> 
+>     if (ax25_ctl.arg > ULONG_MAX / HZ && ...
 
-I don't have a kernel source tree at the moment, so I haven't seen where 
-it's used, but the same size-limiting principle using divisions would 
-apply whether you have constants, variables or function calls.
+Ok, How about this then?
 
-If ax25_ctl.arg * HZ is used later, one should arrange that the thread 
-won't get that far if it has already been deemed an excessive value.
-
-Kevin
+diff --git a/net/ax25/af_ax25.c b/net/ax25/af_ax25.c
+index f454607..d923ac4 100644
+--- a/net/ax25/af_ax25.c
++++ b/net/ax25/af_ax25.c
+@@ -369,6 +369,9 @@ static int ax25_ctl_ioctl(const unsigned int cmd, void __user *arg)
+ 	if (ax25_ctl.digi_count > AX25_MAX_DIGIS)
+ 		return -EINVAL;
+ 
++	if (ax25_ctl.arg > ULONG_MAX / HZ && ax25_ctl.cmd != AX25_KILL)
++		return -EINVAL;
++
+ 	digi.ndigi = ax25_ctl.digi_count;
+ 	for (k = 0; k < digi.ndigi; k++)
+ 		digi.calls[k] = ax25_ctl.digi_addr[k];
+@@ -418,14 +421,10 @@ static int ax25_ctl_ioctl(const unsigned int cmd, void __user *arg)
+ 		break;
+ 
+ 	case AX25_T3:
+-		if (ax25_ctl.arg < 0)
+-			goto einval_put;
+ 		ax25->t3 = ax25_ctl.arg * HZ;
+ 		break;
+ 
+ 	case AX25_IDLE:
+-		if (ax25_ctl.arg < 0)
+-			goto einval_put;
+ 		ax25->idle = ax25_ctl.arg * 60 * HZ;
+ 		break;
+ 
