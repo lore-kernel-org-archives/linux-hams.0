@@ -1,31 +1,27 @@
-From: Bernard Pidoux F6BVP <f6bvp@free.fr>
-Subject: FPAC327-14 compatible with patched libax25-0.0.12-rc2
-Date: Mon, 26 Oct 2009 12:26:20 +0100
-Message-ID: <4AE5875C.9000108@free.fr>
+From: David Miller <davem@davemloft.net>
+Subject: Re: [PATCH] ax25: unsigned cannot be less than 0 in
+ ax25_ctl_ioctl()
+Date: Thu, 29 Oct 2009 23:06:53 -0700 (PDT)
+Message-ID: <20091029.230653.256114041.davem@davemloft.net>
+References: <4AD37D44.9050207@gmail.com>
+	<4AD3A67B.6070703@cerebellum.kd>
+	<4AD5EDA6.4040709@gmail.com>
 Mime-Version: 1.0
 Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
+In-Reply-To: <4AD5EDA6.4040709@gmail.com>
 Sender: linux-hams-owner@vger.kernel.org
 List-ID: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"; format="flowed"
-To: Linux Hams <linux-hams@vger.kernel.org>
-Cc: =?ISO-8859-15?Q?Jan-Simon_M=F6ller?= <dl9pf@gmx.de>, Ralf Baechle DL5RB <ralf@linux-mips.org>
+Content-Type: Text/Plain; charset="us-ascii"
+To: roel.kluin@gmail.com
+Cc: kevind@esi.com.au, wharms@bfs.de, linux-hams@vger.kernel.org, netdev@vger.kernel.org, jreuter@yaina.de, akpm@linux-foundation.org
 
-Hi,
+From: Roel Kluin <roel.kluin@gmail.com>
+Date: Wed, 14 Oct 2009 17:26:30 +0200
 
-I recently sent a patch against libax25-0.0.12-rc2
-to remove bugs in procutils. See details here :
+> struct ax25_ctl_struct member `arg' is unsigned and cannot be less
+> than 0.
+> 
+> Signed-off-by: Roel Kluin <roel.kluin@gmail.com>
 
-http://marc.info/?l=linux-hams&m=125586611206715&w=2
-
-I am pleased to announce that the latest release of FPAC
-packet switch node package is now compatible with patched libax25-0.0.12-rc2.
-
-http://f6bvp.free.fr/logiciels/rose-fpac/fpac327-14-pre18.tar.bz2
-
-For instructions about implementation of an FPAC ROSE node, visit :
-  
-http://rose.fpac.free.fr/MINI-HOWTO/
-
-73 de Bernard, f6bvp
-
+Applied to net-next-2.6
