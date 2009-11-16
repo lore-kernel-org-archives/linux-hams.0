@@ -1,41 +1,37 @@
-From: kd4e <doc@kd4e.com>
-Subject: WOOF - Generates Custom Linux Distros
-Date: Tue, 10 Nov 2009 09:18:15 -0500
-Message-ID: <4AF97627.30205@kd4e.com>
-Reply-To: doc@kd4e.com
+From: Nate Bargmann <n0nb@n0nb.us>
+Subject: FMT results
+Date: Mon, 16 Nov 2009 12:50:48 -0600
+Message-ID: <20091116185048.GP22720@n0nb.us>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
+Content-Disposition: inline
 Sender: linux-hams-owner@vger.kernel.org
 List-ID: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"; format="flowed"
-To: Linux Hams <linux-hams@vger.kernel.org>, Ham-Linux <ham-linux@mailman.qth.net>, ham-computers <ham-computers@mailman.qth.net>
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+To: Linux Hams <linux-hams@vger.kernel.org>
 
-WOOF - Generates Custom Linux Distros
-http://bkhome.org/blog/?page=1
+I took a look at the FMT results and I see I blew it big time:
 
-Barry, the developer, just posted a greatly improved
-GUI.
+N0NB	KS	W0	
+			160m		80m		40m
+		W1AW			3,597,861.78    7,098,560.21
+					750.88		750.71
 
-WOOF accesses repositories for Ubuntu and other big
-distros, extracts elements of interest, and builds
-a custom distro.
+		WA6ZTY					7,097,423.57
+							750.22
 
-It is an amazing piece of work.
+		K5CM	1,846,076.67
+			748.96		
+			
+So I see that I was off by 750 Hz high, precisely the CW offset I've
+set.  As I used USB, this will require investigation.
+
+73, de Nate >>
 
 -- 
 
-Thanks! & 73, doc, KD4E
-FS/Swap/Wanted: http://kd4e.com/swapn.html
-Free OS : http://www.PuppyLinux.com
-Personal: http://kd4e.com
-             |_|___|_|
-             | | & | |
-        /\      {|
-       /  \     {|
-      /    \    {|
-     /   @  \   {|
-     |   |~_|~~~~|
-     |   -| |    |
-============\ # KD4E
-Have an http://ultrafidian.com day!
+"The optimist proclaims that we live in the best of all
+possible worlds.  The pessimist fears this is true."
+
+Ham radio, Linux, bikes, and more: http://n0nb.us/index.html
