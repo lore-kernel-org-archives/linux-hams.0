@@ -1,17 +1,17 @@
 From: Bernard Pidoux <bpidoux@free.fr>
-Subject: [PATCH] net-tools-1.60-23 inet_src
-Date: Sat, 21 Nov 2009 17:59:00 +0100
-Message-ID: <4B081C54.6010507@free.fr>
+Subject: [PATCH] net-tools-1.60-23 netstat x25_sr
+Date: Sat, 21 Nov 2009 17:59:44 +0100
+Message-ID: <4B081C80.7010907@free.fr>
 Mime-Version: 1.0
 Content-Type: multipart/mixed;
- boundary="------------060408000700090402060105"
+ boundary="------------040507000804030104070603"
 Return-path: <linux-hams-owner@vger.kernel.org>
 Sender: linux-hams-owner@vger.kernel.org
 List-ID: <linux-hams.vger.kernel.org>
 To: linux-hams <linux-hams@vger.kernel.org>, C Schuman <k4gbb1@embarqmail.com>, Jerry DeLong <KD4YAL@tampabay.rr.com>, Ray Wells <vk2tv@exemail.com.au>, Terry Dawson VK2KTJ <terry@animat>
 
 This is a multi-part message in MIME format.
---------------060408000700090402060105
+--------------040507000804030104070603
 Content-Type: text/plain; charset=ISO-8859-15; format=flowed
 Content-Transfer-Encoding: 7bit
 
@@ -33,23 +33,24 @@ Here follows three patches.
 
 
 
---------------060408000700090402060105
+
+--------------040507000804030104070603
 Content-Type: text/plain;
- name="net-tools-1.60-23.inet_src.patch"
+ name="net-tools-1.60-23.netstat.x25_sr.patch"
 Content-Transfer-Encoding: 7bit
 Content-Disposition: inline;
- filename="net-tools-1.60-23.inet_src.patch"
+ filename="net-tools-1.60-23.netstat.x25_sr.patch"
 
-diff -ruN net-tools-1.60-23/lib/inet_sr.c net-tools-1.60-23/lib/inet_sr.c
---- net-tools-1.60-23/lib/inet_sr.c	2000-02-20 22:46:45.000000000 +0100
-+++ net-tools-1.60-23/lib/inet_sr.c	2009-11-21 16:01:09.693168634 +0100
-@@ -105,6 +105,7 @@
-     case 2:
-        isnet = 0; break;
-     default:
-+       break;
-     }
+--- net-tools-1.60-23/lib/x25_sr.c	2000-05-20 15:38:10.000000000 +0200
++++ net-tools-1.60-23/lib/x25_sr.c	2009-11-20 16:36:22.253146541 +0100
+@@ -77,7 +77,7 @@
+   rt.sigdigits=sigdigits;
  
-     /* Fill in the other fields. */
+   /* x25_route_struct.address isn't type struct sockaddr_x25, Why? */
+-  memcpy(&rt.address, &sx25.sx25_addr, sizeof(x25_address));
++  memcpy(&rt.address, &sx25.sx25_addr, sizeof(sx25.sx25_addr));
+ 
+   while (*args) {
+ 	if (!strcmp(*args,"device") || !strcmp(*args,"dev")) {
 
---------------060408000700090402060105--
+--------------040507000804030104070603--
