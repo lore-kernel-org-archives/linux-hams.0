@@ -1,47 +1,36 @@
-From: Geoff Bagley <geoff.bagley@btinternet.com>
-Subject: Gyrators.
-Date: Tue, 01 Dec 2009 13:33:21 +0000
-Message-ID: <4B151B21.4040802@btinternet.com>
+From: Cathryn Mataga <cathryn@junglevision.com>
+Subject: ax25ipd.c routing
+Date: Mon, 07 Dec 2009 02:30:27 -0800
+Message-ID: <4B1CD943.6030808@junglevision.com>
+References: <S1752195AbZK3HxQ/20091130075316Z+372@vger.kernel.org> <4B142D5A.7010803@junglevision.com> <4B143564.2060206@junglevision.com> <4B143DC9.9060601@junglevision.com> <4B14B22E.6010901@junglevision.com>
 Mime-Version: 1.0
 Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
+In-Reply-To: <4B14B22E.6010901@junglevision.com>
 Sender: linux-hams-owner@vger.kernel.org
 List-ID: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"; format="flowed"
-To: Linux Hams <linux-hams@vger.kernel.org>
+To: Linux Hams Mailing list <linux-hams@vger.kernel.org>
 
-I would like to hear from any other amateur who has experience with 
-simulation of
-hi-Q inductors for use in VLF receivers by means of gyrator circuits.
+How does this work with multiple connections?
 
-There seem to be two sorts. 
+Suppose I have two incoming connections
+My call is K1BBS.
 
-There is a simpler one which you can find in Wikipedia,
-and there is a rather more complicated one by WB9ATW  (taken from Ham 
-Radio  June 1979 )
-which is to be found in  the RSGB  "LF Experimenter's Source Book  2nd 
-Ed. Ed G3LDO.
+route K1PAR 1.0.0.0
+route K2PAR 2.0.0.0 d
 
-This second circuit uses two op-amps rather than one (for the gyrator) 
-and was used by N8BN
-in a receiver design published in the same publication.
+Then suppose K1USR at K1PAR does a connect to K1BBS.
 
-I am interested in what Q-factor values are feasible,  and the relative 
-merits of the two circuit
-configurations.
+What seems to happen is I see packets come in from K1USR  to K1BBS.
+But then when packets go back out, they go back to K2PAR, even though
+he's at K1PAR.   At least that's what I think is happening.
 
-It sounds nice to be able to vary the tuning of the circuit by means of 
-a single potentiometer !
+Shouldn't ax25d.c keep a record of which IP callsigns came from, so that
+way when it needs to send a packet back they go to the right place?
+I'm not 100% sure of this, but it seems like the lookup only checks
+the route commands.   I only see one call to route_add in config.c.
 
-I imagine that if a very Hi-Q tuned circuit were to be made in this 
-manner, you would have to drive it
-in such a manner as not to cause any appreciable damping, and consequent 
-lower Q.
-
-Any hints or experiences welcome.  TIA.
-
-73
-
-Geoff
-G3FHL
-
+Shouldn't it 'route_add' every time a callsign comes in axip?
+Or the only way to make this work is to run a separate
+ax25ipd for every connection.
