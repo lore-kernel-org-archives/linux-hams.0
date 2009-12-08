@@ -1,125 +1,164 @@
-From: Ray Wells <vk2tv@exemail.com.au>
+From: Cathryn Mataga <cathryn@junglevision.com>
 Subject: Re: ax25ipd.c routing
-Date: Tue, 08 Dec 2009 10:30:26 +1100
-Message-ID: <4B1D9012.8030205@exemail.com.au>
-References: <S1752195AbZK3HxQ/20091130075316Z+372@vger.kernel.org> <4B142D5A.7010803@junglevision.com> <4B143564.2060206@junglevision.com> <4B143DC9.9060601@junglevision.com> <4B14B22E.6010901@junglevision.com> <4B1CD943.6030808@junglevision.com> <20091207162523.GC6537@x-berg.in-berlin.de> <4B1D5F4A.7050002@junglevision.com> <20091207202650.GM19524@x-berg.in-berlin.de>
+Date: Mon, 07 Dec 2009 17:45:43 -0800
+Message-ID: <4B1DAFC7.5080302@junglevision.com>
+References: <S1752195AbZK3HxQ/20091130075316Z+372@vger.kernel.org> <4B142D5A.7010803@junglevision.com> <4B143564.2060206@junglevision.com> <4B143DC9.9060601@junglevision.com> <4B14B22E.6010901@junglevision.com> <4B1CD943.6030808@junglevision.com> <20091207162523.GC6537@x-berg.in-berlin.de> <4B1D5F4A.7050002@junglevision.com> <20091207202650.GM19524@x-berg.in-berlin.de> <4B1D84C4.8000206@exemail.com.au> <20091207235111.GS19524@x-berg.in-berlin.de>
 Mime-Version: 1.0
 Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <20091207202650.GM19524@x-berg.in-berlin.de>
+In-Reply-To: <20091207235111.GS19524@x-berg.in-berlin.de>
 Sender: linux-hams-owner@vger.kernel.org
 List-ID: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"; format="flowed"
 To: Thomas Osterried <thomas@x-berg.in-berlin.de>
-Cc: Cathryn Mataga <cathryn@junglevision.com>, linux-hams@vger.kernel.org
-
-Hi,
-
-Excuse me if I'm barking up the wrong tree.
-
-I've been using ax25ipd for many years and haven't observed any routing 
-problems.  For many years the system ran fbb (40 ports - ax25, rose and 
-telnet) and fpacnode, as well as xastir (aprs).
-
-I was a beta tester for some modifications implemented by vk5asf back in 
-2005 and haven't used the stock sources since then. I know that f6bvp 
-has also introduced some fixes. I always get my sources from the f6bvp 
-web site.
-
-Also, I don't remember how far back it was introduced, or by whom, but 
-specifying an ssid of zero causes that route to respond to any ssid from 
-that callsign. I used a mixture of generic (-0) and directed ssid's.
-
- >From my ax25ipd.conf.
-
-route vk2tv-3 gizmo udp 10093 d
-route vk2tv-8 gizmo udp 10093 b
-route kp4djt-0 w4bgh.no-ip.org udp 10095 b
-route k4gbb-9 k4gbb.serveftp.com udp 10093
-route k4gbb-12 k4gbb.serveftp.com udp 10094
-route k4gbb-14 k4gbb.serveftp.com udp 10093 b
-route f6bvp-0 82.66.61.83 udp 10093 b
-route gb7yb-0 62.49.59.169 udp 10093 b
-route gb7ydx-1 gb7ydx.ath.cx udp 10093 b
-#route kd4yal-0 kd4yal.servebbs.org udp 10093 b
-route kd4yal-0 97.97.181.223 udp 10093 b
-route f4bwt-0 62.147.157.243 udp 10093 b
-route vk2dot-0 220.245.50.125 udp 93 b
-route vk2xb-0 122.252.16.174 udp 10093 b
-route vk7hdm-0 203.55.215.234 udp 93 b
-route g3ldi-0 84.92.112.67 udp 10093 b
-route ti2has-0 201.200.228.134 udp 10093 b
-route w4min-0 74.174.224.115 udp 10093 b
-route vk2wet-0 tankremote.no-ip.org udp 10093 b
-#route vk2bvo 44.1.1.1
-
-Ray vk2tv
+Cc: Ray Wells <vk2tv@exemail.com.au>, linux-hams@vger.kernel.org
 
 
-Thomas Osterried wrote:
-> Hello,
->
->   
->> What about this for both my and Bernard's issue.
->>
->> 1.  If a callsign is received from the ip of a known route
->> but is not the callsign of a known route, or the callsign
->> of the local station, then add this callsign
->> and the route pointer to a binary tree.  If the callsign
->> was previously in the tree, then the new route replaces
->> the old one, if different.
->>     
->
-> yes. And if not set to "permanent" (p).
->
->   
->> 2.  in call_to_ip, before it checks the default route,
->> it checks this binary tree for this callsign, and returns the
->> route it came from.  If the callsign is not found, the default
->> route is used.
->>     
->
-> yes.
->
->   
->> 3.  Callsigns never expire.  The tree just grows.
->>     
->
-> yes.
->
->   
->> 4.  SSID's are matched as unique callsigns.
->>     
->
-> call + same-ssid unique.
-> If you like to route i.E. ssid 0 to 15 permanently to a specific host,
-> it's only 16 lines. That's ok.
->
->   
->> 5.  If the callsign is that of a ddns route,
->> Fork, check dns, and if the ip matches the dns,
->> update the route_table_entry->ip_addr
->>     
->
-> No. Don't fork.
-> The best solution is a posix thread, which does periodicaly the resolving,
-> and to use a mutex-lock in the special case an IP address is currently being
-> looked up.
->
->   
->> 6.  If a process is already forked for updating the ip of
->> a particular route, do not fork another one.  Add
->> a variable to route_table_entry to verify this.
->>     
->
-> A single thread is sufficient.
->
-> 73,
-> 	- Thomas
-> --
-> To unsubscribe from this list: send the line "unsubscribe linux-hams" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at  http://vger.kernel.org/majordomo-info.html
->
->   
+> Cathryn, do you have the possibility to do a packet-trace?
+> 
 
+Alright, here's a case where it doesn't work.  I connect to
+my partner's system at gvcity.ampr.org. His callsign is KG6BAJ.
+I log into his system via telnet with my call KE6I.  He's running
+"Xrouter v186b".  I'm connected to 'port 6' on his system, so
+I do the command.
+
+C 6 KE6I-9
+
+This is a trace from my side with stock ax25ipd.  His site
+connects to mine using my call KE6I-15.  My side is trying
+to send the packet back, but they're all going to the default
+route, so it keeps trying and never gets a response.  On the
+connecting side, I just see a timeout.  From gvcity.ampr.org
+I never see the 'uronode' message.
+
+
+axip: fm KE6I-15 to KE6I-9 ctl SABM+
+axip: fm KE6I-9 to KE6I-15 ctl UA-
+axip: fm KE6I-9 to KE6I-15 ctl I00^ pid=F0(Text) len 102
+0000  URONode v1.0.7 - Welcome to XX#XX-#.Welcome KE6I in Berkeley Cal
+0040  ifornia.  Type 'CONV' for live chat...
+axip: fm KE6I-9 to KE6I-15 ctl I01+ pid=F0(Text) len 4
+0000  .=>
+axip: fm KE6I-15 to KE6I-9 ctl SABM+
+axip: fm KE6I-9 to KE6I-15 ctl UA-
+axip: fm KE6I-9 to KE6I-15 ctl I00^ pid=F0(Text) len 102
+0000  URONode v1.0.7 - Welcome to XX#XX-#.Welcome KE6I in Berkeley Cal
+0040  ifornia.  Type 'CONV' for live chat...
+axip: fm KE6I-9 to KE6I-15 ctl I01+ pid=F0(Text) len 4
+0000  .=>
+axip: fm KE6I-15 to KE6I-9 ctl SABM+
+axip: fm KE6I-9 to KE6I-15 ctl UA-
+axip: fm KE6I-9 to KE6I-15 ctl I00^ pid=F0(Text) len 102
+0000  URONode v1.0.7 - Welcome to XX#XX-#.Welcome KE6I in Berkeley Cal
+0040  ifornia.  Type 'CONV' for live chat...
+axip: fm KE6I-9 to KE6I-15 ctl I01+ pid=F0(Text) len 4
+0000  .=>
+axip: fm KE6I-15 to KE6I-9 ctl SABM+
+axip: fm KE6I-9 to KE6I-15 ctl UA-
+axip: fm KE6I-9 to KE6I-15 ctl I00^ pid=F0(Text) len 102
+0000  URONode v1.0.7 - Welcome to XX#XX-#.Welcome KE6I in Berkeley Cal
+0040  ifornia.  Type 'CONV' for live chat...
+axip: fm KE6I-9 to KE6I-15 ctl I01+ pid=F0(Text) len 4
+0000  .=>
+axip: fm KE6I-15 to KE6I-9 ctl SABM+
+axip: fm KE6I-9 to KE6I-15 ctl UA-
+axip: fm KE6I-9 to KE6I-15 ctl I00^ pid=F0(Text) len 102
+0000  URONode v1.0.7 - Welcome to XX#XX-#.Welcome KE6I in Berkeley Cal
+0040  ifornia.  Type 'CONV' for live chat...
+axip: fm KE6I-9 to KE6I-15 ctl I01+ pid=F0(Text) len 4
+0000  .=>
+axip: fm KE6I-15 to KE6I-9 ctl SABM+
+axip: fm KE6I-9 to KE6I-15 ctl UA-
+axip: fm KE6I-9 to KE6I-15 ctl I00^ pid=F0(Text) len 102
+0000  URONode v1.0.7 - Welcome to XX#XX-#.Welcome KE6I in Berkeley Cal
+0040  ifornia.  Type 'CONV' for live chat...
+axip: fm KE6I-9 to KE6I-15 ctl I01+ pid=F0(Text) len 4
+0000  .=>
+axip: fm KE6I-15 to KE6I-9 ctl SABM+
+axip: fm KE6I-9 to KE6I-15 ctl UA-
+axip: fm KE6I-9 to KE6I-15 ctl I00^ pid=F0(Text) len 102
+0000  URONode v1.0.7 - Welcome to XX#XX-#.Welcome KE6I in Berkeley Cal
+0040  ifornia.  Type 'CONV' for live chat...
+axip: fm KE6I-9 to KE6I-15 ctl I01+ pid=F0(Text) len 4
+0000  .=>
+axip: fm KE6I-15 to KE6I-9 ctl SABM+
+axip: fm KE6I-9 to KE6I-15 ctl UA-
+axip: fm KE6I-9 to KE6I-15 ctl I00^ pid=F0(Text) len 102
+0000  URONode v1.0.7 - Welcome to XX#XX-#.Welcome KE6I in Berkeley Cal
+0040  ifornia.  Type 'CONV' for live chat...
+axip: fm KE6I-9 to KE6I-15 ctl I01+ pid=F0(Text) len 4
+0000  .=>
+axip: fm KE6I-15 to KE6I-9 ctl SABM+
+axip: fm KE6I-9 to KE6I-15 ctl UA-
+axip: fm KE6I-9 to KE6I-15 ctl I00^ pid=F0(Text) len 102
+0000  URONode v1.0.7 - Welcome to XX#XX-#.Welcome KE6I in Berkeley Cal
+0040  ifornia.  Type 'CONV' for live chat...
+axip: fm KE6I-9 to KE6I-15 ctl I01+ pid=F0(Text) len 4
+0000  .=>
+axip: fm KE6I-15 to KE6I-9 ctl SABM+
+axip: fm KE6I-9 to KE6I-15 ctl UA-
+axip: fm KE6I-9 to KE6I-15 ctl I00^ pid=F0(Text) len 102
+0000  URONode v1.0.7 - Welcome to XX#XX-#.Welcome KE6I in Berkeley Cal
+0040  ifornia.  Type 'CONV' for live chat...
+axip: fm KE6I-9 to KE6I-15 ctl I01+ pid=F0(Text) len 4
+0000  .=>
+
+
+I did make the change as I mentioned.  It's not too difficult
+as most of the bits and pieces already exist in the test version.
+
+In this case, the connection works because the return packets
+go to the right place.   I see the 'uronode' message and am
+able to disconnect without error.
+
+axip: fm KE6I-15 to KE6I-9 ctl SABM+
+axip: fm KE6I-9 to KE6I-15 ctl UA-
+axip: fm KE6I-9 to KE6I-15 ctl I00^ pid=F0(Text) len 102
+0000  URONode v1.0.7 - Welcome to XX#XX-#.Welcome KE6I in Berkeley Cal
+0040  ifornia.  Type 'CONV' for live chat...
+axip: fm KE6I-9 to KE6I-15 ctl I01+ pid=F0(Text) len 4
+0000  .=>
+axip: fm KE6I-15 to KE6I-9 ctl RR2-
+axip: fm KE6I-15 to KE6I-9 ctl I20^ pid=F0(Text) len 2
+0000  ?.
+axip: fm KE6I-9 to KE6I-15 ctl I12^ pid=F0(Text) len 177
+0000  Commands:.?, BBS, Bye, Connect, CONVers, Escape, Finger, Help, H
+0040  Ost, Info.INTerfaces, Links, MHeard, MSg, Nodes, Ping, Quit, Rou
+0080  tes, SEssions, Status.Telnet, Users, Version, Who
+axip: fm KE6I-9 to KE6I-15 ctl I13+ pid=F0(Text) len 4
+0000  .=>
+axip: fm KE6I-15 to KE6I-9 ctl RR4-
+axip: fm KE6I-15 to KE6I-9 ctl I41^ pid=F0(Text) len 2
+0000  b.
+axip: fm KE6I-9 to KE6I-15 ctl I24^ pid=F0(Text) len 24
+0000  KE6I-15 de XX#XX-#.73!
+axip: fm KE6I-9 to KE6I-15 ctl DISC+
+axip: fm KE6I-15 to KE6I-9 ctl UA-
+
+Here's my ax25ipd.conf file
+
+socket ip
+mode tnc
+device /dev/ttyq7
+#device /dev/ptyad
+mycall KE6I-9
+speed 9600
+loglevel 4
+broadcast QST-0 NODES-0
+# route WH6IO 71.198.33.249
+# route WH6IO-8 71.198.33.249 d
+route WH6IO-8 75.106.121.56
+route WH6IO 75.106.121.56
+route AA6HF-4 44.17.0.128*
+route AA6HF 44.17.0.128 d
+route KG6BAJ-2 44.2.14.1
+route KG6BAJ-1 44.2.14.1
+route KG6BAJ 44.2.14.1
+
+
+Stock ax25ipd works for all outgoing connections from Linux.  Also if
+kg6baj connects to me from his system using his callsign it works
+correctly because the return packets go back to him.  It's only the
+users his system that have trouble connecting.  That's the problem
+I see here.
