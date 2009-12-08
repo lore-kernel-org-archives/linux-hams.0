@@ -1,33 +1,30 @@
-From: Terry Dawson <tjd@animats.net>
-Subject: Re: [PATCH] net-tools-1.60-23 netstat ampr ROSE
-Date: Tue, 08 Dec 2009 15:32:33 +1100
-Message-ID: <4B1DD6E1.80209@animats.net>
-References: <4B081B04.8020900@free.fr>
+From: Cathryn Mataga <cathryn@junglevision.com>
+Subject: Re: ax25ipd.c routing
+Date: Mon, 07 Dec 2009 21:11:36 -0800
+Message-ID: <4B1DE008.1080306@junglevision.com>
+References: <S1752195AbZK3HxQ/20091130075316Z+372@vger.kernel.org> <4B142D5A.7010803@junglevision.com> <4B143564.2060206@junglevision.com> <4B143DC9.9060601@junglevision.com> <4B14B22E.6010901@junglevision.com> <4B1CD943.6030808@junglevision.com> <20091207162523.GC6537@x-berg.in-berlin.de> <4B1D5F4A.7050002@junglevision.com> <20091207202650.GM19524@x-berg.in-berlin.de> <4B1D84C4.8000206@exemail.com.au> <20091207235111.GS19524@x-berg.in-berlin.de>
 Mime-Version: 1.0
 Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <4B081B04.8020900@free.fr>
+In-Reply-To: <20091207235111.GS19524@x-berg.in-berlin.de>
 Sender: linux-hams-owner@vger.kernel.org
 List-ID: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"; format="flowed"
-To: Bernard Pidoux <bpidoux@free.fr>
-Cc: linux-hams <linux-hams@vger.kernel.org>, Ray Wells <vk2tv@exemail.com.au>, Terry Dawson VK2KTJ <terry@animats.net>, Steve Fraser <sfraser@sierra.apana.org.au>
+To: Thomas Osterried <thomas@x-berg.in-berlin.de>
+Cc: linux-hams@vger.kernel.org
 
-Bernard Pidoux wrote:
+http://www.mataga.net/mataga/ax25ipdke6i.diff
 
-> It already includes AX.25 and Netrom sockets contents
-> and NetRom route table.
-> 
-> Terry Dawson VK2KTJ, implemented (although partially ?) ROSE
-> in netstat, some time ago (date ?).
-> 
-> I completed the work with a patch against the last net-tools
-> source I found at http://packages.debian.org/sid/net-tools
+Here's a link to the change I made to ax25ipd.  This is a diff
+versus the rc2 version.   It hasn't been tested that much,
+but it does work for me.
 
-Hi Bernard,
-Thanks for the cc: I'd lost this list and am pleased to have a pointer 
-to where it again.
+It's pretty basic.  It reads ip addresses and callsigns
+using code taken from the test version.  But then it stores the
+matching route/Callsign in a btree, and uses this btree to
+retrieve the correct ip during sending.  It does fix the issue
+shown in the logs I created earlier.
 
-regards
-Terry
-
+It doesn't deal with the route IP's changing.  Currently, I just
+print a message when this happens.  It only addresses the issue
+of user callsigns.
