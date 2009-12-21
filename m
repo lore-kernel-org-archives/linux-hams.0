@@ -1,58 +1,82 @@
-From: Cathryn Mataga <cathryn@junglevision.com>
-Subject: Made a change to call.c
-Date: Fri, 18 Dec 2009 17:46:54 -0800
-Message-ID: <4B2C308E.5080709@junglevision.com>
+From: Pino Zollo <pinozollo@gmail.com>
+Subject: DBLog 1.3
+Date: Mon, 21 Dec 2009 11:57:26 -0300
+Message-ID: <200912211157.26660.pinozollo@gmail.com>
+Reply-To: pinozollo@gmail.com
 Mime-Version: 1.0
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:from:reply-to:organization:to
+         :subject:date:user-agent:mime-version:content-type
+         :content-transfer-encoding:content-disposition:message-id;
+        bh=SmGa7E+hjVMXyPOfGT01ur37mhNyWLKNVLhpPJVqCUk=;
+        b=GByrCMWc/zkA6X4jD8YM8TlJFOZIQlkH8o93T4Hgz0Sv6mKJdijbQePBmorvU2QeRj
+         x6ANyI605TmsWpoyXobX7Ii/AA/Q3VJn28nH9eJ29PXVLvqvkHn8zHD+uh1lIWrmD90g
+         e8iVlD1yC8e6EWel6r2+8uTDl5Z1bj4OV1x7w=
+Content-Disposition: inline
 Sender: linux-hams-owner@vger.kernel.org
 List-ID: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="utf-8"; format="flowed"
+Content-Type: text/plain; charset="us-ascii"
 To: linux-hams <linux-hams@vger.kernel.org>
 
-http://hamradio.junglevision.com/callintl.patch	=09
+Hi everybody,
 
-This patch needs to sit another week before it's
-done, though it's basically working now.  This
-updates the 'call' program in ax25-apps to work
-with either IBM850 encoding, or UTF-8 encoding.
-This is versus ax25-apps-0.0.8-rc2
+I have just uploaded the version 1.3 of DBLog on
 
-Posting a link now just in case anyone has any
-philosophical issues with this.
+http://www.qsl.net/zp4kfx/Linux/DBLog/
 
-Call seems to support only a limited
-version of IBM850 that just included
-borders and German.  Output now is done with
-UTF8 mode, and I translate characters using
-the iconv function from IBM850 to UTF8.
-More of the IBM850 charset should be visible.
+NEWS:
 
-I tested the 850 character set with some of the
-schematic BBS messages that are sent regularly to
-packet.  I'm not sure if German input ever worked
-from call, but it should work now.  (Though this
-is not tested.)
+    --   Introduced DBCluster in alternative to 'xdx'. DBCluster allow to
+         select the cluster server from a large table and allows to spot
+         worked or heard stations.
 
-The program =EF=BD=93=E7=94=B0=EF=BD=92=EF=BD=94=EF=BD=93 by default in=
- IBM850 mode, but can be
-changed to UTF8 by using ~8 command in the program
-or by using -8 from the command line.
+   --   Integrated with WSJT 7 for weak signal modes. This needs a modified
+        version of wsjt.py available on the same site.
 
-I've tested to ensure that wide characters
-work correctly in UTF8, and I've checked Japanese
-myself for both input and output by entering
-Japanese characters into my BBS, and then
-reading back the messages.
+   --  Recognise the new 600m band.
 
-I did a few other small tweaks, like fixing the
-~command help to not glitch the screen so badly.
-I haven't looked at the irritating bug that causes
-the program to crash out when the window is
-resized.
+   --  Lots of bugs killed and improvements.   
+-------------------------------------------------------------------------------------------------------------------
 
---
-To unsubscribe from this list: send the line "unsubscribe linux-hams" i=
-n
-the body of a message to majordomo@vger.kernel.org
-More majordomo info at  http://vger.kernel.org/majordomo-info.html
+     * Group home page: http://groups.google.com/group/dblog-Linux-logger
+ 
+     * Group email address dblog-Linux-logger@googlegroups.com
+
+-----------------------------------------------------------------------------------------------------------------------
+
+DBLog is a logger program for Linux inspired to Logger32 and to N1MM_Logger.
+
+It works in harmony with fldigi  and with wsjt for operating digi-modes and
+weak signal modes.
+
+DBLog  is UTF-8 compliant and sensitive to the 'locale'. 
+
+It stores all QSO data's and QSL pictures  into the RDBM PostgreSQL.
+
+It uses cwdaemon to send CW code, hamlibs to control the radio and xdx
+or DBCluster to receive cluster spots.
+
+Can be used by other ham-radio programs as a logger-server (EME or other 
+digimodes as implemnted for wsjt)
+
+Has a Client/Server architecture, so multi-operators stations can log at the 
+same time into the same log.
+
+Beyond sources for GAMBAS2 ( http://gambas.sf.net ) there are available the 
+installation packages for Debian, OpenSuSE, Fedora, Mandriva, Ubuntu and 
+Slackware.
+It is also available an "Autotool" package.
+
+It is distributed under the GPL licence. 
+
+Bug reports and comments are welcome.
+
+73 de
+Pino ZP4KFX
+-- 
+Key ID: 0xF6768208 
+Key fingerprint = B16D 0A7C 5B29 A334 CE6A  71F6 EAF8 3D88 F676 8208
+Key server: hkp://wwwkeys.eu.pgp.net
