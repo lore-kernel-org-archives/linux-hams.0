@@ -1,119 +1,129 @@
-From: Ralf Baechle DL5RB <ralf@linux-mips.org>
-Subject: Re: Linux AX25 KISS driver for Kenwood D700
-Date: Tue, 29 Dec 2009 14:49:41 +0100
-Message-ID: <20091229134941.GA23742@linux-mips.org>
-References: <5abd436b0912171434g6bfa1c46r52cca684de4f7999@mail.gmail.com>
+From: "Jaime Robles" <jaime@robles.es>
+Subject: New version of KLog released 0.5.0/ Liberada una nueva 
+     =?iso-8859-1?Q?versi=F3n_de_KLog_-_0.5.0?=
+Date: Wed, 30 Dec 2009 15:10:25 +0100 (CET)
+Message-ID: <a6f5477dcf503bd8fd32c5914fb9ee4b.squirrel@correo.robles.es>
 Mime-Version: 1.0
 Content-Transfer-Encoding: QUOTED-PRINTABLE
 Return-path: <linux-hams-owner@vger.kernel.org>
-Content-Disposition: inline
-In-Reply-To: <5abd436b0912171434g6bfa1c46r52cca684de4f7999@mail.gmail.com>
 Sender: linux-hams-owner@vger.kernel.org
 List-ID: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="utf-8"
-To: Bill V WA7NWP <wa7nwp@gmail.com>
-Cc: linux-hams <linux-hams@vger.kernel.org>
+Content-Type: text/plain; charset="iso-8859-1"
+To: klog-users@lists.berlios.de
+Cc: kde-devel-es@mail.kde.org, linux-hams@vger.kernel.org, debian-hams@lists.debian.org, eadxnet@elistas.net, hamlinex@yahoogroups.com
 
-On Thu, Dec 17, 2009 at 02:34:47PM -0800, Bill V WA7NWP wrote:
 
-> Is this where the maintainers of the Linux KISS code would be found?
 
-Generic way of finding a maintainer for a piece of kernel code:
+(Versi=F3n en espa=F1ol al final)
 
- o look in the MAINTAINERS file in the root directory of the kernel sou=
-rce
-   tree
- o Look for email addresses in the source code in question itself.  Tha=
-t
-   would have yielded my name and address.
- o If still unsuccessful, look through the git source tree.
- o If you don't have git, dig it up on git web at http://git.kernel.org=
-;
-   in this particular case
-   http://git.kernel.org/?p=3Dlinux/kernel/git/torvalds/linux-2.6.git;a=
-=3Dhistory;f=3Ddrivers/net/hamradio/mkiss.c;h=3D7db0a1c3216c7b8dc86703a=
-c23074b9afbe82867;hb=3D6b7b284958d47b77d06745b36bc7f36dab769d9b
-   which will yield a list of people who last modified the the code or
-   approved changes to it - that are the Signed-off-by:, Reviewed-by:,
-   Tested-by: etc. headers at the bottom of commit messages.
+ I am  happy to announce that the release of 0.5.0 version of KLog is
+available.
 
->  A simple tweak would eliminate the possibility of some ASCI sequence=
+
+The mailing list of KLog is in  Klog-users@lists.berlios.de for discuss=
+ion
+about KLog, wishlist, bug report, ideas, suggestions tips on using, ...
+
+ The main language of the list if English.
+
+ Subscribe at:
+
+                  https://lists.berlios.de/mailman/listinfo/klog-users
+
+We also have a list for development:
+
+                  https://lists.berlios.de/mailman/listinfo/klog-devel
+
+
+ From the Changelog:
+
+December - 0.5.0
+- Migrated to Qt4.
+- Updated translations: SV by SM4ABE, DE by DL5PD, ES by EA4TV.
+- ZL2ACG joined the KLog team. Welcome and thank you Andrew!
+
+ KLog may have many bugs.
+ You can download KLog from::
+	http://jaime.robles.es/klog
+
+ You will find the tar.gz sources and the debian package.
+
+ You can see some screenshots in the web.
+
+ The KLog's new-releases email list is created using the addresses of
+people I have previously received emails from about KLog. Feel free to =
+ask
+me to remove your address if you don't want to be alerted of new KLog
+releases.
+
+ Thanks for your help and I hope you find KLog useful.
+
+Merry Christmast and Happy New Year.
+
+ 73
+ =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D
+ (Spanish version)
+
+ Me alegro de anunciaros que ya est=E1 disponible la versi=F3n 0.5.0 de=
+ KLog.
+
+La lista de KLog es ( Klog-users@lists.berlios.de) para charlar sobre
+KLog, pedir  funcionalidades, avisar de errores, ideas, sugerencias,
+trucos sobre  c=F3mo usarlo, ...
+
+ El lenguaje principal de la lista es el ingl=E9s.
+
+ Subscribete en:
+
+                  https://lists.berlios.de/mailman/listinfo/klog-users
+
+Tambi=E9n tenemos una lista para desarrollo:
+
+                  https://lists.berlios.de/mailman/listinfo/klog-devel
+
+ Del fichero Changelog vemos los cambios:
+
+Diciembre - 0.5.0
+- Migrado a Qt4.
+- Traducciones actualizadas: SV por SM4ABE, DE por DL5PD, ES por EA4TV.
+- ZL2ACG se ha unido al equipo de KLog. Bienvenido y gracias Andrew!
+
+KLog est=E1 disponible en ingl=E9s, espa=F1ol, portugu=E9s, portugu=E9s=
+ brasile=F1o,
+alem=E1n, serbio, gallego y sueco.
+
+ KLog puede tener a=FAn muchos errores y otras funciones por
+ implementar. Puedes descargar KLog de:
+	http://jaime.robles.es/klog
+
+ Encontrar=E1s las fuentes en tar.gz o el paquete de Debian.
+
+ Puedes ver capturas de pantalla en la web.
+
+
+ La lista de aviso de nuevas versiones de KLog la he ido creando con la=
 s
-> kicking the Kenwood D7 or D700 radios out of KISS mode...
->=20
-> We really need to feed this info back to Kenwood so they correctly fi=
-x
-> the D710.   I don't hold any hope in firmware updates for the D7/D700
-> so it seems tweaking the KISS generator is the best answer.
+direcciones de las personas que previamente me han enviado algo sobre
+KLog. Si prefieres que no te envie estos mensajes, avisame y quitar=E9 =
+tu
+direcci=F3n de la lista.
 
-I agree.
+ Gracias por tu ayuda y espero que KLog te resulte =FAtil.
+ 73
 
-Kenwood has a tradition of shipping substandard TNC implementations, se=
-e
-for example the TNC in the otherwise nice TH-D7 handheld.
+=46elices fiestas y pr=F3spero A=F1o Nuevo.
 
-> The 710 =E2=80=9Cbug=E2=80=9D is not a violation of the KISS protocol=
-=E2=80=A6it is the result
-> of trying to use the same serial port for both a TNC and a Front pane=
-l
-> control. The problem is when in KISS mode (which sends binary packets
-> =E2=80=9Cencapsulated in the KISS protocol=E2=80=9D  it is possible t=
-o have the
-> character sequence =E2=80=9CTC 0<Cr>=E2=80=9D  as binary or  characte=
-r data within the
-> KISS encapsulation. This sequence will be interpreted by the serial
-> port controller in the Control head of the D710 as =E2=80=9Cescape to=
- control
-> mode=E2=80=9D and which will switch the serial interface from TNC mod=
-e to
-> front panel control mode.  This can have disastrous affects when
-> trying to transfer binary files using KISS.
+--=20
+Un saludo,
+	Jaime Robles, EA4TV
+	jaime@robles.es
 
-If you can't speak normal KISS to the interface I very well call it a=20
-violation of the KISS protocol.  And it's a terribly, terribly lame one=
-=2E
-Reminds me of the modems taking "+++" in the data stream for a command=20
-but those vendors at least had the excuse of Hayes' patents.
+Visita:
+   http://jaime.robles.es
 
-> One solution would be to entice Kenwood to modify the firmware in the
-> control head to having entered the KISS protocol to ignore all mode
-> control commands including =E2=80=9CTC 0<Cr>=E2=80=9D. This would req=
-uire using the
-> standardized escape KISS sequence {0xC0, 0xFF, 0xC0} prior to any
-> control panel commands and then re enabling KISS to continue TNC
-> operation=E2=80=A6This gets tricky and is very likely to impact exist=
-ing
-> programs that now work.
 
-The solution which Hayes has a patent on was to only accept the +++ esc=
-ape
-to command mode sequence if it is framed by a short delay.  Thankfully
-Wikipedia has an article coverting this in details at
-http://en.wikipedia.org/wiki/Time_Independent_Escape_Sequence
-
-Note the expiry date of the patent so the approach should be possible f=
-or
-a modem even in the united patent hell states of america.  Still a work=
-around
-for existing firmware is needed.
-
-> The solution we used and which appears to work well and is solid is t=
-o
-> escape the =E2=80=9CC=E2=80=9D character.  So when any data is sent t=
-o the TNC in KISS
-> mode if there is an ASCII =E2=80=9CC=E2=80=9D it is replaced by the s=
-equence <0xDB>=E2=80=9DC=E2=80=9D
-> which essentially escapes the =E2=80=9CTC 0<Cr>=E2=80=9D sequence. Th=
-e KISS protocol
-> (in the D710=E2=80=99s KISS TNC implementation) removes the <0xDB> wh=
-ich is
-> the frame escape so no modification of the transmitted data stream is
-> actually made. Thanks to Peter Woods for figuring this out.
-
-It would be easy enough to add this to the escaping code in the mkiss.c
-driver in the kernel - but I can't test this.
-
-  Ralf
 --
 To unsubscribe from this list: send the line "unsubscribe linux-hams" i=
 n
