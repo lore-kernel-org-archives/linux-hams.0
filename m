@@ -1,43 +1,38 @@
-From: John Ronan <jronan@tssg.org>
-Subject: Re: Linux AX25 KISS driver for Kenwood D700
-Date: Wed, 30 Dec 2009 21:59:25 +0000
-Message-ID: <044EE8F7-AAE2-4A1C-810F-F687191162A1@tssg.org>
-References: <5abd436b0912171434g6bfa1c46r52cca684de4f7999@mail.gmail.com> <20091229134941.GA23742@linux-mips.org>
-Mime-Version: 1.0 (Apple Message framework v1077)
-Content-Transfer-Encoding: 8BIT
+From: Ralf Baechle <ralf@linux-mips.org>
+Subject: linux-ax25.org outage
+Date: Thu, 31 Dec 2009 09:06:54 +0100
+Message-ID: <20091231080654.GA15689@linux-mips.org>
+Mime-Version: 1.0
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <20091229134941.GA23742@linux-mips.org>
+Content-Disposition: inline
 Sender: linux-hams-owner@vger.kernel.org
 List-ID: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
-To: Ralf Baechle DL5RB <ralf@linux-mips.org>
-Cc: Bill V WA7NWP <wa7nwp@gmail.com>, linux-hams <linux-hams@vger.kernel.org>
+Content-Transfer-Encoding: 7bit
+To: linux-hams@vger.kernel.org
 
+On December 22 linux-ax25.org's uplink failed.  Despite repeated promises
+the company providing the copper (Bloody Telecom) has not managed to fix
+the equipment; they last promised _yesterday_ to fix things 24/12/09.
+Well done ...
 
-On 29 Dec 2009, at 13:49, Ralf Baechle DL5RB wrote:
-> 
-> It would be easy enough to add this to the escaping code in the mkiss.c
-> driver in the kernel - but I can't test this.
-> 
->  Ralf
-> --
-> To unsubscribe from this list: send the line "unsubscribe linux-hams" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at  http://vger.kernel.org/majordomo-info.html
+I've re-routed the IP address space to another site but being absent I
+unfortunately don't have access to the current data or backups of
+linux-ax25.org, so the temporary site is running a 3 month old backup.
+This means:
 
+ o If you want to edit the wiki keep in mind that all wiki edits will be
+   lost once the actual site is back.  It's just too painful to transplant
+   edits from one instance of mediawiki to another.
+ o Think if you really want to run a "cvs update".  Cvs being stupid might
+   actually perform a downgrade.  This also means we won't do any CVS
+   checkins until old machine is back.
 
-Hi,
+   If there is interest I can put a git conversion of the CVS repo online.
+   It is newer than the CVS - and won't do silly stuff like downgrading
+   just because an upstream repo happens to be out of date.  We should
+   probably migrate anyway.
 
-I've transferred a lot of data TCP/IP with the TM-D710E in kiss mode and it's never given me any trouble.   
-Has anyone got a 'test file' that I could try to see if I can trigger it?
+Cheers,
 
-Cheers
-John
-
-
---
-John Ronan <jronan@tssg.org>, +353-51-302938
-Telecommunications Software &  Systems Group,  http://www.tssg.org
-
-
-
+  Ralf
