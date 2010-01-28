@@ -1,106 +1,57 @@
-From: Bob Nielsen <n7xy@clearwire.net>
+From: pa2hbn <pa2hbn@gmail.com>
 Subject: Re: Puff microwave CAD software now under GPL
-Date: Wed, 27 Jan 2010 17:48:25 -0800
-Message-ID: <50365CBC-F31C-404F-8210-8616C4DD19F2@clearwire.net>
-References: <C78610DE.2B477%teners@bh90210.net>
-Mime-Version: 1.0 (Apple Message framework v753.1)
+Date: Thu, 28 Jan 2010 06:31:20 +0100
+Message-ID: <4B612128.2040505@gmail.com>
+References: <20100127214722.GK21978@cs.utwente.nl>
+Mime-Version: 1.0
 Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <C78610DE.2B477%teners@bh90210.net>
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from
+         :user-agent:mime-version:to:cc:subject:references:in-reply-to
+         :content-type:content-transfer-encoding;
+        bh=2cFKCnDqywjxdkeGFtqrTOTWutjoeRvxr4m45yDmGEI=;
+        b=XplNyRc0wTEzdh0gYWVzNslo3K6ZSKlNY9Vv2I9zbXQP7owZ2QfY7jOfQflM5Mj6ev
+         FSq+aXxUtK+ybqp+EtEABgs7AlvAIMsDPCY1Wfj5GNQnKoMkwtfN6oiR1dzuxCsDdAeu
+         PVRtEMvxtiRN6ZKRar7cBmee6LjEeiRU9JcPk=
+In-Reply-To: <20100127214722.GK21978@cs.utwente.nl>
 Sender: linux-hams-owner@vger.kernel.org
 List-ID: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"; delsp="yes"; format="flowed"
-To: "IT2 Stuart Blake Tener, USNR" <teners@bh90210.net>
-Cc: "linux-hams@vger.kernel.org HAMs" <linux-hams@vger.kernel.org>
+Content-Type: text/plain; charset="us-ascii"; format="flowed"
+To: linux-hams@vger.kernel.org, KC8LDO <kc8ldo@arrl.net>
+Cc: Hans PA2HBN <pa2hbn@veron.nl>
 
-Fink lists a couple of available Pascal compilers for OS X (fpc,  
-gpc).  I know absolutely nothing about Pascal, but it shouldn't hurt  
-to give it a try.
+Hello Pieter-Tjerk,
+Thanks for this good initiative.
+I have only a little problem, I don't get the pictures in the .pdf manual.
+(neither under windows nor under Linux)
+Hope you can help.
 
-73, Bob N7XY
+Best 73,
+Hans Boon, pa2hbn.
 
-On Jan 27, 2010, at 2:48 PM, IT2 Stuart Blake Tener, USNR wrote:
-
-> ALCON,
+Pieter-Tjerk de Boer wrote:
+> Hello,
 >
->     Very interesting news to hear! However, I am curious, what  
-> would be the
-> level of difficulty and likely probability of seeing this ported to  
-> MacOS?
+> For many years, radio amateurs have been using a nice MS-DOS program
+> called 'puff' for designing microwave circuits.
+> It was not expensive, and came with source code, which with some
+> effort could also be compiled on Linux; instructions for that have
+> been on my website for a number of years.
 >
+> Recently, Leland C. Scott, KC8LDO, contacted the authors of Puff
+> and they agreed to release the code under the GPLv3 license.
+> They also gave us a PDF file of the manual.
 >
+> Thus, we can now distribute a complete Puff package as free software,
+> and ready to compile on Linux. It is available on my website:
+>   http://wwwhome.cs.utwente.nl/~ptdeboer/ham/puff/
 >
-> V/R and 73,
->
-> Stuart, N3GWG
->
->
-> On 1/27/10 2:47 PM, "Pieter-Tjerk de Boer" <ptdeboer@cs.utwente.nl>  
-> wrote:
->
->> Hello,
->>
->> For many years, radio amateurs have been using a nice MS-DOS program
->> called 'puff' for designing microwave circuits.
->> It was not expensive, and came with source code, which with some
->> effort could also be compiled on Linux; instructions for that have
->> been on my website for a number of years.
->>
->> Recently, Leland C. Scott, KC8LDO, contacted the authors of Puff
->> and they agreed to release the code under the GPLv3 license.
->> They also gave us a PDF file of the manual.
->>
->> Thus, we can now distribute a complete Puff package as free software,
->> and ready to compile on Linux. It is available on my website:
->>   http://wwwhome.cs.utwente.nl/~ptdeboer/ham/puff/
->>
->> 73, Pieter-Tjerk, PA3FWM
->> --
->> To unsubscribe from this list: send the line "unsubscribe linux- 
->> hams" in
->> the body of a message to majordomo@vger.kernel.org
->> More majordomo info at  http://vger.kernel.org/majordomo-info.html
->
->
->
->
-> -- 
->
-> Very Respectfully,
->
-> IT2 Stuart Blake Tener, USNR
-> Las Vegas, NV / Beverly Hills, CA / Philadelphia, PA / Washington, DC
-> email: teners@bh90210.net (also carbon copies to my Blackberry)
->
-> phone: +(1) 310.358.0202 (Beverly Hills, CA, forwards to mobile phone)
-> phone: +(1) 215.338.6005 (Philadelphia, PA, voice mail only)
-> E-Fax: +(1) 928.437.4505 (Telecopier, fax to email gateway)
->
-> Amateur Radio Call Sign: N3GWG (Extra) / Marine Radio Operator  
-> Permit (MROP)
->
-> Government/Military email information:
->
-> NIPRNET: stuart.tener@navy.mil (forwards to "us.army.mil" address  
-> below)
-> NIPRNET: stuart.b.tener@us.army.mil
->
-> Confidentiality Notice: This e-mail message, including any  
-> attachments, is
-> for the sole use of the intended recipient(s) and may contain  
-> unclassified
-> proprietary and/or privileged information. Any unauthorized review,  
-> use,
-> disclosure or distribution is prohibited. If you are not the intended
-> recipient, please contact the sender by reply e-mail and destroy  
-> all copies
-> of the originative message.
->
->
->
+> 73, Pieter-Tjerk, PA3FWM
 > --
-> To unsubscribe from this list: send the line "unsubscribe linux- 
-> hams" in
+> To unsubscribe from this list: send the line "unsubscribe linux-hams" in
 > the body of a message to majordomo@vger.kernel.org
 > More majordomo info at  http://vger.kernel.org/majordomo-info.html
+>   
 
