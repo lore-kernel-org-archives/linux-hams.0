@@ -1,8 +1,8 @@
 From: "Jaime Robles" <jaime@robles.es>
-Subject: New version of KLog released 0.5.2/ Liberada una nueva      
-     =?iso-8859-1?Q?versi=F3n_de_KLog_-_0.5.2?=
-Date: Sat, 27 Feb 2010 00:12:28 +0100 (CET)
-Message-ID: <ca47610565ec1582ac0546036db4785e.squirrel@correo.robles.es>
+Subject: New version of KLog released 0.5.3/ Liberada una nueva 
+     =?iso-8859-1?Q?versi=F3n_de_KLog_-_0.5.3?=
+Date: Sun, 28 Feb 2010 20:03:40 +0100 (CET)
+Message-ID: <886a822b6fd9cbafb21cb72da4f9b7aa.squirrel@correo.robles.es>
 Mime-Version: 1.0
 Content-Transfer-Encoding: QUOTED-PRINTABLE
 Return-path: <linux-hams-owner@vger.kernel.org>
@@ -12,11 +12,17 @@ Content-Type: text/plain; charset="iso-8859-1"
 To: klog-users@lists.berlios.de
 Cc: kde-devel-es@mail.kde.org, linux-hams@vger.kernel.org, debian-hams@lists.debian.org, eadxnet@elistas.net, hamlinex@yahoogroups.com
 
+
 (Versi=F3n en espa=F1ol al final)
 
- I am  happy to announce that the release of 0.5.2 version of KLog is
+ I am  happy to announce that the release of 0.5.3 version of KLog is
 available.
 
+After the release of 0.5.2 (yesterday) I found a bug and I considered t=
+o
+release a new version of KLog as may include data lost if the operator =
+was
+not looking carefully the GUI while using KLog.
 
 The mailing list of KLog is in  Klog-users@lists.berlios.de for discuss=
 ion
@@ -35,14 +41,9 @@ We also have a list for development:
 
  From the Changelog:
 
-=46ebruary-2010 - 0.5.2
-- Fixed a bug that causes a crash when connectiong to DXCluster. (bug
-#016653)
-- Added a very basic Satellite support.
-- Removed the Freq LCD and added two new editable widgets: Freq TX and
-=46req RX. (bug #016609)
-- Added again the entity count of /M stations.
-
+=46ebruary-2010  0.5.3
+- Fixed a bug that caused modified QSO not being updated.
+- Fixed a bug in the way the band & mode combobox managed the data.
 
  KLog may have many bugs.
  You can download KLog from::
@@ -70,6 +71,13 @@ releases.
  Me alegro de anunciaros que ya est=E1 disponible la versi=F3n 0.5.2 de=
  KLog.
 
+Tras la liberaci=F3n de la versi=F3n 0.5.2 (ayer) encontr=E9 un error y
+consider=E9 necesario sacar una nueva versi=F3n de KLog porque con la a=
+nterior
+podr=EDa haber p=E9rdida de datos si el operador no miraba con atenci=F3=
+n la
+interfaz gr=E1fica mientras usaba KLog.
+
 La lista de KLog es ( Klog-users@lists.berlios.de) para charlar sobre
 KLog, pedir  funcionalidades, avisar de errores, ideas, sugerencias,
 trucos sobre  c=F3mo usarlo, ...
@@ -86,15 +94,10 @@ Tambi=E9n tenemos una lista para desarrollo:
 
  Del fichero Changelog vemos los cambios:
 
-=46ebrero-2010 - 0.5.2
-- Solucionado un error que hac=EDa que KLog muriera al conectar al Clus=
-ter.
-(bug #016653)
-- A=F1adido soporte b=E1sico de sat=E9lite.
-- Eliminado el LCD de frecuencia y a=F1adidos dos widgets editables: Fr=
-ec TX
-y freq RX. (bug #016609)
-- A=F1adido de nuevo que se cuente la entidad en estaciones /M.
+=46ebrero-2010  0.5.3
+- Corregido un fallo que hac=EDa que los QSO modificados no se actualiz=
+aran.
+- Corregido un fallo en la gesti=F3n del selector de modo y banda.
 
 KLog est=E1 disponible en ingl=E9s, espa=F1ol, portugu=E9s, portugu=E9s=
  brasile=F1o,
@@ -127,8 +130,6 @@ Un saludo,
 
 Visita:
    http://jaime.robles.es
-
-
 
 
 --
