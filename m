@@ -1,53 +1,41 @@
-From: "Mike McCarthy, W1NR" <lists@w1nr.net>
-Subject: Re: USB converters and old hardware
-Date: Thu, 08 Apr 2010 06:20:56 -0400
-Message-ID: <4BBDAE08.9010507@w1nr.net>
-References: <201004081508.45770.phillor@telstra.com>
+From: Richard Stearn <richard@rns-stearn.demon.co.uk>
+Subject: AX.25 in Wireshark (nee Ethereal)
+Date: Fri, 09 Apr 2010 22:50:36 +0100
+Message-ID: <4BBFA12C.3000002@rns-stearn.demon.co.uk>
 Mime-Version: 1.0
 Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <201004081508.45770.phillor@telstra.com>
 Sender: linux-hams-owner@vger.kernel.org
 List-ID: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"
-To: Phil <phillor@telstra.com>
-Cc: linux-hams@vger.kernel.org
+Content-Type: text/plain; charset="us-ascii"; format="flowed"
+To: linux-hams@vger.kernel.org
 
-There are many PCI and PCI-e cards with both types of ports that respond
-like "real" serial and parallel ports. I generally buy the cheapest ones
-I can find at mwave.com (they all seem to use the same chip) and have no
-problems. No go for laptops. Best solution I have seen for laptops are
-the legacy docking stations for the Dell Latitude line.
+For those that are interested, I have ported my patches of 2007
+for wireshark-0.99.5 to wireshark-1.2.7
 
-Mike, W1NR
+The patch and implementation instructions can be found here:
+   http://www.rns-stearn.demon.co.uk/ax25.wireshark.2010-04-10/
 
-Phil wrote:
-> Thank you for reading this.
->
-> I have two old hardware items that I would like to put back into service.
->
-> The first is a Baycom style modem that of course does not work with USB to 
-> serial converters because of the non-standard way in which the modem 
-> interacts with the serial port. An acquaintance told me that genuine USB to 
-> serial converters are available but a Google search does not indicate this to 
-> be true. Can anyone suggest how I might be able to use this modem again?
->
-> The second question is more programming related and concerns a hardware 
-> item that used to operate via a parallel port. I thought a USB to parallel 
-> converter would easily solve this problem but it does not. The converter 
-> does allow me to use an old printer and it does cause /dev/parport0 to be 
-> generated. The problem is that ioctl(fd,PPCLAIM) now causes the following 
-> error message to be displayed:
->
-> "Parport claim: No such device or address" 
->
-> This indicates to me that the parallel converter does what it is intended to 
-> do, allow the use of old printers, but nothing else. Is there an alternative 
-> way to programme such a port? I've played with the outport C instruction 
-> briefly but I'm unsure of the base address of the port. Are genuine serial and 
-> parallel ports available for newer computers?
->
-> I'm reluctant to build new gear when the old stuff works perfectly.
->
->   
+What is in the patch:
+	Correct handling of the KISS header in Linux.
+	Correct handling of the BPQ encapsulation.
+	AX.25 dissection
+	NetROM dissection
+	Recognition of FlexNet
+	TCP/IP dissection, actually a handoff to the TCP/IP dissector
+	ROSE dissection, actually a handoff to the X.25 dissector
+	Decoding from the No Layer 3 PID of:
+		DX cluster
+		APRS
+		
+Wanted:
+	Captures of:
+		FlexNet
+		Anything that does not decode correctly.
+
+Thank you for all those who contributed in 2005, 2006 & 2007.
+
+-- 
+73 de g1sog
+	Richard
 
