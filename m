@@ -1,39 +1,73 @@
-From: "Bradley D. Thornton" <Bradley@NorthTech.US>
-Subject: Re: Welcome to linux-hams
-Date: Sat, 10 Apr 2010 01:21:54 -0700
-Message-ID: <4BC03522.2070408@NorthTech.US>
-References: <S936242AbYCSX7m/20080319235943Z+449@vger.kernel.org>
+From: Richard Stearn <richard@rns-stearn.demon.co.uk>
+Subject: Re: AX.25 in Wireshark (nee Ethereal)
+Date: Sat, 10 Apr 2010 10:02:55 +0100
+Message-ID: <4BC03EBF.3010701@rns-stearn.demon.co.uk>
+References: <4BBFA12C.3000002@rns-stearn.demon.co.uk>
 Mime-Version: 1.0
 Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <S936242AbYCSX7m/20080319235943Z+449@vger.kernel.org>
+In-Reply-To: <4BBFA12C.3000002@rns-stearn.demon.co.uk>
 Sender: linux-hams-owner@vger.kernel.org
 List-ID: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"
+Content-Type: text/plain; charset="us-ascii"; format="flowed"
 To: linux-hams@vger.kernel.org
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Ok, Ok, I am posting in reply to my own post.  A number have asked if 
+the patch is being offered to the Wireshark developers, the answer is 
+yes but...
 
-Hey I haven't received an email from this list in over two years now.
+I proposed the 2007 patch to the Wireshark developers in 2007 and
+it was declined at that time for a number of reasons.
 
-Is this list still active?
+Primarily because the Linux implementation of AX.25 has a "KISS"
+header byte thus is not true AX.25 (protocol 3), I had handled
+this in the AX.25 dissector. I had done the same with the BPQ
+ethernet encapsulation.  So the developers for libpcap, tcpdump
+& wireshark declined to accept that patches at that time and in
+that form.  I can see their point and do not have a problem with
+that point of view.
 
-- -- 
-Bradley D. Thornton
-Manager Network Services
-NorthTech Computer
-TEL: +1.760.666.2703  (US)
-TEL: +44.702.405.1909 (UK)
-http://NorthTech.US
+The libpcap maintainers did add a new protocol
+     DLT_AX25_KISS "AX.25 with KISS header"
+to libpcap, this went into libpcap late in the 0.9.x series and 
+overcomes the problems with having an unidentified protocol to
+handle.  I then had to reimplement the dissectors so I had a
+KISS dissector that could handle the KISS header and then hand the
+encapsulated AX.25 frame on to an AX.25 dissector which in turn can
+hand on any encapsulated higher protocol to the appropriate dissector.
 
------BEGIN PGP SIGNATURE-----
+Unfortunately I have been involved in family affairs for the last 3
+years (the passing of my parents, Mum, Jean G7DKZ and Dad, Bill G0MLT)
+so have had no time to follow up on the work.
 
-iQEcBAEBAgAGBQJLwDUiAAoJEE1wgkIhr9j3kqoH/3aFRXPOZER0bi8EaXLSOW1H
-UALG49/7wBD1Kn/tmyJbeeaZbZaCmbUZXR7ZDA8MA0g2H3svnrR6f7917jgWRZey
-Pw53cOxm2xBZvXaHC1YTdvzMfKPlPpuuLfZtw4eRhshlIl9Z4fmjNpamkTDhUkT5
-VQXO7gV6LULI/nqZJNpBrTpl5BYJXm5gmaQi6G1gRY6Cs/jZXOblYrHTm1SnfGsF
-HRXZZEPD05D3QsD7VpEVRsua3SGFbhCTyaWedQ63qp0S/8LYK/YNHNJL9nmZRhQY
-w4hapU/PlD6myl/6oVP26YWtyIBmbFu9jVbHcbINnMiw5b2YJY3mWX1GdrH6rAw=
-=P+MR
------END PGP SIGNATURE-----
+I have just (in the last week) returned to the issue and have
+re-implemented the patch to handle the various "protocols" correctly.
+I will be attempting to get the patch accepted by the Wireshark
+developers, but in small pieces, not the whole patch as one entity.
+
+Even so parts such as FlexNet, DX cluster & APRS may not be accepted,
+FlexNet because I have no spec and the current implementation only
+recognises FlexNet rather than doing a detailed dissection, DX cluster
+and APRS because they are not protocols, more a way of using the No
+Layer 3 protocol PID payload.
+
+I have published this patch so that those who can apply the patch and
+recompile can have the benefit while I get the patch into Wireshark
+piece by piece.  I can also benefit by the patch being used and hence
+the bugs found.
+
+So, please if you can recompile, do so, and use the patch, I no longer
+have a working Packet system and thus am dependant on those that do, to
+use the code and thus test it.  Also my Packet system was a Linux box,
+all my captures are from that system, the code needs to "see" packets
+from other systems.
+
+I would also like to know who does recompile to use the patch, so if
+you do recompile please drop me an email, via the list or direct, I
+do not mind.  Knowing the number who do may be useful when talking to
+the Wireshark developers.
+
+-- 
+73 de g1sog
+	Richard
+
