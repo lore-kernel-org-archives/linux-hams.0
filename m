@@ -1,75 +1,65 @@
-From: "IT2 Stuart Blake Tener, USNR" <teners@bh90210.net>
-Subject: Re: AX.25 in Wireshark (nee Ethereal)
-Date: Sun, 11 Apr 2010 16:13:16 -0400
-Message-ID: <20100411161316.20943begrorq3wkk@mgtmail.com>
-References: <4BBFA12C.3000002@rns-stearn.demon.co.uk>
+From: Stef Daniels VK5HSX <vk5hsx@wia.org.au>
+Subject: Re: Linux flavor ?
+Date: Mon, 12 Apr 2010 16:20:29 +0930
+Message-ID: <4BC2C2B5.8060904@wia.org.au>
+References: <S936242AbYCSX7m/20080319235943Z+449@vger.kernel.org> <4BC03522.2070408@NorthTech.US> <0c5901cad99e$34fa4ec0$9eeeec40$@net>
+Reply-To: vk5hsx@wia.org.au
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7BIT
+Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <4BBFA12C.3000002@rns-stearn.demon.co.uk>
-Content-Disposition: inline
+In-Reply-To: <0c5901cad99e$34fa4ec0$9eeeec40$@net>
 Sender: linux-hams-owner@vger.kernel.org
 List-ID: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"; delsp="Yes	format=flowed"
-To: Richard Stearn <richard@rns-stearn.demon.co.uk>
-Cc: linux-hams@vger.kernel.org
+Content-Type: text/plain; charset="us-ascii"; format="flowed"
+To: Randall <rkkennard@cox.net>
+Cc: "'Bradley D. Thornton'" <Bradley@NorthTech.US>, linux-hams@vger.kernel.org
 
-Mr. Stearn,
+Hi Randall..
 
-Is it reasonable to presume that these patches shall be or have  
-already been submitted to the source tree for wireshark, such that at  
-some point these patches will be inclusive to the standard wireshark  
-source code?
+Randall wrote:
+> 
+> I just picked up a CF-M34 866Mhz 512mb RAM.
+> 
+> I'm wondering what would be the best version of Linux to install, either a
+> Linux only or a dual boot with Xp or W2K system.
+> 
+> It would have to be wireless capable for internet use.
+> I have a copy of Xubuntu but haven't used it yet.
+> 
+> I've used SuSe, Ubuntu and Debian before, some years ago, but newer versions
+> probably take more horse power.
 
 
-V/R,
+With regards to legacy type hardware, some options for 
+the system include:
 
-Sutart, N3GWG
+Puppy Linux 
+http://distrowatch.com/table.php?distribution=puppy
 
+Ubuntu Lite (U-Lite) 
+http://distrowatch.com/table.php?distribution=ulite
+using Ubuntu
+TinyMe http://distrowatch.com/table.php?distribution=tinyme
+based on Unity Linux.
 
-Quoting "Richard Stearn" <richard@rns-stearn.demon.co.uk>:
+Zenwalk http://distrowatch.com/table.php?distribution=zenwalk
+Vector http://distrowatch.com/table.php?distribution=vector
+both based on Slackware Linux.
 
-> For those that are interested, I have ported my patches of 2007
-> for wireshark-0.99.5 to wireshark-1.2.7
->
-> The patch and implementation instructions can be found here:
->   http://www.rns-stearn.demon.co.uk/ax25.wireshark.2010-04-10/
->
-> What is in the patch:
-> 	Correct handling of the KISS header in Linux.
-> 	Correct handling of the BPQ encapsulation.
-> 	AX.25 dissection
-> 	NetROM dissection
-> 	Recognition of FlexNet
-> 	TCP/IP dissection, actually a handoff to the TCP/IP dissector
-> 	ROSE dissection, actually a handoff to the X.25 dissector
-> 	Decoding from the No Layer 3 PID of:
-> 		DX cluster
-> 		APRS
->
-> Wanted:
-> 	Captures of:
-> 		FlexNet
-> 		Anything that does not decode correctly.
->
-> Thank you for all those who contributed in 2005, 2006 & 2007.
->
-> -- 
-> 73 de g1sog
-> 	Richard
->
-> --
-> To unsubscribe from this list: send the line "unsubscribe linux-hams" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at  http://vger.kernel.org/majordomo-info.html
->
-
+There as several that can be used on older hardware, it 
+just depends on flavour or version of linux the distro is 
+based on.
 
 
 -- 
-IT2 Stuart Blake Tener, USNR, N3GWG (Extra), MROP
-Beverly Hills, CA / Las Vegas, NV / Philadelphia, PA / Washington, DC
-mobile: (310) 358-0202
-Nextel: 124*233172*14 (direct connect)
-e-mail: teners@bh90210.net
+Regards,
 
+Stef Daniels
+VK5HSX Amateur Station
+Adelaide, Sth Australia.
+
+Debian GNU\Linux User 
+Website: http://www.au.debian.org
+---------------------------------------------------------------
+"The optimist proclaims that we live in the best of all
+possible worlds.  The pessimist fears this is true."
