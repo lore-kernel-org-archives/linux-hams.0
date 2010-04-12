@@ -1,64 +1,64 @@
-From: "Mike McCarthy, W1NR" <lists@w1nr.net>
+From: Jeff Laughlin <jeff.laughlin@gmail.com>
 Subject: Re: Linux flavor ?
-Date: Mon, 12 Apr 2010 08:15:15 -0400
-Message-ID: <4BC30ED3.5000808@w1nr.net>
-References: <S936242AbYCSX7m/20080319235943Z+449@vger.kernel.org> <4BC03522.2070408@NorthTech.US> <0c5901cad99e$34fa4ec0$9eeeec40$@net> <4BC2C2B5.8060904@wia.org.au>
+Date: Mon, 12 Apr 2010 08:59:31 -0400
+Message-ID: <y2u8ea83f41004120559gb59f0ed6rf664516d67a235e5@mail.gmail.com>
+References: <S936242AbYCSX7m/20080319235943Z+449@vger.kernel.org>
+	 <4BC03522.2070408@NorthTech.US> <0c5901cad99e$34fa4ec0$9eeeec40$@net>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <4BC2C2B5.8060904@wia.org.au>
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:received:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=DSUuIQkqpa+Ti9IAuwWk5GwxE9LBQlmqolNuvTZYFic=;
+        b=VyJbQ68HsJwWogsHSnKpl+3+8z3Cy4zQuDKo6fmLf+eSfe97D2fobAFf688rejimX2
+         N4GLxoEJ9fZ1aR/KkKh/9o2evxGyDdiUFtBUIUDinUtw1SlH8+n+0lZScMjf/mQ9XvAR
+         HOxYpQaD4uE8nGKVdKnPBI0bUb/n/oOWHLefw=
+In-Reply-To: <0c5901cad99e$34fa4ec0$9eeeec40$@net>
 Sender: linux-hams-owner@vger.kernel.org
 List-ID: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"
-To: vk5hsx@wia.org.au
-Cc: linux-hams@vger.kernel.org
+Content-Type: text/plain; charset="iso-8859-1"
+To: Randall <rkkennard@cox.net>
+Cc: "Bradley D. Thornton" <Bradley@northtech.us>, linux-hams@vger.kernel.org
 
-I do a lot of beta testing of the latest distros from SuSE and run them
-on a 1000 MHz P3 with 1GB of RAM. I also run the latest SuSE dual boot
-with XP on a 1000 MHz laptop with 512 MB and don't have any issues at
-all. W2K runs WAY too slow compared with XP. Just load XP first. Linux
-will take it from there.
-The biggest issue I had with my laptop was the BIOS won't handle a hard
-drive larger than 120 GB. Performance with Linux is not an issue. You
-just won't be able to do the fancy 3D graphics.
+I'm running full blown Ubuntu with Gnome desktop on a similar system,
+a 1ghz celeron-m with 512mb. I find the performance to be acceptable
+for light web browsing, openoffice, compiling, etc. If I open too much
+stuff at once then obviously it starts swapping; that's usually my cue
+to close a few windows.
 
-Mike, W1NR
-
-Stef Daniels VK5HSX wrote:
-> Hi Randall..
->
-> Randall wrote:
->>
->> I just picked up a CF-M34 866Mhz 512mb RAM.
->>
->> I'm wondering what would be the best version of Linux to install,
->> either a
->> Linux only or a dual boot with Xp or W2K system.
->>
->> It would have to be wireless capable for internet use.
->> I have a copy of Xubuntu but haven't used it yet.
->>
->> I've used SuSe, Ubuntu and Debian before, some years ago, but newer
->> versions
->> probably take more horse power.
+On Sun, Apr 11, 2010 at 1:41 PM, Randall <rkkennard@cox.net> wrote:
 >
 >
-> With regards to legacy type hardware, some options for the system
-> include:
+> I just picked up a CF-M34 866Mhz 512mb RAM.
 >
-> Puppy Linux http://distrowatch.com/table.php?distribution=puppy
+> I'm wondering what would be the best version of Linux to install, eit=
+her a
+> Linux only or a dual boot with Xp or W2K system.
 >
-> Ubuntu Lite (U-Lite) http://distrowatch.com/table.php?distribution=ulite
-> using Ubuntu
-> TinyMe http://distrowatch.com/table.php?distribution=tinyme
-> based on Unity Linux.
+> It would have to be wireless capable for internet use.
 >
-> Zenwalk http://distrowatch.com/table.php?distribution=zenwalk
-> Vector http://distrowatch.com/table.php?distribution=vector
-> both based on Slackware Linux.
+> I have a copy of Xubuntu but haven't used it yet.
 >
-> There as several that can be used on older hardware, it just depends
-> on flavour or version of linux the distro is based on.
+> I've used SuSe, Ubuntu and Debian before, some years ago, but newer v=
+ersions
+> probably take more horse power.
 >
+> --
+> To unsubscribe from this list: send the line "unsubscribe linux-hams"=
+ in
+> the body of a message to majordomo@vger.kernel.org
+> More majordomo info at =A0http://vger.kernel.org/majordomo-info.html
 >
 
+
+
+--=20
+73 de n1ywb
+--
+To unsubscribe from this list: send the line "unsubscribe linux-hams" i=
+n
+the body of a message to majordomo@vger.kernel.org
+More majordomo info at  http://vger.kernel.org/majordomo-info.html
