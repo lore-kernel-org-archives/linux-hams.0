@@ -1,64 +1,46 @@
-From: Jeff Laughlin <jeff.laughlin@gmail.com>
-Subject: Re: Linux flavor ?
-Date: Mon, 12 Apr 2010 08:59:31 -0400
-Message-ID: <y2u8ea83f41004120559gb59f0ed6rf664516d67a235e5@mail.gmail.com>
-References: <S936242AbYCSX7m/20080319235943Z+449@vger.kernel.org>
-	 <4BC03522.2070408@NorthTech.US> <0c5901cad99e$34fa4ec0$9eeeec40$@net>
+From: walter harms <wharms@bfs.de>
+Subject: Re: USB converters and old hardware
+Date: Tue, 13 Apr 2010 16:42:00 +0200
+Message-ID: <4BC482B8.5020500@bfs.de>
+References: <201004081508.45770.phillor@telstra.com> <4BBDAE08.9010507@w1nr.net> <201004091109.05660.phillor@telstra.com>
+Reply-To: wharms@bfs.de
 Mime-Version: 1.0
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:received:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=DSUuIQkqpa+Ti9IAuwWk5GwxE9LBQlmqolNuvTZYFic=;
-        b=VyJbQ68HsJwWogsHSnKpl+3+8z3Cy4zQuDKo6fmLf+eSfe97D2fobAFf688rejimX2
-         N4GLxoEJ9fZ1aR/KkKh/9o2evxGyDdiUFtBUIUDinUtw1SlH8+n+0lZScMjf/mQ9XvAR
-         HOxYpQaD4uE8nGKVdKnPBI0bUb/n/oOWHLefw=
-In-Reply-To: <0c5901cad99e$34fa4ec0$9eeeec40$@net>
+In-Reply-To: <201004091109.05660.phillor@telstra.com>
 Sender: linux-hams-owner@vger.kernel.org
 List-ID: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="iso-8859-1"
-To: Randall <rkkennard@cox.net>
-Cc: "Bradley D. Thornton" <Bradley@northtech.us>, linux-hams@vger.kernel.org
-
-I'm running full blown Ubuntu with Gnome desktop on a similar system,
-a 1ghz celeron-m with 512mb. I find the performance to be acceptable
-for light web browsing, openoffice, compiling, etc. If I open too much
-stuff at once then obviously it starts swapping; that's usually my cue
-to close a few windows.
-
-On Sun, Apr 11, 2010 at 1:41 PM, Randall <rkkennard@cox.net> wrote:
->
->
-> I just picked up a CF-M34 866Mhz 512mb RAM.
->
-> I'm wondering what would be the best version of Linux to install, eit=
-her a
-> Linux only or a dual boot with Xp or W2K system.
->
-> It would have to be wireless capable for internet use.
->
-> I have a copy of Xubuntu but haven't used it yet.
->
-> I've used SuSe, Ubuntu and Debian before, some years ago, but newer v=
-ersions
-> probably take more horse power.
->
-> --
-> To unsubscribe from this list: send the line "unsubscribe linux-hams"=
- in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at =A0http://vger.kernel.org/majordomo-info.html
->
+Content-Type: text/plain; charset="us-ascii"
+To: Phil <phillor@telstra.com>
+Cc: linux-hams@vger.kernel.org
 
 
 
---=20
-73 de n1ywb
---
-To unsubscribe from this list: send the line "unsubscribe linux-hams" i=
-n
-the body of a message to majordomo@vger.kernel.org
-More majordomo info at  http://vger.kernel.org/majordomo-info.html
+Phil schrieb:
+> On Thu, 8 Apr 2010 08:20:56 pm Mike McCarthy, W1NR wrote:
+>> There are many PCI and PCI-e cards with both types of ports that respond
+>> like "real" serial and parallel ports. I generally buy the cheapest ones
+>> I can find at mwave.com (they all seem to use the same chip) and have 
+> no
+>> problems. No go for laptops. Best solution I have seen for laptops are
+>> the legacy docking stations for the Dell Latitude line.
+>>
+> 
+> Thank you Mike,
+> 
+> I should have mentioned that I have a laptop. It's been a long time since I've 
+> owned a desktop computer and I didn't think of legacy cards. Are these 
+> cards compatible with the latest motherboards? It's an expensive option but 
+> worth considering.
+> 
+Hi Phil,
+there is an easy solution for laptops like this one here:
+http://www.amazon.de/Delock-PCMCIA-ADAPTER-1x-SERIELL/dp/B000OQW562
+http://www.amazon.de/Delock-PCMCIA-CardBus-1x-parallel/dp/B000N7BJO6
+
+I have no idea about quality or linux drivers but PCMCIA with seriell or parallel
+are available for many laptops. The question is more interessting if you want
+both at the same time.
+
+re,
+ wh
