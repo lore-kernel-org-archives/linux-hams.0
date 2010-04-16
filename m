@@ -1,41 +1,75 @@
-From: Dave Platt <dplatt@radagast.org>
-Subject: Re: USB converters and old hardware (Baycom in particular)
-Date: Thu, 15 Apr 2010 13:41:58 -0700
-Message-ID: <4BC77A16.3050804@radagast.org>
-References: <201004081508.45770.phillor@telstra.com>	<20100413135239.89243vh5ioxdtks0@mgtmail.com>	<g2t9923fd661004132237z48f024d3va4ee598ab4d5cf10@mail.gmail.com>	<201004151151.38923.phillor@telstra.com>	<20100415104942.63522s5vbiv7a7i8@mgtmail.com>	<4BC75156.9060907@radagast.org> <y2ask6web1q.fsf@cartman.at.offog.org>
+From: Thomas Osterried <thomas@x-berg.in-berlin.de>
+Subject: ax25-tools: mkiss (multiport kiss) - new feature
+Date: Fri, 16 Apr 2010 21:24:01 +0200
+Message-ID: <20100416192401.GS3189@x-berg.in-berlin.de>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <y2ask6web1q.fsf@cartman.at.offog.org>
+Content-Disposition: inline
 Sender: linux-hams-owner@vger.kernel.org
 List-ID: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 7bit
 To: linux-hams@vger.kernel.org
 
-Adam Sampson wrote:
-> Dave Platt <dplatt@radagast.org> writes:
-> 
->> I'm not sure how this is being done... but it may not be possible at
->> all in a USB dongle!
-> 
-> You might be pleasantly surprised. The FTDI USB-to-serial chips have a
-> bit-banging mode that's designed for doing this sort of thing, where you
-> can tell it to just clock a sequence of bits out to the pins (or read
-> one in) at a fixed rate. It'd need some software fiddling, of course,
-> and if you're going to that much effort I'd be tempted just to stick a
-> microcontroller in the way to give the modem a more convenient serial or
-> USB interface...
+Hello,
 
-You're right, I hadn't thought about those particular USB chips in this
-context.  They would require something other than the standard serial-port
-host driver (i.e. a special driver, or at least some specialized ioctls
-or other modes in the existing driver) since they aren't being used
-as UARTs.
+I'd like to introduce a new operation mode for ax25-tools mkiss
+(multiport kiss).
 
-Yes, sticking a microcontroller between the modem chip and the USB
-would certainly ease things.  That's the approach that the TNC-X
-takes... it's a PIC micro hooked to a modem chip, which then
-connects either to a serial port or to an on-board FTDI serial-to-USB
-interface.  It speaks KISS over the host interface, and is thus
-fairly easy to support on the host side.
+Franko describes in his mail below his hardware and why he needed this
+feature.
 
+From the man-page:
+       If  the  pty name is the special name "none", no pty is opened. This is
+       useful if you have multiport tnc like the KPC-9612 on i.e. /dev/ttyUSB0
+       and you only like to handle packets for the second port. The KPC has no
+       option to configure the second tnc to listen on  kiss  port  number  0.
+       Thus, if you like to send all frames from the pty to the kiss port num-
+       ber 1, we need to tell mkiss to tag them for port  number  1.  This  is
+       done  by "mkiss /dev/ttyUSB0 none /dev/ptmx". Frames received with port
+       number 0 are discarded.
+
+diff:
+http://www.linux-ax25.org/cvsweb/ax25-tools/kiss/mkiss.c.diff?r1=1.6;r2=1.7;f=h
+
+73,
+	- Thomas  dl9sau
+
+----- Forwarded message from Franco Spinelli <frspin@gmail.com> -----
+
+Delivery-date: Fri, 16 Apr 2010 19:08:41 +0200
+X-Envelope-From: frspin@gmail.com
+X-Envelope-To: <thomas@osterried.de>
+Message-ID: <4BC89991.20906@gmail.com>
+Date: Fri, 16 Apr 2010 19:08:33 +0200
+From: Franco Spinelli <frspin@gmail.com>
+User-Agent: Thunderbird 2.0.0.24 (X11/20100317)
+To: Thomas Osterried <thomas@osterried.de>
+Subject: Re: AX25-tool
+X-Spam-Score:  (0.686) BAYES_50,SPF_HELO_PASS,SPF_NEUTRAL
+
+Thomas Osterried ha scritto:
+> Hello Franco,
+> Would you like to describe the feature and the requirements of your KPC in your own words and like to post this to the linux-hams mailing-list? It could be useful to other KPC owners to know that there is support by the mkiss program now.
+>
+
+KPC-9612 have some different operation modes and two ports, one at 1200  
+bauds and a second at 9600 bauds.
+
+In TERM mode (Intface TERM) you can switch from one to other port using  
+HBaud 1200|9600 command.
+In KISS mode there is no equivalent command
+
+So, using KPC-9612 in KISS mode and standard mkiss program you get two  
+pseudo-devices and use first for 1200 bauds and second for 9600 bauds.
+
+The new feature permit you to select which interface use with mkiss command.
+This is useful with a monoband radio and TCP/IP packet, when the only  
+needed port is the second (9600 bauds)
+
+Regards
+Franco Spinelli
+IW2DHW
+
+
+----- End forwarded message -----
