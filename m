@@ -1,75 +1,48 @@
-From: Thomas Osterried <thomas@x-berg.in-berlin.de>
-Subject: ax25-tools: mkiss (multiport kiss) - new feature
-Date: Fri, 16 Apr 2010 21:24:01 +0200
-Message-ID: <20100416192401.GS3189@x-berg.in-berlin.de>
+From: Jim Kusznir <jkusznir@gmail.com>
+Subject: node software for Linux
+Date: Sun, 25 Apr 2010 17:36:41 -0700
+Message-ID: <y2xdf8c8a6d1004251736sb8446a3bka7d66895ae0d71fb@mail.gmail.com>
 Mime-Version: 1.0
 Return-path: <linux-hams-owner@vger.kernel.org>
-Content-Disposition: inline
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:received:date:message-id
+         :subject:from:to:content-type;
+        bh=YSQWBZoeStkO4TBKG8US19UimA084nVKSFueg3XkEcQ=;
+        b=VDv4yUVDCQtghcqybuLSCctrMYwjTstDkazzs411SYdOlA1SgokEzAGpW63vyApvYw
+         7oHiK+wexQEHwqrJWC8Wf7awSD0uMZHAFr5leExhmkYDtK5dgQCJ5RWDkvllYqaGxWQU
+         TP/2shdW/ic/wQXrnsqKEKlfU0ZtkyUI40yIQ=
 Sender: linux-hams-owner@vger.kernel.org
 List-ID: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
 To: linux-hams@vger.kernel.org
 
-Hello,
+Hi all:
 
-I'd like to introduce a new operation mode for ax25-tools mkiss
-(multiport kiss).
+I have my linux system successfully operating the ax25 stack, with
+netrom, etc.  I've gotten to the point where I'm looking at
+"replacing" a stack of TNC's running TheNet X1J-4 with a linux box
+controlling radios (still deciding on dropping a KISS rom in the
+TNC's, or replacing them with something else that linux is
+controlling, such as sound cards or baycom modems, etc).  My goal is
+to produce a NetRom node-like interface that also has full IP support,
+and AXIP capability.  Ultimately, I plan on establishing a "high
+speed" (at least 10mbps) IP network, and would like to use this as a
+"backbone" for the existing AX.25 / NetRom network.
 
-Franko describes in his mail below his hardware and why he needed this
-feature.
+In any case, I'm trying to find a suitable node software.  I've been
+having trouble locating a version of "node" that still builds (I'm
+running Gentoo Linux, but would be fine running other linux variants,
+as long as they'll run on ARM (sheeva plug), MIPS (Ubnt hardware), and
+the like.).  A local operator pointed me toward uronode, but it seems
+that uronode.net disappeared, and so far I haven't been able to find a
+source distribution of that either.
 
-From the man-page:
-       If  the  pty name is the special name "none", no pty is opened. This is
-       useful if you have multiport tnc like the KPC-9612 on i.e. /dev/ttyUSB0
-       and you only like to handle packets for the second port. The KPC has no
-       option to configure the second tnc to listen on  kiss  port  number  0.
-       Thus, if you like to send all frames from the pty to the kiss port num-
-       ber 1, we need to tell mkiss to tag them for port  number  1.  This  is
-       done  by "mkiss /dev/ttyUSB0 none /dev/ptmx". Frames received with port
-       number 0 are discarded.
+In an ideal world, I'd be able to run something like BPQ on linux, but
+it appears that also doesn't exist...
 
-diff:
-http://www.linux-ax25.org/cvsweb/ax25-tools/kiss/mkiss.c.diff?r1=1.6;r2=1.7;f=h
+So, suggestions?
 
-73,
-	- Thomas  dl9sau
-
------ Forwarded message from Franco Spinelli <frspin@gmail.com> -----
-
-Delivery-date: Fri, 16 Apr 2010 19:08:41 +0200
-X-Envelope-From: frspin@gmail.com
-X-Envelope-To: <thomas@osterried.de>
-Message-ID: <4BC89991.20906@gmail.com>
-Date: Fri, 16 Apr 2010 19:08:33 +0200
-From: Franco Spinelli <frspin@gmail.com>
-User-Agent: Thunderbird 2.0.0.24 (X11/20100317)
-To: Thomas Osterried <thomas@osterried.de>
-Subject: Re: AX25-tool
-X-Spam-Score:  (0.686) BAYES_50,SPF_HELO_PASS,SPF_NEUTRAL
-
-Thomas Osterried ha scritto:
-> Hello Franco,
-> Would you like to describe the feature and the requirements of your KPC in your own words and like to post this to the linux-hams mailing-list? It could be useful to other KPC owners to know that there is support by the mkiss program now.
->
-
-KPC-9612 have some different operation modes and two ports, one at 1200  
-bauds and a second at 9600 bauds.
-
-In TERM mode (Intface TERM) you can switch from one to other port using  
-HBaud 1200|9600 command.
-In KISS mode there is no equivalent command
-
-So, using KPC-9612 in KISS mode and standard mkiss program you get two  
-pseudo-devices and use first for 1200 bauds and second for 9600 bauds.
-
-The new feature permit you to select which interface use with mkiss command.
-This is useful with a monoband radio and TCP/IP packet, when the only  
-needed port is the second (9600 bauds)
-
-Regards
-Franco Spinelli
-IW2DHW
-
-
------ End forwarded message -----
+Thanks!
+--Jim
