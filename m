@@ -1,67 +1,95 @@
-From: Ray Wells <vk2tv@exemail.com.au>
-Subject: Re: AX25 write up anywhere?
-Date: Mon, 03 May 2010 17:12:54 +1000
-Message-ID: <4BDE7776.5090803@exemail.com.au>
-References: <201004291438.41756.w8iss@wideopenwest.com> <4BDC08E9.4080106@w1nr.net> <4BDC1541.7070607@exemail.com.au> <4BDE5F27.3040605@animats.net>
+From: Luigi - IK5ZUK <ik5zuk@tiscali.it>
+Subject: R: Re: AX25 write up anywhere?
+Date: Mon, 3 May 2010 11:20:04 +0200 (CEST)
+Message-ID: <21698816.680381272878404600.JavaMail.root@ps19>
+Reply-To: Luigi - IK5ZUK <ik5zuk@tiscali.it>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <4BDE5F27.3040605@animats.net>
 Sender: linux-hams-owner@vger.kernel.org
 List-ID: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"; format="flowed"
-To: Terry Dawson <tjd@animats.net>
+Content-Type: text/plain; charset="utf-8"
+To: tjd@animats.net
 Cc: linux-hams@vger.kernel.org
 
-Terry Dawson wrote:
-> On 1/05/2010 9:49 PM, Ray Wells wrote:
->> With the greatest respect to Jeff Trantor and the previous author of the
->> ax25 howto, Terry Dawson (a fellow vk2), I've always found the official
->> document to be of limited value. The principal problem is currency of
->> the document in a changing environment.
+Hi Terry,
+nice to see you here, back in the HAM community !
+
+Personally=20
+I'm using Linux without the AX25 support because the packet users are a=
+=20
+very limited number and the official HOWTO is now very obsolete.
+Here=20
+I'm using Ubuntu Server, wich is a Debian derived, and it would be nice=
+=20
+if you can update the AX25 HOWTO to this Linux distro (and also the the=
+=20
+other modern distros)...
+Sadly, when I started my Linux server mainly=20
+for implementing a DxCluster node with Ubuntu, I had not found info=20
+about how to setup the AX25 and due to the limited number of users=20
+interested to connect my node via packet radio, I've decided to leave=20
+my server accessible only via internet connection... BTW, if you can=20
+update the HOWTO, I may add the ax25 to my cluster node very happyfully=
+=20
+!
+
+If you want, we can start a private discussion about...
+
+Vy 73 de=20
+Luigi, ik5zuk =20
+
+
+>> With the greatest respect to Jeff Trantor and the=20
+previous author of the
+>> ax25 howto, Terry Dawson (a fellow vk2), I've=20
+always found the official
+>> document to be of limited value. The=20
+principal problem is currency of
+>> the document in a changing=20
+environment.
 >
-> I haven't looked at the AX.25 HOWTO since I handed it over to Jeff in 
-> 2000. Indeed, I'd pretty much left amateur radio about that time. I'm 
-> getting back into it somewhat again now.
+>I haven't looked at the AX.25 HOWTO since I handed it=20
+over to Jeff in=20
+>2000. Indeed, I'd pretty much left amateur radio=20
+about that time. I'm=20
+>getting back into it somewhat again now.
 >
-> Is packet still popularly used with Linux? Things seem very quiet in 
-> Sydney, hard to find a packet radio signal at all, let alone anyone 
-> using Linux.
+>Is=20
+packet still popularly used with Linux? Things seem very quiet in=20
+
+>Sydney, hard to find a packet radio signal at all, let alone anyone=20
+
+>using Linux.
 >
-> Has there been much demand for the HOWTO? If there has I might 
-> consider updating it again.
+>Has there been much demand for the HOWTO? If there has=20
+I might consider=20
+>updating it again.
 >
-> Terry
-> -- 
-> To unsubscribe from this list: send the line "unsubscribe linux-hams" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at  http://vger.kernel.org/majordomo-info.html
+>Terry
+>--
+>To unsubscribe from=20
+this list: send the line "unsubscribe linux-hams" in
+>the body of a=20
+message to majordomo@vger.kernel.org
+>More majordomo info at  http:
+//vger.kernel.org/majordomo-info.html
 >
-Terry,
 
-Nice to see you back on deck.
 
-The packet network has greatly diminished in size over the last ten 
-years, with many (most) nodes (of all flavours) and bbs's having 
-disappeared. There was never a lot of Linux users in vk.
 
-However, packet is still surviving in UI mode courtesy of APRS, and 
-nodes are springing up everywhere. Programs such as xastir, which is 
-Linux based, are ensuring a future need for ax25 under Linux. With many 
-operators opting for soundmodem, the need for a howto is still current, 
-IMHO.
 
-Getting back to packet, there is still a world-wide Netrom network and, 
-both Rose and Flexnet are in use in small(ish) pockets around the world. 
-The fpac implementation of Rose for Linux by F6FBB, and now maintained 
-by Bernard, F6BVP, is really excellent and new nodes are appearing in 
-the US and Australia, among other places.
+Risparmia con Tutto Incluso Light: telefono + adsl 8 mega a soli 14,95 =
+=E2=82=AC al mese.
 
-I've been using Linux for packet since John Tanner, VK2ZXQ, introduced 
-me to it (Linux) in 1992/3, and I still use it today because it lets me 
-do things Windows has never let me do - in AR.
+Gratis la Sim Tiscali Mobile con 25 euro di traffico!=20
 
-I'm happy to converse privately if you want more local information.
+L'offerta =C3=A8 valida solo se attivi entro il 06/05/10
 
-Ray vk2tv
-
+http://abbonati.tiscali.it/telefono-adsl/prodotti/tc/tuttoincluso_light=
+/?WT.mc_id=3D01fw
+--
+To unsubscribe from this list: send the line "unsubscribe linux-hams" i=
+n
+the body of a message to majordomo@vger.kernel.org
+More majordomo info at  http://vger.kernel.org/majordomo-info.html
