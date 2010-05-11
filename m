@@ -1,28 +1,55 @@
-From: Claude <info_list@f5pbl.fr>
-Subject: Re: R: Re: AX25 write up anywhere?
-Date: Mon, 03 May 2010 22:28:39 +0200
-Message-ID: <4BDF31F7.3010404@f5pbl.fr>
-References: <21698816.680381272878404600.JavaMail.root@ps19> <019ab659d50e2766ec48e48f38a8bc87@localhost> <4BDF24E2.2090809@tiscali.it>
+From: Bernard Pidoux f6bvp <f6bvp@amsat.org>
+Subject: Libax25 procutils.c for NetRom local node
+Date: Tue, 11 May 2010 10:41:14 +0200
+Message-ID: <4BE9182A.5010406@amsat.org>
 Mime-Version: 1.0
 Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <4BDF24E2.2090809@tiscali.it>
 Sender: linux-hams-owner@vger.kernel.org
 List-ID: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"
-To: linux-hams@vger.kernel.org
+Content-Type: text/plain; charset="us-ascii"; format="flowed"
+To: Thomas Osterried DL9SAU <ax25@x-berg.in-berlin.de>
+Cc: Ralf Baechle DL5RB <ralf@linux-mips.org>, linux-hams <linux-hams@vger.kernel.org>
 
-Hello Luigi,
+Hi Thomas,
 
-> BTW, I know that Ubuntu comes out with the AX25 precompiled (as default)
-> inside the kernel... isn't it ?!?
+I noticed that in libax25 the routine used to read /proc/net/nr_nodes
+only initialized local NetRom node name, alias and n parameters.
 
-Yes; the modules are yet present in the default kernel. You can check that
-by using modprobe ax25 and then lsmod.
-But you may know that it is always better to compile the libs on your own
-system. But of course, the default config may work fine on your side
-without recompiling the libs from sources.
+Quality and Obs parameters are not initialized.
 
-73,
-Claude, F5PBL
+FPAC node packet switch application is compatible with NetRom.
+When reading NetRom nodes list using the AX.25 library it is
+confused by the local node entries with zero Quality and Obs values.
 
+When the node is broadcasting NetRom table it propagates local node
+parameters to other NetRom nodes, and Quality zero is also propagated
+over the network.
+
+I patched read_proc_nr_nodes() in order to initialize local node
+quality =  255
+obs (persist) = 6
+w = 1
+
+With the above local node initialized parameters, adjacent NetRom
+nodes can now modify and broadcast Quality and other link parameters.
+And we don't see NetRom node with zero quality in NetRom tables
+over the net.
+
+Here is the patch :
+
+--- libax25-0.0.12-rc2/procutils.c	2009-11-26 18:37:42.000000000 +0100
++++ libax25-0.0.12-rc2/procutils.c	2010-05-11 01:19:35.005268719 +0200
+@@ -391,6 +391,10 @@
+  		if ((cp = nr_config_get_alias(name)) == NULL)
+  			break;
+  		safe_strncpy(new->alias, cp, 6);
++
++		new->w = 1;		/* local node w */
++		new->qual1 = 255;	/* obviously, local node quality should be set to maximum value */
++		new->obs1 = 6; 		/* persist */
+  		/*
+  		 * n == 0 indicates a local node.
+  		 */
+
+73 de Bernard, f6bvp
