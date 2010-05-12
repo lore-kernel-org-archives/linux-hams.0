@@ -1,26 +1,36 @@
-From: Robert Thoelen <kd1zd@rtcubed.org>
-Subject: Questions on AX25 tools and support
-Date: Tue, 11 May 2010 18:04:52 -0400
-Message-ID: <AANLkTinONabV4XZGP2eFlq-Icd4x98JTbJz-GTb2tGW5@mail.gmail.com>
+From: T + J Williams <wa0eir@mchsi.com>
+Subject: twlog 2.6
+Date: Wed, 12 May 2010 16:05:46 -0500
+Message-ID: <1273698346.1618.27.camel__26750.0099180781$1273698696$gmane$org@maddie>
 Mime-Version: 1.0
+Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
 Sender: linux-hams-owner@vger.kernel.org
 List-ID: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-To: linux-hams@vger.kernel.org
+To: aintel psk31 <psk31@aintel.bi.ehu.es>, debian hams <debian-hams@lists.debian.org>, fedora hams <fedora-hams@lists.fedoraunity.org>, qth ham software <ham-software@mailman.qth.net>, s
 
-I'm doing well with running my custom version of UROnode for the 2.6.18 kernel.
+Hi,
 
-I have noticed two issues that I can't seem to figure out:
+There is a new version of twlog.  Major changes include faster loading
+of the log editor and a requested new feature.
 
-1.  I can't get mheard/mheardd to work.  I created the
-/var/ax25/mheard/mheard.dat file, but even after running mheardd, and
-verifying the process is running, nothing is getting written to the
-file.  Perhaps I'm missing something?
+A log file of about 1000 QSO's (140KB) was taking 2 to 3 seconds to
+load.  The new code loads a 10000 QSO log (1.25MB) file in less than a
+second.
 
-2.  Is there a way to selectively broadcast netrom routes?  For
-instance, I have several interfaces that each have a distinct netrom
-name.  I only want to publish one of them on my VHF user port.  Right
-now, netromd is broadcasting everything, filling up the neighbor
-netrom node with three of my names.
+A new feature allows you to delete a QSO by clicking on the QSO number
+in the log editor.
+
+See the ChangeLog file for a complete list of changes.  See the web site
+below.
+
+-- 
+73
+
+Ted - wa0eir
+http://wa0eir.ham.org
+
+There are 10 types of people in this world:
+those who understand binary, and those who don't.
+
