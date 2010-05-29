@@ -1,27 +1,32 @@
-From: David Miller <davem@davemloft.net>
-Subject: Re: [PATCH 4/11] drivers/net/hamradio: Eliminate a NULL pointer
- dereference
-Date: Thu, 27 May 2010 16:29:19 -0700 (PDT)
-Message-ID: <20100527.162919.115912825.davem@davemloft.net>
-References: <Pine.LNX.4.64.1005271432450.5422@ask.diku.dk>
+From: David Ranch <linux-hams@trinnet.net>
+Subject: Adding kernel support for a US Interface Navigator USB sound device
+Date: Fri, 28 May 2010 17:28:48 -0700
+Message-ID: <4C005FC0.4010508@trinnet.net>
 Mime-Version: 1.0
 Content-Transfer-Encoding: 7bit
-Return-path: <netdev-owner@vger.kernel.org>
-In-Reply-To: <Pine.LNX.4.64.1005271432450.5422@ask.diku.dk>
-Sender: netdev-owner@vger.kernel.org
+Return-path: <linux-hams-owner@vger.kernel.org>
+Sender: linux-hams-owner@vger.kernel.org
 List-ID: <linux-hams.vger.kernel.org>
-Content-Type: Text/Plain; charset="us-ascii"
-To: julia@diku.dk
-Cc: jpr@f6fbb.org, linux-hams@vger.kernel.org, netdev@vger.kernel.org, linux-kernel@vger.kernel.org, kernel-janitors@vger.kernel.org
+Content-Type: text/plain; charset="us-ascii"; format="flowed"
+To: linux-hams@vger.kernel.org
 
-From: Julia Lawall <julia@diku.dk>
-Date: Thu, 27 May 2010 14:33:00 +0200 (CEST)
 
-> At the point of the print, dev is NULL.
-> 
-> A simplified version of the semantic match that finds this problem is as
-> follows: (http://coccinelle.lip6.fr/)
- ...
-> Signed-off-by: Julia Lawall <julia@diku.dk>
+Hello Everyone,
 
-Applied.
+Some time ago, I wrote up a HOWTO on getting a US Interface Navigator 
+working on Centos5 for FLdigi:
+
+   
+http://www.ecst.csuchico.edu/~dranch/HAM/US-INTERFACE/us-interface-navigator-and-linux.html
+
+
+It works like a charm and I submitted my very minor ftdi_sio driver 
+changes to the FTDI maintainer but I never heard back from him.  I was 
+curious if there was someone on this list that could help me get the USB 
+ID changes checked into the mainline kernel:
+
+http://www.ecst.csuchico.edu/~dranch/HAM/US-INTERFACE/ftdi_sio.c.diff
+http://www.ecst.csuchico.edu/~dranch/HAM/US-INTERFACE/ftdi_sio.h.diff
+
+
+--David
