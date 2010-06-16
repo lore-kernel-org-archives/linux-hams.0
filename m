@@ -1,77 +1,105 @@
-From: Jim Kusznir <jkusznir@gmail.com>
+From: "Curt, WE7U" <curt.we7u@gmail.com>
 Subject: Re: Linux Packet Interface Hardware
-Date: Wed, 16 Jun 2010 16:25:44 -0700
-Message-ID: <AANLkTim0JXl8-LeoeOtLhwCgy2_YoQ--mTWGGg6hWYgF@mail.gmail.com>
-References: <AANLkTim2kyUNlW4OOJc42U_CUFzFw1Ox0OhoymamsOTz@mail.gmail.com>
-	<4C183169.3060206@radagast.org>
-	<alpine.LNX.2.00.1006160534330.14107@wapiti.we7u.net>
-	<AANLkTikS7GnQ4hyLpIEk62IF43pX_NVvl_E1GhNwH9C9@mail.gmail.com>
-	<alpine.LNX.2.00.1006160944480.21590@wapiti.we7u.net>
+Date: Wed, 16 Jun 2010 16:33:33 -0700 (PDT)
+Message-ID: <alpine.LNX.2.00.1006161618320.23730@wapiti.we7u.net>
+References: <AANLkTim2kyUNlW4OOJc42U_CUFzFw1Ox0OhoymamsOTz@mail.gmail.com> <4C183169.3060206@radagast.org> <alpine.LNX.2.00.1006160534330.14107@wapiti.we7u.net> <4C195062.7050401@radagast.org>
 Mime-Version: 1.0
-Content-Transfer-Encoding: QUOTED-PRINTABLE
 Return-path: <linux-hams-owner@vger.kernel.org>
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:received:in-reply-to
-         :references:date:message-id:subject:from:to:content-type
-         :content-transfer-encoding;
-        bh=DqGLTr+s5FutnGY9DllXMqzekIAjX7hFRzCL1YDLeCk=;
-        b=Impma4aC4morhrDgGumCYcfGKK0s9/htkxt03oNAq6fQSmItItvXwwgWpUXKSLy8Qv
-         MBsMSTdW3nKu0quYc/ARdbqk1aX+Np6YIo4bThzr93HcyeOGclIxjZIDJzIFlSnDdFj9
-         ScDG4vtyZCKndFuUZo2uKWewNsJUexoVTicl4=
-In-Reply-To: <alpine.LNX.2.00.1006160944480.21590@wapiti.we7u.net>
+        h=domainkey-signature:received:received:date:from:to:cc:subject
+         :in-reply-to:message-id:references:user-agent:mime-version
+         :content-type;
+        bh=k3+u5xbTZ3DtSkHKNt7SmWzDxiaCM9cxKY4u3j2/290=;
+        b=nIAm77u/RCEswElmtTjW+EyI3SU9c3GTIb/9jKVdDz2jc9wYexwbDeLGpZVntZKHKg
+         RZ/WHDVoVqpnUAs5R+A44MslVVu1vSfa89NP7lpW4Yl97oxT5jPuuZmTfD5ZuniQcWYu
+         Uu7xF7qe9Z/CNmBPIpQLSPQUamdcsxMin8NR8=
+In-Reply-To: <4C195062.7050401@radagast.org>
 Sender: linux-hams-owner@vger.kernel.org
 List-ID: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="iso-8859-1"
-To: linux-hams@vger.kernel.org
+Content-Type: TEXT/PLAIN; charset="us-ascii"; format="flowed"
+Content-Transfer-Encoding: 7bit
+To: Dave Platt <dplatt@radagast.org>
+Cc: linux-hams@vger.kernel.org
 
-It appears that the PacComm firmware (both the very old version I got
-it with and the new one I paid $30 for last year) seem to have a bug
-such that:
+On Wed, 16 Jun 2010, Dave Platt wrote:
 
-1) its not possible to leave KISS mode without doing a RAM reset (pull
-battery or use the jumper)
-2) When switching to KISS mode, all the parameters specified in the
-non-kiss mode are ignored.  So I'm running with "default" tx delay,
-etc.
+> I've read opinions by people who said that old-style crystal-
+> based radios are a better choice for running a 9600 bit/second
+> backbone than modern synthesized radios are.  Maybe this is why?
 
-This is partially why I thought I'd need to replace the ROM with a
-KISS-specific ROM in order to configure some of these settings.
+Certainly can be a big factor.
 
---Jim
 
-On Wed, Jun 16, 2010 at 9:46 AM, Curt, WE7U <curt.we7u@gmail.com> wrote=
-:
-> On Wed, 16 Jun 2010, Jim Kusznir wrote:
+> I do know that our local guys have had difficulty getting good,
+> predictable performance out of the 9600 bit/second backbone they
+> have been trying to set up.  Our first assumptions were that
+> the main problems have been noise, multipath, and intermod...
+> but maybe transmitter frequency stability is also complicating
+> matters.  I'll mention this to Michael.
+
+Should be easy to test by putting various audio frequencies in to
+the modulator and verifying whether the PLL tracks with them or
+allows the radio to shift frequency properly with the modulation.
+Or phase, if you're phase modulating it.  Starting to get way out of
+my realm of expertise though!
+
+
+>> Note that the 0 bits are a disadvantage for the reasons mentioned,
+>> but they're an advantage for the purpose of getting more clock
+>> transitions to sync up with at the receive side.  If it weren't for
+>> the extra short packet in there that some devices create it would be
+>> much better to have a sequence of 0-bits than flags.  This is
+>> especially important for the first part of a transmission when the
+>> receiver is attempting to sync up to the transmit clock:  With
+>> 0-bits you can often use a shorter TXD at the transmit side yet
+>> still get the receiver to sync before the data starts across.  It
+>> might also be important in lower S/N conditions.
 >
->> I've been
->> using one at home in KISS mode for a while, and I've been noticing
->> what I think now is the T1 timer problem, and its been causing very
->> frustrating and massive reduction in throughput on my local 9k6
->> channel, even though my radio and the node are the only two on
->> frequency! =A0I often see my system try and send retransmits before =
-the
->> first packet ever even makes it out the radio (but on the other hand=
-,
->> I also think my TNC is sitting on packets way too long -- PacComm
->> Spirit-2).
->
-> Tweak your KISS parameters. =A0If there are only two on frequency the=
-n
-> you can increase your p-persistence quite a bit and perhaps decrease
-> your slottime.
->
-> --
-> Curt, WE7U. =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 <http://w=
-ww.eskimo.com/~archer>
-> =A0 APRS: =A0Where it's at! =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0<h=
-ttp://www.xastir.org>
-> =A0Lotto: =A0A tax on people who are bad at math. - unknown
-> Windows: =A0Microsoft's tax on computer illiterates. - WE7U.
-> The world DOES revolve around me: =A0I picked the coordinate system!"
->
---
-To unsubscribe from this list: send the line "unsubscribe linux-hams" i=
-n
-the body of a message to majordomo@vger.kernel.org
-More majordomo info at  http://vger.kernel.org/majordomo-info.html
+> Hmmm... that's an argument I haven't seen proposed in the X.25 or
+> AX.25 literature.
+
+The thoughts come from a project I did in 1985 with a RS Micro Color
+Computer and an XR-2211 on an interrupt pin, decoding 300/600/1200
+baud packet (w/o a TNC).  Said computer had 6803 processor at
+0.79MHz (TV colorburst Xtal / 4).  Was fun, but figured out I locked
+faster with 0 bits than with a flag and had to figure out why.  Also
+did full CRC-16 checking with above scheme.  I saw at the time that
+some TNC's were sending flags and some zero bytes during the TXD
+period.
+
+
+> During the initial part of transmission (before the first frame)
+> I could well see it... send a continuous stream of 0-bits during
+> the TXDELAY period (to allow for the modem-level clock
+> synchronization), then send one or two FLAGs to sync up the
+> HDLC bitstream.  Dunno about in between frames, though.
+
+If I remember the spec correctly (have the printed version at home)
+0 bytes like that aren't allowed between frames, and a single flag
+can delineate two data frames.  Don't know whether most TNC's can
+handle that last.  Or soundmodem.  Or AGWPE & friends.
+
+
+> When I figured out that the soundmodem and my TNC-X weren't
+> playing well together, I looked into the soundmodem code and
+> figured out a couple of possible fixes.  One is to modify
+> soundmodem's HDLC encoder and bit-stuffer so that it doesn't
+> generated invalid (runt) frames.
+
+> Another possible approach would be to give soundmodem the ability
+> to generate a somewhat more complex start-of-frame sequence...
+> perhaps a programmable number of zero-bytes followed by a programmable
+> number of FLAGs.  This would allow TNCs with marginal firmware (or
+> operating under noisy conditions) a better chance to re-synchronize
+> at the beginning of the next frame.
+
+Check the spec.  I think it says flags only between frames, which
+doesn't give you as good a chance to resync.
+
+-- 
+Curt, WE7U.                         <http://www.eskimo.com/~archer>
+    APRS:  Where it's at!                    <http://www.xastir.org>
+   Lotto:  A tax on people who are bad at math. - unknown
+Windows:  Microsoft's tax on computer illiterates. - WE7U.
+The world DOES revolve around me:  I picked the coordinate system!"
