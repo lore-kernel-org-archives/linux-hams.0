@@ -1,37 +1,30 @@
-From: T + J Williams <wa0eir@mchsi.com>
-Subject: Re: status
-Date: Wed, 23 Jun 2010 10:55:17 -0500
-Message-ID: <1277308518.1621.8.camel@localhost>
-References: <20100622194615.GW15838@belle.intranet.vanheusden.com>
-	 <201006230833.24902.bob@rsmits.ca>
+From: "Mike McCarthy, W1NR" <lists@w1nr.net>
+Subject: Re: tcpdump/wireshark
+Date: Wed, 23 Jun 2010 16:35:28 -0400
+Message-ID: <4C227010.3060809@w1nr.net>
+References: <20100623123328.GL15838@belle.intranet.vanheusden.com>
 Mime-Version: 1.0
 Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <201006230833.24902.bob@rsmits.ca>
+In-Reply-To: <20100623123328.GL15838@belle.intranet.vanheusden.com>
 Sender: linux-hams-owner@vger.kernel.org
 List-ID: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
-To: linux-hams@vger.kernel.org
+To: folkert <folkert@vanheusden.com>
+Cc: linux-hams@vger.kernel.org
 
+Oh yes, there is axlisten as well.
 
-There are a few of us left :-)
+Mike, W1NR
 
-On Wed, 2010-06-23 at 08:33 -0700, Bob Smits wrote:
-> > What's the status of linux-hams? Anyone left?
-> > 
-> > 
-> > Folkert van Heusden
-> > 
-> 
-> Some of us are still here, lurking.
-> 
-> I came looking for linux implementations for packet.
-
-73
-
-Ted - wa0eir
-http://wa0eir.ham.org
-
-There are 10 types of people in this world:
-those who understand binary, and those who don't.
+On 06/23/2010 08:33 AM, folkert wrote:
+> Hi,
+>
+> Am I right that neither tcpdump nor wireshark support an AX25 network
+> interface?
+>
+>
+> Folkert van Heusden
+>
+>   
 
