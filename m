@@ -1,47 +1,36 @@
-From: Richard Stearn <richard@rns-stearn.demon.co.uk>
-Subject: Re: tcpdump/wireshark
-Date: Wed, 30 Jun 2010 22:20:48 +0100
-Message-ID: <4C2BB530.1030709@rns-stearn.demon.co.uk>
-References: <20100623123328.GL15838@belle.intranet.vanheusden.com> <20100629153556.GV7246@x-berg.in-berlin.de>
+From: John Ronan <jpronans@gmail.com>
+Subject: unix98 ptys
+Date: Mon, 05 Jul 2010 21:45:29 +0100
+Message-ID: <4C324469.4090500@gmail.com>
 Mime-Version: 1.0
 Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <20100629153556.GV7246@x-berg.in-berlin.de>
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from
+         :user-agent:mime-version:to:subject:content-type
+         :content-transfer-encoding;
+        bh=z9yN4mb550diZ0co7DPwAjsaGBQR9DLcFvweMIu0SEw=;
+        b=gas9lBIy8pDo0zVkKfK97V7lLO9VYPurkFLLcSu/IRFV8n67h2OxWvyx6Jue76EpLU
+         IJ/9x/Wvyd09SqNZfaC+273JcstrJ/UIQSexHmffTBMjWh9I2GyIFiBYJ2WwmfuSefKd
+         Ip9kaI7O4wUAlEiU0g2jVYGc55ZsMjQ/wYq40=
 Sender: linux-hams-owner@vger.kernel.org
 List-ID: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"; format="flowed"
 To: linux-hams@vger.kernel.org
 
-Thomas Osterried wrote:
-> On 2010-06-23 14:33:29 +0200, folkert <folkert@vanheusden.com>
-> wrote in <20100623123328.GL15838@belle.intranet.vanheusden.com>:
->> Hi,
->>
->> Am I right that neither tcpdump nor wireshark support an AX25 network
->> interface?
-> 
-> There's support for tcpdump / wireshark. The patch is dated 2007.
-> More on this was written on this list in
->   Message-ID: <4BC03EBF.3010701@rns-stearn.demon.co.uk>                           
->   Date:  Sat, 10 Apr 2010 10:02:55 +0100                                          
->   From: Richard Stearn <richard@rns-stearn.demon.co.uk>             
->   Subject: Re: AX.25 in Wireshark (nee Ethereal)     
-> 
-> 73,
-> 	- Thomas  dl9sau
+Hi,
 
-I have released a more recent patches as of 10th April 2010, against 
-tcpdump 4.1 & wireshark 1.2.7 which can be found here:
+I just had a go at getting ax25 mkiss working on ubuntu 10.04.
+I came across this message and was wondered if there is a similiar 
+mechanism to /dev/ptmx for the receive side.
 
-	www.rns-stearn.demon.co.uk
+http://www.mail-archive.com/linux-hams@vger.kernel.org/msg00103.html
 
-You will have to recompile tcpdump/wireshark as some of the changes
-are in fundamental parts of code.
+At the moment I'm using kissattach /dev/pts/5 1200mk 44.155.6.12
+etc to attach to it.  I've never used Unix98 ptys before so any 
+assistance appreciated
 
-Thank you Thomas for highlighting the question, I had missed the
-original posting.
-
--- 
-73 de g1sog
-	Richard
-
+Regards
+de John
+EI7IG
