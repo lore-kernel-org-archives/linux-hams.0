@@ -1,29 +1,36 @@
-From: Al Scanandoah <k2zn@rochester.rr.com>
+From: Nate Bargmann <n0nb@n0nb.us>
 Subject: Re: EZNEC, other software...
-Date: Wed, 21 Jul 2010 18:09:51 -0400
-Message-ID: <4C47702F.5020802@rochester.rr.com>
-References: <201007211010.27488.bob@rsmits.ca> <4C474A54.9090400@w1nr.net>
+Date: Wed, 21 Jul 2010 17:32:21 -0500
+Message-ID: <20100721223221.GC18708@n0nb.us>
+References: <201007211010.27488.bob@rsmits.ca>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <4C474A54.9090400@w1nr.net>
+Content-Disposition: inline
+In-Reply-To: <201007211010.27488.bob@rsmits.ca>
 Sender: linux-hams-owner@vger.kernel.org
 List-ID: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 7bit
 To: Linux Listserve <linux-hams@vger.kernel.org>
 
-Another possibility is to run Virtualbox.  I'm using that to host Win2k
-on my OpenSuse 11.1 box.  EZNEC, as well as any other Windows app I've
-tried run just fine.
+* On 2010 21 Jul 12:10 -0500, Bob Smits wrote:
+> For those of you running Linux and not able to get EZNEC running under 
+> CrossOver Office or Wine, I have found that installing the CrossOver Office 
+> Linux v 9 rpm under OpenSuSE 11.2 64 bit let me run EZNEC v 5.0.37 in a win98 
+> bottle. 
 
-Al, K2ZN
+There are a couple of extra steps needed to get the EZNEC 5.0 demo
+running under Wine 1.2 as I've documented at:
 
-On 07/21/2010 03:28 PM, Mike McCarthy, W1NR wrote:
-> Have you tried the qantenna and necpp packages from the openSuSE Ham
-> Radio repositories?
-> 
-> The repos are at http://download.opensuse.org/repositories/hamradio/ and
-> can be added with the YaST software repository manager.
-> 
-> Mike, W1NR
-> 
+http://appdb.winehq.org/objectManager.php?sClass=version&iId=19176
+
+I have not tried upgrading to nor installing the full version.
+
+73, de Nate >>
+
+-- 
+
+"The optimist proclaims that we live in the best of all
+possible worlds.  The pessimist fears this is true."
+
+Ham radio, Linux, bikes, and more: http://n0nb.us/index.html
