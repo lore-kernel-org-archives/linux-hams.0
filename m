@@ -1,36 +1,60 @@
-From: Nate Bargmann <n0nb@n0nb.us>
-Subject: Re: EZNEC, other software...
-Date: Wed, 21 Jul 2010 17:32:21 -0500
-Message-ID: <20100721223221.GC18708@n0nb.us>
-References: <201007211010.27488.bob@rsmits.ca>
+From: "Curt, WE7U" <curt.we7u@gmail.com>
+Subject: SignaLink USB w/NVidia Chipset motherboard.  Fix.
+Date: Thu, 22 Jul 2010 13:27:17 -0700 (PDT)
+Message-ID: <alpine.LNX.2.00.1007221316020.6511@wapiti.we7u.net>
 Mime-Version: 1.0
 Return-path: <linux-hams-owner@vger.kernel.org>
-Content-Disposition: inline
-In-Reply-To: <201007211010.27488.bob@rsmits.ca>
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:date:from:to:subject
+         :message-id:user-agent:mime-version:content-type;
+        bh=+21rDZbLzS3H29B6RexAbLWLugJR38aHoRhQe7yLdfI=;
+        b=KM9aTpfWI5/IglcmbviY855neEUxFN4EMsflH1S59S4TURroVMD/gCr6YYg68X0jNF
+         F67ctO61fNGqux3VUfgkuOdPvl+qK91LPcv/bNXAHvjwkZYydKYghUGtwi++x77Ntmf9
+         7kNpn9U/+TzMDJm/iwt2SxcUuVpKpW67j+2/o=
 Sender: linux-hams-owner@vger.kernel.org
 List-ID: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"
+Content-Type: TEXT/PLAIN; format="flowed"; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
-To: Linux Listserve <linux-hams@vger.kernel.org>
+To: linux-hams@vger.kernel.org
 
-* On 2010 21 Jul 12:10 -0500, Bob Smits wrote:
-> For those of you running Linux and not able to get EZNEC running under 
-> CrossOver Office or Wine, I have found that installing the CrossOver Office 
-> Linux v 9 rpm under OpenSuSE 11.2 64 bit let me run EZNEC v 5.0.37 in a win98 
-> bottle. 
 
-There are a couple of extra steps needed to get the EZNEC 5.0 demo
-running under Wine 1.2 as I've documented at:
+This may bite others, so I'm trying to document it in a few places.
 
-http://appdb.winehq.org/objectManager.php?sClass=version&iId=19176
+I plugged a SignaLink USB into my OpenSuSE-11.2 32-bit laptop and
+had no issues configuring the 2nd soundcard and using the device
+with WSPR and Fldigi.
 
-I have not tried upgrading to nor installing the full version.
+On my desktop it was quite another matter:  The desktop machine has
+a motherboard with an integrated NVidia 8200 video card.  This
+particular chipset has a bug in the USB1.1 "high-speed" controller,
+but not in the USB1.1 low-speed or USB2.0 controllers.  Of course
+the SignaLink USB is a USB1.1 "high-speed" device and triggers the
+bug.  On Linux this caused my entire USB stack to crash, taking out
+the mouse, external USB hard drive, etc, requiring a reboot to make
+all of those devices responsive again.  This happens within a few
+seconds of starting up Fldigi or WSPR using the SignaLink.
 
-73, de Nate >>
+Evidently Windows has implemented a fix for this particular chipset
+problem but Linux has not.
+
+One fix:  Plug in a USB2.0 PCI card and plug the SignaLink into
+that.  Here's a link with more details on the bug and this initial
+fix, but a different motherboard manufacturer than mine (mine's an
+ASUS):  http://kjellquist.com/WordPress/?p=283
+
+Another fix (which I'm using):  Plug in a USB2.0 HUB and plug the
+SignaLink into it.
+
+Either of the above fixes causes USB1.1 "high-speed" protocol to be
+converted to USB2.0 "full-speed" protocol, which then uses the
+motherboard USB2.0 controller which apparently doesn't have the bug.
+
+I sent a note to Tigertronics about it as well.
 
 -- 
-
-"The optimist proclaims that we live in the best of all
-possible worlds.  The pessimist fears this is true."
-
-Ham radio, Linux, bikes, and more: http://n0nb.us/index.html
+Curt, WE7U.                         <http://www.eskimo.com/~archer>
+    APRS:  Where it's at!                    <http://www.xastir.org>
+   Lotto:  A tax on people who are bad at math. - unknown
+Windows:  Microsoft's tax on computer illiterates. - WE7U.
+The world DOES revolve around me:  I picked the coordinate system!"
