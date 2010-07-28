@@ -1,60 +1,33 @@
-From: "Curt, WE7U" <curt.we7u@gmail.com>
-Subject: SignaLink USB w/NVidia Chipset motherboard.  Fix.
-Date: Thu, 22 Jul 2010 13:27:17 -0700 (PDT)
-Message-ID: <alpine.LNX.2.00.1007221316020.6511@wapiti.we7u.net>
+From: Bernard F6BVP <f6bvp@free.fr>
+Subject: net-tools patch for netstat adding ROSE capability
+Date: Wed, 28 Jul 2010 16:30:19 +0200
+Message-ID: <4C503EFB.2010504@free.fr>
+References: <4BD727C7.4050200@free.fr>
 Mime-Version: 1.0
+Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:subject
-         :message-id:user-agent:mime-version:content-type;
-        bh=+21rDZbLzS3H29B6RexAbLWLugJR38aHoRhQe7yLdfI=;
-        b=KM9aTpfWI5/IglcmbviY855neEUxFN4EMsflH1S59S4TURroVMD/gCr6YYg68X0jNF
-         F67ctO61fNGqux3VUfgkuOdPvl+qK91LPcv/bNXAHvjwkZYydKYghUGtwi++x77Ntmf9
-         7kNpn9U/+TzMDJm/iwt2SxcUuVpKpW67j+2/o=
+In-Reply-To: <4BD727C7.4050200@free.fr>
 Sender: linux-hams-owner@vger.kernel.org
 List-ID: <linux-hams.vger.kernel.org>
-Content-Type: TEXT/PLAIN; format="flowed"; charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-To: linux-hams@vger.kernel.org
+Content-Type: text/plain; charset="us-ascii"; format="flowed"
+To: fpac@f6fbb.org, linux-hams@vger.kernel.org
 
+Hi All,
 
-This may bite others, so I'm trying to document it in a few places.
+I finally found at http://net-tools.berlios.de the CVS repository on 
+which all net-tools Linux distros packages are based (Red Had, Debian, 
+Ubuntu, Mandriva...)
 
-I plugged a SignaLink USB into my OpenSuSE-11.2 32-bit laptop and
-had no issues configuring the 2nd soundcard and using the device
-with WSPR and Fldigi.
+This allowed me building simplified patches to make netstat know 
+something about ROSE.
 
-On my desktop it was quite another matter:  The desktop machine has
-a motherboard with an integrated NVidia 8200 video card.  This
-particular chipset has a bug in the USB1.1 "high-speed" controller,
-but not in the USB1.1 low-speed or USB2.0 controllers.  Of course
-the SignaLink USB is a USB1.1 "high-speed" device and triggers the
-bug.  On Linux this caused my entire USB stack to crash, taking out
-the mouse, external USB hard drive, etc, requiring a reboot to make
-all of those devices responsive again.  This happens within a few
-seconds of starting up Fldigi or WSPR using the SignaLink.
+I submitted the patch to net-tools developer team.
 
-Evidently Windows has implemented a fix for this particular chipset
-problem but Linux has not.
+However, it is already possible to get a working netstat following the 
+updated Linux FPAC MINI HOWTO.
 
-One fix:  Plug in a USB2.0 PCI card and plug the SignaLink into
-that.  Here's a link with more details on the bug and this initial
-fix, but a different motherboard manufacturer than mine (mine's an
-ASUS):  http://kjellquist.com/WordPress/?p=283
+The relevant chapter explaining how to proceed is 
+http://rose.fpac.free.fr/MINI-HOWTO/#s103
 
-Another fix (which I'm using):  Plug in a USB2.0 HUB and plug the
-SignaLink into it.
+73 de Bernard, f6bvp
 
-Either of the above fixes causes USB1.1 "high-speed" protocol to be
-converted to USB2.0 "full-speed" protocol, which then uses the
-motherboard USB2.0 controller which apparently doesn't have the bug.
-
-I sent a note to Tigertronics about it as well.
-
--- 
-Curt, WE7U.                         <http://www.eskimo.com/~archer>
-    APRS:  Where it's at!                    <http://www.xastir.org>
-   Lotto:  A tax on people who are bad at math. - unknown
-Windows:  Microsoft's tax on computer illiterates. - WE7U.
-The world DOES revolve around me:  I picked the coordinate system!"
