@@ -1,49 +1,67 @@
-From: Bob Nielsen <n7xy@clearwire.net>
-Subject: Re: Looking for Packet Radio Software
-Date: Mon, 16 Aug 2010 12:13:24 -0700
-Message-ID: <2936F684-EDC4-4EEF-B982-36CA95E35D4C@clearwire.net>
-References: <000001cb3d62$c36ad940$4a408bc0$@com>
-Mime-Version: 1.0 (Apple Message framework v1081)
-Content-Transfer-Encoding: 8BIT
+From: "Curt, WE7U" <curt.we7u@gmail.com>
+Subject: Re: problem serial/USB stick and Xaster
+Date: Mon, 16 Aug 2010 12:17:55 -0700 (PDT)
+Message-ID: <alpine.LNX.2.00.1008161213400.19029@wapiti.we7u.net>
+References: <4C61C34F.7050704@skypro.be>
+Mime-Version: 1.0
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <000001cb3d62$c36ad940$4a408bc0$@com>
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:date:from:to:cc:subject
+         :in-reply-to:message-id:references:user-agent:mime-version
+         :content-type;
+        bh=76dW7RF8/psoCaMbnYr6gOAMriCAPfRBigm//9RsxCg=;
+        b=Q+R7MnuQl3LdXrAw+BLsxVLfcFN+zQZejYZnfld+ozoPWDz1cLq029ycg8tX48q7bH
+         vxeauGNgJvFquaFCHuI08M/FH+t42Q/tW/7gR7F+cd0c30uNbTPdoburBcKd2jsPkBql
+         Yo1G3hkCV/EsXgM5L38csSwM1Aq1LLCABlEGc=
+In-Reply-To: <4C61C34F.7050704@skypro.be>
 Sender: linux-hams-owner@vger.kernel.org
 List-ID: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"
-To: john paterson <jpaterjr@gmail.com>, linux-hams@vger.kernel.org
+Content-Type: TEXT/PLAIN; charset="us-ascii"; format="flowed"
+Content-Transfer-Encoding: 7bit
+To: Kristoff Bonne <kristoff.bonne@skypro.be>
+Cc: linux-hams <linux-hams@vger.kernel.org>
 
-It sounds like there may be an issue with going in and out of KISS mode, but there are many Linux applications for packet radio.  For straight terminal operation (non-KISS), you could even use minicom (which I was using 15 years ago).
+On Tue, 10 Aug 2010, Kristoff Bonne wrote:
 
-There is a large list of Linux ham radio applications with links (not necessarily up-do-date, however) at 
+> I do not know if this is the correct ML for this, so feel free to let me know 
+> if there is a better place for this.
 
-http://radio.linux.org.au
+     Try the Xastir mailing list at www.xastir.org
 
-73, Bob N7XY
 
-On Aug 16, 2010, at 9:47 AM, john paterson wrote:
+> It shows itself as "/dev/ttyUSB0" on my box (ubuntu 10.06 netbook release).
 
-> Hi, all...
-> 
-> I just joined the mailing list. I have looked through a lot of the archives
-> and not found the information I am looking for, so I will try here. I have a
-> computer running Ubuntu 10.04 and would like to use it for packet radio. I
-> have tried Airmail and Outpost Packet Manager, both in Wine, but neither
-> works well. Airmail works for one interchange then apparently messes up the
-> the TNC (a KPC3), so that I have to reset the TNC to use it again on
-> Windows. Outpost PM seems to communicate with the TNC OK, in the serial
-> terminal, but never shows outgoing or incoming characters in the terminal
-> window, and does not properly communicate with the TNC when trying to
-> send/receive from the packet manager.
-> 
-> Can anyone help me with the proper setup for Airmail or Outpost PM, or
-> suggest other terminal software for packet operation with a KPC3 TNC?
-> 
-> Thanks in advance..
-> 
-> 73 de John, KC5LAA
-> 
-> --
-> To unsubscribe from this list: send the line "unsubscribe linux-hams" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at  http://vger.kernel.org/majordomo-info.html
+Have you verified that you're a member of the group for
+/dev/ttyUSB0?  If you just added yourself to that group for testing,
+log out/log in again to gain those new permissions.  Make sure that
+group permissions are rw also on that port.
 
+Alternatively:
+
+     sudo chmod 4755 /usr/local/bin/xastir
+
+Which will set the SUID bit on the Xastir executable, letting it
+assume root privileges when it needs to deal with the ports.  It
+drops to normal user privileges when it's not doing the above.  Note
+that this can be a security issue, setting the SUID bit on an
+executable, but if you're the only one using the machine you're
+relatively save with Xastir because we do drop privileges when we
+don't need them.
+
+
+> - minicom works OK (both with the normal serial port and with the USB-stick)
+> - Xastir with the USB-stick gives rubish
+> - Xastir with normal serial port works OK.
+
+
+> Is anybody familiar with a "known issue" with Xastir about this?
+
+Nope.
+
+-- 
+Curt, WE7U.                         <http://www.eskimo.com/~archer>
+    APRS:  Where it's at!                    <http://www.xastir.org>
+   Lotto:  A tax on people who are bad at math. - unknown
+Windows:  Microsoft's tax on computer illiterates. - WE7U.
+The world DOES revolve around me:  I picked the coordinate system!"
