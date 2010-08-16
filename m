@@ -1,62 +1,43 @@
-From: Julia Lawall <julia@diku.dk>
-Subject: [PATCH 13/16] net/ax25: Use available error codes
-Date: Mon, 16 Aug 2010 18:28:19 +0200 (CEST)
-Message-ID: <Pine.LNX.4.64.1008161828030.19313@ask.diku.dk>
+From: "john paterson" <jpaterjr@gmail.com>
+Subject: Looking for Packet Radio Software
+Date: Mon, 16 Aug 2010 11:47:47 -0500
+Message-ID: <000001cb3d62$c36ad940$4a408bc0$@com>
 Mime-Version: 1.0
-Return-path: <linux-kernel-owner@vger.kernel.org>
-Sender: linux-kernel-owner@vger.kernel.org
-List-ID: <linux-hams.vger.kernel.org>
-Content-Type: TEXT/PLAIN; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
-To: Joerg Reuter <jreuter@yaina.de>, Ralf Baechle <ralf@linux-mips.org>, "D, avid S. Miller" <davem@davemloft.net>, linux-hams@vger.kernel.org, linux-kernel@vger.kernel.org, netdev@vger.
+Return-path: <linux-hams-owner@vger.kernel.org>
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:from:to:subject:date
+         :message-id:mime-version:content-type:content-transfer-encoding
+         :x-mailer:thread-index:content-language:x-cr-hashedpuzzle
+         :x-cr-puzzleid;
+        bh=agZH+7uIafQIA5kxtJjWzFKaBAnCM+9HxS7fIi1uPc4=;
+        b=Ifrlq9Y13Uf4yOsZK4vf5aThiRo9ZloHBRU3rxDBo3uMsvAQbHRzbVJfRK3yWHg9jb
+         M2RrmG9+einWSirQrYxXv1cDgyQF1Cvx4oDZNDmS8MP11KTiK7ShT/jUYJLf7A2d2jVb
+         V1D83MytrmMLdPFYQKZvo25ySV2dLxt1E7+aM=
+Content-Language: en-us
+Sender: linux-hams-owner@vger.kernel.org
+List-ID: <linux-hams.vger.kernel.org>
+Content-Type: text/plain; charset="us-ascii"
+To: linux-hams@vger.kernel.org
 
-From: Julia Lawall <julia@diku.dk>
+Hi, all...
 
-Error codes are stored in err, but the return value is always 0.  Return
-err instead.
+I just joined the mailing list. I have looked through a lot of the archives
+and not found the information I am looking for, so I will try here. I have a
+computer running Ubuntu 10.04 and would like to use it for packet radio. I
+have tried Airmail and Outpost Packet Manager, both in Wine, but neither
+works well. Airmail works for one interchange then apparently messes up the
+the TNC (a KPC3), so that I have to reset the TNC to use it again on
+Windows. Outpost PM seems to communicate with the TNC OK, in the serial
+terminal, but never shows outgoing or incoming characters in the terminal
+window, and does not properly communicate with the TNC when trying to
+send/receive from the packet manager.
 
-The semantic match that finds this problem is as follows:
-(http://coccinelle.lip6.fr/)
+Can anyone help me with the proper setup for Airmail or Outpost PM, or
+suggest other terminal software for packet operation with a KPC3 TNC?
 
-// <smpl>
-@r@
-local idexpression x;
-constant C;
-@@
+Thanks in advance..
 
-if (...) { ...
-  x = -C
-  ... when != x
-(
-  return <+...x...+>;
-|
-  return NULL;
-|
-  return;
-|
-* return ...;
-)
-}
-// </smpl>
+73 de John, KC5LAA
 
-Signed-off-by: Julia Lawall <julia@diku.dk>
-
----
-This changes the semantics of the function and has not been tested.
-
- net/ax25/af_ax25.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-
-diff --git a/net/ax25/af_ax25.c b/net/ax25/af_ax25.c
-index cfdfd7e..26eaebf 100644
---- a/net/ax25/af_ax25.c
-+++ b/net/ax25/af_ax25.c
-@@ -1103,7 +1103,7 @@ done:
- out:
- 	release_sock(sk);
- 
--	return 0;
-+	return err;
- }
- 
- /*
