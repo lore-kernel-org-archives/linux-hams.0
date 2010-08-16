@@ -1,57 +1,30 @@
-From: Ralf Baechle <ralf@linux-mips.org>
-Subject: Re: [PATCH 13/16] net/ax25: Use available error codes
-Date: Mon, 16 Aug 2010 20:31:01 +0100
-Message-ID: <20100816193100.GB10921@linux-mips.org>
-References: <Pine.LNX.4.64.1008161828030.19313@ask.diku.dk>
+From: Bill V WA7NWP <wa7nwp@gmail.com>
+Subject: Re: Looking for Packet Radio Software
+Date: Mon, 16 Aug 2010 14:17:10 -0700
+Message-ID: <AANLkTimJmoE0ETZM9m4Bcz11Mtb=viJ3=4VqBmvE=QCu@mail.gmail.com>
+References: <000001cb3d62$c36ad940$4a408bc0$@com>
+	<2936F684-EDC4-4EEF-B982-36CA95E35D4C@clearwire.net>
 Mime-Version: 1.0
-Return-path: <netdev-owner@vger.kernel.org>
-Content-Disposition: inline
-In-Reply-To: <Pine.LNX.4.64.1008161828030.19313@ask.diku.dk>
-Sender: netdev-owner@vger.kernel.org
+Return-path: <linux-hams-owner@vger.kernel.org>
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:received:in-reply-to
+         :references:date:message-id:subject:from:to:content-type;
+        bh=S7kNeEK7LjEsUfRdLjAqwFGzJeqX9RCxhVZCjaer0xU=;
+        b=UOnrK6ww40YPWUSO/spnWhssjx+mZsV8vYuXN3KVF2qReZxi61yLbTNt1t3sE3+AD7
+         3Q7UTKZDYIdS46Ylth2E4hZUgY6cBl679uCzV4FbQe9cUsY4m85NrVMBNpoQvN2nwKj7
+         EkyeyU8yf+Z2/XJM6StPOBv1bq8YF3gAbeBQI=
+In-Reply-To: <2936F684-EDC4-4EEF-B982-36CA95E35D4C@clearwire.net>
+Sender: linux-hams-owner@vger.kernel.org
 List-ID: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
-To: Julia Lawall <julia@diku.dk>
-Cc: Joerg Reuter <jreuter@yaina.de>, "David S. Miller" <davem@davemloft.net>, linux-hams@vger.kernel.org, linux-kernel@vger.kernel.org, netdev@vger.kernel.org, kernel-janitors@vger.kernel.org
+To: linux-hams@vger.kernel.org
 
-On Mon, Aug 16, 2010 at 06:28:19PM +0200, Julia Lawall wrote:
+> It sounds like there may be an issue with going in and out of KISS mode,
 
-> Error codes are stored in err, but the return value is always 0.  Return
-> err instead.
-> 
-> The semantic match that finds this problem is as follows:
-> (http://coccinelle.lip6.fr/)
-> 
-> // <smpl>
-> @r@
-> local idexpression x;
-> constant C;
-> @@
-> 
-> if (...) { ...
->   x = -C
->   ... when != x
-> (
->   return <+...x...+>;
-> |
->   return NULL;
-> |
->   return;
-> |
-> * return ...;
-> )
-> }
-> // </smpl>
-> 
-> Signed-off-by: Julia Lawall <julia@diku.dk>
-> 
-> ---
-> This changes the semantics of the function and has not been tested.
+Airmail uses Kantronics Host mode.   On the windows side, I've found
+Airmil to be fairly reliable for bringing the TNC out of host mode
+when exiting.
 
-It restores the semantics to what they should be and used to be.  This
-probably happened during the introduction of proper refcounting and
-locking into the AX.25 stack.  Looks fine to me.
-
-Acked-by: Ralf Baechle <ralf@linux-mips.org>
-
-  Ralf
+> 73, Bob N7XY
