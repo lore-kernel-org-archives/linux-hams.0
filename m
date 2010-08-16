@@ -1,23 +1,21 @@
 From: Ralf Baechle <ralf@linux-mips.org>
-Subject: Re: [PATCH 8/16] net/ax25: Use available error codes
-Date: Mon, 16 Aug 2010 20:23:50 +0100
-Message-ID: <20100816192350.GA10921@linux-mips.org>
-References: <Pine.LNX.4.64.1008161826390.19313@ask.diku.dk>
+Subject: Re: [PATCH 13/16] net/ax25: Use available error codes
+Date: Mon, 16 Aug 2010 20:31:01 +0100
+Message-ID: <20100816193100.GB10921@linux-mips.org>
+References: <Pine.LNX.4.64.1008161828030.19313@ask.diku.dk>
 Mime-Version: 1.0
-Return-path: <linux-hams-owner@vger.kernel.org>
+Return-path: <netdev-owner@vger.kernel.org>
 Content-Disposition: inline
-In-Reply-To: <Pine.LNX.4.64.1008161826390.19313@ask.diku.dk>
-Sender: linux-hams-owner@vger.kernel.org
+In-Reply-To: <Pine.LNX.4.64.1008161828030.19313@ask.diku.dk>
+Sender: netdev-owner@vger.kernel.org
 List-ID: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
 To: Julia Lawall <julia@diku.dk>
-Cc: "David S. Miller" <davem@davemloft.net>, linux-hams@vger.kernel.org, linux-kernel@vger.kernel.org, netdev@vger.kernel.org, kernel-janitors@vger.kernel.org
+Cc: Joerg Reuter <jreuter@yaina.de>, "David S. Miller" <davem@davemloft.net>, linux-hams@vger.kernel.org, linux-kernel@vger.kernel.org, netdev@vger.kernel.org, kernel-janitors@vger.kernel.org
 
-On Mon, Aug 16, 2010 at 06:26:57PM +0200, Julia Lawall wrote:
+On Mon, Aug 16, 2010 at 06:28:19PM +0200, Julia Lawall wrote:
 
-> From: Julia Lawall <julia@diku.dk>
-> 
 > Error codes are stored in err, but the return value is always 0.  Return
 > err instead.
 > 
@@ -48,7 +46,7 @@ On Mon, Aug 16, 2010 at 06:26:57PM +0200, Julia Lawall wrote:
 > Signed-off-by: Julia Lawall <julia@diku.dk>
 > 
 > ---
-> This changes the semantics and has not been tested.
+> This changes the semantics of the function and has not been tested.
 
 It restores the semantics to what they should be and used to be.  This
 probably happened during the introduction of proper refcounting and
