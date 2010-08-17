@@ -1,51 +1,48 @@
-From: "Bernard, f6bvp" <f6bvp@free.fr>
+From: Bernard F6BVP <f6bvp@free.fr>
 Subject: Re: netstat caused a SIGSEGV
-Date: Tue, 17 Aug 2010 12:10:45 +0200
-Message-ID: <4C6A6025.8040109@free.fr>
+Date: Tue, 17 Aug 2010 14:37:56 +0200
+Message-ID: <4C6A82A4.4080804@free.fr>
+References: <4C6944CD.1070003@free.fr> <20100816160046.GA3741@neskaya.eckenfels.net>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 Return-path: <linux-hams-owner@vger.kernel.org>
+In-Reply-To: <20100816160046.GA3741@neskaya.eckenfels.net>
 Sender: linux-hams-owner@vger.kernel.org
 List-ID: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"; format="flowed"
-To: linux-hams <linux-hams@vger.kernel.org>
+Content-Type: text/plain; charset="iso-8859-1"; format="flowed"
+To: Bernd Eckenfels <bernd-10@eckenfels.net>
+Cc: linux-hams@vger.kernel.org, ecki@users.berlios.de, philb@users.berlios.de
 
-Message resent (previous post were rejected for it contained HTML code).
+Hi Bernd,
 
-With my previous ROSE patch a segment violation would occur when
-rose->state was at a higher level than ROSE_STATE_3.
-This was due to an error in rose_state[] array lacking all possible ROSE
-states.
-The present patch corrects this bug by initializing rose_state[]
-correctly according to linux/include/net/rose.h
+Actually, rose->state is determined by a state machine with
+only defined ROSE_STATE_0 to ROSE_STATE_5.
+So, there is no risk for an extraneous state to be selected.
+The error was mine, when I first duplicated NetRom code to introduce
+ROSE protocol in netstat.
+The two submitted patch are complementary and should be both applied.
+Thank you for considering my proposal.
 
---- net-tools/netstat.c 2010-08-16 13:47:50.000000000 +0200
-+++ net-tools/netstat.c 2010-08-16 13:29:11.000000000 +0200
-@@ -504,10 +505,12 @@
-#if HAVE_AFROSE
-static const char *rose_state[] =
-{
-- N_("LISTENING"),
-- N_("CONN SENT"),
-- N_("DISC SENT"),
-- N_("ESTABLISHED")
-+ N_("READY"),
-+ N_("AWAITING CALL ACCEPTED"),
-+ N_("AWAITING CLEAR CONFIRMATION"),
-+ N_("CONNECTED"),
-+ N_("AWAITING RESET CONFIRMATION"),
-+ N_("AWAITING CALL ACCEPTANCE")
-};
-
-static int rose_info(void)
+Bernard
 
 
 
-I updated previous ROSE patch against 1.70 netstat Berlios CVS here :
-
-http://f6bvp.free.fr/logiciels/netstat/net-tools-rose-1.70.diff
-http://f6bvp.free.fr/logiciels/netstat/net-tools-netstat-1.70.diff
-
-
-73 de Bernard, f6bvp
-
+Le 16/08/2010 18:00, Bernd Eckenfels a =E9crit :
+> On Mon, Aug 16, 2010 at 04:01:49PM +0200, Bernard F6BVP wrote:
+>   =20
+>> The present patch corrects this bug by initializing rose_state[]
+>> correctly according to linux/include/net/rose.h
+>>     =20
+> Thanks, can you please also add a "unknown state" option in case the =
+kernel
+> adds new states?  Will integrate that to upstream CVS later this week=
+=2E
+>
+> Greetings
+> Bernd
+>   =20
+--
+To unsubscribe from this list: send the line "unsubscribe linux-hams" i=
+n
+the body of a message to majordomo@vger.kernel.org
+More majordomo info at  http://vger.kernel.org/majordomo-info.html
