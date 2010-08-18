@@ -1,44 +1,73 @@
-From: "Curt, WE7U" <curt.we7u@gmail.com>
-Subject: Re: Looking for Packet Radio Software
-Date: Wed, 18 Aug 2010 10:42:18 -0700 (PDT)
-Message-ID: <alpine.LNX.2.00.1008181040120.18546@wapiti.we7u.net>
-References: <000001cb3d62$c36ad940$4a408bc0$@com> <AANLkTikbB9EM523hFqX+RLKqP_vkWMpojYab0rfpvzbq@mail.gmail.com> <20100817172606.GA19305@locutus> <AANLkTimLGW2OgOQ2mVyr-Uj9n9GkLgiO391aTxkvntDG@mail.gmail.com> <alpine.LNX.2.00.1008172115500.10295@wapiti.we7u.net>
- <AANLkTi=WVEiqD1bOAuZWefjM-VGNh_rNNh76CoHLebtc@mail.gmail.com>
+From: Kristoff Bonne <kristoff.bonne@skypro.be>
+Subject: Re: problem serial/USB stick and Xaster
+Date: Wed, 18 Aug 2010 20:39:31 +0200
+Message-ID: <4C6C28E3.3000809@skypro.be>
+References: <4C61C34F.7050704@skypro.be> <alpine.LNX.2.00.1008161213400.19029@wapiti.we7u.net>
 Mime-Version: 1.0
+Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :in-reply-to:message-id:references:user-agent:mime-version
-         :content-type;
-        bh=QsaW/Hl7vowIjEy8Uk4KVi8QojgV5tiRKqwbt36w1ic=;
-        b=DnLm5VJCZRtIrLETWgfSKHssw1oyhAcHqav31D1rA4gEOmHjOfnYRarnVghE0oznjz
-         p6CiVX+b0OSVs/e8j7uXrZ1Q1a/QyXlj7CoYasw0BGTVluEJnfabx/UCdmsVy83TEHpz
-         nb2dMqYrlXg5BBcvkJpm49gD7s6camBPDWa+Q=
-In-Reply-To: <AANLkTi=WVEiqD1bOAuZWefjM-VGNh_rNNh76CoHLebtc@mail.gmail.com>
+In-Reply-To: <alpine.LNX.2.00.1008161213400.19029@wapiti.we7u.net>
 Sender: linux-hams-owner@vger.kernel.org
 List-ID: <linux-hams.vger.kernel.org>
-Content-Type: TEXT/PLAIN; charset="us-ascii"; format="flowed"
-Content-Transfer-Encoding: 7bit
-To: Douglas Cole <doug.n7bfs@gmail.com>
-Cc: "Curt, WE7U" <curt.we7u@gmail.com>, linux-hams@vger.kernel.org
+Content-Type: text/plain; charset="us-ascii"; format="flowed"
+To: "Curt, WE7U" <curt.we7u@gmail.com>
+Cc: linux-hams <linux-hams@vger.kernel.org>
 
-On Wed, 18 Aug 2010, Douglas Cole wrote:
+Hi Curt (and all others that have replied offline).
 
-> I too have since upgraded my desktop pc to openSuSE 11.3 and it works
-> very well, but have not made the plunge on my packet pc since I wasn't
-> sure there were packages available in the ham repo' yet.
+
+First of all.
+I'm sorry for the late reply. I just got back from a week abroad.
+
+
+
+>> I do not know if this is the correct ML for this, so feel free to let 
+>> me know if there is a better place for this.
 >
-> I will give it a try this weekend, thanks Curt for the info :)
+>     Try the Xastir mailing list at www.xastir.org
+I've just reasked the question overthere.
 
-I didn't say I had upgraded to 11.3 yet, I've only downloaded the
-DVD images and checked the md5sum.  I still have to write either a
-full DVD or a network boot CD for each and then start installing.  I
-have five machines total to do.  I'll probably start with the laptop
-since it's non-essential.
+But I was actually more thinking in a line of problems of (say) 
+differences in the "ioctl" commands when using the xastir and minicom; 
+so perhaps something more system-level and not related to one particular 
+program.
 
-I don't know if the ham packages have caught up to 11.3 yet.  Change
-the last part of the URL I posted to 11.3 and see.
 
---we7u
 
+>> It shows itself as "/dev/ttyUSB0" on my box (ubuntu 10.06 netbook 
+>> release).
+>
+> Have you verified that you're a member of the group for
+> /dev/ttyUSB0?  If you just added yourself to that group for testing,
+> log out/log in again to gain those new permissions.  Make sure that
+> group permissions are rw also on that port.
+>
+> Alternatively:
+>
+>     sudo chmod 4755 /usr/local/bin/xastir
+
+Well, I also have the same problem as root (with sudo) so I do not think 
+it's a problem of rights.
+That would probably have resulted in Xastir not receiving anything at 
+all. Here I do receive something but it's 'kind of" mixed up. (not 
+completely, some words do are OK, like a "OFF" and "ON" or some digits)
+
+
+
+
+>> - minicom works OK (both with the normal serial port and with the 
+>> USB-stick)
+>> - Xastir with the USB-stick gives rubish
+>> - Xastir with normal serial port works OK.
+>> Is anybody familiar with a "known issue" with Xastir about this?
+>
+> Nope.
+Oh. Something else I forgot to mention.
+
+Sending does work. When I start up Xastir or issue a "Transmit now!" (in 
+the "interfaces" menu) the tranceiver does send, so I guess we van 
+conclude from that the USB-port does send valid commands to the TNC.
+(the messages I received at startup seams to indicate the same thing).
+
+
+Cheerio! Kr. Bonne. ON5ARF (ex. ON1ARF)
