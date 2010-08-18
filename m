@@ -1,73 +1,44 @@
-From: Douglas Cole <doug.n7bfs@gmail.com>
+From: "Curt, WE7U" <curt.we7u@gmail.com>
 Subject: Re: Looking for Packet Radio Software
-Date: Wed, 18 Aug 2010 07:30:09 -0700
-Message-ID: <AANLkTi=WVEiqD1bOAuZWefjM-VGNh_rNNh76CoHLebtc@mail.gmail.com>
-References: <000001cb3d62$c36ad940$4a408bc0$@com>
-	<AANLkTikbB9EM523hFqX+RLKqP_vkWMpojYab0rfpvzbq@mail.gmail.com>
-	<20100817172606.GA19305@locutus>
-	<AANLkTimLGW2OgOQ2mVyr-Uj9n9GkLgiO391aTxkvntDG@mail.gmail.com>
-	<alpine.LNX.2.00.1008172115500.10295@wapiti.we7u.net>
+Date: Wed, 18 Aug 2010 10:42:18 -0700 (PDT)
+Message-ID: <alpine.LNX.2.00.1008181040120.18546@wapiti.we7u.net>
+References: <000001cb3d62$c36ad940$4a408bc0$@com> <AANLkTikbB9EM523hFqX+RLKqP_vkWMpojYab0rfpvzbq@mail.gmail.com> <20100817172606.GA19305@locutus> <AANLkTimLGW2OgOQ2mVyr-Uj9n9GkLgiO391aTxkvntDG@mail.gmail.com> <alpine.LNX.2.00.1008172115500.10295@wapiti.we7u.net>
+ <AANLkTi=WVEiqD1bOAuZWefjM-VGNh_rNNh76CoHLebtc@mail.gmail.com>
 Mime-Version: 1.0
-Content-Transfer-Encoding: QUOTED-PRINTABLE
 Return-path: <linux-hams-owner@vger.kernel.org>
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:received:in-reply-to
-         :references:date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=yonvRDfm02XUPQSTXadxfOt6GXP/8P56xytKMosF0wo=;
-        b=M3VmJm6ymwkVkKqJBUbwkLX8BtDfmffniwkgzFZVk5qBn3wAPYh6w++U5MolNHSrjz
-         MYcYAh1rRq/bd2k8sE8H4CFCXmQjqn1Lc0L0M8mS7mcVn+KW72GbguMJfFFMbyhsBffo
-         bOG/+ykHTQ/TPUEAX+R2R7s4dfqSqbFix9w00=
-In-Reply-To: <alpine.LNX.2.00.1008172115500.10295@wapiti.we7u.net>
+        h=domainkey-signature:received:received:date:from:to:cc:subject
+         :in-reply-to:message-id:references:user-agent:mime-version
+         :content-type;
+        bh=QsaW/Hl7vowIjEy8Uk4KVi8QojgV5tiRKqwbt36w1ic=;
+        b=DnLm5VJCZRtIrLETWgfSKHssw1oyhAcHqav31D1rA4gEOmHjOfnYRarnVghE0oznjz
+         p6CiVX+b0OSVs/e8j7uXrZ1Q1a/QyXlj7CoYasw0BGTVluEJnfabx/UCdmsVy83TEHpz
+         nb2dMqYrlXg5BBcvkJpm49gD7s6camBPDWa+Q=
+In-Reply-To: <AANLkTi=WVEiqD1bOAuZWefjM-VGNh_rNNh76CoHLebtc@mail.gmail.com>
 Sender: linux-hams-owner@vger.kernel.org
 List-ID: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="iso-8859-1"
-To: "Curt, WE7U" <curt.we7u@gmail.com>
-Cc: linux-hams@vger.kernel.org
+Content-Type: TEXT/PLAIN; charset="us-ascii"; format="flowed"
+Content-Transfer-Encoding: 7bit
+To: Douglas Cole <doug.n7bfs@gmail.com>
+Cc: "Curt, WE7U" <curt.we7u@gmail.com>, linux-hams@vger.kernel.org
 
-I too have since upgraded my desktop pc to openSuSE 11.3 and it works
-very well, but have not made the plunge on my packet pc since I wasn't
-sure there were packages available in the ham repo' yet.
+On Wed, 18 Aug 2010, Douglas Cole wrote:
 
-I will give it a try this weekend, thanks Curt for the info :)
+> I too have since upgraded my desktop pc to openSuSE 11.3 and it works
+> very well, but have not made the plunge on my packet pc since I wasn't
+> sure there were packages available in the ham repo' yet.
+>
+> I will give it a try this weekend, thanks Curt for the info :)
 
-Doug
-N7BFS
+I didn't say I had upgraded to 11.3 yet, I've only downloaded the
+DVD images and checked the md5sum.  I still have to write either a
+full DVD or a network boot CD for each and then start installing.  I
+have five machines total to do.  I'll probably start with the laptop
+since it's non-essential.
 
-On Tue, Aug 17, 2010 at 9:18 PM, Curt, WE7U <curt.we7u@gmail.com> wrote=
-:
-> On Tue, 17 Aug 2010, Douglas Cole wrote:
->
->> I am currently running OpenSuSE 11.2 on my amateur packet pc, and ha=
-ve
->> been getting my install files from the download.opensuse.org locatio=
-n.
->> I am not sure who is building the rpm's there but they work.
->
-> Add this to your repositories in yast:
->
-> http://download.opensuse.org/repositories/hamradio/openSUSE_11.2/
->
-> That includes many of the up-to-date ham radio packages for SuSE
-> 11.2 (which is what I run, although I just downloaded the 32 and
-> 64-bit DVD images for 11.3). =A0I wouldn't run the Xastir package fro=
-m
-> there (too old, but that project goes along pretty fast sometimes),
-> but all of the other packages including the ax.25 tools I get from
-> there. =A0The fldigi package there is updated very often.
->
-> --
-> Curt, WE7U. =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 <http://w=
-ww.eskimo.com/~archer>
-> =A0 APRS: =A0Where it's at! =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0<h=
-ttp://www.xastir.org>
-> =A0Lotto: =A0A tax on people who are bad at math. - unknown
-> Windows: =A0Microsoft's tax on computer illiterates. - WE7U.
-> The world DOES revolve around me: =A0I picked the coordinate system!"
->
---
-To unsubscribe from this list: send the line "unsubscribe linux-hams" i=
-n
-the body of a message to majordomo@vger.kernel.org
-More majordomo info at  http://vger.kernel.org/majordomo-info.html
+I don't know if the ham packages have caught up to 11.3 yet.  Change
+the last part of the URL I posted to 11.3 and see.
+
+--we7u
+
