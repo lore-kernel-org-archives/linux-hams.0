@@ -1,38 +1,68 @@
-From: "Curt, WE7U" <curt.we7u@gmail.com>
+From: Douglas Cole <doug.n7bfs@gmail.com>
 Subject: Re: Looking for Packet Radio Software
-Date: Tue, 17 Aug 2010 11:08:04 -0700 (PDT)
-Message-ID: <alpine.LNX.2.00.1008171104310.22429@wapiti.we7u.net>
-References: <000001cb3d62$c36ad940$4a408bc0$@com> <AANLkTiktf4NxvW6eG1Kyr1F_zCnyAddByGuF51PbgRxB@mail.gmail.com>
+Date: Tue, 17 Aug 2010 20:16:53 -0700
+Message-ID: <AANLkTimLGW2OgOQ2mVyr-Uj9n9GkLgiO391aTxkvntDG@mail.gmail.com>
+References: <000001cb3d62$c36ad940$4a408bc0$@com>
+	<AANLkTikbB9EM523hFqX+RLKqP_vkWMpojYab0rfpvzbq@mail.gmail.com>
+	<20100817172606.GA19305@locutus>
 Mime-Version: 1.0
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 Return-path: <linux-hams-owner@vger.kernel.org>
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :in-reply-to:message-id:references:user-agent:mime-version
-         :content-type;
-        bh=hyNNLSctbgGHRpaT2LmJHoXeVtU4uL7HtDTkAy0cAc4=;
-        b=YbqatPtXb3SsoimNACe7leFrzORabNjNgfvdQZNKihHvFrVBkEYf3pLyS/lLPBGU19
-         z/hvt+pZ7LWJlYAZrSR7izGUge46+B0wr7K72Hyp7svbg18UN4/edtVz53cB/c/B3JYv
-         ePDTKSY93oIRmSxDp0vfVCln2cOrsc0sfeiGk=
-In-Reply-To: <AANLkTiktf4NxvW6eG1Kyr1F_zCnyAddByGuF51PbgRxB@mail.gmail.com>
+        h=domainkey-signature:mime-version:received:received:in-reply-to
+         :references:date:message-id:subject:from:to:content-type
+         :content-transfer-encoding;
+        bh=SJQtSxxvm5a0suxSDYvMsWlcboY4ukK7e30+ZzTvsKU=;
+        b=N52iN1+n+XEx0gNRmogwczQQ9mCwj5ZDs4ctgN2KJfiIRhZksNDmt5FqMfMmrikYni
+         iAyVhvgxAtxLQPqfgnqnBWgUf+M0xKK7Sl8qFpPlzuBSVv8Xm28NUOaWoDN9zl8FoZpQ
+         0W8+RFzItSY3lUGlvmNyS4KNP163wZAMqqUSM=
+In-Reply-To: <20100817172606.GA19305@locutus>
 Sender: linux-hams-owner@vger.kernel.org
 List-ID: <linux-hams.vger.kernel.org>
-Content-Type: TEXT/PLAIN; charset="us-ascii"; format="flowed"
-Content-Transfer-Encoding: 7bit
-To: john paterson jr <jpaterjr@gmail.com>
-Cc: linux-hams@vger.kernel.org
+Content-Type: text/plain; charset="macroman"
+To: linux-hams@vger.kernel.org
 
-On Tue, 17 Aug 2010, john paterson jr wrote:
+I am currently running OpenSuSE 11.2 on my amateur packet pc, and have
+been getting my install files from the download.opensuse.org location.
+I am not sure who is building the rpm's there but they work.
 
-> Thank you all for your great suggestions. I have a lot of
-> experimenting to do with all that information. I'll let you all know
-> if and when I get something working for me. I may also ask other
-> questions and/or clarifications from time to time.
+I would be happy to test, but I am just an long-term Linux end user
+and do not have any programming skills.
 
-FYI:  There's some good info in the Xastir Wiki "HowTos" section for
-getting AX.25 and/or Soundmodem going quickly, not Xastir-specific:
+I will try and help, as I really appreciate and use LinKT  though I
+use it in XFCE
 
-     http://www.xastir.org
+Doug
+N7BFS
 
---we7u
-
+On Tue, Aug 17, 2010 at 10:26 AM, Robert Steinh=E4u=DFer DL1NC
+<robert@steinhaeusser.com> wrote:
+> Hi all,
+>
+> I'm currently the author of LinKT, since Jochen DG6VJ and Hans-Peter
+> DG4IAD had no more time for the project a couple of years ago.
+>
+> LinKT is a KDE3 application that uses Linux' kernel AX.25 interface
+> (i.e. no TF host mode or Kantronics host mode). Check the project pag=
+es
+> at http://linkt.de and https://sourceforge.net/projects/linkt/.
+>
+> Since the major distributions (esp. Gentoo, which I use) have dropped
+> KDE3 support I can't test any changes on this code base. And because =
+I
+> almost haven't received any feedback, I never really started a KDE4
+> port. Too much other stuff to do...
+>
+> How many people out there still run LinKT? Are you interested in a KD=
+E4
+> port? Can you help develop or test? Please contact me.
+>
+> 73, Robert DL1NC/N9KBK
+>
+>
+--
+To unsubscribe from this list: send the line "unsubscribe linux-hams" i=
+n
+the body of a message to majordomo@vger.kernel.org
+More majordomo info at  http://vger.kernel.org/majordomo-info.html
