@@ -1,47 +1,53 @@
-From: "Curt, WE7U" <curt.we7u@gmail.com>
+From: Ray Wells <vk2tv@exemail.com.au>
 Subject: Re: Looking for Packet Radio Software
-Date: Tue, 17 Aug 2010 21:18:20 -0700 (PDT)
-Message-ID: <alpine.LNX.2.00.1008172115500.10295@wapiti.we7u.net>
-References: <000001cb3d62$c36ad940$4a408bc0$@com> <AANLkTikbB9EM523hFqX+RLKqP_vkWMpojYab0rfpvzbq@mail.gmail.com> <20100817172606.GA19305@locutus> <AANLkTimLGW2OgOQ2mVyr-Uj9n9GkLgiO391aTxkvntDG@mail.gmail.com>
+Date: Wed, 18 Aug 2010 15:02:01 +1000
+Message-ID: <4C6B6949.6080507@exemail.com.au>
+References: <000001cb3d62$c36ad940$4a408bc0$@com> <AANLkTikbB9EM523hFqX+RLKqP_vkWMpojYab0rfpvzbq@mail.gmail.com> <20100817172606.GA19305@locutus>
 Mime-Version: 1.0
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 Return-path: <linux-hams-owner@vger.kernel.org>
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :in-reply-to:message-id:references:user-agent:mime-version
-         :content-type;
-        bh=dB0cYbshg5qD/50FwN5KymN97v6IGP79zsV4e74EwdE=;
-        b=rdaG5pF6bwmeAwBfEggLHwRdOe9glV8sGrtmKHUgQIM7Y08/bbDn100rOwsfjSviI4
-         2/s9+om2Iie5hZbeF6+4B1eTqJjBcoHIS0F5P7s/Ly/V9R+V4w3PIxoZ9hsqBc6tzz2+
-         CjytHf0llgUI3RqmGD13xVCnSZUSMIWo4Q568=
-In-Reply-To: <AANLkTimLGW2OgOQ2mVyr-Uj9n9GkLgiO391aTxkvntDG@mail.gmail.com>
+In-Reply-To: <20100817172606.GA19305@locutus>
 Sender: linux-hams-owner@vger.kernel.org
 List-ID: <linux-hams.vger.kernel.org>
-Content-Type: TEXT/PLAIN; charset="us-ascii"; format="flowed"
-Content-Transfer-Encoding: 7bit
-To: Douglas Cole <doug.n7bfs@gmail.com>
-Cc: linux-hams@vger.kernel.org
+Content-Type: text/plain; charset="iso-8859-1"; format="flowed"
+To: linux-hams@vger.kernel.org
 
-On Tue, 17 Aug 2010, Douglas Cole wrote:
+Robert,
 
-> I am currently running OpenSuSE 11.2 on my amateur packet pc, and have
-> been getting my install files from the download.opensuse.org location.
-> I am not sure who is building the rpm's there but they work.
+There's no packet activity around here but I still maintain axudp links=
+=20
+to my old forwarding partners. I'd be happy to test a KDE4 version of L=
+inKT
 
-Add this to your repositories in yast:
+Ray vk2tv
 
-http://download.opensuse.org/repositories/hamradio/openSUSE_11.2/
+On 18/08/10 03:26, Robert Steinh=E4u=DFer DL1NC wrote:
+> Hi all,
+>
+> I'm currently the author of LinKT, since Jochen DG6VJ and Hans-Peter
+> DG4IAD had no more time for the project a couple of years ago.
+>
+> LinKT is a KDE3 application that uses Linux' kernel AX.25 interface
+> (i.e. no TF host mode or Kantronics host mode). Check the project pag=
+es
+> at http://linkt.de and https://sourceforge.net/projects/linkt/.
+>
+> Since the major distributions (esp. Gentoo, which I use) have dropped
+> KDE3 support I can't test any changes on this code base. And because =
+I
+> almost haven't received any feedback, I never really started a KDE4
+> port. Too much other stuff to do...
+>
+> How many people out there still run LinKT? Are you interested in a KD=
+E4
+> port? Can you help develop or test? Please contact me.
+>
+> 73, Robert DL1NC/N9KBK
+>
+>   =20
 
-That includes many of the up-to-date ham radio packages for SuSE
-11.2 (which is what I run, although I just downloaded the 32 and
-64-bit DVD images for 11.3).  I wouldn't run the Xastir package from
-there (too old, but that project goes along pretty fast sometimes),
-but all of the other packages including the ax.25 tools I get from
-there.  The fldigi package there is updated very often.
-
--- 
-Curt, WE7U.                         <http://www.eskimo.com/~archer>
-    APRS:  Where it's at!                    <http://www.xastir.org>
-   Lotto:  A tax on people who are bad at math. - unknown
-Windows:  Microsoft's tax on computer illiterates. - WE7U.
-The world DOES revolve around me:  I picked the coordinate system!"
+--
+To unsubscribe from this list: send the line "unsubscribe linux-hams" i=
+n
+the body of a message to majordomo@vger.kernel.org
+More majordomo info at  http://vger.kernel.org/majordomo-info.html
