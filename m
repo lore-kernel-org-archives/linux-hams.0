@@ -1,72 +1,64 @@
-From: Bernard F6BVP <f6bvp@free.fr>
-Subject: [PATCH] [ROSE] rose node number was never decreased
-Date: Fri, 27 Aug 2010 00:15:01 +0200
-Message-ID: <4C76E765.9020201@free.fr>
+From: David Miller <davem@davemloft.net>
+Subject: Re: [PATCH] [ROSE] rose node number was never decreased
+Date: Thu, 26 Aug 2010 16:09:57 -0700 (PDT)
+Message-ID: <20100826.160957.212699485.davem@davemloft.net>
+References: <4C76E765.9020201@free.fr>
 Mime-Version: 1.0
-Content-Type: multipart/mixed;
- boundary="------------030809080406030508080107"
-Return-path: <linux-hams-owner@vger.kernel.org>
-Sender: linux-hams-owner@vger.kernel.org
+Content-Transfer-Encoding: 7bit
+Return-path: <netdev-owner@vger.kernel.org>
+In-Reply-To: <4C76E765.9020201@free.fr>
+Sender: netdev-owner@vger.kernel.org
 List-ID: <linux-hams.vger.kernel.org>
-To: ralf@linux-mips.org
-Cc: davem@davemloft.net, linux-hams@vger.kernel.org, netdev@vger.kernel.org, bpidoux@free.fr
+Content-Type: Text/Plain; charset="us-ascii"
+To: f6bvp@free.fr
+Cc: ralf@linux-mips.org, linux-hams@vger.kernel.org, netdev@vger.kernel.org, bpidoux@free.fr
 
-This is a multi-part message in MIME format.
---------------030809080406030508080107
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
+From: Bernard F6BVP <f6bvp@free.fr>
+Date: Fri, 27 Aug 2010 00:15:01 +0200
 
-When a ROSE node was deleted, node number was not
-decremented and addr kept going up when a new node
-was added.
+> When a ROSE node was deleted, node number was not
+> decremented and addr kept going up when a new node
+> was added.
+> 
+> /proc/net/rose_neigh
+> addr  callsign  dev  count use mode restart  t0  tf digipeaters
+> 00007 F5KBW-9   ax0      1   0  DTE      no   0   0
+> 00006 F6BVP-11  ax0      2   0  DTE      no   0   0
+> 00005 F6BVP-9   ax0      2   0  DTE      no   0   0
+> 00001 RSLOOP-0  ???      0   0  DCE     yes   0   0
+> 
+> With this patch, rose node number is correctly decreased
+> when nodes are deleted and new ones added :
+> 
+> /proc/net/rose_neigh
+> addr  callsign  dev  count use mode restart  t0  tf digipeaters
+> 00004 F5KBW-9   ax0      1   0  DTE      no   0   0
+> 00003 F6BVP-11  ax0      2   0  DTE      no   0   0
+> 00002 F6BVP-9   ax0      2   0  DTE      no   0   0
+> 00001 RSLOOP-0  ???      0   0  DCE     yes   0   0
+> 
+> Signed-off-by: Bernard Pidoux <f6bvp@free.fr>
 
-/proc/net/rose_neigh
-addr  callsign  dev  count use mode restart  t0  tf digipeaters
-00007 F5KBW-9   ax0      1   0  DTE      no   0   0
-00006 F6BVP-11  ax0      2   0  DTE      no   0   0
-00005 F6BVP-9   ax0      2   0  DTE      no   0   0
-00001 RSLOOP-0  ???      0   0  DCE     yes   0   0
+I don't see how this patch is correct.
 
-With this patch, rose node number is correctly decreased
-when nodes are deleted and new ones added :
+The whole point of the rose_neigh_no seems to be to make sure
+that unique numbers are given to the neighbours.
 
-/proc/net/rose_neigh
-addr  callsign  dev  count use mode restart  t0  tf digipeaters
-00004 F5KBW-9   ax0      1   0  DTE      no   0   0
-00003 F6BVP-11  ax0      2   0  DTE      no   0   0
-00002 F6BVP-9   ax0      2   0  DTE      no   0   0
-00001 RSLOOP-0  ???      0   0  DCE     yes   0   0
+But with your patch, we can end up easily with neighbours assigned the
+same number.  Consider adding 3 nodes, and let's say they get
+rose_neigh_no 1, 2, and 3
 
-Signed-off-by: Bernard Pidoux <f6bvp@free.fr>
+A: neigh_no 1
+B: neigh_no 2
+C: neigh_no 3
 
+Delete B, now rose_neigh_no with your patch applied will be '3'.
+Next, add D, which will get neigh_no of '3' which is the same
+as what C has.
 
+This can't be right.
 
+What the code wants is an allocation of unique IDs and a simple
+bitmap along with find_next_zero_bit(), set_bit(), and clear_bit()
+ought to do the trick.
 
---------------030809080406030508080107
-Content-Type: text/x-patch;
- name="rose_route.patch"
-Content-Transfer-Encoding: 7bit
-Content-Disposition: attachment;
- filename="rose_route.patch"
-
---- a/net/rose/rose_route.c	2010-08-13 22:44:56.000000000 +0200
-+++ b/net/rose/rose_route.c	2010-08-26 15:11:13.000000000 +0200
-@@ -240,6 +240,7 @@
- 			ax25_cb_put(rose_neigh->ax25);
- 		kfree(rose_neigh->digipeat);
- 		kfree(rose_neigh);
-+		rose_neigh_no--;
- 		return;
- 	}
- 
-@@ -250,6 +251,7 @@
- 				ax25_cb_put(rose_neigh->ax25);
- 			kfree(rose_neigh->digipeat);
- 			kfree(rose_neigh);
-+			rose_neigh_no--;
- 			return;
- 		}
- 
-
-
---------------030809080406030508080107--
