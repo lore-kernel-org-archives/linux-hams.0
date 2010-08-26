@@ -1,52 +1,27 @@
-From: Bernard F6BVP <f6bvp@free.fr>
-Subject: [PATCH] [AX25] missplaced sock_put(sk)
-Date: Thu, 26 Aug 2010 23:40:00 +0200
-Message-ID: <4C76DF30.7080908@free.fr>
+From: David Miller <davem@davemloft.net>
+Subject: Re: [PATCH] [AX25] missplaced sock_put(sk)
+Date: Thu, 26 Aug 2010 15:16:57 -0700 (PDT)
+Message-ID: <20100826.151657.116364894.davem@davemloft.net>
+References: <4C76DF30.7080908@free.fr>
 Mime-Version: 1.0
-Content-Type: multipart/mixed;
- boundary="------------060201050109090202050908"
-Return-path: <linux-hams-owner@vger.kernel.org>
-Sender: linux-hams-owner@vger.kernel.org
+Content-Transfer-Encoding: 7bit
+Return-path: <netdev-owner@vger.kernel.org>
+In-Reply-To: <4C76DF30.7080908@free.fr>
+Sender: netdev-owner@vger.kernel.org
 List-ID: <linux-hams.vger.kernel.org>
-To: ralf@linux-mips.org
-Cc: davem@davemloft.net, linux-hams@vger.kernel.org, netdev@vger.kernel.org, bpidoux@free.fr
+Content-Type: Text/Plain; charset="us-ascii"
+To: f6bvp@free.fr
+Cc: ralf@linux-mips.org, linux-hams@vger.kernel.org, netdev@vger.kernel.org, bpidoux@free.fr
 
-This is a multi-part message in MIME format.
---------------060201050109090202050908
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
+From: Bernard F6BVP <f6bvp@free.fr>
+Date: Thu, 26 Aug 2010 23:40:00 +0200
 
-[PATCH] [AX25] missplaced sock_put(sk)
+> [PATCH] [AX25] missplaced sock_put(sk)
+> 
+> This patch moves a missplaced sock_put(sk) after
+> bh_unlock_sock(sk)
+> like in other parts of AX25 driver.
+> 
+> Signed-off-by: Bernard Pidoux <f6bvp@free.fr>
 
-This patch moves a missplaced sock_put(sk) after
-bh_unlock_sock(sk)
-like in other parts of AX25 driver.
-
-Signed-off-by: Bernard Pidoux <f6bvp@free.fr>
-
-
-
-
-
-
---------------060201050109090202050908
-Content-Type: text/x-patch;
- name="ax25_ds_timer.patch"
-Content-Transfer-Encoding: 7bit
-Content-Disposition: attachment;
- filename="ax25_ds_timer.patch"
-
---- a/net/ax25/ax25_ds_timer.c	2010-08-26 23:36:45.000000000 +0200
-+++ b/net/ax25/ax25_ds_timer.c	2010-08-26 19:55:13.000000000 +0200
-@@ -112,8 +112,8 @@
- 			if (sk) {
- 				sock_hold(sk);
- 				ax25_destroy_socket(ax25);
--				sock_put(sk);
- 				bh_unlock_sock(sk);
-+				sock_put(sk);
- 			} else
- 				ax25_destroy_socket(ax25);
- 			return;
-
---------------060201050109090202050908--
+Applied, thank you.
