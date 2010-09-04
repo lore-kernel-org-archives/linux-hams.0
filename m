@@ -1,64 +1,46 @@
-From: David Miller <davem@davemloft.net>
-Subject: Re: [PATCH] [ROSE] rose node number was never decreased
-Date: Thu, 26 Aug 2010 16:09:57 -0700 (PDT)
-Message-ID: <20100826.160957.212699485.davem@davemloft.net>
-References: <4C76E765.9020201@free.fr>
+From: Stephane Fillod <f8cfe@free.fr>
+Subject: [ANN] Hamlib 1.2.12 released
+Date: Sat, 4 Sep 2010 11:52:35 +0200
+Message-ID: <20100904095235.GJ17318@charybde.local>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
-Return-path: <netdev-owner@vger.kernel.org>
-In-Reply-To: <4C76E765.9020201@free.fr>
-Sender: netdev-owner@vger.kernel.org
+Return-path: <linux-hams-owner@vger.kernel.org>
+Content-Disposition: inline
+Sender: linux-hams-owner@vger.kernel.org
 List-ID: <linux-hams.vger.kernel.org>
-Content-Type: Text/Plain; charset="us-ascii"
-To: f6bvp@free.fr
-Cc: ralf@linux-mips.org, linux-hams@vger.kernel.org, netdev@vger.kernel.org, bpidoux@free.fr
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+To: Hamlib developers <hamlib-developer@lists.sourceforge.net>
+Cc: Linux HAMs <Linux-hams@vger.kernel.org>
 
-From: Bernard F6BVP <f6bvp@free.fr>
-Date: Fri, 27 Aug 2010 00:15:01 +0200
+Good news everyone!
 
-> When a ROSE node was deleted, node number was not
-> decremented and addr kept going up when a new node
-> was added.
-> 
-> /proc/net/rose_neigh
-> addr  callsign  dev  count use mode restart  t0  tf digipeaters
-> 00007 F5KBW-9   ax0      1   0  DTE      no   0   0
-> 00006 F6BVP-11  ax0      2   0  DTE      no   0   0
-> 00005 F6BVP-9   ax0      2   0  DTE      no   0   0
-> 00001 RSLOOP-0  ???      0   0  DCE     yes   0   0
-> 
-> With this patch, rose node number is correctly decreased
-> when nodes are deleted and new ones added :
-> 
-> /proc/net/rose_neigh
-> addr  callsign  dev  count use mode restart  t0  tf digipeaters
-> 00004 F5KBW-9   ax0      1   0  DTE      no   0   0
-> 00003 F6BVP-11  ax0      2   0  DTE      no   0   0
-> 00002 F6BVP-9   ax0      2   0  DTE      no   0   0
-> 00001 RSLOOP-0  ???      0   0  DCE     yes   0   0
-> 
-> Signed-off-by: Bernard Pidoux <f6bvp@free.fr>
+Hamlib-1.2.12 has been released.
 
-I don't see how this patch is correct.
+Hamlib provides a unified environment for the development of radio
+and rotator control applications. The release 1.2.12 includes many
+improvements since last official version.
 
-The whole point of the rose_neigh_no seems to be to make sure
-that unique numbers are given to the neighbours.
+The wiki site is available at http://apps.sourceforge.net/mediawiki/hamlib/
 
-But with your patch, we can end up easily with neighbours assigned the
-same number.  Consider adding 3 nodes, and let's say they get
-rose_neigh_no 1, 2, and 3
+Version 1.2.12
+* New models: PCR-2500, RX331, TRP 8255 S R
+* New rotator backends: DF9GR's ERC
+* Fixes and features: Paragon, TS-690S, FT-920, FT-990, FT-2000,
+            Elektor SDR-USB, IC-7000, IC-7700, AR-8200, AR-8600
 
-A: neigh_no 1
-B: neigh_no 2
-C: neigh_no 3
+Download page is accessible at http://sourceforge.net/projects/hamlib,
+rpms, .deb and Win32 DLL's coming soon.
 
-Delete B, now rose_neigh_no with your patch applied will be '3'.
-Next, add D, which will get neigh_no of '3' which is the same
-as what C has.
+Please, check it out and report to hamlib-developer@lists.sourceforge.net
+If your favorite rig is not in the supported list, feel free to ask.
+We need more beta-testers, so all the backends can reach the stable
+and fully supported state.
 
-This can't be right.
+Many thanks to all the developers and testers who participated
+in this release. Contributors and backend maintainers are listed in
+the AUTHORS file.
 
-What the code wants is an allocation of unique IDs and a simple
-bitmap along with find_next_zero_bit(), set_bit(), and clear_bit()
-ought to do the trick.
+Have fun and let us know!
+
+73 de Stephane - F8CFE & the Hamlib team
 
