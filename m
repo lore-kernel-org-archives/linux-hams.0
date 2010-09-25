@@ -1,36 +1,144 @@
-From: Dave Platt <dplatt@radagast.org>
-Subject: Re: Remote station operation from a Netbook?
-Date: Fri, 17 Sep 2010 10:59:50 -0700
-Message-ID: <4C93AC96.50208@radagast.org>
-References: <4C925613.9080005@kd4e.com> <88F49F90-0CE8-49A4-A70D-708255754716@radagast.org> <4C936EA8.1070504@kd4e.com>
+From: Dan Smith <dsmith@danplanet.com>
+Subject: [PATCH] Make mkiss link its ptys in a predictable manner
+Date: Fri, 24 Sep 2010 17:35:44 -0700
+Message-ID: <4C9D43E0.2040908@danplanet.com>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
+Content-Type: multipart/mixed;
+ boundary="------------010409070806050004000504"
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <4C936EA8.1070504@kd4e.com>
 Sender: linux-hams-owner@vger.kernel.org
 List-ID: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"
-To: doc@kd4e.com
-Cc: "FT-857@yahoogroups.com" <FT-857@yahoogroups.com>, "FT-857D@yahoogroups.com" <FT-857D@yahoogroups.com>, Linux Hams <linux-hams@vger.kernel.org>
+To: ralf@linux-mips.org, ax25@x-berg.in-berlin.de
+Cc: linux-hams@vger.kernel.org
 
-doc@kd4e.com wrote:
-> Could IRLP be used with GRIG to accomplish this?
+This is a multi-part message in MIME format.
+--------------010409070806050004000504
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
 
-I haven't used IRLP at all, but from what I see on their
-main page, it looks to me as if that combination could work.
-One would use an IRLP board hooked to the radio's audio and
-PTT lines (probably through the auxiliary jack), and a
-serial-port interface to the CAT jack being controlled by
-GRIG or something similar.
+This patch makes mkiss create symlinks for easier scripting.  If the -L
+flag is specified, it uses the base device path as a template for the link:
 
-> Is GRIG still being developed and supported or has flrig taken
-> its place?
+  # mkiss -L -x 2 /dev/ttyS0
+  Awaiting client connects on:
+  /dev/ttyS0.0 /dev/ttyS0.1
 
-The last update to the GRIG page seems to have been in 2008.
-I don't know whether it's under active development or support.
+This makes it easy to subsequently call, for example, kissattach on
+/dev/ttyS0.0 to access the first TNC port without having to parse the
+output of mkiss.  Without the -L flag, it behaves as it used it.  Upon
+exit, the links are removed.
 
-flrig does seem to be under active development... I can't
-tell whether it's a formal successor to grig (i.e. derived
-to some extent from the grig code) or whether it's a
-complementary/competing release.
+-- 
+Dan Smith
+dsmith#danplanet.com, s/#/@/
+www.danplanet.com
+KK7DS
 
+--------------010409070806050004000504
+Content-Type: text/x-patch;
+ name="mkiss_link.patch"
+Content-Transfer-Encoding: 7bit
+Content-Disposition: attachment;
+ filename="mkiss_link.patch"
+
+Index: kiss/mkiss.c
+===================================================================
+RCS file: /home/ax25-cvs/ax25-tools/kiss/mkiss.c,v
+retrieving revision 1.7
+diff -u -r1.7 mkiss.c
+--- kiss/mkiss.c	13 Apr 2010 08:36:00 -0000	1.7
++++ kiss/mkiss.c	25 Sep 2010 00:25:25 -0000
+@@ -82,7 +82,7 @@
+ static int invalid_ports	= 0;
+ static int return_polls		= 0;
+ 
+-static char *usage_string	= "usage: mkiss [-p interval] [-c] [-f] [-h] [-l] [-s speed] [-v] [-x <num_ptmx_devices>] ttyinterface pty ..\n";
++static char *usage_string	= "usage: mkiss [-p interval] [-c] [-f] [-h] [-l] [-s speed] [-v] [-x <num_ptmx_devices>] [-L] ttyinterface pty ..\n";
+ 
+ static int dump_report		= FALSE;
+ 
+@@ -112,6 +112,7 @@
+ 	unsigned long	txbytes;	/* TX bytes count		*/
+ 	char		namepts[PATH_MAX];  /* name of the unix98 pts slaves, which
+ 				       * the client has to use */
++	char		link[PATH_MAX];	/* The link (if any) to namepts	*/
+ };
+ 
+ static struct iface *tty	= NULL;
+@@ -363,8 +364,10 @@
+ 	for (i = 0; i < numptys; i++) {
+ 		if (pty[i]->fd == -1)
+ 			continue;
+-		if (pty[i]->namepts[0] != '\0')
++		if (pty[i]->namepts[0] != '\0') {
++			unlink(pty[i]->link);
+ 			continue;
++		}
+ 		tty_unlock(pty[i]->name);
+ 		close(pty[i]->fd);
+ 		free(pty[i]);
+@@ -432,8 +435,9 @@
+ 	int ptmxdevices = 0;
+ 	char *npts;
+ 	int wrote_info = 0;
++	int link_pty = 0;
+ 
+-	while ((size = getopt(argc, argv, "cfhlp:s:vx:")) != -1) {
++	while ((size = getopt(argc, argv, "cfhlp:s:vx:L")) != -1) {
+ 		switch (size) {
+ 		case 'c':
+ 			crcflag = G8BPQ_CRC;
+@@ -462,6 +466,9 @@
+ 				return 1;
+ 			}
+ 			break;
++		case 'L':
++			link_pty = 1;
++			break;
+ 		case 'v':
+ 			printf("mkiss: %s\n", VERSION);
+ 			return 1;
+@@ -585,8 +592,28 @@
+ 				printf("\nAwaiting client connects on:\n");
+ 			else
+ 				printf(" ");
+-			printf("%s", pty[i]->namepts);
+ 			wrote_info = 1;
++
++			if (link_pty) {
++				int ret;
++
++				ret = snprintf(pty[i]->link, PATH_MAX,
++					       "%s.%i", tty->name, i);
++				if (ret == -1) {
++					perror("symlink");
++					return 1;
++				}
++
++				unlink(pty[i]->link);
++				ret = symlink(pty[i]->namepts, pty[i]->link);
++				if (ret) {
++					perror("symlink");
++					return 1;
++				}
++				printf("%s", pty[i]->link);
++			} else
++				printf("%s", pty[i]->namepts);
++
+ 		}
+ 	}
+ 
+@@ -720,8 +747,10 @@
+ 	for (i = 0; i < numptys; i++) {
+ 		if (pty[i]->fd == -1)
+ 			continue;
+-		if (pty[i]->namepts[0] != '\0')
++		if (pty[i]->namepts[0] != '\0') {
++			unlink(pty[i]->link);
+ 			continue;
++		}
+ 		tty_unlock(pty[i]->name);
+ 		close(pty[i]->fd);
+ 		free(pty[i]);
+
+--------------010409070806050004000504--
