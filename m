@@ -1,144 +1,57 @@
-From: Dan Smith <dsmith@danplanet.com>
-Subject: [PATCH] Make mkiss link its ptys in a predictable manner
-Date: Fri, 24 Sep 2010 17:35:44 -0700
-Message-ID: <4C9D43E0.2040908@danplanet.com>
+From: Thomas Osterried <thomas@x-berg.in-berlin.de>
+Subject: Re: [PATCH] Make mkiss link its ptys in a predictable manner
+Date: Mon, 27 Sep 2010 00:24:56 +0200
+Message-ID: <20100926222456.GA31242@x-berg.in-berlin.de>
+References: <4C9D43E0.2040908@danplanet.com>
 Mime-Version: 1.0
-Content-Type: multipart/mixed;
- boundary="------------010409070806050004000504"
 Return-path: <linux-hams-owner@vger.kernel.org>
+Content-Disposition: inline
+In-Reply-To: <4C9D43E0.2040908@danplanet.com>
 Sender: linux-hams-owner@vger.kernel.org
 List-ID: <linux-hams.vger.kernel.org>
-To: ralf@linux-mips.org, ax25@x-berg.in-berlin.de
-Cc: linux-hams@vger.kernel.org
-
-This is a multi-part message in MIME format.
---------------010409070806050004000504
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
+To: Dan Smith <dsmith@danplanet.com>
+Cc: ralf@linux-mips.org, linux-hams@vger.kernel.org
 
-This patch makes mkiss create symlinks for easier scripting.  If the -L
-flag is specified, it uses the base device path as a template for the link:
+Hello Dan, hello list,
 
-  # mkiss -L -x 2 /dev/ttyS0
-  Awaiting client connects on:
-  /dev/ttyS0.0 /dev/ttyS0.1
+On 2010-09-24 17:35:44 -0700, Dan Smith <dsmith@danplanet.com>
+wrote in <4C9D43E0.2040908@danplanet.com>:
+> This patch makes mkiss create symlinks for easier scripting.  If the -L
+> flag is specified, it uses the base device path as a template for the link:
+> 
+>   # mkiss -L -x 2 /dev/ttyS0
+>   Awaiting client connects on:
+>   /dev/ttyS0.0 /dev/ttyS0.1
+> 
+> This makes it easy to subsequently call, for example, kissattach on
+> /dev/ttyS0.0 to access the first TNC port without having to parse the
+> output of mkiss.  Without the -L flag, it behaves as it used it.  Upon
+> exit, the links are removed.
 
-This makes it easy to subsequently call, for example, kissattach on
-/dev/ttyS0.0 to access the first TNC port without having to parse the
-output of mkiss.  Without the -L flag, it behaves as it used it.  Upon
-exit, the links are removed.
+thank you for your clean patch.
 
--- 
-Dan Smith
-dsmith#danplanet.com, s/#/@/
-www.danplanet.com
-KK7DS
+Personaly, I don't believe it's good to hardcode every eventuality in C. We're working on unix systems and value our powerful scripting languages.
 
---------------010409070806050004000504
-Content-Type: text/x-patch;
- name="mkiss_link.patch"
-Content-Transfer-Encoding: 7bit
-Content-Disposition: attachment;
- filename="mkiss_link.patch"
+Imho, your approach has some foibles.
+1. mkiss is a kiss multiplexer in userspace. It does not even need to be run under root rights.
+   By symlinking to /dev/, users of your new feature need mkiss to run as root.
+2. mkiss could not only be used on true tty's but also on pseudo pty's. Modern linuxes prefer unix98 ptys.
+   Unix98-pty's are allocated automaticaly via /dev/ptmx.
+   Imagine you'd try to use two mkiss instances, both called with /dev/ptmx as argument and -L as option. Here the concept completely fails.
+   Apart from this, it's not permitted to create files in /dev/pts/. Since linux changes so fast, it might be only a matter of time it could be decided that direct operation to /dev/ may not be permitted anymore.
 
-Index: kiss/mkiss.c
-===================================================================
-RCS file: /home/ax25-cvs/ax25-tools/kiss/mkiss.c,v
-retrieving revision 1.7
-diff -u -r1.7 mkiss.c
---- kiss/mkiss.c	13 Apr 2010 08:36:00 -0000	1.7
-+++ kiss/mkiss.c	25 Sep 2010 00:25:25 -0000
-@@ -82,7 +82,7 @@
- static int invalid_ports	= 0;
- static int return_polls		= 0;
- 
--static char *usage_string	= "usage: mkiss [-p interval] [-c] [-f] [-h] [-l] [-s speed] [-v] [-x <num_ptmx_devices>] ttyinterface pty ..\n";
-+static char *usage_string	= "usage: mkiss [-p interval] [-c] [-f] [-h] [-l] [-s speed] [-v] [-x <num_ptmx_devices>] [-L] ttyinterface pty ..\n";
- 
- static int dump_report		= FALSE;
- 
-@@ -112,6 +112,7 @@
- 	unsigned long	txbytes;	/* TX bytes count		*/
- 	char		namepts[PATH_MAX];  /* name of the unix98 pts slaves, which
- 				       * the client has to use */
-+	char		link[PATH_MAX];	/* The link (if any) to namepts	*/
- };
- 
- static struct iface *tty	= NULL;
-@@ -363,8 +364,10 @@
- 	for (i = 0; i < numptys; i++) {
- 		if (pty[i]->fd == -1)
- 			continue;
--		if (pty[i]->namepts[0] != '\0')
-+		if (pty[i]->namepts[0] != '\0') {
-+			unlink(pty[i]->link);
- 			continue;
-+		}
- 		tty_unlock(pty[i]->name);
- 		close(pty[i]->fd);
- 		free(pty[i]);
-@@ -432,8 +435,9 @@
- 	int ptmxdevices = 0;
- 	char *npts;
- 	int wrote_info = 0;
-+	int link_pty = 0;
- 
--	while ((size = getopt(argc, argv, "cfhlp:s:vx:")) != -1) {
-+	while ((size = getopt(argc, argv, "cfhlp:s:vx:L")) != -1) {
- 		switch (size) {
- 		case 'c':
- 			crcflag = G8BPQ_CRC;
-@@ -462,6 +466,9 @@
- 				return 1;
- 			}
- 			break;
-+		case 'L':
-+			link_pty = 1;
-+			break;
- 		case 'v':
- 			printf("mkiss: %s\n", VERSION);
- 			return 1;
-@@ -585,8 +592,28 @@
- 				printf("\nAwaiting client connects on:\n");
- 			else
- 				printf(" ");
--			printf("%s", pty[i]->namepts);
- 			wrote_info = 1;
-+
-+			if (link_pty) {
-+				int ret;
-+
-+				ret = snprintf(pty[i]->link, PATH_MAX,
-+					       "%s.%i", tty->name, i);
-+				if (ret == -1) {
-+					perror("symlink");
-+					return 1;
-+				}
-+
-+				unlink(pty[i]->link);
-+				ret = symlink(pty[i]->namepts, pty[i]->link);
-+				if (ret) {
-+					perror("symlink");
-+					return 1;
-+				}
-+				printf("%s", pty[i]->link);
-+			} else
-+				printf("%s", pty[i]->namepts);
-+
- 		}
- 	}
- 
-@@ -720,8 +747,10 @@
- 	for (i = 0; i < numptys; i++) {
- 		if (pty[i]->fd == -1)
- 			continue;
--		if (pty[i]->namepts[0] != '\0')
-+		if (pty[i]->namepts[0] != '\0') {
-+			unlink(pty[i]->link);
- 			continue;
-+		}
- 		tty_unlock(pty[i]->name);
- 		close(pty[i]->fd);
- 		free(pty[i]);
+Your feature could be easily implemented as one-liner in a startup script (s/echo// - it's an example):
 
---------------010409070806050004000504--
+# cd /dev; M=/dev/ptyr9; PTYS=$(mkiss $M /dev/ptmx /dev/ptmx |tail -1); n=0; for p in $PTYS; do echo ln -fs $p /dev/ptyr9.$n; n=$(($n+1)); done
+ln -fs /dev/pts/21 /dev/ptyr9.0
+ln -fs /dev/pts/22 /dev/ptyr9.1
+# 
+
+Only the cleanup must be done by hand.
+On the other hand, if your system crashes or mkiss is killed hard, your patch does also is not able to unlink the symlinks. 
+
+vy 73,
+- Thomas  dl9sau
+
