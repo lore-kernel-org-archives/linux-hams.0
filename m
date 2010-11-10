@@ -1,54 +1,56 @@
-From: Tomi Manninen <oh2bns@sral.fi>
-Subject: Re: Running python from ax25d?
-Date: Wed, 10 Nov 2010 09:34:05 +0200
-Message-ID: <4CDA4AED.8020100@sral.fi>
-References: <1289341791.7453.6.camel@localhost.localdomain>
-Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
-Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <1289341791.7453.6.camel@localhost.localdomain>
-Sender: linux-hams-owner@vger.kernel.org
+From: Vasiliy Kulikov <segooon@gmail.com>
+Subject: [PATCH v2] net: ax25: fix information leak to userland
+Date: Wed, 10 Nov 2010 21:12:36 +0300
+Message-ID: <1289412757-11411-1-git-send-email-segooon@gmail.com>
+Return-path: <netdev-owner@vger.kernel.org>
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:from:to:cc:subject:date
+         :message-id:x-mailer;
+        bh=HzmHEJ3/OExyew19gvJbYgqguIO0pMEskwbAU+ys5Tw=;
+        b=pXtrknj7R8bVFgZjxsWSKKKzZS/WkLUlEOx571nLqLHDwXIkUe+t/XsFwguN8NWYnl
+         +1l5ZDfhibYND7axgjMRdA9RMeAhgnkT3m8xgzCH+avEXG2+UZBfIc6F48HtZy+msWnC
+         hUrXMQxpqRGM/VJTWO7Yl/tkDrCeTAxgiyTcQ=
+Sender: netdev-owner@vger.kernel.org
 List-ID: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"; format="flowed"
-To: Gordon JC Pearce <gordonjcp@gjcp.net>
-Cc: linux-hams@vger.kernel.org
+MIME-Version: 1.0
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+To: kernel-janitors@vger.kernel.org
+Cc: Joerg Reuter <jreuter@yaina.de>, Ralf Baechle <ralf@linux-mips.org>, "David S. Miller" <davem@davemloft.net>, linux-hams@vger.kernel.org, netdev@vger.kernel.org, linux-kernel@vger.kernel.org
 
-Gordon JC Pearce wrote:
+Sometimes ax25_getname() doesn't initialize all members of fsa_digipeater
+field of fsa struct, also the struct has padding bytes between
+sax25_call and sax25_ndigis fields.  This structure is then copied to
+userland.  It leads to leaking of contents of kernel stack memory.
 
-> #!/usr/bin/python2 -u
-> # saved as /home/gordonjcp/test.py
-> # corresponding line in ax25d.conf is
-> # default  * * * * * *  - gordonjcp /home/gordonjcp/test.py test.py
-> import sys
-> a=""
-> print "Hello"
-> while(a.strip()!="stop"):
->     a = sys.stdin.readline()
->     print "you typed " + a
+Signed-off-by: Vasiliy Kulikov <segooon@gmail.com>
+---
+ Compile tested.
 
-End-of-line problems maybe? On packet radio CR is the de facto EOL
-character. Python file objects readline() method probably seeks
-for a LF...
+ net/ax25/af_ax25.c |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
 
-Have you tried eg. sys.stdin.read(1) to see if you get what you
-wrote back one character at a time?
-
->>From ax25d, it prints "Hello" but does not respond to any keyboard
-> input.  Furthermore, if I close down the connection from call(1) I get
-> the following:
-> 
-> Traceback (most recent call last):
->   File "/home/gordonjcp/test.py", line 7, in <module>
->     a = sys.stdin.readline()
-> IOError: [Errno 107] Transport endpoint is not connected
-> 
-> The IO error seems to suggest that there is no connection from stdin as
-> handled by ax25d to Python.  I'm not sure if this is because stdin goes
-> away when the connection is closed, or because it was never there to
-> begin with.
-
-I'd say it's because the connection was closed. Although ENOTCONN is
-a somewhat strange error here... hmm.
-
-/Tomi
+diff --git a/net/ax25/af_ax25.c b/net/ax25/af_ax25.c
+index 26eaebf..bb86d29 100644
+--- a/net/ax25/af_ax25.c
++++ b/net/ax25/af_ax25.c
+@@ -1392,6 +1392,7 @@ static int ax25_getname(struct socket *sock, struct sockaddr *uaddr,
+ 	ax25_cb *ax25;
+ 	int err = 0;
+ 
++	memset(fsa, 0, sizeof(fsa));
+ 	lock_sock(sk);
+ 	ax25 = ax25_sk(sk);
+ 
+@@ -1403,7 +1404,6 @@ static int ax25_getname(struct socket *sock, struct sockaddr *uaddr,
+ 
+ 		fsa->fsa_ax25.sax25_family = AF_AX25;
+ 		fsa->fsa_ax25.sax25_call   = ax25->dest_addr;
+-		fsa->fsa_ax25.sax25_ndigis = 0;
+ 
+ 		if (ax25->digipeat != NULL) {
+ 			ndigi = ax25->digipeat->ndigi;
+-- 
+1.7.0.4
 
