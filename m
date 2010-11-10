@@ -1,63 +1,54 @@
-From: Cathryn Mataga <cathryn@junglevision.com>
-Subject: Re: xfbbd oddness.
-Date: Tue, 09 Nov 2010 18:54:42 -0800
-Message-ID: <4CDA0972.40108@junglevision.com>
-References: <Pine.LNX.4.64.1005271432450.5422@ask.diku.dk> <20100527.162919.115912825.davem@davemloft.net> <4CD99C63.4030406@junglevision.com>
+From: Tomi Manninen <oh2bns@sral.fi>
+Subject: Re: Running python from ax25d?
+Date: Wed, 10 Nov 2010 09:34:05 +0200
+Message-ID: <4CDA4AED.8020100@sral.fi>
+References: <1289341791.7453.6.camel@localhost.localdomain>
 Mime-Version: 1.0
 Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <4CD99C63.4030406@junglevision.com>
+In-Reply-To: <1289341791.7453.6.camel@localhost.localdomain>
 Sender: linux-hams-owner@vger.kernel.org
 List-ID: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"; format="flowed"
-To: linux-hams@vger.kernel.org
-Cc: bernard.pidoux@upmic.fr
+To: Gordon JC Pearce <gordonjcp@gjcp.net>
+Cc: linux-hams@vger.kernel.org
 
-You know, I'm not an expert on signal programming in Unix.
-But, wouldn't another signal coming in during the wait cause
-a the system to halt?
+Gordon JC Pearce wrote:
 
+> #!/usr/bin/python2 -u
+> # saved as /home/gordonjcp/test.py
+> # corresponding line in ax25d.conf is
+> # default  * * * * * *  - gordonjcp /home/gordonjcp/test.py test.py
+> import sys
+> a=""
+> print "Hello"
+> while(a.strip()!="stop"):
+>     a = sys.stdin.readline()
+>     print "you typed " + a
 
+End-of-line problems maybe? On packet radio CR is the de facto EOL
+character. Python file objects readline() method probably seeks
+for a LF...
 
-         for (i = 1; i < NSIG; i++)
-         {
-                 if (i == SIGBUS || i == SIGSEGV || i == SIGALRM)
-                         continue;
-                 signal (i, sig_fct);
-         }
+Have you tried eg. sys.stdin.read(1) to see if you get what you
+wrote back one character at a time?
 
+>>From ax25d, it prints "Hello" but does not respond to any keyboard
+> input.  Furthermore, if I close down the connection from call(1) I get
+> the following:
+> 
+> Traceback (most recent call last):
+>   File "/home/gordonjcp/test.py", line 7, in <module>
+>     a = sys.stdin.readline()
+> IOError: [Errno 107] Transport endpoint is not connected
+> 
+> The IO error seems to suggest that there is no connection from stdin as
+> handled by ax25d to Python.  I'm not sure if this is because stdin goes
+> away when the connection is closed, or because it was never there to
+> begin with.
 
-static void sig_fct (int sig)
-{
-         int pid, pstatus;
+I'd say it's because the connection was closed. Although ENOTCONN is
+a somewhat strange error here... hmm.
 
-         sig &= 0xff;
-         pid = wait (&pstatus);
-         signal (sig, sig_fct);
+/Tomi
 
-	switch (sig)
-	{
-...
-stuff
-	}
-}
-
-
-
-
-
-This handler does nothing useful anyway except for
-SIGHUP, SIGTERM, SIGBUS and SIGSEGV.  I don't see any
-reason not to just ignore all signals except for the few
-that do have a function here.  I'm going to let it run
-like this, and see if it fixes the bug.
-
-
-         for (i = 1; i < NSIG; i++)
-         {
-                 if (i == SIGBUS || i == SIGSEGV || i == SIGALRM)
-                         continue;
-                 if (i == SIGHUP || i == SIGTERM)
-                         signal (i, sig_fct);
-                 else    signal(i, SIG_IGN);
-         }
