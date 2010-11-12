@@ -1,36 +1,41 @@
-From: Ralf Baechle DL5RB <ralf@linux-mips.org>
-Subject: Re: Kernel 6pack broken after 2.6.32?
-Date: Fri, 12 Nov 2010 13:50:33 +0000
-Message-ID: <20101112135033.GC8021@linux-mips.org>
-References: <20101028172004.GN29313@mea-ext.zmailer.org>
+From: Cathryn Mataga <cathryn@junglevision.com>
+Subject: Re: xfbbd oddness.
+Date: Fri, 12 Nov 2010 13:23:50 -0800
+Message-ID: <4CDDB066.4040801@junglevision.com>
+References: <Pine.LNX.4.64.1005271432450.5422@ask.diku.dk> <20100527.162919.115912825.davem@davemloft.net> <4CD99C63.4030406@junglevision.com> <4CDA0972.40108@junglevision.com>
 Mime-Version: 1.0
+Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
-Content-Disposition: inline
-In-Reply-To: <20101028172004.GN29313@mea-ext.zmailer.org>
+In-Reply-To: <4CDA0972.40108@junglevision.com>
 Sender: linux-hams-owner@vger.kernel.org
 List-ID: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-To: Matti Aarnio <matti.aarnio@zmailer.org>
-Cc: linux-hams@vger.kernel.org
+Content-Type: text/plain; charset="us-ascii"; format="flowed"
+To: linux-hams@vger.kernel.org
+Cc: bernard.pidoux@upmic.fr
 
-On Thu, Oct 28, 2010 at 08:20:04PM +0300, Matti Aarnio wrote:
+Actually, I think ignoring the SIGPIPE and other signals
+does fix a real problem.   I changed this, and I ran
+about a day with no SIGPIPE faults -- that is with
+frequent connects from an actual RF-based AX25 connection.
+No functionality is lost by ignore these signals, so I think
+I will send in a patch for this at some point.
 
-> Local Linux packet radio user reported that using 6pack driver
-> on Ubuntu 10.10 causes system to crash in few hours.
-> Using KISS on same machine works without problems.
-> 
-> He did some comparison of kernels, on 2.6.32 as released
-> by Ubuntu there were no problems.  All latter versions crash.
+With this one patch, I think xfbbd is basically usable for
+me on RF connections.
 
-Can he try a vanilla kernel.org kernel?
 
-> Apparently use of 6pack is extremely rare.
+There still is a bug.  After awhile, I start seeing...
 
-KISS is surely dominant but 6pack is a much smarter protocol.  6pack seems
-to be much more common in some parts of the world than in others.
+select: Bad file descriptor
+select: Bad file descriptor
+select: Bad file descriptor
+select: Bad file descriptor
 
-73 de DL5RB op Ralf
+and then the system bugs out.  The script normally restarts
+it, though I'm running from gdb myself so for me it just dies.
 
---
-Loc. JN47BS / CQ 14 / ITU 28 / DOK A21
+
+
+Via google, I see someone reported this bug back in 2004.  That
+was 6 years ago, so it is obviously a very old bug.
+At least it's consistent, I suppose.
