@@ -1,28 +1,21 @@
-From: David Miller <davem@davemloft.net>
-Subject: Re: [PATCH v2] net: ax25: fix information leak to userland
-Date: Wed, 10 Nov 2010 10:14:49 -0800 (PST)
-Message-ID: <20101110.101449.104041941.davem@davemloft.net>
-References: <1289412757-11411-1-git-send-email-segooon@gmail.com>
+From: John Goerzen <jgoerzen@complete.org>
+Subject: Ann: AX.25 <-> XMPP gateway
+Date: Thu, 11 Nov 2010 21:50:57 -0600
+Message-ID: <4CDCB9A1.6090105@complete.org>
 Mime-Version: 1.0
 Content-Transfer-Encoding: 7bit
-Return-path: <netdev-owner@vger.kernel.org>
-In-Reply-To: <1289412757-11411-1-git-send-email-segooon@gmail.com>
-Sender: netdev-owner@vger.kernel.org
+Return-path: <linux-hams-owner@vger.kernel.org>
+Sender: linux-hams-owner@vger.kernel.org
 List-ID: <linux-hams.vger.kernel.org>
-Content-Type: Text/Plain; charset="us-ascii"
-To: segooon@gmail.com
-Cc: kernel-janitors@vger.kernel.org, jreuter@yaina.de, ralf@linux-mips.org, linux-hams@vger.kernel.org, netdev@vger.kernel.org, linux-kernel@vger.kernel.org
+Content-Type: text/plain; charset="us-ascii"; format="flowed"
+To: linux-hams@vger.kernel.org
 
-From: Vasiliy Kulikov <segooon@gmail.com>
-Date: Wed, 10 Nov 2010 21:12:36 +0300
+Hi folks,
 
-> Sometimes ax25_getname() doesn't initialize all members of fsa_digipeater
-> field of fsa struct, also the struct has padding bytes between
-> sax25_call and sax25_ndigis fields.  This structure is then copied to
-> userland.  It leads to leaking of contents of kernel stack memory.
-> 
-> Signed-off-by: Vasiliy Kulikov <segooon@gmail.com>
+I wanted to let you know about a project I wrote today, which is an
+AX.25 packet radio to XMPP (Jabber / Google Talk protocol) gateway.
+This is working well on my node and thought I'd make it available:
 
-Looks good to me, applied.
+https://github.com/jgoerzen/ax25xmpp
 
-Thanks!
+-- John
