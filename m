@@ -1,24 +1,26 @@
 From: Cathryn Mataga <cathryn@junglevision.com>
-Subject: Re: xfbbd oddness.
-Date: Sat, 13 Nov 2010 22:52:04 -0800
-Message-ID: <4CDF8714.70503@junglevision.com>
-References: <Pine.LNX.4.64.1005271432450.5422@ask.diku.dk> <20100527.162919.115912825.davem@davemloft.net> <4CD99C63.4030406@junglevision.com> <4CDA0972.40108@junglevision.com> <4CDDB066.4040801@junglevision.com>
+Subject: [PATCH] xfbbd:  Fix issue with xfbbd and AX25 radio connections
+Date: Sat, 13 Nov 2010 22:58:39 -0800
+Message-ID: <4CDF889F.8090709@junglevision.com>
+References: <Pine.LNX.4.64.1005271432450.5422@ask.diku.dk> <20100527.162919.115912825.davem@davemloft.net> <4CD99C63.4030406@junglevision.com> <4CDA0972.40108@junglevision.com> <4CDDB066.4040801@junglevision.com> <4CDF8714.70503@junglevision.com>
 Mime-Version: 1.0
 Content-Type: multipart/mixed;
- boundary="------------080706060001070002060009"
+ boundary="------------010906020804000402090901"
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <4CDDB066.4040801@junglevision.com>
+In-Reply-To: <4CDF8714.70503@junglevision.com>
 Sender: linux-hams-owner@vger.kernel.org
 List-ID: <linux-hams.vger.kernel.org>
 To: linux-hams@vger.kernel.org
 Cc: bernard.pidoux@upmic.fr
 
 This is a multi-part message in MIME format.
---------------080706060001070002060009
+--------------010906020804000402090901
 Content-Type: text/plain; charset=ISO-8859-1; format=flowed
 Content-Transfer-Encoding: 7bit
 
-Patch versus version r11
+Patch versus version xfbbd version r11
+
+Same patch file, Except I changed the email subject.
 
 
 
@@ -33,8 +35,7 @@ to prevent bugs.  Other signals are set to SIG_IGN.
 
 
 
-
---------------080706060001070002060009
+--------------010906020804000402090901
 Content-Type: text/plain;
  name="diff.patch"
 Content-Transfer-Encoding: 7bit
@@ -119,4 +120,4 @@ diff -ruN fbbsrc.704r11/src/xfbbd.c fbbsrc.704r11cathryn/src/xfbbd.c
  
  	for (ng = 1; ng < ac; ng++)
 
---------------080706060001070002060009--
+--------------010906020804000402090901--
