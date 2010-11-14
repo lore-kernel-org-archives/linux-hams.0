@@ -1,69 +1,49 @@
-From: Miroslav Skoric <skoric@eunet.rs>
-Subject: [OT]: PZT bbs software?
-Date: Sun, 14 Nov 2010 14:02:57 +0100
-Message-ID: <4CDFDE01.6040203@eunet.rs>
+From: Bernard Pidoux <bernard.pidoux@upmc.fr>
+Subject: [PATCH] xfbbd:  Fix issue with xfbbd and AX25 radio connections
+Date: Sun, 14 Nov 2010 19:58:04 +0100
+Message-ID: <4CE0313C.3080804@upmc.fr>
 Mime-Version: 1.0
 Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
 Sender: linux-hams-owner@vger.kernel.org
 List-ID: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"; format="flowed"
-To: linux-hams@vger.kernel.org
+To: Cathryn Mataga <cathryn@junglevision.com>, linux-hams <linux-hams@vger.kernel.org>
 
-Hi all,
+Hi Cathryn,
 
-At the moment I work on a book chapter related to software that can
-simulate real things. To reference works of others, I am interested in
-written reports (web pages, online newspaper articles, e-book chapters,
-e-books, or else) related to the experience with using a ham radio
-software that can simulate a hardware node talking to another node, or
-something similar. In that way, the sources I reference to will become
-more visible after my book is published, so do not hesitate to suggest
-me reading anything that is available - including your own reports :-))
+Many thanks for the patches.
+I had noticed the SIGPIPE bug when in GDB session.
+However xfbbd did not fail usually when not under GDB.
+Anyway, its nice you cured the problem.
+Other bugs were also very annoying and I am gratefull that
+your perspicacy found the reasons I did not discovered.
 
-Also, I need information where to get an updated version of Paula 
-G8PZT's PZTBBS (Xserv) software for DOS machines. Seems that she does 
-not respond to emails anymore. I recently made a telnet to her GB7PZT 
-bbs and noticed it runs XServ AX25/IP/PSTN Mail/File/Web Server/Gateway 
-v410h (13/8/06). But I did not find a way to get a copy of that version 
-to install it here.
+I applied your patch into new FBB pre release xd704r12.
 
-Finally, here you can see my test equipment:
-             _____________                ____________________
-VHF        |MS DOS 5 comp|              |MS Windows 2000 comp|
-TRX--TNC2--|BPQ4.08a, PZT| --- LAN ---  | BPQ32 4.10n, FBB   |-- I'net
-ant         -------------                --------------------
-             YT7M-1 (BPQ)                   YT7MPB-3 (BPQ32)
-             YT7M (PZTBBS)                  YT7MPB-4 (FBB)
+http://f6bvp.free.fr/logiciels/BBS-f6fbb/xd704r12-src.tar.bz2
 
-My plan is to replace Windows setup on the right with Linux - or to have 
-an alternative testbed for Windows-based computer. At the moment I have 
-here Ubuntu 9.10 as a dual-boot with Windows, and wonder what 
-suggestions do you have about the opportunities for Ubuntu. Earlier I 
-played with Mandrake 9.1 and LinFBB but did not try it on Ubuntu.
+See CHANGES file for important notices about the use of xfbbd
+on 64 bits and SMP systems.
 
-Best regards,
+73s de Bernard, f6bvp
 
-Miroslav 'Misko' Skoric, YT7MPB
 
--- 
 
-tutorial instructor:
+>Patch versus version xfbbd version r11
+>
+>Same patch file, Except I changed the email subject.
+>
+>
+>
+>1. SOCK_MAXCHAN (drv_sock.c) now set to (MAXVOIES)  This was set to 50, which was less than MAXVOIES, and the code was
+>accessing data off the end of this table.  This was causing strange problems.  After I made this change the gateway
+>function started working again.  If anyone was having trouble with xfbbd and RF radio connections, this change may
+>possibly fix their problem.
+>2.  Several minor changes designed to eliminate "Bad file descriptor" error messages.  These occurred at the time
+>of housekeeping due to a minor bug.  The messages actually turned out to be harmless, as far as I can tell.
+>3.  Only use the signal handler for signals that have functionality in the code.  This is a simplification
+>to prevent bugs.  Other signals are set to SIG_IGN.
 
-http://tldp.org/HOWTO/FBB.html
-http://www.dirf.org/ndt2010
-http://www.icact.org/
-http://www.iaeng.org/IMECS2009
-http://www.iaria.org/conferences2008/ICWMC08.html
-http://www.wseas.org/conferences/2008/greece/education/
-http://www.wseas.us/conferences/2009/rodos/education
-http://eurocon2007.isep.pw.edu.pl/index.php?id=tutorials.php
 
-book chapter author:
 
-Handbook of Research on Human Performance and Instructional Technology
-ISBN: 978-1-60566-782-9; 678 pp; October 2009
-Published under Information Science Reference, an imprint of IGI Global
-http://www.igi-global.com/reference/details.asp?id=34814
-Edited by: Holim Song, Texas Southern University, USA; Terry T. Kidd,
-Texas A&M University, USA
