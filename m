@@ -1,123 +1,69 @@
-From: Cathryn Mataga <cathryn@junglevision.com>
-Subject: [PATCH] xfbbd:  Fix issue with xfbbd and AX25 radio connections
-Date: Sat, 13 Nov 2010 22:58:39 -0800
-Message-ID: <4CDF889F.8090709@junglevision.com>
-References: <Pine.LNX.4.64.1005271432450.5422@ask.diku.dk> <20100527.162919.115912825.davem@davemloft.net> <4CD99C63.4030406@junglevision.com> <4CDA0972.40108@junglevision.com> <4CDDB066.4040801@junglevision.com> <4CDF8714.70503@junglevision.com>
+From: Miroslav Skoric <skoric@eunet.rs>
+Subject: [OT]: PZT bbs software?
+Date: Sun, 14 Nov 2010 14:02:57 +0100
+Message-ID: <4CDFDE01.6040203@eunet.rs>
 Mime-Version: 1.0
-Content-Type: multipart/mixed;
- boundary="------------010906020804000402090901"
+Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <4CDF8714.70503@junglevision.com>
 Sender: linux-hams-owner@vger.kernel.org
 List-ID: <linux-hams.vger.kernel.org>
+Content-Type: text/plain; charset="us-ascii"; format="flowed"
 To: linux-hams@vger.kernel.org
-Cc: bernard.pidoux@upmic.fr
 
-This is a multi-part message in MIME format.
---------------010906020804000402090901
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
+Hi all,
 
-Patch versus version xfbbd version r11
+At the moment I work on a book chapter related to software that can
+simulate real things. To reference works of others, I am interested in
+written reports (web pages, online newspaper articles, e-book chapters,
+e-books, or else) related to the experience with using a ham radio
+software that can simulate a hardware node talking to another node, or
+something similar. In that way, the sources I reference to will become
+more visible after my book is published, so do not hesitate to suggest
+me reading anything that is available - including your own reports :-))
 
-Same patch file, Except I changed the email subject.
+Also, I need information where to get an updated version of Paula 
+G8PZT's PZTBBS (Xserv) software for DOS machines. Seems that she does 
+not respond to emails anymore. I recently made a telnet to her GB7PZT 
+bbs and noticed it runs XServ AX25/IP/PSTN Mail/File/Web Server/Gateway 
+v410h (13/8/06). But I did not find a way to get a copy of that version 
+to install it here.
 
+Finally, here you can see my test equipment:
+             _____________                ____________________
+VHF        |MS DOS 5 comp|              |MS Windows 2000 comp|
+TRX--TNC2--|BPQ4.08a, PZT| --- LAN ---  | BPQ32 4.10n, FBB   |-- I'net
+ant         -------------                --------------------
+             YT7M-1 (BPQ)                   YT7MPB-3 (BPQ32)
+             YT7M (PZTBBS)                  YT7MPB-4 (FBB)
 
+My plan is to replace Windows setup on the right with Linux - or to have 
+an alternative testbed for Windows-based computer. At the moment I have 
+here Ubuntu 9.10 as a dual-boot with Windows, and wonder what 
+suggestions do you have about the opportunities for Ubuntu. Earlier I 
+played with Mandrake 9.1 and LinFBB but did not try it on Ubuntu.
 
-1. SOCK_MAXCHAN (drv_sock.c) now set to (MAXVOIES)  This was set to 50, which was less than MAXVOIES, and the code was
-accessing data off the end of this table.  This was causing strange problems.  After I made this change the gateway
-function started working again.  If anyone was having trouble with xfbbd and RF radio connections, this change may
-possibly fix their problem.
-2.  Several minor changes designed to eliminate "Bad file descriptor" error messages.  These occurred at the time
-of housekeeping due to a minor bug.  The messages actually turned out to be harmless, as far as I can tell.
-3.  Only use the signal handler for signals that have functionality in the code.  This is a simplification
-to prevent bugs.  Other signals are set to SIG_IGN.
+Best regards,
 
+Miroslav 'Misko' Skoric, YT7MPB
 
+-- 
 
---------------010906020804000402090901
-Content-Type: text/plain;
- name="diff.patch"
-Content-Transfer-Encoding: 7bit
-Content-Disposition: attachment;
- filename="diff.patch"
+tutorial instructor:
 
-diff -ruN fbbsrc.704r11/src/drv_sock.c fbbsrc.704r11cathryn/src/drv_sock.c
---- fbbsrc.704r11/src/drv_sock.c	2010-06-22 13:03:01.000000000 -0700
-+++ fbbsrc.704r11cathryn/src/drv_sock.c	2010-11-13 22:43:56.284120401 -0800
-@@ -74,7 +74,8 @@
- #define RETR_EVENT 3
- #define BUSY_EVENT 4
- 
--#define SOCK_MAXCAN 50
-+#define SOCK_MAXCAN  (MAXVOIES) /* was 50 -- this was causing bad problems. 
-+			This table was being accessed beyond the array */
- 
- #define	CAN_AX25	0
- #define	CAN_NETROM	1
-@@ -104,7 +105,7 @@
- }
- scan_t;
- 
--scan_t scan[SOCK_MAXCAN];
-+scan_t scan[SOCK_MAXCAN] = {{0}};  /* I think this is necessary (Though not 100% sure.  */
- 
- static int last_can = 1;
- static int msocket = -1;
-@@ -692,8 +693,11 @@
- 
- static int stop_cnx (int port)
- {
--	close(p_port[port].fd);
--	p_port[port].fd = 0;
-+	if (p_port[port].fd) /* Prevent closing of 0 */
-+	{
-+		close(p_port[port].fd);
-+		p_port[port].fd = 0;
-+	}
- 	return 1;
- }
- 
-diff -ruN fbbsrc.704r11/src/drv_tcp.c fbbsrc.704r11cathryn/src/drv_tcp.c
---- fbbsrc.704r11/src/drv_tcp.c	2009-11-27 08:50:44.000000000 -0800
-+++ fbbsrc.704r11cathryn/src/drv_tcp.c	2010-11-13 16:55:53.363119445 -0800
-@@ -950,8 +950,11 @@
- 
- static int stop_cnx (int port)
- {
--	close(p_port[port].fd);
--	p_port[port].fd = 0;
-+	if (p_port[port].fd) /* Prevent closing of 0 */
-+	{
-+		close(p_port[port].fd);
-+		p_port[port].fd = 0;
-+	}
- 	return 1;
- }
- 
-@@ -1439,7 +1442,7 @@
- 	fd_set tcp_excep;
- 	struct timeval to;
- 
--	if (can->sock == -1)
-+	if (can->sock <= 0) /* Was -1.  Sock=0 during housekeeping.  Cause of select errors */
- 		return (0);
- 
- 	if ((can->timeout) && (can->timeout < time (NULL)))
-diff -ruN fbbsrc.704r11/src/xfbbd.c fbbsrc.704r11cathryn/src/xfbbd.c
---- fbbsrc.704r11/src/xfbbd.c	2009-11-27 08:50:44.000000000 -0800
-+++ fbbsrc.704r11cathryn/src/xfbbd.c	2010-11-13 17:10:40.879123108 -0800
-@@ -195,7 +195,10 @@
- 	{
- 		if (i == SIGBUS || i == SIGSEGV || i == SIGALRM)
- 			continue;
--		signal (i, sig_fct);
-+		else if (i == SIGHUP  || i == SIGTERM || i == SIGBUS || i == SIGSEGV)
-+			signal (i, sig_fct); /* Use sig_fct only for signals that do something */
-+		else 	
-+			signal (i, SIG_IGN); /* Otherwise ignore */
- 	}
- 
- 	for (ng = 1; ng < ac; ng++)
+http://tldp.org/HOWTO/FBB.html
+http://www.dirf.org/ndt2010
+http://www.icact.org/
+http://www.iaeng.org/IMECS2009
+http://www.iaria.org/conferences2008/ICWMC08.html
+http://www.wseas.org/conferences/2008/greece/education/
+http://www.wseas.us/conferences/2009/rodos/education
+http://eurocon2007.isep.pw.edu.pl/index.php?id=tutorials.php
 
---------------010906020804000402090901--
+book chapter author:
+
+Handbook of Research on Human Performance and Instructional Technology
+ISBN: 978-1-60566-782-9; 678 pp; October 2009
+Published under Information Science Reference, an imprint of IGI Global
+http://www.igi-global.com/reference/details.asp?id=34814
+Edited by: Holim Song, Texas Southern University, USA; Terry T. Kidd,
+Texas A&M University, USA
