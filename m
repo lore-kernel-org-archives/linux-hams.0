@@ -1,47 +1,37 @@
 From: Gordon JC Pearce <gordonjcp@gjcp.net>
-Subject: RE: two way radio
-Date: Thu, 18 Nov 2010 18:54:51 +0000
-Message-ID: <1290106491.21069.6.camel@localhost.localdomain>
-References: <AANLkTin-zRtubZg+UvmAm0hqT=T+95o00+ToG6oLJH+9@mail.gmail.com>
-	 <20101118121549.GW2394@n0nb.us>
-	 <AANLkTin9MdSCs86ZAaGpJ0pzVCfVwnbxeUGfPA7dUTo2@mail.gmail.com>
-	 <003b01cb873e$a8e96020$fabc2060$@no>
+Subject: Re: Problems with system lockup
+Date: Thu, 18 Nov 2010 19:13:24 +0000
+Message-ID: <1290107604.21069.17.camel@localhost.localdomain>
+References: <555517178-1290101199-cardhu_decombobulator_blackberry.rim.net-278429640-@bda381.bisx.prod.on.blackberry>
+	 <4CE573AC.1010607@radagast.org>
 Mime-Version: 1.0
 Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <003b01cb873e$a8e96020$fabc2060$@no>
+In-Reply-To: <4CE573AC.1010607@radagast.org>
 Sender: linux-hams-owner@vger.kernel.org
 List-ID: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
-To: Robert Eliassen <robel@vktv.no>
-Cc: linux-hams@vger.kernel.org
+To: linux-hams@vger.kernel.org
 
-On Thu, 2010-11-18 at 17:35 +0100, Robert Eliassen wrote:
-> Eduardo,
-> 
-> You still have to explain what your intentions are. Are you going to use the
-> FRS/GMRS-radio to transmit and receive data?
-> 
-> PTT (Push To Talk) would be the trickiest part I guess. You may have to
-> modify the unit.
-> 
-> Regards
-> Bob, LA6GHA
+On Thu, 2010-11-18 at 10:42 -0800, Dave Platt wrote:
 
-Most of these wee cheapy radios have a stereo 2.5mm or 3.5mm jack socket
-with an earphone pin, a mike pin and ground.  To put them into transmit,
-you connect a smallish resistor (typically 1k or so) across the electret
-mike element.  The PTT circuit in the radio looks to see if you've
-pulled the mike line down - not totally to ground, but typically to
-about 1.5 to 3V - and switches to transmit.
+> -  Hardware problems on the motherboard, pure and simple...
+>    bad DRAM, for example, or an overheating CPU due to a
+>    fan failure, or overly-aggressive overclocking.  It
+>    wouldn't hurt to install, and then run the stand-alone
+>    MEMTEST86+ check (let it run overnight, at least) to
+>    see if there are DRAM or timing problems.
 
-As other posters have said, there may be legal issues with using
-unlicensed radios for data comms.  If you're controlling a remote PC,
-you may also find that you want to encrypt your traffic - except with an
-amateur licence you can't.  Owing to the legal aspects, I can't
-recommend that you use these radios - if you get caught you could be in
-quite a lot of legal trouble, assuming your local equivalent of Ofcom
-aren't too busy catching pirate FM stations.
+This ^^^.  It smells hardware-y.  I'd be really surprised if JNOS could
+do anything to hard-lock the system - typically even if something is
+poking really low-level drivers the worst it will do is cause a kernel
+panic.  Okay, that *will* basically lock up your system, but it should
+be more informative than "just plain catatonic".
+
+Very nearly all "just locks up" problems I've run across have been down
+to dying memory or overheating CPUs.  In the past I've found that the
+latter has been quite good for causing segfaults when the CPU is driven
+hard, like compiling code or rendering video.
 
 Gordon MM0YEQ
 
