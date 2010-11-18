@@ -1,123 +1,75 @@
-From: Eduardo <erocha.ssa@gmail.com>
-Subject: Re: two way radio
-Date: Thu, 18 Nov 2010 15:31:09 -0200
-Message-ID: <AANLkTinp_qLfaWZHv+ZpdSBkHXTF4OGuTMW68Ugmy2b3@mail.gmail.com>
-References: <AANLkTin-zRtubZg+UvmAm0hqT=T+95o00+ToG6oLJH+9@mail.gmail.com>
-	<20101118121549.GW2394@n0nb.us>
-	<AANLkTin9MdSCs86ZAaGpJ0pzVCfVwnbxeUGfPA7dUTo2@mail.gmail.com>
-	<003b01cb873e$a8e96020$fabc2060$@no>
+From: Dave Platt <dplatt@radagast.org>
+Subject: Re: Problems with system lockup
+Date: Thu, 18 Nov 2010 10:42:52 -0800
+Message-ID: <4CE573AC.1010607@radagast.org>
+References: <555517178-1290101199-cardhu_decombobulator_blackberry.rim.net-278429640-@bda381.bisx.prod.on.blackberry>
 Mime-Version: 1.0
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:received:in-reply-to
-         :references:date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=GZSCT8dDkPBi4DNiymJsBHmNtVU/3F+ep2T4VRE6YyQ=;
-        b=sDFpk+sgNMcy2c3t/avh+DwvhwFeeORIPYGassDev7ZDzE0JQXYDeAkxSU5wrdVyLr
-         HYI11AmdEY1oETh1VnmTxTuXP6QaQ8rjlcUAdwHoH+c0gq/crJTiNhkHiPqiJ/PCaeH7
-         m5ycOQcNPMe3GO2tvov/VSKIweDbPSsrj+B4A=
-In-Reply-To: <003b01cb873e$a8e96020$fabc2060$@no>
+In-Reply-To: <555517178-1290101199-cardhu_decombobulator_blackberry.rim.net-278429640-@bda381.bisx.prod.on.blackberry>
 Sender: linux-hams-owner@vger.kernel.org
 List-ID: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="iso-8859-1"
-To: Robert Eliassen <robel@vktv.no>
+Content-Type: text/plain; charset="us-ascii"
+To: kd1zd@rtcubed.org
 Cc: linux-hams@vger.kernel.org
 
-Hello Robert,
+kd1zd@rtcubed.org wrote:
+> I've been having problems recently with my Linux system.  It randomly locks up, and I was wondering if anyone out there has experienced problems with a hung system.  
+> 
+> My system is CentOS 5.5, and is running UROnode and JNOS.  I have been having segmentation violation issues with JNOS, which I'm trying to figure out.  I have two serial ports which drive TNCs connected to radios.  
+> 
+> When I say the system is hung, I mean that the only thing that will liven it is a hard reboot or power cycle.  Anyone else troubleshoot these issues before?  I'm trying to run a 24/7 TCP/IP node and BBS, but these lockups make it very hard to do so.
 
-I want to send commands (and receive status) to a Linux box. I am not
-quite sure what band I can use. I am in Brazil and I think (I'm not
-completely sure) that I can use CB here for that.
+There can be a number of problems which can cause these
+sorts of lockups... sometimes hardware, sometimes software,
+sometimes an interaction of the two.  I've run into a bunch
+of them over the years.
 
-Regards,
-Eduardo
+Some examples:
 
-On Thu, Nov 18, 2010 at 2:35 PM, Robert Eliassen <robel@vktv.no> wrote:
-> Eduardo,
->
-> You still have to explain what your intentions are. Are you going to =
-use the
-> FRS/GMRS-radio to transmit and receive data?
->
-> PTT (Push To Talk) would be the trickiest part I guess. You may have =
-to
-> modify the unit.
->
-> Regards
-> Bob, LA6GHA
->
-> -----Original Message-----
-> From: linux-hams-owner@vger.kernel.org
-> [mailto:linux-hams-owner@vger.kernel.org] On Behalf Of Eduardo
-> Sent: 18. november 2010 15:51
-> To: linux-hams@vger.kernel.org
-> Subject: Re: two way radio
->
-> Hi Nate / John,
->
-> Thanks for your replay.
->
-> What (cheap) radio would you recommend to transmit data? Could you
-> also point a place where I can find the circuit needed to connect thi=
-s
-> radio to a Linux box?
->
-> Best regards,
-> Eduardo
->
-> On Thu, Nov 18, 2010 at 10:15 AM, Nate Bargmann <n0nb@n0nb.us> wrote:
->> * On 2010 18 Nov 05:09 -0600, Eduardo wrote:
->>> Hi,
->>>
->>> I have a pretty basic question. Is it possible to connect a two way
->>> radio (like https://cobra.com/detail/microtalk-cxr925-35-mile-radio=
-=2Ecfm
->>> ) to a Linux box? Does anyone know a good reference explaining how =
-to
->>> make this connection?
->>
->> To do what? =A0As it is an FRS radio I doubt that anything but voice=
- is
->> allowed, at least in the USA. =A0Outside the USA you may be able to =
-use
->> data of some sort, depending on your local regulations. =A0To do tha=
-t you
->> would likely connect the speaker/mic jack to the audio connections o=
-n a
->> sound card. =A0Looking at the specs I doubt there is any way to conn=
-ect
->> the radio for frequency/channel selection.
->>
->> 73, de Nate >>
->>
->> --
->>
->> "The optimist proclaims that we live in the best of all
->> possible worlds. =A0The pessimist fears this is true."
->>
->> Ham radio, Linux, bikes, and more: http://n0nb.us/index.html
->> --
->> To unsubscribe from this list: send the line "unsubscribe linux-hams=
-" in
->> the body of a message to majordomo@vger.kernel.org
->> More majordomo info at =A0http://vger.kernel.org/majordomo-info.html
->>
-> --
-> To unsubscribe from this list: send the line "unsubscribe linux-hams"=
- in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at =A0http://vger.kernel.org/majordomo-info.html
->
-> --
-> To unsubscribe from this list: send the line "unsubscribe linux-hams"=
- in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at =A0http://vger.kernel.org/majordomo-info.html
->
---
-To unsubscribe from this list: send the line "unsubscribe linux-hams" i=
-n
-the body of a message to majordomo@vger.kernel.org
-More majordomo info at  http://vger.kernel.org/majordomo-info.html
+-  Hardware problems on the motherboard, pure and simple...
+   bad DRAM, for example, or an overheating CPU due to a
+   fan failure, or overly-aggressive overclocking.  It
+   wouldn't hurt to install, and then run the stand-alone
+   MEMTEST86+ check (let it run overnight, at least) to
+   see if there are DRAM or timing problems.
+
+   The fact that you're seeing segfaults in JNOS, as well
+   as complete freezes, brings this possibility to the
+   top of my UsualSuspects list.
+
+-  Power-supply problems... momentary voltage sags can
+   glitch a box pretty badly.
+
+-  Problems with the power-management code, in the kernel
+   or in the BIOS (e.g. Intel SpeedStep, or the AMD
+   equivalent).  There have been a fair number of motherboards
+   and CPUs which don't handle the switching between different
+   processor clock speeds and voltages properly.
+
+-  PCI (or other) cards not plugged securely into their slots,
+   resulting in intermittent contacts that can cause all sorts
+   of confusion.
+
+-  Driver bugs.  I had a nasty periodic full freeze on my new
+   firewall/server system at home, which turned out to be a bug
+   in the driver for the USB Ethernet dongle I was using to add
+   a third Ethernet port... it worked OK under light load but
+   froze the system solid under some heavy-load conditions.  If
+   you've got a uSB dongle which uses the "kaweth" driver, get
+   rid of it.
+
+Something you may be able to do, as a very short term ugly
+workaround, is to use a hardware-based watchdog to reboot
+the system if it freezes.  A lot of motherboards these days
+use a "Super IO" chip which incorporates such a watchdog, and
+Linux has a driver and utility program to access it.  Start up
+the watchdog program (in the "no exit allowed" mode), and if
+the watchdog program doesn't wake up and successfully poke the
+watchdog chip's registers every ten seconds or so, the chip will
+yank the board's /RESET line and do a hard reboot.  Nasty, but
+perhaps better than a day-long hang until you can get home
+and push the Big Red Button yourself.  As the man said in
+Young Frankenstein, "A riot is an ugly thing... and I think
+it's about time we had one!!!"
+
