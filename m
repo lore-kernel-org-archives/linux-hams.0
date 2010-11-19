@@ -1,51 +1,33 @@
-From: kd1zd@rtcubed.org
-Subject: Re: Problems with system lockup
-Date: Fri, 19 Nov 2010 13:32:05 +0000
-Message-ID: <189256004-1290173541-cardhu_decombobulator_blackberry.rim.net-1112465315-@bda381.bisx.prod.on.blackberry>
-Reply-To: kd1zd@rtcubed.org
+From: Eduardo <erocha.ssa@gmail.com>
+Subject: ax25 and direct sound card connection
+Date: Fri, 19 Nov 2010 12:38:40 -0200
+Message-ID: <AANLkTin1oHrKcyytk2Tg72ZdJi7TXBM+QPUjCiDaK_Nm@mail.gmail.com>
 Mime-Version: 1.0
-Content-Transfer-Encoding: base64
 Return-path: <linux-hams-owner@vger.kernel.org>
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:received:date:message-id
+         :subject:from:to:content-type;
+        bh=U84PWHh4oVPoF81E07MzlM+0U2/WnpiGo14CfEFoOS4=;
+        b=NWwU27UGQC71kBE8QbZiAeukxs32ql2xBqiFFBfhK/VqtVcLsnrRIm4OZS6aDtw3Ni
+         5XA+D0YE1yKEZ+A4v4osBkstZIOezSwhZUkFD916JmCiVmjiY1KvZlyYomLLgFwYr4jR
+         twcxUFHdcalgj74Skiox0/Bn4AMyPmiihtUac=
 Sender: linux-hams-owner@vger.kernel.org
 List-ID: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 7bit
 To: linux-hams@vger.kernel.org
 
-VGhhbmtzIGZvciBhbGwgdGhlIHJlc3BvbnNlcy4gIEFmdGVyIHJlYWRpbmcgdGhlbSwgSSByZWFs
-aXplZCBJJ3ZlIHNlZW4gbW9yZSBjcmFzaGVzIGluIHRoZSBsYXN0IHdlZWssIHdoZW4gSSBhZGRl
-ZCBhIHVzYiBoYXJkIGRyaXZlIGVuY2xvc3VyZSB0byB0aGUgc3lzdGVtLiAgSSByZW1vdmVkIGl0
-IHRvIHNlZSBpZ2YgdGhlIGNyYXNoZXMgYXJlIGxlc3MgZnJlcXVlbnQuDQoNCkFsc28sIEkgZG8g
-cnVuIG9uZSBvZiB0aHIgVE5DcyBvZmYgb2YgYSBVU0IgdG8gc2VyaWFsIGRvbmdsZSwgbWF5YmUg
-dGhhdCBhbHNvIGhhcyBzb21ldGhpbmcgdG8gZG8gd2l0aCBpdC4NCg0KSSB3aWxsIGF0IHNvbWUg
-cG9pbnQgZ2l2ZSB0aGUgbWVtb3J5IHRlc3QgYSB0cnkuICBUaGF0IG1heSBhbHNvIGhlbHAgcGlu
-cG9pbnQgaWYgdGhlcmUgYXJlIG90aGVyIHRoaW5ncyB0aGF0IGFyZSBwcm9ibGVtcy4NCg0KQ2Fu
-IGFueSBvZiB5b3UgcmVjb21tZW5kIGEgd2F0Y2hkb2cgY2FyZD8NCi0tLS0tLU9yaWdpbmFsIE1l
-c3NhZ2UtLS0tLS0NCkZyb206IEdvcmRvbiBKQyBQZWFyY2UNClNlbmRlcjogbGludXgtaGFtcy1v
-d25lckB2Z2VyLmtlcm5lbC5vcmcNClRvOiBsaW51eC1oYW1zQHZnZXIua2VybmVsLm9yZw0KU3Vi
-amVjdDogUmU6IFByb2JsZW1zIHdpdGggc3lzdGVtIGxvY2t1cA0KU2VudDogTm92IDE4LCAyMDEw
-IDE0OjEzDQoNCk9uIFRodSwgMjAxMC0xMS0xOCBhdCAxMDo0MiAtMDgwMCwgRGF2ZSBQbGF0dCB3
-cm90ZToNCg0KPiAtICBIYXJkd2FyZSBwcm9ibGVtcyBvbiB0aGUgbW90aGVyYm9hcmQsIHB1cmUg
-YW5kIHNpbXBsZS4uLg0KPiAgICBiYWQgRFJBTSwgZm9yIGV4YW1wbGUsIG9yIGFuIG92ZXJoZWF0
-aW5nIENQVSBkdWUgdG8gYQ0KPiAgICBmYW4gZmFpbHVyZSwgb3Igb3Zlcmx5LWFnZ3Jlc3NpdmUg
-b3ZlcmNsb2NraW5nLiAgSXQNCj4gICAgd291bGRuJ3QgaHVydCB0byBpbnN0YWxsLCBhbmQgdGhl
-biBydW4gdGhlIHN0YW5kLWFsb25lDQo+ICAgIE1FTVRFU1Q4NisgY2hlY2sgKGxldCBpdCBydW4g
-b3Zlcm5pZ2h0LCBhdCBsZWFzdCkgdG8NCj4gICAgc2VlIGlmIHRoZXJlIGFyZSBEUkFNIG9yIHRp
-bWluZyBwcm9ibGVtcy4NCg0KVGhpcyBeXl4uICBJdCBzbWVsbHMgaGFyZHdhcmUteS4gIEknZCBi
-ZSByZWFsbHkgc3VycHJpc2VkIGlmIEpOT1MgY291bGQNCmRvIGFueXRoaW5nIHRvIGhhcmQtbG9j
-ayB0aGUgc3lzdGVtIC0gdHlwaWNhbGx5IGV2ZW4gaWYgc29tZXRoaW5nIGlzDQpwb2tpbmcgcmVh
-bGx5IGxvdy1sZXZlbCBkcml2ZXJzIHRoZSB3b3JzdCBpdCB3aWxsIGRvIGlzIGNhdXNlIGEga2Vy
-bmVsDQpwYW5pYy4gIE9rYXksIHRoYXQgKndpbGwqIGJhc2ljYWxseSBsb2NrIHVwIHlvdXIgc3lz
-dGVtLCBidXQgaXQgc2hvdWxkDQpiZSBtb3JlIGluZm9ybWF0aXZlIHRoYW4gImp1c3QgcGxhaW4g
-Y2F0YXRvbmljIi4NCg0KVmVyeSBuZWFybHkgYWxsICJqdXN0IGxvY2tzIHVwIiBwcm9ibGVtcyBJ
-J3ZlIHJ1biBhY3Jvc3MgaGF2ZSBiZWVuIGRvd24NCnRvIGR5aW5nIG1lbW9yeSBvciBvdmVyaGVh
-dGluZyBDUFVzLiAgSW4gdGhlIHBhc3QgSSd2ZSBmb3VuZCB0aGF0IHRoZQ0KbGF0dGVyIGhhcyBi
-ZWVuIHF1aXRlIGdvb2QgZm9yIGNhdXNpbmcgc2VnZmF1bHRzIHdoZW4gdGhlIENQVSBpcyBkcml2
-ZW4NCmhhcmQsIGxpa2UgY29tcGlsaW5nIGNvZGUgb3IgcmVuZGVyaW5nIHZpZGVvLg0KDQpHb3Jk
-b24gTU0wWUVRDQoNCi0tDQpUbyB1bnN1YnNjcmliZSBmcm9tIHRoaXMgbGlzdDogc2VuZCB0aGUg
-bGluZSAidW5zdWJzY3JpYmUgbGludXgtaGFtcyIgaW4NCnRoZSBib2R5IG9mIGEgbWVzc2FnZSB0
-byBtYWpvcmRvbW9Admdlci5rZXJuZWwub3JnDQpNb3JlIG1ham9yZG9tbyBpbmZvIGF0ICBodHRw
-Oi8vdmdlci5rZXJuZWwub3JnL21ham9yZG9tby1pbmZvLmh0bWwNCg0KDQotLQ0KUm9iZXJ0IFRo
-b2VsZW4sIEtEMVpEDQpDaGVjayBvdXQgaHR0cDovL3d3dy5ydGN1YmVkLm9yZy9rZDF6ZCwNCnBh
-Y2tldCByYWRpbyBpbiBDVA0KDQpTdGF0aW9uIHBob25lOiAoODYwKSA2OTgtMDUwMg0KU3RhdGlv
-biBlbWFpbCAga2QxemQgPGF0PiBydGN1YmVkLm9yZw==
+Hi,
 
+I have another fairly basic question. Before buying an actual radio, I
+thought I can get some know how about using ax25 by connecting two
+sound cards directly. Is that possible?
+
+I mean to connect two linux boxes by their sound cards directly and
+use soundmodem (no radio between them)? Has anyone tried that? Can I
+just connect the mic of the box1 to the speaker of box2 and the other
+way around?
+
+Regards,
+Eduardo
