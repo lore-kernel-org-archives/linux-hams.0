@@ -1,150 +1,51 @@
-From: "Robert Eliassen" <robel@vktv.no>
-Subject: RE: two way radio
-Date: Thu, 18 Nov 2010 21:41:54 +0100
-Message-ID: <006d01cb8761$0950d160$1bf27420$@no>
-References: <AANLkTin-zRtubZg+UvmAm0hqT=T+95o00+ToG6oLJH+9@mail.gmail.com>	<20101118121549.GW2394@n0nb.us>	<AANLkTin9MdSCs86ZAaGpJ0pzVCfVwnbxeUGfPA7dUTo2@mail.gmail.com>	<003b01cb873e$a8e96020$fabc2060$@no> <AANLkTinp_qLfaWZHv+ZpdSBkHXTF4OGuTMW68Ugmy2b3@mail.gmail.com>
+From: kd1zd@rtcubed.org
+Subject: Re: Problems with system lockup
+Date: Fri, 19 Nov 2010 13:32:05 +0000
+Message-ID: <189256004-1290173541-cardhu_decombobulator_blackberry.rim.net-1112465315-@bda381.bisx.prod.on.blackberry>
+Reply-To: kd1zd@rtcubed.org
 Mime-Version: 1.0
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Content-Transfer-Encoding: base64
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <AANLkTinp_qLfaWZHv+ZpdSBkHXTF4OGuTMW68Ugmy2b3@mail.gmail.com>
-Content-Language: no
 Sender: linux-hams-owner@vger.kernel.org
 List-ID: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="iso-8859-1"
-To: 'Eduardo' <erocha.ssa@gmail.com>
-Cc: linux-hams@vger.kernel.org
+Content-Type: text/plain; charset="us-ascii"
+To: linux-hams@vger.kernel.org
 
-Ah, so you're like going to telnet into a Linux box via radio!=20
+VGhhbmtzIGZvciBhbGwgdGhlIHJlc3BvbnNlcy4gIEFmdGVyIHJlYWRpbmcgdGhlbSwgSSByZWFs
+aXplZCBJJ3ZlIHNlZW4gbW9yZSBjcmFzaGVzIGluIHRoZSBsYXN0IHdlZWssIHdoZW4gSSBhZGRl
+ZCBhIHVzYiBoYXJkIGRyaXZlIGVuY2xvc3VyZSB0byB0aGUgc3lzdGVtLiAgSSByZW1vdmVkIGl0
+IHRvIHNlZSBpZ2YgdGhlIGNyYXNoZXMgYXJlIGxlc3MgZnJlcXVlbnQuDQoNCkFsc28sIEkgZG8g
+cnVuIG9uZSBvZiB0aHIgVE5DcyBvZmYgb2YgYSBVU0IgdG8gc2VyaWFsIGRvbmdsZSwgbWF5YmUg
+dGhhdCBhbHNvIGhhcyBzb21ldGhpbmcgdG8gZG8gd2l0aCBpdC4NCg0KSSB3aWxsIGF0IHNvbWUg
+cG9pbnQgZ2l2ZSB0aGUgbWVtb3J5IHRlc3QgYSB0cnkuICBUaGF0IG1heSBhbHNvIGhlbHAgcGlu
+cG9pbnQgaWYgdGhlcmUgYXJlIG90aGVyIHRoaW5ncyB0aGF0IGFyZSBwcm9ibGVtcy4NCg0KQ2Fu
+IGFueSBvZiB5b3UgcmVjb21tZW5kIGEgd2F0Y2hkb2cgY2FyZD8NCi0tLS0tLU9yaWdpbmFsIE1l
+c3NhZ2UtLS0tLS0NCkZyb206IEdvcmRvbiBKQyBQZWFyY2UNClNlbmRlcjogbGludXgtaGFtcy1v
+d25lckB2Z2VyLmtlcm5lbC5vcmcNClRvOiBsaW51eC1oYW1zQHZnZXIua2VybmVsLm9yZw0KU3Vi
+amVjdDogUmU6IFByb2JsZW1zIHdpdGggc3lzdGVtIGxvY2t1cA0KU2VudDogTm92IDE4LCAyMDEw
+IDE0OjEzDQoNCk9uIFRodSwgMjAxMC0xMS0xOCBhdCAxMDo0MiAtMDgwMCwgRGF2ZSBQbGF0dCB3
+cm90ZToNCg0KPiAtICBIYXJkd2FyZSBwcm9ibGVtcyBvbiB0aGUgbW90aGVyYm9hcmQsIHB1cmUg
+YW5kIHNpbXBsZS4uLg0KPiAgICBiYWQgRFJBTSwgZm9yIGV4YW1wbGUsIG9yIGFuIG92ZXJoZWF0
+aW5nIENQVSBkdWUgdG8gYQ0KPiAgICBmYW4gZmFpbHVyZSwgb3Igb3Zlcmx5LWFnZ3Jlc3NpdmUg
+b3ZlcmNsb2NraW5nLiAgSXQNCj4gICAgd291bGRuJ3QgaHVydCB0byBpbnN0YWxsLCBhbmQgdGhl
+biBydW4gdGhlIHN0YW5kLWFsb25lDQo+ICAgIE1FTVRFU1Q4NisgY2hlY2sgKGxldCBpdCBydW4g
+b3Zlcm5pZ2h0LCBhdCBsZWFzdCkgdG8NCj4gICAgc2VlIGlmIHRoZXJlIGFyZSBEUkFNIG9yIHRp
+bWluZyBwcm9ibGVtcy4NCg0KVGhpcyBeXl4uICBJdCBzbWVsbHMgaGFyZHdhcmUteS4gIEknZCBi
+ZSByZWFsbHkgc3VycHJpc2VkIGlmIEpOT1MgY291bGQNCmRvIGFueXRoaW5nIHRvIGhhcmQtbG9j
+ayB0aGUgc3lzdGVtIC0gdHlwaWNhbGx5IGV2ZW4gaWYgc29tZXRoaW5nIGlzDQpwb2tpbmcgcmVh
+bGx5IGxvdy1sZXZlbCBkcml2ZXJzIHRoZSB3b3JzdCBpdCB3aWxsIGRvIGlzIGNhdXNlIGEga2Vy
+bmVsDQpwYW5pYy4gIE9rYXksIHRoYXQgKndpbGwqIGJhc2ljYWxseSBsb2NrIHVwIHlvdXIgc3lz
+dGVtLCBidXQgaXQgc2hvdWxkDQpiZSBtb3JlIGluZm9ybWF0aXZlIHRoYW4gImp1c3QgcGxhaW4g
+Y2F0YXRvbmljIi4NCg0KVmVyeSBuZWFybHkgYWxsICJqdXN0IGxvY2tzIHVwIiBwcm9ibGVtcyBJ
+J3ZlIHJ1biBhY3Jvc3MgaGF2ZSBiZWVuIGRvd24NCnRvIGR5aW5nIG1lbW9yeSBvciBvdmVyaGVh
+dGluZyBDUFVzLiAgSW4gdGhlIHBhc3QgSSd2ZSBmb3VuZCB0aGF0IHRoZQ0KbGF0dGVyIGhhcyBi
+ZWVuIHF1aXRlIGdvb2QgZm9yIGNhdXNpbmcgc2VnZmF1bHRzIHdoZW4gdGhlIENQVSBpcyBkcml2
+ZW4NCmhhcmQsIGxpa2UgY29tcGlsaW5nIGNvZGUgb3IgcmVuZGVyaW5nIHZpZGVvLg0KDQpHb3Jk
+b24gTU0wWUVRDQoNCi0tDQpUbyB1bnN1YnNjcmliZSBmcm9tIHRoaXMgbGlzdDogc2VuZCB0aGUg
+bGluZSAidW5zdWJzY3JpYmUgbGludXgtaGFtcyIgaW4NCnRoZSBib2R5IG9mIGEgbWVzc2FnZSB0
+byBtYWpvcmRvbW9Admdlci5rZXJuZWwub3JnDQpNb3JlIG1ham9yZG9tbyBpbmZvIGF0ICBodHRw
+Oi8vdmdlci5rZXJuZWwub3JnL21ham9yZG9tby1pbmZvLmh0bWwNCg0KDQotLQ0KUm9iZXJ0IFRo
+b2VsZW4sIEtEMVpEDQpDaGVjayBvdXQgaHR0cDovL3d3dy5ydGN1YmVkLm9yZy9rZDF6ZCwNCnBh
+Y2tldCByYWRpbyBpbiBDVA0KDQpTdGF0aW9uIHBob25lOiAoODYwKSA2OTgtMDUwMg0KU3RhdGlv
+biBlbWFpbCAga2QxemQgPGF0PiBydGN1YmVkLm9yZw==
 
-Ok, so the clue here is "I want to control my Linux box 20 miles away, =
-and
-there is no other way but via radio".=20
-
-The good news is that dual-mode GMRS/FRS equipment is approved in Brazi=
-l
-according to http://en.wikipedia.org/wiki/Family_Radio_Service
-
-When it comes to legal modifications and the legal use of data communic=
-ation
-you should Google (in you language) for answers.
-
-Assuming it's legal, the rest is pretty straight forward. You can check=
- out
-http://www.faqs.org/docs/Linux-HOWTO/AX25-HOWTO.html although it's pret=
-ty
-old.=20
-
-73
-Bob, LA6GHA
-
------Original Message-----
-=46rom: linux-hams-owner@vger.kernel.org
-[mailto:linux-hams-owner@vger.kernel.org] On Behalf Of Eduardo
-Sent: 18. november 2010 18:31
-To: Robert Eliassen
-Cc: linux-hams@vger.kernel.org
-Subject: Re: two way radio
-
-Hello Robert,
-
-I want to send commands (and receive status) to a Linux box. I am not
-quite sure what band I can use. I am in Brazil and I think (I'm not
-completely sure) that I can use CB here for that.
-
-Regards,
-Eduardo
-
-On Thu, Nov 18, 2010 at 2:35 PM, Robert Eliassen <robel@vktv.no> wrote:
-> Eduardo,
->
-> You still have to explain what your intentions are. Are you going to =
-use
-the
-> FRS/GMRS-radio to transmit and receive data?
->
-> PTT (Push To Talk) would be the trickiest part I guess. You may have =
-to
-> modify the unit.
->
-> Regards
-> Bob, LA6GHA
->
-> -----Original Message-----
-> From: linux-hams-owner@vger.kernel.org
-> [mailto:linux-hams-owner@vger.kernel.org] On Behalf Of Eduardo
-> Sent: 18. november 2010 15:51
-> To: linux-hams@vger.kernel.org
-> Subject: Re: two way radio
->
-> Hi Nate / John,
->
-> Thanks for your replay.
->
-> What (cheap) radio would you recommend to transmit data? Could you
-> also point a place where I can find the circuit needed to connect thi=
-s
-> radio to a Linux box?
->
-> Best regards,
-> Eduardo
->
-> On Thu, Nov 18, 2010 at 10:15 AM, Nate Bargmann <n0nb@n0nb.us> wrote:
->> * On 2010 18 Nov 05:09 -0600, Eduardo wrote:
->>> Hi,
->>>
->>> I have a pretty basic question. Is it possible to connect a two way
->>> radio (like https://cobra.com/detail/microtalk-cxr925-35-mile-radio=
-=2Ecfm
->>> ) to a Linux box? Does anyone know a good reference explaining how =
-to
->>> make this connection?
->>
->> To do what? =A0As it is an FRS radio I doubt that anything but voice=
- is
->> allowed, at least in the USA. =A0Outside the USA you may be able to =
-use
->> data of some sort, depending on your local regulations. =A0To do tha=
-t you
->> would likely connect the speaker/mic jack to the audio connections o=
-n a
->> sound card. =A0Looking at the specs I doubt there is any way to conn=
-ect
->> the radio for frequency/channel selection.
->>
->> 73, de Nate >>
->>
->> --
->>
->> "The optimist proclaims that we live in the best of all
->> possible worlds. =A0The pessimist fears this is true."
->>
->> Ham radio, Linux, bikes, and more: http://n0nb.us/index.html
->> --
->> To unsubscribe from this list: send the line "unsubscribe linux-hams=
-" in
->> the body of a message to majordomo@vger.kernel.org
->> More majordomo info at =A0http://vger.kernel.org/majordomo-info.html
->>
-> --
-> To unsubscribe from this list: send the line "unsubscribe linux-hams"=
- in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at =A0http://vger.kernel.org/majordomo-info.html
->
-> --
-> To unsubscribe from this list: send the line "unsubscribe linux-hams"=
- in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at =A0http://vger.kernel.org/majordomo-info.html
->
---
-To unsubscribe from this list: send the line "unsubscribe linux-hams" i=
-n
-the body of a message to majordomo@vger.kernel.org
-More majordomo info at  http://vger.kernel.org/majordomo-info.html
-
---
-To unsubscribe from this list: send the line "unsubscribe linux-hams" i=
-n
-the body of a message to majordomo@vger.kernel.org
-More majordomo info at  http://vger.kernel.org/majordomo-info.html
