@@ -1,33 +1,34 @@
 From: Gordon JC Pearce <gordonjcp@gjcp.net>
-Subject: Re: Problems with system lockup
-Date: Fri, 19 Nov 2010 14:50:07 +0000
-Message-ID: <1290178207.21069.25.camel@localhost.localdomain>
-References: <189256004-1290173541-cardhu_decombobulator_blackberry.rim.net-1112465315-@bda381.bisx.prod.on.blackberry>
+Subject: Re: ax25 and direct sound card connection
+Date: Fri, 19 Nov 2010 14:51:34 +0000
+Message-ID: <1290178294.21069.27.camel@localhost.localdomain>
+References: <AANLkTin1oHrKcyytk2Tg72ZdJi7TXBM+QPUjCiDaK_Nm@mail.gmail.com>
 Mime-Version: 1.0
 Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <189256004-1290173541-cardhu_decombobulator_blackberry.rim.net-1112465315-@bda381.bisx.prod.on.blackberry>
+In-Reply-To: <AANLkTin1oHrKcyytk2Tg72ZdJi7TXBM+QPUjCiDaK_Nm@mail.gmail.com>
 Sender: linux-hams-owner@vger.kernel.org
 List-ID: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
 To: linux-hams@vger.kernel.org
 
-On Fri, 2010-11-19 at 13:32 +0000, kd1zd@rtcubed.org wrote:
-> Thanks for all the responses.  After reading them, I realized I've seen more crashes in the last week, when I added a usb hard drive enclosure to the system.  I removed it to see igf the crashes are less frequent.
+On Fri, 2010-11-19 at 12:38 -0200, Eduardo wrote:
+> Hi,
 > 
-> Also, I do run one of thr TNCs off of a USB to serial dongle, maybe that also has something to do with it.
+> I have another fairly basic question. Before buying an actual radio, I
+> thought I can get some know how about using ax25 by connecting two
+> sound cards directly. Is that possible?
+> 
+> I mean to connect two linux boxes by their sound cards directly and
+> use soundmodem (no radio between them)? Has anyone tried that? Can I
+> just connect the mic of the box1 to the speaker of box2 and the other
+> way around?
 
-Shouldn't make a difference, although some USB interfaces don't drive
-the RS-232 side hard enough for some older TNCs to work.
-
-> I will at some point give the memory test a try.  That may also help pinpoint if there are other things that are problems.
-
-It's definitely worth doing sooner rather than later.
-
-> Can any of you recommend a watchdog card?
-
-Not really, no.  If your machine keeps locking up, it's because it's
-faulty.  Treat the fault, not the symptom.
+It certainly is possible.  You won't even need to worry about a PTT
+line, either.  With a direct connection like that you ought to be able
+to get at least 19.2kbps using G3RUH mode.  Using the mike and earpiece
+sockets of unmodified walkie-talkies you will only be able to use
+1200bps AFSK.
 
 Gordon MM0YEQ
 
