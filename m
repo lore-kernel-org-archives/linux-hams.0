@@ -1,27 +1,48 @@
-From: John Goerzen <jgoerzen@complete.org>
-Subject: 300bps Packet
-Date: Mon, 22 Nov 2010 23:26:12 -0600
-Message-ID: <4CEB5074.2070008@complete.org>
+From: Ray Wells <vk2tv@exemail.com.au>
+Subject: Re: 300bps Packet
+Date: Tue, 23 Nov 2010 17:17:10 +1100
+Message-ID: <4CEB5C66.1050803@exemail.com.au>
+References: <4CEB5074.2070008@complete.org>
 Mime-Version: 1.0
 Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
+In-Reply-To: <4CEB5074.2070008@complete.org>
 Sender: linux-hams-owner@vger.kernel.org
 List-ID: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"; format="flowed"
-To: linux-hams@vger.kernel.org
+To: John Goerzen <jgoerzen@complete.org>
+Cc: linux-hams@vger.kernel.org
 
-Hi folks,
+John,
 
-I'm trying to find a way to do 300 baud packet on Linux for HF.
+ From what I've read, Soundmodem does not do 0k3.
 
-The obvious answer is soundmodem, but it doesn't seem to work.  I set it 
-up, but on TX all I get is a solid tone.  Weird.  Has anyone else made 
-this work, and if so, could you send me your config?  I've Googled and 
-have found debate over whether or not this should work, but nothing in 
-the way of actual help.
+ From my perspective, the obvious answer is a TNC2 compatible TNC fitted 
+with a KISS only EPROM. Super reliable and works for years - about 12 
+years here. You'll need kernel ax25 stuff but that's no drama.
 
-On the Windows side, at least MixW does it.  I'm wondering if there may 
-be other options for Linux that I don't know of?
+Ray vk2tv
 
--- John
-KR0L
+
+On 23/11/10 16:26, John Goerzen wrote:
+> Hi folks,
+>
+> I'm trying to find a way to do 300 baud packet on Linux for HF.
+>
+> The obvious answer is soundmodem, but it doesn't seem to work.  I set 
+> it up, but on TX all I get is a solid tone.  Weird.  Has anyone else 
+> made this work, and if so, could you send me your config?  I've 
+> Googled and have found debate over whether or not this should work, 
+> but nothing in the way of actual help.
+>
+> On the Windows side, at least MixW does it.  I'm wondering if there 
+> may be other options for Linux that I don't know of?
+>
+> -- John
+> KR0L
+> -- 
+> To unsubscribe from this list: send the line "unsubscribe linux-hams" in
+> the body of a message to majordomo@vger.kernel.org
+> More majordomo info at  http://vger.kernel.org/majordomo-info.html
+>
+
