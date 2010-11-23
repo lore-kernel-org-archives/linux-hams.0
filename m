@@ -1,17 +1,34 @@
-From: Ray Wells <vk2tv@exemail.com.au>
-Subject: Re: 300bps Packet
-Date: Tue, 23 Nov 2010 17:17:10 +1100
-Message-ID: <4CEB5C66.1050803@exemail.com.au>
-References: <4CEB5074.2070008@complete.org>
+From: "Tsutsumi Family" <oakie@kamakuranet.ne.jp>
+Subject: RE: 300bps Packet
+Date: Tue, 23 Nov 2010 16:41:44 +0900
+Message-ID: <6CE4D96A7B544D30919A49105B458915@LIVINGROOM>
+References: <4CEB5074.2070008@complete.org> <4CEB5C66.1050803@exemail.com.au>
 Mime-Version: 1.0
 Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <4CEB5074.2070008@complete.org>
+In-Reply-To: <4CEB5C66.1050803@exemail.com.au>
 Sender: linux-hams-owner@vger.kernel.org
 List-ID: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"; format="flowed"
-To: John Goerzen <jgoerzen@complete.org>
+Content-Type: text/plain; charset="us-ascii"
+To: 'Ray Wells' <vk2tv@exemail.com.au>, 'John Goerzen' <jgoerzen@complete.org>
 Cc: linux-hams@vger.kernel.org
+
+John,
+
+My experience is the same and it can transmit two tones at 400 bps lowest.
+
+I wish to analyze the source codes but have not yet done due to my software
+capability limitation.
+
+Take JA5AEA
+
+-----Original Message-----
+From: linux-hams-owner@vger.kernel.org
+[mailto:linux-hams-owner@vger.kernel.org] On Behalf Of Ray Wells
+Sent: Tuesday, November 23, 2010 3:17 PM
+To: John Goerzen
+Cc: linux-hams@vger.kernel.org
+Subject: Re: 300bps Packet
 
 John,
 
@@ -45,4 +62,9 @@ On 23/11/10 16:26, John Goerzen wrote:
 > the body of a message to majordomo@vger.kernel.org
 > More majordomo info at  http://vger.kernel.org/majordomo-info.html
 >
+
+--
+To unsubscribe from this list: send the line "unsubscribe linux-hams" in
+the body of a message to majordomo@vger.kernel.org
+More majordomo info at  http://vger.kernel.org/majordomo-info.html
 
