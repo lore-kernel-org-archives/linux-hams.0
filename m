@@ -1,40 +1,73 @@
-From: John Goerzen <jgoerzen@complete.org>
-Subject: Re: 300bps Packet
-Date: Wed, 24 Nov 2010 06:38:27 -0600
-Message-ID: <4CED0743.7000107@complete.org>
-References: <4CEB5074.2070008@complete.org> <201011241651.42670.phillor@telstra.com>
+From: "Tsutsumi Family" <oakie@kamakuranet.ne.jp>
+Subject: RE: 300bps Packet
+Date: Wed, 24 Nov 2010 22:09:07 +0900
+Message-ID: <A4BD57761E85410898774E9077BC0EA2@LIVINGROOM>
+References: <4CEB5074.2070008@complete.org> <4CEC16EF.8060106@radagast.org> <BD133160888F43CA9735B652903C2FF1@LIVINGROOM> <201011242022.08391.a.errington@lancaster.ac.uk>
 Mime-Version: 1.0
 Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <201011241651.42670.phillor@telstra.com>
+In-Reply-To: <201011242022.08391.a.errington@lancaster.ac.uk>
 Sender: linux-hams-owner@vger.kernel.org
 List-ID: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"; format="flowed"
-To: Phil <phillor@telstra.com>
-Cc: linux-hams@vger.kernel.org
+Content-Type: text/plain; charset="us-ascii"
+To: 'Andrew Errington' <a.errington@lancaster.ac.uk>
+Cc: 'Dave Platt' <dplatt@radagast.org>, linux-hams@vger.kernel.org
 
-On 11/24/2010 12:51 AM, Phil wrote:
-> On Tue, 23 Nov 2010 03:26:12 pm you wrote:
->> Hi folks,
->>
->> I'm trying to find a way to do 300 baud packet on Linux for HF.
->>
+Andrew,
+
+Yes, I wished to say, after reading Dave's explanation, that SSB mode
+dominated on HF does not matter the frequency values of two tones as long as
+the gap is maintained, i.e. 200Hz gap for 300bps operation and now I am
+guessing the soundmodem users who knew this were successful for the
+operation. 
+
+My word "conventional" means for the hardware TNCs from historical
+viewpoints.
+
+Regards,
+
+take
+
+de JA5AEA
+
+-----Original Message-----
+From: Andrew Errington [mailto:a.errington@lancaster.ac.uk] 
+Sent: Wednesday, November 24, 2010 8:22 PM
+To: Tsutsumi Family
+Cc: 'Dave Platt'; linux-hams@vger.kernel.org
+Subject: Re: 300bps Packet
+
+On Wed, 24 Nov 2010 19:31:25 you wrote:
+> Dave,
 >
-> I played with HF packet bulletin boards ten years ago using soundmodem. At
-> first it didn't appear to work but I discovered that with very careful tuning
-> soundmodem does in fact transmit and receive at 300 baud.
+> Thank you for providing the tutorial of SM source codes.
 >
-> More recently I have also played with HF APRS on 21MHz and again no problems,
-> except for very careful tuning. So John, soundmodem does work correctly at 300
-> baud.
+> As one of ways to solve 300bps SSB operation without any code change, you
+> are suggesting to use the frequency setting of f0 and f1 to less than 4 x
+> 300bps =1,200 Hz such as 800Hz and 1,000Hz, not conventional 2,100Hz and
+> 2,300Hz.
 >
+> Correct?
+>
+> Regards,
+>
+> take
 
-Hi Phil,
+Hi,
 
-That's good to know, but I must admit I don't know how to make it work. 
-  Can you elaborate on what parameters you tuned, and how you found the 
-appropriate values for them?  Maybe even a copy of your config file?
+There are no 'conventional' tones for HF modems.  Here's a site that gives a
 
-Thanks,
+good explanation why:
+http://wa8lmf.net/aprs/SSB_Frequencies.htm
 
--- John
+Here are two websites listing commonly found tone frequencies:
+http://vk3.aprs.net.au/aprs_on_hf.htm
+http://www.aprs.net.au/hf/hf-modem-tones
+
+HTH,
+
+73,
+
+Andrew
+HL5/ZL3AME
+
