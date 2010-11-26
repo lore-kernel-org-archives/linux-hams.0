@@ -1,15 +1,40 @@
-From: Tomi Manninen <tomi.manninen@saunalahti.fi>
-Subject: Re: 300bps Packet (and EHAS) - what is pam, psk, and newpsk,
-Date: Fri, 26 Nov 2010 10:55:17 +0200 (EET)
-Message-ID: <12761036.9749981290761717844.JavaMail.tomi.manninen@saunalahti.fi>
-Reply-To: oh2bns@sral.fi
+From: "Tsutsumi Family" <oakie@kamakuranet.ne.jp>
+Subject: RE: 300bps Packet (and EHAS) - what is pam, psk, and newpsk,
+Date: Fri, 26 Nov 2010 19:09:28 +0900
+Message-ID: <437FAF5EC2C548EBA73F61598AD3C589@LIVINGROOM>
+References: <12761036.9749981290761717844.JavaMail.tomi.manninen@saunalahti.fi>
 Mime-Version: 1.0
 Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
+In-Reply-To: <12761036.9749981290761717844.JavaMail.tomi.manninen@saunalahti.fi>
 Sender: linux-hams-owner@vger.kernel.org
 List-ID: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"; format="Flowed"
+Content-Type: text/plain; charset="us-ascii"
+To: oh2bns@sral.fi, linux-hams@vger.kernel.org
+
+Hi Tomi,
+
+Are you the Tomi Manninen who implemented the NEWQPSK protocol to the
+soundmodem?
+
+If so, I wish to hear technical comments on the efforts of EHAS program to
+improve the codes developed by the Tomi described in the following article
+titled "Low cost E-mail over HF with OFDM and turbo coding techniques".
+
+http://download.ehas.org/misc/articulo_HF.pdf
+
+Regards,
+
+take
+
+de JA5AEA
+
+-----Original Message-----
+From: linux-hams-owner@vger.kernel.org
+[mailto:linux-hams-owner@vger.kernel.org] On Behalf Of Tomi Manninen
+Sent: Friday, November 26, 2010 5:55 PM
 To: linux-hams@vger.kernel.org
+Subject: Re: 300bps Packet (and EHAS) - what is pam, psk, and newpsk,
 
 David Ranch [linux-hams@trinnet.net] kirjoitti: 
 
@@ -88,4 +113,9 @@ and there might be better ones out there these days. I'm not really
 in touch with the scene anymore :)
 
 /Tomi
+
+--
+To unsubscribe from this list: send the line "unsubscribe linux-hams" in
+the body of a message to majordomo@vger.kernel.org
+More majordomo info at  http://vger.kernel.org/majordomo-info.html
 
