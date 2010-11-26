@@ -1,91 +1,91 @@
-From: Dave Platt <dplatt@radagast.org>
+From: Tomi Manninen <tomi.manninen@saunalahti.fi>
 Subject: Re: 300bps Packet (and EHAS) - what is pam, psk, and newpsk,
-Date: Thu, 25 Nov 2010 22:57:52 -0800
-Message-ID: <4CEF5A70.4050600@radagast.org>
-References: <4CEB5074.2070008@complete.org> <4CEB5C66.1050803@exemail.com.au> <6CE4D96A7B544D30919A49105B458915@LIVINGROOM> <4CEC16EF.8060106@radagast.org> <BD133160888F43CA9735B652903C2FF1@LIVINGROOM> <4CED5B60.5040108@radagast.org> <40C75B79D58C4ECDBC044010559CE8CA@LIVINGROOM> <4CEEB394.3020305@trinnet.net> <CF65928CBF594B608362298FFC1B9470@LIVINGROOM> <4CEF444F.6010308@trinnet.net>
+Date: Fri, 26 Nov 2010 10:55:17 +0200 (EET)
+Message-ID: <12761036.9749981290761717844.JavaMail.tomi.manninen@saunalahti.fi>
+Reply-To: oh2bns@sral.fi
 Mime-Version: 1.0
 Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <4CEF444F.6010308@trinnet.net>
 Sender: linux-hams-owner@vger.kernel.org
 List-ID: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"
-To: 
-Cc: linux-hams@vger.kernel.org
+Content-Type: text/plain; charset="us-ascii"; format="Flowed"
+To: linux-hams@vger.kernel.org
 
+David Ranch [linux-hams@trinnet.net] kirjoitti: 
 
-> fsk - I know what FSK is but what does it mean in respect to soundmodem?
-> My Yaesu FT-950 supports an FSK input and my US Interfaces Navigator
-> device does FSK too but how would soundmodem use it? Seems it's slowest
+> It's interesting you bring up the newQPSK setting. I've never found any 
+> comprehensive documentation on soundmodem and what some of these other 
+> modes are. Do you know? Anybody else on the list know or could comment?
+
+Tom would know best but I don't know if he reads this list anymore (?).
+
+> fsk - I know what FSK is but what does it mean in respect to soundmodem? 
+> My Yaesu FT-950 supports an FSK input and my US Interfaces Navigator 
+> device does FSK too but how would soundmodem use it? Seems it's slowest 
 > speed is 4800Bits/sec.
 
-FSK is the common way of doing AX.25 packet operations at 9600
-baud.  In this mode, the voltage coming out of the sound card's
-line output is fed fairly directly to the modulator in the radio...
-a positive voltage shifts the RF frequency in one direction, a
-negative voltage shifts it in the other.  This mode of hookup and
-operation requires a radio-to-rig connection with very good
-low-frequency response (down to DC or close to it is ideal),
-and very careful adjustment of the sound-card volume control
-in order to adjust the maximum signal level (and thus the
-peak FM deviation) fairly precisely.
+This modem implements what is typically known as G3RUH modulation 
+(other callsigns seem to be assosiated with it as well, but James' is
+most familiar to me at least :)
 
-If I understand correctly, the soundmodem FSK mode (when properly
-adjusted) should be compatible with the G3RUH 9600-baud
-modem designs.
+The modem is actually a binary PAM modem (Pulse Amplitude Modulation),
+ie. it outputs the data as voltage pulses. When these are fed to an FM
+modulator, the resulting signal on RF is FSK modulated. Hence the name.
+
+Of course there are other features that make this modem G3RUH - like
+the way the data is scrambled before modulation etc.
 
 > pam - what is pam?
 
-Sounds to me like Phase and Amplitude Modulation, in which
-the bits being transmit control both the amplitude and the
-relative phase of the carrier signal.  QAM (quadrature
-amplitude modulation) is a common form of this... a signal
-might transmit three or four bits for each symbol, with
-two bits controlling the relative amount of phase shift
-from the previous symbol, and another one or two bits
-controlling the amplitude.
+See above. This modem seems to do a fairly simple
+modulation of the data to PAM, adding a training sequence in front of
+the data packet. The demodulator seems to use maximum likelihood
+estimation for the channel response.
 
-I don't know the details of the soundmodem's PAM.  From
-what I see in the code, it appears to be doing some
-filtering or convolution in the process of converting
-the bits to the symbols being transmitted, and some
-maximal-likelihood decoding upon reception.
+This is probably intended to be used the same way as the fsk modem,
+ie. connected to a FM radio, resulting in FSK on air. The idea being that
+this modem might allow faster data rates or better performance.
+My guess this modem is Tom's original work and probably not
+compatible with anything else.
 
-I assume that one would use it as the other modes would
-be used... set up two soundmodems with compatible
-configurations and start transmitting, and then see how
-well it works.
-
-> psk - I know what PSK is and I use the BPSK31 mode in Fldigi but what
+> psk - I know what PSK is and I use the BPSK31 mode in Fldigi but what 
 > would soundmodem do with it in respect to a packet mode?
 
-See above...
+Possibly similar to the above PAM modem but with PSK modulation.
+Intended to be connected to a SSB radio (SSB maps the PSK on
+audio to PSK on RF).
 
-> 
-> newqpsk - I know what QPSK is and I've used the QPSK31 mode in Fldigi
-> (has forms of FEC enabled on it) but what would soundmodem do with it in
+> newqpsk - I know what QPSK is and I've used the QPSK31 mode in Fldigi 
+> (has forms of FEC enabled on it) but what would soundmodem do with it in 
 > respect to a packet mode? Seems it's slowest speed is 1000Bits/sec.
 
-This one looks rather interesting, in that it seems to incorporate
-symbol interleaving and forward error correction.  This might
-make it more robust in the face of some sorts of errors.
+Now this one I really know. No need for guesswork as I wrote the code :)
 
-> I would love to learn what these modes do, are they stable, and maybe
-> these modes could be used as a strong alternative to trying/failing
+This modem is also known as Q15X25, newqpsk being the original
+name that Pawel, SP9VRC (of MT63, Olivia etc. fame) gave his invention.
+
+The modulation uses 15 carriers with differential QPSK, three level FEC and
+a two-phase preamble for frequency/timing sync. It's intended to be 
+connected to an SSB radio. Note that while soundmodem
+allows various bitrates, only 2500 and 3000 are supported by the original
+implementation (on DSP56002EVM) and I really don't recommend
+anything else.
+
+> I would love to learn what these modes do, are they stable, and maybe 
+> these modes could be used as a strong alternative to trying/failing 
 > 300BAUD HF packet.
 
-There's a bit of a gotcha in the regs (in the U.S. at least) in that
-most HF bands limit data transmissions to baud rates of no
-more than 300 (or an FSK frequency shift of no more than 1 kHz).
-Using a 1000 or 1200 baud QPSK would not be permissible on
-frequencies below 10 meters, I think.
+Newqpsk was intended as a HF packet replacement. I used it a lot on
+80m and in my experience the performance was good. However others
+have had worse luck. After the modem was added to MixW I got a
+lot of complaints that it didn't work at all. I never figured out what 
+the problem was but one thing is that the modem seems to be quite 
+sensitive to samplerate errors. Also the modem shares a lot with MT63
+and many of the caveats about signal levels etc. apply.
 
-An alternative might be to use a multi-carrier HF digital
-mode - one which sends a bunch of different carriers,
-each modulated at a relatively low rate.  Some of the
-keyboard-to-keyboard HF digital modes work this way...
-but I'm not aware of anyone having used those modulations
-as ways of wrapping an AX.25 or IP packet for HF digital
-use.
+It's long since I've last used newqpsk (and actually any of the modems)
+and there might be better ones out there these days. I'm not really
+in touch with the scene anymore :)
 
+/Tomi
 
