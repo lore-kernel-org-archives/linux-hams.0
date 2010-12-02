@@ -1,10 +1,10 @@
 From: f6bvp <f6bvp@free.fr>
 Subject: [PATCH] [ROSE] AX25 packet routing improvement
-Date: Thu, 02 Dec 2010 12:33:12 +0100
-Message-ID: <4CF783F8.7040300@free.fr>
+Date: Thu, 02 Dec 2010 13:05:04 +0100
+Message-ID: <4CF78B70.4060907@free.fr>
 Mime-Version: 1.0
 Content-Type: multipart/mixed;
- boundary="------------090009000305040602020004"
+ boundary="------------020606010607000300040508"
 Return-path: <linux-hams-owner@vger.kernel.org>
 Sender: linux-hams-owner@vger.kernel.org
 List-ID: <linux-hams.vger.kernel.org>
@@ -12,9 +12,15 @@ To: ralf@linux-mips.org
 Cc: davem@davemloft.net, linux-hams@vger.kernel.org, Bernard Pidoux <bernard.pidoux@upmc.fr>
 
 This is a multi-part message in MIME format.
---------------090009000305040602020004
+--------------020606010607000300040508
 Content-Type: text/plain; charset=ISO-8859-1; format=flowed
 Content-Transfer-Encoding: 7bit
+
+Hi,
+
+Sorry for this second post.
+I found that spin_lock_bh was missing in the first loop !
+
 
 [PATCH] [ROSE] rose AX25 packet routing improvement
 
@@ -43,16 +49,17 @@ improved dramatically FPAC ROSE routing time response and efficiency.
 Signed-off-by: Bernard Pidoux <f6bvp@free.fr>
 
 
---------------090009000305040602020004
+
+--------------020606010607000300040508
 Content-Type: text/x-patch;
- name="rose_get_neigh_f6bvp.patch"
+ name="rose_get_neigh.patch"
 Content-Transfer-Encoding: 7bit
 Content-Disposition: attachment;
- filename="rose_get_neigh_f6bvp.patch"
+ filename="rose_get_neigh.patch"
 
 --- a/net/rose/rose_route.c	2010-08-27 01:47:12.000000000 +0200
-+++ b/net/rose/rose_route.c	2010-11-25 15:50:30.885623929 +0100
-@@ -672,34 +672,41 @@
++++ b/net/rose/rose_route.c	2010-12-02 12:46:57.724550823 +0100
+@@ -672,29 +672,34 @@
   *	Find a neighbour or a route given a ROSE address.
   */
  struct rose_neigh *rose_get_neigh(rose_address *addr, unsigned char *cause,
@@ -65,6 +72,7 @@ Content-Disposition: attachment;
  	int i;
  
 -	if (!new) spin_lock_bh(&rose_node_list_lock);
++	if (!route_frame) spin_lock_bh(&rose_node_list_lock);
  	for (node = rose_node_list; node != NULL; node = node->next) {
  		if (rosecmpm(addr, &node->address, node->mask) == 0) {
  			for (i = 0; i < node->count; i++) {
@@ -82,14 +90,12 @@ Content-Disposition: attachment;
 +		}
 +	}
 +	if (!route_frame) { /* connect request */
-+		spin_lock_bh(&rose_node_list_lock);
 +		for (node = rose_node_list; node != NULL; node = node->next) {
 +			if (rosecmpm(addr, &node->address, node->mask) == 0) {
 +				for (i = 0; i < node->count; i++) {
  					if (!rose_ftimer_running(node->neighbour[i])) {
  						res = node->neighbour[i];
 +						failed = 0;
-+						spin_unlock_bh(&rose_node_list_lock);
  						goto out;
 -					} else
 -						failed = 1;
@@ -98,21 +104,15 @@ Content-Disposition: attachment;
  				}
  			}
  		}
-+		spin_unlock_bh(&rose_node_list_lock);
- 	}
--
-+	
- 	if (failed) {
- 		*cause      = ROSE_OUT_OF_ORDER;
- 		*diagnostic = 0;
-@@ -709,8 +716,6 @@
+@@ -709,8 +714,7 @@
  	}
  
  out:
 -	if (!new) spin_unlock_bh(&rose_node_list_lock);
 -
++	if (!route_frame) spin_unlock_bh(&rose_node_list_lock);
  	return res;
  }
  
 
---------------090009000305040602020004--
+--------------020606010607000300040508--
