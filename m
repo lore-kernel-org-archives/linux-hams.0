@@ -1,70 +1,73 @@
-From: f6bvp <f6bvp@free.fr>
-Subject: Re: Patch improving ROSE routing
-Date: Sat, 04 Dec 2010 18:49:53 +0100
-Message-ID: <4CFA7F41.7070505@free.fr>
-References: <4CEEDE41.8000001@free.fr> <4CF6B200.1060509@embarqmail.com>
+From: Dave Platt <dplatt@radagast.org>
+Subject: Re: soundmodem TX on HF again
+Date: Sat, 04 Dec 2010 10:05:08 -0800
+Message-ID: <4CFA82D4.9030300@radagast.org>
+References: <4CFA6753.1010105@complete.org>
 Mime-Version: 1.0
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <4CF6B200.1060509@embarqmail.com>
+In-Reply-To: <4CFA6753.1010105@complete.org>
 Sender: linux-hams-owner@vger.kernel.org
 List-ID: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="iso-8859-1"; format="flowed"
-To: C Schuman <k4gbb1@embarqmail.com>
-Cc: Ray Wells <vk2tv@exemail.com.au>, Bob Tenty <bobtenty@gmail.com>, Jerry DeLong <KD4YAL@tampabay.rr.com>, List for LINUX ROSE/FPAC network switch <fpac@f6fbb.org>, linux-hams <linux-hams@vger.kernel.org>
+Content-Type: text/plain; charset="us-ascii"
+To: John Goerzen <jgoerzen@complete.org>
+Cc: Linux-Hams <linux-hams@vger.kernel.org>
 
-Hi,
+On 12/04/2010 08:07 AM, John Goerzen wrote:
+> Hi folks,
+> 
+> Well I've got soundmodem 300 baud working, sortof, with 900Hz and 1100Hz.
+> 
+> I'm using it on HF.  I seem to copy other stations just fine, but they
+> have difficulty copying me.  They can, sometimes, but it is hard going
+> and lots of retrans on my end.
+> 
+> On the output side, I've tried running loud volume and quieter volume.
+> K7TMG suggested that I set the power on the rig to 100W, then reduce the
+> audio volume to it until it is transmitting with only 50W.  That maybe
+> helped marginally.
+> 
+> Any other suggestions on what I could do to improve the TX side of
+> soundmodem on HF?
 
-I am presently hunting a bug in fpacwpd that makes this server crash=20
-regularly.
-I think I am not far from the goal as I found a SIGPIPE signal that is=20
-occuring when
-fpacwpd cannot reach a destination node. This signal was not handled by=
-=20
-the server
-and this could explain why WP data base is not available from time to=20
-time inside
-fpacnode showing -1 instead of the number of nodes and fpacnode not=20
-being able to
-connect a remote node.
-Continuous testing are being performed locally.
-If the results are positive, I will soon release fpac327.14-pre30 that=20
-could become
-fpac327.14 after validation by you all.
+Several suggestions:
 
-On my list are a few other bugs in Linux rose module, ax25ipd, FPAC and=
-=20
-BBS softwares.
-This number is decreasing regularly, with some valuable help from Cathr=
-yn.
+(1) Use a standard oscilloscope, and take look at the waveforms
+    of the signals you are generating from your sound card's
+    line outputs.
 
-I recently corrected a bug in "nestat", a usefull tool from net-tools.=20
-When I patched it
-to include ROSE handling, I made a small error that made it crash from=20
-time to time.
-You can download netstat from CVS and apply the new patch as explained=20
-here :
+    I found that on one of my laptops, trying to generate full-
+    amplitude signals was "flat-topping" the audio waveform...
+    it was being clipped quite badly.  Turning down the sound
+    card "master" volume reduced the amplitude but did not
+    eliminate the flat-topping... turning down the individual
+    "PCM volume fixed the problem entirely.
 
-http://rose.fpac.free.fr/MINI-HOWTO/#s103
+    This was clearly a design flaw in the sound "card" in the
+    Dell laptop... other sound interfaces did not exhibit
+    the problem.
 
-73 de Bernard, f6bvp
+(2) Check the voltage levels of the signals going into the
+    HF rig's input (auxiliary or mic) - you may be overdriving
+    the input, or there might be a DC offset on the signal for
+    some reason.  You may need a DC-blocking capacitor or
+    a resistive padder to match the levels required.
 
+(3) Use an RF monitor of some sort (either a monitor scope
+    such as an old Heathkit HO-10, or an oscilloscope)
+    to take a look at your RF envelope and make sure it
+    is clean and not distorted.
 
-Le 01/12/2010 21:37, C Schuman a =E9crit :
-> Bernard
-> Either the AxUDP ports are working better or the ROSE patch has made =
-a=20
-> *HUGE* improvement.
-> I installed the patch on approx half of our Servers.
-> In Every case connectivity has improved and connections go thru at=20
-> warp speed.
->
-> <<Charley>>
->      k4gbb
->
+(4) Have a friend some distance away take a look at your
+    signal on a "digital modes" program's waterfall
+    display... make sure the distance between the tones is
+    correct, and make sure you aren't "splattering" due
+    to distortion somewhere along the way.
 
---
-To unsubscribe from this list: send the line "unsubscribe linux-hams" i=
-n
-the body of a message to majordomo@vger.kernel.org
-More majordomo info at  http://vger.kernel.org/majordomo-info.html
+(5) If you aren't using a transformer-isolated audio
+    interface between PC and radio, try one... if you
+    are, try adding a few ferrites around the cable to the
+    radio.   You might be getting transmitter RF coupling
+    back in the the audio, which would cause distortion and
+    mess up the waveform.
+
