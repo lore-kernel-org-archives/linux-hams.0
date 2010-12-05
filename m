@@ -1,28 +1,21 @@
 From: John Goerzen <jgoerzen@complete.org>
 Subject: Re: soundmodem TX on HF again
-Date: Sat, 04 Dec 2010 19:37:24 -0600
-Message-ID: <4CFAECD4.8050803@complete.org>
-References: <4CFA6753.1010105@complete.org> <4CFA82D4.9030300@radagast.org>
+Date: Sat, 04 Dec 2010 19:45:21 -0600
+Message-ID: <4CFAEEB1.2000201@complete.org>
+References: <4CFA6753.1010105@complete.org> <4CFA82D4.9030300@radagast.org> <4CFAB0AE.4080200@exemail.com.au>
 Mime-Version: 1.0
 Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <4CFA82D4.9030300@radagast.org>
+In-Reply-To: <4CFAB0AE.4080200@exemail.com.au>
 Sender: linux-hams-owner@vger.kernel.org
 List-ID: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"; format="flowed"
-To: Dave Platt <dplatt@radagast.org>
-Cc: Linux-Hams <linux-hams@vger.kernel.org>
+To: Ray Wells <vk2tv@exemail.com.au>
+Cc: Dave Platt <dplatt@radagast.org>, Linux-Hams <linux-hams@vger.kernel.org>
 
-On 12/04/2010 12:05 PM, Dave Platt wrote:
-> (4) Have a friend some distance away take a look at your
->      signal on a "digital modes" program's waterfall
->      display... make sure the distance between the tones is
->      correct, and make sure you aren't "splattering" due
->      to distortion somewhere along the way.
+Thank you very much, Ray and Dave.  I am gathering the wisdom I'm 
+collecting from here and elsewhere at
 
-That I managed to do today.  KQ0I looked at my signal from Des Moines 
-(I'm in Kansas).  We were having strong signals on 40m at the time and 
-he believes I've now got things set up right, and any remaining problems 
-are due to poor band conditions.
+http://wiki.complete.org/PacketRadio#hfsettings
 
-- John
+(it's incomplete but will get more)
