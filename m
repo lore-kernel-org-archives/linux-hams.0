@@ -1,21 +1,44 @@
-From: John Goerzen <jgoerzen@complete.org>
-Subject: Re: soundmodem TX on HF again
-Date: Sat, 04 Dec 2010 19:45:21 -0600
-Message-ID: <4CFAEEB1.2000201@complete.org>
-References: <4CFA6753.1010105@complete.org> <4CFA82D4.9030300@radagast.org> <4CFAB0AE.4080200@exemail.com.au>
+From: f6bvp <f6bvp@free.fr>
+Subject: RE: 300bps soundmodem notes and Broken Pipe
+Date: Mon, 06 Dec 2010 11:24:08 +0100
+Message-ID: <4CFCB9C8.1030408@free.fr>
 Mime-Version: 1.0
 Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <4CFAB0AE.4080200@exemail.com.au>
 Sender: linux-hams-owner@vger.kernel.org
 List-ID: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"; format="flowed"
-To: Ray Wells <vk2tv@exemail.com.au>
-Cc: Dave Platt <dplatt@radagast.org>, Linux-Hams <linux-hams@vger.kernel.org>
+To: oakie@kamakuranet.ne.jp, linux-hams <linux-hams@vger.kernel.org>
 
-Thank you very much, Ray and Dave.  I am gathering the wisdom I'm 
-collecting from here and elsewhere at
+Hi,
 
-http://wiki.complete.org/PacketRadio#hfsettings
+You could try adding this in soundmodem :
 
-(it's incomplete but will get more)
+#include<signal.h>
+...
+main()
+...
+...
+signal (SIGPIPE, SIG_IGN);
+
+73 de Bernard, f6bvp
+
+
+-----Original Message-----
+John,
+
+Excellent note to the soundmodem beginners.
+
+Concerning the soundmodem program, I often experience "broken pipe" errors
+in high speed transmission setting with slow CPU machines and it looks like
+one of the popular questions unexplained.
+
+Can I have suggestion from the experienced linux-hams the proper ways to
+fix?
+
+Regards,
+
+take
+
+de JA5AEA
+
