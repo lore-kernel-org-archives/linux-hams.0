@@ -1,11 +1,11 @@
-From: f6bvp <f6bvp@free.fr>
-Subject: Can AX25 socket debug message be removed ?
-Date: Tue, 21 Dec 2010 11:38:25 +0100
-Message-ID: <4D1083A1.209@free.fr>
+From: Bernard Pidoux <bernard.pidoux@upmc.fr>
+Subject: Can ROSE socket debug message be removed ?
+Date: Tue, 21 Dec 2010 11:41:59 +0100
+Message-ID: <4D108477.4060108@upmc.fr>
 References: <4CF78B70.4060907@free.fr>
 Mime-Version: 1.0
 Content-Type: multipart/mixed;
- boundary="------------080403010003040900020302"
+ boundary="------------060704040600030201010906"
 Return-path: <linux-hams-owner@vger.kernel.org>
 In-Reply-To: <4CF78B70.4060907@free.fr>
 Sender: linux-hams-owner@vger.kernel.org
@@ -14,75 +14,81 @@ To: ralf@linux-mips.org
 Cc: linux-hams@vger.kernel.org, Bernard Pidoux <bernard.pidoux@upmc.fr>
 
 This is a multi-part message in MIME format.
---------------080403010003040900020302
+--------------060704040600030201010906
 Content-Type: text/plain; charset=ISO-8859-1; format=flowed
 Content-Transfer-Encoding: 7bit
 
 Hi Ralf,
 
-I would like to know your thinking about removing the following
+The same question about removing the following ROSE
 kernel debug messages that fills /var/log/kernel/info and does not
 seem to be actually usefull.
 
-I build a patch project included here.
-In case you approve I will submit it.
 Should the SOCK_DEBUG lines be commented or removed ?
 
 Bernard Pidoux <f6bvp@free.fr>
 
---------------080403010003040900020302
+
+--------------060704040600030201010906
 Content-Type: text/x-patch;
- name="af_ax25_sock_debug.patch"
+ name="af_rose_sock_debug.patch"
 Content-Transfer-Encoding: 7bit
 Content-Disposition: attachment;
- filename="af_ax25_sock_debug.patch"
+ filename="af_rose_sock_debug.patch"
 
---- a/net/ax25/af_ax25.c	2010-12-09 23:17:27.000000000 +0100
-+++ b/net/ax25/af_ax25.c	2010-11-17 17:49:41.414197280 +0100
-@@ -1538,7 +1538,7 @@
+--- a/net/rose/af_rose.c	2010-12-19 12:12:57.712847187 +0100
++++ b/net/rose/af_rose.c	2010-12-09 20:03:57.557563800 +0100
+@@ -716,7 +739,7 @@
+ 	rose_insert_socket(sk);
+ 
+ 	sock_reset_flag(sk, SOCK_ZAPPED);
+-	SOCK_DEBUG(sk, "ROSE: socket is bound\n");
++/*	SOCK_DEBUG(sk, "ROSE: socket is bound\n");*/
+ 	return 0;
+ }
+ 
+@@ -1113,10 +1138,10 @@
+ 			srose.srose_digis[n] = rose->dest_digis[n];
  	}
  
+-	SOCK_DEBUG(sk, "ROSE: sendto: Addresses built.\n");
++/*	SOCK_DEBUG(sk, "ROSE: sendto: Addresses built.\n");*/
+ 
  	/* Build a packet */
--	SOCK_DEBUG(sk, "AX.25: sendto: Addresses built. Building packet.\n");
-+/*	SOCK_DEBUG(sk, "AX.25: sendto: Addresses built. Building packet.\n");*/
+-	SOCK_DEBUG(sk, "ROSE: sendto: building packet.\n");
++/*	SOCK_DEBUG(sk, "ROSE: sendto: building packet.\n");*/
+ 	/* Sanity check the packet size */
+ 	if (len > 65535)
+ 		return -EMSGSIZE;
+@@ -1131,7 +1156,7 @@
+ 	/*
+ 	 *	Put the data on the end
+ 	 */
+-	SOCK_DEBUG(sk, "ROSE: Appending user data\n");
++/*	SOCK_DEBUG(sk, "ROSE: Appending user data\n");*/
  
- 	/* Assume the worst case */
- 	size = len + ax25->ax25_dev->dev->hard_header_len;
-@@ -1549,7 +1549,7 @@
+ 	skb_reset_transport_header(skb);
+ 	skb_put(skb, len);
+@@ -1156,7 +1181,7 @@
+ 	 */
+ 	asmptr = skb_push(skb, ROSE_MIN_LEN);
  
- 	skb_reserve(skb, size - len);
+-	SOCK_DEBUG(sk, "ROSE: Building Network Header.\n");
++/*	SOCK_DEBUG(sk, "ROSE: Building Network Header.\n");*/
  
--	SOCK_DEBUG(sk, "AX.25: Appending user data\n");
-+/*	SOCK_DEBUG(sk, "AX.25: Appending user data\n");*/
+ 	/* Build a ROSE Network header */
+ 	asmptr[0] = ((rose->lci >> 8) & 0x0F) | ROSE_GFI;
+@@ -1166,9 +1191,9 @@
+ 	if (qbit)
+ 		asmptr[0] |= ROSE_Q_BIT;
  
- 	/* User data follows immediately after the AX.25 data */
- 	if (memcpy_fromiovec(skb_put(skb, len), msg->msg_iov, len)) {
-@@ -1564,7 +1564,7 @@
- 	if (!ax25->pidincl)
- 		*skb_push(skb, 1) = sk->sk_protocol;
+-	SOCK_DEBUG(sk, "ROSE: Built header.\n");
++/*	SOCK_DEBUG(sk, "ROSE: Built header.\n");*/
  
--	SOCK_DEBUG(sk, "AX.25: Transmitting buffer\n");
-+/*	SOCK_DEBUG(sk, "AX.25: Transmitting buffer\n");*/
+-	SOCK_DEBUG(sk, "ROSE: Transmitting buffer\n");
++/*	SOCK_DEBUG(sk, "ROSE: Transmitting buffer\n");*/
  
- 	if (sk->sk_type == SOCK_SEQPACKET) {
- 		/* Connected mode sockets go via the LAPB machine */
-@@ -1583,7 +1583,7 @@
- 
- 	skb_push(skb, 1 + ax25_addr_size(dp));
- 
--	SOCK_DEBUG(sk, "Building AX.25 Header (dp=%p).\n", dp);
-+/*	SOCK_DEBUG(sk, "Building AX.25 Header (dp=%p).\n", dp);*/
- 
- 	if (dp != NULL)
- 		SOCK_DEBUG(sk, "Num digipeaters=%d\n", dp->ndigi);
-@@ -1592,7 +1592,7 @@
- 	lv = ax25_addr_build(skb->data, &ax25->source_addr, &sax.sax25_call,
- 			     dp, AX25_COMMAND, AX25_MODULUS);
- 
--	SOCK_DEBUG(sk, "Built header (%d bytes)\n",lv);
-+/*	SOCK_DEBUG(sk, "Built header (%d bytes)\n",lv);*/
- 
- 	skb_set_transport_header(skb, lv);
- 
+ 	if (sk->sk_state != TCP_ESTABLISHED) {
+ 		kfree_skb(skb);
 
---------------080403010003040900020302--
+--------------060704040600030201010906--
