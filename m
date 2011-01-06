@@ -1,48 +1,47 @@
-From: f6bvp <f6bvp@free.fr>
-Subject: New BBS version FBB 7.05
-Date: Thu, 06 Jan 2011 00:20:47 +0100
-Message-ID: <4D24FCCF.3070407@free.fr>
-References: <ifi61a+ah4n@eGroups.com>
+From: Peter - ZL2BAU <peter.zl2bau@gmail.com>
+Subject: Re: [xfbb] New BBS version FBB 7.05
+Date: Thu, 06 Jan 2011 14:15:38 +1300
+Message-ID: <4D2517BA.7050805@gmail.com>
+References: <ifi61a+ah4n@eGroups.com> <4D24FCCF.3070407@free.fr>
 Mime-Version: 1.0
 Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <ifi61a+ah4n@eGroups.com>
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from
+         :user-agent:mime-version:to:cc:subject:references:in-reply-to
+         :content-type:content-transfer-encoding;
+        bh=UBSiAQ9QMUYaeISD4a55HYoVoZ2HO6+dD7orYvanjfY=;
+        b=pq2Tah+sIbCAUxQcUce/e5K946PCEwn3SfYncK289sjwsvvbH6Wnb8cx+8MWwiqsL/
+         Mu6Vb/4VmYDmDRzknMeNy9v1s+5XE0MTuVwL522WfmcWRDeiuhbnWAeEgdCAZvAd/rA0
+         lEz/MMJuprcMAD6cIxP5qw2cwm//7t1HjB8ZQ=
+In-Reply-To: <4D24FCCF.3070407@free.fr>
 Sender: linux-hams-owner@vger.kernel.org
 List-ID: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"; format="flowed"
-To: Liste LinuxFBB <xfbb@f6fbb.org>, FBB - User Forum <fbb@f6fbb.org>, List for LINUX ROSE/FPAC network switch <fpac@f6fbb.org>, linux-hams <linux-hams@vger.kernel.org>
+To: List for the LINUX version of FBB <xfbb@f6fbb.org>
+Cc: f6bvp <f6bvp@free.fr>, FBB - User Forum <fbb@f6fbb.org>, List for LINUX ROSE/FPAC network switch <fpac@f6fbb.org>, linux-hams <linux-hams@vger.kernel.org>
 
-Hello All,
+On 06/01/11 12:20, f6bvp wrote:
+> Hello All,
+>
+> Coming with 2011 new year a new release of F6FBB BBS has arrived.
+> This is version number 7.05 to celebrate the return to full BBS 
+> capability under Linux kernel 2.6.
+> Jean-Paul F6FBB stoped the developpment of 7.04 version a few years 
+> ago when Linux kernel was 2.2 and there was no 64 bits CPUs.
+> Version 7.05 is now fully compatible with 32 bits and 64 bits CPUs and
+> kernels 2.6.
+>
 
-Coming with 2011 new year a new release of F6FBB BBS has arrived.
-This is version number 7.05 to celebrate the return to full BBS 
-capability under Linux kernel 2.6.
-Jean-Paul F6FBB stoped the developpment of 7.04 version a few years ago 
-when Linux kernel was 2.2 and there was no 64 bits CPUs.
-Version 7.05 is now fully compatible with 32 bits and 64 bits CPUs and
-kernels 2.6.
+Hello Bernard and group,
 
-Source package can be downloaded from :
-http://f6bvp.free.fr/logiciels/BBS-f6fbb/xd705-src.tar.bz2
+Thank you Bernard for all your very hard work on this latest release, I 
+have installed 7.05 and as usual, it is running very well.
 
-Complete online documentation may be found here :
-http://www.f6fbb.org/fbbdoc/doc.htm
-or here :
-http://f6bvp.free.fr/logiciels/BBS-f6fbb/html/index.html
+Best wishes to all for 2011.
 
-FPAC LINUX MINI HOWTO describes how to install and set up the FBB BBS on 
-a packet radio network taking advantage of level 3 automatic routing 
-using ROSE protocol and FPAC nodes (an F6FBB application too).
-This is probably the most convenient packet routing system available for 
-hamradio through Internet and radio links.
-
-http://rose.fpac.free.fr/MINI-HOWTO/
-with a chapter dedicated to BBS interfaced with ROSE/FPAC network :
-http://rose.fpac.free.fr/MINI-HOWTO/#s102
-
-Happy New Year to All,
-
-Vy 73s de Bernard, f6bvp
+Regards ..... Peter - ZL2BAU
 
 
 
