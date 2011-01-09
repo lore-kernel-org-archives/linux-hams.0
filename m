@@ -1,55 +1,27 @@
-From: Jesper Juhl <jj@chaosbits.net>
-Subject: [PATCH] hamradio: Resolve memory leak due to missing firmware release
- in add_mcs()
-Date: Thu, 6 Jan 2011 21:50:29 +0100 (CET)
-Message-ID: <alpine.LNX.2.00.1101062146430.13988@swampdragon.chaosbits.net>
+From: David Miller <davem@davemloft.net>
+Subject: Re: [PATCH] hamradio: Resolve memory leak due to missing firmware
+ release in add_mcs()
+Date: Sun, 09 Jan 2011 15:46:15 -0800 (PST)
+Message-ID: <20110109.154615.200375094.davem@davemloft.net>
+References: <alpine.LNX.2.00.1101062146430.13988@swampdragon.chaosbits.net>
 Mime-Version: 1.0
+Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
+In-Reply-To: <alpine.LNX.2.00.1101062146430.13988@swampdragon.chaosbits.net>
 Sender: linux-hams-owner@vger.kernel.org
 List-ID: <linux-hams.vger.kernel.org>
-Content-Type: TEXT/PLAIN; charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-To: linux-kernel@vger.kernel.org
-Cc: netdev@vger.kernel.org, linux-hams@vger.kernel.org, Jean-Paul Roubelat <jpr@f6fbb.org>, Frederic Rible <frible@teaser.fr>, Thomas Sailer <sailer@ife.ee.ethz.ch>
+Content-Type: Text/Plain; charset="us-ascii"
+To: jj@chaosbits.net
+Cc: linux-kernel@vger.kernel.org, netdev@vger.kernel.org, linux-hams@vger.kernel.org, jpr@f6fbb.org, frible@teaser.fr, sailer@ife.ee.ethz.ch
 
+From: Jesper Juhl <jj@chaosbits.net>
+Date: Thu, 6 Jan 2011 21:50:29 +0100 (CET)
 
-Failure to release_firmware() in drivers/net/hamradio/yam.c::add_mcs() 
-causes memory leak.
-This patch should fix it.
+> 
+> Failure to release_firmware() in drivers/net/hamradio/yam.c::add_mcs() 
+> causes memory leak.
+> This patch should fix it.
+> 
+> Signed-off-by: Jesper Juhl <jj@chaosbits.net>
 
-Signed-off-by: Jesper Juhl <jj@chaosbits.net>
----
- yam.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
-
-  compile tested only
-
-diff --git a/drivers/net/hamradio/yam.c b/drivers/net/hamradio/yam.c
-index 4e7d1d0..7d9ced0 100644
---- a/drivers/net/hamradio/yam.c
-+++ b/drivers/net/hamradio/yam.c
-@@ -396,7 +396,7 @@ static unsigned char *add_mcs(unsigned char *bits, int bitrate,
- 	while (p) {
- 		if (p->bitrate == bitrate) {
- 			memcpy(p->bits, bits, YAM_FPGA_SIZE);
--			return p->bits;
-+			goto out;
- 		}
- 		p = p->next;
- 	}
-@@ -411,7 +411,7 @@ static unsigned char *add_mcs(unsigned char *bits, int bitrate,
- 	p->bitrate = bitrate;
- 	p->next = yam_data;
- 	yam_data = p;
--
-+ out:
- 	release_firmware(fw);
- 	return p->bits;
- }
-
-
--- 
-Jesper Juhl <jj@chaosbits.net>            http://www.chaosbits.net/
-Don't top-post http://www.catb.org/~esr/jargon/html/T/top-post.html
-Plain text mails only, please.
-
+Applied.
