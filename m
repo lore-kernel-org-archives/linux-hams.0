@@ -1,102 +1,56 @@
-From: f6bvp <f6bvp@free.fr>
-Subject: Re: [PATCH] [ROSE] AX25 packet routing improvement
-Date: Fri, 21 Jan 2011 12:23:34 +0100
-Message-ID: <4D396CB6.50209@free.fr>
-References: <4CF78B70.4060907@free.fr> <4D0F9C6B.4020608@free.fr>
+From: Nate Bargmann <n0nb-/4qmxAYkJys@public.gmane.org>
+Subject: Temporary daily Hamlib snapshot link
+Date: Tue, 1 Feb 2011 07:52:59 -0600
+Message-ID: <20110201135259.GB13724@n0nb.us>
+Reply-To: linuxham-hHKSG33TihhbjbujkaE4pw@public.gmane.org
 Mime-Version: 1.0
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <4D0F9C6B.4020608@free.fr>
-Sender: linux-hams-owner@vger.kernel.org
-List-ID: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="iso-8859-1"; format="flowed"
-To: ralf@linux-mips.org
-Cc: davem@davemloft.net, linux-hams@vger.kernel.org, C Schuman <k4gbb1@embarqmail.com>
+Content-Transfer-Encoding: 7bit
+Return-path: <sentto-17259876-12273-1296568395-gcrl-linuxham=m.gmane.org-Hmr20et6RfIqbyJsPhsW54OaOnUyUoRs@public.gmane.org>
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yahoogroups.com; s=lima; t=1296568396; bh=opfFDGqctAElViVhxleEmi5vbZIgoECmTDL9B/9J7uQ=; h=Received:Received:X-Yahoo-Newman-Id:X-Sender:X-Apparently-To:X-Received:X-Received:X-Received:X-Received:X-Received:To:Message-ID:Mail-Followup-To:X-Operating-System:Organization:User-Agent:X-Originating-IP:From:X-Yahoo-Profile:Sender:MIME-Version:Mailing-List:Delivered-To:List-Id:Precedence:List-Unsubscribe:Date:Subject:Reply-To:X-Yahoo-Newman-Property:Content-Type:Content-Transfer-Encoding; b=b651hTGqL6c2ShGwRK8wxw2nhkkyDMS7bUNcP9G/MUA4LzJHdSPsjzi6xp7ZwUM5SBn9FkM2+LZQX8YUUPWCOSsNG+IcVpn9xo6aorGTMUGNHUsmxacGrioncca47W5y
+Sender: linuxham-hHKSG33TihhbjbujkaE4pw@public.gmane.org
+List-Id: <linux-hams.vger.kernel.org>
+List-Unsubscribe: <mailto:linuxham-unsubscribe-hHKSG33TihhbjbujkaE4pw@public.gmane.org>
+Content-Type: text/plain; charset="us-ascii"
+To: Hamlib Developers <hamlib-developer-5NWGOfrQmneRv+LV9MX5uipxlwaOVQ5f@public.gmane.org>, Linux Hams <linux-hams-u79uwXL29TY76Z2rM5mHXA@public.gmane.org>, Fldigi List <linuxham-hHKSG33TihhbjbujkaE4pw@public.gmane.org>
 
-Hi Ralf,
+The temporary link for the current daily Hamlib snapshot is:
 
-One month ago I sent two patches for ROSE aimed at
-improving rose network routing, especially when
-a user sends a connect request on a local node.
+http://n0nb.us/hamlib/
 
-They have been implemented on a dozen of ROSE FPAC nodes in the
-United States and other countries in the world and seem to be
-quite efficient and cause no problem.
+Once SourceForge reactivates the webhost service, it will be at its
+former home.
 
-As I have no feedback since, I am a little bit puzzled.
-Could you tell us if you have any restrictive opinion about
-applying these patches ?
+73, de Nate >>
 
-73 de Bernard, f6bvp
+-- 
+
+"The optimist proclaims that we live in the best of all
+possible worlds.  The pessimist fears this is true."
+
+Ham radio, Linux, bikes, and more: http://n0nb.us/index.html
 
 
-Le 20/12/2010 19:11, f6bvp a =E9crit :
-> Hi Ralf,
->
-> Here is a new patch that completes the one I sent recently.
->
-> I hope you will find time to have a look at both patches
-> and approve them.
->
-> ----------
->
-> [PATCH] [ROSE] [AX25] finding routes simplification
->
-> With previous patch, rose_get_neigh() routine
-> investigates the full list of neighbor nodes
-> until it finds or not an already connected node whether
-> it is called locally or through a level 3 transit frame.
-> If no routes are opened through an adjacent connected node
-> then a classical connect request is attempted.
->
-> Then there is no more reason for an extra loop such
-> as the one removed by this patch.
->
-> Signed-off-by: Bernard Pidoux <f6bvp@free.fr>
->
->
->
-> Le 02/12/2010 13:05, f6bvp a =E9crit :
->> Hi,
->>
->> Sorry for this second post.
->> I found that spin_lock_bh was missing in the first loop !
->>
->>
->> [PATCH] [ROSE] rose AX25 packet routing improvement
->>
->> FPAC AX25 packet application is using Linux kernel ROSE
->> routing skills in order to connect or send packets to remote station=
-s
->> knowing their ROSE address via a network of interconnected nodes.
->>
->> Each FPAC node has a ROSE routing table that Linux ROSE module is
->> looking at each time a ROSE frame is relayed by the node or when
->> a connect request to a neighbor node is received.
->>
->> A previous patch improved the system time response by looking at
->> already established routes each time the system was looking for a
->> route to relay a frame. If a neighbor node routing the destination
->> address was already connected, then the frame would be sent
->> through him. If not, a connection request would be issued.
->>
->> The present patch extends the same routing capability to a connect
->> request asked by a user locally connected into an FPAC node.
->> Without this patch, a connect request was not well handled unless it
->> was directed to an immediate connected neighbor of the local node.
->>
->> Implemented at a number of ROSE FPAC node stations, the present patc=
-h=20
->> improved dramatically FPAC ROSE routing time response and efficiency=
-=2E
->>
->> Signed-off-by: Bernard Pidoux <f6bvp@free.fr>
->>
->>
->
+------------------------------------
 
---
-To unsubscribe from this list: send the line "unsubscribe linux-hams" i=
-n
-the body of a message to majordomo@vger.kernel.org
-More majordomo info at  http://vger.kernel.org/majordomo-info.html
+Yahoo! Groups Links
+
+<*> To visit your group on the web, go to:
+    http://groups.yahoo.com/group/linuxham/
+
+<*> Your email settings:
+    Individual Email | Traditional
+
+<*> To change settings online go to:
+    http://groups.yahoo.com/group/linuxham/join
+    (Yahoo! ID required)
+
+<*> To change settings via email:
+    linuxham-digest-hHKSG33TihhbjbujkaE4pw@public.gmane.org 
+    linuxham-fullfeatured-hHKSG33TihhbjbujkaE4pw@public.gmane.org
+
+<*> To unsubscribe from this group, send an email to:
+    linuxham-unsubscribe-hHKSG33TihhbjbujkaE4pw@public.gmane.org
+
+<*> Your use of Yahoo! Groups is subject to:
+    http://docs.yahoo.com/info/terms/
+
