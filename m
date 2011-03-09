@@ -1,54 +1,67 @@
 From: "Curt, WE7U" <curt.we7u@gmail.com>
 Subject: Re: YAM modems at higher (shared) IRQ's
-Date: Tue, 8 Mar 2011 08:06:52 -0800 (PST)
-Message-ID: <alpine.LNX.2.00.1103080724280.18889@wapiti.we7u.net>
+Date: Wed, 9 Mar 2011 08:32:42 -0800 (PST)
+Message-ID: <alpine.LNX.2.00.1103090758450.5282@wapiti.we7u.net>
 References: <alpine.LNX.2.00.1103061128170.31123@wapiti.we7u.net> <4D73F262.6000703@exemail.com.au> <alpine.LNX.2.00.1103062214370.13905@wapiti.we7u.net> <4D74B845.4040600@bfs.de> <alpine.LNX.2.00.1103072301120.13405@wapiti.we7u.net>
+ <alpine.LNX.2.00.1103080724280.18889@wapiti.we7u.net>
 Mime-Version: 1.0
 Return-path: <linux-hams-owner@vger.kernel.org>
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:date:from:to:cc:subject:in-reply-to:message-id
          :references:user-agent:mime-version:content-type;
-        bh=p0lHIusUDv7DIZ8zyC662fZZIwo7uKCVE3Jflv+X3vM=;
-        b=EMN2s/bPVdjJYPxfwpiFVdzK4w6cfNZSCQECuqml19MV3VEgLsDVduxnF1BYMzZTod
-         33uwuyjkvwYZ0/dLzvvFUGYGZoMUvkGrKcKQilo1Jq3GcqscVAoqpv1cETOlgKMQLLAI
-         3AABDLs9qmzEYm7FDkdlCCNYJ3oE/q2YZW7CA=
-In-Reply-To: <alpine.LNX.2.00.1103072301120.13405@wapiti.we7u.net>
+        bh=6VsayFPC6QaknD7oxY81G6rHf3xoWYVZlSWwBL04f4Y=;
+        b=iriPmjgtjVvH+nf4bb+Nypw5gGvL0w0UId2fEhlcNBKS1+EDuS7ex2Lsl+UItiYSSb
+         4uawf+2J2KfdojfL830QbYG9BZpA4y21FwfFkNE3lNldY4Ene3Zfrivej28/HoOhMNBa
+         P/6Sz85gjAqt4EclsYJv70FYTiYYAHcg9Fov0=
+In-Reply-To: <alpine.LNX.2.00.1103080724280.18889@wapiti.we7u.net>
 Sender: linux-hams-owner@vger.kernel.org
 List-ID: <linux-hams.vger.kernel.org>
-Content-Type: TEXT/PLAIN; charset="us-ascii"; format="flowed"
+Content-Type: TEXT/PLAIN; format="flowed"; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
 To: "Curt, WE7U" <curt.we7u@gmail.com>
 Cc: linux-hams@vger.kernel.org
 
+On Tue, 8 Mar 2011, Curt, WE7U wrote:
 
-I got farther last night!  It helped that I could configure one on the laptop (with one _standard_ serial port) and see what the LED's were doing on the YAM, then try it on the desktop and notice the differences.
+> To recap:  I can make one YAM work on the laptop, but that's not the final 
+> destination.  I haven't gotten one to work on the desktop yet, but want to 
+> get two YAM's working there as well as a couple of other TNC's.
+>
+>    Laptop                  Desktop
+>    ------                  -------
+>    OpenSuSE-11.3 32-bit    OpenSuSE-11.3 64-bit
+>    Qty 1 - 16550a          Qty 4 - 16550a
+>    I/O: 0x3f8              I/O: 0xdc00 (and others slightly below)
+>    irq 4                   irq 17 (shared)
+>
+> At the point I do an "ifconfig up" on the laptop I see one LED go nuts on the 
+> YAM for a few seconds as the Xilinx chip is being loaded.  Last night I was 
+> finally able to see that on the desktop, but then the command errored out 
+> upon finishing the loading.  This is progress though as I've not seen the 
+> Xilinx get loaded via the desktop until last night.
 
-To recap:  I can make one YAM work on the laptop, but that's not the final destination.  I haven't gotten one to work on the desktop yet, but want to get two YAM's working there as well as a couple of other TNC's.
+What I found out:  The 16550 interface that I was trying to get running... ain't.  It's a 16550-compatible multi-port card, NOT a card with 16550A's.  I may not be able to get it working, depending on how compatible the chip is and how the board is wired.  It's a Startech 4-port card with a NetMos Technology 9845 chip.
 
-     Laptop                  Desktop
-     ------                  -------
-     OpenSuSE-11.3 32-bit    OpenSuSE-11.3 64-bit
-     Qty 1 - 16550a          Qty 4 - 16550a
-     I/O: 0x3f8              I/O: 0xdc00 (and others slightly below)
-     irq 4                   irq 17 (shared)
+Worse, I examined the 2-port cards I have:  They're also 16550-compatibles (SYBA 2-port PCI cards).  I didn't get a chance last night to swap out the 4-port for one of those to see if they do better talking to the YAM.
 
-At the point I do an "ifconfig up" on the laptop I see one LED go nuts on the YAM for a few seconds as the Xilinx chip is being loaded.  Last night I was finally able to see that on the desktop, but then the command errored out upon finishing the loading.  This is progress though as I've not seen the Xilinx get loaded via the desktop until last night.
+In my spare parts I found one PCI card with a real 16550A, a single-port card.  Newegg has LAVA 4-port ($76) and 8-port ($111) cards w/real 16550A's if I want to go that route.  Most of the cards I see offered for sale are 16550 "compatible".  Anything that does faster than 115200 baud appears to be a "compatible" instead of a real 16550A.  Cards with real 16552's or 16554's should work fine assuming all the lines for a DE-9 are wired out to the connector and controllable by the chip.  That LAVA 8-port has the "RI" signal wired out to only the first four ports.
 
-I've been hacking on the "yam.c" code.  I've changed the high-range check for IRQ's to "< 99" (was "< 15") and removed the high-range check for the base address (was 0x1000 - extents).  Last night I rummaged through the code some more and noticed variables in "yam.h" that were defined as "unsigned int" but used in "yam.c" as "int".  By switching the I/O base address to "unsigned int" I finally got the LED blinking that shows the Xilinx is being loaded.
+I'm deciding whether to go further down this rabbit-hole attempting to get non-16550A cards to talk to the YAM.  Changes to date are useful to fold back into the mainstream, updating the driver to modern standards and increasing portability.  Additional work to get "compatible" boards to talk to the YAM may not be a good use of my time.
 
-What I've learned so far:
+This is the 4-port card, using "lspci -v" to get the info:
 
-*) The kernel driver hasn't been updated to handle IRQ's and I/O addresses which are commonplace with PCI serial cards.
-*) Sign problems exist between the .h and the .c files.
-*) There may be 64-bit issues as "int" and "unsigned int" shouldn't be used in portable code:  Should use UINT8, UINT16, UINT32, etc instead.
-
-I believe I've fixed the first two but the third needs to be done yet.  The switch from "int" to "unsigned int" was just a first approximation but is not the correct fix for portability.
-
-Anyone willing to help with portability tweaks to the code please jump in here!  I'll provide a patch if/when I get it working.
-
-NOTE:  It would be worthwhile to look through some of the other "drivers/net/hamradio/" code for similar problems with other AX.25 drivers.  The Baycom driver most likely suffers from similar problems (the YAM driver was derived from it) unless it has had more use recently and therefore has had more recent fixes than the YAM driver.  If other drivers have not been touched since the ISA days, or even the pre-64-bit days, they will need some of the fixes applied as well.
+     01:06.0 Serial controller: NetMos Technology PCI 9845 Multi-I/O Controller (rev 01) (prog-if 02 [16550])
+             Subsystem: LSI Logic / Symbios Logic 0P4S (4 port 16550A serial card)
+             Flags: medium devsel, IRQ 17
+             I/O ports at dc00 [size=8]
+             I/O ports at d880 [size=8]
+             I/O ports at d800 [size=8]
+             I/O ports at d480 [size=8]
+             I/O ports at d400 [size=8]
+             I/O ports at d080 [size=16]
+             Kernel driver in use: serial
 
 -- 
 Curt, WE7U.        http://www.eskimo.com/~archer
-Babysitting your tracker:  http://info.aprs.net/index.php?title=ControlOperator
+APRS:  Where it's at!        http://www.xastir.org
