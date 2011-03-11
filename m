@@ -1,78 +1,70 @@
-From: Dave Platt <dplatt@radagast.org>
+From: "Curt, WE7U" <curt.we7u@gmail.com>
 Subject: Re: YAM modems at higher (shared) IRQ's
-Date: Fri, 11 Mar 2011 13:36:46 -0800
-Message-ID: <4D7A95EE.9060206@radagast.org>
-References: <alpine.LNX.2.00.1103061128170.31123@wapiti.we7u.net> <4D73F262.6000703@exemail.com.au> <alpine.LNX.2.00.1103062214370.13905@wapiti.we7u.net> <4D74B845.4040600@bfs.de> <alpine.LNX.2.00.1103072301120.13405@wapiti.we7u.net> <alpine.LNX.2.00.1103080724280.18889@wapiti.we7u.net> <alpine.LNX.2.00.1103090758450.5282@wapiti.we7u.net> <alpine.LNX.2.00.1103091840260.7648@wapiti.we7u.net>
+Date: Fri, 11 Mar 2011 14:32:40 -0800 (PST)
+Message-ID: <alpine.LNX.2.00.1103111424460.11898@wapiti.we7u.net>
+References: <alpine.LNX.2.00.1103061128170.31123@wapiti.we7u.net> <4D73F262.6000703@exemail.com.au> <alpine.LNX.2.00.1103062214370.13905@wapiti.we7u.net> <4D74B845.4040600@bfs.de> <alpine.LNX.2.00.1103072301120.13405@wapiti.we7u.net>
+ <alpine.LNX.2.00.1103080724280.18889@wapiti.we7u.net> <alpine.LNX.2.00.1103090758450.5282@wapiti.we7u.net> <alpine.LNX.2.00.1103091840260.7648@wapiti.we7u.net> <4D7A95EE.9060206@radagast.org>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <alpine.LNX.2.00.1103091840260.7648@wapiti.we7u.net>
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:date:from:to:cc:subject:in-reply-to:message-id
+         :references:user-agent:mime-version:content-type;
+        bh=m5sjMULdFv0Dv6GrUY41c9ZjnWu2FExh3d9LAiKmB+M=;
+        b=ebAinZ6kQLP+DN366i2RPgjN0nsfcpsstS6swmFfmTWh4vkYnn/e7PTtrLq79K5Au9
+         ZAayR6RcVm7coWJ+lUwlG4h2TfHf4v9v9UJpOejYteWhkJTix3iEu4EJvRrv+rVvk43u
+         rqNdVbHHMmLJ0g5SogW7SlyHcITFIsw/usLrc=
+In-Reply-To: <4D7A95EE.9060206@radagast.org>
 Sender: linux-hams-owner@vger.kernel.org
 List-ID: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"
-To: linux-hams@vger.kernel.org
+Content-Type: TEXT/PLAIN; charset="us-ascii"; format="flowed"
+Content-Transfer-Encoding: 7bit
+To: Dave Platt <dplatt@radagast.org>
+Cc: linux-hams@vger.kernel.org
 
-On 03/09/2011 07:07 PM, Curt, WE7U wrote:
-> On Wed, 9 Mar 2011, Curt, WE7U wrote:
-> 
->> What I found out:  The 16550 interface that I was trying to get
->> running... ain't.  It's a 16550-compatible multi-port card, NOT a card
->> with 16550A's.
-> 
->> Worse, I examined the 2-port cards I have:  They're also
->> 16550-compatibles (SYBA 2-port PCI cards).
-> 
->> In my spare parts I found one PCI card with a real 16550A, a
->> single-port card.
+On Fri, 11 Mar 2011, Dave Platt wrote:
 
-I wonder... how much of the compatibility problems you're seeing,
-have anything to do with the chip itself (16550 vs. "compatible")
-and how much have to do with the external analog interfaces used
-by the board vendors?
+> I wonder... how much of the compatibility problems you're seeing,
+> have anything to do with the chip itself (16550 vs. "compatible")
+> and how much have to do with the external analog interfaces used
+> by the board vendors?
 
-A lot of serial ports these days are only "barely RS-232",
-and some don't even comply with the RS-232 spec.  RS-232 requires
-both positive and negative voltage swings (minimum of +/-
-3 volts if I recall correctly, with +/- 12 having been the
-old "nominal" swing).  Modern serial ports may only swing
-+5 and 0 (no negative swing at all), or may swing only
-just past the +/- 3 volt limits.  The receiver thresholds on
-such devices are often set at around 1.5 volts or so.
+I starting walking down that same path yesterday afternoon!
 
-Furthermore, the amount of power which can be "robbed" from
-the handshaking lines is often quite miniscule... just a
-few milliamperes.
-
-Since the YAM is intended to be port-powered, I suspect it
-is going to be very prone to not work correctly when used
-from these wimpy, under-voltaged-and-under-powered ports.
-If the handshaking lines can't pull well above +5 while
-providing enough juice to run the FPGA, the device probably
-will not initialize properly.
-
-Here's my guess:
-
--  If you have a serial port with a 1488 quad-line driver
-   IC, it's likely to work, as these drivers are powered from
-   +12/-12 rails and have plenty of current drive capacity.
-
--  If you have a serial port with a MAX232 or similar
-   voltage-doubling driver, it may work, depending on the
-   actual output voltage generated on the handshaking pins and
-   the amount of current which can be drawn.  Voltage-doubler
-   chips which have small on-chip capacitors may be less likely
-   to have the necessary current-sourcing capacity, than those which
-   use larger (e.g. 1-to-10 uF) off-chip caps.
-
--  If you have a serial port which simply provides "pseudo-RS-232"
-   driver (inverts the TTL/CMOS logic, with no negative voltage
-   swing) I suspect it's unlikely to work.
-
-As I see just now that Ray has suggested, you may be able to
-overcome the RS-232 voltage issues by using a separate (outboard)
-power supply to run the YAM circuitry.  This might provide better
-compatibility with a broad range of modern serial ports, which
-are usually very register-compatible with 16550A UARTs but which
-differ at the electrical level.
+I figured out how they're doing the synchronous clocking, and it has nothing to do with a 16550.  It's just standard UART stuff.  The only "16550" stuff required is the particular registers at particular addresses, and control of a couple of handshake lines by bit-twiddling.
 
 
+> A lot of serial ports these days are only "barely RS-232",
+> and some don't even comply with the RS-232 spec.
+
+Yep.  The boards with the 9835/9845's on them are doing +11.25 or higher, and -11.25 or lower on the swings.  Measured that last night.
+
+I also measured the good ports and they are the same.  I found one handshake at a different state between the "good" and "bad" interfaces after configuration, then started in to the driver again and found that the two handshakes that were always supposed to be at opposite states (to provide power to the board) weren't being handled that way in the driver.
+
+I haven't gone back to verify the current capability from either interface (spec says should supply 7mA per line at 12V or sink 7mA at -12V if I remember correctly), or that the power supply to the chip remains between 4.75 and 5.25V the entire time.  I need to do so yet.
+
+
+> Since the YAM is intended to be port-powered, I suspect it
+> is going to be very prone to not work correctly when used
+> from these wimpy, under-voltaged-and-under-powered ports.
+> If the handshaking lines can't pull well above +5 while
+> providing enough juice to run the FPGA, the device probably
+> will not initialize properly.
+
+Yes, which is why I'd rather power it from my 20A Astron.  That ought to have enough ooomph!
+
+
+> As I see just now that Ray has suggested, you may be able to
+> overcome the RS-232 voltage issues by using a separate (outboard)
+> power supply to run the YAM circuitry.  This might provide better
+> compatibility with a broad range of modern serial ports, which
+> are usually very register-compatible with 16550A UARTs but which
+> differ at the electrical level.
+
+Yep.  My thoughts too.  Since I need +12V all over the shack anyway to power darned-near anything, I might as well tap off that and make the YAM more reliable in the process.
+
+Which reminds me:  If a vendor has a deal on a Saratoga powerpole distribution strip tomorrow at the hamfest I'll pick one up.  I already have one in the Jeep to distribute 12V.
+
+-- 
+Curt, WE7U.        http://www.eskimo.com/~archer
+APRS Client Capabilities:  http://www.eskimo.com/~archer/aprs_capabilities.html
