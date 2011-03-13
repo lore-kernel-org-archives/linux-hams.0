@@ -1,39 +1,53 @@
-From: echicken <echicken@bbs.electronicchicken.com>
-Subject: Re: SPAM: Re: axports & ax25d.conf
-Date: Sun, 13 Mar 2011 10:52:54 -0400
-Message-ID: <AANLkTin_1fcctC7OKy3WCdZBx+JOyf+nAajjwHX-vNPK@mail.gmail.com>
+From: "Curt, WE7U" <curt.we7u@gmail.com>
+Subject: Re: axports & ax25d.conf
+Date: Sun, 13 Mar 2011 08:17:49 -0700 (PDT)
+Message-ID: <alpine.LNX.2.00.1103130812110.7815@wapiti.we7u.net>
 References: <AANLkTi=VNvvAe4FZmfeWRKTg3_rUcSMjycy+BLO118UN@mail.gmail.com>
-	<201103131428.51446.christoph.rueckert@arcor.de>
 Mime-Version: 1.0
 Return-path: <linux-hams-owner@vger.kernel.org>
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:sender:in-reply-to:references:date
-         :x-google-sender-auth:message-id:subject:from:to:content-type;
-        bh=BmwQRAlfW0vUBT2prgrsUmpGR9cECibSYa4SvK1B020=;
-        b=IzLPxM5XfCDhJnn9jSfuWol2PrhGS2Kr+BptkKSGSRC1UdieAH0hOhA/X4rMEKMUQ6
-         w0XqRfuESll4ylGK9AL3BmC30w4b22vYpqU1PonCqUV6m2W8Og4J/McUnWdCpBui8Jmt
-         zF9BDnYb0Dql/gGNI7Hy8sEmFSBorqksU/PeY=
-In-Reply-To: <201103131428.51446.christoph.rueckert@arcor.de>
+        h=domainkey-signature:date:from:to:cc:subject:in-reply-to:message-id
+         :references:user-agent:mime-version:content-type;
+        bh=4i06kNL4wxXLTtkr7QbUf1Gtl5sJei0GMr3/mlOhcsk=;
+        b=YzcoQMmzNBLZgDPN9qoX1b6WGQ62iDki2JS80xo4E/6NcUVmMqDMxnkUU1w3dINkym
+         FVQGj3chngDfrO17jEq5nYvYxZroK6FoW9//U7Jb5Ynrk/X952HYpIYCxc4rG/jIpHdW
+         46oyCAQAeCEN1wTVop7hv8LDRmQ27YT6VpLm4=
+In-Reply-To: <AANLkTi=VNvvAe4FZmfeWRKTg3_rUcSMjycy+BLO118UN@mail.gmail.com>
 Sender: linux-hams-owner@vger.kernel.org
 List-ID: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"
+Content-Type: TEXT/PLAIN; format="flowed"; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
-To: linux-hams@vger.kernel.org
+To: echicken <echicken@bbs.electronicchicken.com>
+Cc: linux-hams@vger.kernel.org
 
-Hi Christoph,
+On Sun, 13 Mar 2011, echicken wrote:
 
-> what is your destination program or server on 192.168.1.75:2000?
+> My ax25d.conf is:
+>
+> [VE3XEC-2 via ax0]
+> default * * * * * * - root /usr/local/sbin/axconv axconv 192.168.1.75 2000
+>
+> ax25d launches and goes into the background without any errors, and
+> continues to run, but when I connect to VE3XEC-2 the behavior is
+> exactly the same as when ax25d isn't running at all (I simply see
+> "Connected to VE3XEC-2") and my connection is not forwarded to the
+> service running on port 2000 of 192.168.1.75.
+>
+> I can run axconv from the command line and connect to the service
+> specified in ax25d.conf, and the output is what I'm expecting.
+>
+> So the connection is being made, but ax25d never seems to be doing its
+> thing.  Hopefully I'm just missing something simple - but I'm at a
+> loss.
 
-It's a custom service that I'm writing to add packet BBS functionality
-to a BBS package that's more geared to telnet and dialup users.
+Go check out the archives for 01/02/2009 through 01/26/2009 and read the threads:
 
-Currently that service outputs a line of text followed by a CRLF when
-somebody connects to it, then prompts for a line of input from the
-user and then echoes it back to them.  If I telnet to port 2000 it
-behaves as expected.
+     "ax25d not hearing incoming connection requests"
+     "Problems with ax25d/axspawn on OpenSuSE 11.0 32-bit"
 
-I've also tried sending clients to port 23 of the same, where a proper
-telnet server is listening, and saw no change.
+See if anything there sounds familiar and/or might help.
 
-Derek
+-- 
+Curt, WE7U.        http://www.eskimo.com/~archer
+APRS Usage Pages:  http://wetnet.net/~we7u/usage.html
