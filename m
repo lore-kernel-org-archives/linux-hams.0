@@ -1,110 +1,70 @@
-From: David Ranch <linux-hams@trinnet.net>
-Subject: Re: YAM modems at higher (shared) IRQ's
-Date: Sat, 12 Mar 2011 08:40:36 -0800
-Message-ID: <4D7BA204.2030602@trinnet.net>
-References: <alpine.LNX.2.00.1103061128170.31123@wapiti.we7u.net> <4D73F262.6000703@exemail.com.au> <alpine.LNX.2.00.1103062214370.13905@wapiti.we7u.net> <4D74B845.4040600@bfs.de> <alpine.LNX.2.00.1103072301120.13405@wapiti.we7u.net> <alpine.LNX.2.00.1103080724280.18889@wapiti.we7u.net> <alpine.LNX.2.00.1103090758450.5282@wapiti.we7u.net> <alpine.LNX.2.00.1103091840260.7648@wapiti.we7u.net> <alpine.LNX.2.00.1103110815240.4745@wapiti.we7u.net>
+From: Nate Bargmann <n0nb-/4qmxAYkJys@public.gmane.org>
+Subject: Hamlib 1.2.13 released
+Date: Sat, 12 Mar 2011 20:56:06 -0600
+Message-ID: <20110313025606.GH17075@n0nb.us>
+Reply-To: linuxham-hHKSG33TihhbjbujkaE4pw@public.gmane.org
 Mime-Version: 1.0
 Content-Transfer-Encoding: 7bit
-Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <alpine.LNX.2.00.1103110815240.4745@wapiti.we7u.net>
-Sender: linux-hams-owner@vger.kernel.org
-List-ID: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"; format="flowed"
-To: "Curt, WE7U" <curt.we7u@gmail.com>
-Cc: linux-hams@vger.kernel.org
+Return-path: <sentto-17259876-12639-1299984976-gcrl-linuxham=m.gmane.org-Hmr20et6RfIqbyJsPhsW54OaOnUyUoRs@public.gmane.org>
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yahoogroups.com; s=lima; t=1299984977; bh=w4K1+npyCpW2yiyts6UqbOH3hYPV632Brt3ybevTHmg=; h=Received:Received:Received:X-Yahoo-Newman-Id:X-Sender:X-Apparently-To:X-Received:X-Received:X-Received:X-Received:X-Received:To:Message-ID:Mail-Followup-To:X-Operating-System:Organization:User-Agent:X-Originating-IP:From:X-Yahoo-Profile:Sender:MIME-Version:Mailing-List:Delivered-To:List-Id:Precedence:List-Unsubscribe:Date:Subject:Reply-To:X-Yahoo-Newman-Property:Content-Type:Content-Transfer-Encoding; b=PSETH+FCPXRiP4Mh3NQOsNpD8Yt154j204L0J/b0nVaL52zjNTSOZzG95WdZKARFZPMBohVdig/9QBDZ00L1ohu8jnNf5RGNrt90E3LOr5axoBWLLRNCKKWx7RWouRvg
+Sender: linuxham-hHKSG33TihhbjbujkaE4pw@public.gmane.org
+List-Id: <linux-hams.vger.kernel.org>
+List-Unsubscribe: <mailto:linuxham-unsubscribe-hHKSG33TihhbjbujkaE4pw@public.gmane.org>
+Content-Type: text/plain; charset="us-ascii"
+To: Linux Hams <linux-hams-u79uwXL29TY76Z2rM5mHXA@public.gmane.org>, Fldigi Alpha Team <fldigi-alpha-0fE9KPoRgkgATYTw5x5z8w@public.gmane.org>, Fldigi List <linuxham-hHKSG33TihhbjbujkaE4pw@public.gmane.org>
 
+The Hamlib Group is pleased to announce the latest release of Hamlib
+1.2.13.  The following changes are included in the 1.2.13 release:
 
-Hey Curt,
-> Any pointers as to who to submit the patches to?  Probably the 
-> kernel-hackers list?  How to submit them?  It might be a few more days 
-> or weeks before I get around to it though.  I've tested the driver on 
-> 64-bit and 32-bit, but will do so again before I send any patches 
-> upstream.
-[slightly updated and resending to the linux-hams list as others  might 
-find it helpful]
+Version 1.2.13
+    2011-03-12
+    * New models: VX-1700, FUNcube, FiFi-SDR, KTH-SDR Si570,
+      FT-5000, TS-590S
+    * Rotor fixes and features: SPID
+    * New Rotor backend: F1TE Tracker
+    * Fixes and features: TS-440S, K2, K3,
+      SR-2200, THF6A, THF7E, NewCAT rigs serial port defaults, TM-D700,
+    * Removed libtool tree from source tree
+    * Removed old DocBook files
+    * Allow USB device's VID/PID/Vendor/Product to be explicitly specified
+    * Doxygen documentation updates and new style sheet
 
+At this time only the source archive has been released.  The Hamlib
+1.2.13 Win32 DLL binary will be released in the near future.
 
-1. Get the newest available vanilla Linus kernel (today, that's 2.6.37)
+For the Hamlib Group,
 
-2. Look at the MAINTAINERS.txt file and see who is the maintainer for 
-the Yam driver.  I see:
--- 
-YAM DRIVER FOR AX.25
-M:      Jean-Paul Roubelat <jpr@f6fbb.org>
-L:      linux-hams@vger.kernel.org
-S:      Maintained
-F:      drivers/net/hamradio/yam*
-F:      include/linux/yam.h
--- 
+73, de Nate >>
 
-3. Read this article in the source tree:
-
-    Documentation/SubmittingDrivers
-
-4. In an email to the YAM driver maintainer, you need to cite:
-  a. reason for the patch
-  b. sign off on the patch as yourself (just a one liner in the email 
-before the diff with a real email address)
-  c. include the "-up" diffs against the newest vanilla kernel
-  d. diffs cannot have line wraps
-
-5. The Yam maintainer should accept and submit the patch.  If you can't 
-reach that maintainer, you should be able to submit the patch directly 
-to the kernel-hackers list and someone else will commit for you assuming 
-they pass muster (sane code, comments, etc.)
-
-
-Here is the very simple patch I submitted which was also signed off by 
-the USB serial driver maintainer
 -- 
 
-This patch is to add a US Interface, Inc. "Navigator" USB device.
-Specifically, it's a HAM Radio USB sound modem that also
-incorporates three pairs of unique FTDI serial ports.  The standard
-Linux FTDI serial driver will only recognize the first two serial
-ports of an unknown FDTI derived device and this patch adds in
-recognition to these specific new IDs.
+"The optimist proclaims that we live in the best of all
+possible worlds.  The pessimist fears this is true."
 
-Signed-off-by: David A. Ranch <dranch@trinnet.net>
-Signed-off-by: Greg Kroah-Hartman <gregkh@suse.de>
-
----
-drivers/usb/serial/ftdi_sio.c     |    3 +++
-drivers/usb/serial/ftdi_sio_ids.h |    5 +++++
-2 files changed, 8 insertions(+)
-
---- a/drivers/usb/serial/ftdi_sio.c
-+++ b/drivers/usb/serial/ftdi_sio.c
-@@ -162,6 +162,9 @@ static struct usb_device_id id_table_com
-    { USB_DEVICE(FTDI_VID, FTDI_SCS_DEVICE_5_PID) },
-    { USB_DEVICE(FTDI_VID, FTDI_SCS_DEVICE_6_PID) },
-    { USB_DEVICE(FTDI_VID, FTDI_SCS_DEVICE_7_PID) },
-+    { USB_DEVICE(FTDI_VID, FTDI_USINT_CAT_PID) },
-+    { USB_DEVICE(FTDI_VID, FTDI_USINT_WKEY_PID) },
-+    { USB_DEVICE(FTDI_VID, FTDI_USINT_RS232_PID) },
-    { USB_DEVICE(FTDI_VID, FTDI_ACTZWAVE_PID) },
-    { USB_DEVICE(FTDI_VID, FTDI_IRTRANS_PID) },
-    { USB_DEVICE(FTDI_VID, FTDI_IPLUS_PID) },
---- a/drivers/usb/serial/ftdi_sio_ids.h
-+++ b/drivers/usb/serial/ftdi_sio_ids.h
-@@ -40,6 +40,11 @@
-
-#define FTDI_NXTCAM_PID        0xABB8 /* NXTCam for Mindstorms NXT */
-
-+/* US Interface Navigator (http://www.usinterface.com/) */
-+#define FTDI_USINT_CAT_PID    0xb810    /* Navigator CAT and 2nd PTT 
-lines */
-+#define FTDI_USINT_WKEY_PID    0xb811    /* Navigator WKEY and FSK 
-lines */
-+#define FTDI_USINT_RS232_PID    0xb812    /* Navigator RS232 and CONFIG 
-lines */
-+
-/* OOCDlink by Joern Kaipf <joernk@web.de>
- * 
-(http://www.joernonline.de/dw/doku.php?id=start&idx=projects:oocdlink) */
-#define FTDI_OOCDLINK_PID    0xbaf8    /* Amontec JTAGkey */
+Ham radio, Linux, bikes, and more: http://www.n0nb.us
 
 
+------------------------------------
 
+Yahoo! Groups Links
 
+<*> To visit your group on the web, go to:
+    http://groups.yahoo.com/group/linuxham/
+
+<*> Your email settings:
+    Individual Email | Traditional
+
+<*> To change settings online go to:
+    http://groups.yahoo.com/group/linuxham/join
+    (Yahoo! ID required)
+
+<*> To change settings via email:
+    linuxham-digest-hHKSG33TihhbjbujkaE4pw@public.gmane.org 
+    linuxham-fullfeatured-hHKSG33TihhbjbujkaE4pw@public.gmane.org
+
+<*> To unsubscribe from this group, send an email to:
+    linuxham-unsubscribe-hHKSG33TihhbjbujkaE4pw@public.gmane.org
+
+<*> Your use of Yahoo! Groups is subject to:
+    http://docs.yahoo.com/info/terms/
 
