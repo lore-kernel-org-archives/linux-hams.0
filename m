@@ -1,56 +1,69 @@
 From: echicken <echicken@bbs.electronicchicken.com>
 Subject: Re: SPAM: Re: SPAM: Re: axports & ax25d.conf
-Date: Sun, 13 Mar 2011 12:34:33 -0400
-Message-ID: <AANLkTi=TvfvD1k_pe4TggeyO9Hcr2kYjtQnd9+BGM__v@mail.gmail.com>
+Date: Sun, 13 Mar 2011 12:42:03 -0400
+Message-ID: <AANLkTikOeXmE+DoqO23GrOK6wJG4SD0NqjU3sD09RUog@mail.gmail.com>
 References: <AANLkTi=VNvvAe4FZmfeWRKTg3_rUcSMjycy+BLO118UN@mail.gmail.com>
-	<201103131428.51446.christoph.rueckert@arcor.de>
-	<AANLkTin_1fcctC7OKy3WCdZBx+JOyf+nAajjwHX-vNPK@mail.gmail.com>
-	<201103131512.36492.christoph.rueckert@arcor.de>
+	<alpine.LNX.2.00.1103130812110.7815@wapiti.we7u.net>
+	<AANLkTinDe+3vHmLs=xUXjAZkGaaWAxm-qhqOk2VTPzao@mail.gmail.com>
+	<alpine.LNX.2.00.1103130925200.7815@wapiti.we7u.net>
 Mime-Version: 1.0
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 Return-path: <linux-hams-owner@vger.kernel.org>
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:mime-version:sender:in-reply-to:references:date
-         :x-google-sender-auth:message-id:subject:from:to:content-type;
-        bh=vJjMWB5WbOs/kB2XxV9iS2Xhg1BIUVeGvL5LscvnDp0=;
-        b=TUtF3Ny9vnAsCvPo3k4pasOdraEIpkJvLpxRrjqiLsACmDlvDGOWOmMcnttZpZpZ44
-         PyURMUKM8jEJZaZY7wFRJ31wV8kqAwDM0NsyuqhAYOEMkArqWDBGqYbyrQGGwe4leWrn
-         p2N291aybLCNLdgRTShcnU+T/RY57gCpxMPJM=
-In-Reply-To: <201103131512.36492.christoph.rueckert@arcor.de>
+         :x-google-sender-auth:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=ejT3ka8TN1kHbZ+ExMd6KAWT2DithPJn4KMXVUHudbs=;
+        b=IEHJXEYLS84FaMp0Fm/4PXI7E+S90JfzvqTSKnRlqQbUmiF/cZOKAaS5TjYsfur5Mm
+         knLFhsLqmzGV7opQPMnsX6Rx2VsEWhEIn19MG6ENZddAK/JrGXlSy65LL3UCBPKhf3TI
+         q1abZhCPxtFbhGTHB4j0zlsuuneIc/f2LdmNY=
+In-Reply-To: <alpine.LNX.2.00.1103130925200.7815@wapiti.we7u.net>
 Sender: linux-hams-owner@vger.kernel.org
 List-ID: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-To: linux-hams@vger.kernel.org
+Content-Type: text/plain; charset="iso-8859-1"
+To: "Curt, WE7U" <curt.we7u@gmail.com>
+Cc: linux-hams@vger.kernel.org
 
-> which type of packet BBS be used?
+> I remember from waaaayyyyy back when I used to do a lot of tcp/ip ove=
+r ax.25
+> here in the Seattle area that it would just sit there after the conne=
+ct
+> until you sent some packet. =A0This may have been fixed somehow since=
+ then,
+> but that's what I recall.
 
-It's Synchronet BBS, which is not a packet BBS at all.  It's more like
-a dial-up BBS, but designed to be accessed over the internet via a
-suite of Telnet, SSH, HTTP, NNTP, FTP, and various other services.
+Interesting.  It may be that I'm misunderstanding something about how
+this works.  I'm not actually trying to do tcp/ip over AX.25, exactly.
+ I just want pure AX.25 clients to be able to connect, and then have
+something forward their input to a particular TCP/IP service and
+forward its output to them.
 
-Synchronet is not packet or AX.25 aware at all and is entirely geared
-toward IP.  So I'm working on allowing AX.25 clients to connect to it.
+> The good news is that I'm getting back into tcp/ip over RF. =A0I'm me=
+ssing
+> with YAM modems and 9600-baud TNC's here, and just came up on 220 960=
+0-baud
+> friday night. =A0Eventually I plan to have both a 220 and a 440 port =
+on
+> 9600-baud as well as the 1200-baud AX.25 port running APRS. =A0This s=
+hould
+> keep me more up-to-date on the issues than I have been for the last b=
+unch of
+> years. =A0We plan to have a 220 9600-baud full-duplex bit-regen repea=
+ter up
+> and running sometime this year too, to replace our aging 1200-baud re=
+peater
+> that doesn't work so well anymore. =A0That should get our area buzzin=
+g again.
+> =A0Literally!
 
-There are other approaches that I could take - I've used JNOS as a
-telnet gateway, with some success, but I'm looking for a cleaner and
-more automated way of doing it.
-
-> Please test the axconv-program in a command terminal:
->
-> sudo axconv 192.168.1.75 2000
->
-> The program axconv displays the std-output of your program just in one line.
-> When the output is ok, try following:
-
-Yes, as I said in my original post, I can do that and the output is
-what I'm expecting to see.
-
-> Define a IP-address for your ax0 device, e.g.:
-> /usr/local/sbin/kissattach /dev/ttyUSB0 ax0 192.168.2.74
-
-I'll give this a shot and let you know if it makes any difference.
-
-Thanks,
+Sounds fun.  I've been curious about all manner of digital modes for a
+long time, and really enjoy packet, but I've only been licensed for
+about a year, so I'm still making sense of it.
 
 Derek
+--
+To unsubscribe from this list: send the line "unsubscribe linux-hams" i=
+n
+the body of a message to majordomo@vger.kernel.org
+More majordomo info at  http://vger.kernel.org/majordomo-info.html
