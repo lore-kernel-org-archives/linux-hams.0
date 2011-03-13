@@ -1,11 +1,12 @@
 From: echicken <echicken@bbs.electronicchicken.com>
 Subject: Re: SPAM: Re: SPAM: Re: axports & ax25d.conf
-Date: Sun, 13 Mar 2011 12:42:03 -0400
-Message-ID: <AANLkTikOeXmE+DoqO23GrOK6wJG4SD0NqjU3sD09RUog@mail.gmail.com>
+Date: Sun, 13 Mar 2011 12:45:02 -0400
+Message-ID: <AANLkTikc7p=r=m0q6X+4Lkgxzq55tTbB3KTzCauDGsf1@mail.gmail.com>
 References: <AANLkTi=VNvvAe4FZmfeWRKTg3_rUcSMjycy+BLO118UN@mail.gmail.com>
 	<alpine.LNX.2.00.1103130812110.7815@wapiti.we7u.net>
-	<AANLkTinDe+3vHmLs=xUXjAZkGaaWAxm-qhqOk2VTPzao@mail.gmail.com>
-	<alpine.LNX.2.00.1103130925200.7815@wapiti.we7u.net>
+	<alpine.LNX.2.00.1103130828550.7815@wapiti.we7u.net>
+	<AANLkTi=zUs+PeSsb-Dh5VWT=L3atYxSxCp=DjdyVBQzu@mail.gmail.com>
+	<alpine.LNX.2.00.1103130932040.7815@wapiti.we7u.net>
 Mime-Version: 1.0
 Content-Transfer-Encoding: QUOTED-PRINTABLE
 Return-path: <linux-hams-owner@vger.kernel.org>
@@ -14,52 +15,27 @@ DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         h=domainkey-signature:mime-version:sender:in-reply-to:references:date
          :x-google-sender-auth:message-id:subject:from:to:cc:content-type
          :content-transfer-encoding;
-        bh=ejT3ka8TN1kHbZ+ExMd6KAWT2DithPJn4KMXVUHudbs=;
-        b=IEHJXEYLS84FaMp0Fm/4PXI7E+S90JfzvqTSKnRlqQbUmiF/cZOKAaS5TjYsfur5Mm
-         knLFhsLqmzGV7opQPMnsX6Rx2VsEWhEIn19MG6ENZddAK/JrGXlSy65LL3UCBPKhf3TI
-         q1abZhCPxtFbhGTHB4j0zlsuuneIc/f2LdmNY=
-In-Reply-To: <alpine.LNX.2.00.1103130925200.7815@wapiti.we7u.net>
+        bh=7iDKtQA0l8c7+H+4cI5W6h0IgI7vTMESrCbqO4lN83I=;
+        b=Pbm9IYNciK1/S/pJJ49+wn59qKCFecj49Cri/8vPJHDXTwC4nCpCdq1GFxuX7tA9JP
+         4NqO/jhpomQ8yxHyEE8r8YCDicVGwUyfJxRlM8MWrOYX1o3z6KCxX+9tK2aRzYH/2gdy
+         CAC3xONCEQX0K3HOfdci0x85d1/kX21UvMJYo=
+In-Reply-To: <alpine.LNX.2.00.1103130932040.7815@wapiti.we7u.net>
 Sender: linux-hams-owner@vger.kernel.org
 List-ID: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="iso-8859-1"
 To: "Curt, WE7U" <curt.we7u@gmail.com>
 Cc: linux-hams@vger.kernel.org
 
-> I remember from waaaayyyyy back when I used to do a lot of tcp/ip ove=
-r ax.25
-> here in the Seattle area that it would just sit there after the conne=
-ct
-> until you sent some packet. =A0This may have been fixed somehow since=
- then,
-> but that's what I recall.
+> Note the bit about running ax25d as root. =A0W/o that it couldn't lis=
+ten to
+> the AX.25 port and so just sat there. =A0Perhaps that might be your i=
+ssue?
 
-Interesting.  It may be that I'm misunderstanding something about how
-this works.  I'm not actually trying to do tcp/ip over AX.25, exactly.
- I just want pure AX.25 clients to be able to connect, and then have
-something forward their input to a particular TCP/IP service and
-forward its output to them.
-
-> The good news is that I'm getting back into tcp/ip over RF. =A0I'm me=
-ssing
-> with YAM modems and 9600-baud TNC's here, and just came up on 220 960=
-0-baud
-> friday night. =A0Eventually I plan to have both a 220 and a 440 port =
-on
-> 9600-baud as well as the 1200-baud AX.25 port running APRS. =A0This s=
-hould
-> keep me more up-to-date on the issues than I have been for the last b=
-unch of
-> years. =A0We plan to have a 220 9600-baud full-duplex bit-regen repea=
-ter up
-> and running sometime this year too, to replace our aging 1200-baud re=
-peater
-> that doesn't work so well anymore. =A0That should get our area buzzin=
-g again.
-> =A0Literally!
-
-Sounds fun.  I've been curious about all manner of digital modes for a
-long time, and really enjoy packet, but I've only been licensed for
-about a year, so I'm still making sense of it.
+Unfortunately not.  I've been running it all as root so far while
+trying to get everything working.  After that's done I'll worry about
+tidying it up and locking it down a bit better.  I figured it best to
+take permissions and privileges out of the equation at this stage,
+rather than complicate things.
 
 Derek
 --
