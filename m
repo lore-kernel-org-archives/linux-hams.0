@@ -1,70 +1,73 @@
-From: Nate Bargmann <n0nb-/4qmxAYkJys@public.gmane.org>
-Subject: Hamlib 1.2.13 released
-Date: Sat, 12 Mar 2011 20:56:06 -0600
-Message-ID: <20110313025606.GH17075@n0nb.us>
-Reply-To: linuxham-hHKSG33TihhbjbujkaE4pw@public.gmane.org
+From: echicken <echicken@bbs.electronicchicken.com>
+Subject: axports & ax25d.conf
+Date: Sun, 13 Mar 2011 00:18:15 -0500
+Message-ID: <AANLkTi=VNvvAe4FZmfeWRKTg3_rUcSMjycy+BLO118UN@mail.gmail.com>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
-Return-path: <sentto-17259876-12639-1299984976-gcrl-linuxham=m.gmane.org-Hmr20et6RfIqbyJsPhsW54OaOnUyUoRs@public.gmane.org>
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yahoogroups.com; s=lima; t=1299984977; bh=w4K1+npyCpW2yiyts6UqbOH3hYPV632Brt3ybevTHmg=; h=Received:Received:Received:X-Yahoo-Newman-Id:X-Sender:X-Apparently-To:X-Received:X-Received:X-Received:X-Received:X-Received:To:Message-ID:Mail-Followup-To:X-Operating-System:Organization:User-Agent:X-Originating-IP:From:X-Yahoo-Profile:Sender:MIME-Version:Mailing-List:Delivered-To:List-Id:Precedence:List-Unsubscribe:Date:Subject:Reply-To:X-Yahoo-Newman-Property:Content-Type:Content-Transfer-Encoding; b=PSETH+FCPXRiP4Mh3NQOsNpD8Yt154j204L0J/b0nVaL52zjNTSOZzG95WdZKARFZPMBohVdig/9QBDZ00L1ohu8jnNf5RGNrt90E3LOr5axoBWLLRNCKKWx7RWouRvg
-Sender: linuxham-hHKSG33TihhbjbujkaE4pw@public.gmane.org
-List-Id: <linux-hams.vger.kernel.org>
-List-Unsubscribe: <mailto:linuxham-unsubscribe-hHKSG33TihhbjbujkaE4pw@public.gmane.org>
+Return-path: <linux-hams-owner@vger.kernel.org>
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:sender:date:x-google-sender-auth
+         :message-id:subject:from:to:content-type;
+        bh=Vxky09n+Tc1RLWqeTQbKcgMrh4Rao6IBFTJZI0nF3Ps=;
+        b=igm6Khme/0/wlkoE4Rw8XD/XNLKpBYTUYLfh+0i+YjHaA/+2Z0Tqfyr3Dkfo2SSnkl
+         kk2KjgmIKrXhdYmO2BxSJAob13FeMFA5vEmRyxE7GUb1QEkJIS++YyBwuFY3BOmgPVUZ
+         vHQAOwd/4RA2tEDruhAUzXnPJDJbrQKeNm43I=
+Sender: linux-hams-owner@vger.kernel.org
+List-ID: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
-To: Linux Hams <linux-hams-u79uwXL29TY76Z2rM5mHXA@public.gmane.org>, Fldigi Alpha Team <fldigi-alpha-0fE9KPoRgkgATYTw5x5z8w@public.gmane.org>, Fldigi List <linuxham-hHKSG33TihhbjbujkaE4pw@public.gmane.org>
+Content-Transfer-Encoding: 7bit
+To: linux-hams@vger.kernel.org
 
-The Hamlib Group is pleased to announce the latest release of Hamlib
-1.2.13.  The following changes are included in the 1.2.13 release:
+I've been trying to set up ax25d and axconv on a CentOS 5 (kernel
+2.6.18 with hamradio support compiled in) server, but haven't been
+having much luck.
 
-Version 1.2.13
-    2011-03-12
-    * New models: VX-1700, FUNcube, FiFi-SDR, KTH-SDR Si570,
-      FT-5000, TS-590S
-    * Rotor fixes and features: SPID
-    * New Rotor backend: F1TE Tracker
-    * Fixes and features: TS-440S, K2, K3,
-      SR-2200, THF6A, THF7E, NewCAT rigs serial port defaults, TM-D700,
-    * Removed libtool tree from source tree
-    * Removed old DocBook files
-    * Allow USB device's VID/PID/Vendor/Product to be explicitly specified
-    * Doxygen documentation updates and new style sheet
+My TNC is a Kantronics KPC3+ in KISS mode.  My axports file is:
 
-At this time only the source archive has been released.  The Hamlib
-1.2.13 Win32 DLL binary will be released in the near future.
+# /etc/ax25/axports
+#
+# The format of this file is:
+#
+# name callsign speed paclen window description
+#
+ax0	VE3XEC-2	9600	255	2	KPC3P 1200bps VHF
 
-For the Hamlib Group,
+I can attach the TNC with:
 
-73, de Nate >>
+/usr/local/sbin/kissattach /dev/ttyUSB0 ax0
 
--- 
+and all goes well.  If I connect from another TNC at this point I see
+"Connected to VE3XEC-2".  'netstat --ax25' on the linux box confirms
+this.  I can also use the 'call' command to connect from the linux box
+to the other TNC at this point, and everything works nicely.
 
-"The optimist proclaims that we live in the best of all
-possible worlds.  The pessimist fears this is true."
+ifconfig, for what it's worth, tells me this about ax0:
 
-Ham radio, Linux, bikes, and more: http://www.n0nb.us
+ax0       Link encap:AMPR AX.25  HWaddr VE3XEC-2
+          UP BROADCAST RUNNING  MTU:255  Metric:1
+          RX packets:15 errors:1 dropped:0 overruns:0 frame:0
+          TX packets:13 errors:0 dropped:0 overruns:0 carrier:0
+          collisions:0 txqueuelen:10
+          RX bytes:240 (240.0 b)  TX bytes:238 (238.0 b)
 
+My ax25d.conf is:
 
-------------------------------------
+[VE3XEC-2 via ax0]
+default * * * * * * - root /usr/local/sbin/axconv axconv 192.168.1.75 2000
 
-Yahoo! Groups Links
+ax25d launches and goes into the background without any errors, and
+continues to run, but when I connect to VE3XEC-2 the behavior is
+exactly the same as when ax25d isn't running at all (I simply see
+"Connected to VE3XEC-2") and my connection is not forwarded to the
+service running on port 2000 of 192.168.1.75.
 
-<*> To visit your group on the web, go to:
-    http://groups.yahoo.com/group/linuxham/
+I can run axconv from the command line and connect to the service
+specified in ax25d.conf, and the output is what I'm expecting.
 
-<*> Your email settings:
-    Individual Email | Traditional
+So the connection is being made, but ax25d never seems to be doing its
+thing.  Hopefully I'm just missing something simple - but I'm at a
+loss.
 
-<*> To change settings online go to:
-    http://groups.yahoo.com/group/linuxham/join
-    (Yahoo! ID required)
+Thanks in advance for any suggestions.
 
-<*> To change settings via email:
-    linuxham-digest-hHKSG33TihhbjbujkaE4pw@public.gmane.org 
-    linuxham-fullfeatured-hHKSG33TihhbjbujkaE4pw@public.gmane.org
-
-<*> To unsubscribe from this group, send an email to:
-    linuxham-unsubscribe-hHKSG33TihhbjbujkaE4pw@public.gmane.org
-
-<*> Your use of Yahoo! Groups is subject to:
-    http://docs.yahoo.com/info/terms/
-
+Derek, VE3XEC
