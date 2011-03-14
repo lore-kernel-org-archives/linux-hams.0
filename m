@@ -1,39 +1,49 @@
-From: Ray Wells <vk2tv@exemail.com.au>
-Subject: Re: Why screw with the AX.25 configs?
-Date: Mon, 14 Mar 2011 13:57:40 +1100
-Message-ID: <4D7D8424.1070202@exemail.com.au>
-References: <alpine.LNX.2.00.1103131241240.7815@wapiti.we7u.net> <4D7D2BAB.9010909@exemail.com.au> <20110314014414.GG8243@x-berg.in-berlin.de>
+From: "Bradley D. Thornton" <Bradley@NorthTech.US>
+Subject: Re: Hamlib 1.2.13 released
+Date: Mon, 14 Mar 2011 00:31:17 -0700
+Message-ID: <4D7DC445.40309@NorthTech.US>
+References: <20110313025606.GH17075@n0nb.us>
 Mime-Version: 1.0
 Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <20110314014414.GG8243@x-berg.in-berlin.de>
+In-Reply-To: <20110313025606.GH17075@n0nb.us>
 Sender: linux-hams-owner@vger.kernel.org
 List-ID: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"; format="flowed"
-To: Thomas Osterried <thomas@x-berg.in-berlin.de>
-Cc: linux-hams@vger.kernel.org
+Content-Type: text/plain; charset="us-ascii"
+To: Linux Hams <linux-hams@vger.kernel.org>, Fldigi Alpha Team <fldigi-alpha@lists.berlios.de>, Fldigi List <linuxham@yahoogroups.com>
+
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: RIPEMD160
 
 
 
-On 14/03/11 12:44, Thomas Osterried wrote:
->> 2. I use libax25, ax25-apps and ax25-tools sources from F6BVP
->> because they contain fixes that AFAIK haven't been adopted in the
->> official maintainers versions.
->
-> Please explain any compatibility issue.
->
-> 73,
-> 	- Thomas  dl9sau
-> --
+On 03/12/2011 06:56 PM, Nate Bargmann wrote:
+> The Hamlib Group is pleased to announce the latest release of Hamlib
+> 1.2.13.  
+> At this time only the source archive has been released.  The Hamlib
+> 1.2.13 Win32 DLL binary will be released in the near future.
+> 
 
-Who mentioned compatibility issues?
+That's no big deal. No one runs microsoft anymore anyway ;)
 
-I can only rely on exchanges in these forums and those exchanges suggest 
-to me that some of Bernard's fixes (primarily as related to Rose/Fpac) 
-haven't been adopted. I didn't say I was absolutely correct, I said AFAIK.
 
-I'm not starting a version war, just stating, in explaining differences 
-that might exist between my installation and that of Curt, that I use 
-the F6BVP versions for the reason previously stated.
+- -- 
+Bradley D. Thornton
+Manager Network Services
+NorthTech Computer
+TEL: +1.760.666.2703  (US)
+TEL: +44.702.405.1909 (UK)
+http://NorthTech.US
 
-Ray vk2tv
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.10 (GNU/Linux)
+Comment: Find this cert at x-hkp://pool.sks-keyservers.net
+
+iQEcBAEBAwAGBQJNfcRFAAoJEE1wgkIhr9j3sRYH/3HkkO9UGuU8Wju0uzj6EoSv
+2jmKTincs7+cBod7hLVmLWpY9iTLO9dtCte7phqubZeoKShGM18MaOuJ/fLwSoN3
+v1ZgqQkwcIMMh39GforsPZU6SuRiaHtA1KjGWXYThqt7KXYZBaI2FWNIo2oqTJ7v
+A3ah1r/TbkzyOJTJWiEZMsOlFUH0yuAp8KfWTHbwFy54qxvn70DVebevWB2cn0l4
+XQUsdtNlFMa0B+b4vPFbMgycwqs4bMKncOLGCb1h67laA0YZQQC/3Zj601HApxuI
+6QucREE/Ag8rbyzeQqfdVw40+UxAl7GOzHAoIXTKW7RY6rVspA/McIt83Mjjw4Q=
+=9QSp
+-----END PGP SIGNATURE-----
