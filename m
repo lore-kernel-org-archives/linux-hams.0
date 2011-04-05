@@ -1,43 +1,45 @@
-From: Michal Marek <mmarek@suse.cz>
-Subject: [PATCH 17/34] hdlcdrv: Drop __TIME__ usage
-Date: Tue,  5 Apr 2011 16:59:04 +0200
-Message-ID: <1302015561-21047-18-git-send-email-mmarek@suse.cz>
+From: Greg KH <gregkh@suse.de>
+Subject: Re: [PATCH 00/34] Make kernel build deterministic
+Date: Tue, 5 Apr 2011 08:49:18 -0700
+Message-ID: <20110405154918.GA31337@suse.de>
 References: <1302015561-21047-1-git-send-email-mmarek@suse.cz>
-Return-path: <linux-kbuild-owner@vger.kernel.org>
-In-Reply-To: <1302015561-21047-1-git-send-email-mmarek@suse.cz>
-Sender: linux-kbuild-owner@vger.kernel.org
-List-ID: <linux-hams.vger.kernel.org>
-MIME-Version: 1.0
+Mime-Version: 1.0
 Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
-To: linux-kbuild@vger.kernel.org
-Cc: linux-kernel@vger.kernel.org, Thomas Sailer <t.sailer@alumni.ethz.ch>, linux-hams@vger.kernel.org, netdev@vger.kernel.org
+Return-path: <linux-arm-kernel-bounces+linux-arm-kernel=m.gmane.org@lists.infradead.org>
+Content-Disposition: inline
+In-Reply-To: <1302015561-21047-1-git-send-email-mmarek@suse.cz>
+List-Id: <linux-hams.vger.kernel.org>
+List-Unsubscribe: <http://lists.infradead.org/mailman/options/linux-arm-kernel>, 
+	<mailto:linux-arm-kernel-request@lists.infradead.org?subject=unsubscribe>
+List-Archive: <http://lists.infradead.org/pipermail/linux-arm-kernel/>
+List-Post: <mailto:linux-arm-kernel@lists.infradead.org>
+List-Help: <mailto:linux-arm-kernel-request@lists.infradead.org?subject=help>
+List-Subscribe: <http://lists.infradead.org/mailman/listinfo/linux-arm-kernel>, 
+	<mailto:linux-arm-kernel-request@lists.infradead.org?subject=subscribe>
+Sender: linux-arm-kernel-bounces@lists.infradead.org
+Errors-To: linux-arm-kernel-bounces+linux-arm-kernel=m.gmane.org@lists.infradead.org
+To: Michal Marek <mmarek@suse.cz>
+Cc: anil_ravindranath@pmc-sierra.com, mchehab@redhat.com, benh@kernel.crashing.org, x86@kernel.org, mac@melware.de, aacraid@adaptec.com, linux-mtd@lists.infradead.org, allan.stephens@windriver.com, hpa@zytor.com, netdev@vger.kernel.org, t.sailer@alumni.ethz.ch, gwingerde@gmail.com, IvDoorn@gmail.com, elf@buici.com, cluster-devel@redhat.com, ccaulfie@redhat.com, mingo@redhat.com, dougthompson@xmission.com, linux-media@vger.kernel.org, arnaud.giersch@free.fr, linux-kbuild@vger.kernel.org, teigland@redhat.com, tony.olech@elandigitalsystems.com, apw@canonical.com, linux-hams@vger.kernel.org, tglx@linutronix.de, swhiteho@redhat.com, linux-arm-kernel@lists.infradead.org, linux-edac@vger.kernel.org, jon.maloy@ericsson.com, linux-scsi@vger.kernel.org, linuxppc-dev@lists.ozlabs.org, linux-usb@vger.kernel.org, linux-wireless@vger.kernel.org, linux-kernel@vger.kernel.org, bluesmoke-
 
-The kernel already prints its build timestamp during boot, no need to
-repeat it in random drivers and produce different object files each
-time.
+On Tue, Apr 05, 2011 at 04:58:47PM +0200, Michal Marek wrote:
+> 
+> Hi,
+> 
+> this series makes it possible to build bit-identical kernel image and
+> modules from identical sources. Of course the build is already
+> deterministic in terms of behavior of the code, but the various
+> timestamps embedded in the object files make it hard to compare two
+> builds, for instance to verify that a makefile cleanup didn't
+> accidentally change something. A prime example is /proc/config.gz, which
+> has both a timestamp in the gzip header and a timestamp in the payload
+> data. With this series applied, a script like this will produce
+> identical kernels each time:
 
-Cc: Thomas Sailer <t.sailer@alumni.ethz.ch>
-Cc: linux-hams@vger.kernel.org
-Cc: netdev@vger.kernel.org
-Signed-off-by: Michal Marek <mmarek@suse.cz>
----
- drivers/net/hamradio/hdlcdrv.c |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
+Very nice stuff.  Do you want to take the individual patches through one
+of your trees, or do you mind if the subsystem maintainers take them
+through theirs?
 
-diff --git a/drivers/net/hamradio/hdlcdrv.c b/drivers/net/hamradio/hdlcdrv.c
-index 5b37579..a4a3516 100644
---- a/drivers/net/hamradio/hdlcdrv.c
-+++ b/drivers/net/hamradio/hdlcdrv.c
-@@ -749,7 +749,7 @@ EXPORT_SYMBOL(hdlcdrv_unregister);
- static int __init hdlcdrv_init_driver(void)
- {
- 	printk(KERN_INFO "hdlcdrv: (C) 1996-2000 Thomas Sailer HB9JNX/AE4WA\n");
--	printk(KERN_INFO "hdlcdrv: version 0.8 compiled " __TIME__ " " __DATE__ "\n");
-+	printk(KERN_INFO "hdlcdrv: version 0.8\n");
- 	return 0;
- }
- 
--- 
-1.7.4.1
+thanks,
 
+greg k-h
