@@ -1,39 +1,36 @@
-From: Michal Marek <mmarek@suse.cz>
-Subject: Re: [PATCH 17/34] hdlcdrv: Drop __TIME__ usage
-Date: Tue, 19 Apr 2011 12:56:50 +0200
-Message-ID: <4DAD6A72.2050809@suse.cz>
-References: <1302015561-21047-1-git-send-email-mmarek@suse.cz> <1302015561-21047-18-git-send-email-mmarek@suse.cz> <4DAD614D.1060704@bfs.de>
+From: T + J Williams <wa0eir@mchsi.com>
+Subject: psk31lx version 2.0 release
+Date: Sat, 21 May 2011 16:58:40 -0500
+Message-ID: <1306015120.2460.38.camel@localhost>
 Mime-Version: 1.0
 Content-Transfer-Encoding: 7bit
-Return-path: <linux-kbuild-owner@vger.kernel.org>
-In-Reply-To: <4DAD614D.1060704@bfs.de>
-Sender: linux-kbuild-owner@vger.kernel.org
-List-ID: <linux-hams.vger.kernel.org>
+Return-path: <opensuse-ham+bounces-87-suse-ham-e=m.gmane.org@opensuse.org>
+List-Post: <mailto:opensuse-ham@opensuse.org>
+List-Help: <mailto:opensuse-ham+help@opensuse.org>
+List-Subscribe: <mailto:opensuse-ham+subscribe@opensuse.org>
+List-Unsubscribe: <mailto:opensuse-ham+unsubscribe@opensuse.org>
+List-Owner: <mailto:opensuse-ham+owner@opensuse.org>
+List-Archive: <http://lists.opensuse.org/opensuse-ham/>
+List-Id: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
-To: wharms@bfs.de
-Cc: linux-kbuild@vger.kernel.org, Thomas Sailer <t.sailer@alumni.ethz.ch>, linux-hams@vger.kernel.org, netdev@vger.kernel.org
+To: yahoo psk31 <psk31@yahoogroups.com>, vger linux hams <linux-hams@vger.kernel.org>, ubuntu hams devel <ubuntu-hams-devel@lists.launchpad.net>, suse ham <opensuse-ham@opensuse.org>, qt
 
-On 19.4.2011 12:17, walter harms wrote:
-> Am 05.04.2011 16:59, schrieb Michal Marek:
->> --- a/drivers/net/hamradio/hdlcdrv.c
->> +++ b/drivers/net/hamradio/hdlcdrv.c
->> @@ -749,7 +749,7 @@ EXPORT_SYMBOL(hdlcdrv_unregister);
->>  static int __init hdlcdrv_init_driver(void)
->>  {
->>  	printk(KERN_INFO "hdlcdrv: (C) 1996-2000 Thomas Sailer HB9JNX/AE4WA\n");
->> -	printk(KERN_INFO "hdlcdrv: version 0.8 compiled " __TIME__ " " __DATE__ "\n");
->> +	printk(KERN_INFO "hdlcdrv: version 0.8\n");
->>  	return 0;
->>  }
->>  
-> 
-> Its a bit late but i am not a big fan of hard coded version id's.
-> Does GIT provide something like that ? If not
-> IMHO the line
->  printk(KERN_INFO "hdlcdrv: version 0.8\n");
-> can be removed.
+Hi,
 
-OK, submit a separate patch then. I personally don't care about version
-id's, as long as they do not embed any timestamp ;-).
+There is a new release of psk31lx.  This version has been updated to use
+pulseaudio.  Some color was added as well. For a list of all the
+changes, please see the ChangeLog file.
+ 
+Since psk31lx does not have a GUI (it uses ncurses), it will run in an
+xterm or even on a system without the X Window system.   It needs very
+little CPU time, which makes it perfect for slower and smaller hardware.
+See my website for the download.
 
-Michal
+-- 
+Enjoy and 73
+
+Ted W - wa0eir
+http://wa0eir.ham.org
+
+There are 10 types of people in this world:
+those who understand binary, and those who don't.
