@@ -1,33 +1,57 @@
-From: Michal Marek <mmarek@suse.cz>
-Subject: Re: [PATCH 17/34] hdlcdrv: Drop __TIME__ usage
-Date: Wed, 25 May 2011 17:24:36 +0200
-Message-ID: <4DDD1F34.7030702@suse.cz>
-References: <1302015561-21047-1-git-send-email-mmarek@suse.cz>	 <1302015561-21047-18-git-send-email-mmarek@suse.cz> <1302015790.4124.54.camel@xbox360.hq.axsem.com>
+From: Nate Bargmann <n0nb@n0nb.us>
+Subject: Hamlib 1.2.13.1 released!
+Date: Sun, 29 May 2011 07:30:38 -0500
+Message-ID: <20110529123038.GB20012@n0nb.us>
 Mime-Version: 1.0
+Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
-Return-path: <linux-kbuild-owner@vger.kernel.org>
-In-Reply-To: <1302015790.4124.54.camel@xbox360.hq.axsem.com>
-Sender: linux-kbuild-owner@vger.kernel.org
-List-ID: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"; format="flowed"
-To: Thomas Sailer <t.sailer@alumni.ethz.ch>
-Cc: linux-kbuild <linux-kbuild@vger.kernel.org>, lkml <linux-kernel@vger.kernel.org>, linux-hams@vger.kernel.org, Linux Kernel Network Developers <netdev@vger.kernel.org>
+Return-path: <hamlib-developer-bounces@lists.sourceforge.net>
+Content-Disposition: inline
+List-Id: <linux-hams.vger.kernel.org>
+List-Unsubscribe: <https://lists.sourceforge.net/lists/listinfo/hamlib-developer>,
+	<mailto:hamlib-developer-request@lists.sourceforge.net?subject=unsubscribe>
+List-Archive: <http://sourceforge.net/mailarchive/forum.php?forum_name=hamlib-developer>
+List-Post: <mailto:hamlib-developer@lists.sourceforge.net>
+List-Help: <mailto:hamlib-developer-request@lists.sourceforge.net?subject=help>
+List-Subscribe: <https://lists.sourceforge.net/lists/listinfo/hamlib-developer>,
+	<mailto:hamlib-developer-request@lists.sourceforge.net?subject=subscribe>
+Errors-To: hamlib-developer-bounces@lists.sourceforge.net
+To: Hamlib Developers <hamlib-developer@lists.sourceforge.net>, Fldigi Alpha Team <fldigi-alpha@lists.berlios.de>, Linux Hams <linux-hams@vger.kernel.org>
 
-On 5.4.2011 17:03, Thomas Sailer wrote:
-> On Tue, 2011-04-05 at 16:59 +0200, Michal Marek wrote:
->> The kernel already prints its build timestamp during boot, no need to
->> repeat it in random drivers and produce different object files each
->> time.
->>
->> Cc: Thomas Sailer<t.sailer@alumni.ethz.ch>
->> Cc: linux-hams@vger.kernel.org
->> Cc: netdev@vger.kernel.org
->> Signed-off-by: Michal Marek<mmarek@suse.cz>
-> Acked-By: Thomas Sailer<t.sailer@alumni.ethz.ch>
->
-> Ok with me
+At long last Hamlib 1.2.13.1 has been push out the door and is available
+for download from:
 
-I didn't find the commit in today's linux-next, so I applied this to
-kbuild-2.6.git#trivial.
+https://sourceforge.net/projects/hamlib/files/hamlib/1.2.13.1/
 
-Michal
+Available are a source tarball and Win32 builds for MSVC++ and VB.NET
+binaries.
+
+This release is a bug fix release and includes no new features or
+backends:
+
+Version 1.2.13.1
+	* 2011-05-29
+	* Conversion to Git SCM and updated README documentation for Git SCM
+	* Mingw32 build fixes
+	* FUNcube dongle USB fixes for Win32
+	* Added kit/README.funcubedongle
+	* Bug fix--K3 antenna selection function
+
+Users of the FUN Cube dongle on Win32 and K3 users on all platforms are
+urged to upgrade to Hamlib 1.2.13.1.
+
+73, de Nate >>
+
+-- 
+
+"The optimist proclaims that we live in the best of all
+possible worlds.  The pessimist fears this is true."
+
+Ham radio, Linux, bikes, and more: http://www.n0nb.us
+
+------------------------------------------------------------------------------
+vRanger cuts backup time in half-while increasing security.
+With the market-leading solution for virtual backup and recovery, 
+you get blazing-fast, flexible, and affordable data protection.
+Download your free trial now. 
+http://p.sf.net/sfu/quest-d2dcopy1
