@@ -1,57 +1,56 @@
-From: Nate Bargmann <n0nb@n0nb.us>
-Subject: Hamlib 1.2.13.1 released!
-Date: Sun, 29 May 2011 07:30:38 -0500
-Message-ID: <20110529123038.GB20012@n0nb.us>
+From: f8arr <f8arr@f8arr.org>
+Subject: Issue with RS232 <-> USB adaptor (FC15)
+Date: Mon, 13 Jun 2011 21:24:23 +0200
+Message-ID: <4DF663E7.7040100@f8arr.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
-Return-path: <hamlib-developer-bounces@lists.sourceforge.net>
-Content-Disposition: inline
-List-Id: <linux-hams.vger.kernel.org>
-List-Unsubscribe: <https://lists.sourceforge.net/lists/listinfo/hamlib-developer>,
-	<mailto:hamlib-developer-request@lists.sourceforge.net?subject=unsubscribe>
-List-Archive: <http://sourceforge.net/mailarchive/forum.php?forum_name=hamlib-developer>
-List-Post: <mailto:hamlib-developer@lists.sourceforge.net>
-List-Help: <mailto:hamlib-developer-request@lists.sourceforge.net?subject=help>
-List-Subscribe: <https://lists.sourceforge.net/lists/listinfo/hamlib-developer>,
-	<mailto:hamlib-developer-request@lists.sourceforge.net?subject=subscribe>
-Errors-To: hamlib-developer-bounces@lists.sourceforge.net
-To: Hamlib Developers <hamlib-developer@lists.sourceforge.net>, Fldigi Alpha Team <fldigi-alpha@lists.berlios.de>, Linux Hams <linux-hams@vger.kernel.org>
+Return-path: <linux-hams-owner@vger.kernel.org>
+Sender: linux-hams-owner@vger.kernel.org
+List-ID: <linux-hams.vger.kernel.org>
+Content-Type: text/plain; charset="us-ascii"; format="flowed"
+To: linux-hams <linux-hams@vger.kernel.org>
 
-At long last Hamlib 1.2.13.1 has been push out the door and is available
-for download from:
+Hello Hams !
 
-https://sourceforge.net/projects/hamlib/files/hamlib/1.2.13.1/
+Apologies for the bandwich, but perhaps someone has allready faced it ...
 
-Available are a source tarball and Win32 builds for MSVC++ and VB.NET
-binaries.
 
-This release is a bug fix release and includes no new features or
-backends:
+Here is the case :
+In order to have a TX port on WSJT I use /dev/ttyUSB0 from prolific pl2303.
+At boot, the serial comes up to TX.
+On messages I have only this message :
 
-Version 1.2.13.1
-	* 2011-05-29
-	* Conversion to Git SCM and updated README documentation for Git SCM
-	* Mingw32 build fixes
-	* FUNcube dongle USB fixes for Win32
-	* Added kit/README.funcubedongle
-	* Bug fix--K3 antenna selection function
+Jun 13 17:00:08 f8arr2-station kernel: [ 3574.706035] usb 3-1: new full 
+speed USB device using uhci_hcd and address 8
+Jun 13 17:00:08 f8arr2-station kernel: [ 3574.852805] usb 3-1: New USB 
+device found, idVendor=067b, idProduct=2303
+Jun 13 17:00:08 f8arr2-station kernel: [ 3574.852814] usb 3-1: New USB 
+device strings: Mfr=1, Product=2, SerialNumber=0
+Jun 13 17:00:08 f8arr2-station kernel: [ 3574.852819] usb 3-1: Product: 
+USB-Serial Controller
+Jun 13 17:00:08 f8arr2-station kernel: [ 3574.852823] usb 3-1: 
+Manufacturer: Prolific Technology Inc.
+Jun 13 17:00:08 f8arr2-station kernel: [ 3574.855943] pl2303 3-1:1.0: 
+pl2303 converter detected
+Jun 13 17:00:08 f8arr2-station kernel: [ 3574.868109] usb 3-1: pl2303 
+converter now attached to ttyUSB0
+Jun 13 17:00:08 f8arr2-station mtp-probe: checking bus 3, device 8: 
+"/sys/devices/pci0000:00/0000:00:1d.1/usb3/3-1"
+Jun 13 17:00:08 f8arr2-station mtp-probe: bus: 3, device: 8 was not an 
+MTP device
 
-Users of the FUN Cube dongle on Win32 and K3 users on all platforms are
-urged to upgrade to Hamlib 1.2.13.1.
+Of course, If I run WSJT it can't commute the TX with an error message 
+"Can't connect to /dev/ttyUSB0"
 
-73, de Nate >>
+My user is on the "dialout" and "uucp" group.
 
--- 
+I tried exactly the same manipulation with my only real RS232 port and 
+it works like a charm.. (but dedicated to an other action).
+Of course, same configuration was ok under my ubuntu 10.04. but I 
+switched to Fedora 15...
 
-"The optimist proclaims that we live in the best of all
-possible worlds.  The pessimist fears this is true."
+If someone had a idea.. it would be great. My freind google didn't came 
+with something looking good...
 
-Ham radio, Linux, bikes, and more: http://www.n0nb.us
-
-------------------------------------------------------------------------------
-vRanger cuts backup time in half-while increasing security.
-With the market-leading solution for virtual backup and recovery, 
-you get blazing-fast, flexible, and affordable data protection.
-Download your free trial now. 
-http://p.sf.net/sfu/quest-d2dcopy1
+regards
+F8ARR - Guillaume
