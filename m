@@ -1,60 +1,24 @@
-From: f8arr <f8arr@f8arr.org>
-Subject: Re: Issue with RS232 <-> USB adaptor (FC15)
-Date: Mon, 13 Jun 2011 23:26:32 +0200
-Message-ID: <4DF68088.9070501@f8arr.org>
-References: <4DF663E7.7040100@f8arr.org> <4DF66BF8.6090003@shom.fr> <4DF672E6.7050403@f8arr.org> <4DF678B0.1080600@shom.fr> <4DF67C02.4060200@radagast.org>
+From: Alan Cox <alan-VuQAYsv1563Yd54FQh9/CA@public.gmane.org>
+Subject: Re: [PATCH] TTY: define TTY_MAX_RECEIVE_ROOM to 65536
+Date: Tue, 14 Jun 2011 14:24:46 +0100
+Message-ID: <20110614142446.063c0859@bob.linux.org.uk>
+References: <1308057986-11472-1-git-send-email-ffainelli@freebox.fr>
 Mime-Version: 1.0
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <4DF67C02.4060200@radagast.org>
-Sender: linux-hams-owner@vger.kernel.org
+Content-Transfer-Encoding: 7bit
+Return-path: <linux-bluetooth-owner-u79uwXL29TY76Z2rM5mHXA@public.gmane.org>
+In-Reply-To: <1308057986-11472-1-git-send-email-ffainelli-MmRyKUhfbQ9GWvitb5QawA@public.gmane.org>
+Sender: linux-bluetooth-owner-u79uwXL29TY76Z2rM5mHXA@public.gmane.org
 List-ID: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="iso-8859-1"; format="flowed"
-To: Dave Platt <dplatt@radagast.org>
-Cc: linux-hams <linux-hams@vger.kernel.org>
+Content-Type: text/plain; charset="us-ascii"
+To: Florian Fainelli <ffainelli-MmRyKUhfbQ9GWvitb5QawA@public.gmane.org>
+Cc: linux-kernel-u79uwXL29TY76Z2rM5mHXA@public.gmane.org, Marcel Holtmann <marcel-kz+m5ild9QBg9hUCZPvPmw@public.gmane.org>, "Gustavo F. Padovan" <padovan-Y3ZbgMPKUGA34EUeqzHoZw@public.gmane.org>, Wolfgang Grandegger <wg-5Yr1BZd7O62+XT7JhA+gdA@public.gmane.org>, Andreas Koensgen <ajk-iz34hMvxm2Hmj42eshorlhS11BummzK+@public.gmane.org>, Samuel Ortiz <samuel-jcdQHdrhKHMdnm+yROfE0A@public.gmane.org>, Paul Mackerras <paulus-eUNUBHrolfbYtjvyW6yDsg@public.gmane.org>, Greg Kroah-Hartman <gregkh-l3A5Bk7waGM@public.gmane.org>, Mikael Starvik <starvik-VrBV9hrLPhE@public.gmane.org>, Jesper Nilsson <jesper.nilsson-VrBV9hrLPhE@public.gmane.org>, Pavan Savoy <pavan_savoy-l0cyMroinI0@public.gmane.org>, Felipe Balbi <balbi-l0cyMroinI0@public.gmane.org>, Thomas Gleixner <tglx-hfZtesqFncYOwBW4kG4KsQ@public.gmane.org>, David Miller <davem-fT/PcQaiUtIeIZ0/mPfg9Q@public.gmane.org>, Eric Dumazet <eric.dumazet-Re5JQEeQqe8AvxtiuMwx3w@public.gmane.org>, Oliver Hartkopp <socketcan-fJ+pQTUTwRTk1uMJSBkQmQ@public.gmane.org>, Tobias Klauser <tklauser-93Khv+1bN0NyDzI6CaY1VQ@public.gmane.org>, Jiri Slaby <jslaby-AlSwsSmVLrQ@public.gmane.org>, linux-bluetooth-u79uwXL29TY76Z2rM5mHXA@public.gmane.org, socketcan-core-0fE9KPoRgkgATYTw5x5z8w@public.gmane.org, netdev-u79uwXL29TY76Z2rM5mHXA@public.gmane.org, linux-hams-u79uwXL29TY76Z2rM5mHXA@public.gmane.org, linux-ppp-u79uwXL29TY76Z2rM5mHXA@public.gmane.org, linux-cris-kernel-VrBV9hrLPhE@public.gmane.org, linux-serial-u79uwXL29TY76Z2rM5mHXA@public.gmane.org
 
-hum...
+On Tue, 14 Jun 2011 15:26:25 +0200
+Florian Fainelli <ffainelli-MmRyKUhfbQ9GWvitb5QawA@public.gmane.org> wrote:
 
-you are right the Issue is not clear.. something is going wrong...
-I have to investigate.
+> A lot of TTY drivers are setting their receive_room value to 65536
+> so let's define a constant for this.
 
-73 qro
-f8ARR
+These are not all the same thing so NAK
 
-On 06/13/2011 11:07 PM, Dave Platt wrote:
-> On 06/13/2011 01:53 PM, Bruno Tr=E9guier wrote:
->> Le 13/06/2011 =E0 22:28, f8arr a =E9crit :
->>> Hello,
->>>
->>> I'm not sure because I found the problem to resolve my issue :
->>>
->>> stty --file=3D/dev/ttyUSB0 clocal
->>>
->>> I remove all flow control on the serial.
-> I don't think that "clocal" removes flow control (on RTS/CTS) -
-> that's controlled by a separate option.
->
-> What "clocal" does, is "disable modem control signals".
-> Specifically, for a port marked "-clocal" (not local),
-> an open() call will block until the device on the port
-> asserts the CD (carrier detect) line, and if the CD
-> line is deasserted the port will "hang up".  This is
-> useful for serial ports connected to dial-up modems,
-> but not particularly desirable for serial ports being
-> used to control local devices such as transceiver.
->
-> I can't recall whether a -clocal port automagically
-> asserts DTR even when it isn't open... I don't think so
-> but I could be wrong.
->
-> --
-> To unsubscribe from this list: send the line "unsubscribe linux-hams"=
- in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at  http://vger.kernel.org/majordomo-info.html
->
---
-To unsubscribe from this list: send the line "unsubscribe linux-hams" i=
-n
-the body of a message to majordomo@vger.kernel.org
-More majordomo info at  http://vger.kernel.org/majordomo-info.html
+Linus wants to get rid of tty->receive_room anyway
