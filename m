@@ -1,7 +1,7 @@
 From: f6bvp <f6bvp@free.fr>
 Subject: [AX25] inconsistent lock state
-Date: Thu, 16 Jun 2011 22:23:09 +0200
-Message-ID: <4DFA662D.5030302@free.fr>
+Date: Thu, 16 Jun 2011 22:40:57 +0200
+Message-ID: <4DFA6A59.2000709@free.fr>
 References: <4B2CD772.1030106@upmc.fr> <4B2D1025.1020106@gmail.com> <4B2E6729.1090102@free.fr> <4B507FAA.8010007@free.fr> <20100115203654.GA3084@del.dom.local>
 Mime-Version: 1.0
 Content-Transfer-Encoding: QUOTED-PRINTABLE
@@ -11,7 +11,7 @@ Sender: linux-hams-owner@vger.kernel.org
 List-ID: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="iso-8859-1"; format="flowed"
 To: linux-kernel@vger.kernel.org
-Cc: Jarek Poplawski <jarkao2@gmail.com>, Linux Netdev List <netdev@vger.kernel.org>, Ralf Baechle <ralf@linux-mips.org>, linux-hams@vger.kernel.org
+Cc: Linux Netdev List <netdev@vger.kernel.org>, Ralf Baechle <ralf@linux-mips.org>, linux-hams@vger.kernel.org
 
 Hi,
 
