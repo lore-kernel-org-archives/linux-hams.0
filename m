@@ -1,39 +1,34 @@
-From: David Ranch <linux-hams@trinnet.net>
-Subject: Packet Radio Crawlers for Linux?
-Date: Sun, 19 Jun 2011 18:09:22 -0700
-Message-ID: <4DFE9DC2.60809@trinnet.net>
+From: Gordon JC Pearce <gordonjcp@gjcp.net>
+Subject: Re: Packet Radio Crawlers for Linux?
+Date: Mon, 20 Jun 2011 07:45:02 +0100
+Message-ID: <1308552302.15520.18.camel@localhost.localdomain>
+References: <4DFE9DC2.60809@trinnet.net>
 Mime-Version: 1.0
 Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
+In-Reply-To: <4DFE9DC2.60809@trinnet.net>
 Sender: linux-hams-owner@vger.kernel.org
 List-ID: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"; format="flowed"
-To: Linux Hams <linux-hams@vger.kernel.org>
+Content-Type: text/plain; charset="us-ascii"
+To: David Ranch <linux-hams@trinnet.net>
+Cc: Linux Hams <linux-hams@vger.kernel.org>
 
+On Sun, 2011-06-19 at 18:09 -0700, David Ranch wrote:
+> Hello Everyone and Happy Fathers Day,
+> 
+> I'm curious, are any of you aware of any packet radio crawlers.. ideally 
+> written in Perl or Python?  I've emailed the author of this one which 
+> looks very nice and maps things out via GoogleMaps:
 
-Hello Everyone and Happy Fathers Day,
+What does a packet radio crawler do?  Just map where stations are?
 
-I'm curious, are any of you aware of any packet radio crawlers.. ideally 
-written in Perl or Python?  I've emailed the author of this one which 
-looks very nice and maps things out via GoogleMaps:
+Because of the lack of APRS software for Linux (yes, there's xastir but
+it's old and doesn't work) I started this:
 
-    http://db0fhn.efi.fh-nuernberg.de/doku.php?id=projects:prcrawler
+http://gordonjcp.github.com/aprsmap/
 
-and we'll see if he/she responds and see if the code is available.
+Feel free to poke at it and let me know how you get on.  Either email me
+questions about it, or come and bug me in irc.freenode.net #hamradio.
 
+Gordon MM0YEQ
 
-I also found this other website and the author had responded to me
-some time ago but it's Windows only:
-
-http://babelfish.yahoo.com/translate_url?doit=done&tt=url&intl=1&fr=bf-home&trurl=http%3A%2F%2Fwww.hammap.de%2Findex.html&lp=de_en&btnTrUrl=Translate
-
-Porting this over to Linux would probably be beyond my skills but
-if it comes to it, I might try.
-
-
-Any other thoughts?  I started trying to map this out manually but it 
-takes a LOT of effort:
-
-  http://www.trinityos.com/HAM/CentosDigitalModes/misc/145.050-051011.kmz
-
---David
