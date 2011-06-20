@@ -1,31 +1,39 @@
-From: f6bvp <f6bvp@free.fr>
-Subject: dxget - Dx Cluster client sends spots on AX.25 port
-Date: Sat, 18 Jun 2011 18:50:11 +0200
-Message-ID: <4DFCD743.40200@free.fr>
-References: <349047524-1308178820-cardhu_decombobulator_blackberry.rim.net-2125796964-@b16.c31.bise6.blackberry>
+From: David Ranch <linux-hams@trinnet.net>
+Subject: Packet Radio Crawlers for Linux?
+Date: Sun, 19 Jun 2011 18:09:22 -0700
+Message-ID: <4DFE9DC2.60809@trinnet.net>
 Mime-Version: 1.0
 Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <349047524-1308178820-cardhu_decombobulator_blackberry.rim.net-2125796964-@b16.c31.bise6.blackberry>
 Sender: linux-hams-owner@vger.kernel.org
 List-ID: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"; format="flowed"
-To: sysops@dxcluster.info, Liste FRPACKET <frpacket-linux@yahoogroupes.fr>, linux-hams <linux-hams@vger.kernel.org>
+To: Linux Hams <linux-hams@vger.kernel.org>
 
-Hi,
 
-I just want to report an interesting Linux DxCluster client I
-had been looking for a long time.
+Hello Everyone and Happy Fathers Day,
 
-dxget - connects to telnet DX Cluster and sends received
-dx data in unprotocolled ax.25 frames readable by
-TH-D7 handheld radio (and maybe by some other).
+I'm curious, are any of you aware of any packet radio crawlers.. ideally 
+written in Perl or Python?  I've emailed the author of this one which 
+looks very nice and maps things out via GoogleMaps:
 
-License: GPL, Author: benghi/Karel OK2SKY
+    http://db0fhn.efi.fh-nuernberg.de/doku.php?id=projects:prcrawler
 
-Received via AX.25 packet and uploaded to :
+and we'll see if he/she responds and see if the code is available.
 
-http://f6bvp.free.fr/logiciels/dxget.tgz
 
-73 de Bernard, f6bvp
+I also found this other website and the author had responded to me
+some time ago but it's Windows only:
 
+http://babelfish.yahoo.com/translate_url?doit=done&tt=url&intl=1&fr=bf-home&trurl=http%3A%2F%2Fwww.hammap.de%2Findex.html&lp=de_en&btnTrUrl=Translate
+
+Porting this over to Linux would probably be beyond my skills but
+if it comes to it, I might try.
+
+
+Any other thoughts?  I started trying to map this out manually but it 
+takes a LOT of effort:
+
+  http://www.trinityos.com/HAM/CentosDigitalModes/misc/145.050-051011.kmz
+
+--David
