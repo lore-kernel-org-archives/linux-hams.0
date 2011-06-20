@@ -1,51 +1,74 @@
-From: Bob Nielsen <n7xy@clearwire.net>
+From: David Ranch <linux-hams@trinnet.net>
 Subject: Re: Packet Radio Crawlers for Linux?
-Date: Mon, 20 Jun 2011 14:53:58 -0700
-Message-ID: <8D2DCF5C-083C-4FF1-A5FC-FC739D67D2A9@clearwire.net>
-References: <4DFE9DC2.60809@trinnet.net> <1308552302.15520.18.camel@localhost.localdomain> <4DFEF94B.3010802@exemail.com.au> <alpine.LNX.2.00.1106200902180.10051@DadsBox.we7u.net> <4DFFBBBD.7010702@exemail.com.au>
-Mime-Version: 1.0 (Apple Message framework v1084)
-Content-Transfer-Encoding: 8BIT
+Date: Mon, 20 Jun 2011 15:21:58 -0700
+Message-ID: <4DFFC806.2020104@trinnet.net>
+References: <4DFE9DC2.60809@trinnet.net> <20110620190820.GJ8243@x-berg.in-berlin.de>
+Mime-Version: 1.0
+Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <4DFFBBBD.7010702@exemail.com.au>
+In-Reply-To: <20110620190820.GJ8243@x-berg.in-berlin.de>
 Sender: linux-hams-owner@vger.kernel.org
 List-ID: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"
-To: linux-hams@vger.kernel.org
+Content-Type: text/plain; charset="us-ascii"; format="flowed"
+To: Thomas Osterried <thomas@x-berg.in-berlin.de>
+Cc: Linux Hams <linux-hams@vger.kernel.org>
 
-On Jun 20, 2011, at 2:29 PM, Ray Wells wrote:
 
-> On 21/06/11 02:05, Curt, WE7U wrote:
->> On Mon, 20 Jun 2011, Ray Wells wrote:
->> 
->>> Xastir is probably "newer" than almost any other aprs application,
->>> being that it is constantly being developed and supported by a very
->>> active mailing list. It works perfectly.
->> 
->> Many people see the Xastir versions that come out in official Linux
->> distributions and assume they are the newest available. Some
->> distributions are a bit slow at including newer packages for apps.
->> Sometimes two years or more before they get around to it. From that
->> viewpoint, everything looks pretty old.
->> 
->> Curt... One of those Xastir guys.
+Hello Thomas,
+
+Jens did reply to my email so I hope I can contribute to that effort vs. 
+re-create the wheel where both efforts slowly evolve vs. everyone unites 
+and creates a single stronger solution.
+
+We'll see where it goes but thanks for the response!
+
+--David
+
+
+Thomas Osterried wrote:
+> Hello,
 > 
-> One of the good guys!!
+> the packet-radio crawler runs on db0fhn (linux) and we use it to have a
+> daily view of our packet-radio network.
 > 
-> Maybe I've been using Debian based systems for too long - about 18 years - so I know the packages are often (usually, always?) not the latest.
+> Author is Jens, DL3SJB (@ qsl.net).
 > 
-> I do get a bit crabby when someone makes a sweeping statement - it doesn't work - without qualifying the statement.
+> vy 73,
+> 	- Thomas  dl9sau
 > 
-> Ray vk2tv
-> 
-
-We always have CVS/SVN/GIT.  May the Source be with you.
-
-Bob, N7XY
-
-_____
-N7XY DX Cluster Node - telnet to n7xy.net, port 7300
-
-
-
-
-
+> On 2011-06-19 18:09:22 -0700, David Ranch <linux-hams@trinnet.net>
+> wrote in <4DFE9DC2.60809@trinnet.net>:
+>> Hello Everyone and Happy Fathers Day,
+>>
+>> I'm curious, are any of you aware of any packet radio crawlers..
+>> ideally written in Perl or Python?  I've emailed the author of this
+>> one which looks very nice and maps things out via GoogleMaps:
+>>
+>>    http://db0fhn.efi.fh-nuernberg.de/doku.php?id=projects:prcrawler
+>>
+>> and we'll see if he/she responds and see if the code is available.
+>>
+>>
+>> I also found this other website and the author had responded to me
+>> some time ago but it's Windows only:
+>>
+>> http://babelfish.yahoo.com/translate_url?doit=done&tt=url&intl=1&fr=bf-home&trurl=http%3A%2F%2Fwww.hammap.de%2Findex.html&lp=de_en&btnTrUrl=Translate
+>>
+>> Porting this over to Linux would probably be beyond my skills but
+>> if it comes to it, I might try.
+>>
+>>
+>> Any other thoughts?  I started trying to map this out manually but
+>> it takes a LOT of effort:
+>>
+>>  http://www.trinityos.com/HAM/CentosDigitalModes/misc/145.050-051011.kmz
+>>
+>> --David
+>> --
+>> To unsubscribe from this list: send the line "unsubscribe linux-hams" in
+>> the body of a message to majordomo@vger.kernel.org
+>> More majordomo info at  http://vger.kernel.org/majordomo-info.html
+> --
+> To unsubscribe from this list: send the line "unsubscribe linux-hams" in
+> the body of a message to majordomo@vger.kernel.org
+> More majordomo info at  http://vger.kernel.org/majordomo-info.html
