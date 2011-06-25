@@ -1,56 +1,37 @@
-From: f6bvp <f6bvp@free.fr>
-Subject: Re: [AX25] inconsistent lock state
-Date: Sat, 25 Jun 2011 17:51:39 +0200
-Message-ID: <4E06040B.7040309@free.fr>
-References: <4B2CD772.1030106@upmc.fr> <201106171536.15660.arnd@arndb.de> <20110617135147.GA3470@linux-mips.org> <201106171611.10655.arnd@arndb.de>
+From: "doc@kd4e.com" <doc@kd4e.com>
+Subject: Alinco DR-135TP Comm for APRS?
+Date: Sat, 25 Jun 2011 12:21:10 -0400
+Message-ID: <4E060AF6.3020301@kd4e.com>
+Reply-To: doc@kd4e.com
 Mime-Version: 1.0
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <201106171611.10655.arnd@arndb.de>
 Sender: linux-hams-owner@vger.kernel.org
 List-ID: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="iso-8859-1"; format="flowed"
-To: Arnd Bergmann <arnd@arndb.de>
-Cc: Ralf Baechle <ralf@linux-mips.org>, linux-kernel@vger.kernel.org, Linux Netdev List <netdev@vger.kernel.org>, linux-hams@vger.kernel.org
+Content-Type: text/plain; charset="us-ascii"; format="flowed"
+To: APRS@yahoogroups.com, Linux Hams <linux-hams@vger.kernel.org>, Ham- Linux reflector <Ham-Linux@mailman.qth.net>
 
-Hi,
+I have an Alinco DR-135TP and an older laptop with a
+real serial port running Linux.
 
-I applied the patch and since then I could not reproduce the
-inconsistent lock state.
-Thus mkiss patch fixed it.
+I have the laptop connected to the rig but cannot recall
+how to query the rig or the serial port.
 
-Thanks,
+I checked BIOS and Serial 1 and 2 and something called
+serial MP (I think) are all set to AUTO.
 
-Bernard
+I forgot to turn off the rig when I power-cycled the laptop
+and the rig reacted to some sort of signals from the laptop,
+so the cable connection and serial port are at least partially
+good!
 
-Le 17/06/2011 16:11, Arnd Bergmann a =E9crit :
-> On Friday 17 June 2011 15:51:48 Ralf Baechle wrote:
->> On Fri, Jun 17, 2011 at 03:36:15PM +0200, Arnd Bergmann wrote:
->>
->> (Removed Jarek from cc; his email bounces.)
->>
->>> The message hints that disc_data_lock is aquired with softirqs disa=
-bled,
->>> but does not itself disable softirqs, which can in rare circumstanc=
-es
->>> lead to a deadlock.
->>>
->>> Does this fix it?
->> If so, drivers/net/hamradio.c, function sp_get() would probably need=
- the
->> equivalent fix.  Same for drivers/net/ppp_async.c:ap_get() and sp_ge=
-t() in
->> drivers/net/ppp_synctty.c.
-> It seems that ppp_synctty.c is ok, it uses write_lock_irq() already,
-> sixpack.c looks like it has the same bug as mkiss. I also realized
-> after sending out the patch that only the write_lock needs to be
-> changed to write_lock_bh, while read_lock can leave softirqs enabled
-> because it can be called recursively.
->
-> 	Arnd
+Any suggestions, please?
 
---
-To unsubscribe from this list: send the line "unsubscribe linux-hams" i=
-n
-the body of a message to majordomo@vger.kernel.org
-More majordomo info at  http://vger.kernel.org/majordomo-info.html
+
+-- 
+
+Thanks! & 73, KD4E
+David Colburn http://kd4e.com
+Have an http://ultrafidian.com day
+I don't google I SEARCH!  STARTPAGE.com
+Shop Freedom-Friendly http://kd4e.com/of.html
