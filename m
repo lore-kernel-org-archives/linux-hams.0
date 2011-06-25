@@ -1,45 +1,31 @@
-From: "doc@kd4e.com" <doc@kd4e.com>
-Subject: Re: Alinco DR-135TP Comm for APRS?
-Date: Sat, 25 Jun 2011 12:22:34 -0400
-Message-ID: <4E060B4A.7080508@kd4e.com>
-References: <4E060AF6.3020301@kd4e.com>
-Reply-To: doc@kd4e.com
+From: Ralf Baechle DL5RB <ralf@linux-mips.org>
+Subject: Re: [AX25] inconsistent lock state
+Date: Sat, 25 Jun 2011 17:39:42 +0100
+Message-ID: <20110625163942.GB20976@linux-mips.org>
+References: <4B2CD772.1030106@upmc.fr>
+ <201106171536.15660.arnd@arndb.de>
+ <20110617135147.GA3470@linux-mips.org>
+ <201106171611.10655.arnd@arndb.de>
+ <4E06040B.7040309@free.fr>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
-Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <4E060AF6.3020301@kd4e.com>
-Sender: linux-hams-owner@vger.kernel.org
+Return-path: <netdev-owner@vger.kernel.org>
+Content-Disposition: inline
+In-Reply-To: <4E06040B.7040309@free.fr>
+Sender: netdev-owner@vger.kernel.org
 List-ID: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"; format="flowed"
-To: APRS@yahoogroups.com, Linux Hams <linux-hams@vger.kernel.org>, Ham- Linux reflector <Ham-Linux@mailman.qth.net>
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+To: f6bvp <f6bvp@free.fr>
+Cc: Arnd Bergmann <arnd@arndb.de>, linux-kernel@vger.kernel.org, Linux Netdev List <netdev@vger.kernel.org>, linux-hams@vger.kernel.org
 
-Ooops!
+On Sat, Jun 25, 2011 at 05:51:39PM +0200, f6bvp wrote:
 
-I forgot to mention that I was using urxvt - which has
-been recommended as a Linux alternative to Hyperterminal.
+> I applied the patch and since then I could not reproduce the
+> inconsistent lock state.
+> Thus mkiss patch fixed it.
 
- > doc@kd4e.com wrote:
-> I have an Alinco DR-135TP and an older laptop with a real serial port
-> running Linux.
->
-> I have the laptop connected to the rig but cannot recall how to query
-> the rig or the serial port.
->
-> I checked BIOS and Serial 1 and 2 and something called serial MP (I
-> think) are all set to AUTO.
->
-> I forgot to turn off the rig when I power-cycled the laptop and the
-> rig reacted to some sort of signals from the laptop, so the cable
-> connection and serial port are at least partially good!
->
-> Any suggestions, please?
->
+I also think the patch is the right thing, so
 
+Acked-by: Ralf Baechle <ralf@linux-mips.org>
 
--- 
-
-Thanks! & 73, KD4E
-David Colburn http://kd4e.com
-Have an http://ultrafidian.com day
-I don't google I SEARCH!  STARTPAGE.com
-Shop Freedom-Friendly http://kd4e.com/of.html
+  Ralf
