@@ -1,69 +1,79 @@
-From: Joe Perches <joe@perches.com>
-Subject: [PATCH 09/12] netrom:  Reduce switch/case indent
-Date: Fri,  1 Jul 2011 12:43:10 -0700
-Message-ID: <0e287994408ee50d5f10170e0c14e625faa6625e.1309549244.git.joe@perches.com>
-References: <cover.1309549243.git.joe@perches.com>
+From: Arnd Bergmann <arnd@arndb.de>
+Subject: [PATCH] 6pack,mkiss: fix lock inconsistency
+Date: Fri, 1 Jul 2011 23:28:46 +0200
+Message-ID: <201107012328.46256.arnd@arndb.de>
+References: <4B2CD772.1030106@upmc.fr> <20110625163942.GB20976@linux-mips.org> <4E0DC4F3.6010203@free.fr>
+Mime-Version: 1.0
+Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <cover.1309549243.git.joe@perches.com>
+In-Reply-To: <4E0DC4F3.6010203@free.fr>
 Sender: linux-hams-owner@vger.kernel.org
 List-ID: <linux-hams.vger.kernel.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-To: Ralf Baechle <ralf@linux-mips.org>
-Cc: "David S. Miller" <davem@davemloft.net>, linux-hams@vger.kernel.org, netdev@vger.kernel.org, linux-kernel@vger.kernel.org
+Content-Type: Text/Plain; charset="us-ascii"
+To: Bernard F6BVP <f6bvp@free.fr>, David Miller <davem@davemloft.net>
+Cc: Ralf Baechle DL5RB <ralf@linux-mips.org>, linux-kernel@vger.kernel.org, Linux Netdev List <netdev@vger.kernel.org>, linux-hams@vger.kernel.org
 
-Make the case labels the same indent as the switch.
+Lockdep found a locking inconsistency in the mkiss_close function:
 
-git diff -w shows code on same line as case moved
-to separate lines and a "/* Fallthrough */" comment
-added where appropriate.
+> kernel: [ INFO: inconsistent lock state ]
+> kernel: 2.6.39.1 #3
+> kernel: ---------------------------------
+> kernel: inconsistent {IN-SOFTIRQ-R} -> {SOFTIRQ-ON-W} usage.
+> kernel: ax25ipd/2813 [HC0[0]:SC0[0]:HE1:SE1] takes:
+> kernel: (disc_data_lock){+++?.-}, at: [<ffffffffa018552b>] mkiss_close+0x1b/0x90 [mkiss]
+> kernel: {IN-SOFTIRQ-R} state was registered at:
 
-Signed-off-by: Joe Perches <joe@perches.com>
+The message hints that disc_data_lock is aquired with softirqs disabled,
+but does not itself disable softirqs, which can in rare circumstances
+lead to a deadlock. 
+The same problem is present in the 6pack driver, this patch fixes both
+by using write_lock_bh instead of write_lock.
+
+Reported-by: Bernard F6BVP <f6bvp@free.fr>
+Tested-by: Bernard F6BVP <f6bvp@free.fr>
+Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+Acked-by: Ralf Baechle<ralf@linux-mips.org>
+Cc: stable@kernel.org
 ---
- net/netrom/nr_route.c |   22 +++++++++++++---------
- 1 files changed, 13 insertions(+), 9 deletions(-)
+On Friday 01 July 2011 15:00:35 Bernard F6BVP wrote:
+> 
+> Now, who is going to commit this mkiss patch and the equivalent one for 
+> sixpack.c ?
 
-diff --git a/net/netrom/nr_route.c b/net/netrom/nr_route.c
-index 44059d0..cd5ddb2 100644
---- a/net/netrom/nr_route.c
-+++ b/net/netrom/nr_route.c
-@@ -257,9 +257,12 @@ static int __must_check nr_add_node(ax25_address *nr, const char *mnemonic,
- 	case 3:
- 		if (nr_node->routes[1].quality > nr_node->routes[0].quality) {
- 			switch (nr_node->which) {
--				case 0:  nr_node->which = 1; break;
--				case 1:  nr_node->which = 0; break;
--				default: break;
-+			case 0:
-+				nr_node->which = 1;
-+				break;
-+			case 1:
-+				nr_node->which = 0;
-+				break;
- 			}
- 			nr_route           = nr_node->routes[0];
- 			nr_node->routes[0] = nr_node->routes[1];
-@@ -505,12 +508,13 @@ static int nr_dec_obs(void)
- 				s->count--;
- 
- 				switch (i) {
--					case 0:
--						s->routes[0] = s->routes[1];
--					case 1:
--						s->routes[1] = s->routes[2];
--					case 2:
--						break;
-+				case 0:
-+					s->routes[0] = s->routes[1];
-+					/* Fallthrough */
-+				case 1:
-+					s->routes[1] = s->routes[2];
-+				case 2:
-+					break;
- 				}
- 				break;
- 
--- 
-1.7.6.rc1
+Here's a formal patch with all the right tags, I assume that David Miller
+will apply that to the netdev tree.
 
+diff --git a/drivers/net/hamradio/6pack.c b/drivers/net/hamradio/6pack.c
+index 9624cbf..fea7cb4 100644
+--- a/drivers/net/hamradio/6pack.c
++++ b/drivers/net/hamradio/6pack.c
+@@ -694,10 +694,10 @@ static void sixpack_close(struct tty_struct *tty)
+ {
+ 	struct sixpack *sp;
+ 
+-	write_lock(&disc_data_lock);
++	write_lock_bh(&disc_data_lock);
+ 	sp = tty->disc_data;
+ 	tty->disc_data = NULL;
+-	write_unlock(&disc_data_lock);
++	write_unlock_bh(&disc_data_lock);
+ 	if (!sp)
+ 		return;
+ 
+diff --git a/drivers/net/hamradio/mkiss.c b/drivers/net/hamradio/mkiss.c
+index 9f84c83..324f7bf 100644
+--- a/drivers/net/hamradio/mkiss.c
++++ b/drivers/net/hamradio/mkiss.c
+@@ -813,10 +813,10 @@ static void mkiss_close(struct tty_struct *tty)
+ {
+ 	struct mkiss *ax;
+ 
+-	write_lock(&disc_data_lock);
++	write_lock_bh(&disc_data_lock);
+ 	ax = tty->disc_data;
+ 	tty->disc_data = NULL;
+-	write_unlock(&disc_data_lock);
++	write_unlock_bh(&disc_data_lock);
+ 
+ 	if (!ax)
+ 		return;
