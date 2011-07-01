@@ -1,31 +1,41 @@
-From: Ralf Baechle DL5RB <ralf@linux-mips.org>
+From: Bernard F6BVP <f6bvp@free.fr>
 Subject: Re: [AX25] inconsistent lock state
-Date: Sat, 25 Jun 2011 17:39:42 +0100
-Message-ID: <20110625163942.GB20976@linux-mips.org>
-References: <4B2CD772.1030106@upmc.fr>
- <201106171536.15660.arnd@arndb.de>
- <20110617135147.GA3470@linux-mips.org>
- <201106171611.10655.arnd@arndb.de>
- <4E06040B.7040309@free.fr>
+Date: Fri, 01 Jul 2011 15:00:35 +0200
+Message-ID: <4E0DC4F3.6010203@free.fr>
+References: <4B2CD772.1030106@upmc.fr> <201106171536.15660.arnd@arndb.de> <20110617135147.GA3470@linux-mips.org> <201106171611.10655.arnd@arndb.de> <4E06040B.7040309@free.fr> <20110625163942.GB20976@linux-mips.org>
 Mime-Version: 1.0
-Return-path: <netdev-owner@vger.kernel.org>
-Content-Disposition: inline
-In-Reply-To: <4E06040B.7040309@free.fr>
-Sender: netdev-owner@vger.kernel.org
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Return-path: <linux-hams-owner@vger.kernel.org>
+In-Reply-To: <20110625163942.GB20976@linux-mips.org>
+Sender: linux-hams-owner@vger.kernel.org
 List-ID: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-To: f6bvp <f6bvp@free.fr>
+Content-Type: text/plain; charset="iso-8859-1"; format="flowed"
+To: Ralf Baechle DL5RB <ralf@linux-mips.org>
 Cc: Arnd Bergmann <arnd@arndb.de>, linux-kernel@vger.kernel.org, Linux Netdev List <netdev@vger.kernel.org>, linux-hams@vger.kernel.org
 
-On Sat, Jun 25, 2011 at 05:51:39PM +0200, f6bvp wrote:
+Hi all,
 
-> I applied the patch and since then I could not reproduce the
-> inconsistent lock state.
-> Thus mkiss patch fixed it.
+Now, who is going to commit this mkiss patch and the equivalent one for=
+=20
+sixpack.c ?
 
-I also think the patch is the right thing, so
+Bernard, f6bvp
 
-Acked-by: Ralf Baechle <ralf@linux-mips.org>
 
-  Ralf
+Le 25/06/2011 18:39, Ralf Baechle DL5RB a =E9crit :
+> On Sat, Jun 25, 2011 at 05:51:39PM +0200, f6bvp wrote:
+>
+>> I applied the patch and since then I could not reproduce the
+>> inconsistent lock state.
+>> Thus mkiss patch fixed it.
+>
+> I also think the patch is the right thing, so
+>
+> Acked-by: Ralf Baechle<ralf@linux-mips.org>
+>
+>    Ralf
+--
+To unsubscribe from this list: send the line "unsubscribe linux-hams" i=
+n
+the body of a message to majordomo@vger.kernel.org
+More majordomo info at  http://vger.kernel.org/majordomo-info.html
