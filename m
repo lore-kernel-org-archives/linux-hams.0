@@ -1,43 +1,40 @@
-From: David Miller <davem@davemloft.net>
-Subject: Re: [PATCH] 6pack,mkiss: fix lock inconsistency
-Date: Fri, 01 Jul 2011 17:30:57 -0700 (PDT)
-Message-ID: <20110701.173057.2255930046909364966.davem@davemloft.net>
-References: <20110625163942.GB20976@linux-mips.org>
-	<4E0DC4F3.6010203@free.fr>
-	<201107012328.46256.arnd@arndb.de>
+From: Robert Thoelen <kd1zd@rtcubed.org>
+Subject: Question with axudp
+Date: Tue, 5 Jul 2011 19:30:55 -0400
+Message-ID: <CAAynhLMhGVDiVsAugsWSOLTRkrw6OeXRYeyKJEdUVaHMmE0rZQ@mail.gmail.com>
+References: <CAAynhLOuj2DTQur_ixt2QoeLRK0oa0aOAVYXXPVeRkXNqHq5+g@mail.gmail.com>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <201107012328.46256.arnd@arndb.de>
+In-Reply-To: <CAAynhLOuj2DTQur_ixt2QoeLRK0oa0aOAVYXXPVeRkXNqHq5+g@mail.gmail.com>
 Sender: linux-hams-owner@vger.kernel.org
 List-ID: <linux-hams.vger.kernel.org>
-Content-Type: Text/Plain; charset="us-ascii"
-To: arnd@arndb.de
-Cc: f6bvp@free.fr, ralf@linux-mips.org, linux-kernel@vger.kernel.org, netdev@vger.kernel.org, linux-hams@vger.kernel.org
+Content-Type: text/plain; charset="iso-8859-1"
+To: linux-hams@vger.kernel.org
 
-From: Arnd Bergmann <arnd@arndb.de>
-Date: Fri, 1 Jul 2011 23:28:46 +0200
+I have a system running UROnode, and I have a couple of internet
+links.=A0 I want to create a virtual machine in a data center to run
+UROnode and have my internet axudp links connect to that system.
+Then, I can use one connection from my home station via axudp to
+connect to the virtual machine.=A0 The purpose behind this is among
+other reasons to keep netrom broadcasts from cluttering my RF node.
 
-> Lockdep found a locking inconsistency in the mkiss_close function:
-> 
->> kernel: [ INFO: inconsistent lock state ]
->> kernel: 2.6.39.1 #3
->> kernel: ---------------------------------
->> kernel: inconsistent {IN-SOFTIRQ-R} -> {SOFTIRQ-ON-W} usage.
->> kernel: ax25ipd/2813 [HC0[0]:SC0[0]:HE1:SE1] takes:
->> kernel: (disc_data_lock){+++?.-}, at: [<ffffffffa018552b>] mkiss_close+0x1b/0x90 [mkiss]
->> kernel: {IN-SOFTIRQ-R} state was registered at:
-> 
-> The message hints that disc_data_lock is aquired with softirqs disabled,
-> but does not itself disable softirqs, which can in rare circumstances
-> lead to a deadlock. 
-> The same problem is present in the 6pack driver, this patch fixes both
-> by using write_lock_bh instead of write_lock.
-> 
-> Reported-by: Bernard F6BVP <f6bvp@free.fr>
-> Tested-by: Bernard F6BVP <f6bvp@free.fr>
-> Signed-off-by: Arnd Bergmann <arnd@arndb.de>
-> Acked-by: Ralf Baechle<ralf@linux-mips.org>
-> Cc: stable@kernel.org
+Anyway, the virtual machine seems to be working well and is
+broadcasting its netrom node to the home system.=A0=A0 I'm having troub=
+le
+getting the home system to send packets back to the virtual machine.
 
-Applied, thanks!
+My question is:=A0 if I use a few ssids with my callsign, will that
+cause ax25ipd from routing another ssid with my call?=A0 The virtual
+machine is kd1zd-9, and the home system uses kd1zd-3 to kd1zd-7.
+
+What could be causing the home system to not send packets out to the
+virtual machine?=A0 The other axudp links in the .conf file work fine.
+
+Thanks,
+Bob
+--
+To unsubscribe from this list: send the line "unsubscribe linux-hams" i=
+n
+the body of a message to majordomo@vger.kernel.org
+More majordomo info at  http://vger.kernel.org/majordomo-info.html
