@@ -1,42 +1,80 @@
-From: David Miller <davem@davemloft.net>
-Subject: instant oops with AF_ROSE
-Date: Wed, 06 Jul 2011 03:57:35 -0700 (PDT)
-Message-ID: <20110706.035735.1271031398642349034.davem@davemloft.net>
+From: Chuck Hast <wchast@gmail.com>
+Subject: Re: instant oops with AF_ROSE
+Date: Wed, 6 Jul 2011 07:42:32 -0400
+Message-ID: <CADNfBV_i6st5PD_7bJta2rUwGjzt6eBckeeEGTt4osjr_P_R+g@mail.gmail.com>
+References: <20110706.035735.1271031398642349034.davem@davemloft.net>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 Return-path: <linux-hams-owner@vger.kernel.org>
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        bh=WZFGpuGVMGwAaLwEE8YXfIldF85dDgK1e5DWdeTG/dQ=;
+        b=iqwW7KI6BbEadE93FBZuRy5QTMlG6lDMvs4yLy89Hc0cUhNqb07KzJ0H2PZdEccDw2
+         kak8RU2mvFhuyJ7HD1MgOq4OTgtO8NiwZzLvj8LlUXLAKMKNbNd397OgsoaVv0VpwyXy
+         GjvmDDTvVLhNQIWdUrs6G4nXUS8X/CTL6OS7g=
+In-Reply-To: <20110706.035735.1271031398642349034.davem@davemloft.net>
 Sender: linux-hams-owner@vger.kernel.org
 List-ID: <linux-hams.vger.kernel.org>
-Content-Type: Text/Plain; charset="us-ascii"
-To: netdev@vger.kernel.org
-Cc: ralf@linux-mips.org, linux-hams@vger.kernel.org
+Content-Type: text/plain; charset="iso-8859-1"
+To: David Miller <davem@davemloft.net>
+Cc: netdev@vger.kernel.org, ralf@linux-mips.org, linux-hams@vger.kernel.org
+
+On Wed, Jul 6, 2011 at 06:57, David Miller <davem@davemloft.net> wrote:
+>
+> The support for ipv4 over rose devices has been broken for as long as
+> the code has existed (I went back to 2.0.x just to make sure). =A0Try
+> this:
+>
+> modprobe rose
+> ip link set rose0 up
+> ip addr add 11.0.0.3/8 dev rose0
+> ping -b 11.255.255.255
+>
+> That should crash your box pretty well.
+>
+----- Text cut for bandwidth reduction-----------
+
+It has been a while, and we were (still are I just am not active)  usin=
+g FPAC
+we have run a lot of IP through it, and never seemed to have a issue, b=
+ut
+perhaps this is not quite in that area.
+
+I  am sure Bernard will see this and pitch in with more info. I am
+just trying to
+figure out if we are taking two different pieces here.
+
+Here in FL I have ran both NetRom and IP over ROSE through FPAC boxes
+with no issues that I can remember. FPAC is a wrapper around the rose p=
+iece.
+We probably have people still doing IP inside ROSE through FPAC boxes a=
+round
+the state, not sure who or where, but it would not be a surprise to me =
+because
+some use SMTP between their BBS devices.
 
 
-The support for ipv4 over rose devices has been broken for as long as
-the code has existed (I went back to 2.0.x just to make sure).  Try
-this:
+Bernard, any comments?
+--=20
 
-modprobe rose
-ip link set rose0 up
-ip addr add 11.0.0.3/8 dev rose0
-ping -b 11.255.255.255
+Chuck Hast =A0-- KP4DJT --
+To paraphrase my flight instructor;
+"the only dumb question is the one you DID NOT ask resulting in my goin=
+g
+out and having to identify your bits and pieces in the midst of torn
+and twisted metal."
+---
+Home web site:
+www.wchast.com
 
-That should crash your box pretty well.
-
-The immediate reason is that rose_rebuild_header() calls
-rose_route_frame() with second arg NULL.
-
-The first thing rose_route_frame() does is take that second arg and
-dereference it in order to find the appropriate rose neighbour to use.
-
-Again, it has "worked" this way since day one.  Ie. it never worked.
-
-Since this has never worked, I think the thing to do is to simply
-remove all of the rose device code.  It's only used to provide support
-for ipv4 over ROSE and it simply never worked.
-
-If someone wants to resurrect this, that's fine, but they'll have
-to implement proper header_ops and a real transmit function instead
-of the hacky thing it does now where it does the transmit in the
-header building routines :-/
-
+ZoneMinder Demo and test site
+www.wchast.com/zm
+Login =3D guest
+pwd=A0 =A0=3D guest
+--
+To unsubscribe from this list: send the line "unsubscribe linux-hams" i=
+n
+the body of a message to majordomo@vger.kernel.org
+More majordomo info at  http://vger.kernel.org/majordomo-info.html
