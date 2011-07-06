@@ -1,40 +1,42 @@
-From: Robert Thoelen <kd1zd@rtcubed.org>
-Subject: Question with axudp
-Date: Tue, 5 Jul 2011 19:30:55 -0400
-Message-ID: <CAAynhLMhGVDiVsAugsWSOLTRkrw6OeXRYeyKJEdUVaHMmE0rZQ@mail.gmail.com>
-References: <CAAynhLOuj2DTQur_ixt2QoeLRK0oa0aOAVYXXPVeRkXNqHq5+g@mail.gmail.com>
+From: David Miller <davem@davemloft.net>
+Subject: instant oops with AF_ROSE
+Date: Wed, 06 Jul 2011 03:57:35 -0700 (PDT)
+Message-ID: <20110706.035735.1271031398642349034.davem@davemloft.net>
 Mime-Version: 1.0
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <CAAynhLOuj2DTQur_ixt2QoeLRK0oa0aOAVYXXPVeRkXNqHq5+g@mail.gmail.com>
 Sender: linux-hams-owner@vger.kernel.org
 List-ID: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="iso-8859-1"
-To: linux-hams@vger.kernel.org
+Content-Type: Text/Plain; charset="us-ascii"
+To: netdev@vger.kernel.org
+Cc: ralf@linux-mips.org, linux-hams@vger.kernel.org
 
-I have a system running UROnode, and I have a couple of internet
-links.=A0 I want to create a virtual machine in a data center to run
-UROnode and have my internet axudp links connect to that system.
-Then, I can use one connection from my home station via axudp to
-connect to the virtual machine.=A0 The purpose behind this is among
-other reasons to keep netrom broadcasts from cluttering my RF node.
 
-Anyway, the virtual machine seems to be working well and is
-broadcasting its netrom node to the home system.=A0=A0 I'm having troub=
-le
-getting the home system to send packets back to the virtual machine.
+The support for ipv4 over rose devices has been broken for as long as
+the code has existed (I went back to 2.0.x just to make sure).  Try
+this:
 
-My question is:=A0 if I use a few ssids with my callsign, will that
-cause ax25ipd from routing another ssid with my call?=A0 The virtual
-machine is kd1zd-9, and the home system uses kd1zd-3 to kd1zd-7.
+modprobe rose
+ip link set rose0 up
+ip addr add 11.0.0.3/8 dev rose0
+ping -b 11.255.255.255
 
-What could be causing the home system to not send packets out to the
-virtual machine?=A0 The other axudp links in the .conf file work fine.
+That should crash your box pretty well.
 
-Thanks,
-Bob
---
-To unsubscribe from this list: send the line "unsubscribe linux-hams" i=
-n
-the body of a message to majordomo@vger.kernel.org
-More majordomo info at  http://vger.kernel.org/majordomo-info.html
+The immediate reason is that rose_rebuild_header() calls
+rose_route_frame() with second arg NULL.
+
+The first thing rose_route_frame() does is take that second arg and
+dereference it in order to find the appropriate rose neighbour to use.
+
+Again, it has "worked" this way since day one.  Ie. it never worked.
+
+Since this has never worked, I think the thing to do is to simply
+remove all of the rose device code.  It's only used to provide support
+for ipv4 over ROSE and it simply never worked.
+
+If someone wants to resurrect this, that's fine, but they'll have
+to implement proper header_ops and a real transmit function instead
+of the hacky thing it does now where it does the transmit in the
+header building routines :-/
+
