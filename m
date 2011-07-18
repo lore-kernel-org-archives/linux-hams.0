@@ -1,38 +1,41 @@
-From: Ralf Baechle <ralf@linux-mips.org>
+From: Bernard Pidoux <bernard.pidoux@upmc.fr>
 Subject: Re: Can AX25 socket debug message be removed ?
-Date: Mon, 18 Jul 2011 16:17:41 +0100
-Message-ID: <20110718151740.GB5257@linux-mips.org>
-References: <4E22E8FD.9000805@upmc.fr>
+Date: Mon, 18 Jul 2011 21:39:07 +0200
+Message-ID: <4E248BDB.8080708@upmc.fr>
+References: <4E22E1DD.2060902@upmc.fr> <20110718150732.GA5257@linux-mips.org>
 Mime-Version: 1.0
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 Return-path: <linux-hams-owner@vger.kernel.org>
-Content-Disposition: inline
-In-Reply-To: <4E22E8FD.9000805@upmc.fr>
+In-Reply-To: <20110718150732.GA5257@linux-mips.org>
 Sender: linux-hams-owner@vger.kernel.org
 List-ID: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-To: Bernard Pidoux <bernard.pidoux@upmc.fr>
+Content-Type: text/plain; charset="iso-8859-1"; format="flowed"
+To: Ralf Baechle <ralf@linux-mips.org>
 Cc: linux-hams <linux-hams@vger.kernel.org>
 
-On Sun, Jul 17, 2011 at 03:51:57PM +0200, Bernard Pidoux wrote:
+Hello Ralf,
 
-> I am actually concerned by two remaining bugs in ROSE module :
-> First, is the occurence of negative values for neighbour->use parameter
-> from time to time.
+I am sorry that I missed that for I did not looked at the proper
+location.
+Thanks for the info.
 
-In the past week I noticed various ROSE bugs including non-atomic
-manipulation of variables which may explain this and other issues.  Some
-may be hard to trigger but ROSE (and probably AX.25 and NETROM) are still
-quite full of bugs.
+73 de Bernard, f6bvp
 
-> Second, is the impossibility to remove rose module after an application such
-> as FPAC has initialized rose nodes and routes.
-
-I never noticed that one - I tend to build my AX.25 test kernels with all
-protocols and drivers built in most of the time.
-
-Certain other kernel modules - IPv4 and IPv6 come to mind - cannot be
-unloaded either.  It was deemed to much work for too little gain to make
-that work.  I'm not sure if ROSE belongs into that group?  Probably not.
-
-  Ralf
+Le 18/07/2011 17:07, Ralf Baechle a =E9crit :
+> On Sun, Jul 17, 2011 at 03:21:33PM +0200, Bernard Pidoux wrote:
+>
+>> Hi Ralf,
+>>
+>> This is a reminder for I do not see any trace of your following
+>> patches being committed
+>
+> I don't know where you've been looking - it's been committed on April=
+ 14
+> to next-next.
+>
+>    Ralf
+--
+To unsubscribe from this list: send the line "unsubscribe linux-hams" i=
+n
+the body of a message to majordomo@vger.kernel.org
+More majordomo info at  http://vger.kernel.org/majordomo-info.html
