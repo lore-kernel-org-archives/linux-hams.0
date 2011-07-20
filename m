@@ -1,67 +1,47 @@
 From: Ralf Baechle <ralf@linux-mips.org>
-Subject: [PATCH 6/7] NET: ROSE: Move return statements hidden behind an if to
- their own line
-Date: Wed, 20 Jul 2011 09:11:14 +0100
-Message-ID: <c974f48d4d85d3dffee48187968a199c70e39a29.1311152437.git.ralf@linux-mips.org>
-References: <cover.1311152437.git.ralf@linux-mips.org>
+Subject: Re: instant oops with AF_ROSE
+Date: Wed, 20 Jul 2011 10:32:14 +0100
+Message-ID: <20110720093214.GA20152@linux-mips.org>
+References: <4E186E25.5080200@free.fr>
+Mime-Version: 1.0
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <cover.1311152437.git.ralf@linux-mips.org>
+Content-Disposition: inline
+In-Reply-To: <4E186E25.5080200@free.fr>
 Sender: linux-hams-owner@vger.kernel.org
 List-ID: <linux-hams.vger.kernel.org>
-MIME-Version: 1.0
 Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
-To: linux-hams@vger.kernel.org
-Cc: Bernard F6BVP <f6bvp@free.fr>
+To: Bernard F6BVP <f6bvp@free.fr>
+Cc: wchast@gmail.com, davem@davemloft.net, linux-hams@vger.kernel.org
 
-Signed-off-by: Ralf Baechle <ralf@linux-mips.org>
-To: linux-hams@vger.kernel.org
-Cc: Bernard F6BVP <f6bvp@free.fr>
----
- net/rose/af_rose.c   |    7 +++++--
- net/rose/rose_subr.c |    3 ++-
- 2 files changed, 7 insertions(+), 3 deletions(-)
+On Sat, Jul 09, 2011 at 05:05:09PM +0200, Bernard F6BVP wrote:
 
-diff --git a/net/rose/af_rose.c b/net/rose/af_rose.c
-index 47f1824..2e058bb 100644
---- a/net/rose/af_rose.c
-+++ b/net/rose/af_rose.c
-@@ -609,7 +609,8 @@ static int rose_release(struct socket *sock)
- 	struct sock *sk = sock->sk;
- 	struct rose_sock *rose;
- 
--	if (sk == NULL) return 0;
-+	if (sk == NULL)
-+		return 0;
- 
- 	sock_hold(sk);
- 	sock_orphan(sk);
-@@ -1353,7 +1354,9 @@ static int rose_ioctl(struct socket *sock, unsigned int cmd, unsigned long arg)
- 	}
- 
- 	case SIOCRSSL2CALL:
--		if (!capable(CAP_NET_ADMIN)) return -EPERM;
-+		if (!capable(CAP_NET_ADMIN))
-+			return -EPERM;
-+
- 		if (ax25cmp(&rose_callsign, &null_ax25_address) != 0)
- 			ax25_listen_release(&rose_callsign, NULL);
- 		if (copy_from_user(&tmp_call, argp, sizeof(ax25_address)))
-diff --git a/net/rose/rose_subr.c b/net/rose/rose_subr.c
-index f6c71ca..53fb653 100644
---- a/net/rose/rose_subr.c
-+++ b/net/rose/rose_subr.c
-@@ -89,7 +89,8 @@ int rose_validate_nr(struct sock *sk, unsigned short nr)
- 	unsigned short vc = rose->va;
- 
- 	while (vc != rose->vs) {
--		if (nr == vc) return 1;
-+		if (nr == vc)
-+			return 1;
- 		vc = (vc + 1) % ROSE_MODULUS;
- 	}
- 
--- 
-1.7.4.4
+> What we do with ROSE nodes is to create a network allowing AX25
+> frames routing based on destination address. However, basically,
+> ROSE frames
+> are still AX.25 standard frames that can be sent over packet radio.
+> In order to relay rose frames through Internet, applications like
+> ax25ipd encapsulates rose inside of IP or UDP frames.
+> 
+> I agree that rose module is still unfriendly and will crash linux
+> kernel on some occasions.
+> For example, after creating rose socket and populating rose routing
+> table, removing rose module is not possible.
+> 
+> There is either a kernel crash or a looping message
+> 
+> kernel:unregister_netdevice: waiting for rose0 to become free. Usage
+> count = 6
+> 
+> where count can be any number without any relation to actual usage
+> and remaining the same, preventing Linux to shutdown.
+> 
+> I noticed that there are no refcount entries in rose node or rose neigh
+> structures. This may be related ?
 
+As part of fixing the problem reported by David I've found 4 race conditions
+so far.  I've posted the patches to linux-hams for testing but on a 2nd
+thought I think the race accessing rose_neigh->use is unlikely to be the
+cause for what Bernard is observing.
 
+  Ralf
