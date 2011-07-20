@@ -1,8 +1,7 @@
 From: Ralf Baechle <ralf@linux-mips.org>
-Subject: [PATCH 1/7] NET: ROSE: Fix race in SIOCRSSL2CALL ioctl accessing
- userspace.
+Subject: [PATCH 2/7] NET: ROSE: Factor our common code from functions.
 Date: Wed, 20 Jul 2011 01:21:42 +0100
-Message-ID: <c65a602a1358d8facb866e3e1af176e18ac2aa07.1311152437.git.ralf@linux-mips.org>
+Message-ID: <b28b8493c126c09a3f5aed1b08e2616e60aec2e7.1311152437.git.ralf@linux-mips.org>
 References: <cover.1311152437.git.ralf@linux-mips.org>
 Return-path: <linux-hams-owner@vger.kernel.org>
 In-Reply-To: <cover.1311152437.git.ralf@linux-mips.org>
@@ -14,40 +13,77 @@ Content-Transfer-Encoding: 7bit
 To: linux-hams@vger.kernel.org
 Cc: Bernard F6BVP <f6bvp@free.fr>
 
-The SIOCRSSL2CALL ioctl may abort before the complete callsign has been
-copied from userspace, for example when the part of it is in a PROT_NONE
-mapping.
+This will simplify a later fix.
 
 Signed-off-by: Ralf Baechle <ralf@linux-mips.org>
 To: linux-hams@vger.kernel.org
 Cc: Bernard F6BVP <f6bvp@free.fr>
 ---
- net/rose/af_rose.c |    5 ++++-
- 1 files changed, 4 insertions(+), 1 deletions(-)
+ net/rose/rose_link.c |   32 ++++++++++++++++++--------------
+ 1 files changed, 18 insertions(+), 14 deletions(-)
 
-diff --git a/net/rose/af_rose.c b/net/rose/af_rose.c
-index f9ea925..710df37 100644
---- a/net/rose/af_rose.c
-+++ b/net/rose/af_rose.c
-@@ -1289,6 +1289,8 @@ static int rose_ioctl(struct socket *sock, unsigned int cmd, unsigned long arg)
- 	void __user *argp = (void __user *)arg;
+diff --git a/net/rose/rose_link.c b/net/rose/rose_link.c
+index fa5f564..fa8703b 100644
+--- a/net/rose/rose_link.c
++++ b/net/rose/rose_link.c
+@@ -94,6 +94,15 @@ static void rose_t0timer_expiry(unsigned long param)
+ 	rose_start_t0timer(neigh);
+ }
  
- 	switch (cmd) {
-+		ax25_address tmp_call;
++static void rose_get_neigh_callsign(ax25_address *rose_call,
++	struct rose_neigh *neigh)
++{
++	if (ax25cmp(&rose_callsign, &null_ax25_address) == 0)
++		memcpy(rose_call, neigh->dev->dev_addr, sizeof(rose_call));
++	else
++		memcpy(rose_call, &rose_callsign, sizeof(rose_call));
++}
 +
- 	case TIOCOUTQ: {
- 		long amount;
+ /*
+  *	Interface to ax25_send_frame. Changes my level 2 callsign depending
+  *	on whether we have a global ROSE callsign or use the default port
+@@ -101,16 +110,14 @@ static void rose_t0timer_expiry(unsigned long param)
+  */
+ static int rose_send_frame(struct sk_buff *skb, struct rose_neigh *neigh)
+ {
+-	ax25_address *rose_call;
++	ax25_address rose_call;
+ 	ax25_cb *ax25s;
  
-@@ -1352,8 +1354,9 @@ static int rose_ioctl(struct socket *sock, unsigned int cmd, unsigned long arg)
- 		if (!capable(CAP_NET_ADMIN)) return -EPERM;
- 		if (ax25cmp(&rose_callsign, &null_ax25_address) != 0)
- 			ax25_listen_release(&rose_callsign, NULL);
--		if (copy_from_user(&rose_callsign, argp, sizeof(ax25_address)))
-+		if (copy_from_user(&tmp_call, argp, sizeof(ax25_address)))
- 			return -EFAULT;
-+		memcpy(&rose_callsign, &tmp_call, sizeof(ax25_address));
- 		if (ax25cmp(&rose_callsign, &null_ax25_address) != 0)
- 			return ax25_listen_register(&rose_callsign, NULL);
+-	if (ax25cmp(&rose_callsign, &null_ax25_address) == 0)
+-		rose_call = (ax25_address *)neigh->dev->dev_addr;
+-	else
+-		rose_call = &rose_callsign;
+-
+ 	ax25s = neigh->ax25;
+-	neigh->ax25 = ax25_send_frame(skb, 260, rose_call, &neigh->callsign, neigh->digipeat, neigh->dev);
++	rose_get_neigh_callsign(&rose_call, neigh);
++	neigh->ax25 = ax25_send_frame(skb, 260, &rose_call,
++				      &neigh->callsign, neigh->digipeat,
++				      neigh->dev);
+ 	if (ax25s)
+ 		ax25_cb_put(ax25s);
+ 
+@@ -124,16 +131,13 @@ static int rose_send_frame(struct sk_buff *skb, struct rose_neigh *neigh)
+  */
+ static int rose_link_up(struct rose_neigh *neigh)
+ {
+-	ax25_address *rose_call;
++	ax25_address rose_call;
+ 	ax25_cb *ax25s;
+ 
+-	if (ax25cmp(&rose_callsign, &null_ax25_address) == 0)
+-		rose_call = (ax25_address *)neigh->dev->dev_addr;
+-	else
+-		rose_call = &rose_callsign;
+-
+ 	ax25s = neigh->ax25;
+-	neigh->ax25 = ax25_find_cb(rose_call, &neigh->callsign, neigh->digipeat, neigh->dev);
++	rose_get_neigh_callsign(&rose_call, neigh);
++	neigh->ax25 = ax25_find_cb(&rose_call, &neigh->callsign,
++				   neigh->digipeat, neigh->dev);
+ 	if (ax25s)
+ 		ax25_cb_put(ax25s);
  
 -- 
 1.7.4.4
