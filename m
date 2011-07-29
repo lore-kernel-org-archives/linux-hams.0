@@ -1,7 +1,7 @@
 From: Christof Schmitt <cschmitt@users.sourceforge.net>
-Subject: hamfax 0.8 released
-Date: Wed, 27 Jul 2011 10:21:08 -0700
-Message-ID: <20110727172108.GA8640@chs.home.pages.de>
+Subject: hamfax 0.8.1 released
+Date: Fri, 29 Jul 2011 11:20:19 -0700
+Message-ID: <20110729182019.GA10386@chs.home.pages.de>
 Mime-Version: 1.0
 Return-path: <linux-hams-owner@vger.kernel.org>
 Content-Disposition: inline
@@ -13,19 +13,16 @@ To: hamfax-devel@lists.sourceforge.net, linux-hams@vger.kernel.org, debian-hams@
 
 Hi,
 
-hamfax 0.8 has been released. The big change is the switch from Qt3 to Qt4,
-but there are other changes as well:
+i just released hamfax 0.8.1 to fix some bugs found in the new Qt4 and hamlib
+code:
 
- * Use Qt4 instead of Qt3
- * Save and restore window size and state
- * Update ALSA implementation: works now with pulseaudio
- * Small fixes
+ * Fix checkable entries in options menu
+ * Fix hamlib parameters handling
+ * Fix hamlib usage: Set PTT for ALSA and do not open hamlib in receive path
 
-The download and git repository are available at the sourceforge page:
-https://sourceforge.net/projects/hamfax/
+Many thanks to Kamal Mostafa for pointing out these issues, and testing the
+fixes.
 
-Comments, bug reports and patches are always welcome,
-
-73,
+73
 
 Christof, DH1CS
