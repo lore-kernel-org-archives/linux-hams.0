@@ -1,68 +1,55 @@
-From: Nate Bargmann <n0nb@n0nb.us>
-Subject: Hamlib 1.2.14 released
-Date: Sun, 31 Jul 2011 10:08:33 -0500
-Message-ID: <20110731150833.GN5728@n0nb.us>
+From: Ben Hutchings <ben@decadent.org.uk>
+Subject: [PATCH 02/12] headers, ax25: Add missing #include to
+ <linux/netrom.h>, <linux/rose.h>
+Date: Mon, 08 Aug 2011 14:17:20 +0100
+Message-ID: <1312809440.2591.1141.camel@deadeye>
+References: <1312809302.2591.1139.camel@deadeye>
 Mime-Version: 1.0
+Content-Transfer-Encoding: 8BIT
+Return-path: <linux-hams-owner@vger.kernel.org>
+In-Reply-To: <1312809302.2591.1139.camel@deadeye>
+Sender: linux-hams-owner@vger.kernel.org
+List-ID: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-Return-path: <hamlib-developer-bounces@lists.sourceforge.net>
-Content-Disposition: inline
-List-Id: <linux-hams.vger.kernel.org>
-List-Unsubscribe: <https://lists.sourceforge.net/lists/listinfo/hamlib-developer>,
-	<mailto:hamlib-developer-request@lists.sourceforge.net?subject=unsubscribe>
-List-Archive: <http://sourceforge.net/mailarchive/forum.php?forum_name=hamlib-developer>
-List-Post: <mailto:hamlib-developer@lists.sourceforge.net>
-List-Help: <mailto:hamlib-developer-request@lists.sourceforge.net?subject=help>
-List-Subscribe: <https://lists.sourceforge.net/lists/listinfo/hamlib-developer>,
-	<mailto:hamlib-developer-request@lists.sourceforge.net?subject=subscribe>
-Errors-To: hamlib-developer-bounces@lists.sourceforge.net
-To: Debian Hams <debian-hams@lists.debian.org>, Linux Hams <linux-hams@vger.kernel.org>, Ham-Linux <ham-linux@mailman.qth.net>, Fldigi Alpha Team <fldigi-alpha@lists.berlios.de>, Hamlib
+To: David Miller <davem@davemloft.net>
+Cc: netdev@vger.kernel.org, Ralf Baechle <ralf@linux-mips.org>, linux-hams@vger.kernel.org
 
-The Hamlib team announces the release of Hamlib 1.2.14, the first since
-adopting a timed release schedule of 1 Feb and 1 Aug each year.  Changes
-since 1.2.13 include:
+These headers use the ax25_address type defined in <linux/ax25.h>.
 
-    * New models: SigFox Transfox, TH-D72A, IC-7410, IC-9100, IC-R9500,
-      KX3, V4L2 API support (untested),
-    
-    * New rotator backends: IF-100, TS-7400
-    
-    * Fixes and features: K3/KX3, Build Win32 from script,
-      rigctld/rotctld ported to Mingw32, Win32 build fixes, remove
-      obsolete bundled libtool files, rigctl improvements, FUNcube
-      string test (works with V0.0 and V1.0), Yaesu newcat.c fixed to
-      use rig->state.current_vfo to store vfo value, add a command to
-      halt rigctld, select PTT source in Kenwood backends (TS-590S),
-      make sure scan is stopped at IC-9000 opening, thd72 get channel
-      data (alpha).
+Signed-off-by: Ben Hutchings <ben@decadent.org.uk>
+---
+ include/linux/netrom.h |    2 ++
+ include/linux/rose.h   |    2 ++
+ 2 files changed, 4 insertions(+), 0 deletions(-)
 
-
-For a complete log of changes to Hamlib 1.2.14, please visit:
-
-http://hamlib.git.sourceforge.net/git/gitweb.cgi?p=hamlib/hamlib;a=shortlog;h=refs/heads/Hamlib-1.2.14
-
-
-The project welcomes contributions of support for new radio and rotor
-models and bug fixes or feature enhancements for existing models.
-
-Future plans include development of "API 3" to tweak the current API as
-needed to support newer devices with expanded capabilities and enhance
-the current Hamlib API.  Participation by developers using Hamlib in
-their programs is welcome.
-
-For the Hamlib team,
-
-73, de Nate >>
-
+diff --git a/include/linux/netrom.h b/include/linux/netrom.h
+index 6939b32..af7313c 100644
+--- a/include/linux/netrom.h
++++ b/include/linux/netrom.h
+@@ -7,6 +7,8 @@
+ #ifndef	NETROM_KERNEL_H
+ #define	NETROM_KERNEL_H
+ 
++#include <linux/ax25.h>
++
+ #define NETROM_MTU	236
+ 
+ #define NETROM_T1	1
+diff --git a/include/linux/rose.h b/include/linux/rose.h
+index c7b4b18..e8289cd 100644
+--- a/include/linux/rose.h
++++ b/include/linux/rose.h
+@@ -7,6 +7,8 @@
+ #ifndef	ROSE_KERNEL_H
+ #define	ROSE_KERNEL_H
+ 
++#include <linux/ax25.h>
++
+ #define ROSE_MTU	251
+ 
+ #define ROSE_MAX_DIGIS 6
 -- 
+1.7.5.4
 
-"The optimist proclaims that we live in the best of all
-possible worlds.  The pessimist fears this is true."
 
-Ham radio, Linux, bikes, and more: http://www.n0nb.us
 
-------------------------------------------------------------------------------
-Got Input?   Slashdot Needs You.
-Take our quick survey online.  Come on, we don't ask for help often.
-Plus, you'll get a chance to win $100 to spend on ThinkGeek.
-http://p.sf.net/sfu/slashdot-survey
