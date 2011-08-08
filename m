@@ -1,8 +1,7 @@
 From: Ben Hutchings <ben@decadent.org.uk>
-Subject: [PATCH 02/12] headers, ax25: Add missing #include to
- <linux/netrom.h>, <linux/rose.h>
-Date: Mon, 08 Aug 2011 14:17:20 +0100
-Message-ID: <1312809440.2591.1141.camel@deadeye>
+Subject: [PATCH 11/12] headers, scc: Add missing #include to <linux/scc.h>
+Date: Mon, 08 Aug 2011 14:24:29 +0100
+Message-ID: <1312809869.2591.1151.camel@deadeye>
 References: <1312809302.2591.1139.camel@deadeye>
 Mime-Version: 1.0
 Content-Transfer-Encoding: 8BIT
@@ -12,42 +11,32 @@ Sender: linux-hams-owner@vger.kernel.org
 List-ID: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
 To: David Miller <davem@davemloft.net>
-Cc: netdev@vger.kernel.org, Ralf Baechle <ralf@linux-mips.org>, linux-hams@vger.kernel.org
+Cc: netdev@vger.kernel.org, Joerg Reuter <jreuter@yaina.de>, Klaus Kudielka <klaus.kudielka@ieee.org>, linux-hams@vger.kernel.org
 
-These headers use the ax25_address type defined in <linux/ax25.h>.
+<linux/scc.h> uses SIOCDEVPRIVATE, defined in <linux/sockios.h>.
 
 Signed-off-by: Ben Hutchings <ben@decadent.org.uk>
 ---
- include/linux/netrom.h |    2 ++
- include/linux/rose.h   |    2 ++
- 2 files changed, 4 insertions(+), 0 deletions(-)
+This file isn't listed in MAINTAINERS but appears to be associated with
+one of the hamradio drivers; please could one of the hams claim it?
 
-diff --git a/include/linux/netrom.h b/include/linux/netrom.h
-index 6939b32..af7313c 100644
---- a/include/linux/netrom.h
-+++ b/include/linux/netrom.h
-@@ -7,6 +7,8 @@
- #ifndef	NETROM_KERNEL_H
- #define	NETROM_KERNEL_H
+Ben.
+
+ include/linux/scc.h |    1 +
+ 1 files changed, 1 insertions(+), 0 deletions(-)
+
+diff --git a/include/linux/scc.h b/include/linux/scc.h
+index 3495bd9..d5916e5 100644
+--- a/include/linux/scc.h
++++ b/include/linux/scc.h
+@@ -3,6 +3,7 @@
+ #ifndef	_SCC_H
+ #define	_SCC_H
  
-+#include <linux/ax25.h>
-+
- #define NETROM_MTU	236
++#include <linux/sockios.h>
  
- #define NETROM_T1	1
-diff --git a/include/linux/rose.h b/include/linux/rose.h
-index c7b4b18..e8289cd 100644
---- a/include/linux/rose.h
-+++ b/include/linux/rose.h
-@@ -7,6 +7,8 @@
- #ifndef	ROSE_KERNEL_H
- #define	ROSE_KERNEL_H
+ /* selection of hardware types */
  
-+#include <linux/ax25.h>
-+
- #define ROSE_MTU	251
- 
- #define ROSE_MAX_DIGIS 6
 -- 
 1.7.5.4
 
