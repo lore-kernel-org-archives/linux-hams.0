@@ -1,43 +1,59 @@
-From: f6bvp <f6bvp@free.fr>
-Subject: Re: [PATCH 02/12] headers, ax25: Add missing #include to
-Date: Mon, 08 Aug 2011 18:47:58 +0200
-Message-ID: <4E40133E.9090206@free.fr>
+From: Ben Hutchings <ben@decadent.org.uk>
+Subject: Re: [PATCH 11/12] headers, scc: Add missing #include to
+ <linux/scc.h>
+Date: Mon, 8 Aug 2011 19:20:18 +0100
+Message-ID: <20110808182018.GG29924@decadent.org.uk>
+References: <1312809302.2591.1139.camel@deadeye>
+ <1312809869.2591.1151.camel@deadeye>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
-Return-path: <linux-hams-owner@vger.kernel.org>
-Sender: linux-hams-owner@vger.kernel.org
+Return-path: <netdev-owner@vger.kernel.org>
+Content-Disposition: inline
+In-Reply-To: <1312809869.2591.1151.camel@deadeye>
+Sender: netdev-owner@vger.kernel.org
 List-ID: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"; format="flowed"
-To: linux-hams <linux-hams@vger.kernel.org>
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+To: David Miller <davem@davemloft.net>
+Cc: netdev@vger.kernel.org, Joerg Reuter <jreuter@yaina.de>, Klaus Kudielka <klaus.kudielka@ieee.org>, linux-hams@vger.kernel.org
 
-Hi,
+On Mon, Aug 08, 2011 at 02:24:29PM +0100, Ben Hutchings wrote:
+> <linux/scc.h> uses SIOCDEVPRIVATE, defined in <linux/sockios.h>.
+ 
+Unfortunately SIOCDEVPRIVATE is also defined elsewhere by glibc,
+so including <linux/sockios.h> can result in duplicate definitions.
+So I don't think we can make this change.
 
-Actually, netrom and rose files needing ax25_address types are already including :
+Ben.
 
-#include<net/ax25.h>
+> Signed-off-by: Ben Hutchings <ben@decadent.org.uk>
+> ---
+> This file isn't listed in MAINTAINERS but appears to be associated with
+> one of the hamradio drivers; please could one of the hams claim it?
+> 
+> Ben.
+> 
+>  include/linux/scc.h |    1 +
+>  1 files changed, 1 insertions(+), 0 deletions(-)
+> 
+> diff --git a/include/linux/scc.h b/include/linux/scc.h
+> index 3495bd9..d5916e5 100644
+> --- a/include/linux/scc.h
+> +++ b/include/linux/scc.h
+> @@ -3,6 +3,7 @@
+>  #ifndef	_SCC_H
+>  #define	_SCC_H
+>  
+> +#include <linux/sockios.h>
+>  
+>  /* selection of hardware types */
+>  
+> -- 
+> 1.7.5.4
+> 
+> 
+> 
 
-that in turn includes :
-
-#include<linux/ax25.h>
-
-This is why Gcc compiler did not complain about missing ax25_address type
-for it had been already declared.
-
-Thus adding the above #include would be redundant.
-
-Bernard, f6bvp
-
-
-On Mon, Aug 08, 2011 at 02:17:20PM +0100, Ben Hutchings wrote:
-
->  These headers use the ax25_address type defined in<linux/ax25.h>.
->
->  Signed-off-by: Ben Hutchings<ben@decadent.org.uk>
-
-Makes sense.
-
-Acked-by: Ralf Baechle<ralf@linux-mips.org>
-
-   Ralf
---
-
+-- 
+Ben Hutchings
+We get into the habit of living before acquiring the habit of thinking.
+                                                              - Albert Camus
