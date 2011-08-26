@@ -1,85 +1,60 @@
-From: Ben Hutchings <ben@decadent.org.uk>
-Subject: [PATCH net-next v2 02/10] headers, ax25: Add missing #include to
- <linux/netrom.h>, <linux/rose.h>
-Date: Thu, 25 Aug 2011 05:43:18 +0100
-Message-ID: <1314247398.27179.119.camel@deadeye>
-References: <1314247131.27179.116.camel@deadeye>
+From: Stephane Fillod <f8cfe@free.fr>
+Subject: [ANN] grig 0.8.0 released
+Date: Fri, 26 Aug 2011 23:20:48 +0200
+Message-ID: <20110826212048.GB4738@charybde.local>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg="pgp-sha512";
-	protocol="application/pgp-signature"; boundary="=-l18VGwDfcfkjRWtCEVMT"
-Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <1314247131.27179.116.camel@deadeye>
-Sender: linux-hams-owner@vger.kernel.org
-List-ID: <linux-hams.vger.kernel.org>
-To: David Miller <davem@davemloft.net>
-Cc: netdev@vger.kernel.org, Ralf Baechle <ralf@linux-mips.org>, linux-hams@vger.kernel.org
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+Return-path: <hamlib-developer-bounces@lists.sourceforge.net>
+Content-Disposition: inline
+List-Id: <linux-hams.vger.kernel.org>
+List-Unsubscribe: <https://lists.sourceforge.net/lists/listinfo/hamlib-developer>,
+	<mailto:hamlib-developer-request@lists.sourceforge.net?subject=unsubscribe>
+List-Archive: <http://sourceforge.net/mailarchive/forum.php?forum_name=hamlib-developer>
+List-Post: <mailto:hamlib-developer@lists.sourceforge.net>
+List-Help: <mailto:hamlib-developer-request@lists.sourceforge.net?subject=help>
+List-Subscribe: <https://lists.sourceforge.net/lists/listinfo/hamlib-developer>,
+	<mailto:hamlib-developer-request@lists.sourceforge.net?subject=subscribe>
+Errors-To: hamlib-developer-bounces@lists.sourceforge.net
+To: groundstation-developer@lists.sourceforge.net
+Cc: linux-hams@vger.kernel.org, Hamlib developers <hamlib-developer@lists.sourceforge.net>
+
+Good News every one!
+
+After almost 5 years, here is coming grig 0.8.0.
+
+The NEWS blurb:
+
+- Frequency entry via keypad (thanks to Alessandro Zummo).
+- Arrow LEFT/RIGHT will change the frequency with the smallest step.
+  This can be used for tuning using external devices like the Powermate.
+* Support for VFO->MEM and MEM->VFO function.
+- Support on/off rig functions.
+- Added an extra gigahertz digit in lcd display
+- Added antenna control
+- French l10n (feel free to contribute your language)
+- Fixed crash that occurs when mouse is clicked between MHz and kHz digits.
+  Reported as Ubuntu bug 517816.
+- Requires Gtk+ 2.12 and Hamlib 1.2.8
+
+Download it at: https://sourceforge.net/projects/groundstation/files/Grig/0.8.0/
+
+But hold on, what is grig BTW?  http://groundstation.sourceforge.net/grig/
+
+Alexandru Csete, OZ9AEC, the original designer and developer of grig
+is looking for people to take over and maintain the project.
+The current release has been made on interim by Nirgal and myself.
+We are thinking about bringing all the nice Alex's ideas in a Python
+code base, lowering the maintainance. Upon Alex proposal, Grig might
+one day join the Hamlib project. Many thanks to Alex for his work so far.
+
+73
+-- 
+Stephane - F8CFE
 
 
---=-l18VGwDfcfkjRWtCEVMT
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-These headers use the ax25_address type defined in <linux/ax25.h>.
-
-Signed-off-by: Ben Hutchings <ben@decadent.org.uk>
-Acked-by: Ralf Baechle <ralf@linux-mips.org>
----
- include/linux/netrom.h |    2 ++
- include/linux/rose.h   |    2 ++
- 2 files changed, 4 insertions(+), 0 deletions(-)
-
-diff --git a/include/linux/netrom.h b/include/linux/netrom.h
-index 6939b32..af7313c 100644
---- a/include/linux/netrom.h
-+++ b/include/linux/netrom.h
-@@ -7,6 +7,8 @@
- #ifndef	NETROM_KERNEL_H
- #define	NETROM_KERNEL_H
-=20
-+#include <linux/ax25.h>
-+
- #define NETROM_MTU	236
-=20
- #define NETROM_T1	1
-diff --git a/include/linux/rose.h b/include/linux/rose.h
-index c7b4b18..e8289cd 100644
---- a/include/linux/rose.h
-+++ b/include/linux/rose.h
-@@ -7,6 +7,8 @@
- #ifndef	ROSE_KERNEL_H
- #define	ROSE_KERNEL_H
-=20
-+#include <linux/ax25.h>
-+
- #define ROSE_MTU	251
-=20
- #define ROSE_MAX_DIGIS 6
---=20
-1.7.5.4
-
-
-
-
---=-l18VGwDfcfkjRWtCEVMT
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: This is a digitally signed message part
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.11 (GNU/Linux)
-
-iQIVAwUATlXS5ue/yOyVhhEJAQqmHg//Zk/knt7UhqxJOFJDFx5IpXTfy+2kkeVQ
-3Djo0bKnoBCSIxly7FiuOeGt47C5SMktwwUKxPpA4qwMoW8g5EadkiF9tTPbEYSt
-mQQA7HQQEIFeFE/xosXckmX9ZeE9jf03TEXcIAq5OXb4ne+Lj+qU/FaqRk67KMXw
-1JfW+icKQDqUJ/jMialQ0tYa4ZYsmAOsccOl26+PVm6zVMMwwP/Az7PQbOZiP4eN
-6gcxps4X3jdBPXbW81ISixztcdzdMbXqK8dKk/WLjzrddqmq/582Rk2MiXrewSIV
-+INkruJ+PhF2ynbZ8jixjztAzcqiy3BLlkd+Y63Cu6ldaoofg7VAfbL2vr9a0uhl
-oqhtL++BjwOUcIef4mlA1cAGoqJo4rn9++TS1leCT/pTS2hirzuwJTQU4y3hR/MX
-YM+BIIxoWKTkfxMXd1tGCEK6m8ni9ODs9tSvRgEDxckYSmRRvSuE+bcL1XXfe5bO
-TUAD47s5KrjXusgTv581QKPKCRg5uN24s8ObDfPfJCO28+53K2R7yS/aP31TJ7CW
-bNok3KRkEtpXmLJCBId7inUN6iQg55FtO4mElRRXbV4CUTKC+Ani3lYbMF/N/4I1
-KWBvsfhs3CMSafSwmfl9BkM0/Wd4dRAFhlpw/okvx24JxIa56U4eo1ESrZcpSWju
-D5D9wS9SYR8=
-=2gAa
------END PGP SIGNATURE-----
-
---=-l18VGwDfcfkjRWtCEVMT--
+------------------------------------------------------------------------------
+EMC VNX: the world's simplest storage, starting under $10K
+The only unified storage solution that offers unified management 
+Up to 160% more powerful than alternatives and 25% more efficient. 
+Guaranteed. http://p.sf.net/sfu/emc-vnx-dev2dev
