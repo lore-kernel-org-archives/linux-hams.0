@@ -1,43 +1,52 @@
-From: Brett Mueller <wa7v@wa7v.com>
-Subject: Re: Need standard PROM image for Paccomm Tiny2 MK2
-Date: Fri, 09 Sep 2011 15:43:09 -0700
-Message-ID: <4E6A967D.50900@wa7v.com>
-References: <CAArS27vGJdjH+sCwXG-gqJXobH6Mt+MT5NGVX=SKDYWMkOOLag@mail.gmail.com> <4E6A93FB.1030207@exemail.com.au>
+From: "IT2 Stuart Blake Tener, USNR" <teners@bh90210.net>
+Subject: Kantronics KAM (PROM and other queries)
+Date: Mon, 12 Sep 2011 12:30:53 -0400
+Message-ID: <20110912123053.21445wzetkvhl3ul@horde.mgtmail.com>
 Mime-Version: 1.0
 Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <4E6A93FB.1030207@exemail.com.au>
+Content-Disposition: inline
 Sender: linux-hams-owner@vger.kernel.org
 List-ID: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"
+Content-Type: text/plain; charset="us-ascii"; delsp="Yes"; format="flowed"
 To: Linux HAMs <linux-hams@vger.kernel.org>
 
-Ray Wells wrote the following on 09/09/2011 15:32:
-> On 9/10/2011 8:10 AM, Douglas Cole wrote:
->> As the subject says, I purchased a number of Paccomm TNC's without
->> PROM's (they had X1J PROM's in them and the seller didn't have the
->> original ones and pulled his PROM's out) and I need either the
->> original PROM that I can duplicate or the image file for it so I can
->> program ones for these TNC's.
->> I plan on using the TNC's in KISS mode on Linux boxes and so the need
->> for the standard PROM image.
->> Sorry for the off topic posting but I'm not sure what other list might
->> have folks with packet interests, if anyone knows please offer any
->> info you can.
->>
->> 73
-> The KISS implementation in a standard EPROM has horrendous,
-> unpredictable timing issues, suggest you burn a KISS only EPROM. I have
-> an image but am forced to laptop only at the moment and the file is not
-> readily available to me.
-> 
-> Ray vk2tv
+Fellow Amateurs,
 
-I've been using a KISS-only EPROM in a Tiny2 with satisfactory results.  I
-believe I burned it from the tnc2kiss.hex file obtained from TAPR at:
-ftp://ftp.tapr.org/software_lib/tnc/
+I have an olde Kantronics KAM (which does NOT have an enhancement  
+board in it, though I'd be open to buying one if someone has one  
+inexpensively priced), though the PROM version in the KAM is I think  
+5.x or thereabouts.
+
+What is the highest level of PROM I can put in a KAM absent the  
+enhancement board?
+
+What is the highest level of PROM I can put in a KAM with the  
+enhancement board?
+
+Also, does anyone know what the model number is for the mating  
+connector for power for the KAM (I lost my power cable, I do not have  
+the KAM with me right now and am traveling).
+
+It is worthy of notation that I do not have the images for any PROMs  
+over 5.x at the moment.
 
 
 73,
 
-Brett, WA7V
+Stuart, N3GWG
+
+
+
+--
+
+IT2 Stuart Blake Tener, USNR, N3GWG (Extra), MROP
+Beverly Hills, CA / Las Vegas, NV / Philadelphia, PA / Washington, DC
+mobile: (310) 358-0202
+Nextel: 124*233172*14 (direct connect)
+e-mail: teners@bh90210.net
+
+
+
+
+
