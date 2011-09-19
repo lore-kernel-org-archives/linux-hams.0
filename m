@@ -1,54 +1,37 @@
-From: Nate Bargmann <n0nb@n0nb.us>
-Subject: Re: Kantronics KAM (PROM and other queries)
-Date: Mon, 12 Sep 2011 15:16:38 -0500
-Message-ID: <20110912201638.GC30531@n0nb.us>
-References: <20110912123053.21445wzetkvhl3ul@horde.mgtmail.com>
-Mime-Version: 1.0
+From: Ben Stienstra <b.stienstra@xs4all.nl>
+Subject: conversd-saupp
+Date: Mon, 19 Sep 2011 23:37:08 +0200
+Message-ID: <1990DAF0-D2C0-4DFF-89F2-E3099F8A7010@xs4all.nl>
+Mime-Version: 1.0 (Apple Message framework v1244.3)
+Content-Transfer-Encoding: 8BIT
 Return-path: <linux-hams-owner@vger.kernel.org>
-Content-Disposition: inline
-In-Reply-To: <20110912123053.21445wzetkvhl3ul@horde.mgtmail.com>
 Sender: linux-hams-owner@vger.kernel.org
 List-ID: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-To: Linux HAMs <linux-hams@vger.kernel.org>
+To: linux-hams@vger.kernel.org
 
-* On 2011 12 Sep 11:31 -0500, IT2 Stuart Blake Tener, USNR wrote:
-> Fellow Amateurs,
-> 
-> I have an olde Kantronics KAM (which does NOT have an enhancement
-> board in it, though I'd be open to buying one if someone has one
-> inexpensively priced), though the PROM version in the KAM is I think
-> 5.x or thereabouts.
-> 
-> What is the highest level of PROM I can put in a KAM absent the
-> enhancement board?
+Dear all,
+ 
+I'm setting up a saupp conversd server and got it running, almost... When i connect with the 'convers' client from the localhost, it works. But, when i connect via AX.25 i only get the "channel 0 has been removed" message, and nothing else. It just waits and disconnect after a long wait. Maybe someone can help me with it.
 
-If memory serves, 5.1 or so.  PROM version 6 required the board, as I
-recall.
+Please see the output below. 
 
-> What is the highest level of PROM I can put in a KAM with the
-> enhancement board?
+c vhf pd0b-13
+Trying...  The escape character is: CTRL-T
+*** connected to PD0B-13
+*
+* Access to channel 0 has been removed from this server.
+*
 
-I think my original KAM has 8.1 or thereabouts.  There may have been a
-version 9.x that I never got.
+*** reconnected to PD0B-2 
 
-> Also, does anyone know what the model number is for the mating
-> connector for power for the KAM (I lost my power cable, I do not
-> have the KAM with me right now and am traveling).
 
-Isn't it a 2.1x1.5mm coaxial connector?
+I have tried everything from axconv (ax25d) to the ax25 listener and rawconvers, all give the same output on AX.25. I have no errors in the log. The line below is the only evidence from the connect:
 
-> It is worthy of notation that I do not have the images for any PROMs
-> over 5.x at the moment.
+Sep 19 23:28:00 voyage conversd[2118]: Incoming connection from PD0B-15 to ax25:pd0b-13,pd0b-1
 
-I probably read my proms of various versions for grins years ago.
 
-73, de Nate >>
+Best regards,
+Ben
 
--- 
 
-"The optimist proclaims that we live in the best of all
-possible worlds.  The pessimist fears this is true."
-
-Ham radio, Linux, bikes, and more: http://www.n0nb.us
