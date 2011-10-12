@@ -1,34 +1,31 @@
-From: f6bvp <f6bvp@free.fr>
-Subject: Compiling FBB
-Date: Tue, 11 Oct 2011 10:18:52 +0200
-Message-ID: <4E93FBEC.7050907@free.fr>
+From: John Goerzen <jgoerzen@complete.org>
+Subject: Re: packet radio gateway
+Date: Wed, 12 Oct 2011 08:52:27 -0500
+Message-ID: <4E959B9B.9030302@complete.org>
+References: <4E932538.5000805@kinfolk.org> <CAPSBm51Ps5mo0xSb9Fo3ZGgkwyno8LvQw0GsTFZNtjJgu1r-=w@mail.gmail.com>
 Mime-Version: 1.0
 Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
+In-Reply-To: <CAPSBm51Ps5mo0xSb9Fo3ZGgkwyno8LvQw0GsTFZNtjJgu1r-=w@mail.gmail.com>
 Sender: linux-hams-owner@vger.kernel.org
 List-ID: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"; format="flowed"
-To: Miroslav Skoric <skoric@eunet.rs>, linux-hams <linux-hams@vger.kernel.org>
-Cc: f6bvp@free.fr
+To: Bill Vodall <wa7nwp@gmail.com>
+Cc: linux-hams@vger.kernel.org
 
-*Hello Miroslav,
+On 10/10/2011 04:04 PM, Bill Vodall wrote:
+> There's a lot more cool stuff that can be done with TCP on packet -
+> but that's a whole different ballgame.
+>
 
-It looks like you did not install AX.25 libraries (libax25) before 
-installing FBB.
-Look at the following link :
+I've done it a bit here locally, using some nonroutable IP ranges.  It 
+was fun but at 1200bps a bit painful, though very occasionally useful to 
+fix something on a remote box.  What sorts of things do you have in mind?
 
-http://code.google.com/p/linuxax25/
+How does one get a 44 address anymore?  I've tried but kept running into 
+brick walls due to people that were supposed to be doing things in that 
+system being AWOL.
 
-73 de Bernard, f6bvp
 
-
-List: linux-hams <http://marc.info/?l=linux-hams&r=1&w=4>
-Subject: Compiling FBB
-From: Miroslav Skoric <skoric () eunet ! rs> 
-<http://marc.info/?a=128974130300001&r=1&w=4>
-Date: 2011-10-02 15:41:02 <http://marc.info/?l=linux-hams&r=1&b=201110&w=4>
-Message-ID: 4E88860E.3030908 () eunet ! rs 
-<http://marc.info/?i=4E88860E.3030908%20%28%29%20eunet%20%21%20rs>
-[Download message RAW 
-<http://marc.info/?l=linux-hams&m=131758932830913&q=raw>]*
+- John
 
