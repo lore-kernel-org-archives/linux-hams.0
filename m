@@ -1,45 +1,44 @@
-From: Nate Bargmann <n0nb@n0nb.us>
-Subject: Re: packet radio gateway
-Date: Wed, 12 Oct 2011 09:49:30 -0500
-Message-ID: <20111012144930.GB8332@n0nb.us>
-References: <4E932538.5000805@kinfolk.org>
- <CAPSBm51Ps5mo0xSb9Fo3ZGgkwyno8LvQw0GsTFZNtjJgu1r-=w@mail.gmail.com>
- <4E959B9B.9030302@complete.org>
+From: Miroslav Skoric <skoric@eunet.rs>
+Subject: Re: Compiling FBB
+Date: Sat, 15 Oct 2011 00:10:38 +0200
+Message-ID: <4E98B35E.1050602@eunet.rs>
+References: <4E93FBEC.7050907@free.fr>
 Mime-Version: 1.0
+Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
-Content-Disposition: inline
-In-Reply-To: <4E959B9B.9030302@complete.org>
+In-Reply-To: <4E93FBEC.7050907@free.fr>
 Sender: linux-hams-owner@vger.kernel.org
 List-ID: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-To: linux-hams@vger.kernel.org
+Content-Type: text/plain; charset="us-ascii"; format="flowed"
+To: f6bvp <f6bvp@free.fr>
+Cc: linux-hams <linux-hams@vger.kernel.org>
 
-* On 2011 12 Oct 09:29 -0500, John Goerzen wrote:
-> On 10/10/2011 04:04 PM, Bill Vodall wrote:
-> >There's a lot more cool stuff that can be done with TCP on packet -
-> >but that's a whole different ballgame.
-> >
-> 
-> I've done it a bit here locally, using some nonroutable IP ranges.
-> It was fun but at 1200bps a bit painful, though very occasionally
-> useful to fix something on a remote box.  What sorts of things do
-> you have in mind?
-> 
-> How does one get a 44 address anymore?  I've tried but kept running
-> into brick walls due to people that were supposed to be doing things
-> in that system being AWOL.
+On 10/11/2011 10:18 AM, f6bvp wrote:
+> *Hello Miroslav,
+>
+> It looks like you did not install AX.25 libraries (libax25) before
+> installing FBB.
+> Look at the following link :
+>
+> http://code.google.com/p/linuxax25/
+>
+> 73 de Bernard, f6bvp
+>
 
-John, Dale, K0HYD at Goddard was the AMPR IP coordinator for Kansas.
-I'm not sure if he still does that.  I did see him at the KS convention
-in August and he is getting back into amateur radio, or at least HF.  He
-may be able to help you.
+Hi Bernard,
 
-73, de Nate >>
+I already had libax25 (as well as ax25-apps and ax25-tools) before 
+trying to compile FBB. Btw, in respect to repositories of Ubuntu and 
+Debian communities, I installed the version they both provided: libax25 
+0.0.11-6.1)
 
--- 
+However, I checked the link above, but not sure what their versions 
+might help me in regard to the FBB compiling issue. In fact, I would 
+like to keep the existing ax25 stuff, provided they bring basic 
+functionality (for example, I managed to activate a few Linux nodes in 
+Ubuntu and Debian, and now I am in the process of configuring them to 
+interact with Win/BPQ32 nodes in the mixed Lin/Win dual-boot environment.)
 
-"The optimist proclaims that we live in the best of all
-possible worlds.  The pessimist fears this is true."
+What else could I eventually try to install/reinstall?
 
-Ham radio, Linux, bikes, and more: http://www.n0nb.us
+Misko, YT7MPB
