@@ -1,73 +1,125 @@
-From: Maynard Wright <m-wright-qx95VtOkOx/QT0dZR+AlfA@public.gmane.org>
-Subject: Re: OT: World Radio Online
-Date: Thu, 20 Oct 2011 06:23:13 -0700
-Message-ID: <201110200623.14208.m-wright@eskimo.com>
-References: <20111020123209.GD31005@n0nb.us>
-Reply-To: linuxham-hHKSG33TihhbjbujkaE4pw@public.gmane.org
+From: David Ranch <linux-hams@trinnet.net>
+Subject: Re: Compiling FBB
+Date: Thu, 20 Oct 2011 21:02:44 -0700
+Message-ID: <4EA0EEE4.7050502@trinnet.net>
+References: <4E93FBEC.7050907@free.fr> <4E98B35E.1050602@eunet.rs> <4E993C82.2090601@free.fr>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
-Return-path: <sentto-17259876-14663-1319117078-gcrl-linuxham=m.gmane.org-Hmr20et6RfIqbyJsPhsW54OaOnUyUoRs@public.gmane.org>
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yahoogroups.com; s=lima; t=1319117078; bh=lqNNxJu+k18HOAad0dE5V2RwpVh9ExihNrUcT7o+Alk=; h=Received:Received:X-Yahoo-Newman-Id:X-Sender:X-Apparently-To:X-Received:X-Received:X-Received:X-Received:To:User-Agent:Cc:References:In-Reply-To:Message-Id:X-Originating-IP:From:X-Yahoo-Profile:Sender:MIME-Version:Mailing-List:Delivered-To:List-Id:Precedence:List-Unsubscribe:Date:Subject:Reply-To:X-Yahoo-Newman-Property:Content-Type:Content-Transfer-Encoding; b=olwGyftOtDEMUcKsxepjnTO5LpnkBgM/U53BtqX44FtCbSPyjAWS1oDaJzveywwSDD5RGMAunToleTFgMOsP5KbJVdMtuF1AstgeKTqUk2s/LR4VBORQgtqOOeQsuMJt
-In-Reply-To: <20111020123209.GD31005-/4qmxAYkJys@public.gmane.org>
-Sender: linuxham-hHKSG33TihhbjbujkaE4pw@public.gmane.org
-List-Id: <linux-hams.vger.kernel.org>
-List-Unsubscribe: <mailto:linuxham-unsubscribe-hHKSG33TihhbjbujkaE4pw@public.gmane.org>
-Content-Type: text/plain; charset="us-ascii"
-To: linuxham-hHKSG33TihhbjbujkaE4pw@public.gmane.org
-Cc: Ham-Linux <ham-linux-xGejAJT2w6wZAos1Rg0P4g@public.gmane.org>, Linux Hams <linux-hams-u79uwXL29TY76Z2rM5mHXA@public.gmane.org>, Hamlib Developers <hamlib-developer-5NWGOfrQmneRv+LV9MX5uipxlwaOVQ5f@public.gmane.org>
-
-I agree.  Since I use Linux only and do not have Flash, I'll not be a 
-potential customer of theirs.
-
-73,
-
-Maynard
-W6PAP
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Return-path: <linux-hams-owner@vger.kernel.org>
+In-Reply-To: <4E993C82.2090601@free.fr>
+Sender: linux-hams-owner@vger.kernel.org
+List-ID: <linux-hams.vger.kernel.org>
+Content-Type: text/plain; charset="iso-8859-1"; format="flowed"
+To: "Bernard, f6bvp" <f6bvp@free.fr>
+Cc: ralf@linux-mips.org, linux-hams <linux-hams@vger.kernel.org>, ax25@x-berg.in-berlin.de
 
 
-On Thursday 20 October 2011 05:32:09 Nate Bargmann wrote:
-> For those of us who have been subscribers to World Radio and then have
-> viewed it via the downloadable PDF for the past almost three years, the
-> next issue, November 2011, will revert to paid subscription.  In itself
-> the subscription is not so bad as the way it will be done.  WRO will be
-> hosted by Zinio which only offers us Linux users the ability to view the
-> content via a Flash plugin.  No offline reader is available and even if
-> it were, the content is in their proprietary format.  This is
-> unacceptable to me and for the first time since January 1984, I will not
-> receive a new monthly issue of World Radio.
+Hello Bernard, Ralf, Thomas,
+
+I've been meaning to ask this question for a while now:  Do you know wh=
+y=20
+the official version of the ax25 apps/libs/tools hasn't been updated in=
+=20
+ages?  I've been slowly hacking up the legacy "released" versions to=20
+work around bugs I've found in my personal uses and I'm sure there are=20
+other issues I haven't hit.. yet:
+
+nrattach.c - non-incrementing nr interfaces (netrom)
+http://marc.info/?l=3Dlinux-hams&m=3D125646640011531&w=3D2
+
+axipd/kiss.c - control byte non-zero when used for axudp tunnels
+http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=3D606338
+
+
+It seems that many of these issues are resolved in the official CVS but=
+=20
+maybe other issues as you pointed out in that Google URL aren't.   It=20
+would be nice if we could at least get  the current CVS pushed out as=20
+say a new official version of 0.0.13 and be aligned across all three=20
+packages.   Even better, have this 0.0.13 version integrate the fixes i=
+n=20
+the Google repo too?
+
+--David
+
+
+
+Bernard, f6bvp wrote:
+> Hello Miroslav,
 >
-> I'm sure the powers that be at CQ Communications couldn't care less
-> about me or the few other Linux using hams that enjoyed World Radio,
-> otherwise a more equitable solution would have been offered.  Vendor
-> lockin is a non-starter in my shack.  If a PDF version is offered once
-> again, I will reconsider but for now I must vote by keeping my wallet
-> closed.
+> I now understand the libax25 issue.
+> Debian and alike libax25 packages are installing AX.25 libraries into=
+=20
+> /usr/lib/ whereas by default xfbb link process is expecting libax25.*=
+=20
+> in /usr/local/lib directory.
 >
-> 73, de Nate >>
-
-
-
-------------------------------------
-
-Yahoo! Groups Links
-
-<*> To visit your group on the web, go to:
-    http://groups.yahoo.com/group/linuxham/
-
-<*> Your email settings:
-    Individual Email | Traditional
-
-<*> To change settings online go to:
-    http://groups.yahoo.com/group/linuxham/join
-    (Yahoo! ID required)
-
-<*> To change settings via email:
-    linuxham-digest-hHKSG33TihhbjbujkaE4pw@public.gmane.org 
-    linuxham-fullfeatured-hHKSG33TihhbjbujkaE4pw@public.gmane.org
-
-<*> To unsubscribe from this group, send an email to:
-    linuxham-unsubscribe-hHKSG33TihhbjbujkaE4pw@public.gmane.org
-
-<*> Your use of Yahoo! Groups is subject to:
-    http://docs.yahoo.com/info/terms/
-
+> You will certainly know how to edit Makefile in order to tell it wher=
+e=20
+> to find the libraries.
+>
+> I must say that for many reasons I do prefere to get all hamradio=20
+> applications and libraries in /usr/local subdirectories.
+> This is more convenient for backups and file search.
+>
+> Last remark : there have been some updates and bug removals in the=20
+> "unofficial" libax25, tools and apps that I gave you as compared to=20
+> the "old one" you are using (libax25 > 0.0.11-6.1).
+>
+> This is the result of an intensive work performed by Lee VE7FET with=20
+> FPAC development team. The site I gave you the address has Debian /=20
+> Ubuntu compatible packages. You should consider using them. This will=
+=20
+> not break anything in your application but rather remove some failure=
+=20
+> causes.
+>
+>
+> 73 de Bernard, f6bvp
+>
+>
+>
+> Le 15/10/2011 00:10, Miroslav Skoric a =E9crit :
+>> On 10/11/2011 10:18 AM, f6bvp wrote:
+>>> *Hello Miroslav,
+>>>
+>>> It looks like you did not install AX.25 libraries (libax25) before
+>>> installing FBB.
+>>> Look at the following link :
+>>>
+>>> http://code.google.com/p/linuxax25/
+>>>
+>>> 73 de Bernard, f6bvp
+>>>
+>>
+>> Hi Bernard,
+>>
+>> I already had libax25 (as well as ax25-apps and ax25-tools) before
+>> trying to compile FBB. Btw, in respect to repositories of Ubuntu and
+>> Debian communities, I installed the version they both provided: liba=
+x25
+>> 0.0.11-6.1)
+>>
+>> However, I checked the link above, but not sure what their versions
+>> might help me in regard to the FBB compiling issue. In fact, I would
+>> like to keep the existing ax25 stuff, provided they bring basic
+>> functionality (for example, I managed to activate a few Linux nodes =
+in
+>> Ubuntu and Debian, and now I am in the process of configuring them t=
+o
+>> interact with Win/BPQ32 nodes in the mixed Lin/Win dual-boot=20
+>> environment.)
+>>
+>> What else could I eventually try to install/reinstall?
+>>
+>> Misko, YT7MPB
+> --=20
+> To unsubscribe from this list: send the line "unsubscribe linux-hams"=
+ in
+> the body of a message to majordomo@vger.kernel.org
+> More majordomo info at  http://vger.kernel.org/majordomo-info.html
+--
+To unsubscribe from this list: send the line "unsubscribe linux-hams" i=
+n
+the body of a message to majordomo@vger.kernel.org
+More majordomo info at  http://vger.kernel.org/majordomo-info.html
