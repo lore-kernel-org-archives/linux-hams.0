@@ -1,339 +1,195 @@
-From: "John D. Hays" <john-qp0vnD+zlOo@public.gmane.org>
-Subject: Re: [Ham-Linux] OT: World Radio Online
-Date: Fri, 21 Oct 2011 09:34:52 -0700
-Message-ID: <CAN77r3z6tTBS6qFXL98qcFX3q76_L29KkuxiEGfjXWJwcWSrZg@mail.gmail.com>
-References: <20111020123209.GD31005@n0nb.us>
-	<201110200623.14208.m-wright@eskimo.com>
-Reply-To: linuxham-hHKSG33TihhbjbujkaE4pw@public.gmane.org
+From: Lee Woldanski <ve7fet@tparc.org>
+Subject: Re: Compiling FBB
+Date: Fri, 21 Oct 2011 10:11:10 -0700
+Message-ID: <CACaEaZmyW6GwSaQFeudX0EuqyEKyL6rGRBEsbZxjcwKqRbRCyA@mail.gmail.com>
+References: <4E93FBEC.7050907@free.fr>
+	<4E98B35E.1050602@eunet.rs>
+	<4E993C82.2090601@free.fr>
+	<4EA0EEE4.7050502@trinnet.net>
+	<4EA14651.7000108@free.fr>
 Mime-Version: 1.0
-Content-Type: multipart/alternative;
- boundary="000e0cd47bc61228b904afd1a7d7"
-Return-path: <sentto-17259876-14669-1319214897-gcrl-linuxham=m.gmane.org-Hmr20et6RfIqbyJsPhsW54OaOnUyUoRs@public.gmane.org>
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yahoogroups.com; s=lima; t=1319214898; bh=E5UGzOdaCoP56XBsfzngvILuHPVPQMy9vp5CG1S3mfY=; h=Received:Received:X-Yahoo-Newman-Id:X-Sender:X-Apparently-To:X-Received:X-Received:X-Received:X-Received:X-Received:X-Received:In-Reply-To:References:Message-ID:To:Cc:X-Originating-IP:X-eGroups-Msg-Info:From:X-Yahoo-Profile:Sender:MIME-Version:Mailing-List:Delivered-To:List-Id:Precedence:List-Unsubscribe:Date:Subject:Reply-To:X-Yahoo-Newman-Property:Content-Type; b=moYcAAUBdNudctWkbM06TsklHXx8+FOgtpLbzQ72sC8isZBcurm9qLbr5wZfwq6cWBeYxq78YBAs1mqeLvcCq/GSr0BtPGATtGQQG58Gdwy1FpM6Hoz6if1H76/9Y3Ff
-In-Reply-To: <201110200623.14208.m-wright-qx95VtOkOx/QT0dZR+AlfA@public.gmane.org>
-Sender: linuxham-hHKSG33TihhbjbujkaE4pw@public.gmane.org
-List-Id: <linux-hams.vger.kernel.org>
-List-Unsubscribe: <mailto:linuxham-unsubscribe-hHKSG33TihhbjbujkaE4pw@public.gmane.org>
-To: Maynard Wright <m-wright-qx95VtOkOx/QT0dZR+AlfA@public.gmane.org>
-Cc: linuxham-hHKSG33TihhbjbujkaE4pw@public.gmane.org, Ham-Linux <ham-linux-xGejAJT2w6wZAos1Rg0P4g@public.gmane.org>, Hamlib Developers <hamlib-developer-5NWGOfrQmneRv+LV9MX5uipxlwaOVQ5f@public.gmane.org>, Linux Hams <linux-hams-u79uwXL29TY76Z2rM5mHXA@public.gmane.org>
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Return-path: <linux-hams-owner@vger.kernel.org>
+In-Reply-To: <4EA14651.7000108@free.fr>
+Sender: linux-hams-owner@vger.kernel.org
+List-ID: <linux-hams.vger.kernel.org>
+Content-Type: text/plain; charset="iso-8859-1"
+To: David Ranch <linux-hams@trinnet.net>
+Cc: "Bernard, f6bvp" <f6bvp@free.fr>, ralf@linux-mips.org, linux-hams <linux-hams@vger.kernel.org>, ax25@x-berg.in-berlin.de
 
---000e0cd47bc61228b904afd1a7d7
-Content-Type: text/plain; charset=UTF-8
+As Bernard has eluded to, I am maintaining my own copies of the
+official AX.25 suite at http://linuxax25.googlecode.com.
 
-The Linux crowd alone probably won't affect them as much as the iOS crowd
-(iPad users) which also does not provide native flash support.
+This is a personal project so that I can package up the source for
+easier deployment to my embedded systems. If someone else finds it
+useful, that's great.
 
-------------------------------
-John D. Hays
-K7VE
-PO Box 1223, Edmonds, WA 98020-1223
-<http://k7ve.org/blog>  <http://twitter.com/#!/john_hays>
-<http://www.facebook.com/john.d.hays>
+I have taken the CVS source from http://www.linux-ax25.org and
+re-organized it a bit, and integrated it with Autotools. It makes it
+easier to build and maintain, in my opinion.
+
+I have used the CVS source as my code base, since there are a number
+of bug fixes in there that are not present in the current released
+version.
+
+I would like all patches and bug fixes to be sent to the official
+maintainers, as I pull my changes from there. That said, I wouldn't
+mind a heads up on any submitted patches, so I can keep an eye open
+for them when they are accepted (since I manually check for diffs
+periodically).
 
 
+Cheers!
 
-On Thu, Oct 20, 2011 at 06:23, Maynard Wright <m-wright-qx95VtOkOx/QT0dZR+AlfA@public.gmane.org> wrote:
+Lee
+VE7FET
 
-> I agree.  Since I use Linux only and do not have Flash, I'll not be a
-> potential customer of theirs.
+
+On Fri, Oct 21, 2011 at 3:15 AM, Bernard, f6bvp <f6bvp@free.fr> wrote:
+> Hello Misko,
 >
-> 73,
+> Lee Ve7fet is the maintainer of "unofficial" AX.25 suite.
+> These AX.25 programs are constantly updated, as opposed to the certai=
+nly too
+> slowly maintained "official" versions.
 >
-> Maynard
-> W6PAP
+> We are willing to repare all known bugs as soon as possible.
 >
+> If you have personal solutions to known or unknown bugs, please let u=
+s know
+> by sending patches to the linux-ham list with copies to Ralf DL5BE.
 >
-> On Thursday 20 October 2011 05:32:09 Nate Bargmann wrote:
-> > For those of us who have been subscribers to World Radio and then have
-> > viewed it via the downloadable PDF for the past almost three years, the
-> > next issue, November 2011, will revert to paid subscription.  In itself
-> > the subscription is not so bad as the way it will be done.  WRO will be
-> > hosted by Zinio which only offers us Linux users the ability to view the
-> > content via a Flash plugin.  No offline reader is available and even if
-> > it were, the content is in their proprietary format.  This is
-> > unacceptable to me and for the first time since January 1984, I will not
-> > receive a new monthly issue of World Radio.
-> >
-> > I'm sure the powers that be at CQ Communications couldn't care less
-> > about me or the few other Linux using hams that enjoyed World Radio,
-> > otherwise a more equitable solution would have been offered.  Vendor
-> > lockin is a non-starter in my shack.  If a PDF version is offered once
-> > again, I will reconsider but for now I must vote by keeping my wallet
-> > closed.
-> >
-> > 73, de Nate >>
+> We will do our best to improve the AX.25 libraries and applications.
 >
-> ______________________________________________________________
-> Ham-Linux mailing list
-> Home: http://mailman.qth.net/mailman/listinfo/ham-linux
-> Help: http://mailman.qth.net/mmfaq.htm
-> Post: mailto:Ham-Linux-xGejAJT2w6wZAos1Rg0P4g@public.gmane.org
+> 73 de Bernard, f6bvp
 >
-> This list hosted by: http://www.qsl.net
-> Please help support this email list: http://www.qsl.net/donate.html
+> Le 21/10/2011 06:02, David Ranch a =E9crit :
+>>
+>> Hello Bernard, Ralf, Thomas,
+>>
+>> I've been meaning to ask this question for a while now: Do you know =
+why
+>> the official version of the ax25 apps/libs/tools hasn't been updated=
+ in
+>> ages? I've been slowly hacking up the legacy "released" versions to =
+work
+>> around bugs I've found in my personal uses and I'm sure there are ot=
+her
+>> issues I haven't hit.. yet:
+>>
+>> nrattach.c - non-incrementing nr interfaces (netrom)
+>> http://marc.info/?l=3Dlinux-hams&m=3D125646640011531&w=3D2
+>>
+>> axipd/kiss.c - control byte non-zero when used for axudp tunnels
+>> http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=3D606338
+>>
+>>
+>> It seems that many of these issues are resolved in the official CVS =
+but
+>> maybe other issues as you pointed out in that Google URL aren't. It
+>> would be nice if we could at least get the current CVS pushed out as=
+ say
+>> a new official version of 0.0.13 and be aligned across all three
+>> packages. Even better, have this 0.0.13 version integrate the fixes =
+in
+>> the Google repo too?
+>>
+>> --David
+>>
+>>
+>>
+>> Bernard, f6bvp wrote:
+>>>
+>>> Hello Miroslav,
+>>>
+>>> I now understand the libax25 issue.
+>>> Debian and alike libax25 packages are installing AX.25 libraries in=
+to
+>>> /usr/lib/ whereas by default xfbb link process is expecting libax25=
+=2E*
+>>> in /usr/local/lib directory.
+>>>
+>>> You will certainly know how to edit Makefile in order to tell it wh=
+ere
+>>> to find the libraries.
+>>>
+>>> I must say that for many reasons I do prefere to get all hamradio
+>>> applications and libraries in /usr/local subdirectories.
+>>> This is more convenient for backups and file search.
+>>>
+>>> Last remark : there have been some updates and bug removals in the
+>>> "unofficial" libax25, tools and apps that I gave you as compared to
+>>> the "old one" you are using (libax25 > 0.0.11-6.1).
+>>>
+>>> This is the result of an intensive work performed by Lee VE7FET wit=
+h
+>>> FPAC development team. The site I gave you the address has Debian /
+>>> Ubuntu compatible packages. You should consider using them. This wi=
+ll
+>>> not break anything in your application but rather remove some failu=
+re
+>>> causes.
+>>>
+>>>
+>>> 73 de Bernard, f6bvp
+>>>
+>>>
+>>>
+>>> Le 15/10/2011 00:10, Miroslav Skoric a =E9crit :
+>>>>
+>>>> On 10/11/2011 10:18 AM, f6bvp wrote:
+>>>>>
+>>>>> *Hello Miroslav,
+>>>>>
+>>>>> It looks like you did not install AX.25 libraries (libax25) befor=
+e
+>>>>> installing FBB.
+>>>>> Look at the following link :
+>>>>>
+>>>>> http://code.google.com/p/linuxax25/
+>>>>>
+>>>>> 73 de Bernard, f6bvp
+>>>>>
+>>>>
+>>>> Hi Bernard,
+>>>>
+>>>> I already had libax25 (as well as ax25-apps and ax25-tools) before
+>>>> trying to compile FBB. Btw, in respect to repositories of Ubuntu a=
+nd
+>>>> Debian communities, I installed the version they both provided: li=
+bax25
+>>>> 0.0.11-6.1)
+>>>>
+>>>> However, I checked the link above, but not sure what their version=
+s
+>>>> might help me in regard to the FBB compiling issue. In fact, I wou=
+ld
+>>>> like to keep the existing ax25 stuff, provided they bring basic
+>>>> functionality (for example, I managed to activate a few Linux node=
+s in
+>>>> Ubuntu and Debian, and now I am in the process of configuring them=
+ to
+>>>> interact with Win/BPQ32 nodes in the mixed Lin/Win dual-boot
+>>>> environment.)
+>>>>
+>>>> What else could I eventually try to install/reinstall?
+>>>>
+>>>> Misko, YT7MPB
+>>>
+>>> --
+>>> To unsubscribe from this list: send the line "unsubscribe linux-ham=
+s" in
+>>> the body of a message to majordomo@vger.kernel.org
+>>> More majordomo info at http://vger.kernel.org/majordomo-info.html
 >
 
---000e0cd47bc61228b904afd1a7d7
-Content-Type: text/html; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
 
 
-
-
-
-<head>
-
-<style type=3D"text/css">
-<!--
-
-/* start of attachment style */
-       .ygrp-photo-title{
-         clear: both;
-         font-size: smaller;
-         height: 15px;
-         overflow: hidden;
-         text-align: center;
-         width: 75px;
-       }
-       div.ygrp-photo{
-         background-position: center;
-         background-repeat: no-repeat;
-         background-color: white;
-         border: 1px solid black;
-         height: 62px;
-         width: 62px;
-       }
-
-       div.photo-title=20
-         a,
-         div.photo-title a:active,
-         div.photo-title a:hover,
-         div.photo-title a:visited {
-           text-decoration: none;=20
-       }
-
-       div.attach-table div.attach-row {
-         clear: both;
-       }
-
-       div.attach-table div.attach-row div {
-         float: left;
-         /* margin: 2px;*/
-       }
-
-       p {
-         clear: both;
-         padding: 15px 0 3px 0;
-	 overflow: hidden;
-       }
-
-       div.ygrp-file {
-         width: 30px;
-         valign: middle;
-       }
-       div.attach-table div.attach-row div div a {
-         text-decoration: none;
-       }
-
-       div.attach-table div.attach-row div div span {
-         font-weight: normal;
-       }
-
-       div.ygrp-file-title {
-         font-weight: bold;
-       }
- /* end of attachment style */
-        -->
-        </style>
-        </head>
-<html>
-<head>
-<style type=3D"text/css">
-<!--
-#ygrp-mkp {
-  border: 1px solid #d8d8d8;
-  font-family: Arial;
-  margin: 10px 0;
-  padding: 0 10px;
-}
-
-#ygrp-mkp hr {
-  border: 1px solid #d8d8d8;
-}
-
-#ygrp-mkp #hd {
-  color: #628c2a;
-  font-size: 85%;
-  font-weight: 700;
-  line-height: 122%;
-  margin: 10px 0;
-}
-
-#ygrp-mkp #ads {
-  margin-bottom: 10px;
-}
-
-#ygrp-mkp .ad {
-  padding: 0 0;
-}
-
-#ygrp-mkp .ad p {
-  margin: 0;
-}
-
-#ygrp-mkp .ad a {
-  color: #0000ff;
-  text-decoration: none;
-}
--->
-</style>
-</head>
-<body>
-
-
-
-
-
-The Linux crowd alone probably won&#39;t affect them as much as the iOS cro=
-wd (iPad users) which also does not provide native flash support.<br clear=
-=3D"all"><br><hr><div style=3D"float:left;padding-left:1em;color:blue">John=
- D. Hays<br>
-<span style=3D"color:rgb(128, 128, 128)">K7VE</span></div><div style=3D"flo=
-at:right;text-align:right">PO Box 1223, Edmonds, WA 98020-1223=C2=A0<div st=
-yle=3D"padding-top:0.5em"><a href=3D"http://k7ve.org/blog" target=3D"_blank=
-"><img src=3D"http://k7ve.org/images/blog-icon-box-red-26.png"></a>=C2=A0<a=
- href=3D"http://twitter.com/#!/john_hays" target=3D"_blank"><img src=3D"htt=
-p://k7ve.org/images/Twitter-26.png"></a>=C2=A0<a href=3D"http://www.faceboo=
-k.com/john.d.hays" target=3D"_blank"><img src=3D"http://k7ve.org/images/Fac=
-ebook-26.png"></a></div>
-</div><br>
-<br><br><div class=3D"gmail_quote">On Thu, Oct 20, 2011 at 06:23, Maynard W=
-right <span dir=3D"ltr">&lt;<a href=3D"mailto:m-wright-qx95VtOkOx/QT0dZR+AlfA@public.gmane.org">m-wright=
-@eskimo.com</a>&gt;</span> wrote:<br><blockquote class=3D"gmail_quote" styl=
-e=3D"margin:0 0 0 .8ex;border-left:1px #ccc solid;padding-left:1ex;">
-I agree. =C2=A0Since I use Linux only and do not have Flash, I&#39;ll not b=
-e a<br>
-potential customer of theirs.<br>
-<br>
-73,<br>
-<br>
-Maynard<br>
-W6PAP<br>
-<br>
-<br>
-On Thursday 20 October 2011 05:32:09 Nate Bargmann wrote:<br>
-&gt; For those of us who have been subscribers to World Radio and then have=
-<br>
-&gt; viewed it via the downloadable PDF for the past almost three years, th=
-e<br>
-&gt; next issue, November 2011, will revert to paid subscription. =C2=A0In =
-itself<br>
-&gt; the subscription is not so bad as the way it will be done. =C2=A0WRO w=
-ill be<br>
-&gt; hosted by Zinio which only offers us Linux users the ability to view t=
-he<br>
-&gt; content via a Flash plugin. =C2=A0No offline reader is available and e=
-ven if<br>
-&gt; it were, the content is in their proprietary format. =C2=A0This is<br>
-&gt; unacceptable to me and for the first time since January 1984, I will n=
-ot<br>
-&gt; receive a new monthly issue of World Radio.<br>
-&gt;<br>
-&gt; I&#39;m sure the powers that be at CQ Communications couldn&#39;t care=
- less<br>
-&gt; about me or the few other Linux using hams that enjoyed World Radio,<b=
-r>
-&gt; otherwise a more equitable solution would have been offered. =C2=A0Ven=
-dor<br>
-&gt; lockin is a non-starter in my shack. =C2=A0If a PDF version is offered=
- once<br>
-&gt; again, I will reconsider but for now I must vote by keeping my wallet<=
-br>
-&gt; closed.<br>
-&gt;<br>
-&gt; 73, de Nate &gt;&gt;<br>
-<br>
-______________________________________________________________<br>
-Ham-Linux mailing list<br>
-Home: <a href=3D"http://mailman.qth.net/mailman/listinfo/ham-linux" target=
-=3D"_blank">http://mailman.qth.net/mailman/listinfo/ham-linux</a><br>
-Help: <a href=3D"http://mailman.qth.net/mmfaq.htm" target=3D"_blank">http:/=
-/mailman.qth.net/mmfaq.htm</a><br>
-Post: mailto:<a href=3D"mailto:Ham-Linux-xGejAJT2w6wZAos1Rg0P4g@public.gmane.org">Ham-Linux@mailman=
-.qth.net</a><br>
-<br>
-This list hosted by: <a href=3D"http://www.qsl.net" target=3D"_blank">http:=
-//www.qsl.net</a><br>
-Please help support this email list: <a href=3D"http://www.qsl.net/donate.h=
-tml" target=3D"_blank">http://www.qsl.net/donate.html</a><br>
-</blockquote></div><br>
-
-
-
-
-<!-- |**|begin egp html banner|**| -->
-
-<br>
-
-=20=20=20=20
-=20=20=20=20
-<br>
-
-<!-- |**|end egp html banner|**| -->
-
-
-<div width=3D"1" style=3D"color: white; clear: both;"/>__._,_.___</div>
-
-<!-- Start Recommendations -->
-<!-- End Recommendations -->
-
-
-
-<!-- |**|begin egp html banner|**| -->
-
-  <img src=3D"http://geo.yahoo.com/serv?s=3D97476590/grpId=3D17259876/grpsp=
-Id=3D1705063108/msgId=3D14669/stime=3D1319214898" width=3D"1" height=3D"1">=
- <br>
-
-<!-- |**|end egp html banner|**| -->
-
-=20=20
-<!-- |**|begin egp html banner|**| -->
-
-<br>
-      <div style=3D"font-family: verdana; font-size: 77%; border-top: 1px s=
-olid #666; padding: 5px 0;" >
-      Your email settings: Individual Email|Traditional <br>
-      <a href=3D"http://groups.yahoo.com/group/linuxham/join;_ylc=3DX3oDMTJ=
-nc2RnbWh1BF9TAzk3NDc2NTkwBGdycElkAzE3MjU5ODc2BGdycHNwSWQDMTcwNTA2MzEwOARzZW=
-MDZnRyBHNsawNzdG5ncwRzdGltZQMxMzE5MjE0ODk4">Change settings via the Web</a>=
- (Yahoo! ID required) <br>
-      Change settings via email: <a href=3D"mailto:linuxham-digest@yahoogro=
-ups.com?subject=3DEmail Delivery: Digest">Switch delivery to Daily Digest</=
-a> | <a href =3D "mailto:linuxham-fullfeatured-hHKSG33TihhbjbujkaE4pw@public.gmane.org?subject=3DCh=
-ange Delivery Format: Fully Featured">Switch to Fully Featured</a> <br>
-           <a href=3D"http://groups.yahoo.com/group/linuxham;_ylc=3DX3oDMTJ=
-lcm1mYThmBF9TAzk3NDc2NTkwBGdycElkAzE3MjU5ODc2BGdycHNwSWQDMTcwNTA2MzEwOARzZW=
-MDZnRyBHNsawNocGYEc3RpbWUDMTMxOTIxNDg5OA--">
-        Visit Your Group=20
-      </a> |
-      <a href=3D"http://docs.yahoo.com/info/terms/">
-        Yahoo! Groups Terms of Use
-      </a> |
-      <a href=3D"mailto:linuxham-unsubscribe-hHKSG33TihhbjbujkaE4pw@public.gmane.org?subject=3DUnsu=
-bscribe">
-       Unsubscribe=20
-      </a>=20
- <br>
-    </div>
-  <br>
-
-<!-- |**|end egp html banner|**| -->
-
-
-<div style=3D"color: white; clear: both;"/>__,_._,___</div>
-</body>
-
-</html>
-
---000e0cd47bc61228b904afd1a7d7--
+--=20
+Lee Woldanski, AScT
+VE7FET
+--
+To unsubscribe from this list: send the line "unsubscribe linux-hams" i=
+n
+the body of a message to majordomo@vger.kernel.org
+More majordomo info at  http://vger.kernel.org/majordomo-info.html
