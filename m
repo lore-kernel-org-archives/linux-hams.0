@@ -1,37 +1,54 @@
-From: Ralf Baechle DL5RB <ralf@linux-mips.org>
+From: Bill Vodall <wa7nwp@gmail.com>
 Subject: Re: Compiling FBB
-Date: Tue, 8 Nov 2011 21:22:41 +0000
-Message-ID: <20111108212241.GA32339@linux-mips.org>
+Date: Tue, 8 Nov 2011 13:39:39 -0800
+Message-ID: <CAPSBm51tmG2P=f3xSoQH96GcmPTy_kACYDC1J4KLqyofPVGghQ@mail.gmail.com>
 References: <4E93FBEC.7050907@free.fr>
- <4E98B35E.1050602@eunet.rs>
- <4E993C82.2090601@free.fr>
- <4EA0EEE4.7050502@trinnet.net>
- <20111021120359.GO8243@x-berg.in-berlin.de>
- <20111108200524.GE30829@flying-gecko.net>
+	<4E98B35E.1050602@eunet.rs>
+	<4E993C82.2090601@free.fr>
+	<4EA0EEE4.7050502@trinnet.net>
+	<20111021120359.GO8243@x-berg.in-berlin.de>
+	<20111108200524.GE30829@flying-gecko.net>
 Mime-Version: 1.0
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 Return-path: <linux-hams-owner@vger.kernel.org>
-Content-Disposition: inline
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :content-type:content-transfer-encoding;
+        bh=sDZqv96AhTnlJYmgVDOJJGbb5itjHm4KVkbK8FFdBjU=;
+        b=gGf1q5p7uJxMSAhHhPE0cHkKlsMgNkwAcQqg/sPSGpYAubvh8ZUDCXdzHrJvrsTN7y
+         qtUW9JWFbKrOLO0J0y0S3jV2KN4/KQDp2eataifksvXkCHBmABUSeoWNrmXq15dkb4Mn
+         oE5BgyG/hJvEX7aBDKonYg7ROSNZdT9eZHt+k=
 In-Reply-To: <20111108200524.GE30829@flying-gecko.net>
 Sender: linux-hams-owner@vger.kernel.org
 List-ID: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-To: Patrick Ouellette <pouelle@debian.org>
-Cc: Thomas Osterried <thomas@x-berg.in-berlin.de>, David Ranch <linux-hams@trinnet.net>, "Bernard, f6bvp" <f6bvp@free.fr>, linux-hams <linux-hams@vger.kernel.org>
+Content-Type: text/plain; charset="iso-8859-1"
+To: linux-hams@vger.kernel.org
 
-On Tue, Nov 08, 2011 at 03:05:24PM -0500, Patrick Ouellette wrote:
+>> > I've been meaning to ask this question for a while now: =A0Do you =
+know
+>> > why the official version of the ax25 apps/libs/tools hasn't been
+>> > updated in ages?
+>>
+>> Unfortunately, there's no debian-developer who regulary builds new
+>> packages from the CVS head of ax25-apps, -tools and libax25.
+>
+> I used maintain ax25 for Debian to a long time ago. =A0Apparently I w=
+ill be
+> picking up support in Debian again since no one else seems to want to=
+ and the
+> "team maintainer" concept has fallen apart.
 
-> I used maintain ax25 for Debian to a long time ago.  Apparently I will be 
-> picking up support in Debian again since no one else seems to want to and the
-> "team maintainer" concept has fallen apart.  
-> 
-> The first order of business I have to attend to is the apparent need to rename
-> the node package and binary to ax25-node.
-> 
-> www.linux-ax25.org is apparently down right now?
 
-I'm upgrading the VM.  All services are running again but there might be
-a few more brief outages to the ftp service while I'm doing nasty things
-to systemd.
+Does this have any relationship to the ax25-* packages in the Ubuntu
+LTS releases?   I had a frustrating experience last week getting ax25
+going again on a system and was wondering what could be done to make
+it work out of the box for the next user.
 
-  Ralf
+Thanks,
+Bill - WA7NWP
+--
+To unsubscribe from this list: send the line "unsubscribe linux-hams" i=
+n
+the body of a message to majordomo@vger.kernel.org
+More majordomo info at  http://vger.kernel.org/majordomo-info.html
