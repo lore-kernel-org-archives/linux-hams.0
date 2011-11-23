@@ -1,101 +1,47 @@
 From: Ralf Baechle <ralf@linux-mips.org>
-Subject: Re: [PATCH 1/2] ax25: integer overflows in ax25_setsockopt()
-Date: Wed, 23 Nov 2011 17:09:30 +0000
-Message-ID: <20111123170930.GA7260@linux-mips.org>
-References: <7187C142-99F1-4A96-9BE6-650B10C9B22D@gmail.com>
+Subject: Re: [patch] netrom: check that user string is terminated
+Date: Wed, 23 Nov 2011 19:12:49 +0000
+Message-ID: <20111123191249.GB7260@linux-mips.org>
+References: <20111123065240.GD6871@elgon.mountain>
+ <4ECCAD38.9090309@bfs.de>
 Mime-Version: 1.0
-Return-path: <linux-kernel-owner@vger.kernel.org>
+Return-path: <linux-hams-owner@vger.kernel.org>
 Content-Disposition: inline
-In-Reply-To: <7187C142-99F1-4A96-9BE6-650B10C9B22D@gmail.com>
-Sender: linux-kernel-owner@vger.kernel.org
+In-Reply-To: <4ECCAD38.9090309@bfs.de>
+Sender: linux-hams-owner@vger.kernel.org
 List-ID: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
-To: Xi Wang <xi.wang@gmail.com>
-Cc: linux-kernel@vger.kernel.org, Joerg Reuter <jreuter@yaina.de>, David Miller <davem@davemloft.net>, linux-hams@vger.kernel.org, netdev@vger.kernel.org, Thomas Osterried <thomas@osterried.de>
+To: walter harms <wharms@bfs.de>
+Cc: Dan Carpenter <dan.carpenter@oracle.com>, "David S. Miller" <davem@davemloft.net>, linux-hams@vger.kernel.org, netdev@vger.kernel.org, kernel-janitors@vger.kernel.org
 
-On Tue, Nov 22, 2011 at 11:28:24PM -0500, Xi Wang wrote:
+On Wed, Nov 23, 2011 at 09:22:16AM +0100, walter harms wrote:
 
-> ax25_setsockopt() misses several upper-bound checks on the
-> user-controlled value.
+> I am not sure that it does what you intends.
+> mnemonic is an array and a  malicious use may fill it upto the last char
+> causing strlen go beyond. perhaps this may help:
+
+Correct, it makes thigs worse.  I'm going to reply in detail later tonight,
+have to bail out now.
+
+> >  		if ((dev = nr_ax25_dev_get(nr_route.device)) == NULL)
+> >  			return -EINVAL;
+> while you are here:
 > 
+> 	dev = nr_ax25_dev_get(nr_route.device);
+> 	if ( dev == NULL )
+> 		return -EINVAL;
 > 
-> Reported-by: Fan Long <longfancn@gmail.com>
-> Signed-off-by: Xi Wang <xi.wang@gmail.com>
-> ---
->  net/ax25/af_ax25.c |    8 ++++----
->  1 files changed, 4 insertions(+), 4 deletions(-)
+> >  		if (nr_route.ndigis < 0 || nr_route.ndigis > AX25_MAX_DIGIS) {
 > 
-> diff --git a/net/ax25/af_ax25.c b/net/ax25/af_ax25.c
-> index e7c69f4..be6a8cf 100644
-> --- a/net/ax25/af_ax25.c
-> +++ b/net/ax25/af_ax25.c
-> @@ -571,7 +571,7 @@ static int ax25_setsockopt(struct socket *sock, int level, int optname,
->  		break;
->  
->  	case AX25_T1:
-> -		if (opt < 1) {
-> +		if (opt < 1 || opt > 30) {
->  			res = -EINVAL;
->  			break;
->  		}
+> if guess "nr_route.ndigis >= AX25_MAX_DIGIS" is intended ?
 
-30 seconds is definitively too low.  The TCP spec assumes that a RTT
-of up to 120s is possible.  In slow packet radio networks 15 minutes are
-easily possible in HF networks.
+No, values of 0 .. AX25_MAX_DIGIS are permitted with zero meaning no
+digipeater at all.
 
-How about AX.25 to the P5A mars mission?
-
-A silly value for T1 will be caught further down the road, so no damage
-but an application really should receive a sensible return value when
-trying something stupid.
-
-If an apps wants to shoot itself into the foot there is nothing wrong with
-being the arms dealer so an error check should be something like
-
-	if (val > ULONG_MAX / HZ)
-		bail_out;
-
-which will do the right thing even on a 64-bit system and prevent an
-overflow in the multiplication further down.
-
-> @@ -580,7 +580,7 @@ static int ax25_setsockopt(struct socket *sock, int level, int optname,
->  		break;
->  
->  	case AX25_T2:
-> -		if (opt < 1) {
-> +		if (opt < 1 || opt > 20) {
->  			res = -EINVAL;
->  			break;
->  		}
-
-An excessive value here could result in a timer being set to expire in
-the past similar in effect to setting a very low value.  Again it's ok
-if a user tries to shoot himself into the other foot as well.
-
-> @@ -596,7 +596,7 @@ static int ax25_setsockopt(struct socket *sock, int level, int optname,
->  		break;
->  
->  	case AX25_T3:
-> -		if (opt < 1) {
-> +		if (opt < 0 || opt > 3600) {
->  			res = -EINVAL;
->  			break;
->  		}
-
-For a stable link it should be possible to set a very high T3 value,
-potencially high enough to effectively disable the T3 functionality.
-
-> @@ -604,7 +604,7 @@ static int ax25_setsockopt(struct socket *sock, int level, int optname,
->  		break;
->  
->  	case AX25_IDLE:
-> -		if (opt < 0) {
-> +		if (opt < 0 || opt > 65535) {
->  			res = -EINVAL;
->  			break;
->  		}
-
-I have an updated patch which I'm testing right now.
+The actual bug if you want to call it that in this line is cosmetic -
+nr_route.ndigis is an unsigned int so nr_route.ndigis < 0 will never become
+true.  There are other simplifications possible to the error checking
+here.  I've whipped a cleanup patch for this part of the code.
 
   Ralf
