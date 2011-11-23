@@ -1,30 +1,43 @@
-From: Alan Cox <alan@lxorguk.ukuu.org.uk>
-Subject: Re: [PATCH 1/2] ax25: integer overflows in ax25_setsockopt()
-Date: Wed, 23 Nov 2011 14:39:13 +0000
-Message-ID: <20111123143913.50fbcc8c@lxorguk.ukuu.org.uk>
-References: <7187C142-99F1-4A96-9BE6-650B10C9B22D@gmail.com>
-	<20111123104449.5e845a0f@lxorguk.ukuu.org.uk>
-	<CAKU6vyY3WjVwTK5Tcp2W93DefjJMreZjhtudNHBALns=6bK9Jw@mail.gmail.com>
+From: "David Laight" <David.Laight@ACULAB.COM>
+Subject: RE: [PATCH 1/2] ax25: integer overflows in ax25_setsockopt()
+Date: Wed, 23 Nov 2011 14:53:18 -0000
+Message-ID: <AE90C24D6B3A694183C094C60CF0A2F6D8AEDB@saturn3.aculab.com>
+References: <20111123143913.50fbcc8c@lxorguk.ukuu.org.uk>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
-Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <CAKU6vyY3WjVwTK5Tcp2W93DefjJMreZjhtudNHBALns=6bK9Jw@mail.gmail.com>
-Sender: linux-hams-owner@vger.kernel.org
+Content-Transfer-Encoding: 8BIT
+Return-path: <linux-kernel-owner@vger.kernel.org>
+Content-class: urn:content-classes:message
+In-Reply-To: <20111123143913.50fbcc8c@lxorguk.ukuu.org.uk>
+Sender: linux-kernel-owner@vger.kernel.org
 List-ID: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
-To: Xi Wang <xi.wang@gmail.com>
+To: Alan Cox <alan@lxorguk.ukuu.org.uk>, Xi Wang <xi.wang@gmail.com>
 Cc: linux-kernel@vger.kernel.org, Joerg Reuter <jreuter@yaina.de>, Ralf Baechle <ralf@linux-mips.org>, David Miller <davem@davemloft.net>, linux-hams@vger.kernel.org, netdev@vger.kernel.org
 
-On Wed, 23 Nov 2011 09:04:11 -0500
-Xi Wang <xi.wang@gmail.com> wrote:
+ 
+> > All these magic numbers come from net/ax25/sysctl_net_ax25.c, where
+> > min/max values of each field are set for sysctl.  Is it okay to use
+> > them?
+> 
+> The sysctl range is the 'standard' range, but it's always historically
+> been possible to override them in apps for special cases. I'm wary of
+> changing that because people do insane things like AX.25 
+> bounced off the moon where you need very long timeouts.
 
-> All these magic numbers come from net/ax25/sysctl_net_ax25.c, where
-> min/max values of each field are set for sysctl.  Is it okay to use
-> them?
+It is a long time since I wrote any of the X.25 protocol
+stack layers, but I would agree that limiting timers to the
+values defined in the standard is probably not a good idea.
 
-The sysctl range is the 'standard' range, but it's always historically
-been possible to override them in apps for special cases. I'm wary of
-changing that because people do insane things like AX.25 bounced off the
-moon where you need very long timeouts.
+Even normal telco's may have decided to use values that
+are outside the nominal range.
 
-Alan
+These timers are almost certainly either 'guard' timers
+for missing responses or retransmit timers for 'keepalive'
+messages - so allowing much larger values doesn't matter.
+I'd only limit them in order to stop the code breaking.
+
+The lower limit (1 second) will be below the limit for the
+protocol - but exists to stop the code breaking.
+
+	David
+
