@@ -1,66 +1,26 @@
-From: Dan Carpenter <dan.carpenter@oracle.com>
-Subject: Re: [patch] netrom: check that user string is terminated
-Date: Wed, 23 Nov 2011 22:54:22 +0300
-Message-ID: <20111123195421.GB3258@mwanda>
-References: <20111123065240.GD6871@elgon.mountain>
- <4ECCAD38.9090309@bfs.de>
- <20111123191249.GB7260@linux-mips.org>
-Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="Pd0ReVV5GZGQvF3a"
+From: Xi Wang <xi.wang@gmail.com>
+Subject: Re: [PATCH 1/2] ax25: integer overflows in ax25_setsockopt()
+Date: Thu, 24 Nov 2011 14:09:04 -0500
+Message-ID: <D3B738C6-6566-4490-A482-F4BB2F10CC62@gmail.com>
+References: <7187C142-99F1-4A96-9BE6-650B10C9B22D@gmail.com> <20111123170930.GA7260@linux-mips.org>
+Mime-Version: 1.0 (Apple Message framework v1084)
+Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
-Content-Disposition: inline
-In-Reply-To: <20111123191249.GB7260@linux-mips.org>
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=subject:mime-version:content-type:from:in-reply-to:date:cc
+         :content-transfer-encoding:message-id:references:to:x-mailer;
+        bh=AwVAkC0CO6JgcqFrlYW5AQ6msUk0fb9mzfj4G3ExESc=;
+        b=gXnxbn7dxYg0GeUFjr/2OimhnNb715v4BOIF2DY1n1PLH070++uwesrqEh1bAWtr0s
+         ETKvVAOb0/z0k10zXZ0dvR3U6qu8IpM3haiNcDG38wNGq346kd54DeQoSQxWoYvYHrTQ
+         n8fbCDgYbivGDxYOzxfb+wyv+9tOWE4BZqQl0=
+In-Reply-To: <20111123170930.GA7260@linux-mips.org>
 Sender: linux-hams-owner@vger.kernel.org
 List-ID: <linux-hams.vger.kernel.org>
+Content-Type: text/plain; charset="us-ascii"
 To: Ralf Baechle <ralf@linux-mips.org>
-Cc: walter harms <wharms@bfs.de>, "David S. Miller" <davem@davemloft.net>, linux-hams@vger.kernel.org, netdev@vger.kernel.org, kernel-janitors@vger.kernel.org
+Cc: linux-kernel@vger.kernel.org, Joerg Reuter <jreuter@yaina.de>, David Miller <davem@davemloft.net>, linux-hams@vger.kernel.org, netdev@vger.kernel.org, Thomas Osterried <thomas@osterried.de>
 
+Thanks a lot for your comments!  Look forward to your patch.
 
---Pd0ReVV5GZGQvF3a
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
-
-On Wed, Nov 23, 2011 at 07:12:49PM +0000, Ralf Baechle wrote:
-> On Wed, Nov 23, 2011 at 09:22:16AM +0100, walter harms wrote:
->=20
-> > I am not sure that it does what you intends.
-> > mnemonic is an array and a  malicious use may fill it upto the last char
-> > causing strlen go beyond. perhaps this may help:
->=20
-> Correct, it makes thigs worse.  I'm going to reply in detail later tonigh=
-t,
-> have to bail out now.
->=20
-
-Ok.  I said in a different thread that I was going to redo these
-using strnlen() but I'll wait to read your comments.
-
-regards,
-dan carpenter
-
-
---Pd0ReVV5GZGQvF3a
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: Digital signature
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.11 (GNU/Linux)
-
-iQIcBAEBAgAGBQJOzU9tAAoJEOnZkXI/YHqRsQgQAJgUTFnGqYHKmqJPECSmReCx
-b9pTH2l1c2LTIC+9BXLmXbN8LRBomZMOjadtsmeBoIkSPkGYYhrApHPRTJuFCUwI
-WF8XXchnBLJUCFf+Suje4bVVtbr2qxSBW0OMte48piEpm1031KyvEsIOshCQRhli
-sdrnhEx/Ed2drdcEtFiGArejtKri0mpnTaWrC3GVDNSL0V5nOP8lsqmLCFuhFl1P
-6qC8Kltdm7WHEMW/bWEwZ5dZpNkdt3mWQ+xNlCJd4OfuqeaN6THS+ee99Fpt6sIh
-bG9qE7j5vQVMDZaSlrMxevFtna1hlMVmL/RKFGovshT9zIf+gAxUC3K+BAVd4tbc
-CZmBrJgrxAwU5/jvYnybFJuUFofjxRoef+AR0NgbkXSyBy1mijnx0pPTia4IaBH4
-HQwJVEeaauG/spElLjse4PZ2doZa6p+0I//n9ZjsPefxMmgTcstPY5p2Z/lxsocn
-WgQ1GXpGMN5fmBqMAPFcyfjpJsrBJg1RJJdRgJALB1SSZ603ofzhdOXiJiviMOgJ
-8dP0ckugZ40C3r2OjXV4mtxF753uG03/amq51oPFzMx8SvOrGxwCHthcPUzyIAjk
-tPH8oHIuYPaGuiDe9llcfinJnyl7TWUuZkO28gUoKDhUeHuq9GfrPgtddcgSNpza
-4As3Z6w+br4eCP+qluMj
-=JhGF
------END PGP SIGNATURE-----
-
---Pd0ReVV5GZGQvF3a--
+- xi
