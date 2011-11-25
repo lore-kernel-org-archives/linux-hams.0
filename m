@@ -1,112 +1,61 @@
-From: Ralf Baechle <ralf@linux-mips.org>
-Subject: [PATCH 1/4] NET: AX.25: Check ioctl arguments to avoid overflows
- further down the road.
-Date: Thu, 24 Nov 2011 16:12:59 +0000
-Message-ID: <1d2adcd4eadb1f42926734cca5886dfad258aeb6.1322214950.git.ralf@linux-mips.org>
-References: <cover.1322214950.git.ralf@linux-mips.org>
+From: walter harms <wharms@bfs.de>
+Subject: Re: [PATCH 3/4] NET: NETROM: Cleanup argument SIOCADDRT ioctl argument
+ checking.
+Date: Fri, 25 Nov 2011 12:22:30 +0100
+Message-ID: <4ECF7A76.3090305@bfs.de>
+References: <cover.1322214950.git.ralf@linux-mips.org> <9f87aed932fc551c6f5c474b39d01fb337237a7e.1322214950.git.ralf@linux-mips.org>
+Reply-To: wharms@bfs.de
+Mime-Version: 1.0
+Content-Transfer-Encoding: 7bit
 Return-path: <netdev-owner@vger.kernel.org>
-In-Reply-To: <cover.1322214950.git.ralf@linux-mips.org>
+In-Reply-To: <9f87aed932fc551c6f5c474b39d01fb337237a7e.1322214950.git.ralf@linux-mips.org>
 Sender: netdev-owner@vger.kernel.org
 List-ID: <linux-hams.vger.kernel.org>
-MIME-Version: 1.0
 Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-To: "David S. Miller" <davem@davemloft.net>
-Cc: netdev@vger.kernel.org, linux-hams@vger.kernel.org, Xi Wang <xi.wang@gmail.com>, Joerg Reuter <jreuter@yaina.de>, Alan Cox <alan@lxorguk.ukuu.org.uk>, Thomas Osterried <thomas@osterried.de>
+To: Ralf Baechle <ralf@linux-mips.org>
+Cc: "David S. Miller" <davem@davemloft.net>, netdev@vger.kernel.org, linux-hams@vger.kernel.org, Thomas Osterried <thomas@osterried.de>
 
-Very large, nonsenical arguments or use in very extreme conditions could
-result in integer overflows.  Check ioctls arguments to avoid such
-overflows and return -EINVAL for too large arguments.
 
-To allow the use of AX.25 for even the most extreme setup (think packet
-radio to the Phase 5E mars probe) we make no further attempt to clamp the
-argument range.
 
-Originally reported by Fan Long <longfancn@gmail.com> and a first patch
-was sent by Xi Wang <xi.wang@gmail.com>.
+Am 25.11.2011 10:09, schrieb Ralf Baechle:
+> nr_route.ndigis is unsigned int so the nr_route.ndigis < 0 expression is
+> never true and can be dropped.  Doing the nr_ax25_dev_get call later
+> allows the nr_route.ndigis test to bail out without having to dev_put.
+> 
+> Signed-off-by: Ralf Baechle <ralf@linux-mips.org>
+> Cc: Thomas Osterried <thomas@osterried.de>
+> ---
+>  net/netrom/nr_route.c |    6 ++----
+>  1 files changed, 2 insertions(+), 4 deletions(-)
+> 
+> diff --git a/net/netrom/nr_route.c b/net/netrom/nr_route.c
+> index 8d7716c..2cf3301 100644
+> --- a/net/netrom/nr_route.c
+> +++ b/net/netrom/nr_route.c
+> @@ -670,12 +670,10 @@ int nr_rt_ioctl(unsigned int cmd, void __user *arg)
+>  	case SIOCADDRT:
+>  		if (copy_from_user(&nr_route, arg, sizeof(struct nr_route_struct)))
+>  			return -EFAULT;
+> -		if ((dev = nr_ax25_dev_get(nr_route.device)) == NULL)
+> +		if (nr_route.ndigis > AX25_MAX_DIGIS)
+>  			return -EINVAL;
+> -		if (nr_route.ndigis < 0 || nr_route.ndigis > AX25_MAX_DIGIS) {
+> -			dev_put(dev);
+> +		if ((dev = nr_ax25_dev_get(nr_route.device)) == NULL)
+>  			return -EINVAL;
+> -		}
+>  		switch (nr_route.type) {
+>  		case NETROM_NODE:
+>  			if (strnlen(nr_route.mnemonic, 7) == 7) {
 
-Signed-off-by: Ralf Baechle <ralf@linux-mips.org>
-Cc: Xi Wang <xi.wang@gmail.com>
-Cc: Joerg Reuter <jreuter@yaina.de>
-Cc: Alan Cox <alan@lxorguk.ukuu.org.uk>
-Cc: Thomas Osterried <thomas@osterried.de>
----
- net/ax25/af_ax25.c |   17 +++++++++++------
- 1 files changed, 11 insertions(+), 6 deletions(-)
+I realy do not know if that matters but some use AX25_MAX_DIGIS as array
+and therefore it should be >=AX25_MAX_DIGIS.
 
-diff --git a/net/ax25/af_ax25.c b/net/ax25/af_ax25.c
-index e7c69f4..b863c18 100644
---- a/net/ax25/af_ax25.c
-+++ b/net/ax25/af_ax25.c
-@@ -402,14 +402,14 @@ static int ax25_ctl_ioctl(const unsigned int cmd, void __user *arg)
- 		break;
- 
- 	case AX25_T1:
--		if (ax25_ctl.arg < 1)
-+		if (ax25_ctl.arg < 1 || ax25_ctl.arg > ULONG_MAX / HZ)
- 			goto einval_put;
- 		ax25->rtt = (ax25_ctl.arg * HZ) / 2;
- 		ax25->t1  = ax25_ctl.arg * HZ;
- 		break;
- 
- 	case AX25_T2:
--		if (ax25_ctl.arg < 1)
-+		if (ax25_ctl.arg < 1 || ax25_ctl.arg > ULONG_MAX / HZ)
- 			goto einval_put;
- 		ax25->t2 = ax25_ctl.arg * HZ;
- 		break;
-@@ -422,10 +422,15 @@ static int ax25_ctl_ioctl(const unsigned int cmd, void __user *arg)
- 		break;
- 
- 	case AX25_T3:
-+		if (ax25_ctl.arg > ULONG_MAX / HZ)
-+			goto einval_put;
- 		ax25->t3 = ax25_ctl.arg * HZ;
- 		break;
- 
- 	case AX25_IDLE:
-+		if (ax25_ctl.arg > ULONG_MAX / (60 * HZ))
-+			goto einval_put;
-+
- 		ax25->idle = ax25_ctl.arg * 60 * HZ;
- 		break;
- 
-@@ -571,7 +576,7 @@ static int ax25_setsockopt(struct socket *sock, int level, int optname,
- 		break;
- 
- 	case AX25_T1:
--		if (opt < 1) {
-+		if (opt < 1 || opt > ULONG_MAX / HZ) {
- 			res = -EINVAL;
- 			break;
- 		}
-@@ -580,7 +585,7 @@ static int ax25_setsockopt(struct socket *sock, int level, int optname,
- 		break;
- 
- 	case AX25_T2:
--		if (opt < 1) {
-+		if (opt < 1 || opt > ULONG_MAX / HZ) {
- 			res = -EINVAL;
- 			break;
- 		}
-@@ -596,7 +601,7 @@ static int ax25_setsockopt(struct socket *sock, int level, int optname,
- 		break;
- 
- 	case AX25_T3:
--		if (opt < 1) {
-+		if (opt < 1 || opt > ULONG_MAX / HZ) {
- 			res = -EINVAL;
- 			break;
- 		}
-@@ -604,7 +609,7 @@ static int ax25_setsockopt(struct socket *sock, int level, int optname,
- 		break;
- 
- 	case AX25_IDLE:
--		if (opt < 0) {
-+		if (opt < 0 || opt > ULONG_MAX / (60 * HZ)) {
- 			res = -EINVAL;
- 			break;
- 		}
--- 
-1.7.4.4
-
+struct rose_route_struct {
+         rose_address    address;
+        unsigned short  mask;
+        ax25_address    neighbour;
+        char            device[16];
+         unsigned char   ndigis;
+         ax25_address    digipeaters[AX25_MAX_DIGIS];
+  };
