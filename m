@@ -1,26 +1,39 @@
-From: Xi Wang <xi.wang@gmail.com>
-Subject: Re: [PATCH 1/2] ax25: integer overflows in ax25_setsockopt()
-Date: Thu, 24 Nov 2011 14:09:04 -0500
-Message-ID: <D3B738C6-6566-4490-A482-F4BB2F10CC62@gmail.com>
-References: <7187C142-99F1-4A96-9BE6-650B10C9B22D@gmail.com> <20111123170930.GA7260@linux-mips.org>
-Mime-Version: 1.0 (Apple Message framework v1084)
-Content-Transfer-Encoding: 7bit
+From: Ralf Baechle <ralf@linux-mips.org>
+Subject: [PATCH 4/4] NET: NETROM: Fix formatting.
+Date: Fri, 25 Nov 2011 09:54:10 +0000
+Message-ID: <0047a7876bd8f7b9bc5dbf87792785ce75010eab.1322214950.git.ralf@linux-mips.org>
+References: <cover.1322214950.git.ralf@linux-mips.org>
 Return-path: <linux-hams-owner@vger.kernel.org>
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=subject:mime-version:content-type:from:in-reply-to:date:cc
-         :content-transfer-encoding:message-id:references:to:x-mailer;
-        bh=AwVAkC0CO6JgcqFrlYW5AQ6msUk0fb9mzfj4G3ExESc=;
-        b=gXnxbn7dxYg0GeUFjr/2OimhnNb715v4BOIF2DY1n1PLH070++uwesrqEh1bAWtr0s
-         ETKvVAOb0/z0k10zXZ0dvR3U6qu8IpM3haiNcDG38wNGq346kd54DeQoSQxWoYvYHrTQ
-         n8fbCDgYbivGDxYOzxfb+wyv+9tOWE4BZqQl0=
-In-Reply-To: <20111123170930.GA7260@linux-mips.org>
+In-Reply-To: <cover.1322214950.git.ralf@linux-mips.org>
 Sender: linux-hams-owner@vger.kernel.org
 List-ID: <linux-hams.vger.kernel.org>
+MIME-Version: 1.0
 Content-Type: text/plain; charset="us-ascii"
-To: Ralf Baechle <ralf@linux-mips.org>
-Cc: linux-kernel@vger.kernel.org, Joerg Reuter <jreuter@yaina.de>, David Miller <davem@davemloft.net>, linux-hams@vger.kernel.org, netdev@vger.kernel.org, Thomas Osterried <thomas@osterried.de>
+Content-Transfer-Encoding: 7bit
+To: "David S. Miller" <davem@davemloft.net>
+Cc: netdev@vger.kernel.org, linux-hams@vger.kernel.org, Thomas Osterried <thomas@osterried.de>
 
-Thanks a lot for your comments!  Look forward to your patch.
+The Linux coding style wants the return statement on its own line.
 
-- xi
+Signed-off-by: Ralf Baechle <ralf@linux-mips.org>
+---
+ net/netrom/af_netrom.c |    3 ++-
+ 1 files changed, 2 insertions(+), 1 deletions(-)
+
+diff --git a/net/netrom/af_netrom.c b/net/netrom/af_netrom.c
+index 732152f..c329b47 100644
+--- a/net/netrom/af_netrom.c
++++ b/net/netrom/af_netrom.c
+@@ -1244,7 +1244,8 @@ static int nr_ioctl(struct socket *sock, unsigned int cmd, unsigned long arg)
+ 	case SIOCADDRT:
+ 	case SIOCDELRT:
+ 	case SIOCNRDECOBS:
+-		if (!capable(CAP_NET_ADMIN)) return -EPERM;
++		if (!capable(CAP_NET_ADMIN))
++			return -EPERM;
+ 		return nr_rt_ioctl(cmd, argp);
+ 
+ 	default:
+-- 
+1.7.4.4
+
