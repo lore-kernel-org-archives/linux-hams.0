@@ -1,26 +1,23 @@
 From: David Miller <davem@davemloft.net>
-Subject: Re: [PATCH 3/4] NET: NETROM: Cleanup argument SIOCADDRT ioctl
- argument checking.
-Date: Tue, 29 Nov 2011 01:18:09 -0500 (EST)
-Message-ID: <20111129.011809.998010141029466939.davem@davemloft.net>
+Subject: Re: [PATCH 4/4] NET: NETROM: Fix formatting.
+Date: Tue, 29 Nov 2011 01:18:15 -0500 (EST)
+Message-ID: <20111129.011815.670998564253180790.davem@davemloft.net>
 References: <cover.1322214950.git.ralf@linux-mips.org>
-	<9f87aed932fc551c6f5c474b39d01fb337237a7e.1322214950.git.ralf@linux-mips.org>
+	<0047a7876bd8f7b9bc5dbf87792785ce75010eab.1322214950.git.ralf@linux-mips.org>
 Mime-Version: 1.0
 Content-Transfer-Encoding: 7bit
-Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <9f87aed932fc551c6f5c474b39d01fb337237a7e.1322214950.git.ralf@linux-mips.org>
-Sender: linux-hams-owner@vger.kernel.org
+Return-path: <netdev-owner@vger.kernel.org>
+In-Reply-To: <0047a7876bd8f7b9bc5dbf87792785ce75010eab.1322214950.git.ralf@linux-mips.org>
+Sender: netdev-owner@vger.kernel.org
 List-ID: <linux-hams.vger.kernel.org>
 Content-Type: Text/Plain; charset="us-ascii"
 To: ralf@linux-mips.org
 Cc: netdev@vger.kernel.org, linux-hams@vger.kernel.org, thomas@osterried.de
 
 From: Ralf Baechle <ralf@linux-mips.org>
-Date: Fri, 25 Nov 2011 09:09:00 +0000
+Date: Fri, 25 Nov 2011 09:54:10 +0000
 
-> nr_route.ndigis is unsigned int so the nr_route.ndigis < 0 expression is
-> never true and can be dropped.  Doing the nr_ax25_dev_get call later
-> allows the nr_route.ndigis test to bail out without having to dev_put.
+> The Linux coding style wants the return statement on its own line.
 > 
 > Signed-off-by: Ralf Baechle <ralf@linux-mips.org>
 
