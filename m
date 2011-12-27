@@ -1,57 +1,43 @@
 From: Xi Wang <xi.wang@gmail.com>
-Subject: [PATCH -next] ax25: avoid overflows in ax25_setsockopt()
-Date: Tue, 27 Dec 2011 14:43:19 -0500
-Message-ID: <1325014999-28931-1-git-send-email-xi.wang@gmail.com>
-Return-path: <linux-hams-owner@vger.kernel.org>
+Subject: [PATCH -next] netrom: avoid overflows in nr_setsockopt()
+Date: Tue, 27 Dec 2011 14:44:53 -0500
+Message-ID: <1325015093-28968-1-git-send-email-xi.wang@gmail.com>
+Return-path: <netdev-owner@vger.kernel.org>
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=from:to:cc:subject:date:message-id:x-mailer;
-        bh=azHqk73iiiG6PolA/2JaTzEqE1Sd8BJcYAfDhE6pyEY=;
-        b=n03pvrqWtrvQ+5aq8wO8R7hyI85+2jdFmYw/nw7MX28Dla7jYRNJSK1W2bfF7M3Lfb
-         Jw/aKrwYBpi9YMGECi10CHZDIe9ooZXjo7XDqNvArNnzysnOpioLkhxQmUPyd3lzDaA3
-         LbrJ8Ecr/f4gnUSx76huaSO0zlj/FxDa9xrz8=
-Sender: linux-hams-owner@vger.kernel.org
+        bh=kzhUX70UNyiUGuQ3XtwQcBARjgX4wMHwR9Ny2MVuPYU=;
+        b=viNOax83m3ym4xcz7dKJLOScLrmCxRymlkCCOD/TW0SGI0Y8EJIhsh0xnfpr6RB6fI
+         kw0pv5NgHlCjRZkJcDusF1WDkdCw5ZKjp3xfx31g+ZfLTh46a6yAIjJAT6zbl1tqyRSa
+         zw4ieQ23BTd6xiMFmVSiCSd7uIg3HLeXGVJeA=
+Sender: netdev-owner@vger.kernel.org
 List-ID: <linux-hams.vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
 To: linux-hams@vger.kernel.org
-Cc: "David S. Miller" <davem@davemloft.net>, netdev@vger.kernel.org, Xi Wang <xi.wang@gmail.com>, Ralf Baechle <ralf@linux-mips.org>
+Cc: "David S. Miller" <davem@davemloft.net>, netdev@vger.kernel.org, Ralf Baechle <ralf@linux-mips.org>, Xi Wang <xi.wang@gmail.com>
 
-Commit be639ac6 ("NET: AX.25: Check ioctl arguments to avoid overflows
-further down the road") rejects very large arguments, but doesn't
-completely fix overflows on 64-bit systems.  Consider the AX25_T2 case.
-
-	int opt;
-	...
-	if (opt < 1 || opt > ULONG_MAX / HZ) {
-		res = -EINVAL;
-		break;
-	}
-	ax25->t2 = opt * HZ;
-
-The 32-bit multiplication opt * HZ would overflow before being assigned
-to 64-bit ax25->t2.  This patch changes "opt" to unsigned long.
+Check setsockopt arguments to avoid overflows and return -EINVAL for
+too large arguments.
 
 Signed-off-by: Xi Wang <xi.wang@gmail.com>
-Cc: Ralf Baechle <ralf@linux-mips.org>
 ---
- net/ax25/af_ax25.c |   11 ++++++-----
- 1 files changed, 6 insertions(+), 5 deletions(-)
+ net/netrom/af_netrom.c |   14 +++++++-------
+ 1 files changed, 7 insertions(+), 7 deletions(-)
 
-diff --git a/net/ax25/af_ax25.c b/net/ax25/af_ax25.c
-index b863c18..3cd0a0d 100644
---- a/net/ax25/af_ax25.c
-+++ b/net/ax25/af_ax25.c
-@@ -545,15 +545,16 @@ static int ax25_setsockopt(struct socket *sock, int level, int optname,
- 	ax25_cb *ax25;
- 	struct net_device *dev;
- 	char devname[IFNAMSIZ];
--	int opt, res = 0;
+diff --git a/net/netrom/af_netrom.c b/net/netrom/af_netrom.c
+index c329b47..7dab229 100644
+--- a/net/netrom/af_netrom.c
++++ b/net/netrom/af_netrom.c
+@@ -306,26 +306,26 @@ static int nr_setsockopt(struct socket *sock, int level, int optname,
+ {
+ 	struct sock *sk = sock->sk;
+ 	struct nr_sock *nr = nr_sk(sk);
+-	int opt;
 +	unsigned long opt;
-+	int res = 0;
  
- 	if (level != SOL_AX25)
+ 	if (level != SOL_NETROM)
  		return -ENOPROTOOPT;
  
 -	if (optlen < sizeof(int))
@@ -62,25 +48,35 @@ index b863c18..3cd0a0d 100644
 +	if (get_user(opt, (unsigned int __user *)optval))
  		return -EFAULT;
  
- 	lock_sock(sk);
-@@ -609,7 +610,7 @@ static int ax25_setsockopt(struct socket *sock, int level, int optname,
- 		break;
+ 	switch (optname) {
+ 	case NETROM_T1:
+-		if (opt < 1)
++		if (opt < 1 || opt > ULONG_MAX / HZ)
+ 			return -EINVAL;
+ 		nr->t1 = opt * HZ;
+ 		return 0;
  
- 	case AX25_IDLE:
--		if (opt < 0 || opt > ULONG_MAX / (60 * HZ)) {
-+		if (opt > ULONG_MAX / (60 * HZ)) {
- 			res = -EINVAL;
- 			break;
- 		}
-@@ -617,7 +618,7 @@ static int ax25_setsockopt(struct socket *sock, int level, int optname,
- 		break;
+ 	case NETROM_T2:
+-		if (opt < 1)
++		if (opt < 1 || opt > ULONG_MAX / HZ)
+ 			return -EINVAL;
+ 		nr->t2 = opt * HZ;
+ 		return 0;
+@@ -337,13 +337,13 @@ static int nr_setsockopt(struct socket *sock, int level, int optname,
+ 		return 0;
  
- 	case AX25_BACKOFF:
--		if (opt < 0 || opt > 2) {
-+		if (opt > 2) {
- 			res = -EINVAL;
- 			break;
- 		}
+ 	case NETROM_T4:
+-		if (opt < 1)
++		if (opt < 1 || opt > ULONG_MAX / HZ)
+ 			return -EINVAL;
+ 		nr->t4 = opt * HZ;
+ 		return 0;
+ 
+ 	case NETROM_IDLE:
+-		if (opt < 0)
++		if (opt > ULONG_MAX / (60 * HZ))
+ 			return -EINVAL;
+ 		nr->idle = opt * 60 * HZ;
+ 		return 0;
 -- 
 1.7.5.4
-
