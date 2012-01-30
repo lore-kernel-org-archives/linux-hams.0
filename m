@@ -1,24 +1,53 @@
-From: David Miller <davem@davemloft.net>
-Subject: Re: [PATCH -next] netrom: avoid overflows in nr_setsockopt()
-Date: Wed, 28 Dec 2011 14:08:24 -0500 (EST)
-Message-ID: <20111228.140824.803334102480724987.davem@davemloft.net>
-References: <1325015093-28968-1-git-send-email-xi.wang@gmail.com>
-Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
+From: Danny Kukawka <danny.kukawka@bisect.de>
+Subject: [PATCH 14/16] hamradio: fix incompatible pointer in module parameter
+Date: Mon, 30 Jan 2012 23:00:18 +0100
+Message-ID: <1327960820-11867-15-git-send-email-danny.kukawka@bisect.de>
+References: <1327960820-11867-1-git-send-email-danny.kukawka@bisect.de>
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <1325015093-28968-1-git-send-email-xi.wang@gmail.com>
+In-Reply-To: <1327960820-11867-1-git-send-email-danny.kukawka@bisect.de>
 Sender: linux-hams-owner@vger.kernel.org
 List-ID: <linux-hams.vger.kernel.org>
-Content-Type: Text/Plain; charset="us-ascii"
-To: xi.wang@gmail.com
-Cc: linux-hams@vger.kernel.org, netdev@vger.kernel.org, ralf@linux-mips.org
+MIME-Version: 1.0
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+To: Thomas Sailer <t.sailer@alumni.ethz.ch>
+Cc: linux-hams@vger.kernel.org, netdev@vger.kernel.org, linux-kernel@vger.kernel.org
 
-From: Xi Wang <xi.wang@gmail.com>
-Date: Tue, 27 Dec 2011 14:44:53 -0500
+Fixed 'warning: return from incompatible pointer type' related
+to module parameters.
 
-> Check setsockopt arguments to avoid overflows and return -EINVAL for
-> too large arguments.
-> 
-> Signed-off-by: Xi Wang <xi.wang@gmail.com>
+Signed-off-by: Danny Kukawka <danny.kukawka@bisect.de>
+---
+ drivers/net/hamradio/baycom_epp.c |    2 +-
+ drivers/net/hamradio/baycom_par.c |    2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
 
-Applied.
+diff --git a/drivers/net/hamradio/baycom_epp.c b/drivers/net/hamradio/baycom_epp.c
+index 9537aaa..49b8b58 100644
+--- a/drivers/net/hamradio/baycom_epp.c
++++ b/drivers/net/hamradio/baycom_epp.c
+@@ -1162,7 +1162,7 @@ static void baycom_probe(struct net_device *dev)
+ /*
+  * command line settable parameters
+  */
+-static const char *mode[NR_PORTS] = { "", };
++static char *mode[NR_PORTS] = { "", };
+ static int iobase[NR_PORTS] = { 0x378, };
+ 
+ module_param_array(mode, charp, NULL, 0);
+diff --git a/drivers/net/hamradio/baycom_par.c b/drivers/net/hamradio/baycom_par.c
+index 279d229..f1aea0c 100644
+--- a/drivers/net/hamradio/baycom_par.c
++++ b/drivers/net/hamradio/baycom_par.c
+@@ -477,7 +477,7 @@ static int baycom_ioctl(struct net_device *dev, struct ifreq *ifr,
+ /*
+  * command line settable parameters
+  */
+-static const char *mode[NR_PORTS] = { "picpar", };
++static char *mode[NR_PORTS] = { "picpar", };
+ static int iobase[NR_PORTS] = { 0x378, };
+ 
+ module_param_array(mode, charp, NULL, 0);
+-- 
+1.7.7.3
+
