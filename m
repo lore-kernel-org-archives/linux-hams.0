@@ -1,76 +1,40 @@
 From: Danny Kukawka <danny.kukawka@bisect.de>
-Subject: [PATCH 00/12] Part 2: check given MAC address, if invalid return -EADDRNOTAVAIL
-Date: Fri, 24 Feb 2012 17:01:10 +0100
-Message-ID: <1330099282-4588-1-git-send-email-danny.kukawka@bisect.de>
+Subject: [PATCH 12/12] rose: check given MAC address, if invalid return -EADDRNOTAVAIL
+Date: Fri, 24 Feb 2012 17:01:22 +0100
+Message-ID: <1330099282-4588-13-git-send-email-danny.kukawka@bisect.de>
+References: <1330099282-4588-1-git-send-email-danny.kukawka@bisect.de>
 Return-path: <linux-kernel-owner@vger.kernel.org>
+In-Reply-To: <1330099282-4588-1-git-send-email-danny.kukawka@bisect.de>
 Sender: linux-kernel-owner@vger.kernel.org
 List-ID: <linux-hams.vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
-To: "David S. Miller" <davem@davemloft.net>, Andy Gospodarek <andy@greyhouse.net>, Guo-Fu Tseng <cooldavid@cooldavid.org>, Petko Manolov <petkan@users.sourceforge.net>, "VMware, Inc." <pv-drivers@vmware.com>, "John W. Linville" <linville@tuxdriver.com>, linux390@de.ibm.com, Mauro Carvalho Chehab <mchehab@infradead.org>
-Cc: Danny Kukawka <dkukawka@suse.de>, Stephen Hemminger <shemminger@vyatta.com>, Joe Perches <joe@perches.com>, Jeff Kirsher <jeffrey.t.kirsher@intel.com>, Jiri Pirko <jpirko@redhat.com>, netdev@vger.kernel.org, linux-usb@vger.kernel.org, linux-wireless@vger.kernel.org, libertas-dev@lists.infradead.org, linux-kernel@vger.kernel.org, linux-media@vger.kernel.org, linux-s390@vger.kernel.org, linux-hams@vger.kernel.org, linux-mips@linux-mips.org
+To: Ralf Baechle <ralf@linux-mips.org>
+Cc: Danny Kukawka <dkukawka@suse.de>, "David S. Miller" <davem@davemloft.net>, linux-hams@vger.kernel.org, netdev@vger.kernel.org, linux-kernel@vger.kernel.org
 
-Second Part of series patches to unifiy the return value of 
-.ndo_set_mac_address if the given address isn't valid.
+Check if given address is valid in .ndo_set_mac_address/
+rose_set_mac_address(), if invalid return -EADDRNOTAVAIL as
+eth_mac_addr() already does if is_valid_ether_addr() fails.
 
-These changes check if a given (MAC) address is valid in 
-.ndo_set_mac_address, if invalid return -EADDRNOTAVAIL 
-as eth_mac_addr() already does if is_valid_ether_addr() fails.
+Signed-off-by: Danny Kukawka <danny.kukawka@bisect.de>
+---
+ net/rose/rose_dev.c |    3 +++
+ 1 files changed, 3 insertions(+), 0 deletions(-)
 
-These patches are against net-next.
-
-Danny Kukawka (12):
-  ethernet: .ndo_set_mac_address: check given address, if invalid
-    return -EADDRNOTAVAIL
-  cris/eth_v10: check given MAC address, if invalid return
-    -EADDRNOTAVAIL
-  dvb_net: check given MAC address, if invalid return -EADDRNOTAVAIL
-  fddi/skfp: check given MAC address, if invalid return -EADDRNOTAVAIL
-  team: check given MAC address, if invalid return -EADDRNOTAVAIL
-  tokenring: check given MAC address, if invalid return -EADDRNOTAVAIL
-  usb/rtl8150: check given MAC address, if invalid return
-    -EADDRNOTAVAIL
-  vmxnet3: check given MAC address, if invalid return -EADDRNOTAVAIL
-  wan/lapbether: check given MAC address, if invalid return
-    -EADDRNOTAVAIL
-  wireless: check given MAC address, if invalid return -EADDRNOTAVAIL
-  s390/net/qeth_l2_main: check given MAC address, if invalid return
-    -EADDRNOTAVAIL
-  rose: check given MAC address, if invalid return -EADDRNOTAVAIL
-
- drivers/media/dvb/dvb-core/dvb_net.c               |    5 ++++-
- drivers/net/cris/eth_v10.c                         |    3 +++
- drivers/net/ethernet/amd/amd8111e.c                |    3 +++
- drivers/net/ethernet/amd/atarilance.c              |    3 +++
- drivers/net/ethernet/chelsio/cxgb/cxgb2.c          |    3 +++
- drivers/net/ethernet/cisco/enic/enic_main.c        |    3 +++
- drivers/net/ethernet/freescale/fec_mpc52xx.c       |    3 +++
- drivers/net/ethernet/jme.c                         |    3 +++
- drivers/net/ethernet/micrel/ks8851_mll.c           |    3 +++
- drivers/net/ethernet/micrel/ksz884x.c              |    3 +++
- drivers/net/ethernet/seeq/sgiseeq.c                |    3 +++
- drivers/net/ethernet/sgi/ioc3-eth.c                |    3 +++
- drivers/net/ethernet/tehuti/tehuti.c               |    3 +++
- drivers/net/fddi/skfp/skfddi.c                     |    3 +++
- drivers/net/team/team.c                            |    3 +++
- drivers/net/tokenring/3c359.c                      |    4 ++++
- drivers/net/tokenring/lanstreamer.c                |    4 ++++
- drivers/net/tokenring/olympic.c                    |    4 ++++
- drivers/net/tokenring/tms380tr.c                   |    3 +++
- drivers/net/usb/rtl8150.c                          |    3 +++
- drivers/net/vmxnet3/vmxnet3_drv.c                  |    3 +++
- drivers/net/wan/lapbether.c                        |    5 +++++
- drivers/net/wireless/airo.c                        |    3 +++
- drivers/net/wireless/atmel.c                       |    3 +++
- .../net/wireless/brcm80211/brcmfmac/dhd_linux.c    |    5 ++++-
- drivers/net/wireless/hostap/hostap_main.c          |    3 +++
- drivers/net/wireless/libertas/main.c               |    3 +++
- drivers/net/wireless/mwifiex/main.c                |    3 +++
- drivers/net/wireless/zd1201.c                      |    2 ++
- drivers/s390/net/qeth_l2_main.c                    |    3 +++
- net/rose/rose_dev.c                                |    3 +++
- 31 files changed, 99 insertions(+), 2 deletions(-)
-
+diff --git a/net/rose/rose_dev.c b/net/rose/rose_dev.c
+index 178ff4f..1ae8791 100644
+--- a/net/rose/rose_dev.c
++++ b/net/rose/rose_dev.c
+@@ -96,6 +96,9 @@ static int rose_set_mac_address(struct net_device *dev, void *addr)
+ 	struct sockaddr *sa = addr;
+ 	int err;
+ 
++	if (!is_valid_ether_addr(sa->sa_data))
++		return -EADDRNOTAVAIL;
++
+ 	if (!memcpy(dev->dev_addr, sa->sa_data, dev->addr_len))
+ 		return 0;
+ 
 -- 
 1.7.8.3
