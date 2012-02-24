@@ -1,40 +1,31 @@
-From: Danny Kukawka <danny.kukawka@bisect.de>
-Subject: [PATCH 12/12] rose: check given MAC address, if invalid return -EADDRNOTAVAIL
-Date: Fri, 24 Feb 2012 17:01:22 +0100
-Message-ID: <1330099282-4588-13-git-send-email-danny.kukawka@bisect.de>
+From: Alan Cox <alan@lxorguk.ukuu.org.uk>
+Subject: Re: [PATCH 12/12] rose: check given MAC address, if invalid return
+ -EADDRNOTAVAIL
+Date: Fri, 24 Feb 2012 16:13:58 +0000
+Message-ID: <20120224161358.17df7421@pyramind.ukuu.org.uk>
 References: <1330099282-4588-1-git-send-email-danny.kukawka@bisect.de>
-Return-path: <linux-kernel-owner@vger.kernel.org>
-In-Reply-To: <1330099282-4588-1-git-send-email-danny.kukawka@bisect.de>
-Sender: linux-kernel-owner@vger.kernel.org
-List-ID: <linux-hams.vger.kernel.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
+	<1330099282-4588-13-git-send-email-danny.kukawka@bisect.de>
+Mime-Version: 1.0
 Content-Transfer-Encoding: 7bit
-To: Ralf Baechle <ralf@linux-mips.org>
-Cc: Danny Kukawka <dkukawka@suse.de>, "David S. Miller" <davem@davemloft.net>, linux-hams@vger.kernel.org, netdev@vger.kernel.org, linux-kernel@vger.kernel.org
+Return-path: <linux-hams-owner@vger.kernel.org>
+In-Reply-To: <1330099282-4588-13-git-send-email-danny.kukawka@bisect.de>
+Sender: linux-hams-owner@vger.kernel.org
+List-ID: <linux-hams.vger.kernel.org>
+Content-Type: text/plain; charset="us-ascii"
+To: Danny Kukawka <danny.kukawka@bisect.de>
+Cc: Ralf Baechle <ralf@linux-mips.org>, Danny Kukawka <dkukawka@suse.de>, "David S. Miller" <davem@davemloft.net>, linux-hams@vger.kernel.org, netdev@vger.kernel.org, linux-kernel@vger.kernel.org
 
-Check if given address is valid in .ndo_set_mac_address/
-rose_set_mac_address(), if invalid return -EADDRNOTAVAIL as
-eth_mac_addr() already does if is_valid_ether_addr() fails.
+On Fri, 24 Feb 2012 17:01:22 +0100
+Danny Kukawka <danny.kukawka@bisect.de> wrote:
 
-Signed-off-by: Danny Kukawka <danny.kukawka@bisect.de>
----
- net/rose/rose_dev.c |    3 +++
- 1 files changed, 3 insertions(+), 0 deletions(-)
+> Check if given address is valid in .ndo_set_mac_address/
+> rose_set_mac_address(), if invalid return -EADDRNOTAVAIL as
+> eth_mac_addr() already does if is_valid_ether_addr() fails.
 
-diff --git a/net/rose/rose_dev.c b/net/rose/rose_dev.c
-index 178ff4f..1ae8791 100644
---- a/net/rose/rose_dev.c
-+++ b/net/rose/rose_dev.c
-@@ -96,6 +96,9 @@ static int rose_set_mac_address(struct net_device *dev, void *addr)
- 	struct sockaddr *sa = addr;
- 	int err;
- 
-+	if (!is_valid_ether_addr(sa->sa_data))
-+		return -EADDRNOTAVAIL;
-+
- 	if (!memcpy(dev->dev_addr, sa->sa_data, dev->addr_len))
- 		return 0;
- 
--- 
-1.7.8.3
+This patch series looks wrong - you cannot go blindly applying ethernet
+mac address tests to device drivers without checking if they are using
+802.11 type addressing at the physical level.
+
+Alan
+
+
