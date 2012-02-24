@@ -1,34 +1,76 @@
-From: Miroslav Skoric <skoric@eunet.rs>
-Subject: Link Win/BPQ32 >< Lin/FPAC
-Date: Sun, 19 Feb 2012 16:39:44 +0100
-Message-ID: <4F4117C0.8060200@eunet.rs>
-Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
-Return-path: <linux-hams-owner@vger.kernel.org>
-Sender: linux-hams-owner@vger.kernel.org
+From: Danny Kukawka <danny.kukawka@bisect.de>
+Subject: [PATCH 00/12] Part 2: check given MAC address, if invalid return -EADDRNOTAVAIL
+Date: Fri, 24 Feb 2012 17:01:10 +0100
+Message-ID: <1330099282-4588-1-git-send-email-danny.kukawka@bisect.de>
+Return-path: <linux-kernel-owner@vger.kernel.org>
+Sender: linux-kernel-owner@vger.kernel.org
 List-ID: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"; format="flowed"
-To: linux-hams@vger.kernel.org
+MIME-Version: 1.0
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+To: "David S. Miller" <davem@davemloft.net>, Andy Gospodarek <andy@greyhouse.net>, Guo-Fu Tseng <cooldavid@cooldavid.org>, Petko Manolov <petkan@users.sourceforge.net>, "VMware, Inc." <pv-drivers@vmware.com>, "John W. Linville" <linville@tuxdriver.com>, linux390@de.ibm.com, Mauro Carvalho Chehab <mchehab@infradead.org>
+Cc: Danny Kukawka <dkukawka@suse.de>, Stephen Hemminger <shemminger@vyatta.com>, Joe Perches <joe@perches.com>, Jeff Kirsher <jeffrey.t.kirsher@intel.com>, Jiri Pirko <jpirko@redhat.com>, netdev@vger.kernel.org, linux-usb@vger.kernel.org, linux-wireless@vger.kernel.org, libertas-dev@lists.infradead.org, linux-kernel@vger.kernel.org, linux-media@vger.kernel.org, linux-s390@vger.kernel.org, linux-hams@vger.kernel.org, linux-mips@linux-mips.org
 
-Hi all,
+Second Part of series patches to unifiy the return value of 
+.ndo_set_mac_address if the given address isn't valid.
 
-I have  three BPQ32  machines in  the home  LAN and  they talk  each 
-other by using bpqether ports.  One machine has  two network cards  and 
-the other two have one card each, so the box with two cards interconnect 
-all of them in a chain. When everything is up, all three BPQ32 nodes see 
-each other, netrom works too in between, etc.
+These changes check if a given (MAC) address is valid in 
+.ndo_set_mac_address, if invalid return -EADDRNOTAVAIL 
+as eth_mac_addr() already does if is_valid_ether_addr() fails.
 
-Al three comps  are dual-boot (with  either Debian 6.04 or  Ubuntu 
-10.04.2). Now I want to experiment  with  connecting  a BPQ32  node  to 
-a FPAC node. It seems that FPAC nodes need axudp ports  to see the  rest 
-of the  world, but if  I replace bpqether with axip  at BPQ32  comps, 
-they  stop talking  each other  (I mean all three BPQ32 nodes).
+These patches are against net-next.
 
-On the  other side, I  do not know  if it is possible to use bpqether 
-approach in FPAC (in a way bpq works  in Linux Node; I mean to configure 
-ports bpq0, bpq1, etc.  instead of  ax0, ax1,  rose0, rose1,  etc.) In 
-fact, some  time ago  I managed to interconnect a BPQ32 machine  with a 
-Linux Node machine, by using only bpqether mode at the Windows side, and 
-only bpq module at the Linux side. Any idea?
+Danny Kukawka (12):
+  ethernet: .ndo_set_mac_address: check given address, if invalid
+    return -EADDRNOTAVAIL
+  cris/eth_v10: check given MAC address, if invalid return
+    -EADDRNOTAVAIL
+  dvb_net: check given MAC address, if invalid return -EADDRNOTAVAIL
+  fddi/skfp: check given MAC address, if invalid return -EADDRNOTAVAIL
+  team: check given MAC address, if invalid return -EADDRNOTAVAIL
+  tokenring: check given MAC address, if invalid return -EADDRNOTAVAIL
+  usb/rtl8150: check given MAC address, if invalid return
+    -EADDRNOTAVAIL
+  vmxnet3: check given MAC address, if invalid return -EADDRNOTAVAIL
+  wan/lapbether: check given MAC address, if invalid return
+    -EADDRNOTAVAIL
+  wireless: check given MAC address, if invalid return -EADDRNOTAVAIL
+  s390/net/qeth_l2_main: check given MAC address, if invalid return
+    -EADDRNOTAVAIL
+  rose: check given MAC address, if invalid return -EADDRNOTAVAIL
 
-Misko
+ drivers/media/dvb/dvb-core/dvb_net.c               |    5 ++++-
+ drivers/net/cris/eth_v10.c                         |    3 +++
+ drivers/net/ethernet/amd/amd8111e.c                |    3 +++
+ drivers/net/ethernet/amd/atarilance.c              |    3 +++
+ drivers/net/ethernet/chelsio/cxgb/cxgb2.c          |    3 +++
+ drivers/net/ethernet/cisco/enic/enic_main.c        |    3 +++
+ drivers/net/ethernet/freescale/fec_mpc52xx.c       |    3 +++
+ drivers/net/ethernet/jme.c                         |    3 +++
+ drivers/net/ethernet/micrel/ks8851_mll.c           |    3 +++
+ drivers/net/ethernet/micrel/ksz884x.c              |    3 +++
+ drivers/net/ethernet/seeq/sgiseeq.c                |    3 +++
+ drivers/net/ethernet/sgi/ioc3-eth.c                |    3 +++
+ drivers/net/ethernet/tehuti/tehuti.c               |    3 +++
+ drivers/net/fddi/skfp/skfddi.c                     |    3 +++
+ drivers/net/team/team.c                            |    3 +++
+ drivers/net/tokenring/3c359.c                      |    4 ++++
+ drivers/net/tokenring/lanstreamer.c                |    4 ++++
+ drivers/net/tokenring/olympic.c                    |    4 ++++
+ drivers/net/tokenring/tms380tr.c                   |    3 +++
+ drivers/net/usb/rtl8150.c                          |    3 +++
+ drivers/net/vmxnet3/vmxnet3_drv.c                  |    3 +++
+ drivers/net/wan/lapbether.c                        |    5 +++++
+ drivers/net/wireless/airo.c                        |    3 +++
+ drivers/net/wireless/atmel.c                       |    3 +++
+ .../net/wireless/brcm80211/brcmfmac/dhd_linux.c    |    5 ++++-
+ drivers/net/wireless/hostap/hostap_main.c          |    3 +++
+ drivers/net/wireless/libertas/main.c               |    3 +++
+ drivers/net/wireless/mwifiex/main.c                |    3 +++
+ drivers/net/wireless/zd1201.c                      |    2 ++
+ drivers/s390/net/qeth_l2_main.c                    |    3 +++
+ net/rose/rose_dev.c                                |    3 +++
+ 31 files changed, 99 insertions(+), 2 deletions(-)
+
+-- 
+1.7.8.3
