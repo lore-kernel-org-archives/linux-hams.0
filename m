@@ -1,36 +1,33 @@
-From: =?ISO-8859-2?Q?Micha=B3_Miros=B3aw?= <mirqus@gmail.com>
-Subject: Re: [PATCH 00/12] Part 2: check given MAC address, if invalid return -EADDRNOTAVAIL
-Date: Fri, 24 Feb 2012 18:59:04 +0100
-Message-ID: <CAHXqBFK=u+MchBn=D31h6nhp-R9GTNbaC18QJA937zjXc60UQw@mail.gmail.com>
+From: David Miller <davem@davemloft.net>
+Subject: Re: [PATCH 12/12] rose: check given MAC address, if invalid return
+ -EADDRNOTAVAIL
+Date: Fri, 24 Feb 2012 15:43:35 -0500 (EST)
+Message-ID: <20120224.154335.577711354132386075.davem@davemloft.net>
 References: <1330099282-4588-1-git-send-email-danny.kukawka@bisect.de>
+	<1330099282-4588-13-git-send-email-danny.kukawka@bisect.de>
+	<20120224161358.17df7421@pyramind.ukuu.org.uk>
 Mime-Version: 1.0
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Return-path: <linux-media-owner@vger.kernel.org>
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        bh=HNn6H3hm4G/LuHJaxW51hiS54zqmUVFTWgoL8/Qwmp4=;
-        b=uRweyO3pqeGxoxfdvseACLmdNBChiN19x/DDO3lfFzzkC4EHvlfgZClu3ED0MUHxSt
-         7crUfxu+uCPklEWZyUG9PVSYoVFz+4VfaBNEvTnjnXQgxZ7lplyVpX11gTcRpx5wNKLh
-         TWLgXo2nKR4va2ROXG7Wd2IGRwoVUEpPi/2uc=
-In-Reply-To: <1330099282-4588-1-git-send-email-danny.kukawka@bisect.de>
-Sender: linux-media-owner@vger.kernel.org
+Content-Transfer-Encoding: 7bit
+Return-path: <linux-hams-owner@vger.kernel.org>
+In-Reply-To: <20120224161358.17df7421@pyramind.ukuu.org.uk>
+Sender: linux-hams-owner@vger.kernel.org
 List-ID: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="utf-8"
-To: Danny Kukawka <danny.kukawka@bisect.de>
-Cc: "David S. Miller" <davem@davemloft.net>, Andy Gospodarek <andy@greyhouse.net>, Guo-Fu Tseng <cooldavid@cooldavid.org>, Petko Manolov <petkan@users.sourceforge.net>, "VMware, Inc." <pv-drivers@vmware.com>, "John W. Linville" <linville@tuxdriver.com>, linux390@de.ibm.com, Mauro Carvalho Chehab <mchehab@infradead.org>, Danny Kukawka <dkukawka@suse.de>, Stephen Hemminger <shemminger@vyatta.com>, Joe Perches <joe@perches.com>, Jeff Kirsher <jeffrey.t.kirsher@intel.com>, Jiri Pirko <jpirko@redhat.com>, netdev@vger.kernel.org, linux-usb@vger.kernel.org, linux-wireless@vger.kernel.org, libertas-dev@lists.infradead.org, linux-kernel@vger.kernel.org, linux-media@vger.kernel.org, linux-s390@vger.kernel.org, linux-hams@vger.kernel.org, linux-mips@linux-mips.org
+Content-Type: Text/Plain; charset="us-ascii"
+To: alan@lxorguk.ukuu.org.uk
+Cc: danny.kukawka@bisect.de, ralf@linux-mips.org, dkukawka@suse.de, linux-hams@vger.kernel.org, netdev@vger.kernel.org, linux-kernel@vger.kernel.org
 
-2012/2/24 Danny Kukawka <danny.kukawka@bisect.de>:
-> Second Part of series patches to unifiy the return value of
-> .ndo_set_mac_address if the given address isn't valid.
->
-> These changes check if a given (MAC) address is valid in
-> .ndo_set_mac_address, if invalid return -EADDRNOTAVAIL
-> as eth_mac_addr() already does if is_valid_ether_addr() fails.
+From: Alan Cox <alan@lxorguk.ukuu.org.uk>
+Date: Fri, 24 Feb 2012 16:13:58 +0000
 
-Why not just fix dev_set_mac_address() and make do_setlink() use that?
-Checks are specific to address family, not device model I assume.
+> On Fri, 24 Feb 2012 17:01:22 +0100
+> Danny Kukawka <danny.kukawka@bisect.de> wrote:
+> 
+>> Check if given address is valid in .ndo_set_mac_address/
+>> rose_set_mac_address(), if invalid return -EADDRNOTAVAIL as
+>> eth_mac_addr() already does if is_valid_ether_addr() fails.
+> 
+> This patch series looks wrong - you cannot go blindly applying ethernet
+> mac address tests to device drivers without checking if they are using
+> 802.11 type addressing at the physical level.
 
-Best Regards,
-Micha=C5=82 Miros=C5=82aw
+Right.
