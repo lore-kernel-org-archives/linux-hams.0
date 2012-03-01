@@ -1,128 +1,83 @@
-From: Nate Bargmann <n0nb@n0nb.us>
-Subject: Re: [Ubuntu-hams] Contest logging project
-Date: Wed, 29 Feb 2012 13:44:02 -0600
-Message-ID: <20120229194402.GD8615@n0nb.us>
-References: <20120228232524.GE28180@n0nb.us>
- <1330536513.14841.YahooMailNeo@web120102.mail.ne1.yahoo.com>
+From: David Ranch <linux-hams@trinnet.net>
+Subject: Re: Trusted QSL 1.13 on lenny
+Date: Wed, 29 Feb 2012 21:55:39 -0800
+Message-ID: <4F4F0F5B.4070700@trinnet.net>
+References: <1330417559.42501.YahooMailClassic@web171313.mail.ir2.yahoo.com> <1330421068.84437.YahooMailNeo@web171307.mail.ir2.yahoo.com>
 Mime-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-Return-path: <bounce-debian-user=gldu-debian-user-2=m.gmane.org@lists.debian.org>
-Content-Disposition: inline
-In-Reply-To: <1330536513.14841.YahooMailNeo@web120102.mail.ne1.yahoo.com>
-Resent-Message-ID: <yBby4y-m9AK.A.Y4H.6AoTPB@liszt>
-List-Id: <linux-hams.vger.kernel.org>
-List-Post: <mailto:debian-user@lists.debian.org>
-List-Help: <mailto:debian-user-request@lists.debian.org?subject=help>
-List-Subscribe: <mailto:debian-user-request@lists.debian.org?subject=subscribe>
-List-Unsubscribe: <mailto:debian-user-request@lists.debian.org?subject=unsubscribe>
-Content-Type: text/plain; charset="iso-8859-1"
-To: Paula Keezer <paula_ke@yahoo.com>
-Cc: Debian Users <debian-user@lists.debian.org>, Ubuntu Hams Group <ubuntu-hams@lists.launchpad.net>, Linux Hams <linux-hams@vger.kernel.org>, Debian Hams <debian-hams@lists.debian.org>
-
-* On 2012 29 Feb 11:30 -0600, Paula Keezer wrote:
-> Nate,=A0 I thought I would share some thoughts with you on the logistic=
-s
-> of building a logging program, contest or or otherwise.=A0=20
-
-Hi Paula.
-
-> As the author of the very first windows based logging program back in
-> 1989 (logview, rigview, hamview and packview) I can tell you that
-> developing and keeping a logging program alive is a daunting task.=A0 I
-> was able to maintain it until 1997 when y2k became an issue and the
-> amount of effort for one individual to keep up with the changing
-> demands of the community was simply to much.=A0 It was written in C and
-> was one of the better offerings for both general logging and contest
-> logging for its time.=A0=20
-
-Which is why I'm trying to guage the interest in collaboration before
-giving up on this idea completely.
-
-> Over the years I've looked at a number of contemporary programs that
-> are feature rich to see if I could contribute and provide some of my
-> expertise gained with 8 years of log program experience.=A0
-> Unfortunately, they all use rather difficult or under powered
-> development environments.=A0 N1MM for instance, is a dedicated Win
-> platform and to work on that code one would have to make a heavy
-> investment in the latest win dev platform.
-
-IMO, sticking with GNU tools and wxWidgets means the financial barrier
-to entry is $0 and each is available for all popular platforms.  Some
-may argue that there exists no IDE for Linux.  Perhaps so (although
-there are several that make the claim), but I consider my entire desktop
-to be the IDE.  ;-)
-
-> I've thought at length about how an open source solution might be
-> constructed that could attract a large number of Hamix developers.=A0 A=
-s
-> Martin, AA6E pointed out, it would be very important to split the
-> effort into two projects:=A0 A frontend project and a backend project.=A0
-> Ideally, the frontend project would welcome anyone who wished to make
-> a logging/shackcontrol/cluster user interface to participate using the
-> language/development and perhaps even computing platform of their
-> choice.=A0 The backend for logging/dxcc/prefix/callpartial databases,
-> rigcontrol/rotatorcontrol/antennaswitch and cluster/telnet/packet/web
-> should be in the form of services, preferably communicated=A0 through
-> tcpip sockets or even better, a web api.=A0 Ideally this code should be
-> fast, but if a standard socket or web api were used, it could be built
-> in virtually any language and on top of any db platform and still be
-> compatible.
-
-Whew!  Rig control is covered by Hamlib.  But really, I didn't plan for
-this project to cover any more ground than CT which I'm most familiar
-with.  To me that means maintaining a contest log and nothing more than
-Cabrillo and ADIF export (let the other apps deal with LoTW/eQSL
-uploads/tracking and the like).  Things like cluster/bandmap support and
-multiop stuff is long term.
-
-My idea is to specify contests using a definition file for each event
-and from that the program configures the entry/display fields and
-scoring.  As I see it, if done smartly the program doesn't need much
-rewriting as contest rules change.
-
-> I think an open source effort like this, where new comers can easily
-> participate and add value to a growing body of code, would be an long
-> term winner.
->=20
-> I think the challenge is in defining the back end services so that all
-> the features and functions could be easily extended while preserving
-> backward compatibility and keeping it open so new developers can step
-> in and fill in gags as time moves forward.  The front end becomes an
-> open field where anyone with a little programming knowledge and access
-> to open source tools can build a new look and feel for the community.
-
-Perhaps I see that as a bit too heavy of a solution?  There have been a
-few false starts of something comprehensive on the various ham
-radio+Linux mailing lists over the years that have come to nothing.  I'm
-looking more in the direction of "do one thing and do it well".
-
-BTW, I now have a mailing list at:
-
-https://lists.sourceforge.net/lists/listinfo/ctestlogger-developer
-
-Later I'll upload my personal Git repository where interested parties
-can take a look.  The project page is at:
-
-https://sourceforge.net/projects/ctestlogger/
-
-I chose SourceForge as I'm familiar with it and they offer a Media Wiki
-and PHP BB, both of which I've enabled.
-
-Thanks for writing.
-
-73, de Nate >>
-
---=20
-
-"The optimist proclaims that we live in the best of all
-possible worlds.  The pessimist fears this is true."
-
-Ham radio, Linux, bikes, and more: http://www.n0nb.us
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Return-path: <linux-hams-owner@vger.kernel.org>
+In-Reply-To: <1330421068.84437.YahooMailNeo@web171307.mail.ir2.yahoo.com>
+Sender: linux-hams-owner@vger.kernel.org
+List-ID: <linux-hams.vger.kernel.org>
+Content-Type: text/plain; charset="iso-8859-1"; format="flowed"
+To: Vittorio Vallero <ik1rac@yahoo.it>
+Cc: "linux-hams@vger.kernel.org" <linux-hams@vger.kernel.org>
 
 
---=20
-To UNSUBSCRIBE, email to debian-user-REQUEST@lists.debian.org=20
-with a subject of "unsubscribe". Trouble? Contact listmaster@lists.debian=
-.org
-Archive: http://lists.debian.org/20120229194402.GD8615@n0nb.us
+Hello Vittorio,
 
+I had different errors with 1.13 on Centos5 (scan towards the bottom of=
+=20
+the following URL).  I had to go back to 1.11 to get things working.  I=
+=20
+sent emails off to the various authors listed in the 1.13 archive and=20
+100% of their addresses bounced and nothing was ever returned from the=20
+ARRL.  Bummer!
+
+   =20
+http://www.trinityos.com/HAM/CentosDigitalModes/hampacketizing-centos.h=
+tml#22.lotw
+
+--David
+
+
+Vittorio Vallero wrote:
+> Hi,
+> I am trying to compile the latest trusted qsl 1.13 with no success.
+> First I compiled tqsllib 2.2 without problems, then here is what happ=
+ens when compiling trusted qsl 1.13:
+>
+> vittorio@ik1rac:~/src/TrustedQSL-1.13$ make
+> /usr/bin/perl ./touchver.pl ./tqslbuild.h.in BUILD unofficial
+> /bin/cp ./tqslbuild.h.in tqslbuild.h
+> /usr/bin/touch ./tqslbuild.h.in
+> /usr/bin/perl ./touchver.pl ./tqslcertbuild.h.in BUILD unofficial
+> /bin/cp ./tqslcertbuild.h.in tqslcertbuild.h
+> /usr/bin/touch ./tqslcertbuild.h.in
+> test -e help || ln -s ./help help
+> test -e icons || ln -s ./icons icons
+> make  all-am
+> make[1]: Entering directory `/home/vittorio/src/TrustedQSL-1.13'
+> g++ -DHAVE_CONFIG_H -I.    -Wall `"/usr/bin/wx-config" --cxxflags` -I=
+/usr/local/include -I/usr/include -I/usr/include -g -O2 -MT tqsl.o -MD =
+-MP -MF
+> .deps/tqsl.Tpo -c -o tqsl.o tqsl.cpp
+> tqsl.cpp:1220: internal compiler error: Segmentation fault
+> Please submit a full bug report,
+> with preprocessed source if appropriate.
+> See <file:///usr/share/doc/gcc-4.3/README.Bugs> for instructions.
+> make[1]: *** [tqsl.o] Error 1
+> make[1]: Leaving directory `/home/vittorio/src/TrustedQSL-1.13'
+> make: *** [all] Error 2
+>
+> Have anybody had the same problem ?
+>
+> Thanks, 73
+>
+> --
+> IK1RAC - WH2W   Vittorio Vallero
+> I-QRP N=B0106
+> Marconista 305
+> Italy Telegraphy Club N=B0 214
+> WAB Bookholder 12649=20
+> --
+> To unsubscribe from this list: send the line "unsubscribe linux-hams"=
+ in
+> the body of a message to majordomo@vger.kernel.org
+> More majordomo info at  http://vger.kernel.org/majordomo-info.html
+>  =20
+--
+To unsubscribe from this list: send the line "unsubscribe linux-hams" i=
+n
+the body of a message to majordomo@vger.kernel.org
+More majordomo info at  http://vger.kernel.org/majordomo-info.html
