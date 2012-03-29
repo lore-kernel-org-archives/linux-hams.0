@@ -1,265 +1,171 @@
-From: Chuck Hast <wchast@gmail.com>
-Subject: Re: Link Win/BPQ32 >< Lin/FPAC
-Date: Sun, 11 Mar 2012 10:53:47 -0400
-Message-ID: <CADNfBV9XSgxDum=QE-ifGjMN1WjGrShXU8uex6ZGyexWZN7KLQ@mail.gmail.com>
-References: <4F5CAAAA.3030605@eunet.rs>
-	<20120311134941.GA16669@user-desktop>
+From: =?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= 
+	<u.kleine-koenig@pengutronix.de>
+Subject: [PATCH 05/17] net: mark const init data with __initconst instead of __initdata
+Date: Thu, 29 Mar 2012 23:12:22 +0200
+Message-ID: <1333055554-31300-5-git-send-email-u.kleine-koenig@pengutronix.de>
+References: <20120329211131.GA31250@pengutronix.de>
 Mime-Version: 1.0
 Content-Transfer-Encoding: QUOTED-PRINTABLE
 Return-path: <linux-hams-owner@vger.kernel.org>
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :content-type:content-transfer-encoding;
-        bh=JuFeHnN6Ci8ikBfKZ4k8e0A6MpfcnkifY/lbLdXRogQ=;
-        b=RTzdzUkindoXNpMAViDZAQl3G9hblalbBJ5C27DjMH3NZ0bPuXAyPQzoRbCJE+qyca
-         dQPTUqG2xiMzHgutPmUchwHPHqkK8+kS0JaH8BTDuJO/rJcsHN2PnhVx+g09n9qsFvi6
-         7O3gRxE2fd534QbmiO0E9sId3cmUOtBOB7sBpKUoBY7Pn2WObhgwZelatcqBfg9HloNw
-         tEJFXVOWXMaoJZQ3YCYhivxvCDFa1vu8/qehlyhJDrtBMQSt+khMi4mbx1MbgjfoLqeB
-         /dhi9rVpeNUqJvN8a+quxdnpX8teBJoBwpJwCXhcqEOrsCztQbrRmJP7Wk6gQ42QDQT4
-         ZOhw==
-In-Reply-To: <20120311134941.GA16669@user-desktop>
+In-Reply-To: <20120329211131.GA31250@pengutronix.de>
 Sender: linux-hams-owner@vger.kernel.org
 List-ID: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="iso-8859-1"
-To: Miroslav Skoric <skoric@eunet.rs>, linux-hams@vger.kernel.org
+To: linux-kernel@vger.kernel.org, Andrew Morton <akpm@linux-foundation.org>
+Cc: kernel@pengutronix.de, Andreas Koensgen <ajk@comnets.uni-bremen.de>, Klaus Kudielka <klaus.kudielka@ieee.org>, Joerg Reuter <jreuter@yaina.de>, Jean-Paul Roubelat <jpr@f6fbb.org>, netdev@vger.kernel.org, linux-hams@vger.kernel.org
 
-Those are ARP request.
+As long as there is no other non-const variable marked __initdata in th=
+e
+same compilation unit it doesn't hurt. If there were one however
+compilation would fail with
 
-On Sun, Mar 11, 2012 at 09:49, Larry Levesque <ka1vgm@gmail.com> wrote:
-> First things first, put your ax stuff in another subnet. Hams usually
-> use the 44.*.*.* series.
->
->
->
-> On Sun, Mar 11, 2012 at 02:37:46PM +0100, Miroslav Skoric wrote:
->> Hi all,
->>
->> I have three BPQ32 machines in the home =A0LAN and they talk each
->> other by using bpqether ports. =A0One machine has two network cards
->> and the other two have one card each, so the box with two cards
->> interconnect all three boxes in a 'chain':
->>
->>
->> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 _____________ =A0 =A0 =A0 __________=
-____ =A0 =A0 ______________
->> VHF =A0 =A0 =A0 =A0 =A0| BPQ32 4.10f =A0| =A0 =A0 | =A0BPQ32 4.10f =A0=
- =A0| =A0 | BPQ32 4.10f =A0 =A0|
->> TRX-TNC2-| =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0| -- | FPAC 3.28.1=
-8 =A0 |--| =A0 =A0 =A0 |
->> ant =A0 =A0 =A0 =A0 =A0 |____________| =A0 =A0 |______________| =A0 =
-|_____________|
->>
->> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 (1) =A0 =A0 =A0 =A0 =
-=A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0(2) =A0 =A0 =A0 =A0 (3)
->>
->> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0192.168.1.2 =A0 <--> =A0 =A0192.1=
-68.1.1
->> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =
-=A0 =A0 =A0 =A0 =A0 =A0 192.168.0.1 =A0 =A0<-->
->> 192.168.0.2
->>
->>
->> All comps are dual-boot. The box with two NICs is dual-boot with
->> Debian 6.0.4 and I put FPAC 3.28.18 there. I managed to force FPAC
->> talking via bpq0 (eth0) to the BPQ32 comps.
->>
->> Although the three nodes communicate each-other, I discovered an
->> annoying traffic of FPAC filling up the BPQ32 monitoring screen: In
->> fact, it sends the rows bellow continually to the box (3), on the
->> right in the Fig. above:
->>
->> 12:52:53R YT7MPB-15>QST Port=3D1 <UI> <ARP Request> Who Has
->> 192.168.0.2? Tell 192.168.0.1
->> 12:52:54R YT7MPB-15>QST Port=3D1 <UI> <ARP Request> Who Has
->> 192.168.0.2? Tell 192.168.0.1
->> 12:52:55R YT7MPB-15>QST Port=3D1 <UI> <ARP Request> Who Has
->> 192.168.0.2? Tell 192.168.0.1
->> 12:52:57R YT7MPB-15>QST Port=3D1 <UI> <ARP Request> Who Has
->> 192.168.0.2? Tell 192.168.0.1
->> 12:52:58R YT7MPB-15>QST Port=3D1 <UI> <ARP Request> Who Has
->> 192.168.0.2? Tell 192.168.0.1
->>
->> ... and the similar traffic it sends to the box (1), on the left in
->> the Fig. above:
->>
->> 12:52:59R YT7MPB-14>QST Port=3D1 <UI> <ARP Request> Who Has
->> 192.168.1.2? Tell 192.168.1.1
->> 12:53:01R YT7MPB-14>QST Port=3D1 <UI> <ARP Request> Who Has
->> 192.168.1.2? Tell 192.168.1.1
->> 12:53:02R YT7MPB-14>QST Port=3D1 <UI> <ARP Request> Who Has
->> 192.168.1.2? Tell 192.168.1.1
->> 12:53:03R YT7MPB-14>QST Port=3D1 <UI> <ARP Request> Who Has
->> 192.168.1.2? Tell 192.168.1.1
->> ...etc ...
->>
->> To locate the issue, I reboot the box in the middle to Win/BPQ32
->> again, and the production of those funny lines stops. Any idea?
->>
->> By the way, ifconfig returns the following:
->>
->> root@localhost:/home/misko# ifconfig
->> ax0 =A0 =A0 =A0 Link encap:AMPR AX.25 =A0HWaddr YT7MPB-15
->> =A0 =A0 =A0 =A0 =A0 inet addr:192.168.0.1 =A0Bcast:192.168.0.255 =A0=
-Mask:255.255.255.0
->> =A0 =A0 =A0 =A0 =A0 UP BROADCAST RUNNING =A0MTU:255 =A0Metric:1
->> =A0 =A0 =A0 =A0 =A0 RX packets:0 errors:0 dropped:0 overruns:0 frame=
-:0
->> =A0 =A0 =A0 =A0 =A0 TX packets:0 errors:0 dropped:0 overruns:0 carri=
-er:0
->> =A0 =A0 =A0 =A0 =A0 collisions:0 txqueuelen:10
->> =A0 =A0 =A0 =A0 =A0 RX bytes:0 (0.0 B) =A0TX bytes:0 (0.0 B)
->>
->> bpq0 =A0 =A0 =A0Link encap:AMPR AX.25 =A0HWaddr YT7MPB-15
->> =A0 =A0 =A0 =A0 =A0 inet addr:192.168.0.1 =A0Mask:255.255.255.0
->> =A0 =A0 =A0 =A0 =A0 UP RUNNING =A0MTU:256 =A0Metric:1
->> =A0 =A0 =A0 =A0 =A0 RX packets:95 errors:0 dropped:0 overruns:0 fram=
-e:0
->> =A0 =A0 =A0 =A0 =A0 TX packets:0 errors:0 dropped:0 overruns:0 carri=
-er:0
->> =A0 =A0 =A0 =A0 =A0 collisions:0 txqueuelen:0
->> =A0 =A0 =A0 =A0 =A0 RX bytes:2477 (2.4 KiB) =A0TX bytes:0 (0.0 B)
->>
->> bpq1 =A0 =A0 =A0Link encap:AMPR AX.25 =A0HWaddr YT7MPB-14
->> =A0 =A0 =A0 =A0 =A0 inet addr:192.168.1.1 =A0Mask:255.255.255.0
->> =A0 =A0 =A0 =A0 =A0 UP RUNNING =A0MTU:256 =A0Metric:1
->> =A0 =A0 =A0 =A0 =A0 RX packets:71 errors:0 dropped:0 overruns:0 fram=
-e:0
->> =A0 =A0 =A0 =A0 =A0 TX packets:0 errors:0 dropped:0 overruns:0 carri=
-er:0
->> =A0 =A0 =A0 =A0 =A0 collisions:0 txqueuelen:0
->> =A0 =A0 =A0 =A0 =A0 RX bytes:2336 (2.2 KiB) =A0TX bytes:0 (0.0 B)
->>
->> eth0 =A0 =A0 =A0Link encap:Ethernet =A0HWaddr 94:0c:6d:80:4d:83
->> =A0 =A0 =A0 =A0 =A0 inet addr:192.168.0.1 =A0Bcast:192.168.0.255 =A0=
-Mask:255.255.255.0
->> =A0 =A0 =A0 =A0 =A0 inet6 addr: fe80::960c:6dff:fe80:4d83/64 Scope:L=
-ink
->> =A0 =A0 =A0 =A0 =A0 UP BROADCAST RUNNING MULTICAST =A0MTU:1500 =A0Me=
-tric:1
->> =A0 =A0 =A0 =A0 =A0 RX packets:2547 errors:0 dropped:0 overruns:0 fr=
-ame:0
->> =A0 =A0 =A0 =A0 =A0 TX packets:2550 errors:0 dropped:0 overruns:0 ca=
-rrier:0
->> =A0 =A0 =A0 =A0 =A0 collisions:0 txqueuelen:1000
->> =A0 =A0 =A0 =A0 =A0 RX bytes:198452 (193.8 KiB) =A0TX bytes:164246 (=
-160.3 KiB)
->> =A0 =A0 =A0 =A0 =A0 Interrupt:5 Base address:0xe800
->>
->> eth1 =A0 =A0 =A0Link encap:Ethernet =A0HWaddr 00:10:4b:2e:da:df
->> =A0 =A0 =A0 =A0 =A0 inet addr:192.168.1.1 =A0Bcast:192.168.1.255 =A0=
-Mask:255.255.255.0
->> =A0 =A0 =A0 =A0 =A0 inet6 addr: fe80::210:4bff:fe2e:dadf/64 Scope:Li=
-nk
->> =A0 =A0 =A0 =A0 =A0 UP BROADCAST RUNNING MULTICAST =A0MTU:1500 =A0Me=
-tric:1
->> =A0 =A0 =A0 =A0 =A0 RX packets:1446 errors:0 dropped:0 overruns:0 fr=
-ame:0
->> =A0 =A0 =A0 =A0 =A0 TX packets:2532 errors:0 dropped:0 overruns:0 ca=
-rrier:0
->> =A0 =A0 =A0 =A0 =A0 collisions:0 txqueuelen:1000
->> =A0 =A0 =A0 =A0 =A0 RX bytes:117209 (114.4 KiB) =A0TX bytes:160870 (=
-157.0 KiB)
->> =A0 =A0 =A0 =A0 =A0 Interrupt:11 Base address:0xe400
->>
->> lo =A0 =A0 =A0 =A0Link encap:Local Loopback
->> =A0 =A0 =A0 =A0 =A0 inet addr:127.0.0.1 =A0Mask:255.0.0.0
->> =A0 =A0 =A0 =A0 =A0 inet6 addr: ::1/128 Scope:Host
->> =A0 =A0 =A0 =A0 =A0 UP LOOPBACK RUNNING =A0MTU:16436 =A0Metric:1
->> =A0 =A0 =A0 =A0 =A0 RX packets:8 errors:0 dropped:0 overruns:0 frame=
-:0
->> =A0 =A0 =A0 =A0 =A0 TX packets:8 errors:0 dropped:0 overruns:0 carri=
-er:0
->> =A0 =A0 =A0 =A0 =A0 collisions:0 txqueuelen:0
->> =A0 =A0 =A0 =A0 =A0 RX bytes:560 (560.0 B) =A0TX bytes:560 (560.0 B)
->>
->> nr0 =A0 =A0 =A0 Link encap:AMPR NET/ROM =A0HWaddr YT7MPB-3
->> =A0 =A0 =A0 =A0 =A0 inet addr:192.168.0.1 =A0Mask:255.255.255.0
->> =A0 =A0 =A0 =A0 =A0 UP RUNNING NOARP =A0MTU:235 =A0Metric:1
->> =A0 =A0 =A0 =A0 =A0 RX packets:0 errors:0 dropped:0 overruns:0 frame=
-:0
->> =A0 =A0 =A0 =A0 =A0 TX packets:0 errors:0 dropped:0 overruns:0 carri=
-er:0
->> =A0 =A0 =A0 =A0 =A0 collisions:0 txqueuelen:0
->> =A0 =A0 =A0 =A0 =A0 RX bytes:0 (0.0 B) =A0TX bytes:0 (0.0 B)
->>
->> nr1 =A0 =A0 =A0 Link encap:AMPR NET/ROM =A0HWaddr YT7MPB-4
->> =A0 =A0 =A0 =A0 =A0 inet addr:192.168.0.1 =A0Mask:255.255.255.0
->> =A0 =A0 =A0 =A0 =A0 UP RUNNING NOARP =A0MTU:235 =A0Metric:1
->> =A0 =A0 =A0 =A0 =A0 RX packets:0 errors:0 dropped:0 overruns:0 frame=
-:0
->> =A0 =A0 =A0 =A0 =A0 TX packets:0 errors:0 dropped:0 overruns:0 carri=
-er:0
->> =A0 =A0 =A0 =A0 =A0 collisions:0 txqueuelen:0
->> =A0 =A0 =A0 =A0 =A0 RX bytes:0 (0.0 B) =A0TX bytes:0 (0.0 B)
->>
->> nr2 =A0 =A0 =A0 Link encap:AMPR NET/ROM =A0HWaddr YT7MPB-3
->> =A0 =A0 =A0 =A0 =A0 inet addr:192.168.1.1 =A0Mask:255.255.255.0
->> =A0 =A0 =A0 =A0 =A0 UP RUNNING NOARP =A0MTU:235 =A0Metric:1
->> =A0 =A0 =A0 =A0 =A0 RX packets:0 errors:0 dropped:0 overruns:0 frame=
-:0
->> =A0 =A0 =A0 =A0 =A0 TX packets:0 errors:0 dropped:0 overruns:0 carri=
-er:0
->> =A0 =A0 =A0 =A0 =A0 collisions:0 txqueuelen:0
->> =A0 =A0 =A0 =A0 =A0 RX bytes:0 (0.0 B) =A0TX bytes:0 (0.0 B)
->>
->> nr3 =A0 =A0 =A0 Link encap:AMPR NET/ROM =A0HWaddr YT7MPB-4
->> =A0 =A0 =A0 =A0 =A0 inet addr:192.168.1.1 =A0Mask:255.255.255.0
->> =A0 =A0 =A0 =A0 =A0 UP RUNNING NOARP =A0MTU:235 =A0Metric:1
->> =A0 =A0 =A0 =A0 =A0 RX packets:0 errors:0 dropped:0 overruns:0 frame=
-:0
->> =A0 =A0 =A0 =A0 =A0 TX packets:0 errors:0 dropped:0 overruns:0 carri=
-er:0
->> =A0 =A0 =A0 =A0 =A0 collisions:0 txqueuelen:0
->> =A0 =A0 =A0 =A0 =A0 RX bytes:0 (0.0 B) =A0TX bytes:0 (0.0 B)
->>
->> rose0 =A0 =A0 Link encap:AMPR ROSE =A0HWaddr 2200210000
->> =A0 =A0 =A0 =A0 =A0 inet addr:192.168.0.1 =A0Mask:255.255.255.0
->> =A0 =A0 =A0 =A0 =A0 UP RUNNING NOARP =A0MTU:251 =A0Metric:1
->> =A0 =A0 =A0 =A0 =A0 RX packets:0 errors:0 dropped:0 overruns:0 frame=
-:0
->> =A0 =A0 =A0 =A0 =A0 TX packets:0 errors:0 dropped:0 overruns:0 carri=
-er:0
->> =A0 =A0 =A0 =A0 =A0 collisions:0 txqueuelen:0
->> =A0 =A0 =A0 =A0 =A0 RX bytes:0 (0.0 B) =A0TX bytes:0 (0.0 B)
->>
->> root@localhost:/home/misko#
->>
->>
->> Misko
->> --
->> To unsubscribe from this list: send the line "unsubscribe linux-hams=
-" in
->> the body of a message to majordomo@vger.kernel.org
->> More majordomo info at =A0http://vger.kernel.org/majordomo-info.html
->
-> --
-> Larry Levesque
-> www.surrycomputerservices.com
-> --
-> To unsubscribe from this list: send the line "unsubscribe linux-hams"=
- in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at =A0http://vger.kernel.org/majordomo-info.html
+	error: $variablename causes a section type conflict
 
+because a section containing const variables is marked read only and so
+cannot contain non-const variables.
 
-
---=20
-
-Chuck Hast =A0-- KP4DJT --
-To paraphrase my flight instructor;
-"the only dumb question is the one you DID NOT ask resulting in my goin=
-g
-out and having to identify your bits and pieces in the midst of torn
-and twisted metal."
+Signed-off-by: Uwe Kleine-K=C3=B6nig <u.kleine-koenig@pengutronix.de>
+Cc: Andreas Koensgen <ajk@comnets.uni-bremen.de>
+Cc: Klaus Kudielka <klaus.kudielka@ieee.org>
+Cc: Joerg Reuter <jreuter@yaina.de>
+Cc: Jean-Paul Roubelat <jpr@f6fbb.org>
+Cc: netdev@vger.kernel.org
+Cc: linux-hams@vger.kernel.org
 ---
-Home web site:
-www.wchast.com
+ drivers/net/ethernet/8390/ne3210.c |    2 +-
+ drivers/net/hamradio/6pack.c       |    4 ++--
+ drivers/net/hamradio/bpqether.c    |    2 +-
+ drivers/net/hamradio/mkiss.c       |    4 ++--
+ drivers/net/hamradio/scc.c         |    2 +-
+ drivers/net/hamradio/yam.c         |    2 +-
+ drivers/net/tokenring/smctr.c      |    2 +-
+ drivers/net/wan/z85230.c           |    2 +-
+ 8 files changed, 10 insertions(+), 10 deletions(-)
 
-ZoneMinder Demo and test site
-www.wchast.com/zm
-Login =3D guest
-pwd=A0 =A0=3D guest
+diff --git a/drivers/net/ethernet/8390/ne3210.c b/drivers/net/ethernet/=
+8390/ne3210.c
+index a2f8b2b..f826e74 100644
+--- a/drivers/net/ethernet/8390/ne3210.c
++++ b/drivers/net/ethernet/8390/ne3210.c
+@@ -81,7 +81,7 @@ static void ne3210_block_output(struct net_device *de=
+v, int count, const unsigne
+=20
+ static unsigned char irq_map[] __initdata =3D {15, 12, 11, 10, 9, 7, 5=
+, 3};
+ static unsigned int shmem_map[] __initdata =3D {0xff0, 0xfe0, 0xfff0, =
+0xd8, 0xffe0, 0xffc0, 0xd0, 0x0};
+-static const char *ifmap[] __initdata =3D {"UTP", "?", "BNC", "AUI"};
++static const char *ifmap[] __initconst =3D {"UTP", "?", "BNC", "AUI"};
+ static int ifmap_val[] __initdata =3D {
+ 		IF_PORT_10BASET,
+ 		IF_PORT_UNKNOWN,
+diff --git a/drivers/net/hamradio/6pack.c b/drivers/net/hamradio/6pack.=
+c
+index 64783a0..d225a2a 100644
+--- a/drivers/net/hamradio/6pack.c
++++ b/drivers/net/hamradio/6pack.c
+@@ -811,9 +811,9 @@ static struct tty_ldisc_ops sp_ldisc =3D {
+=20
+ /* Initialize 6pack control device -- register 6pack line discipline *=
+/
+=20
+-static const char msg_banner[]  __initdata =3D KERN_INFO \
++static const char msg_banner[]  __initconst =3D KERN_INFO \
+ 	"AX.25: 6pack driver, " SIXPACK_VERSION "\n";
+-static const char msg_regfail[] __initdata =3D KERN_ERR  \
++static const char msg_regfail[] __initconst =3D KERN_ERR  \
+ 	"6pack: can't register line discipline (err =3D %d)\n";
+=20
+ static int __init sixpack_init_driver(void)
+diff --git a/drivers/net/hamradio/bpqether.c b/drivers/net/hamradio/bpq=
+ether.c
+index 76d5477..c2e5497 100644
+--- a/drivers/net/hamradio/bpqether.c
++++ b/drivers/net/hamradio/bpqether.c
+@@ -87,7 +87,7 @@
+=20
+ #include <linux/bpqether.h>
+=20
+-static const char banner[] __initdata =3D KERN_INFO \
++static const char banner[] __initconst =3D KERN_INFO \
+ 	"AX.25: bpqether driver version 004\n";
+=20
+ static char bcast_addr[6]=3D{0xFF,0xFF,0xFF,0xFF,0xFF,0xFF};
+diff --git a/drivers/net/hamradio/mkiss.c b/drivers/net/hamradio/mkiss.=
+c
+index aed1a61..d694215 100644
+--- a/drivers/net/hamradio/mkiss.c
++++ b/drivers/net/hamradio/mkiss.c
+@@ -997,9 +997,9 @@ static struct tty_ldisc_ops ax_ldisc =3D {
+ 	.write_wakeup	=3D mkiss_write_wakeup
+ };
+=20
+-static const char banner[] __initdata =3D KERN_INFO \
++static const char banner[] __initconst =3D KERN_INFO \
+ 	"mkiss: AX.25 Multikiss, Hans Albas PE1AYX\n";
+-static const char msg_regfail[] __initdata =3D KERN_ERR \
++static const char msg_regfail[] __initconst =3D KERN_ERR \
+ 	"mkiss: can't register line discipline (err =3D %d)\n";
+=20
+ static int __init mkiss_init_driver(void)
+diff --git a/drivers/net/hamradio/scc.c b/drivers/net/hamradio/scc.c
+index efc6c97..1b4a47b 100644
+--- a/drivers/net/hamradio/scc.c
++++ b/drivers/net/hamradio/scc.c
+@@ -182,7 +182,7 @@
+=20
+ #include "z8530.h"
+=20
+-static const char banner[] __initdata =3D KERN_INFO \
++static const char banner[] __initconst =3D KERN_INFO \
+ 	"AX.25: Z8530 SCC driver version "VERSION".dl1bke\n";
+=20
+ static void t_dwait(unsigned long);
+diff --git a/drivers/net/hamradio/yam.c b/drivers/net/hamradio/yam.c
+index 5a6412e..c6645f1 100644
+--- a/drivers/net/hamradio/yam.c
++++ b/drivers/net/hamradio/yam.c
+@@ -76,7 +76,7 @@
+ /* -------------------------------------------------------------------=
+-- */
+=20
+ static const char yam_drvname[] =3D "yam";
+-static const char yam_drvinfo[] __initdata =3D KERN_INFO \
++static const char yam_drvinfo[] __initconst =3D KERN_INFO \
+ 	"YAM driver version 0.8 by F1OAT/F6FBB\n";
+=20
+ /* -------------------------------------------------------------------=
+-- */
+diff --git a/drivers/net/tokenring/smctr.c b/drivers/net/tokenring/smct=
+r.c
+index cb35fb7..90b5f1e 100644
+--- a/drivers/net/tokenring/smctr.c
++++ b/drivers/net/tokenring/smctr.c
+@@ -59,7 +59,7 @@
+=20
+ #include "smctr.h"               /* Our Stuff */
+=20
+-static const char version[] __initdata =3D
++static const char version[] __initconst =3D
+ 	KERN_INFO "smctr.c: v1.4 7/12/00 by jschlst@samba.org\n";
+ static const char cardname[] =3D "smctr";
+=20
+diff --git a/drivers/net/wan/z85230.c b/drivers/net/wan/z85230.c
+index 0e57690..feacc3b 100644
+--- a/drivers/net/wan/z85230.c
++++ b/drivers/net/wan/z85230.c
+@@ -1775,7 +1775,7 @@ EXPORT_SYMBOL(z8530_queue_xmit);
+ /*
+  *	Module support
+  */
+-static const char banner[] __initdata =3D
++static const char banner[] __initconst =3D
+ 	KERN_INFO "Generic Z85C30/Z85230 interface driver v0.02\n";
+=20
+ static int __init z85230_init_driver(void)
+--=20
+1.7.9.1
+
 --
 To unsubscribe from this list: send the line "unsubscribe linux-hams" i=
 n
