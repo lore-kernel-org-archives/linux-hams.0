@@ -1,50 +1,45 @@
-From: Uwe =?iso-8859-1?Q?Kleine-K=F6nig?= <u.kleine-koenig@pengutronix.de>
-Subject: [PATCH 00/17] mark const init data with __initconst instead of
- __initdata
-Date: Thu, 29 Mar 2012 23:11:31 +0200
-Message-ID: <20120329211131.GA31250@pengutronix.de>
+From: =?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= 
+	<u.kleine-koenig@pengutronix.de>
+Subject: [PATCH] hamradio/scc: orphan driver in MAINTAINERS
+Date: Thu, 29 Mar 2012 23:21:39 +0200
+Message-ID: <1333056099-31530-1-git-send-email-u.kleine-koenig@pengutronix.de>
 Mime-Version: 1.0
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Return-path: <linux-hams-owner@vger.kernel.org>
+Sender: linux-hams-owner@vger.kernel.org
+List-ID: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="iso-8859-1"
-Content-Transfer-Encoding: quoted-printable
-Return-path: <linux-mtd-bounces+gldm-linux-mtd-36=gmane.org@lists.infradead.org>
-Content-Disposition: inline
-List-Id: <linux-hams.vger.kernel.org>
-List-Unsubscribe: <http://lists.infradead.org/mailman/options/linux-mtd>,
- <mailto:linux-mtd-request@lists.infradead.org?subject=unsubscribe>
-List-Archive: <http://lists.infradead.org/pipermail/linux-mtd/>
-List-Post: <mailto:linux-mtd@lists.infradead.org>
-List-Help: <mailto:linux-mtd-request@lists.infradead.org?subject=help>
-List-Subscribe: <http://lists.infradead.org/mailman/listinfo/linux-mtd>,
- <mailto:linux-mtd-request@lists.infradead.org?subject=subscribe>
-Sender: linux-mtd-bounces@lists.infradead.org
-Errors-To: linux-mtd-bounces+gldm-linux-mtd-36=gmane.org@lists.infradead.org
-To: linux-kernel@vger.kernel.org, Andrew Morton <akpm@linux-foundation.org>
-Cc: Andrew Lunn <andrew@lunn.ch>, Christoph Lameter <cl@linux-foundation.org>, linux-mips@linux-mips.org, Tony Lindgren <tony@atomide.com>, Benjamin Herrenschmidt <benh@kernel.crashing.org>, Linus Walleij <linus.walleij@linaro.org>, Matt Porter <mporter@kernel.crashing.org>, Nicolas Ferre <nicolas.ferre@atmel.com>, Matthew Garrett <mjg59@srcf.ucam.org>, platform-driver-x86@vger.kernel.org, Grant Likely <grant.likely@secretlab.ca>, ibm-acpi-devel@lists.sourceforge.net, Randy Dunlap <rdunlap@xenotime.net>, linux-mtd@lists.infradead.org, Sekhar Nori <nsekhar@ti.com>, Daniel Walker <dwalker@fifo99.com>, lm-sensors@lm-sensors.org, Klaus Kudielka <klaus.kudielka@ieee.org>, Guenter Roeck <guenter.roeck@ericsson.com>, Kevin Hilman <khilman@ti.com>, linux-ia64@vger.kernel.org, Kukjin Kim <kgene.kim@samsung.com>, Russell King <linux@arm.linux.org.uk>, Samuel Ortiz <sameo@linux.intel.c>
+To: Andrew Morton <akpm@linux-foundation.org>, linux-kernel@vger.kernel.org
+Cc: kernel@pengutronix.de, linux-hams@vger.kernel.org
 
-Hello,
+The email address doesn't exist anymore and the website yields a 404.
 
-this series fixes a common error to use __initdata to mark const
-variables. Most of the time this works well enough to go unnoticed
-(though I wonder why the linker doesn't warn about that).
-Just try adding something like
+Signed-off-by: Uwe Kleine-K=C3=B6nig <u.kleine-koenig@pengutronix.de>
+---
+ MAINTAINERS |    4 +---
+ 1 files changed, 1 insertions(+), 3 deletions(-)
 
-	int something __initdata;
+diff --git a/MAINTAINERS b/MAINTAINERS
+index f9faade..22da628 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -3185,10 +3185,8 @@ F:	include/linux/clockchips.h
+ F:	include/linux/hrtimer.h
+=20
+ HIGH-SPEED SCC DRIVER FOR AX.25
+-M:	Klaus Kudielka <klaus.kudielka@ieee.org>
+ L:	linux-hams@vger.kernel.org
+-W:	http://www.nt.tuwien.ac.at/~kkudielk/Linux/
+-S:	Maintained
++S:	Orphan
+ F:	drivers/net/hamradio/dmascc.c
+ F:	drivers/net/hamradio/scc.c
+=20
+--=20
+1.7.9.1
 
-to one of the patched files and compile to see the error.
-
-While touching these annotations I also corrected the position where it
-was wrong to go between the variable name and the =3D.
-
-Note this series is not compile tested.
-
-Best regards
-Uwe
-
--- =
-
-Pengutronix e.K.                           | Uwe Kleine-K=F6nig            |
-Industrial Linux Solutions                 | http://www.pengutronix.de/  |
-
-______________________________________________________
-Linux MTD discussion mailing list
-http://lists.infradead.org/mailman/listinfo/linux-mtd/
+--
+To unsubscribe from this list: send the line "unsubscribe linux-hams" i=
+n
+the body of a message to majordomo@vger.kernel.org
+More majordomo info at  http://vger.kernel.org/majordomo-info.html
