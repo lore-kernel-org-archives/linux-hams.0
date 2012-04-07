@@ -1,67 +1,181 @@
-From: Uwe =?iso-8859-1?Q?Kleine-K=F6nig?= <u.kleine-koenig@pengutronix.de>
-Subject: [PATCH v2 00/15] mark const init data with __initconst instead of
- __initdata
-Date: Fri, 30 Mar 2012 22:03:58 +0200
-Message-ID: <20120330200358.GV15647@pengutronix.de>
-References: <20120329211131.GA31250@pengutronix.de>
+From: David Ranch <linux-hams@trinnet.net>
+Subject: Soundmodem hangs all USB keyboard or mouse input -- and soundmodem
+ 0.16: fix the AFSK modulator for 300 baud operation
+Date: Sat, 07 Apr 2012 16:14:51 -0700
+Message-ID: <4F80CA6B.4010204@trinnet.net>
+References: <1330736067.25864.15.camel@vortex> <4F51E964.9080605@bfs.de>   <1330786027.2248.33.camel@vortex> <4F537D4A.6040507@bfs.de>   <1330892180.2083.84.camel@vortex> <4F776E14.7090104@trinnet.net>   <1333379832.2112.15.camel@vortex> <4F7B199F.3050104@trinnet.net>   <1333647291.2605.34.camel@vortex> <1333741818.4064.20.camel@vortex>  <4F7F7A2C.2030500@trinnet.net> <1333809855.2433.10.camel@vortex>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="iso-8859-1"
-Content-Transfer-Encoding: quoted-printable
-Return-path: <linux-mtd-bounces+gldm-linux-mtd-36=gmane.org@lists.infradead.org>
-Content-Disposition: inline
-In-Reply-To: <20120329211131.GA31250@pengutronix.de>
-List-Id: <linux-hams.vger.kernel.org>
-List-Unsubscribe: <http://lists.infradead.org/mailman/options/linux-mtd>,
- <mailto:linux-mtd-request@lists.infradead.org?subject=unsubscribe>
-List-Archive: <http://lists.infradead.org/pipermail/linux-mtd/>
-List-Post: <mailto:linux-mtd@lists.infradead.org>
-List-Help: <mailto:linux-mtd-request@lists.infradead.org?subject=help>
-List-Subscribe: <http://lists.infradead.org/mailman/listinfo/linux-mtd>,
- <mailto:linux-mtd-request@lists.infradead.org?subject=subscribe>
-Sender: linux-mtd-bounces@lists.infradead.org
-Errors-To: linux-mtd-bounces+gldm-linux-mtd-36=gmane.org@lists.infradead.org
-To: linux-kernel@vger.kernel.org, Andrew Morton <akpm@linux-foundation.org>
-Cc: Andrew Lunn <andrew@lunn.ch>, Christoph Lameter <cl@linux-foundation.org>, linux-mips@linux-mips.org, Tony Lindgren <tony@atomide.com>, Benjamin Herrenschmidt <benh@kernel.crashing.org>, Linus Walleij <linus.walleij@linaro.org>, Matt Porter <mporter@kernel.crashing.org>, Nicolas Ferre <nicolas.ferre@atmel.com>, Matthew Garrett <mjg59@srcf.ucam.org>, platform-driver-x86@vger.kernel.org, Grant Likely <grant.likely@secretlab.ca>, ibm-acpi-devel@lists.sourceforge.net, Randy Dunlap <rdunlap@xenotime.net>, linux-mtd@lists.infradead.org, Sekhar Nori <nsekhar@ti.com>, Daniel Walker <dwalker@fifo99.com>, lm-sensors@lm-sensors.org, Klaus Kudielka <klaus.kudielka@ieee.org>, Guenter Roeck <guenter.roeck@ericsson.com>, Kevin Hilman <khilman@ti.com>, linux-ia64@vger.kernel.org, Kukjin Kim <kgene.kim@samsung.com>, Russell King <linux@arm.linux.org.uk>, Samuel Ortiz <sameo@linux.intel.c>
+Content-Transfer-Encoding: 7bit
+Return-path: <linux-hams-owner@vger.kernel.org>
+In-Reply-To: <1333809855.2433.10.camel@vortex>
+Sender: linux-hams-owner@vger.kernel.org
+List-ID: <linux-hams.vger.kernel.org>
+Content-Type: text/plain; charset="us-ascii"; format="flowed"
+To: Guido Trentalancia <iz6rdb@trentalancia.com>, t.sailer@alumni.ethz.ch, Linux Hams <linux-hams@vger.kernel.org>
 
-Hello,
 
-On Thu, Mar 29, 2012 at 11:11:31PM +0200, Uwe Kleine-K=F6nig wrote:
-> this series fixes a common error to use __initdata to mark const
-> variables. Most of the time this works well enough to go unnoticed
-> (though I wonder why the linker doesn't warn about that).
-> Just try adding something like
-> =
+Hello Guido, Thomas, fellow Linux HAMs:
 
-> 	int something __initdata;
-> =
+I've CCed the Linuxhams group as I'm curious if any of you have any 
+thoughts on why Soundmodem would be shutting down all USB-based keyboard 
+and mouse functionality until the process is killed!  In all my years of 
+Linux, I've never need something like this.  Very strange and any/all 
+comments would be very much appreciated!
 
-> to one of the patched files and compile to see the error.
-> =
 
-> While touching these annotations I also corrected the position where it
-> was wrong to go between the variable name and the =3D.
-> =
+Few points:
 
-> Note this series is not compile tested.
-I now dropped the wrong annotations. So two patches became obsolete
-(mtd and percpu). Note that I also dropped fixing the position of
-__initdata if changing it to __initconst was wrong. (I think if
-__initdata is placed before the variable name it doesn't have any
-effect.)
+1) I've recently noticed a change on my system that when I run 
+soundmodemconfig (patched or unpatched), and I go into the spectrum 
+scope view, my USB keyboard and mouse stop responding!  Though the 
+spectrum scope continues to update, I can't type nor mouse around until 
+I kill soundmodem via an out of band SSH connection!   How weird!
 
-I didn't promote the Acks I got because all acked changes changed in v2.
+This Gateway NV57 laptop system is Centos6 (linux 2.6.32) running 
+PulseAudio and Soundmodem using a USB soundcard (US Interface Navigator) 
+which is configured to use ALSA natively (not OSS).
 
-For the details changed in each patch see the changelogs in the
-respective patch mails that I follow up to this mail.
+     - If I configure soundmodemconfig to use the on-motherboard 
+soundcard, the keyboard and mouse continue to function when the spectrum 
+scope is running!  This makes me think this is a USB / kernel issue with 
+soundmodem
 
-Thanks
-Uwe
+     - I moved all my various USB devices to different port locations 
+but there wasn't any improvement
+     - I tried disconnecting and re-connecting the USB to kb+mouse 
+adapter after the spectrum scope is running but that didn't help
+     - The KB+mouse are actually PS/2 style devices connecting through a 
+PS2 to USB adapter
+     - I've unconfigured the PTT port in soundmodemconfig to reduce 
+variables but that didn't have any change to the behavior
+     - I'm not running a KVM or Xen enabled kernel
+     - I've tried soundmodemconfig -S and that didn't allow the 
+soundsystem to be found.  Options -R and -M don't seem to be legal in 
+soundmodemconfig though the man page says they are.
 
--- =
+     - When I start soundmodem and try to show the spectrum display, I 
+see the following on STDOUT:
 
-Pengutronix e.K.                           | Uwe Kleine-K=F6nig            |
-Industrial Linux Solutions                 | http://www.pengutronix.de/  |
+[root@hampacket2 dranch]# soundmodemconfig
+on_configtree_selection_changed
+config_select: cfg: hampacket  chan: -
+selection: cfg: hampacket  chan: -
+on_configtree_selection_changed
+config_deselect: cfg: hampacket  chan: -
+selection: cfg: hampacket  chan: Channel 0
+Modulator: afsk Demodulator: afsk
+Modulator: parameter bps value 300
+Modulator: parameter f0 value 1600
+Modulator: parameter f1 value 1800
+Modulator: parameter diffenc value 1
+Demodulator: parameter bps value 300
+Demodulator: parameter f0 value 1600
+Demodulator: parameter f1 value 1800
+Demodulator: parameter diffdec value 1
+Minimum sampling rate: 11025
+Audio IO: type alsa
+ALSA: Using sample rate 11025, sample format 2, significant bits 16, 
+buffer size 5513, period size 165
+ALSA: Using sample rate 11025, sample format 2, significant bits 16, 
+buffer size 5513, period size 165
+sm[3644]: audio: starting "plughw:1,0"
+Real sampling rate: 11025
+sm[3644]: Opening PTT device "/dev/USI_PTT"
+--
 
-______________________________________________________
-Linux MTD discussion mailing list
-http://lists.infradead.org/mailman/listinfo/linux-mtd/
+     - As a test, I tried using "padsp" to try things under OSS 
+emulation but the /dev/dsp device isn't getting created.  It looks like 
+maybe soundmodem as asking for something that PulseAudio cannot support 
+(according to an strace):
+       --
+write(2, "utils/padsp.c: SNDCTL_DSP_CAPS\n", 31utils/padsp.c: 
+SNDCTL_DSP_CAPS) = 31
+write(2, "sm[4098]: ", 10sm[4098]: )              = 10
+write(2, "audio: forcing half duplex mode\n", 32audio: forcing half 
+duplex mode) = 32
+write(2, "utils/padsp.c: SNDCTL_DSP_SETFRA"..., 50utils/padsp.c: 
+SNDCTL_DSP_SETFRAGMENT: 0xffff0008) = 50
+futex(0x817160, FUTEX_UNLOCK_PI_PRIVATE, 0) = 0
+write(2, "utils/padsp.c: SNDCTL_DSP_SETFMT"..., 37utils/padsp.c: 
+SNDCTL_DSP_SETFMT: 16) = 37
+futex(0x817160, FUTEX_UNLOCK_PI_PRIVATE, 0) = 0
+write(2, "utils/padsp.c: SNDCTL_DSP_STEREO"..., 36utils/padsp.c: 
+SNDCTL_DSP_STEREO: 0) = 36
+write(2, "utils/padsp.c: SNDCTL_DSP_SPEED:"..., 39utils/padsp.c: 
+SNDCTL_DSP_SPEED: 11025) = 39
+futex(0x817160, FUTEX_LOCK_PI_PRIVATE, 1) = 0
+write(2, "utils/padsp.c: ss: s16le 1ch 110"..., 37utils/padsp.c: ss: 
+s16le 1ch 11025Hz) = 37
+futex(0x817160, FUTEX_UNLOCK_PI_PRIVATE, 0) = 0
+write(2, "utils/padsp.c: unknown ioctl 0x0"..., 40utils/padsp.c: unknown 
+ioctl 0x0000500e) = 40
+write(2, "sm[4098]: ", 10sm[4098]: )              = 10
+write(2, "audio: Error, cannot set nonbloc"..., 42audio: Error, cannot 
+set nonblocking mode) = 42 <-------------------------------------
+write(2, "utils/padsp.c: freeing fd info ("..., 38utils/padsp.c: freeing 
+fd info (fd=4)) = 38
+write(2, "utils/padsp.c: Draining.\n", 25utils/padsp.c: Draining.
+       --
+
+I want to say soundmodem used to work on this specific machine with 
+Pulse/Alsa on plughw1,0.  I even tried starting up an older kernel but 
+that didn't help.  I don't see anything helpful in /var/log/messages, 
+/var/log/Xorg.0.log, dmesg, etc.
+
+2) I'm trying the newer soundmodem-0.16 patch iz6rdb submitted to Thomas 
+for better 300BAUD performance but I thought you said you reverted one 
+of these patches.  I assume means I only need ONE of the patches.  Which 
+one should I NOT apply?
+
+Sampling rate fix: 
+http://iz6rdb.trentalancia.com/en/soundmodem-0.16-use-a-minimum-samplerate-for-afsk-v5.patch
+Longer filters (I think it's this one you don't recommend now): 
+http://iz6rdb.trentalancia.com/en/soundmodem-0.16-increase-rx-filters-parameters.patch
+
+
+3) With the unpatched soundmodemconfig spectrum view, there isn't any 
+waveforms in column #1 but I do see all spectrum filling in columns 
+2-8.  With your patches applied, I see the upper frequencies of column 1 
+filled (50%) all the way through column 4.  Columns 5-8 are completely 
+empty.  It's as if all the spectrum has been compressed into the first 
+four columns with your patch.  Is that expected?   It seems to be due to 
+the soundmodem-0.16-use-a-minimum-samplerate-for-afsk-v5.patch patch
+
+4) With your patched soundmodem code running with a config of 1600/1800 
+mark/space, if I hit the PTT button say in the spectrum screen, I get 
+one primary tone at 1700hz (according to the soundmodemconfig spectrum 
+scope) and two very large harmonics on each side of it (1390hz, 1550, 
+1850, 1990).  With the original soundmodem-0.16 code, I get one single 
+tone at 1200hz and no harmonics
+
+5) In soundmodemconfig under channel 0, do you know what the 
+"differential encoding" option is for?
+
+6) It seems I must apply the 
+soundmodem-0.16-use-a-minimum-samplerate-for-afsk-v5.patch FIRST and if 
+I don't, the other patch will fail to apply.  Might be worth mentioning 
+the order dependency on your website
+
+7) - Your patch files are assuming unique directories 
+(soundmodem-0.16-orig).  You should probably make them be more generic 
+and relative:
+
+--- soundmodem-0.16-orig/afsk/modem.c   2012-02-29 20:31:24.356287000 +0100
++++ soundmodem-0.16/afsk/modem.c        2012-03-03 19:14:07.696345582 +0100
+
+to say
+
+--- afsk/modem.c   2012-02-29 20:31:24.356287000 +0100
++++ afsk/modem.c        2012-03-03 19:14:07.696345582 +0100
+
+
+Sorry for the long email but lots of interesting stuff and I think 
+including all the details always helps to come to a complete picture of 
+the problem(s).
+
+
+73s!
+
+--David
+KI6ZHD
+
