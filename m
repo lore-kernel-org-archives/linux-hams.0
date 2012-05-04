@@ -1,73 +1,52 @@
-From: Patrick Ouellette <pouelle@debian.org>
+From: Dan Smith <dsmith@danplanet.com>
 Subject: Re: AX25 and related software's future in Debian
-Date: Fri, 04 May 2012 14:06:21 -0400
-Message-ID: <20120504180621.GB6444@flying-gecko.net>
-References: <20120504151424.GC24655@flying-gecko.net>
- <E1SQLMS-00025Q-Iq@mail.kostecke.net>
- <20120504165706.GD24655@flying-gecko.net>
- <CAPSBm51RHEn7ch_A9CDrtUymZtnOJgnkCq_a=F3auq8A_6XFfg@mail.gmail.com>
+Date: Fri, 04 May 2012 11:32:34 -0700
+Message-ID: <4FA420C2.2060308@danplanet.com>
+References: <20120504151424.GC24655@flying-gecko.net> <E1SQLMS-00025Q-Iq@mail.kostecke.net> <20120504165706.GD24655@flying-gecko.net> <CAPSBm51RHEn7ch_A9CDrtUymZtnOJgnkCq_a=F3auq8A_6XFfg@mail.gmail.com> <20120504180621.GB6444@flying-gecko.net>
 Mime-Version: 1.0
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Content-Type: multipart/signed; micalg=pgp-sha1;
+ protocol="application/pgp-signature";
+ boundary="------------enigFD56340064703B1B7D44E609"
 Return-path: <linux-hams-owner@vger.kernel.org>
-Content-disposition: inline
-In-reply-to: <CAPSBm51RHEn7ch_A9CDrtUymZtnOJgnkCq_a=F3auq8A_6XFfg@mail.gmail.com>
+In-Reply-To: <20120504180621.GB6444@flying-gecko.net>
 Sender: linux-hams-owner@vger.kernel.org
 List-ID: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="iso-8859-1"
-To: Bill Vodall <wa7nwp@gmail.com>
-Cc: linux-hams@vger.kernel.org
+To: Patrick Ouellette <pouelle@debian.org>
+Cc: Bill Vodall <wa7nwp@gmail.com>, linux-hams@vger.kernel.org
 
-On Fri, May 04, 2012 at 10:50:41AM -0700, Bill Vodall wrote:
-> >> Has anyone considered making nodejs and ax25 conflict? That would =
-be an
-> >> easy way of sidestepping this entire namespace issue.
-> >>
-> >
-> > FWIW, I'm fine with that. =A0Apparently either Node.js people are n=
-ot
-> > OR someone higher in the food chain is not. =A0They are trying to
-> > make it so you can have Node.js AND node installed. =A0I suspect th=
-e
-> > actual cases where this is really desired to be very close to zero.
->=20
-> While I don't yet know anything about Node.js, a comment was recently
-> made on the wetnet list that the Node.js technology might lead to
-> making good use of the inherent nature of AX25 data.
->=20
-> If they are marked as conflicting, can it be easily overridden at ins=
-tall time?
->=20
+This is an OpenPGP/MIME signed message (RFC 2440 and 3156)
+--------------enigFD56340064703B1B7D44E609
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: quoted-printable
 
-Marking the packages as conflicting would get us out of the current
-immediate situation and allow another release cycle to develop and
-test transition stratigies/plans.
+> Not seeing anything particularly well suited to ax25 networks there,
+> or anything particularly unique in general.
 
-It can be overridden with dpkg --force-conflicts at installation.  This=
- is
-certainly not necessarily a long term solution.
+Not sure I'd agree there. If whatever you're running AX.25 on is
+suitable for HTTP, then Node.js would be of potential use as well. I'd
+surely vote to avoid a "Conflicts: resolution" (pun intended).
 
-As for the usefulness or not of Node.js with ax25 - similar java toolki=
-ts=20
-exist in the world, web apps are web apps from the user perspective.
-
-The marketing speak from nodejs.org:
-
-Node.js is a platform built on Chrome's JavaScript runtime for easily=20
-building fast, scalable network applications. Node.js uses an event-dri=
-ven,=20
-non-blocking I/O model that makes it lightweight and efficient, perfect=
-=20
-for data-intensive real-time applications that run across distributed d=
-evices.
+--=20
+Dan Smith
+www.danplanet.com
+KK7DS
 
 
-Not seeing anything particularly well suited to ax25 networks there,
-or anything particularly unique in general.
+--------------enigFD56340064703B1B7D44E609
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: OpenPGP digital signature
+Content-Disposition: attachment; filename="signature.asc"
 
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.11 (GNU/Linux)
 
-Pat
---
-To unsubscribe from this list: send the line "unsubscribe linux-hams" i=
-n
-the body of a message to majordomo@vger.kernel.org
-More majordomo info at  http://vger.kernel.org/majordomo-info.html
+iQEcBAEBAgAGBQJPpCDCAAoJEBeZxaMESjNVEccH/jt3HiQmx8lzGHIYYU7o3ITw
+N/iwOirp40c5fQXXWZYjIdUkYlKzhlXtG6iWY2Q8Ai0wOpciOgGS7CsEAm98yhad
+VXWxN1NYteU1R+k1JvRjZe+JCUt8qyaae+sdX/AMgeBtDBlXf8gPlASMctKvmECw
+Kiqe5QHOFhq39F79tdZ6gsNE1ychUYtrwm58Ajn2Ul/TRz9ua81rzwmrRDg3XPen
+7zkus+wFqkm+aqRzlrGFoS0Sd8718FWJQlyCUr0pK1aDOT6psWXIRmMEuUM+HI5Q
+n+1kYE2y8ht6BIkbTLvlK7m2z/sP0nsmbQuvPKJl2JnC/XqLPzmkJ7ndm9lJEY4=
+=WDXu
+-----END PGP SIGNATURE-----
+
+--------------enigFD56340064703B1B7D44E609--
