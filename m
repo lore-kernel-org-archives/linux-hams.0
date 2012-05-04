@@ -1,65 +1,78 @@
-From: Dan Smith <dsmith@danplanet.com>
+From: Patrick Ouellette <pouelle@debian.org>
 Subject: Re: AX25 and related software's future in Debian
-Date: Fri, 04 May 2012 08:35:30 -0700
-Message-ID: <4FA3F742.1010506@danplanet.com>
-References: <20120504013200.GB3489@flying-gecko.net> <4FA3E269.4060801@danplanet.com> <20120504151424.GC24655@flying-gecko.net>
+Date: Fri, 04 May 2012 12:57:06 -0400
+Message-ID: <20120504165706.GD24655@flying-gecko.net>
+References: <20120504151424.GC24655@flying-gecko.net>
+ <E1SQLMS-00025Q-Iq@mail.kostecke.net>
 Mime-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha1;
- protocol="application/pgp-signature";
- boundary="------------enig4818A72427E4D7AFBEDE3A6B"
+ protocol="application/pgp-signature"; boundary=uAKRQypu60I7Lcqm
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <20120504151424.GC24655@flying-gecko.net>
+Content-disposition: inline
+In-reply-to: <E1SQLMS-00025Q-Iq@mail.kostecke.net>
 Sender: linux-hams-owner@vger.kernel.org
 List-ID: <linux-hams.vger.kernel.org>
-To: Patrick Ouellette <pat@flying-gecko.net>
-Cc: linux-hams@vger.kernel.org, debian-hams@lists.debian.org, ralf@linux-mips.org, ax25@x-berg.in-berlin.de
+To: Steve Kostecke <steve@debian.org>, debian-ctte@lists.debian.org
+Cc: Dan Smith <dsmith@danplanet.com>, linux-hams@vger.kernel.org, debian-hams@lists.debian.org
 
-This is an OpenPGP/MIME signed message (RFC 2440 and 3156)
---------------enig4818A72427E4D7AFBEDE3A6B
-Content-Type: text/plain; charset=ISO-8859-1
+
+--uAKRQypu60I7Lcqm
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-> You claim the existence of the packages in Debian encourages others to =
+On Fri, May 04, 2012 at 11:28:04AM -0500, Steve Kostecke wrote:
+>=20
+> I've not had time to read that entire thread, but it seems to me that
+> renaming well known binaries violates the Principle Of Least
+> Astonishment.
+>=20
+> Has anyone considered making nodejs and ax25 conflict? That would be an
+> easy way of sidestepping this entire namespace issue.
+>=20
 
-> try ax25, if this is so where are these people?
+FWIW, I'm fine with that.  Apparently either Node.js people are not
+OR someone higher in the food chain is not.  They are trying to
+make it so you can have Node.js AND node installed.  I suspect the
+actual cases where this is really desired to be very close to zero.
+"They" are determined to not introduce the conflicts field.
 
-As you indicate, popcon isn't going to properly report all of the Linux
-systems "out there" that are running in completely isolated RF islands
-(much of network 44./8). Even the ones that do have a path to the
-outside are likely going to be configured to minimize any extra traffic
-over our extremely bandwidth-limited RF links.
+Policy again - from Section 7.4:
+"Be aware that adding Conflicts is normally not the best solution when=20
+two packages provide the same files. Depending on the reason for that=20
+conflict, using alternatives or renaming the files is often a better=20
+approach. See, for example, Binaries, Section 10.1.
 
-However, if debian determines the priority of packages based on
-popularity from internet-connected systems, and priority for names is
-given to the highest scoring package, (instead of the first one to use
-it), then it's unlikely we'll get to keep our place here.
+Neither Breaks nor Conflicts should be used unless two packages cannot=20
+be installed at the same time or installing them both causes one of=20
+them to be broken or unusable. Having similar functionality or performing=
+=20
+the same tasks as another package is not sufficient reason to declare=20
+Breaks or Conflicts with that package. Be aware that adding Conflicts=20
+is normally not the best solution when two packages provide the same=20
+files. Depending on the reason for that conflict, using alternatives=20
+or renaming the files is often a better approach. See, for example,=20
+Binaries, Section 10.1."
 
-Honestly, I can't say I'd fault debian for making such a decision, as
-we're certainly in the minority of their users. However, to answer your
-question, judging usage or the presence of "these people" by popcon is
-probably significantly and atypically less accurate for us as a group :)
+Clearly conflicts is a solution allowed by policy 7.4, and I don't know
+*why* they continue to press the issue.  Apparently bug 611698 which
+cites policy 10.1 claims "you can't do that."
 
---=20
-Dan Smith
-www.danplanet.com
-KK7DS
+Maybe the tech committee can explain why policy contradicts policy.
 
 
---------------enig4818A72427E4D7AFBEDE3A6B
+Pat=20
+
+--uAKRQypu60I7Lcqm
 Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="signature.asc"
+Content-Description: Digital signature
 
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.11 (GNU/Linux)
+Version: GnuPG v1.4.12 (GNU/Linux)
 
-iQEcBAEBAgAGBQJPo/dCAAoJEBeZxaMESjNVtWIIAMETsxBZvFeYnjbEWfLqJrA4
-vVpNcyZcRuoTcvSwLisTpaWcM8QzfqJsoPCxvdSSxcfCHKXf0WAJcALjxPYNACeF
-pwb759A5EMjFwwofEi6081VpUya1lDE3l9xjqO7eXIOBhcLwH6h26DHbAD6RKG0U
-GFsGNODMsRC8vOusNvH87NT3vq34WO6KNt4W3w/FueyVotVk5J/oCTVmqV9uVqJO
-qq7dGMwkkCLZh2/YTguVkrvCKGSZJ5XkBAJO1EYxRWSb4CNhviBn4z1DitBPWQLv
-oW3oux/QHzbi4Fh5LIdo9/1x+rcSVn/AyUa3SdYbv9Ez03MmqMmpuc6mrisPjEE=
-=SsQn
+iEYEARECAAYFAk+kCmIACgkQz9qdgganN263vQCeNWBidxorIx2tcb0377EbXkwI
+z8MAnRMyiOQTQ7oxXcjnmYzAzyR5rJwy
+=elDV
 -----END PGP SIGNATURE-----
 
---------------enig4818A72427E4D7AFBEDE3A6B--
+--uAKRQypu60I7Lcqm--
