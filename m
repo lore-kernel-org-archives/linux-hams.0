@@ -1,55 +1,41 @@
-From: Dan Smith <dsmith@danplanet.com>
-Subject: Re: AX25 and related software's future in Debian
-Date: Fri, 04 May 2012 07:06:33 -0700
-Message-ID: <4FA3E269.4060801@danplanet.com>
-References: <20120504013200.GB3489@flying-gecko.net>
+From: Patrick Ouellette <pat@flying-gecko.net>
+Subject: Re: Node.js and it's future in debian
+Date: Fri, 04 May 2012 10:31:32 -0400
+Message-ID: <20120504143132.GA24655@flying-gecko.net>
+References: <20120501205524.GI30521@flying-gecko.net>
+ <20120501215305.GA1250@burratino> <20120501221659.GA11430@flying-gecko.net>
+ <20120502065003.GB2410@burratino> <20120502165031.GC7390@flying-gecko.net>
+ <20120502171349.GA23806@burratino> <20120502200426.GF7390@flying-gecko.net>
+ <4FA2A557.1080103@trinnet.net> <20120503170521.GD19468@flying-gecko.net>
+ <20120504143129.0d9a7955@hw42.dyndns.org>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
- protocol="application/pgp-signature";
- boundary="------------enig23F936027D42C52277F3D24E"
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <20120504013200.GB3489@flying-gecko.net>
+Content-disposition: inline
+In-reply-to: <20120504143129.0d9a7955@hw42.dyndns.org>
 Sender: linux-hams-owner@vger.kernel.org
 List-ID: <linux-hams.vger.kernel.org>
-To: Patrick Ouellette <pat@flying-gecko.net>
-Cc: linux-hams@vger.kernel.org, debian-hams@lists.debian.org
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+To: DL1SIG <dl1sig@hw42.dyndns.org>
+Cc: Patrick Ouellette <pouelle@debian.org>, David Ranch <linux-hams@trinnet.net>, node@packages.debian.org, nodejs@packages.debian.org, debian-hams@lists.debian.org, linux-hams@vger.kernel.org
 
-This is an OpenPGP/MIME signed message (RFC 2440 and 3156)
---------------enig23F936027D42C52277F3D24E
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: quoted-printable
+On Fri, May 04, 2012 at 02:31:29PM +0200, DL1SIG wrote:
+> 
+> I think using the alternatives system [1] could be a solution. I guess
+> that node.js and axnode is not often used on the same system. Therefore
+> in most of the cases the alternatives auto select mechanism will do the
+> right thing.
+>
 
-> So, what inspiration can you give me to keep me from packing up the ten=
-t?
+While the alternatives system could be used in this manner, we are
+back to a policy type issue. From the wiki:
 
-Some of us continue to develop and deploy new systems based on this
-stuff. Linux provides the most modern way to integrate AX.25 with other
-IP networks (IMHO) and Debian provides a good platform on which to
-build. Yes, you and I can install our own stacks, but if it goes away
-from the base distro, it will be harder to encourage other folks to do
-the same.
+"The Debian alternatives system creates a way for several programs 
+that fullfill the same or similar functions to be listed as alternative 
+implementations that are installed simultaneously but with one 
+particular implementation designated as the default."
 
---=20
-Dan Smith
-www.danplanet.com
-KK7DS
+The packages in question are worlds apart in what they do.  They are not
+alternatives or substitutes.
 
-
---------------enig23F936027D42C52277F3D24E
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.11 (GNU/Linux)
-
-iQEcBAEBAgAGBQJPo+JpAAoJEBeZxaMESjNVbP0H/0ypAv73WSeLQzG1MTRmR4cL
-olGrCMjd4bYBd9an9kdW6I/S5A3i50SKjh0/zBNaV3cBPmKdWRjz9kyUr+HXRVyd
-6Nd4CO6jrrZOBsXUpGp+/oRPKCS6LmNeIo66ldwuGu28Jt5+iu70IPwKBAHSXEI5
-CD7G3fjNWT8elOxF7WezyorjLu4jjhFT5GsmDJppOt8nSgKQX91QeqaDht1KAmw6
-EAHpZfFCFnLbaI6ZIekKPaEFc+CuoLPC+viEgO8zMbmneMw3KPepn61ApzPWxvQz
-GqyY/tReThjzppbyh0eTM3Ltl0qlHOtyuAoiNZNifz6FBzSrkKlEU9FH5iXDfLo=
-=N2by
------END PGP SIGNATURE-----
-
---------------enig23F936027D42C52277F3D24E--
+Pat
