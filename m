@@ -1,70 +1,54 @@
 From: Patrick Ouellette <pat@flying-gecko.net>
 Subject: Re: AX25 and related software's future in Debian
-Date: Thu, 03 May 2012 22:10:30 -0400
-Message-ID: <20120504021030.GA4017@flying-gecko.net>
+Date: Thu, 03 May 2012 22:17:52 -0400
+Message-ID: <20120504021752.GB4017@flying-gecko.net>
 References: <20120504013200.GB3489@flying-gecko.net>
- <4FA33509.5070006@radagast.org>
+ <CALyAeG9e=jWtjyLOyhTsp_fOhpP1Zbvjb-EQutE=+zRHPOS1YQ@mail.gmail.com>
 Mime-Version: 1.0
 Return-path: <linux-hams-owner@vger.kernel.org>
 Content-disposition: inline
-In-reply-to: <4FA33509.5070006@radagast.org>
+In-reply-to: <CALyAeG9e=jWtjyLOyhTsp_fOhpP1Zbvjb-EQutE=+zRHPOS1YQ@mail.gmail.com>
 Sender: linux-hams-owner@vger.kernel.org
 List-ID: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
-To: Dave Platt <dplatt@radagast.org>
+To: Charles Suprin <hamaa1vs@gmail.com>
 Cc: linux-hams@vger.kernel.org, debian-hams@lists.debian.org
 
-Dave,
-
-I appreciate the response.  Having been with Debian for somewhere
-around 15 years I'm no stranger to the "discussions" that erupt
-over various issues.
-
-I usually prefer to not comment on most of them.  Unfortunately I
-am in the center of this one.
-
-On Thu, May 03, 2012 at 06:46:49PM -0700, Dave Platt wrote:
+On Thu, May 03, 2012 at 10:03:57PM -0400, Charles Suprin wrote:
 > 
-> I'm enough of a "tweaker" that I'd much prefer an actively-
-> maintained, distribution-agnostic "master kit" that I can
-> build and install myself, to an "easy install" package that's
-> not used by enough people to justify the effort needed to track
-> a changing distribution rule-set and fight battles such as the
-> one that seems to have erupted here.  My 8mpression is that the
-> Debian AX.25 apps have lagged significantly behind what's been
-> available "from source", perhaps due in part to this same
-> "lack of adequate use" problem, and that it's been preferable to
-> build from sources anyhow.
-
-Actually the AX25 versions in Debian only lagged "far" behind the last
-release (which has problems) and cvs (a situation I was trying to remedy).
-Granted the last release was about 2 years ago (the -rc2 packages), but in 
-Debian release cycle time that is barely a single stable release.
-The upstream change logs most recent entries are dated 2002,2003,2009,2012.
-(Those are for libax25)
-
+> Patrick,
 > 
-> AX.25 on Linux has (I think) always been enough of an "oddball"
-> niche interest that I suspect most users of it were "self-
-> installers" from the beginning, rather than being dependent on
-> support from their distribution.  If I recall correctly, many
-> of the standard Debian kernels have not supported AX.25 by
-> default, and installing a custom kernel has been close to a
-> "must".  Anybody who can do this, can probably manage to build
-> and install the libraries and apps themselves from the original
-> source kits.
+> I find myself asking the question if the name collision had occurred
+> with emacs, vi, ls, cat, or anyone of a number of other programs would
+> the conversation be the same.  There have been several good points in
+> the conversation.
+> 
+> Good luck and thanks for the effort.  It is a bigger problem than just
+> this small node app.
+> 
+> Charles
 
-Debian kernels have pretty much always had the ax25 support either
-compiled in or as modules.  That was one of the legacies from the early
-efforts to make Debian a ham friendly distro (way back in 1997).
+Charles,
+
+I have no doubt if the longer packaged program in question was one
+you listed, or many others, the new package would be summarily dismissed
+until it no longer conflicted.  There would not even be discussion.
+
+I see the bigger problem too, but it seems like many or most in the
+node discussion are so focused on getting node.js the name node at any
+cost they haven't even considered the potential long term ramifications
+of their actions.
+
+The larger problem has been raised to the Debian project leader.  Perhaps
+it will be addressed, perhaps not.
 
 73,
 
 Pat NE4PO
 -- 
 ,-----------------------------------------------------------------------------.
->  Patrick Ouellette        |   Start by doing what's necessary; then do      <
->  pat(at)flying-gecko.net  |   what's possible; and suddenly you are doing   <
->  Amateur Radio: NE4PO     |   the impossible.  -- Francis of Assisi         <
+>   Patrick Ouellette         |   Lord, grant that I might not so much seek   <
+>   pat(at)flying-gecko.net   |   to be loved as to love.                     <
+>   Amateur Radio: NE4PO      |   -- Francis of Assisi                        <
 `-----------------------------------------------------------------------------'
