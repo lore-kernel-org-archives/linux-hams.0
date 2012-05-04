@@ -1,52 +1,56 @@
-From: Dan Smith <dsmith@danplanet.com>
+From: Patrick Ouellette <pouelle@debian.org>
 Subject: Re: AX25 and related software's future in Debian
-Date: Fri, 04 May 2012 11:32:34 -0700
-Message-ID: <4FA420C2.2060308@danplanet.com>
-References: <20120504151424.GC24655@flying-gecko.net> <E1SQLMS-00025Q-Iq@mail.kostecke.net> <20120504165706.GD24655@flying-gecko.net> <CAPSBm51RHEn7ch_A9CDrtUymZtnOJgnkCq_a=F3auq8A_6XFfg@mail.gmail.com> <20120504180621.GB6444@flying-gecko.net>
+Date: Fri, 04 May 2012 14:49:34 -0400
+Message-ID: <20120504184934.GE6444@flying-gecko.net>
+References: <20120504151424.GC24655@flying-gecko.net>
+ <E1SQLMS-00025Q-Iq@mail.kostecke.net>
+ <20120504165706.GD24655@flying-gecko.net>
+ <CAPSBm51RHEn7ch_A9CDrtUymZtnOJgnkCq_a=F3auq8A_6XFfg@mail.gmail.com>
+ <20120504180621.GB6444@flying-gecko.net> <4FA420C2.2060308@danplanet.com>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
- protocol="application/pgp-signature";
- boundary="------------enigFD56340064703B1B7D44E609"
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <20120504180621.GB6444@flying-gecko.net>
+Content-disposition: inline
+In-reply-to: <4FA420C2.2060308@danplanet.com>
 Sender: linux-hams-owner@vger.kernel.org
 List-ID: <linux-hams.vger.kernel.org>
-To: Patrick Ouellette <pouelle@debian.org>
-Cc: Bill Vodall <wa7nwp@gmail.com>, linux-hams@vger.kernel.org
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+To: Dan Smith <dsmith@danplanet.com>
+Cc: Patrick Ouellette <pouelle@debian.org>, Bill Vodall <wa7nwp@gmail.com>, linux-hams@vger.kernel.org
 
-This is an OpenPGP/MIME signed message (RFC 2440 and 3156)
---------------enigFD56340064703B1B7D44E609
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: quoted-printable
+On Fri, May 04, 2012 at 11:32:34AM -0700, Dan Smith wrote:
+> 
+> > Not seeing anything particularly well suited to ax25 networks there,
+> > or anything particularly unique in general.
+> 
+> Not sure I'd agree there. If whatever you're running AX.25 on is
+> suitable for HTTP, then Node.js would be of potential use as well. I'd
+> surely vote to avoid a "Conflicts: resolution" (pun intended).
 
-> Not seeing anything particularly well suited to ax25 networks there,
-> or anything particularly unique in general.
+From wikipedia's node.js page:
 
-Not sure I'd agree there. If whatever you're running AX.25 on is
-suitable for HTTP, then Node.js would be of potential use as well. I'd
-surely vote to avoid a "Conflicts: resolution" (pun intended).
-
---=20
-Dan Smith
-www.danplanet.com
-KK7DS
+"Similar environments written in other programming languages include 
+Twisted for Python, Perl Object Environment for Perl, libevent for C 
+and EventMachine for Ruby. Unlike most JavaScript programs, it is not
+executed in a web browser, but is instead a server-side JavaScript 
+application"
 
 
---------------enigFD56340064703B1B7D44E609
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="signature.asc"
+There is not any particularly novel or new thing that you can do
+with Node.js that can't be done with another toolkit as far as I
+can tell.  The suitability of a verbose protocol like http for use
+on limited bandwidth networks is a different issue.  I suppose if
+you are running ax25 over D-Star 1.2GHz (128kbps) links....
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.11 (GNU/Linux)
+Actually http is not the problem so much as the plethora of poorly
+written and implemented web sites and all the web 2.0 "interactive"
+user experience with mouse overs that send data back to the server
+automatically, triggering the server to send a response.
 
-iQEcBAEBAgAGBQJPpCDCAAoJEBeZxaMESjNVEccH/jt3HiQmx8lzGHIYYU7o3ITw
-N/iwOirp40c5fQXXWZYjIdUkYlKzhlXtG6iWY2Q8Ai0wOpciOgGS7CsEAm98yhad
-VXWxN1NYteU1R+k1JvRjZe+JCUt8qyaae+sdX/AMgeBtDBlXf8gPlASMctKvmECw
-Kiqe5QHOFhq39F79tdZ6gsNE1ychUYtrwm58Ajn2Ul/TRz9ua81rzwmrRDg3XPen
-7zkus+wFqkm+aqRzlrGFoS0Sd8718FWJQlyCUr0pK1aDOT6psWXIRmMEuUM+HI5Q
-n+1kYE2y8ht6BIkbTLvlK7m2z/sP0nsmbQuvPKJl2JnC/XqLPzmkJ7ndm9lJEY4=
-=WDXu
------END PGP SIGNATURE-----
+Don't misunderstand me, I like the flashy Ajax web2.0 user experiences
+I get on my 25Mbps/25Mbps FiOS internet connection - I'm just really
+skeptical it will be as nice at 9600 baud or slower on an ax25 network.
 
---------------enigFD56340064703B1B7D44E609--
+Pat
+
+
