@@ -1,47 +1,61 @@
-From: "Hans-Peter F. Oeste" <hoeste@shaw.ca>
-Subject: RE: Node.js and it's future in debian
-Date: Thu, 3 May 2012 16:10:05 -0700
-Message-ID: <025201cd2981$e0c46620$a24d3260$@shaw.ca>
-References: <CACxjfDH5zYth6Q-ZDLDafqNEczbF3BqaGRcAhsaiPEnApbiUuA@mail.gmail.com> <20120501205524.GI30521@flying-gecko.net> <20120501215305.GA1250@burratino> <20120501221659.GA11430@flying-gecko.net> <20120502065003.GB2410@burratino> <20120502165031.GC7390@flying-gecko.net> <20120502171349.GA23806@burratino> <20120502200426.GF7390@flying-gecko.net> <4FA2A557.1080103@trinnet.net> <20120503170521.GD19468@flying-gecko.net> <20120503185129.GA18768@burratino>
+From: Patrick Ouellette <pat@flying-gecko.net>
+Subject: AX25 and related software's future in Debian
+Date: Thu, 03 May 2012 21:32:00 -0400
+Message-ID: <20120504013200.GB3489@flying-gecko.net>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <20120503185129.GA18768@burratino>
-Content-language: en-ca
+Content-disposition: inline
 Sender: linux-hams-owner@vger.kernel.org
 List-ID: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
-To: 
-Cc: node@packages.debian.org, nodejs@packages.debian.org, debian-hams@lists.debian.org, linux-hams@vger.kernel.org
+Content-Transfer-Encoding: 7bit
+To: linux-hams@vger.kernel.org, debian-hams@lists.debian.org
 
-I thought I'd also chime in with one aspect that perhaps hasn't been
-articulated.  This could have a huge impact in 'Health and Public Safety', a
-place where many hams use the tools and the debian distribution as an
-appliance.  The node and ax25 package is used worldwide providing
-communications infrastructure that may people rely on in times of disaster
-and emergency, be it a forwarding of medical information to gain insight to
-people health problems to local floods or fires to events like Katrina.
-Hams often provide the backbone to the communications for these events.
+I come to the lists mentally and physically exhausted from the
+current struggle to defend the ham radio package node in the Debian
+distribution.  I also seem to be the only person interested in the
+ax25 software (libax25, ax25-tools, ax25-xtools, and ax25-utils).
+The situation with node has made me wonder why I am even bothering.  I can
+compile the ax25 stack for my use, and not have to put up with the baggage
+Debian requires.
 
-That they treat the Debian distribution as an appliance says that they trust
-the distribution to not break down, and this is something to be proud of.
-That they use it as an appliance should not be considered a stupidity,.
-Consider how many of us nowadays make changes to the engine in their
-vehicles themselves.  Not many, it's done by enthusiasts.  The package node
-and its attendant  packages is an engine for many ham operators.  So please,
-be very careful in your consideration in making changes. The ramifications
-could affect you personally inadvertently.
+The question I have for the lists - is there really any interest in having
+ham radio software, particularly libax25 and the tools/utils in Debian?
+I know if it disappears from Debian it affects all Debian derived distros
+(like Ubuntu for instance).
 
-If you are going to muck with it, please consider a phased in approach that
-gives warning of potentially at least year, if not longer, so that warning
-is give and propagated to the mentors that these ham operators use, so that
-customizations can be 'fixed' and any migrations and mitigation is
-flawlessly executed.  This may mean that you yourselves may be asked to help
-troubleshoot issues/problems that arise.  Please be patient.
+Reverse depends output for libax25:
+libax25
+  Reverse Depends: aprsd (>= 1:2.2.5-13-5.1)
+  Reverse Depends: aprsdigi (>= 2.4.4-3.1)
+  Reverse Depends: ax25-apps (>= 0.0.8-rc2+cvs20120204-2)
+  Reverse Depends: ax25-tools (>= 0.0.10-rc2+cvs20120204-3)
+  Reverse Depends: ax25mail-utils (>= 0.11-6.1)
+  Reverse Depends: fbb (>= 7.04j-8.2)
+  Reverse Depends: libax25-dev (= 0.0.12-rc2+cvs20120204-2)
+  Reverse Depends: linamc (>= 2.0rc5-2)
+  Reverse Depends: node (>= 0.3.2-7.1)
+  Reverse Depends: xastir (>= 2.0.0-2+b1)
+aprsd
+aprsdigi
+ax25-apps
+ax25-tools
+ax25mail-utils
+fbb
+libax25-dev
+linamc
+node
+xastir
 
-While I am a ham, I am also a mediocre programmer, so I can see both sides
-of this argument.  In addition, I've used Linux longer than I've been a ham.
 
-Hans Oeste
-VE7OES
+So, what inspiration can you give me to keep me from packing up the tent?
 
+73,
+
+Pat NE4PO
+-- 
+,-----------------------------------------------------------------------------.
+>   Patrick Ouellette         |    It is in pardoning that we are pardoned.   <
+>   pat(at)flying-gecko.net   |    -- Francis of Assisi                       <
+>   Amateur Radio: NE4PO      |                                               <
+`-----------------------------------------------------------------------------'
