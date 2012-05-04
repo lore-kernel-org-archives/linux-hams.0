@@ -1,48 +1,71 @@
-From: Bill Vodall <wa7nwp@gmail.com>
+From: Patrick Ouellette <pouelle@debian.org>
 Subject: Re: AX25 and related software's future in Debian
-Date: Fri, 4 May 2012 10:50:41 -0700
-Message-ID: <CAPSBm51RHEn7ch_A9CDrtUymZtnOJgnkCq_a=F3auq8A_6XFfg@mail.gmail.com>
+Date: Fri, 04 May 2012 14:06:21 -0400
+Message-ID: <20120504180621.GB6444@flying-gecko.net>
 References: <20120504151424.GC24655@flying-gecko.net>
-	<E1SQLMS-00025Q-Iq@mail.kostecke.net>
-	<20120504165706.GD24655@flying-gecko.net>
+ <E1SQLMS-00025Q-Iq@mail.kostecke.net>
+ <20120504165706.GD24655@flying-gecko.net>
+ <CAPSBm51RHEn7ch_A9CDrtUymZtnOJgnkCq_a=F3auq8A_6XFfg@mail.gmail.com>
 Mime-Version: 1.0
 Content-Transfer-Encoding: QUOTED-PRINTABLE
 Return-path: <linux-hams-owner@vger.kernel.org>
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :content-type:content-transfer-encoding;
-        bh=ogkZyeNgjlVIiM+a/WHdhsRalvJ1khSFdUFnlQNm82Q=;
-        b=WFRrzWuhe4YzswegKmUH0wxBlKRne3wsQq4GLB2/E0XdBdo9rUfrgVpL9o0lhiGDbi
-         291vjrPLYQVizY2pQOqU+AG4zUPSdwoNn77A3HBZlLxdL0fgMdr0Ic22V+QxzMFLSPVs
-         9ZMC0qLdPJMRJHjz0jrUcc5EpcC/kHWBZQucWO+QozIB1IMD1ebBhG07ePATsMd0V9Bk
-         VgqszNPk1bRtgN+d9XmDrLc/gmrYVxvKtplLQwTwrMsYOLlKILCWwDapXT9h2uMtzT5h
-         FQo/i+pZ9lOVySfQSByu+bJxBm2Rxlan+5U8E6j4O9RXU3cjESBiDhlTNIbCO65kCn5Y
-         AEAw==
-In-Reply-To: <20120504165706.GD24655@flying-gecko.net>
+Content-disposition: inline
+In-reply-to: <CAPSBm51RHEn7ch_A9CDrtUymZtnOJgnkCq_a=F3auq8A_6XFfg@mail.gmail.com>
 Sender: linux-hams-owner@vger.kernel.org
 List-ID: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="iso-8859-1"
-To: linux-hams@vger.kernel.org
+To: Bill Vodall <wa7nwp@gmail.com>
+Cc: linux-hams@vger.kernel.org
 
->> Has anyone considered making nodejs and ax25 conflict? That would be=
- an
->> easy way of sidestepping this entire namespace issue.
->>
->
-> FWIW, I'm fine with that. =A0Apparently either Node.js people are not
-> OR someone higher in the food chain is not. =A0They are trying to
-> make it so you can have Node.js AND node installed. =A0I suspect the
-> actual cases where this is really desired to be very close to zero.
+On Fri, May 04, 2012 at 10:50:41AM -0700, Bill Vodall wrote:
+> >> Has anyone considered making nodejs and ax25 conflict? That would =
+be an
+> >> easy way of sidestepping this entire namespace issue.
+> >>
+> >
+> > FWIW, I'm fine with that. =A0Apparently either Node.js people are n=
+ot
+> > OR someone higher in the food chain is not. =A0They are trying to
+> > make it so you can have Node.js AND node installed. =A0I suspect th=
+e
+> > actual cases where this is really desired to be very close to zero.
+>=20
+> While I don't yet know anything about Node.js, a comment was recently
+> made on the wetnet list that the Node.js technology might lead to
+> making good use of the inherent nature of AX25 data.
+>=20
+> If they are marked as conflicting, can it be easily overridden at ins=
+tall time?
+>=20
 
-While I don't yet know anything about Node.js, a comment was recently
-made on the wetnet list that the Node.js technology might lead to
-making good use of the inherent nature of AX25 data.
+Marking the packages as conflicting would get us out of the current
+immediate situation and allow another release cycle to develop and
+test transition stratigies/plans.
 
-If they are marked as conflicting, can it be easily overridden at insta=
-ll time?
+It can be overridden with dpkg --force-conflicts at installation.  This=
+ is
+certainly not necessarily a long term solution.
 
-Bill - WA7NWP
+As for the usefulness or not of Node.js with ax25 - similar java toolki=
+ts=20
+exist in the world, web apps are web apps from the user perspective.
+
+The marketing speak from nodejs.org:
+
+Node.js is a platform built on Chrome's JavaScript runtime for easily=20
+building fast, scalable network applications. Node.js uses an event-dri=
+ven,=20
+non-blocking I/O model that makes it lightweight and efficient, perfect=
+=20
+for data-intensive real-time applications that run across distributed d=
+evices.
+
+
+Not seeing anything particularly well suited to ax25 networks there,
+or anything particularly unique in general.
+
+
+Pat
 --
 To unsubscribe from this list: send the line "unsubscribe linux-hams" i=
 n
