@@ -1,117 +1,38 @@
-From: Ray Wells <vk2tv@exemail.com.au>
-Subject: Re: Node.js and it's future in debian
-Date: Fri, 04 May 2012 14:28:41 +1000
-Message-ID: <4FA35AF9.6020508@exemail.com.au>
-References: <CACxjfDH5zYth6Q-ZDLDafqNEczbF3BqaGRcAhsaiPEnApbiUuA@mail.gmail.com> <20120501205524.GI30521@flying-gecko.net> <20120501215305.GA1250@burratino> <20120501221659.GA11430@flying-gecko.net> <20120502065003.GB2410@burratino> <20120502165031.GC7390@flying-gecko.net> <20120502171349.GA23806@burratino> <20120502200426.GF7390@flying-gecko.net> <4FA2A557.1080103@trinnet.net> <20120503170521.GD19468@flying-gecko.net> <20120503185129.GA18768@burratino> <4FA3567F.2020707@trinnet.net>
+From: "Kim, VK5FJ" <vk5fj@hawtin.net.au>
+Subject: Re: AX25 and related software's future in Debian
+Date: Fri, 04 May 2012 14:50:50 +0930
+Message-ID: <4FA36732.7060609@hawtin.net.au>
+References: <20120504013200.GB3489@flying-gecko.net> <CAOnrUC3qPXjrZK+ata_SVBYaTqAx7Y9pFEZ3_LUJui3CuizWcw@mail.gmail.com>
+Reply-To: vk5fj@wia.org.au
 Mime-Version: 1.0
 Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <4FA3567F.2020707@trinnet.net>
+In-Reply-To: <CAOnrUC3qPXjrZK+ata_SVBYaTqAx7Y9pFEZ3_LUJui3CuizWcw@mail.gmail.com>
 Sender: linux-hams-owner@vger.kernel.org
 List-ID: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"; format="flowed"
-To: David Ranch <linux-hams@trinnet.net>
-Cc: Jonathan Nieder <jrnieder@gmail.com>, Patrick Ouellette <pouelle@debian.org>, node@packages.debian.org, nodejs@packages.debian.org, debian-hams@lists.debian.org, linux-hams@vger.kernel.org
+To: Patrick Ouellette <pat@flying-gecko.net>
+Cc: linux-hams@vger.kernel.org, debian-hams@lists.debian.org
 
-All,
+Alejandro wrote:
+> Patrick wrote:
+> > So, what inspiration can you give me to keep me from packing up the tent?
+> I for one vote to keep the software on Debian as long as it's possible
+> to maintain.
 
-Although not currently running a node (although I do run aprs with 
-kernel ax25), I started using kernel ax25 back around 1994 (ish) with a 
-floppy that booted into ramdisk and provided two ports, one kiss and the 
-other baycom. I used node back then but moved on. The disk still works 
-but I can't for the life of me remember the logon password :-( Back then 
-(kernel 2.0.29) it was ax25-utils-<version> that provided kernel ax25 
-apps and tools, in the days prior to ax25-apps and ax25-tools being 
-released as separate packages.
+Two things;
 
-When I last ran a node, along with a bbs, I didn't use the node package. 
-Instead, I used fpac which provided the facilities I needed - ax25, rose 
-and netrom. For many, many years, right up to just last week, I compile 
-libax25, ax25-apps & ax25-tools from sources to try to keep as up to 
-date as possible with fixes, etc. Although not a user of the packages I 
-still appreciate the efforts of the maintainers who produce packages for 
-the benefit of users/potential users who don't care to compile from sources.
+Firstly, we invest our time and efforts in learning Debian because its 
+consistent, predictable, reliable, Open and Free. I've lost count of how 
+many Debian servers I've built for other people over the years. Not to 
+mention how many dist-upgrades I've done between releases. Many other 
+people come to rely on those attributes,
 
-As for a name change for node, it seems strange that such a long-running 
-application should be forced to change simply because of some 
-Johnny-come-lately. I think Debian policy in this regard should be 
-reviewed to prevent repetition of the current stalemate in the years to 
-come. FWIW, I've only ever used Debian or a Debian derivative.
+Secondly, I've just levelled up to get on air using digital modes; the 
+amateur license, skills, computer and radio hardware. I've been looking 
+forward to get my hands dirty with packet radio and APRS for a very long 
+time! Please don't drop it =) Alternatively, sign me up!
 
-Ray vk2tv
+regards,
 
-On 04/05/12 14:09, David Ranch wrote:
->
-> Me again..
->
-> AX.25 in Linux has been around for a long time so I can excuse it's 
-> overly generic "node" name purely based upon it's age but..
->
->
->> The working title of Node.js was "server" for a few weeks, before
->> anyone was using it.
->
-> Wow.. that's horrible!  Obviously we don't want stuff like that to 
-> happen.  Please also consider that all this ISN'T just a *Debian* 
-> problem.  Its a Linux distro-wide problem.  It's groups like this that 
-> form and guide aspects of all Linux distributions consistency and 
-> considering Debian's wide influence, changes here will surely trickle 
-> into other distributions over time.
->
-> It's also worth touching on that I personally appreciate the work that
-> Patrick Ouellette has done on maintaining the HAM packages for Debian. 
-> Like always, there are never enough appreciative people in this world 
-> but once removed / renamed /etc, I'm SURE a lot of people will come 
-> out of the woodwork to bitch about it.  A *lot* of people use Debian 
-> and Debian-related distributions with Packet radio.
->
->
->>   1. Which package should use the name "node" in the long term?  What
->>      can we do to ensure that happens eventually?
->>
->>      (My answer is that I hope that neither uses the name "node" in
->>      the long term.)
->
-> I personally think that some of it SHOULD be a first come, first 
-> served thing.  I previously mentioned in the previous email that all 
-> of the various scripts that people run could/would break.  Probably no 
-> big deal to many of us on *this* list but trust me, I know a few Linux 
-> packet people who would be seriously lost because of these changes.
->
-> Also consider the tons of documentation, notably the AX.25 HOWTO that 
-> would be impacted and I highly doubt it would get updated (hasn't been 
-> since 2001) to reflect these changes.  It's not like things have 
-> needed to change all that much - http://tldp.org/HOWTO/AX25-HOWTO/
->
->
->>   2. What should be the state in Debian's upcoming "wheezy" release to
->>      provide a smooth upgrade path and not surprise users too much?
->
-> Is Node.js a new addition to Debian?  Again, I side with first come 
-> first served.
->
->
->>      I also would hope that wheezy can include a /usr/sbin/node file
->>      that prints a message to help people notice they are still using
->>      it and calls /usr/sbin/axnode, but that is still under discussion.
->>
->>      Likewise, the Node.js needs some migration to ensure scripts
->>      installed by Debian packages and from outside use the new name.
->>      I would hope that wheezy can include a /usr/bin/node synonym for
->>      compatibility until usage of it fades away, but that is still
->>      under discussion.)
->
-> If for some reason Debian feels that longstanding packages and their 
-> well known binary names can be renamed at any given time (I seriously 
-> disagree with that mentality btw), I'd say then ALSO force the change 
-> of the "node" in Node.JS name to something more sane.  Don't remove 
-> one poorly named file for a new poorly named one just because it's new 
-> and shiny.
->
-> --David
-> -- 
-> To unsubscribe from this list: send the line "unsubscribe linux-hams" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at  http://vger.kernel.org/majordomo-info.html
->
-
+Kim VK5FJ
