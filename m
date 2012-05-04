@@ -1,88 +1,106 @@
-From: walter harms <wharms@bfs.de>
+From: DL1SIG <dl1sig@hw42.dyndns.org>
 Subject: Re: Node.js and it's future in debian
-Date: Fri, 04 May 2012 09:38:57 +0200
-Message-ID: <4FA38791.9030004@bfs.de>
-References: <CACxjfDH5zYth6Q-ZDLDafqNEczbF3BqaGRcAhsaiPEnApbiUuA@mail.gmail.com> <20120501205524.GI30521@flying-gecko.net> <20120501215305.GA1250@burratino> <20120501221659.GA11430@flying-gecko.net> <20120502065003.GB2410@burratino> <20120502165031.GC7390@flying-gecko.net> <20120502171349.GA23806@burratino> <20120502200426.GF7390@flying-gecko.net>
-Reply-To: wharms@bfs.de
+Date: Fri, 4 May 2012 14:31:29 +0200
+Message-ID: <20120504143129.0d9a7955@hw42.dyndns.org>
+References: <CACxjfDH5zYth6Q-ZDLDafqNEczbF3BqaGRcAhsaiPEnApbiUuA@mail.gmail.com>
+	<20120501205524.GI30521@flying-gecko.net>
+	<20120501215305.GA1250@burratino>
+	<20120501221659.GA11430@flying-gecko.net>
+	<20120502065003.GB2410@burratino>
+	<20120502165031.GC7390@flying-gecko.net>
+	<20120502171349.GA23806@burratino>
+	<20120502200426.GF7390@flying-gecko.net>
+	<4FA2A557.1080103@trinnet.net>
+	<20120503170521.GD19468@flying-gecko.net>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
-Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <20120502200426.GF7390@flying-gecko.net>
-Sender: linux-hams-owner@vger.kernel.org
-List-ID: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+Return-path: <pkg-javascript-devel-bounces+glddj-pkg-javascript-devel=m.gmane.org@lists.alioth.debian.org>
+In-Reply-To: <20120503170521.GD19468@flying-gecko.net>
+List-Id: <linux-hams.vger.kernel.org>
+List-Unsubscribe: <http://lists.alioth.debian.org/cgi-bin/mailman/options/pkg-javascript-devel>,
+	<mailto:pkg-javascript-devel-request@lists.alioth.debian.org?subject=unsubscribe>
+List-Archive: <http://lists.alioth.debian.org/pipermail/pkg-javascript-devel>
+List-Post: <mailto:pkg-javascript-devel@lists.alioth.debian.org>
+List-Help: <mailto:pkg-javascript-devel-request@lists.alioth.debian.org?subject=help>
+List-Subscribe: <http://lists.alioth.debian.org/cgi-bin/mailman/listinfo/pkg-javascript-devel>,
+	<mailto:pkg-javascript-devel-request@lists.alioth.debian.org?subject=subscribe>
+Sender: pkg-javascript-devel-bounces+glddj-pkg-javascript-devel=m.gmane.org@lists.alioth.debian.org
+Errors-To: pkg-javascript-devel-bounces+glddj-pkg-javascript-devel=m.gmane.org@lists.alioth.debian.org
 To: Patrick Ouellette <pouelle@debian.org>
-Cc: linux-hams@vger.kernel.org
+Cc: linux-hams@vger.kernel.org, David Ranch <linux-hams@trinnet.net>, node@packages.debian.org, debian-hams@lists.debian.org, nodejs@packages.debian.org
 
+Hi,
 
+I think using the alternatives system [1] could be a solution. I guess
+that node.js and axnode is not often used on the same system. Therefore
+in most of the cases the alternatives auto select mechanism will do the
+right thing.
 
-Am 02.05.2012 22:04, schrieb Patrick Ouellette:
-> On Wed, May 02, 2012 at 12:13:49PM -0500, Jonathan Nieder wrote:
->> Patrick Ouellette wrote:
->>
->>> Likewise I can argue the number of people with installed ham radio systems
->>> is a good reason NOT to change the current situation.
->>
->> You can, yes.  But how does that move things forward at all?
-> 
-> I never said it did.  Clearly both sides have valid reasons to
-> not change.  Equally clear to me is one side ignored policy
-> and created an issue to attempt to force a resolution they hope
-> will be in their favor rather than solve the issue first.
-> 
->>
->> This is not supposed to be a popularity contest.  I mentioned the
->> large pile of scripts because _every one of them would have to be
->> changed_ to have a working system.  By contrast, there are two
->> configuration files mentioned so far that refer to /usr/sbin/node.
-> 
-> The scripts (on either side) could be changed with a scripted change. 
-> 
-> If it is so simple to change the configuration files for the ham radio
-> users, why has not a Node.js person put forth code to do this and advocated
-> it on debian-hams and linux-hams? (The "patch" sent does not address
-> automatically updating anything)
-> 
-> I've discussed it with other ham radio operators.  They shudder at the
-> thought of changing the name because of the possible issues that will
-> come up.
-> 
->>
->> [...]
->>> If it were "easy" to get an exception, why has this not already happened?
->>
->> Because you did not ask for one.  Instead you have been wasting time
->> arguing and defending against an opponent you seem to assume is not
->> going to care or listen to you.
-> 
-> The Node.js people apparently didn't ask for one either
-> pot - kettle - black
-> 
-> As for the last line, if I thought the opponent did not care or was
-> not going to listen I would not waste the time putting forth my
-> position.  Since it would seem that is where we are, I won't
-> continue to waste my time.
-> 
-> Here is my proposal:
-> Node.js people, put forth a reasonable and workable plan to allow
-> hundreds or thousands of ham radio users to transition from 
-> /usr/sbin/node to /usr/sbin/axnode, including reliable shell scripts
-> to verify all the files on the system are identified and allowed to
-> be patched or manually modified.  You created the situation, you 
-> provide the manpower to resolve it in the way you prefer.
-> 
->
+In the case that both programs are installed, the node symlink is auto
+selected by the priority so I would suggest to set the priority of
+axnode higher because it was first there.
 
- hi par,
-the problem of scripts would dissolve with time. I am worried about node.js itself.
-I do think js is a problem not a solution, my experience with webservices is like
-that described with other on the net .. slow, ugly, unmaintainable in the long run.
-Unfortunately there is now a tendency in programming that everything should go web
-and that understanding of code and algorithms is not longer important since fast
-computers will make every rubbish look like usable.
+Anyone who want to have node.js as node can simply set the alternatives
+to manual selection.
 
-My only hope is that even perl was unable to displace shell programming and this
-time it will not work either.
+This approach can be combined with the long term goal to have no node
+binary. You make node a shell script which prints a warning and then
+calls the binary selected by the alternatives system.
 
-re,
- wh
+73 DL1SIG
+
+1. http://wiki.debian.org/DebianAlternatives
+
+Am Thu, 03 May 2012 13:05:21 -0400
+schrieb Patrick Ouellette <pouelle@debian.org>:
+
+> Thanks for the comments!
+> 
+> On Thu, May 03, 2012 at 08:33:43AM -0700, David Ranch wrote:
+> > 
+> > From my experience, many MANY Linux hams have customized scripts
+> > that startup some very elaborate HAM systems.  For many, these
+> > scripts weren't written by them and the changing of the node command
+> > could be very difficult for some.  The other aspect is if this
+> > change came into a package update that could impact production
+> > systems in VERY remote sites.  This could cause all kinds ugliness
+> > that can be easily avoided.
+> > 
+> 
+> One issue here seems to be a perception problem.  The non-ham folks
+> look at the ax25 how to or similar documentation and see that node is
+> "usually called from ax25d" or a similar superserver.  This leads them
+> to believe that the command is only started from one or two "easily 
+> identified and modified" scripts.
+> 
+> The Node.js side argues that there are many books, tutorials, and
+> scripts that tell the user to run "node <script>" and so the
+> interaction of the user and node.js' node command is direct and
+> uncontrollable.
+> 
+> > I can appreciate Debian's goal to keep things moving forward but I'd
+> > argue that a binary name of "/usr/sbin/nodejs" would be a lot more
+> > informative with the two additional characters than just calling it
+> > "node" (and disrupting a well known binary name for us Linux packet
+> > hams).
+> 
+> I completely agree, but apparently Node.js' upstream has changed the
+> name once previously (apparently from a similar problem) and while
+> acknowledging the name is generic and a poor choice refuses to
+> consider another change. (According to what I can tell from the
+> Debian discussion.  I have not talked to Node.js upstream personally.)
+> 
+> FWIW, the commands are NOT in the same path.  The ham radio node
+> command is /usr/sbin/node and the Node.js command is /usr/bin/node
+> 
+> Debian does NOT allow binaries with the same name to have different
+> functions. Unfortunately "first come, first served" is not the policy
+> either.
+> 
+> 
+> Pat 
+> --
+> To unsubscribe from this list: send the line "unsubscribe linux-hams"
+> in the body of a message to majordomo@vger.kernel.org
+> More majordomo info at  http://vger.kernel.org/majordomo-info.html
