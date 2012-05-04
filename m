@@ -1,41 +1,38 @@
 From: Patrick Ouellette <pat@flying-gecko.net>
-Subject: Re: Node.js and it's future in debian
-Date: Fri, 04 May 2012 10:31:32 -0400
-Message-ID: <20120504143132.GA24655@flying-gecko.net>
-References: <20120501205524.GI30521@flying-gecko.net>
- <20120501215305.GA1250@burratino> <20120501221659.GA11430@flying-gecko.net>
- <20120502065003.GB2410@burratino> <20120502165031.GC7390@flying-gecko.net>
- <20120502171349.GA23806@burratino> <20120502200426.GF7390@flying-gecko.net>
- <4FA2A557.1080103@trinnet.net> <20120503170521.GD19468@flying-gecko.net>
- <20120504143129.0d9a7955@hw42.dyndns.org>
+Subject: Re: AX25 and related software's future in Debian
+Date: Fri, 04 May 2012 10:34:52 -0400
+Message-ID: <20120504143452.GB24655@flying-gecko.net>
+References: <20120504013200.GB3489@flying-gecko.net>
+ <CAOnrUC3qPXjrZK+ata_SVBYaTqAx7Y9pFEZ3_LUJui3CuizWcw@mail.gmail.com>
+ <4FA36732.7060609@hawtin.net.au>
 Mime-Version: 1.0
 Return-path: <linux-hams-owner@vger.kernel.org>
 Content-disposition: inline
-In-reply-to: <20120504143129.0d9a7955@hw42.dyndns.org>
+In-reply-to: <4FA36732.7060609@hawtin.net.au>
 Sender: linux-hams-owner@vger.kernel.org
 List-ID: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
-To: DL1SIG <dl1sig@hw42.dyndns.org>
-Cc: Patrick Ouellette <pouelle@debian.org>, David Ranch <linux-hams@trinnet.net>, node@packages.debian.org, nodejs@packages.debian.org, debian-hams@lists.debian.org, linux-hams@vger.kernel.org
+To: vk5fj@wia.org.au
+Cc: linux-hams@vger.kernel.org, debian-hams@lists.debian.org
 
-On Fri, May 04, 2012 at 02:31:29PM +0200, DL1SIG wrote:
+On Fri, May 04, 2012 at 02:50:50PM +0930, Kim, VK5FJ wrote:
 > 
-> I think using the alternatives system [1] could be a solution. I guess
-> that node.js and axnode is not often used on the same system. Therefore
-> in most of the cases the alternatives auto select mechanism will do the
-> right thing.
->
+> Secondly, I've just levelled up to get on air using digital modes;
+> the amateur license, skills, computer and radio hardware. I've been
+> looking forward to get my hands dirty with packet radio and APRS for
+> a very long time! Please don't drop it =) Alternatively, sign me up!
+> 
 
-While the alternatives system could be used in this manner, we are
-back to a policy type issue. From the wiki:
+Kim,
 
-"The Debian alternatives system creates a way for several programs 
-that fullfill the same or similar functions to be listed as alternative 
-implementations that are installed simultaneously but with one 
-particular implementation designated as the default."
+It is all about timing in life, isn't it? ;-)
 
-The packages in question are worlds apart in what they do.  They are not
-alternatives or substitutes.
+If you seriously want to get involved in helping with Debian,
+the instructions on how to go about it are at: 
 
-Pat
+http://www.debian.org/intro/help
+
+73,
+
+Pat NE4PO
