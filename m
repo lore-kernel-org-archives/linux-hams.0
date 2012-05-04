@@ -1,54 +1,33 @@
-From: Patrick Ouellette <pat@flying-gecko.net>
+From: Alejandro Santos <alejolp@alejolp.com.ar>
 Subject: Re: AX25 and related software's future in Debian
-Date: Thu, 03 May 2012 22:17:52 -0400
-Message-ID: <20120504021752.GB4017@flying-gecko.net>
+Date: Thu, 3 May 2012 23:20:41 -0300
+Message-ID: <CAOnrUC3qPXjrZK+ata_SVBYaTqAx7Y9pFEZ3_LUJui3CuizWcw@mail.gmail.com>
 References: <20120504013200.GB3489@flying-gecko.net>
- <CALyAeG9e=jWtjyLOyhTsp_fOhpP1Zbvjb-EQutE=+zRHPOS1YQ@mail.gmail.com>
 Mime-Version: 1.0
 Return-path: <linux-hams-owner@vger.kernel.org>
-Content-disposition: inline
-In-reply-to: <CALyAeG9e=jWtjyLOyhTsp_fOhpP1Zbvjb-EQutE=+zRHPOS1YQ@mail.gmail.com>
+In-Reply-To: <20120504013200.GB3489@flying-gecko.net>
 Sender: linux-hams-owner@vger.kernel.org
 List-ID: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
-To: Charles Suprin <hamaa1vs@gmail.com>
+To: Patrick Ouellette <pat@flying-gecko.net>
 Cc: linux-hams@vger.kernel.org, debian-hams@lists.debian.org
 
-On Thu, May 03, 2012 at 10:03:57PM -0400, Charles Suprin wrote:
-> 
-> Patrick,
-> 
-> I find myself asking the question if the name collision had occurred
-> with emacs, vi, ls, cat, or anyone of a number of other programs would
-> the conversation be the same.  There have been several good points in
-> the conversation.
-> 
-> Good luck and thanks for the effort.  It is a bigger problem than just
-> this small node app.
-> 
-> Charles
+On Thu, May 3, 2012 at 10:32 PM, Patrick Ouellette <pat@flying-gecko.net> wrote:
+>
+>
+> So, what inspiration can you give me to keep me from packing up the tent?
+>
 
-Charles,
+While not specific to libax25, software like gpsk31 is long gone from
+the original website, and Debian is one of the few places to get it.
 
-I have no doubt if the longer packaged program in question was one
-you listed, or many others, the new package would be summarily dismissed
-until it no longer conflicted.  There would not even be discussion.
+I for one vote to keep the software on Debian as long as it's possible
+to maintain.
 
-I see the bigger problem too, but it seems like many or most in the
-node discussion are so focused on getting node.js the name node at any
-cost they haven't even considered the potential long term ramifications
-of their actions.
+Thanks,
 
-The larger problem has been raised to the Debian project leader.  Perhaps
-it will be addressed, perhaps not.
+LU4EXT
 
-73,
-
-Pat NE4PO
 -- 
-,-----------------------------------------------------------------------------.
->   Patrick Ouellette         |   Lord, grant that I might not so much seek   <
->   pat(at)flying-gecko.net   |   to be loved as to love.                     <
->   Amateur Radio: NE4PO      |   -- Francis of Assisi                        <
-`-----------------------------------------------------------------------------'
+Alejandro Santos
