@@ -1,51 +1,47 @@
-From: Damien Gardner Jnr <rendrag@rendrag.net>
+From: Kris Kirby <kris@catonic.us>
 Subject: Re: AX25 and related software's future in Debian
-Date: Sat, 05 May 2012 08:52:17 +1000
-Message-ID: <4FA45DA1.8090602@rendrag.net>
-References: <20120504013200.GB3489@flying-gecko.net> <4FA3E269.4060801@danplanet.com> <20120504151424.GC24655@flying-gecko.net>
+Date: Fri, 4 May 2012 22:00:54 -0500 (CDT)
+Message-ID: <alpine.BSF.2.00.1205042157360.56205@spectre.catonic.us>
+References: <20120504013200.GB3489@flying-gecko.net> <CAPSBm51zYFpfPa0Rqvjemv4KGh-NQfFmFTcW07B8KzpTK_E8bw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <20120504151424.GC24655@flying-gecko.net>
+In-Reply-To: <CAPSBm51zYFpfPa0Rqvjemv4KGh-NQfFmFTcW07B8KzpTK_E8bw@mail.gmail.com>
 Sender: linux-hams-owner@vger.kernel.org
 List-ID: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"; format="flowed"
-To: Patrick Ouellette <pat@flying-gecko.net>
-Cc: Dan Smith <dsmith@danplanet.com>, linux-hams@vger.kernel.org, debian-hams@lists.debian.org, ralf@linux-mips.org, ax25@x-berg.in-berlin.de
+Content-Type: TEXT/PLAIN; charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+To: linux-hams@vger.kernel.org, debian-hams@lists.debian.org
 
-On 5/05/2012 1:14 AM, Patrick Ouellette wrote:
-> Dan,
->
-> Playing Devil's advocate - the argument has been put forth in the
-> "other discussion" that according to popcon (the Debian popularity
-> contest), node has 81 installs, and 17 reporting as "active" while the
-> nodejs package has 720 installs with 163 reporting as "active."  So their
-> conclusion is the node package is only used by a small community.
->
-Does anyone actually USE popcon though?  I dunno about you, but I have 
-~400 debian boxes in use around my clients, and NONE are participating 
-in popularity contest.. - Having the server info + installed packages 
-sent off to some off-site location is a security risk, and a stumbling 
-block on the way to PCI Compliance.  That and it just seems 
-microsoft-style creepy!
+> From: Patrick
+> Date: Thu, May 3, 2012 at 6:32 PM
+> Subject: AX25 and related software's future in Debian
+> 
+> I come to the lists mentally and physically exhausted from the
+> current struggle to defend the ham radio package node in the Debian
+> distribution.  I also seem to be the only person interested in the
+> ax25 software (libax25, ax25-tools, ax25-xtools, and ax25-utils).
+> The situation with node has made me wonder why I am even bothering.  I can
+> compile the ax25 stack for my use, and not have to put up with the baggage
+> Debian requires.
+> 
+> The question I have for the lists - is there really any interest in having
+> ham radio software, particularly libax25 and the tools/utils in Debian?
+> I know if it disappears from Debian it affects all Debian derived distros
+> (like Ubuntu for instance).
 
-I don't think you can honestly expect to use popcon as a valid indicator 
-to the ax25 packages' install base.. - Much like you couldn't expect it 
-to be valid for snort, acidbase, or other tools used in a secure 
-environment?   (Which a ham radio node needs to be, to maintain the 
-separation of ham-tcpip and public-tcpip networks).
+Most assuredly yes. While I don't presently have a system for using 
+AX.25 on Debian, I do want to see it available because I will need it in 
+the future. We use AX.25 for APRS particularly, and removing ham radio 
+support from Debian and Linux means we go back into the dark ages and 
+start over. 
 
-Regards,
+Folks from the Allstar group may be impacted by this, and I can tell you 
+that hams were involved in the birth, growth, and design of Asterisk as 
+well. 
 
-Damien
+AX.25 may be outdated, but unfortunately, it's one of the protocols we 
+have that we can either buy equipment off the shelf and use. 
 
--- 
-Damien Gardner Jnr
-VK2TDG. Dip EE. GradIEAust
-rendrag@rendrag.net - http://www.rendrag.net/
 --
-We rode on the winds of the rising storm,
-  We ran to the sounds of thunder.
-We danced among the lightning bolts,
-  and tore the world asunder
-
+Kris Kirby, KE4AHR
+Disinformation Analyst
