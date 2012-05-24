@@ -1,67 +1,93 @@
-From: "Marius Petrescu" <marius@yo2loj.ro>
-Subject: RE: Using ax25ipd
-Date: Fri, 25 May 2012 02:25:13 +0300
-Message-ID: <000c01cd3a04$78ad35b0$6a07a110$@ro>
-References: <4FBEB9ED.3050805@boling.us>
+From: "IT1 Stuart Blake Tener, USNR" <stuart.tener@bh90210.net>
+Subject: RE: AX25 and related software's future in Debian
+Date: Thu, 24 May 2012 19:29:58 -0400
+Message-ID: <20120524192958.93234be29ww8p37a@horde.mgtmail.com>
+References: <20120504013200.GB3489@flying-gecko.net>
+ <201205231215.27327.wjl@icecavern.net>
+ <9C404E2E-1574-4F0C-8286-AE1E8CA7AD0D@colliertech.org>
+ <20120524083356.13672istfyl94790@horde.mgtmail.com>
+ <000901cd3a01$a9811600$fc834200$@ro>
 Mime-Version: 1.0
 Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <4FBEB9ED.3050805@boling.us>
-Content-Language: en-us
+In-Reply-To: <000901cd3a01$a9811600$fc834200$@ro>
+Content-Disposition: inline
 Sender: linux-hams-owner@vger.kernel.org
 List-ID: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"
-To: linux-hams@vger.kernel.org
+Content-Type: text/plain; charset="us-ascii"; delsp="Yes"; format="flowed"
+To: Marius Petrescu <marius@yo2loj.ro>
+Cc: linux-hams@vger.kernel.org
 
-I'm using socat to create a pty pair.
-On one end I set up kissattach to get the ax25 interface, on the other comes
-ax25ipd:
+Marius,
 
-/usr/bin/socat pty,link=/var/ax25/axip,raw,echo=0
-pty,link=/var/ax25/kip,raw,echo=0 &
-/usr/sbin/kissattach /var/ax25/kip axip 44.xxx.xxx.xxx
+Excuse me but the ham radio apps work just fine for me, so long as  
+nobody deletes them from distribution. I don't need no stink'in GUI!  
+If I did, I'd have given up on Linux and Unix Administration a long  
+time ago and become a Windows weenie. However, I have always chosen to  
+take the same posture that my maid does, "I DO NOT DO WINDOWS!"
 
-Of course, this port called axip has to appear in the axports file
+And if Ham Radio is an obscure activity it is because how many talks  
+were given on Amateur Radio at Schmoocon? At DEFCON? At places where  
+the hacking and technical communities stand in congress together?  
+Perhaps the issue is marketing.
 
-axip	YO2LOJ-8	38400	255	7	AXIP encapsulation port
-
-Now you coud set up ax25ipd. In the config file you need to set the device
-to /var/ax25/axip (the pty delivered by socat) so that it will talk to
-kissattach.
-Other parameters:
-socket ip or udp - depends on what you need, ip means proto 93, udp means...
-udp
-Your routes. e.g.:
-route yo2tst 44.xxx.xxx.xxx bd (in case of proto 93)
-route yo2tst 44.xxx.xxx.xxx bd udp 93 (udp on port 93)
-
-Note that protocol is either ax25 encap or udp. If you need both, you need 2
-pty pairs, 2 interfaces and 2 instances of ax25ipd with different config
-files.
-
-Now start ax25ipd:
-/usr/sbin/ax25ipd -c <path to your config file>
-
-in my case:
-/usr/sbin/ax25ipd -c /etc/ax25/ax25ipd_ip.conf
-/usr/sbin/ax25ipd -c /etc/ax25/ax25ipd_udp.conf
-
-Have fun,
-Marius, YO2LOJ
+When last I went to DEFCON I saw an OVERCROWD of people waiting to  
+learn how to pick a lock, pick a lock I said! Had a decent Ham Radio  
+setup been there, with HF, Packet, Amateur TV, etc... we'd have likely  
+done well at marketing our hobby.
 
 
------Original Message-----
-From: linux-hams-owner@vger.kernel.org
-[mailto:linux-hams-owner@vger.kernel.org] On Behalf Of Charles Boling
-(AD7UF)
-Sent: Friday, May 25, 2012 01:45
-To: linux-hams@vger.kernel.org
-Subject: Using ax25ipd
+Stuart
 
-...
 
-What now?  Do I need to use kissattach to attach to the other end of the
-pseudo-TTY?  Which one?
+--
 
-...
+IT1 Stuart Blake Tener, USNR, N3GWG (Extra), MROP
+Las Vegas, NV / Boulder, CO / Philadelphia, PA / Beverly Hills, CA
+
+(310) 358-0202 Mobile Phone
+(215) 338-6005 Google Voice
+
+e-mail: stuart.tener@bh90210.net
+
+
+
+Quoting Marius Petrescu <marius@yo2loj.ro>:
+
+> Please take the effort to remember the whole thread...
+>
+> It started because there was a proposal to rename node from the ax25 suite
+> into something else, so that "newcomer" node.js  could be named node
+> instead.
+> (What a server side javascript package has with in common with the name node
+> is still a mistery to me, maybe the authors should calle it kernel since the
+> name and function seems to be irelevant and unrelated in their opinion...)
+>
+> And the idea behind distros like Ubuntu is not about having or not the ax25
+> package in the distribution, but the issue of CONSISTENCY. It is really
+> idiotic to have "node" an ax25 node communication software as a package in
+> one distro (e.g. Ubuntu) and in another one to have "node" a java script
+> package (talking about Debian where the discussion started).
+> Remember this happened before: axmail was just overrun by some After Logic
+> XMail, without any hesitations. But this seems to be the trend...
+> For "the clicking generation", ham radio is an obscure activity which just
+> can be trampled down since it does not result in nice pictures on a device
+> with an bitten fruit on it, and packet radio just some obsolete
+> non-important stuff that can be ignored (Duhhhh, ever heard of 3G and HSDPA?
+> Why would you want to use that?).
+>
+> But again maybe this is a signal to get some fresh wind into ham radio apps,
+> maybe ax.25 in its current concept is really obsolete. And in this case we
+> need to do something about it. Making it maybe a little more "clickable"...
+>
+> Marius, YO2LOJ
+> proud user of ax.25
+>
+>
+> --
+> To unsubscribe from this list: send the line "unsubscribe linux-hams" in
+> the body of a message to majordomo@vger.kernel.org
+> More majordomo info at  http://vger.kernel.org/majordomo-info.html
+>
+
 
