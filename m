@@ -1,49 +1,73 @@
-From: Damien Gardner Jnr <rendrag@rendrag.net>
+From: "C.J. Adams-Collier" <cjac@colliertech.org>
 Subject: Re: AX25 and related software's future in Debian
-Date: Thu, 24 May 2012 08:48:46 +1000
-Message-ID: <4FBD694E.3040903@rendrag.net>
+Date: Thu, 24 May 2012 05:18:18 -0700
+Message-ID: <9C404E2E-1574-4F0C-8286-AE1E8CA7AD0D@colliertech.org>
 References: <20120504013200.GB3489@flying-gecko.net> <201205231215.27327.wjl@icecavern.net>
-Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
+Mime-Version: 1.0 (1.0)
+Content-Transfer-Encoding: 8BIT
 Return-path: <linux-hams-owner@vger.kernel.org>
 In-Reply-To: <201205231215.27327.wjl@icecavern.net>
 Sender: linux-hams-owner@vger.kernel.org
 List-ID: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"; format="flowed"
+Content-Type: text/plain; charset="us-ascii"
 To: "Wesley J. Landaker" <wjl@icecavern.net>
-Cc: debian-hams@lists.debian.org, Patrick Ouellette <pat@flying-gecko.net>, linux-hams@vger.kernel.org
+Cc: "debian-hams@lists.debian.org" <debian-hams@lists.debian.org>, Patrick Ouellette <pat@flying-gecko.net>, "linux-hams@vger.kernel.org" <linux-hams@vger.kernel.org>
 
-On 24/05/2012 4:15 AM, Wesley J. Landaker wrote:
+
+
+Sent from my PDP-11
+
+On May 23, 2012, at 11:15 AM, "Wesley J. Landaker" <wjl@icecavern.net> wrote:
+
+> On Thursday, May 03, 2012 19:32:00 Patrick Ouellette wrote:
+>> I come to the lists mentally and physically exhausted from the
+>> current struggle to defend the ham radio package node in the Debian
+>> distribution.  
+
+Who have you been speaking with?  I know some people who know some people.
+
+>> I also seem to be the only person interested in the
+>> ax25 software (libax25, ax25-tools, ax25-xtools, and ax25-utils).
+
+That makes at least two of us.
+
+>> The situation with node has made me wonder why I am even bothering.  
+
+Whatever the reason, it probably started like
+
+We The People...
+
+>> I
+>> can compile the ax25 stack for my use, and not have to put up with the
+>> baggage Debian requires.
+>> 
+
+It's pretty light baggage.
+
+>> The question I have for the lists - is there really any interest in
+>> having ham radio software, particularly libax25 and the tools/utils in
+>> Debian? I know if it disappears from Debian it affects all Debian
+>> derived distros (like Ubuntu for instance).
+
+Ooh!  Ooh!  Me!  And KE7KML probably.
+
+
+> I do not use any ax25 software at the moment, but I've always had it on my 
+> list of interesting things to try: back when I was younger (I wasn't a ham 
+> at the time) I helped a friend of mine set up packet radio software on his 
+> computer.
+> 
+
+Nice.  I'd like to give it a try.
+
+
 > About ham radio software in general, I do use a lot of other ham radio 
-> software packaged in Debian. In general I'm surprised that there isn't 
-> more overlap between the ham radio and free/open-source software 
-> communities. - W5OSS 
+> software packaged in Debian. In general I'm surprised that there isn't more 
+> overlap between the ham radio and free/open-source software communities.
 
-While I live and breath Debian, and have spent probably 90% of the time 
-since I was introduced to Debian in 1998, with it on the desktop, my 
-most recent personal machine runs Win 7.  I used to have a macbook pro 
-17" running debian as my 'work' machine, and a little portege running 
-debian as my 'ham machine' when I was out and about..
+Yeah.  They seem a natural fit to me.
 
-But now that I'm married with kids, when I finally manage to get out, I 
-don't want to have to make sure batteries are charged, that the latest 
-apt-get upgrade hasn't killed my favourite apps, and that the firmware 
-for my wireless card hasn't been removed from the repository and killed 
-my ability to get on the 'net, or any other mucking about.. - I want to 
-just open up my go-bag, plug in the USB cable to the hub, fire up HRD, 
-and spend my hour chatting to folk on psk31, not messing with my OS :)
+> - W5OSS
 
-Cheers,
-
-DG
-
--- 
-Damien Gardner Jnr
-VK2TDG. Dip EE. GradIEAust
-rendrag@rendrag.net - http://www.rendrag.net/
---
-We rode on the winds of the rising storm,
-  We ran to the sounds of thunder.
-We danced among the lightning bolts,
-  and tore the world asunder
+KF7BMP
 
