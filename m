@@ -1,118 +1,63 @@
-From: "IT1 Stuart Blake Tener, USNR" <stuart.tener@bh90210.net>
-Subject: Re: AX25 and related software's future in Debian
-Date: Thu, 24 May 2012 08:33:56 -0400
-Message-ID: <20120524083356.13672istfyl94790@horde.mgtmail.com>
-References: <20120504013200.GB3489@flying-gecko.net>
- <201205231215.27327.wjl@icecavern.net>
- <9C404E2E-1574-4F0C-8286-AE1E8CA7AD0D@colliertech.org>
+From: "Charles Boling (AD7UF)" <junk07+ham@boling.us>
+Subject: Using ax25ipd
+Date: Thu, 24 May 2012 15:45:01 -0700
+Message-ID: <4FBEB9ED.3050805@boling.us>
 Mime-Version: 1.0
 Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <9C404E2E-1574-4F0C-8286-AE1E8CA7AD0D@colliertech.org>
-Content-Disposition: inline
 Sender: linux-hams-owner@vger.kernel.org
 List-ID: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"; delsp="Yes"; format="flowed"
-To: "C.J. Adams-Collier" <cjac@colliertech.org>
-Cc: "Wesley J. Landaker" <wjl@icecavern.net>, "debian-hams@lists.debian.org" <debian-hams@lists.debian.org>, Patrick Ouellette <pat@flying-gecko.net>, "linux-hams@vger.kernel.org" <linux-hams@vger.kernel.org>
+Content-Type: text/plain; charset="us-ascii"
+To: linux-hams@vger.kernel.org
 
-ALCON,
+I've done the soundcard driver.  I've done the BPQ driver.  I've done
+NET/ROM.  I've done a basic node.  And now I've done gotten myself
+stuck! :-)
 
-Let me say in the most precise and absolute terms, yes, if you do  
-something that would "de-perfectfy" Ubuntu for Amateur Radio use that  
-would be quite a sad day for me. Granted, I jettisoned Debian a long  
-time ago in exchange for Ubuntu (which by my measurement is far  
-superior).
+I want to use ax25ipd to establish an AXUDP tunnel over the Internet.
 
-If you lack the interest in continuing to take the lead on AX25's  
-appearance within the Debian distribution and its subordinate  
-distributions (such as Ubuntu), why not try to speak to the Ubuntu  
-folks? Maybe they will maintain it and that way it can stay. Perhaps  
-someone else will take it over? Why just remove and leave everyone  
-else absent this functional capability?
+Unfortunately, all of the documentation I've been able to find so far is
+either obviously outdated (e.g. from 2000, uses old-style BSD
+pseudo-TTYs), or otherwise doesn't work (e.g. expects ax25ipd to
+immediately write data to stdout after launch, as in
+  http://mailman.f6fbb.org/pipermail/xfbb/2012-March/004316.html)
 
+Add to that the fact that I'm really green on pseudo-TTYs, kissattach, etc.
 
-V/R,
+Here's what I have in axports:
+ sm0	AD7UF	1200	255	2	SignaLink USB
+ bpq0	AD7UF-9	1000000000	255	5	BPQ node for eth1
+ axudp	AD7UF-12	115200	255	5	AX25 over UDP (ax25ipd)
 
-Stuart, N3GWG
+and here's what's in ax25ipd.conf:
+ socket udp 10093
+ mode tnc
+ mycall ad7uf-12
+ device /dev/ptmx
+ speed 115200
+ loglevel 4
+ broadcast QST-0 NODES-0 ANYONE-0
+ route ke7awr ke7awr.no-ip.org udp 10093
 
+After launching ax25ipd, I see this logged:
+ 14:47:48  ax25ipd: #012Current configuration:
+ 14:47:48  ax25ipd:   socket     udp on port 10093
+ 14:47:48  ax25ipd:   mode       tnc
+ 14:47:48  ax25ipd:   device     /dev/ptmx
+ 14:47:48  ax25ipd:   speed      115200
+ 14:47:48  ax25ipd:   loglevel   1
+ 14:47:48  ax25ipd: #0121 active routes.
+ 14:47:48  ax25ipd:   KE7AWR#01124.21.99.210#011udp#01110093#0110
+ 14:47:48  ax25ipd: #0120 parameters
 
---
+What now?  Do I need to use kissattach to attach to the other end of the
+pseudo-TTY?  Which one?
 
-IT1 Stuart Blake Tener, USNR, N3GWG (Extra), MROP
-Las Vegas, NV / Boulder, CO / Philadelphia, PA / Beverly Hills, CA
+Of course, without the missing piece, I get this:
+ axcall axudp ke7awr
+ axconfig: port axudp not active
+ axcall: invalid port setting
 
-(310) 358-0202 Mobile Phone
-(215) 338-6005 Google Voice
+Any help would be greatly appreciated!
 
-e-mail: stuart.tener@bh90210.net
-
-
-
-Quoting "C.J. Adams-Collier" <cjac@colliertech.org>:
-
->
->
-> Sent from my PDP-11
->
-> On May 23, 2012, at 11:15 AM, "Wesley J. Landaker" <wjl@icecavern.net> wrote:
->
->> On Thursday, May 03, 2012 19:32:00 Patrick Ouellette wrote:
->>> I come to the lists mentally and physically exhausted from the
->>> current struggle to defend the ham radio package node in the Debian
->>> distribution.
->
-> Who have you been speaking with?  I know some people who know some people.
->
->>> I also seem to be the only person interested in the
->>> ax25 software (libax25, ax25-tools, ax25-xtools, and ax25-utils).
->
-> That makes at least two of us.
->
->>> The situation with node has made me wonder why I am even bothering.
->
-> Whatever the reason, it probably started like
->
-> We The People...
->
->>> I
->>> can compile the ax25 stack for my use, and not have to put up with the
->>> baggage Debian requires.
->>>
->
-> It's pretty light baggage.
->
->>> The question I have for the lists - is there really any interest in
->>> having ham radio software, particularly libax25 and the tools/utils in
->>> Debian? I know if it disappears from Debian it affects all Debian
->>> derived distros (like Ubuntu for instance).
->
-> Ooh!  Ooh!  Me!  And KE7KML probably.
->
->
->> I do not use any ax25 software at the moment, but I've always had it on my
->> list of interesting things to try: back when I was younger (I wasn't a ham
->> at the time) I helped a friend of mine set up packet radio software on his
->> computer.
->>
->
-> Nice.  I'd like to give it a try.
->
->
->> About ham radio software in general, I do use a lot of other ham radio
->> software packaged in Debian. In general I'm surprised that there isn't more
->> overlap between the ham radio and free/open-source software communities.
->
-> Yeah.  They seem a natural fit to me.
->
->> - W5OSS
->
-> KF7BMP
->
-> --
-> To unsubscribe from this list: send the line "unsubscribe linux-hams" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at  http://vger.kernel.org/majordomo-info.html
->
-
-
+PS: I'm running Ubuntu 11.04.
