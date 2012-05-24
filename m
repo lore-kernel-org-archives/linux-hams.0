@@ -1,63 +1,45 @@
-From: "Charles Boling (AD7UF)" <junk07+ham@boling.us>
-Subject: Using ax25ipd
-Date: Thu, 24 May 2012 15:45:01 -0700
-Message-ID: <4FBEB9ED.3050805@boling.us>
+From: "Marius Petrescu" <marius@yo2loj.ro>
+Subject: RE: AX25 and related software's future in Debian
+Date: Fri, 25 May 2012 02:05:07 +0300
+Message-ID: <000901cd3a01$a9811600$fc834200$@ro>
+References: <20120504013200.GB3489@flying-gecko.net> <201205231215.27327.wjl@icecavern.net> <9C404E2E-1574-4F0C-8286-AE1E8CA7AD0D@colliertech.org> <20120524083356.13672istfyl94790@horde.mgtmail.com>
 Mime-Version: 1.0
 Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
+In-Reply-To: <20120524083356.13672istfyl94790@horde.mgtmail.com>
+Content-Language: en-us
 Sender: linux-hams-owner@vger.kernel.org
 List-ID: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
 To: linux-hams@vger.kernel.org
 
-I've done the soundcard driver.  I've done the BPQ driver.  I've done
-NET/ROM.  I've done a basic node.  And now I've done gotten myself
-stuck! :-)
+Please take the effort to remember the whole thread...
 
-I want to use ax25ipd to establish an AXUDP tunnel over the Internet.
+It started because there was a proposal to rename node from the ax25 suite
+into something else, so that "newcomer" node.js  could be named node
+instead.
+(What a server side javascript package has with in common with the name node
+is still a mistery to me, maybe the authors should calle it kernel since the
+name and function seems to be irelevant and unrelated in their opinion...)
 
-Unfortunately, all of the documentation I've been able to find so far is
-either obviously outdated (e.g. from 2000, uses old-style BSD
-pseudo-TTYs), or otherwise doesn't work (e.g. expects ax25ipd to
-immediately write data to stdout after launch, as in
-  http://mailman.f6fbb.org/pipermail/xfbb/2012-March/004316.html)
+And the idea behind distros like Ubuntu is not about having or not the ax25
+package in the distribution, but the issue of CONSISTENCY. It is really
+idiotic to have "node" an ax25 node communication software as a package in
+one distro (e.g. Ubuntu) and in another one to have "node" a java script
+package (talking about Debian where the discussion started).
+Remember this happened before: axmail was just overrun by some After Logic
+XMail, without any hesitations. But this seems to be the trend... 
+For "the clicking generation", ham radio is an obscure activity which just
+can be trampled down since it does not result in nice pictures on a device
+with an bitten fruit on it, and packet radio just some obsolete
+non-important stuff that can be ignored (Duhhhh, ever heard of 3G and HSDPA?
+Why would you want to use that?).
 
-Add to that the fact that I'm really green on pseudo-TTYs, kissattach, etc.
+But again maybe this is a signal to get some fresh wind into ham radio apps,
+maybe ax.25 in its current concept is really obsolete. And in this case we
+need to do something about it. Making it maybe a little more "clickable"...
 
-Here's what I have in axports:
- sm0	AD7UF	1200	255	2	SignaLink USB
- bpq0	AD7UF-9	1000000000	255	5	BPQ node for eth1
- axudp	AD7UF-12	115200	255	5	AX25 over UDP (ax25ipd)
+Marius, YO2LOJ 
+proud user of ax.25
 
-and here's what's in ax25ipd.conf:
- socket udp 10093
- mode tnc
- mycall ad7uf-12
- device /dev/ptmx
- speed 115200
- loglevel 4
- broadcast QST-0 NODES-0 ANYONE-0
- route ke7awr ke7awr.no-ip.org udp 10093
 
-After launching ax25ipd, I see this logged:
- 14:47:48  ax25ipd: #012Current configuration:
- 14:47:48  ax25ipd:   socket     udp on port 10093
- 14:47:48  ax25ipd:   mode       tnc
- 14:47:48  ax25ipd:   device     /dev/ptmx
- 14:47:48  ax25ipd:   speed      115200
- 14:47:48  ax25ipd:   loglevel   1
- 14:47:48  ax25ipd: #0121 active routes.
- 14:47:48  ax25ipd:   KE7AWR#01124.21.99.210#011udp#01110093#0110
- 14:47:48  ax25ipd: #0120 parameters
-
-What now?  Do I need to use kissattach to attach to the other end of the
-pseudo-TTY?  Which one?
-
-Of course, without the missing piece, I get this:
- axcall axudp ke7awr
- axconfig: port axudp not active
- axcall: invalid port setting
-
-Any help would be greatly appreciated!
-
-PS: I'm running Ubuntu 11.04.
