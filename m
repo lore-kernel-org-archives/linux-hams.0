@@ -1,130 +1,70 @@
 From: "Marius Petrescu" <marius@yo2loj.ro>
-Subject: RE: AX25 and related software's future in Debian
-Date: Fri, 25 May 2012 03:04:34 +0300
-Message-ID: <005401cd3a09$f7685920$e6390b60$@ro>
-References: <20120504013200.GB3489@flying-gecko.net> <201205231215.27327.wjl@icecavern.net> <9C404E2E-1574-4F0C-8286-AE1E8CA7AD0D@colliertech.org> <20120524083356.13672istfyl94790@horde.mgtmail.com> <000901cd3a01$a9811600$fc834200$@ro> <20120524192958.93234be29ww8p37a@horde.mgtmail.com> <005101cd3a09$adef9a10$09cece30$@ro>
+Subject: RE: Using ax25ipd
+Date: Fri, 25 May 2012 03:22:56 +0300
+Message-ID: <005701cd3a0c$8b90e5c0$a2b2b140$@ro>
+References: <4FBEB9ED.3050805@boling.us> <4FBECB76.60109@trinnet.net>
 Mime-Version: 1.0
 Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <005101cd3a09$adef9a10$09cece30$@ro>
+In-Reply-To: <4FBECB76.60109@trinnet.net>
 Content-Language: en-us
 Sender: linux-hams-owner@vger.kernel.org
 List-ID: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
-To: 'Marius Petrescu' <marius@yo2loj.ro>, "'IT1 Stuart Blake Tener, USNR'" <stuart.tener@bh90210.net>
-Cc: linux-hams@vger.kernel.org
+To: 'David Ranch' <linux-hams@trinnet.net>, linux-hams@vger.kernel.org
 
-Grrr. Let me rephrase that. Some people in the Debian group wanted to use
-the name NODE for a java script package currently called node.js.
+Hi David,
+This is exactly what socat will do in this case.
+It automates that dynamic /dev/pts/# alloocation by providing symbolic links
+with the names that you choose.
+So it becomes scriptable.
 
-
------Original Message-----
-From: linux-hams-owner@vger.kernel.org
-[mailto:linux-hams-owner@vger.kernel.org] On Behalf Of Marius Petrescu
-Sent: Friday, May 25, 2012 03:03
-To: 'IT1 Stuart Blake Tener, USNR'
-Cc: linux-hams@vger.kernel.org
-Subject: RE: AX25 and related software's future in Debian
-
-What I said was ironic (probably not enough).
-I use those tools and I am happy with them. Just some people in the Debian
-group were bothered by the fact that some wannabe script pack wants to use
-the name node....
-And than it jumped over to the whole ham radio stuff.
-
-Marius, YO2LOJ
+Marius
 
 -----Original Message-----
 From: linux-hams-owner@vger.kernel.org
-[mailto:linux-hams-owner@vger.kernel.org] On Behalf Of IT1 Stuart Blake
-Tener, USNR
-Sent: Friday, May 25, 2012 02:30
-To: Marius Petrescu
-Cc: linux-hams@vger.kernel.org
-Subject: RE: AX25 and related software's future in Debian
-
-Marius,
-
-Excuse me but the ham radio apps work just fine for me, so long as nobody
-deletes them from distribution. I don't need no stink'in GUI!  
-If I did, I'd have given up on Linux and Unix Administration a long time ago
-and become a Windows weenie. However, I have always chosen to take the same
-posture that my maid does, "I DO NOT DO WINDOWS!"
-
-And if Ham Radio is an obscure activity it is because how many talks were
-given on Amateur Radio at Schmoocon? At DEFCON? At places where the hacking
-and technical communities stand in congress together?  
-Perhaps the issue is marketing.
-
-When last I went to DEFCON I saw an OVERCROWD of people waiting to learn how
-to pick a lock, pick a lock I said! Had a decent Ham Radio setup been there,
-with HF, Packet, Amateur TV, etc... we'd have likely done well at marketing
-our hobby.
+[mailto:linux-hams-owner@vger.kernel.org] On Behalf Of David Ranch
+Sent: Friday, May 25, 2012 03:00
+To: linux-hams@vger.kernel.org
+Subject: Re: Using ax25ipd
 
 
-Stuart
+Here are my notes I wrote down to get this working in a very manual 
+fashion   Should be too hard to automate this in a script (see the URL 
+below)
+
+--David
 
 
---
+09/04/2011
 
-IT1 Stuart Blake Tener, USNR, N3GWG (Extra), MROP Las Vegas, NV / Boulder,
-CO / Philadelphia, PA / Beverly Hills, CA
+http://wiki.complete.org/LinuxPacketRadio#ax25ipd-1
 
-(310) 358-0202 Mobile Phone
-(215) 338-6005 Google Voice
+   - requires changes to ax25-apps too --
 
-e-mail: stuart.tener@bh90210.net
+1. Update /etc/ax25/axports and define the ipct port
 
+2. /usr/sbin/kissnetd -p2 &
+    - Please record the FIRST port and SECOND port out of that list
+      for follow-on commands
 
+3. /usr/sbin/kissattach -l /dev/pts/7 ipct 44.4.10.40
+    - In this example, /dev/pts/7 camesfrom the output of the kissnetd
+      command above.  44.4.10.40 is my AMPR IP address
 
-Quoting Marius Petrescu <marius@yo2loj.ro>:
+4. From the output of command in step 2, take the SECOND port given (not the
+    first port) and put that into /etc/ax25/ax25ipd.conf for the "device"
+line
 
-> Please take the effort to remember the whole thread...
->
-> It started because there was a proposal to rename node from the ax25 
-> suite into something else, so that "newcomer" node.js  could be named 
-> node instead.
-> (What a server side javascript package has with in common with the 
-> name node is still a mistery to me, maybe the authors should calle it 
-> kernel since the name and function seems to be irelevant and unrelated 
-> in their opinion...)
->
-> And the idea behind distros like Ubuntu is not about having or not the
-> ax25 package in the distribution, but the issue of CONSISTENCY. It is 
-> really idiotic to have "node" an ax25 node communication software as a 
-> package in one distro (e.g. Ubuntu) and in another one to have "node"
-> a java script package (talking about Debian where the discussion started).
-> Remember this happened before: axmail was just overrun by some After 
-> Logic XMail, without any hesitations. But this seems to be the trend...
-> For "the clicking generation", ham radio is an obscure activity which 
-> just can be trampled down since it does not result in nice pictures on 
-> a device with an bitten fruit on it, and packet radio just some 
-> obsolete non-important stuff that can be ignored (Duhhhh, ever heard 
-> of 3G
-and HSDPA?
-> Why would you want to use that?).
->
-> But again maybe this is a signal to get some fresh wind into ham radio 
-> apps, maybe ax.25 in its current concept is really obsolete. And in 
-> this case we need to do something about it. Making it maybe a little 
-> more
-"clickable"...
->
-> Marius, YO2LOJ
-> proud user of ax.25
->
->
-> --
-> To unsubscribe from this list: send the line "unsubscribe linux-hams" 
-> in the body of a message to majordomo@vger.kernel.org More majordomo 
-> info at  http://vger.kernel.org/majordomo-info.html
->
+5. run /usr/sbin/ax25ipd
 
+6. Per db0fhn security, you MUST log into Echolink via the same egress IP
+    address (easily done via NAT) as this AXUDP connection.
 
---
-To unsubscribe from this list: send the line "unsubscribe linux-hams" in the
-body of a message to majordomo@vger.kernel.org More majordomo info at
-http://vger.kernel.org/majordomo-info.html
+7. Connect to the remote station:
+
+    call ipct db0fhn
+
 
 --
 To unsubscribe from this list: send the line "unsubscribe linux-hams" in the
