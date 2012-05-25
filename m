@@ -1,150 +1,48 @@
-From: Bob Nielsen <n7xy@clearwire.net>
+From: Nate Bargmann <n0nb@n0nb.us>
 Subject: Re: AX25 and related software's future in Debian
-Date: Thu, 24 May 2012 17:56:00 -0700
-Message-ID: <2AE861CD-AE01-46E5-B585-1B3AF3DA4B28@clearwire.net>
-References: <20120504013200.GB3489@flying-gecko.net> <201205231215.27327.wjl@icecavern.net> <9C404E2E-1574-4F0C-8286-AE1E8CA7AD0D@colliertech.org> <20120524083356.13672istfyl94790@horde.mgtmail.com> <000901cd3a01$a9811600$fc834200$@ro> <20120524192958.93234be29ww8p37a@horde.mgtmail.com> <005101cd3a09$adef9a10$09cece30$@ro> <005401cd3a09$f7685920$e6390b60$@ro>
-Mime-Version: 1.0 (Apple Message framework v1278)
-Content-Transfer-Encoding: 8BIT
+Date: Thu, 24 May 2012 20:46:09 -0500
+Message-ID: <20120525014609.GA4171@n0nb.us>
+References: <20120504013200.GB3489@flying-gecko.net>
+ <201205231215.27327.wjl@icecavern.net>
+ <9C404E2E-1574-4F0C-8286-AE1E8CA7AD0D@colliertech.org>
+ <20120524083356.13672istfyl94790@horde.mgtmail.com>
+ <000901cd3a01$a9811600$fc834200$@ro>
+ <20120524192958.93234be29ww8p37a@horde.mgtmail.com>
+ <005101cd3a09$adef9a10$09cece30$@ro>
+ <005401cd3a09$f7685920$e6390b60$@ro>
+ <2AE861CD-AE01-46E5-B585-1B3AF3DA4B28@clearwire.net>
+Mime-Version: 1.0
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <005401cd3a09$f7685920$e6390b60$@ro>
+Content-Disposition: inline
+In-Reply-To: <2AE861CD-AE01-46E5-B585-1B3AF3DA4B28@clearwire.net>
 Sender: linux-hams-owner@vger.kernel.org
 List-ID: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
-To: Marius Petrescu <marius@yo2loj.ro>
-Cc: "'IT1 Stuart Blake Tener, USNR'" <stuart.tener@bh90210.net>, linux-hams@vger.kernel.org
+Content-Transfer-Encoding: 7bit
+To: linux-hams@vger.kernel.org
 
-Ah, for the days when a ham (Bruce Perens, Bdale Garbee) was the Debian Project Leader.
+* On 2012 24 May 20:04 -0500, Bob Nielsen wrote:
+> Ah, for the days when a ham (Bruce Perens, Bdale Garbee) was the
+> Debian Project Leader.
 
-Bob, N7XY
+Unfortunately, both have stepped away from an active leadership role in
+the Debian Project.  Given how the current DPL opted to stay out of this
+issue if possible, would Bruce or Bdale have acted differently?  I don't
+know.
 
-On May 24, 2012, at 5:04 PM, Marius Petrescu wrote:
+I do not take my position merely because I am a licensed radio amateur
+and therefore have sympathy toward the amateur radio related packages.
+Rather, it seems to me that the onus should be on *new* packages to play
+nicely with existing packages in any distribution, particulary ones that
+are actively maintained.  In this case maintained refers to the Debian
+maintainer keeping the package abreast of upstream and current with
+Debian changes.
 
-> Grrr. Let me rephrase that. Some people in the Debian group wanted to use
-> the name NODE for a java script package currently called node.js.
-> 
-> 
-> -----Original Message-----
-> From: linux-hams-owner@vger.kernel.org
-> [mailto:linux-hams-owner@vger.kernel.org] On Behalf Of Marius Petrescu
-> Sent: Friday, May 25, 2012 03:03
-> To: 'IT1 Stuart Blake Tener, USNR'
-> Cc: linux-hams@vger.kernel.org
-> Subject: RE: AX25 and related software's future in Debian
-> 
-> What I said was ironic (probably not enough).
-> I use those tools and I am happy with them. Just some people in the Debian
-> group were bothered by the fact that some wannabe script pack wants to use
-> the name node....
-> And than it jumped over to the whole ham radio stuff.
-> 
-> Marius, YO2LOJ
-> 
-> -----Original Message-----
-> From: linux-hams-owner@vger.kernel.org
-> [mailto:linux-hams-owner@vger.kernel.org] On Behalf Of IT1 Stuart Blake
-> Tener, USNR
-> Sent: Friday, May 25, 2012 02:30
-> To: Marius Petrescu
-> Cc: linux-hams@vger.kernel.org
-> Subject: RE: AX25 and related software's future in Debian
-> 
-> Marius,
-> 
-> Excuse me but the ham radio apps work just fine for me, so long as nobody
-> deletes them from distribution. I don't need no stink'in GUI!  
-> If I did, I'd have given up on Linux and Unix Administration a long time ago
-> and become a Windows weenie. However, I have always chosen to take the same
-> posture that my maid does, "I DO NOT DO WINDOWS!"
-> 
-> And if Ham Radio is an obscure activity it is because how many talks were
-> given on Amateur Radio at Schmoocon? At DEFCON? At places where the hacking
-> and technical communities stand in congress together?  
-> Perhaps the issue is marketing.
-> 
-> When last I went to DEFCON I saw an OVERCROWD of people waiting to learn how
-> to pick a lock, pick a lock I said! Had a decent Ham Radio setup been there,
-> with HF, Packet, Amateur TV, etc... we'd have likely done well at marketing
-> our hobby.
-> 
-> 
-> Stuart
-> 
-> 
-> --
-> 
-> IT1 Stuart Blake Tener, USNR, N3GWG (Extra), MROP Las Vegas, NV / Boulder,
-> CO / Philadelphia, PA / Beverly Hills, CA
-> 
-> (310) 358-0202 Mobile Phone
-> (215) 338-6005 Google Voice
-> 
-> e-mail: stuart.tener@bh90210.net
-> 
-> 
-> 
-> Quoting Marius Petrescu <marius@yo2loj.ro>:
-> 
->> Please take the effort to remember the whole thread...
->> 
->> It started because there was a proposal to rename node from the ax25 
->> suite into something else, so that "newcomer" node.js  could be named 
->> node instead.
->> (What a server side javascript package has with in common with the 
->> name node is still a mistery to me, maybe the authors should calle it 
->> kernel since the name and function seems to be irelevant and unrelated 
->> in their opinion...)
->> 
->> And the idea behind distros like Ubuntu is not about having or not the
->> ax25 package in the distribution, but the issue of CONSISTENCY. It is 
->> really idiotic to have "node" an ax25 node communication software as a 
->> package in one distro (e.g. Ubuntu) and in another one to have "node"
->> a java script package (talking about Debian where the discussion started).
->> Remember this happened before: axmail was just overrun by some After 
->> Logic XMail, without any hesitations. But this seems to be the trend...
->> For "the clicking generation", ham radio is an obscure activity which 
->> just can be trampled down since it does not result in nice pictures on 
->> a device with an bitten fruit on it, and packet radio just some 
->> obsolete non-important stuff that can be ignored (Duhhhh, ever heard 
->> of 3G
-> and HSDPA?
->> Why would you want to use that?).
->> 
->> But again maybe this is a signal to get some fresh wind into ham radio 
->> apps, maybe ax.25 in its current concept is really obsolete. And in 
->> this case we need to do something about it. Making it maybe a little 
->> more
-> "clickable"...
->> 
->> Marius, YO2LOJ
->> proud user of ax.25
->> 
->> 
->> --
->> To unsubscribe from this list: send the line "unsubscribe linux-hams" 
->> in the body of a message to majordomo@vger.kernel.org More majordomo 
->> info at  http://vger.kernel.org/majordomo-info.html
->> 
-> 
-> 
-> --
-> To unsubscribe from this list: send the line "unsubscribe linux-hams" in the
-> body of a message to majordomo@vger.kernel.org More majordomo info at
-> http://vger.kernel.org/majordomo-info.html
-> 
-> --
-> To unsubscribe from this list: send the line "unsubscribe linux-hams" in the
-> body of a message to majordomo@vger.kernel.org More majordomo info at
-> http://vger.kernel.org/majordomo-info.html
-> 
-> --
-> To unsubscribe from this list: send the line "unsubscribe linux-hams" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at  http://vger.kernel.org/majordomo-info.html
+73, de Nate >>
 
-_____
-N7XY DX Cluster Node - telnet to n7xy.net, port 7300
+-- 
 
+"The optimist proclaims that we live in the best of all
+possible worlds.  The pessimist fears this is true."
 
-
-
-
+Ham radio, Linux, bikes, and more: http://www.n0nb.us
