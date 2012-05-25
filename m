@@ -1,18 +1,30 @@
 From: "Marius Petrescu" <marius@yo2loj.ro>
 Subject: RE: AX25 and related software's future in Debian
-Date: Fri, 25 May 2012 03:02:31 +0300
-Message-ID: <005101cd3a09$adef9a10$09cece30$@ro>
-References: <20120504013200.GB3489@flying-gecko.net> <201205231215.27327.wjl@icecavern.net> <9C404E2E-1574-4F0C-8286-AE1E8CA7AD0D@colliertech.org> <20120524083356.13672istfyl94790@horde.mgtmail.com> <000901cd3a01$a9811600$fc834200$@ro> <20120524192958.93234be29ww8p37a@horde.mgtmail.com>
+Date: Fri, 25 May 2012 03:04:34 +0300
+Message-ID: <005401cd3a09$f7685920$e6390b60$@ro>
+References: <20120504013200.GB3489@flying-gecko.net> <201205231215.27327.wjl@icecavern.net> <9C404E2E-1574-4F0C-8286-AE1E8CA7AD0D@colliertech.org> <20120524083356.13672istfyl94790@horde.mgtmail.com> <000901cd3a01$a9811600$fc834200$@ro> <20120524192958.93234be29ww8p37a@horde.mgtmail.com> <005101cd3a09$adef9a10$09cece30$@ro>
 Mime-Version: 1.0
 Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <20120524192958.93234be29ww8p37a@horde.mgtmail.com>
+In-Reply-To: <005101cd3a09$adef9a10$09cece30$@ro>
 Content-Language: en-us
 Sender: linux-hams-owner@vger.kernel.org
 List-ID: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
-To: "'IT1 Stuart Blake Tener, USNR'" <stuart.tener@bh90210.net>
+To: 'Marius Petrescu' <marius@yo2loj.ro>, "'IT1 Stuart Blake Tener, USNR'" <stuart.tener@bh90210.net>
 Cc: linux-hams@vger.kernel.org
+
+Grrr. Let me rephrase that. Some people in the Debian group wanted to use
+the name NODE for a java script package currently called node.js.
+
+
+-----Original Message-----
+From: linux-hams-owner@vger.kernel.org
+[mailto:linux-hams-owner@vger.kernel.org] On Behalf Of Marius Petrescu
+Sent: Friday, May 25, 2012 03:03
+To: 'IT1 Stuart Blake Tener, USNR'
+Cc: linux-hams@vger.kernel.org
+Subject: RE: AX25 and related software's future in Debian
 
 What I said was ironic (probably not enough).
 I use those tools and I am happy with them. Just some people in the Debian
@@ -77,23 +89,25 @@ Quoting Marius Petrescu <marius@yo2loj.ro>:
 > kernel since the name and function seems to be irelevant and unrelated 
 > in their opinion...)
 >
-> And the idea behind distros like Ubuntu is not about having or not the 
+> And the idea behind distros like Ubuntu is not about having or not the
 > ax25 package in the distribution, but the issue of CONSISTENCY. It is 
 > really idiotic to have "node" an ax25 node communication software as a 
-> package in one distro (e.g. Ubuntu) and in another one to have "node" 
+> package in one distro (e.g. Ubuntu) and in another one to have "node"
 > a java script package (talking about Debian where the discussion started).
 > Remember this happened before: axmail was just overrun by some After 
 > Logic XMail, without any hesitations. But this seems to be the trend...
 > For "the clicking generation", ham radio is an obscure activity which 
 > just can be trampled down since it does not result in nice pictures on 
 > a device with an bitten fruit on it, and packet radio just some 
-> obsolete non-important stuff that can be ignored (Duhhhh, ever heard of 3G
+> obsolete non-important stuff that can be ignored (Duhhhh, ever heard 
+> of 3G
 and HSDPA?
 > Why would you want to use that?).
 >
 > But again maybe this is a signal to get some fresh wind into ham radio 
 > apps, maybe ax.25 in its current concept is really obsolete. And in 
-> this case we need to do something about it. Making it maybe a little more
+> this case we need to do something about it. Making it maybe a little 
+> more
 "clickable"...
 >
 > Marius, YO2LOJ
@@ -106,6 +120,11 @@ and HSDPA?
 > info at  http://vger.kernel.org/majordomo-info.html
 >
 
+
+--
+To unsubscribe from this list: send the line "unsubscribe linux-hams" in the
+body of a message to majordomo@vger.kernel.org More majordomo info at
+http://vger.kernel.org/majordomo-info.html
 
 --
 To unsubscribe from this list: send the line "unsubscribe linux-hams" in the
