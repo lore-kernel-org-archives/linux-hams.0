@@ -1,38 +1,39 @@
-From: Kim VK5FJ <vk5fj@hawtin.net.au>
+From: Gordon JC Pearce <gordonjcp@gjcp.net>
 Subject: Re: ARPS userland apps
-Date: Mon, 04 Jun 2012 22:01:19 +0930
-Message-ID: <4FCCAA97.1050609@hawtin.net.au>
-References: <4FCC13C1.5090003@hawtin.net.au> <4FCC1907.5090403@gjcp.net> <4FCC2B6E.4060408@hawtin.net.au> <4FCC6E07.1040205@gjcp.net>
-Reply-To: vk5fj@wia.org.au
+Date: Mon, 04 Jun 2012 19:23:26 +0100
+Message-ID: <4FCCFD1E.3030505@gjcp.net>
+References: <4FCC13C1.5090003@hawtin.net.au> <4FCC1907.5090403@gjcp.net>
 Mime-Version: 1.0
 Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <4FCC6E07.1040205@gjcp.net>
+In-Reply-To: <4FCC1907.5090403@gjcp.net>
 Sender: linux-hams-owner@vger.kernel.org
 List-ID: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"; format="flowed"
-To: Gordon JC Pearce <gordonjcp@gjcp.net>
-Cc: linux-hams@vger.kernel.org
+To: linux-hams@vger.kernel.org
 
-On 04/06/12 17:42, Gordon JC Pearce wrote:
-> On 04/06/12 04:28, Kim, VK5FJ wrote:
->> Ok, I had a quick look and couldn't get it passed the
->> waf configure.
->>
->> Its failing on the dependencies;
->> Checking for 'osmgpsmap' >= 0.7.2 : not found
+On 04/06/12 03:10, Gordon JC Pearce wrote:
+> On 04/06/12 02:47, Kim, VK5FJ wrote:
 >
-> If you're on Ubuntu (and possibly Debian)
-
-yes debian/squeeze
-
-> this is because libosmgpsmap
-> is broken, and misses the dependency on libsoup2.4-dev
+>> Are the other active Linux text or gui clients that are a tad more
+>> recent than xastir?
 >
-> You'll also likely need to install libfap manually.
+> Quite a long time ago I started hacking on aprsmap:
+>
+> https://github.com/gordonjcp/aprsmap
+>
+> but at the moment I need to spend most of my time doing Real Work.
+> Please feel free to submit patches or even just helpful suggestions.
+>
 
-yeah, that makes more sense. i'll have a crack at that shortly.
+Just to give you an example, here's a screenshot showing the path of the 
+Olympic Torch across Northern Ireland today:
 
-regards,
+http://www.gjcp.net/~gordonjcp/aprsmap-torch2012.jpg
 
-Kim
+There's a bit of "splatter" in the top right where it has become clear 
+that aprsmap doesn't deal with out-of-sequence APRS packets well ;-)
+
+
+-- 
+Gordonjcp MM0YEQ
