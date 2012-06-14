@@ -1,39 +1,38 @@
-From: Gordon JC Pearce <gordonjcp@gjcp.net>
-Subject: Re: ARPS userland apps
-Date: Mon, 04 Jun 2012 19:23:26 +0100
-Message-ID: <4FCCFD1E.3030505@gjcp.net>
-References: <4FCC13C1.5090003@hawtin.net.au> <4FCC1907.5090403@gjcp.net>
+From: f6bvp <f6bvp@free.fr>
+Subject: Subject:    Re: Using ax25ipd
+Date: Thu, 14 Jun 2012 10:28:50 +0200
+Message-ID: <4FD9A0C2.6000909@free.fr>
 Mime-Version: 1.0
 Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <4FCC1907.5090403@gjcp.net>
 Sender: linux-hams-owner@vger.kernel.org
 List-ID: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"; format="flowed"
-To: linux-hams@vger.kernel.org
+To: linux-hams <linux-hams@vger.kernel.org>
 
-On 04/06/12 03:10, Gordon JC Pearce wrote:
-> On 04/06/12 02:47, Kim, VK5FJ wrote:
->
->> Are the other active Linux text or gui clients that are a tad more
->> recent than xastir?
->
-> Quite a long time ago I started hacking on aprsmap:
->
-> https://github.com/gordonjcp/aprsmap
->
-> but at the moment I need to spend most of my time doing Real Work.
-> Please feel free to submit patches or even just helpful suggestions.
->
+Hi Charles,
 
-Just to give you an example, here's a screenshot showing the path of the 
-Olympic Torch across Northern Ireland today:
+You wrote :
 
-http://www.gjcp.net/~gordonjcp/aprsmap-torch2012.jpg
+"I've done the soundcard driver. I've done the BPQ driver. I've done 
+NET/ROM. I've done a basic node. And now I've done gotten myself stuck! 
+:-) I want to use ax25ipd to establish an AXUDP tunnel over the Internet."
 
-There's a bit of "splatter" in the top right where it has become clear 
-that aprsmap doesn't deal with out-of-sequence APRS packets well ;-)
+Charles, I am sorry that I did not read linux-ham until recently. Then I 
+had problems for replying through linux-hams list.
 
+May I suggest you first download patched AX25ipd that includes a 
+symbolic link connection capability and an automatic periodical retry 
+function for closed links.
 
--- 
-Gordonjcp MM0YEQ
+This version is included in the following linuxax25 package maintained 
+by Lee VE7FET
+
+code.google.com/p/linuxax25/source/checkout
+
+You will find here a link to a script from Charley K4GBB for creating 
+pseudo devices that will be attached to the /dev/ptmx end of the tunnel.
+
+http://f6bvp.free.fr/logiciels/ax25/rc.ax25
+
+73 de Bernard, f6bvp
