@@ -1,24 +1,36 @@
-From: David Miller <davem@davemloft.net>
-Subject: Re: [patch] [AX.25]: small cleanup in ax25_addr_parse()
-Date: Mon, 09 Jul 2012 00:16:34 -0700 (PDT)
-Message-ID: <20120709.001634.1183046288317502958.davem@davemloft.net>
-References: <20120705082718.GA14993@elgon.mountain>
+From: folkert <folkert@vanheusden.com>
+Subject: ax.25 localhost?
+Date: Sat, 21 Jul 2012 18:08:48 +0200
+Message-ID: <20120721160848.GX17345@belle.intranet.vanheusden.com>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <20120705082718.GA14993@elgon.mountain>
+Content-Disposition: inline
 Sender: linux-hams-owner@vger.kernel.org
 List-ID: <linux-hams.vger.kernel.org>
-Content-Type: Text/Plain; charset="us-ascii"
-To: dan.carpenter@oracle.com
-Cc: ralf@linux-mips.org, linux-hams@vger.kernel.org, netdev@vger.kernel.org, kernel-janitors@vger.kernel.org
+Content-Type: text/plain; charset="iso-8859-1"
+To: linux-hams@vger.kernel.org
 
-From: Dan Carpenter <dan.carpenter@oracle.com>
-Date: Thu, 5 Jul 2012 11:27:18 +0300
+is it not possible to an 'axcall' to a call on the local system? i
+checked with axlisten that some traffic is going on but it seems ax25d
+ignores it - verified with strace that it gets no data via its sockets
 
-> The comments were wrong here because "AX25_MAX_DIGIS" is 8 but the
-> comments say 6.  Also I've changed the "7" to "AX25_ADDR_LEN".
-> 
-> Signed-off-by: Dan Carpenter <dan.carpenter@oracle.com>
+axlisten tells me:
+fm FH1GOU-1 to FH1GOU-1 ctl DISC+ 00:36:28
+fm FH1GOU-1 to FH1GOU-1 ctl SABM+ 00:36:28
 
-Applied, thanks Dan.
+
+=46olkert van Heusden
+
+--=20
+Multitail es una herramienta flexible que permite visualizar los "log
+file" y seguir la ejecuci=F3n de comandos. Permite filtrar, a=F1adir
+colores, combinar archivos, la visualizaci=F3n de diferencias (diff-
+view), etc.  http://www.vanheusden.com/multitail/
+----------------------------------------------------------------------
+Phone: +31-6-41278122, PGP-key: 1F28D8AE, www.vanheusden.com
+--
+To unsubscribe from this list: send the line "unsubscribe linux-hams" i=
+n
+the body of a message to majordomo@vger.kernel.org
+More majordomo info at  http://vger.kernel.org/majordomo-info.html
