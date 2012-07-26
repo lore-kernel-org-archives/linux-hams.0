@@ -1,40 +1,33 @@
-From: Alejandro Santos <alejolp@alejolp.com.ar>
-Subject: Re: AX.25 Packet Radio on a RaspBerry Pi : a success
-Date: Wed, 25 Jul 2012 13:38:57 -0300
-Message-ID: <CAOnrUC3iavAZB5q9Xy6pxU0N72YcPyPFAkqzDnca11vmvMdFJg@mail.gmail.com>
-References: <500FD014.5090004@free.fr> <5010192A.9060506@upmc.fr> <50101DB2.9020101@sharon.esrac.ele.tue.nl>
+From: folkert <folkert@vanheusden.com>
+Subject: network sniffer
+Date: Thu, 26 Jul 2012 09:22:20 +0200
+Message-ID: <20120726072218.GA7638@belle.intranet.vanheusden.com>
 Mime-Version: 1.0
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <50101DB2.9020101@sharon.esrac.ele.tue.nl>
+Content-Disposition: inline
 Sender: linux-hams-owner@vger.kernel.org
 List-ID: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
-To: Arno Verhoeven <pe1icq@sharon.esrac.ele.tue.nl>
-Cc: Bernard Pidoux <bernard.pidoux@upmc.fr>, linux-hams <linux-hams@vger.kernel.org>, List for the LINUX version of FBB <xfbb@f6fbb.org>
+To: linux-hams@vger.kernel.org
 
-Amazing! Has anyone managed to run soundmodem inside r-Pi?
+Hi,
 
-On Wed, Jul 25, 2012 at 1:24 PM, Arno Verhoeven
-<pe1icq@sharon.esrac.ele.tue.nl> wrote:
-> On 25-07-12 18:04, Bernard Pidoux wrote:
->>
->> Hello all,
->>
->> I succeeded the compilation of a dedicated Raspbian 3.1.9+ kernel with
->
-> Very nice Bernard. This is good inspiration :)  I have two Raspberries  for
-> another project, but now I must re-prioritize and assign one for ham usage
-> ;-)
->
-> 73, PE1ICQ
->
-> --
-> To unsubscribe from this list: send the line "unsubscribe linux-hams" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at  http://vger.kernel.org/majordomo-info.html
+You probably all have heard of the network sniffer & dissector called
+Wireshark. Currently it does not know of AX.25. I filed a wishlist-bug
+in their bugzilla and it looks as if people are willing to develop AX.25
+support in wireshark.
+My question to you people now is: can someone generate some traffic?
+Plain AX.25, beacons, ip-over-ax.25, netrom, rose, etc.
+That would help the developers. If you like, I can then host the file
+for you and tell the developers about it.
+In any case, the url of the bugzilla entry is:
+https://bugs.wireshark.org/bugzilla/show_bug.cgi?id=7529
+(unfortunately I cannot generate any traffic yet myself, hopefully in a week)
 
 
+Folkert van Heusden
 
 -- 
-Alejandro Santos
+----------------------------------------------------------------------
+Phone: +31-6-41278122, PGP-key: 1F28D8AE, www.vanheusden.com
