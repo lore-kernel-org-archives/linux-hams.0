@@ -1,38 +1,36 @@
-From: "Curt, WE7U" <curt.we7u@gmail.com>
-Subject: Re: Libax25 for OpenWrt Backfire Package
-Date: Fri, 27 Jul 2012 09:26:48 -0700 (PDT)
-Message-ID: <alpine.LNX.2.00.1207270926250.5163@DadsBox.we7u.net>
-References: <50127D4C.7070502@kamakuranet.ne.jp>
+From: Richard Stearn <richard@rns-stearn.demon.co.uk>
+Subject: AX.25 in wireshark & tcpdump
+Date: Sat, 28 Jul 2012 22:11:54 +0100
+Message-ID: <5014559A.4010203@rns-stearn.demon.co.uk>
 Mime-Version: 1.0
+Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=date:from:to:cc:subject:in-reply-to:message-id:references
-         :user-agent:mime-version:content-type;
-        bh=tUlZG29oK32y2XgOHLj8HR2b7IEuDeFfXWyrj1gG/jc=;
-        b=qDtBA/ltZ6jq+YlM07aLDX8+iaoKcwAbRjFuG4FE3P2CTEqN7m/0dPQOrtvSWPXIWF
-         FIx9gbFSmH1O0npfFH22/+YYiErAxxqzdmge7zI3w/P2Av+DMffB6rfSBLJpnJaA2++F
-         VlpXZgY7JBYHFSSt36lt25iWSdElXpbNKkHgceQFebs2yI/4/s66eAW9Mn9b/rQwdMF0
-         Ltlyv6kFE3rYY41wY6Y3QC5K8OC5IPry+AbmDyFhK7VdbItIRv8iPNnXipKpmlq8YDdw
-         p/Kj8fRRLY2zH2LUT2p423DkDQOSlaRQZWZTY5hbB7LKgaliI/SvRrertEBpHiQPQoUv
-         Z05w==
-In-Reply-To: <50127D4C.7070502@kamakuranet.ne.jp>
 Sender: linux-hams-owner@vger.kernel.org
 List-ID: <linux-hams.vger.kernel.org>
-Content-Type: TEXT/PLAIN; charset="us-ascii"; format="flowed"
-Content-Transfer-Encoding: 7bit
-To: Tsutsumi Family <oakie@kamakuranet.ne.jp>
-Cc: linux-hams@vger.kernel.org
+Content-Type: text/plain; charset="us-ascii"; format="flowed"
+To: linux-hams@vger.kernel.org
 
-On Fri, 27 Jul 2012, Tsutsumi Family wrote:
+All
 
-> I have been looking for the libraries of ax25 of OpenWrt but have not yet 
-> identified.
->
-> I am appreciated if somebody help me.
+For those that are interested I have just uploaded more recent ports of
+my patches that add ax25 support to tcpdump & wireshark.  These can be
+found at:
 
-Look on http://wetnet.net
+	http://www.rns-stearn.demon.co.uk
+
+I no longer have a working packet system here and it will probably be
+some years, if ever, before I have one again.
+
+I have done these ports in the hope the the bugzilla ticket raised by
+Folkert van Heusden might result in the patches being included in
+Wireshark.
+
+What is needed is those who can, to compile a patched wireshark and use
+it.  If the decode is not right or crashes wireshark in some way then
+please feed that back to me.  Small captures that demonstrate the issue
+will be welcome, but please, no screen shots unless I ask for them.
 
 -- 
-Curt, WE7U.        http://wetnet.net/~we7u
-APRS in Search and Rescue:  http://wetnet.net/~we7u/search_and_rescue.html
+Regards
+	Richard
+
