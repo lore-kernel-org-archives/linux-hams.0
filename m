@@ -1,12 +1,12 @@
 From: ebiederm@xmission.com (Eric W. Biederman)
 Subject: Re: CPU: 0 Not tainted  (3.1.9+ #1) when ifconfig rose0 down
-Date: Thu, 02 Aug 2012 15:55:23 -0700
-Message-ID: <87ipd0ykdg.fsf@xmission.com>
-References: <5017E786.5000102@free.fr>
+Date: Thu, 02 Aug 2012 16:03:30 -0700
+Message-ID: <87vch0x5fh.fsf@xmission.com>
+References: <5017E786.5000102@free.fr> <5017F96B.1060701@free.fr>
 Mime-Version: 1.0
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <5017E786.5000102@free.fr> (Bernard Pidoux's message of "Tue, 31
-	Jul 2012 16:11:18 +0200")
+In-Reply-To: <5017F96B.1060701@free.fr> (Bernard Pidoux's message of "Tue, 31
+	Jul 2012 17:27:39 +0200")
 Sender: linux-hams-owner@vger.kernel.org
 List-ID: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
@@ -16,55 +16,56 @@ Cc: linux-hams <linux-hams@vger.kernel.org>, Linux Netdev List <netdev@vger.kern
 
 Bernard Pidoux <bernard.pidoux@free.fr> writes:
 
-> Hi,
+> Here is a complementary observation.
+> Trying to remove rose module with rmmod rose did not create any kernel panic.
+> However, there is an endless message from the kernel saying :
 >
-> I observe systematically a kernel panic when I try to shutdown rose0 device
-> using ifconfig rose0 down
+> Message from syslogd@raspberrypi at Jul 31 17:22:40 ...
+>  kernel:[  831.579007] unregister_netdevice: waiting for rose0 to become
+> free. Usage count = 23
 >
-> This is happening on two very different ROSE implementation, one is on a machine
-> with x86-64 kernel 4.6.3 on an Intel core 2 duo CPU
-> the other is on a RaspBerry Pi with Raspbian and 3.1.9+ wheezy kernel
-> recompiled with AX.25 modules (ax25, rose, netrom, 6pack, kiss) enabled.
+> Message from syslogd@raspberrypi at Jul 31 17:22:50 ...
+>  kernel:[  841.739390] unregister_netdevice: waiting for rose0 to become
+> free. Usage count = 23
 >
-> Here is an image of the screen dump :
+> Message from syslogd@raspberrypi at Jul 31 17:23:00 ...
+>  kernel:[  851.899758] unregister_netdevice: waiting for rose0 to become
+> free. Usage count = 23
+> .....
 >
-> http://f6bvp.org/photos/rose_device_event.JPG
-
-For some reason I can not connect f6bvp.org.
-
-> It can be noticed that PC is at rose_device_event and
-> LR is at sock_def_wakeup
+> As observed at many occasions, count number seems to be random ! and
+> the same message keeps going without any change of count number.
+> At the same time, there is no possibility to recover the command line on any
+> console.
+> However I could loggin via ssh and I noticed that rose0 device is actually no
+> more in the ifconfig list.
 >
-> One thing to be noticed is that when I close before all ROSE and AX.25
-> applications, there are still a few populated sockets, probably for one of the
-> program did not close the sockets properly.
+> If I try to remove rose with rmmod rose I get :
 >
-> I that case, does rose module should accept to shutdown rose0 device ?
-> However, I guess that it should not create a kernel panic due to a kernel NULL
-> pointer.
+> root@raspberrypi:/home/pi# rmmod rose
+> libkmod: ERROR ../libkmod/libkmod-module.c:753 kmod_module_remove_module: could
+> not remove 'rose': Device or resource busy
+> Error: could not remove module rose: Device or resource busy
+>
+>
+> Does this help ?
 
-No.  The kernel should not panic.
+Something presumably in the rose code is leaking a reference to the rose
+device.  That is probably a separate bug than your other one, but it may
+be related.  These are some of my least favorite bugs to track down.
 
-> I don't know what to do in order to debug that issue.
+That said in rose there is only one call to dev_hold and only one call
+to dev_put.
 
-I assume that rose is interesting to you and you would like for it to
-work better?
+Hmm.  Looking at it dev_hold happens in rose_dev_get, and of which there
+are several callers and only one of those callers calls dev_put.  So
+it should just be a matter of adding some more dev_put calls in the
+appropriate places.
 
-In general you can read the code and figure out what it is doing ref
-counting wise.  It doesn't look like anyone has done much with the rose
-code for years except very basic maintenance across the kernel.  It
-scares me to know that I was the last one to touch the rose code.
+The usage in rose_loopback_timer looks easy to fix, the usage in
+rose_bind seems more of a challenge.
 
-Part of what is happening at the time of the panic is
-unregister_netdevice_notifier now generates synthetic removal for all of
-the network devices in the system to remove the need for a special path
-to handle network device removal in modules.
-
-Unfortunately it looks like one of those modules is a problem.
-
-You might want to simply try moving unregister_netdevice_notifier a bit
-earlier in rose_exit and see if that helps.  Otherwise I would recommend
-instrumenting the code up with some printk so you can understand what
-part of unregistration is failing.
+Are you enough of a developer to take that observation and look at
+the code and fix it?
 
 Eric
