@@ -1,135 +1,124 @@
-From: Bernard Pidoux <bernard.pidoux@free.fr>
+From: Folkert van Heusden <folkert.van.heusden@gmail.com>
 Subject: Re: CPU: 0 Not tainted  (3.1.9+ #1) when ifconfig rose0 down
-Date: Sun, 05 Aug 2012 18:23:25 +0200
-Message-ID: <501E9DFD.4040301@free.fr>
-References: <5017E786.5000102@free.fr> <87ipd0ykdg.fsf@xmission.com> <20120803143200.GE10211@belle.intranet.vanheusden.com>
+Date: Sun, 05 Aug 2012 19:08:34 +0200
+Message-ID: <kg2my0wkfkapuq8el3jxpb8a.1344186435987@email.android.com>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: base64
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <20120803143200.GE10211@belle.intranet.vanheusden.com>
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=date:subject:message-id:from:to:cc:mime-version:content-type
+         :content-transfer-encoding;
+        bh=EpBVHkN01AHboYHUSK8DUPOdqQ1+J7TSG4l2RdXJHaA=;
+        b=uZ3ckO8DuKaBabJXh12RGKS5EaGfENvnnzBEbLHrnM2zIHOMaIlKA5S83lw0GUiV6S
+         47PVhdEBPbDEHIu5ftla7b01c0/Rtqvi4ZSg8vcu0L+VzUqq7uoADjHEYS/MmsQkN8OQ
+         sv/xCFTEvhbuBia+YG1df1z11zC1aDkDUNasDNCdA1u7RfAjAHzmFtdne1sbt9LiPcfC
+         LY4DHEywRYRmI4ZfhfdOM2QXqi3mCV3JBKxEWmm0qt8qJNdr2zu2rY0QEkGHuqLAgEQl
+         UqjTp36XB8SwA0HMDSIHIGVC7uBE+VBG55/FnU+wUnMRf8Qi8jIet7qtZvvie62+M5Bi
+         eazQ==
 Sender: linux-hams-owner@vger.kernel.org
 List-ID: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"; format="flowed"
-To: folkert <folkert@vanheusden.com>
+Content-Type: text/plain; charset="windows-1254"
+To: Bernard Pidoux <bernard.pidoux@free.fr>, folkert <folkert@vanheusden.com>
 Cc: "Eric W. Biederman" <ebiederm@xmission.com>, linux-hams <linux-hams@vger.kernel.org>, Linux Netdev List <netdev@vger.kernel.org>
 
-Thanks for suggesting a bissect. However I guess that this bug has 
-always been there !
-
-I am not professionaly involved in programming, however I committed a 
-few patches for ROSE, AX.25 and NetRom modules since a few years.
-
-I reactivated netconfig and here is the report showing that kernel panic 
-occurs when rose_device_event is triggered when issuing command
-ifconfig rose0 down
-
-[ 1215.153302] rose_kill_by_device() rose->neighbour->use 0
-[ 1215.153316] BUG: unable to handle kernel NULL pointer dereference at 
-000000000000002a
-[ 1215.153321] IP: [<ffffffffa065e37d>] rose_device_event+0x11d/0x160 [rose]
-[ 1215.153333] PGD 36340067 PUD 359fa067 PMD 0
-[ 1215.153338] Oops: 0002 [#1] SMP
-[ 1215.153343] CPU 1
-[ 1215.153344] Modules linked in: af_packet rose mkiss ax25 nfsd 
-exportfs nfs nfs_acl auth_rpcgss fscache lockd sunrpc netconsole 
-configfs bnep bluetooth rfkill snd_hda_codec_idt snd_hda_intel 
-snd_hda_codec snd_hwdep snd_pcm snd_page_alloc snd_timer snd 
-i82975x_edac soundcore e1000e ppdev parport_pc parport edac_core 
-iTCO_wdt iTCO_vendor_support serio_raw i2c_i801 processor coretemp evdev 
-ipv6 autofs4 usbhid hid ext4 crc16 jbd2 sd_mod crc_t10dif firewire_ohci 
-firewire_core ehci_hcd crc_itu_t uhci_hcd usbcore usb_common nouveau 
-button video mxm_wmi wmi i2c_algo_bit drm_kms_helper ttm drm i2c_core 
-ahci libahci ata_piix pata_marvell libata scsi_mod [last unloaded: 
-microcode]
-[ 1215.153395]
-[ 1215.153398] Pid: 18637, comm: ifconfig Not tainted 3.4.7 #8 
-/D975XBX2
-[ 1215.153404] RIP: 0010:[<ffffffffa065e37d>]  [<ffffffffa065e37d>] 
-rose_device_event+0x11d/0x160 [rose]
-[ 1215.153411] RSP: 0000:ffff880035271ca8  EFLAGS: 00010296
-[ 1215.153414] RAX: 0000000000000000 RBX: ffff88003d0c2838 RCX: 
-0000000230924000
-[ 1215.153417] RDX: 0000000000000002 RSI: 0000000000000001 RDI: 
-ffffffffa0665f28
-[ 1215.153420] RBP: ffff880035271cb8 R08: 0000000000000002 R09: 
-0000000000000000
-[ 1215.153422] R10: 0000000000000003 R11: 0000000000000000 R12: 
-ffff88003a9e1000
-[ 1215.153425] R13: 00000000fffffff1 R14: ffffffffa05b0000 R15: 
-0000000000000000
-[ 1215.153429] FS:  00007fb7a318f700(0000) GS:ffff88003fa80000(0000) 
-knlGS:0000000000000000
-[ 1215.153433] CS:  0010 DS: 0000 ES: 0000 CR0: 000000008005003b
-[ 1215.153435] CR2: 000000000000002a CR3: 00000000393fd000 CR4: 
-00000000000007e0
-[ 1215.153438] DR0: 0000000000000000 DR1: 0000000000000000 DR2: 
-0000000000000000
-[ 1215.153441] DR3: 0000000000000000 DR6: 00000000ffff0ff0 DR7: 
-0000000000000400
-[ 1215.153445] Process ifconfig (pid: 18637, threadinfo 
-ffff880035270000, task ffff88003f5f5d90)
-[ 1215.153448] Stack:
-[ 1215.153450]  0000000000000002 ffff88003a9e1000 ffff880035271cf8 
-ffffffff8146d86d
-[ 1215.153455]  ffff880036040d00 0000000000000002 ffff88003a9e1000 
-0000000000000000
-[ 1215.153459]  00000000ffffff9d 0000000000000000 ffff880035271d08 
-ffffffff8107a2b6
-[ 1215.153464] Call Trace:
-[ 1215.153470]  [<ffffffff8146d86d>] notifier_call_chain+0x4d/0x70
-[ 1215.153476]  [<ffffffff8107a2b6>] raw_notifier_call_chain+0x16/0x20
-[ 1215.153483]  [<ffffffff81395136>] call_netdevice_notifiers+0x36/0x60
-[ 1215.153487]  [<ffffffff8139b9ea>] __dev_notify_flags+0x6a/0x90
-[ 1215.153491]  [<ffffffff8139ba55>] dev_change_flags+0x45/0x70
-[ 1215.153496]  [<ffffffff81403aed>] devinet_ioctl+0x61d/0x7b0
-[ 1215.153500]  [<ffffffff81403f05>] inet_ioctl+0x75/0x90
-[ 1215.153505]  [<ffffffff8137fbd0>] sock_do_ioctl+0x30/0x70
-[ 1215.153509]  [<ffffffff8137fc89>] sock_ioctl+0x79/0x2f0
-[ 1215.153514]  [<ffffffff811829d8>] do_vfs_ioctl+0x98/0x560
-[ 1215.153517]  [<ffffffff81182f31>] sys_ioctl+0x91/0xa0
-[ 1215.153522]  [<ffffffff81471b39>] system_call_fastpath+0x16/0x1b
-[ 1215.153525] Code: e0 5b 41 5c 31 c0 5d c3 48 8d 7b c8 31 c9 ba 09 00 
-00 00 be 65 00 00 00 e8 a1 5c 00 00 48 8b 83 b8 04 00 00 48 c7 c7 28 5f 
-66 a0 <66> 83 68 2a 01 48 8b 83 b8 04 00 00 0f b7 70 2a 31 c0 e8 d4 10
-[ 1215.153561] RIP  [<ffffffffa065e37d>] rose_device_event+0x11d/0x160 
-[rose]
-[ 1215.153567]  RSP <ffff880035271ca8>
-[ 1215.153569] CR2: 000000000000002a
-[ 1215.177577] ---[ end trace d23a7ddff228876c ]---
-[ 1215.177589] Kernel panic - not syncing: Fatal exception in interrupt
-[ 1215.177662] panic occurred, switching back to text console
-[ 1215.177717] Rebooting in 60 seconds..
-
-I inserted some printk into rose_device_event() and commented calls to 
-subroutines.
-Without calling subroutines, there is no more kernel panic.
-Same results when replacing rose_kill_by_device() in net/rose/af_rose.c, 
-rose_link_device_down() and rose_rt_device() in
-net/rose_route.c by a dummy functions with just a printk inside.
-
-I am glad that I found make parameters that shorten the debugging
-cycle :
-
-make modules SUBDIRS=net/rose
-make modules_install SUBDIRS=net/rose
-
-Now I have to go further into each subroutines step by step in order to 
-find out the falty code !
-
-
-Bernard
-
-
-On 03/08/2012 16:32, folkert wrote:
->> You might want to simply try moving unregister_netdevice_notifier a bit
->> earlier in rose_exit and see if that helps.  Otherwise I would recommend
->> instrumenting the code up with some printk so you can understand what
->> part of unregistration is failing.
->
-> Or bisect! Give e.g. the oldest 2.6 kernel a try to find a last known
-> good and then do a bisect upto a known bad kernel.
->
->
-> Folkert van Heusden
->
+R29vZCBsdWNrIQpJJ20gdG8gYnVzeSBteXNlbGYgd2l0aCBkZWJ1Z2dpbmcgdGhlIGJheWNvbSBk
+cml2ZXIuCkNhbiBkbyBhdCBtb3N0IDIgc3RlcHMgYSBkYXkgYW5kIGl0IGFyZSAxNSBzdGVwcy4u
+LiAoNTRrIGNoYW5nZXNldHMpCgpCZXJuYXJkIFBpZG91eCA8YmVybmFyZC5waWRvdXhAZnJlZS5m
+cj4gd3JvdGU6Cgo+VGhhbmtzIGZvciBzdWdnZXN0aW5nIGEgYmlzc2VjdC4gSG93ZXZlciBJIGd1
+ZXNzIHRoYXQgdGhpcyBidWcgaGFzIAo+YWx3YXlzIGJlZW4gdGhlcmUgIQo+Cj5JIGFtIG5vdCBw
+cm9mZXNzaW9uYWx5IGludm9sdmVkIGluIHByb2dyYW1taW5nLCBob3dldmVyIEkgY29tbWl0dGVk
+IGEgCj5mZXcgcGF0Y2hlcyBmb3IgUk9TRSwgQVguMjUgYW5kIE5ldFJvbSBtb2R1bGVzIHNpbmNl
+IGEgZmV3IHllYXJzLgo+Cj5JIHJlYWN0aXZhdGVkIG5ldGNvbmZpZyBhbmQgaGVyZSBpcyB0aGUg
+cmVwb3J0IHNob3dpbmcgdGhhdCBrZXJuZWwgcGFuaWMgCj5vY2N1cnMgd2hlbiByb3NlX2Rldmlj
+ZV9ldmVudCBpcyB0cmlnZ2VyZWQgd2hlbiBpc3N1aW5nIGNvbW1hbmQKPmlmY29uZmlnIHJvc2Uw
+IGRvd24KPgo+WyAxMjE1LjE1MzMwMl0gcm9zZV9raWxsX2J5X2RldmljZSgpIHJvc2UtPm5laWdo
+Ym91ci0+dXNlIDAKPlsgMTIxNS4xNTMzMTZdIEJVRzogdW5hYmxlIHRvIGhhbmRsZSBrZXJuZWwg
+TlVMTCBwb2ludGVyIGRlcmVmZXJlbmNlIGF0IAo+MDAwMDAwMDAwMDAwMDAyYQo+WyAxMjE1LjE1
+MzMyMV0gSVA6IFs8ZmZmZmZmZmZhMDY1ZTM3ZD5dIHJvc2VfZGV2aWNlX2V2ZW50KzB4MTFkLzB4
+MTYwIFtyb3NlXQo+WyAxMjE1LjE1MzMzM10gUEdEIDM2MzQwMDY3IFBVRCAzNTlmYTA2NyBQTUQg
+MAo+WyAxMjE1LjE1MzMzOF0gT29wczogMDAwMiBbIzFdIFNNUAo+WyAxMjE1LjE1MzM0M10gQ1BV
+IDEKPlsgMTIxNS4xNTMzNDRdIE1vZHVsZXMgbGlua2VkIGluOiBhZl9wYWNrZXQgcm9zZSBta2lz
+cyBheDI1IG5mc2QgCj5leHBvcnRmcyBuZnMgbmZzX2FjbCBhdXRoX3JwY2dzcyBmc2NhY2hlIGxv
+Y2tkIHN1bnJwYyBuZXRjb25zb2xlIAo+Y29uZmlnZnMgYm5lcCBibHVldG9vdGggcmZraWxsIHNu
+ZF9oZGFfY29kZWNfaWR0IHNuZF9oZGFfaW50ZWwgCj5zbmRfaGRhX2NvZGVjIHNuZF9od2RlcCBz
+bmRfcGNtIHNuZF9wYWdlX2FsbG9jIHNuZF90aW1lciBzbmQgCj5pODI5NzV4X2VkYWMgc291bmRj
+b3JlIGUxMDAwZSBwcGRldiBwYXJwb3J0X3BjIHBhcnBvcnQgZWRhY19jb3JlIAo+aVRDT193ZHQg
+aVRDT192ZW5kb3Jfc3VwcG9ydCBzZXJpb19yYXcgaTJjX2k4MDEgcHJvY2Vzc29yIGNvcmV0ZW1w
+IGV2ZGV2IAo+aXB2NiBhdXRvZnM0IHVzYmhpZCBoaWQgZXh0NCBjcmMxNiBqYmQyIHNkX21vZCBj
+cmNfdDEwZGlmIGZpcmV3aXJlX29oY2kgCj5maXJld2lyZV9jb3JlIGVoY2lfaGNkIGNyY19pdHVf
+dCB1aGNpX2hjZCB1c2Jjb3JlIHVzYl9jb21tb24gbm91dmVhdSAKPmJ1dHRvbiB2aWRlbyBteG1f
+d21pIHdtaSBpMmNfYWxnb19iaXQgZHJtX2ttc19oZWxwZXIgdHRtIGRybSBpMmNfY29yZSAKPmFo
+Y2kgbGliYWhjaSBhdGFfcGlpeCBwYXRhX21hcnZlbGwgbGliYXRhIHNjc2lfbW9kIFtsYXN0IHVu
+bG9hZGVkOiAKPm1pY3JvY29kZV0KPlsgMTIxNS4xNTMzOTVdCj5bIDEyMTUuMTUzMzk4XSBQaWQ6
+IDE4NjM3LCBjb21tOiBpZmNvbmZpZyBOb3QgdGFpbnRlZCAzLjQuNyAjOCAKPi9EOTc1WEJYMgo+
+WyAxMjE1LjE1MzQwNF0gUklQOiAwMDEwOls8ZmZmZmZmZmZhMDY1ZTM3ZD5dICBbPGZmZmZmZmZm
+YTA2NWUzN2Q+XSAKPnJvc2VfZGV2aWNlX2V2ZW50KzB4MTFkLzB4MTYwIFtyb3NlXQo+WyAxMjE1
+LjE1MzQxMV0gUlNQOiAwMDAwOmZmZmY4ODAwMzUyNzFjYTggIEVGTEFHUzogMDAwMTAyOTYKPlsg
+MTIxNS4xNTM0MTRdIFJBWDogMDAwMDAwMDAwMDAwMDAwMCBSQlg6IGZmZmY4ODAwM2QwYzI4Mzgg
+UkNYOiAKPjAwMDAwMDAyMzA5MjQwMDAKPlsgMTIxNS4xNTM0MTddIFJEWDogMDAwMDAwMDAwMDAw
+MDAwMiBSU0k6IDAwMDAwMDAwMDAwMDAwMDEgUkRJOiAKPmZmZmZmZmZmYTA2NjVmMjgKPlsgMTIx
+NS4xNTM0MjBdIFJCUDogZmZmZjg4MDAzNTI3MWNiOCBSMDg6IDAwMDAwMDAwMDAwMDAwMDIgUjA5
+OiAKPjAwMDAwMDAwMDAwMDAwMDAKPlsgMTIxNS4xNTM0MjJdIFIxMDogMDAwMDAwMDAwMDAwMDAw
+MyBSMTE6IDAwMDAwMDAwMDAwMDAwMDAgUjEyOiAKPmZmZmY4ODAwM2E5ZTEwMDAKPlsgMTIxNS4x
+NTM0MjVdIFIxMzogMDAwMDAwMDBmZmZmZmZmMSBSMTQ6IGZmZmZmZmZmYTA1YjAwMDAgUjE1OiAK
+PjAwMDAwMDAwMDAwMDAwMDAKPlsgMTIxNS4xNTM0MjldIEZTOiAgMDAwMDdmYjdhMzE4ZjcwMCgw
+MDAwKSBHUzpmZmZmODgwMDNmYTgwMDAwKDAwMDApIAo+a25sR1M6MDAwMDAwMDAwMDAwMDAwMAo+
+WyAxMjE1LjE1MzQzM10gQ1M6ICAwMDEwIERTOiAwMDAwIEVTOiAwMDAwIENSMDogMDAwMDAwMDA4
+MDA1MDAzYgo+WyAxMjE1LjE1MzQzNV0gQ1IyOiAwMDAwMDAwMDAwMDAwMDJhIENSMzogMDAwMDAw
+MDAzOTNmZDAwMCBDUjQ6IAo+MDAwMDAwMDAwMDAwMDdlMAo+WyAxMjE1LjE1MzQzOF0gRFIwOiAw
+MDAwMDAwMDAwMDAwMDAwIERSMTogMDAwMDAwMDAwMDAwMDAwMCBEUjI6IAo+MDAwMDAwMDAwMDAw
+MDAwMAo+WyAxMjE1LjE1MzQ0MV0gRFIzOiAwMDAwMDAwMDAwMDAwMDAwIERSNjogMDAwMDAwMDBm
+ZmZmMGZmMCBEUjc6IAo+MDAwMDAwMDAwMDAwMDQwMAo+WyAxMjE1LjE1MzQ0NV0gUHJvY2VzcyBp
+ZmNvbmZpZyAocGlkOiAxODYzNywgdGhyZWFkaW5mbyAKPmZmZmY4ODAwMzUyNzAwMDAsIHRhc2sg
+ZmZmZjg4MDAzZjVmNWQ5MCkKPlsgMTIxNS4xNTM0NDhdIFN0YWNrOgo+WyAxMjE1LjE1MzQ1MF0g
+IDAwMDAwMDAwMDAwMDAwMDIgZmZmZjg4MDAzYTllMTAwMCBmZmZmODgwMDM1MjcxY2Y4IAo+ZmZm
+ZmZmZmY4MTQ2ZDg2ZAo+WyAxMjE1LjE1MzQ1NV0gIGZmZmY4ODAwMzYwNDBkMDAgMDAwMDAwMDAw
+MDAwMDAwMiBmZmZmODgwMDNhOWUxMDAwIAo+MDAwMDAwMDAwMDAwMDAwMAo+WyAxMjE1LjE1MzQ1
+OV0gIDAwMDAwMDAwZmZmZmZmOWQgMDAwMDAwMDAwMDAwMDAwMCBmZmZmODgwMDM1MjcxZDA4IAo+
+ZmZmZmZmZmY4MTA3YTJiNgo+WyAxMjE1LjE1MzQ2NF0gQ2FsbCBUcmFjZToKPlsgMTIxNS4xNTM0
+NzBdICBbPGZmZmZmZmZmODE0NmQ4NmQ+XSBub3RpZmllcl9jYWxsX2NoYWluKzB4NGQvMHg3MAo+
+WyAxMjE1LjE1MzQ3Nl0gIFs8ZmZmZmZmZmY4MTA3YTJiNj5dIHJhd19ub3RpZmllcl9jYWxsX2No
+YWluKzB4MTYvMHgyMAo+WyAxMjE1LjE1MzQ4M10gIFs8ZmZmZmZmZmY4MTM5NTEzNj5dIGNhbGxf
+bmV0ZGV2aWNlX25vdGlmaWVycysweDM2LzB4NjAKPlsgMTIxNS4xNTM0ODddICBbPGZmZmZmZmZm
+ODEzOWI5ZWE+XSBfX2Rldl9ub3RpZnlfZmxhZ3MrMHg2YS8weDkwCj5bIDEyMTUuMTUzNDkxXSAg
+WzxmZmZmZmZmZjgxMzliYTU1Pl0gZGV2X2NoYW5nZV9mbGFncysweDQ1LzB4NzAKPlsgMTIxNS4x
+NTM0OTZdICBbPGZmZmZmZmZmODE0MDNhZWQ+XSBkZXZpbmV0X2lvY3RsKzB4NjFkLzB4N2IwCj5b
+IDEyMTUuMTUzNTAwXSAgWzxmZmZmZmZmZjgxNDAzZjA1Pl0gaW5ldF9pb2N0bCsweDc1LzB4OTAK
+PlsgMTIxNS4xNTM1MDVdICBbPGZmZmZmZmZmODEzN2ZiZDA+XSBzb2NrX2RvX2lvY3RsKzB4MzAv
+MHg3MAo+WyAxMjE1LjE1MzUwOV0gIFs8ZmZmZmZmZmY4MTM3ZmM4OT5dIHNvY2tfaW9jdGwrMHg3
+OS8weDJmMAo+WyAxMjE1LjE1MzUxNF0gIFs8ZmZmZmZmZmY4MTE4MjlkOD5dIGRvX3Zmc19pb2N0
+bCsweDk4LzB4NTYwCj5bIDEyMTUuMTUzNTE3XSAgWzxmZmZmZmZmZjgxMTgyZjMxPl0gc3lzX2lv
+Y3RsKzB4OTEvMHhhMAo+WyAxMjE1LjE1MzUyMl0gIFs8ZmZmZmZmZmY4MTQ3MWIzOT5dIHN5c3Rl
+bV9jYWxsX2Zhc3RwYXRoKzB4MTYvMHgxYgo+WyAxMjE1LjE1MzUyNV0gQ29kZTogZTAgNWIgNDEg
+NWMgMzEgYzAgNWQgYzMgNDggOGQgN2IgYzggMzEgYzkgYmEgMDkgMDAgCj4wMCAwMCBiZSA2NSAw
+MCAwMCAwMCBlOCBhMSA1YyAwMCAwMCA0OCA4YiA4MyBiOCAwNCAwMCAwMCA0OCBjNyBjNyAyOCA1
+ZiAKPjY2IGEwIDw2Nj4gODMgNjggMmEgMDEgNDggOGIgODMgYjggMDQgMDAgMDAgMGYgYjcgNzAg
+MmEgMzEgYzAgZTggZDQgMTAKPlsgMTIxNS4xNTM1NjFdIFJJUCAgWzxmZmZmZmZmZmEwNjVlMzdk
+Pl0gcm9zZV9kZXZpY2VfZXZlbnQrMHgxMWQvMHgxNjAgCj5bcm9zZV0KPlsgMTIxNS4xNTM1Njdd
+ICBSU1AgPGZmZmY4ODAwMzUyNzFjYTg+Cj5bIDEyMTUuMTUzNTY5XSBDUjI6IDAwMDAwMDAwMDAw
+MDAwMmEKPlsgMTIxNS4xNzc1NzddIC0tLVsgZW5kIHRyYWNlIGQyM2E3ZGRmZjIyODg3NmMgXS0t
+LQo+WyAxMjE1LjE3NzU4OV0gS2VybmVsIHBhbmljIC0gbm90IHN5bmNpbmc6IEZhdGFsIGV4Y2Vw
+dGlvbiBpbiBpbnRlcnJ1cHQKPlsgMTIxNS4xNzc2NjJdIHBhbmljIG9jY3VycmVkLCBzd2l0Y2hp
+bmcgYmFjayB0byB0ZXh0IGNvbnNvbGUKPlsgMTIxNS4xNzc3MTddIFJlYm9vdGluZyBpbiA2MCBz
+ZWNvbmRzLi4KPgo+SSBpbnNlcnRlZCBzb21lIHByaW50ayBpbnRvIHJvc2VfZGV2aWNlX2V2ZW50
+KCkgYW5kIGNvbW1lbnRlZCBjYWxscyB0byAKPnN1YnJvdXRpbmVzLgo+V2l0aG91dCBjYWxsaW5n
+IHN1YnJvdXRpbmVzLCB0aGVyZSBpcyBubyBtb3JlIGtlcm5lbCBwYW5pYy4KPlNhbWUgcmVzdWx0
+cyB3aGVuIHJlcGxhY2luZyByb3NlX2tpbGxfYnlfZGV2aWNlKCkgaW4gbmV0L3Jvc2UvYWZfcm9z
+ZS5jLCAKPnJvc2VfbGlua19kZXZpY2VfZG93bigpIGFuZCByb3NlX3J0X2RldmljZSgpIGluCj5u
+ZXQvcm9zZV9yb3V0ZS5jIGJ5IGEgZHVtbXkgZnVuY3Rpb25zIHdpdGgganVzdCBhIHByaW50ayBp
+bnNpZGUuCj4KPkkgYW0gZ2xhZCB0aGF0IEkgZm91bmQgbWFrZSBwYXJhbWV0ZXJzIHRoYXQgc2hv
+cnRlbiB0aGUgZGVidWdnaW5nCj5jeWNsZSA6Cj4KPm1ha2UgbW9kdWxlcyBTVUJESVJTPW5ldC9y
+b3NlCj5tYWtlIG1vZHVsZXNfaW5zdGFsbCBTVUJESVJTPW5ldC9yb3NlCj4KPk5vdyBJIGhhdmUg
+dG8gZ28gZnVydGhlciBpbnRvIGVhY2ggc3Vicm91dGluZXMgc3RlcCBieSBzdGVwIGluIG9yZGVy
+IHRvIAo+ZmluZCBvdXQgdGhlIGZhbHR5IGNvZGUgIQo+Cj4KPkJlcm5hcmQKPgo+Cj5PbiAwMy8w
+OC8yMDEyIDE2OjMyLCBmb2xrZXJ0IHdyb3RlOgo+Pj4gWW91IG1pZ2h0IHdhbnQgdG8gc2ltcGx5
+IHRyeSBtb3ZpbmcgdW5yZWdpc3Rlcl9uZXRkZXZpY2Vfbm90aWZpZXIgYSBiaXQKPj4+IGVhcmxp
+ZXIgaW4gcm9zZV9leGl0IGFuZCBzZWUgaWYgdGhhdCBoZWxwcy4gIE90aGVyd2lzZSBJIHdvdWxk
+IHJlY29tbWVuZAo+Pj4gaW5zdHJ1bWVudGluZyB0aGUgY29kZSB1cCB3aXRoIHNvbWUgcHJpbnRr
+IHNvIHlvdSBjYW4gdW5kZXJzdGFuZCB3aGF0Cj4+PiBwYXJ0IG9mIHVucmVnaXN0cmF0aW9uIGlz
+IGZhaWxpbmcuCj4+Cj4+IE9yIGJpc2VjdCEgR2l2ZSBlLmcuIHRoZSBvbGRlc3QgMi42IGtlcm5l
+bCBhIHRyeSB0byBmaW5kIGEgbGFzdCBrbm93bgo+PiBnb29kIGFuZCB0aGVuIGRvIGEgYmlzZWN0
+IHVwdG8gYSBrbm93biBiYWQga2VybmVsLgo+Pgo+Pgo+PiBGb2xrZXJ0IHZhbiBIZXVzZGVuCj4+
+Cj4K
 
