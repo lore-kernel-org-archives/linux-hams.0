@@ -1,139 +1,109 @@
-From: ebiederm@xmission.com (Eric W. Biederman)
-Subject: Re: CPU: 0 Not tainted  (3.1.9+ #1) when ifconfig rose0 down
-Date: Sun, 05 Aug 2012 10:23:48 -0700
-Message-ID: <87y5lts15n.fsf@xmission.com>
-References: <5017E786.5000102@free.fr> <87ipd0ykdg.fsf@xmission.com>
-	<20120803143200.GE10211@belle.intranet.vanheusden.com>
-	<501E9DFD.4040301@free.fr>
+From: remi.chateauneu@free.fr
+Subject: Re: [xfbb] AX.25 Packet Radio on a RaspBerry Pi : a success
+Date: Tue, 7 Aug 2012 00:59:54 +0200 (CEST)
+Message-ID: <825918264.55071112.1344293994188.JavaMail.root@zimbra2-e1.priv.proxad.net>
+References: <501D9B55.9050608@exemail.com.au>
 Mime-Version: 1.0
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <501E9DFD.4040301@free.fr> (Bernard Pidoux's message of "Sun, 05
-	Aug 2012 18:23:25 +0200")
+In-Reply-To: <501D9B55.9050608@exemail.com.au>
 Sender: linux-hams-owner@vger.kernel.org
 List-ID: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-To: Bernard Pidoux <bernard.pidoux@free.fr>
-Cc: folkert <folkert@vanheusden.com>, linux-hams <linux-hams@vger.kernel.org>, Linux Netdev List <netdev@vger.kernel.org>
+Content-Type: text/plain; charset="utf-8"
+To: List for the LINUX version of FBB <xfbb@f6fbb.org>
+Cc: Arno Verhoeven <pe1icq@sharon.esrac.ele.tue.nl>, C Schuman <k4gbb1@embarqmail.com>, Lee Woldanski <ve7fet@tparc.org>, F3KT <f3kt@free.fr>, Alejandro Santos <alejolp@alejolp.com.ar>, linux-hams <linux-hams@vger.kernel.org>, Bernard Pidoux <bernard.pidoux@upmc.fr>, f6bvp <f6bvp@free.fr>
 
-Bernard Pidoux <bernard.pidoux@free.fr> writes:
+Did you try to run soundmodem on Raspberry, please ?
 
-> Thanks for suggesting a bissect. However I guess that this bug has always been
-> there !
 
-One thing that has changed recently is I modified
-unregister_netdev_notifier to create synthetic events so drivers don't
-need a separate network device tear down path in module unload.
+----- Mail original -----
+De: "Ray Wells" <vk2tv@exemail.com.au>
+=C3=80: "f6bvp" <f6bvp@free.fr>
+Cc: "List for the LINUX version of FBB" <xfbb@f6fbb.org>, "Arno Verhoev=
+en" <pe1icq@sharon.esrac.ele.tue.nl>, "C Schuman" <k4gbb1@embarqmail.co=
+m>, "Lee Woldanski" <ve7fet@tparc.org>, "F3KT" <f3kt@free.fr>, "Alejand=
+ro Santos" <alejolp@alejolp.com.ar>, "linux-hams" <linux-hams@vger.kern=
+el.org>, "Bernard Pidoux" <bernard.pidoux@upmc.fr>
+Envoy=C3=A9: Samedi 4 Ao=C3=BBt 2012 23:59:49
+Objet: Re: [xfbb] AX.25 Packet Radio on a RaspBerry Pi : a success
 
-For rose it looks like this has triggered latent bugs.
+Hi Bernard, All,
 
-> I am not professionaly involved in programming, however I committed a few
-> patches for ROSE, AX.25 and NetRom modules since a few years.
+This is great news because I almost wrote to you yesterday to ask if yo=
+u=20
+had made a .deb package for your kernel.
+
+My two Raspberry Pi's arrived on Friday (I was told 5 weeks and they=20
+arrived in 5 days from Element 14!) and I'm gathering the hardware I=20
+need to get one of them up and running with kernel ax25. One will serve=
+=20
+as my aprs gateway machine and maybe a fpac node again.
+
+Ray vk2tv
+
+
+On 04/08/12 22:21, f6bvp wrote:
+> Hello all,
 >
-> I reactivated netconfig and here is the report showing that kernel panic occurs
-> when rose_device_event is triggered when issuing command
-> ifconfig rose0 down
-
-Oh ouch!  This is from an ioctl not even at module unload time.
-
-> [ 1215.153302] rose_kill_by_device() rose->neighbour->use 0
-> [ 1215.153316] BUG: unable to handle kernel NULL pointer dereference at
-> 000000000000002a
-> [ 1215.153321] IP: [<ffffffffa065e37d>] rose_device_event+0x11d/0x160 [rose]
-> [ 1215.153333] PGD 36340067 PUD 359fa067 PMD 0
-> [ 1215.153338] Oops: 0002 [#1] SMP
-> [ 1215.153343] CPU 1
-> [ 1215.153344] Modules linked in: af_packet rose mkiss ax25 nfsd exportfs nfs
-> nfs_acl auth_rpcgss fscache lockd sunrpc netconsole configfs bnep bluetooth
-> rfkill snd_hda_codec_idt snd_hda_intel snd_hda_codec snd_hwdep snd_pcm
-> snd_page_alloc snd_timer snd i82975x_edac soundcore e1000e ppdev parport_pc
-> parport edac_core iTCO_wdt iTCO_vendor_support serio_raw i2c_i801 processor
-> coretemp evdev ipv6 autofs4 usbhid hid ext4 crc16 jbd2 sd_mod crc_t10dif
-> firewire_ohci firewire_core ehci_hcd crc_itu_t uhci_hcd usbcore usb_common
-> nouveau button video mxm_wmi wmi i2c_algo_bit drm_kms_helper ttm drm i2c_core
-> ahci libahci ata_piix pata_marvell libata scsi_mod [last unloaded: microcode]
-> [ 1215.153395]
-> [ 1215.153398] Pid: 18637, comm: ifconfig Not tainted 3.4.7 #8 /D975XBX2
-> [ 1215.153404] RIP: 0010:[<ffffffffa065e37d>]  [<ffffffffa065e37d>]
-> rose_device_event+0x11d/0x160 [rose]
-> [ 1215.153411] RSP: 0000:ffff880035271ca8  EFLAGS: 00010296
-> [ 1215.153414] RAX: 0000000000000000 RBX: ffff88003d0c2838 RCX: 0000000230924000
-> [ 1215.153417] RDX: 0000000000000002 RSI: 0000000000000001 RDI: ffffffffa0665f28
-> [ 1215.153420] RBP: ffff880035271cb8 R08: 0000000000000002 R09: 0000000000000000
-> [ 1215.153422] R10: 0000000000000003 R11: 0000000000000000 R12: ffff88003a9e1000
-> [ 1215.153425] R13: 00000000fffffff1 R14: ffffffffa05b0000 R15: 0000000000000000
-> [ 1215.153429] FS:  00007fb7a318f700(0000) GS:ffff88003fa80000(0000)
-> knlGS:0000000000000000
-> [ 1215.153433] CS:  0010 DS: 0000 ES: 0000 CR0: 000000008005003b
-> [ 1215.153435] CR2: 000000000000002a CR3: 00000000393fd000 CR4: 00000000000007e0
-> [ 1215.153438] DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
-> [ 1215.153441] DR3: 0000000000000000 DR6: 00000000ffff0ff0 DR7: 0000000000000400
-> [ 1215.153445] Process ifconfig (pid: 18637, threadinfo ffff880035270000, task
-> ffff88003f5f5d90)
-> [ 1215.153448] Stack:
-> [ 1215.153450]  0000000000000002 ffff88003a9e1000 ffff880035271cf8
-> ffffffff8146d86d
-> [ 1215.153455]  ffff880036040d00 0000000000000002 ffff88003a9e1000
-> 0000000000000000
-> [ 1215.153459]  00000000ffffff9d 0000000000000000 ffff880035271d08
-> ffffffff8107a2b6
-> [ 1215.153464] Call Trace:
-> [ 1215.153470]  [<ffffffff8146d86d>] notifier_call_chain+0x4d/0x70
-> [ 1215.153476]  [<ffffffff8107a2b6>] raw_notifier_call_chain+0x16/0x20
-> [ 1215.153483]  [<ffffffff81395136>] call_netdevice_notifiers+0x36/0x60
-> [ 1215.153487]  [<ffffffff8139b9ea>] __dev_notify_flags+0x6a/0x90
-> [ 1215.153491]  [<ffffffff8139ba55>] dev_change_flags+0x45/0x70
-> [ 1215.153496]  [<ffffffff81403aed>] devinet_ioctl+0x61d/0x7b0
-> [ 1215.153500]  [<ffffffff81403f05>] inet_ioctl+0x75/0x90
-> [ 1215.153505]  [<ffffffff8137fbd0>] sock_do_ioctl+0x30/0x70
-> [ 1215.153509]  [<ffffffff8137fc89>] sock_ioctl+0x79/0x2f0
-> [ 1215.153514]  [<ffffffff811829d8>] do_vfs_ioctl+0x98/0x560
-> [ 1215.153517]  [<ffffffff81182f31>] sys_ioctl+0x91/0xa0
-> [ 1215.153522]  [<ffffffff81471b39>] system_call_fastpath+0x16/0x1b
-> [ 1215.153525] Code: e0 5b 41 5c 31 c0 5d c3 48 8d 7b c8 31 c9 ba 09 00 00 00 be
-> 65 00 00 00 e8 a1 5c 00 00 48 8b 83 b8 04 00 00 48 c7 c7 28 5f 66 a0 <66> 83 68
-> 2a 01 48 8b 83 b8 04 00 00 0f b7 70 2a 31 c0 e8 d4 10
-> [ 1215.153561] RIP  [<ffffffffa065e37d>] rose_device_event+0x11d/0x160 [rose]
-> [ 1215.153567]  RSP <ffff880035271ca8>
-> [ 1215.153569] CR2: 000000000000002a
-> [ 1215.177577] ---[ end trace d23a7ddff228876c ]---
-> [ 1215.177589] Kernel panic - not syncing: Fatal exception in interrupt
-> [ 1215.177662] panic occurred, switching back to text console
-> [ 1215.177717] Rebooting in 60 seconds..
+> This is my first debian package !
 >
-> I inserted some printk into rose_device_event() and commented calls to
-> subroutines.
-> Without calling subroutines, there is no more kernel panic.
-> Same results when replacing rose_kill_by_device() in net/rose/af_rose.c,
-> rose_link_device_down() and rose_rt_device() in
-> net/rose_route.c by a dummy functions with just a printk inside.
+> http://f6bvp.free.fr/logiciels/ax25/linux-image-3.1.9.080312.ax25+_3.=
+1.9.080312.ax25+-10.00.Custom_armhf.deb=20
 >
-> I am glad that I found make parameters that shorten the debugging
-> cycle :
 >
-> make modules SUBDIRS=net/rose
-> make modules_install SUBDIRS=net/rose
+> This is the raspbian kernel image including AX.25 modules (ax25,=20
+> 6pack, netrom, rose, mkiss,...)
 >
-> Now I have to go further into each subroutines step by step in order to find out
-> the falty code !
+> From your RaspBerry Pi you can download it with wget
+>
+> wget=20
+> http://f6bvp.free.fr/logiciels/ax25/linux-image-3.1.9.080312.ax25+_3.=
+1.9.080312.ax25+-10.00.Custom_armhf.deb
+>
+> To install it :
+> sudo dpkg -i=20
+> linux-image-3.1.9.080312.ax25+_3.1.9.080312.ax25+-10.00.Custom_armhf.=
+deb
+>
+> Edit /boot/config.txt and add a line at the end with
+> # for more options see http://elinux.org/RPi_config.txt
+> kernel vmlinuz-3.1.9.080312.ax25+
+>
+> reboot
+>
+> Then download K4GBB install ax25 script for installing ax25 libraries=
+,=20
+> tools and apps.
+>
+> sudo wget http://f6bvp.free.fr/logiciels/ax25/Instax25.new
+> sudo chmod +x Instax25.new
+> ./Instax25.new
+>
+> You may download a sample ax25 device init script :
+> sudo wget http://f6bvp.free.fr/logiciels/ax25/rc.ax25
+>
+> and a sample /etc/ax25/ax25ipd.conf
+> sudo wget http://f6bvp.free.fr/logiciels/ax25/ax25ipd.conf
+>
+> Then you also need to edit /etc/ax25/axports
+> such this example :
+> sudo wget http://f6bvp.free.fr/logiciels/ax25/axports
+>
+> I may have missed some details.
+>
+> 73 de Bernard, f6bvp
+> --=20
+> To unsubscribe from this list: send the line "unsubscribe linux-hams"=
+ in
+> the body of a message to majordomo@vger.kernel.org
+> More majordomo info at  http://vger.kernel.org/majordomo-info.html
+>
 
-Argh inline functions obscuring the backtraces again.
-
-If you are any good at reading assembly you might be able to cut the
-tracing time down by using gdb to get a disassembly and looking in the
-disassembly.
-
-Although in something easily reproducible what I tend to do is I have
-a printk that does.
-
-printk(KERN_EMERG "@%s.%s.%d\n", __FILE__, __func__, __LINE__);
-
-Which I sprinkle all over the code so I know where I fail, and don't
-need to cycle too many times.
-
-Sometimes it can be productive to use kvm or a second machine so your
-cycle times aren't as long.
-
-In any event I wish you luck tracking this down.
-
-Eric
+_______________________________________________
+xfbb maillist  -  xfbb@f6fbb.org
+http://mailman.f6fbb.org/mailman/listinfo/xfbb
+--
+To unsubscribe from this list: send the line "unsubscribe linux-hams" i=
+n
+the body of a message to majordomo@vger.kernel.org
+More majordomo info at  http://vger.kernel.org/majordomo-info.html
