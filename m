@@ -1,17 +1,40 @@
-From: Ray Wells <vk2tv@exemail.com.au>
+From: remi.chateauneu@free.fr
 Subject: Re: [xfbb] AX.25 Packet Radio on a RaspBerry Pi : a success
-Date: Tue, 07 Aug 2012 18:16:31 +1000
-Message-ID: <5020CEDF.5030501@exemail.com.au>
-References: <825918264.55071112.1344293994188.JavaMail.root@zimbra2-e1.priv.proxad.net> <5020CBBD.6090104@free.fr>
+Date: Wed, 8 Aug 2012 14:10:08 +0200 (CEST)
+Message-ID: <1559873781.59617798.1344427808339.JavaMail.root@zimbra2-e1.priv.proxad.net>
+References: <5020CEDF.5030501@exemail.com.au>
 Mime-Version: 1.0
 Content-Transfer-Encoding: QUOTED-PRINTABLE
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <5020CBBD.6090104@free.fr>
+In-Reply-To: <5020CEDF.5030501@exemail.com.au>
 Sender: linux-hams-owner@vger.kernel.org
 List-ID: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="utf-8"; format="flowed"
-To: f6bvp <f6bvp@free.fr>
-Cc: remi.chateauneu@free.fr, List for the LINUX version of FBB <xfbb@f6fbb.org>, Arno Verhoeven <pe1icq@sharon.esrac.ele.tue.nl>, Alejandro Santos <alejolp@alejolp.com.ar>, linux-hams <linux-hams@vger.kernel.org>, Bernard Pidoux <bernard.pidoux@upmc.fr>
+Content-Type: text/plain; charset="utf-8"
+To: Ray Wells <vk2tv@exemail.com.au>
+Cc: List for the LINUX version of FBB <xfbb@f6fbb.org>, Arno Verhoeven <pe1icq@sharon.esrac.ele.tue.nl>, Alejandro Santos <alejolp@alejolp.com.ar>, linux-hams <linux-hams@vger.kernel.org>, Bernard Pidoux <bernard.pidoux@upmc.fr>, f6bvp <f6bvp@free.fr>
+
+Hi All,
+
+Some help about Soundmodem is available here:
+
+http://www.xastir.org/wiki/HowTo:SoundModem
+
+Push-to-talk can be activated with Soundmodem original method but also =
+with the very convenient hamlib library ( http://sourceforge.net/apps/m=
+ediawiki/hamlib/index.php?title=3DMain_Page )=20
+
+Hamlib is used by fldigi on Raslberry , therefore it is seriously suppo=
+rted.
+
+----- Mail original -----
+De: "Ray Wells" <vk2tv@exemail.com.au>
+=C3=80: "f6bvp" <f6bvp@free.fr>
+Cc: "remi chateauneu" <remi.chateauneu@free.fr>, "List for the LINUX ve=
+rsion of FBB" <xfbb@f6fbb.org>, "Arno Verhoeven" <pe1icq@sharon.esrac.e=
+le.tue.nl>, "Alejandro Santos" <alejolp@alejolp.com.ar>, "linux-hams" <=
+linux-hams@vger.kernel.org>, "Bernard Pidoux" <bernard.pidoux@upmc.fr>
+Envoy=C3=A9: Mardi 7 Ao=C3=BBt 2012 10:16:31
+Objet: Re: [xfbb] AX.25 Packet Radio on a RaspBerry Pi : a success
 
 Bernard, Remy, All,
 
