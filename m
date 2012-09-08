@@ -1,55 +1,59 @@
-From: Jeremy Utley <jerutley@gmail.com>
-Subject: Re: [xfbb] AX.25 Packet Radio on a RaspBerry Pi : a success
-Date: Fri, 7 Sep 2012 11:32:32 -0500
-Message-ID: <CAOMfyjYvC9h4TbiH8CobP+zqzcxfOOpaLt4E8+W2XVm5qci6jg@mail.gmail.com>
-References: <500FD014.5090004@free.fr>
-	<5010192A.9060506@upmc.fr>
-	<50101DB2.9020101@sharon.esrac.ele.tue.nl>
-	<CAOnrUC3iavAZB5q9Xy6pxU0N72YcPyPFAkqzDnca11vmvMdFJg@mail.gmail.com>
-	<501110B1.5080202@free.fr>
-	<501D13B8.8070004@free.fr>
-	<501D2C69.80304@free.fr>
-	<yD$XQnFpQmRQFwVt@skywaves.demon.co.uk>
-	<50466721.6000209@embarqmail.com>
-	<oTSREEHcimRQFwWp@skywaves.demon.co.uk>
-	<50466C4B.2010308@upmc.fr>
-	<27C015D224BF4821839181536E7AD64A@R>
-	<5048F38A.1000408@free.fr>
+From: T + J Williams <wa0eir@mchsi.com>
+Subject: New twlog and twHamQTH versions
+Date: Sat, 08 Sep 2012 00:33:05 -0500
+Message-ID: <1347082385.7726.328.camel@localhost>
 Mime-Version: 1.0
-Return-path: <linux-hams-owner@vger.kernel.org>
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :content-type;
-        bh=9gwhOcN1iHfdZv3dNHXyDSbEIidYCSwaRZK8988+2iw=;
-        b=p/oc3OdMMVRA5m8QFeZhBm9HRDQcABObHUSXYoXfa8b05cjlIfGwFQc/AW7snQd1dm
-         +WhB0NN7CobuGU7kZ2jVXhfsntblnI/gYX0uXBYIqPMawVMZb6f9Sn4WWozgTj2BmN35
-         zuCMR/3Vv5n+8DLofciPOybdwrDnq6MQA2sdoTz61c3l5Efkh3A4d+/cM0KjsHrFSVsc
-         x0pPyvUOqkE55iY1lRL18y+oRl0+uZCZPGZyRBd+YqAm1fl5QKCAIPVqDcapkBjmCGNt
-         Wbr0WbZ7eNIQoagqM8B+94Gtr9KNMB5cBrPjBmnDaxVST5u9X4Dusx2nQEJpEet6ONax
-         wwug==
-In-Reply-To: <5048F38A.1000408@free.fr>
-Sender: linux-hams-owner@vger.kernel.org
-List-ID: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
-To: linux-hams@vger.kernel.org
+Return-path: <opensuse-ham+bounces-101-suse-ham-e=m.gmane.org@opensuse.org>
+List-Post: <mailto:opensuse-ham@opensuse.org>
+List-Help: <mailto:opensuse-ham+help@opensuse.org>
+List-Subscribe: <mailto:opensuse-ham+subscribe@opensuse.org>
+List-Unsubscribe: <mailto:opensuse-ham+unsubscribe@opensuse.org>
+List-Owner: <mailto:opensuse-ham+owner@opensuse.org>
+List-Archive: <http://lists.opensuse.org/opensuse-ham/>
+List-Id: <linux-hams.vger.kernel.org>
+Content-Type: text/plain; charset="us-ascii"
+To: Linux in the Hamshack <lhspodcast@lists.blacksparrowmedia.net>, ubuntu hams <ubuntu-hams@lists.launchpad.net>, debian hams <debian-hams@lists.debian.org>, fedora hams <fedora-hams@kernelnewbies.org>, ubuntu hams devel <ubuntu-hams-devel@lists.launchpad.net>
+Cc: suse ham <opensuse-ham@opensuse.org>, linuxham <linuxham@yahoogroups.com>, linuxhams yahoo <linuxhams@yahoogroups.com>, vger linux hams <linux-hams@vger.kernel.org>
 
-On Thu, Sep 6, 2012 at 2:03 PM, Bernard f6bvp <f6bvp@free.fr> wrote:
-> Hello all,
->
-> K4GBB's Raspberry site is back on line with more details and updated
-> information.
-> Thank you Charley for providing such help !
->
-> 73 de Bernard, f6bvp
+Hi,
+
+There are new versions of twHamQTH and twlog.
+
+twHamQTH is a callsign lookup program.  This version downloads all
+(about 40) data fields available from www.HamQTH.com  Thanks to Petr,
+OK2CQR, for his very fast XML download service.
+ 
+Another new feature of twHamQTH is an eQSL Authenticity Guaranteed
+check.  When you lookup a call, it will tell you if the station is "AG"
+or not.
+
+twHamQTH now has an "Export" button that makes all of the downloaded
+data fields available to any other program, so they can use the data.
 
 
-As a point of information, I documented my RPi setup of an APRS digi
-using the Linux AX.25 stack and APRX on my blog at the following URL:
+The new version of twlog can automatically send an eQSL to the worked
+station when you save the QSO.  You can choose if you want to send an
+eQSL or not, or turn the feature off.
 
-http://www.ke0md.com/2012/09/03/aprs-i-gatedigi-with-my-new-raspberry-pi/
+Twlog can also uses the data from twHamQTH.  When twHamQTH "Exports"
+it's data, twlog will automatically fill in twlog's Call box, and put
+the QTH and Name in it's Notes box.
 
-It's a very simplistic write-up, but it should work great!
 
-Jeremy, KE0MD
+See my web page below for more.
+Enjoy!
+
+-- 
+73
+
+Ted W - wa0eir
+http://home.mchsi.com/wa0eir
+
+There are 10 types of people in this world:
+those who understand binary, and those who don't.
+
+-- 
+To unsubscribe, e-mail: opensuse-ham+unsubscribe@opensuse.org
+To contact the owner, e-mail: opensuse-ham+owner@opensuse.org
+
