@@ -1,104 +1,46 @@
-From: Thomas Osterried <thomas@x-berg.in-berlin.de>
-Subject: Re: IP over and AX25IPD UDP connect does not workon kernals from
- 2.6
-Date: Fri, 14 Sep 2012 11:16:51 +0200
-Message-ID: <20120914091651.GG32411@x-berg.in-berlin.de>
-References: <FqAKqsBDluUQFwYb@skywaves.demon.co.uk>
+From: David Ranch <linux-hams@trinnet.net>
+Subject: Looking for any active Linpac (Linux based AX.25 Packet radio terminal)
+ users
+Date: Wed, 19 Sep 2012 22:46:26 -0700
+Message-ID: <505AADB2.90603@trinnet.net>
 Mime-Version: 1.0
+Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
-Content-Disposition: inline
-In-Reply-To: <FqAKqsBDluUQFwYb@skywaves.demon.co.uk>
 Sender: linux-hams-owner@vger.kernel.org
 List-ID: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-To: Paul Lewis <paul@skywaves.demon.co.uk>, linux-hams@vger.kernel.org
+Content-Type: text/plain; charset="us-ascii"; format="flowed"
+To: Linux Hams <linux-hams@vger.kernel.org>
 
-Hello,
+Hello Everyone,
 
-our systems with kernel 2.6 are running stable -since years- with ax25ipd
-using axudp. We're also using IP. But in difference to your configuration,
-we've configured the ARP address hard.
+I was curious if there are any active Linpac users here on the list.  I 
+(somewhat) recently took over the project from the previous author and 
+have things working for my uses.  I wanted to see what else active 
+packet users would like to see from this project.  I'm also curious what 
+versions of code people are using if it's the Ncurses interface or the 
+Java interface.
 
-You describe a problem with IP over AX.25 (over UDP over IP).
-Your trace shows ARP requests and ARP responses.
-ax25ipd does not filter such packets. It passes all them to kernel.
-If there's a problem, it's the kernel-ax25-code where to look at.
+    http://linpac.sourceforge.net/
 
-vy 73,
-	- Thomas  dl9sau
+Linpac is a fantastic AX.25 terminal program and is very feature rich.  
+It supports multiple concurrent connections, easy Unproto (UI) traffic, 
+local email and FBB forwarding, etc.  It's currently working on 
+Centos5/6 and Ubuntu so far and I'm looking for any and all help from  
+people who know aspects of:
 
-On 2012-09-14 09:22:27 +0100, Paul Lewis <paul@skywaves.demon.co.uk>
-wrote in <FqAKqsBDluUQFwYb@skywaves.demon.co.uk>:
-> Hello All
-> 
-> IP over and AX25IPD UDP connect does not work on kernels from 2.6
-> 
-> net44 IP over AX25UDP does not work.
-> I have never got this working on my remote partners system when they
-> upgraded to the 2.6 kernels during the last decade.
-> 
-> So this problem has caught up with me again..
-> 
-> Works fine on my 2.2.26 kernel the version of ax25ipd that I am using
-> nn my main server and installed 4.June 2007
-> From my log updated  4.6.2007
-> ax25-apps-0.0.6.2src_f6bvp.tar (bz2)
-> ax25ipd is a dynamic version for DHCP enhancement.
-> 
-> 
-> This is my test
-> 244.4 is the Raspberry Pi Debian build
-> 244.1 is the 2.2.26 system
-> 
-> Telnet from 244.4 to 244.1 over and axudp tunnel fails
-> Can see the ARP requests over the AX25IPD UDP  axu2 Interface on
-> both machine. Nothing seems to happen requests ignored.  In the past
-> we have even entered static arp entries and still fails to establish
-> the IP link
-> 
-> 
-> Local Machine (244.4)
-> sender IPaddr 44.131.244.4 hwaddr G4APL-11
-> target IPaddr 44.131.244.1
-> axu2: fm G4APL-11 to QST ctl UI pid=CD(ARP) len 30 07:13:31
-> ARP: len 30 hwtype AX25 prot IP op REQUEST
-> sender IPaddr 44.131.244.4 hwaddr G4APL-11
-> target IPaddr 44.131.244.1
-> 
-> 
-> Remote machine (244.1)
-> axu2: fm G4APL-11 to QST ctl UI pid=CD(ARP) len 30 08:13:31
-> ARP: len 30 hwtype AX25 prot IP op REQUEST
-> sender IPaddr 44.131.244.4 hwaddr G4APL-11
-> target IPaddr 44.131.244.1
-> axu2: fm G4APL-2 to G4APL-11 ctl UI pid=CD(ARP) len 30 08:13:31
-> ARP: len 30 hwtype AX25 prot IP op REPLY
-> sender IPaddr 44.131.244.1 hwaddr G4APL-2
-> target IPaddr 44.131.244.4 hwaddr G4APL-11
-> 
-> 
-> I have seen this many times in the past (during the last decade)
-> when my remote partners have upgraded from the 2.4 to 2.6 Kernels.
-> And we loose our net44 links over ax25ipd udp links.
-> Reverted to using VPN to overcome.
-> 
-> I have never been able to solve the problem as to why
-> the later versions of kernel or ax25ipd does or handle IP over the
-> ax25udp
-> 
-> IP over my AXUDP links worked to my current Partner(s)
-> running xrouter, jnos and in the past BPQ partners.
-> 
-> Has anyone come across this and found a solution.  Or as might be
-> the case. I may have missed something.
-> 
-> Currently testing on my Raspberry PI system.
-> 73 Paul g4apl (gb7cip)
-> 
-> -- 
-> paul@skywaves.demon.co.uk
-> --
-> To unsubscribe from this list: send the line "unsubscribe linux-hams" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at  http://vger.kernel.org/majordomo-info.html
+    - C++, Autoconf/Automake, socket programming, Ncurses, Java
+    - testers
+    - documentation
+
+
+Give it a look and I have patches and .spec files ready to go:
+
+   Patches: 
+http://www.trinityos.com/HAM/CentosDigitalModes/usr/src/redhat/SOURCES/
+   SPECS:   
+http://www.trinityos.com/HAM/CentosDigitalModes/usr/src/redhat/SPECS/linpac.spec
+
+73s
+
+--David
+KI6ZHD
