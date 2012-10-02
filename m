@@ -1,94 +1,93 @@
-From: David Ranch <linux-hams@trinnet.net>
-Subject: Re: Looking for any active Linpac (Linux based AX.25 Packet radio
- terminal) users
-Date: Thu, 20 Sep 2012 23:37:42 -0700
-Message-ID: <505C0B36.1010904@trinnet.net>
-References: <505AADB2.90603@trinnet.net> <505ACB55.60705@kth.se>
+From: "Bernard, f6bvp" <f6bvp@free.fr>
+Subject: Re: [xfbb] AX.25 Packet Radio on a RaspBerry Pi : a success
+Date: Tue, 02 Oct 2012 14:32:01 +0200
+Message-ID: <506ADEC1.6060809@free.fr>
+References: <500FD014.5090004@free.fr> <5010192A.9060506@upmc.fr> <50101DB2.9020101@sharon.esrac.ele.tue.nl> <CAOnrUC3iavAZB5q9Xy6pxU0N72YcPyPFAkqzDnca11vmvMdFJg@mail.gmail.com> <501110B1.5080202@free.fr> <501D13B8.8070004@free.fr> <501D2C69.80304@free.fr> <yD$XQnFpQmRQFwVt@skywaves.demon.co.uk> <50466721.6000209@embarqmail.com> <oTSREEHcimRQFwWp@skywaves.demon.co.uk> <504734FD.4030009@embarqmail.com> <4XcVlTClnzRQFwkJ@skywaves.demon.co.uk> <vKlAy5AVauUQFw+E@skywaves.demon.co.uk>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <505ACB55.60705@kth.se>
+In-Reply-To: <vKlAy5AVauUQFw+E@skywaves.demon.co.uk>
 Sender: linux-hams-owner@vger.kernel.org
 List-ID: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"; format="flowed"
-To: Linux Hams <linux-hams@vger.kernel.org>
+Content-Type: text/plain; charset="iso-8859-1"; format="flowed"
+To: Paul Lewis <paul@skywaves.demon.co.uk>
+Cc: C Schuman <k4gbb1@embarqmail.com>, List for the LINUX version of FBB <xfbb@f6fbb.org>, Alejandro Santos <alejolp@alejolp.com.ar>, Arno Verhoeven <pe1icq@sharon.esrac.ele.tue.nl>, Lee Woldanski <ve7fet@tparc.org>, F3KT <f3kt@free.fr>, linux-hams <linux-hams@vger.kernel.org>, Bernard Pidoux <bernard.pidoux@upmc.fr>
 
+Hello All,
 
-Hello Bjorn,
+In case someone did not notice, Raspbian distros include AX.25 modules=20
+since July 2012 version. There were since new updates in august and=20
+september 18.
+See http://www.raspberrypi.org/downloads
 
-Centos6 comes with a 2.6.32 kernel and I'm currently running a 3.5.2 
-kernel.  I have a friend, KJ6YWD who is running Linpac with Soundmodem 
-with great results.
+Thus, it is not necessary to download anymore my own Raspbian compile=20
+package.
 
-No, soundmodem isn't integrated but in classic Linux fashion, it 
-shouldn't be.
+Don't forget to perform "apt-get update" and "apt-get upgrade" from tim=
+e=20
+to time in order to download package updates for your RPi.
 
+73 de Bernard, f6bvp
 
-I  have BOTH versions compiling.  The only Ncurses-only 0.17pre3 works 
-very well (though is has some minor bugs).  It's the 1.0pre3 server 
-version either with the Ncurses or Java client that I'm currently having 
-issues with.  I've captured the issue straces here:
-
-    http://www.trinityos.com/SCRATCH/Linpac/
-
-
-If you're interested if giving Linpac a try, use my previously mentioned 
-patches though they assume the use of compatibility libraries: 
-compat-gcc-34-c++
-
-I understand that the vector.h errors should be avoidable w/o those 
-compatibility libraries and one of my posted patch files is supposed to 
-rectify the compile errors (commented out in the SPEC file). 
-Unfortunately, my patches for all this must be incomplete.  I'd love to 
-have someone set me strait so I can remove those compatibility libs.
-
---David
-
-On 09/20/2012 12:52 AM, Bjorn Pehrson wrote:
-> Hi,
-> What about proceeding to the 2.6 kernel and integrating soundmodem or
-> has that already happened?
-> best wishes
-> Bjorn/SA0BXI
+Le 14/09/2012 10:11, Paul Lewis a =C3=A9crit :
+> Hi Gays
 >
-> On 2012-09-20 07:46, David Ranch wrote:
->> Hello Everyone,
+> Thought I would give and update
+> Have now got the system running as a linuxnode.
+> Have not switch on the radio yet connected to a usb serial port
+> AX25IPD Ax25 and netrom connections work.
+> Telnet to the linuxnode from on the local machine
+>
+> net44 IP over AX25UDP does not work.
+> I have never got this working on my partners when they upgraded to th=
+e
+> 2.6 kernels and the associated ax25ipd during the last decade.
+> So this problem has caught up with me again..
+>
+> Works fine on my 2.2.26 kernel the version of ax25ipd that I am using
+> ax25-apps-0.0.6.2src_f6bvp.tar (installed 4.6.2007)
+>
+> Will provide feedback in a new thread.
+>
+>
+> Encounter one gotcha though, that got me going for a couple of days. =
+Was
+> the netrom interfaces were always in use and the nrrattach fails, no
+> spare netrom device.
+> Also the ttyUSB0 interface was 'grab by the system'
+>
+> Confirmed netrom, ax25, mkiss modules loaded
+> the required alias defined the /etc/modprobe.d
+> conf files.
+>
+> See these referenced during the system boot and message log file.
+>
+> Traced (ps -ef) to the /etc/default/ifplugd hotplug deamon that auto
+> connects 'by default' all interfaces.
+> Change the attribute HOTPLUG INTERFACES=3D"all"  to "lo eth0"
+>
+> and we got control of the system and nrrattach now worked.
+> 73 Paul g4apl (gb7cip)
+>
+>
+> In message <4XcVlTClnzRQFwkJ@skywaves.demon.co.uk>, Paul Lewis
+> <paul@skywaves.demon.co.uk> writes
+>> Hello Charles and the others
 >>
->> I was curious if there are any active Linpac users here on the list. I
->> (somewhat) recently took over the project from the previous author and
->> have things working for my uses. I wanted to see what else active
->> packet users would like to see from this project. I'm also curious
->> what versions of code people are using if it's the Ncurses interface
->> or the Java interface.
+>> your feedback is noticed.
 >>
->> http://linpac.sourceforge.net/
+>> Yes I do have the source code that I could ftp across and compile.
 >>
->> Linpac is a fantastic AX.25 terminal program and is very feature rich.
->> It supports multiple concurrent connections, easy Unproto (UI)
->> traffic, local email and FBB forwarding, etc. It's currently working
->> on Centos5/6 and Ubuntu so far and I'm looking for any and all help
->> from people who know aspects of:
+>> Also your RMS gate on a Raspberry Pi has come up now..
 >>
->> - C++, Autoconf/Automake, socket programming, Ncurses, Java
->> - testers
->> - documentation
+>> Thanks for the support and feedback
+>> Paul g4apl
 >>
 >>
->> Give it a look and I have patches and .spec files ready to go:
->>
->> Patches:
->> http://www.trinityos.com/HAM/CentosDigitalModes/usr/src/redhat/SOURCES/
->> SPECS:
->> http://www.trinityos.com/HAM/CentosDigitalModes/usr/src/redhat/SPECS/linpac.spec
 >>
 >>
->> 73s
->>
->> --David
->> KI6ZHD
->> --
->> To unsubscribe from this list: send the line "unsubscribe linux-hams" in
->> the body of a message to majordomo@vger.kernel.org
->> More majordomo info at http://vger.kernel.org/majordomo-info.html
->> .
->>
+--
+To unsubscribe from this list: send the line "unsubscribe linux-hams" i=
+n
+the body of a message to majordomo@vger.kernel.org
+More majordomo info at  http://vger.kernel.org/majordomo-info.html
