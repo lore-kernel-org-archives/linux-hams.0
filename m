@@ -1,35 +1,54 @@
-From: "Curt, WE7U" <curt.we7u@gmail.com>
-Subject: Xastir-2.0.2 Stable Released
-Date: Thu, 1 Nov 2012 12:44:18 -0700 (PDT)
-Message-ID: <alpine.LNX.2.00.1211011244020.3270@DadsBox.we7u.net>
+From: Nate Bargmann <n0nb@n0nb.us>
+Subject: Hamlib 1.2.15.3 released
+Date: Thu, 1 Nov 2012 21:41:07 -0500
+Message-ID: <20121102024107.GN32043@n0nb.us>
 Mime-Version: 1.0
-Return-path: <linux-hams-owner@vger.kernel.org>
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=date:from:to:subject:message-id:user-agent:mime-version
-         :content-type;
-        bh=CHW7215i1EiREg6BCADh+ScMoW+fAjBHMPeKy3PoP88=;
-        b=bIBLZDx4MjSR2shMu+ylE6rN3ps/bpMsHH/25Z0X/pcY1od7BlIYNSpTv2I15EZk8x
-         mKAPoWFY3TMII2cr65L24uJw++JfOvWw2upm+BxYC7S+PiZUqZWWQd1OWqQKNxwaaaqT
-         LgO+hiAms8Rc/3XWBz1nK1g4MTL6F6eLqR9tqrNvF9cmfMvL26x/Y9PBW2MTTEZF1dDh
-         XFpI1aaEu3ugDK0F8Wh17F8FELbBUCuZQnZa8rvM6gRq6jpvp4N/Ie24kz/JZ/xuvyPm
-         mduLZOpwrzqRrAF/+2qQx6N2irpY3UUE3CNfl4CQB0Z+BBcZ+nJ5jKEbXrBa/HsugVSx
-         Cs+Q==
-Sender: linux-hams-owner@vger.kernel.org
-List-ID: <linux-hams.vger.kernel.org>
-Content-Type: TEXT/PLAIN; format="flowed"; charset="us-ascii"
+Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
-To: linux-hams@vger.kernel.org
+Return-path: <hamlib-developer-bounces@lists.sourceforge.net>
+Content-Disposition: inline
+List-Id: <linux-hams.vger.kernel.org>
+List-Unsubscribe: <https://lists.sourceforge.net/lists/listinfo/hamlib-developer>,
+	<mailto:hamlib-developer-request@lists.sourceforge.net?subject=unsubscribe>
+List-Archive: <http://sourceforge.net/mailarchive/forum.php?forum_name=hamlib-developer>
+List-Post: <mailto:hamlib-developer@lists.sourceforge.net>
+List-Help: <mailto:hamlib-developer-request@lists.sourceforge.net?subject=help>
+List-Subscribe: <https://lists.sourceforge.net/lists/listinfo/hamlib-developer>,
+	<mailto:hamlib-developer-request@lists.sourceforge.net?subject=subscribe>
+Errors-To: hamlib-developer-bounces@lists.sourceforge.net
+To: Linux Hams <linux-hams@vger.kernel.org>, Hamlib Developers <hamlib-developer@lists.sourceforge.net>
 
+Hamlib 1.2.15.3 is now released and available from:
 
-Xastir-2.0.2 was released a few minutes ago, then CVS was bumped to v2.0.3 for further development.
+https://sourceforge.net/projects/hamlib/files/hamlib/1.2.15.3/
 
-Download at your leisure.  The big green "Download" button on the main page hasn't updated to the latest file yet, so you may need to use the direct link below instead:
+Changes in this release from 1.2.15.2 are:
 
-   https://sourceforge.net/projects/xastir/files/xastir-stable/xastir-2.0.0/
+Version 1.2.15.3 2012-11-01
+	* Fix configure.ac so that rigctld/rotcld work on Win32 platform
+	* Add NSIS script to build executable installer on Win32 platform
+	* Remove unsupported commands on IC-756 (non-Pro model) from AK6I
+	* Fix set_split in netrigctl.c to properly accept the split value.
+		TNX, N2ADR.
+	* IC-R8500: Add RIG_LEVEL_AF to has_set_level. TNX John, EI7IG
+	* ADAT updates from Frank, DG1SBG, needed for stable operation. 
 
-See the ChangeLog file for changes made since the last stable release.
+This is likely the last planned release of the Hamlib 1.2 series.
+Development will now focus on the Hamlib 3 series which is now
+configured to be ABI compatible with the 1.2 series.
+
+73, de Nate >>
 
 -- 
-Curt, WE7U.        http://wetnet.net/~we7u
-APRS Client Capabilities:  http://wetnet.net/~we7u/aprs_capabilities.html
+
+"The optimist proclaims that we live in the best of all
+possible worlds.  The pessimist fears this is true."
+
+Ham radio, Linux, bikes, and more: http://www.n0nb.us
+
+------------------------------------------------------------------------------
+LogMeIn Central: Instant, anywhere, Remote PC access and management.
+Stay in control, update software, and manage PCs from one command center
+Diagnose problems and improve visibility into emerging IT issues
+Automate, monitor and manage. Do more in less time with Central
+http://p.sf.net/sfu/logmein12331_d2d
