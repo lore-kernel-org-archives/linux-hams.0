@@ -1,40 +1,31 @@
-From: Thomas Osterried <thomas@osterried.de>
-Subject: Re: Bug in ax25-apps "call" program
-Date: Wed, 28 Nov 2012 10:31:24 +0100
-Message-ID: <607FF204-48DE-497F-9244-A695C84A4FB2@osterried.de>
-References: <alpine.DEB.2.00.1211272105230.5105@excalibur.caerleon.us>
-Mime-Version: 1.0 (Mac OS X Mail 6.2 \(1499\))
-Content-Transfer-Encoding: 8BIT
+From: Brett Friermood <brett.friermood@gmail.com>
+Subject: "?" Command List
+Date: Wed, 5 Dec 2012 12:41:26 -0600
+Message-ID: <CADS0AtSe=a3AfMvPjNqvXA5DAmrE6t0aMWb-dbromj7+bj5kXQ@mail.gmail.com>
+Mime-Version: 1.0
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <alpine.DEB.2.00.1211272105230.5105@excalibur.caerleon.us>
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:date:message-id:subject:from:to:content-type;
+        bh=2Q9lKWecigBeaD6fYenjIbBvfRCZ74EUfV3kpnanaOk=;
+        b=wBUg7AZ9gjCoC4bkNXf9zpEskciogTeo4LHhwsntHTNJI8kXc43Ncmc4UXNd6ebqeZ
+         TnS2DurFoXHzq+Y5+ZEVtrbh6yoZfj3UTeWwI73jCT9K7p6dE9BhxG8XUhnLhqCG0ryP
+         SVDobrFicjPreTgI2uPRZykX09KzRghVzufO8MknyOz9K6rz6hxHWpI3uPSCMqLNucx2
+         FIaoVcCfQC95bpV+ZdfliQrHaBmpXRbMzNOkuaIpnMp0jFjQgDRU4DY4UjfsRiTvTzbd
+         +9xcqMKEkh++JJgeuhyokXfwT3QmjrRUNiNZNd6GOvDIPZgN+6yswqDC8H79Qe+zknSa
+         E+ow==
 Sender: linux-hams-owner@vger.kernel.org
 List-ID: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
-To: Brian Smith <avalon73@caerleon.us>
-Cc: "ralf@linux-mips.org Baechle" <ralf@linux-mips.org>, linux-hams@vger.kernel.org, debian-hams@lists.debian.org
+Content-Transfer-Encoding: 7bit
+To: linux-hams@vger.kernel.org
 
-Hello,
+Hello everyone,
 
-i think this bug has been already fixed a 4 weeks ago.
+Is there anyway to configure what commands show up when "?" is used
+under Linux AX25? I did not see anything in node.conf.
 
-Visit http://www.linux-ax25.org/cvsweb/ax25-apps/call/
+If possible I would like to trim the list to make it a little more
+friendly to non-Linux packet operators.
 
-This is the patch:
-  http://www.linux-ax25.org/cvsweb/ax25-apps/call/call.c.diff?r1=1.25;r2=1.26;f=h
-
-Perhaps it could be a good idea to submit a bug report in ubuntu's bug tracking system, mentioning that there's an upstream fix available. This helps other users, and it helps the package maintainer.
-If no one documents, no one finds it in the web. The submitter 4 weeks ago was also an ubuntu user.
-
-Btw, the bug is more than 10 years old (older than the cvs repository). The interesting thing is, that it did not occur (or did not often occur); newer C compilers produce other code and better checks. I use call quite often - but without ncurses gui, and mostly in my scripts; the bug is in the curses part.
-
-I do CC to the linux-hams and debian-hams mailing-list, so it should be found better now.
-
-vy 73,
-	- Thomas  dl9sau
-
-On 28.11.2012 um 03:15 Brian Smith wrote:
-
-> In the call program, there's a buffer overflow condition in the start_screen function (call.c) if the call sign is 6 characters long and the SSID is 10 or higher.  I don't know if you've already fixed it, but it didn't seem like it was fixed in the version of 0.0.8 that Ubuntu is including in its "quantal" distribution.
-> 
-> I would have included a patch in this email, but that patch is on a different machine.  The fix is an easy one, though.  I increased the ID string buffer in the start_screen function (call.c) and the format string for the sprintf call by one character.  Everything else seems to work quite well.
-
+KQ9N
