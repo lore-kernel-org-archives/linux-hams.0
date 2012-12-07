@@ -1,31 +1,46 @@
-From: Brett Friermood <brett.friermood@gmail.com>
-Subject: "?" Command List
-Date: Wed, 5 Dec 2012 12:41:26 -0600
-Message-ID: <CADS0AtSe=a3AfMvPjNqvXA5DAmrE6t0aMWb-dbromj7+bj5kXQ@mail.gmail.com>
+From: David Ranch <linux-hams@trinnet.net>
+Subject: Re: "?" Command List
+Date: Thu, 06 Dec 2012 18:04:16 -0800
+Message-ID: <50C14EA0.3080708@trinnet.net>
+References: <CADS0AtSe=a3AfMvPjNqvXA5DAmrE6t0aMWb-dbromj7+bj5kXQ@mail.gmail.com>
 Mime-Version: 1.0
+Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:date:message-id:subject:from:to:content-type;
-        bh=2Q9lKWecigBeaD6fYenjIbBvfRCZ74EUfV3kpnanaOk=;
-        b=wBUg7AZ9gjCoC4bkNXf9zpEskciogTeo4LHhwsntHTNJI8kXc43Ncmc4UXNd6ebqeZ
-         TnS2DurFoXHzq+Y5+ZEVtrbh6yoZfj3UTeWwI73jCT9K7p6dE9BhxG8XUhnLhqCG0ryP
-         SVDobrFicjPreTgI2uPRZykX09KzRghVzufO8MknyOz9K6rz6hxHWpI3uPSCMqLNucx2
-         FIaoVcCfQC95bpV+ZdfliQrHaBmpXRbMzNOkuaIpnMp0jFjQgDRU4DY4UjfsRiTvTzbd
-         +9xcqMKEkh++JJgeuhyokXfwT3QmjrRUNiNZNd6GOvDIPZgN+6yswqDC8H79Qe+zknSa
-         E+ow==
+In-Reply-To: <CADS0AtSe=a3AfMvPjNqvXA5DAmrE6t0aMWb-dbromj7+bj5kXQ@mail.gmail.com>
 Sender: linux-hams-owner@vger.kernel.org
 List-ID: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset="us-ascii"; format="flowed"
 To: linux-hams@vger.kernel.org
 
-Hello everyone,
 
-Is there anyway to configure what commands show up when "?" is used
-under Linux AX25? I did not see anything in node.conf.
+That depends on which "node" software you're running:   
+Unode/Uronode/Awznode?
 
-If possible I would like to trim the list to make it a little more
-friendly to non-Linux packet operators.
+Unode/Uronode allows for configuring external commands but I don't see 
+node.conf options for internal commands.  Looks like your going to need 
+to either disable those commands via the source:
 
-KQ9N
+Assuming the stock Node program: 
+https://code.google.com/p/ve7fet/source/browse/trunk/node/command.c?spec=svn11&r=11
+
+Or you'll need to create a new help screen that can only display 
+specific commands yet leave the hidden commands still functional.
+
+--David
+
+
+
+
+> Hello everyone,
+>
+> Is there anyway to configure what commands show up when "?" is used
+> under Linux AX25? I did not see anything in node.conf.
+>
+> If possible I would like to trim the list to make it a little more
+> friendly to non-Linux packet operators.
+>
+> KQ9N
+> --
+> To unsubscribe from this list: send the line "unsubscribe linux-hams" in
+> the body of a message tomajordomo@vger.kernel.org
+> More majordomo info athttp://vger.kernel.org/majordomo-info.html
