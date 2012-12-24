@@ -1,62 +1,131 @@
-From: Jeroen Vreeken <jeroen@vreeken.net>
-Subject: Re: [RFC] Future of INP3 patch
-Date: Tue, 18 Dec 2012 23:13:37 +0100
-Message-ID: <50D0EA91.30908@vreeken.net>
-References: <1355612939-3148455801.80b07a7cbd@bliksem.vehosting.nl> <4B30F8D4-7679-400F-8606-BC0D449DCA8D@gmail.com>
-Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
-Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <4B30F8D4-7679-400F-8606-BC0D449DCA8D@gmail.com>
-Sender: linux-hams-owner@vger.kernel.org
+From: Akinobu Mita <akinobu.mita@gmail.com>
+Subject: [PATCH 18/29] drivers/net: rename random32() to prandom_u32()
+Date: Mon, 24 Dec 2012 11:14:05 +0900
+Message-ID: <1356315256-6572-19-git-send-email-akinobu.mita@gmail.com>
+References: <1356315256-6572-1-git-send-email-akinobu.mita@gmail.com>
+Return-path: <netdev-owner@vger.kernel.org>
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=x-received:from:to:cc:subject:date:message-id:x-mailer:in-reply-to
+         :references;
+        bh=weKV3xjKKCdPG93ayLgqF7dkfsIQ3ts64Ek5hvUQ+aw=;
+        b=vX+/MGzQjCmy/GPXd4iVTIAJOWMWNQn521fPVowp49bYr1xeGpW4JKciR1oTT/SslA
+         tRoUUA8gLWpfHEn5RjlaYbUXsOHPTmyuHTZ1e1XrmTDHsLHxjm9258MACmPZHXLqLs2S
+         hvF7OtdBw4OLEeOLIGksoXcfHPBR8KliI7ilzVOtXYKw1WpAm6OtmK19hEEW7tgKO56Z
+         VslUt4/gR5z9xd+uXsRWlN4B1arkF4yH4muNwD1lvW/OajiR8aF4melUF+0SkUzcRqE9
+         DT+bujebar3ID/Tce0fGDXHfDgyGpOLoGgrX0jX0xhpb+IYyK3SIpANvs73TTyjuIz2B
+         TGmA==
+In-Reply-To: <1356315256-6572-1-git-send-email-akinobu.mita@gmail.com>
+Sender: netdev-owner@vger.kernel.org
 List-ID: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"; format="flowed"
-To: Matt VK2RQ <matt.vk2rq@gmail.com>
-Cc: "linux-hams@vger.kernel.org" <linux-hams@vger.kernel.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+To: linux-kernel@vger.kernel.org, akpm@linux-foundation.org
+Cc: Akinobu Mita <akinobu.mita@gmail.com>, "David S. Miller" <davem@davemloft.net>, Michael Chan <mchan@broadcom.com>, Thomas Sailer <t.sailer@alumni.ethz.ch>, Jean-Paul Roubelat <jpr@f6fbb.org>, Bing Zhao <bzhao@marvell.com>, netdev@vger.kernel.org, linux-hams@vger.kernel.org, linux-wireless@vger.kernel.org
 
-Hi Matt,
+Use more preferable function name which implies using a pseudo-random
+number generator.
 
-On 12/16/2012 12:08 AM, Matt VK2RQ wrote:
->> Hi,
->>
->> I haven't seen any replies after posting about the inp3 patches for 2.6 so
->> either the spontanious combustion problems are fixed or nobody cares.....
->> At the moment the patch seems to be pretty stable and running without
->> problems so I was wondering what to do next:
->>
->> - Keep making new patches for the 2.6 kernels and try to get it in in 2.7
->>    (Should be very safe, although less testing)
->>
->> - Try to get it in 2.6.
->>    (The patch only affects netrom and is for 99% configurable with
->> CONFIG_NETROM_INP with the exeption of the netrom node sorting but this
->> shouldn't be a problem)
->>
->> Any comments?
-> Hi Jeroen,
->
-> I just tried installing version 007 of your INP3 patch to kernel 2.6.32. There have
-> been some changes to the kernel since 2.6.4, so I needed to tweak it a bit to
-> get it to compile:
-> http://qsl.net/vk2rq/2.6.32-inp3_007.patch
->
-> However, there are some deadlock problems arising from this patch. Specifically,
-> when inp3_nodes_neg() is called, neigh_list will already be locked, and if
-> it was called from inp3_route_neg(), then node_list will be locked as well.
->
-> However, inp3_nodes_neg() calls nr_del_node_found(), which assumes
-> there are no locks in place. If nr_del_node_found() places a call to
-> nr_remove_neigh() or nr_remove_node(), then those functions will
-> try to acquire a lock on neigh_list or node_list, which will lead to a
-> deadlock situation if those locks are already in place.
->
-> This thread is already quite old, so not sure if you or anyone else is
-> still maintaining this code?
-I have not been actively maintaining the code. However I am currently 
-re-building the local packet access point in Eindhoven, and I was 
-planning on updating the patch to a more recent kernel. (probably 3.7 based)
-I haven't got around to this since I am still fighting with scc cards... 
-but I hope to get to the netrom part soon.
+Signed-off-by: Akinobu Mita <akinobu.mita@gmail.com>
+Cc: "David S. Miller" <davem@davemloft.net>
+Cc: Michael Chan <mchan@broadcom.com>
+Cc: Thomas Sailer <t.sailer@alumni.ethz.ch>
+Cc: Jean-Paul Roubelat <jpr@f6fbb.org>
+Cc: Bing Zhao <bzhao@marvell.com>
+Cc: netdev@vger.kernel.org
+Cc: linux-hams@vger.kernel.org
+Cc: linux-wireless@vger.kernel.org
+---
+ drivers/net/ethernet/broadcom/cnic.c    | 4 ++--
+ drivers/net/hamradio/baycom_epp.c       | 2 +-
+ drivers/net/hamradio/hdlcdrv.c          | 2 +-
+ drivers/net/hamradio/yam.c              | 2 +-
+ drivers/net/wireless/mwifiex/cfg80211.c | 4 ++--
+ 5 files changed, 7 insertions(+), 7 deletions(-)
 
-73,
-Jeroen PE1RXQ
-
+diff --git a/drivers/net/ethernet/broadcom/cnic.c b/drivers/net/ethernet/broadcom/cnic.c
+index df8c30d..27d7a32 100644
+--- a/drivers/net/ethernet/broadcom/cnic.c
++++ b/drivers/net/ethernet/broadcom/cnic.c
+@@ -4085,7 +4085,7 @@ static int cnic_cm_alloc_mem(struct cnic_dev *dev)
+ 	if (!cp->csk_tbl)
+ 		return -ENOMEM;
+ 
+-	port_id = random32();
++	port_id = prandom_u32();
+ 	port_id %= CNIC_LOCAL_PORT_RANGE;
+ 	if (cnic_init_id_tbl(&cp->csk_port_tbl, CNIC_LOCAL_PORT_RANGE,
+ 			     CNIC_LOCAL_PORT_MIN, port_id)) {
+@@ -4145,7 +4145,7 @@ static int cnic_cm_init_bnx2_hw(struct cnic_dev *dev)
+ {
+ 	u32 seed;
+ 
+-	seed = random32();
++	seed = prandom_u32();
+ 	cnic_ctx_wr(dev, 45, 0, seed);
+ 	return 0;
+ }
+diff --git a/drivers/net/hamradio/baycom_epp.c b/drivers/net/hamradio/baycom_epp.c
+index 49b8b58..484f77e 100644
+--- a/drivers/net/hamradio/baycom_epp.c
++++ b/drivers/net/hamradio/baycom_epp.c
+@@ -449,7 +449,7 @@ static int transmit(struct baycom_state *bc, int cnt, unsigned char stat)
+ 			if ((--bc->hdlctx.slotcnt) > 0)
+ 				return 0;
+ 			bc->hdlctx.slotcnt = bc->ch_params.slottime;
+-			if ((random32() % 256) > bc->ch_params.ppersist)
++			if ((prandom_u32() % 256) > bc->ch_params.ppersist)
+ 				return 0;
+ 		}
+ 	}
+diff --git a/drivers/net/hamradio/hdlcdrv.c b/drivers/net/hamradio/hdlcdrv.c
+index a4a3516..3169252 100644
+--- a/drivers/net/hamradio/hdlcdrv.c
++++ b/drivers/net/hamradio/hdlcdrv.c
+@@ -389,7 +389,7 @@ void hdlcdrv_arbitrate(struct net_device *dev, struct hdlcdrv_state *s)
+ 	if ((--s->hdlctx.slotcnt) > 0)
+ 		return;
+ 	s->hdlctx.slotcnt = s->ch_params.slottime;
+-	if ((random32() % 256) > s->ch_params.ppersist)
++	if ((prandom_u32() % 256) > s->ch_params.ppersist)
+ 		return;
+ 	start_tx(dev, s);
+ }
+diff --git a/drivers/net/hamradio/yam.c b/drivers/net/hamradio/yam.c
+index c6645f1..21f231a 100644
+--- a/drivers/net/hamradio/yam.c
++++ b/drivers/net/hamradio/yam.c
+@@ -638,7 +638,7 @@ static void yam_arbitrate(struct net_device *dev)
+ 	yp->slotcnt = yp->slot / 10;
+ 
+ 	/* is random > persist ? */
+-	if ((random32() % 256) > yp->pers)
++	if ((prandom_u32() % 256) > yp->pers)
+ 		return;
+ 
+ 	yam_start_tx(dev, yp);
+diff --git a/drivers/net/wireless/mwifiex/cfg80211.c b/drivers/net/wireless/mwifiex/cfg80211.c
+index a875499..78dbc18 100644
+--- a/drivers/net/wireless/mwifiex/cfg80211.c
++++ b/drivers/net/wireless/mwifiex/cfg80211.c
+@@ -216,7 +216,7 @@ mwifiex_cfg80211_mgmt_tx(struct wiphy *wiphy, struct wireless_dev *wdev,
+ 	mwifiex_form_mgmt_frame(skb, buf, len);
+ 	mwifiex_queue_tx_pkt(priv, skb);
+ 
+-	*cookie = random32() | 1;
++	*cookie = prandom_u32() | 1;
+ 	cfg80211_mgmt_tx_status(wdev, *cookie, buf, len, true, GFP_ATOMIC);
+ 
+ 	wiphy_dbg(wiphy, "info: management frame transmitted\n");
+@@ -271,7 +271,7 @@ mwifiex_cfg80211_remain_on_channel(struct wiphy *wiphy,
+ 					 duration);
+ 
+ 	if (!ret) {
+-		*cookie = random32() | 1;
++		*cookie = prandom_u32() | 1;
+ 		priv->roc_cfg.cookie = *cookie;
+ 		priv->roc_cfg.chan = *chan;
+ 
+-- 
+1.7.11.7
