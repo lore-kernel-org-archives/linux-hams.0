@@ -1,49 +1,136 @@
-From: Matt VK2RQ <matt.vk2rq@gmail.com>
-Subject: Re: Removing unwanted NET/ROM nodes
-Date: Thu, 27 Dec 2012 19:50:55 +1100
-Message-ID: <5282751B-2DC5-4AEE-8470-F6D81EEB5173@gmail.com>
-References: <12f24a67.1a9da.13bdab2690f.Webtop.51@rtcubed.org>
-Mime-Version: 1.0 (Mac OS X Mail 6.2 \(1499\))
-Content-Transfer-Encoding: 8BIT
+From: Akinobu Mita <akinobu.mita@gmail.com>
+Subject: [PATCH -v2 18/26] drivers/net: rename random32() to prandom_u32()
+Date: Thu,  3 Jan 2013 21:19:14 +0900
+Message-ID: <1357215562-6288-19-git-send-email-akinobu.mita@gmail.com>
+References: <1357215562-6288-1-git-send-email-akinobu.mita@gmail.com>
 Return-path: <linux-hams-owner@vger.kernel.org>
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=x-received:content-type:mime-version:subject:from:in-reply-to:date
-         :cc:content-transfer-encoding:message-id:references:to:x-mailer;
-        bh=6ug7T87FaXgzvVU0HBP+jQdCpgsDXgC0tyJXx8aXSo4=;
-        b=yjCJJ2SCA5ITHopyrPT72vs3TCrQ5QjSu0W+EFkaez3mT5UH2hsvQMi3lOKhrWW13L
-         AbK/nyP0HeqlPb+ibKiwRD2Bxun+UEnmNBzX5DvC2e/ziMNqSzJAcCIRrzOrtd0v6ZEm
-         Ve7N3mOkYeu31DB/OJeRk2sfOqWbgOc46OY9rsFI8wExN66xN7bb3JLzbcHWl4wZG6VC
-         7cYIKvTJwk19qh2qtWWgnYnDpY6Hxq+NE+Q3kLEBOBnD304g2QexhUxSi74NaxOhqGXT
-         E5iAi46DWnWHXG2CuEh5qVHtE64JxqC9z1jMNOg4xraR2r8L26DNeyU46WZ1HaExg9eg
-         JP3g==
-In-Reply-To: <12f24a67.1a9da.13bdab2690f.Webtop.51@rtcubed.org>
+        h=x-received:from:to:cc:subject:date:message-id:x-mailer:in-reply-to
+         :references;
+        bh=WrtQ8sf3GSe60hdt0nZuz2lnvCaYdzzSMMNWKai0x+0=;
+        b=xkK2h78p2NfwXRAB42hDFV10Qmvpl3Iqh2SInq01mByNQjRs/YcyGY55estVrSGKY2
+         ynoEDOaSIXnVIZ6Xiud5PST49ZLSw/oosoARd2gjOdKrtF8UEgZeplAWsDaKwelxhNHP
+         4BPWZW2Dg/ma4uaeT/dhQ6B3KSSVKT5usU+SDYSSRh22o51qFKo79M60OVqxyPE5dKVe
+         klXbGpqRT8WH8iU/iLbRVkQfdUKo/0RKsUTkWDb8YleeOBDW8FfXga4wE1zSpm5bIffR
+         kyjEt/RlmN27RQcZA7DuEPFeILcp4836zS3oDszVcUAPTWMIw4S4A8iWqpPe3FYgq1j+
+         3Kbw==
+In-Reply-To: <1357215562-6288-1-git-send-email-akinobu.mita@gmail.com>
 Sender: linux-hams-owner@vger.kernel.org
 List-ID: <linux-hams.vger.kernel.org>
+MIME-Version: 1.0
 Content-Type: text/plain; charset="us-ascii"
-To: kd1zd@rtcubed.org
+Content-Transfer-Encoding: 7bit
+To: linux-kernel@vger.kernel.org, akpm@linux-foundation.org
+Cc: Akinobu Mita <akinobu.mita@gmail.com>, "David S. Miller" <davem@davemloft.net>, Michael Chan <mchan@broadcom.com>, Thomas Sailer <t.sailer@alumni.ethz.ch>, Jean-Paul Roubelat <jpr@f6fbb.org>, Bing Zhao <bzhao@marvell.com>, netdev@vger.kernel.org, linux-hams@vger.kernel.org, linux-wireless@vger.kernel.org
+
+Use more preferable function name which implies using a pseudo-random
+number generator.
+
+Signed-off-by: Akinobu Mita <akinobu.mita@gmail.com>
+Acked-by: Thomas Sailer <t.sailer@alumni.ethz.ch>
+Cc: "David S. Miller" <davem@davemloft.net>
+Cc: Michael Chan <mchan@broadcom.com>
+Cc: Thomas Sailer <t.sailer@alumni.ethz.ch>
+Cc: Jean-Paul Roubelat <jpr@f6fbb.org>
+Cc: Bing Zhao <bzhao@marvell.com>
+Cc: netdev@vger.kernel.org
 Cc: linux-hams@vger.kernel.org
+Cc: linux-wireless@vger.kernel.org
+---
 
-You can lower the quality of the undesired node with the nrparms command:
+No change from v1
 
-nrparms -nodes <node_callsign> + <node_mnemonic> <quality> <count> <port> <neighbour>
+ drivers/net/ethernet/broadcom/cnic.c    | 4 ++--
+ drivers/net/hamradio/baycom_epp.c       | 2 +-
+ drivers/net/hamradio/hdlcdrv.c          | 2 +-
+ drivers/net/hamradio/yam.c              | 2 +-
+ drivers/net/wireless/mwifiex/cfg80211.c | 4 ++--
+ 5 files changed, 7 insertions(+), 7 deletions(-)
 
-eg. set quality to 10, count to 6, port to the AX25 port used to access the node, and neighbour is the callsign of the node you route through -- will be the same as <node_callsign> if you route to it directly.
-
-73, Matt VK2RQ
-
-On 27/12/2012, at 3:50 PM, kd1zd@rtcubed.org wrote:
-
-> I am on a packet frequency that has 2 nodes that I can both hear and transmit successfully.  The connections with them are solid.  There is a third node that I can hear, but cannot transmit and make a connection. When I go to make a NET/ROM connect, Linux for some reason decides that it wants to use the third node, and as a result, I can't connect to other nodes in the list
-> because of the failed connection.
-> 
-> Is there a command I can run with cron to make Linux "forget" about routing through the third node?  All three nodes are part of the same system, and linked via microwave to each other, so all I need is a route to one of the good nodes, and I will be able to get to the third if needed routing through them.
-> 
-> 73
-> Bob
-> KD1ZD
-> --
-> To unsubscribe from this list: send the line "unsubscribe linux-hams" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at  http://vger.kernel.org/majordomo-info.html
+diff --git a/drivers/net/ethernet/broadcom/cnic.c b/drivers/net/ethernet/broadcom/cnic.c
+index df8c30d..27d7a32 100644
+--- a/drivers/net/ethernet/broadcom/cnic.c
++++ b/drivers/net/ethernet/broadcom/cnic.c
+@@ -4085,7 +4085,7 @@ static int cnic_cm_alloc_mem(struct cnic_dev *dev)
+ 	if (!cp->csk_tbl)
+ 		return -ENOMEM;
+ 
+-	port_id = random32();
++	port_id = prandom_u32();
+ 	port_id %= CNIC_LOCAL_PORT_RANGE;
+ 	if (cnic_init_id_tbl(&cp->csk_port_tbl, CNIC_LOCAL_PORT_RANGE,
+ 			     CNIC_LOCAL_PORT_MIN, port_id)) {
+@@ -4145,7 +4145,7 @@ static int cnic_cm_init_bnx2_hw(struct cnic_dev *dev)
+ {
+ 	u32 seed;
+ 
+-	seed = random32();
++	seed = prandom_u32();
+ 	cnic_ctx_wr(dev, 45, 0, seed);
+ 	return 0;
+ }
+diff --git a/drivers/net/hamradio/baycom_epp.c b/drivers/net/hamradio/baycom_epp.c
+index 49b8b58..484f77e 100644
+--- a/drivers/net/hamradio/baycom_epp.c
++++ b/drivers/net/hamradio/baycom_epp.c
+@@ -449,7 +449,7 @@ static int transmit(struct baycom_state *bc, int cnt, unsigned char stat)
+ 			if ((--bc->hdlctx.slotcnt) > 0)
+ 				return 0;
+ 			bc->hdlctx.slotcnt = bc->ch_params.slottime;
+-			if ((random32() % 256) > bc->ch_params.ppersist)
++			if ((prandom_u32() % 256) > bc->ch_params.ppersist)
+ 				return 0;
+ 		}
+ 	}
+diff --git a/drivers/net/hamradio/hdlcdrv.c b/drivers/net/hamradio/hdlcdrv.c
+index a4a3516..3169252 100644
+--- a/drivers/net/hamradio/hdlcdrv.c
++++ b/drivers/net/hamradio/hdlcdrv.c
+@@ -389,7 +389,7 @@ void hdlcdrv_arbitrate(struct net_device *dev, struct hdlcdrv_state *s)
+ 	if ((--s->hdlctx.slotcnt) > 0)
+ 		return;
+ 	s->hdlctx.slotcnt = s->ch_params.slottime;
+-	if ((random32() % 256) > s->ch_params.ppersist)
++	if ((prandom_u32() % 256) > s->ch_params.ppersist)
+ 		return;
+ 	start_tx(dev, s);
+ }
+diff --git a/drivers/net/hamradio/yam.c b/drivers/net/hamradio/yam.c
+index c6645f1..21f231a 100644
+--- a/drivers/net/hamradio/yam.c
++++ b/drivers/net/hamradio/yam.c
+@@ -638,7 +638,7 @@ static void yam_arbitrate(struct net_device *dev)
+ 	yp->slotcnt = yp->slot / 10;
+ 
+ 	/* is random > persist ? */
+-	if ((random32() % 256) > yp->pers)
++	if ((prandom_u32() % 256) > yp->pers)
+ 		return;
+ 
+ 	yam_start_tx(dev, yp);
+diff --git a/drivers/net/wireless/mwifiex/cfg80211.c b/drivers/net/wireless/mwifiex/cfg80211.c
+index a875499..78dbc18 100644
+--- a/drivers/net/wireless/mwifiex/cfg80211.c
++++ b/drivers/net/wireless/mwifiex/cfg80211.c
+@@ -216,7 +216,7 @@ mwifiex_cfg80211_mgmt_tx(struct wiphy *wiphy, struct wireless_dev *wdev,
+ 	mwifiex_form_mgmt_frame(skb, buf, len);
+ 	mwifiex_queue_tx_pkt(priv, skb);
+ 
+-	*cookie = random32() | 1;
++	*cookie = prandom_u32() | 1;
+ 	cfg80211_mgmt_tx_status(wdev, *cookie, buf, len, true, GFP_ATOMIC);
+ 
+ 	wiphy_dbg(wiphy, "info: management frame transmitted\n");
+@@ -271,7 +271,7 @@ mwifiex_cfg80211_remain_on_channel(struct wiphy *wiphy,
+ 					 duration);
+ 
+ 	if (!ret) {
+-		*cookie = random32() | 1;
++		*cookie = prandom_u32() | 1;
+ 		priv->roc_cfg.cookie = *cookie;
+ 		priv->roc_cfg.chan = *chan;
+ 
+-- 
+1.7.11.7
 
