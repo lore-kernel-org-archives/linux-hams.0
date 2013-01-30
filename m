@@ -1,170 +1,131 @@
-From: f6bvp <f6bvp@free.fr>
-Subject: netrom circular locking dependency detected
-Date: Thu, 17 Jan 2013 19:21:20 +0100
-Message-ID: <50F84120.3020809@free.fr>
+From: Jaime Robles <jaime@robles.es>
+Subject: =?ISO-8859-1?Q?10_years_of_KLog_=2D_New_version_of_KLog_released_0=2E6=2E?=
+	=?ISO-8859-1?Q?0_=2F_10_a=F1os_de_KLog_=2D_Liberada_una_nueva_versi=F3n_de_KLog_=2D?=
+	=?ISO-8859-1?Q?_0=2E6=2E0?=
+Date: Wed, 30 Jan 2013 21:31:33 +0100
+Message-ID: <CAOinu-9z0Cg81cc5nM1qerCU+TyaAtwcMtg9xR-sx9RVG=6FCQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: multipart/mixed;
- boundary="------------020604050105030601020703"
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 Return-path: <linux-hams-owner@vger.kernel.org>
 Sender: linux-hams-owner@vger.kernel.org
 List-ID: <linux-hams.vger.kernel.org>
-To: linux-hams <linux-hams@vger.kernel.org>, Linux Netdev List <netdev@vger.kernel.org>, Ralf Baechle <ralf@linux-mips.org>
+Content-Type: text/plain; charset="windows-1252"
+To: klog-users@nongnu.org, klog-devel@nongnu.org
+Cc: debian-hams@lists.debian.org, kde-devel-es@mail.kde.org, linux-hams@vger.kernel.org, eadxnet@elistas.net
 
-This is a multi-part message in MIME format.
---------------020604050105030601020703
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
+(Versi=F3n en espa=F1ol al final)
 
-Hi,
+I am happy to announce that the release of 0.6.0 version of KLog is ava=
+ilable.
+It is 10 year since the first release of KLog!! (time goes fast when yo=
+u enjoy!)
 
-Circular locking I reported a while ago is still present in kernel 3.7.2 
-netrom module.
-I include here /var/log/kernel relevant details for information.
+DOWNLOAD:
+You can download KLog 0.6.0 from two places:
+  - http://jaime.robles.es/download/klog-0.6.0.tar.gz
+  - http://download.savannah.gnu.org/releases/klog/klog-0.6.0.tar.gz
 
-73 de Bernard, f6bvp
+The Debian package will be uploaded to the Debian servers during the
+following days.
+
+This releases has the following Changelog:
+
+January-2013 0.6.0
+- Bug fixed: Typo "Frecuency" changed to "Frequency" in a tooltip.
+(Debian bug: #654328) (TNX Jonas Stein)
+- Bug fixed: Typo/wishlist "Numb" changed to "Number" in main table.
+(Debian bug: #654331) (TNX Jonas Stein)
+- Bug fixed: Typo/wishlist "UTC" changed to "Time" in main table.
+(Debian bug: #654331) (TNX Jonas Stein)
+- Removal of several not needed #includes.
+- Removed some warnings on compilation.
+- GUI improved: The information boxes are now independant from the top
+right tab widget to improve usability.
+- GUI updated: Disabled the Setup tab of Hamlib until hamlib is
+properly working.
+
+KLog is available in English, Spanish, Portuguese, Brazilian
+Portuguese, German, Serbian, Galician and Swedish.
+
+The list for user discussion about KLog: User discussion, wishlist,
+tips, ideas, suggestions, =85
+http://lists.nongnu.org/mailman/listinfo/klog-users
+
+The development mailing list to coordinate the development.
+http://lists.nongnu.org/mailman/listinfo/klog-devel
+
+As before, the main language of the mailing lists is English.
+
+The KLog's new-releases email list is created using the addresses of
+people I have previously received emails from about KLog. Feel free to
+ask me to remove your address if you don't want to be alerted of new
+KLog releases.
+
+Thanks for your help and I hope you find KLog useful.
+
+73 de Jaime, EA4TV
+http://jaime.robles.es
+
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D
+
+(Spanish version)
+
+Me alegro de anunciaros que ya est=E1 disponible la versi=F3n 0.6.0 de =
+KLog.
+=A1=A1Han pasado 10 a=F1os desde la primera versi=F3n de KLog!! (El tie=
+mpo
+vuela cuando uno disfruta)
+
+DESCARGAS:
+Puedes descargar KLog 0.6.0 desde dos sitios:
+  - http://jaime.robles.es/download/klog-0.6.0.tar.gz
+  - http://download.savannah.gnu.org/releases/klog/klog-0.6.0.tar.gz
+
+El paquete Debian se subir=E1 a los servidores de Debian en los pr=F3xi=
+mos d=EDas=85
+
+Esta versi=F3n incluye los siguientes cambios:
+
+Enero-2013  0.6.0
+- Correcci=F3n: Ortograf=EDa "Frecuency" changed to "Frequency" in a
+tooltip. (Debian bug: #654328) (TNX Jonas Stein)
+- Correcci=F3n: Typo/wishlist "Numb" changed to "Number" in main table.
+(Debian bug: #654331) (TNX Jonas Stein)
+- Correcci=F3n: Typo/wishlist "UTC" changed to "Time" in main table.
+(Debian bug: #654331) (TNX Jonas Stein)
+- Eliminaci=F3n de varios #includes no necesarios.
+- Eliminados algunos warnings en la compilaci=F3n.
+- Mejora de GUI: Los cuadros de informaci=F3n ahora son independientes
+del widget de arriba a la derecha para mejorar la usabilidad.
+- Mejora de GUI: Deshabilitada la pesta=F1a de Hamlib de la
+configuraci=F3n hasta que hamlib funcione bien.
+
+KLog est=E1 disponible en ingl=E9s, espa=F1ol, portugu=E9s, portugu=E9s
+brasile=F1o, alem=E1n, serbio, gallego y sueco.
 
 
+Lista para discussion de usuarios sobre KLog: Discusi=F3n de usuarios,
+solicitudes, pistas, trucos, ideas, sugerencias, =85
+http://lists.nongnu.org/mailman/listinfo/klog-users
 
---------------020604050105030601020703
-Content-Type: text/plain;
- name="nr_circular_locking.txt"
-Content-Transfer-Encoding: 7bit
-Content-Disposition: attachment;
- filename="nr_circular_locking.txt"
+Lista para coordinar el desarrollo.
+http://lists.nongnu.org/mailman/listinfo/klog-devel
 
+Como antes, el idioma principal de las listas es el ingl=E9s.
 
-Jan 13 12:05:39 f6bvp-8 kernel: [76938.785965] 
-Jan 13 12:05:39 f6bvp-8 kernel: [76938.785980] ======================================================
-Jan 13 12:05:39 f6bvp-8 kernel: [76938.785984] [ INFO: possible circular locking dependency detected ]
-Jan 13 12:05:39 f6bvp-8 kernel: [76938.785989] 3.7.2 #2 Not tainted
-Jan 13 12:05:39 f6bvp-8 kernel: [76938.785993] -------------------------------------------------------
-Jan 13 12:05:39 f6bvp-8 kernel: [76938.785997] ax25ipd/2093 is trying to acquire lock:
-Jan 13 12:05:39 f6bvp-8 kernel: [76938.786001]  (nr_node_list_lock){+.-...}, at: [<ffffffffa06025ec>] nr_rt_device_down+0x7c/0x240 [netrom]
-Jan 13 12:05:39 f6bvp-8 kernel: [76938.786006] 
-Jan 13 12:05:39 f6bvp-8 kernel: [76938.786006] but task is already holding lock:
-Jan 13 12:05:39 f6bvp-8 kernel: [76938.786006]  (nr_neigh_list_lock){+.-...}, at: [<ffffffffa0602596>] nr_rt_device_down+0x26/0x240 [netrom]
-Jan 13 12:05:39 f6bvp-8 kernel: [76938.786006] 
-Jan 13 12:05:39 f6bvp-8 kernel: [76938.786006] which lock already depends on the new lock.
-Jan 13 12:05:39 f6bvp-8 kernel: [76938.786006] 
-Jan 13 12:05:39 f6bvp-8 kernel: [76938.786006] 
-Jan 13 12:05:39 f6bvp-8 kernel: [76938.786006] the existing dependency chain (in reverse order) is:
-Jan 13 12:05:39 f6bvp-8 kernel: [76938.786006] 
-Jan 13 12:05:39 f6bvp-8 kernel: [76938.786006] -> #2 (nr_neigh_list_lock){+.-...}:
-Jan 13 12:05:39 f6bvp-8 kernel: [76938.786006]        [<ffffffff810b80a2>] lock_acquire+0x92/0x120
-Jan 13 12:05:39 f6bvp-8 kernel: [76938.786006]        [<ffffffff81491616>] _raw_spin_lock_bh+0x36/0x50
-Jan 13 12:05:39 f6bvp-8 kernel: [76938.786006]        [<ffffffffa06019eb>] nr_remove_neigh+0x1b/0xb0 [netrom]
-Jan 13 12:05:39 f6bvp-8 kernel: [76938.786006]        [<ffffffffa0602c20>] nr_rt_ioctl+0x2b0/0xa60 [netrom]
-Jan 13 12:05:39 f6bvp-8 kernel: [76938.786006]        [<ffffffffa05fefa1>] nr_ioctl+0x51/0x1d0 [netrom]
-Jan 13 12:05:39 f6bvp-8 kernel: [76938.786006]        [<ffffffff813a3cd0>] sock_do_ioctl+0x30/0x70
-Jan 13 12:05:39 f6bvp-8 kernel: [76938.786006]        [<ffffffff813a4029>] sock_ioctl+0x79/0x2f0
-Jan 13 12:05:39 f6bvp-8 kernel: [76938.786006]        [<ffffffff81190808>] do_vfs_ioctl+0x98/0x560
-Jan 13 12:05:39 f6bvp-8 kernel: [76938.786006]        [<ffffffff81190d61>] sys_ioctl+0x91/0xb0
-Jan 13 12:05:39 f6bvp-8 kernel: [76938.786006]        [<ffffffff8149a869>] system_call_fastpath+0x16/0x1b
-Jan 13 12:05:39 f6bvp-8 kernel: [76938.786006] 
-Jan 13 12:05:39 f6bvp-8 kernel: [76938.786006] -> #1 (&(&nr_node->node_lock)->rlock){+.-...}:
-Jan 13 12:05:39 f6bvp-8 kernel: [76938.786006]        [<ffffffff810b80a2>] lock_acquire+0x92/0x120
-Jan 13 12:05:39 f6bvp-8 kernel: [76938.786006]        [<ffffffff81491616>] _raw_spin_lock_bh+0x36/0x50
-Jan 13 12:05:39 f6bvp-8 kernel: [76938.786006]        [<ffffffffa0601acc>] nr_node_show+0x4c/0x150 [netrom]
-Jan 13 12:05:39 f6bvp-8 kernel: [76938.786006]        [<ffffffff811a158c>] seq_read+0x26c/0x420
-Jan 13 12:05:39 f6bvp-8 kernel: [76938.786006]        [<ffffffff811e7226>] proc_reg_read+0x86/0xc0
-Jan 13 12:05:39 f6bvp-8 kernel: [76938.786006]        [<ffffffff8117ed1c>] vfs_read+0xac/0x180
-Jan 13 12:05:39 f6bvp-8 kernel: [76938.786006]        [<ffffffff8117ee42>] sys_read+0x52/0xa0
-Jan 13 12:05:39 f6bvp-8 kernel: [76938.786006]        [<ffffffff8149a869>] system_call_fastpath+0x16/0x1b
-Jan 13 12:05:39 f6bvp-8 kernel: [76938.786006] 
-Jan 13 12:05:39 f6bvp-8 kernel: [76938.786006] -> #0 (nr_node_list_lock){+.-...}:
-Jan 13 12:05:39 f6bvp-8 kernel: [76938.786006]        [<ffffffff810b78b3>] __lock_acquire+0x1c13/0x1e40
-Jan 13 12:05:39 f6bvp-8 kernel: [76938.786006]        [<ffffffff810b80a2>] lock_acquire+0x92/0x120
-Jan 13 12:05:39 f6bvp-8 kernel: [76938.786006]        [<ffffffff81491616>] _raw_spin_lock_bh+0x36/0x50
-Jan 13 12:05:39 f6bvp-8 kernel: [76938.786006]        [<ffffffffa06025ec>] nr_rt_device_down+0x7c/0x240 [netrom]
-Jan 13 12:05:39 f6bvp-8 kernel: [76938.786006]        [<ffffffffa05ffb4d>] nr_device_event+0x7d/0xa0 [netrom]
-Jan 13 12:05:39 f6bvp-8 kernel: [76938.786006]        [<ffffffff814961c8>] notifier_call_chain+0x58/0xb0
-Jan 13 12:05:39 f6bvp-8 kernel: [76938.786006]        [<ffffffff810824e6>] raw_notifier_call_chain+0x16/0x20
-Jan 13 12:05:39 f6bvp-8 kernel: [76938.786006]        [<ffffffff813bac06>] call_netdevice_notifiers+0x36/0x60
-Jan 13 12:05:39 f6bvp-8 kernel: [76938.786006]        [<ffffffff813badff>] dev_close_many+0xbf/0x100
-Jan 13 12:05:39 f6bvp-8 kernel: [76938.786006]        [<ffffffff813baf18>] rollback_registered_many+0xd8/0x240
-Jan 13 12:05:39 f6bvp-8 kernel: [76938.786006]        [<ffffffff813bb11d>] rollback_registered+0x2d/0x40
-Jan 13 12:05:39 f6bvp-8 kernel: [76938.786006]        [<ffffffff813bdea8>] unregister_netdevice_queue+0x68/0xc0
-Jan 13 12:05:39 f6bvp-8 kernel: [76938.786006]        [<ffffffff813bdf20>] unregister_netdev+0x20/0x30
-Jan 13 12:05:39 f6bvp-8 kernel: [76938.786006]        [<ffffffffa05f34e7>] mkiss_close+0x57/0x90 [mkiss]
-Jan 13 12:05:39 f6bvp-8 kernel: [76938.786006]        [<ffffffff81313861>] tty_ldisc_close.isra.2+0x41/0x60
-Jan 13 12:05:39 f6bvp-8 kernel: [76938.786006]        [<ffffffff81313ad0>] tty_ldisc_reinit+0x40/0x80
-Jan 13 12:05:39 f6bvp-8 kernel: [76938.786006]        [<ffffffff81314287>] tty_ldisc_hangup+0x197/0x340
-Jan 13 12:05:39 f6bvp-8 kernel: [76938.786006]        [<ffffffff8130b86a>] __tty_hangup+0x10a/0x3c0
-Jan 13 12:05:39 f6bvp-8 kernel: [76938.786006]        [<ffffffff8130bb4e>] tty_vhangup+0xe/0x10
-Jan 13 12:05:39 f6bvp-8 kernel: [76938.786006]        [<ffffffff813161d9>] pty_close+0x109/0x180
-Jan 13 12:05:39 f6bvp-8 kernel: [76938.786006]        [<ffffffff8130cb06>] tty_release+0x156/0x580
-Jan 13 12:05:39 f6bvp-8 kernel: [76938.786006]        [<ffffffff8117fd5e>] __fput+0xae/0x230
-Jan 13 12:05:39 f6bvp-8 kernel: [76938.786006]        [<ffffffff8117feee>] ____fput+0xe/0x10
-Jan 13 12:05:39 f6bvp-8 kernel: [76938.786006]        [<ffffffff8107811c>] task_work_run+0xbc/0xe0
-Jan 13 12:05:39 f6bvp-8 kernel: [76938.786006]        [<ffffffff8105b4cf>] do_exit+0x17f/0x8f0
-Jan 13 12:05:39 f6bvp-8 kernel: [76938.786006]        [<ffffffff8105c0be>] do_group_exit+0x4e/0xc0
-Jan 13 12:05:39 f6bvp-8 kernel: [76938.786006]        [<ffffffff8105c147>] sys_exit_group+0x17/0x20
-Jan 13 12:05:39 f6bvp-8 kernel: [76938.786006]        [<ffffffff8149a869>] system_call_fastpath+0x16/0x1b
-Jan 13 12:05:39 f6bvp-8 kernel: [76938.786006] 
-Jan 13 12:05:39 f6bvp-8 kernel: [76938.786006] other info that might help us debug this:
-Jan 13 12:05:39 f6bvp-8 kernel: [76938.786006] 
-Jan 13 12:05:39 f6bvp-8 kernel: [76938.786006] Chain exists of:
-Jan 13 12:05:39 f6bvp-8 kernel: [76938.786006]   nr_node_list_lock --> &(&nr_node->node_lock)->rlock --> nr_neigh_list_lock
-Jan 13 12:05:39 f6bvp-8 kernel: [76938.786006] 
-Jan 13 12:05:39 f6bvp-8 kernel: [76938.786006]  Possible unsafe locking scenario:
-Jan 13 12:05:39 f6bvp-8 kernel: [76938.786006] 
-Jan 13 12:05:39 f6bvp-8 kernel: [76938.786006]        CPU0                    CPU1
-Jan 13 12:05:39 f6bvp-8 kernel: [76938.786006]        ----                    ----
-Jan 13 12:05:39 f6bvp-8 kernel: [76938.786006]   lock(nr_neigh_list_lock);
-Jan 13 12:05:39 f6bvp-8 kernel: [76938.786006]                                lock(&(&nr_node->node_lock)->rlock);
-Jan 13 12:05:39 f6bvp-8 kernel: [76938.786006]                                lock(nr_neigh_list_lock);
-Jan 13 12:05:39 f6bvp-8 kernel: [76938.786006]   lock(nr_node_list_lock);
-Jan 13 12:05:39 f6bvp-8 kernel: [76938.786006] 
-Jan 13 12:05:39 f6bvp-8 kernel: [76938.786006]  *** DEADLOCK ***
-Jan 13 12:05:39 f6bvp-8 kernel: [76938.786006] 
-Jan 13 12:05:39 f6bvp-8 kernel: [76938.786006] 4 locks held by ax25ipd/2093:
-Jan 13 12:05:39 f6bvp-8 kernel: [76938.786006]  #0:  (&tty->legacy_mutex){+.+.+.}, at: [<ffffffff81491d82>] tty_lock_nested+0x42/0x90
-Jan 13 12:05:39 f6bvp-8 kernel: [76938.786006]  #1:  (&tty->ldisc_mutex){+.+.+.}, at: [<ffffffff8131420a>] tty_ldisc_hangup+0x11a/0x340
-Jan 13 12:05:39 f6bvp-8 kernel: [76938.786006]  #2:  (rtnl_mutex){+.+.+.}, at: [<ffffffff813cd707>] rtnl_lock+0x17/0x20
-Jan 13 12:05:39 f6bvp-8 kernel: [76938.786006]  #3:  (nr_neigh_list_lock){+.-...}, at: [<ffffffffa0602596>] nr_rt_device_down+0x26/0x240 [netrom]
-Jan 13 12:05:39 f6bvp-8 kernel: [76938.786006] 
-Jan 13 12:05:39 f6bvp-8 kernel: [76938.786006] stack backtrace:
-Jan 13 12:05:39 f6bvp-8 kernel: [76938.786006] Pid: 2093, comm: ax25ipd Not tainted 3.7.2 #2
-Jan 13 12:05:39 f6bvp-8 kernel: [76938.786006] Call Trace:
-Jan 13 12:05:39 f6bvp-8 kernel: [76938.786006]  [<ffffffff814884e9>] print_circular_bug+0x289/0x29a
-Jan 13 12:05:39 f6bvp-8 kernel: [76938.786006]  [<ffffffff810b78b3>] __lock_acquire+0x1c13/0x1e40
-Jan 13 12:05:39 f6bvp-8 kernel: [76938.786006]  [<ffffffffa06025ec>] ? nr_rt_device_down+0x7c/0x240 [netrom]
-Jan 13 12:05:39 f6bvp-8 kernel: [76938.786006]  [<ffffffff810b80a2>] lock_acquire+0x92/0x120
-Jan 13 12:05:39 f6bvp-8 kernel: [76938.786006]  [<ffffffffa06025ec>] ? nr_rt_device_down+0x7c/0x240 [netrom]
-Jan 13 12:05:39 f6bvp-8 kernel: [76938.786006]  [<ffffffff81491616>] _raw_spin_lock_bh+0x36/0x50
-Jan 13 12:05:39 f6bvp-8 kernel: [76938.786006]  [<ffffffffa06025ec>] ? nr_rt_device_down+0x7c/0x240 [netrom]
-Jan 13 12:05:39 f6bvp-8 kernel: [76938.786006]  [<ffffffff810b8b15>] ? trace_hardirqs_on_caller+0x105/0x190
-Jan 13 12:05:39 f6bvp-8 kernel: [76938.786006]  [<ffffffffa05ffb41>] ? nr_device_event+0x71/0xa0 [netrom]
-Jan 13 12:05:39 f6bvp-8 kernel: [76938.786006]  [<ffffffffa06025ec>] nr_rt_device_down+0x7c/0x240 [netrom]
-Jan 13 12:05:39 f6bvp-8 kernel: [76938.786006]  [<ffffffff8105e2c7>] ? local_bh_enable_ip+0x97/0x100
-Jan 13 12:05:39 f6bvp-8 kernel: [76938.786006]  [<ffffffffa05ffb4d>] nr_device_event+0x7d/0xa0 [netrom]
-Jan 13 12:05:39 f6bvp-8 kernel: [76938.786006]  [<ffffffff814961c8>] notifier_call_chain+0x58/0xb0
-Jan 13 12:05:39 f6bvp-8 kernel: [76938.786006]  [<ffffffff810824e6>] raw_notifier_call_chain+0x16/0x20
-Jan 13 12:05:39 f6bvp-8 kernel: [76938.786006]  [<ffffffff813bac06>] call_netdevice_notifiers+0x36/0x60
-Jan 13 12:05:39 f6bvp-8 kernel: [76938.786006]  [<ffffffff813badff>] dev_close_many+0xbf/0x100
-Jan 13 12:05:39 f6bvp-8 kernel: [76938.786006]  [<ffffffff813baf18>] rollback_registered_many+0xd8/0x240
-Jan 13 12:05:39 f6bvp-8 kernel: [76938.786006]  [<ffffffff813bb11d>] rollback_registered+0x2d/0x40
-Jan 13 12:05:39 f6bvp-8 kernel: [76938.786006]  [<ffffffff813bdea8>] unregister_netdevice_queue+0x68/0xc0
-Jan 13 12:05:39 f6bvp-8 kernel: [76938.786006]  [<ffffffff813bdf20>] unregister_netdev+0x20/0x30
-Jan 13 12:05:39 f6bvp-8 kernel: [76938.786006]  [<ffffffffa05f34e7>] mkiss_close+0x57/0x90 [mkiss]
-Jan 13 12:05:39 f6bvp-8 kernel: [76938.786006]  [<ffffffff81313861>] tty_ldisc_close.isra.2+0x41/0x60
-Jan 13 12:05:39 f6bvp-8 kernel: [76938.786006]  [<ffffffff81313ad0>] tty_ldisc_reinit+0x40/0x80
-Jan 13 12:05:39 f6bvp-8 kernel: [76938.786006]  [<ffffffff81314287>] tty_ldisc_hangup+0x197/0x340
-Jan 13 12:05:39 f6bvp-8 kernel: [76938.786006]  [<ffffffff8130b86a>] __tty_hangup+0x10a/0x3c0
-Jan 13 12:05:39 f6bvp-8 kernel: [76938.786006]  [<ffffffff8130bb4e>] tty_vhangup+0xe/0x10
-Jan 13 12:05:39 f6bvp-8 kernel: [76938.786006]  [<ffffffff813161d9>] pty_close+0x109/0x180
-Jan 13 12:05:39 f6bvp-8 kernel: [76938.786006]  [<ffffffff8130cb06>] tty_release+0x156/0x580
-Jan 13 12:05:39 f6bvp-8 kernel: [76938.786006]  [<ffffffff81195952>] ? dput+0x62/0x1b0
-Jan 13 12:05:39 f6bvp-8 kernel: [76938.786006]  [<ffffffff8117fd5e>] __fput+0xae/0x230
-Jan 13 12:05:39 f6bvp-8 kernel: [76938.786006]  [<ffffffff8117feee>] ____fput+0xe/0x10
-Jan 13 12:05:39 f6bvp-8 kernel: [76938.786006]  [<ffffffff8107811c>] task_work_run+0xbc/0xe0
-Jan 13 12:05:39 f6bvp-8 kernel: [76938.786006]  [<ffffffff8105b4cf>] do_exit+0x17f/0x8f0
-Jan 13 12:05:39 f6bvp-8 kernel: [76938.786006]  [<ffffffff81153008>] ? do_munmap+0x2c8/0x3a0
-Jan 13 12:05:39 f6bvp-8 kernel: [76938.786006]  [<ffffffff814920d8>] ? retint_swapgs+0x13/0x1b
-Jan 13 12:05:39 f6bvp-8 kernel: [76938.786006]  [<ffffffff8105c0be>] do_group_exit+0x4e/0xc0
-Jan 13 12:05:39 f6bvp-8 kernel: [76938.786006]  [<ffffffff8105c147>] sys_exit_group+0x17/0x20
-Jan 13 12:05:39 f6bvp-8 kernel: [76938.786006]  [<ffffffff8149a869>] system_call_fastpath+0x16/0x1b
-Jan 13 12:06:20 f6bvp-8 kernel: [76979.963779] mkiss: ax0: crc mode is auto.
-Jan 13 12:06:20 f6bvp-8 kernel: [76979.964864] IPv6: ADDRCONF(NETDEV_CHANGE): ax0: link becomes ready
+La lista de aviso de nuevas versiones de KLog la he ido creando con
+las direcciones de las personas que previamente me han enviado algo
+sobre KLog. Si prefieres que no te env=EDe estos mensajes, av=EDsame y
+quitar=E9 tu direcci=F3n de la lista.
 
---------------020604050105030601020703--
+Gracias por tu ayuda y espero que KLog te resulte =FAtil.
+
+73 de Jaime, EA4TV
+http://jaime.robles.es
+--
+To unsubscribe from this list: send the line "unsubscribe linux-hams" i=
+n
+the body of a message to majordomo@vger.kernel.org
+More majordomo info at  http://vger.kernel.org/majordomo-info.html
