@@ -1,131 +1,123 @@
-From: Jaime Robles <jaime@robles.es>
-Subject: =?ISO-8859-1?Q?10_years_of_KLog_=2D_New_version_of_KLog_released_0=2E6=2E?=
-	=?ISO-8859-1?Q?0_=2F_10_a=F1os_de_KLog_=2D_Liberada_una_nueva_versi=F3n_de_KLog_=2D?=
-	=?ISO-8859-1?Q?_0=2E6=2E0?=
-Date: Wed, 30 Jan 2013 21:31:33 +0100
-Message-ID: <CAOinu-9z0Cg81cc5nM1qerCU+TyaAtwcMtg9xR-sx9RVG=6FCQ@mail.gmail.com>
+From: Joe Perches <joe@perches.com>
+Subject: [PATCH 0/8] drivers/net: Remove unnecessary alloc/OOM messages
+Date: Sun,  3 Feb 2013 19:28:07 -0800
+Message-ID: <cover.1359939012.git.joe@perches.com>
 Mime-Version: 1.0
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Return-path: <linux-hams-owner@vger.kernel.org>
-Sender: linux-hams-owner@vger.kernel.org
-List-ID: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="windows-1252"
-To: klog-users@nongnu.org, klog-devel@nongnu.org
-Cc: debian-hams@lists.debian.org, kde-devel-es@mail.kde.org, linux-hams@vger.kernel.org, eadxnet@elistas.net
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+Return-path: <virtualization-bounces@lists.linux-foundation.org>
+List-Id: <linux-hams.vger.kernel.org>
+List-Unsubscribe: <https://lists.linuxfoundation.org/mailman/options/virtualization>,
+	<mailto:virtualization-request@lists.linux-foundation.org?subject=unsubscribe>
+List-Archive: <http://lists.linuxfoundation.org/pipermail/virtualization/>
+List-Post: <mailto:virtualization@lists.linux-foundation.org>
+List-Help: <mailto:virtualization-request@lists.linux-foundation.org?subject=help>
+List-Subscribe: <https://lists.linuxfoundation.org/mailman/listinfo/virtualization>,
+	<mailto:virtualization-request@lists.linux-foundation.org?subject=subscribe>
+Sender: virtualization-bounces@lists.linux-foundation.org
+Errors-To: virtualization-bounces@lists.linux-foundation.org
+To: netdev@vger.kernel.org
+Cc: wimax@linuxwimax.org, libertas-dev@lists.infradead.org, e1000-devel@lists.sourceforge.net, linux-usb@vger.kernel.org, linux-wireless@vger.kernel.org, linux-kernel@vger.kernel.org, virtualization@lists.linux-foundation.org, ath9k-devel@lists.ath9k.org, linux-hams@vger.kernel.org, linux-can@vger.kernel.org
 
-(Versi=F3n en espa=F1ol al final)
+Remove all the OOM messages that follow kernel alloc
+failures as there is already a generic equivalent to
+these messages in the mm subsystem.
 
-I am happy to announce that the release of 0.6.0 version of KLog is ava=
-ilable.
-It is 10 year since the first release of KLog!! (time goes fast when yo=
-u enjoy!)
+Joe Perches (8):
+  caif: Remove unnecessary alloc/OOM messages
+  can: Remove unnecessary alloc/OOM messages
+  ethernet: Remove unnecessary alloc/OOM messages, alloc cleanups
+  drivers: net: usb: Remove unnecessary alloc/OOM messages
+  wan: Remove unnecessary alloc/OOM messages
+  wimax: Remove unnecessary alloc/OOM messages, alloc cleanups
+  wireless: Remove unnecessary alloc/OOM messages, alloc cleanups
+  drivers:net:misc: Remove unnecessary alloc/OOM messages
 
-DOWNLOAD:
-You can download KLog 0.6.0 from two places:
-  - http://jaime.robles.es/download/klog-0.6.0.tar.gz
-  - http://download.savannah.gnu.org/releases/klog/klog-0.6.0.tar.gz
+ drivers/net/caif/caif_shmcore.c                    |  6 -----
+ drivers/net/can/sja1000/ems_pci.c                  |  1 -
+ drivers/net/can/sja1000/peak_pci.c                 |  5 +---
+ drivers/net/can/sja1000/peak_pcmcia.c              |  1 -
+ drivers/net/can/sja1000/plx_pci.c                  |  1 -
+ drivers/net/can/usb/ems_usb.c                      |  4 +---
+ drivers/net/can/usb/kvaser_usb.c                   |  2 --
+ drivers/net/can/usb/peak_usb/pcan_usb_core.c       |  5 ----
+ drivers/net/can/usb/usb_8dev.c                     |  4 +---
+ drivers/net/ethernet/atheros/atl1c/atl1c_main.c    |  6 ++---
+ drivers/net/ethernet/atheros/atl1e/atl1e_main.c    |  2 --
+ drivers/net/ethernet/broadcom/b44.c                |  4 +---
+ drivers/net/ethernet/broadcom/bcm63xx_enet.c       |  6 ++---
+ drivers/net/ethernet/broadcom/cnic.c               |  6 ++---
+ drivers/net/ethernet/broadcom/tg3.c                |  4 +---
+ drivers/net/ethernet/freescale/gianfar_ethtool.c   |  9 ++++----
+ drivers/net/ethernet/ibm/ehea/ehea_main.c          |  4 +---
+ drivers/net/ethernet/ibm/ehea/ehea_qmr.c           | 19 +++++----------
+ drivers/net/ethernet/ibm/emac/mal.c                |  7 ++----
+ drivers/net/ethernet/ibm/ibmveth.c                 |  1 -
+ drivers/net/ethernet/intel/igb/igb_main.c          |  5 ++--
+ drivers/net/ethernet/intel/igbvf/netdev.c          |  8 +++----
+ drivers/net/ethernet/marvell/mv643xx_eth.c         |  8 +++----
+ drivers/net/ethernet/marvell/mvmdio.c              |  1 -
+ drivers/net/ethernet/marvell/skge.c                |  5 ++--
+ drivers/net/ethernet/marvell/sky2.c                |  4 +---
+ drivers/net/ethernet/mellanox/mlx4/en_main.c       |  4 +---
+ drivers/net/ethernet/mellanox/mlx4/main.c          |  4 +---
+ drivers/net/ethernet/myricom/myri10ge/myri10ge.c   |  5 ++--
+ .../net/ethernet/qlogic/netxen/netxen_nic_ctx.c    |  5 +---
+ drivers/net/ethernet/qlogic/netxen/netxen_nic_hw.c | 18 ++++-----------
+ .../net/ethernet/qlogic/netxen/netxen_nic_init.c   | 27 ++++++++--------------
+ .../net/ethernet/qlogic/netxen/netxen_nic_main.c   |  5 +---
+ drivers/net/ethernet/qlogic/qla3xxx.c              | 10 ++++----
+ .../net/ethernet/qlogic/qlcnic/qlcnic_83xx_init.c  | 14 ++++-------
+ drivers/net/ethernet/qlogic/qlcnic/qlcnic_hw.c     |  6 ++---
+ drivers/net/ethernet/qlogic/qlcnic/qlcnic_init.c   | 26 +++++++--------------
+ drivers/net/ethernet/qlogic/qlcnic/qlcnic_main.c   | 19 +++++----------
+ .../net/ethernet/qlogic/qlcnic/qlcnic_minidump.c   |  7 ++----
+ drivers/net/ethernet/qlogic/qlge/qlge_main.c       |  1 -
+ drivers/net/ethernet/rdc/r6040.c                   |  3 +--
+ drivers/net/ethernet/renesas/sh_eth.c              | 10 ++++----
+ drivers/net/ethernet/stmicro/stmmac/stmmac_main.c  | 11 +++++----
+ drivers/net/ethernet/sun/niu.c                     |  2 +-
+ drivers/net/ethernet/ti/cpsw.c                     |  8 +++----
+ drivers/net/ethernet/ti/davinci_mdio.c             |  4 +---
+ drivers/net/ethernet/xilinx/ll_temac_main.c        |  6 ++---
+ drivers/net/hamradio/dmascc.c                      |  7 +-----
+ drivers/net/phy/spi_ks8995.c                       |  4 +---
+ drivers/net/usb/ax88172a.c                         |  6 ++---
+ drivers/net/usb/hso.c                              | 25 ++++++--------------
+ drivers/net/usb/sierra_net.c                       | 10 +++-----
+ drivers/net/usb/smsc75xx.c                         |  6 ++---
+ drivers/net/usb/smsc95xx.c                         |  6 ++---
+ drivers/net/usb/usbnet.c                           |  5 +---
+ drivers/net/virtio_net.c                           |  4 +---
+ drivers/net/wan/cosa.c                             |  9 ++++----
+ drivers/net/wan/farsync.c                          |  6 ++---
+ drivers/net/wan/hdlc.c                             |  9 ++++----
+ drivers/net/wan/x25_asy.c                          |  1 -
+ drivers/net/wimax/i2400m/rx.c                      | 16 ++++---------
+ drivers/net/wimax/i2400m/usb-notif.c               |  1 -
+ drivers/net/wireless/airo_cs.c                     |  5 ++--
+ drivers/net/wireless/at76c50x-usb.c                |  4 +---
+ .../net/wireless/ath/ath9k/dfs_pattern_detector.c  |  6 ++---
+ drivers/net/wireless/atmel_cs.c                    |  5 ++--
+ drivers/net/wireless/ipw2x00/ipw2100.c             |  9 +++-----
+ drivers/net/wireless/libertas/cfg.c                |  4 +---
+ drivers/net/wireless/mwifiex/11n.c                 |  5 +---
+ drivers/net/wireless/mwifiex/11n_rxreorder.c       |  5 +---
+ drivers/net/wireless/mwifiex/cfg80211.c            |  4 +---
+ drivers/net/wireless/mwifiex/cmdevt.c              | 11 +++------
+ drivers/net/wireless/mwifiex/init.c                |  5 +---
+ drivers/net/wireless/mwifiex/scan.c                | 27 +++++++---------------
+ drivers/net/wireless/mwifiex/sdio.c                | 11 ++-------
+ drivers/net/wireless/mwifiex/sta_ioctl.c           | 11 +++------
+ drivers/net/wireless/mwifiex/wmm.c                 |  7 ++----
+ drivers/net/wireless/orinoco/main.c                | 16 ++++---------
+ drivers/net/wireless/p54/p54usb.c                  | 10 ++------
+ drivers/net/wireless/prism54/islpci_mgt.c          | 14 ++++-------
+ drivers/net/wireless/rndis_wlan.c                  |  5 +---
+ drivers/net/wireless/ti/wlcore/sdio.c              |  4 +---
+ drivers/net/wireless/ti/wlcore/spi.c               | 14 +++--------
+ drivers/net/wireless/zd1211rw/zd_usb.c             |  1 -
+ 84 files changed, 185 insertions(+), 436 deletions(-)
 
-The Debian package will be uploaded to the Debian servers during the
-following days.
-
-This releases has the following Changelog:
-
-January-2013 0.6.0
-- Bug fixed: Typo "Frecuency" changed to "Frequency" in a tooltip.
-(Debian bug: #654328) (TNX Jonas Stein)
-- Bug fixed: Typo/wishlist "Numb" changed to "Number" in main table.
-(Debian bug: #654331) (TNX Jonas Stein)
-- Bug fixed: Typo/wishlist "UTC" changed to "Time" in main table.
-(Debian bug: #654331) (TNX Jonas Stein)
-- Removal of several not needed #includes.
-- Removed some warnings on compilation.
-- GUI improved: The information boxes are now independant from the top
-right tab widget to improve usability.
-- GUI updated: Disabled the Setup tab of Hamlib until hamlib is
-properly working.
-
-KLog is available in English, Spanish, Portuguese, Brazilian
-Portuguese, German, Serbian, Galician and Swedish.
-
-The list for user discussion about KLog: User discussion, wishlist,
-tips, ideas, suggestions, =85
-http://lists.nongnu.org/mailman/listinfo/klog-users
-
-The development mailing list to coordinate the development.
-http://lists.nongnu.org/mailman/listinfo/klog-devel
-
-As before, the main language of the mailing lists is English.
-
-The KLog's new-releases email list is created using the addresses of
-people I have previously received emails from about KLog. Feel free to
-ask me to remove your address if you don't want to be alerted of new
-KLog releases.
-
-Thanks for your help and I hope you find KLog useful.
-
-73 de Jaime, EA4TV
-http://jaime.robles.es
-
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D
-
-(Spanish version)
-
-Me alegro de anunciaros que ya est=E1 disponible la versi=F3n 0.6.0 de =
-KLog.
-=A1=A1Han pasado 10 a=F1os desde la primera versi=F3n de KLog!! (El tie=
-mpo
-vuela cuando uno disfruta)
-
-DESCARGAS:
-Puedes descargar KLog 0.6.0 desde dos sitios:
-  - http://jaime.robles.es/download/klog-0.6.0.tar.gz
-  - http://download.savannah.gnu.org/releases/klog/klog-0.6.0.tar.gz
-
-El paquete Debian se subir=E1 a los servidores de Debian en los pr=F3xi=
-mos d=EDas=85
-
-Esta versi=F3n incluye los siguientes cambios:
-
-Enero-2013  0.6.0
-- Correcci=F3n: Ortograf=EDa "Frecuency" changed to "Frequency" in a
-tooltip. (Debian bug: #654328) (TNX Jonas Stein)
-- Correcci=F3n: Typo/wishlist "Numb" changed to "Number" in main table.
-(Debian bug: #654331) (TNX Jonas Stein)
-- Correcci=F3n: Typo/wishlist "UTC" changed to "Time" in main table.
-(Debian bug: #654331) (TNX Jonas Stein)
-- Eliminaci=F3n de varios #includes no necesarios.
-- Eliminados algunos warnings en la compilaci=F3n.
-- Mejora de GUI: Los cuadros de informaci=F3n ahora son independientes
-del widget de arriba a la derecha para mejorar la usabilidad.
-- Mejora de GUI: Deshabilitada la pesta=F1a de Hamlib de la
-configuraci=F3n hasta que hamlib funcione bien.
-
-KLog est=E1 disponible en ingl=E9s, espa=F1ol, portugu=E9s, portugu=E9s
-brasile=F1o, alem=E1n, serbio, gallego y sueco.
-
-
-Lista para discussion de usuarios sobre KLog: Discusi=F3n de usuarios,
-solicitudes, pistas, trucos, ideas, sugerencias, =85
-http://lists.nongnu.org/mailman/listinfo/klog-users
-
-Lista para coordinar el desarrollo.
-http://lists.nongnu.org/mailman/listinfo/klog-devel
-
-Como antes, el idioma principal de las listas es el ingl=E9s.
-
-La lista de aviso de nuevas versiones de KLog la he ido creando con
-las direcciones de las personas que previamente me han enviado algo
-sobre KLog. Si prefieres que no te env=EDe estos mensajes, av=EDsame y
-quitar=E9 tu direcci=F3n de la lista.
-
-Gracias por tu ayuda y espero que KLog te resulte =FAtil.
-
-73 de Jaime, EA4TV
-http://jaime.robles.es
---
-To unsubscribe from this list: send the line "unsubscribe linux-hams" i=
-n
-the body of a message to majordomo@vger.kernel.org
-More majordomo info at  http://vger.kernel.org/majordomo-info.html
+-- 
+1.8.0.dirty
