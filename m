@@ -1,70 +1,42 @@
-From: "Arend van Spriel" <arend-dY08KVG/lbpWk0Htik3J/w@public.gmane.org>
-Subject: Re: [PATCH -v3 16/23] drivers/net: rename random32() to
- prandom_u32()
-Date: Mon, 4 Mar 2013 14:37:01 +0100
-Message-ID: <5134A37D.9000704@broadcom.com>
+From: Akinobu Mita <akinobu.mita@gmail.com>
+Subject: Re: [PATCH -v3 16/23] drivers/net: rename random32() to prandom_u32()
+Date: Tue, 5 Mar 2013 06:53:12 +0900
+Message-ID: <CAC5umyjMvMW8ZZ1JFJcZVYo7PiUkG+dVgUNQ3bd87SW_6LnYqw@mail.gmail.com>
 References: <1362401911-14074-1-git-send-email-akinobu.mita@gmail.com>
- <1362401911-14074-17-git-send-email-akinobu.mita@gmail.com>
+	<1362401911-14074-17-git-send-email-akinobu.mita@gmail.com>
+	<5134A37D.9000704@broadcom.com>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
-Return-path: <linux-wireless-owner-u79uwXL29TY76Z2rM5mHXA@public.gmane.org>
-In-Reply-To: <1362401911-14074-17-git-send-email-akinobu.mita-Re5JQEeQqe8AvxtiuMwx3w@public.gmane.org>
-Sender: linux-wireless-owner-u79uwXL29TY76Z2rM5mHXA@public.gmane.org
+Return-path: <linux-hams-owner@vger.kernel.org>
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:x-received:in-reply-to:references:date:message-id
+         :subject:from:to:cc:content-type;
+        bh=423hmmsUk7cLqRZR/9PdjYnkb9NEP/srZSgVu29MBgs=;
+        b=VTlNskAvu0iKKzuJG966fUseCKm2LLM0EUg8vTcAhz82FmPKEfmTih9r92ODxiBoQs
+         7+6hWAKwM0IStFm/27KwRCDISFrVKVa0r7nQcsBNd7cZrWlqyVY32kc3pZztBqlhCbRg
+         +qQ4JkwePpDL1barWol8RpYwQyCXdzws5OyQicyNi/6Dl0LvqJUQWCfUF0kGeURu/R1o
+         i/LNwWawmQWvlQmYuFiLi3/XQKX53hWCrZ+2oM1PrAr61az/ttKP+TfvjG4JRTayjxat
+         Pi4UYvn0DlB6978fdSK4owHp9TUeSlHDK2FrXGKeM1S6NtRDKK46q3DA/J05zScAIqsX
+         WN4Q==
+In-Reply-To: <5134A37D.9000704@broadcom.com>
+Sender: linux-hams-owner@vger.kernel.org
 List-ID: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"; format="flowed"
-To: Akinobu Mita <akinobu.mita-Re5JQEeQqe8AvxtiuMwx3w@public.gmane.org>
-Cc: linux-kernel-u79uwXL29TY76Z2rM5mHXA@public.gmane.org, akpm-de/tnXTf+JLsfHDXvbKv3WD2FQJk+8+b@public.gmane.org, "David S. Miller" <davem-fT/PcQaiUtIeIZ0/mPfg9Q@public.gmane.org>, Michael Chan <mchan-dY08KVG/lbpWk0Htik3J/w@public.gmane.org>, Thomas Sailer <t.sailer-aAjG49QhEdKVRmA6MYkXiA@public.gmane.org>, Jean-Paul Roubelat <jpr-3OwtVqItl4LYtjvyW6yDsg@public.gmane.org>, Bing Zhao <bzhao-eYqpPyKDWXRBDgjK7y7TUQ@public.gmane.org>, Brett Rudley <brudley-dY08KVG/lbpWk0Htik3J/w@public.gmane.org>, "Franky (Zhenhui) Lin" <frankyl-dY08KVG/lbpWk0Htik3J/w@public.gmane.org>, Hante Meuleman <meuleman-dY08KVG/lbpWk0Htik3J/w@public.gmane.org>, brcm80211-dev-list-dY08KVG/lbpWk0Htik3J/w@public.gmane.org, netdev-u79uwXL29TY76Z2rM5mHXA@public.gmane.org, linux-hams-u79uwXL29TY76Z2rM5mHXA@public.gmane.org, linux-wireless-u79uwXL29TY76Z2rM5mHXA@public.gmane.org
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+To: Arend van Spriel <arend@broadcom.com>
+Cc: LKML <linux-kernel@vger.kernel.org>, Andrew Morton <akpm@linux-foundation.org>, "David S. Miller" <davem@davemloft.net>, Michael Chan <mchan@broadcom.com>, Thomas Sailer <t.sailer@alumni.ethz.ch>, Jean-Paul Roubelat <jpr@f6fbb.org>, Bing Zhao <bzhao@marvell.com>, Brett Rudley <brudley@broadcom.com>, "Franky (Zhenhui) Lin" <frankyl@broadcom.com>, Hante Meuleman <meuleman@broadcom.com>, brcm80211-dev-list@broadcom.com, netdev <netdev@vger.kernel.org>, linux-hams@vger.kernel.org, linux-wireless@vger.kernel.org
 
-On 03/04/13 13:58, Akinobu Mita wrote:
-> Use more preferable function name which implies using a pseudo-random
-> number generator.
+2013/3/4 Arend van Spriel <arend@broadcom.com>
+>>
+>> @@ -1118,7 +1118,7 @@ static void brcmf_p2p_afx_handler(struct work_struct *work)
+>>         if (afx_hdl->is_listen&&  afx_hdl->my_listen_chan)
+>>
+>>                 /* 100ms ~ 300ms */
+>>                 err = brcmf_p2p_discover_listen(p2p, afx_hdl->my_listen_chan,
+>> -                                               100 * (1 + (random32() % 3)));
+>> +                                       100 * (1 + (prandom_u32() % 3)));
 >
-> Signed-off-by: Akinobu Mita<akinobu.mita-Re5JQEeQqe8AvxtiuMwx3w@public.gmane.org>
-> Acked-by: Thomas Sailer<t.sailer-aAjG49QhEdKVRmA6MYkXiA@public.gmane.org>
-> Acked-by: Bing Zhao<bzhao-eYqpPyKDWXRBDgjK7y7TUQ@public.gmane.org>  [mwifiex]
-> Cc: "David S. Miller"<davem-fT/PcQaiUtIeIZ0/mPfg9Q@public.gmane.org>
-> Cc: Michael Chan<mchan-dY08KVG/lbpWk0Htik3J/w@public.gmane.org>
-> Cc: Thomas Sailer<t.sailer-aAjG49QhEdKVRmA6MYkXiA@public.gmane.org>
-> Cc: Jean-Paul Roubelat<jpr-3OwtVqItl4LYtjvyW6yDsg@public.gmane.org>
-> Cc: Bing Zhao<bzhao-eYqpPyKDWXRBDgjK7y7TUQ@public.gmane.org>
-> Cc: Brett Rudley<brudley-dY08KVG/lbpWk0Htik3J/w@public.gmane.org>
-> Cc: Arend van Spriel<arend-dY08KVG/lbpWk0Htik3J/w@public.gmane.org>
-> Cc: "Franky (Zhenhui) Lin"<frankyl-dY08KVG/lbpWk0Htik3J/w@public.gmane.org>
-> Cc: Hante Meuleman<meuleman-dY08KVG/lbpWk0Htik3J/w@public.gmane.org>
-> Cc: brcm80211-dev-list-dY08KVG/lbpWk0Htik3J/w@public.gmane.org
-> Cc: netdev-u79uwXL29TY76Z2rM5mHXA@public.gmane.org
-> Cc: linux-hams-u79uwXL29TY76Z2rM5mHXA@public.gmane.org
-> Cc: linux-wireless-u79uwXL29TY76Z2rM5mHXA@public.gmane.org
-> ---
-> * Changes from v2
-> - add Acked-by: line
-> - add rename for brcm80211
 >
->   drivers/net/ethernet/broadcom/cnic.c          | 4 ++--
->   drivers/net/hamradio/baycom_epp.c             | 2 +-
->   drivers/net/hamradio/hdlcdrv.c                | 2 +-
->   drivers/net/hamradio/yam.c                    | 2 +-
->   drivers/net/wireless/brcm80211/brcmfmac/p2p.c | 2 +-
->   drivers/net/wireless/mwifiex/cfg80211.c       | 4 ++--
->   6 files changed, 8 insertions(+), 8 deletions(-)
->
-> diff --git a/drivers/net/wireless/brcm80211/brcmfmac/p2p.c b/drivers/net/wireless/brcm80211/brcmfmac/p2p.c
-> index 4166e64..bca31a8 100644
-> --- a/drivers/net/wireless/brcm80211/brcmfmac/p2p.c
-> +++ b/drivers/net/wireless/brcm80211/brcmfmac/p2p.c
-> @@ -1118,7 +1118,7 @@ static void brcmf_p2p_afx_handler(struct work_struct *work)
->   	if (afx_hdl->is_listen&&  afx_hdl->my_listen_chan)
->   		/* 100ms ~ 300ms */
->   		err = brcmf_p2p_discover_listen(p2p, afx_hdl->my_listen_chan,
-> -						100 * (1 + (random32() % 3)));
-> +					100 * (1 + (prandom_u32() % 3)));
+> Seems like indentation is wrong now. Please retain the alignment.
 
-Seems like indentation is wrong now. Please retain the alignment.
-
-Regards,
-Arend
-
---
-To unsubscribe from this list: send the line "unsubscribe linux-wireless" in
-the body of a message to majordomo-u79uwXL29TY76Z2rM5mHXA@public.gmane.org
-More majordomo info at  http://vger.kernel.org/majordomo-info.html
+OK, I'll fix it.
