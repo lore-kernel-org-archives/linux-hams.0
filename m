@@ -1,42 +1,49 @@
-From: Akinobu Mita <akinobu.mita@gmail.com>
-Subject: Re: [PATCH -v3 16/23] drivers/net: rename random32() to prandom_u32()
-Date: Tue, 5 Mar 2013 06:53:12 +0900
-Message-ID: <CAC5umyjMvMW8ZZ1JFJcZVYo7PiUkG+dVgUNQ3bd87SW_6LnYqw@mail.gmail.com>
-References: <1362401911-14074-1-git-send-email-akinobu.mita@gmail.com>
-	<1362401911-14074-17-git-send-email-akinobu.mita@gmail.com>
-	<5134A37D.9000704@broadcom.com>
-Mime-Version: 1.0
-Return-path: <linux-hams-owner@vger.kernel.org>
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:x-received:in-reply-to:references:date:message-id
-         :subject:from:to:cc:content-type;
-        bh=423hmmsUk7cLqRZR/9PdjYnkb9NEP/srZSgVu29MBgs=;
-        b=VTlNskAvu0iKKzuJG966fUseCKm2LLM0EUg8vTcAhz82FmPKEfmTih9r92ODxiBoQs
-         7+6hWAKwM0IStFm/27KwRCDISFrVKVa0r7nQcsBNd7cZrWlqyVY32kc3pZztBqlhCbRg
-         +qQ4JkwePpDL1barWol8RpYwQyCXdzws5OyQicyNi/6Dl0LvqJUQWCfUF0kGeURu/R1o
-         i/LNwWawmQWvlQmYuFiLi3/XQKX53hWCrZ+2oM1PrAr61az/ttKP+TfvjG4JRTayjxat
-         Pi4UYvn0DlB6978fdSK4owHp9TUeSlHDK2FrXGKeM1S6NtRDKK46q3DA/J05zScAIqsX
-         WN4Q==
-In-Reply-To: <5134A37D.9000704@broadcom.com>
-Sender: linux-hams-owner@vger.kernel.org
+From: Colin King <colin.king@canonical.com>
+Subject: [PATCH] yam: avoid null pointer dereference error
+Date: Wed, 27 Mar 2013 11:19:34 +0000
+Message-ID: <1364383174-17708-1-git-send-email-colin.king@canonical.com>
+Return-path: <netdev-owner@vger.kernel.org>
+Sender: netdev-owner@vger.kernel.org
 List-ID: <linux-hams.vger.kernel.org>
+MIME-Version: 1.0
 Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
-To: Arend van Spriel <arend@broadcom.com>
-Cc: LKML <linux-kernel@vger.kernel.org>, Andrew Morton <akpm@linux-foundation.org>, "David S. Miller" <davem@davemloft.net>, Michael Chan <mchan@broadcom.com>, Thomas Sailer <t.sailer@alumni.ethz.ch>, Jean-Paul Roubelat <jpr@f6fbb.org>, Bing Zhao <bzhao@marvell.com>, Brett Rudley <brudley@broadcom.com>, "Franky (Zhenhui) Lin" <frankyl@broadcom.com>, Hante Meuleman <meuleman@broadcom.com>, brcm80211-dev-list@broadcom.com, netdev <netdev@vger.kernel.org>, linux-hams@vger.kernel.org, linux-wireless@vger.kernel.org
+To: Jean-Paul Roubelat <jpr@f6fbb.org>, linux-hams@vger.kernel.org, netdev@vger.kernel.org
 
-2013/3/4 Arend van Spriel <arend@broadcom.com>
->>
->> @@ -1118,7 +1118,7 @@ static void brcmf_p2p_afx_handler(struct work_struct *work)
->>         if (afx_hdl->is_listen&&  afx_hdl->my_listen_chan)
->>
->>                 /* 100ms ~ 300ms */
->>                 err = brcmf_p2p_discover_listen(p2p, afx_hdl->my_listen_chan,
->> -                                               100 * (1 + (random32() % 3)));
->> +                                       100 * (1 + (prandom_u32() % 3)));
->
->
-> Seems like indentation is wrong now. Please retain the alignment.
+From: Colin Ian King <colin.king@canonical.com>
 
-OK, I'll fix it.
+yam_open checks if dev is null, however, before that check it
+accesses some of the fields from dev in a proceeding printk which
+will cause a null pointer dereference error if dev is nul. Move
+the printk to after the null check.
+
+Smatch analysis:
+
+drivers/net/hamradio/yam.c:869 yam_open() warn: variable
+  dereferenced before check 'dev' (see line 867)
+
+Signed-off-by: Colin Ian King <colin.king@canonical.com>
+---
+ drivers/net/hamradio/yam.c |    5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
+
+diff --git a/drivers/net/hamradio/yam.c b/drivers/net/hamradio/yam.c
+index 4cf8f10..e021e51 100644
+--- a/drivers/net/hamradio/yam.c
++++ b/drivers/net/hamradio/yam.c
+@@ -864,10 +864,11 @@ static int yam_open(struct net_device *dev)
+ 	int i;
+ 	int ret=0;
+ 
+-	printk(KERN_INFO "Trying %s at iobase 0x%lx irq %u\n", dev->name, dev->base_addr, dev->irq);
+-
+ 	if (!dev || !yp->bitrate)
+ 		return -ENXIO;
++
++	printk(KERN_INFO "Trying %s at iobase 0x%lx irq %u\n", dev->name, dev->base_addr, dev->irq);
++
+ 	if (!dev->base_addr || dev->base_addr > 0x1000 - YAM_EXTENT ||
+ 		dev->irq < 2 || dev->irq > 15) {
+ 		return -ENXIO;
+-- 
+1.7.9.5
