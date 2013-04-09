@@ -1,30 +1,49 @@
-From: Gordon JC Pearce <gordonjcp@gjcp.net>
-Subject: Re: Raspberry PI and netrom
-Date: Sun, 07 Apr 2013 20:25:30 +0100
-Message-ID: <5161C82A.7060702@gjcp.net>
-References: <567d5f72.20bae.13de4a9f9ae.Webtop.52@rtcubed.org>
+From: Wei Yongjun <weiyj.lk@gmail.com>
+Subject: [PATCH -next] netrom: fix invalid use of sizeof in nr_recvmsg()
+Date: Tue, 9 Apr 2013 10:07:19 +0800
+Message-ID: <CAPgLHd-yEmt_BJ52uZNsCA_-w85VhnN_HbfjG1QLVvR5kp7Xvw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <567d5f72.20bae.13de4a9f9ae.Webtop.52@rtcubed.org>
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:x-received:date:message-id:subject:from:to:cc
+         :content-type;
+        bh=4IZycuKrplrorq5s9Izw/ukP144aEVC2gxgBsFrsI6I=;
+        b=ezK8dxwMCrfxt7FgJ5tnTlNsMDECL/ryFUI3vFLr5riEjW2yUt5L0WYvrEqNXm3dXF
+         1HWGbX6236y3XtL10Gz3wNTlxhoq9nQM8gaE8ymMsZba3Sx6f3h7O/eVWhghhXGRtWx1
+         zjALgXF3JfibcQPEEhdf9iuO+7GMw3QnIwaGviS9EcQW8RM8TT7TDgR2wnizF1jUEyal
+         zyr4WedfQDq6lK50YYr5qeeqmOuuWPRCark5I36c8j3mPIHZDynt0FIUbxZQF/ofV9Ap
+         rf5ydx69Qegjtn0t1ngVi79fMg1rwfMd7bZdpcMInnTJKXiNdcGLiVRUwoOGNt0t81Em
+         uz/w==
 Sender: linux-hams-owner@vger.kernel.org
 List-ID: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"; format="flowed"
-To: linux-hams@vger.kernel.org
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+To: ralf@linux-mips.org, minipli@googlemail.com, davem@davemloft.net
+Cc: yongjun_wei@trendmicro.com.cn, linux-hams@vger.kernel.org, netdev@vger.kernel.org
 
-On 07/04/13 14:22, kd1zd@rtcubed.org wrote:
-> I have a Raspberry PI running the latest version of wheezy downloaded
-> from the Raspberry site.
->
-> I'm getting the following error trying to configure NET/ROM:
->
-> sudo nrattach netrom
-> nrattach: cannot find free NET/ROM device
->
+From: Wei Yongjun <yongjun_wei@trendmicro.com.cn>
 
-At this point, does dmesg have any exciting news?
+sizeof() when applied to a pointer typed expression gives the size of the
+pointer, not that of the pointed data.
+Introduced by commit 3ce5ef(netrom: fix info leak via msg_name in nr_recvmsg)
 
--- 
-Gordonjcp MM0YEQ
+Signed-off-by: Wei Yongjun <yongjun_wei@trendmicro.com.cn>
+---
+ net/netrom/af_netrom.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
+diff --git a/net/netrom/af_netrom.c b/net/netrom/af_netrom.c
+index 7fcb307..103bd70 100644
+--- a/net/netrom/af_netrom.c
++++ b/net/netrom/af_netrom.c
+@@ -1173,7 +1173,7 @@ static int nr_recvmsg(struct kiocb *iocb, struct socket *sock,
+ 	}
+ 
+ 	if (sax != NULL) {
+-		memset(sax, 0, sizeof(sax));
++		memset(sax, 0, sizeof(*sax));
+ 		sax->sax25_family = AF_NETROM;
+ 		skb_copy_from_linear_data_offset(skb, 7, sax->sax25_call.ax25_call,
+ 			      AX25_ADDR_LEN);
 
