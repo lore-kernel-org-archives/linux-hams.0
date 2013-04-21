@@ -1,28 +1,26 @@
-From: Mathias Krause <minipli@googlemail.com>
+From: "f6bvp@free" <f6bvp@free.fr>
 Subject: Re: [PATCH -next] netrom: fix invalid use of sizeof in nr_recvmsg()
-Date: Sun, 21 Apr 2013 19:53:17 +0200
-Message-ID: <CA+rthh_tm1nwUwM+ryinVMbaJR1rrCAUXqAYAJYTGG8HiXxMzQ@mail.gmail.com>
+Date: Sun, 21 Apr 2013 20:05:07 +0200
+Message-ID: <51742A53.4030907@free.fr>
 References: <51742437.6080406@free.fr>
 Mime-Version: 1.0
-Return-path: <linux-hams-owner@vger.kernel.org>
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlemail.com; s=20120113;
-        h=mime-version:x-received:in-reply-to:references:date:message-id
-         :subject:from:to:cc:content-type;
-        bh=iC/KzTL4dEFKn5IZK9YEgELd50fDqexfNc1kzE3VyKo=;
-        b=YXMEsw1Q+r1IWorogdc5BlSXSQz0o/1yoI/tLeKaIhM4h1K8VpFG5c7X3pDFnZzNE3
-         qjqRMwblvJdlqhibAgEZPnxu6sQtz3e7cJLtS+2tP+nonb56wX9zppGcA5yJzu8fL5E2
-         upX0ymsiJVZebV3e5Nd0544OLNEqZpSLCax01cfyqJTTOm/jiT8y/ZgIkp6MNvv6YPtg
-         I4am/EWzXtyo25BSX24OtncM3qwumjsIJg+LGe3itO8vK+LY1/NV2xiHJ/EpCQ7s2xBm
-         A/nL6W2orxizubtoRbxFcUcmBTDK9Oa/Wyt7GyoU8couwlbzefRKHj9oYi8kA63tEEP1
-         qYQg==
-In-Reply-To: <51742437.6080406@free.fr>
-Sender: linux-hams-owner@vger.kernel.org
-List-ID: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
-To: "f6bvp@free" <f6bvp@free.fr>
-Cc: linux-hams@vger.kernel.org, linux-netdev@vger.kernel.org
+Return-path: <netdev-owner@vger.kernel.org>
+In-Reply-To: <51742437.6080406@free.fr>
+Sender: netdev-owner@vger.kernel.org
+List-ID: <linux-hams.vger.kernel.org>
+Content-Type: text/plain; charset="us-ascii"; format="flowed"
+To: Mathias Krause <minipli@googlemail.com>
+Cc: linux-hams@vger.kernel.org, netdev@vger.kernel.org
+
+Hi Mathias,
+
+Thank you for the copy of the thread and sorry for the second post.
+It is good to know that someone is taking care of this nice piece of 
+network code.
+
+Bernard Pidoux
+
 
 On Sun, Apr 21, 2013 at 7:39 PM, f6bvp@free <f6bvp@free.fr> wrote:
 > Hi,
@@ -53,30 +51,31 @@ commit 4a184233f21645cf0b719366210ed445d1024d72
 Author: Mathias Krause <minipli@googlemail.com>
 Date:   Sun Apr 7 01:51:59 2013 +0000
 
-    rose: fix info leak via msg_name in rose_recvmsg()
+     rose: fix info leak via msg_name in rose_recvmsg()
 
-    The code in rose_recvmsg() does not initialize all of the members of
-    struct sockaddr_rose/full_sockaddr_rose when filling the sockaddr info.
-    Nor does it initialize the padding bytes of the structure inserted by
-    the compiler for alignment. This will lead to leaking uninitialized
-    kernel stack bytes in net/socket.c.
+     The code in rose_recvmsg() does not initialize all of the members of
+     struct sockaddr_rose/full_sockaddr_rose when filling the sockaddr info.
+     Nor does it initialize the padding bytes of the structure inserted by
+     the compiler for alignment. This will lead to leaking uninitialized
+     kernel stack bytes in net/socket.c.
 
-    Fix the issue by initializing the memory used for sockaddr info with
-    memset(0).
+     Fix the issue by initializing the memory used for sockaddr info with
+     memset(0).
 
-    Cc: Ralf Baechle <ralf@linux-mips.org>
-    Signed-off-by: Mathias Krause <minipli@googlemail.com>
-    Signed-off-by: David S. Miller <davem@davemloft.net>
+     Cc: Ralf Baechle <ralf@linux-mips.org>
+     Signed-off-by: Mathias Krause <minipli@googlemail.com>
+     Signed-off-by: David S. Miller <davem@davemloft.net>
 
 diff --git a/net/rose/af_rose.c b/net/rose/af_rose.c
 index cf68e6e..9c83474 100644
 --- a/net/rose/af_rose.c
 +++ b/net/rose/af_rose.c
-@@ -1253,6 +1253,7 @@ static int rose_recvmsg(struct kiocb *iocb, struct socket
-        skb_copy_datagram_iovec(skb, 0, msg->msg_iov, copied);
+@@ -1253,6 +1253,7 @@ static int rose_recvmsg(struct kiocb *iocb, struct 
+socket
+         skb_copy_datagram_iovec(skb, 0, msg->msg_iov, copied);
 
-        if (srose != NULL) {
+         if (srose != NULL) {
 +               memset(srose, 0, msg->msg_namelen);
-                srose->srose_family = AF_ROSE;
-                srose->srose_addr   = rose->dest_addr;
-                srose->srose_call   = rose->dest_call;
+                 srose->srose_family = AF_ROSE;
+                 srose->srose_addr   = rose->dest_addr;
+                 srose->srose_call   = rose->dest_call;
