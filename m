@@ -1,81 +1,63 @@
-From: "f6bvp@free" <f6bvp@free.fr>
-Subject: Re: [PATCH -next] netrom: fix invalid use of sizeof in nr_recvmsg()
-Date: Sun, 21 Apr 2013 20:05:07 +0200
-Message-ID: <51742A53.4030907@free.fr>
-References: <51742437.6080406@free.fr>
+From: kd1zd@rtcubed.org
+Subject: Re: Raspberry PI and netrom
+Date: Sun, 21 Apr 2013 19:06:36 -0400 (EDT)
+Message-ID: <750ed339.1d0c.13e2ed95a84.Webtop.53@rtcubed.org>
 Mime-Version: 1.0
 Content-Transfer-Encoding: 7bit
-Return-path: <netdev-owner@vger.kernel.org>
-In-Reply-To: <51742437.6080406@free.fr>
-Sender: netdev-owner@vger.kernel.org
+Return-path: <linux-hams-owner@vger.kernel.org>
+Content-Disposition: inline
+Sender: linux-hams-owner@vger.kernel.org
 List-ID: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"; format="flowed"
-To: Mathias Krause <minipli@googlemail.com>
-Cc: linux-hams@vger.kernel.org, netdev@vger.kernel.org
+Content-Type: text/plain; charset="us-ascii"; format="flowed"; delsp="no"
+To: f6bvp@free.fr
+Cc: linux-hams@vger.kernel.org, gordonjcp@gjcp.net
 
-Hi Mathias,
+I think I found this the other day, thanks for posting it on the list.
 
-Thank you for the copy of the thread and sorry for the second post.
-It is good to know that someone is taking care of this nice piece of 
-network code.
+I was able to get my netrom working.
 
-Bernard Pidoux
+Thank you.
 
 
-On Sun, Apr 21, 2013 at 7:39 PM, f6bvp@free <f6bvp@free.fr> wrote:
+On Sun, Apr 21, 2013 at 12:32 PM, f6bvp@free wrote:
+
 > Hi,
 >
-> According to the proximity of NetRom and Rose codes I looked at af_rose.c
-> and it seems that similarly sockaddr_rose structure is let uninitialized in
-> rose_recvmsg().
+> I am running two RaspBerry Pis with AX.25, NetRom and Rose network 
+> devices.
+> When loading ax25 modules there is no problem.
+> However, due to modules or kernel bugs, when loading NetRom or Rose 
+> modules
+> with modprobe or if netrom or rose are listed in /etc/modules, then 
+> ALL netrom
+> and rose devices are wrongly initialized.
 >
-> Then, would you consider the following patch interesting to be committed ?
+> This can be easily bypassed by editing ifplugd configuration file.
 >
-> --- a/net/rose/af_rose.c        2013-04-17 07:11:28.000000000 +0200
-> +++ b/net/rose/af_rose.c        2013-04-21 17:26:06.914967897 +0200
-> @@ -1257,6 +1257,7 @@ static int rose_recvmsg(struct kiocb *io
->         skb_copy_datagram_iovec(skb, 0, msg->msg_iov, copied);
+> I suggest you edit /etc/default/ifplugd   and replace
 >
->         if (srose != NULL) {
-> +               memset(srose, 0, sizeof(*srose));
->                 srose->srose_family = AF_ROSE;
->                 srose->srose_addr   = rose->dest_addr;
->                 srose->srose_call   = rose->dest_call;
+> HOTPLUG_INTERFACES="all"
+>
+> by
+>
+> HOTPLUG_INTERFACES="eth0"
 >
 >
-
-Thanks, but something more complete is already in Linus tree
-(sizeof(*srose) is not enough):
-
-commit 4a184233f21645cf0b719366210ed445d1024d72
-Author: Mathias Krause <minipli@googlemail.com>
-Date:   Sun Apr 7 01:51:59 2013 +0000
-
-     rose: fix info leak via msg_name in rose_recvmsg()
-
-     The code in rose_recvmsg() does not initialize all of the members of
-     struct sockaddr_rose/full_sockaddr_rose when filling the sockaddr info.
-     Nor does it initialize the padding bytes of the structure inserted by
-     the compiler for alignment. This will lead to leaking uninitialized
-     kernel stack bytes in net/socket.c.
-
-     Fix the issue by initializing the memory used for sockaddr info with
-     memset(0).
-
-     Cc: Ralf Baechle <ralf@linux-mips.org>
-     Signed-off-by: Mathias Krause <minipli@googlemail.com>
-     Signed-off-by: David S. Miller <davem@davemloft.net>
-
-diff --git a/net/rose/af_rose.c b/net/rose/af_rose.c
-index cf68e6e..9c83474 100644
---- a/net/rose/af_rose.c
-+++ b/net/rose/af_rose.c
-@@ -1253,6 +1253,7 @@ static int rose_recvmsg(struct kiocb *iocb, struct 
-socket
-         skb_copy_datagram_iovec(skb, 0, msg->msg_iov, copied);
-
-         if (srose != NULL) {
-+               memset(srose, 0, msg->msg_namelen);
-                 srose->srose_family = AF_ROSE;
-                 srose->srose_addr   = rose->dest_addr;
-                 srose->srose_call   = rose->dest_call;
+> 73 de Bernard, f6bvp
+> (http://f6bvp.org)
+>
+>
+> On 07/04/13 14:22, kd1zd@rtcubed.org wrote:
+>> I have a Raspberry PI running the latest version of wheezy downloaded
+>> from the Raspberry site.
+>>
+>> I'm getting the following error trying to configure NET/ROM:
+>>
+>> sudo nrattach netrom
+>> nrattach: cannot find free NET/ROM device
+>>
+>
+> At this point, does dmesg have any exciting news?
+>
+> -- 
+> Gordonjcp MM0YEQ
