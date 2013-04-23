@@ -1,63 +1,33 @@
-From: kd1zd@rtcubed.org
-Subject: Re: Raspberry PI and netrom
-Date: Sun, 21 Apr 2013 19:06:36 -0400 (EDT)
-Message-ID: <750ed339.1d0c.13e2ed95a84.Webtop.53@rtcubed.org>
+From: Dan Carpenter <dan.carpenter@oracle.com>
+Subject: [patch] netrom: info leak in ->getname()
+Date: Tue, 23 Apr 2013 09:22:51 +0300
+Message-ID: <20130423062251.GB15893@elgon.mountain>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
-Return-path: <linux-hams-owner@vger.kernel.org>
+Return-path: <netdev-owner@vger.kernel.org>
 Content-Disposition: inline
-Sender: linux-hams-owner@vger.kernel.org
+Sender: netdev-owner@vger.kernel.org
 List-ID: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"; format="flowed"; delsp="no"
-To: f6bvp@free.fr
-Cc: linux-hams@vger.kernel.org, gordonjcp@gjcp.net
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+To: Ralf Baechle <ralf@linux-mips.org>
+Cc: "David S. Miller" <davem@davemloft.net>, linux-hams@vger.kernel.org, netdev@vger.kernel.org, kernel-janitors@vger.kernel.org
 
-I think I found this the other day, thanks for posting it on the list.
+The sockaddr_ax25 struct has a 3 byte hole between ->sax25_call and
+->sax25_ndigis.  I've added a memset to avoid leaking uninitialized
+stack data to userspace.
 
-I was able to get my netrom working.
+Signed-off-by: Dan Carpenter <dan.carpenter@oracle.com>
 
-Thank you.
-
-
-On Sun, Apr 21, 2013 at 12:32 PM, f6bvp@free wrote:
-
-> Hi,
->
-> I am running two RaspBerry Pis with AX.25, NetRom and Rose network 
-> devices.
-> When loading ax25 modules there is no problem.
-> However, due to modules or kernel bugs, when loading NetRom or Rose 
-> modules
-> with modprobe or if netrom or rose are listed in /etc/modules, then 
-> ALL netrom
-> and rose devices are wrongly initialized.
->
-> This can be easily bypassed by editing ifplugd configuration file.
->
-> I suggest you edit /etc/default/ifplugd   and replace
->
-> HOTPLUG_INTERFACES="all"
->
-> by
->
-> HOTPLUG_INTERFACES="eth0"
->
->
-> 73 de Bernard, f6bvp
-> (http://f6bvp.org)
->
->
-> On 07/04/13 14:22, kd1zd@rtcubed.org wrote:
->> I have a Raspberry PI running the latest version of wheezy downloaded
->> from the Raspberry site.
->>
->> I'm getting the following error trying to configure NET/ROM:
->>
->> sudo nrattach netrom
->> nrattach: cannot find free NET/ROM device
->>
->
-> At this point, does dmesg have any exciting news?
->
-> -- 
-> Gordonjcp MM0YEQ
+diff --git a/net/netrom/af_netrom.c b/net/netrom/af_netrom.c
+index 103bd70..ec0c80f 100644
+--- a/net/netrom/af_netrom.c
++++ b/net/netrom/af_netrom.c
+@@ -834,6 +834,8 @@ static int nr_getname(struct socket *sock, struct sockaddr *uaddr,
+ 	struct sock *sk = sock->sk;
+ 	struct nr_sock *nr = nr_sk(sk);
+ 
++	memset(&sax->fsa_ax25, 0, sizeof(struct sockaddr_ax25));
++
+ 	lock_sock(sk);
+ 	if (peer != 0) {
+ 		if (sk->sk_state != TCP_ESTABLISHED) {
