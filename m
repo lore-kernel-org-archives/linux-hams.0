@@ -1,135 +1,170 @@
-From: Miroslav Skoric <skoric@eunet.rs>
-Subject: [OT]: Book on packet radio and similar things
-Date: Mon, 24 Jun 2013 00:34:55 +0200
-Message-ID: <51C7780F.5000207@eunet.rs>
+From: Cathryn Mataga <cathryn@junglevision.com>
+Subject: [PATCH] xfbbd: Run the same data files on 64-bit
+Date: Fri, 05 Jul 2013 14:20:39 -0700
+Message-ID: <51D738A7.1010505@junglevision.com>
+References: <4CE0313C.3080804@upmc.fr>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
+Content-Type: multipart/mixed;
+ boundary="------------000308000404060309060809"
 Return-path: <linux-hams-owner@vger.kernel.org>
+In-Reply-To: <4CE0313C.3080804@upmc.fr>
 Sender: linux-hams-owner@vger.kernel.org
 List-ID: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"; format="flowed"
-To: linux-hams@vger.kernel.org
+To: Bernard Pidoux <bernard.pidoux@upmc.fr>
+Cc: linux-hams <linux-hams@vger.kernel.org>
 
-Hi all,
+This is a multi-part message in MIME format.
+--------------000308000404060309060809
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
 
-After having published some book chapters on packet and assorted stuff 
-(see the book titles bellow), I plan to work on the whole book. A rough 
-plan is to cover the following topics (but not limited to):
+I'm moving my ham radio server up to 64-bit Fedora 18.  So I'm fixing 
+issues as I hit them.
 
-- Introduction (broad definition, history of the amateur radio hobby, 
-personal experience within the area, ...)
-- Background (discussion of previous works - literature review, etc.)
-- Discussion of hardware aspects:
-  - ham digital experience with older computers /Commodore 64, PC AT i80286/
-  - newer PC compatibles /various Intel and AMD platforms/
-  - non-PC solutions such as industrial computers, RaspBerry Pi, ...
-  - discussion about packet modems, antennas ...
-  - radio mofifications
-- Discussion of software aspects:
-  - operating systems used by digital hams
-  - proprietary vs. open source solutions, such as Linux and packet 
-software for Linux
-  - packet radio programs for end-users (all platforms)
-  - software for packet nodes based on PC computers and/or modem EPROMs, 
-etc.)
-  - gateway operations (VHF-HF, packet-pactor, etc.)
-- Discussion of diverse locations for implementing amateur digital radio:
-  - home shacks
-  - informal scholarly activities with 'ham radio' in computer and/or 
-electronics laboratories
-  - possibilities in workplaces, etc.
-  - practical advices (positioning antennas, power supply, air 
-conditioning for computer rooms, various home-brew appliances such as 
-using old refrigerators for housing digital equipment, ...)
-- Influence of the amateur (digital) radio hobby to one's preferred 
-lifestyle and profession:
-  - examples of scientists and researchers who started with 'ham radio' 
-in their early career days
-  - personal experience (motivated family background, early start with 
-'ham radio' some 25 years ago, starting and growing with academic 
-writing on that technical activity - magazine articles, conference 
-papers, book chapters, half-day tutorials, 1-2 day workshops; networking 
-with scholars and researchers during the technical events; exploring new 
-countries, cultures, educational systems, etc.)
-- Review of today's prevalent ways in disseminating amateur radio 
-instructions:
-  - presence/absence in implementation of 'help' sections within the 
-packet software packages
-  - (in)adequate 'expert' technical language as (not) suitable for beginners
-  - mis(use) of informal descriptions followed by improper formatting in 
-documents /no APA-style in presenting information, overuse of jargon, etc
-- Displaying experience with exchanging information related to amateur 
-radio theory and praxis in conferences, symposiums, seminars, tutorials, 
-workshops (incl. various aspects: technical, professional, 
-inter-cultural, etc)
-- Amateur radio as a trigger to learn new cultures, new countries, 
-tourist aspects such as people, flora and fauna, food, drink, etc ... 
--thankfully to the ham radio (will include personal experience with 
-conferencing, as well as travel experience provided by the other 
-amateurs (such as traveling to/from contest locations in remote and 
-rural areas, research expeditions, etc.
-- Research and development: should include experience provided by 
-amateur radio groups and societies (mainly in western countries) that 
-have been exploring 'ham radio' alongside their teaching and learning 
-activities; a suggested project of AMUNET (the amateur radio university 
-network - a vision of the future networking between educational 
-institutions on local and global level; the influence and potential 
-results from astronauts on spaceships who practiced digital amateur 
-radio experiments and conducted correspondence with schools, etc.
-- Inclusion/Convergence with other technologies:
-  - Experimenting with various Linux applications, such as librarian 
-databases that might be reached and browsed from the amateur packet 
-radio network
-  - 'Green technologies' - small wind or solar energy plants in 
-appropriate locations (one of my last visiting places was one of the 
-most Sun-covered area of India where relatively small solar panels could 
-provide enough electricity to power 'ham radio' relay stations)
-- Experiments in 'the wild' such as weekend-amateurs who might provide 
-temporary radio-relay services from  picnic locations in the woods or 
-seaside, or something similar.
-- Potentials of amateur radio in unrelated research directions and 
-sciences (such as collecting weather related data from remote locations 
-like mountain tops, ideas of tracking wild animals /endangered species/ 
-by using amateur radio digital devices, etc.)
-- Final discussions and conclusions
-- Acknowledgments
-- References
-- Additional literature list
-- Index words, glossary etc.
-- Appendices (program codes, configuration and parameter file examples, 
-additional figures that do not fit to the chapter text, etc)
+This is against fbbsrc.705e.  When compiled for 64 bits, the code was 
+corrupting all my 32-bit data files.
+I think this is right, that the binary data files should be the same 
+between 32 and 64 bit compiles.
 
-(All subjects listed in above sections should be well illustrated and in 
-form of tutorials. Whenever possible, chapter authors should provide 
-enough figures (screen shots, photographs, drawings, diagrams, etc) that 
-would help beginners to replicate experiments and compare with their own 
-test results)
+After applying this patch, I see my user names and messages correctly 
+after copying data from my old 32-bit install to a new 64-bit install.
 
-So, if you find yourself as a prospective book chapter contributor on 
-above topics, let me know off-list.
+I haven't made any patches in awhile so if anything is wrong let me know.
 
-Regards,
 
-Misko
+--------------000308000404060309060809
+Content-Type: text/plain; charset=windows-1252;
+ name="fbbsrc.705e.sixtyfour.patch"
+Content-Transfer-Encoding: 7bit
+Content-Disposition: attachment;
+ filename="fbbsrc.705e.sixtyfour.patch"
 
--- 
+--- /home/cathryn/fbbsrc.705e/include/fbb_serv.h	2013-03-16 10:00:56.000000000 -0400
++++ /home/cathryn/fbbsrc.705e.sixtyfour/include/fbb_serv.h	2013-07-05 16:26:01.814157699 -0400
+@@ -31,7 +31,7 @@
+ 
+ #ifndef	_fbb_serv
+ #define	_fbb_serv
+-
++#define fbb_long int
+ /* #define FORTIFY */
+ 
+ #ifdef __LINUX__
+@@ -655,8 +655,8 @@
+ 	uchar free;
+ 	uchar changed;
+ 	ushort seen;
+-	long last_modif __a2__;
+-	long last_seen __a2__;
++	fbb_long last_modif __a2__;
++	fbb_long last_seen __a2__;
+ 	char first_homebbs[41];
+ 	char secnd_homebbs[41];
+ 	char first_zip[9];
+@@ -669,7 +669,6 @@
+ /*
+  * Structures et blocs de messages
+  */
+-
+ typedef struct
+ {
+ 	long nmess;
+@@ -733,7 +732,7 @@
+ 	char indcnx[6];
+ 	uchar port;
+ 	uchar voie;
+-	long datcnx __a2__;
++	fbb_long datcnx __a2__;
+ 	short tpscnx;
+ }
+ statis;
+@@ -767,17 +766,17 @@
+ 
+ 	indicat indic;				/* 8  Callsign */
+ 	indicat relai[8];			/* 64 Digis path */
+-	long lastmes __a2__;		/* 4  Last L number */
+-	long nbcon __a2__;			/* 4  Number of connexions */
+-	long hcon __a2__;			/* 4  Last connexion date */
+-	long lastyap __a2__;		/* 4  Last YN date */
++	fbb_long lastmes __a2__;		/* 4  Last L number */
++	fbb_long nbcon __a2__;			/* 4  Number of connexions */
++	fbb_long hcon __a2__;			/* 4  Last connexion date */
++	fbb_long lastyap __a2__;		/* 4  Last YN date */
+ 	ushort flags;				/* 2  Flags */
+ 	ushort on_base;				/* 2  ON Base number */
+ 
+ 	uchar nbl;					/* 1  Lines paging */
+ 	uchar lang;					/* 1  Language */
+ 
+-	long newbanner __a2__;		/* 4  Last Banner date */
++	fbb_long newbanner __a2__;		/* 4  Last Banner date */
+ 	ushort download;			/* 2  download size (KB) = 100 */
+ 	char free[20];				/* 20 Reserved */
+ 	char theme;					/* 1  Current topic */
+@@ -802,7 +801,7 @@
+ {
+ 	char mode;
+ 	char fbid[13];
+-	long numero __a2__;
++	fbb_long numero __a2__;
+ }
+ bidfwd;
+ 
+@@ -850,9 +849,9 @@
+ {								/* Longueur = 194 octets */
+ 	char type;
+ 	char status;
+-	long numero __a2__;
+-	long taille __a2__;
+-	long date __a2__;
++	fbb_long numero __a2__;
++	fbb_long taille __a2__;
++	fbb_long date __a2__;
+ 	char bbsf[7];
+ 	char bbsv[41];
+ 	char exped[7];
+@@ -861,11 +860,11 @@
+ 	char titre[61];
+ 	char bin;
+ 	char free[5];
+-	long grpnum __a2__;
++	fbb_long grpnum __a2__;
+ 	ushort nblu;
+-	long theme __a2__;
+-	long datesd __a2__;
+-	long datech __a2__;
++	fbb_long theme __a2__;
++	fbb_long datesd __a2__;
++	fbb_long datech __a2__;
+ 	char fbbs[NBMASK];
+ 	char forw[NBMASK];
+ }
+@@ -921,12 +920,12 @@
+ 	double a0 __a2__;
+ 	double n0 __a2__;
+ 	double q3 __a2__;
+-	long k0 __a2__;
++	fbb_long k0 __a2__;
+ 	double f1 __a2__;
+ 	double v1 __a2__;
+ 	short pas;
+-	long maj __a2__;
+-	long cat __a2__;			/* Catalog Number - anciennement vide  */
++	fbb_long maj __a2__;
++	fbb_long cat __a2__;			/* Catalog Number - anciennement vide  */
+ 	short libre[4];
+ }
+ satel;
+@@ -1230,8 +1229,8 @@
+ 	char nomfic[LABEL_FIC];
+ 	char label[LABEL_NOM];
+ 	char owner[LABEL_OWN];
+-	long index;
+-	long date_creation;
++	fbb_long index;
++	fbb_long date_creation;
+ 	char free[24];
+ }
+ Rlabel;							/* 160 bytes */
 
-book chapter author in those books:
-
-Handbook of Research on Human Performance and Instructional Technology
-ISBN: 978-1-60566-782-9; 678 pp; October 2009
-Published under Information Science Reference, an imprint of IGI Global
-http://www.igi-global.com/reference/details.asp?id=34814
-Edited by: Holim Song, Terry T. Kidd
-
-Simulation in Computer Network Design and Modeling: Use and Analysis
-ISBN: 978-1-46660-191-8; 582 pages; February 2012
-Published by IGI Global, USA
-http://www.igi-global.com/book/simulation-computer-network-design-modeling/58282
-Edited by: Hussein Al-Bahadili
-
-Wireless Networks and Security: Issues, Challenges and Research Trends
-ISBN: 978-3-642-36168-5; 510 pages; February 2013
-Published by Springer, Germany
-http://www.springer.com/engineering/signals/book/978-3-642-36168-5
-Edited by: Shafiullah Khan, Al-Sakib Khan Pathan
+--------------000308000404060309060809--
