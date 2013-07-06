@@ -1,35 +1,31 @@
-From: Cathryn Mataga <cathryn@junglevision.com>
+From: David Ranch <linux-hams@trinnet.net>
 Subject: Re: Netrom on kernel version 3.9.6-200
-Date: Fri, 05 Jul 2013 22:42:03 -0700
-Message-ID: <51D7AE2B.3070408@junglevision.com>
-References: <51D79AE6.5030208@junglevision.com> <51D7A082.1000500@junglevision.com> <51D7AC41.6060606@junglevision.com>
+Date: Sat, 06 Jul 2013 10:24:06 -0700
+Message-ID: <51D852B6.3060401@trinnet.net>
+References: <51D79AE6.5030208@junglevision.com> <51D7A082.1000500@junglevision.com> <51D7AC41.6060606@junglevision.com> <51D7AE2B.3070408@junglevision.com>
 Mime-Version: 1.0
 Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <51D7AC41.6060606@junglevision.com>
+In-Reply-To: <51D7AE2B.3070408@junglevision.com>
 Sender: linux-hams-owner@vger.kernel.org
 List-ID: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"; format="flowed"
-To: linux-hams <linux-hams@vger.kernel.org>
+To: Cathryn Mataga <cathryn@junglevision.com>
+Cc: linux-hams <linux-hams@vger.kernel.org>
 
-On 7/5/2013 10:33 PM, Cathryn Mataga wrote:
-> On 7/5/2013 9:43 PM, Cathryn Mataga wrote:
->> On 7/5/2013 9:19 PM, Cathryn Mataga wrote:
->>> Hmm, is netrom known to work?  I'm on 3.9.6-200, and I'm getting 
->>> weird results with netrom.
->>>
->
-> Wait, wait, this is definitely a Fedora issue and not a kernel issue.  
-> Because I copied in nrattach that I compiled myself and it started 
-> correctly.   (I don't think it's a 'old versions of libax25 lying 
-> around issue'  but I haven't completely ruled that out yet.)
 
-Wait a minute.  Someone has been mucking about with nrattach.c . They 
-removed the the code that actually connects the netrom port.     Bahh..
+Hello Cathryn,
 
-#ifdef  notdef
-         if (!startiface(dev, hp))
-                 return 1;
-#endif
+Which AX.25 libs/apps/tools are you using?  If you're using the 
+"official AX.25" ones, you're going to find this and other bugs.  I 
+recommend you use VE7FET / F6BVP's version at 
+http://code.google.com/p/linuxax25/ as it has all of the required fixes 
+that I've come across.   You can find .spec files for this code here: 
+http://www.trinityos.com/HAM/CentosDigitalModes/usr/src/redhat/SPECS/ 
+(don't use the ones that have "f6bvp" in the name as they reflect an 
+older version of the libs).
+
+--David
+KI6ZHD
 
 
