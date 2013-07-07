@@ -1,33 +1,100 @@
 From: Cathryn Mataga <cathryn@junglevision.com>
-Subject: Re: [PATCH] xfbbd: Run the same data files on 64-bit
-Date: Sat, 06 Jul 2013 17:15:10 -0700
-Message-ID: <51D8B30E.40401@junglevision.com>
-References: <4CE0313C.3080804@upmc.fr> <51D738A7.1010505@junglevision.com> <0A70646B-CB6F-4FBE-8D10-767502DD78B6@upmc.fr>
+Subject: Re: Netrom on kernel version 3.9.6-200
+Date: Sat, 06 Jul 2013 22:49:48 -0700
+Message-ID: <51D9017C.3040309@junglevision.com>
+References: <51D79AE6.5030208@junglevision.com> <51D7A082.1000500@junglevision.com> <51D7AC41.6060606@junglevision.com> <51D7AE2B.3070408@junglevision.com> <51D852B6.3060401@trinnet.net> <20130706202807.GB18314@x-berg.in-berlin.de>
 Mime-Version: 1.0
 Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <0A70646B-CB6F-4FBE-8D10-767502DD78B6@upmc.fr>
+In-Reply-To: <20130706202807.GB18314@x-berg.in-berlin.de>
 Sender: linux-hams-owner@vger.kernel.org
 List-ID: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"; format="flowed"
-To: Pidoux <bernard.pidoux@upmc.fr>
+To: Thomas Osterried <thomas@x-berg.in-berlin.de>
 Cc: linux-hams <linux-hams@vger.kernel.org>
 
-On 7/6/2013 2:24 PM, Pidoux wrote:
-> Hi Cathryn,
+On 7/6/2013 1:28 PM, Thomas Osterried wrote:
+> the bug you mentioned was fixed in 2009-11-02
+>    http://www.linux-ax25.org/cvsweb/ax25-tools/netrom/nrattach.c
 >
-> Thank you for your message.
-> I have been using FBB 7.05e on a 64 bits machine for a while with Mandriva and somce lat year with Mageia Linux distro without problem.
- >However I never tried to import any data from a previous 32 bits 
-install for I do not see any necessity to do that.
+> Needless to say, that we recommend to use the official tree and deeply
+> appreciate, that we get bug reports and patches.
 
-Yeah, what happened to me was I upgraded and then all my messages/users 
-went away because the 64/32 bit issue.  Basically the structures for 
-files suck as inf.sys (which contain the user list) use 'long'  which is 
-64-bits on 64 bit systems and 32-bits on 32-bit systems.  So when you 
-upgrade from 32 to 64 bits all the data is lost.
+Okay, I filed a bug with Fedora to see if they can update what they ship.
 
-However, this change would cause issues for anyone now who has been 
-64-bit since the change.   I can send again in the correct format but 
-with an #ifdef  so that it can only be turned on only for people who 
-need it.
+> if you're in a netrom (I am not): I might need help.
+> A few weeks ago we got a bug report for netromd. nodes are learned,
+> even if they're under the configured minimum threshold.
+> The netrom code is very old and didn't change. Perhaps it's an issue with
+> newer kernels. Or it never had worked as expected.
+> A test setup is quite time consuming (3 test-computers/VMs) and I did not have
+> the time to set them up.
+
+Well, I do have a bit list of nodes on my system right now.  It looks 
+like what he says happens does happen.  I have worst_qual set to 100 and 
+I do see a handful of nodes with quality just below 100, some as low as 
+94, but none too far below 100.   I'll uninstall the Fedora libax25 and 
+put in the latest, see if it's any different.
+
+
+
+
+> The OM reported:
+>
+> 	# /etc/ax25/nrbroadcast
+> 	#
+> 	# The format of this file is:
+> 	#
+> 	# ax25_name min_obs def_qual worst_qual verbose
+> 	#
+> 	1	5	120	120	0
+>
+> 	--
+>
+> 	So I would assume that any new neighbor gets a quality of 120 and minimum quality to show up in my table is also 120. I would expect to have nothing but direct neighbors in my routing table.
+>
+> 	However I have this:
+> 	
+> 	# cat /proc/net/nr_nodes
+> 	callsign  mnemonic w n qual obs neigh qual obs neigh qual obs neigh
+> 	ND6C-4    LPRC3    1 1   56   6 00001
+> 	KF6FPU-5  LIVER    1 1   56   6 00001
+> 	WA6TOW-1  PAC      1 1   56   6 00001
+> 	KI6UDZ-7  FCITY    1 1   56   6 00001
+> 	W6TUK-7   FOSN3    1 1  120   6 00001
+>
+> 	--
+>
+> 	Why do I have all of those < 120 routes showing up as nodes? I am missing something? I just upgraded ax25-tools to the latest and greatest and this is still happening.
+>
+>
+> vy 73,
+> 	- Thomas  dl9sau
+>
+> On 2013-07-06 10:24:06 -0700, David Ranch <linux-hams@trinnet.net>
+> wrote in <51D852B6.3060401@trinnet.net>:
+>> Hello Cathryn,
+>>
+>> Which AX.25 libs/apps/tools are you using?  If you're using the
+>> "official AX.25" ones, you're going to find this and other bugs.  I
+>> recommend you use VE7FET / F6BVP's version at
+>> http://code.google.com/p/linuxax25/ as it has all of the required
+>> fixes that I've come across.   You can find .spec files for this
+>> code here:
+>> http://www.trinityos.com/HAM/CentosDigitalModes/usr/src/redhat/SPECS/
+>> (don't use the ones that have "f6bvp" in the name as they reflect an
+>> older version of the libs).
+>>
+>> --David
+>> KI6ZHD
+>>
+>>
+>> --
+>> To unsubscribe from this list: send the line "unsubscribe linux-hams" in
+>> the body of a message to majordomo@vger.kernel.org
+>> More majordomo info at  http://vger.kernel.org/majordomo-info.html
+> --
+> To unsubscribe from this list: send the line "unsubscribe linux-hams" in
+> the body of a message to majordomo@vger.kernel.org
+> More majordomo info at  http://vger.kernel.org/majordomo-info.html
+
