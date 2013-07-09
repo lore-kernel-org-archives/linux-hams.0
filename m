@@ -1,60 +1,36 @@
 From: Cathryn Mataga <cathryn@junglevision.com>
-Subject: Re: Netrom:  Quality issue
-Date: Mon, 08 Jul 2013 06:24:38 -0700
-Message-ID: <51DABD96.6060600@junglevision.com>
-References: <51D79AE6.5030208@junglevision.com> <51D7A082.1000500@junglevision.com> <51D7AC41.6060606@junglevision.com> <51D7AE2B.3070408@junglevision.com> <51D852B6.3060401@trinnet.net> <20130706202807.GB18314@x-berg.in-berlin.de> <51D905C2.1000301@junglevision.com> <51D99E83.9000604@trinnet.net> <51D9B74E.7030603@junglevision.com> <51DA34A9.5070108@trinnet.net> <51DA36BD.7070209@junglevision.com> <46D0BA07-A3AB-4477-BE76-4582DFC84823@osterried.de>
+Subject: Re: Netrom on kernel version 3.9.6-200
+Date: Mon, 08 Jul 2013 21:37:23 -0700
+Message-ID: <51DB9383.1050304@junglevision.com>
+References: <20130708115635.A4B233700A5@n1uro.ampr.org>  <51DABEDA.8020905@junglevision.com> <1373314487.13641.19.camel@n1uro.ampr.org>
 Mime-Version: 1.0
 Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <46D0BA07-A3AB-4477-BE76-4582DFC84823@osterried.de>
+In-Reply-To: <1373314487.13641.19.camel@n1uro.ampr.org>
 Sender: linux-hams-owner@vger.kernel.org
 List-ID: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"; format="flowed"
-To: Thomas Osterried <thomas@osterried.de>
-Cc: David Ranch <linux-hams@trinnet.net>, Thomas Osterried <thomas@x-berg.in-berlin.de>, linux-hams <linux-hams@vger.kernel.org>, "ralf@linux-mips.org Baechle" <ralf@linux-mips.org>
+To: n1uro@n1uro.ampr.org, linux-hams <linux-hams@vger.kernel.org>
 
-On 7/8/2013 12:48 AM, Thomas Osterried wrote:
->
-> Nice idea, this outgoing filter.
->
-> But I see problems with worst_qual filters being different for each interface. Even more, if we'll have two (in and outbound).
->
-> Example:
->
->
-> A <-> B <-> INET-Host <-> C-in-inet
->
->                            ^ learned: INET-HOST, A, B
->   ^    ^
-> learned:
-> only INET-Host
->
->
-> User on C-inet tries to connect A.
-> But A has not learned C-inet by B's broadcast and thus has no route to answer.
+ >One thing that X1J/TheNet does that I would like to see linux do is 
+NOT rebroadcast nodes received on a particular >interface back out on 
+that same interface.
 
+Hmm, interesting that this would be an issue.   The Linux code does 
+ignore a node if its best neighbor is one's self.    I wonder if there's 
+a degenerate case, if 3 nodes all have their default_quality set to 255, 
+where the 'neighbor' can all be the third station in the pair, and then 
+the node broadcast just goes around and around for all eternity because 
+the quality never decreases at all.
 
-Yeah, I see what you're saying.  Really we do have this problem anyway, 
-though.  I suppose.  If a TNC sets its worst_quality to be high and 
-someone from that node connects in, there's no way to reply.    When 
-worst_quality on a TNC is set high, the internet machine sends a giant 
-list of nodes over 1200 baud, and then the TNC would throw them all 
-away.  If we could match these then the IP connected machine could avoid 
-putting all this extra stuff on the 1200 baud RF channel.
+In this equation,
 
-Maybe could be fixed with some kind of scheme that could set quality 
-based on traffic going through -- but the node broadcast would be too 
-late for a connect, so at least the first connect wouldn't get through.
+  = ((quality * best_quality) + 128) /256;
 
-
-> => In the inet cloud there would be many nodes which are not reachable.
->     Where's the benefit?
->
-
-Just that the massive node list on 1200 baud TNC is a poor user experience.
-
-
-> Even worse, if you like to make IP:
-> you cannot manually connect from node to node; you depend on a working bi-directional l3 route.
->
+Could it be that 128 is a mistake, in a world with so many ip based 
+systems that set default quality at a high value. Without the 128 then a 
+default_quality of 255 turn a 255 quality node into 254, so the infinite 
+loop would end eventually.    If we don't want to touch the code, maybe 
+we should discourage anyone from ever setting a def_qual=255.  That this 
+just seems likely to cause problems to me.
 
