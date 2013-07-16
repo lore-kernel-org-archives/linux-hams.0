@@ -1,76 +1,237 @@
-From: Brian Rogers <n1uro@n1uro.ampr.org>
-Subject: Re: Netrom
-Date: Wed, 10 Jul 2013 00:51:03 -0400
-Message-ID: <1373431863.12034.11.camel@n1uro.ampr.org>
-References: <20130708115635.A4B233700A5@n1uro.ampr.org>
-	 <51DABEDA.8020905@junglevision.com>
-	 <1373314487.13641.19.camel@n1uro.ampr.org>
-	 <51DB9383.1050304@junglevision.com>
-	 <1373371546.6646.26.camel@n1uro.ampr.org>
-	 <20130709223429.GD18314@x-berg.in-berlin.de>
-	 <51DCC209.8080006@junglevision.com> <51DCC337.9030204@junglevision.com>
-	 <20130710031728.GI16655@n0nb.us>
-Reply-To: n1uro@n1uro.ampr.org
+From: Cathryn Mataga <cathryn@junglevision.com>
+Subject: Re: [PATCH] xfbbd: Run the same data files on 64-bit
+Date: Mon, 15 Jul 2013 20:09:19 -0700
+Message-ID: <51E4B95F.9030002@junglevision.com>
+References: <4CE0313C.3080804@upmc.fr> <51D738A7.1010505@junglevision.com> <0A70646B-CB6F-4FBE-8D10-767502DD78B6@upmc.fr>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
+Content-Type: multipart/mixed;
+ boundary="------------050707090906040905060707"
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <20130710031728.GI16655@n0nb.us>
+In-Reply-To: <0A70646B-CB6F-4FBE-8D10-767502DD78B6@upmc.fr>
 Sender: linux-hams-owner@vger.kernel.org
 List-ID: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"
-To: linux-hams <linux-hams@vger.kernel.org>
+To: Pidoux <bernard.pidoux@upmc.fr>
+Cc: linux-hams <linux-hams@vger.kernel.org>
 
-On Tue, 2013-07-09 at 22:17 -0500, Nate Bargmann wrote:
+This is a multi-part message in MIME format.
+--------------050707090906040905060707
+Content-Type: text/plain; charset="utf-8"; format="flowed"
+Content-Transfer-Encoding: 8bit
 
-> It has been a long time, nearly 20 years since I worked with NetROM, but
-> I do recall this.  Broadcasts are AX.25 UI (unconnected) packets and are
-> sent to the destination of NODES, at least that is what I recall of the
-> original NetROM, early TheNet, and G8BPQ nodes.  So Node A in this case
-> does not "disconnect" nor does it ever send its nodes list as part of
-> the connected level 2/level 3 session.  Even when there was a level
-> 2/level 3 connection between nodes, the nodes broadcast was a UI packet
-> typically broadcast every 60 minutes often refered to as "node barf" by
-> some who didn't care to understand about their operation.
+On 7/6/2013 2:24 PM, Pidoux wrote:
 
-Absolutely the way it was (and in some parts still is). If you can find
-some of the old NEDA pages, they used a default quality of 203, and a
-min qual of 50. Only user tnc's were shown and never broadcast nodes as
-you mention. The backbone tncs linked via rs232/diode matrix cables had
-hidden alias's... so the only visible nodes to an end user in a "nodes
-list" were those of the userport TNCs. By using 203, the next visible
-hop would degrade to a quality of 181 (with the hidden port having a
-quality of I think 192). The next visible hop after that if my memory
-serves me well would be 164, and so on. The mathematics was so that the
-8th visible hop to your own node would have a quality of 51, thus the
-9th hop would be below the minqual of 50, and wouldn't be
-shown/broadcasted or added.
+Alright, let's try this again.  This is in -pruN format.  if 
+THIRTYTWOBITDATA is defined then the data will be created in a way 
+that's compatible with the 32-bit versions of the program, and 
+compatible with the documentation on the f6fbb.org website. I also fixed 
+some compile warnings that were created by the last patch. The default 
+is set to 64-bit data.
 
-> Once upon a time I had a Software 2000 NetROM manual that described a
-> lot of the protocol.  I have no idea if the authors of the Linux NetROM
-> code had access to that document or any other reference.  After years of
-> watching it, even when I had access to a NetROM network with a backbone,
-> NetROM seemed to fall apart after more than about three or four hops.
+Note:  That the 64-bit data and 32-bit data are not compatible with each 
+other, so back up your data files first before you experiment with this.
 
-The NEDA system worked extremely well beyond 4 hops. They very carefully
-studied it and when TheNet was replaced with X1J-4 we migrated over to
-that. The neat thing about X1J-4 was that it did have a tiny IP router
-in it... which was in a sense pointless because it had no IP daemons.
-In the event of IP on RF though, you're better off w/o the added
-protocol headers of NetRom and use vanilla ax25.
+> Hi Cathryn,
+>
+> Thank you for your message.
+> I have been using FBB 7.05e on a 64 bits machine for a while with Mandriva and somce lat year with Mageia Linux distro without problem.
+> However I never tried to import any data from a previous 32 bits install for I do not see any necessity to do that.
+> What kind of data do you want to import  ?
+>
+> However, would you mind providing a patch created with diff -pruN options. This is the one I am used to read.
+>
+> I will consider it and let you know the results of my tests.
+>
+> 73 de Bernard Pidoux f6bvp
+>
+> Sent from my iPhone
+>
+> Le 5 juil. 2013 à 23:20, Cathryn Mataga <cathryn@junglevision.com> a écrit :
+>
+>> I'm moving my ham radio server up to 64-bit Fedora 18.  So I'm fixing issues as I hit them.
+>>
+>> This is against fbbsrc.705e.  When compiled for 64 bits, the code was corrupting all my 32-bit data files.
+>> I think this is right, that the binary data files should be the same between 32 and 64 bit compiles.
+>>
+>> After applying this patch, I see my user names and messages correctly after copying data from my old 32-bit install to a new 64-bit install.
+>>
+>> I haven't made any patches in awhile so if anything is wrong let me know.
+>>
+>> <fbbsrc.705e.sixtyfour.patch>
+> --
+> To unsubscribe from this list: send the line "unsubscribe linux-hams" in
+> the body of a message to majordomo@vger.kernel.org
+> More majordomo info at  http://vger.kernel.org/majordomo-info.html
 
-> All of this is a bit hazy in my memory.
 
-Your memory is quite clear it seems :) Thanks for the trip down memory
-lane! Brought me back to my old TheNet/BPQ days as well.
--- 
-73 de Brian Rogers - N1URO
-email: <n1uro@n1uro.ampr.org>
-Web: http://www.n1uro.net/
-Ampr1: http://n1uro.ampr.org/
-Ampr2: http://nos.n1uro.ampr.org
-Linux Amateur Radio Services
-axMail-Fax & URONode
-AmprNet coordinator for:
-Delaware, all New England, 
-and New Jersey.
+--------------050707090906040905060707
+Content-Type: text/plain; charset=windows-1252;
+ name="patch.fbbsrc.705e.32data"
+Content-Transfer-Encoding: base64
+Content-Disposition: attachment;
+ filename="patch.fbbsrc.705e.32data"
 
+ZGlmZiAtcHJ1TiAvaG9tZS9jYXRocnluL2ZiYnNyYy43MDVlL2luY2x1ZGUvZGlmZi50eHQg
+L2hvbWUvY2F0aHJ5bi9mYmJzcmMuNzA1ZS5zaXh0eWZvdXIvaW5jbHVkZS9kaWZmLnR4dAot
+LS0gL2hvbWUvY2F0aHJ5bi9mYmJzcmMuNzA1ZS9pbmNsdWRlL2RpZmYudHh0CTE5NjktMTIt
+MzEgMTk6MDA6MDAuMDAwMDAwMDAwIC0wNTAwCisrKyAvaG9tZS9jYXRocnluL2ZiYnNyYy43
+MDVlLnNpeHR5Zm91ci9pbmNsdWRlL2RpZmYudHh0CTIwMTMtMDctMDUgMTc6MDk6MTIuMTEx
+ODIzNTA5IC0wNDAwCkBAIC0wLDAgKzEsMTI3IEBACistLS0gL2hvbWUvY2F0aHJ5bi9mYmJf
+c2Vydi5oCTIwMTMtMDctMDUgMTc6MDM6MDkuMTUwMDU1MjY1IC0wNDAwCisrKysgZmJiX3Nl
+cnYuaAkyMDEzLTA3LTA1IDE2OjI2OjAxLjgxNDE1NzY5OSAtMDQwMAorQEAgLTMxLDcgKzMx
+LDcgQEAKKyAKKyAjaWZuZGVmCV9mYmJfc2VydgorICNkZWZpbmUJX2ZiYl9zZXJ2CistCisr
+I2RlZmluZSBmYmJfbG9uZyBpbnQKKyAvKiAjZGVmaW5lIEZPUlRJRlkgKi8KKyAKKyAjaWZk
+ZWYgX19MSU5VWF9fCitAQCAtNjU1LDggKzY1NSw4IEBACisgCXVjaGFyIGZyZWU7CisgCXVj
+aGFyIGNoYW5nZWQ7CisgCXVzaG9ydCBzZWVuOworLQlsb25nIGxhc3RfbW9kaWYgX19hMl9f
+OworLQlsb25nIGxhc3Rfc2VlbiBfX2EyX187CisrCWZiYl9sb25nIGxhc3RfbW9kaWYgX19h
+Ml9fOworKwlmYmJfbG9uZyBsYXN0X3NlZW4gX19hMl9fOworIAljaGFyIGZpcnN0X2hvbWVi
+YnNbNDFdOworIAljaGFyIHNlY25kX2hvbWViYnNbNDFdOworIAljaGFyIGZpcnN0X3ppcFs5
+XTsKK0BAIC02NjksNyArNjY5LDYgQEAKKyAvKgorICAqIFN0cnVjdHVyZXMgZXQgYmxvY3Mg
+ZGUgbWVzc2FnZXMKKyAgKi8KKy0KKyB0eXBlZGVmIHN0cnVjdAorIHsKKyAJbG9uZyBubWVz
+czsKK0BAIC03MzMsNyArNzMyLDcgQEAKKyAJY2hhciBpbmRjbnhbNl07CisgCXVjaGFyIHBv
+cnQ7CisgCXVjaGFyIHZvaWU7CistCWxvbmcgZGF0Y254IF9fYTJfXzsKKysJZmJiX2xvbmcg
+ZGF0Y254IF9fYTJfXzsKKyAJc2hvcnQgdHBzY254OworIH0KKyBzdGF0aXM7CitAQCAtNzY3
+LDE3ICs3NjYsMTcgQEAKKyAKKyAJaW5kaWNhdCBpbmRpYzsJCQkJLyogOCAgQ2FsbHNpZ24g
+Ki8KKyAJaW5kaWNhdCByZWxhaVs4XTsJCQkvKiA2NCBEaWdpcyBwYXRoICovCistCWxvbmcg
+bGFzdG1lcyBfX2EyX187CQkvKiA0ICBMYXN0IEwgbnVtYmVyICovCistCWxvbmcgbmJjb24g
+X19hMl9fOwkJCS8qIDQgIE51bWJlciBvZiBjb25uZXhpb25zICovCistCWxvbmcgaGNvbiBf
+X2EyX187CQkJLyogNCAgTGFzdCBjb25uZXhpb24gZGF0ZSAqLworLQlsb25nIGxhc3R5YXAg
+X19hMl9fOwkJLyogNCAgTGFzdCBZTiBkYXRlICovCisrCWZiYl9sb25nIGxhc3RtZXMgX19h
+Ml9fOwkJLyogNCAgTGFzdCBMIG51bWJlciAqLworKwlmYmJfbG9uZyBuYmNvbiBfX2EyX187
+CQkJLyogNCAgTnVtYmVyIG9mIGNvbm5leGlvbnMgKi8KKysJZmJiX2xvbmcgaGNvbiBfX2Ey
+X187CQkJLyogNCAgTGFzdCBjb25uZXhpb24gZGF0ZSAqLworKwlmYmJfbG9uZyBsYXN0eWFw
+IF9fYTJfXzsJCS8qIDQgIExhc3QgWU4gZGF0ZSAqLworIAl1c2hvcnQgZmxhZ3M7CQkJCS8q
+IDIgIEZsYWdzICovCisgCXVzaG9ydCBvbl9iYXNlOwkJCQkvKiAyICBPTiBCYXNlIG51bWJl
+ciAqLworIAorIAl1Y2hhciBuYmw7CQkJCQkvKiAxICBMaW5lcyBwYWdpbmcgKi8KKyAJdWNo
+YXIgbGFuZzsJCQkJCS8qIDEgIExhbmd1YWdlICovCisgCistCWxvbmcgbmV3YmFubmVyIF9f
+YTJfXzsJCS8qIDQgIExhc3QgQmFubmVyIGRhdGUgKi8KKysJZmJiX2xvbmcgbmV3YmFubmVy
+IF9fYTJfXzsJCS8qIDQgIExhc3QgQmFubmVyIGRhdGUgKi8KKyAJdXNob3J0IGRvd25sb2Fk
+OwkJCS8qIDIgIGRvd25sb2FkIHNpemUgKEtCKSA9IDEwMCAqLworIAljaGFyIGZyZWVbMjBd
+OwkJCQkvKiAyMCBSZXNlcnZlZCAqLworIAljaGFyIHRoZW1lOwkJCQkJLyogMSAgQ3VycmVu
+dCB0b3BpYyAqLworQEAgLTgwMiw3ICs4MDEsNyBAQAorIHsKKyAJY2hhciBtb2RlOworIAlj
+aGFyIGZiaWRbMTNdOworLQlsb25nIG51bWVybyBfX2EyX187CisrCWZiYl9sb25nIG51bWVy
+byBfX2EyX187CisgfQorIGJpZGZ3ZDsKKyAKK0BAIC04NTAsOSArODQ5LDkgQEAKKyB7CQkJ
+CQkJCQkvKiBMb25ndWV1ciA9IDE5NCBvY3RldHMgKi8KKyAJY2hhciB0eXBlOworIAljaGFy
+IHN0YXR1czsKKy0JbG9uZyBudW1lcm8gX19hMl9fOworLQlsb25nIHRhaWxsZSBfX2EyX187
+CistCWxvbmcgZGF0ZSBfX2EyX187CisrCWZiYl9sb25nIG51bWVybyBfX2EyX187CisrCWZi
+Yl9sb25nIHRhaWxsZSBfX2EyX187CisrCWZiYl9sb25nIGRhdGUgX19hMl9fOworIAljaGFy
+IGJic2ZbN107CisgCWNoYXIgYmJzdls0MV07CisgCWNoYXIgZXhwZWRbN107CitAQCAtODYx
+LDExICs4NjAsMTEgQEAKKyAJY2hhciB0aXRyZVs2MV07CisgCWNoYXIgYmluOworIAljaGFy
+IGZyZWVbNV07CistCWxvbmcgZ3JwbnVtIF9fYTJfXzsKKysJZmJiX2xvbmcgZ3JwbnVtIF9f
+YTJfXzsKKyAJdXNob3J0IG5ibHU7CistCWxvbmcgdGhlbWUgX19hMl9fOworLQlsb25nIGRh
+dGVzZCBfX2EyX187CistCWxvbmcgZGF0ZWNoIF9fYTJfXzsKKysJZmJiX2xvbmcgdGhlbWUg
+X19hMl9fOworKwlmYmJfbG9uZyBkYXRlc2QgX19hMl9fOworKwlmYmJfbG9uZyBkYXRlY2gg
+X19hMl9fOworIAljaGFyIGZiYnNbTkJNQVNLXTsKKyAJY2hhciBmb3J3W05CTUFTS107Cisg
+fQorQEAgLTkyMSwxMiArOTIwLDEyIEBACisgCWRvdWJsZSBhMCBfX2EyX187CisgCWRvdWJs
+ZSBuMCBfX2EyX187CisgCWRvdWJsZSBxMyBfX2EyX187CistCWxvbmcgazAgX19hMl9fOwor
+KwlmYmJfbG9uZyBrMCBfX2EyX187CisgCWRvdWJsZSBmMSBfX2EyX187CisgCWRvdWJsZSB2
+MSBfX2EyX187CisgCXNob3J0IHBhczsKKy0JbG9uZyBtYWogX19hMl9fOworLQlsb25nIGNh
+dCBfX2EyX187CQkJLyogQ2F0YWxvZyBOdW1iZXIgLSBhbmNpZW5uZW1lbnQgdmlkZSAgKi8K
+KysJZmJiX2xvbmcgbWFqIF9fYTJfXzsKKysJZmJiX2xvbmcgY2F0IF9fYTJfXzsJCQkvKiBD
+YXRhbG9nIE51bWJlciAtIGFuY2llbm5lbWVudCB2aWRlICAqLworIAlzaG9ydCBsaWJyZVs0
+XTsKKyB9Cisgc2F0ZWw7CitAQCAtMTIzMCw4ICsxMjI5LDggQEAKKyAJY2hhciBub21maWNb
+TEFCRUxfRklDXTsKKyAJY2hhciBsYWJlbFtMQUJFTF9OT01dOworIAljaGFyIG93bmVyW0xB
+QkVMX09XTl07CistCWxvbmcgaW5kZXg7CistCWxvbmcgZGF0ZV9jcmVhdGlvbjsKKysJZmJi
+X2xvbmcgaW5kZXg7CisrCWZiYl9sb25nIGRhdGVfY3JlYXRpb247CisgCWNoYXIgZnJlZVsy
+NF07CisgfQorIFJsYWJlbDsJCQkJCQkJLyogMTYwIGJ5dGVzICovCmRpZmYgLXBydU4gL2hv
+bWUvY2F0aHJ5bi9mYmJzcmMuNzA1ZS9pbmNsdWRlL2ZiYl9zZXJ2LmggL2hvbWUvY2F0aHJ5
+bi9mYmJzcmMuNzA1ZS5zaXh0eWZvdXIvaW5jbHVkZS9mYmJfc2Vydi5oCi0tLSAvaG9tZS9j
+YXRocnluL2ZiYnNyYy43MDVlL2luY2x1ZGUvZmJiX3NlcnYuaAkyMDEzLTAzLTE2IDEwOjAw
+OjU2LjAwMDAwMDAwMCAtMDQwMAorKysgL2hvbWUvY2F0aHJ5bi9mYmJzcmMuNzA1ZS5zaXh0
+eWZvdXIvaW5jbHVkZS9mYmJfc2Vydi5oCTIwMTMtMDctMTUgMjM6MDA6MzMuOTc1MzU5MzIw
+IC0wNDAwCkBAIC0zMiw2ICszMiwxNSBAQAogI2lmbmRlZglfZmJiX3NlcnYKICNkZWZpbmUJ
+X2ZiYl9zZXJ2CiAKKy8qIERlZmluZSBUSElSVFlUV09CSVREQVRBIGlmIHlvdSBhcmUgYnJp
+bmdpbmcgaW4gZGF0YSBmcm9tIDMyLWJpdCB2ZXJzaW9ucy4KKyBUaGlzIGNyZWF0ZXMgZGF0
+YWZpbGVzIHRoYXQgbWF0Y2ggdGhlIG9yaWdpbiBkb2N1bWVudGF0aW9uIGZvciBGQkIuICAK
+KyBUaGV5IGFyZSBub3QgY29tcGF0aWJsZSB3aXRoIGZpbGVzIGNyZWF0ZWQgd2l0aCA2NC1i
+aXQgdmVyc2lvbnMuICAqLworLyogI2RlZmluZSBUSElSVFlUV09CSVREQVRBIDEgKi8KKyNp
+ZmRlZiBUSElSVFlUV09CSVREQVRBCisjZGVmaW5lIGZiYl9sb25nIGludAorI2Vsc2UKKyNk
+ZWZpbmUgZmJiX2xvbmcgbG9uZworI2VuZGlmCiAvKiAjZGVmaW5lIEZPUlRJRlkgKi8KIAog
+I2lmZGVmIF9fTElOVVhfXwpAQCAtNjU1LDggKzY2NCw4IEBAIHR5cGVkZWYgc3RydWN0CiAJ
+dWNoYXIgZnJlZTsKIAl1Y2hhciBjaGFuZ2VkOwogCXVzaG9ydCBzZWVuOwotCWxvbmcgbGFz
+dF9tb2RpZiBfX2EyX187Ci0JbG9uZyBsYXN0X3NlZW4gX19hMl9fOworCWZiYl9sb25nIGxh
+c3RfbW9kaWYgX19hMl9fOworCWZiYl9sb25nIGxhc3Rfc2VlbiBfX2EyX187CiAJY2hhciBm
+aXJzdF9ob21lYmJzWzQxXTsKIAljaGFyIHNlY25kX2hvbWViYnNbNDFdOwogCWNoYXIgZmly
+c3RfemlwWzldOwpAQCAtNjY5LDcgKzY3OCw2IEBAIFdwczsKIC8qCiAgKiBTdHJ1Y3R1cmVz
+IGV0IGJsb2NzIGRlIG1lc3NhZ2VzCiAgKi8KLQogdHlwZWRlZiBzdHJ1Y3QKIHsKIAlsb25n
+IG5tZXNzOwpAQCAtNzMzLDcgKzc0MSw3IEBAIHR5cGVkZWYgc3RydWN0IHR5cHN0YXQKIAlj
+aGFyIGluZGNueFs2XTsKIAl1Y2hhciBwb3J0OwogCXVjaGFyIHZvaWU7Ci0JbG9uZyBkYXRj
+bnggX19hMl9fOworCWZiYl9sb25nIGRhdGNueCBfX2EyX187CiAJc2hvcnQgdHBzY254Owog
+fQogc3RhdGlzOwpAQCAtNzY3LDE3ICs3NzUsMTcgQEAgdHlwZWRlZiBzdHJ1Y3QKIAogCWlu
+ZGljYXQgaW5kaWM7CQkJCS8qIDggIENhbGxzaWduICovCiAJaW5kaWNhdCByZWxhaVs4XTsJ
+CQkvKiA2NCBEaWdpcyBwYXRoICovCi0JbG9uZyBsYXN0bWVzIF9fYTJfXzsJCS8qIDQgIExh
+c3QgTCBudW1iZXIgKi8KLQlsb25nIG5iY29uIF9fYTJfXzsJCQkvKiA0ICBOdW1iZXIgb2Yg
+Y29ubmV4aW9ucyAqLwotCWxvbmcgaGNvbiBfX2EyX187CQkJLyogNCAgTGFzdCBjb25uZXhp
+b24gZGF0ZSAqLwotCWxvbmcgbGFzdHlhcCBfX2EyX187CQkvKiA0ICBMYXN0IFlOIGRhdGUg
+Ki8KKwlmYmJfbG9uZyBsYXN0bWVzIF9fYTJfXzsJCS8qIDQgIExhc3QgTCBudW1iZXIgKi8K
+KwlmYmJfbG9uZyBuYmNvbiBfX2EyX187CQkJLyogNCAgTnVtYmVyIG9mIGNvbm5leGlvbnMg
+Ki8KKwlmYmJfbG9uZyBoY29uIF9fYTJfXzsJCQkvKiA0ICBMYXN0IGNvbm5leGlvbiBkYXRl
+ICovCisJZmJiX2xvbmcgbGFzdHlhcCBfX2EyX187CQkvKiA0ICBMYXN0IFlOIGRhdGUgKi8K
+IAl1c2hvcnQgZmxhZ3M7CQkJCS8qIDIgIEZsYWdzICovCiAJdXNob3J0IG9uX2Jhc2U7CQkJ
+CS8qIDIgIE9OIEJhc2UgbnVtYmVyICovCiAKIAl1Y2hhciBuYmw7CQkJCQkvKiAxICBMaW5l
+cyBwYWdpbmcgKi8KIAl1Y2hhciBsYW5nOwkJCQkJLyogMSAgTGFuZ3VhZ2UgKi8KIAotCWxv
+bmcgbmV3YmFubmVyIF9fYTJfXzsJCS8qIDQgIExhc3QgQmFubmVyIGRhdGUgKi8KKwlmYmJf
+bG9uZyBuZXdiYW5uZXIgX19hMl9fOwkJLyogNCAgTGFzdCBCYW5uZXIgZGF0ZSAqLwogCXVz
+aG9ydCBkb3dubG9hZDsJCQkvKiAyICBkb3dubG9hZCBzaXplIChLQikgPSAxMDAgKi8KIAlj
+aGFyIGZyZWVbMjBdOwkJCQkvKiAyMCBSZXNlcnZlZCAqLwogCWNoYXIgdGhlbWU7CQkJCQkv
+KiAxICBDdXJyZW50IHRvcGljICovCkBAIC04MDIsNyArODEwLDcgQEAgdHlwZWRlZiBzdHJ1
+Y3QKIHsKIAljaGFyIG1vZGU7CiAJY2hhciBmYmlkWzEzXTsKLQlsb25nIG51bWVybyBfX2Ey
+X187CisJZmJiX2xvbmcgbnVtZXJvIF9fYTJfXzsKIH0KIGJpZGZ3ZDsKIApAQCAtODUwLDkg
+Kzg1OCw5IEBAIHR5cGVkZWYgc3RydWN0CiB7CQkJCQkJCQkvKiBMb25ndWV1ciA9IDE5NCBv
+Y3RldHMgKi8KIAljaGFyIHR5cGU7CiAJY2hhciBzdGF0dXM7Ci0JbG9uZyBudW1lcm8gX19h
+Ml9fOwotCWxvbmcgdGFpbGxlIF9fYTJfXzsKLQlsb25nIGRhdGUgX19hMl9fOworCWZiYl9s
+b25nIG51bWVybyBfX2EyX187CisJZmJiX2xvbmcgdGFpbGxlIF9fYTJfXzsKKwlmYmJfbG9u
+ZyBkYXRlIF9fYTJfXzsKIAljaGFyIGJic2ZbN107CiAJY2hhciBiYnN2WzQxXTsKIAljaGFy
+IGV4cGVkWzddOwpAQCAtODYxLDExICs4NjksMTEgQEAgdHlwZWRlZiBzdHJ1Y3QKIAljaGFy
+IHRpdHJlWzYxXTsKIAljaGFyIGJpbjsKIAljaGFyIGZyZWVbNV07Ci0JbG9uZyBncnBudW0g
+X19hMl9fOworCWZiYl9sb25nIGdycG51bSBfX2EyX187CiAJdXNob3J0IG5ibHU7Ci0JbG9u
+ZyB0aGVtZSBfX2EyX187Ci0JbG9uZyBkYXRlc2QgX19hMl9fOwotCWxvbmcgZGF0ZWNoIF9f
+YTJfXzsKKwlmYmJfbG9uZyB0aGVtZSBfX2EyX187CisJZmJiX2xvbmcgZGF0ZXNkIF9fYTJf
+XzsKKwlmYmJfbG9uZyBkYXRlY2ggX19hMl9fOwogCWNoYXIgZmJic1tOQk1BU0tdOwogCWNo
+YXIgZm9yd1tOQk1BU0tdOwogfQpAQCAtOTIxLDEyICs5MjksMTIgQEAgdHlwZWRlZiBzdHJ1
+Y3QgdHlwX3NhdGVsCiAJZG91YmxlIGEwIF9fYTJfXzsKIAlkb3VibGUgbjAgX19hMl9fOwog
+CWRvdWJsZSBxMyBfX2EyX187Ci0JbG9uZyBrMCBfX2EyX187CisJZmJiX2xvbmcgazAgX19h
+Ml9fOwogCWRvdWJsZSBmMSBfX2EyX187CiAJZG91YmxlIHYxIF9fYTJfXzsKIAlzaG9ydCBw
+YXM7Ci0JbG9uZyBtYWogX19hMl9fOwotCWxvbmcgY2F0IF9fYTJfXzsJCQkvKiBDYXRhbG9n
+IE51bWJlciAtIGFuY2llbm5lbWVudCB2aWRlICAqLworCWZiYl9sb25nIG1haiBfX2EyX187
+CisJZmJiX2xvbmcgY2F0IF9fYTJfXzsJCQkvKiBDYXRhbG9nIE51bWJlciAtIGFuY2llbm5l
+bWVudCB2aWRlICAqLwogCXNob3J0IGxpYnJlWzRdOwogfQogc2F0ZWw7CkBAIC0xMjMwLDgg
+KzEyMzgsOCBAQCB0eXBlZGVmIHN0cnVjdAogCWNoYXIgbm9tZmljW0xBQkVMX0ZJQ107CiAJ
+Y2hhciBsYWJlbFtMQUJFTF9OT01dOwogCWNoYXIgb3duZXJbTEFCRUxfT1dOXTsKLQlsb25n
+IGluZGV4OwotCWxvbmcgZGF0ZV9jcmVhdGlvbjsKKwlmYmJfbG9uZyBpbmRleDsKKwlmYmJf
+bG9uZyBkYXRlX2NyZWF0aW9uOwogCWNoYXIgZnJlZVsyNF07CiB9CiBSbGFiZWw7CQkJCQkJ
+CS8qIDE2MCBieXRlcyAqLwpkaWZmIC1wcnVOIC9ob21lL2NhdGhyeW4vZmJic3JjLjcwNWUv
+c3JjL0VSUk9SLlNZUyAvaG9tZS9jYXRocnluL2ZiYnNyYy43MDVlLnNpeHR5Zm91ci9zcmMv
+RVJST1IuU1lTCi0tLSAvaG9tZS9jYXRocnluL2ZiYnNyYy43MDVlL3NyYy9FUlJPUi5TWVMJ
+MTk2OS0xMi0zMSAxOTowMDowMC4wMDAwMDAwMDAgLTA1MDAKKysrIC9ob21lL2NhdGhyeW4v
+ZmJic3JjLjcwNWUuc2l4dHlmb3VyL3NyYy9FUlJPUi5TWVMJMjAxMy0wNy0wNSAwMTo0Njox
+NC45NzA3NjE0MTEgLTA0MDAKQEAgLTAsMCArMSw0IEBACis+IEVYQ0VQVElPTiA6IFN0YXRp
+b24gLCBDaDowICgwLTAtMCkgIDA0LzA3LzEzIDIyOjQ2CisgIFZlcnNpb24gNy4wNWUgKEp1
+bCAgNSAyMDEzKQorICAvdXNyL2xvY2FsL3Zhci9heDI1L2ZiYi9zYXQvc2F0ZWwuZGF0IDAs
+IGVycm5vIDEzPVBlcm1pc3Npb24gZGVuaWVkICBDYW5ub3QgY3JlYXRlIGZpbGUKKwpkaWZm
+IC1wcnVOIC9ob21lL2NhdGhyeW4vZmJic3JjLjcwNWUvc3JjL3N0YXRpcy5jIC9ob21lL2Nh
+dGhyeW4vZmJic3JjLjcwNWUuc2l4dHlmb3VyL3NyYy9zdGF0aXMuYwotLS0gL2hvbWUvY2F0
+aHJ5bi9mYmJzcmMuNzA1ZS9zcmMvc3RhdGlzLmMJMjAxMy0wMy0xNiAxMDowMDo1Ni4wMDAw
+MDAwMDAgLTA0MDAKKysrIC9ob21lL2NhdGhyeW4vZmJic3JjLjcwNWUuc2l4dHlmb3VyL3Ny
+Yy9zdGF0aXMuYwkyMDEzLTA3LTE1IDIyOjU3OjQzLjQ4ODc2ODYyOCAtMDQwMApAQCAtMzAs
+NiArMzAsMjAgQEAKIAogI2luY2x1ZGUgPHNlcnYuaD4KIAorI2lmZGVmIFRISVJUWVRXT0JJ
+VERBVEEKKworc3RhdGljIHN0cnVjdCB0bSAqZmJiX2xvY2FsdGltZShpbnQgKnRpbWUpCit7
+Citsb25nIGx0aW1lID0gKnRpbWU7CityZXR1cm4gbG9jYWx0aW1lKCZsdGltZSk7Cit9CisK
+KworI2Vsc2UKKyNkZWZpbmUgZmJiX2xvY2FsdGltZSBsb2NhbHRpbWUKKyNlbmRpZgorCisK
+IHN0YXRpYyB2b2lkIG1lbnVfc3RhdGlzdGlxdWVzICh2b2lkKTsKIAogc3RhdGljIHZvaWQg
+aGlzdG9fam91ciAodm9pZCkKQEAgLTcyLDcgKzg2LDcgQEAgc3RhdGljIHZvaWQgaGlzdG9f
+am91ciAodm9pZCkKIAkJCW5fY3B5ICg2LCBjYWwsIGJ1ZmZzdGF0LmluZGNueCk7CiAJCQlp
+ZiAoc3RybWF0Y2ggKGNhbCwgcHZvaWUtPmNoX3RlbXApKQogCQkJewotCQkJCXNkYXRlID0g
+bG9jYWx0aW1lICgmYnVmZnN0YXQuZGF0Y254KTsKKwkJCQlzZGF0ZSA9IGZiYl9sb2NhbHRp
+bWUgKCZidWZmc3RhdC5kYXRjbngpOwogCQkJCWhpc3RbKHNkYXRlLT50bV93ZGF5ICsgNikg
+JSA3XSArPSBidWZmc3RhdC50cHNjbng7CiAJCQl9CiAJCX0KQEAgLTE0NSw3ICsxNTksNyBA
+QCBzdGF0aWMgdm9pZCBoaXN0b19oZXVyZSAodm9pZCkKIAkJbl9jcHkgKDYsIGNhbCwgYnVm
+ZnN0YXQuaW5kY254KTsKIAkJaWYgKHN0cm1hdGNoIChjYWwsIHB2b2llLT5jaF90ZW1wKSkK
+IAkJewotCQkJc2RhdGUgPSBsb2NhbHRpbWUgKCZidWZmc3RhdC5kYXRjbngpOworCQkJc2Rh
+dGUgPSBmYmJfbG9jYWx0aW1lICgmYnVmZnN0YXQuZGF0Y254KTsKIAkJCWhpc3Rbc2RhdGUt
+PnRtX2hvdXJdICs9IGJ1ZmZzdGF0LnRwc2NueDsKIAkJfQogCX0KQEAgLTIxMiw3ICsyMjYs
+NyBAQCBzdGF0aWMgdm9pZCBnZW5lcmFsaXRlcyAodm9pZCkKIAkJCWRlcGFydCA9IHRpbWUg
+KE5VTEwpIC0gKGxvbmcpIG5iam91ciAqODY0MDBMOwogCQl9CiAKLQkJc2RhdGUgPSBsb2Nh
+bHRpbWUgKCZidWZmc3RhdC5kYXRjbngpOworCQlzZGF0ZSA9IGZiYl9sb2NhbHRpbWUgKCZi
+dWZmc3RhdC5kYXRjbngpOwogCQlpZiAoYnVmZnN0YXQuZGF0Y254ID4gZGVwYXJ0KQogCQl7
+CiAJCQloaXN0W3NkYXRlLT50bV9ob3VyXSArPSAobG9uZykgYnVmZnN0YXQudHBzY254Owo=
+--------------050707090906040905060707--
