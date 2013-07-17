@@ -1,237 +1,1638 @@
 From: Cathryn Mataga <cathryn@junglevision.com>
-Subject: Re: [PATCH] xfbbd: Run the same data files on 64-bit
-Date: Mon, 15 Jul 2013 20:09:19 -0700
-Message-ID: <51E4B95F.9030002@junglevision.com>
-References: <4CE0313C.3080804@upmc.fr> <51D738A7.1010505@junglevision.com> <0A70646B-CB6F-4FBE-8D10-767502DD78B6@upmc.fr>
+Subject: utf8-patch
+Date: Tue, 16 Jul 2013 23:54:31 -0700
+Message-ID: <51E63FA7.7070601@junglevision.com>
+References: <20130708115635.A4B233700A5@n1uro.ampr.org> <51DABEDA.8020905@junglevision.com> <1373314487.13641.19.camel@n1uro.ampr.org> <51DB9383.1050304@junglevision.com> <1373371546.6646.26.camel@n1uro.ampr.org> <20130709223429.GD18314@x-berg.in-berlin.de> <1373415104.26592.32.camel@n1uro.ampr.org> <EB9D8B55-6554-46D8-B0D4-D83F0A1499CC@osterried.de> <1373460041.4524.33.camel@n1uro.ampr.org> <6389184E-68DE-4B2D-B955-75E69726E08A@osterried.de> <1373489422.1842.24.camel@n1uro.ampr.org> <AE263F20-4B10-465A-BBAE-DB62498DB3CF@osterried.de>
 Mime-Version: 1.0
 Content-Type: multipart/mixed;
- boundary="------------050707090906040905060707"
+ boundary="------------010402090305050103050505"
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <0A70646B-CB6F-4FBE-8D10-767502DD78B6@upmc.fr>
+In-Reply-To: <AE263F20-4B10-465A-BBAE-DB62498DB3CF@osterried.de>
 Sender: linux-hams-owner@vger.kernel.org
 List-ID: <linux-hams.vger.kernel.org>
-To: Pidoux <bernard.pidoux@upmc.fr>
-Cc: linux-hams <linux-hams@vger.kernel.org>
+To: Thomas Osterried <thomas@osterried.de>
+Cc: n1uro@n1uro.ampr.org, Ralf Baechle <ralf@linux-mips.org>, linux-hams <linux-hams@vger.kernel.org>
 
 This is a multi-part message in MIME format.
---------------050707090906040905060707
-Content-Type: text/plain; charset="utf-8"; format="flowed"
-Content-Transfer-Encoding: 8bit
+--------------010402090305050103050505
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On 7/6/2013 2:24 PM, Pidoux wrote:
+ >Cathryn, there's also work left for your utf8-patch in the userspace 
+call program. It has been some years ago, and it >came right after 
+serveral bugfixes that crashed the call program. I
 
-Alright, let's try this again.  This is in -pruN format.  if 
-THIRTYTWOBITDATA is defined then the data will be created in a way 
-that's compatible with the 32-bit versions of the program, and 
-compatible with the documentation on the f6fbb.org website. I also fixed 
-some compile warnings that were created by the last patch. The default 
-is set to 64-bit data.
-
-Note:  That the 64-bit data and 32-bit data are not compatible with each 
-other, so back up your data files first before you experiment with this.
-
-> Hi Cathryn,
->
-> Thank you for your message.
-> I have been using FBB 7.05e on a 64 bits machine for a while with Mandriva and somce lat year with Mageia Linux distro without problem.
-> However I never tried to import any data from a previous 32 bits install for I do not see any necessity to do that.
-> What kind of data do you want to import  ?
->
-> However, would you mind providing a patch created with diff -pruN options. This is the one I am used to read.
->
-> I will consider it and let you know the results of my tests.
->
-> 73 de Bernard Pidoux f6bvp
->
-> Sent from my iPhone
->
-> Le 5 juil. 2013 à 23:20, Cathryn Mataga <cathryn@junglevision.com> a écrit :
->
->> I'm moving my ham radio server up to 64-bit Fedora 18.  So I'm fixing issues as I hit them.
->>
->> This is against fbbsrc.705e.  When compiled for 64 bits, the code was corrupting all my 32-bit data files.
->> I think this is right, that the binary data files should be the same between 32 and 64 bit compiles.
->>
->> After applying this patch, I see my user names and messages correctly after copying data from my old 32-bit install to a new 64-bit install.
->>
->> I haven't made any patches in awhile so if anything is wrong let me know.
->>
->> <fbbsrc.705e.sixtyfour.patch>
-> --
-> To unsubscribe from this list: send the line "unsubscribe linux-hams" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at  http://vger.kernel.org/majordomo-info.html
+I had a free evening, so I rebased this patch with the most recent 
+code.   I got as far as determining that the code still works for me, 
+but it's not extensively tested.  This needs to link to ncursesw rather 
+than ncurses.
 
 
---------------050707090906040905060707
+
+
+
+--------------010402090305050103050505
 Content-Type: text/plain; charset=windows-1252;
- name="patch.fbbsrc.705e.32data"
-Content-Transfer-Encoding: base64
+ name="patch.ax25-apps-0.0.8-rc4.callintl"
+Content-Transfer-Encoding: 7bit
 Content-Disposition: attachment;
- filename="patch.fbbsrc.705e.32data"
+ filename="patch.ax25-apps-0.0.8-rc4.callintl"
 
-ZGlmZiAtcHJ1TiAvaG9tZS9jYXRocnluL2ZiYnNyYy43MDVlL2luY2x1ZGUvZGlmZi50eHQg
-L2hvbWUvY2F0aHJ5bi9mYmJzcmMuNzA1ZS5zaXh0eWZvdXIvaW5jbHVkZS9kaWZmLnR4dAot
-LS0gL2hvbWUvY2F0aHJ5bi9mYmJzcmMuNzA1ZS9pbmNsdWRlL2RpZmYudHh0CTE5NjktMTIt
-MzEgMTk6MDA6MDAuMDAwMDAwMDAwIC0wNTAwCisrKyAvaG9tZS9jYXRocnluL2ZiYnNyYy43
-MDVlLnNpeHR5Zm91ci9pbmNsdWRlL2RpZmYudHh0CTIwMTMtMDctMDUgMTc6MDk6MTIuMTEx
-ODIzNTA5IC0wNDAwCkBAIC0wLDAgKzEsMTI3IEBACistLS0gL2hvbWUvY2F0aHJ5bi9mYmJf
-c2Vydi5oCTIwMTMtMDctMDUgMTc6MDM6MDkuMTUwMDU1MjY1IC0wNDAwCisrKysgZmJiX3Nl
-cnYuaAkyMDEzLTA3LTA1IDE2OjI2OjAxLjgxNDE1NzY5OSAtMDQwMAorQEAgLTMxLDcgKzMx
-LDcgQEAKKyAKKyAjaWZuZGVmCV9mYmJfc2VydgorICNkZWZpbmUJX2ZiYl9zZXJ2CistCisr
-I2RlZmluZSBmYmJfbG9uZyBpbnQKKyAvKiAjZGVmaW5lIEZPUlRJRlkgKi8KKyAKKyAjaWZk
-ZWYgX19MSU5VWF9fCitAQCAtNjU1LDggKzY1NSw4IEBACisgCXVjaGFyIGZyZWU7CisgCXVj
-aGFyIGNoYW5nZWQ7CisgCXVzaG9ydCBzZWVuOworLQlsb25nIGxhc3RfbW9kaWYgX19hMl9f
-OworLQlsb25nIGxhc3Rfc2VlbiBfX2EyX187CisrCWZiYl9sb25nIGxhc3RfbW9kaWYgX19h
-Ml9fOworKwlmYmJfbG9uZyBsYXN0X3NlZW4gX19hMl9fOworIAljaGFyIGZpcnN0X2hvbWVi
-YnNbNDFdOworIAljaGFyIHNlY25kX2hvbWViYnNbNDFdOworIAljaGFyIGZpcnN0X3ppcFs5
-XTsKK0BAIC02NjksNyArNjY5LDYgQEAKKyAvKgorICAqIFN0cnVjdHVyZXMgZXQgYmxvY3Mg
-ZGUgbWVzc2FnZXMKKyAgKi8KKy0KKyB0eXBlZGVmIHN0cnVjdAorIHsKKyAJbG9uZyBubWVz
-czsKK0BAIC03MzMsNyArNzMyLDcgQEAKKyAJY2hhciBpbmRjbnhbNl07CisgCXVjaGFyIHBv
-cnQ7CisgCXVjaGFyIHZvaWU7CistCWxvbmcgZGF0Y254IF9fYTJfXzsKKysJZmJiX2xvbmcg
-ZGF0Y254IF9fYTJfXzsKKyAJc2hvcnQgdHBzY254OworIH0KKyBzdGF0aXM7CitAQCAtNzY3
-LDE3ICs3NjYsMTcgQEAKKyAKKyAJaW5kaWNhdCBpbmRpYzsJCQkJLyogOCAgQ2FsbHNpZ24g
-Ki8KKyAJaW5kaWNhdCByZWxhaVs4XTsJCQkvKiA2NCBEaWdpcyBwYXRoICovCistCWxvbmcg
-bGFzdG1lcyBfX2EyX187CQkvKiA0ICBMYXN0IEwgbnVtYmVyICovCistCWxvbmcgbmJjb24g
-X19hMl9fOwkJCS8qIDQgIE51bWJlciBvZiBjb25uZXhpb25zICovCistCWxvbmcgaGNvbiBf
-X2EyX187CQkJLyogNCAgTGFzdCBjb25uZXhpb24gZGF0ZSAqLworLQlsb25nIGxhc3R5YXAg
-X19hMl9fOwkJLyogNCAgTGFzdCBZTiBkYXRlICovCisrCWZiYl9sb25nIGxhc3RtZXMgX19h
-Ml9fOwkJLyogNCAgTGFzdCBMIG51bWJlciAqLworKwlmYmJfbG9uZyBuYmNvbiBfX2EyX187
-CQkJLyogNCAgTnVtYmVyIG9mIGNvbm5leGlvbnMgKi8KKysJZmJiX2xvbmcgaGNvbiBfX2Ey
-X187CQkJLyogNCAgTGFzdCBjb25uZXhpb24gZGF0ZSAqLworKwlmYmJfbG9uZyBsYXN0eWFw
-IF9fYTJfXzsJCS8qIDQgIExhc3QgWU4gZGF0ZSAqLworIAl1c2hvcnQgZmxhZ3M7CQkJCS8q
-IDIgIEZsYWdzICovCisgCXVzaG9ydCBvbl9iYXNlOwkJCQkvKiAyICBPTiBCYXNlIG51bWJl
-ciAqLworIAorIAl1Y2hhciBuYmw7CQkJCQkvKiAxICBMaW5lcyBwYWdpbmcgKi8KKyAJdWNo
-YXIgbGFuZzsJCQkJCS8qIDEgIExhbmd1YWdlICovCisgCistCWxvbmcgbmV3YmFubmVyIF9f
-YTJfXzsJCS8qIDQgIExhc3QgQmFubmVyIGRhdGUgKi8KKysJZmJiX2xvbmcgbmV3YmFubmVy
-IF9fYTJfXzsJCS8qIDQgIExhc3QgQmFubmVyIGRhdGUgKi8KKyAJdXNob3J0IGRvd25sb2Fk
-OwkJCS8qIDIgIGRvd25sb2FkIHNpemUgKEtCKSA9IDEwMCAqLworIAljaGFyIGZyZWVbMjBd
-OwkJCQkvKiAyMCBSZXNlcnZlZCAqLworIAljaGFyIHRoZW1lOwkJCQkJLyogMSAgQ3VycmVu
-dCB0b3BpYyAqLworQEAgLTgwMiw3ICs4MDEsNyBAQAorIHsKKyAJY2hhciBtb2RlOworIAlj
-aGFyIGZiaWRbMTNdOworLQlsb25nIG51bWVybyBfX2EyX187CisrCWZiYl9sb25nIG51bWVy
-byBfX2EyX187CisgfQorIGJpZGZ3ZDsKKyAKK0BAIC04NTAsOSArODQ5LDkgQEAKKyB7CQkJ
-CQkJCQkvKiBMb25ndWV1ciA9IDE5NCBvY3RldHMgKi8KKyAJY2hhciB0eXBlOworIAljaGFy
-IHN0YXR1czsKKy0JbG9uZyBudW1lcm8gX19hMl9fOworLQlsb25nIHRhaWxsZSBfX2EyX187
-CistCWxvbmcgZGF0ZSBfX2EyX187CisrCWZiYl9sb25nIG51bWVybyBfX2EyX187CisrCWZi
-Yl9sb25nIHRhaWxsZSBfX2EyX187CisrCWZiYl9sb25nIGRhdGUgX19hMl9fOworIAljaGFy
-IGJic2ZbN107CisgCWNoYXIgYmJzdls0MV07CisgCWNoYXIgZXhwZWRbN107CitAQCAtODYx
-LDExICs4NjAsMTEgQEAKKyAJY2hhciB0aXRyZVs2MV07CisgCWNoYXIgYmluOworIAljaGFy
-IGZyZWVbNV07CistCWxvbmcgZ3JwbnVtIF9fYTJfXzsKKysJZmJiX2xvbmcgZ3JwbnVtIF9f
-YTJfXzsKKyAJdXNob3J0IG5ibHU7CistCWxvbmcgdGhlbWUgX19hMl9fOworLQlsb25nIGRh
-dGVzZCBfX2EyX187CistCWxvbmcgZGF0ZWNoIF9fYTJfXzsKKysJZmJiX2xvbmcgdGhlbWUg
-X19hMl9fOworKwlmYmJfbG9uZyBkYXRlc2QgX19hMl9fOworKwlmYmJfbG9uZyBkYXRlY2gg
-X19hMl9fOworIAljaGFyIGZiYnNbTkJNQVNLXTsKKyAJY2hhciBmb3J3W05CTUFTS107Cisg
-fQorQEAgLTkyMSwxMiArOTIwLDEyIEBACisgCWRvdWJsZSBhMCBfX2EyX187CisgCWRvdWJs
-ZSBuMCBfX2EyX187CisgCWRvdWJsZSBxMyBfX2EyX187CistCWxvbmcgazAgX19hMl9fOwor
-KwlmYmJfbG9uZyBrMCBfX2EyX187CisgCWRvdWJsZSBmMSBfX2EyX187CisgCWRvdWJsZSB2
-MSBfX2EyX187CisgCXNob3J0IHBhczsKKy0JbG9uZyBtYWogX19hMl9fOworLQlsb25nIGNh
-dCBfX2EyX187CQkJLyogQ2F0YWxvZyBOdW1iZXIgLSBhbmNpZW5uZW1lbnQgdmlkZSAgKi8K
-KysJZmJiX2xvbmcgbWFqIF9fYTJfXzsKKysJZmJiX2xvbmcgY2F0IF9fYTJfXzsJCQkvKiBD
-YXRhbG9nIE51bWJlciAtIGFuY2llbm5lbWVudCB2aWRlICAqLworIAlzaG9ydCBsaWJyZVs0
-XTsKKyB9Cisgc2F0ZWw7CitAQCAtMTIzMCw4ICsxMjI5LDggQEAKKyAJY2hhciBub21maWNb
-TEFCRUxfRklDXTsKKyAJY2hhciBsYWJlbFtMQUJFTF9OT01dOworIAljaGFyIG93bmVyW0xB
-QkVMX09XTl07CistCWxvbmcgaW5kZXg7CistCWxvbmcgZGF0ZV9jcmVhdGlvbjsKKysJZmJi
-X2xvbmcgaW5kZXg7CisrCWZiYl9sb25nIGRhdGVfY3JlYXRpb247CisgCWNoYXIgZnJlZVsy
-NF07CisgfQorIFJsYWJlbDsJCQkJCQkJLyogMTYwIGJ5dGVzICovCmRpZmYgLXBydU4gL2hv
-bWUvY2F0aHJ5bi9mYmJzcmMuNzA1ZS9pbmNsdWRlL2ZiYl9zZXJ2LmggL2hvbWUvY2F0aHJ5
-bi9mYmJzcmMuNzA1ZS5zaXh0eWZvdXIvaW5jbHVkZS9mYmJfc2Vydi5oCi0tLSAvaG9tZS9j
-YXRocnluL2ZiYnNyYy43MDVlL2luY2x1ZGUvZmJiX3NlcnYuaAkyMDEzLTAzLTE2IDEwOjAw
-OjU2LjAwMDAwMDAwMCAtMDQwMAorKysgL2hvbWUvY2F0aHJ5bi9mYmJzcmMuNzA1ZS5zaXh0
-eWZvdXIvaW5jbHVkZS9mYmJfc2Vydi5oCTIwMTMtMDctMTUgMjM6MDA6MzMuOTc1MzU5MzIw
-IC0wNDAwCkBAIC0zMiw2ICszMiwxNSBAQAogI2lmbmRlZglfZmJiX3NlcnYKICNkZWZpbmUJ
-X2ZiYl9zZXJ2CiAKKy8qIERlZmluZSBUSElSVFlUV09CSVREQVRBIGlmIHlvdSBhcmUgYnJp
-bmdpbmcgaW4gZGF0YSBmcm9tIDMyLWJpdCB2ZXJzaW9ucy4KKyBUaGlzIGNyZWF0ZXMgZGF0
-YWZpbGVzIHRoYXQgbWF0Y2ggdGhlIG9yaWdpbiBkb2N1bWVudGF0aW9uIGZvciBGQkIuICAK
-KyBUaGV5IGFyZSBub3QgY29tcGF0aWJsZSB3aXRoIGZpbGVzIGNyZWF0ZWQgd2l0aCA2NC1i
-aXQgdmVyc2lvbnMuICAqLworLyogI2RlZmluZSBUSElSVFlUV09CSVREQVRBIDEgKi8KKyNp
-ZmRlZiBUSElSVFlUV09CSVREQVRBCisjZGVmaW5lIGZiYl9sb25nIGludAorI2Vsc2UKKyNk
-ZWZpbmUgZmJiX2xvbmcgbG9uZworI2VuZGlmCiAvKiAjZGVmaW5lIEZPUlRJRlkgKi8KIAog
-I2lmZGVmIF9fTElOVVhfXwpAQCAtNjU1LDggKzY2NCw4IEBAIHR5cGVkZWYgc3RydWN0CiAJ
-dWNoYXIgZnJlZTsKIAl1Y2hhciBjaGFuZ2VkOwogCXVzaG9ydCBzZWVuOwotCWxvbmcgbGFz
-dF9tb2RpZiBfX2EyX187Ci0JbG9uZyBsYXN0X3NlZW4gX19hMl9fOworCWZiYl9sb25nIGxh
-c3RfbW9kaWYgX19hMl9fOworCWZiYl9sb25nIGxhc3Rfc2VlbiBfX2EyX187CiAJY2hhciBm
-aXJzdF9ob21lYmJzWzQxXTsKIAljaGFyIHNlY25kX2hvbWViYnNbNDFdOwogCWNoYXIgZmly
-c3RfemlwWzldOwpAQCAtNjY5LDcgKzY3OCw2IEBAIFdwczsKIC8qCiAgKiBTdHJ1Y3R1cmVz
-IGV0IGJsb2NzIGRlIG1lc3NhZ2VzCiAgKi8KLQogdHlwZWRlZiBzdHJ1Y3QKIHsKIAlsb25n
-IG5tZXNzOwpAQCAtNzMzLDcgKzc0MSw3IEBAIHR5cGVkZWYgc3RydWN0IHR5cHN0YXQKIAlj
-aGFyIGluZGNueFs2XTsKIAl1Y2hhciBwb3J0OwogCXVjaGFyIHZvaWU7Ci0JbG9uZyBkYXRj
-bnggX19hMl9fOworCWZiYl9sb25nIGRhdGNueCBfX2EyX187CiAJc2hvcnQgdHBzY254Owog
-fQogc3RhdGlzOwpAQCAtNzY3LDE3ICs3NzUsMTcgQEAgdHlwZWRlZiBzdHJ1Y3QKIAogCWlu
-ZGljYXQgaW5kaWM7CQkJCS8qIDggIENhbGxzaWduICovCiAJaW5kaWNhdCByZWxhaVs4XTsJ
-CQkvKiA2NCBEaWdpcyBwYXRoICovCi0JbG9uZyBsYXN0bWVzIF9fYTJfXzsJCS8qIDQgIExh
-c3QgTCBudW1iZXIgKi8KLQlsb25nIG5iY29uIF9fYTJfXzsJCQkvKiA0ICBOdW1iZXIgb2Yg
-Y29ubmV4aW9ucyAqLwotCWxvbmcgaGNvbiBfX2EyX187CQkJLyogNCAgTGFzdCBjb25uZXhp
-b24gZGF0ZSAqLwotCWxvbmcgbGFzdHlhcCBfX2EyX187CQkvKiA0ICBMYXN0IFlOIGRhdGUg
-Ki8KKwlmYmJfbG9uZyBsYXN0bWVzIF9fYTJfXzsJCS8qIDQgIExhc3QgTCBudW1iZXIgKi8K
-KwlmYmJfbG9uZyBuYmNvbiBfX2EyX187CQkJLyogNCAgTnVtYmVyIG9mIGNvbm5leGlvbnMg
-Ki8KKwlmYmJfbG9uZyBoY29uIF9fYTJfXzsJCQkvKiA0ICBMYXN0IGNvbm5leGlvbiBkYXRl
-ICovCisJZmJiX2xvbmcgbGFzdHlhcCBfX2EyX187CQkvKiA0ICBMYXN0IFlOIGRhdGUgKi8K
-IAl1c2hvcnQgZmxhZ3M7CQkJCS8qIDIgIEZsYWdzICovCiAJdXNob3J0IG9uX2Jhc2U7CQkJ
-CS8qIDIgIE9OIEJhc2UgbnVtYmVyICovCiAKIAl1Y2hhciBuYmw7CQkJCQkvKiAxICBMaW5l
-cyBwYWdpbmcgKi8KIAl1Y2hhciBsYW5nOwkJCQkJLyogMSAgTGFuZ3VhZ2UgKi8KIAotCWxv
-bmcgbmV3YmFubmVyIF9fYTJfXzsJCS8qIDQgIExhc3QgQmFubmVyIGRhdGUgKi8KKwlmYmJf
-bG9uZyBuZXdiYW5uZXIgX19hMl9fOwkJLyogNCAgTGFzdCBCYW5uZXIgZGF0ZSAqLwogCXVz
-aG9ydCBkb3dubG9hZDsJCQkvKiAyICBkb3dubG9hZCBzaXplIChLQikgPSAxMDAgKi8KIAlj
-aGFyIGZyZWVbMjBdOwkJCQkvKiAyMCBSZXNlcnZlZCAqLwogCWNoYXIgdGhlbWU7CQkJCQkv
-KiAxICBDdXJyZW50IHRvcGljICovCkBAIC04MDIsNyArODEwLDcgQEAgdHlwZWRlZiBzdHJ1
-Y3QKIHsKIAljaGFyIG1vZGU7CiAJY2hhciBmYmlkWzEzXTsKLQlsb25nIG51bWVybyBfX2Ey
-X187CisJZmJiX2xvbmcgbnVtZXJvIF9fYTJfXzsKIH0KIGJpZGZ3ZDsKIApAQCAtODUwLDkg
-Kzg1OCw5IEBAIHR5cGVkZWYgc3RydWN0CiB7CQkJCQkJCQkvKiBMb25ndWV1ciA9IDE5NCBv
-Y3RldHMgKi8KIAljaGFyIHR5cGU7CiAJY2hhciBzdGF0dXM7Ci0JbG9uZyBudW1lcm8gX19h
-Ml9fOwotCWxvbmcgdGFpbGxlIF9fYTJfXzsKLQlsb25nIGRhdGUgX19hMl9fOworCWZiYl9s
-b25nIG51bWVybyBfX2EyX187CisJZmJiX2xvbmcgdGFpbGxlIF9fYTJfXzsKKwlmYmJfbG9u
-ZyBkYXRlIF9fYTJfXzsKIAljaGFyIGJic2ZbN107CiAJY2hhciBiYnN2WzQxXTsKIAljaGFy
-IGV4cGVkWzddOwpAQCAtODYxLDExICs4NjksMTEgQEAgdHlwZWRlZiBzdHJ1Y3QKIAljaGFy
-IHRpdHJlWzYxXTsKIAljaGFyIGJpbjsKIAljaGFyIGZyZWVbNV07Ci0JbG9uZyBncnBudW0g
-X19hMl9fOworCWZiYl9sb25nIGdycG51bSBfX2EyX187CiAJdXNob3J0IG5ibHU7Ci0JbG9u
-ZyB0aGVtZSBfX2EyX187Ci0JbG9uZyBkYXRlc2QgX19hMl9fOwotCWxvbmcgZGF0ZWNoIF9f
-YTJfXzsKKwlmYmJfbG9uZyB0aGVtZSBfX2EyX187CisJZmJiX2xvbmcgZGF0ZXNkIF9fYTJf
-XzsKKwlmYmJfbG9uZyBkYXRlY2ggX19hMl9fOwogCWNoYXIgZmJic1tOQk1BU0tdOwogCWNo
-YXIgZm9yd1tOQk1BU0tdOwogfQpAQCAtOTIxLDEyICs5MjksMTIgQEAgdHlwZWRlZiBzdHJ1
-Y3QgdHlwX3NhdGVsCiAJZG91YmxlIGEwIF9fYTJfXzsKIAlkb3VibGUgbjAgX19hMl9fOwog
-CWRvdWJsZSBxMyBfX2EyX187Ci0JbG9uZyBrMCBfX2EyX187CisJZmJiX2xvbmcgazAgX19h
-Ml9fOwogCWRvdWJsZSBmMSBfX2EyX187CiAJZG91YmxlIHYxIF9fYTJfXzsKIAlzaG9ydCBw
-YXM7Ci0JbG9uZyBtYWogX19hMl9fOwotCWxvbmcgY2F0IF9fYTJfXzsJCQkvKiBDYXRhbG9n
-IE51bWJlciAtIGFuY2llbm5lbWVudCB2aWRlICAqLworCWZiYl9sb25nIG1haiBfX2EyX187
-CisJZmJiX2xvbmcgY2F0IF9fYTJfXzsJCQkvKiBDYXRhbG9nIE51bWJlciAtIGFuY2llbm5l
-bWVudCB2aWRlICAqLwogCXNob3J0IGxpYnJlWzRdOwogfQogc2F0ZWw7CkBAIC0xMjMwLDgg
-KzEyMzgsOCBAQCB0eXBlZGVmIHN0cnVjdAogCWNoYXIgbm9tZmljW0xBQkVMX0ZJQ107CiAJ
-Y2hhciBsYWJlbFtMQUJFTF9OT01dOwogCWNoYXIgb3duZXJbTEFCRUxfT1dOXTsKLQlsb25n
-IGluZGV4OwotCWxvbmcgZGF0ZV9jcmVhdGlvbjsKKwlmYmJfbG9uZyBpbmRleDsKKwlmYmJf
-bG9uZyBkYXRlX2NyZWF0aW9uOwogCWNoYXIgZnJlZVsyNF07CiB9CiBSbGFiZWw7CQkJCQkJ
-CS8qIDE2MCBieXRlcyAqLwpkaWZmIC1wcnVOIC9ob21lL2NhdGhyeW4vZmJic3JjLjcwNWUv
-c3JjL0VSUk9SLlNZUyAvaG9tZS9jYXRocnluL2ZiYnNyYy43MDVlLnNpeHR5Zm91ci9zcmMv
-RVJST1IuU1lTCi0tLSAvaG9tZS9jYXRocnluL2ZiYnNyYy43MDVlL3NyYy9FUlJPUi5TWVMJ
-MTk2OS0xMi0zMSAxOTowMDowMC4wMDAwMDAwMDAgLTA1MDAKKysrIC9ob21lL2NhdGhyeW4v
-ZmJic3JjLjcwNWUuc2l4dHlmb3VyL3NyYy9FUlJPUi5TWVMJMjAxMy0wNy0wNSAwMTo0Njox
-NC45NzA3NjE0MTEgLTA0MDAKQEAgLTAsMCArMSw0IEBACis+IEVYQ0VQVElPTiA6IFN0YXRp
-b24gLCBDaDowICgwLTAtMCkgIDA0LzA3LzEzIDIyOjQ2CisgIFZlcnNpb24gNy4wNWUgKEp1
-bCAgNSAyMDEzKQorICAvdXNyL2xvY2FsL3Zhci9heDI1L2ZiYi9zYXQvc2F0ZWwuZGF0IDAs
-IGVycm5vIDEzPVBlcm1pc3Npb24gZGVuaWVkICBDYW5ub3QgY3JlYXRlIGZpbGUKKwpkaWZm
-IC1wcnVOIC9ob21lL2NhdGhyeW4vZmJic3JjLjcwNWUvc3JjL3N0YXRpcy5jIC9ob21lL2Nh
-dGhyeW4vZmJic3JjLjcwNWUuc2l4dHlmb3VyL3NyYy9zdGF0aXMuYwotLS0gL2hvbWUvY2F0
-aHJ5bi9mYmJzcmMuNzA1ZS9zcmMvc3RhdGlzLmMJMjAxMy0wMy0xNiAxMDowMDo1Ni4wMDAw
-MDAwMDAgLTA0MDAKKysrIC9ob21lL2NhdGhyeW4vZmJic3JjLjcwNWUuc2l4dHlmb3VyL3Ny
-Yy9zdGF0aXMuYwkyMDEzLTA3LTE1IDIyOjU3OjQzLjQ4ODc2ODYyOCAtMDQwMApAQCAtMzAs
-NiArMzAsMjAgQEAKIAogI2luY2x1ZGUgPHNlcnYuaD4KIAorI2lmZGVmIFRISVJUWVRXT0JJ
-VERBVEEKKworc3RhdGljIHN0cnVjdCB0bSAqZmJiX2xvY2FsdGltZShpbnQgKnRpbWUpCit7
-Citsb25nIGx0aW1lID0gKnRpbWU7CityZXR1cm4gbG9jYWx0aW1lKCZsdGltZSk7Cit9CisK
-KworI2Vsc2UKKyNkZWZpbmUgZmJiX2xvY2FsdGltZSBsb2NhbHRpbWUKKyNlbmRpZgorCisK
-IHN0YXRpYyB2b2lkIG1lbnVfc3RhdGlzdGlxdWVzICh2b2lkKTsKIAogc3RhdGljIHZvaWQg
-aGlzdG9fam91ciAodm9pZCkKQEAgLTcyLDcgKzg2LDcgQEAgc3RhdGljIHZvaWQgaGlzdG9f
-am91ciAodm9pZCkKIAkJCW5fY3B5ICg2LCBjYWwsIGJ1ZmZzdGF0LmluZGNueCk7CiAJCQlp
-ZiAoc3RybWF0Y2ggKGNhbCwgcHZvaWUtPmNoX3RlbXApKQogCQkJewotCQkJCXNkYXRlID0g
-bG9jYWx0aW1lICgmYnVmZnN0YXQuZGF0Y254KTsKKwkJCQlzZGF0ZSA9IGZiYl9sb2NhbHRp
-bWUgKCZidWZmc3RhdC5kYXRjbngpOwogCQkJCWhpc3RbKHNkYXRlLT50bV93ZGF5ICsgNikg
-JSA3XSArPSBidWZmc3RhdC50cHNjbng7CiAJCQl9CiAJCX0KQEAgLTE0NSw3ICsxNTksNyBA
-QCBzdGF0aWMgdm9pZCBoaXN0b19oZXVyZSAodm9pZCkKIAkJbl9jcHkgKDYsIGNhbCwgYnVm
-ZnN0YXQuaW5kY254KTsKIAkJaWYgKHN0cm1hdGNoIChjYWwsIHB2b2llLT5jaF90ZW1wKSkK
-IAkJewotCQkJc2RhdGUgPSBsb2NhbHRpbWUgKCZidWZmc3RhdC5kYXRjbngpOworCQkJc2Rh
-dGUgPSBmYmJfbG9jYWx0aW1lICgmYnVmZnN0YXQuZGF0Y254KTsKIAkJCWhpc3Rbc2RhdGUt
-PnRtX2hvdXJdICs9IGJ1ZmZzdGF0LnRwc2NueDsKIAkJfQogCX0KQEAgLTIxMiw3ICsyMjYs
-NyBAQCBzdGF0aWMgdm9pZCBnZW5lcmFsaXRlcyAodm9pZCkKIAkJCWRlcGFydCA9IHRpbWUg
-KE5VTEwpIC0gKGxvbmcpIG5iam91ciAqODY0MDBMOwogCQl9CiAKLQkJc2RhdGUgPSBsb2Nh
-bHRpbWUgKCZidWZmc3RhdC5kYXRjbngpOworCQlzZGF0ZSA9IGZiYl9sb2NhbHRpbWUgKCZi
-dWZmc3RhdC5kYXRjbngpOwogCQlpZiAoYnVmZnN0YXQuZGF0Y254ID4gZGVwYXJ0KQogCQl7
-CiAJCQloaXN0W3NkYXRlLT50bV9ob3VyXSArPSAobG9uZykgYnVmZnN0YXQudHBzY254Owo=
---------------050707090906040905060707--
+diff -pruN '--exclude=*.dep*' '--exclude=Makefile' '--exclude=config.status' '--exclude=*.log' '--exclude=*.swp' ax25-apps-0.0.8-rc4/call/call.c ax25-apps-0.0.8-rc4.callintl/call/call.c
+--- ax25-apps-0.0.8-rc4/call/call.c	2013-06-17 03:10:27.000000000 -0400
++++ ax25-apps-0.0.8-rc4.callintl/call/call.c	2013-07-17 02:26:34.096307443 -0400
+@@ -35,7 +35,15 @@
+ #include <sys/wait.h>
+ #include <termios.h>
+ #include <unistd.h>
++#define __USE_XOPEN
++#include <wchar.h>
++#include <wctype.h>
++#define _XOPEN_SOURCE_EXTENDED 1
+ #include <curses.h>
++#include <ncurses.h>
++#include <locale.h>
++#include <iconv.h>
++#include <sys/ioctl.h>
+ 
+ #include <netax25/ax25.h>
+ #include <netrom/netrom.h>
+@@ -78,10 +86,13 @@ static char *port = NULL;
+ static char *mycall = NULL;
+ 
+ static int stdin_is_tty = 1;
++static iconv_t ibm850toutf8 = 0,wcharttoibm850 = 0, wcharttoutf8 = 0, utf8towchart = 0;
+ 
+ int interrupted = FALSE;
++static int sigwinchsignal = FALSE;
+ int paclen = 0;
+ int fd;
++int curson = 1;
+ 
+ int wait_for_remote_disconnect = FALSE;
+ static struct timeval inactivity_timeout;
+@@ -103,7 +114,7 @@ typedef struct {
+ 	WINDOW *ptr;
+ 	int max_y;
+ 	int max_x;
+-	char string[MAX_BUFLEN];
++	wchar_t string[MAX_BUFLEN];
+ 	unsigned long bytes;
+ 	int curs_pos;
+ } t_win;
+@@ -112,11 +123,234 @@ typedef struct {
+ #define SLAVEMODE	002	/* Menu mode */
+ #define RAWMODE         004	/* mode used by earlier versions */
+ 
++#define ORIGINALENCODING	0
++#define UTF8ENCODING		1
++
++#define SCROLLBACKSIZE 5000
++
++typedef struct {
++	char *str;int len;
++}scrollbackstruct;	
++
++
++static scrollbackstruct scrollback[SCROLLBACKSIZE];
++static int topscroll=0, lastscroll = 0, scrolledup=0, eatchar = 0;
++static char inbuf[MAX_BUFLEN];static int inbuflen = 0, inbufwid = 0;
++static char incharbuf[6];static int incharbuflen = 0;
++void statline(int mode, char *s);
++
++void addscrollline(char *s, int len)
++{
++	scrollback[lastscroll].str = malloc(len);
++	memcpy(scrollback[lastscroll].str, s, len);
++	scrollback[lastscroll].len = len;
++	if (++lastscroll >= SCROLLBACKSIZE)lastscroll = 0;
++	if (lastscroll == topscroll){
++		free(scrollback[topscroll].str);		
++		if (++topscroll >= SCROLLBACKSIZE)topscroll = 0;
++	}
++}
++
++// Notes: Japanese, Chinese and Korean characters mostly take up two
++// characters in width.  These characters return 2 via 
++// wcwidth to let the code know that they require two
++// spaces.  Mono-space fonts/ncurses seems to work correctly with 
++// East Asian characters.  
++//
++// There are also some characters that return a wcwidth of 0. I'm
++// not sure about all of them, but some of the 0 width characters
++// add a mark above or below a character.  In order for these marks
++// to appear correctly, the previous character and the overstrike
++// must be drawn together.  using wmove and drawing the accent doesn't
++// work.
++//
++// There are some other characters that have functions, and these 
++// are not supported using a print to the screen. South Asian
++// fonts are complicated.  I don't believe south asian fonts work
++// correctly from the Linux command line (as of late 2009). They
++// print but don't combine.  The result is distorted.
++//
++// Many characters, as of 12/09, are too wide for a single space
++// in the font, although they return a wcwidth of 1.  I suspect
++// this is due to these characters not being part of the mono-spaced
++// font and are instead pulled from an alternate font.  These
++// characters also glitch in xterm, vim and other ncurses
++// software. I suspect this is actually a font bug, and any character
++// that returns wcwidth=1 in a monospaced font should be
++// monospaced.  
++//
++
++
++int widthchar(char *s, size_t bytes, int xpos)
++{
++	wchar_t c;int width;
++	char *outbuf=(char *) &c;
++	size_t outsize = sizeof(wchar_t); 
++	// Note:  Actually need to check if bad UTF8 characters show as ? 
++	if (iconv(utf8towchart, &s, &bytes, &outbuf, &outsize)< 0)return 0; 
++	if (c == 9){
++		return 8 - (xpos & 7);
++	}
++	width = wcwidth(c);
++	if (width < 0)return 0;
++	return width;
++}
++
++
++int completecharlen(char *s)
++{
++	unsigned ut = (unsigned char)s[0];int clen;
++	if (ut <= 0x80)clen = 1;
++	else if ((ut >= 192) && (ut < 192+32))clen = 2;
++	else if ((ut >= 224) && (ut < 224+16))clen = 3;
++	else if ((ut >= 240) && (ut < 240+8))clen = 4;
++	else if ((ut >= 248) && (ut < 248+4))clen = 5;
++	else if ((ut >= 252) && (ut < 252+2))clen = 6;
++	else clen = 1; // bad 
++	return clen;
++}
++
++		
++// Must check for COLS while redrawing from history.  Or otherwise the text
++// wraps around and does strange things.
++int waddnstrcolcheck(WINDOW *win, char *s, int len, int twidth)
++{
++	int n;
++	for (twidth = 0,n=0;n<len;){
++		int cwidth = completecharlen(&s[n]), width;
++		if (n + cwidth > len)return twidth; // Error condition
++		width = widthchar(&s[n], cwidth, twidth);
++		if (twidth+width > COLS)return twidth; // 
++		waddnstr(win, &s[n], cwidth);
++		n += cwidth;
++		twidth += width;
++	}
++	return twidth;
++}
++
++// Update a line on the screen from the backscroll buffer.
++void updateline(int screeny, int yfrom, t_win *win_in, int mode, t_win *win_out)
++{
++	wmove(win_in->ptr, screeny, 0);
++	if (yfrom == lastscroll){
++		int twidth = 0;
++		if (inbuflen > 0)
++			twidth = waddnstrcolcheck(win_in->ptr, inbuf, inbuflen, 0);
++		if (mode == SLAVEMODE){
++			char obuf[MAX_BUFLEN];
++			char *inbuf = (char *)win_out->string, *outbuf = obuf;
++			size_t insize = win_out->bytes * sizeof(wchar_t), outsize = MAX_BUFLEN; 
++			iconv(wcharttoutf8, &inbuf, &insize, &outbuf, &outsize);
++			waddnstrcolcheck(win_in->ptr, obuf, MAX_BUFLEN - outsize, twidth);
++			win_out->curs_pos = win_out->bytes;
++		}
++	}
++	else {
++		waddnstrcolcheck(win_in->ptr, scrollback[yfrom].str, scrollback[yfrom].len, 0);
++	}
++}
++
++// Cursor in SLAVE mode while scrolling looks broken.
++// Cursor in TALK mode is always good, because it's on the bottom window
++void checkcursor(int mode)
++{
++	int newcursor;
++	if ((mode == SLAVEMODE) && scrolledup)newcursor = 0;
++	else newcursor = 1;
++	if (curson != newcursor){
++		curs_set(newcursor);
++		curson = newcursor;
++	}
++}
++
++/* For CJK, it's important to keep the cursor always on the input
++ * window.  Otherwise the display is confused */
++static void restorecursor(int mode, t_win *win_out)
++{
++	checkcursor(mode);	
++	if (mode != RAWMODE){
++		int x,y;
++		getyx(win_out->ptr, y, x);// Must restore input cursor location.
++		wmove(win_out->ptr,y, x);
++		wrefresh(win_out->ptr);
++	}						
++}
++
++void redrawscreen(t_win *win_in, int mode, t_win *win_out)
++{
++	int y, storedlines;	
++	if (lastscroll >= topscroll) storedlines = lastscroll - topscroll;
++	else storedlines = lastscroll + SCROLLBACKSIZE - topscroll;
++	// Note it's stored lines + 1 extra line for text input.
++	for (y=0;(y<=win_in->max_y) && (y <= storedlines);y++){
++		int linefrom;
++		if (storedlines <= win_in->max_y){// This is a little confusing.
++			linefrom = topscroll + y;// The screen scrolls top down at start
++		}
++		else linefrom = lastscroll -scrolledup - (win_in->max_y) + y;
++		while (linefrom < 0)linefrom += SCROLLBACKSIZE;
++		while (linefrom >= SCROLLBACKSIZE)linefrom -= SCROLLBACKSIZE;
++		updateline(y,linefrom , win_in, mode, win_out);
++	}
++	checkcursor(mode);
++}
++
++void scrolltext(t_win *win_in, int lines, int mode, t_win *win_out)
++{
++	int topline, storedlines;
++	int y;
++	int wasscrolledup;
++	if (scrolledup + lines < 0){
++		lines = -scrolledup;
++	}
++	// storedlines = Lines stored in buffer.
++	if (lastscroll >= topscroll) storedlines = lastscroll - topscroll;
++	else storedlines = lastscroll + SCROLLBACKSIZE - topscroll;
++	// The max scrolling  we can do is the # of lines stored - the 
++	// screen size.
++	topline = storedlines - win_in->max_y;
++	if (topline < 0)topline = 0;
++	if (scrolledup + lines > topline){
++		lines = topline - scrolledup;
++	}
++	if (!lines)return;
++	wasscrolledup = scrolledup;
++	scrolledup += lines;
++	wscrl(win_in->ptr, -lines);
++	scrollok(win_in->ptr, FALSE);
++	if (lines > 0){
++		for (y=0;y<lines;y++){
++			int linefrom = lastscroll -scrolledup - (win_in->max_y) + y;
++			while (linefrom < 0)linefrom += SCROLLBACKSIZE;
++			while (linefrom >= SCROLLBACKSIZE)linefrom -= SCROLLBACKSIZE;
++			updateline(y,linefrom , win_in, mode, win_out);
++		}
++	}
++	else  {
++		for (y=-lines-1;y>=0;y--){
++			int linefrom = lastscroll -scrolledup -  y;
++			while (linefrom < 0)linefrom += SCROLLBACKSIZE;
++			while (linefrom >= SCROLLBACKSIZE)linefrom -= SCROLLBACKSIZE;
++			updateline(win_in->max_y  - y,linefrom , win_in, mode, win_out);
++		}
++		
++	}
++	scrollok(win_in->ptr, TRUE);
++	checkcursor(mode);
++	wrefresh(win_in->ptr);
++	if (wasscrolledup && !scrolledup){
++		statline(mode, "");
++	}
++	else if (!wasscrolledup && scrolledup){
++		statline(mode, "Viewing Scrollback");
++	}
++}
++	
+ void usage(void)
+ {
+-	fprintf(stderr, "usage: call [-b l|e] [-d] [-h] [-m s|e] [-p paclen] [-r] [-R]\n");
+-	fprintf(stderr, "            [-s mycall] [-t] [-T timeout] [-v] [-w window] [-W]\n");
+-	fprintf(stderr, "            port callsign [[via] digipeaters...]\n");
++        fprintf(stderr, "usage: call [-b l|e] [-d] [-h] [-m s|e] [-p paclen] [-r] [-R]\n");
++        fprintf(stderr, "            [-s mycall] [-t] [-T timeout] [-v] [-w window] [-W]\n");
++        fprintf(stderr, "            port callsign [[via] digipeaters...]\n");
+ 	exit(1);
+ }
+ 
+@@ -128,8 +362,8 @@ const char *key_words[] = { "//",
+ 	"\0"
+ };
+ const char *rkey_words[] = {
+-	// actually restricted keywords are very restrictive
+-	"\0"
++        // actually restricted keywords are very restrictive
++         "\0"
+ };
+ #define MAXCMDLEN 10
+ 
+@@ -160,6 +394,73 @@ void convert_upper_lower(char *buf, int
+ }
+ 
+ 
++
++/* Return the with of this character in character blocks.  (Normal = 1, CJK=2) 
++ * Also for control chracters, return the width of the replacement string.
++ * */
++static int wcwidthcontrol(wchar_t c)
++{
++	int width;
++	cchar_t cc = {0};
++	wchar_t *str;
++	cc.chars[0] = c;
++	str = wunctrl(&cc);
++	if (!str)return 0;
++	width = wcswidth(str, wcslen(str));
++	return width;
++}
++
++/* Return a string to print for a wchar_t.  Expand control characters.
++ * Strings returned by wunctrl don't like to be freed.  It seems. */
++static wchar_t *wunctrlwchar(wchar_t c)
++{
++	cchar_t cc = {0};
++	wchar_t *str;
++	cc.chars[0] = c;
++	str = wunctrl(&cc);
++	return str;
++}		
++
++// For some reason wins_nwstr fails on fedora 12 on some characters
++// but waddnstr works.  
++// Draw the entire input buffer when adding text.  
++// The fonts that do overstrike fail when written one char at a time.
++void drawinbuf(WINDOW *w, wchar_t *string, int bytes, int cur_pos)
++{
++	int n, x, cursorx, xpos, ypos, width;
++	getyx(w, ypos, xpos);// Assume cursor to be at position of current char to draw.
++	x = xpos;cursorx = xpos;
++	// cur_pos-1 = the chracter that was just added.
++	for (n=cur_pos-2;n>=0;n--){// Move x position to start of string or 0
++		width = wcwidthcontrol(string[n]);
++		if (x >= width)x -= width;
++		else x = 0;
++	}
++	wmove(w, ypos, x);
++	for (n=0;n<bytes;n++){
++		char obuf[MAX_BUFLEN];
++		char *inbuf, *outbuf = obuf;
++		size_t insize, outsize = MAX_BUFLEN; 
++		wchar_t *str;int len, width;
++		if (n == cur_pos){
++			cursorx = x;
++		}
++		str = wunctrlwchar(string[n]);
++		if (!str)continue;
++		inbuf = (char *) str;
++		len = wcslen(str);
++	        insize = len * sizeof(wchar_t);
++		width = wcswidth(str, len);
++		iconv(wcharttoutf8, &inbuf, &insize, &outbuf, &outsize);
++		waddnstr(w, obuf, MAX_BUFLEN-outsize);	
++		x += width;
++	}
++	if (cur_pos < bytes){
++		wmove(w,ypos, cursorx); 
++	}
++}
++
++
+ /* Convert linear UNIX date to a MS-DOS time/date pair. */
+ 
+ static char * unix_to_sfbin_date_string(time_t gmt)
+@@ -411,6 +712,13 @@ static int connect_to(char *address[])
+ 	return (fd);
+ }
+ 
++
++static void cmd_sigwinch(int sig)
++{
++	signal(SIGWINCH, cmd_sigwinch);
++	sigwinchsignal = TRUE;
++}
++
+ void cmd_intr(int sig)
+ {
+ 	signal(SIGQUIT, cmd_intr);
+@@ -428,7 +736,7 @@ void statline(int mode, char *s)
+ 		if (oldlen > 0) {
+ 			move(0, STATW_STAT);
+ 			attron(A_REVERSE);
+-			for (cnt = 0; cnt < oldlen; cnt++)
++			for (cnt = STATW_STAT; cnt < COLS; cnt++)
+ 				addch(' ');
+ 			oldlen = 0;
+ 			attroff(A_REVERSE);
+@@ -441,21 +749,18 @@ void statline(int mode, char *s)
+ 		fflush(stdout);
+ 		return;
+ 	}
+-	if (strlen(s) > 80 - STATW_STAT)
+-		s[80 - STATW_STAT] = '\0';
++	if (COLS <= STATW_STAT)return; 
++	l = strlen(s);
++	if (l > COLS - STATW_STAT)
++		l = COLS-STATW_STAT;
+ 
+ 	move(0, STATW_STAT);
+ 
+ 	attron(A_REVERSE);
+-	addstr(s);
+-
+-	if (oldlen > strlen(s)) {
+-		l = oldlen - strlen(s);
+-		for (cnt = 0; cnt < l; cnt++)
+-			addch(' ');
+-	}
++	addnstr(s, l);
++	for (cnt = STATW_STAT+l;cnt < COLS;cnt++)addch(' ');
+ 	attroff(A_REVERSE);
+-	oldlen = strlen(s);
++	oldlen = l;
+ 	refresh();
+ }
+ 
+@@ -487,7 +792,7 @@ void wrdstatw(WINDOW * win, char s[])
+ 		return;
+ 	}
+ 	waddstr(win, s);
+-	y = getcury(win);
++	y = getcury(win); 
+ 	wmove(win, y + 1, 2);
+ 	wrefresh(win);
+ }
+@@ -671,11 +976,11 @@ int start_ab_download(int mode, WINDOW *
+ 	}
+ 	if (bytes == 1) {
+ 		if (write(fd, "#OK#\r", 5) == -1) {
+-			perror("write");
+-			close(gp->dwn_file);
+-			gp->dwn_file = -1;
+-			gp->dwn_cnt = 0;
+-			gp->file_name[0] = '\0';
++                        perror("write");
++                        close(gp->dwn_file);
++                        gp->dwn_file = -1;
++                        gp->dwn_cnt = 0;
++                        gp->file_name[0] = '\0';
+ 			return -1;
+ 		}
+ 		gp->calc_crc = 0;
+@@ -683,26 +988,26 @@ int start_ab_download(int mode, WINDOW *
+ 		unsigned long offset = 0L;
+ 		while (offset != bytes) {
+ 			int ret = write(gp->dwn_file, buf+offset, bytes-offset);
+-			if (ret == -1) {
+-				perror("write");
+-			    	if (errno == EWOULDBLOCK || errno == EAGAIN) {
+-		 			usleep(100000);
+-					continue;
+-				}
+-				close(gp->dwn_file);
+-				gp->dwn_file = -1;
+-				gp->dwn_cnt = 0;
+-				gp->file_name[0] = '\0';
+-				return -1;
+-			}
+-			if (ret == 0) {
+-				close(gp->dwn_file);
+-				gp->dwn_file = -1;
+-				gp->dwn_cnt = 0;
+-				gp->file_name[0] = '\0';
+-				return -1;
+-				break;
+-			}
++                        if (ret == -1) {
++                                perror("write");
++                                if (errno == EWOULDBLOCK || errno == EAGAIN) {
++                                        usleep(100000);
++                                        continue;
++                                }
++                                close(gp->dwn_file);
++                                gp->dwn_file = -1;
++                                gp->dwn_cnt = 0;
++                                gp->file_name[0] = '\0';
++                                return -1;
++                        }
++                        if (ret == 0) {
++                                close(gp->dwn_file);
++                                gp->dwn_file = -1;
++                                gp->dwn_cnt = 0;
++                                gp->file_name[0] = '\0';
++                                return -1;
++                                break;
++                        }
+ 		  	gp->calc_crc = calc_crc((unsigned char *) buf, ret, 0);
+ 		  	gp->dwn_cnt -= ret;
+ 		  	offset += ret;
+@@ -721,7 +1026,6 @@ int ab_down(int mode, WINDOW * swin, win
+ 	if (*bytes == 8 && strncmp(buf, "#ABORT#\r", 8) == 0) {
+ 		gp->dwn_cnt = 0;
+ 		close(gp->dwn_file);
+-		gp->dwn_file = -1;
+ 		statline(mode, "Remote aborts AutoBin transfer!");
+ 		gp->file_name[0] = '\0';
+ 		*bytes = 0;
+@@ -779,9 +1083,8 @@ int ab_down(int mode, WINDOW * swin, win
+ 			}
+ 			statline(mode, s);
+ 			close(gp->dwn_file);
+-			gp->dwn_file = -1;
+ 			utime(gp->file_name, &gp->ut);
+-		        gp->file_name[0] = '\0';
++			gp->file_name[0] = '\0';
+ 			if (extrach != 0) {
+ 				memmove(buf, buf + *bytes, extrach);
+ 				*bytes = extrach;
+@@ -800,8 +1103,11 @@ int start_screen(char *call[])
+ {
+ 	int cnt;
+ 	char idString[12];
+-	sprintf(idString, " %9.9s ", call[0]);
++	struct winsize winsz = {0};
+ 
++	if ((ioctl(0, TIOCGWINSZ, &winsz) >= 0) && winsz.ws_row && winsz.ws_col)
++		resizeterm(winsz.ws_row, winsz.ws_col);
++	sprintf(idString, " %9.9s ", call[0]);
+ 	if ((win = initscr()) == NULL)
+ 		return -1;
+ 
+@@ -811,7 +1117,8 @@ int start_screen(char *call[])
+ 	addch(ACS_VLINE);
+ 	addstr("--------");
+ 	addch(ACS_VLINE);
+-	for (cnt = STATW_STAT; cnt <= 80; cnt++)
++	move(0, STATW_STAT);
++	for (cnt = STATW_STAT; cnt < COLS; cnt++)
+ 		addch(' ');
+ 	attroff(A_REVERSE);
+ 
+@@ -819,8 +1126,8 @@ int start_screen(char *call[])
+ 	raw();
+ 	nodelay(win, TRUE);
+ 	keypad(win, TRUE);
++	curson = 1;
+ 	refresh();
+-
+ 	return 0;
+ }
+ 
+@@ -841,7 +1148,8 @@ int start_slave_mode(wint * wintab, t_wi
+ 	win_out->curs_pos = 0;
+ 	win_in->bytes = 0;
+ 	win_in->curs_pos = 0;
+-
++        redrawscreen(win_in, SLAVEMODE, win_out);
++	wrefresh(win_in->ptr);
+ 	return 0;
+ }
+ 
+@@ -872,15 +1180,16 @@ int start_talk_mode(wint * wintab, t_win
+ 	scrollok(win_out->ptr, TRUE);
+ 
+ 	wclear(win_out->ptr);
+-	wrefresh(win_out->ptr);
+ 	wclear(win_in->ptr);
+-	wrefresh(win_in->ptr);
+ 
+ 	win_out->bytes = 0;
+ 	win_out->curs_pos = 0;
+ 	win_in->bytes = 0;
+ 	win_out->curs_pos = 0;
+-
++        redrawscreen(win_in, TALKMODE, win_out);
++	restorecursor(TALKMODE, win_out);
++	wrefresh(win_in->ptr);
++	wrefresh(win_out->ptr);
+ 	return 0;
+ }
+ 
+@@ -930,171 +1239,210 @@ int change_mode(int oldmode, int newmode
+ 		}
+ 		break;
+ 	}
+-
++	scrolledup = 0; 
+ 	return newmode;
+ }
+ 
+-void writeincom(int mode, t_win * win_in, unsigned char buf[], int bytes)
++static void reinit_mode(int mode, wint * wintab, t_win * win_in,
++		t_win * win_out, char *call[])
+ {
+-	int cnt;
++	switch (mode) {
++	case RAWMODE:
++		break;
+ 
+-	if (mode & RAWMODE) {
+-		while (write(STDOUT_FILENO, buf, bytes) == -1) {
+-			if (errno == EWOULDBLOCK || errno == EAGAIN) {
+-				usleep(100000);
+-				continue;
+-			}
+-			exit(1);
+-		}
+-		return;
+-	}
+-	for (cnt = 0; cnt < bytes; cnt++) {
+-		switch (buf[cnt]) {
+-		case 201:
+-		case 218:
+-			waddch(win_in->ptr, ACS_ULCORNER);
+-			break;
+-		case 187:
+-		case 191:
+-			waddch(win_in->ptr, ACS_URCORNER);
+-			break;
+-		case 200:
+-		case 192:
+-			waddch(win_in->ptr, ACS_LLCORNER);
+-			break;
+-		case 188:
+-		case 217:
+-			waddch(win_in->ptr, ACS_LRCORNER);
+-			break;
+-		case 204:
+-		case 195:
+-			waddch(win_in->ptr, ACS_LTEE);
+-			break;
+-		case 185:
+-		case 180:
+-			waddch(win_in->ptr, ACS_RTEE);
+-			break;
+-		case 203:
+-		case 194:
+-			waddch(win_in->ptr, ACS_TTEE);
+-			break;
+-		case 202:
+-		case 193:
+-			waddch(win_in->ptr, ACS_BTEE);
+-			break;
+-		case 205:
+-		case 196:
+-			waddch(win_in->ptr, ACS_HLINE);
+-			break;
+-		case 186:
+-		case 179:
+-			waddch(win_in->ptr, ACS_VLINE);
+-			break;
+-		case 129:
+-			waddch(win_in->ptr, 252);	/*u umlaut */
+-			break;
+-		case 132:
+-			waddch(win_in->ptr, 228);	/*a umlaut */
+-			break;
+-		case 142:
+-			waddch(win_in->ptr, 196);	/*A umlaut */
+-			break;
+-		case 148:
+-			waddch(win_in->ptr, 246);	/*o umlaut */
+-			break;
+-		case 153:
+-			waddch(win_in->ptr, 214);	/*O umlaut */
+-			break;
+-		case 154:
+-			waddch(win_in->ptr, 220);	/*U umlaut */
++	case TALKMODE:// Clear the screen and re-init. Which looks awful.  
++			wclear(win_out->ptr);
++			wrefresh(win_out->ptr);
++			wclear(win_in->ptr);
++		//	wrefresh(win_in->ptr);
++			wintab->next = 0;
++			endwin();
++			start_screen(call);
++			start_talk_mode(wintab, win_in, win_out);
++			restorecursor(mode, win_out);
+ 			break;
+-		case 225:
+-			waddch(win_in->ptr, 223);	/*sz */
++
++	case SLAVEMODE:// Also fix me.  
++			wclear(win_out->ptr);
++			//wrefresh(win_out->ptr);
++			wintab->next = 0;
++			endwin();
++			start_screen(call);
++			start_slave_mode(wintab, win_in, win_out);
++			restorecursor(mode, win_out);
+ 			break;
+-		default:
+-			{
+-				if (buf[cnt] > 127)
+-					waddch(win_in->ptr, '.');
+-				else
+-					waddch(win_in->ptr, buf[cnt]);
++	}
++}
++
++
++void waddnstrcrcheck(t_win *win_in, char *buf, int bytes, int draw, int mode, t_win *win_out)
++{
++	int n;
++	for (n=0;n<bytes;n++){
++		int width;
++		incharbuf[incharbuflen++] = buf[n];
++		if (completecharlen(incharbuf) > incharbuflen)continue;
++		if (eatchar && (incharbuf[0] == '\n')){
++			eatchar = 0;
++			incharbuflen = 0;
++			continue;
++			}
++		width = widthchar(incharbuf, incharbuflen, inbufwid);
++		eatchar = 0;
++		if (draw) {
++			if (win_in) waddnstr(win_in->ptr, incharbuf, incharbuflen);
++			else write(STDOUT_FILENO, incharbuf, incharbuflen);
++		}
++		if (incharbuf[0] == '\n')incharbuflen = 0;
++		else if (width + inbufwid <= COLS){
++			if (inbuflen + incharbuflen <= MAX_BUFLEN){
++				memcpy(&inbuf[inbuflen], incharbuf, incharbuflen);
++				inbuflen += incharbuflen;
+ 			}
++			incharbuflen = 0;
++			inbufwid += width;
++			if (inbufwid >= COLS)eatchar = 1;
++			continue;// Skip to next line when width goes over.
++		}
++		addscrollline(inbuf, inbuflen);
++		if (incharbuflen){
++			memcpy(&inbuf[0], incharbuf, incharbuflen);
++			inbuflen = incharbuflen;
++			incharbuflen = 0;
++			inbufwid = width;
++		}
++		else {
++			inbuflen = 0;
++			inbufwid = 0;
++		}
++		if (scrolledup && win_in && win_out){
++			scrolledup++; // scrolledup is relative to bottom line 	
++			scrolltext(win_in, 0, mode, win_out);
+ 		}
+ 	}
++	if (draw && win_in) wrefresh(win_in->ptr);
++	
++}
+ 
+-/*      waddnstr(win_in->ptr, buf, bytes); */
+-	wrefresh(win_in->ptr);
+ 
++void writeincom(int mode, int encoding, t_win * win_in, unsigned char buf[], int bytes, t_win *win_out)
++{
++        if (mode & RAWMODE) {
++                while (write(STDOUT_FILENO, buf, bytes) == -1) {
++                        if (errno == EWOULDBLOCK || errno == EAGAIN) {
++                                usleep(100000);
++                                continue;
++                        }
++                        exit(1);
++                }
++                return;
++        }
++ //  waddnstrcrcheck(0, (char *)buf, bytes,1, mode, 0); // Had this, but this is wrong.
++	else if (encoding == UTF8ENCODING)
++                waddnstrcrcheck(win_in, (char *)buf, bytes,scrolledup == 0, mode, win_out);
++	else {
++		char *inbuf = (char *) buf, out[MAX_BUFLEN], *outbuf=out;
++		size_t insize = bytes, outsize = MAX_BUFLEN; 
++		iconv(ibm850toutf8, &inbuf, &insize, &outbuf, &outsize);
++                waddnstrcrcheck(win_in, out, MAX_BUFLEN-outsize,scrolledup == 0, mode, win_out);
++	}
+ 	return;
+ }
+-
++static void writeincomstr(int mode, int encoding, t_win * win_in, char buf[], t_win *win_out)
++{
++	int len;
++	len = strlen(buf);
++	writeincom(mode, encoding, win_in, (unsigned char *)buf, len, win_out);
++}
++
++int  outstring(char *buf, wchar_t *string, int bytes, int encoding)
++{
++	char *inbuf = (char *) string, *outbuf = buf;
++	size_t insize = bytes * sizeof(wchar_t), outsize = MAX_BUFLEN-1; 
++	if (encoding == UTF8ENCODING){
++		iconv(wcharttoutf8, &inbuf, &insize, &outbuf, &outsize);
++	}
++	else {
++		iconv(wcharttoibm850, &inbuf, &insize, &outbuf, &outsize);
++			
++	}			
++	buf[(MAX_BUFLEN-1)-outsize] = '\0'; 
++	return (MAX_BUFLEN-1)-outsize;
++}
++	
+ int getstring(wint * wintab, char text[], char buf[])
+ {
+-	int c;
++	wchar_t c;
+ 	int ypos = 0, xpos = 0;
+ 	int bytes = 0;
+-
++	wchar_t wbuf[MAX_BUFLEN];
+ 	WINDOW *win = winopen(wintab, 3, COLS, 10, 0, TRUE);
++	int done = 0;
+ 
+ 	wmove(win, 1, 2);
+ 	waddstr(win, text);
+ 	wrefresh(win);
+ 
+ 	do {
+-		c = getch();
+-		if (c != ERR) {
+-			switch (c) {
+-			case KEY_BACKSPACE:
+-			case 127:
+-				{
+-					getyx(win, ypos, xpos);
+-					if (xpos > 0 && bytes > 0) {
+-						wmove(win, ypos, --xpos);
+-						waddch(win, ' ');
+-						wmove(win, ypos, xpos);
+-						bytes--;
+-					}
+-				}
+-				break;
+-			case (int) '\n':
+-			case (int) '\r':
+-			case KEY_ENTER:
+-				{
+-					waddch(win, '\n');
+-					buf[bytes++] = (char) '\n';
+-					wrefresh(win);
+-					buf[bytes] = 0;
+-				}
+-				break;
+-			default:
+-				{
+-					waddch(win, (char) c);
+-					buf[bytes++] = (char) c;
++		int r;
++		wint_t ci;
++		r = get_wch(&ci);
++		if (r != ERR) {
++			c = (wchar_t) ci;
++			if  (((r == KEY_CODE_YES) && (c == KEY_BACKSPACE))||
++				    ((r == OK) && ((c==127)|| (c==8)))){
++				getyx(win, ypos, xpos);
++				if (bytes > 0) {
++					int width, j;
++					width = wcwidthcontrol(wbuf[bytes-1]);
++					for (j=0;j<width;j++) mvwdelch(win, ypos, xpos-width);
++					xpos -= width;
++					wmove(win, ypos, xpos);
++					bytes--;
+ 				}
+ 			}
++			else if (( (r==KEY_CODE_YES) && (c == KEY_ENTER))||
++				   ( (r == OK) && ((c=='\n') || (c=='\r')))){
++				wbuf[bytes++] = (wchar_t) '\n';
++		 		outstring(buf, wbuf, bytes, UTF8ENCODING);
++				done = 1;
++			}
++			else if (r == KEY_CODE_YES); // Put in code for other KEYCODES here
++			else if (bytes+2 < MAX_BUFLEN){
++				//int width;
++				//width = wins_nwchrmy(win, c);
++				//getyx(win, ypos, xpos);
++				//wmove(win, ypos, xpos+width);
++				wbuf[bytes++] = c;
++				drawinbuf(win, wbuf, bytes, bytes);
++			}
+ 			wrefresh(win);
+ 		}
+ 	}
+-	while (c != '\n' && c != '\r' && c != KEY_ENTER);
++	while (!done);
+ 	delwin(win);
+ 	winclose(wintab);
+ 	return 0;
+ }
+ 
+ int readoutg(t_win * win_out, wint * wintab, menuitem * top, char buf[],
+-	     int keyesc)
++	     int keyesc, int mode, int encoding, t_win *win_in)
+ {
+-	int out_cnt;
+-	int c;
++	int out_cnt, r;
++	wint_t ci;wchar_t c;
+ 	int ypos = 0, xpos = 0;
+ 	int value;
+ 
+-	c = getch();
+-	if (c == ERR)
++	r = get_wch(&ci);
++	if (r == ERR)
+ 		return 0;
+-
++	c = (wchar_t) ci;
+ 	if (c == keyesc) {
+-		if ((value = top_menu(wintab, top, 1)) == 0)
++		if ((value = top_menu(wintab, top, 1)) == 0){
++			restorecursor(mode, win_out);
+ 			return 0;
++		}
++		restorecursor(mode, win_out);
+ 		buf[0] = '~';
+ 		switch (value) {
+ 		case 0x01:
+@@ -1113,6 +1461,7 @@ int readoutg(t_win * win_out, wint * win
+ 				getstring(wintab,
+ 					  "Please enter filename: ",
+ 					  &buf[2]);
++				restorecursor(mode, win_out);
+ 				return strlen(buf);
+ 			}
+ 		case 0x12:
+@@ -1137,6 +1486,7 @@ int readoutg(t_win * win_out, wint * win
+ 				getstring(wintab,
+ 					  "Please enter filename: ",
+ 					  buf + 2);
++				restorecursor(mode, win_out);
+ 				return strlen(buf);
+ 			}
+ 		case 0x21:
+@@ -1160,97 +1510,164 @@ int readoutg(t_win * win_out, wint * win
+ 		wrefresh(win_out->ptr);
+ 		return 2;
+ 	}
+-	switch (c) {
+-	case KEY_BACKSPACE:
+-	case 127:
+-		{
++	if  (((r == KEY_CODE_YES) && (c == KEY_BACKSPACE))||
++			((r == OK) && ((c==127)|| (c==8)))){
++		if ((mode == SLAVEMODE) && scrolledup) return 0;  
++		while(win_out->curs_pos > 0){
++			int width;int j;
+ 			getyx(win_out->ptr, ypos, xpos);
+-			if (win_out->bytes > 0) {
+-				if (win_out->curs_pos < win_out->bytes) {
+-					mvwaddnstr(win_out->ptr, ypos,
+-						   --xpos,
+-						   &win_out->
+-						   string[win_out->
+-							  curs_pos],
+-						   win_out->bytes -
+-						   win_out->curs_pos);
+-					waddch(win_out->ptr, ' ');
+-					memmove(&win_out->
+-						string[win_out->curs_pos -
+-						       1],
+-						&win_out->string[win_out->
+-								 curs_pos],
+-						win_out->bytes -
+-						win_out->curs_pos);
+-				} else
+-					mvwaddch(win_out->ptr, ypos,
+-						 --xpos, ' ');
+-
+-				wmove(win_out->ptr, ypos, xpos);
+-				win_out->bytes--;
+-				win_out->curs_pos--;
+-			}
+-		}
+-		break;
+-	case KEY_LEFT:
+-		if (win_out->curs_pos > 0) {
++			width = wcwidthcontrol(win_out->string[win_out->curs_pos-1]);
++			for (j=0;j<width;j++) mvwdelch(win_out->ptr, ypos, xpos-width);
++			xpos -= width;
++			wmove(win_out->ptr, ypos, xpos);
++			if (win_out->curs_pos < win_out->bytes) {
++				memmove(&win_out->
++					string[win_out->curs_pos - 1],
++					&win_out->string[win_out-> curs_pos],
++					(win_out->bytes -
++					win_out->curs_pos) * sizeof(wchar_t));
++				} 
++			win_out->bytes--;
+ 			win_out->curs_pos--;
+-			getyx(win_out->ptr, ypos, xpos);
+-			wmove(win_out->ptr, ypos, xpos - 1);
++			if (width)break;
+ 		}
+-		break;
+-	case KEY_RIGHT:
+-		if (win_out->curs_pos < win_out->bytes) {
++	}
++	else if (( (r==KEY_CODE_YES) && (c == KEY_ENTER))||
++		   ( (r == OK) && ((c=='\n') || (c=='\r')))){
++		if ((mode == SLAVEMODE) && scrolledup) return 0;  
++		while (win_out->curs_pos < win_out->bytes) { // Move to end of the line
++			int width;
++			width = wcwidthcontrol(win_out->string[win_out->curs_pos]);
+ 			win_out->curs_pos++;
+ 			getyx(win_out->ptr, ypos, xpos);
+-			wmove(win_out->ptr, ypos, xpos + 1);
+-		}
+-		break;
+-	case KEY_ENTER:
+-	case (int) '\n':
+-	case (int) '\r':
+-		{
+-			if (win_out->curs_pos < win_out->bytes) {
+-				getyx(win_out->ptr, ypos, xpos);
+-				wmove(win_out->ptr, ypos,
+-				      xpos + win_out->bytes -
+-				      win_out->curs_pos);
++			wmove(win_out->ptr, ypos, xpos + width);
+ 			}
+-			waddch(win_out->ptr, '\n');
+-			win_out->string[win_out->bytes++] = (char) '\n';
+-			wrefresh(win_out->ptr);
+-			strncpy(buf, win_out->string, win_out->bytes);
+-			wrefresh(win_out->ptr);
+-			out_cnt = win_out->bytes;
+-			win_out->bytes = 0;
+-			win_out->curs_pos = 0;
+-			return out_cnt;
++		waddch(win_out->ptr, '\n');
++		win_out->string[win_out->bytes++] = (wchar_t) '\n';
++		wrefresh(win_out->ptr);
++		out_cnt = outstring(buf, win_out->string, win_out->bytes, encoding);
++		if (mode == SLAVEMODE){
++			char obuf[MAX_BUFLEN];
++			char *inbuf = (char *)win_out->string, *outbuf = obuf;
++			size_t insize = win_out->bytes * sizeof(wchar_t), outsize = MAX_BUFLEN; 
++			iconv(wcharttoutf8, &inbuf, &insize, &outbuf, &outsize);
++                        waddnstrcrcheck(win_in, obuf, MAX_BUFLEN-outsize, 0, mode, win_out);
++		}
++		win_out->bytes = 0;
++		win_out->curs_pos = 0;
++		return out_cnt;
++	}
++	else if (r == KEY_CODE_YES){
++		switch(c){
++			case KEY_LEFT:// Character of 0 width 
++				while (win_out->curs_pos > 0) {
++					int width;
++					win_out->curs_pos--;
++					width = wcwidthcontrol(win_out->string[win_out->curs_pos]);
++					getyx(win_out->ptr, ypos, xpos);
++					wmove(win_out->ptr, ypos, xpos - width);
++					if (width)break; // Skip to non-width
++				}
++				break;
++			case KEY_RIGHT:
++				{
++				int skipped = 0;// Skip over 0 length characters
++				while (win_out->curs_pos < win_out->bytes) {
++					int width;
++					width = wcwidthcontrol(win_out->string[win_out->curs_pos]);
++					if (width){
++						if (skipped)break;
++						skipped = 1;
++					}
++					win_out->curs_pos++;
++					getyx(win_out->ptr, ypos, xpos);
++					wmove(win_out->ptr, ypos, xpos + width);
++				}
++				break;
++			}
++			case KEY_UP:
++				scrolltext(win_in, 1, mode, win_out);
++				break;
++			case KEY_DOWN:
++				scrolltext(win_in, -1, mode, win_out);
++				break;
++			case KEY_NPAGE:
++				scrolltext(win_in, -win_in->max_y, mode, win_out);
++				break;
++			case KEY_PPAGE:
++				scrolltext(win_in, win_in->max_y, mode, win_out);
++				break;
++			case KEY_HOME:
++				while (win_out->curs_pos > 0) {
++					int width;
++					win_out->curs_pos--;
++					width = wcwidthcontrol(win_out->string[win_out->curs_pos]);
++					getyx(win_out->ptr, ypos, xpos);
++					wmove(win_out->ptr, ypos, xpos - width);
++				}
++				break;
++			case KEY_END:
++				while (win_out->curs_pos < win_out->bytes) { // Move to end of the line
++					int width;
++					width = wcwidthcontrol(win_out->string[win_out->curs_pos]);
++					win_out->curs_pos++;
++					getyx(win_out->ptr, ypos, xpos);
++					wmove(win_out->ptr, ypos, xpos + width);
++					}
++				break;
++			case KEY_DC:{
++				int skipped = 0;
++				if ((mode == SLAVEMODE) && scrolledup) return 0;  
++				while (win_out->curs_pos < win_out->bytes){
++					int width;int j;
++					getyx(win_out->ptr, ypos, xpos);
++					width = wcwidthcontrol(win_out->string[win_out->curs_pos]);
++					if (width){
++						if (skipped)break;
++						skipped = 1;
++					}
++					for (j=0;j<width;j++) mvwdelch(win_out->ptr, ypos, xpos);
++					if (win_out->curs_pos + 1 < win_out->bytes) {
++						memmove(&win_out-> string[win_out->curs_pos],
++							&win_out->string[win_out-> curs_pos+1],
++							(win_out->bytes - (win_out->curs_pos+1)) * sizeof(wchar_t));
++					} 
++					win_out->bytes--;
++				}
++				break;
++			}
++			case KEY_RESIZE:
++				break;
++			case KEY_BACKSPACE:
++				break;
++			case KEY_ENTER:
++				break;
++			default:
++				break;
+ 		}
++	}
++	else switch (c) {
++	case 8:
++	case 127:
++	case '\r':
++	case '\n':
+ 		break;
+ 	default:
+-		{
+-			waddch(win_out->ptr, (char) c);
++		if ((mode == SLAVEMODE) && scrolledup) return 0; // Don't try to edit while scrolled up in SLAVEmode.
++						// It's just not possible because the cursor is off screen 
++		if (win_out->bytes < MAX_BUFLEN )	{
+ 			if (win_out->curs_pos < win_out->bytes) {
+-				getyx(win_out->ptr, ypos, xpos);
+-				waddnstr(win_out->ptr,
+-					 &win_out->string[win_out->
+-							  curs_pos],
+-					 win_out->bytes -
+-					 win_out->curs_pos);
+ 				memmove(&win_out->
+ 					string[win_out->curs_pos + 1],
+-					&win_out->string[win_out->
+-							 curs_pos],
+-					win_out->bytes -
+-					win_out->curs_pos);
+-				win_out->string[win_out->curs_pos] =
+-				    (char) c;
+-				wmove(win_out->ptr, ypos, xpos);
+-			} else
+-				win_out->string[win_out->bytes] = (char) c;
+-
++					&win_out->string[win_out-> curs_pos],
++					(win_out->bytes -
++					win_out->curs_pos) * sizeof(wchar_t)); 
++			}
++			win_out->string[win_out->curs_pos] =  c;
+ 			win_out->bytes++;
+ 			win_out->curs_pos++;
++			drawinbuf(win_out->ptr, win_out->string, win_out->bytes, win_out->curs_pos);
++			break;
+ 		}
+ 	}
+ 	wrefresh(win_out->ptr);
+@@ -1349,7 +1766,6 @@ int searche_key_words(char buf[], int *b
+ 	int cnt = 0;
+ 	int t = 0;
+ 
+-
+ 	if (cmpstrbyte != 0) {
+ 		memmove(buf + cmpstrbyte, buf, *bytes);
+ 		*bytes += cmpstrbyte;
+@@ -1371,22 +1787,22 @@ int searche_key_words(char buf[], int *b
+ 			command = 0;
+ 			cmdstpos = cnt;
+ 
+-			t = -1;
+-			while (*pkey_words[command] != '\0') {
+-				if ((t =
+-				     compstr(pkey_words[command], &buf[cnt],
+-					     *bytes - cnt)) != -1)
+-					break;
+-				command++;
+-			}
+-
+-			for (; !eol(buf[cnt]) && cnt < *bytes - 1; cnt++);
+-
+-			if (cnt < *bytes - 1)
+-				cnt++;
+-			else
+-				break;
+-		} while (t == -1);
++                        t = -1;
++                        while (*pkey_words[command] != '\0') {
++                                if ((t =
++                                     compstr(pkey_words[command], &buf[cnt],
++                                             *bytes - cnt)) != -1)
++                                        break;
++                                command++;
++                        }
++
++                        for (; !eol(buf[cnt]) && cnt < *bytes - 1; cnt++);
++
++                        if (cnt < *bytes - 1)
++                                cnt++;
++                        else
++                                break;
++                } while (t == -1);
+ 
+ 		if (t < 0)
+ 			command = -1;
+@@ -1525,7 +1941,7 @@ void statbits(int mode, char stat, int m
+ }
+ 
+ 
+-int cmd_call(char *call[], int mode)
++int cmd_call(char *call[], int mode, int encoding)
+ {
+ 	menuitem con[] = {
+ 		{"~Reconnect", 'R', M_ITEM, (void *) 0x01},
+@@ -1588,8 +2004,8 @@ int cmd_call(char *call[], int mode)
+ 	int upllen = 0;
+ 	char *c, *t;
+ 	t_gp gp;
+-	t_win win_in;
+-	t_win win_out;
++	t_win win_in = {0};
++	t_win win_out = {0};
+ 	WINDOW *swin = 0;
+ 	int cnt;
+ 	int crc = 0;
+@@ -1609,9 +2025,11 @@ int cmd_call(char *call[], int mode)
+ 		return FALSE;
+ 
+ 	interrupted = FALSE;
++	sigwinchsignal = FALSE;
+ 	signal(SIGQUIT, cmd_intr);
+ 	signal(SIGINT, SIG_IGN);
+ 	signal(SIGTSTP, SIG_IGN);
++	signal(SIGWINCH, cmd_sigwinch);
+ 
+ 	fcntl(fd, F_SETFL, O_NONBLOCK);
+ 	fcntl(STDIN_FILENO, F_SETFL, O_NONBLOCK);
+@@ -1633,13 +2051,14 @@ int cmd_call(char *call[], int mode)
+ 	}
+ 
+ 	while (TRUE) {
+-		struct timeval tv;
++		struct timespec tv;
++		sigset_t sigmask;
+ 		if (inactivity_timeout_is_set == TRUE && uploadfile == -1 && downloadfile == -1) {
+ 			tv.tv_sec = inactivity_timeout.tv_sec;
+-			tv.tv_usec = inactivity_timeout.tv_usec;
++			tv.tv_nsec = inactivity_timeout.tv_usec * 1000;
+ 		} else {
+ 			tv.tv_sec = 0;
+-			tv.tv_usec = 10;
++			tv.tv_nsec = 10000;
+ 		}
+ 		FD_ZERO(&sock_read);
+ 		if (EOF_on_STDIN == FALSE)
+@@ -1647,17 +2066,28 @@ int cmd_call(char *call[], int mode)
+ 		FD_SET(fd, &sock_read);
+ 		FD_ZERO(&sock_write);
+ 
++		sigemptyset(&sigmask);
+ 		if (uploadfile != -1)
+ 			FD_SET(fd, &sock_write);
+ 
+-		if (select(fd + 1, &sock_read, &sock_write, NULL, (uploadfile == -1 && downloadfile == -1 && inactivity_timeout_is_set == FALSE) ? NULL : &tv) == -1) {
++		if (pselect(fd + 1, &sock_read, &sock_write, NULL, (uploadfile == -1 && downloadfile == -1 && inactivity_timeout_is_set == FALSE) ? NULL : &tv, &sigmask) == -1) {
+ 			if (!interrupted && errno == EAGAIN) {
+ 				usleep(100000);
+ 				continue;
+ 			}
+-			if (!interrupted)
+-				perror("select");
+-			break;
++			if ((errno == EINTR) && sigwinchsignal){
++				// Just process screen resize here.
++				reinit_mode(mode, &wintab, &win_in,
++					&win_out, call);
++				sigwinchsignal = 0;
++				continue;
++			}
++			else {
++				if (!interrupted){
++					perror("select");
++				}
++				break;
++			}
+ 		}
+ 		if (inactivity_timeout_is_set == TRUE && !FD_ISSET(fd, &sock_read) && !FD_ISSET(STDIN_FILENO, &sock_read)) {
+ 			if (!be_silent) {
+@@ -1702,8 +2132,9 @@ int cmd_call(char *call[], int mode)
+ 					convert_cr_lf(buf, bytes);
+ 					if (!sevenplus) {
+ 
+-						writeincom(mode, &win_in,
+-							   (unsigned char * ) buf, bytes);
++						writeincom(mode, encoding, &win_in,
++							   (unsigned char * ) buf, bytes, &win_out);
++						restorecursor(mode, &win_out);
+ 					} else {
+ 						for (cnt = 0; cnt < bytes;
+ 						     cnt++)
+@@ -1830,7 +2261,7 @@ int cmd_call(char *call[], int mode)
+ 			} else {
+ 				bytes =
+ 				    readoutg(&win_out, &wintab, top, buf,
+-					     0x1d);
++					     0x1d, mode, encoding, &win_in);
+ 				if (bytes == -1) {
+ 					wclear(win_in.ptr);
+ 					wrefresh(win_in.ptr);
+@@ -1895,23 +2326,23 @@ int cmd_call(char *call[], int mode)
+ 				case '?':
+ 				case 'h':
+ 				case 'H':
+-					printf("\nTilde escapes:\n");
+-					printf(".   close\n");
+-					printf("~   send ~\n");
+-					printf("r   reconnect\n");
+-					printf("!   shell\n");
+-					printf("Z   suspend program. Resume with \"fg\"\n");
+-					printf("s   Stop upload\n");
+-					printf("o   Open log\n");
+-					printf("c   Close log\n");
+-					printf("0   Switch GUI to \"RAW\" (line) mode - already here ;)\n");
+-					printf("1   Switch GUI to \"Slave\" mode\n");
+-					printf("2   Switch GUI to \"Talk\" (split) mode\n");
+-					printf("u   Upload\n");
+-					printf("a   Upload (autobin protocol)\n");
+-					printf("b   Upload binary data (crlf conversion)\n");
+-					printf("yd  YAPP Download\n");
+-					printf("yu  YAPP Upload\n");
++					writeincomstr(mode, encoding, &win_in,"\nTilde escapes:\n", &win_out);
++					writeincomstr(mode, encoding, &win_in,".   close\n", &win_out);
++					writeincomstr(mode, encoding, &win_in,"~   send ~\n", &win_out);
++					writeincomstr(mode, encoding, &win_in,"r   reconnect\n", &win_out);
++					writeincomstr(mode, encoding, &win_in,"!   shell\n", &win_out);
++					writeincomstr(mode, encoding, &win_in,"Z   suspend program. Resume with \"fg\"\n", &win_out);
++					writeincomstr(mode, encoding, &win_in,"s   Stop upload\n", &win_out);
++					writeincomstr(mode, encoding, &win_in,"o   Open log\n", &win_out);
++					writeincomstr(mode, encoding, &win_in,"c   Close log\n", &win_out);
++					writeincomstr(mode, encoding, &win_in,"0   Switch GUI to \"RAW\" (line) mode - already here ;)\n", &win_out);
++					writeincomstr(mode, encoding, &win_in,"1   Switch GUI to \"Slave\" mode\n", &win_out);
++					writeincomstr(mode, encoding, &win_in,"2   Switch GUI to \"Talk\" (split) mode\n", &win_out);
++					writeincomstr(mode, encoding, &win_in,"u   Upload\n", &win_out);
++					writeincomstr(mode, encoding, &win_in,"a   Upload (autobin protocol)\n", &win_out);
++					writeincomstr(mode, encoding, &win_in,"b   Upload binary data (crlf conversion)\n", &win_out);
++					writeincomstr(mode, encoding, &win_in,"yd  YAPP Download\n", &win_out);
++					writeincomstr(mode, encoding, &win_in,"yu  YAPP Upload\n", &win_out);
+ 					fflush(stdout);
+ 					continue;
+ 				case 'S':
+@@ -1925,6 +2356,7 @@ int cmd_call(char *call[], int mode)
+ 						statline(mode,
+ 								"No upload in progress");
+ 					}
++					restorecursor(mode, &win_out);
+ 					continue;
+ 				case 'A':
+ 				case 'a':
+@@ -1935,6 +2367,7 @@ int cmd_call(char *call[], int mode)
+ 					if (uploadfile != -1) {
+ 						statline(mode,
+ 								"Already uploading");
++						restorecursor(mode, &win_out);
+ 						continue;
+ 					}
+ 					if ((t =
+@@ -1946,12 +2379,14 @@ int cmd_call(char *call[], int mode)
+ 					if (*t == '\0') {
+ 						statline(mode,
+ 								"Upload requires a filename");
++						restorecursor(mode, &win_out);
+ 						continue;
+ 					}
+ 					uploadfile = open(t, O_RDONLY);
+ 					if (uploadfile == -1) {
+ 						statline(mode,
+ 								"Unable to open upload file");
++						restorecursor(mode, &win_out);
+ 						continue;
+ 					}
+ 					if (lseek(uploadfile, 0L, SEEK_END)
+@@ -2051,6 +2486,7 @@ int cmd_call(char *call[], int mode)
+ 								upldp = -1;
+ 								upllen = 0;
+ 							}
++							restorecursor(mode, &win_out);
+ 							break;
+ 						case 'b':
+ 						case 'B':
+@@ -2100,10 +2536,12 @@ int cmd_call(char *call[], int mode)
+ 						statline(mode,
+ 								"Log file not open");
+ 					}
++					restorecursor(mode, &win_out);
+ 					continue;
+ 				case 'Y':
+ 				case 'y':
+ 					cmd_yapp(buf + 2, bytes - 2);
++					restorecursor(mode, &win_out);
+ 					continue;
+ 				case '~':
+ 					bytes--;
+@@ -2133,6 +2571,17 @@ int cmd_call(char *call[], int mode)
+ 							&wintab, &win_in,
+ 							&win_out, call);
+ 					continue;
++				case '8':
++					encoding = UTF8ENCODING;
++					statline(mode, "UTF-8 encoding");
++					restorecursor(mode, &win_out);
++					continue;
++				case 'i':
++				case 'I':
++					encoding = ORIGINALENCODING;
++					statline(mode, "IBM850 encoding");
++					restorecursor(mode, &win_out);
++					continue;
+ 				default:
+ 					statline(mode,
+ 						 "Unknown '~' escape. Type ~h for a list");
+@@ -2151,6 +2600,7 @@ int cmd_call(char *call[], int mode)
+ 				if (uploadfile != -1) {
+ 					statline(mode,
+ 						 "Ignored. Type ~s to stop upload");
++					restorecursor(mode, &win_out);
+ 					continue;
+ 				}
+ 				convert_lf_cr(buf, bytes);
+@@ -2186,6 +2636,7 @@ int cmd_call(char *call[], int mode)
+ 				winclose(&wintab);
+ 				statline(mode,
+ 					 "Upload complete: 0 bytes");
++				restorecursor(mode, &win_out);
+ 				continue;
+ 			}
+ 			if (upldp == -1) {
+@@ -2200,6 +2651,7 @@ int cmd_call(char *call[], int mode)
+ 					sprintf(s,
+ 						"Upload complete: %ld bytes",
+ 						uplpos);
++					restorecursor(mode, &win_out);
+ 					statline(mode, s);
+ 					continue;
+ 				}
+@@ -2212,6 +2664,7 @@ int cmd_call(char *call[], int mode)
+ 						"Error reading upload file: upload aborted at %ld bytes",
+ 						uplpos);
+ 					statline(mode, s);
++					restorecursor(mode, &win_out);
+ 					continue;
+ 				}
+ 				if (!binup)
+@@ -2231,6 +2684,7 @@ int cmd_call(char *call[], int mode)
+ 				if (errno != EWOULDBLOCK && errno != EAGAIN) {
+ 					sprintf(s, "Write error during upload. Connection lost");
+ 					statline(mode, s);
++					restorecursor(mode, &win_out);
+ 					perror("write");
+ 					break;
+ 			  	}
+@@ -2289,17 +2743,27 @@ int cmd_call(char *call[], int mode)
+ }
+ 
+ 
++void iconvclose(void)
++{
++	iconv_close(ibm850toutf8);
++	iconv_close(wcharttoibm850);
++	iconv_close(wcharttoutf8);
++	iconv_close(utf8towchart);
++}
++
+ int main(int argc, char **argv)
+ {
+ 	int p;
+ 	int mode = TALKMODE;
++	int encoding = UTF8ENCODING;// Maybe controversial?  
+ 
++	setlocale(LC_ALL, "");
+ 	if (!isatty(STDIN_FILENO))
+ 		stdin_is_tty = 0;
+ 
+  	setlinebuf(stdin);
+ 
+-	while ((p = getopt(argc, argv, "b:dhm:p:rs:RStT:vw:W")) != -1) {
++	while ((p = getopt(argc, argv, "b:dhm:p:rs:RStT:vw:Wi8")) != -1) {
+ 		switch (p) {
+ 		case 'b':
+ 			if (*optarg != 'e' && *optarg != 'l') {
+@@ -2336,6 +2800,7 @@ int main(int argc, char **argv)
+ 			}
+ 			break;
+ 		case 'r':
++			COLS = 80; // This is used to format the scrollback buffer, which is stored in raw
+ 			mode = RAWMODE;
+ 			break;
+ 		case 's':
+@@ -2346,17 +2811,17 @@ int main(int argc, char **argv)
+ 		case 'S':
+ 			be_silent = 1;
+ 			break;
+-		case 'T':
+-			{ double f = atof(optarg);
+-			  inactivity_timeout.tv_sec = ((time_t) f) & 0x7fffffff;
+-			  inactivity_timeout.tv_usec = (time_t ) (f - (double ) (time_t ) f);
+-			  if (f < 0.001 || f > (double) (0x7fffffff) || (inactivity_timeout.tv_sec == 0 && inactivity_timeout.tv_usec == 0)) {
+-			  	fprintf(stderr, "call: option '-T' must be > 0.001 (1ms) and < 69 years\n");
+-				return 1;
+-			  }
+-			  inactivity_timeout_is_set = TRUE;
+-			}
+-			break;
++                case 'T':
++                        { double f = atof(optarg);
++                          inactivity_timeout.tv_sec = ((time_t) f) & 0x7fffffff;
++                          inactivity_timeout.tv_usec = (time_t ) (f - (double ) (time_t ) f);
++                          if (f < 0.001 || f > (double) (0x7fffffff) || (inactivity_timeout.tv_sec == 0 && inactivity_timeout.tv_usec == 0)) {
++                                fprintf(stderr, "call: option '-T' must be > 0.001 (1ms) and < 69 years\n");
++                                return 1;
++                          }
++                          inactivity_timeout_is_set = TRUE;
++                        }
++                        break;
+ 		case 't':
+ 			mode = TALKMODE;
+ 			break;
+@@ -2386,6 +2851,12 @@ int main(int argc, char **argv)
+ 		case 'W':
+ 			wait_for_remote_disconnect = TRUE;
+ 			break;
++		case 'i':
++			encoding = ORIGINALENCODING;
++			break;
++		case '8':
++			encoding = UTF8ENCODING;
++			break;
+ 		case '?':
+ 		case ':':
+ 			usage();
+@@ -2395,6 +2866,13 @@ int main(int argc, char **argv)
+ 	if (optind == argc || optind == argc - 1) {
+ 		usage();
+ 	}
++
++	ibm850toutf8 = iconv_open("UTF8", "IBM850");
++	wcharttoibm850 = iconv_open("IBM850", "WCHAR_T");
++	wcharttoutf8 = iconv_open("UTF8", "WCHAR_T");
++	utf8towchart = iconv_open("WCHAR_T", "UTF8");
++	atexit(iconvclose);
++
+ 	port = argv[optind];
+ 
+ 	if (ax25_config_load_ports() == 0) {
+@@ -2443,7 +2921,7 @@ int main(int argc, char **argv)
+ 		printf("GW4PTS AX.25 Connect v1.11\n");
+ 		fflush(stdout);
+ 	}
+-	while (cmd_call(argv + optind + 1, mode)) {
++	while (cmd_call(argv + optind + 1, mode, encoding)) {
+ 		if (!be_silent) {
+ 			printf("Wait 60 sec before reconnect\n");
+ 			fflush(stdout);
+diff -pruN '--exclude=*.dep*' '--exclude=Makefile' '--exclude=config.status' '--exclude=*.log' '--exclude=*.swp' ax25-apps-0.0.8-rc4/configure ax25-apps-0.0.8-rc4.callintl/configure
+--- ax25-apps-0.0.8-rc4/configure	2013-06-18 14:57:12.000000000 -0400
++++ ax25-apps-0.0.8-rc4.callintl/configure	2013-07-17 00:00:13.931803675 -0400
+@@ -11497,13 +11497,13 @@ else
+   as_fn_error $? "Could not find the libax25 libraries; aborting" "$LINENO" 5
+ fi
+ 
+-{ $as_echo "$as_me:${as_lineno-$LINENO}: checking for initscr in -lncurses" >&5
+-$as_echo_n "checking for initscr in -lncurses... " >&6; }
++{ $as_echo "$as_me:${as_lineno-$LINENO}: checking for initscr in -lncursesw" >&5
++$as_echo_n "checking for initscr in -lncursesw... " >&6; }
+ if ${ac_cv_lib_ncurses_initscr+:} false; then :
+   $as_echo_n "(cached) " >&6
+ else
+   ac_check_lib_save_LIBS=$LIBS
+-LIBS="-lncurses  $LIBS"
++LIBS="-lncursesw  $LIBS"
+ cat confdefs.h - <<_ACEOF >conftest.$ac_ext
+ /* end confdefs.h.  */
+ 
+@@ -11534,7 +11534,7 @@ fi
+ { $as_echo "$as_me:${as_lineno-$LINENO}: result: $ac_cv_lib_ncurses_initscr" >&5
+ $as_echo "$ac_cv_lib_ncurses_initscr" >&6; }
+ if test "x$ac_cv_lib_ncurses_initscr" = xyes; then :
+-  NCURSES_LIB="-lncurses"
++  NCURSES_LIB="-lncursesw"
+ else
+   as_fn_error $? "Could not find the ncurses library; aborting" "$LINENO" 5
+ fi
+
+--------------010402090305050103050505--
