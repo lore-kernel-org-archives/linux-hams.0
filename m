@@ -1,22 +1,40 @@
-From: David Howells <dhowells@redhat.com>
+From: Joe Perches <joe@perches.com>
 Subject: Re: [PATCH 0/8] include/net: next set of extern removals
-Date: Thu, 01 Aug 2013 13:04:10 +0100
-Message-ID: <24958.1375358650@warthog.procyon.org.uk>
+Date: Thu, 01 Aug 2013 09:29:20 -0700
+Message-ID: <1375374560.2034.52.camel@joe-AO722>
 References: <cover.1375316912.git.joe@perches.com>
-Return-path: <linux-kernel-owner@vger.kernel.org>
-In-Reply-To: <cover.1375316912.git.joe@perches.com>
-Sender: linux-kernel-owner@vger.kernel.org
-List-ID: <linux-hams.vger.kernel.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
+	 <24958.1375358650@warthog.procyon.org.uk>
+Mime-Version: 1.0
 Content-Transfer-Encoding: 7bit
-To: Joe Perches <joe@perches.com>
-Cc: dhowells@redhat.com, netdev@vger.kernel.org, linux-hams@vger.kernel.org, linux-wireless@vger.kernel.org, linux-kernel@vger.kernel.org, linux-afs@lists.infradead.org
+Return-path: <linux-hams-owner@vger.kernel.org>
+In-Reply-To: <24958.1375358650@warthog.procyon.org.uk>
+Sender: linux-hams-owner@vger.kernel.org
+List-ID: <linux-hams.vger.kernel.org>
+Content-Type: text/plain; charset="us-ascii"
+To: David Howells <dhowells@redhat.com>
+Cc: netdev@vger.kernel.org, linux-hams@vger.kernel.org, linux-wireless@vger.kernel.org, linux-kernel@vger.kernel.org, linux-afs@lists.infradead.org
 
-Joe Perches <joe@perches.com> wrote:
+On Thu, 2013-08-01 at 13:04 +0100, David Howells wrote:
+> Joe Perches <joe@perches.com> wrote:
+> > Standardize on no extern use on function prototypes
+> Can we please standardise on _having_ externs on function prototypes?
 
-> Standardize on no extern use on function prototypes
+Why?
 
-Ugh.  Can we please standardise on _having_ externs on function prototypes?
+What value is there in using extern for function prototypes?
 
-David
+Your argument for "picking out at a glance"
+https://lkml.org/lkml/2013/8/1/237
+really doesn't make sense to me.
+
+Basically, anything with parentheses that's not a #define
+is an extern.
+
+Exceptions exist for extern function pointers, but those
+are fairly unusual anyway.  Outside of netfilter,
+extern function pointers are only used about a dozen times
+total in the kernel tree.
+
+So, please provide some examples supporting your view.
+
+
