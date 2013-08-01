@@ -1,82 +1,40 @@
-From: folkert <folkert@vanheusden.com>
-Subject: Re: raspberry pi & baycom
-Date: Sat, 27 Jul 2013 21:27:31 +0200
-Message-ID: <20130727192731.GF10157@belle.intranet.vanheusden.com>
-References: <20130726215926.GD10157@belle.intranet.vanheusden.com>
- <51F398EE.2010608@tlen.pl>
- <51F3A83E.9090403@tlen.pl>
-Mime-Version: 1.0
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Return-path: <linux-hams-owner@vger.kernel.org>
-Content-Disposition: inline
-In-Reply-To: <51F3A83E.9090403@tlen.pl>
-Sender: linux-hams-owner@vger.kernel.org
+From: Joe Perches <joe@perches.com>
+Subject: [PATCH 0/8] include/net: next set of extern removals
+Date: Wed, 31 Jul 2013 17:31:31 -0700
+Message-ID: <cover.1375316912.git.joe@perches.com>
+Return-path: <linux-kernel-owner@vger.kernel.org>
+Sender: linux-kernel-owner@vger.kernel.org
 List-ID: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="iso-8859-1"
-To: sp2lob <sp2lob@tlen.pl>
-Cc: linux-hams@vger.kernel.org
+MIME-Version: 1.0
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+To: netdev@vger.kernel.org
+Cc: linux-kernel@vger.kernel.org, linux-afs@lists.infradead.org, linux-hams@vger.kernel.org, linux-wireless@vger.kernel.org
 
-Tom,
+Standardize on no extern use on function prototypes
 
-Thanks!
+Joe Perches (8):
+  addrconf.h: Remove extern function prototypes
+  af_unix.h: Remove extern from function prototypes
+  af_rxrpc.h: Remove extern from function prototypes
+  arp/neighbour.h: Remove extern from function prototypes
+  ax25.h: Remove extern from function prototypes
+  cfg80211.h/mac80211.h: Remove extern from function prototypes
+  checksum: Remove extern from function prototypes
+  cls_cgroup.h netprio_cgroup.h: Remove extern from function prototypes
 
-At www.ohm2013.org this week someone's going to do a workshop on this.
+ include/net/addrconf.h       | 160 +++++++++++++++-----------------
+ include/net/af_rxrpc.h       |  35 ++++---
+ include/net/af_unix.h        |  16 ++--
+ include/net/arp.h            |  30 +++---
+ include/net/ax25.h           | 215 ++++++++++++++++++++++---------------------
+ include/net/cfg80211.h       |  34 +++----
+ include/net/checksum.h       |  10 +-
+ include/net/cls_cgroup.h     |   2 +-
+ include/net/mac80211.h       |  16 ++--
+ include/net/neighbour.h      |  98 ++++++++++----------
+ include/net/netprio_cgroup.h |   2 +-
+ 11 files changed, 300 insertions(+), 318 deletions(-)
 
-On Sat, Jul 27, 2013 at 01:00:14PM +0200, sp2lob wrote:
-> Hello Folkert,
->=20
-> I think I got it!
->=20
-> Look here, A LOT of interesting things for Raspberry Pi:
->=20
-> http://www.gobookee.net/raspberry-pi-ham-radio/
->=20
-> And particularly there:
->=20
->=20
-> http://www.gobookee.net/get_book.php?u=3DaHR0cDovL2hvbWUuY29tY2FzdC5u=
-ZXQvfndiMm9zei9WZXJzaW9uJTIwMC43L1Jhc3BiZXJyeS1QaS1BUFJTLnBkZgpSYXNwYmV=
-ycnkgUGkgQVBSUw=3D=3D
->=20
->=20
-> Q/uotation from above document:/*/
-> /**/
-> /**/"If you want to transmit, some method is needed to activate the
-> transmitter push-to-talk (PTT) function. /**/
-> /**/
-> /**/Traditionally, this has been done with the RTS or DTR signal
-> from a serial port.  The built-in serial /**/
-> /**/
-> /**/interface does not have the RTS or DTR control signals.
-> Possible alternatives include:/**/
-> /**/
-> /**/- Use a USB to RS-232 converter cable to supply a full RS-232 por=
-t./**/
-> /**/
-> /**/- VOX operation where transmitter is activated by transmit audio
-> signal.  The SignaLink USB uses /**/
-> /**/
-> /**/this technique./**/
-> /**/
-> /**/- Use one of the General Purpose I/O (GPIO) pins. Future
-> possibility -- not implemented yet./**/"/*
->=20
->=20
-> Best regards.
-> Tom - sp2lob
->=20
-
-
-=46olkert van Heusden
-
---=20
-MultiTail ist eine flexible Applikation um Logfiles und Kommando
-Eingaben zu =FCberpr=FCfen. Inkl. Filter, Farben, Zusammenf=FChren,
-Ansichten etc. http://www.vanheusden.com/multitail/
-----------------------------------------------------------------------
-Phone: +31-6-41278122, PGP-key: 1F28D8AE, www.vanheusden.com
---
-To unsubscribe from this list: send the line "unsubscribe linux-hams" i=
-n
-the body of a message to majordomo@vger.kernel.org
-More majordomo info at  http://vger.kernel.org/majordomo-info.html
+-- 
+1.8.1.2.459.gbcd45b4.dirty
