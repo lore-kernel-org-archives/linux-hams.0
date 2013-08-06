@@ -1,37 +1,37 @@
-From: Joe Perches <joe-6d6DIl74uiNBDgjK7y7TUQ@public.gmane.org>
-Subject: Re: [PATCH 0/8] include/net: next set of extern removals
-Date: Thu, 01 Aug 2013 10:05:52 -0700
-Message-ID: <1375376752.2034.60.camel@joe-AO722>
-References: <cover.1375316912.git.joe@perches.com>
-	 <24958.1375358650@warthog.procyon.org.uk>
-	 <1375374560.2034.52.camel@joe-AO722>
-	 <1375375486.10515.170.camel@edumazet-glaptop>
+From: "f6bvp@free" <f6bvp@free.fr>
+Subject: [PATCH] ax25tools mheard : don't display empty records
+Date: Tue, 06 Aug 2013 19:57:51 +0200
+Message-ID: <5201391F.40607@free.fr>
+References: <cover.1311152437.git.ralf@linux-mips.org> <85ee0c4b56ea0f34dc34bae57d5203aaa7a1a053.1311152437.git.ralf@linux-mips.org>
+Reply-To: f6bvp@free.fr
 Mime-Version: 1.0
 Content-Transfer-Encoding: 7bit
-Return-path: <linux-wireless-owner-u79uwXL29TY76Z2rM5mHXA@public.gmane.org>
-In-Reply-To: <1375375486.10515.170.camel@edumazet-glaptop>
-Sender: linux-wireless-owner-u79uwXL29TY76Z2rM5mHXA@public.gmane.org
+Return-path: <linux-hams-owner@vger.kernel.org>
+In-Reply-To: <85ee0c4b56ea0f34dc34bae57d5203aaa7a1a053.1311152437.git.ralf@linux-mips.org>
+Sender: linux-hams-owner@vger.kernel.org
 List-ID: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"
-To: Eric Dumazet <eric.dumazet-Re5JQEeQqe8AvxtiuMwx3w@public.gmane.org>
-Cc: David Howells <dhowells-H+wXaHxf7aLQT0dZR+AlfA@public.gmane.org>, netdev-u79uwXL29TY76Z2rM5mHXA@public.gmane.org, linux-hams-u79uwXL29TY76Z2rM5mHXA@public.gmane.org, linux-wireless-u79uwXL29TY76Z2rM5mHXA@public.gmane.org, linux-kernel-u79uwXL29TY76Z2rM5mHXA@public.gmane.org, linux-afs-IAPFreCvJWM7uuMidbF8XUB+6BGkLq7r@public.gmane.org
+Content-Type: text/plain; charset="us-ascii"; format="flowed"
+To: linux-hams@vger.kernel.org
 
-On Thu, 2013-08-01 at 09:44 -0700, Eric Dumazet wrote:
-> 'extern' in include files are an easy way to have a grep friendly
-> marker, and otherwise are harmless.
-> 
-> _You_ believe they are useless, other people think otherwise.
+Hi,
 
-I believe I wrote superfluous.
+mheardd daemon application, as part of ax25tools, collects all heard 
+callsigns on AX.25 devices into a data base
+together with times and dates of first time and last time heard.
 
-> I learned C 30 years ago, and using 'extern' is quite natural for me.
+I noticed that in some cases, mheard would read data base and list a 
+number of empty lines with zero packet received.
+Empty lines displayed roll up the list and sometime makes uncomfortable 
+the reading of captured callsigns.
 
-I think I've got a few years headstart on you.
-All that means is we're both relatively old...
+With this patch mheard client will display only usefull information and 
+skip empty records.
 
-cheers, Joe
+Patch and updated source can be downloaded from ve7fet Lee's "unofficial 
+repository":
 
---
-To unsubscribe from this list: send the line "unsubscribe linux-wireless" in
-the body of a message to majordomo-u79uwXL29TY76Z2rM5mHXA@public.gmane.org
-More majordomo info at  http://vger.kernel.org/majordomo-info.html
+https://code.google.com/p/linuxax25/source/list
+
+73 de Bernard, f6bvp
+
+
