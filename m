@@ -1,53 +1,48 @@
-From: Thomas Osterried <thomas@x-berg.in-berlin.de>
-Subject: Re: [PATCH] ax25tools mheard : don't display empty records
-Date: Wed, 7 Aug 2013 10:17:54 +0200
-Message-ID: <20130807081754.GE18314@x-berg.in-berlin.de>
-References: <cover.1311152437.git.ralf@linux-mips.org>
- <85ee0c4b56ea0f34dc34bae57d5203aaa7a1a053.1311152437.git.ralf@linux-mips.org>
- <5201391F.40607@free.fr>
+From: Sascha Alexander Jopen <jopen@informatik.uni-bonn.de>
+Subject: Wireshark/Packet Socket Duplicate Frames
+Date: Wed, 07 Aug 2013 10:37:44 +0200
+Message-ID: <52020758.10207@informatik.uni-bonn.de>
 Mime-Version: 1.0
+Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
-Content-Disposition: inline
-In-Reply-To: <5201391F.40607@free.fr>
 Sender: linux-hams-owner@vger.kernel.org
 List-ID: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-To: "f6bvp@free" <f6bvp@free.fr>
-Cc: linux-hams@vger.kernel.org, ralf@linux-mips.org
+To: linux-hams@vger.kernel.org
 
-Hello Bernard,
+Hey,
 
-please send us a diff for the official tree.
+i'm trying to work with linux packet sockets to receive and send raw
+AX.25 frames. When i use sockets bound to AX.25 frames only, everything
+works as expected. However, when i a raw packet socket requesting all
+possible frame types like so
 
-vy 73,
-	- Thomas  dl9sau
+  socket(PF_PACKET, SOCK_RAW, htons(ETH_P_ALL))
 
-On 2013-08-06 19:57:51 +0200, f6bvp@free <f6bvp@free.fr>
-wrote in <5201391F.40607@free.fr>:
-> Hi,
-> 
-> mheardd daemon application, as part of ax25tools, collects all heard
-> callsigns on AX.25 devices into a data base
-> together with times and dates of first time and last time heard.
-> 
-> I noticed that in some cases, mheard would read data base and list a
-> number of empty lines with zero packet received.
-> Empty lines displayed roll up the list and sometime makes
-> uncomfortable the reading of captured callsigns.
-> 
-> With this patch mheard client will display only usefull information
-> and skip empty records.
-> 
-> Patch and updated source can be downloaded from ve7fet Lee's
-> "unofficial repository":
-> 
-> https://code.google.com/p/linuxax25/source/list
-> 
-> 73 de Bernard, f6bvp
-> 
-> 
-> --
-> To unsubscribe from this list: send the line "unsubscribe linux-hams" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at  http://vger.kernel.org/majordomo-info.html
+i receive two frames for each incoming physical frame. Both frames seem
+to be identical and i can not distinguish one frome the other.
+As wireshark uses the same mechanisms through libpcap, one can see the
+same phenomenon there, too. For each incoming frame, two frames are
+displayed. Even the listen tool from ax25-apps shows this behaviour when
+called with -a.
+At the network layer only a single ip packet is emitted, so i'm actually
+receiving only a single frame, not two.
+
+Because i currently do not have the necessary radio equipment, i
+connected two PCs via a crosslinked serial cable. Both ends are sending
+KISS/AX.25 frames. However, this should not be the source of the
+duplicates, shouldn't it?
+
+So the basic question here is, does anybody else see this behaviour?
+If so, is this behaviour intended?
+
+Thanks in advance,
+Sascha
+
+-- 
+Dipl.-Inform. Sascha Jopen
+
+University of Bonn                     Tel.:   +49-228-73-54219
+Institute of Computer Science 4        Fax:    +49-228-73-4571
+Friedrich-Ebert-Allee 144              E-mail: jopen@cs.uni-bonn.de
+D-53113 Bonn, Germany
