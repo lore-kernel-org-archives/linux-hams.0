@@ -1,48 +1,100 @@
-From: Sascha Alexander Jopen <jopen@informatik.uni-bonn.de>
-Subject: Wireshark/Packet Socket Duplicate Frames
-Date: Wed, 07 Aug 2013 10:37:44 +0200
-Message-ID: <52020758.10207@informatik.uni-bonn.de>
+From: "f6bvp@free" <f6bvp@free.fr>
+Subject: Re: [PATCH] ax25tools mheard : don't display empty records
+Date: Wed, 07 Aug 2013 12:06:57 +0200
+Message-ID: <52021C41.4010506@free.fr>
+References: <cover.1311152437.git.ralf@linux-mips.org> <85ee0c4b56ea0f34dc34bae57d5203aaa7a1a053.1311152437.git.ralf@linux-mips.org> <5201391F.40607@free.fr> <20130807081754.GE18314@x-berg.in-berlin.de>
+Reply-To: f6bvp@free.fr
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 Return-path: <linux-hams-owner@vger.kernel.org>
+In-Reply-To: <20130807081754.GE18314@x-berg.in-berlin.de>
 Sender: linux-hams-owner@vger.kernel.org
 List-ID: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"
-To: linux-hams@vger.kernel.org
+Content-Type: text/plain; charset="iso-8859-1"; format="flowed"
+To: Thomas Osterried <thomas@x-berg.in-berlin.de>
+Cc: linux-hams@vger.kernel.org, ralf@linux-mips.org
 
-Hey,
+Hello Thomas,
 
-i'm trying to work with linux packet sockets to receive and send raw
-AX.25 frames. When i use sockets bound to AX.25 frames only, everything
-works as expected. However, when i a raw packet socket requesting all
-possible frame types like so
+As you know mheard is a user application included in ax25tools package.
+It is not part of Linux kernel.
 
-  socket(PF_PACKET, SOCK_RAW, htons(ETH_P_ALL))
+Here is a diff of ax25tools/ax25/mheard.c
 
-i receive two frames for each incoming physical frame. Both frames seem
-to be identical and i can not distinguish one frome the other.
-As wireshark uses the same mechanisms through libpcap, one can see the
-same phenomenon there, too. For each incoming frame, two frames are
-displayed. Even the listen tool from ax25-apps shows this behaviour when
-called with -a.
-At the network layer only a single ip packet is emitted, so i'm actually
-receiving only a single frame, not two.
+73 de Bernard, f6bvp
 
-Because i currently do not have the necessary radio equipment, i
-connected two PCs via a crosslinked serial cable. Both ends are sending
-KISS/AX.25 frames. However, this should not be the source of the
-duplicates, shouldn't it?
 
-So the basic question here is, does anybody else see this behaviour?
-If so, is this behaviour intended?
+Index: ax25/mheard.c
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+--- ax25/mheard.c       (r=E9vision 109)
++++ ax25/mheard.c       (copie de travail)
+@@ -68,7 +68,8 @@
+                         call =3D ax25_ntoa(&pr->entry.from_call);
+                         if ((s =3D strstr(call, "-0")) !=3D NULL)
+                                 *s =3D '\0';
+-                       printf("%-10s %-5s %5d   %s\n",
++                       if (pr->entry.count !=3D 0)
++                               printf("%-10s %-5s %5d   %s\n",
+                                 call, pr->entry.portname,=20
+pr->entry.count, lh);
+                         break;
+                 case 1:
+@@ -91,7 +92,8 @@
+                         }
+                         if (pr->entry.ndigis >=3D 4)
+                                 strcat(buffer, ",...");
+-                       printf("%-70s %-5s\n",
++                       if (pr->entry.count !=3D 0)
++                               printf("%-70s %-5s\n",
+                                 buffer, pr->entry.portname);
+                         break;
+                 case 2:
+@@ -102,14 +104,16 @@
+                         call =3D ax25_ntoa(&pr->entry.from_call);
+                         if ((s =3D strstr(call, "-0")) !=3D NULL)
+                                 *s =3D '\0';
+-                       printf("%-10s %-5s %5d %5d %5d  %s  %s\n",
++                       if (pr->entry.count !=3D 0)
++                               printf("%-10s %-5s %5d %5d %5d %s  %s\n=
+",
+                                 call, pr->entry.portname,=20
+pr->entry.iframes, pr->entry.sframes, pr->entry.uframes, fh, lh);
+                         break;
+                 case 3:
+                         call =3D ax25_ntoa(&pr->entry.from_call);
+                         if ((s =3D strstr(call, "-0")) !=3D NULL)
+                                 *s =3D '\0';
+-                       printf("%-10s %-5s %5d %5s ",
++                       if (pr->entry.count !=3D 0) {
++                               printf("%-10s %-5s %5d %5s ",
+                                 call, pr->entry.portname,=20
+pr->entry.count, types[pr->entry.type]);
+                         if (pr->entry.mode & MHEARD_MODE_ARP)
+                                 printf(" ARP");
+@@ -136,6 +140,7 @@
+                         if (pr->entry.mode & MHEARD_MODE_UNKNOWN)
+                                 printf(" Unknown");
+                         printf("\n");
++                       }
+                         break;
+         }
+  }
 
-Thanks in advance,
-Sascha
 
--- 
-Dipl.-Inform. Sascha Jopen
+Le 07/08/2013 10:17, Thomas Osterried a =E9crit :
+> Hello Bernard,
+>
+> please send us a diff for the official tree.
+>
+> vy 73,
+> 	- Thomas  dl9sau
+>
+>
 
-University of Bonn                     Tel.:   +49-228-73-54219
-Institute of Computer Science 4        Fax:    +49-228-73-4571
-Friedrich-Ebert-Allee 144              E-mail: jopen@cs.uni-bonn.de
-D-53113 Bonn, Germany
+--
+To unsubscribe from this list: send the line "unsubscribe linux-hams" i=
+n
+the body of a message to majordomo@vger.kernel.org
+More majordomo info at  http://vger.kernel.org/majordomo-info.html
