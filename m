@@ -1,181 +1,51 @@
-From: Kumar Gaurav <kumargauravgupta3@gmail.com>
-Subject: Re: [PATCH] drivers:net:hamradio: Removing Depricated IRQF_DISABLED
-Date: Sun, 11 Aug 2013 00:23:07 +0530
-Message-ID: <52068C13.4020707@gmail.com>
-References: <1376152738-14944-1-git-send-email-kumargauravgupta3@gmail.com> <alpine.DEB.2.02.1308101847260.2076@localhost6.localdomain6> <5206720C.4060405@gmail.com> <alpine.DEB.2.02.1308101923130.2076@localhost6.localdomain6> <52068329.4010400@gmail.com> <52068B3C.4030707@bfs.de>
+From: David Ranch <linux-hams@trinnet.net>
+Subject: Re: Kernel panics with FPAC
+Date: Wed, 14 Aug 2013 17:09:57 -0700
+Message-ID: <520C1C55.7040600@trinnet.net>
+References: <CAOP4WsOrukEx-XuoTb8O4gfDF6kKB1S2ponS_ZVjYy1xVtDi9A@mail.gmail.com>
 Mime-Version: 1.0
 Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=message-id:date:from:user-agent:mime-version:to:cc:subject
-         :references:in-reply-to:content-type:content-transfer-encoding;
-        bh=684H5svHEtCon9rCXHsneB7UiJ4RYtp6FGZtWZ2d5D0=;
-        b=BK5UL60MrO9IvlMUXU3b1ol8/SgzuU6PKt8/i92S2FpDFMNlpxvadIZ5xK3BtLt9Hi
-         wU+1Q9RzOGpN3hELuA6GdZF1IJPTQ7E0YIHGHU/vqLUXAk1Vpa80fNNlO4Rfsn1hlOzD
-         mfFSOjkfS+wD0D66ipxSJDYCraKNN4FVnUVOSvJrRHXz4tM8UA7Ufukv2gfCdbxZHMLS
-         ldrksz15j9fFCW8D0+u9LyayK9lCcJ6YbV4AHh21gRDMir1MARS8esqxc55NSR/DJ+KF
-         8Kdtm4JGplRdd/lL9GN7bqC9oEStHoOcT6cbuNn8Q2Fc3vrXMQrqFLmuGniQqOQtH3Na
-         dasg==
-In-Reply-To: <52068B3C.4030707@bfs.de>
+In-Reply-To: <CAOP4WsOrukEx-XuoTb8O4gfDF6kKB1S2ponS_ZVjYy1xVtDi9A@mail.gmail.com>
 Sender: linux-hams-owner@vger.kernel.org
 List-ID: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"; format="flowed"
-To: wharms@bfs.de
-Cc: Julia Lawall <julia.lawall@lip6.fr>, t.sailer@alumni.ethz.ch, jreuter@yaina.de, jpr@f6fbb.org, linux-hams@vger.kernel.org, netdev@vger.kernel.org, linux-kernel@vger.kernel.org, kernel-janitors@vger.kernel.org
+To: Demetre SV1UY <demetre.sv1uy@gmail.com>
+Cc: linux-hams@vger.kernel.org
 
-On Sunday 11 August 2013 12:19 AM, walter harms wrote:
-> Hello Kumar,
-> i will try to resolve the riddle ...
->
-> doing something like fn(a,b,c,0) is a bad habit.
-> 0 is called a "magic number" because noone reading the code has an idea
-> why it is there. Using the name IRQF_TRIGGER_NONE good.
->
-> Having a named bit like IRQ_TRIGGER|IRQ_NMI is most times also a good idea
-> because it correspond (most times) to the naming of the bits in the data sheet.
->
-> The problems starts when this hits reality since nothing is clearly black or white.
-> In this case when you remove IRQF_DISABLED disables "bit" something should be left.
->
-> a|b|IRQF_DISABLED -> a|b  (that is the easy part)
-> but
-> IRQF_DISABLED -> IRQF_TRIGGER_NONE
->
-> Otherwise you would be left with "0". That is a magic number (see above).
-> So this is to be replaced by a placeholder called IRQF_TRIGGER_NONE.
->
-> hope that really helps and that i have understood the discussion.
->
-> re,
->   wh
-Thanks for the clarification. I'll be following this.
 
-Regards
-Kumar Gaurav
+Hello Demetre,
+
+I would have to guess there is an ACPI issue in your BIOS that Linux 
+isn't working around.  Back in the day, this was a VERY common problem.  
+The first place I would look is with the computer vendor to see if there 
+is a newer BIOS (you might be surprised).  Next, maybe there are some 
+specific work around available:
+
+    https://www.google.com/search?q=linux+panic+on+reboot+ACPI
+
+I imagine one of the solutions will be to disable ACPI completely which 
+will work but you might loose some power saving benefits (unlikely on 
+such an old machine) and also the inability to actually turn OFF the 
+machine with a "shutdown -h now" command.
+
+--David
+KI6ZHD
+
+
+
+On 08/08/2013 02:23 PM, Demetre SV1UY wrote:
+> Hi all,
 >
-> Am 10.08.2013 20:15, schrieb Kumar Gaurav:
->> On Saturday 10 August 2013 10:54 PM, Julia Lawall wrote:
->>> On Sat, 10 Aug 2013, Kumar Gaurav wrote:
->>>
->>>> On Saturday 10 August 2013 10:17 PM, Julia Lawall wrote:
->>>>> If it is in a | with something else, I think you can just remove it.
->>>>>
->>>>> julia
->>>>>
->>>>> On Sat, 10 Aug 2013, Kumar Gaurav wrote:
->>>>>
->>>>>> Removed IRQF_DISABLED as it's deprecated and should be removed
->>>>>>
->>>>>> Signed-off-by: Kumar Gaurav <kumargauravgupta3@gmail.com>
->>>>>> ---
->>>>>>     drivers/net/hamradio/baycom_ser_fdx.c |    2 +-
->>>>>>     drivers/net/hamradio/baycom_ser_hdx.c |    2 +-
->>>>>>     drivers/net/hamradio/scc.c            |    2 +-
->>>>>>     drivers/net/hamradio/yam.c            |    2 +-
->>>>>>     4 files changed, 4 insertions(+), 4 deletions(-)
->>>>>>
->>>>>> diff --git a/drivers/net/hamradio/baycom_ser_fdx.c
->>>>>> b/drivers/net/hamradio/baycom_ser_fdx.c
->>>>>> index a974727..c114009 100644
->>>>>> --- a/drivers/net/hamradio/baycom_ser_fdx.c
->>>>>> +++ b/drivers/net/hamradio/baycom_ser_fdx.c
->>>>>> @@ -445,7 +445,7 @@ static int ser12_open(struct net_device *dev)
->>>>>>         outb(0, FCR(dev->base_addr));  /* disable FIFOs */
->>>>>>         outb(0x0d, MCR(dev->base_addr));
->>>>>>         outb(0, IER(dev->base_addr));
->>>>>> -    if (request_irq(dev->irq, ser12_interrupt, IRQF_DISABLED |
->>>>>> IRQF_SHARED,
->>>>>> +    if (request_irq(dev->irq, ser12_interrupt, IRQF_TRIGGER_NONE |
->>>>>> IRQF_SHARED,
->>>>>>                 "baycom_ser_fdx", dev)) {
->>>>>>             release_region(dev->base_addr, SER12_EXTENT);
->>>>>>             return -EBUSY;
->>>>>> diff --git a/drivers/net/hamradio/baycom_ser_hdx.c
->>>>>> b/drivers/net/hamradio/baycom_ser_hdx.c
->>>>>> index e349d86..d91c1fd 100644
->>>>>> --- a/drivers/net/hamradio/baycom_ser_hdx.c
->>>>>> +++ b/drivers/net/hamradio/baycom_ser_hdx.c
->>>>>> @@ -490,7 +490,7 @@ static int ser12_open(struct net_device *dev)
->>>>>>         outb(0, FCR(dev->base_addr));  /* disable FIFOs */
->>>>>>         outb(0x0d, MCR(dev->base_addr));
->>>>>>         outb(0, IER(dev->base_addr));
->>>>>> -    if (request_irq(dev->irq, ser12_interrupt, IRQF_DISABLED |
->>>>>> IRQF_SHARED,
->>>>>> +    if (request_irq(dev->irq, ser12_interrupt, IRQF_TRIGGER_NONE |
->>>>>> IRQF_SHARED,
->>>>>>                 "baycom_ser12", dev)) {
->>>>>>             release_region(dev->base_addr, SER12_EXTENT);
->>>>>>             return -EBUSY;
->>>>>> diff --git a/drivers/net/hamradio/scc.c b/drivers/net/hamradio/scc.c
->>>>>> index bc1d521..4bc6ee8 100644
->>>>>> --- a/drivers/net/hamradio/scc.c
->>>>>> +++ b/drivers/net/hamradio/scc.c
->>>>>> @@ -1734,7 +1734,7 @@ static int scc_net_ioctl(struct net_device *dev,
->>>>>> struct ifreq *ifr, int cmd)
->>>>>>                 if (!Ivec[hwcfg.irq].used && hwcfg.irq)
->>>>>>                 {
->>>>>>                     if (request_irq(hwcfg.irq, scc_isr,
->>>>>> -                        IRQF_DISABLED, "AX.25 SCC",
->>>>>> +                        0, "AX.25 SCC",
->>>>>>                             (void *)(long) hwcfg.irq))
->>>>>>                         printk(KERN_WARNING "z8530drv:
->>>>>> warning, cannot get IRQ %d\n", hwcfg.irq);
->>>>>>                     else
->>>>>> diff --git a/drivers/net/hamradio/yam.c b/drivers/net/hamradio/yam.c
->>>>>> index 0721e72..f947887 100644
->>>>>> --- a/drivers/net/hamradio/yam.c
->>>>>> +++ b/drivers/net/hamradio/yam.c
->>>>>> @@ -888,7 +888,7 @@ static int yam_open(struct net_device *dev)
->>>>>>             goto out_release_base;
->>>>>>         }
->>>>>>         outb(0, IER(dev->base_addr));
->>>>>> -    if (request_irq(dev->irq, yam_interrupt, IRQF_DISABLED |
->>>>>> IRQF_SHARED,
->>>>>> dev->name, dev)) {
->>>>>> +    if (request_irq(dev->irq, yam_interrupt, IRQF_TRIGGER_NONE |
->>>>>> IRQF_SHARED, dev->name, dev)) {
->>>>>>             printk(KERN_ERR "%s: irq %d busy\n", dev->name, dev->irq);
->>>>>>             ret = -EBUSY;
->>>>>>             goto out_release_base;
->>>>>> -- 
->>>>>> 1.7.9.5
->>>>>>
->>>>>> -- 
->>>>>> To unsubscribe from this list: send the line "unsubscribe
->>>>>> kernel-janitors"
->>>>>> in
->>>>>> the body of a message to majordomo@vger.kernel.org
->>>>>> More majordomo info at  http://vger.kernel.org/majordomo-info.html
->>>>>>
->>>> Yes i was suggested for using IRQF_TRIGGER_NONE too so used this.
->>>> Please tell
->>>> me if this makes any difference or issue?
->>> I think that the suggestion was to use IRQF_TRIGGER_NONE only when
->>> removing IRQF_DISABLED would leave nothing left.
->>>
->>> - IRQF_DISABLED | e
->>> + e
->>>
->>> otherwise,
->>>
->>> - IRQF_DISABLED
->>> + 0
->>>
->>> julia
->> Sorry to prompt back but i'm confused. if removing IRQF_DISABLED leaves
->> nothing then should i use 0 or IRQF_TRIGGER_NONE?
->> I'm convinced with
->>
->>      - IRQF_DISABLED | e
->>      + e
->>
->> Regards
->>
->> Kumar Gaurav
->>
->> -- 
->> To unsubscribe from this list: send the line "unsubscribe linux-hams" in
->> the body of a message to majordomo@vger.kernel.org
->> More majordomo info at  http://vger.kernel.org/majordomo-info.html
+> I have a problem here. I use Linuxmint 15 and the latest FPAC and 1
+> out of every 5 times I press CONTROL-ALT-DELETE or issue the reboot
+> command, I get Kernel panic and I have to press the RESET button of my
+> PC.
+>
+> This is not very good when you try to do remote administration.
+>
+> Does anyone else have this problem or am I the only one?
+>
+> PC is a P4 at 1.8 GHZ and has no such problems with other OS.
+>
 
