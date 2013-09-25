@@ -1,47 +1,62 @@
-From: Willie Hein WJ3G <wj3g@comcast.net>
-Subject: AMPRNet-config
-Date: Sun, 01 Sep 2013 22:08:23 -0400
-Message-ID: <5223F317.2070105@comcast.net>
+From: Waldek <sp2ong@wp.pl>
+Subject: Problem with flexd and Xnet Node
+Date: Wed, 25 Sep 2013 07:11:19 +0200
+Message-ID: <52427077ee1c72.57557303@wp.pl>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 7BIT
 Return-path: <linux-hams-owner@vger.kernel.org>
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=comcast.net;
-	s=q20121106; t=1378087704;
-	bh=16IclRHQSqcND3OZIy/rpYG37ANB+IYTqZmffWGh9qw=;
-	h=Received:Received:Message-ID:Date:From:MIME-Version:To:Subject:
-	 Content-Type;
-	b=J+qg9nF+eo6RcLPXQzwvYrqRhu8BpRSvwU2ZUkEl0iBptXjda4dq15nB9Nh9Qxfil
-	 O923sG2iCZSwqPGYDrW9LWhGwFjXkenYm1F8oWJ90EJp1BRYrFtlvMZIn4fZXTf7Ei
-	 MuLL023z0bOCqGNNC5ift3t5gtdk+mD/7huUBdyuA9tjHPJl78SW620KlVF3d1xpd6
-	 olakOEfxaEQ8qdU3/M+Mci3G+c0AETM+Ly/EJeE1Jhn6yvR4LUuwZHIZvKSuYY8y1U
-	 PGlb98+L9phLsKHnX3Ux/sSBgyCCgRJPBxOy3ea/NqPlUH7M8pPiRhfOxLB06Es+uL
-	 Lflh0YTqW9rIQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=wp.pl; s=1024a;
+          t=1380085880; bh=BUMCU8gzhCPS53yf3FGWg6+vBtyyWdeFOkFBDPhasvA=;
+          h=From:To:Subject;
+          b=w8RkPaS7nkQlOT9vsox0meKom9e67c07wcDcSKk5P64LbRbHDSnjEsaseGUkVU411
+           N7bMs+mMaXyImsGJGwy5x9k6T3H6nrOi2wIR9LaheyA2rMwA/HmbSvoPepr1BbAuU6
+           eYJc02Zzt3juBW08OkHkaE+6fjnyq8JdHiwBaRZk=
+Content-Disposition: inline
 Sender: linux-hams-owner@vger.kernel.org
 List-ID: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"; format="flowed"
-To: 44net@hamradio.ucsd.edu, Linux Hams Mailing list <linux-hams@vger.kernel.org>
+Content-Type: text/plain; charset="us-ascii"
+To: linux-hams@vger.kernel.org
 
-Greetings,
 
-I'm again planning the setup of a gateway here at the Balogna Capitol, 
-much to the wonderment of a few. Prelim's are done, ie: static ip, 
-registering in the portal, etc. Now I'm back to a place I've been 
-before, automating the startup, and configuration. Something I'm 
-surprised we haven't overcome with a gui by now, and unfortunately way 
-above my pay scale.:)
+Hi,
 
-I did have this working before, so I'm hoping with little changes I'll 
-have the init.d scripts and all updated. I'll certainly make them 
-available, maybe on the wiki when I'm done. I realize that it will take 
-changes to make them work on other distros. Maybe it's time to see what 
-the commonalities are, in hopes of developing a standard config tool.
+I have use RaspberryPI to setup local AX25 Node base on linux kernel tools
 
-I'd certainly like to take this off list till there is something worth 
-showing.
+I have use flexd program which is part of URONode or FPACNode and I have setup flexd.conf with follow
 
-Anyone interested?
+MyCall	 SP2ONG-11  # SP2ONG-2 is may call for NodeID
+PollInterval	300
+# sr1dsz my XNet flex neighbor sr1dsz don't use SSID
+FlexGate	sr1dsz  
+MyGate sr1dsz
+MyRange	 0-0
 
-Best regards,
+and add in uronode.routes
 
-Willie, WJ3G
+route sr1bsz polnet axudp d 'XNet Flexnet node'
+
+When I have start flexd I have see in mointor
+
+axudp: fm SP2ONG-11 to SR1DSZ ctl SABM+ 15:57:35
+axudp: fm SR1DSZ to SP2ONG-11 ctl UA- 15:57:36
+axudp: fm SR1DSZ to SP2ONG-11 ctl I00^ pid=CE(FLEXNET) len 5 15:57:36
+FlexNet: Link setup - max SSID 0  30 25 21 0d
+axudp: fm SR1DSZ to SP2ONG-11 ctl I00+ pid=CE(FLEXNET) len 5 15:57:37
+FlexNet: Link setup - max SSID 0  30 25 21 0d
+axudp: fm SP2ONG-11 to SR1DSZ ctl REJ1- 15:57:37
+axudp: fm SR1DSZ to SP2ONG-11 ctl I01^ pid=CE(FLEXNET) len 5 15:57:52
+FlexNet: Link setup - max SSID 0  30 25 21 0d
+axudp: fm SR1DSZ to SP2ONG-11 ctl I01+ pid=CE(FLEXNET) len 5 15:57:54
+FlexNet: Link setup - max SSID 0  30 25 21 0d
+axudp: fm SP2ONG-11 to SR1DSZ ctl REJ2- 15:57:54
+
+When I have in URONode with command 'D' I have only one record:
+
+SR1DSZ  3-0      0 
+
+Why sr1dsz don't send my your destination ??? flexd working with XNet Node ???
+
+73 Waldek sp2ong
+
+
 
