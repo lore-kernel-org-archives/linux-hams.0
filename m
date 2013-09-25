@@ -1,55 +1,49 @@
-From: marius@yo2loj.ro
-Subject: Re: RaspberryPI and soundmodem PTT
-Date: Wed, 25 Sep 2013 10:27:54 +0300
-Message-ID: <304c7be18259b790925fe766adf1b718.squirrel@mail.quailcro.com>
-References: <52428f657519e5.11288990@wp.pl>
+From: Waldek <sp2ong@wp.pl>
+Subject: Re: Problem with flexd and Xnet Node
+Date: Wed, 25 Sep 2013 10:00:03 +0200
+Message-ID: <52429803c62845.80879804@wp.pl>
 Mime-Version: 1.0
 Content-Transfer-Encoding: 7BIT
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <52428f657519e5.11288990@wp.pl>
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=wp.pl; s=1024a;
+          t=1380096003; bh=5q/YHr6dEdbALZ1/diYfkH2IlXw0lO/XMr7mTGxS4HA=;
+          h=From:To:Cc:Subject;
+          b=R8GBwLoWVsrOetQUxsyWqctzD/gl8JyDotBduMwYo+479snAs2YDtZAblNOMflHyF
+           XBDHvVvYEqu1zEwXOyF4c7Ot8buWYEHTx9u1Yg8sqPrbjI0dl69G9FFYFv+jBxKoSR
+           RgQ2Dv2UUz3i06N0kIlv8ksW5UtfBk7EsHsONlFM=
+Content-Disposition: inline
 Sender: linux-hams-owner@vger.kernel.org
 List-ID: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
-To: linux-hams <linux-hams@vger.kernel.org>
+To: marius <marius@yo2loj.ro>
+Cc: linux-hams <linux-hams@vger.kernel.org>
+
+Hi Marius
 
 
-Hi Waldek,
+> > route sr1bsz polnet axudp d 'XNet Flexnet node'
+> >
+> 
+> You mean
+> route sr1dsz polnet axudp d 'XNet Flexnet node'
+> (dsz instead of bsz...)
 
->
-> MyCall         SP2ONG-11  # SP2ONG-2 is may call for NodeID
-> PollInterval        300
-> # sr1dsz my XNet flex neighbor sr1dsz don't use SSID
-> FlexGate        sr1dsz
-> MyGate sr1dsz
-> MyRange         0-0
->
-> and add in uronode.routes
->
-> route sr1bsz polnet axudp d 'XNet Flexnet node'
->
+Yes it is my mistake in write in email but in uronode.routes is correct sr1dsz
 
-You mean
-route sr1dsz polnet axudp d 'XNet Flexnet node'
-(dsz instead of bsz...)
+> C axudp sr1dsz
+> 
+> If it works, check if it provides flexnet routes using the 'D' command
+
+Yes this connection working with sr1dsz but not provide flexnet routes
+sysop sr1dsz setup route flexte to my callsign SP2ONG-11
+
+> This is how your flexd works, so any failure gere will lead to flexd not
+> working.
+
+but in my Destiantion lsit is only:
+SR1DSZ  3-0      0
 
 
-> When I have start flexd I have see in mointor
-> ...
-
-It seems that your system is not able to set up a link with SR1DSZ.
-Check first in your node, without starting flexd that the partner is
-accessible via ax.25 (also delete the files in /var/ax25/flexd):
-
-C axudp sr1dsz
-
-If it works, check if it provides flexnet routes using the 'D' command
-
-This is how your flexd works, so any failure gere will lead to flexd not
-working.
-
-Activate flend afterwards.
-
-73s de Marius, YO2LOJ
-
+73 Waldek sp2ong
 
 
