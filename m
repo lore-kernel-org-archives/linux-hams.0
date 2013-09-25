@@ -1,49 +1,52 @@
-From: Waldek <sp2ong@wp.pl>
-Subject: Re: Problem with flexd and Xnet Node
-Date: Wed, 25 Sep 2013 10:00:03 +0200
-Message-ID: <52429803c62845.80879804@wp.pl>
-Mime-Version: 1.0
-Content-Transfer-Encoding: 7BIT
-Return-path: <linux-hams-owner@vger.kernel.org>
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=wp.pl; s=1024a;
-          t=1380096003; bh=5q/YHr6dEdbALZ1/diYfkH2IlXw0lO/XMr7mTGxS4HA=;
-          h=From:To:Cc:Subject;
-          b=R8GBwLoWVsrOetQUxsyWqctzD/gl8JyDotBduMwYo+479snAs2YDtZAblNOMflHyF
-           XBDHvVvYEqu1zEwXOyF4c7Ot8buWYEHTx9u1Yg8sqPrbjI0dl69G9FFYFv+jBxKoSR
-           RgQ2Dv2UUz3i06N0kIlv8ksW5UtfBk7EsHsONlFM=
-Content-Disposition: inline
-Sender: linux-hams-owner@vger.kernel.org
+From: Michael Opdenacker <michael.opdenacker@free-electrons.com>
+Subject: [PATCH] hamradio: baycom: remove deprecated IRQF_DISABLED
+Date: Wed, 25 Sep 2013 20:17:45 +0200
+Message-ID: <1380133065-13712-1-git-send-email-michael.opdenacker@free-electrons.com>
+Return-path: <linux-kernel-owner@vger.kernel.org>
+Sender: linux-kernel-owner@vger.kernel.org
 List-ID: <linux-hams.vger.kernel.org>
+MIME-Version: 1.0
 Content-Type: text/plain; charset="us-ascii"
-To: marius <marius@yo2loj.ro>
-Cc: linux-hams <linux-hams@vger.kernel.org>
+Content-Transfer-Encoding: 7bit
+To: t.sailer@alumni.ethz.ch
+Cc: linux-hams@vger.kernel.org, netdev@vger.kernel.org, linux-kernel@vger.kernel.org, Michael Opdenacker <michael.opdenacker@free-electrons.com>
 
-Hi Marius
+This patch proposes to remove the IRQF_DISABLED flag
+from drivers/net/hamradio/baycom_*
 
+It's a NOOP since 2.6.35 and it will be removed one day.
 
-> > route sr1bsz polnet axudp d 'XNet Flexnet node'
-> >
-> 
-> You mean
-> route sr1dsz polnet axudp d 'XNet Flexnet node'
-> (dsz instead of bsz...)
+Signed-off-by: Michael Opdenacker <michael.opdenacker@free-electrons.com>
+---
+ drivers/net/hamradio/baycom_ser_fdx.c | 2 +-
+ drivers/net/hamradio/baycom_ser_hdx.c | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
 
-Yes it is my mistake in write in email but in uronode.routes is correct sr1dsz
-
-> C axudp sr1dsz
-> 
-> If it works, check if it provides flexnet routes using the 'D' command
-
-Yes this connection working with sr1dsz but not provide flexnet routes
-sysop sr1dsz setup route flexte to my callsign SP2ONG-11
-
-> This is how your flexd works, so any failure gere will lead to flexd not
-> working.
-
-but in my Destiantion lsit is only:
-SR1DSZ  3-0      0
-
-
-73 Waldek sp2ong
-
-
+diff --git a/drivers/net/hamradio/baycom_ser_fdx.c b/drivers/net/hamradio/baycom_ser_fdx.c
+index a974727..636b65c 100644
+--- a/drivers/net/hamradio/baycom_ser_fdx.c
++++ b/drivers/net/hamradio/baycom_ser_fdx.c
+@@ -445,7 +445,7 @@ static int ser12_open(struct net_device *dev)
+ 	outb(0, FCR(dev->base_addr));  /* disable FIFOs */
+ 	outb(0x0d, MCR(dev->base_addr));
+ 	outb(0, IER(dev->base_addr));
+-	if (request_irq(dev->irq, ser12_interrupt, IRQF_DISABLED | IRQF_SHARED,
++	if (request_irq(dev->irq, ser12_interrupt, IRQF_SHARED,
+ 			"baycom_ser_fdx", dev)) {
+ 		release_region(dev->base_addr, SER12_EXTENT);
+ 		return -EBUSY;
+diff --git a/drivers/net/hamradio/baycom_ser_hdx.c b/drivers/net/hamradio/baycom_ser_hdx.c
+index e349d86..f9a8976 100644
+--- a/drivers/net/hamradio/baycom_ser_hdx.c
++++ b/drivers/net/hamradio/baycom_ser_hdx.c
+@@ -490,7 +490,7 @@ static int ser12_open(struct net_device *dev)
+ 	outb(0, FCR(dev->base_addr));  /* disable FIFOs */
+ 	outb(0x0d, MCR(dev->base_addr));
+ 	outb(0, IER(dev->base_addr));
+-	if (request_irq(dev->irq, ser12_interrupt, IRQF_DISABLED | IRQF_SHARED,
++	if (request_irq(dev->irq, ser12_interrupt, IRQF_SHARED,
+ 			"baycom_ser12", dev)) {
+ 		release_region(dev->base_addr, SER12_EXTENT);       
+ 		return -EBUSY;
+-- 
+1.8.1.2
