@@ -1,52 +1,52 @@
-From: Michael Opdenacker <michael.opdenacker@free-electrons.com>
-Subject: [PATCH] hamradio: baycom: remove deprecated IRQF_DISABLED
-Date: Wed, 25 Sep 2013 20:17:45 +0200
-Message-ID: <1380133065-13712-1-git-send-email-michael.opdenacker@free-electrons.com>
-Return-path: <linux-kernel-owner@vger.kernel.org>
-Sender: linux-kernel-owner@vger.kernel.org
-List-ID: <linux-hams.vger.kernel.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
+From: David Ranch <linux-hams@trinnet.net>
+Subject: Re: RaspberryPI and soundmodem PTT
+Date: Wed, 25 Sep 2013 19:48:42 -0700
+Message-ID: <5243A08A.9020607@trinnet.net>
+References: <52428f657519e5.11288990@wp.pl>
+Mime-Version: 1.0
 Content-Transfer-Encoding: 7bit
-To: t.sailer@alumni.ethz.ch
-Cc: linux-hams@vger.kernel.org, netdev@vger.kernel.org, linux-kernel@vger.kernel.org, Michael Opdenacker <michael.opdenacker@free-electrons.com>
+Return-path: <linux-hams-owner@vger.kernel.org>
+In-Reply-To: <52428f657519e5.11288990@wp.pl>
+Sender: linux-hams-owner@vger.kernel.org
+List-ID: <linux-hams.vger.kernel.org>
+Content-Type: text/plain; charset="us-ascii"; format="flowed"
+To: Linux Hams <linux-hams@vger.kernel.org>
 
-This patch proposes to remove the IRQF_DISABLED flag
-from drivers/net/hamradio/baycom_*
 
-It's a NOOP since 2.6.35 and it will be removed one day.
+Hello Waldek,
 
-Signed-off-by: Michael Opdenacker <michael.opdenacker@free-electrons.com>
----
- drivers/net/hamradio/baycom_ser_fdx.c | 2 +-
- drivers/net/hamradio/baycom_ser_hdx.c | 2 +-
- 2 files changed, 2 insertions(+), 2 deletions(-)
+The RPi has one built-in serial port but in it's default mode, it only 
+supports TX / RX and GND pins.  That won't help you for PTT. Now, what 
+you can do is invoke one of the RPi's alternative I/O mappings and at 
+that point, you have full access to the flow control pins (specifically 
+RTS) that most people use for PTT.  Please note, the RPi is a 3.3v 
+device with limited current so you'll probably need a level shifter to 
+drive the PTT line on your radio.
 
-diff --git a/drivers/net/hamradio/baycom_ser_fdx.c b/drivers/net/hamradio/baycom_ser_fdx.c
-index a974727..636b65c 100644
---- a/drivers/net/hamradio/baycom_ser_fdx.c
-+++ b/drivers/net/hamradio/baycom_ser_fdx.c
-@@ -445,7 +445,7 @@ static int ser12_open(struct net_device *dev)
- 	outb(0, FCR(dev->base_addr));  /* disable FIFOs */
- 	outb(0x0d, MCR(dev->base_addr));
- 	outb(0, IER(dev->base_addr));
--	if (request_irq(dev->irq, ser12_interrupt, IRQF_DISABLED | IRQF_SHARED,
-+	if (request_irq(dev->irq, ser12_interrupt, IRQF_SHARED,
- 			"baycom_ser_fdx", dev)) {
- 		release_region(dev->base_addr, SER12_EXTENT);
- 		return -EBUSY;
-diff --git a/drivers/net/hamradio/baycom_ser_hdx.c b/drivers/net/hamradio/baycom_ser_hdx.c
-index e349d86..f9a8976 100644
---- a/drivers/net/hamradio/baycom_ser_hdx.c
-+++ b/drivers/net/hamradio/baycom_ser_hdx.c
-@@ -490,7 +490,7 @@ static int ser12_open(struct net_device *dev)
- 	outb(0, FCR(dev->base_addr));  /* disable FIFOs */
- 	outb(0x0d, MCR(dev->base_addr));
- 	outb(0, IER(dev->base_addr));
--	if (request_irq(dev->irq, ser12_interrupt, IRQF_DISABLED | IRQF_SHARED,
-+	if (request_irq(dev->irq, ser12_interrupt, IRQF_SHARED,
- 			"baycom_ser12", dev)) {
- 		release_region(dev->base_addr, SER12_EXTENT);       
- 		return -EBUSY;
--- 
-1.8.1.2
+    http://lavalink.com/2012/04/more-on-raspberry-pi-serial-ports/
+
+Ps.   In addition to considering Soundmodem, have you heard of 
+Direwolf?  http://home.comcast.net/~wb2osz/  This soundcard TNC supports 
+is being actively developed, supports multiple parallel decoders for off 
+frequency signals, supports multi-bit correction, etc.  None of those 
+times is true of Soundmodem.  Oh yeah.. and it has RPi binaries!
+
+--David
+
+
+
+On 09/25/2013 12:23 AM, Waldek wrote:
+>   Hi
+>
+> I have looking solution on RaspberryPI with soundmodem how to do PTT if I don't have in my radio VOX. When I have use soundmodem on my laptop with linux kernel 2.x ten years ago but driver soundmodem support PTT via RS-232 which working very well with my IC-W2A. But I don't know how to do this on RPI ?
+>   It is need modify soundmodem driver to possible setting the gpio pin for PTT ?? Maybe exist patch for this ?
+>   
+>   73 Waldek sp2ong
+>
+>
+>
+> --
+> To unsubscribe from this list: send the line "unsubscribe linux-hams" in
+> the body of a message to majordomo@vger.kernel.org
+> More majordomo info at  http://vger.kernel.org/majordomo-info.html
+
