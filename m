@@ -1,26 +1,37 @@
-From: David Miller <davem@davemloft.net>
-Subject: Re: [PATCH] hamradio: baycom: remove deprecated IRQF_DISABLED
-Date: Mon, 30 Sep 2013 15:09:12 -0400 (EDT)
-Message-ID: <20130930.150912.46415312099350726.davem@davemloft.net>
-References: <1380133065-13712-1-git-send-email-michael.opdenacker@free-electrons.com>
-Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
-Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <1380133065-13712-1-git-send-email-michael.opdenacker@free-electrons.com>
-Sender: linux-hams-owner@vger.kernel.org
-List-ID: <linux-hams.vger.kernel.org>
-Content-Type: Text/Plain; charset="us-ascii"
-To: michael.opdenacker@free-electrons.com
-Cc: t.sailer@alumni.ethz.ch, linux-hams@vger.kernel.org, netdev@vger.kernel.org, linux-kernel@vger.kernel.org
-
 From: Michael Opdenacker <michael.opdenacker@free-electrons.com>
-Date: Wed, 25 Sep 2013 20:17:45 +0200
+Subject: [PATCH] net: hamradio/scc: remove deprecated IRQF_DISABLED
+Date: Sat,  5 Oct 2013 06:22:30 +0200
+Message-ID: <1380946950-3482-1-git-send-email-michael.opdenacker@free-electrons.com>
+Return-path: <linux-kernel-owner@vger.kernel.org>
+Sender: linux-kernel-owner@vger.kernel.org
+List-ID: <linux-hams.vger.kernel.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+To: jreuter@yaina.de
+Cc: linux-hams@vger.kernel.org, netdev@vger.kernel.org, linux-kernel@vger.kernel.org, Michael Opdenacker <michael.opdenacker@free-electrons.com>
 
-> This patch proposes to remove the IRQF_DISABLED flag
-> from drivers/net/hamradio/baycom_*
-> 
-> It's a NOOP since 2.6.35 and it will be removed one day.
-> 
-> Signed-off-by: Michael Opdenacker <michael.opdenacker@free-electrons.com>
+This patch proposes to remove the use of the IRQF_DISABLED flag
 
-Applied to net-next, thanks.
+It's a NOOP since 2.6.35 and it will be removed one day.
+
+Signed-off-by: Michael Opdenacker <michael.opdenacker@free-electrons.com>
+---
+ drivers/net/hamradio/scc.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/drivers/net/hamradio/scc.c b/drivers/net/hamradio/scc.c
+index bc1d521..4bc6ee8 100644
+--- a/drivers/net/hamradio/scc.c
++++ b/drivers/net/hamradio/scc.c
+@@ -1734,7 +1734,7 @@ static int scc_net_ioctl(struct net_device *dev, struct ifreq *ifr, int cmd)
+ 			if (!Ivec[hwcfg.irq].used && hwcfg.irq)
+ 			{
+ 				if (request_irq(hwcfg.irq, scc_isr,
+-						IRQF_DISABLED, "AX.25 SCC",
++						0, "AX.25 SCC",
+ 						(void *)(long) hwcfg.irq))
+ 					printk(KERN_WARNING "z8530drv: warning, cannot get IRQ %d\n", hwcfg.irq);
+ 				else
+-- 
+1.8.1.2
