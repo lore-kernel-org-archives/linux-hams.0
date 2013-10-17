@@ -1,31 +1,25 @@
-From: Dan Carpenter <dan.carpenter@oracle.com>
-Subject: [patch] yam: remove a no-op in yam_ioctl()
-Date: Mon, 14 Oct 2013 15:46:15 +0300
-Message-ID: <20131014123726.GA17034@mwanda>
+From: David Miller <davem@davemloft.net>
+Subject: Re: [patch] yam: integer underflow in yam_ioctl()
+Date: Thu, 17 Oct 2013 15:54:22 -0400 (EDT)
+Message-ID: <20131017.155422.1244517906591812199.davem@davemloft.net>
+References: <20131014121931.GI6247@mwanda>
 Mime-Version: 1.0
-Return-path: <kernel-janitors-owner@vger.kernel.org>
-Content-Disposition: inline
-Sender: kernel-janitors-owner@vger.kernel.org
-List-ID: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
-To: Jean-Paul Roubelat <jpr@f6fbb.org>
-Cc: linux-hams@vger.kernel.org, netdev@vger.kernel.org, kernel-janitors@vger.kernel.org
+Return-path: <linux-hams-owner@vger.kernel.org>
+In-Reply-To: <20131014121931.GI6247@mwanda>
+Sender: linux-hams-owner@vger.kernel.org
+List-ID: <linux-hams.vger.kernel.org>
+Content-Type: Text/Plain; charset="us-ascii"
+To: dan.carpenter@oracle.com
+Cc: jpr@f6fbb.org, linux-hams@vger.kernel.org, netdev@vger.kernel.org, kernel-janitors@vger.kernel.org
 
-We overwrite the ->bitrate with the user supplied information on the
-next line.
+From: Dan Carpenter <dan.carpenter@oracle.com>
+Date: Mon, 14 Oct 2013 15:28:38 +0300
 
-Signed-off-by: Dan Carpenter <dan.carpenter@oracle.com>
+> We cap bitrate at YAM_MAXBITRATE in yam_ioctl(), but it could also be
+> negative.  I don't know the impact of using a negative bitrate but let's
+> prevent it.
+> 
+> Signed-off-by: Dan Carpenter <dan.carpenter@oracle.com>
 
-diff --git a/drivers/net/hamradio/yam.c b/drivers/net/hamradio/yam.c
-index 0721e72..5af1c3e 100644
---- a/drivers/net/hamradio/yam.c
-+++ b/drivers/net/hamradio/yam.c
-@@ -975,7 +975,6 @@ static int yam_ioctl(struct net_device *dev, struct ifreq *ifr, int cmd)
- 			return -EINVAL;		/* Cannot change this parameter when up */
- 		if ((ym = kmalloc(sizeof(struct yamdrv_ioctl_mcs), GFP_KERNEL)) == NULL)
- 			return -ENOBUFS;
--		ym->bitrate = 9600;
- 		if (copy_from_user(ym, ifr->ifr_data, sizeof(struct yamdrv_ioctl_mcs))) {
- 			kfree(ym);
- 			return -EFAULT;
+Applied.
