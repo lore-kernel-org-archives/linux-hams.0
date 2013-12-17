@@ -1,29 +1,53 @@
-From: David Miller <davem@davemloft.net>
-Subject: Re: [PATCH] hamradio/yam: fix info leak in ioctl
-Date: Mon, 16 Dec 2013 20:11:27 -0500 (EST)
-Message-ID: <20131216.201127.533912619440960142.davem@davemloft.net>
+From: =?UTF-8?q?Salva=20Peir=C3=B3?= <speiro@ai2.upv.es>
+Subject: =?UTF-8?q?=5BPATCH=20v2=5D=20hamradio/yam=3A=20fix=20info=20leak=20in=20ioctl?=
+Date: Tue, 17 Dec 2013 10:06:30 +0100
+Message-ID: <1387271191-10355-1-git-send-email-speiro@ai2.upv.es>
 References: <1386920767-27962-1-git-send-email-speiro@ai2.upv.es>
 Mime-Version: 1.0
 Content-Transfer-Encoding: QUOTED-PRINTABLE
 Return-path: <linux-hams-owner@vger.kernel.org>
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=upv.es; s=default;
+	t=1387271229; bh=NSD1cQgfV2nzIjrXQhUZlqHSbD9UbeYt6ifu9NgAr1s=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References;
+	b=Kph98ctsjLqrPBLQJtLUKTjIPJy0jQF4TBlbCf0WClENIOIAgUkT56yCWpZB+xCzv
+	 D5gkn5lA85SRFkYGncCJDxJJUhY61IyELYuibisxSCVlfYXs6r/C9qZjbMKxKCzLJU
+	 DkhfONAk0LtVtvvmzjiRGxPR212Ukrr2YChDhCpQPY7iV1b+vuj3uj9LPL2/oswRbR
+	 lsJ3ZHcaVPfwQnXMq9V2Xh6jI8bZYTSbK5HZlNOULcdt64L9Znxk+YTFsk+M5iXg0P
+	 E71OQcaPmENPOWlPx8fGrtv1I1D4bkRhUdGozKcG9BCNqobaCOox7IHI3Jh7XsPT6L
+	 hZmHXRAhPC8kQ==
 In-Reply-To: <1386920767-27962-1-git-send-email-speiro@ai2.upv.es>
 Sender: linux-hams-owner@vger.kernel.org
 List-ID: <linux-hams.vger.kernel.org>
-Content-Type: Text/Plain; charset="iso-8859-1"
-To: speiro@ai2.upv.es
-Cc: linux-kernel@vger.kernel.org, security@kernel.org, linux-hams@vger.kernel.org, netdev@vger.kernel.org, jpr@f6fbb.org, stable@vger.kernel.org
+Content-Type: text/plain; charset="macroman"
+To: linux-kernel@vger.kernel.org
+Cc: =?UTF-8?q?Salva=20Peir=C3=B3?= <speiro@ai2.upv.es>, security@kernel.org, linux-hams@vger.kernel.org, netdev@vger.kernel.org, Jean-Paul Roubelat <jpr@f6fbb.org>, stable@vger.kernel.org
 
-=46rom: Salva Peir=F3 <speiro@ai2.upv.es>
-Date: Fri, 13 Dec 2013 08:46:07 +0100
+The yam_ioctl() code fails to initialise the cmd field
+of the struct yamdrv_ioctl_cfg. Add an explicit memset(0)
+before filling the structure to avoid the 4-byte info leak.
 
-> The yam_ioctl() code fails to initialise the cmd field
-> of the struct yamdrv_ioctl_cfg. Add an explicit memset(0)
-> before filling the structure to avoid the 4-byte info leak.
->=20
-> Signed-off-by: Salva Peir=F3 <speiro@ai2.upv.es>
+Signed-off-by: Salva Peir=C3=B3 <speiro@ai2.upv.es>
+CC: <stable@vger.kernel.org>
+---
+ drivers/net/hamradio/yam.c |    1 +
+ 1 file changed, 1 insertion(+)
 
-Put this into the SIOCYAMGCFG case statement, which is where the
-problem actually exists.
+diff --git a/drivers/net/hamradio/yam.c b/drivers/net/hamradio/yam.c
+index 1971411..61dd244 100644
+--- a/drivers/net/hamradio/yam.c
++++ b/drivers/net/hamradio/yam.c
+@@ -1057,6 +1057,7 @@ static int yam_ioctl(struct net_device *dev, stru=
+ct ifreq *ifr, int cmd)
+ 		break;
+=20
+ 	case SIOCYAMGCFG:
++		memset(&yi, 0, sizeof(yi));
+ 		yi.cfg.mask =3D 0xffffffff;
+ 		yi.cfg.iobase =3D yp->iobase;
+ 		yi.cfg.irq =3D yp->irq;
+--=20
+1.7.10.4
+
 --
 To unsubscribe from this list: send the line "unsubscribe linux-hams" i=
 n
