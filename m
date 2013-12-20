@@ -1,31 +1,34 @@
-From: David Miller <davem@davemloft.net>
-Subject: Re: [PATCH v2] hamradio/yam: fix info leak in ioctl
-Date: Thu, 19 Dec 2013 15:09:58 -0500 (EST)
-Message-ID: <20131219.150958.1721621193135421738.davem@davemloft.net>
-References: <1386920767-27962-1-git-send-email-speiro@ai2.upv.es>
-	<1387271191-10355-1-git-send-email-speiro@ai2.upv.es>
+From: Florian Westphal <fw@strlen.de>
+Subject: possible rose recvmsg behavior change after msg_namelen fixes
+Date: Fri, 20 Dec 2013 17:02:07 +0100
+Message-ID: <20131220160207.GC29632@breakpoint.cc>
 Mime-Version: 1.0
-Content-Transfer-Encoding: QUOTED-PRINTABLE
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <1387271191-10355-1-git-send-email-speiro@ai2.upv.es>
+Content-Disposition: inline
 Sender: linux-hams-owner@vger.kernel.org
 List-ID: <linux-hams.vger.kernel.org>
-Content-Type: Text/Plain; charset="iso-8859-1"
-To: speiro@ai2.upv.es
-Cc: linux-kernel@vger.kernel.org, security@kernel.org, linux-hams@vger.kernel.org, netdev@vger.kernel.org, jpr@f6fbb.org, stable@vger.kernel.org
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+To: hannes@stressinduktion.org
+Cc: netdev <netdev@vger.kernel.org>, linux-hams@vger.kernel.org
 
-=46rom: Salva Peir=F3 <speiro@ai2.upv.es>
-Date: Tue, 17 Dec 2013 10:06:30 +0100
+Hi.
 
-> The yam_ioctl() code fails to initialise the cmd field
-> of the struct yamdrv_ioctl_cfg. Add an explicit memset(0)
-> before filling the structure to avoid the 4-byte info leak.
->=20
-> Signed-off-by: Salva Peir=F3 <speiro@ai2.upv.es>
+recvmsg handler in net/rose/af_rose.c performs size-check
+on  ->msg_namelen:
 
-Applied and queued up for -stable, thanks.
---
-To unsubscribe from this list: send the line "unsubscribe linux-hams" i=
-n
-the body of a message to majordomo@vger.kernel.org
-More majordomo info at  http://vger.kernel.org/majordomo-info.html
+if (msg->msg_namelen >= sizeof(struct full_sockaddr_rose)) {
+ /* something */
+} else {
+  /* else */
+}
+
+Now that msg_namelen is zeroed before the handler calls we always
+hit the 'else' branch.
+
+TBH i don't comprehend how this was/is supposed to work.
+
+Could someone who is familiar with AF_ROSE look at this, before
+I send untested patch that blindly chops off code?
+
+Thanks!
