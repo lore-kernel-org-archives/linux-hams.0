@@ -1,7 +1,7 @@
 From: Ding Tianhong <dingtianhong@huawei.com>
-Subject: [PATCH v2 05/20] hamradio: slight optimization of addr compare
-Date: Tue, 24 Dec 2013 19:28:01 +0800
-Message-ID: <52B96FC1.9000708@huawei.com>
+Subject: [PATCH v3 04/19] hamradio: slight optimization of addr compare
+Date: Wed, 25 Dec 2013 11:28:20 +0800
+Message-ID: <52BA50D4.1010001@huawei.com>
 Mime-Version: 1.0
 Content-Transfer-Encoding: 7bit
 Return-path: <linux-kernel-owner@vger.kernel.org>
@@ -37,5 +37,4 @@ index f91bf0d..d50b23c 100644
  	if (skb_cow(skb, sizeof(struct ethhdr)))
 -- 
 1.8.0
-
 
