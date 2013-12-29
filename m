@@ -1,40 +1,62 @@
-From: Ding Tianhong <dingtianhong@huawei.com>
-Subject: [PATCH v3.5 04/19] hamradio: slight optimization of addr compare
-Date: Thu, 26 Dec 2013 19:40:31 +0800
-Message-ID: <52BC15AF.9070106@huawei.com>
-Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
+From: Julia Lawall <Julia.Lawall@lip6.fr>
+Subject: [PATCH 13/25] hamradio: 6pack: fix error return code
+Date: Sun, 29 Dec 2013 23:47:28 +0100
+Message-ID: <1388357260-4843-14-git-send-email-Julia.Lawall@lip6.fr>
+References: <1388357260-4843-1-git-send-email-Julia.Lawall@lip6.fr>
 Return-path: <linux-kernel-owner@vger.kernel.org>
+In-Reply-To: <1388357260-4843-1-git-send-email-Julia.Lawall@lip6.fr>
 Sender: linux-kernel-owner@vger.kernel.org
 List-ID: <linux-hams.vger.kernel.org>
+MIME-Version: 1.0
 Content-Type: text/plain; charset="us-ascii"
-To: Joerg Reuter <jreuter@yaina.de>, linux-hams@vger.kernel.org, Netdev <netdev@vger.kernel.org>, "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>
+Content-Transfer-Encoding: 7bit
+To: ajk@comnets.uni-bremen.de, linux-hams@vger.kernel.org, netdev@vger.kernel.org
+Cc: kernel-janitors@vger.kernel.org, linux-kernel@vger.kernel.org
 
-Use possibly more efficient ether_addr_equal
-to instead of memcmp.
+From: Julia Lawall <Julia.Lawall@lip6.fr>
 
-Cc: Joerg Reuter <jreuter@yaina.de>
-Cc: linux-hams@vger.kernel.org
-Cc: netdev@vger.kernel.org
-Cc: linux-kernel@vger.kernel.org
-Signed-off-by: Ding Tianhong <dingtianhong@huawei.com>
+Set the return variable to an error code as done elsewhere in the function.
+
+A simplified version of the semantic match that finds this problem is as
+follows: (http://coccinelle.lip6.fr/)
+
+// <smpl>
+(
+if@p1 (\(ret < 0\|ret != 0\))
+ { ... return ret; }
+|
+ret@p1 = 0
+)
+... when != ret = e1
+    when != &ret
+*if(...)
+{
+  ... when != ret = e2
+      when forall
+ return ret;
+}
+
+// </smpl>
+
+Signed-off-by: Julia Lawall <Julia.Lawall@lip6.fr>
+
 ---
- drivers/net/hamradio/bpqether.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+Not tested.
 
-diff --git a/drivers/net/hamradio/bpqether.c b/drivers/net/hamradio/bpqether.c
-index f91bf0d..d50b23c 100644
---- a/drivers/net/hamradio/bpqether.c
-+++ b/drivers/net/hamradio/bpqether.c
-@@ -208,7 +208,7 @@ static int bpq_rcv(struct sk_buff *skb, struct net_device *dev, struct packet_ty
- 	eth = eth_hdr(skb);
- 
- 	if (!(bpq->acpt_addr[0] & 0x01) &&
--	    memcmp(eth->h_source, bpq->acpt_addr, ETH_ALEN))
-+	    !ether_addr_equal(eth->h_source, bpq->acpt_addr))
- 		goto drop_unlock;
- 
- 	if (skb_cow(skb, sizeof(struct ethhdr)))
--- 
-1.8.0
+ drivers/net/hamradio/6pack.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
+diff --git a/drivers/net/hamradio/6pack.c b/drivers/net/hamradio/6pack.c
+index 1450e33..66e2b19 100644
+--- a/drivers/net/hamradio/6pack.c
++++ b/drivers/net/hamradio/6pack.c
+@@ -662,7 +662,8 @@ static int sixpack_open(struct tty_struct *tty)
+ 	tty->receive_room = 65536;
+ 
+ 	/* Now we're ready to register. */
+-	if (register_netdev(dev))
++	err = register_netdev(dev);
++	if (err)
+ 		goto out_free;
+ 
+ 	tnc_init(sp);
