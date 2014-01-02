@@ -1,62 +1,29 @@
-From: Julia Lawall <Julia.Lawall@lip6.fr>
-Subject: [PATCH 13/25] hamradio: 6pack: fix error return code
-Date: Sun, 29 Dec 2013 23:47:28 +0100
-Message-ID: <1388357260-4843-14-git-send-email-Julia.Lawall@lip6.fr>
+From: David Miller <davem@davemloft.net>
+Subject: Re: [PATCH 13/25] hamradio: 6pack: fix error return code
+Date: Thu, 02 Jan 2014 03:31:17 -0500 (EST)
+Message-ID: <20140102.033117.1926462846239862157.davem@davemloft.net>
 References: <1388357260-4843-1-git-send-email-Julia.Lawall@lip6.fr>
-Return-path: <linux-kernel-owner@vger.kernel.org>
-In-Reply-To: <1388357260-4843-1-git-send-email-Julia.Lawall@lip6.fr>
-Sender: linux-kernel-owner@vger.kernel.org
-List-ID: <linux-hams.vger.kernel.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
+	<1388357260-4843-14-git-send-email-Julia.Lawall@lip6.fr>
+Mime-Version: 1.0
 Content-Transfer-Encoding: 7bit
-To: ajk@comnets.uni-bremen.de, linux-hams@vger.kernel.org, netdev@vger.kernel.org
-Cc: kernel-janitors@vger.kernel.org, linux-kernel@vger.kernel.org
+Return-path: <kernel-janitors-owner@vger.kernel.org>
+In-Reply-To: <1388357260-4843-14-git-send-email-Julia.Lawall@lip6.fr>
+Sender: kernel-janitors-owner@vger.kernel.org
+List-ID: <linux-hams.vger.kernel.org>
+Content-Type: Text/Plain; charset="us-ascii"
+To: Julia.Lawall@lip6.fr
+Cc: ajk@comnets.uni-bremen.de, linux-hams@vger.kernel.org, netdev@vger.kernel.org, kernel-janitors@vger.kernel.org, linux-kernel@vger.kernel.org
 
 From: Julia Lawall <Julia.Lawall@lip6.fr>
+Date: Sun, 29 Dec 2013 23:47:28 +0100
 
-Set the return variable to an error code as done elsewhere in the function.
+> From: Julia Lawall <Julia.Lawall@lip6.fr>
+> 
+> Set the return variable to an error code as done elsewhere in the function.
+> 
+> A simplified version of the semantic match that finds this problem is as
+> follows: (http://coccinelle.lip6.fr/)
+ ...
+> Signed-off-by: Julia Lawall <Julia.Lawall@lip6.fr>
 
-A simplified version of the semantic match that finds this problem is as
-follows: (http://coccinelle.lip6.fr/)
-
-// <smpl>
-(
-if@p1 (\(ret < 0\|ret != 0\))
- { ... return ret; }
-|
-ret@p1 = 0
-)
-... when != ret = e1
-    when != &ret
-*if(...)
-{
-  ... when != ret = e2
-      when forall
- return ret;
-}
-
-// </smpl>
-
-Signed-off-by: Julia Lawall <Julia.Lawall@lip6.fr>
-
----
-Not tested.
-
- drivers/net/hamradio/6pack.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
-
-diff --git a/drivers/net/hamradio/6pack.c b/drivers/net/hamradio/6pack.c
-index 1450e33..66e2b19 100644
---- a/drivers/net/hamradio/6pack.c
-+++ b/drivers/net/hamradio/6pack.c
-@@ -662,7 +662,8 @@ static int sixpack_open(struct tty_struct *tty)
- 	tty->receive_room = 65536;
- 
- 	/* Now we're ready to register. */
--	if (register_netdev(dev))
-+	err = register_netdev(dev);
-+	if (err)
- 		goto out_free;
- 
- 	tnc_init(sp);
+Applied.
