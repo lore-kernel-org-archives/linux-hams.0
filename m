@@ -1,29 +1,40 @@
-From: David Miller <davem@davemloft.net>
-Subject: Re: [PATCH 13/25] hamradio: 6pack: fix error return code
-Date: Thu, 02 Jan 2014 03:31:17 -0500 (EST)
-Message-ID: <20140102.033117.1926462846239862157.davem@davemloft.net>
-References: <1388357260-4843-1-git-send-email-Julia.Lawall@lip6.fr>
-	<1388357260-4843-14-git-send-email-Julia.Lawall@lip6.fr>
+From: Ding Tianhong <dingtianhong@huawei.com>
+Subject: [PATCH v3.6 04/19] hamradio: slight optimization of addr compare
+Date: Wed, 8 Jan 2014 10:53:23 +0800
+Message-ID: <52CCBDA3.8090302@huawei.com>
 Mime-Version: 1.0
 Content-Transfer-Encoding: 7bit
-Return-path: <kernel-janitors-owner@vger.kernel.org>
-In-Reply-To: <1388357260-4843-14-git-send-email-Julia.Lawall@lip6.fr>
-Sender: kernel-janitors-owner@vger.kernel.org
+Return-path: <netdev-owner@vger.kernel.org>
+Sender: netdev-owner@vger.kernel.org
 List-ID: <linux-hams.vger.kernel.org>
-Content-Type: Text/Plain; charset="us-ascii"
-To: Julia.Lawall@lip6.fr
-Cc: ajk@comnets.uni-bremen.de, linux-hams@vger.kernel.org, netdev@vger.kernel.org, kernel-janitors@vger.kernel.org, linux-kernel@vger.kernel.org
+Content-Type: text/plain; charset="us-ascii"
+To: Joerg Reuter <jreuter@yaina.de>, linux-hams@vger.kernel.org, Netdev <netdev@vger.kernel.org>, "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>
 
-From: Julia Lawall <Julia.Lawall@lip6.fr>
-Date: Sun, 29 Dec 2013 23:47:28 +0100
+Use possibly more efficient ether_addr_equal
+to instead of memcmp.
 
-> From: Julia Lawall <Julia.Lawall@lip6.fr>
-> 
-> Set the return variable to an error code as done elsewhere in the function.
-> 
-> A simplified version of the semantic match that finds this problem is as
-> follows: (http://coccinelle.lip6.fr/)
- ...
-> Signed-off-by: Julia Lawall <Julia.Lawall@lip6.fr>
+Cc: Joerg Reuter <jreuter@yaina.de>
+Cc: linux-hams@vger.kernel.org
+Cc: netdev@vger.kernel.org
+Cc: linux-kernel@vger.kernel.org
+Signed-off-by: Ding Tianhong <dingtianhong@huawei.com>
+---
+ drivers/net/hamradio/bpqether.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-Applied.
+diff --git a/drivers/net/hamradio/bpqether.c b/drivers/net/hamradio/bpqether.c
+index f91bf0d..d50b23c 100644
+--- a/drivers/net/hamradio/bpqether.c
++++ b/drivers/net/hamradio/bpqether.c
+@@ -208,7 +208,7 @@ static int bpq_rcv(struct sk_buff *skb, struct net_device *dev, struct packet_ty
+ 	eth = eth_hdr(skb);
+ 
+ 	if (!(bpq->acpt_addr[0] & 0x01) &&
+-	    memcmp(eth->h_source, bpq->acpt_addr, ETH_ALEN))
++	    !ether_addr_equal(eth->h_source, bpq->acpt_addr))
+ 		goto drop_unlock;
+ 
+ 	if (skb_cow(skb, sizeof(struct ethhdr)))
+-- 
+1.8.0
+
