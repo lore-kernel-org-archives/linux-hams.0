@@ -1,43 +1,31 @@
-From: David A Aitcheson <david.aitcheson@gmail.com>
-Subject: Re: [Ubuntu-hams] Xdx 2.4.3 released
-Date: Fri, 07 Feb 2014 07:49:24 -0500
-Message-ID: <52F4D654.2080603@gmail.com>
+From: David Quental <ct1drb@radiotelegrafistas.com>
+Subject: Re: Xdx 2.4.3 released
+Date: Fri, 07 Feb 2014 13:11:34 +0000
+Message-ID: <52F4DB86.4000803@radiotelegrafistas.com>
 References: <20140207030616.GC29586@n0nb.us>
-Reply-To: david.aitcheson@gmail.com
 Mime-Version: 1.0
 Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=message-id:date:from:reply-to:user-agent:mime-version:to:subject
-         :references:in-reply-to:content-type:content-transfer-encoding;
-        bh=npGWUZSuhCaUtly/O6OJPehmVc1jRDhNhTKH2d6jMmY=;
-        b=XaWSOapK/wzi24fnSzQXOJHNPztW1tyWjb1Lzr7KaCBw6LzfkwRuwrdRvxEgVYswgJ
-         8RUgf9FsXt0MyEt4joP1B9bkKa2trd9JrPEbaisB2ogq2Ux64lauohxmb3Upzr4BYBmO
-         p836sOjlxyFYk9VOSB2Q0Q9SfHm+Pd6emSrRuJGb71TisUQi+F0HjSXCQPHnO426Ufu+
-         JbmjJOB7Hav+VXudaSvi0LeiAZvYnt2X8Z/0P7JIZvS/224IrRoKz3YFHFKfqxBCA+Io
-         thijmJjsSmTOC7CT6uZbV84EoBbI7RvYxnOMQc6oDIbOqibrl4VVgAM8VUbPiK37EKEJ
-         U+5w==
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=radiotelegrafistas.com; s=default;
+	h=Content-Transfer-Encoding:Content-Type:In-Reply-To:References:Subject:To:MIME-Version:From:Date:Message-ID; bh=3jkYy2dE8VkKcvQLfRVz/2OKyYkhvB1kDKgBSg/62kU=;
+	b=Hl2FIenUElqugrnkkWQ+c/+ZPzGJ9nVTaSgcb5cZn0wbIerb4m9DJzye98dhxsAPwZl3MQNhVImTMX1UNk2u6Bu2pcFSwbfBEX53kSeLGSdpT/exrhu02wqL7eht9ElgmPLkD43on4lPLbWTiLe/zIEdazjmgJ71basBm+IvYU8=;
 In-Reply-To: <20140207030616.GC29586@n0nb.us>
 Sender: linux-hams-owner@vger.kernel.org
 List-ID: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"
-To: Linux Hams <linux-hams@vger.kernel.org>, Debian Hams <debian-hams@lists.debian.org>, Ubuntu Hams Group <ubuntu-hams@lists.launchpad.net>, Ham-Linux <ham-linux@mailman.qth.net>, Joop Stakenborg <joop.stakenborg@xs4all.nl>, Thomas Beierlein <tb@forth-ev.de>, David Quental <ct1drb@radiotelegrafistas.com>, Ed <autek@comcast.net>, Andy Stewart <andystewart@comcast.net>, Kamal Mostafa <kamal@whence.com>
+Content-Type: text/plain; charset="us-ascii"; format="flowed"
+To: Linux Hams <linux-hams@vger.kernel.org>, Debian Hams <debian-hams@lists.debian.org>, Ubuntu Hams Group <ubuntu-hams@lists.launchpad.net>, Ham-Linux <ham-linux@mailman.qth.net>, Joop Stakenborg <joop.stakenborg@xs4all.nl>, Thomas Beierlein <tb@forth-ev.de>, Ed <autek@comcast.net>, Andy Stewart <andystewart@comcast.net>, Kamal Mostafa <kamal@whence.com>
 
-Hello Nate et al,
+Hello all,
 
-Built with no errors / Compiled smoothly on Ubuntu 12.04-LTS
+built with no errors on OpenSuSE 13.1, no problems at all.
 
-Runs "FB"
+Thanks for nice work Nate.
 
-Thank you Nate!
+Best 73 all.
 
-73
-Dave
-KB3EFS
+CT1DRB
+David Quental
 
-
-On 02/06/2014 10:06 PM, Nate Bargmann wrote:
 > After being in slumber for about five years, development on Xdx, a DX
 > Cluster client written in C using the GTK+ library has resumed and a new
 > stable version been released.
@@ -71,6 +59,3 @@ On 02/06/2014 10:06 PM, Nate Bargmann wrote:
 > 73, de Nate >>
 >
 
--- 
-David A Aitcheson david.aitcheson@gmail.com Go Green! Print this email
-only when necessary.
