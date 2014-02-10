@@ -1,75 +1,50 @@
-From: "qrv@kd4e.com" <qrv@kd4e.com>
-Subject: Re: [Ham-Linux] FreeDV (HF digital voice) for Ubuntu
-Date: Sun, 09 Feb 2014 15:03:11 -0500
-Message-ID: <52F7DEFF.9070300@kd4e.com>
+From: Joey STANFORD <joey@canonical.com>
+Subject: Re: [Ubuntu-hams] FreeDV (HF digital voice) for Ubuntu
+Date: Mon, 10 Feb 2014 11:02:22 -0700
+Message-ID: <20140210180222.GC25071@warthog.stan4d.net>
 References: <1391966195.30458.139.camel@fourier>
-Reply-To: qrv@kd4e.com
+ <52f84609.ea42420a.06df.5e1c@mx.google.com>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="AbQceqfdZEv+FvjW"
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <1391966195.30458.139.camel@fourier>
+Content-Disposition: inline
+In-Reply-To: <52f84609.ea42420a.06df.5e1c@mx.google.com>
 Sender: linux-hams-owner@vger.kernel.org
 List-ID: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"; format="flowed"
-To: 
-Cc: Linux Hams <linux-hams@vger.kernel.org>, Ham-Linux <ham-linux@mailman.qth.net>
+To: 9m2pju@gmail.com
+Cc: Kamal Mostafa <kamal@whence.com>, Ubuntu Hams Group <ubuntu-hams@lists.launchpad.net>, Linux Hams <linux-hams@vger.kernel.org>, Ham-Linux <ham-linux@mailman.qth.net>, "digitalvoice@googlegroups.com" <digitalvoice@googlegroups.com>
 
-FreeDV is a valuable addition of a new & non-proprietary tool for
-Hams.
 
-I listened to the recorded QSO and observed two of the three key
-operating variables:
+--AbQceqfdZEv+FvjW
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Disposition: inline
 
-1.  Significant saving of spectrum for FreeDV vs analog SSB. (+)
-
-2.  Significant FreeDV artifacts - muffled audio.  (-)
-
-3.  Missing was an on-air comparison of SSB throughput in rough band
-	condition and/or weak-signal performance vs FreeDV (The specs
-	say "should be readable down to 2 dB S/N" but can you
-	demonstrate the difference is real-world practice via another
-	recording of a live QSO, please?
-
-	Do you know if anyone has tested this with an Icom IC-7200
-or IC-706MK2g?  If so, what have been determined to be the best rig
-settings, please?  (That sort of data would be good to gather on your
-Web site.)
-
-Thanks for this contribution to our hobby!
-
-73, David KD4E
-
-> FreeDV ("HF Digital Voice for Radio Amateurs") -- http://freedv.org/ --
-> is now available as an installable package for recent versions of
-> Ubuntu[0].
+On Mon, Feb 10, 2014 at 03:22:25AM +0000, 9m2pju@gmail.com wrote:
+>Well done.
 >
-> Many thanks to David Rowe and the rest of the upstream FreeDV team, and
-> to A. Maitland Bottoms for the Debian package[1].
->
->
-> The freedv package for Ubuntu is available from either of these PPA's:
->
->          Freedv PPA (and its prerequisites) only
->          https://launchpad.net/~kamalmostafa/+archive/freedv
->
->          Ubuntu Hams Updates PPA (many backported ham packages)
->          https://launchpad.net/~ubuntu-hams-updates/+archive/ppa
->
->
-> 73 de KA6MAL
->
->   -Kamal
+>I should blog about this.
 
+I've been using this package on and off since it showed up in a recent
+magazine (CQ or QST...something like that). Codec2 was meant iirc to be
+a FOSS replacement for the AMBE series which is used in D-STAR and DMR.
 
+It sounds really good.
 
--- 
+>Sent from Windows Mail
 
-David (NOT Dave) Colburn, KD4E - Nevils, Georgia USA
+Really PJU? :-) I should blog about that! :-)
 
-Safe & Secure Search Engine: duckduckgo.com
+--AbQceqfdZEv+FvjW
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: Digital signature
 
-Android for Hams: groups.yahoo.com/group/hamdroid
-Creative Tech: groups.yahoo.com/group/ham-macguyver
-Raspi Alternative: groups.yahoo.com/group/beagleboneblack/
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (GNU/Linux)
 
-Restored to design-spec at Heaven's gate 1Cor15:22
+iEYEARECAAYFAlL5FC4ACgkQK44xRkGJ7ScAlQCcDDPjPDhvKOKPEraxX4G9zBk/
+9aYAoJEWkNPaoU1NGqQ9VduRC7axeeXQ
+=/8zv
+-----END PGP SIGNATURE-----
+
+--AbQceqfdZEv+FvjW--
