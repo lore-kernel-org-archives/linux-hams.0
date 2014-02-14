@@ -1,62 +1,70 @@
-From: Joe Goforth <joego@mcn.org>
-Subject: Re: Fw: Fw: AX.25
-Date: Fri, 14 Feb 2014 15:48:24 -0800
-Message-ID: <52FEAB48.5020301@mcn.org>
-References: <20140214151927.GU30054@belle.intranet.vanheusden.com> <52FE509E.20306@trinnet.net> <20140214203115.GX30054@belle.intranet.vanheusden.com> <52FE84CF.7010407@mcn.org> <52FE97A8.6030000@trinnet.net>
+From: Ray Wells <vk2tv@exemail.com.au>
+Subject: Re: Linpac on Raspberry Pi
+Date: Sat, 15 Feb 2014 10:53:10 +1100
+Message-ID: <52FEAC66.1060102@exemail.com.au>
+References: <52FDC2F9.2050804@exemail.com.au> <52FE4D95.2020701@trinnet.net> <52FE8EE2.90501@exemail.com.au>
 Mime-Version: 1.0
 Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <52FE97A8.6030000@trinnet.net>
+In-Reply-To: <52FE8EE2.90501@exemail.com.au>
 Sender: linux-hams-owner@vger.kernel.org
 List-ID: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"; format="flowed"
-To: David Ranch <linux-hams@trinnet.net>
-Cc: linux-hams@vger.kernel.org
+To: David Ranch <linux-hams@trinnet.net>, Linux Hams <linux-hams@vger.kernel.org>
 
-Hi David, I would love to try linpac but the beaglebone is kind of 
-stripped down so it doesn't have rpm. Is there something I can compile 
-from scratch in tar.gz?
+David,
 
---Joe
+A correction on what I previously wrote about meeting dependencies. 
+ncurses-libs is not in the Debian repositories. In Debian I use 
+libncurses5-dev to meet dependencies when compiling kernel ax25 and I've 
+not yet had any curses header errors with Linpac. I'm guessing 
+libncurses5-dev provides the headers provided by ncurse-libs in RPM 
+based systems. Right/wrong???
 
-On 2/14/2014 2:24 PM, David Ranch wrote:
+Ray vk2tv
+
+
+On 15/02/14 08:47, Ray Wells wrote:
+> Hi David,
 >
-> Hello Joe,
+> Thanks for the reply and the information. This is great news.
 >
-> Nice to see the linux-hams@vger list a little busy!
+> #0 I didn't realise that ax25mail-utils was a dependency because the 
+> documentation talks about getting mail as being optional. I've met the 
+> other requirements.
+> #1 On this particular occasion I'm not concerned about the SD card 
+> wearing out but I take your point. It's convenient at the moment to 
+> wear out the card.
+> #2 I also have concentrated on the curses version. An attempt with the 
+> Java version quite some years back failed and I walked away from it. 
+> Besides, the curses version fits well with headless operation of the RPi.
 >
->> I'm still looking for a better program than beacon to do the transmit so
->> that might be a program that needs to be written. There are a lot of
->> programs with source code out there for reference. Many of the linux
->> APRS type programs have this code. Maybe someone out there has a better
->> solution but that is about as simple as I could get it on an embedded
->> system.
+> I'll get and apply the patches and see what happens next. Another 
+> member of the RPi list, Tom SP2LOB is also running with this project.
 >
+> I'm not a programmer or a developer but my twenty years of Debian has 
+> taught me what some of the compile errors mean, even if I can't 
+> resolve them <grin>
 >
-> In a previous post I made today, you might want to check out Linpac 
-> for Linux  It has the ability to send UI or unconnected packets like 
-> "beacon" but it also fully supports making multiple connected sessions 
-> to other nodes and packet stations, chatting real time with remote
-> operators, leaving messages, and much more.  You can read up about
-> what it can do, see screen captures, etc. here:
+> Thanks, David.
 >
+> Ray vk2tv
 >
-> http://www.trinityos.com/HAM/CentosDigitalModes/hampacketizing-centos.html#11.linpac 
->
->
-> If you're not aware, you can also find another great listing of various
-> Linux software for AX.25 here:
->
->   http://radio.linux.org.au/?sectpat=packet&ordpat=date
->
-> I'm actually about to upload a big update to that site to reflect newer
-> versions of code, etc. as some of those pages are a bit out of date.
->
-> --David
-> KI6ZHD
-> -- 
-> To unsubscribe from this list: send the line "unsubscribe linux-hams" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at  http://vger.kernel.org/majordomo-info.html
->
+> On 15/02/14 04:08, David Ranch wrote:
+>>
+>> Hello Ray,
+>>
+>> I'm actively working on (finally) releasing a new version of Linpac 
+>> but Autoconf has been a challenge.  I received some great help from 
+>> the Xastir folks but have a little more to go. Anyway, I have your 
+>> "vector" and other issues have already been solved with these new 
+>> patches and I should be able to give you a hand.  I do plan on 
+>> releasing a .debs in the future but until then, try this for non-RPM 
+>> based systems:
+>>
+>>
+>> # 0 - Your dependencies will be gcc, perl, ncurses-libs, libax25, and 
+>> ax25mail-utils
+>> #    All compiling details can be found here: 
+>> http://www.trinityos.com/HAM/CentosDigitalModes/hampacketizing-centos.html#11.linpac
 
