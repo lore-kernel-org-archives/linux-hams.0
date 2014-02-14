@@ -1,122 +1,87 @@
-From: Ray Wells <vk2tv@exemail.com.au>
-Subject: Re: Linpac on Raspberry Pi
-Date: Sat, 15 Feb 2014 08:47:14 +1100
-Message-ID: <52FE8EE2.90501@exemail.com.au>
-References: <52FDC2F9.2050804@exemail.com.au> <52FE4D95.2020701@trinnet.net>
+From: Joe Goforth <joego@mcn.org>
+Subject: Re: Fw: Fw: AX.25
+Date: Fri, 14 Feb 2014 13:04:15 -0800
+Message-ID: <52FE84CF.7010407@mcn.org>
+References: <20140214151927.GU30054@belle.intranet.vanheusden.com> <52FE509E.20306@trinnet.net> <20140214203115.GX30054@belle.intranet.vanheusden.com>
 Mime-Version: 1.0
 Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <52FE4D95.2020701@trinnet.net>
+In-Reply-To: <20140214203115.GX30054@belle.intranet.vanheusden.com>
 Sender: linux-hams-owner@vger.kernel.org
 List-ID: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"; format="flowed"
-To: David Ranch <linux-hams@trinnet.net>, Linux Hams <linux-hams@vger.kernel.org>
+To: folkert <folkert@vanheusden.com>, David Ranch <linux-hams@trinnet.net>
+Cc: linux-hams@vger.kernel.org
 
-Hi David,
+Hi folkert, I'm on the same wavelength as you are. I have two beaglebone 
+boards with tnc-x packet using linux angstrom. It's been a real battle 
+to find a simple way to communicate between the two without getting tied 
+into the various software packages. At this point I realize that I 
+should have gone to the raspberry-pi board but I have money tied up in 
+the two boards I have now. To top it off the beaglebone black is the one 
+all the support is going to now and I have a beaglebone white. This has 
+caused me to learn a lot more which is good in the end. What I have 
+finally come down to is this which is kind of a cool experimental 
+platform to talk between two stations.
 
-Thanks for the reply and the information. This is great news.
+Setup the basic ax25d stuff so you have your ax25d daemon running. You 
+don't need to worry about getting the tcp stuff all routed. Once you 
+have that going you can setup a port to listen like this
 
-#0 I didn't realise that ax25mail-utils was a dependency because the 
-documentation talks about getting mail as being optional. I've met the 
-other requirements.
-#1 On this particular occasion I'm not concerned about the SD card 
-wearing out but I take your point. It's convenient at the moment to wear 
-out the card.
-#2 I also have concentrated on the curses version. An attempt with the 
-Java version quite some years back failed and I walked away from it. 
-Besides, the curses version fits well with headless operation of the RPi.
+listen MYPORT >> listen.log&
 
-I'll get and apply the patches and see what happens next. Another member 
-of the RPi list, Tom SP2LOB is also running with this project.
+at this point you can log any incoming to the listen.log and to bring it 
+to the console;
 
-I'm not a programmer or a developer but my twenty years of Debian has 
-taught me what some of the compile errors mean, even if I can't resolve 
-them <grin>
+tail -f listen.log
 
-Thanks, David.
+On your other station you can use the program "beacon" to send messages;
 
-Ray vk2tv
+beacon  -m -d KE6ACW-1 MYPORT2 "my message I want to send"
 
-On 15/02/14 04:08, David Ranch wrote:
+At this point you have setup a simple communication system and you can 
+pipe the listen program to a python (or your flavor) script to process 
+or send the data any way you like.
+
+I'm still looking for a better program than beacon to do the transmit so 
+that might be a program that needs to be written. There are a lot of 
+programs with source code out there for reference. Many of the linux 
+APRS type programs have this code. Maybe someone out there has a better 
+solution but that is about as simple as I could get it on an embedded 
+system.
+
+--Joe Goforth
+KE6ACW
+
+On 2/14/2014 12:31 PM, folkert wrote:
+>> The AMPR group at http://wiki.ampr.org/index.php/Main_Page and it's
+>> email list at 44net@hamradio.ucsd.edu will be the best place to
+>> follow up on getting Internet forwarding going.  The one challenge
+>> for you will be that the AMPR group is focused for licensed amateur
+>> radio (HAMs) who have built extensive, worldwide ax25ipd enabled
+>> overlay network.  I don't know if they would give you any IPs unless
+>> you and your third party traffic would be coming from licensed HAMs.
+>> I leave that to you to investigate.
+> Ok. Yeah I'm trying to setup a free for all access for all and do
+> whatever you like network.
 >
-> Hello Ray,
+>> Beyond that previous key point, I don't know in your email if you
+>> really intend to use the very old Baycom TNCs (require true 16550
+>> serial UARTS, not USB-to-serial adapters) or you're referring to
+>> Thomas Sailers's excellent but deprecated "soundmodem" that used to
+>> be hosted on the Baycom website (now gone).  Instead, I encourage
+> Both. I have old pcs with real serial ports, I have a raspberry pi with
+> a sound module and a couple of rpi-s with tnc-pi hardware.
 >
-> I'm actively working on (finally) releasing a new version of Linpac 
-> but Autoconf has been a challenge.  I received some great help from 
-> the Xastir folks but have a little more to go.  Anyway, I have your 
-> "vector" and other issues have already been solved with these new 
-> patches and I should be able to give you a hand.  I do plan on 
-> releasing a .debs in the future but until then, try this for non-RPM 
-> based systems:
->
->
-> # 0 - Your dependencies will be gcc, perl, ncurses-libs, libax25, and 
-> ax25mail-utils
-> #    All compiling details can be found here: 
-> http://www.trinityos.com/HAM/CentosDigitalModes/hampacketizing-centos.html#11.linpac
->
-> # 1 - I highly advise you do NOT compile things on your Rpi's SD card 
-> - it will wear it out.  Do all your compiling
-> # via an NFS mount or an attached USB hard drive , etc.
->
-> # 2 - Get the sources (please note that the Ncurses based Linpac is 
-> the one I've been focusing so far)
-> cd <your high-write cycle destination path>
-> wget 
-> http://downloads.sourceforge.net/project/linpac/LinPac-unstable/0.17pre3/LinPac-0.17pre3.tar.gz
->
-> # 3 - Uncompress Linpac
-> tar xzvf LinPac-0.17pre3.tar.gz
->
-> #4 - Get all the required patches
-> cd LinPac-0.17pre3
-> wget -r -l1 --no-parent --no-directories -Alinpac0* 
-> http://www.trinityos.com/HAM/CentosDigitalModes/usr/src/redhat/SOURCES/
->
-> #5 - Apply the patches
-> patch -p0 < linpac0-digi-length.diff
-> patch -p0 < linpac0-pcskprsnd.diff
-> patch -p0 < linpac0-compile-fixes.diff
-> patch -p0 < linpac0-compile-fixes2.diff
->
-> #6 - Configure and build it
-> ./configure --prefix=/usr
-> make
->
-> The compiler is still throwing warnings but it builds ok on Centos6.5 
-> today.  I would appreciate any feedback on how to clean up the 
-> warnings as I'd like to get a 100% clean build before I post this new 
-> version on SF.net.
->
-> #7 - Configure it up by reading the included manual.html documentation 
-> and 
-> http://www.trinityos.com/HAM/CentosDigitalModes/hampacketizing-centos.html#11a.linpacconfig
+>> you to check out Direwolf which is a vastly superior sound card TNC
+>> - http://home.comcast.net/~wb2osz/site/ . Not only does it support
+>> superior decoding of 1200 and 9600 packet but also integrated APRS
+>> and AGWPE support.
+> Ah!
+> Will do
+> thanks
 >
 >
-> PS.  I'm not on the Rpi list but if you would, please cross-post this 
-> response over there as well.  I'd love to get more users on Linpac and 
-> get some additional developers on board!
->
->
-> --David
-> KI6ZHD
->
->
->
->> Over on the RPi list questions are being asked about a packet 
->> terminal program for the RPi to satisfy a mild renewal of interest in 
->> connected mode packet. As a one-time user of Linpac I decided to try 
->> to compile it on the Pi but have run into problems with header files, 
->> with vector.h being the one that is stumping further progress. I 
->> haven't so far found a Debian package that provides vector.h. I've 
->> tried to compile both 0.16 and 0.17-pre with similar results.
->>
->> I found an email in my archives from David Ranch, dated 21-09-12 in 
->> which reference was made to someone running Linpac "with great 
->> results". David is listed as the maintainer.
->>
->> Is anyone here, and specifically David, able to shed any light on the 
->> problem?
->
+> Folkert van Heusden
 >
 
