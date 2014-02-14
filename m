@@ -1,126 +1,122 @@
-From: folkert <folkert@vanheusden.com>
-Subject: Re: AX.25
-Date: Fri, 14 Feb 2014 22:45:13 +0100
-Message-ID: <20140214214513.GB30054@belle.intranet.vanheusden.com>
-References: <20140214151927.GU30054@belle.intranet.vanheusden.com>
- <52FE509E.20306@trinnet.net>
- <E7E550C2-3CA6-4A6C-BD6F-4B4E1F0FED5C@gmail.com>
- <20140214203326.GY30054@belle.intranet.vanheusden.com>
- <14AFFEA1-EEB9-44A0-A674-9A04F43C4E06@gmail.com>
+From: Ray Wells <vk2tv@exemail.com.au>
+Subject: Re: Linpac on Raspberry Pi
+Date: Sat, 15 Feb 2014 08:47:14 +1100
+Message-ID: <52FE8EE2.90501@exemail.com.au>
+References: <52FDC2F9.2050804@exemail.com.au> <52FE4D95.2020701@trinnet.net>
 Mime-Version: 1.0
+Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
-Content-Disposition: inline
-In-Reply-To: <14AFFEA1-EEB9-44A0-A674-9A04F43C4E06@gmail.com>
+In-Reply-To: <52FE4D95.2020701@trinnet.net>
 Sender: linux-hams-owner@vger.kernel.org
 List-ID: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-To: Matt VK2RQ <matt.vk2rq@gmail.com>
-Cc: David Ranch <linux-hams@trinnet.net>, "linux-hams@vger.kernel.org" <linux-hams@vger.kernel.org>
+Content-Type: text/plain; charset="us-ascii"; format="flowed"
+To: David Ranch <linux-hams@trinnet.net>, Linux Hams <linux-hams@vger.kernel.org>
 
-Yeah you can do whatever you like over CB here.
-Not entirely sure about encryption but from what I heard nobody is
-monitoring things.
+Hi David,
 
-On Sat, Feb 15, 2014 at 07:57:34AM +1100, Matt VK2RQ wrote:
-> Well, in Australia running packet radio over CB is illegal except in some very restricted scenarios. But if it is legal in your country, then by all means go for it :-)
-> 
-> 73,
-> Matt VK2RQ
-> 
-> > On 15 Feb 2014, at 7:33 am, folkert <folkert@vanheusden.com> wrote:
-> > 
-> > The idea is to setup, to bring back that old hackers-feeling, that you
-> > can tinker without anyoing bothering you with rules this rules that.
-> > Also no limit on what you're transmitting. I'm focussing on ax.25 now as
-> > I found it interesting technology but hey if someone wants to transmit
-> > ip; let him do it.
-> > 
-> >> On Sat, Feb 15, 2014 at 04:43:09AM +1100, Matt VK2RQ wrote:
-> >> AMPRnet is a completely different topic, and technically has nothing to do with AX25 (although of course in some cases AMPRnet IP packets may be encapsulated into AX25 frames and transported over AX25 links).
-> >> 
-> >> The OP didn't really specify the intended use cases for his packet network. If one of the requirements involves transporting or IP traffic, and possibly connecting to the Internet, then this is possible using a private IP addressing scheme with a NAPT function on the internet-facing gateway. Or, if the internet gateway has a block of public IPs available, then these can be distributed and routed around his packet network. As you say, AMPRnet is only for licensed hams, and so is not an option in this case.
-> >> 
-> >> 73, Matt VK2RQ
-> >> 
-> >> 
-> >>> On 15 Feb 2014, at 4:21 am, David Ranch <linux-hams@trinnet.net> wrote:
-> >>> 
-> >>> 
-> >>> Hello Folkert,
-> >>> 
-> >>> The AMPR group at http://wiki.ampr.org/index.php/Main_Page and it's email list at 44net@hamradio.ucsd.edu will be the best place to follow up on getting Internet forwarding going.  The one challenge for you will be that the AMPR group is focused for licensed amateur radio (HAMs) who have built extensive, worldwide ax25ipd enabled overlay network.  I don't know if they would give you any IPs unless you and your third party traffic would be coming from licensed HAMs.  I leave that to you to investigate.
-> >>> 
-> >>> Beyond that previous key point, I don't know in your email if you really intend to use the very old Baycom TNCs (require true 16550 serial UARTS, not USB-to-serial adapters) or you're referring to Thomas Sailers's excellent but deprecated "soundmodem" that used to be hosted on the Baycom website (now gone).  Instead, I encourage you to check out Direwolf which is a vastly superior sound card TNC - http://home.comcast.net/~wb2osz/site/ . Not only does it support superior decoding of 1200 and 9600 packet but also integrated APRS and AGWPE support.
-> >>> 
-> >>> --David
-> >>> KI6ZHD
-> >>> 
-> >>> 
-> >>>> [ also posted in netdev@vger.kernel.org, this list is probably more
-> >>>> on-topic ]
-> >>>> 
-> >>>> Hi,
-> >>>> 
-> >>>> In my neighbourhood (the Netherlands) I'm trying to make people
-> >>>> enthousiast again for packet radio (AX.25) over CB radio (27mc).
-> >>>> 
-> >>>> For that I'm setting up a couple of nodes spread out of the netherlands
-> >>>> which I want to interconnect over the internet (untill there is enough
-> >>>> coverage).
-> >>>> Each node has a radio and a pc with a baycom- or soundmodem setup (and
-> >>>> maybe in the future these nice tnc-pi devices).
-> >>>> 
-> >>>> I've been investigating how to do this. For the distribution over the
-> >>>> internet there's ax25ipd. Documention is a bit sparse though. Also I
-> >>>> could not find how to bridge the ax.25 device of the baycom/sound-modem
-> >>>> and the network device brought up by ax25ipd. It does mention bpqether
-> >>>> module but from the name (and the modinfo output) I concluded that it is
-> >>>> for bridging over ethernet, so not for bridging between two ax.25
-> >>>> devices. Also I did not find anything like "ax25_forward" or so
-> >>>> underneath /proc (like the /proc/sys/net/ipv4/ip_forward we have for
-> >>>> ipv4).
-> >>>> I think I read something about interfacing to TNC devices directly by
-> >>>> ax25ipd but that won't work with baycom- and soundmodems.
-> >>>> 
-> >>>> I'm capable of developing my own software, I wrote a network sniffer
-> >>>> (in "sysopview") and stuff that creates raw-packets for IP, so how
-> >>>> difficult can ax.25 be?
-> >>>>    My plan is: using pcap sniff each packet from the two network
-> >>>> devices and then using raw sockets feed them to the opposite interface.
-> >>>> Yeah or I could create my own ax25ipd alike program, that does not
-> >>>> matter.
-> >>>>    My question is: apart from the design, is this the way to go?
-> >>>> Should I indeed inject packets using raw ax25 sockets and retrieve them
-> >>>> using pcap? Or also retrieve them using raw sockets? Or is there maybe
-> >>>> even ready-made solution that I overlooked during the lengthy google
-> >>>> search?
-> >>>> 
-> >>>> 
-> >>>> regards,
-> >>>> 
-> >>>> Folkert van Heusden
-> >>> 
-> >>> --
-> >>> To unsubscribe from this list: send the line "unsubscribe linux-hams" in
-> >>> the body of a message to majordomo@vger.kernel.org
-> >>> More majordomo info at  http://vger.kernel.org/majordomo-info.html
-> > 
-> > 
-> > Folkert van Heusden
-> > 
-> > -- 
-> > MultiTail is a versatile tool for watching logfiles and output of
-> > commands. Filtering, coloring, merging, diff-view, etc.
-> > http://www.vanheusden.com/multitail/
-> > ----------------------------------------------------------------------
-> > Phone: +31-6-41278122, PGP-key: 1F28D8AE, www.vanheusden.com
+Thanks for the reply and the information. This is great news.
 
+#0 I didn't realise that ax25mail-utils was a dependency because the 
+documentation talks about getting mail as being optional. I've met the 
+other requirements.
+#1 On this particular occasion I'm not concerned about the SD card 
+wearing out but I take your point. It's convenient at the moment to wear 
+out the card.
+#2 I also have concentrated on the curses version. An attempt with the 
+Java version quite some years back failed and I walked away from it. 
+Besides, the curses version fits well with headless operation of the RPi.
 
-Folkert van Heusden
+I'll get and apply the patches and see what happens next. Another member 
+of the RPi list, Tom SP2LOB is also running with this project.
 
--- 
-Ever wonder what is out there? Any alien races? Then please support
-the seti@home project: setiathome.ssl.berkeley.edu
-----------------------------------------------------------------------
-Phone: +31-6-41278122, PGP-key: 1F28D8AE, www.vanheusden.com
+I'm not a programmer or a developer but my twenty years of Debian has 
+taught me what some of the compile errors mean, even if I can't resolve 
+them <grin>
+
+Thanks, David.
+
+Ray vk2tv
+
+On 15/02/14 04:08, David Ranch wrote:
+>
+> Hello Ray,
+>
+> I'm actively working on (finally) releasing a new version of Linpac 
+> but Autoconf has been a challenge.  I received some great help from 
+> the Xastir folks but have a little more to go.  Anyway, I have your 
+> "vector" and other issues have already been solved with these new 
+> patches and I should be able to give you a hand.  I do plan on 
+> releasing a .debs in the future but until then, try this for non-RPM 
+> based systems:
+>
+>
+> # 0 - Your dependencies will be gcc, perl, ncurses-libs, libax25, and 
+> ax25mail-utils
+> #    All compiling details can be found here: 
+> http://www.trinityos.com/HAM/CentosDigitalModes/hampacketizing-centos.html#11.linpac
+>
+> # 1 - I highly advise you do NOT compile things on your Rpi's SD card 
+> - it will wear it out.  Do all your compiling
+> # via an NFS mount or an attached USB hard drive , etc.
+>
+> # 2 - Get the sources (please note that the Ncurses based Linpac is 
+> the one I've been focusing so far)
+> cd <your high-write cycle destination path>
+> wget 
+> http://downloads.sourceforge.net/project/linpac/LinPac-unstable/0.17pre3/LinPac-0.17pre3.tar.gz
+>
+> # 3 - Uncompress Linpac
+> tar xzvf LinPac-0.17pre3.tar.gz
+>
+> #4 - Get all the required patches
+> cd LinPac-0.17pre3
+> wget -r -l1 --no-parent --no-directories -Alinpac0* 
+> http://www.trinityos.com/HAM/CentosDigitalModes/usr/src/redhat/SOURCES/
+>
+> #5 - Apply the patches
+> patch -p0 < linpac0-digi-length.diff
+> patch -p0 < linpac0-pcskprsnd.diff
+> patch -p0 < linpac0-compile-fixes.diff
+> patch -p0 < linpac0-compile-fixes2.diff
+>
+> #6 - Configure and build it
+> ./configure --prefix=/usr
+> make
+>
+> The compiler is still throwing warnings but it builds ok on Centos6.5 
+> today.  I would appreciate any feedback on how to clean up the 
+> warnings as I'd like to get a 100% clean build before I post this new 
+> version on SF.net.
+>
+> #7 - Configure it up by reading the included manual.html documentation 
+> and 
+> http://www.trinityos.com/HAM/CentosDigitalModes/hampacketizing-centos.html#11a.linpacconfig
+>
+>
+> PS.  I'm not on the Rpi list but if you would, please cross-post this 
+> response over there as well.  I'd love to get more users on Linpac and 
+> get some additional developers on board!
+>
+>
+> --David
+> KI6ZHD
+>
+>
+>
+>> Over on the RPi list questions are being asked about a packet 
+>> terminal program for the RPi to satisfy a mild renewal of interest in 
+>> connected mode packet. As a one-time user of Linpac I decided to try 
+>> to compile it on the Pi but have run into problems with header files, 
+>> with vector.h being the one that is stumping further progress. I 
+>> haven't so far found a Debian package that provides vector.h. I've 
+>> tried to compile both 0.16 and 0.17-pre with similar results.
+>>
+>> I found an email in my archives from David Ranch, dated 21-09-12 in 
+>> which reference was made to someone running Linpac "with great 
+>> results". David is listed as the maintainer.
+>>
+>> Is anyone here, and specifically David, able to shed any light on the 
+>> problem?
+>
+>
+
