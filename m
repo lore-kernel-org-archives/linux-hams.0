@@ -1,7 +1,7 @@
 From: David Ranch <linux-hams@trinnet.net>
 Subject: Re: Linpac on Raspberry Pi
-Date: Fri, 14 Feb 2014 09:38:50 -0800
-Message-ID: <52FE54AA.5070102@trinnet.net>
+Date: Fri, 14 Feb 2014 09:08:37 -0800
+Message-ID: <52FE4D95.2020701@trinnet.net>
 References: <52FDC2F9.2050804@exemail.com.au>
 Mime-Version: 1.0
 Content-Transfer-Encoding: 7bit
@@ -76,18 +76,18 @@ KI6ZHD
 
 
 
-> Over on the RPi list questions are being asked about a packet terminal
-> program for the RPi to satisfy a mild renewal of interest in connected
-> mode packet. As a one-time user of Linpac I decided to try to compile
-> it on the Pi but have run into problems with header files, with
-> vector.h being the one that is stumping further progress. I haven't so
-> far found a Debian package that provides vector.h. I've tried to
+> Over on the RPi list questions are being asked about a packet terminal 
+> program for the RPi to satisfy a mild renewal of interest in connected 
+> mode packet. As a one-time user of Linpac I decided to try to compile 
+> it on the Pi but have run into problems with header files, with 
+> vector.h being the one that is stumping further progress. I haven't so 
+> far found a Debian package that provides vector.h. I've tried to 
 > compile both 0.16 and 0.17-pre with similar results.
 >
-> I found an email in my archives from David Ranch, dated 21-09-12 in
-> which reference was made to someone running Linpac "with great
+> I found an email in my archives from David Ranch, dated 21-09-12 in 
+> which reference was made to someone running Linpac "with great 
 > results". David is listed as the maintainer.
 >
-> Is anyone here, and specifically David, able to shed any light on the
+> Is anyone here, and specifically David, able to shed any light on the 
 > problem?
 
