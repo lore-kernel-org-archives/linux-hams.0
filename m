@@ -1,50 +1,28 @@
-From: Joey STANFORD <joey@canonical.com>
-Subject: Re: [Ubuntu-hams] FreeDV (HF digital voice) for Ubuntu
-Date: Mon, 10 Feb 2014 11:02:22 -0700
-Message-ID: <20140210180222.GC25071@warthog.stan4d.net>
-References: <1391966195.30458.139.camel@fourier>
- <52f84609.ea42420a.06df.5e1c@mx.google.com>
+From: Ray Wells <vk2tv@exemail.com.au>
+Subject: Linpac on Raspberry Pi
+Date: Fri, 14 Feb 2014 18:17:13 +1100
+Message-ID: <52FDC2F9.2050804@exemail.com.au>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="AbQceqfdZEv+FvjW"
+Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
-Content-Disposition: inline
-In-Reply-To: <52f84609.ea42420a.06df.5e1c@mx.google.com>
 Sender: linux-hams-owner@vger.kernel.org
 List-ID: <linux-hams.vger.kernel.org>
-To: 9m2pju@gmail.com
-Cc: Kamal Mostafa <kamal@whence.com>, Ubuntu Hams Group <ubuntu-hams@lists.launchpad.net>, Linux Hams <linux-hams@vger.kernel.org>, Ham-Linux <ham-linux@mailman.qth.net>, "digitalvoice@googlegroups.com" <digitalvoice@googlegroups.com>
+Content-Type: text/plain; charset="us-ascii"; format="flowed"
+To: Linux Hams <linux-hams@vger.kernel.org>
 
+Over on the RPi list questions are being asked about a packet terminal 
+program for the RPi to satisfy a mild renewal of interest in connected 
+mode packet. As a one-time user of Linpac I decided to try to compile it 
+on the Pi but have run into problems with header files, with vector.h 
+being the one that is stumping further progress. I haven't so far found 
+a Debian package that provides vector.h. I've tried to compile both 0.16 
+and 0.17-pre with similar results.
 
---AbQceqfdZEv+FvjW
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Disposition: inline
+I found an email in my archives from David Ranch, dated 21-09-12 in 
+which reference was made to someone running Linpac "with great results". 
+David is listed as the maintainer.
 
-On Mon, Feb 10, 2014 at 03:22:25AM +0000, 9m2pju@gmail.com wrote:
->Well done.
->
->I should blog about this.
+Is anyone here, and specifically David, able to shed any light on the 
+problem?
 
-I've been using this package on and off since it showed up in a recent
-magazine (CQ or QST...something like that). Codec2 was meant iirc to be
-a FOSS replacement for the AMBE series which is used in D-STAR and DMR.
-
-It sounds really good.
-
->Sent from Windows Mail
-
-Really PJU? :-) I should blog about that! :-)
-
---AbQceqfdZEv+FvjW
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: Digital signature
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (GNU/Linux)
-
-iEYEARECAAYFAlL5FC4ACgkQK44xRkGJ7ScAlQCcDDPjPDhvKOKPEraxX4G9zBk/
-9aYAoJEWkNPaoU1NGqQ9VduRC7axeeXQ
-=/8zv
------END PGP SIGNATURE-----
-
---AbQceqfdZEv+FvjW--
+Ray vk2tv
