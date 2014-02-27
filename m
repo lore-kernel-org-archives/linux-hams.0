@@ -1,37 +1,41 @@
-From: David Ranch <linux-hams@trinnet.net>
+From: folkert <folkert@vanheusden.com>
 Subject: Re: soundmodem
-Date: Thu, 27 Feb 2014 09:08:50 -0800
-Message-ID: <530F7122.9090207@trinnet.net>
+Date: Thu, 27 Feb 2014 18:37:32 +0100
+Message-ID: <20140227173731.GJ30054@belle.intranet.vanheusden.com>
 References: <20140227163306.GH30054@belle.intranet.vanheusden.com>
+ <530F7122.9090207@trinnet.net>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <20140227163306.GH30054@belle.intranet.vanheusden.com>
+Content-Disposition: inline
+In-Reply-To: <530F7122.9090207@trinnet.net>
 Sender: linux-hams-owner@vger.kernel.org
 List-ID: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"; format="flowed"
-To: linux-hams@vger.kernel.org
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+To: David Ranch <linux-hams@trinnet.net>
+Cc: linux-hams@vger.kernel.org
+
+> Back to your original problem, I suspect your issue is in the Linux
+> sound system.  Are you using PulseAudio?   Did you run pavucontrol
+> and route the audio from Soundmodem to your desired soundcard?
+
+I don't think that is the problem: I connected headphones on the
+audio-out connector of the soundcard and did hear the modem-noise. So
+encoded data is going out. I'm suspecting something electrical going
+wrong. I googled for it and no special precautions were suggested
+anywher, only sdchematics for a ptt were to be found.
+
+Regarding dire wolf: I'll give it a try when the audio tx problem has
+been solved.
 
 
-Hello Folkert,
+thanks for your reply
 
-While Soundmodem is the old standby software TNC for LInux, there are 
-better solutions out there now.  The one I've been recommending with 
-significantly better decodes is a new entry called Dire Wolf from WB2OSZ:
+Folkert van Heusden
 
-    http://home.comcast.net/~wb2osz/site/
-
-If you download the new beta source archive ( 
-http://home.comcast.net/~wb2osz/Version%201.0/direwolf-1.0-src.zip ), 
-open up the zip, look in the User-Guide and check out Chapter 10.  In 
-there, it gives a table of Dire wolf's # of decodes compared to all 
-kinds of TNCs including Soundmodem and safe to say, it blows away 
-Soundmodem due to it's multiple off frequency decoders, multi-bit error 
-correction, etc..  There is also a version for the Raspberry Pi as well!
-
-Back to your original problem, I suspect your issue is in the Linux 
-sound system.  Are you using PulseAudio?   Did you run pavucontrol and 
-route the audio from Soundmodem to your desired soundcard?
-
---David
-KI6ZHD
+-- 
+Multi tail barnamaj mowahib li mora9abat attasjilat wa nataij awamir
+al 7asoub. damj, talwin, mora9abat attarchi7 wa ila akhirih.
+http://www.vanheusden.com/multitail/
+----------------------------------------------------------------------
+Phone: +31-6-41278122, PGP-key: 1F28D8AE, www.vanheusden.com
