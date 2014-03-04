@@ -1,47 +1,31 @@
-From: folkert <folkert@vanheusden.com>
-Subject: Re: soundmodem
-Date: Sat, 1 Mar 2014 22:54:49 +0100
-Message-ID: <20140301215449.GO30054@belle.intranet.vanheusden.com>
-References: <20140227163306.GH30054@belle.intranet.vanheusden.com>
- <20140227205136.GK30054@belle.intranet.vanheusden.com>
- <530FAF7D.5080807@boling.us>
+From: JJ <ve1jot@eastlink.ca>
+Subject: uz7ho soundmodem<-->jnos2 agw TX corruption?
+Date: Tue, 04 Mar 2014 04:06:45 -0400
+Message-ID: <53158995.5090901@eastlink.ca>
 Mime-Version: 1.0
+Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
-Content-Disposition: inline
-In-Reply-To: <530FAF7D.5080807@boling.us>
 Sender: linux-hams-owner@vger.kernel.org
 List-ID: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-To: Charles Boling <junk07+ham@boling.us>
-Cc: linux-hams@vger.kernel.org
+Content-Type: text/plain; charset="us-ascii"; format="flowed"
+To: linux-hams@vger.kernel.org
 
-> > http://elektrotanya.com/PREVIEWS/45612216/23432455/transceiver/egyeb/dnt_formel_1.pdf_1.png
-> So, just to double-check what you've done, here's what I see as pin
-> assignments:
-> 
-> 1 GND
-> 2 (not shown)
-> 3 PTT-Tx (Ground it to transmit)
-> 4 MIC audio in (always on, other wire to Ground)
-> 5 PTT-Rx (Ground it to receive)
-> 6 GND (not used in original mic)
+Using soundmodem in wine, running jnosX latest
+Jnos trace screen:
+(agw) W6OAV-3->BEACON K8ZTT* W0TX-2* KC6OAR KB9KC
+W6OAV-1/B  W6OAV-7/N  CENTENNIAL, CO  (w6oav@arrl.net)
+(agw) VE1JOT-4->WD5CFJ-7 SABM!
+(agw) VE1JOT-4->WD5CFJ-7 SABM!
+(agw) VE1JOT-4->WD5CFJ-7 SABM!
+(agw) VE1JOT-4->WD5CFJ-7 SABM!
+(agw) VE1JOT-4->WD5CFJ-7 SABM!
 
-
-
-> The PTT button is working as a SPDT switch.  I don't know how you're
-> switching, and I didn't look closely at the schematic, but you may not
-> want RX & TX grounded at the same time; if you're keeping RX on
-> full-time and doing a SPST switch on TX, you might try disconnecting the
-> RX to see if your TX audio comes in.
-
-Tried that this night (disconnecting rx) but still silence.
-
-Hmmm, let me see if it helps if I short rx when sending.
+--------------------------------------------------------------------------------
+same time interval from soundmodem screen the sabm
+frames jnos sent as seen by soundmodem are:
+1:Frm CFJwVE-1 To WD-5 <REJ F/R R0>
+-----------------------------------------------------------------
+Received text in TO jnos FROM soundmodem is fine however...any ideas 
+where to look? or more details perhaps?
 
 
-Folkert van Heusden
-
--- 
-----------------------------------------------------------------------
-Phone: +31-6-41278122, PGP-key: 1F28D8AE, www.vanheusden.com
