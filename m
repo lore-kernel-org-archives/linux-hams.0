@@ -1,31 +1,37 @@
-From: David Ranch <linux-hams@trinnet.net>
-Subject: Re: Multicast AX.25?
-Date: Sat, 08 Mar 2014 08:44:41 -0800
-Message-ID: <531B48F9.7010002@trinnet.net>
-References: <r6jqua-e6d.ln1@atomos.longlandclan.yi.org>
+From: sp2lob <sp2lob@tlen.pl>
+Subject: JNOS  netrom.sav file
+Date: Sat, 08 Mar 2014 21:07:30 +0100
+Message-ID: <1394309250.6048.61.camel@deb.sp2lob.ampr.org>
+References: <53158995.5090901@eastlink.ca>
 Mime-Version: 1.0
 Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <r6jqua-e6d.ln1@atomos.longlandclan.yi.org>
+In-Reply-To: <53158995.5090901@eastlink.ca>
 Sender: linux-hams-owner@vger.kernel.org
 List-ID: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"; format="flowed"
+Content-Type: text/plain; charset="us-ascii"
 To: linux-hams@vger.kernel.org
 
+Greetings all,
 
-Hello Stuart,
+In JNOS  netrom.sav file I have one entry which
+is DIFFERENT form all other 500 entries (example):
 
-Interesting idea though what is the plan to support "subscriptions" to 
-this traffic?  Will all stations with your new patch just accept the 
-traffic?  In the IP world, we have IGMP to support join/leaves and 
-pragmatic general multicast (PGM) to support selective re-transmits for 
-reliable transport.  Definitely some interesting stuff can be done with 
-MC but it can be a challenge to operate in the real world!
+LOBBBS:SP2LOB     X 202  6  fpac  SP2LOB-12
+LOBCLU:SP2LOB-3   P 202  6  fpac  SP2LOB-12
+LOBNOS:SP2LOB-14  X 202  6  fpac  SP2LOB-12
 
-Ps.  Any plans to submit your patch to the upstream repositories like:
+The ONLY difference is letter "P"
+instead "X" for all other nodes.
 
-     AX.25 repo: http://www.linux-ax25.org/wiki/CVS
-     VE7FET's more current repo: http://code.google.com/p/linuxax25/
+Digged quite a few documents and didn't
+found explanation for that.
 
---David
-KI6ZHD
+Will appreciate some shed light on that.
+
+-- 
+Best regards.
+Tom - sp2lob
+
+
+
