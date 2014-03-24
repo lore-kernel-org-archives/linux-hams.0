@@ -1,48 +1,45 @@
-From: David Ranch <linux-hams@trinnet.net>
+From: Stuart Longland <stuartl@longlandclan.yi.org>
 Subject: Re: Packet BBSes on ax25d
-Date: Sun, 23 Mar 2014 11:00:59 -0700
-Message-ID: <532F215B.3040600@trinnet.net>
+Date: Mon, 24 Mar 2014 21:27:28 +1000
+Message-ID: <0eh50b-t7c.ln1@atomos.longlandclan.yi.org>
 References: <i2h20b-t7c.ln1@atomos.longlandclan.yi.org>
+	<20140323080815.GA15209@gjcp.net> <532EB3C2.5090803@exemail.com.au>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <i2h20b-t7c.ln1@atomos.longlandclan.yi.org>
 Sender: linux-hams-owner@vger.kernel.org
 List-ID: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"; format="flowed"
-To: Stuart Longland VK4MSL <me@vk4msl.yi.org>, linux-hams@vger.kernel.org
+Content-Type: text/plain; charset="us-ascii"
+To: linux-hams@vger.kernel.org
 
+On Sun, 23 Mar 2014 21:13:22 +1100, Ray Wells wrote:
 
-Hello Stuart,
+>> I was looking for some too, but couldn't find any and couldn't even 
+>> get the old software working well enough to try and characterise how 
+>> it worked.
+>>
+>> Maybe it's time to start from scratch.  What should a packet BBS do?
+>
+> The xfbb mailing list is still active and might be a good place to ask 
+> questions. The maintainer of xfbb is Bernard, F6BVP, who frequents this 
+> list, but many xfbb users do not.
 
-FBB does get some attention now and then but I wouldn't call it active 
-development.  I would make sure you're running the newer version to void 
-known issues:
+Interesting, I've tried again but last time I submitted my email address 
+via their subscribe form (Mailman) nothing arrived.
 
-     "xd705f" is the newest as of 6/2013 is the newest  - 
-http://f6bvp.free.fr/logiciels/BBS-f6fbb/xd705f-src.tar.bz2
+I've tried again, maybe this time it'll work.
 
+> Reflecting back to when I ran xfbb the only configuration for ax25d was 
+> for Netrom calls to connect to fpacnode. xfbb did it's own listening 
+> for ax25 traffic via kernel ax25 ports.
 
-There is also Jnos which is probably under more development than FBB:
+That's what I figured, but could never get to work.  I could at best get 
+it to answer, but then typing commands did absolutely nothing.
 
-http://www.langelaar.net/projects/jnos2/about.html
+xfbbC -c, as per the instructions, just did a poor emulation of /bin/cat, 
+and I couldn't figure out how to kill it.  Telnet would talk to me: it'd 
+tell me my callsign wasn't registered.
 
-
-Speaking of BBSes and Outpost, the local ARES/RACES team here in Silicon 
-Valley (Santa Clara) have done a bang up job at building a multi-node 
-packet system using JNOS supporting multi-port RF and Internet backups 
-for full local messaging, BBS forwarding, and SMTP forwarding.  This 
-system was co-developed by Jim Oberhofer KN6PE (Outpost developer) and 
-many other local HAMs.  You can learn more about this system and maybe 
-save yourself a LOT of time and headaches by contacting that group:
-
-http://www.scc-ares-races.org/packet.html
-
-That team has developed some installer scripts that take a lot of the 
-pain out of configuring the JNOS, various forwarding rules, etc. to 
-support tactical callsigns, backup relays, etc.
-
---David
-
-
+(Not registered with whom I wonder, did it check the ACMA or its own 
+password file?)
 
