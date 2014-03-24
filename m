@@ -1,31 +1,45 @@
-From: Stuart Longland <stuartl@longlandclan.yi.org>
+From: Brian <n1uro@n1uro.ampr.org>
 Subject: Re: Packet BBSes on ax25d
-Date: Mon, 24 Mar 2014 21:35:53 +1000
-Message-ID: <pth50b-t7c.ln1@atomos.longlandclan.yi.org>
+Date: Mon, 24 Mar 2014 08:54:07 -0400
+Message-ID: <1395665647.25192.22.camel@n1uro.ampr.org>
 References: <i2h20b-t7c.ln1@atomos.longlandclan.yi.org>
-	<532F215B.3040600@trinnet.net>
+	 <1395578421.23426.9.camel@n1uro.ampr.org>
+	 <vhh50b-t7c.ln1@atomos.longlandclan.yi.org>
+Reply-To: n1uro@n1uro.ampr.org
 Mime-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
+In-Reply-To: <vhh50b-t7c.ln1@atomos.longlandclan.yi.org>
 Sender: linux-hams-owner@vger.kernel.org
 List-ID: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
-To: linux-hams@vger.kernel.org
+To: Stuart Longland <stuartl@longlandclan.yi.org>
+Cc: linux-hams@vger.kernel.org
 
-On Sun, 23 Mar 2014 11:00:59 -0700, David Ranch wrote:
+Stuart;
 
-> There is also Jnos which is probably under more development than FBB:
+On Mon, 2014-03-24 at 21:29 +1000, Stuart Longland wrote:
+> Ahh okay... I grabbed Unode via git:
 > 
-> http://www.langelaar.net/projects/jnos2/about.html
+> git://github.com/rthoelen/Unode.git
 > 
-> 
-> Speaking of BBSes and Outpost, the local ARES/RACES team here in Silicon
-> Valley (Santa Clara) have done a bang up job at building a multi-node
-> packet system using JNOS supporting multi-port RF and Internet backups
-> for full local messaging, BBS forwarding, and SMTP forwarding.  This
-> system was co-developed by Jim Oberhofer KN6PE (Outpost developer) and
-> many other local HAMs.  You can learn more about this system and maybe
-> save yourself a LOT of time and headaches by contacting that group:
+> Not sure if that's the same software.
 
-Ahh, that sounds like a good one to look at too.  Thanks for the heads up.
+URONode is at: http://radio.linux.org.au
+               http://freecode.com/projects/uronode
+               ftp://ftp.n1uro.net/packet
+not on git.
+-- 
+73 de Brian Rogers - N1URO
+email: <n1uro@n1uro.ampr.org>
+Web: http://www.n1uro.net/
+Ampr1: http://n1uro.ampr.org/
+Ampr2: http://nos.n1uro.ampr.org
+Linux Amateur Radio Services
+axMail-Fax & URONode
+AmprNet coordinator for:
+Connecticut, Delaware, Maine,
+Maryland, Massachusetts, 
+New Hampshire, Pennsylvania, 
+Rhode Island, and Vermont.
 
