@@ -1,22 +1,67 @@
 From: Julia Lawall <Julia.Lawall@lip6.fr>
-Subject: [PATCH 0/7] replace del_timer by del_timer_sync
-Date: Wed, 26 Mar 2014 22:33:38 +0100
-Message-ID: <1395869625-15209-1-git-send-email-Julia.Lawall@lip6.fr>
-Mime-Version: 1.0
+Subject: [PATCH 7/7] yam: replace del_timer by del_timer_sync
+Date: Wed, 26 Mar 2014 22:33:45 +0100
+Message-ID: <1395869625-15209-8-git-send-email-Julia.Lawall@lip6.fr>
+References: <1395869625-15209-1-git-send-email-Julia.Lawall@lip6.fr>
+Return-path: <linux-kernel-owner@vger.kernel.org>
+In-Reply-To: <1395869625-15209-1-git-send-email-Julia.Lawall@lip6.fr>
+Sender: linux-kernel-owner@vger.kernel.org
+List-ID: <linux-hams.vger.kernel.org>
+MIME-Version: 1.0
 Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
-Return-path: <driverdev-devel-bounces@linuxdriverproject.org>
-List-Id: <linux-hams.vger.kernel.org>
-List-Unsubscribe: <http://driverdev.linuxdriverproject.org/mailman/options/driverdev-devel>, 
- <mailto:driverdev-devel-request@linuxdriverproject.org?subject=unsubscribe>
-List-Archive: <http://driverdev.linuxdriverproject.org/pipermail/driverdev-devel>
-List-Post: <mailto:driverdev-devel@linuxdriverproject.org>
-List-Help: <mailto:driverdev-devel-request@linuxdriverproject.org?subject=help>
-List-Subscribe: <http://driverdev.linuxdriverproject.org/mailman/listinfo/driverdev-devel>, 
- <mailto:driverdev-devel-request@linuxdriverproject.org?subject=subscribe>
-Errors-To: driverdev-devel-bounces@linuxdriverproject.org
-Sender: driverdev-devel-bounces@linuxdriverproject.org
-To: linux-serial@vger.kernel.org
-Cc: devel@driverdev.osuosl.org, linux-mips@linux-mips.org, netdev@vger.kernel.org, kernel-janitors@vger.kernel.org, linux-kernel@vger.kernel.org, linux-hams@vger.kernel.org, tglx@linutronix.de
+To: Jean-Paul Roubelat <jpr@f6fbb.org>
+Cc: kernel-janitors@vger.kernel.org, tglx@linutronix.de, linux-hams@vger.kernel.org, netdev@vger.kernel.org, linux-kernel@vger.kernel.org
 
-These patches replace del_timer by del_timer_sync in module_exit functions.
+From: Julia Lawall <Julia.Lawall@lip6.fr>
+
+Use del_timer_sync to ensure that the timer is stopped on all CPUs before
+the driver exists.
+
+This change was suggested by Thomas Gleixner
+
+The semantic patch that makes this change is as follows:
+(http://coccinelle.lip6.fr/)
+
+// <smpl>
+@r@
+declarer name module_exit;
+identifier ex;
+@@
+
+module_exit(ex);
+
+@@
+identifier r.ex;
+@@
+
+ex(...) {
+  <...
+- del_timer
++ del_timer_sync
+    (...)
+  ...>
+}
+// </smpl>
+
+Signed-off-by: Julia Lawall <Julia.Lawall@lip6.fr>
+
+---
+Not tested.
+
+ drivers/net/hamradio/yam.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/drivers/net/hamradio/yam.c b/drivers/net/hamradio/yam.c
+index 61dd244..8190165 100644
+--- a/drivers/net/hamradio/yam.c
++++ b/drivers/net/hamradio/yam.c
+@@ -1184,7 +1184,7 @@ static void __exit yam_cleanup_driver(void)
+ 	struct yam_mcs *p;
+ 	int i;
+ 
+-	del_timer(&yam_timer);
++	del_timer_sync(&yam_timer);
+ 	for (i = 0; i < NR_PORTS; i++) {
+ 		struct net_device *dev = yam_devs[i];
+ 		if (dev) {
