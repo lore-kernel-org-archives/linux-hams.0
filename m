@@ -1,32 +1,37 @@
-From: David Miller <davem@davemloft.net>
-Subject: Re: [PATCH 7/7] yam: replace del_timer by del_timer_sync
-Date: Thu, 27 Mar 2014 15:29:00 -0400 (EDT)
-Message-ID: <20140327.152900.610693492229362700.davem@davemloft.net>
-References: <1395869625-15209-1-git-send-email-Julia.Lawall@lip6.fr>
-	<1395869625-15209-8-git-send-email-Julia.Lawall@lip6.fr>
+From: "sp2lob@tlen" <sp2lob@tlen.pl>
+Subject: Re: netromr.c path quality calc bug  ax25tools-1.0.2/netrom
+Date: Thu, 27 Mar 2014 20:46:45 +0100
+Message-ID: <14505132540.27e7.5a0dbb80754033f6c6eb17b69a6b1aac@tlen.pl>
+References: <r6jqua-e6d.ln1@atomos.longlandclan.yi.org>
+ <024rua-e6d.ln1@atomos.longlandclan.yi.org>
+ <IYGDg$AQECNTFw+e@skywaves.demon.co.uk>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
-Return-path: <linux-kernel-owner@vger.kernel.org>
-In-Reply-To: <1395869625-15209-8-git-send-email-Julia.Lawall@lip6.fr>
-Sender: linux-kernel-owner@vger.kernel.org
+Content-Transfer-Encoding: 7BIT
+Return-path: <linux-hams-owner@vger.kernel.org>
+In-Reply-To: <14505098c38.27e7.5a0dbb80754033f6c6eb17b69a6b1aac@tlen.pl>
+Sender: linux-hams-owner@vger.kernel.org
 List-ID: <linux-hams.vger.kernel.org>
-Content-Type: Text/Plain; charset="us-ascii"
-To: Julia.Lawall@lip6.fr
-Cc: jpr@f6fbb.org, kernel-janitors@vger.kernel.org, tglx@linutronix.de, linux-hams@vger.kernel.org, netdev@vger.kernel.org, linux-kernel@vger.kernel.org
+Content-Type: text/plain; charset="us-ascii"; format="flowed"
+To: linux-hams@vger.kernel.org
+Cc: Paul@skywaves.demon.co.uk
 
-From: Julia Lawall <Julia.Lawall@lip6.fr>
-Date: Wed, 26 Mar 2014 22:33:45 +0100
+To whom it may concern,
 
-> From: Julia Lawall <Julia.Lawall@lip6.fr>
-> 
-> Use del_timer_sync to ensure that the timer is stopped on all CPUs before
-> the driver exists.
-> 
-> This change was suggested by Thomas Gleixner
-> 
-> The semantic patch that makes this change is as follows:
-> (http://coccinelle.lip6.fr/)
- ...
-> Signed-off-by: Julia Lawall <Julia.Lawall@lip6.fr>
+Taking the opportunity and today's
+PERFECT example given by Paul / G4APL,
 
-Applied.
+"netromr.c path quality calc bug ax25tools-1.0.2/netrom"
+
+I would like politely appeal for NOT LETTING
+them all big enthusiasts of AMPRNet & packet,
+blame each other for bad or wrong setup
+wheras source of problem is lying elsewhere,
+for not ONLY pointing finger at somebody
+but ALSO showing possible and right solution.
+
+KUDOS! To Paul (G4APL).
+
+Best regards.
+Tom - sp2lob
+
+
