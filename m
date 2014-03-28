@@ -1,37 +1,52 @@
-From: "sp2lob@tlen" <sp2lob@tlen.pl>
+From: Brian <n1uro@n1uro.ampr.org>
 Subject: Re: netromr.c path quality calc bug  ax25tools-1.0.2/netrom
-Date: Thu, 27 Mar 2014 20:46:45 +0100
-Message-ID: <14505132540.27e7.5a0dbb80754033f6c6eb17b69a6b1aac@tlen.pl>
+Date: Thu, 27 Mar 2014 20:36:01 -0400
+Message-ID: <1395966961.9523.8.camel@n1uro.ampr.org>
 References: <r6jqua-e6d.ln1@atomos.longlandclan.yi.org>
- <024rua-e6d.ln1@atomos.longlandclan.yi.org>
- <IYGDg$AQECNTFw+e@skywaves.demon.co.uk>
+	 <024rua-e6d.ln1@atomos.longlandclan.yi.org>
+	 <IYGDg$AQECNTFw+e@skywaves.demon.co.uk>
+Reply-To: n1uro@n1uro.ampr.org
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7BIT
+Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <14505098c38.27e7.5a0dbb80754033f6c6eb17b69a6b1aac@tlen.pl>
+In-Reply-To: <IYGDg$AQECNTFw+e@skywaves.demon.co.uk>
 Sender: linux-hams-owner@vger.kernel.org
 List-ID: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"; format="flowed"
-To: linux-hams@vger.kernel.org
-Cc: Paul@skywaves.demon.co.uk
+Content-Type: text/plain; charset="us-ascii"
+To: Paul Lewis <paul@skywaves.demon.co.uk>
+Cc: linux-hams@vger.kernel.org
 
-To whom it may concern,
+Paul;
 
-Taking the opportunity and today's
-PERFECT example given by Paul / G4APL,
+On Thu, 2014-03-27 at 13:01 +0000, Paul Lewis wrote:
 
-"netromr.c path quality calc bug ax25tools-1.0.2/netrom"
+> netromr.c path quality calc bug
+> 
+> Refers to ax25tools-1.0.2/netrom/netromr.c and Maintainer of the above.
 
-I would like politely appeal for NOT LETTING
-them all big enthusiasts of AMPRNet & packet,
-blame each other for bad or wrong setup
-wheras source of problem is lying elsewhere,
-for not ONLY pointing finger at somebody
-but ALSO showing possible and right solution.
+A patch was supplied last summer by KE6I, tested by myself, and
+incorporated by Thomas DL9SAU. Are you suggesting this never made it
+through to the final distro? 
 
-KUDOS! To Paul (G4APL).
 
-Best regards.
-Tom - sp2lob
+> I noticed that the distribution that I recently downloaded  (2013) 
 
+What month? The suggested patch by KE6I was approved and incorporated
+July 2013, or is this another package of the same name? I know there's
+already at least two ax25-tools/apps available which is extremely bad!
+We should be ashamed that there's no continuity.
+
+-- 
+73 de Brian Rogers - N1URO
+email: <n1uro@n1uro.ampr.org>
+Web: http://www.n1uro.net/
+Ampr1: http://n1uro.ampr.org/
+Ampr2: http://nos.n1uro.ampr.org
+Linux Amateur Radio Services
+axMail-Fax & URONode
+AmprNet coordinator for:
+Connecticut, Delaware, Maine,
+Maryland, Massachusetts, 
+New Hampshire, Pennsylvania, 
+Rhode Island, and Vermont.
 
