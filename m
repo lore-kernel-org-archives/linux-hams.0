@@ -1,34 +1,57 @@
-From: Roger Harris <linham@mybunker.plus.com>
-Subject: AX25 Node problem - please help
-Date: Sun, 06 Apr 2014 11:40:05 +0100
-Message-ID: <53412F05.4090306@mybunker.plus.com>
+From: Paul Lewis <paul@skywaves.demon.co.uk>
+Subject: Re: UBUNTO 12.04 VScom TC800  Serial Kissattach ax??- port configuring corruption HELP Required please
+Date: Sun, 6 Apr 2014 12:22:08 +0100
+Message-ID: <mJnY0bAgjTQTFwja@skywaves.demon.co.uk>
+References: <r6jqua-e6d.ln1@atomos.longlandclan.yi.org>
+ <024rua-e6d.ln1@atomos.longlandclan.yi.org>
+ <IYGDg$AQECNTFw+e@skywaves.demon.co.uk>
+ <14505098c38.27e7.5a0dbb80754033f6c6eb17b69a6b1aac@tlen.pl>
+ <14505132540.27e7.5a0dbb80754033f6c6eb17b69a6b1aac@tlen.pl>
+ <VHW0nDBbGtPTFwcl@skywaves.demon.co.uk> <53406C67.3080008@trinnet.net>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
+In-Reply-To: <53406C67.3080008@trinnet.net>
 Sender: linux-hams-owner@vger.kernel.org
 List-ID: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"; format="flowed"
-To: linux-hams@vger.kernel.org
+Content-Transfer-Encoding: 7bit
+To: David Ranch <linux-hams@trinnet.net>
+Cc: linux-hams@vger.kernel.org
 
-Hi
+Hello David
 
-I've been trying to post full details of this problem to the mailing 
-list but my messages don't seem to be getting through. Perhaps there's 
-something in the body of the message that the system doesn't like so 
-here is a summary in the hope that someone may recognise the problem.
+OK I will need to start testing as you suggested
+Where I am coming from this hardware and configuration worked for 20 
+year on Slakeware ..Though need to move of for security reasons.
 
-I've recently noticed that a particular set of events can cause the node 
-to go into an endless loop. I have noticed this with node-0.3.2-4 on 
-Fedora 9 and node-0.3.2-14 on Fedora 20 so I'm assuming that it's a bug 
-which has always been there. Note that these are the distribution 
-(unpatched) versions.
+ From the over night tests I still have the same issue.
+To eliminate if ir a clash on the PCI
+First thing this morning. I have removed the PCI NIC and replaced it 
+with a PCIexpress card.
+  So that the VSCOM serial card is on it own.
+As I have known it to class with different make of NIC card drivers 
+years ago
+So we have the onboard NIC and PCIe NIC.
 
-Does this sound familiar to anyone? Has it been reported before and is 
-there a patch available? I'm happy to correspond directly with someone 
-with full details including strace info etc. in order to get this fixed, 
-but I don't know who is looking after the node software these days.
+I will now move on over the coming hours. set up the script to bring up
+ax0 with the rest of the services I normally run.
+Produce the details you requested to this group.
+Thank you for your interest
+73 Paul g4apl gb7cip
 
-Many thanks
 
-Roger G3ZFR
+In message <53406C67.3080008@trinnet.net>, David Ranch 
+<linux-hams@trinnet.net> writes
+>
+>Hello Paul
+>
+>You need to provide some more information.  Specifically,
+>
+>  - What distro
+>  - what kernel
+>  - what kind of TNCs
 
+
+
+-- 
+paul@skywaves.demon.co.uk
