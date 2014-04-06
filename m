@@ -1,124 +1,39 @@
 From: David Ranch <linux-hams@trinnet.net>
-Subject: Re: UBUNTO 12.04 VScom TC800  Serial Kissattach ax??- port configuring
- corruption HELP Required please
-Date: Sun, 06 Apr 2014 11:51:21 -0700
-Message-ID: <5341A229.8010902@trinnet.net>
-References: <r6jqua-e6d.ln1@atomos.longlandclan.yi.org> <024rua-e6d.ln1@atomos.longlandclan.yi.org> <IYGDg$AQECNTFw+e@skywaves.demon.co.uk> <14505098c38.27e7.5a0dbb80754033f6c6eb17b69a6b1aac@tlen.pl> <14505132540.27e7.5a0dbb80754033f6c6eb17b69a6b1aac@tlen.pl> <VHW0nDBbGtPTFwcl@skywaves.demon.co.uk>,<53406C67.3080008@trinnet.net> <0AC34FBF7531404B98449A9318023E3B011B294F@EXMBX16.thus.corp>
+Subject: Re: AX25 Node problem - please help
+Date: Sun, 06 Apr 2014 12:41:04 -0700
+Message-ID: <5341ADD0.2050303@trinnet.net>
+References: <53412F05.4090306@mybunker.plus.com> <53419279.3090804@mybunker.plus.com>
 Mime-Version: 1.0
 Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <0AC34FBF7531404B98449A9318023E3B011B294F@EXMBX16.thus.corp>
+In-Reply-To: <53419279.3090804@mybunker.plus.com>
 Sender: linux-hams-owner@vger.kernel.org
 List-ID: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"; format="flowed"
-To: "linux-hams@vger.kernel.org" <linux-hams@vger.kernel.org>
+To: linux-hams@vger.kernel.org
 
 
-Hello Paul,
+Hello Roger,
 
 
-> test 3 FAILED  I was able to connect out via the three radio interfaces
-> then found ax1 had later gone AWOL.  Extracted all that I can find related toe ax0 ax1 ax2 in the
-> messages log
-
-So are you saying that ax0, ax1, and ax2 all looked ok and you were able 
-to make outgoing connections on each of them but after a period of me, 
-ax1 disappeared?  Do you know when?  Maybe it disappeared after you
-disconnected from the ax1 link?   This is a key detail we need to know.
-
-> ax0 u433 ttyS8
-> ax1 u439 ttyS5
-> ax2 v70  ttyS10
-
-What are these "u433, u439, and v70" terms?  Are those the device names 
-in /etc/ax25/axports?
-
-
-> confirm
-> connect out via radio on port ax0 u433
-> connect out via radio on port ax1 u439
-> connect our via radio on port ax2 v70
-
-What program are you using to make these outgoing calls?  "axcall" or 
-"call"?  Maybe something else?
-
-
-What other packet software are you running during these simple tests? 
-Any netrom, node, ax25d, ax25ipd, BBS, or other software?  Below it 
-shows you might be running the legacy NODE program.  Yes?
-
-
-> 15:51  u439 has gone AWOl
-> ax0       Link encap:AMPR AX.25  HWaddr GB7CIP-8
->            inet addr:44.131.244.1  Bcast:44.131.244.255  Mask:255.0.0.0
->            UP BROADCAST RUNNING  MTU:256  Metric:1
->            RX packets:0 errors:0 dropped:0 overruns:0 frame:0
->            TX packets:7 errors:0 dropped:0 overruns:0 carrier:0
->            collisions:0 txqueuelen:10
->            RX bytes:0 (0.0 B)  TX bytes:603 (603.0 B)
+> It would appear to be a known problem. Brian N1URO has fixed it in 
+> URONode but I believe that it's still a problem in the original node.
 >
-> ax1       Link encap:AMPR AX.25  HWaddr                           AWOL <<<<<<<<<<<<<<<<<<<<<<
->            BROADCAST MULTICAST  MTU:236  Metric:1          NOTE MTU as changed
->            RX packets:0 errors:0 dropped:0 overruns:0 frame:0
->            TX packets:0 errors:0 dropped:0 overruns:0 carrier:0
->            collisions:0 txqueuelen:10
->            RX bytes:0 (0.0 B)  TX bytes:0 (0.0 B)
->
-> ax2       Link encap:AMPR AX.25  HWaddr GB7CIP-4
->            inet addr:44.131.244.1  Bcast:44.131.244.255  Mask:255.0.0.0
->            UP BROADCAST RUNNING  MTU:256  Metric:1
->            RX packets:0 errors:0 dropped:0 overruns:0 frame:0
->            TX packets:7 errors:0 dropped:0 overruns:0 carrier:0
->            collisions:0 txqueuelen:10
->            RX bytes:0 (0.0 B)  TX bytes:250 (250.0 B)
+> Anyone who notices the node going into a loop and using unnecessary 
+> resources should consider using URONode instead.
 
+Though I too recommend UroNode, could you tell us more about what you're 
+seeing in this "looping" issue with LinuxNode?  If it's a real bug, we 
+should try to get it fixed as that software is still commonly used and 
+available in various Linux distributions:
 
-> gone through log again after error to pick up anything related to ax0 ax1 ax2 after error noted
-> Apr  6 15:38:52 gb7cip kernel: [  394.742748] mkiss: ax0: crc mode is auto.
-> Apr  6 15:38:52 gb7cip kernel: [  394.747173] IPv6: ADDRCONF(NETDEV_CHANGE): ax0: link becomes ready
-> Apr  6 15:38:56 gb7cip kernel: [  398.758298] mkiss: ax1: crc mode is auto.
-> Apr  6 15:38:56 gb7cip kernel: [  398.762874] IPv6: ADDRCONF(NETDEV_CHANGE): ax1: link becomes ready
-> Apr  6 15:39:00 gb7cip kernel: [  402.773601] mkiss: ax2: crc mode is auto.
-> Apr  6 15:39:00 gb7cip kernel: [  402.777423] IPv6: ADDRCONF(NETDEV_CHANGE): ax2: link becomes ready
-> Apr  6 15:39:31 gb7cip kernel: [  434.063357] IPv4 over IPv4 tunneling driver
-> Apr  6 15:39:58 gb7cip kernel: [  460.932642] mkiss: ax2: Trying crc-smack
-> Apr  6 15:39:58 gb7cip kernel: [  460.932947] mkiss: ax1: Trying crc-smack
-> Apr  6 15:39:58 gb7cip kernel: [  460.934640] mkiss: ax4: Trying crc-smack
-> Apr  6 15:39:58 gb7cip kernel: [  460.939735] mkiss: ax0: Trying crc-smack
+    Ubuntu: http://packages.ubuntu.com/lucid/hamradio/node
+    Fedora: http://koji.fedoraproject.org/koji/packageinfo?packageID=6606
+    Debian: https://packages.debian.org/stable/hamradio/node
+    etc
 
-Above it shows you're bringing up ax4.  Where is ax3?  As mentioned 
-above, we need to know WHEN ax1 disappears in relation to bringing up or 
-using these other interfaces.  I'm suspecting you have a conflicting config.
-
-
-> Apr  6 15:46:17 gb7cip node[3550]: g4apl @ 44.131.244.1 logged out: Bye
-> Apr  6 15:47:41 gb7cip kernel: [  923.663996] mkiss: ax1: crc mode is auto.
-> Apr  6 15:53:43 gb7cip node[3633]: g4apl @ 44.131.244.1 logged in
-
-It seems this remote station, G4APL is coming *into* your station and 
-then maybe after that things break?  How is this remote station coming 
-in.. via AX.25?  via Netrom?  Via IP?
-
-
-
->
-> 15:52 AX1 has gone AWOL
-> c u439 g4apl-8
-> GB7CR:CRNODE CRCHAT:GB7CIP-5 Invalid port
-
-Is this coming from your node program?  How are you accessing the node 
-interface?  Are you telnet'ing into localhost on a specific port?  If 
-that is the classic LinNode software then I don't understand the prompt. 
-  Your machine is GB7CIP but this prompt is showing you're currently 
-coming from "GB7CR:CRNODE"
-
-
-Anyway, there is another thread going on the Linux-hams list on Vger on 
-how the LinNode software is pretty old.  Seems that thread mentions a 
-known "looping" bug which I think should should be fixed but I don't 
-have any details on that.  Regardles, I too would recommend running 
-UroNode instead of the LinNode software:
-
-     ftp://ftp.n1uro.net/packet/uronode-2.1.tar.gz
+yet UroNode is *not* included in most distribution packages per the 
+request of the developer.
 
 --David
+KI6ZHD
