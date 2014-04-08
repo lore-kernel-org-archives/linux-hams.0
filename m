@@ -1,34 +1,54 @@
-From: David Ranch <linux-hams@trinnet.net>
-Subject: Re: AX25 Node problem - please help
-Date: Sun, 06 Apr 2014 14:31:29 -0700
-Message-ID: <5341C7B1.2030503@trinnet.net>
-References: <53412F05.4090306@mybunker.plus.com>	<53419279.3090804@mybunker.plus.com> <5341ADD0.2050303@trinnet.net> <jdq81b-tq1.ln1@atomos.longlandclan.yi.org>
+From: Paul Lewis <paul@skywaves.demon.co.uk>
+Subject: Re: UBUNTO 12.04 VScom TC800  Serial Kissattach ax??- port configuring corruption HELP Required please
+Date: Tue, 8 Apr 2014 15:51:39 +0100
+Message-ID: <2qgsMaA7zARTFwbp@skywaves.demon.co.uk>
+References: <r6jqua-e6d.ln1@atomos.longlandclan.yi.org>
+ <024rua-e6d.ln1@atomos.longlandclan.yi.org>
+ <IYGDg$AQECNTFw+e@skywaves.demon.co.uk>
+ <14505098c38.27e7.5a0dbb80754033f6c6eb17b69a6b1aac@tlen.pl>
+ <14505132540.27e7.5a0dbb80754033f6c6eb17b69a6b1aac@tlen.pl>
+ <VHW0nDBbGtPTFwcl@skywaves.demon.co.uk> <53406C67.3080008@trinnet.net>
+ <0AC34FBF7531404B98449A9318023E3B011B294F@EXMBX16.thus.corp>
+ <5341A229.8010902@trinnet.net>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <jdq81b-tq1.ln1@atomos.longlandclan.yi.org>
+In-Reply-To: <5341A229.8010902@trinnet.net>
 Sender: linux-hams-owner@vger.kernel.org
 List-ID: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"; format="flowed"
-To: linux-hams@vger.kernel.org
+Content-Transfer-Encoding: 7bit
+To: David Ranch <linux-hams@trinnet.net>
+Cc: "linux-hams@vger.kernel.org" <linux-hams@vger.kernel.org>
 
+Hello David and co.
 
-> Okay, what's the logic in that? If UroNode fixes a lot of the problems 
-> in the original "node" package, why package it up in the distributions 
-> where it will get wider visibility and coverage? I'll admit I hadn't 
-> even heard of it until Brian Rogers mentioned it in an earlier thread, 
-> with a link to it on an obscure FTP site.
+Update over the past day and a half, I have been investigating this from 
+the hardware side.
 
-I had an email thread with Brian many months ago where he previously had 
-some personal objections of how some distributions compiled things 
-incorrectly, created specific support issues, etc.  I think previous 
-versions of UroNode called out those objections in the LICENSE file but 
-it seems both 2.0 and 2.1 have that file removed in their respective 
-archive:  ftp://ftp.n1uro.net/packet/
+There are six TNC's connected to 6 of the 8 ports on the VScom TC-800
+Linfbb just hangs when connected to the two spare ports :(
 
-It might be work asking him again as his UroNode software really is a 
-significant improvement over the old LinuxNode package.
+I moved the card back in to the gb7cip Slackware machine
+and found that only pick up all the ports in ifconfig ( and the details
+desplayed very time).
 
---David
-KI6ZHD
+Though I could only connect out on the other three ports (that the other 
+machine fails on).  I did not go deeper to check the system /dev/ 
+mappings to device as I have had enough of this..
+
+So I must have damaged the PCI card moving it across to the other 
+machine :(((
+
+Back on the ubuntu machine the other three TNC stay alive.  I have now 
+amended the script so that three of my 70cm ports are active.  While I 
+consider my next move.
+
+I appreciated all the feedback that got me digging further in to the 
+logs, Learnt some more new commands in the process.
+
+Now I will go back to the finish of the software configuration
+then make the configuration static. That's another story.
+
+73 to all de Paul g4apl / GB7CIP
+
 
