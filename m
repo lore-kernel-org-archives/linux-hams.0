@@ -1,26 +1,26 @@
-From: Paul Lewis <paul@skywaves.demon.co.uk>
-Subject: Has the f6fbb.org mailing list Closed
-Date: Sat, 16 Aug 2014 13:45:42 +0100
-Message-ID: <kPJ4V4C2J17TFwaV@skywaves.demon.co.uk>
+From: Miroslav Skoric <skoric@uns.ac.rs>
+Subject: Re: Has the f6fbb.org mailing list Closed
+Date: Sun, 17 Aug 2014 23:05:05 +0200
+Message-ID: <53F11901.9090207@uns.ac.rs>
+References: <kPJ4V4C2J17TFwaV@skywaves.demon.co.uk>
 Mime-Version: 1.0
+Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
+In-Reply-To: <kPJ4V4C2J17TFwaV@skywaves.demon.co.uk>
 Sender: linux-hams-owner@vger.kernel.org
 List-ID: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"; format="flowed"
-Content-Transfer-Encoding: 7bit
-To: linux-hams@vger.kernel.org
+To: Paul Lewis <paul@skywaves.demon.co.uk>, linux-hams@vger.kernel.org
 
-Hi All
+On 08/16/2014 02:45 PM, Paul Lewis wrote:
 
-Has the f6fbb.org mailing list closed down
-Have not seen anything dated 2014.
+> Hi All
+>
+> Has the f6fbb.org mailing list closed down
+> Have not seen anything dated 2014.
+>
 
-The archives are only up to December 2013.  Have I missed something??
+Should not be closed, maybe just silent ...
 
-Should I now be resend my recent xfbbd questions to the Linux Hams List?
+Misko YT7MPB
 
-Any comments advice.
-
-73 de Paul G4APL/GB7CIP
--- 
-paul@skywaves.demon.co.uk
