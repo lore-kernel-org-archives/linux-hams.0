@@ -1,26 +1,37 @@
-From: Miroslav Skoric <skoric@uns.ac.rs>
-Subject: Re: Has the f6fbb.org mailing list Closed
-Date: Sun, 17 Aug 2014 23:05:05 +0200
-Message-ID: <53F11901.9090207@uns.ac.rs>
-References: <kPJ4V4C2J17TFwaV@skywaves.demon.co.uk>
-Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
+From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Subject: [PATCH] rose: use %*ph specifier
+Date: Fri,  5 Sep 2014 18:01:51 +0300
+Message-ID: <1409929311-3225-1-git-send-email-andriy.shevchenko@linux.intel.com>
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <kPJ4V4C2J17TFwaV@skywaves.demon.co.uk>
 Sender: linux-hams-owner@vger.kernel.org
 List-ID: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"; format="flowed"
-To: Paul Lewis <paul@skywaves.demon.co.uk>, linux-hams@vger.kernel.org
+MIME-Version: 1.0
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+To: "David S. Miller" <davem@davemloft.net>, linux-hams@vger.kernel.org, netdev@vger.kernel.org
+Cc: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
 
-On 08/16/2014 02:45 PM, Paul Lewis wrote:
+Instead of dereference each byte let's use %*ph specifier in the printk()
+calls.
 
-> Hi All
->
-> Has the f6fbb.org mailing list closed down
-> Have not seen anything dated 2014.
->
+Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+---
+ net/rose/rose_link.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-Should not be closed, maybe just silent ...
-
-Misko YT7MPB
+diff --git a/net/rose/rose_link.c b/net/rose/rose_link.c
+index bc55142..ce60771 100644
+--- a/net/rose/rose_link.c
++++ b/net/rose/rose_link.c
+@@ -160,7 +160,7 @@ void rose_link_rx_restart(struct sk_buff *skb, struct rose_neigh *neigh, unsigne
+ 		break;
+ 
+ 	case ROSE_DIAGNOSTIC:
+-		printk(KERN_WARNING "ROSE: received diagnostic #%d - %02X %02X %02X\n", skb->data[3], skb->data[4], skb->data[5], skb->data[6]);
++		pr_warn("ROSE: received diagnostic #%d - %4ph\n", skb->data + 3);
+ 		break;
+ 
+ 	default:
+-- 
+2.1.0
 
