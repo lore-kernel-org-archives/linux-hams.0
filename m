@@ -1,38 +1,36 @@
-From: Mike Markowski <mike.ab3ap@gmail.com>
-Subject: Re: Where Can I find CQRLOG Version 1.8.2 in RPM version?
-Date: Tue, 09 Dec 2014 07:39:03 -0500
-Message-ID: <5486ED67.5060902@gmail.com>
-References: <4185404.s9vzezYYZE@linux-gn6a.site>
+From: Robert Smits <bob@rsmits.ca>
+Subject: Where can we find WSJT-X?
+Date: Tue, 23 Dec 2014 19:40:35 -0800
+Message-ID: <201412231940.36048.bob@rsmits.ca>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 Return-path: <linux-hams-owner@vger.kernel.org>
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=message-id:date:from:user-agent:mime-version:to:subject:references
-         :in-reply-to:content-type:content-transfer-encoding;
-        bh=9SYb61g64mDVkC/hRos/wEq8T3I5sIMFNk/L5Jcfzec=;
-        b=dfLCpQxCEJMiY9ACc0nIan+sWzGqdWMDKf7nD4d9rYAnAnM1pR3oJdzQm/JUyoWI9t
-         nHUHzLGM+uWebrhAMkxh3jLW7xuY+Nr6cuFGmuJXm/GaRuMq1N2kbzItysk4lMjE0wzq
-         MDMcmActivwqvahEyBgC6Vpt2AnkPzpzTrDATnNjNWlGVGII8bXYlyGV31VE7u/9F6ah
-         QEdOPwp8qsTUDfzN095p06HG8+pYs0RozQ1X7P2xS/34XdMgxkWtcbNNQS+KoC7xjHkv
-         wEPLq4+HRg4RVYI5RWnfmbAtDr5jStJCWSKt5lIrsnn6fw7ZooQspAa1HrxD4HnLqYcf
-         V1cA==
-In-Reply-To: <4185404.s9vzezYYZE@linux-gn6a.site>
+Content-Disposition: inline
 Sender: linux-hams-owner@vger.kernel.org
 List-ID: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"; format="flowed"
-To: linux-hams <linux-hams@vger.kernel.org>
+Content-Type: text/plain; charset="iso-8859-1"
+To: Linux Hams Listserve <linux-hams@vger.kernel.org>
 
-Bob,
+I've looked in the opensuse ham radio repo, but can't find wsjt-x liste=
+d=20
+anywhere.
 
-I download it directly from ok2cqr's site at
+All I can find on the internet is wsjtx-1.4.0-rc2_x86_64.rpm, but when =
+I try=20
+to install it, there are dependencies needed for qt5-qtmultimedia,=20
+fftw-libs-single, libgfortran.i686, for none of which I can find opensu=
+se=20
+versions.=20
 
-   http://www.cqrlog.com/
+Any suggestions?
 
-73,
-Mike ab3ap
 
-On 12/08/2014 07:13 PM, Robert Smits wrote:
-> I want to install the latest version of CQRLog in my Opensuse 13.1 laptop. Any
-> idea where I can find one. All I see are fedora versions.
->
+--=20
+Bob Smits <bob@rsmits.ca>=20
+"Microsoft is not the answer. Microsoft is the question. NO is the=20
+answer." =A0=A0- Erik Naggum
+--
+To unsubscribe from this list: send the line "unsubscribe linux-hams" i=
+n
+the body of a message to majordomo@vger.kernel.org
+More majordomo info at  http://vger.kernel.org/majordomo-info.html
