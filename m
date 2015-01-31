@@ -1,17 +1,17 @@
-From: Apostolos Kefalas <sv1ljj@raag.org>
+From: Apostolos Kefalas <akef@freemail.gr>
 Subject: Soundmodem problems
-Date: Sat, 31 Jan 2015 10:02:39 +0200
-Message-ID: <1422691359.5081.8.camel@raag.org>
+Date: Sat, 31 Jan 2015 10:24:41 +0200
+Message-ID: <1422692681.5081.9.camel@freemail.gr>
 Mime-Version: 1.0
 Content-Type: multipart/signed; micalg="pgp-sha512";
-	protocol="application/pgp-signature"; boundary="=-E9PHJsSGrMv7hsAauRpc"
+	protocol="application/pgp-signature"; boundary="=-k/tBVY+xFTp8xpWbpJKh"
 Return-path: <linux-hams-owner@vger.kernel.org>
 Sender: linux-hams-owner@vger.kernel.org
 List-ID: <linux-hams.vger.kernel.org>
 To: linux-hams@vger.kernel.org
 
 
---=-E9PHJsSGrMv7hsAauRpc
+--=-k/tBVY+xFTp8xpWbpJKh
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
@@ -34,7 +34,8 @@ I would appreciate any help on the above problems.
 Apostolos, SV1LJJ
 =20
 
---=-E9PHJsSGrMv7hsAauRpc
+
+--=-k/tBVY+xFTp8xpWbpJKh
 Content-Type: application/pgp-signature; name="signature.asc"
 Content-Description: This is a digitally signed message part
 Content-Transfer-Encoding: 7bit
@@ -42,22 +43,20 @@ Content-Transfer-Encoding: 7bit
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v2
 
-iQIcBAABCgAGBQJUzIwoAAoJEC8RbMGjwZ2g85cQAKoNHkbLWRkEgSDGOKhVCN43
-J28yxP4PGNlqtpYexizcB6yPwhkfxD1ausEtLQlKNzoInMvV/CWRuuUce1fMCyx8
-HBfZwPex4tMkR88pB2oVRWaCA0CJNnlakJrLMVtXm/P+16gSuVoGNxdugyOVJYsO
-Kov0MvgsOyTkjha2czRhZ9x5Bh5iHgGexlqEXaAnW71XSpZJq5b+hMKmW4sJwc+w
-U0tleg1E2LrItuBPm0E4gFVP50/vKcJZdghV09B6mjO0bKNyCwQk2kLKJFiGBrHM
-EmyzScphuL+5pMnWhMDOdYhDflMCJz1sjHd8X2ldSyRgFjInSHxaurMN8ZtD/BlC
-8jr0UMcDrMUjY8dMrf4YENAJ0p79CYAKzJSrTN0qytCid055I1DXjZ3FCqD9K10L
-eGVJXhbOC8aD9zjJq4U6L5PJitbgcXCC1H83X/31289yrSQ8sNPEr3jjmrKocjEg
-m9NlGS1UAy06uSo1DQJdTFrl/e/7tnFTo15SBBo0uxIqT/mIqRg69zaI078sKtj2
-T3nAyJb3dLcMgRBOtTcmAJU31mvjbYUWia3DGyy6cmSSzQyZ2d4fjLF52E66BM4A
-QESlgOhACdXPzFlfU53/w3TlbNGJO3SrfpnKYubA31cGQ3a3B9Wh/Eb5GlZWO6iE
-z+00mw4K4+Zw4d7UtNA6
-=zKdK
+iQIcBAABCgAGBQJUzJFJAAoJEC8RbMGjwZ2gBUIQAKXu3JcKFIQY4cKjKFi7c3iy
+ggn+3GvMIRrNnlyTtkw+8K6AaClHR8iLh7V+sio7OAfeZyQF/qhbP1u+uFUexVJd
+p/SJsNoKwFDNGUJ4+mw1Ej3pXFlSG661oeAD2nHBmU6mQMTJ74vCAWwfiN4EWrSG
+5Nl6kIqk/zfR4Gm35hlwP/nuo7n/bhn2hlLSe0qdmEwiWx45Mh9KX+Gq5Ocku/zt
+/KAA0xCqCSIdnfVmrWlqkmRK5jeGCz4Whpp5b898HyoBdj2YGyJR801FgNGFNJRP
+rI1jBW1yworn9LFSMmUl+9VJNhq9BAR/AA7zdgJCcazYXdCyZF/uHSmc3rdaFoYf
+S8ylGF53xgug1fV1cB0asd4GVj/gv6BgSbFCatNRCgZXUEw+orzNSaWcxcphm20q
+VIHUVwQjjGQlaQYE5QHbnA1tqBAQN2KThB9bc6pLIC1UCVURO7fA8/TmbHMotMI1
+XCwYhuOQoi3t2C3fGJLqwbfHGZOwGarMmQ4gbDoDXC4gd7WB1/rIem6POtpvxesF
+1tgybdA5uqiayFWiS+DU+JQAJen5xa7kOtOUK/E1iPUp2oPLP8HnwLfUiecye15s
++FUe7NR/IkRsBXQbohjkGYylIhYXOgN02VsGy6vN3Fck+JuGZ8JZqCaYPLGzZ5rm
+RdJzNcf/k6Ujlb5uXr/i
+=RjBu
 -----END PGP SIGNATURE-----
 
---=-E9PHJsSGrMv7hsAauRpc--
-
-
+--=-k/tBVY+xFTp8xpWbpJKh--
 
