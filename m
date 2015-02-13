@@ -1,95 +1,176 @@
-From: Thorsten Kranzkowski <dl8bcu@dl8bcu.de>
+From: Paul Lewis <paul@skywaves.demon.co.uk>
 Subject: Re: conversd-saupp-1.62a
-Date: Fri, 13 Feb 2015 19:09:50 +0000
-Message-ID: <20150213190950.GA437@ds20.borg.net>
+Date: Fri, 13 Feb 2015 23:59:46 +0000
+Message-ID: <cYqBEHCy$o3UFwxI@skywaves.demon.co.uk>
 References: <1422692681.5081.9.camel@freemail.gr>
- <54CDB20F.8040201@trinnet.net>
- <viRt6JJd$g3UFw1b@skywaves.demon.co.uk>
-Reply-To: dl8bcu@dl8bcu.de
+ <54CDB20F.8040201@trinnet.net> <viRt6JJd$g3UFw1b@skywaves.demon.co.uk>
+ <20150213190950.GA437@ds20.borg.net>
 Mime-Version: 1.0
 Content-Transfer-Encoding: QUOTED-PRINTABLE
 Return-path: <linux-hams-owner@vger.kernel.org>
-Content-Disposition: inline
-In-Reply-To: <viRt6JJd$g3UFw1b@skywaves.demon.co.uk>
+In-Reply-To: <20150213190950.GA437@ds20.borg.net>
 Sender: linux-hams-owner@vger.kernel.org
 List-ID: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="utf-8"
-To: Paul Lewis <paul@skywaves.demon.co.uk>
+Content-Type: text/plain; charset="macroman"
+To: dl8bcu@dl8bcu.de
 Cc: linux-hams@vger.kernel.org
 
-On Fri, Feb 13, 2015 at 02:53:17PM +0000, Paul Lewis wrote:
->=20
-> Hello all
+Hi all
 
-Hi Paul!
+made the changes to convers.c as suggested
+make clean
+make install
+make install-all
 
-> I am trying to install conversd-saupp-1.62a.20090622.tar.gz
-> on a new Ubuntu 14.4.1 system
->=20
-> and getting the following error. Anyone got any ideas how to over
-> comethis.
-> Still lot of warnings in the make, which I ignore as the binaries are
-> created.
->=20
-> Just not able to create the directories and install the binaries usin=
-g
-> the following command.
-> Anyone have a solution please - may apply to the make install-all as
-> well
->=20
-> make install-bin
-> gcc -O2 -s -Wall -Wstrict-prototypes -DWANT_LOG -DFORKPTY
-> -DOWNER=3D\"daemon\" -DGID=3D\"daemon\"
-> -DCONF_DIR=3D\"/usr/local/conversd-saupp/etc\"
-> -DDATA_DIR=3D\"/usr/local/conversd-saupp/var\" -DCONVERSHOST=3D\"loca=
-lhost\"
-> -DSETLOGNAMES -DHAVE_LIBREADLINE -DHAVE_READLINE_READLINE_H \
->                 convers.c ba_stub.o -o convers -lreadline -lncurses
-> convers.c: In function =C3=A2do_log=C3=A2:
-> convers.c:255:3: warning: format not a string literal and no format
-> arguments [-Wformat-security]
->    fprintf(stderr, fmt);
 
-Strictly speaking, it'a a warning, not an error. But anyway, you need t=
-o
-fix convers.c:
+got a lot of warnings and these look like errors flagged up
+which I have extracted
+##
+make install
+user.c:4655:9: warning: ignoring return value of =E2fgets=E2, declared =
+with
+attribute warn_unused_result [-Wunused-result]
+    fgets(lx, 128, fd);
+         ^
+In file included from /usr/include/stdio.h:937:0,
+                 from user.c:15:
+In function =E2fgets=E2,
+    inlined from =E2last_command=E2 at user.c:1192:15:
+/usr/include/i386-linux-gnu/bits/stdio2.h:261:2: warning: call to
+=E2__fgets_chk_warn=E2 declared with attribute warning: fgets called wi=
+th
+bigger size than length of destination buffer [enabled by default]
+  return __fgets_chk_warn (__s, __bos (__s), __n, __stream);
+  ^
+gcc -O2 -s -Wall -Wstrict-prototypes -DWANT_LOG -DFORKPTY
+-DOWNER=3D\"daemon\" -DGID=3D\"daemon\"
+-DCONF_DIR=3D\"/usr/local/conversd-saupp/etc\"
+-DDATA_DIR=3D\"/usr/local/conversd-saupp/var\" -DCONVERSHOST=3D\"localh=
+ost\"
+-c host.c
+host.c: In function =E2h_ecmd_command=E2:
+host.c:166:6: warning: variable =E2arglen=E2 set but not used
+[-Wunused-but-set-variable]
+  int arglen;
 
-a) insert a line reading
-	#include <stdarg.h>
-   at the beginning (where the other includes are).
+##
+host.c:164:21: warning: variable =E2params=E2 set but not used
+[-Wunused-but-set-variable]
+  char *arg, *user, *params;
+                     ^
+host.c: In function =E2h_netjoin_command=E2:
+host.c:2191:22: warning: the address of =E2buffer=E2 will always evalua=
+te as
+=E2true=E2 [-Waddress]
+  lock_j_unlock_other(buffer);
+                      ^
+host.c:2071:8: note: in definition of macro =E2lock_j_unlock_other=E2
+    if (s) \
+        ^
+host.c: In function =E2h_sysi_command=E2:
+host.c:1394:10: warning: ignoring return value of =E2fscanf=E2, declare=
+d
+with attribute warn_unused_result [-Wunused-result]
+    fscanf(fd, "%ld", &uptime);
+          ^
+host.c:1398:10: warning: ignoring return value of =E2fgets=E2, declared=
+ with
+attribute warn_unused_result [-Wunused-result]
+     fgets(lx, 128, fd);
 
-b) make the function do_log (around line 255) look like this:
+##
+In file included from md5_ampr.c:10:0:
+md5.h:60:6: note: expected =E2unsigned char *=E2 but argument is of typ=
+e
+=E2char *=E2
+ void MD5Update(MD5_CTX *mdContext, unsigned char *inBuf, unsigned int
+inLen);
+      ^
+gcc -O2 -s -Wall -Wstrict-prototypes -DWANT_LOG -DFORKPTY
+-DOWNER=3D\"daemon\" -DGID=3D\"daemon\"
+-DCONF_DIR=3D\"/usr/local/conversd-saupp/etc\"
+-DDATA_DIR=3D\"/usr/local/conversd-saupp/var\" -DCONVERSHOST=3D\"localh=
+ost\"
+-o conversd conversd.o user.o host.o irc.o convert.o config.o tnos.o
+log.o cfgfile.o access.o noflood.o hmalloc.o ba_stub.o compression.o
+md5.o md5_ampr.o  -lutil
+gcc -O2 -s -Wall -Wstrict-prototypes -DWANT_LOG -DFORKPTY
+-DOWNER=3D\"daemon\" -DGID=3D\"daemon\"
+-DCONF_DIR=3D\"/usr/local/conversd-saupp/etc\"
+-DDATA_DIR=3D\"/usr/local/conversd-saupp/var\" -DCONVERSHOST=3D\"localh=
+ost\"
+-DNO_SHELL -DRAW -DNO_IOCTL \
+                convers.c ba_stub.o -o rawconvers
+gcc -O2 -s -Wall -Wstrict-prototypes -DWANT_LOG -DFORKPTY
+-DOWNER=3D\"daemon\" -DGID=3D\"daemon\"
+-DCONF_DIR=3D\"/usr/local/conversd-saupp/etc\"
+-DDATA_DIR=3D\"/usr/local/conversd-saupp/var\" -DCONVERSHOST=3D\"localh=
+ost\"
+-DSETLOGNAMES -DHAVE_LIBREADLINE -DHAVE_READLINE_READLINE_H \
+                convers.c ba_stub.o -o convers -lreadline -lncurses
+convers.c: In function =E2main=E2:
+convers.c:652:23: error: =E2Function=E2 undeclared (first use in this
+function)
+      rl_event_hook =3D (Function *) do_select_call;
+                       ^
+convers.c:652:23: note: each undeclared identifier is reported only onc=
+e
+for each function it appears in
+convers.c:652:33: error: expected expression before =E2)=E2 token
+      rl_event_hook =3D (Function *) do_select_call;
+                                 ^
+convers.c:917:10: warning: ignoring return value of =E2system=E2, decla=
+red
+with attribute warn_unused_result [-Wunused-result]
+    system(line + 1);
+          ^
+make: *** [convers] Error 1
 
-	int do_log(int level, const char *fmt, ...) {
-	  va_list argp;
-	  if (level > 2)
-		  return 0;
-	  va_start(argp, fmt);
-	  vfprintf(stderr, fmt, argp);
-	  va_end(argp);
-	  return fflush(stderr);
-	}
+##################
 
-=20
-This should do the trick.
 
-73 Thorsten DL8BCU
+make install-all
+ make install-all
+warning: your configuration will be overwritten with
+         the provided example files.
+         do you really want to do this?
+               anyway, a backup is made for every file, as filename~
+         press ^C to interrupt
+sleep 10
+make install install-conf
+make[1]: Entering directory `/usr/local/src/ax25/conversd-saupp'
+gcc -O2 -s -Wall -Wstrict-prototypes -DWANT_LOG -DFORKPTY
+-DOWNER=3D\"daemon\" -DGID=3D\"daemon\"
+-DCONF_DIR=3D\"/usr/local/conversd-saupp/etc\"
+-DDATA_DIR=3D\"/usr/local/conversd-saupp/var\" -DCONVERSHOST=3D\"localh=
+ost\"
+-DSETLOGNAMES -DHAVE_LIBREADLINE -DHAVE_READLINE_READLINE_H \
+                convers.c ba_stub.o -o convers -lreadline -lncurses
+convers.c: In function =E2main=E2:
+convers.c:652:23: error: =E2Function=E2 undeclared (first use in this
+function)
+      rl_event_hook =3D (Function *) do_select_call;
+                       ^
+convers.c:652:23: note: each undeclared identifier is reported only onc=
+e
+for each function it appears in
+convers.c:652:33: error: expected expression before =E2)=E2 token
+      rl_event_hook =3D (Function *) do_select_call;
+                                 ^
+convers.c:917:10: warning: ignoring return value of =E2system=E2, decla=
+red
+with attribute warn_unused_result [-Wunused-result]
+    system(line + 1);
+          ^
+make[1]: *** [convers] Error 1
+make[1]: Leaving directory `/usr/local/src/ax25/conversd-saupp'
+make: *** [install-all] Error 2
 
-> 73 de Paul G4APL
->=20
-> --
-> To unsubscribe from this list: send the line "unsubscribe linux-hams"=
- in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at  http://vger.kernel.org/majordomo-info.html
+###########
+73 de Paul G4APl
 
---=20
-| Thorsten Kranzkowski        Internet: dl8bcu@dl8bcu.de               =
-       |
-| Mobile: ++49 170 1876134       Snail: Kiebitzstr. 14, 49324 Melle, Ge=
-rmany  |
-| Ampr: dl8bcu@db0lj.#rpl.deu.eu, dl8bcu@marvin.dl8bcu.ampr.org [44.130=
-=2E8.19] |
+
+
 --
 To unsubscribe from this list: send the line "unsubscribe linux-hams" i=
 n
