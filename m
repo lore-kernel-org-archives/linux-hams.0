@@ -1,60 +1,53 @@
-From: ebiederm@xmission.com (Eric W. Biederman)
-Subject: [PATCH net-next 15/15] neigh: Don't require a dst in neigh_resolve_output
-Date: Mon, 02 Mar 2015 00:14:14 -0600
-Message-ID: <87oaoc53k9.fsf_-_@x220.int.ebiederm.org>
-References: <87pp8xx6ik.fsf@x220.int.ebiederm.org>
-	<20150227.162131.431559184124647735.davem@davemloft.net>
-	<87mw3yg8da.fsf@x220.int.ebiederm.org>
-	<20150301.230306.2023670900391030920.davem@davemloft.net>
+From: David Miller <davem@davemloft.net>
+Subject: Re: [PATCH net-next 0/15] Neighbour table and ax25 cleanups
+Date: Mon, 02 Mar 2015 16:44:26 -0500 (EST)
+Message-ID: <20150302.164426.494515497595921630.davem@davemloft.net>
+References: <20150301.230306.2023670900391030920.davem@davemloft.net>
 	<871tl8dlxn.fsf@x220.int.ebiederm.org>
 	<87lhjg9byo.fsf_-_@x220.int.ebiederm.org>
 Mime-Version: 1.0
-Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <87lhjg9byo.fsf_-_@x220.int.ebiederm.org> (Eric W. Biederman's
-	message of "Sun, 01 Mar 2015 23:59:11 -0600")
-Sender: linux-hams-owner@vger.kernel.org
-List-ID: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
-To: David Miller <davem@davemloft.net>
-Cc: netdev@vger.kernel.org, Ralf Baechle <ralf@linux-mips.org>, linux-hams@vger.kernel.org
+Return-path: <netdev-owner@vger.kernel.org>
+In-Reply-To: <87lhjg9byo.fsf_-_@x220.int.ebiederm.org>
+Sender: netdev-owner@vger.kernel.org
+List-ID: <linux-hams.vger.kernel.org>
+Content-Type: Text/Plain; charset="us-ascii"
+To: ebiederm@xmission.com
+Cc: netdev@vger.kernel.org, ralf@linux-mips.org, linux-hams@vger.kernel.org
 
+From: ebiederm@xmission.com (Eric W. Biederman)
+Date: Sun, 01 Mar 2015 23:59:11 -0600
 
-Having a dst helps a little bit for teql but is fundamentally
-unnecessary and there are code paths where a dst is not available that
-it would be nice to use the neighbour cache.
+> While looking at the neighbour table to what it would take to allow
+> using next hops in a different address family than the current packets
+> I found a partial resolution for my issues and I stumbled upon some
+> work that makes the neighbour table code easier to understand and
+> maintain.
+> 
+> Long ago in a much younger kernel ax25 found a hack to use
+> dev_rebuild_header to transmit it's packets instead of going through
+> what today is ndo_start_xmit.
+> 
+> When the neighbour table was rewritten into it's current form the ax25
+> code was such a challenge that arp_broken_ops appeard in arp.c and
+> neigh_compat_output appeared in neighbour.c to keep the ax25 hack alive.
+> 
+> With a little bit of work I was able to remove some of the hack that
+> is the ax25 transmit path for ip packets and to isolate what remains
+> into a slightly more readable piece of code in ax25_ip.c.  Removing the
+> need for the generic code to worry about ax25 special cases.
+> 
+> After cleaning up the old ax25 hacks I also performed a little bit of
+> work on neigh_resolve_output to remove the need for a dst entry and to
+> ensure cached headers get a deterministic protocol value in their cached
+> header.   This guarantees that a cached header will not be different
+> depending on which protocol of packet is transmitted, and it allows
+> packets to be transmitted that don't have a dst entry.  There remains
+> a small amount of code that takes advantage of when packets have a dst
+> entry but that is something different.
 
-Signed-off-by: "Eric W. Biederman" <ebiederm@xmission.com>
----
- net/core/neighbour.c | 6 ------
- 1 file changed, 6 deletions(-)
+Wow... simply, wow.
 
-diff --git a/net/core/neighbour.c b/net/core/neighbour.c
-index af72b863e968..0f48ea3affed 100644
---- a/net/core/neighbour.c
-+++ b/net/core/neighbour.c
-@@ -1284,12 +1284,8 @@ static void neigh_hh_init(struct neighbour *n)
- 
- int neigh_resolve_output(struct neighbour *neigh, struct sk_buff *skb)
- {
--	struct dst_entry *dst = skb_dst(skb);
- 	int rc = 0;
- 
--	if (!dst)
--		goto discard;
--
- 	if (!neigh_event_send(neigh, skb)) {
- 		int err;
- 		struct net_device *dev = neigh->dev;
-@@ -1312,8 +1308,6 @@ int neigh_resolve_output(struct neighbour *neigh, struct sk_buff *skb)
- 	}
- out:
- 	return rc;
--discard:
--	neigh_dbg(1, "%s: dst=%p neigh=%p\n", __func__, dst, neigh);
- out_kfree_skb:
- 	rc = -EINVAL;
- 	kfree_skb(skb);
--- 
-2.2.1
+I thought we'd be stuck with that crap forever, great work!
 
+Applied to net-next, thanks again!
