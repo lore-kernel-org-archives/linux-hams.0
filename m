@@ -1,86 +1,64 @@
-From: Steven Whitehouse <swhiteho@redhat.com>
-Subject: Re: [PATCH net-next] ax25: Stop using magic neighbour cache operations.
-Date: Sat, 14 Mar 2015 00:33:00 +0000
-Message-ID: <550381BC.7040001@redhat.com>
-References: <87lhjg9byo.fsf_-_@x220.int.ebiederm.org>	<20150302.164426.494515497595921630.davem@davemloft.net>	<874mq22imc.fsf_-_@x220.int.ebiederm.org>	<20150303.144509.1694022322984204895.davem@davemloft.net>	<87mw3tzv8u.fsf@x220.int.ebiederm.org> <54F82C9F.5050307@redhat.com> <87twxx7t5y.fsf@x220.int.ebiederm.org>
+From: Richard Stearn <richard@rns-stearn.demon.co.uk>
+Subject: Request for comments regarding Amateur Radio protocols in Wireshark
+Date: Thu, 09 Apr 2015 13:58:37 +0100
+Message-ID: <5526777D.7070405@rns-stearn.demon.co.uk>
 Mime-Version: 1.0
 Content-Transfer-Encoding: 7bit
-Return-path: <netdev-owner@vger.kernel.org>
-In-Reply-To: <87twxx7t5y.fsf@x220.int.ebiederm.org>
-Sender: netdev-owner@vger.kernel.org
+Return-path: <linux-hams-owner@vger.kernel.org>
+Sender: linux-hams-owner@vger.kernel.org
 List-ID: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"; format="flowed"
-To: "Eric W. Biederman" <ebiederm@xmission.com>
-Cc: David Miller <davem@davemloft.net>, netdev@vger.kernel.org, ralf@linux-mips.org, linux-hams@vger.kernel.org
+To: linux-hams@vger.kernel.org
 
-Hi,
+Hi All
 
-On 06/03/15 20:44, Eric W. Biederman wrote:
-> Steven Whitehouse <swhiteho@redhat.com> writes:
->
->> Hi,
->
->>> We can almost universally use the same procedures for generating
->>> link layer headers from neighbour table entries now.  I had hoped
->>> to optimized things by removing function pointers.
->>>
->>> The big hold out is DECnet that sets src_mac based on the DECnet source
->>> address.
->> That is a requirement of DECnet I'm afraid - DECnet does not have an exact
->> equivalent of ARP/ndisc and many hosts will refuse to communicate if the MAC
->> address is not the expected one based on the DECnet address. This is one bit of
->> DECnet that is being used (to the best of my knowledge) and working.
-> Having a mac address that matches the DECnet address completely makes
-> sense.  Sourcing packets with a different mac address than the devices
-> default mac address make sense.  This latter case doesn't usually happen
-> for IP packets but we force it with the macvlan driver for example.
-The history is that when DECnet was being written, it was not generally 
-reliable to have a different MAC to that of the ethernet card - it 
-worked for some cards, but by no means all of them. So it is something 
-that would be done slightly differently with modern cards.
+This is a request for comments regarding the Amateur Radio protocol
+dissectors in Wireshark, which I am aware is used by some on this list.
 
->>> Which leads me to the conclusion that since DECnet has a different
->>> algorithm for setting the src_mac than everything else in the kernel
->>> DECnet neighbour table entries can not be used for nexthops for other
->>> protocols :(
->>>
->>> DECnet also abuses neigh->output to select by output device which kind
->>> of DECnet header to put on the packets.  But that is easily fixable.
->> One way to fix it would be to drop support for non-broadcast devices. We don't
->> have an implementation of DDCMP currently. Ethernet is the only working DECnet
->> device at the moment. PPP could also potentially work, with a bit of tweeking,
->> but strangely PPP is a broadcast device so far as DECnet is concerned,
-> What I wound up doing was just doing a shuffle of which function was in
-> the neigh->output method.  Which meant there was no need to disable any
-> of the current code.
->
-> That should fix interactions between DECnet and drivers like sch_teql
-> and the netfilter bridge code which after a packet has already been
-> output turn around and do:
->
-> 	dst = skb_dst(skb);
-> 	neigh = n = dst_neigh_lookup_skb(dst, skb);
->          if (dst->dev != dev)
->          	neigh = __neigh_lookup_errno(n->tbl, n->primary_key, dev);
-> 	neigh->output(neigh, skb);
->
-> Which I think if the DECnet code hit one of those code paths today would
-> result in double DECnet headers.  :(
->
-> When looking at the DECnet code there is a flag that enables phase3
-> support but I don't seeing it set anywhere.  Should DECnet phase3
-> support actually work?
->
-> Eric
+In 2012 the suite of dissectors accepted and add to Wireshark.  These
+appeared in 2013 in Wireshark 1.10.0.
 
-Ok. That sounds reasonable to me. The phase 3 stuff is another stub 
-really... most of what is needed is there, but not all of it. Phase 3 is 
-basically the same as Phase IV but without areas and broadcast devices, 
-so in order to make Phase 3 devices reachable on a Phase IV network, the 
-Phase IV router has to add an area and forward the packet on, and remove 
-the area when sending to the Phase 3 node. However since we don't have 
-non-broadcast DECnet devices, there is no point in having Phase3 support 
-really. At least it is one area on which the spec is quite useful 
-though, as this is fairly well described,
+Over the last 2 years I have collected more information regarding some
+of the protocols that currently not fully/correctly dissected.  Also I
+have had requests to complete/extend some of the dissectors.
 
-Steve.
+I light of the above I am currently reviewing all the dissectors with a
+view to updating them in Wireshark.
+
+I would appreciate comments, bugs, missing bits, detailed protocol
+documents, new protocols that I can use in my review and rework.
+
+The relevent dissectors are:
+	KISS	- coded from KA9Q/K3MC kiss spec
+	AXIP	- coded from Linux driver
+	AXUDP	- coded from Linux driver
+	BPQ	- coded from Linux driver
+	AX.25	- coded from V2.2
+	APRS	- coded from V1.0.1 and 2 addenda
+	NETROM	- coded from a postscript doc and "listen" code
+	Flexnet	- coded from flexnet.[ch] from wampes
+	ROSE	- uses existing X.25 dissector
+
+I have:
+	a Multi-kiss spec by Karl Medcalf (WK5M).
+	a request and spec (circa 2003) for OpenTRAC.
+	a request for a heuristic dissector for AXUDP
+
+My current plan:
+	o - update KISS to include Multi-KISS and correctly handle
+		the escape codes.
+	o - add an OpenTRAC dissector
+	o - document how to to register the wanted UDP ports for AXUDP
+		using an LUA script. I have attempted to create
+		a heuristic dissector for AXUDP, unfortunately the
+		resulting dissection is unstable with some packets
+		not being dissected and some by the wrong protocol
+		entirely.
+
+Anything else anyone feels should be on the list?
+
+-- 
+Regards
+	Richard
+
+
