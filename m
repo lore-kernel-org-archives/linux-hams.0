@@ -1,21 +1,54 @@
-From: Patrick Ouellette <pouelle@debian.org>
-Subject: Re: Packet duplication in kernels 2.6 onwards
-Date: Wed, 06 May 2015 11:01:02 -0400
-Message-ID: <20150506150102.GF16858@flying-gecko.net>
-References: <5547BACC.7000709@rns-stearn.demon.co.uk>
- <5548419F.1030801@trinnet.net>
+From: Paul Lewis <paul@skywaves.demon.co.uk>
+Subject: Netromd ssid-0 broadcasts being ignored
+Date: Fri, 15 May 2015 09:14:32 +0100
+Message-ID: <iKOuAuAoraVVFwCg@skywaves.demon.co.uk>
 Mime-Version: 1.0
 Return-path: <linux-hams-owner@vger.kernel.org>
-Content-disposition: inline
-In-reply-to: <5548419F.1030801@trinnet.net>
 Sender: linux-hams-owner@vger.kernel.org
 List-ID: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
-To: David Ranch <linux-hams@trinnet.net>
-Cc: Richard Stearn <richard@rns-stearn.demon.co.uk>, linux-hams@vger.kernel.org
+To: linux-hams@vger.kernel.org
 
-This has just recently come up in Debian's bug system at
-https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=783160https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=783160
+Hi All
 
-Pat
+Since I moved to the latest netromd code in 2013-2015
+I have notice that there have been changes to the ssid-0 of
+nodes.
+
+Examples
+
+1) issuing a C GB7BA  fails.  GB7BA-0 works
+             C GB7CIP fails   GB7CIP-0 works
+
+Never us to behave this way on my old Slackware system (1994-2014)
+
+
+2) Setting a locked Route
+   nrparms -routes axu1 MB7NUQ-0 + 70
+   nrparms -routes axu1 G3LDI-0 + 75
+
+the node broadcast received from MB7NUQ-0
+gets ignored
+
+Callsign  Device Packets  Date & Time     Frame Type(s)
+--------- ------ -------- --------------- -------------
+MB7NUQ    axu1   17593    May 15 08:47:54 NetRom
+G3LDI     axu1   691      May 13 11:04:48 NetRom
+
+Just a couple of examples
+Have tested with the ax25 app/tools/ax25  0.0.# and 1.0.# series of
+code.
+Binaries complied from source code.
+
+I find this very frustrating when setting up static routing tables in
+the past 14 months, after my updated system went live.
+
+Is their a patch that can be applied to get the code to behave as it use
+to.
+Why was it changed??
+
+73 de Paul G4APL (GB7CIP/MB7NCR)
+
+-- 
+paul@skywaves.demon.co.uk
