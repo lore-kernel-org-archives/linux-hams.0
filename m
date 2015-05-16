@@ -1,43 +1,33 @@
-From: David Ranch <linux-hams@trinnet.net>
+From: Richard Stearn <richard@rns-stearn.demon.co.uk>
 Subject: Re: Netromd ssid-0 broadcasts being ignored
-Date: Sat, 16 May 2015 08:50:03 -0700
-Message-ID: <5557672B.1060501@trinnet.net>
-References: <iKOuAuAoraVVFwCg@skywaves.demon.co.uk>
+Date: Sat, 16 May 2015 20:46:26 +0100
+Message-ID: <55579E92.9040205@rns-stearn.demon.co.uk>
+References: <iKOuAuAoraVVFwCg@skywaves.demon.co.uk> <5557672B.1060501@trinnet.net>
 Mime-Version: 1.0
 Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <iKOuAuAoraVVFwCg@skywaves.demon.co.uk>
+In-Reply-To: <5557672B.1060501@trinnet.net>
 Sender: linux-hams-owner@vger.kernel.org
 List-ID: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"; format="flowed"
-To: linux-hams@vger.kernel.org
+To: Linux Hams <linux-hams@vger.kernel.org>
 
+Hi David
 
-Hello Paul,
+Whilst I have a working test environment I had a look at this with
+the following results:
 
-Are you using the CVS version of the "Official AX.25" sources?   If so, 
-this is a known issue and why VE7FET put together his repo with help 
-from Bernard F6BVP.   Read this URL to understand some of the key 
-differences:
+ax25-apps       ax25-tools      libax25         node
+0.0.6           0.0.8           0.0.11          0.3.3   works
+0.0.8-rc4       0.0.10-rc4      0.0.12-rc4      0.3.3   does not work
+1.0.5           1.0.3           1.0.5           0.3.3   does not work
 
+("works"/"does not work" is in terms of Paul's original issue)
 
-https://code.google.com/p/linuxax25/
---
-In the linux-ax25.org source, the ax25_ntoa function in axutils.c was 
-changed so that it mangles callsigns. Specifically, if the callsign has 
-a SSID of -0, it strips it.
+A look at this site https://code.google.com/p/linuxax25/w/list
+indicates that libax25 code is identical between 0.0.12-rc4 and
+1.0.5, the difference being the directory tree layout.
 
-. . .
-
-NOTE: It appears (as of Nov 2014), that this bad behaviour of the 
-Official Source may have been reverted. Patches have been noted in the 
-Official Source that seem to get rid of stripping the SSID-0
---
-
-
-Check out https://code.google.com/p/linuxax25/w/list to understand some 
-of the other current differences between the two repos.  I personally 
-have been running the VE7FET version of AX25 app/lib/tools with good luck.
-
---David
-KI6ZHD
+-- 
+Regards
+	Richard
