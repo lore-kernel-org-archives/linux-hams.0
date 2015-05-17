@@ -1,63 +1,142 @@
-From: Nate Bargmann <n0nb@n0nb.us>
-Subject: Xdx 2.5.0 released
-Date: Sun, 17 May 2015 07:38:17 -0500
-Message-ID: <20150517123817.GP3992@n0nb.us>
+From: Richard Stearn <richard@rns-stearn.demon.co.uk>
+Subject: Re: Netromd ssid-0 broadcasts being ignored
+Date: Sun, 17 May 2015 21:04:11 +0100 (BST)
+Message-ID: <201505172004.t4HK4BQQ022187@ux4.g1sog>
+References: <iKOuAuAoraVVFwCg@skywaves.demon.co.uk>
 Mime-Version: 1.0
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=n0nb.us; s=default;
-	h=Content-Transfer-Encoding:Content-Type:MIME-Version:Message-ID:Subject:To:From:Date; bh=M7kK66dX5ZpanO0OaBEfjDJS1bmzVRCYAfayH/r7nH0=;
-	b=u2TtmaCKbvyjrfVwkkuybs4DMhvZ0wgH2seIgIxf7yjKp/3enJsbfIKo9jOQKwMz+XT+CEyZDBsr9XuFxuodn87Ogac2OjGK/hyBtLvcy1Ey7nMiS/H0KvM3WBnlI7obXt7Knfd9leXbFKG5TYMqULsqRjs1IhIp1uRIvDplSrs=;
-Content-Disposition: inline
+In-Reply-To: <iKOuAuAoraVVFwCg@skywaves.demon.co.uk>
 Sender: linux-hams-owner@vger.kernel.org
 List-ID: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="utf-8"
-To: Linux Hams <linux-hams@vger.kernel.org>, Debian Hams <debian-hams@lists.debian.org>, Xdx list <xdxclusterclient-discuss@lists.sourceforge.net>
+Content-Type: text/plain; charset="us-ascii"
+To: linux-hams@vger.kernel.org
 
-After plenty of time in incubation, I am pleased to announce the releas=
-e
-of Xdx 2.5.0.  Xdx is a lightweight X Window System DX Cluster client
-for POSIX systems (Linux tested).  Originally written by Joop
-Stakenborg, PG4I, maintenance was picked up by Nate Bargmann, N0NB, in
-early 2014.  2.5.0 completes implementation of some UI features started
-by Joop.
+Paul Lewis did scribe:
+> 
+> Hi All
+> 
+> Since I moved to the latest netromd code in 2013-2015
+> I have notice that there have been changes to the ssid-0 of
+> nodes.
+> 
+> Examples
+> 
+> 1) issuing a C GB7BA  fails.  GB7BA-0 works
+>              C GB7CIP fails   GB7CIP-0 works
+> 
 
-The ChangeLog summarizes the changes of the 2.5.0 release:
+Hi Paul
 
-Changelog for version Xdx (2.5)
-  * Complete function key command entry support.
-  * Add close dialog when Ctl-Q is used to exit.
-  * Update manual page to current conventions.
-  * Update GPL boiler plate for current FSF mailing address.
-    Thanks, Walter Fey, DL8FCL.
-  * Spanish translation update from Baltasar, EA8BVP.
-  * German translation update from Tom, DL1JBE.
-  * Polish translation update from Bogus=C5=82aw, SQ5TB.
-  * Update to CTY-2505 =E2=80=93 20 April 2015.
-  * Add Keywords entry to desktop file.
+Try this patch against libax25-1.0.5, it is my attempt a reverting the
+"strip -0" change in recent versions of libax25 :
 
-The source tarball can be downloaded from:
+----------------------------------------------------------------------------
+diff -ru reference/libax25-1.0.5/lib/ax25/axconfig.c modified/libax25-1.0.5/lib/ax25/axconfig.c
+--- reference/libax25-1.0.5/lib/ax25/axconfig.c	2014-11-07 17:41:26.000000000 +0000
++++ modified/libax25-1.0.5/lib/ax25/axconfig.c	2015-05-16 19:03:27.000000000 +0100
+@@ -238,8 +238,8 @@
+ 	strupr(call);
+ 	found = 0;
+ 	char *cp;
+-	if ((cp = strstr(call, "-0")) != NULL)
+-	  *cp = '\0';
++
++
+ 	for (;ifcalls && *ifcalls; ++ifcalls, ++ifdevs) {
+           if (strcmp(call, *ifcalls) == 0) {
+ 	    found = 1;
+diff -ru reference/libax25-1.0.5/lib/ax25/axutils.c modified/libax25-1.0.5/lib/ax25/axutils.c
+--- reference/libax25-1.0.5/lib/ax25/axutils.c	2014-11-07 17:41:26.000000000 +0000
++++ modified/libax25-1.0.5/lib/ax25/axutils.c	2015-05-15 17:22:35.000000000 +0100
+@@ -199,17 +199,14 @@
+ 			*s++ = c;
+ 	}
+ 	
+-	/* Convention is:  -0 suffixes are NOT printed */
+-	if (a->ax25_call[6] & 0x1E) {
+-	       *s++ = '-';
+-
+-		if ((n = ((a->ax25_call[6] >> 1) & 0x0F)) > 9) {
+-			*s++ = '1';
+-			n -= 10;
+-		}
+-		*s++ = n + '0';
+-	}
++	*s++ = '-';
+ 
++	if ((n = ((a->ax25_call[6] >> 1) & 0x0F)) > 9) {
++		*s++ = '1';
++		n -= 10;
++	}
++	
++	*s++ = n + '0';
+ 	*s++ = '\0';
+ 
+ 	return buf;
+diff -ru reference/libax25-1.0.5/lib/ax25/nrconfig.c modified/libax25-1.0.5/lib/ax25/nrconfig.c
+--- reference/libax25-1.0.5/lib/ax25/nrconfig.c	2014-11-07 17:41:26.000000000 +0000
++++ modified/libax25-1.0.5/lib/ax25/nrconfig.c	2015-05-16 19:03:45.000000000 +0100
+@@ -216,8 +216,8 @@
+ 	strupr(alias);
+ 
+ 	char *cp;
+-	if ((cp = strstr(call, "-0")) != NULL)
+-	  *cp = 0;
++
++
+ 
+ 	found = 0;
+ 	for (;ifcalls && *ifcalls; ++ifcalls, ++ifdevs) {
+diff -ru reference/libax25-1.0.5/lib/ax25/procutils.c modified/libax25-1.0.5/lib/ax25/procutils.c
+--- reference/libax25-1.0.5/lib/ax25/procutils.c	2014-11-07 17:41:26.000000000 +0000
++++ modified/libax25-1.0.5/lib/ax25/procutils.c	2015-05-16 19:58:44.000000000 +0100
+@@ -70,6 +70,15 @@
+ 	return buf;
+ }
+ 
++static char *strip_zero_ssid(char *call)
++{
++	char *cp;
++
++	if ((cp = strstr(call, "-0")) != NULL)
++		*cp = 0;
++	return call;
++}
++
+ struct proc_ax25 *read_proc_ax25(void)
+ {
+ 	FILE *fp;
+@@ -336,6 +345,8 @@
+ 		cp = buffer;
+ 
+ 		safe_strncpy(new->call,  token(&cp, space), 9);
++		strip_zero_ssid(new->call);
++
+ 		safe_strncpy(new->alias, token(&cp, space), 6);
+ 
+ 		new->w     = safe_atoi(token(&cp, space));
+@@ -375,6 +386,7 @@
+ 			break;
+ 		if ((cp = nr_config_get_addr(name)) == NULL)
+ 			break;
++		strip_zero_ssid(cp);
+ 		safe_strncpy(new->call, cp, 9);
+ 		if ((cp = nr_config_get_alias(name)) == NULL)
+ 			break;
+@@ -658,6 +670,7 @@
+ 	static struct proc_nr_nodes n;
+ 	struct proc_nr_nodes *p, *list;
+ 
++	strip_zero_ssid(addr);
+ 	list = nodes ? nodes : read_proc_nr_nodes();
+ 	for (p = list; p != NULL; p = p->next) {
+ 		if (!strcasecmp(addr, p->call) || !strcasecmp(addr, p->alias)) {
+----------------------------------------------------------------------------
 
-    https://sourceforge.net/projects/xdxclusterclient/files/2.5.0/
+To apply to libax25-1.0.5 "cd" into libax25-1.0.5 and use
+	patch -p2 < <filename>
 
-Development is hosted at:
-
-    https://github.com/N0NB/xdx/
-
-Support can be requested via the Xdx mailing list:
-
-    https://sourceforge.net/p/xdxclusterclient/mailman/
-
-73, Nate
-
---=20
-
-"The optimist proclaims that we live in the best of all
-possible worlds.  The pessimist fears this is true."
-
-Ham radio, Linux, bikes, and more: http://www.n0nb.us
---
-To unsubscribe from this list: send the line "unsubscribe linux-hams" i=
-n
-the body of a message to majordomo@vger.kernel.org
-More majordomo info at  http://vger.kernel.org/majordomo-info.html
+-- 
+Regards
+	Richard
