@@ -1,47 +1,182 @@
-From: Richard Stearn <richard@rns-stearn.demon.co.uk>
-Subject: Re: Packet duplication in kernels 2.6 onwards
-Date: Sun, 17 May 2015 21:28:50 +0100
-Message-ID: <5558FA02.5070308@rns-stearn.demon.co.uk>
-References: <5547BACC.7000709@rns-stearn.demon.co.uk> <55483EB3.6070600@trinnet.net>
+From: Paul Lewis <paul@skywaves.demon.co.uk>
+Subject: Re: Netromd ssid-0 broadcasts being ignored
+Date: Sun, 17 May 2015 21:34:33 +0100
+Message-ID: <JNxUxZKZtPWVFwOX@skywaves.demon.co.uk>
+References: <iKOuAuAoraVVFwCg@skywaves.demon.co.uk>
+ <201505172004.t4HK4BQQ022187@ux4.g1sog>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <55483EB3.6070600@trinnet.net>
+In-Reply-To: <201505172004.t4HK4BQQ022187@ux4.g1sog>
 Sender: linux-hams-owner@vger.kernel.org
 List-ID: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"; format="flowed"
-To: linux-hams@vger.kernel.org
+Content-Transfer-Encoding: 7bit
+To: Richard Stearn <richard@rns-stearn.demon.co.uk>
+Cc: linux-hams@vger.kernel.org
 
-David Ranch wrote:
->   Hello Richard,
-> 
-> Can you give us some more details?  Are the duplicates on every packet?  Is this 
-> RX or TX duplicates  Only some?  Is this unproto or connected?  Are you using a 
-> HW TNC or a SW TNC?
-> I'm using the 3.17.5 kernel w/o issues.
+Hello Richard
 
-Refined the conditions a little.
+Many THANKS for taking the time and interest
+in fixing this callsign-0 (ssid 0 issue that I and others have.
 
-	1) Only occurs on ax25 packets containing IP payloads
-	2) Occurs in both UI and VC packets
-	3) Only occurs on packets being sent
-	4) Does not appear to be sent "to air" by mkiss module,
-	   i.e. the duplicate packet does not appear on the serial line.
-	5) Is visible in "listen" output
+In applying the patch on my ubuntu 14.4.1
+to the unoffical source release of libax25-1.0.5
 
-I discovered this as I am documenting the amateur radio protocols in
-wireshark.  It was also reported to Ubuntu (thank you Patrick) by
-Ugo Poddine.  In the discussion on the Ubuntu bug report it would appear
-that this is known about, hence my posting here to see what was known.
-Apparently nothing.
+the C callsign   (-0)  now works
+also the static routes for the  -0 callsign  entries
+are NOW being updated correctly.
+
+Patch installed today at 11:15 UK time
+and been running correctly for the
+past 9 hours.
+
+I am happy now.
+
+Next!
+Now back to checking why Xrouter node links fails to connect
+my system for the past many months, Pings replies work,
+73 de Paul G4APL SysOP GB7CIP MB7NCR
 
 
-Other things raised by this, in the process of rebuilding my test system
-I discovered that the ROSE kernel module did not unload correctly (actually
-not at all).  I traced this to the device usage counts not being maintained
-correctly.  I have a patch for this if anybody wants it.
+In message <201505172004.t4HK4BQQ022187@ux4.g1sog>, Richard Stearn 
+<richard@rns-stearn.demon.co.uk> writes
+>Paul Lewis did scribe:
+>>
+>> Hi All
+>>
+>> Since I moved to the latest netromd code in 2013-2015
+>> I have notice that there have been changes to the ssid-0 of
+>> nodes.
+>>
+>> Examples
+>>
+>> 1) issuing a C GB7BA  fails.  GB7BA-0 works
+>>              C GB7CIP fails   GB7CIP-0 works
+>>
+>
+>Hi Paul
+>
+>Try this patch against libax25-1.0.5, it is my attempt a reverting the
+>"strip -0" change in recent versions of libax25 :
+>
+>----------------------------------------------------------------------------
+>diff -ru reference/libax25-1.0.5/lib/ax25/axconfig.c 
+>modified/libax25-1.0.5/lib/ax25/axconfig.c
+>--- reference/libax25-1.0.5/lib/ax25/axconfig.c        2014-11-07 
+>17:41:26.000000000 +0000
+>+++ modified/libax25-1.0.5/lib/ax25/axconfig.c 2015-05-16 
+>19:03:27.000000000 +0100
+>@@ -238,8 +238,8 @@
+>       strupr(call);
+>       found = 0;
+>       char *cp;
+>-      if ((cp = strstr(call, "-0")) != NULL)
+>-        *cp = '\0';
+>+
+>+
+>       for (;ifcalls && *ifcalls; ++ifcalls, ++ifdevs) {
+>           if (strcmp(call, *ifcalls) == 0) {
+>           found = 1;
+>diff -ru reference/libax25-1.0.5/lib/ax25/axutils.c 
+>modified/libax25-1.0.5/lib/ax25/axutils.c
+>--- reference/libax25-1.0.5/lib/ax25/axutils.c 2014-11-07 
+>17:41:26.000000000 +0000
+>+++ modified/libax25-1.0.5/lib/ax25/axutils.c  2015-05-15 
+>17:22:35.000000000 +0100
+>@@ -199,17 +199,14 @@
+>                       *s++ = c;
+>       }
+>
+>-      /* Convention is:  -0 suffixes are NOT printed */
+>-      if (a->ax25_call[6] & 0x1E) {
+>-             *s++ = '-';
+>-
+>-              if ((n = ((a->ax25_call[6] >> 1) & 0x0F)) > 9) {
+>-                      *s++ = '1';
+>-                      n -= 10;
+>-              }
+>-              *s++ = n + '0';
+>-      }
+>+      *s++ = '-';
+>
+>+      if ((n = ((a->ax25_call[6] >> 1) & 0x0F)) > 9) {
+>+              *s++ = '1';
+>+              n -= 10;
+>+      }
+>+
+>+      *s++ = n + '0';
+>       *s++ = '\0';
+>
+>       return buf;
+>diff -ru reference/libax25-1.0.5/lib/ax25/nrconfig.c 
+>modified/libax25-1.0.5/lib/ax25/nrconfig.c
+>--- reference/libax25-1.0.5/lib/ax25/nrconfig.c        2014-11-07 
+>17:41:26.000000000 +0000
+>+++ modified/libax25-1.0.5/lib/ax25/nrconfig.c 2015-05-16 
+>19:03:45.000000000 +0100
+>@@ -216,8 +216,8 @@
+>       strupr(alias);
+>
+>       char *cp;
+>-      if ((cp = strstr(call, "-0")) != NULL)
+>-        *cp = 0;
+>+
+>+
+>
+>       found = 0;
+>       for (;ifcalls && *ifcalls; ++ifcalls, ++ifdevs) {
+>diff -ru reference/libax25-1.0.5/lib/ax25/procutils.c 
+>modified/libax25-1.0.5/lib/ax25/procutils.c
+>--- reference/libax25-1.0.5/lib/ax25/procutils.c       2014-11-07 
+>17:41:26.000000000 +0000
+>+++ modified/libax25-1.0.5/lib/ax25/procutils.c        2015-05-16 
+>19:58:44.000000000 +0100
+>@@ -70,6 +70,15 @@
+>       return buf;
+> }
+>
+>+static char *strip_zero_ssid(char *call)
+>+{
+>+      char *cp;
+>+
+>+      if ((cp = strstr(call, "-0")) != NULL)
+>+              *cp = 0;
+>+      return call;
+>+}
+>+
+> struct proc_ax25 *read_proc_ax25(void)
+> {
+>       FILE *fp;
+>@@ -336,6 +345,8 @@
+>               cp = buffer;
+>
+>               safe_strncpy(new->call,  token(&cp, space), 9);
+>+              strip_zero_ssid(new->call);
+>+
+>               safe_strncpy(new->alias, token(&cp, space), 6);
+>
+>               new->w     = safe_atoi(token(&cp, space));
+>@@ -375,6 +386,7 @@
+>                       break;
+>               if ((cp = nr_config_get_addr(name)) == NULL)
+>                       break;
+>+              strip_zero_ssid(cp);
+>               safe_strncpy(new->call, cp, 9);
+>               if ((cp = nr_config_get_alias(name)) == NULL)
+>                       break;
+>@@ -658,6 +670,7 @@
+>       static struct proc_nr_nodes n;
+>       struct proc_nr_nodes *p, *list;
+>
+>+      strip_zero_ssid(addr);
+>       list = nodes ? nodes : read_proc_nr_nodes();
+>       for (p = list; p != NULL; p = p->next) {
+>               if (!strcasecmp(addr, p->call) || !strcasecmp(addr, p->alias)) {
+>----------------------------------------------------------------------------
+>
+>To apply to libax25-1.0.5 "cd" into libax25-1.0.5 and use
+>       patch -p2 < <filename>
+>
 
 -- 
-Regards
-	Richard
-
+paul@skywaves.demon.co.uk
