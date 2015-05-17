@@ -1,33 +1,63 @@
-From: Richard Stearn <richard@rns-stearn.demon.co.uk>
-Subject: Re: Netromd ssid-0 broadcasts being ignored
-Date: Sat, 16 May 2015 20:46:26 +0100
-Message-ID: <55579E92.9040205@rns-stearn.demon.co.uk>
-References: <iKOuAuAoraVVFwCg@skywaves.demon.co.uk> <5557672B.1060501@trinnet.net>
+From: Nate Bargmann <n0nb@n0nb.us>
+Subject: Xdx 2.5.0 released
+Date: Sun, 17 May 2015 07:38:17 -0500
+Message-ID: <20150517123817.GP3992@n0nb.us>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <5557672B.1060501@trinnet.net>
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=n0nb.us; s=default;
+	h=Content-Transfer-Encoding:Content-Type:MIME-Version:Message-ID:Subject:To:From:Date; bh=M7kK66dX5ZpanO0OaBEfjDJS1bmzVRCYAfayH/r7nH0=;
+	b=u2TtmaCKbvyjrfVwkkuybs4DMhvZ0wgH2seIgIxf7yjKp/3enJsbfIKo9jOQKwMz+XT+CEyZDBsr9XuFxuodn87Ogac2OjGK/hyBtLvcy1Ey7nMiS/H0KvM3WBnlI7obXt7Knfd9leXbFKG5TYMqULsqRjs1IhIp1uRIvDplSrs=;
+Content-Disposition: inline
 Sender: linux-hams-owner@vger.kernel.org
 List-ID: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"; format="flowed"
-To: Linux Hams <linux-hams@vger.kernel.org>
+Content-Type: text/plain; charset="utf-8"
+To: Linux Hams <linux-hams@vger.kernel.org>, Debian Hams <debian-hams@lists.debian.org>, Xdx list <xdxclusterclient-discuss@lists.sourceforge.net>
 
-Hi David
+After plenty of time in incubation, I am pleased to announce the releas=
+e
+of Xdx 2.5.0.  Xdx is a lightweight X Window System DX Cluster client
+for POSIX systems (Linux tested).  Originally written by Joop
+Stakenborg, PG4I, maintenance was picked up by Nate Bargmann, N0NB, in
+early 2014.  2.5.0 completes implementation of some UI features started
+by Joop.
 
-Whilst I have a working test environment I had a look at this with
-the following results:
+The ChangeLog summarizes the changes of the 2.5.0 release:
 
-ax25-apps       ax25-tools      libax25         node
-0.0.6           0.0.8           0.0.11          0.3.3   works
-0.0.8-rc4       0.0.10-rc4      0.0.12-rc4      0.3.3   does not work
-1.0.5           1.0.3           1.0.5           0.3.3   does not work
+Changelog for version Xdx (2.5)
+  * Complete function key command entry support.
+  * Add close dialog when Ctl-Q is used to exit.
+  * Update manual page to current conventions.
+  * Update GPL boiler plate for current FSF mailing address.
+    Thanks, Walter Fey, DL8FCL.
+  * Spanish translation update from Baltasar, EA8BVP.
+  * German translation update from Tom, DL1JBE.
+  * Polish translation update from Bogus=C5=82aw, SQ5TB.
+  * Update to CTY-2505 =E2=80=93 20 April 2015.
+  * Add Keywords entry to desktop file.
 
-("works"/"does not work" is in terms of Paul's original issue)
+The source tarball can be downloaded from:
 
-A look at this site https://code.google.com/p/linuxax25/w/list
-indicates that libax25 code is identical between 0.0.12-rc4 and
-1.0.5, the difference being the directory tree layout.
+    https://sourceforge.net/projects/xdxclusterclient/files/2.5.0/
 
--- 
-Regards
-	Richard
+Development is hosted at:
+
+    https://github.com/N0NB/xdx/
+
+Support can be requested via the Xdx mailing list:
+
+    https://sourceforge.net/p/xdxclusterclient/mailman/
+
+73, Nate
+
+--=20
+
+"The optimist proclaims that we live in the best of all
+possible worlds.  The pessimist fears this is true."
+
+Ham radio, Linux, bikes, and more: http://www.n0nb.us
+--
+To unsubscribe from this list: send the line "unsubscribe linux-hams" i=
+n
+the body of a message to majordomo@vger.kernel.org
+More majordomo info at  http://vger.kernel.org/majordomo-info.html
