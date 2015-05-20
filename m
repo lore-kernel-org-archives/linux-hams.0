@@ -1,93 +1,196 @@
 From: Richard Stearn <richard@rns-stearn.demon.co.uk>
-Subject: Re: Packet duplication in kernels 2.6 onwards
-Date: Wed, 20 May 2015 13:33:42 +0100
-Message-ID: <555C7F26.7030006@rns-stearn.demon.co.uk>
-References: <5547BACC.7000709@rns-stearn.demon.co.uk> <55483EB3.6070600@trinnet.net> <5558FA02.5070308@rns-stearn.demon.co.uk>
+Subject: [PATCH net-next 1/1] - ROSE device usage count
+Date: Wed, 20 May 2015 15:31:25 +0100 (BST)
+Message-ID: <201505201431.t4KEVQbR014971@ux4.g1sog>
 Mime-Version: 1.0
 Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <5558FA02.5070308@rns-stearn.demon.co.uk>
 Sender: linux-hams-owner@vger.kernel.org
 List-ID: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"; format="flowed"
+Content-Type: text/plain; charset="us-ascii"
 To: linux-hams@vger.kernel.org
 
-I think I have got to the bottom of this issue.  The good news is that it is
-not a bug in the AX25 protocol or driver code, the bad news is that it is
-the result of an architectural change in the kernel.
+Whilst investigating couple of issues in AX25 I discovered that
+whilst the NETROM driver had been updated to manage the device
+usage count the ROSE drive had not.  The result being that the
+ROSE driver post kernel 2.4.x would not unload cleanly and
+required a reboot to clean up.
 
-One correction to my original post, the duplication is on receive not
-transmit.
+As both NETROM and ROSE drivers are broadly similar in design
+and implementation I have updated the socket locking and device
+usage count management in the ROSE driver to match the NETROM
+driver.
 
-In kernels upto and including 2.4 where an AX25 payload was IP or ARP the
-packet was handed off by calling the ip or arp protocol driver directly.
-In kernels 2.6 onwards after adjusting the packet details the payload is
-handed back to the network interface for that interface to reroute the
-packet into the IP or ARP protocol drivers.
-
-A couple of code fragments:
-
-from 2.4.37.11:
-net/ax25/ax25_in.c
-287                          case AX25_P_IP:
-288                                  skb_pull(skb,2);                /* drop PID/CTRL */
-289                                  skb->h.raw    = skb->data;
-290                                  skb->nh.raw   = skb->data;
-291                                  skb->dev      = dev;
-292                                  skb->pkt_type = PACKET_HOST;
-293                                  skb->protocol = htons(ETH_P_IP);
-294                                  ip_rcv(skb, dev, ptype);        /* Note ptype here is 
-the wrong one, fix me later */
-295                                  break;
-296
-
-from 2.6.32.65:
-net/ax25/ax25_in.c
-244                  case AX25_P_IP:
-245                          skb_pull(skb,2);                /* drop PID/CTRL */
-246                          skb_reset_transport_header(skb);
-247                          skb_reset_network_header(skb);
-248                          skb->dev      = dev;
-249                          skb->pkt_type = PACKET_HOST;
-250                          skb->protocol = htons(ETH_P_IP);
-251                          netif_rx(skb);
-252                          break;
-
-I was able to revert kernel 2.6.32.65 to the 2.4 method as ip_rcv & arp_rcv still
-exist and it was a simple matter to expose the functions (exporting the symbols and
-adding to the header files).  Once reverted the duplicated packets in the 2.6 kernel
-disappeared.
-
-All the testing has been done using virtual machines linked by a virtual serial link.
-Testing was done to establish connections using AX25-UI, AX25-VC, NETROM, ROSE IP/ICMP,
-IP/UDP & IP/TCP.
-The first setup was of two 2.4.37.11 kernels.
-The second setup was of one 2.4.37.11 kernel and one 2.6.32.65 kernel.
-The third setup was of one 2.4.37.11 kernel and one 3.2.69 kernel.
-
-For the first setup no duplicates were seen at any point.
-
-For the second setup, duplicates of received packets were seen on the 2.6 kernel
-wherever IP was involved. No duplicates were seen on the 2.4 kernel.
-
-For the third setup, duplicates of received packets were seen on the 3.2 kernel
-wherever IP was involved. No duplicates were seen on the 2.4 kernel.
-
-These duplicate packets are seen by both "listen" and libpcap (and thus tcpdump or
-wireshark).  From the protocol analysis point of view any kernel 2.6 onwards is
-suspect where encapsulated protocols, such as IP-over-AX25, are concerned.
-
-Notably NETROM and ROSE are not affected, this may be related to the manner in
-which those protocols "register" their handlers with AX25.  The AX25 protocol
-driver considers AX25_P_TEXT, AX25_P_SEGMENT, AX25_P_IP or AX25_P_ARP as
-"internal" protocols (ax25/ax25_iface.c).  The solution may be to "register"
-IP & ARP with AX25 although how to achieve this I can not immediate see.
-
-The above explains why the amateur radio protocols work however when one starts
-to look at the packets analytically what is seen at the network interface
-for IP & ARP is false.
-
-Of course I could have it totally wrong.
+git diff against net-next
+---------------------------------------------------------------------
+diff --git a/net/rose/af_rose.c b/net/rose/af_rose.c
+index 36dbc2d..3b90a2d 100644
+--- a/net/rose/af_rose.c
++++ b/net/rose/af_rose.c
+@@ -662,23 +662,31 @@ static int rose_bind(struct socket *sock, struct sockaddr *uaddr, int addr_len)
+ 	ax25_uid_assoc *user;
+ 	int n;
+ 
+-	if (!sock_flag(sk, SOCK_ZAPPED))
++	lock_sock(sk);
++	if (!sock_flag(sk, SOCK_ZAPPED)) {
++		release_sock(sk);
+ 		return -EINVAL;
+-
+-	if (addr_len != sizeof(struct sockaddr_rose) && addr_len != sizeof(struct full_sockaddr_rose))
++	}
++	if (addr_len != sizeof(struct sockaddr_rose) && addr_len != sizeof(struct full_sockaddr_rose)) {
++		release_sock(sk);
+ 		return -EINVAL;
+-
+-	if (addr->srose_family != AF_ROSE)
++	}
++	if (addr->srose_family != AF_ROSE) {
++		release_sock(sk);
+ 		return -EINVAL;
+-
+-	if (addr_len == sizeof(struct sockaddr_rose) && addr->srose_ndigis > 1)
++	}
++	if (addr_len == sizeof(struct sockaddr_rose) && addr->srose_ndigis > 1) {
++		release_sock(sk);
+ 		return -EINVAL;
+-
+-	if ((unsigned int) addr->srose_ndigis > ROSE_MAX_DIGIS)
++	}
++	if ((unsigned int) addr->srose_ndigis > ROSE_MAX_DIGIS) {
++		release_sock(sk);
+ 		return -EINVAL;
+-
+-	if ((dev = rose_dev_get(&addr->srose_addr)) == NULL)
++	}
++	if ((dev = rose_dev_get(&addr->srose_addr)) == NULL) {
++		release_sock(sk);
+ 		return -EADDRNOTAVAIL;
++	}
+ 
+ 	source = &addr->srose_call;
+ 
+@@ -687,8 +695,11 @@ static int rose_bind(struct socket *sock, struct sockaddr *uaddr, int addr_len)
+ 		rose->source_call = user->call;
+ 		ax25_uid_put(user);
+ 	} else {
+-		if (ax25_uid_policy && !capable(CAP_NET_BIND_SERVICE))
++		if (ax25_uid_policy && !capable(CAP_NET_BIND_SERVICE)) {
++			release_sock(sk);
++			dev_put(dev);
+ 			return -EACCES;
++		}
+ 		rose->source_call   = *source;
+ 	}
+ 
+@@ -709,6 +720,8 @@ static int rose_bind(struct socket *sock, struct sockaddr *uaddr, int addr_len)
+ 	rose_insert_socket(sk);
+ 
+ 	sock_reset_flag(sk, SOCK_ZAPPED);
++	dev_put(dev);
++	release_sock(sk);
+ 
+ 	return 0;
+ }
+@@ -785,6 +798,7 @@ static int rose_connect(struct socket *sock, struct sockaddr *uaddr, int addr_le
+ 
+ 		user = ax25_findbyuid(current_euid());
+ 		if (!user) {
++			dev_put(dev);
+ 			err = -EINVAL;
+ 			goto out_release;
+ 		}
+@@ -794,6 +808,7 @@ static int rose_connect(struct socket *sock, struct sockaddr *uaddr, int addr_le
+ 		rose->device      = dev;
+ 		ax25_uid_put(user);
+ 
++		dev_put(dev);
+ 		rose_insert_socket(sk);		/* Finish the bind */
+ 	}
+ 	rose->dest_addr   = addr->srose_addr;
+@@ -1607,22 +1622,22 @@ static void __exit rose_exit(void)
+ 
+ 	rose_rt_free();
+ 
+-	ax25_protocol_release(AX25_P_ROSE);
+-	ax25_linkfail_release(&rose_linkfail_notifier);
+-
+ 	if (ax25cmp(&rose_callsign, &null_ax25_address) != 0)
+ 		ax25_listen_release(&rose_callsign, NULL);
+ 
+ #ifdef CONFIG_SYSCTL
+ 	rose_unregister_sysctl();
+ #endif
++
++	ax25_linkfail_release(&rose_linkfail_notifier);
++	ax25_protocol_release(AX25_P_ROSE);
++
+ 	unregister_netdevice_notifier(&rose_dev_notifier);
+ 
+ 	sock_unregister(PF_ROSE);
+ 
+ 	for (i = 0; i < rose_ndevs; i++) {
+ 		struct net_device *dev = dev_rose[i];
+-
+ 		if (dev) {
+ 			unregister_netdev(dev);
+ 			free_netdev(dev);
+@@ -1632,5 +1647,4 @@ static void __exit rose_exit(void)
+ 	kfree(dev_rose);
+ 	proto_unregister(&rose_proto);
+ }
+-
+ module_exit(rose_exit);
+diff --git a/net/rose/rose_loopback.c b/net/rose/rose_loopback.c
+index 3444562..ea48cee 100644
+--- a/net/rose/rose_loopback.c
++++ b/net/rose/rose_loopback.c
+@@ -102,6 +102,7 @@ static void rose_loopback_timer(unsigned long param)
+ 			if ((dev = rose_dev_get(dest)) != NULL) {
+ 				if (rose_rx_call_request(skb, dev, rose_loopback_neigh, lci_o) == 0)
+ 					kfree_skb(skb);
++				dev_put(dev);
+ 			} else {
+ 				kfree_skb(skb);
+ 			}
+diff --git a/net/rose/rose_route.c b/net/rose/rose_route.c
+index 40148932..46505317 100644
+--- a/net/rose/rose_route.c
++++ b/net/rose/rose_route.c
+@@ -599,6 +599,7 @@ static struct net_device *rose_ax25_dev_find(char *devname)
+ 	if ((dev->flags & IFF_UP) && dev->type == ARPHRD_AX25)
+ 		return dev;
+ 
++	dev_put(dev);
+ 	return NULL;
+ }
+ 
+@@ -615,6 +616,8 @@ struct net_device *rose_dev_first(void)
+ 			if (first == NULL || strncmp(dev->name, first->name, 3) < 0)
+ 				first = dev;
+ 	}
++	if (first)
++		dev_hold(first);
+ 	rcu_read_unlock();
+ 
+ 	return first;
+@@ -742,6 +745,7 @@ int rose_rt_ioctl(unsigned int cmd, void __user *arg)
+ 		if (rose_route.ndigis > AX25_MAX_DIGIS)
+ 			return -EINVAL;
+ 		err = rose_add_node(&rose_route, dev);
++		dev_put(dev);
+ 		return err;
+ 
+ 	case SIOCDELRT:
+@@ -750,6 +754,7 @@ int rose_rt_ioctl(unsigned int cmd, void __user *arg)
+ 		if ((dev = rose_ax25_dev_find(rose_route.device)) == NULL)
+ 			return -EINVAL;
+ 		err = rose_del_node(&rose_route, dev);
++		dev_put(dev);
+ 		return err;
+ 
+ 	case SIOCRSCLRRT:
+---------------------------------------------------------------------
 
 -- 
 Regards
