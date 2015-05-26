@@ -1,61 +1,36 @@
-From: David Ranch <linux-hams@trinnet.net>
-Subject: Linpac 0.21 (AX.25 packet radio application) posted
-Date: Mon, 25 May 2015 10:51:27 -0700
-Message-ID: <5563611F.5020204@trinnet.net>
+From: Ralf Baechle DL5RB <ralf@linux-mips.org>
+Subject: Re: Packet duplication in kernels 2.6 onwards
+Date: Tue, 26 May 2015 09:29:06 +0200
+Message-ID: <20150526072905.GB8600@linux-mips.org>
+References: <5547BACC.7000709@rns-stearn.demon.co.uk>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
+Content-Disposition: inline
+In-Reply-To: <5547BACC.7000709@rns-stearn.demon.co.uk>
 Sender: linux-hams-owner@vger.kernel.org
 List-ID: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"; format="flowed"
-To: Linux Hams <linux-hams@vger.kernel.org>
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+To: Richard Stearn <richard@rns-stearn.demon.co.uk>
+Cc: linux-hams@vger.kernel.org
 
+On Mon, May 04, 2015 at 07:30:36PM +0100, Richard Stearn wrote:
 
-Hello Everyone,
+> Just put togther a packet system to test wireshark on and
+> discovered that packets are being duplicated at the ax0 interface.
+> 
+> My tests so far show that the issue is not present in kernels
+> 2.4.29 & 2.4.37.11 and is present in kernel 2.6.33.3.
+> I also have reports of the issue being in kernel 3.x.x.x
+> 
+> Is this a known issue?
+> 
+> If so is there any idea as to when it appeared? My guess is during
+> the 2.5 kernel series.
+> 
+> Has anybody on the list attempted to trace the cause?
 
-This is just a heads up that I have posted Linpac 0.21: 
-https://sourceforge.net/projects/linpac/
+There has been a number of pretty vague bug reports on the issue that
+have been insufficient for me to replicate the issue on my system.
 
-
-What is Linpac?
-
-LinPac is an Ncurses based AX.25 packet radio terminal for use with 
-Linux's native AX.25 stack.  It mimics many of the feature packed 
-HOST-MODE programs that used to exist for Dos (PkGold, etc) but with any 
-TNC running in KISS mode. It allows wide configuration and easy addition 
-of new functions and special functions needed by the user. It's intended 
-for keyboard-to-keyboard use but also supports receiving basic PBBS 
-messages, local Converse-link chat rooms, basic node commands like 
-mheard and making outgoing connections, etc.
-
-The aim was to minimize the amount of 'hard coded' functions and create 
-a complete set of applications that can be easily expanded and/or 
-completely reconfigured via a simple macro language.  There is also a 
-developing GUI version (1.x branch) that provides either a Java Swing 
-GUI or the familiar Ncurses UI.
-
-
-Changes since 0.20:
---
-Memory cleanups
-Fixed Debian based ncurses package dependency
-Added a cron-able script that can send email and SMS notifications when 
-you get a new Linpac message
-Added a script to start linpac via screen for being able to detach and 
-re-attach to the session from anywhere
-Added some Ncurses fixes for spurious "x"'s showed up instead of 
-vertical lines
-Added lots of things to the linpac-todo.txt  (we'd love to get more C 
-developers to help out if you have some time)
---
-
-There aren't any binaries posted at the moment but I can email Centos6 
-RPMs and Raspian(wheezy) .debs if requested.  Everyone else will need to 
-read the README file included in the sources on how to install the 
-required dependencies and build the package yourself.  It's not hard and 
-is quite fast.  Once installed, Linpac will NOT work without a properly 
-configured Linux AX.25 stack.  There are many resources out on the 
-Internet on how to do this and I can help out as well if requested.
-
---David
-KI6ZHD
+  Ralf
