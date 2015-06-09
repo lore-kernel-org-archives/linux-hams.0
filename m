@@ -1,48 +1,25 @@
-From: Ralf Baechle DL5RB <ralf@linux-mips.org>
-Subject: Re: [PATCH] net: rose: Use mod_timer
-Date: Sat, 6 Jun 2015 10:02:30 +0200
-Message-ID: <20150606080230.GB16240@linux-mips.org>
-References: <20150606042234.GA15542@vaishali-Ideapad-Z570>
+From: Richard Stearn <richard@rns-stearn.demon.co.uk>
+Subject: Re: [PATCH net-next 1/1] - ROSE device usage count
+Date: Tue, 09 Jun 2015 13:34:02 +0100
+Message-ID: <5576DD3A.7090708@rns-stearn.demon.co.uk>
+References: <201505201431.t4KEVQbR014971@ux4.g1sog> <555CC7A8.30108@trinnet.net> <5576BE7C.7070704@free.fr>
 Mime-Version: 1.0
+Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
-Content-Disposition: inline
-In-Reply-To: <20150606042234.GA15542@vaishali-Ideapad-Z570>
+In-Reply-To: <5576BE7C.7070704@free.fr>
 Sender: linux-hams-owner@vger.kernel.org
 List-ID: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-To: Vaishali Thakkar <vthakkar1994@gmail.com>
-Cc: "David S. Miller" <davem@davemloft.net>, linux-hams@vger.kernel.org, netdev@vger.kernel.org, linux-kernel@vger.kernel.org, Julia Lawall <julia.lawall@lip6.fr>
+Content-Type: text/plain; charset="us-ascii"; format="flowed"
+To: Linux Hams <linux-hams@vger.kernel.org>
 
-Hi Vaishali,
+Hi Bernard
 
-On Sat, Jun 06, 2015 at 09:52:34AM +0530, Vaishali Thakkar wrote:
+Thank you for confirming the issue and the fix.
 
-> Use mod_timer instead of del_timer followed by add_timer to update
-> the expire field of the active timer.
-> 
-> The semantic patch that performs this transformation is as follows:
-> 
-> @change@
-> expression e1, e2, e3, e4;
-> @@
-> 
-> - del_timer(&e1);
-> ... when != e1 = e3
-> - e1.expires = e2;
-> ... when != e1 = e4
-> - add_timer (&e1);
-> + mod_timer (&e1, e2);
+Bug raised as:
+	https://bugzilla.kernel.org/show_bug.cgi?id=99711
 
-This isn't quite right.  All the instances of this pattern in the ROSE
-stack also modify the timer's data and function fields which if the timer
-is still running and expiring while being fiddled with, might result in
-a race condition, that is the old function but new data field being used
-in combination or something like that.
+-- 
+Regards
+	Richard
 
-For some of the timers (maybe all?) it should be possible to proof that
-always the same values for data and function are being used.  These
-initializations could then be used elsewhere and the code could then
-indeed be switched to mod_timer.
-
-  Ralf
