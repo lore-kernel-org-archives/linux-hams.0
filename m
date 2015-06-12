@@ -1,13 +1,13 @@
 From: Andy Lutomirski <luto@kernel.org>
-Subject: [PATCH v2 08/17] baycom_epp: Replace rdtscl() with native_read_tsc()
-Date: Fri, 12 Jun 2015 16:44:48 -0700
-Message-ID: <1195ce0c7f34169ff3006341b77806184a46b9bf.1434152603.git.luto@kernel.org>
-References: <cover.1434152603.git.luto@kernel.org>
-Return-path: <linux-kernel-owner@vger.kernel.org>
-In-Reply-To: <cover.1434152603.git.luto@kernel.org>
-In-Reply-To: <cover.1434152603.git.luto@kernel.org>
-References: <cover.1434152603.git.luto@kernel.org>
-Sender: linux-kernel-owner@vger.kernel.org
+Subject: [PATCH 08/17] baycom_epp: Replace rdtscl() with native_read_tsc()
+Date: Fri, 12 Jun 2015 16:41:42 -0700
+Message-ID: <1195ce0c7f34169ff3006341b77806184a46b9bf.1434152192.git.luto@kernel.org>
+References: <cover.1434152192.git.luto@kernel.org>
+Return-path: <linux-hams-owner@vger.kernel.org>
+In-Reply-To: <cover.1434152192.git.luto@kernel.org>
+In-Reply-To: <cover.1434152192.git.luto@kernel.org>
+References: <cover.1434152192.git.luto@kernel.org>
+Sender: linux-hams-owner@vger.kernel.org
 List-ID: <linux-hams.vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="us-ascii"
@@ -39,3 +39,4 @@ index 83c7cce0d172..44e5c3b5e0af 100644
  #define GETTICK(x)
 -- 
 2.4.2
+
