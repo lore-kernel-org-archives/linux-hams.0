@@ -1,202 +1,293 @@
-From: Richard Stearn <richard@rns-stearn.demon.co.uk>
-Subject: [PATCH net-next 1/1] - ROSE device usage count - repost with signoff
-Date: Mon, 15 Jun 2015 19:45:34 +0100 (BST)
-Message-ID: <201506151845.t5FIjYEl008610@ux4.g1sog>
-References: <201505201431.t4KEVQbR014971@ux4.g1sog>
+From: Ralf Baechle DL5RB <ralf@linux-mips.org>
+Subject: [PATCH] NET: ROSE: Fix neighbour reference counting issues. signoff
+Date: Mon, 15 Jun 2015 21:16:44 +0200
+Message-ID: <20150615191644.GB11279@linux-mips.org>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <201505201431.t4KEVQbR014971@ux4.g1sog>
+Content-Disposition: inline
 Sender: linux-hams-owner@vger.kernel.org
 List-ID: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
-To: linux-hams@vger.kernel.org
+Content-Transfer-Encoding: 7bit
+To: Richard Stearn <richard@rns-stearn.demon.co.uk>, Bernard Pidoux <f6bvp@free.fr>
+Cc: linux-hams@vger.kernel.org
 
-Whilst investigating couple of issues in AX25 I discovered that
-whilst the NETROM driver had been updated to manage the device
-usage count the ROSE drive had not.  The result being that the
-ROSE driver post kernel 2.4.x would not unload cleanly and
-required a reboot to clean up.
+Richard,
 
-As both NETROM and ROSE drivers are broadly similar in design
-and implementation I have updated the socket locking and device
-usage count management in the ROSE driver to match the NETROM
-driver.
+I think there's another reference counting issues involving the
+rose_neighbour structures' use member which was only a 16 bit integer.
+The increment/decrement operations on this element will compile into
+single instructions on x86 so will be atomic on uniprocessor systems
+but bad things might happen on multiprocessor systems or load/store
+architectures or just because GCC feels like it.
 
-git diff against net-next
----
-Signed-off-by: Richard W. Stearn richard@rns-stearn.demon.co.uk
+Signed-off-by: Ralf Baechle <ralf@linux-mips.org>
 
-
+diff --git a/include/net/rose.h b/include/net/rose.h
+index 50811fe..ad163c1 100644
+--- a/include/net/rose.h
++++ b/include/net/rose.h
+@@ -7,6 +7,7 @@
+ #ifndef _ROSE_H
+ #define _ROSE_H 
+ 
++#include <linux/atomic.h>
+ #include <linux/rose.h>
+ #include <net/sock.h>
+ 
+@@ -94,7 +95,7 @@ struct rose_neigh {
+ 	ax25_cb			*ax25;
+ 	struct net_device		*dev;
+ 	unsigned short		count;
+-	unsigned short		use;
++	atomic_t		use;
+ 	unsigned int		number;
+ 	char			restarted;
+ 	char			dce_mode;
 diff --git a/net/rose/af_rose.c b/net/rose/af_rose.c
-index 36dbc2d..3b90a2d 100644
+index 327f40e..8b8d0b0 100644
 --- a/net/rose/af_rose.c
 +++ b/net/rose/af_rose.c
-@@ -662,23 +662,31 @@ static int rose_bind(struct socket *sock, struct sockaddr *uaddr, int addr_len)
- 	ax25_uid_assoc *user;
- 	int n;
+@@ -10,6 +10,7 @@
+  * Copyright (C) Tomi Manninen OH2BNS (oh2bns@sral.fi)
+  */
  
--	if (!sock_flag(sk, SOCK_ZAPPED))
-+	lock_sock(sk);
-+	if (!sock_flag(sk, SOCK_ZAPPED)) {
-+		release_sock(sk);
- 		return -EINVAL;
--
--	if (addr_len != sizeof(struct sockaddr_rose) && addr_len != sizeof(struct full_sockaddr_rose))
-+	}
-+	if (addr_len != sizeof(struct sockaddr_rose) && addr_len != sizeof(struct full_sockaddr_rose)) {
-+		release_sock(sk);
- 		return -EINVAL;
--
--	if (addr->srose_family != AF_ROSE)
-+	}
-+	if (addr->srose_family != AF_ROSE) {
-+		release_sock(sk);
- 		return -EINVAL;
--
--	if (addr_len == sizeof(struct sockaddr_rose) && addr->srose_ndigis > 1)
-+	}
-+	if (addr_len == sizeof(struct sockaddr_rose) && addr->srose_ndigis > 1) {
-+		release_sock(sk);
- 		return -EINVAL;
--
--	if ((unsigned int) addr->srose_ndigis > ROSE_MAX_DIGIS)
-+	}
-+	if ((unsigned int) addr->srose_ndigis > ROSE_MAX_DIGIS) {
-+		release_sock(sk);
- 		return -EINVAL;
--
--	if ((dev = rose_dev_get(&addr->srose_addr)) == NULL)
-+	}
-+	if ((dev = rose_dev_get(&addr->srose_addr)) == NULL) {
-+		release_sock(sk);
- 		return -EADDRNOTAVAIL;
-+	}
++#include <linux/atomic.h>
+ #include <linux/capability.h>
+ #include <linux/module.h>
+ #include <linux/moduleparam.h>
+@@ -172,7 +173,7 @@ void rose_kill_by_neigh(struct rose_neigh *neigh)
  
- 	source = &addr->srose_call;
- 
-@@ -687,8 +695,11 @@ static int rose_bind(struct socket *sock, struct sockaddr *uaddr, int addr_len)
- 		rose->source_call = user->call;
- 		ax25_uid_put(user);
- 	} else {
--		if (ax25_uid_policy && !capable(CAP_NET_BIND_SERVICE))
-+		if (ax25_uid_policy && !capable(CAP_NET_BIND_SERVICE)) {
-+			release_sock(sk);
-+			dev_put(dev);
- 			return -EACCES;
-+		}
- 		rose->source_call   = *source;
+ 		if (rose->neighbour == neigh) {
+ 			rose_disconnect(s, ENETUNREACH, ROSE_OUT_OF_ORDER, 0);
+-			rose->neighbour->use--;
++			atomic_dec(&rose->neighbour->use);
+ 			rose->neighbour = NULL;
+ 		}
  	}
+@@ -193,7 +194,7 @@ static void rose_kill_by_device(struct net_device *dev)
+ 		if (rose->device == dev) {
+ 			rose_disconnect(s, ENETUNREACH, ROSE_OUT_OF_ORDER, 0);
+ 			if (rose->neighbour)
+-				rose->neighbour->use--;
++				atomic_dec(&rose->neighbour->use);
+ 			rose->device = NULL;
+ 		}
+ 	}
+@@ -619,7 +620,7 @@ static int rose_release(struct socket *sock)
+ 		break;
  
-@@ -709,6 +720,8 @@ static int rose_bind(struct socket *sock, struct sockaddr *uaddr, int addr_len)
- 	rose_insert_socket(sk);
+ 	case ROSE_STATE_2:
+-		rose->neighbour->use--;
++		atomic_dec(&rose->neighbour->use);
+ 		release_sock(sk);
+ 		rose_disconnect(sk, 0, -1, -1);
+ 		lock_sock(sk);
+@@ -833,7 +834,7 @@ static int rose_connect(struct socket *sock, struct sockaddr *uaddr, int addr_le
  
- 	sock_reset_flag(sk, SOCK_ZAPPED);
-+	dev_put(dev);
-+	release_sock(sk);
+ 	rose->state = ROSE_STATE_1;
+ 
+-	rose->neighbour->use++;
++	atomic_inc(&rose->neighbour->use);
+ 
+ 	rose_write_internal(sk, ROSE_CALL_REQUEST);
+ 	rose_start_heartbeat(sk);
+@@ -1033,7 +1034,7 @@ int rose_rx_call_request(struct sk_buff *skb, struct net_device *dev, struct ros
+ 	make_rose->device        = dev;
+ 	make_rose->facilities    = facilities;
+ 
+-	make_rose->neighbour->use++;
++	atomic_inc(&make_rose->neighbour->use);
+ 
+ 	if (rose_sk(sk)->defer) {
+ 		make_rose->state = ROSE_STATE_5;
+diff --git a/net/rose/rose_in.c b/net/rose/rose_in.c
+index 79c4abc..58c6882 100644
+--- a/net/rose/rose_in.c
++++ b/net/rose/rose_in.c
+@@ -11,6 +11,7 @@
+  * but are mostly correct. Before you modify the code could you read the SDL
+  * diagrams as the code is not obvious and probably very easy to break.
+  */
++#include <linux/atomic.h>
+ #include <linux/errno.h>
+ #include <linux/types.h>
+ #include <linux/socket.h>
+@@ -58,7 +59,7 @@ static int rose_state1_machine(struct sock *sk, struct sk_buff *skb, int framety
+ 	case ROSE_CLEAR_REQUEST:
+ 		rose_write_internal(sk, ROSE_CLEAR_CONFIRMATION);
+ 		rose_disconnect(sk, ECONNREFUSED, skb->data[3], skb->data[4]);
+-		rose->neighbour->use--;
++		atomic_dec(&rose->neighbour->use);
+ 		break;
+ 
+ 	default:
+@@ -81,12 +82,12 @@ static int rose_state2_machine(struct sock *sk, struct sk_buff *skb, int framety
+ 	case ROSE_CLEAR_REQUEST:
+ 		rose_write_internal(sk, ROSE_CLEAR_CONFIRMATION);
+ 		rose_disconnect(sk, 0, skb->data[3], skb->data[4]);
+-		rose->neighbour->use--;
++		atomic_dec(&rose->neighbour->use);
+ 		break;
+ 
+ 	case ROSE_CLEAR_CONFIRMATION:
+ 		rose_disconnect(sk, 0, -1, -1);
+-		rose->neighbour->use--;
++		atomic_dec(&rose->neighbour->use);
+ 		break;
+ 
+ 	default:
+@@ -122,7 +123,7 @@ static int rose_state3_machine(struct sock *sk, struct sk_buff *skb, int framety
+ 	case ROSE_CLEAR_REQUEST:
+ 		rose_write_internal(sk, ROSE_CLEAR_CONFIRMATION);
+ 		rose_disconnect(sk, 0, skb->data[3], skb->data[4]);
+-		rose->neighbour->use--;
++		atomic_dec(&rose->neighbour->use);
+ 		break;
+ 
+ 	case ROSE_RR:
+@@ -233,7 +234,7 @@ static int rose_state4_machine(struct sock *sk, struct sk_buff *skb, int framety
+ 	case ROSE_CLEAR_REQUEST:
+ 		rose_write_internal(sk, ROSE_CLEAR_CONFIRMATION);
+ 		rose_disconnect(sk, 0, skb->data[3], skb->data[4]);
+-		rose->neighbour->use--;
++		atomic_dec(&rose->neighbour->use);
+ 		break;
+ 
+ 	default:
+@@ -253,7 +254,7 @@ static int rose_state5_machine(struct sock *sk, struct sk_buff *skb, int framety
+ 	if (frametype == ROSE_CLEAR_REQUEST) {
+ 		rose_write_internal(sk, ROSE_CLEAR_CONFIRMATION);
+ 		rose_disconnect(sk, 0, skb->data[3], skb->data[4]);
+-		rose_sk(sk)->neighbour->use--;
++		atomic_dec(&rose_sk(sk)->neighbour->use);
+ 	}
  
  	return 0;
- }
-@@ -785,6 +798,7 @@ static int rose_connect(struct socket *sock, struct sockaddr *uaddr, int addr_le
- 
- 		user = ax25_findbyuid(current_euid());
- 		if (!user) {
-+			dev_put(dev);
- 			err = -EINVAL;
- 			goto out_release;
- 		}
-@@ -794,6 +808,7 @@ static int rose_connect(struct socket *sock, struct sockaddr *uaddr, int addr_le
- 		rose->device      = dev;
- 		ax25_uid_put(user);
- 
-+		dev_put(dev);
- 		rose_insert_socket(sk);		/* Finish the bind */
- 	}
- 	rose->dest_addr   = addr->srose_addr;
-@@ -1607,22 +1622,22 @@ static void __exit rose_exit(void)
- 
- 	rose_rt_free();
- 
--	ax25_protocol_release(AX25_P_ROSE);
--	ax25_linkfail_release(&rose_linkfail_notifier);
--
- 	if (ax25cmp(&rose_callsign, &null_ax25_address) != 0)
- 		ax25_listen_release(&rose_callsign, NULL);
- 
- #ifdef CONFIG_SYSCTL
- 	rose_unregister_sysctl();
- #endif
-+
-+	ax25_linkfail_release(&rose_linkfail_notifier);
-+	ax25_protocol_release(AX25_P_ROSE);
-+
- 	unregister_netdevice_notifier(&rose_dev_notifier);
- 
- 	sock_unregister(PF_ROSE);
- 
- 	for (i = 0; i < rose_ndevs; i++) {
- 		struct net_device *dev = dev_rose[i];
--
- 		if (dev) {
- 			unregister_netdev(dev);
- 			free_netdev(dev);
-@@ -1632,5 +1647,4 @@ static void __exit rose_exit(void)
- 	kfree(dev_rose);
- 	proto_unregister(&rose_proto);
- }
--
- module_exit(rose_exit);
-diff --git a/net/rose/rose_loopback.c b/net/rose/rose_loopback.c
-index 3444562..ea48cee 100644
---- a/net/rose/rose_loopback.c
-+++ b/net/rose/rose_loopback.c
-@@ -102,6 +102,7 @@ static void rose_loopback_timer(unsigned long param)
- 			if ((dev = rose_dev_get(dest)) != NULL) {
- 				if (rose_rx_call_request(skb, dev, rose_loopback_neigh, lci_o) == 0)
- 					kfree_skb(skb);
-+				dev_put(dev);
- 			} else {
- 				kfree_skb(skb);
- 			}
 diff --git a/net/rose/rose_route.c b/net/rose/rose_route.c
-index 40148932..46505317 100644
+index 46505317..869e201 100644
 --- a/net/rose/rose_route.c
 +++ b/net/rose/rose_route.c
-@@ -599,6 +599,7 @@ static struct net_device *rose_ax25_dev_find(char *devname)
- 	if ((dev->flags & IFF_UP) && dev->type == ARPHRD_AX25)
- 		return dev;
+@@ -7,6 +7,7 @@
+  * Copyright (C) Jonathan Naylor G4KLX (g4klx@g4klx.demon.co.uk)
+  * Copyright (C) Terry Dawson VK2KTJ (terry@animats.net)
+  */
++#include <linux/atomic.h>
+ #include <linux/errno.h>
+ #include <linux/types.h>
+ #include <linux/socket.h>
+@@ -97,7 +98,7 @@ static int __must_check rose_add_node(struct rose_route_struct *rose_route,
+ 		rose_neigh->ax25      = NULL;
+ 		rose_neigh->dev       = dev;
+ 		rose_neigh->count     = 0;
+-		rose_neigh->use       = 0;
++		atomic_set(&rose_neigh->use, 0);
+ 		rose_neigh->dce_mode  = 0;
+ 		rose_neigh->loopback  = 0;
+ 		rose_neigh->number    = rose_neigh_no++;
+@@ -267,10 +268,10 @@ static void rose_remove_route(struct rose_route *rose_route)
+ 	struct rose_route *s;
  
-+	dev_put(dev);
- 	return NULL;
- }
+ 	if (rose_route->neigh1 != NULL)
+-		rose_route->neigh1->use--;
++		atomic_dec(&rose_route->neigh1->use);
  
-@@ -615,6 +616,8 @@ struct net_device *rose_dev_first(void)
- 			if (first == NULL || strncmp(dev->name, first->name, 3) < 0)
- 				first = dev;
- 	}
-+	if (first)
-+		dev_hold(first);
- 	rcu_read_unlock();
+ 	if (rose_route->neigh2 != NULL)
+-		rose_route->neigh2->use--;
++		atomic_dec(&rose_route->neigh2->use);
  
- 	return first;
-@@ -742,6 +745,7 @@ int rose_rt_ioctl(unsigned int cmd, void __user *arg)
- 		if (rose_route.ndigis > AX25_MAX_DIGIS)
- 			return -EINVAL;
- 		err = rose_add_node(&rose_route, dev);
-+		dev_put(dev);
- 		return err;
+ 	if ((s = rose_route_list) == rose_route) {
+ 		rose_route_list = rose_route->next;
+@@ -335,7 +336,7 @@ static int rose_del_node(struct rose_route_struct *rose_route,
+ 		if (rose_node->neighbour[i] == rose_neigh) {
+ 			rose_neigh->count--;
  
- 	case SIOCDELRT:
-@@ -750,6 +754,7 @@ int rose_rt_ioctl(unsigned int cmd, void __user *arg)
- 		if ((dev = rose_ax25_dev_find(rose_route.device)) == NULL)
- 			return -EINVAL;
- 		err = rose_del_node(&rose_route, dev);
-+		dev_put(dev);
- 		return err;
+-			if (rose_neigh->count == 0 && rose_neigh->use == 0)
++			if (rose_neigh->count == 0 && atomic_read(&rose_neigh->use) == 0)
+ 				rose_remove_neigh(rose_neigh);
  
- 	case SIOCRSCLRRT:
----------------------------------------------------------------------
-
--- 
-Regards
-	Richard
+ 			rose_node->count--;
+@@ -383,7 +384,7 @@ void rose_add_loopback_neigh(void)
+ 	sn->ax25      = NULL;
+ 	sn->dev       = NULL;
+ 	sn->count     = 0;
+-	sn->use       = 0;
++	atomic_set(&sn->use, 0);
+ 	sn->dce_mode  = 1;
+ 	sn->loopback  = 1;
+ 	sn->number    = rose_neigh_no++;
+@@ -573,7 +574,7 @@ static int rose_clear_routes(void)
+ 		s          = rose_neigh;
+ 		rose_neigh = rose_neigh->next;
+ 
+-		if (s->use == 0 && !s->loopback) {
++		if (atomic_read(&s->use) && !s->loopback) {
+ 			s->count = 0;
+ 			rose_remove_neigh(s);
+ 		}
+@@ -793,13 +794,13 @@ static void rose_del_route_by_neigh(struct rose_neigh *rose_neigh)
+ 		}
+ 
+ 		if (rose_route->neigh1 == rose_neigh) {
+-			rose_route->neigh1->use--;
++			atomic_dec(&rose_route->neigh1->use);
+ 			rose_route->neigh1 = NULL;
+ 			rose_transmit_clear_request(rose_route->neigh2, rose_route->lci2, ROSE_OUT_OF_ORDER, 0);
+ 		}
+ 
+ 		if (rose_route->neigh2 == rose_neigh) {
+-			rose_route->neigh2->use--;
++			atomic_dec(&rose_route->neigh2->use);
+ 			rose_route->neigh2 = NULL;
+ 			rose_transmit_clear_request(rose_route->neigh1, rose_route->lci1, ROSE_OUT_OF_ORDER, 0);
+ 		}
+@@ -923,7 +924,7 @@ int rose_route_frame(struct sk_buff *skb, ax25_cb *ax25)
+ 			rose_clear_queues(sk);
+ 			rose->cause	 = ROSE_NETWORK_CONGESTION;
+ 			rose->diagnostic = 0;
+-			rose->neighbour->use--;
++			atomic_dec(&rose->neighbour->use);
+ 			rose->neighbour	 = NULL;
+ 			rose->lci	 = 0;
+ 			rose->state	 = ROSE_STATE_0;
+@@ -1066,8 +1067,8 @@ int rose_route_frame(struct sk_buff *skb, ax25_cb *ax25)
+ 	rose_route->lci2      = new_lci;
+ 	rose_route->neigh2    = new_neigh;
+ 
+-	rose_route->neigh1->use++;
+-	rose_route->neigh2->use++;
++	atomic_inc(&rose_route->neigh1->use);
++	atomic_inc(&rose_route->neigh2->use);
+ 
+ 	rose_route->next = rose_route_list;
+ 	rose_route_list  = rose_route;
+@@ -1214,7 +1215,7 @@ static int rose_neigh_show(struct seq_file *seq, void *v)
+ 			   (rose_neigh->loopback) ? "RSLOOP-0" : ax2asc(buf, &rose_neigh->callsign),
+ 			   rose_neigh->dev ? rose_neigh->dev->name : "???",
+ 			   rose_neigh->count,
+-			   rose_neigh->use,
++			   atomic_read(&rose_neigh->use),
+ 			   (rose_neigh->dce_mode) ? "DCE" : "DTE",
+ 			   (rose_neigh->restarted) ? "yes" : "no",
+ 			   ax25_display_timer(&rose_neigh->t0timer) / HZ,
+diff --git a/net/rose/rose_timer.c b/net/rose/rose_timer.c
+index bc5469d..f508102 100644
+--- a/net/rose/rose_timer.c
++++ b/net/rose/rose_timer.c
+@@ -7,6 +7,7 @@
+  * Copyright (C) Jonathan Naylor G4KLX (g4klx@g4klx.demon.co.uk)
+  * Copyright (C) 2002 Ralf Baechle DO1GRB (ralf@gnu.org)
+  */
++#include <linux/atomic.h>
+ #include <linux/errno.h>
+ #include <linux/types.h>
+ #include <linux/socket.h>
+@@ -178,7 +179,7 @@ static void rose_timer_expiry(unsigned long param)
+ 		break;
+ 
+ 	case ROSE_STATE_2:	/* T3 */
+-		rose->neighbour->use--;
++		atomic_dec(&rose->neighbour->use);
+ 		rose_disconnect(sk, ETIMEDOUT, -1, -1);
+ 		break;
+ 
