@@ -1,46 +1,95 @@
-From: Thomas Sailer <t.sailer@alumni.ethz.ch>
-Subject: Re: [PATCH v3 08/18] baycom_epp: Replace rdtscl() with native_read_tsc()
-Date: Wed, 17 Jun 2015 02:49:29 +0200
-Message-ID: <5580C419.8090402@alumni.ethz.ch>
-References: <cover.1434501120.git.luto@kernel.org> <1195ce0c7f34169ff3006341b77806184a46b9bf.1434501121.git.luto@kernel.org>
+From: f6bvp <f6bvp@free.fr>
+Subject: Re: kernel crash when device rose set down
+Date: Wed, 17 Jun 2015 11:12:36 +0200
+Message-ID: <55813A04.7000902@free.fr>
+References: <201505201431.t4KEVQbR014971@ux4.g1sog> <555CC7A8.30108@trinnet.net> <5576BE7C.7070704@free.fr> <557759F2.2090406@free.fr> <55780375.1080504@rns-stearn.demon.co.uk> <557CA340.3030708@free.fr> <557CA97D.9050300@free.fr> <20150615012146.GA23451@linux-mips.org> <557EAB73.7010104@free.fr>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <1195ce0c7f34169ff3006341b77806184a46b9bf.1434501121.git.luto@kernel.org>
+In-Reply-To: <557EAB73.7010104@free.fr>
 Sender: linux-hams-owner@vger.kernel.org
 List-ID: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"; format="flowed"
-To: Andy Lutomirski <luto@kernel.org>, x86@kernel.org
-Cc: Borislav Petkov <bp@suse.de>, Peter Zijlstra <peterz@infradead.org>, John Stultz <john.stultz@linaro.org>, linux-kernel@vger.kernel.org, Len Brown <lenb@kernel.org>, Huang Rui <ray.huang@amd.com>, Denys Vlasenko <dvlasenk@redhat.com>, kvm@vger.kernel.org, Ralf Baechle <ralf@linux-mips.org>, walter harms <wharms@bfs.de>, linux-hams@vger.kernel.org
+Content-Type: text/plain; charset="iso-8859-1"; format="flowed"
+To: Ralf Baechle <ralf@linux-mips.org>
+Cc: Richard Stearn <richard@rns-stearn.demon.co.uk>, Linux-Ham list <linux-hams@vger.kernel.org>
 
-Acked-by: Thomas Sailer <t.sailer@alumni.ethz.ch>
+Hello Ralf,
 
-On 06/17/2015 02:35 AM, Andy Lutomirski wrote:
-> This is only used if BAYCOM_DEBUG is defined.
->
-> Cc: walter harms <wharms@bfs.de>
-> Cc: Ralf Baechle <ralf@linux-mips.org>
-> Cc: Thomas Sailer <t.sailer@alumni.ethz.ch>
-> Cc: linux-hams@vger.kernel.org
-> Signed-off-by: Andy Lutomirski <luto@kernel.org>
-> ---
->
-> I'm hoping for an ack for this to go through -tip.
->
->   drivers/net/hamradio/baycom_epp.c | 2 +-
->   1 file changed, 1 insertion(+), 1 deletion(-)
->
-> diff --git a/drivers/net/hamradio/baycom_epp.c b/drivers/net/hamradio/baycom_epp.c
-> index 83c7cce0d172..44e5c3b5e0af 100644
-> --- a/drivers/net/hamradio/baycom_epp.c
-> +++ b/drivers/net/hamradio/baycom_epp.c
-> @@ -638,7 +638,7 @@ static int receive(struct net_device *dev, int cnt)
->   #define GETTICK(x)                                                \
->   ({                                                                \
->   	if (cpu_has_tsc)                                          \
-> -		rdtscl(x);                                        \
-> +		x = (unsigned int)native_read_tsc();		  \
->   })
->   #else /* __i386__ */
->   #define GETTICK(x)
+This is to publicize the patch you made against an important
+bug responsible of kernel panic when seting rose device down..
 
+Bernard
+
+Le 15/06/2015 12:39, f6bvp a =E9crit :
+> Bingo Ralf !
+>
+> You have found the bug.
+>
+> 73 de Bernard, f6bvp
+>
+>
+> Le 15/06/2015 03:21, Ralf Baechle a =E9crit :
+>> On Sun, Jun 14, 2015 at 12:06:53AM +0200, f6bvp wrote:
+>>
+>>> After neutralizing the three lines I could execute command
+>>> "ifconfig rose down" without any issue.
+>>> I guess the loop ran through the list of possible rose devices
+>>> from rose9 to rose0.
+>>> -----------------------
+>>> [  214.831371] DEBUG: Passed rose_close 131
+>>> [  214.831462] DEBUG: Passed rose_device_event 217
+>>> [  214.831465] DEBUG: Passed rose_kill_by_device 192
+>>> [  214.831467] DEBUG: Passed rose_kill_by_device 192
+>>> [  214.831470] DEBUG: Passed rose_kill_by_device 192
+>>> [  214.831472] DEBUG: Passed rose_kill_by_device 192
+>>> [  214.831474] DEBUG: Passed rose_kill_by_device 192
+>>> [  214.831476] DEBUG: Passed rose_kill_by_device 192
+>>> [  214.831478] DEBUG: Passed rose_kill_by_device 192
+>>> [  214.831480] DEBUG: Passed rose_kill_by_device 192
+>>> [  214.831483] DEBUG: Passed rose_kill_by_device 192
+>>> [  214.831485] DEBUG: Passed rose_kill_by_device 192
+>>> [  214.831487] DEBUG: Passed rose_kill_by_device 199
+>>> [root@RaspBerry-Pi-f6bvp-8 bernard]#
+>>> -----------------------
+>>> And the bug may be there, for I think  it should not try to=20
+>>> disconnect ALL
+>>> possible rose devices but
+>>> only the one we want ?
+>> The look is iterating through all ROSE sockets shutting down the one=
+s
+>> that are associated with the device being shut down.  That is correc=
+t.
+>> What's not correct is that the code is trying to reduce the socket's
+>> neighbour's use counter unconditionally - there might not even be a
+>> neighbour such as for example for a listening socket.
+>>
+>> Can you test this please?
+>>
+>> 73,
+>>
+>>    Ralf
+>>
+>> Signed-off-by: Ralf Baechle <ralf@linux-mips.org>
+>>
+>> diff --git a/net/rose/af_rose.c b/net/rose/af_rose.c
+>> index 8ae6030..dd304bc 100644
+>> --- a/net/rose/af_rose.c
+>> +++ b/net/rose/af_rose.c
+>> @@ -192,7 +192,8 @@ static void rose_kill_by_device(struct net_devic=
+e=20
+>> *dev)
+>>             if (rose->device =3D=3D dev) {
+>>               rose_disconnect(s, ENETUNREACH, ROSE_OUT_OF_ORDER, 0);
+>> -            rose->neighbour->use--;
+>> +            if (rose->neighbour)
+>> +                rose->neighbour->use--;
+>>               rose->device =3D NULL;
+>>           }
+>>       }
+>
+
+--
+To unsubscribe from this list: send the line "unsubscribe linux-hams" i=
+n
+the body of a message to majordomo@vger.kernel.org
+More majordomo info at  http://vger.kernel.org/majordomo-info.html
