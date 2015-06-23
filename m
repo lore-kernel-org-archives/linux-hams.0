@@ -1,28 +1,26 @@
-From: Steve <steve54301@gmail.com>
-Subject: USB Linux Multimeter?
-Date: Sat, 20 Jun 2015 14:29:45 -0500
-Message-ID: <CAH5hMz0ZtwMg0Yke43RA4H8kcj4_pSUmWw2Bi_QwOJXNT+vLtg@mail.gmail.com>
+From: David Miller <davem@davemloft.net>
+Subject: Re: [PATCH] NET: ROSE: Don't dereference NULL neighbour pointer.
+Date: Tue, 23 Jun 2015 03:26:42 -0700 (PDT)
+Message-ID: <20150623.032642.1488831810955257141.davem@davemloft.net>
+References: <20150618224652.GB17494@linux-mips.org>
 Mime-Version: 1.0
-Return-path: <linux-hams-owner@vger.kernel.org>
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:date:message-id:subject:from:to:content-type;
-        bh=nFk9EpLsHksM4mB5EQXHnVYa7Aa9jsOVddBOBMppxEc=;
-        b=kzzxtseA7eHZCIq2ZsHaZ4zKXV22TZpDtYFS7bqNqToTQFPfMCc9ReJtvP0b6zhz/d
-         78XNZh3wJt9s5P6mAgjkuToTm6TIgcuVXu76hgs0/zAVc72AbPi1FFwoDPDkkNFwRpMa
-         2kLY2tVlGC+OTO1svzf/UDYzxcprPhUme3PZxcwLj9Mx25lB2CcI+bdbquNzUF5lyDLv
-         t1kBhxIedcG/SOGLQP08IY4/gRvkhngJZwZSvpNIXcsoH7GFHHvGEO5FLHNSp+ap8cpk
-         pTMioW7tlg/+3YvNteYTLjyPY4zQ9isRF9c14MiwvhAypitugOGEkkR1x/RMKkjFtHmN
-         fJDA==
-Sender: linux-hams-owner@vger.kernel.org
-List-ID: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
-To: linux-hams@vger.kernel.org
+Return-path: <stable-owner@vger.kernel.org>
+In-Reply-To: <20150618224652.GB17494@linux-mips.org>
+Sender: stable-owner@vger.kernel.org
+List-ID: <linux-hams.vger.kernel.org>
+Content-Type: Text/Plain; charset="us-ascii"
+To: ralf@linux-mips.org
+Cc: netdev@vger.kernel.org, linux-hams@vger.kernel.org, stable@vger.kernel.org
 
-Does anyone have any recent experience with multimeter with a USB
-interface, of course with some sort of command line Linux support?
+From: Ralf Baechle <ralf@linux-mips.org>
+Date: Fri, 19 Jun 2015 00:46:53 +0200
 
-I have a whole bunch of data acquisition uses if something like this exists.
---
-To unsubscribe from this list: send the line "unsubscribe linux-hams" in
+> A ROSE socket doesn't necessarily always have a neighbour pointer so check
+> if the neighbour pointer is valid before dereferencing it.
+> 
+> Signed-off-by: Ralf Baechle <ralf@linux-mips.org>
+> Tested-by: Bernard Pidoux <f6bvp@free.fr>
+> Cc: stable@vger.kernel.org #2.6.11+
+
+Applied, thanks Ralf.
