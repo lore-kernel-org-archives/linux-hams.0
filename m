@@ -1,7 +1,7 @@
 From: me@vk4msl.yi.org
-Subject: [PATCH 2/2] kissnetd: Add support for symlinking PTYs
-Date: Sun, 28 Jun 2015 13:04:42 +1000
-Message-ID: <1435460682-27595-3-git-send-email-me@vk4msl.yi.org>
+Subject: [PATCH 1/2] kissattach: Add support for pty symlinking
+Date: Sun, 28 Jun 2015 13:04:41 +1000
+Message-ID: <1435460682-27595-2-git-send-email-me@vk4msl.yi.org>
 References: <1435460682-27595-1-git-send-email-me@vk4msl.yi.org>
 Return-path: <linux-hams-owner@vger.kernel.org>
 In-Reply-To: <1435460682-27595-1-git-send-email-me@vk4msl.yi.org>
@@ -24,293 +24,205 @@ In addition, the patch includes the ability to change the ownership and
 permissions on the allocated PTY, allowing an unpriviged process to make
 use of it.
 ---
- kiss/kissnetd.c | 177 +++++++++++++++++++++++++++++++++++++++++++++++++++++---
- 1 file changed, 169 insertions(+), 8 deletions(-)
+ kiss/kissattach.c | 110 ++++++++++++++++++++++++++++++++++++++++++++++++++----
+ 1 file changed, 103 insertions(+), 7 deletions(-)
 
-diff --git a/kiss/kissnetd.c b/kiss/kissnetd.c
-index 8c8fce9..db3bb27 100644
---- a/kiss/kissnetd.c
-+++ b/kiss/kissnetd.c
-@@ -14,6 +14,7 @@
- #include <stdlib.h>
- #include <sys/time.h>
- #include <sys/types.h>
-+#include <sys/stat.h>
- #include <string.h>
- #include <unistd.h>
- #include <assert.h>
-@@ -23,11 +24,17 @@
- #include <syslog.h>
- #include <time.h>
- #include <limits.h>
-+#include <signal.h>
-+
+diff --git a/kiss/kissattach.c b/kiss/kissattach.c
+index e30ed05..a872d0a 100644
+--- a/kiss/kissattach.c
++++ b/kiss/kissattach.c
+@@ -18,6 +18,9 @@
+ #include <sys/socket.h>
+ #include <sys/ioctl.h>
+ 
 +#include <pwd.h>
 +#include <grp.h>
- 
- static char *Version = "1.5";
- static int VerboseMode;
- static int MaxFrameSize = 512;
++
+ #include <net/if.h>
+ #include <netax25/ax25.h>
+ #include <netrose/rose.h>
+@@ -32,6 +35,8 @@
+ #define N_6PACK 7	/* This is valid for all architectures in 2.2.x */
+ #endif
  
 +#define PTMX_TTY	"/dev/ptmx"
 +
- #define REOPEN_TIMEOUT	30	/* try tio reopen every 10 s */
+ static char *callsign;
+ static int  speed;
+ static int  mtu;
+@@ -42,6 +47,7 @@ static char *portname;
+ static char *inetaddr;
+ static int allow_broadcast;
+ static int i_am_unix98_pty_master;		/* unix98 ptmx support */
++static int symlink_pty = 0;
  
- struct PortDescriptor {
-@@ -39,15 +46,29 @@ struct PortDescriptor {
- 	char		namepts[PATH_MAX];	/* name of the unix98 pts slaves, which
- 						 * the client has to use */
- 	int		is_active;
-+	int		is_unix98;
-+	int		is_symlinked;
-+
-+	int		do_chown;
-+	uid_t		pty_uid;
-+	gid_t		pty_gid;
-+
-+	mode_t		pty_mode;
- };
- 
- static struct PortDescriptor *PortList[FD_SETSIZE];
- 
- static int NbPort;
- 
-+static int SetPtyOwner = 0;
-+static uid_t PtyOwnerUid = 0;
-+static gid_t PtyOwnerGid = 0;
-+
-+static mode_t PtyMode = 0;
-+
- static void Usage(void)
+ static char *kiss_basename(char *s)
  {
--	fprintf(stderr, "\nUsage : kissnetd [-v] [-f size] [-p num | /dev/pty?? [/dev/pty??]* ]\n");
-+	fprintf(stderr, "\nUsage : kissnetd [-v] [-f size] [-p num | /dev/pty?? [/dev/pty??]* | [owner=USER:GROUP] [mode=MODE] pty:/dev/symlink1 [pty:/dev/symlink2]* ]\n");
- 	fprintf(stderr, " -v       : Verbose mode, trace on stdout\n");
- 	fprintf(stderr, " -f size  : Set max frame size to size bytes (default 512)\n");
- 	fprintf(stderr, " -p num   : Number of /dev/ptmx-master-devices has to open\n");
-@@ -90,13 +111,24 @@ static void NewPort(char *Name)
- 		exit(1);
- 	}
+@@ -58,6 +64,8 @@ static void terminate(int sig)
  
--	strncpy(MyPort->Name, Name, PATH_MAX-1);
-+	MyPort->is_symlinked = (strstr(Name, "pty:") == Name);
-+	MyPort->is_unix98 = MyPort->is_symlinked
-+				|| (!strcmp(PTMX_TTY, Name));
-+
-+	strncpy(MyPort->Name, (MyPort->is_symlinked
-+				? index(Name, ':') + 1
-+				: Name), PATH_MAX-1);
-+
- 	MyPort->Name[PATH_MAX-1] = '\0';
- 	MyPort->Fd = -1;
- 	MyPort->FrameBuffer[0] = 0xC0;
- 	MyPort->BufferIndex = 1;
- 	MyPort->namepts [0] = '\0';
- 	MyPort->is_active = 0;
-+	MyPort->do_chown = SetPtyOwner;
-+	MyPort->pty_uid = PtyOwnerUid;
-+	MyPort->pty_gid = PtyOwnerGid;
-+	MyPort->pty_mode= PtyMode;
- 	PortList[NbPort++] = MyPort;
+ 	if (!i_am_unix98_pty_master)
+ 		tty_unlock(kttyname);
++	else if (symlink_pty)
++		unlink(kttyname);
+ 
+ 	exit(0);
  }
+@@ -214,7 +222,8 @@ static int startiface(char *dev, struct hostent *hp)
  
-@@ -112,7 +144,10 @@ static void ReopenPort(int PortNumber)
- 	if (PortList[PortNumber]->namepts[0] == '\0') {
- 
- 		syslog(LOG_WARNING, "kissnetd : Opening port %s\n", PortList[PortNumber]->Name);
--		PortList[PortNumber]->Fd = open(PortList[PortNumber]->Name, O_RDWR | O_NONBLOCK);
-+		PortList[PortNumber]->Fd = open(
-+				(PortList[PortNumber]->is_symlinked
-+				 ? PTMX_TTY
-+				 : PortList[PortNumber]->Name), O_RDWR | O_NONBLOCK);
- 		if (PortList[PortNumber]->Fd < 0) {
- 			syslog(LOG_WARNING, "kissnetd : Error opening port %s : %s\n",
- 				PortList[PortNumber]->Name, strerror(errno));
-@@ -123,7 +158,7 @@ static void ReopenPort(int PortNumber)
- 			return;
- 		}
- 		PortList[PortNumber]->is_active = 1;
--		if (!strcmp(PortList[PortNumber]->Name, "/dev/ptmx")) {
-+		if (PortList[PortNumber]->is_unix98) {
- 			char *npts;
- 			/* get name of pts-device */
- 			if ((npts = ptsname(PortList[PortNumber]->Fd)) == NULL) {
-@@ -140,7 +175,35 @@ static void ReopenPort(int PortNumber)
- 				syslog(LOG_WARNING, "kissnetd : Cannot unlock pts-device %s\n", PortList[PortNumber]->namepts);
- 				exit(1);
- 			}
--			syslog(LOG_WARNING, "kissnetd : Using /dev/ptmx with slave pty %s\n", PortList[PortNumber]->namepts);
-+
-+			if (PortList[PortNumber]->do_chown) {
-+				if (chown(PortList[PortNumber]->namepts,
-+						PortList[PortNumber]->pty_uid,
-+						PortList[PortNumber]->pty_gid)) {
-+					syslog(LOG_CRIT, "Cannot chown %s\n",
-+							PortList[PortNumber]->namepts);
-+					exit(1);
-+				}
-+			}
-+			if (PortList[PortNumber]->pty_mode) {
-+				if (chmod(PortList[PortNumber]->namepts,
-+						PortList[PortNumber]->pty_mode)) {
-+					syslog(LOG_CRIT, "Cannot chmod %s\n",
-+							PortList[PortNumber]->namepts);
-+					exit(1);
-+				}
-+			}
-+
-+			if (PortList[PortNumber]->is_symlinked) {
-+				/* Create symbolic link */
-+				if (symlink(PortList[PortNumber]->namepts, PortList[PortNumber]->Name)) {
-+					syslog(LOG_CRIT, "Cannot symlink %s to %s\n", PortList[PortNumber]->namepts,
-+							PortList[PortNumber]->Name);
-+					exit(1);
-+				}
-+			} else {
-+				syslog(LOG_WARNING, "kissnetd : Using /dev/ptmx with slave pty %s\n", PortList[PortNumber]->namepts);
-+			}
- 		}
- 	} else {
- 		if (PortList[PortNumber]->Fd == -1) {
-@@ -324,6 +387,63 @@ static void ProcessPortList(void)
- 	}
- }
- 
-+/*
-+ * Parse the owner string; given as a user:group pair.  Result is stored
-+ * in PtyOwnerUid and PtyOwnerGid; and overrides previously set defaults.
-+ */
-+static int ParseOwner(char* owner)
-+{
-+	char* colon;
-+	char* pty_owner_group;
-+
-+	if (!strcmp(owner, "default")) {
-+		SetPtyOwner = 0;
-+		return 0;
-+	}
-+
-+	colon = index(owner, ':');
-+	if (!colon) {
-+		fprintf(stderr, "Owner must be given in the form user:group\n");
-+		return 1;
-+	}
-+	*colon = 0;
-+	pty_owner_group = colon + 1;
-+
-+	if (owner) {
-+		/* Look up the user */
-+		struct passwd user;
-+		struct passwd* user_ptr = NULL;
-+		struct group grp;
-+		struct group* grp_ptr = NULL;
-+		char buffer[512];
-+		int err = getpwnam_r(owner, &user,
-+				buffer, sizeof(buffer)-1, &user_ptr);
-+		if (err) {
-+			fprintf(stderr,
-+				"Failed to look up user: %s (%d)\n",
-+				strerror(err), err);
-+			return 1;
-+		}
-+
-+		err = getgrnam_r(pty_owner_group, &grp,
-+				buffer, sizeof(buffer)-1, &grp_ptr);
-+		if (err) {
-+			fprintf(stderr,
-+				"Failed to look up group: %s (%d)\n",
-+				strerror(err), err);
-+			return 1;
-+		}
-+
-+		if (user_ptr && grp_ptr) {
-+			PtyOwnerUid = user_ptr->pw_uid;
-+			PtyOwnerGid = grp_ptr->gr_gid;
-+			SetPtyOwner = 1;
-+			return 0;
-+		}
-+	}
-+	return 1;
-+}
-+
- static void ProcessArgv(int argc, char *argv[])
+ static void usage(void)
  {
- 	int opt;
-@@ -345,7 +465,16 @@ static void ProcessArgv(int argc, char *argv[])
- 				exit(1);
- 			}
- 			for (i=0; i < ptmxdevices; i++)
--				NewPort("/dev/ptmx");
-+				NewPort(PTMX_TTY);
-+			break;
-+		case 'o':
-+			/* Change the owner of the ptys */
-+			if (ParseOwner(optarg))
-+				exit(1);
-+			break;
-+		case 'm':
-+			/* Change the mode of the pty */
-+			PtyMode = (mode_t)strtoul(optarg, NULL, 8);
- 			break;
- 		default:
- 			fprintf(stderr, "Invalid option %s\n", argv[optind]);
-@@ -354,8 +483,18 @@ static void ProcessArgv(int argc, char *argv[])
- 		}
- 	}
- 
--	while (optind < argc)
--		NewPort(argv[optind++]);
-+	while (optind < argc) {
-+		char* arg = argv[optind++];
-+		if (strstr(arg, "owner=") == arg) {
-+			if (ParseOwner(index(arg,'=')+1))
-+				exit(1);
-+		} else if (strstr(arg, "mode=") == arg) {
-+			PtyMode = (mode_t)strtoul(index(arg,'=')+1,
-+				NULL, 8);
-+		} else {
-+			NewPort(arg);
-+		}
-+	}
- 
- 	if (NbPort < 2) {
- 		fprintf(stderr, "This multiplexer needs at least two pty's\n");
-@@ -363,6 +502,23 @@ static void ProcessArgv(int argc, char *argv[])
- 	}
+-	fprintf(stderr, "usage: %s [-b] [-l] [-m mtu] [-v] tty port [inetaddr]\n", progname);
++	fprintf(stderr, "usage: %s [-b] [-l] [-m mtu] [-v] [-o user:group] [-p mode] tty port [inetaddr]\n",
++			progname);
  }
- 
-+void cleanup(void)
-+{
-+	/* Clean up symbolic links */
-+	int i;
-+	for (i=0; i<NbPort; i++) {
-+		if (PortList[i]->is_symlinked) {
-+			if (unlink(PortList[i]->Name))
-+				syslog(LOG_WARNING, "Failed to unlink %s",
-+					PortList[i]->Name);
-+		}
-+	}
-+}
-+void cleanup_sig(int signal)
-+{
-+	cleanup();
-+	exit(0);
-+}
  
  int main(int argc, char *argv[])
- {
-@@ -374,6 +530,11 @@ int main(int argc, char *argv[])
- 		Banner(1);
+@@ -227,12 +236,18 @@ int main(int argc, char *argv[])
+ 				* the client has to use */
+ 	struct hostent *hp = NULL;
+ 
++	/* Name of the user and group who will "own" the pty */
++	char* pty_owner_user = NULL;
++	char* pty_owner_group = NULL;
++	/* Mode for pty: if 0; use defaults */
++	mode_t pty_mode = 0;
++
+ 	progname = kiss_basename(argv[0]);
+ 
+ 	if (!strcmp(progname, "spattach"))
+ 		disc = N_6PACK;
+ 
+-	while ((fd = getopt(argc, argv, "b6i:lm:v")) != -1) {
++	while ((fd = getopt(argc, argv, "b6i:lm:o:p:v")) != -1) {
+ 		switch (fd) {
+ 		case '6':
+ 			disc = N_6PACK;
+@@ -250,9 +265,24 @@ int main(int argc, char *argv[])
+ 		case 'm':
+ 			if ((mtu = atoi(optarg)) <= 0) {
+ 				fprintf(stderr, "%s: invalid mtu size - %s\n", progname, optarg);
+-				return 1;
++		case 'o':
++			/* Change the owner of the pty */
++			{
++				char* colon = index(optarg,':');
++				if (colon) {
++					pty_owner_user = optarg;
++					pty_owner_group = colon + 1;
++					*colon = 0;
++				} else {
++					fprintf(stderr, "%s: Must specify user:group\n", progname);
++					return 1;
++				}
+ 			}
+ 			break;
++		case 'p':
++			/* Change the permissions (mode) of the pty */
++			pty_mode = (mode_t)strtoul(optarg, NULL, 8);
++			break;
+ 		case 'v':
+ 			printf("%s: %s\n", progname, VERSION);
+ 			return 0;
+@@ -278,8 +308,17 @@ int main(int argc, char *argv[])
+ 	if (argc-1 >= optind && !inetaddr)
+ 		inetaddr = argv[optind];
+ 
+-	if (!strcmp("/dev/ptmx", kttyname))
++	if (!strcmp(PTMX_TTY, kttyname)) {
++		i_am_unix98_pty_master = 1;
++	} else if (strstr(kttyname, "pty:") == kttyname) {
++		/*
++		 * If the path starts with pty:, then create a
++		 * new pty (Unix98 style) and make a symlink to it
++		 */
+ 		i_am_unix98_pty_master = 1;
++		kttyname = index(kttyname, ':') + 1;
++		symlink_pty = 1;
++	}
+ 
+ 	if (!i_am_unix98_pty_master) {
+ 		if (tty_is_locked(kttyname)) {
+@@ -296,7 +335,7 @@ int main(int argc, char *argv[])
+ 		return 1;
  	}
  
-+	atexit(cleanup);
-+	signal(SIGTERM, cleanup_sig);
-+	signal(SIGINT, cleanup_sig);
-+	signal(SIGQUIT, cleanup_sig);
+-	if ((fd = open(kttyname, O_RDONLY | O_NONBLOCK)) == -1) {
++	if ((fd = open((symlink_pty ? PTMX_TTY : kttyname), O_RDONLY | O_NONBLOCK)) == -1) {
+ 		if (errno == ENOENT) {
+ 			fprintf(stderr, "%s: Cannot find serial device %s, no such file or directory.\n", progname, kttyname);
+ 		} else {
+@@ -353,12 +392,69 @@ int main(int argc, char *argv[])
+ 
+ 	printf("AX.25 port %s bound to device %s\n", portname, dev);
+ 	if (i_am_unix98_pty_master) {
+-		/* Users await the slave pty to be referenced in the 3d line */
+-		printf("Awaiting client connects on\n%s\n", namepts);
++		/* Are we being asked to chown? */
++		if (pty_owner_user) {
++			/* Look up the user */
++			struct passwd user;
++			struct passwd* user_ptr = NULL;
++			struct group grp;
++			struct group* grp_ptr = NULL;
++			char buffer[512];
++			int err = getpwnam_r(pty_owner_user, &user,
++				buffer, sizeof(buffer)-1, &user_ptr);
++			if (err) {
++				fprintf(stderr,
++					"Failed to look up user: %s (%d)\n",
++					strerror(err), err);
++				return 1;
++			}
 +
- 	ProcessArgv(argc, argv);
- 	while (1) ProcessPortList();
- 	return 0;
++			err = getgrnam_r(pty_owner_group, &grp,
++				buffer, sizeof(buffer)-1, &grp_ptr);
++			if (err) {
++				fprintf(stderr,
++					"Failed to look up group: %s (%d)\n",
++					strerror(err), err);
++				return 1;
++			}
++
++			if (user_ptr && grp_ptr &&
++					chown(namepts, user_ptr->pw_uid,
++						grp_ptr->gr_gid)) {
++				fprintf(stderr,
++					"Failed to change ownership: %s (%d)\n",
++					strerror(errno), errno);
++				return 1;
++			}
++		}
++
++		/* Are we being asked to chmod? */
++		if (pty_mode) {
++			if (chmod(namepts, pty_mode)) {
++				fprintf(stderr,
++					"Failed to change mode: %s (%d)\n",
++					strerror(errno), errno);
++			}
++		}
++
++		if (symlink_pty) {
++			/* Create the symlink */
++			if (symlink(namepts, kttyname)) {
++				fprintf(stderr,
++					"Failed to symlink PTY %s to %s: %s (%d)\n",
++					kttyname, namepts, strerror(errno), errno);
++				return 1;
++			}
++		} else {
++			/* Users await the slave pty to be referenced in the 3d line */
++			printf("Awaiting client connects on\n%s\n", namepts);
++		}
+ 	}
+ 	if (logging) {
+ 		openlog(progname, LOG_PID, LOG_DAEMON);
+ 		syslog(LOG_INFO, "AX.25 port %s bound to device %s%s%s\n", portname, dev, (i_am_unix98_pty_master ? " with slave pty " : ""), (i_am_unix98_pty_master ? namepts : ""));
++		if (symlink_pty)
++			syslog(LOG_INFO, "Slave pty %s is symlinked to %s.", namepts, kttyname);
+ 
+ 	}
+ 
 -- 
 2.3.6
 
