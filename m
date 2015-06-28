@@ -1,26 +1,25 @@
-From: David Miller <davem@davemloft.net>
-Subject: Re: [PATCH] NET: ROSE: Don't dereference NULL neighbour pointer.
-Date: Tue, 23 Jun 2015 03:26:42 -0700 (PDT)
-Message-ID: <20150623.032642.1488831810955257141.davem@davemloft.net>
-References: <20150618224652.GB17494@linux-mips.org>
-Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
-Return-path: <stable-owner@vger.kernel.org>
-In-Reply-To: <20150618224652.GB17494@linux-mips.org>
-Sender: stable-owner@vger.kernel.org
+From: me@vk4msl.yi.org
+Subject: PTY Improvements for kissattach, kissnetd
+Date: Sun, 28 Jun 2015 13:04:40 +1000
+Message-ID: <1435460682-27595-1-git-send-email-me@vk4msl.yi.org>
+Return-path: <linux-hams-owner@vger.kernel.org>
+Sender: linux-hams-owner@vger.kernel.org
 List-ID: <linux-hams.vger.kernel.org>
-Content-Type: Text/Plain; charset="us-ascii"
-To: ralf@linux-mips.org
-Cc: netdev@vger.kernel.org, linux-hams@vger.kernel.org, stable@vger.kernel.org
+MIME-Version: 1.0
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+To: Ralf Baechle <ralf@linux-mips.org>
+Cc: linux-hams@vger.kernel.org
 
-From: Ralf Baechle <ralf@linux-mips.org>
-Date: Fri, 19 Jun 2015 00:46:53 +0200
+This is a re-based patchset for ax25-tools based on commit
+18fa7fa6776da35da34a7e148fa2d96be8921e2.  It adds command line options to
+kissattach and kissnet to permit two things:
 
-> A ROSE socket doesn't necessarily always have a neighbour pointer so check
-> if the neighbour pointer is valid before dereferencing it.
-> 
-> Signed-off-by: Ralf Baechle <ralf@linux-mips.org>
-> Tested-by: Bernard Pidoux <f6bvp@free.fr>
-> Cc: stable@vger.kernel.org #2.6.11+
+- symbolic linking of pseudo TTYs to consistent names for referencing in
+  configuration files.
+- changing ownership/mode of pseudo TTYs so that they can be accessed by
+  designated users/groups.
 
-Applied, thanks Ralf.
+These patches have been in successful operation on my APRS digipeater here
+in Brisbane.  http://aprs.fi/info/a/VK4MSL-1
+
