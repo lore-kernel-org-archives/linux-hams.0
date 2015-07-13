@@ -1,29 +1,35 @@
-From: David Miller <davem@davemloft.net>
-Subject: Re: [PATCH] NET: hamradio: Fix IP over bpq encapsulation.
-Date: Wed, 08 Jul 2015 14:09:54 -0700 (PDT)
-Message-ID: <20150708.140954.1631566627371698945.davem@davemloft.net>
-References: <20150704092230.GN5255@linux-mips.org>
+From: Ralf Baechle <ralf@linux-mips.org>
+Subject: [PATCH] NET: AX.25: Stop heartbeat timer on disconnect.
+Date: Mon, 13 Jul 2015 11:35:07 +0200
+Message-ID: <20150713093506.GB21180@linux-mips.org>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <20150704092230.GN5255@linux-mips.org>
+Content-Disposition: inline
 Sender: linux-hams-owner@vger.kernel.org
 List-ID: <linux-hams.vger.kernel.org>
-Content-Type: Text/Plain; charset="us-ascii"
-To: ralf@linux-mips.org
-Cc: netdev@vger.kernel.org, linux-hams@vger.kernel.org, stable@vger.kernel.org, ebiederm@xmission.com
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+To: "David S. Miller" <davem@davemloft.net>, netdev@vger.kernel.org, Richard Stearn <richard@rns-stearn.demon.co.uk>, f6bvp <f6bvp@free.fr>, Thomas Osterried <thomas@osterried.de>, linux-hams@vger.kernel.org, stable@vger.kernel.org
 
-From: Ralf Baechle <ralf@linux-mips.org>
-Date: Sat, 4 Jul 2015 11:22:30 +0200
+This may result in a kernel panic.  The bug has always existed but
+somehow we've run out of luck now and it bites.
 
-> Since 1d5da757da860a6916adbf68b09e868062b4b3b8 (ax25: Stop using magic
-> neighbour cache operations.) any attempt to transmit IP packets over
-> a bpqether device will result in a message like "Dead loop on virtual
-> device bpq0, fix it urgently!"
-> 
-> Fix suggested by Eric W. Biederman <ebiederm@xmission.com>.
-> 
-> Signed-off-by: Ralf Baechle <ralf@linux-mips.org>
-> Cc: <stable@vger.kernel.org> # 4.1
+Signed-off-by: Richard Stearn <richard@rns-stearn.demon.co.uk>
+Cc: stable@vger.kernel.org	# all branches
+Signed-off-by: Ralf Baechle <ralf@linux-mips.org>
+---
+ net/ax25/ax25_subr.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-Applied, thanks Ralf.
+diff --git a/net/ax25/ax25_subr.c b/net/ax25/ax25_subr.c
+index 1997538..3b78e84 100644
+--- a/net/ax25/ax25_subr.c
++++ b/net/ax25/ax25_subr.c
+@@ -264,6 +264,7 @@ void ax25_disconnect(ax25_cb *ax25, int reason)
+ {
+ 	ax25_clear_queues(ax25);
+ 
++	ax25_stop_heartbeat(ax25);
+ 	ax25_stop_t1timer(ax25);
+ 	ax25_stop_t2timer(ax25);
+ 	ax25_stop_t3timer(ax25);
