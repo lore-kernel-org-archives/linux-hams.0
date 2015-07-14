@@ -1,43 +1,244 @@
-From: Ralf Baechle <ralf@linux-mips.org>
-Subject: [PATCH v2] NET: AX.25: Stop heartbeat timer on disconnect.
-Date: Mon, 13 Jul 2015 11:38:24 +0200
-Message-ID: <20150713093824.GA32732@linux-mips.org>
+From: walter harms <wharms@bfs.de>
+Subject: Re: [PATCH 1/2] kissattach: Add support for pty symlinking
+Date: Tue, 14 Jul 2015 11:17:14 +0200
+Message-ID: <55A4D39A.6000200@bfs.de>
+References: <1435460682-27595-1-git-send-email-me@vk4msl.yi.org> <1435460682-27595-2-git-send-email-me@vk4msl.yi.org>
+Reply-To: wharms@bfs.de
 Mime-Version: 1.0
+Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
-Content-Disposition: inline
+In-Reply-To: <1435460682-27595-2-git-send-email-me@vk4msl.yi.org>
 Sender: linux-hams-owner@vger.kernel.org
 List-ID: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-To: "David S. Miller" <davem@davemloft.net>, netdev@vger.kernel.org, Richard Stearn <richard@rns-stearn.demon.co.uk>, f6bvp <f6bvp@free.fr>, Thomas Osterried <thomas@osterried.de>, linux-hams@vger.kernel.org, stable@vger.kernel.org
+To: me@vk4msl.yi.org
+Cc: Ralf Baechle <ralf@linux-mips.org>, linux-hams@vger.kernel.org, Stuart Longland <stuartl@longlandclan.yi.org>
 
-From: Richard Stearn <richard@rns-stearn.demon.co.uk>
 
-This may result in a kernel panic.  The bug has always existed but
-somehow we've run out of luck now and it bites.
 
-Signed-off-by: Richard Stearn <richard@rns-stearn.demon.co.uk>
-Cc: stable@vger.kernel.org	# all branches
-Signed-off-by: Ralf Baechle <ralf@linux-mips.org>
----
-v2: Correctly attribute the patch to Richard Stearn in the From: line
+Am 28.06.2015 05:04, schrieb me@vk4msl.yi.org:
+> From: Stuart Longland <stuartl@longlandclan.yi.org>
+> 
+> This patch adds abilities for symlinking of dynamically allocated slave
+> PTY interfaces to kissattach.  This enables other services to make use
+> of these PTYs without manually editing their configuration files to
+> point to the dynamically allocated PTY.
+> 
+> In addition, the patch includes the ability to change the ownership and
+> permissions on the allocated PTY, allowing an unpriviged process to make
+> use of it.
+> ---
+>  kiss/kissattach.c | 110 ++++++++++++++++++++++++++++++++++++++++++++++++++----
+>  1 file changed, 103 insertions(+), 7 deletions(-)
+> 
+> diff --git a/kiss/kissattach.c b/kiss/kissattach.c
+> index e30ed05..a872d0a 100644
+> --- a/kiss/kissattach.c
+> +++ b/kiss/kissattach.c
+> @@ -18,6 +18,9 @@
+>  #include <sys/socket.h>
+>  #include <sys/ioctl.h>
+>  
+> +#include <pwd.h>
+> +#include <grp.h>
+> +
+>  #include <net/if.h>
+>  #include <netax25/ax25.h>
+>  #include <netrose/rose.h>
+> @@ -32,6 +35,8 @@
+>  #define N_6PACK 7	/* This is valid for all architectures in 2.2.x */
+>  #endif
+>  
+> +#define PTMX_TTY	"/dev/ptmx"
+> +
+>  static char *callsign;
+>  static int  speed;
+>  static int  mtu;
+> @@ -42,6 +47,7 @@ static char *portname;
+>  static char *inetaddr;
+>  static int allow_broadcast;
+>  static int i_am_unix98_pty_master;		/* unix98 ptmx support */
+> +static int symlink_pty = 0;
+>  
+>  static char *kiss_basename(char *s)
+>  {
+> @@ -58,6 +64,8 @@ static void terminate(int sig)
+>  
+>  	if (!i_am_unix98_pty_master)
+>  		tty_unlock(kttyname);
+> +	else if (symlink_pty)
+> +		unlink(kttyname);
+>  
+>  	exit(0);
+>  }
+> @@ -214,7 +222,8 @@ static int startiface(char *dev, struct hostent *hp)
+>  
+>  static void usage(void)
+>  {
+> -	fprintf(stderr, "usage: %s [-b] [-l] [-m mtu] [-v] tty port [inetaddr]\n", progname);
+> +	fprintf(stderr, "usage: %s [-b] [-l] [-m mtu] [-v] [-o user:group] [-p mode] tty port [inetaddr]\n",
+> +			progname);
+>  }
+>  
+>  int main(int argc, char *argv[])
+> @@ -227,12 +236,18 @@ int main(int argc, char *argv[])
+>  				* the client has to use */
+>  	struct hostent *hp = NULL;
+>  
+> +	/* Name of the user and group who will "own" the pty */
+> +	char* pty_owner_user = NULL;
+> +	char* pty_owner_group = NULL;
+> +	/* Mode for pty: if 0; use defaults */
+> +	mode_t pty_mode = 0;
+> +
+>  	progname = kiss_basename(argv[0]);
+>  
+>  	if (!strcmp(progname, "spattach"))
+>  		disc = N_6PACK;
+>  
+> -	while ((fd = getopt(argc, argv, "b6i:lm:v")) != -1) {
+> +	while ((fd = getopt(argc, argv, "b6i:lm:o:p:v")) != -1) {
+>  		switch (fd) {
+>  		case '6':
+>  			disc = N_6PACK;
+> @@ -250,9 +265,24 @@ int main(int argc, char *argv[])
+>  		case 'm':
+>  			if ((mtu = atoi(optarg)) <= 0) {
+>  				fprintf(stderr, "%s: invalid mtu size - %s\n", progname, optarg);
+> -				return 1;
+> +		case 'o':
+> +			/* Change the owner of the pty */
+> +			{
+> +				char* colon = index(optarg,':');
+> +				if (colon) {
+> +					pty_owner_user = optarg;
+> +					pty_owner_group = colon + 1;
+> +					*colon = 0;
+> +				} else {
+> +					fprintf(stderr, "%s: Must specify user:group\n", progname);
+> +					return 1;
+> +				}
+>  			}
+>  			break;
+> +		case 'p':
+> +			/* Change the permissions (mode) of the pty */
+> +			pty_mode = (mode_t)strtoul(optarg, NULL, 8);
+> +			break;
+>  		case 'v':
+>  			printf("%s: %s\n", progname, VERSION);
+>  			return 0;
 
- net/ax25/ax25_subr.c | 1 +
- 1 file changed, 1 insertion(+)
+hi Stuart,
+what was the model for you cli ? i was looking at 'install' and it uses
+-g group
+-o owner
+-m mode
 
-diff --git a/net/ax25/ax25_subr.c b/net/ax25/ax25_subr.c
-index 1997538..3b78e84 100644
---- a/net/ax25/ax25_subr.c
-+++ b/net/ax25/ax25_subr.c
-@@ -264,6 +264,7 @@ void ax25_disconnect(ax25_cb *ax25, int reason)
- {
- 	ax25_clear_queues(ax25);
- 
-+	ax25_stop_heartbeat(ax25);
- 	ax25_stop_t1timer(ax25);
- 	ax25_stop_t2timer(ax25);
- 	ax25_stop_t3timer(ax25);
 
------ End forwarded message -----
+> @@ -278,8 +308,17 @@ int main(int argc, char *argv[])
+>  	if (argc-1 >= optind && !inetaddr)
+>  		inetaddr = argv[optind];
+>  
+> -	if (!strcmp("/dev/ptmx", kttyname))
+> +	if (!strcmp(PTMX_TTY, kttyname)) {
+> +		i_am_unix98_pty_master = 1;
+> +	} else if (strstr(kttyname, "pty:") == kttyname) {
+> +		/*
+> +		 * If the path starts with pty:, then create a
+> +		 * new pty (Unix98 style) and make a symlink to it
+> +		 */
+>  		i_am_unix98_pty_master = 1;
+> +		kttyname = index(kttyname, ':') + 1;
+> +		symlink_pty = 1;
+> +	}
+>  
+>  	if (!i_am_unix98_pty_master) {
+>  		if (tty_is_locked(kttyname)) {
+> @@ -296,7 +335,7 @@ int main(int argc, char *argv[])
+>  		return 1;
+>  	}
+>  
+> -	if ((fd = open(kttyname, O_RDONLY | O_NONBLOCK)) == -1) {
+> +	if ((fd = open((symlink_pty ? PTMX_TTY : kttyname), O_RDONLY | O_NONBLOCK)) == -1) {
+>  		if (errno == ENOENT) {
+>  			fprintf(stderr, "%s: Cannot find serial device %s, no such file or directory.\n", progname, kttyname);
+>  		} else {
+> @@ -353,12 +392,69 @@ int main(int argc, char *argv[])
+>  
+>  	printf("AX.25 port %s bound to device %s\n", portname, dev);
+>  	if (i_am_unix98_pty_master) {
+> -		/* Users await the slave pty to be referenced in the 3d line */
+> -		printf("Awaiting client connects on\n%s\n", namepts);
+> +		/* Are we being asked to chown? */
+> +		if (pty_owner_user) {
+> +			/* Look up the user */
+> +			struct passwd user;
+> +			struct passwd* user_ptr = NULL;
+> +			struct group grp;
+> +			struct group* grp_ptr = NULL;
+> +			char buffer[512];
+> +			int err = getpwnam_r(pty_owner_user, &user,
+> +				buffer, sizeof(buffer)-1, &user_ptr);
 
-  Ralf
+why _r ? any need to make it thread safe ?
+
+just my 2 cents,
+re,
+ wh
+
+> +			if (err) {
+> +				fprintf(stderr,
+> +					"Failed to look up user: %s (%d)\n",
+> +					strerror(err), err);
+> +				return 1;
+> +			}
+> +
+> +			err = getgrnam_r(pty_owner_group, &grp,
+> +				buffer, sizeof(buffer)-1, &grp_ptr);
+> +			if (err) {
+> +				fprintf(stderr,
+> +					"Failed to look up group: %s (%d)\n",
+> +					strerror(err), err);
+> +				return 1;
+> +			}
+> +
+> +			if (user_ptr && grp_ptr &&
+> +					chown(namepts, user_ptr->pw_uid,
+> +						grp_ptr->gr_gid)) {
+> +				fprintf(stderr,
+> +					"Failed to change ownership: %s (%d)\n",
+> +					strerror(errno), errno);
+> +				return 1;
+> +			}
+> +		}
+> +
+> +		/* Are we being asked to chmod? */
+> +		if (pty_mode) {
+> +			if (chmod(namepts, pty_mode)) {
+> +				fprintf(stderr,
+> +					"Failed to change mode: %s (%d)\n",
+> +					strerror(errno), errno);
+> +			}
+> +		}
+> +
+> +		if (symlink_pty) {
+> +			/* Create the symlink */
+> +			if (symlink(namepts, kttyname)) {
+> +				fprintf(stderr,
+> +					"Failed to symlink PTY %s to %s: %s (%d)\n",
+> +					kttyname, namepts, strerror(errno), errno);
+> +				return 1;
+> +			}
+> +		} else {
+> +			/* Users await the slave pty to be referenced in the 3d line */
+> +			printf("Awaiting client connects on\n%s\n", namepts);
+> +		}
+>  	}
+>  	if (logging) {
+>  		openlog(progname, LOG_PID, LOG_DAEMON);
+>  		syslog(LOG_INFO, "AX.25 port %s bound to device %s%s%s\n", portname, dev, (i_am_unix98_pty_master ? " with slave pty " : ""), (i_am_unix98_pty_master ? namepts : ""));
+> +		if (symlink_pty)
+> +			syslog(LOG_INFO, "Slave pty %s is symlinked to %s.", namepts, kttyname);
+>  
+>  	}
+>  
