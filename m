@@ -1,64 +1,30 @@
-From: "Stuart Longland (VK4MSL)" <me@vk4msl.yi.org>
-Subject: Re: [PATCH 1/2] kissattach: Add support for pty symlinking
-Date: Wed, 15 Jul 2015 06:04:47 +1000
-Message-ID: <55A56B5F.5010904@vk4msl.yi.org>
-References: <1435460682-27595-1-git-send-email-me@vk4msl.yi.org> <1435460682-27595-2-git-send-email-me@vk4msl.yi.org> <55A4D39A.6000200@bfs.de>
+From: David Miller <davem@davemloft.net>
+Subject: Re: [PATCH v2] NET: AX.25: Stop heartbeat timer on disconnect.
+Date: Wed, 15 Jul 2015 16:13:50 -0700 (PDT)
+Message-ID: <20150715.161350.1694501935758582003.davem@davemloft.net>
+References: <20150713093824.GA32732@linux-mips.org>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <55A4D39A.6000200@bfs.de>
-Sender: linux-hams-owner@vger.kernel.org
+Content-Transfer-Encoding: 7bit
+Return-path: <stable-owner@vger.kernel.org>
+In-Reply-To: <20150713093824.GA32732@linux-mips.org>
+Sender: stable-owner@vger.kernel.org
 List-ID: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"
-To: wharms@bfs.de
-Cc: Ralf Baechle <ralf@linux-mips.org>, linux-hams@vger.kernel.org, Stuart Longland <stuartl@longlandclan.yi.org>
+Content-Type: Text/Plain; charset="us-ascii"
+To: ralf@linux-mips.org
+Cc: netdev@vger.kernel.org, richard@rns-stearn.demon.co.uk, f6bvp@free.fr, thomas@osterried.de, linux-hams@vger.kernel.org, stable@vger.kernel.org
 
-Hi Walter,
-On 14/07/15 19:17, walter harms wrote:
-> Am 28.06.2015 05:04, schrieb me@vk4msl.yi.org:
->> From: Stuart Longland <stuartl@longlandclan.yi.org>
->> -	fprintf(stderr, "usage: %s [-b] [-l] [-m mtu] [-v] tty port [inetaddr]\n", progname);
->> +	fprintf(stderr, "usage: %s [-b] [-l] [-m mtu] [-v] [-o user:group] [-p mode] tty port [inetaddr]\n",
->> +			progname);
-> hi Stuart,
-> what was the model for you cli ? i was looking at 'install' and it uses
-> -g group
-> -o owner
-> -m mode
+From: Ralf Baechle <ralf@linux-mips.org>
+Date: Mon, 13 Jul 2015 11:38:24 +0200
 
-Well, -m was already taken with MTU and I didn't want to break backward
-compatibility, so I was thinking along the lines of "permissions" and
-"ownership", hence -p and -o.
-
-I could split ownership into -u (user) and -g (group) however people are
-probably used to chown specifying ownership as user:group.
-
->> +		/* Are we being asked to chown? */
->> +		if (pty_owner_user) {
->> +			/* Look up the user */
->> +			struct passwd user;
->> +			struct passwd* user_ptr = NULL;
->> +			struct group grp;
->> +			struct group* grp_ptr = NULL;
->> +			char buffer[512];
->> +			int err = getpwnam_r(pty_owner_user, &user,
->> +				buffer, sizeof(buffer)-1, &user_ptr);
+> From: Richard Stearn <richard@rns-stearn.demon.co.uk>
 > 
-> why _r ? any need to make it thread safe ?
+> This may result in a kernel panic.  The bug has always existed but
+> somehow we've run out of luck now and it bites.
 > 
-> just my 2 cents,
-> re,
->  wh
+> Signed-off-by: Richard Stearn <richard@rns-stearn.demon.co.uk>
+> Cc: stable@vger.kernel.org	# all branches
+> Signed-off-by: Ralf Baechle <ralf@linux-mips.org>
+> ---
+> v2: Correctly attribute the patch to Richard Stearn in the From: line
 
-Call it paranoia, or an allergy to the non-threadsafe versions of the
-function. :-)
-
-I have a similar allergy to `int` and `unsigned int` for what it's
-worth, preferring to use stdint.h or as a fallback, `char`, `short`,
-`long` and `long long` since those are at least guaranteed to be a
-certain size. (That said: I have seen a system where char was two bytes.)
--- 
-Stuart Longland (aka Redhatter, VK4MSL)
-
-I haven't lost my mind...
-  ...it's backed up on a tape somewhere.
+Applied.
