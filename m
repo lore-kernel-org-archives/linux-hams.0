@@ -1,119 +1,56 @@
-From: Nate Bargmann <n0nb@n0nb.us>
-Subject: Hamlib 3.0 release announcement
-Date: Sat, 19 Sep 2015 09:28:29 -0500
-Message-ID: <20150919142829.GS3787@n0nb.us>
+From: Jean-Christian de Rivaz <jc@eclis.ch>
+Subject: AX25 mkiss interface not deleted when the serial port is removed
+Date: Fri, 25 Sep 2015 19:21:18 +0200
+Message-ID: <5605828E.5010104@eclis.ch>
 Mime-Version: 1.0
-Return-path: <bounce-debian-hams=debian-hams=m.gmane.org@lists.debian.org>
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=n0nb.us; s=default;
-	h=Content-Type:MIME-Version:Message-ID:Subject:To:From:Date; bh=nKeacKbBL3QkgnJSZFZQ1DO4jx4m9Nmy9QHjK9mLqSA=;
-	b=ZlTF0yWRAYlhR5xBm6wMB8rvJb4TiKxZRYZTcCHcrATYJKJ3dREZ8eaBWAuZS2huLpjosSOdXpgJVFRRd584kPLOI/qMmxY5g18GFleq/uTlwmV9jMhjDgO0Lkkp3c2FphFojAtHQJD0Ceyo9tATxAH+41Rwv8JwIUGTmOFGAbw=;
-Content-Disposition: inline
-Resent-Message-ID: <dSUFuKHtHGI.A.ydF.gEX_VB@bendel>
-List-Id: <linux-hams.vger.kernel.org>
-List-URL: <https://lists.debian.org/debian-hams/>
-List-Post: <mailto:debian-hams@lists.debian.org>
-List-Help: <mailto:debian-hams-request@lists.debian.org?subject=help>
-List-Subscribe: <mailto:debian-hams-request@lists.debian.org?subject=subscribe>
-List-Unsubscribe: <mailto:debian-hams-request@lists.debian.org?subject=unsubscribe>
-List-Archive: https://lists.debian.org/msgid-search/20150919142829.GS3787@n0nb.us
-Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
-To: Hamlib Developers <hamlib-developer@lists.sourceforge.net>, Debian Hams <debian-hams@lists.debian.org>, Linux Hams <linux-hams@vger.kernel.org>, Dave Freese <w1hkj@bellsouth.net>, Ubuntu Hams Group <ubuntu-hams@lists.launchpad.net>
+Return-path: <linux-hams-owner@vger.kernel.org>
+Sender: linux-hams-owner@vger.kernel.org
+List-ID: <linux-hams.vger.kernel.org>
+Content-Type: text/plain; charset="us-ascii"; format="flowed"
+To: linux-hams@vger.kernel.org
 
-The Hamlib Group is pleased to announce the release of Hamlib 3.0.
+Hello,
 
-This release of Hamlib introduces a change to the version scheme.
-Essentially, the leading '1.' characters have been dropped so '3.0' is a
-direct follow on from the '1.2.' releases and has been configured to be
-ABI compatible with the '1.2.' releases.
+On a embedded system we use AX25 over an USB serial port with the 
+kissattach command. For some hardware reason the microcontroller that 
+act as a TNC and USB CDC device can be rested while the system is 
+running, causing a USB disconnect of the USN CDC device and the removal 
+of the corresponding serial port in the kernel. But the ax0 interface is 
+not removed in this case and after a few seconds the kernel panic with 
+the crash below:
 
-Bug fixes to this release will start with '3.0.1' through '3.0.n'.
+[<c0595468>] (skb_panic) from [<c0401f70>] (skb_push+0x4c/0x50)
+[<c0401f70>] (skb_push) from [<bf0bdad4>] (ax25_hard_header+0x34/0xf4 
+[ax25])
+[<bf0bdad4>] (ax25_hard_header [ax25]) from [<bf0d05d4>] 
+(ax_header+0x38/0x40 [mkiss])
+[<bf0d05d4>] (ax_header [mkiss]) from [<c041b584>] 
+(neigh_compat_output+0x8c/0xd8)
+[<c041b584>] (neigh_compat_output) from [<c043e7a8>] 
+(ip_finish_output+0x2a0/0x914)
+[<c043e7a8>] (ip_finish_output) from [<c043f948>] (ip_output+0xd8/0xf0)
+[<c043f948>] (ip_output) from [<c043f04c>] (ip_local_out_sk+0x44/0x48)
+[<c043f04c>] (ip_local_out_sk) from [<c04721f4>] (igmpv3_sendpack+0x54/0x58)
+[<c04721f4>] (igmpv3_sendpack) from [<c04734bc>] 
+(igmp_ifc_timer_expire+0x1c0/0x2ac)
+[<c04734bc>] (igmp_ifc_timer_expire) from [<c00696cc>] 
+(call_timer_fn+0x4c/0x1ac)
+[<c00696cc>] (call_timer_fn) from [<c0069d20>] 
+(run_timer_softirq+0x21c/0x340)
+[<c0069d20>] (run_timer_softirq) from [<c0024ea8>] (__do_softirq+0xa4/0x370)
+[<c0024ea8>] (__do_softirq) from [<c002540c>] (irq_exit+0x88/0xc4)
+[<c002540c>] (irq_exit) from [<c005b550>] (__handle_domain_irq+0x74/0xdc)
+[<c005b550>] (__handle_domain_irq) from [<c000872c>] (aic5_handle+0xe8/0xf4)
+[<c000872c>] (aic5_handle) from [<c059aca8>] (__irq_usr+0x48/0x60)
 
-The next releases will be '3.1' through '3.n' until the next major
-release.
+I suspect that some code is missing somewhere in the serial port release 
+part to remove the AX25 interface that is attached to it. But I am not 
+certain about this, and I don't know where to look into the kernel to 
+fix this. The kernel version is 3.19.0 running on a ARMv7 processor in 
+case that matter.
 
+Any hint would be appreciate.
 
-Files are hosted at the Hamlib prjoect page at SourceForge.net:
-
-https://sourceforge.net/projects/hamlib/files/hamlib/3.0/
-
-
-The changes include:
-
-Version 3.0
-        2015-09-20
-        * Kill RPC backends and rpc.rigd/rpc.rotd
-        * Remove -e|--end-marker option from rigctld and rotctld
-        * Build system updates--remove obsolete macros, autogen.sh now
-                runs autoreconf to invoke Autotools to bootstrap the build
-                system, libltdl is installed into the source tree as a part
-                of the build system bootstrap and is included in the source
-                tarball, ABI version is set to be compatible with the 1.2
-                series, all Autotools installed files are copied rather than
-                symlinked and put in the build-aux directory, building
-                rigmem and rigmatrix are now user selectable at configure
-                run time, building static libraries are disabled by default.
-                Fixed TCL binding installation, fixed Perl binding build so it
-                is not invoked by 'make dist' and clean up build files.  Cleaned
-                up bindings builds to occur in alphabetical order.  Use new
-                ax_pkg_swig macro and update ax_python_devel macro.  Test for
-                presence of pkg-config before testing for pkg-config use.
-        * Implement new RIT/XIT activation/deactivation through rig_get/set_func()
-        * IC-PCR1500/2500 default write_delay to 0, IC-746/756, IC-PCR8500
-                fixes, pcr.c, pcr1500.c: Add DSP support.  TNX Paul, KE7ZZ
-        * WinRadio G313 updates.  TNX Julian Campbel
-        * Readline editing and history support added to rigctl interactive
-                mode.  Implement options for reading and writing history file.
-        * Readline editing and history support added to rotctl interactive
-                mode.  Implement options for reading and writing history file.
-        * A new manual draft written in Texinfo added.  Both GNU Info and single
-                HTML files are built and distributed, requires makeinfo.
-        * Android build system support.  See android/README.android.  Android
-                Makefile fragments are included in source tarballs.
-        * Monolithic library, thanks to Remi Chateauneu for the majority of
-                the work!  This allows enabling of a single static library so
-                static libs are enabled by default.  Removes dependency on libltdl.
-        * Fixes to easycomm, TNX Steve AI4QR.
-        * Fixes to port handling allowing PTT and CAT on the same port.  TNX
-                Bill, G4WJS.
-        * New Peaberry models V1 and V2 added to kit backend.  TNX ON8VQ
-                and R2AEE.
-        * New IC-7100 model.  TNX Martin, CT1IQI.
-        * Use AC_CHECK_LIB macro to search for libusb rather than rely on
-            pkg-config.  Preserve environment variables LIBUSB_CFLAGS and
-            LIBUSB_LIBS as user precious variables.  Two features,
-            --with-xml-support and --enable-usrp still rely on pkg-config so
-            only invoke pkg-config when either or both of these features are
-            selected.  Only the Winradio g313 model uses libdl so test for it
-            only when Winradio backend is enabled.
-        * New IC-M700PRO, IC-M710, IC-M802.
-        * New Icom ID-5100 model.
-        * New rotor, cnctrk by KI4SBL
-        * Many backend fixes and updates from many contributors (see Git
-          log for complete details).
-
-Also all work from 1.2.15.3 and prior releases.
-
-
-TODO:
-
-Continue to improve the documentation.  This includes completing the
-included manual and migrating content from the old MediaWiki format to
-the Markdown format now used by SourceForge.net.  Target: ongoing.
-
-Due to the apparent lack of a libusb package for Windows 64 bit, trial
-builds of the current Hamlib for W64 lack support for the USB backends.
-The project should transition these backends to the newer libusb 1.0
-series.  Target: 3.1.
-
-Continue to accept support for new radios and devices and improvement to
-existing radios and devices.  Hamlib has a large list of contributors
-and development relies on testing and code contributions from owners of
-the many varied radios, rotors, and whatever else Hamlib may come to
-support in the future.
-
-
-The Hamlib Group offers their sincere thanks for everyone whose work has
-made this release possible.
-
-73, Nate
+Best Regards,
+Jean-Christian de Rivaz
