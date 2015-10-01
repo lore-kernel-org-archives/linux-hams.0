@@ -1,58 +1,54 @@
 From: Jean-Christian de Rivaz <jc@eclis.ch>
-Subject: [PATCH v2 1/1] Force mkiss to reset the line discipline when serial device is removed
-Date: Thu,  1 Oct 2015 11:18:08 +0200
-Message-ID: <1443691088-30478-1-git-send-email-jc@eclis.ch>
-References: <20151001073117.GA31401@linux-mips.org>
+Subject: Force mkiss to reset the line discipline when serial device is removed
+Date: Thu, 01 Oct 2015 18:56:39 +0200
+Message-ID: <560D65C7.30707@eclis.ch>
+References: <20151001073117.GA31401@linux-mips.org> <1443691088-30478-1-git-send-email-jc@eclis.ch>
+Mime-Version: 1.0
+Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <20151001073117.GA31401@linux-mips.org>
+In-Reply-To: <1443691088-30478-1-git-send-email-jc@eclis.ch>
 Sender: linux-hams-owner@vger.kernel.org
 List-ID: <linux-hams.vger.kernel.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-To: Thomas Osterried <thomas@osterried.de>, David Ranch <dranch@trinnet.net>, Ralf Baechle DL5RB <ralf@linux-mips.org>
-Cc: linux-hams@trinnet.net, linux-hams@vger.kernel.org
+Content-Type: text/plain; charset="us-ascii"; format="flowed"
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, Jiri Slaby <jslaby@suse.com>
+Cc: Thomas Osterried <thomas@osterried.de>, David Ranch <dranch@trinnet.net>, Ralf Baechle DL5RB <ralf@linux-mips.org>, linux-hams@trinnet.net, linux-hams@vger.kernel.org, linux-kernel@vger.kernel.org
 
-Without the TTY_OTHER_CLOSED in the tty flags, the ax_open() is called
-again and a new unconfigured interface replace the one that was just
-deleted. Since this parasit interface is not linked to any serial
-device, when a packet is send the kernel will panic.
+Hi Greg and Jiri,
 
-Signed-off-by: Jean-Christian de Rivaz <jc@eclis.ch>
----
- drivers/net/hamradio/mkiss.c |    5 +++++
- drivers/tty/tty_ldisc.c      |    2 ++
- 2 files changed, 7 insertions(+)
+I try to fix a kernel panic bug related to the AX25 (and probably SLIP) 
+line discipline when the corresponding serial device is removed [1]. I 
+proposed some patches [2] [3] on the linux-hams mailing list but I think 
+there raise more questions about how tty_ldisc_hangup() should work when 
+a serial device is removed [4].
 
-diff --git a/drivers/net/hamradio/mkiss.c b/drivers/net/hamradio/mkiss.c
-index 216bfd3..fba41e9 100644
---- a/drivers/net/hamradio/mkiss.c
-+++ b/drivers/net/hamradio/mkiss.c
-@@ -612,6 +612,11 @@ static int ax_open(struct net_device *dev)
- 
- 	ax->flags   &= (1 << AXF_INUSE);      /* Clear ESCAPE & ERROR flags */
- 
-+	/* Will force N_TTY discipline in tty_ldisc_hangup() to avoid
-+	 * tty_ldisc_reinit() call ax_open() again when the serial
-+	 * device is removed */
-+	set_bit(TTY_OTHER_CLOSED, &ax->tty->flags);
-+
- 	spin_lock_init(&ax->buflock);
- 
- 	return 0;
-diff --git a/drivers/tty/tty_ldisc.c b/drivers/tty/tty_ldisc.c
-index 71750cb..7a24ab6 100644
---- a/drivers/tty/tty_ldisc.c
-+++ b/drivers/tty/tty_ldisc.c
-@@ -691,6 +691,8 @@ void tty_ldisc_hangup(struct tty_struct *tty)
- 
- 	if (tty->ldisc) {
- 
-+		reset |= test_bit(TTY_OTHER_CLOSED, &tty->flags);
-+
- 		/* At this point we have a halted ldisc; we want to close it and
- 		   reopen a new ldisc. We could defer the reopen to the next
- 		   open but it means auditing a lot of other paths so this is
--- 
-1.7.10.4
+I actually see the following options:
+
+a) Let the specific line discipline set the TTY_DRIVER_RESET_TERMIOS 
+flag in tty->driver as in [2] but this is suspected bad practice [5].
+
+b) Let the specific line discipline set the TTY_OTHER_CLOSED flag in tty 
+and check it in tty_ldisc_hangup() as in [3].
+
+c) Let the specific line discipline set the TTY_LDISC_HALTED flag in tty 
+and check it in tty_ldisc_hangup().
+
+d) Let the specific line discipline set a new flag for that purpose, for 
+example TTY_LDISC_RESET, and check it in tty_ldisc_hangup().
+
+e) Close the tty earlier so that tty_ldisc_reinit() is not even called. 
+Need some advise on how this should be done.
+
+f) That's all wrong, something other need to be changed.
+
+I would appreciate some comments from tty subsystem experts about this 
+issue.
+
+[1] http://www.spinics.net/lists/linux-hams/msg03500.html
+[2] http://www.spinics.net/lists/linux-hams/msg03511.html
+[3] http://www.spinics.net/lists/linux-hams/msg03513.html
+[4] http://www.spinics.net/lists/linux-hams/msg03509.html
+[5] http://www.spinics.net/lists/linux-hams/msg03512.html
+
+Best Regards,
+Jean-Christian de Rivaz
 
