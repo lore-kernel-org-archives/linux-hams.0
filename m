@@ -1,40 +1,45 @@
-From: Dave Riesz <dave@riesz.net>
-Subject: multi-channel soundmodem
-Date: Tue, 3 Nov 2015 18:54:25 -0800
-Message-ID: <CAOG7C-hJUPVnYzpsXxkUpV_gMM8Y=950ohVX+zzfCsOMOa9EEg@mail.gmail.com>
+From: David Ranch <linux-hams@trinnet.net>
+Subject: Re: multi-channel soundmodem
+Date: Tue, 3 Nov 2015 20:02:08 -0800
+Message-ID: <56398340.4080803@trinnet.net>
+References: <CAOG7C-hJUPVnYzpsXxkUpV_gMM8Y=950ohVX+zzfCsOMOa9EEg@mail.gmail.com>
 Mime-Version: 1.0
+Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:sender:date:message-id:subject:from:to:content-type;
-        bh=WNhIlw/8HSkJ46NYtb8Gg9UIiCDhmO6KWmxofYNW5b0=;
-        b=1H4Gn7ED2++DOPiAwrsYbsV4h8s30ac9X46Klial/wZ8A4weLplOV0qNJ3BwHyMTuB
-         B5SkRAePwWVdp1l6XLSe8dBQYlIe3syBaGqi5LVtz7xpHIljk9TUsWKTp5CpgEnfZn5v
-         j4Ar1NKFgfnbs7kzczfNaafvG8oGC8cAKS2FOpDn+W32x2dv31UW+BsS93cujgmdvpXT
-         m3cbex2K2204G45NbLO60eQ5iVALmNeyPpioXUbCI4FwNVjftzm1nLGsMsf+2/pNAVwQ
-         34YRVNLVANxYLgefKT4umOkM7Hh3OPLmOxAu9f9KuX7JnODrTBNiKwymXja9iswOZHU3
-         Ruhg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=riesz_net.20150623.gappssmtp.com; s=20150623;
-        h=mime-version:sender:date:message-id:subject:from:to:content-type;
-        bh=WNhIlw/8HSkJ46NYtb8Gg9UIiCDhmO6KWmxofYNW5b0=;
-        b=j29a/2+3Ic1L5OYAfAjCVLqzXKUVxZnucQvSY0oI1I1f4N9XRDtF+tQfZklHQ/9RJm
-         DADS0C2QrNvAFPONcBbCDlRPdlb6NjiMEuMPertitNRBYag0pGnPUcCABNAykL4I93os
-         jr0jeM/ORakiRtNs1tyeOMavTbM95RMkffipZH7M2q0ztjYswYJAikzhttY4OSwGtjg7
-         fSRfNmie651ZiuZYjSoyoUmMqX4/tmAW5tJrVYbWwnhpAXIPtT/CdoWPEfkP8V8rJzr5
-         G2Q/yOoVWhGOkUKd2Ka26o2kpo6AvenQ1PmJgoVEVj/qgO2E2Lao2D/J/dCMIgMcYorS
-         KZHQ==
+In-Reply-To: <CAOG7C-hJUPVnYzpsXxkUpV_gMM8Y=950ohVX+zzfCsOMOa9EEg@mail.gmail.com>
 Sender: linux-hams-owner@vger.kernel.org
 List-ID: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-To: linux-hams@vger.kernel.org
+Content-Type: text/plain; charset="us-ascii"; format="flowed"
+To: Dave Riesz <dave@riesz.net>, linux-hams@vger.kernel.org
 
-Hello.  I'm trying out the soundmodem for the first time in nearly
-twenty years.  I would like to set it up to have two channels running
-from a single line-out, carried separately on stereo-left and
-stereo-right.  I've seen hints here and there that this is possible,
-but no proof.  Is it, in fact, possible?  Has anyone here done it?
 
-Thanks,
-Dave Riesz, N1OSN
+Hello Dave,
+
+Is there a specific reason why you want to specifically run Tom Sailer's 
+Soundmodem or are you just trying to get back into packet? Though I 
+think soundmodem can support stereo out for two different radios, the 
+support might be iffy as Soundmodem really hasn't received any support 
+in many years.  What I can recommend which DOES support stereo input, 
+stereo output, multiple soundcards as well as superior weak signal 
+packet decodes is Direwolf:
+
+    https://github.com/wb2osz/direwolf/releases
+
+--David
+KI6ZHD
+
+
+On 11/03/2015 06:54 PM, Dave Riesz wrote:
+> Hello.  I'm trying out the soundmodem for the first time in nearly
+> twenty years.  I would like to set it up to have two channels running
+> from a single line-out, carried separately on stereo-left and
+> stereo-right.  I've seen hints here and there that this is possible,
+> but no proof.  Is it, in fact, possible?  Has anyone here done it?
+>
+> Thanks,
+> Dave Riesz, N1OSN
+> --
+> To unsubscribe from this list: send the line "unsubscribe linux-hams" in
+> the body of a message to majordomo@vger.kernel.org
+> More majordomo info at  http://vger.kernel.org/majordomo-info.html
+
