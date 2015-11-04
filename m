@@ -1,60 +1,40 @@
-From: Jean-Christian de Rivaz <jc@eclis.ch>
-Subject: Re: [PATCH 1/1] Add poll method to mkiss let notify hangup to the
- user process.
-Date: Sat, 03 Oct 2015 03:02:32 +0200
-Message-ID: <560F2928.3080102@eclis.ch>
-References: <560EBE07.70801@eclis.ch> <1443822373-18395-1-git-send-email-jc@eclis.ch> <560F217B.6020106@trinnet.net>
+From: Dave Riesz <dave@riesz.net>
+Subject: multi-channel soundmodem
+Date: Tue, 3 Nov 2015 18:54:25 -0800
+Message-ID: <CAOG7C-hJUPVnYzpsXxkUpV_gMM8Y=950ohVX+zzfCsOMOa9EEg@mail.gmail.com>
 Mime-Version: 1.0
-Content-Transfer-Encoding: QUOTED-PRINTABLE
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <560F217B.6020106@trinnet.net>
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:sender:date:message-id:subject:from:to:content-type;
+        bh=WNhIlw/8HSkJ46NYtb8Gg9UIiCDhmO6KWmxofYNW5b0=;
+        b=1H4Gn7ED2++DOPiAwrsYbsV4h8s30ac9X46Klial/wZ8A4weLplOV0qNJ3BwHyMTuB
+         B5SkRAePwWVdp1l6XLSe8dBQYlIe3syBaGqi5LVtz7xpHIljk9TUsWKTp5CpgEnfZn5v
+         j4Ar1NKFgfnbs7kzczfNaafvG8oGC8cAKS2FOpDn+W32x2dv31UW+BsS93cujgmdvpXT
+         m3cbex2K2204G45NbLO60eQ5iVALmNeyPpioXUbCI4FwNVjftzm1nLGsMsf+2/pNAVwQ
+         34YRVNLVANxYLgefKT4umOkM7Hh3OPLmOxAu9f9KuX7JnODrTBNiKwymXja9iswOZHU3
+         Ruhg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=riesz_net.20150623.gappssmtp.com; s=20150623;
+        h=mime-version:sender:date:message-id:subject:from:to:content-type;
+        bh=WNhIlw/8HSkJ46NYtb8Gg9UIiCDhmO6KWmxofYNW5b0=;
+        b=j29a/2+3Ic1L5OYAfAjCVLqzXKUVxZnucQvSY0oI1I1f4N9XRDtF+tQfZklHQ/9RJm
+         DADS0C2QrNvAFPONcBbCDlRPdlb6NjiMEuMPertitNRBYag0pGnPUcCABNAykL4I93os
+         jr0jeM/ORakiRtNs1tyeOMavTbM95RMkffipZH7M2q0ztjYswYJAikzhttY4OSwGtjg7
+         fSRfNmie651ZiuZYjSoyoUmMqX4/tmAW5tJrVYbWwnhpAXIPtT/CdoWPEfkP8V8rJzr5
+         G2Q/yOoVWhGOkUKd2Ka26o2kpo6AvenQ1PmJgoVEVj/qgO2E2Lao2D/J/dCMIgMcYorS
+         KZHQ==
 Sender: linux-hams-owner@vger.kernel.org
 List-ID: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="iso-8859-1"; format="flowed"
-To: David Ranch <linux-hams@trinnet.net>, Thomas Osterried <thomas@osterried.de>, Ralf Baechle DL5RB <ralf@linux-mips.org>, Greg Kroah-Hartman <gregkh@linuxfoundation.org>, Jiri Slaby <jslaby@suse.com>, Peter Hurley <peter@hurleysoftware.com>
-Cc: linux-hams@vger.kernel.org
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+To: linux-hams@vger.kernel.org
 
-Le 03. 10. 15 02:29, David Ranch a =E9crit :
->
-> Hello Jean-Christian, Everyone,
->
-> Thanks for working on this as I'm pretty sure I've bit hit by this=20
-> panic as well though I wasn't able to reproduce it more readily.=20
-> Anyway, if this is the proper fix moving forward, will the kernel not=
-=20
-> panic even if kissattach is not updated?
+Hello.  I'm trying out the soundmodem for the first time in nearly
+twenty years.  I would like to set it up to have two channels running
+from a single line-out, carried separately on stereo-left and
+stereo-right.  I've seen hints here and there that this is possible,
+but no proof.  Is it, in fact, possible?  Has anyone here done it?
 
-Hello David,
-
-The kernel will still panic and crash the system. The patch purpose is=20
-only to allow hangup notification to the user space. It has the side=20
-effect to reduce the race window of the panic&crash only if the user=20
-application get the hangup notification and close the file descriptor.=20
-The window is reduced in that case, but the window still exists.
-
-Even with this patch and the user space application patch, the kernel i=
-s=20
-still unsafe, as a packet can still reach the parasitic AX25 interface=20
-in the time between the kiss_open() in the kernel and the close() in th=
-e=20
-user application. More important, as I stated before, safety of the=20
-kernel cannot depend on a user space application closing a file=20
-descriptor. A fix to prevent mkiss_open() call on a removed serial=20
-device is still needed. I proposed patches and options, but to date I=20
-only get two critics and no hint on how to solve the problem. The tty=20
-maintainers stay silent.
-
-> Can you also include the needed patch for the kissattach program to=20
-> complete this solution?
-
-Yes, it was posted a few minutes before in the linux-hams mailing list=20
-only because it don't concern the kernel mailing list:
-
-http://www.spinics.net/lists/linux-hams/msg03520.html
-
-Jean-Christian
---
-To unsubscribe from this list: send the line "unsubscribe linux-hams" i=
-n
-the body of a message to majordomo@vger.kernel.org
-More majordomo info at  http://vger.kernel.org/majordomo-info.html
+Thanks,
+Dave Riesz, N1OSN
