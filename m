@@ -1,36 +1,69 @@
-From: One Thousand Gnomes <gnomes@lxorguk.ukuu.org.uk>
+From: David Miller <davem@davemloft.net>
 Subject: Re: use-after-free in sixpack_close
-Date: Thu, 17 Dec 2015 11:41:04 +0000
-Message-ID: <20151217114104.6946d72b@lxorguk.ukuu.org.uk>
+Date: Thu, 17 Dec 2015 16:05:32 -0500 (EST)
+Message-ID: <20151217.160532.999129498473749695.davem@davemloft.net>
 References: <CACT4Y+YfPHHON7VywV_G-qOyQ0wv6UVB0uxFAGf1aGKpfAP-KA@mail.gmail.com>
+	<20151217114104.6946d72b@lxorguk.ukuu.org.uk>
 Mime-Version: 1.0
 Content-Transfer-Encoding: 7bit
-Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <CACT4Y+YfPHHON7VywV_G-qOyQ0wv6UVB0uxFAGf1aGKpfAP-KA@mail.gmail.com>
-Sender: linux-hams-owner@vger.kernel.org
+Return-path: <netdev-owner@vger.kernel.org>
+In-Reply-To: <20151217114104.6946d72b@lxorguk.ukuu.org.uk>
+Sender: netdev-owner@vger.kernel.org
 List-ID: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"
-To: Dmitry Vyukov <dvyukov@google.com>
-Cc: Andreas Koensgen <ajk@comnets.uni-bremen.de>, linux-hams@vger.kernel.org, netdev <netdev@vger.kernel.org>, LKML <linux-kernel@vger.kernel.org>, Greg Kroah-Hartman <gregkh@linuxfoundation.org>, Jiri Slaby <jslaby@suse.com>, syzkaller <syzkaller@googlegroups.com>, Kostya Serebryany <kcc@google.com>, Alexander Potapenko <glider@google.com>, Sasha Levin <sasha.levin@oracle.com>, Eric Dumazet <edumazet@google.com>
+Content-Type: Text/Plain; charset="us-ascii"
+To: gnomes@lxorguk.ukuu.org.uk
+Cc: dvyukov@google.com, ajk@comnets.uni-bremen.de, linux-hams@vger.kernel.org, netdev@vger.kernel.org, linux-kernel@vger.kernel.org, gregkh@linuxfoundation.org, jslaby@suse.com, syzkaller@googlegroups.com, kcc@google.com, glider@google.com, sasha.levin@oracle.com, edumazet@google.com
 
-> This report is then followed by a dozen of other use-after-free reports.
+From: One Thousand Gnomes <gnomes@lxorguk.ukuu.org.uk>
+Date: Thu, 17 Dec 2015 11:41:04 +0000
+
+>> This report is then followed by a dozen of other use-after-free reports.
+>> 
+>> On commit edb42dc7bc0da0125ceacab810a553ce1f0cac8d (Dec 15).
+>> 
+>> Thank you
 > 
-> On commit edb42dc7bc0da0125ceacab810a553ce1f0cac8d (Dec 15).
+> sixpack_close does unregister_netdev(sp->dev), which frees sp as sp is
+> actually allocated via alloc_netdev()
 > 
-> Thank you
+> Then deletes two timers within sp
+> 
+> Then frees two buffers indexed off sp
 
-sixpack_close does unregister_netdev(sp->dev), which frees sp as sp is
-actually allocated via alloc_netdev()
+This should fix it, the only thing I'm unsure of is if we should perhaps
+also use del_timer_sync() here.  Anyone?
 
-Then deletes two timers within sp
+====================
+[PATCH 1/2] 6pack: Fix use after free in sixpack_close().
 
-Then frees two buffers indexed off sp
+Need to do the unregister_device() after all references to the driver
+private have been done.
 
-The mkiss driver also appears to share the same bug and references
-ax->rbuff/xbuff after they have been freed, and then writes to ax->tty.
+Signed-off-by: David S. Miller <davem@davemloft.net>
+---
+ drivers/net/hamradio/6pack.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-
-Alan
-
-
-
+diff --git a/drivers/net/hamradio/6pack.c b/drivers/net/hamradio/6pack.c
+index 7c4a415..218f3ab 100644
+--- a/drivers/net/hamradio/6pack.c
++++ b/drivers/net/hamradio/6pack.c
+@@ -683,14 +683,14 @@ static void sixpack_close(struct tty_struct *tty)
+ 	if (!atomic_dec_and_test(&sp->refcnt))
+ 		down(&sp->dead_sem);
+ 
+-	unregister_netdev(sp->dev);
+-
+ 	del_timer(&sp->tx_t);
+ 	del_timer(&sp->resync_t);
+ 
+ 	/* Free all 6pack frame buffers. */
+ 	kfree(sp->rbuff);
+ 	kfree(sp->xbuff);
++
++	unregister_netdev(sp->dev);
+ }
+ 
+ /* Perform I/O control on an active 6pack channel. */
+-- 
+2.4.1
