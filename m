@@ -1,35 +1,31 @@
-From: One Thousand Gnomes <gnomes@lxorguk.ukuu.org.uk>
-Subject: Re: use-after-free in sixpack_close
-Date: Fri, 18 Dec 2015 22:02:04 +0000
-Message-ID: <20151218220204.6faf8e93@lxorguk.ukuu.org.uk>
-References: <20151217114104.6946d72b@lxorguk.ukuu.org.uk>
-	<20151217.160532.999129498473749695.davem@davemloft.net>
-	<20151217234739.651e7c5b@lxorguk.ukuu.org.uk>
-	<20151218.155954.26632223306803039.davem@davemloft.net>
+From: Felix Janda <felix.janda@posteo.de>
+Subject: [PATCH] daemon.c: Include <fcntl.h> for open()
+Date: Sun, 3 Jan 2016 11:25:55 +0100
+Message-ID: <20160103102555.GA5031@nyan>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <20151218.155954.26632223306803039.davem@davemloft.net>
+Content-Disposition: inline
 Sender: linux-hams-owner@vger.kernel.org
 List-ID: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
-To: David Miller <davem@davemloft.net>
-Cc: dvyukov@google.com, ajk@comnets.uni-bremen.de, linux-hams@vger.kernel.org, netdev@vger.kernel.org, linux-kernel@vger.kernel.org, gregkh@linuxfoundation.org, jslaby@suse.com, syzkaller@googlegroups.com, kcc@google.com, glider@google.com, sasha.levin@oracle.com, edumazet@google.com
+Content-Transfer-Encoding: 7bit
+To: linux-hams@vger.kernel.org
 
-> > Also you are at the point the tty is closing so the net device may be
-> > active. Don't you need to netif_stop_queue() or defer the buffer
-> > kfrees until after the network device is unregistered so you don't pee
-> > into free memory if you have a transmit occurring ?
-> 
-> I'm pretty sure that's what the semaphore down above this sequence is
-> accomplishing.  But if we do need the netif_stop_queue() let's do that
-> as a separate patch.
+Fixes compilation with the musl c library
 
-Follow the code path for sp_xmit(). If sp_xmit is called it digs out sp
-from the ndetdev, locks sp->lock and stops the queue then calls sp_encaps
-which touches sp->xbuff.
+Signed-off-by: Felix Janda <felix.janda@posteo.de>
+---
+ daemon.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-So if one thread of execution hits sp_xmit and another closes the ldisc
-at just the wrong moment then we have no protection.
-
-Alan
+diff --git a/daemon.c b/daemon.c
+index 01511b6..0028c0f 100644
+--- a/daemon.c
++++ b/daemon.c
+@@ -1,3 +1,4 @@
++#include <fcntl.h>
+ #include <unistd.h>
+ #include <stdio.h>
+ #include <stdlib.h>
+-- 
+2.4.10
