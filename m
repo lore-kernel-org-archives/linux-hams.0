@@ -1,140 +1,84 @@
 From: Amitoj Kaur Chawla <amitoj1606@gmail.com>
-Subject: [PATCH] dmascc: Return correct error codes
-Date: Wed, 10 Feb 2016 00:12:36 +0530
-Message-ID: <20160209184236.GA23644@amitoj-Inspiron-3542>
+Subject: [PATCH] net: hamradio: baycom_ser_fdx: Replace timeval with
+ timespec64
+Date: Wed, 10 Feb 2016 10:08:54 +0530
+Message-ID: <20160210043854.GA29381@amitoj-Inspiron-3542>
 Mime-Version: 1.0
-Return-path: <linux-kernel-owner@vger.kernel.org>
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=date:from:to:cc:subject:message-id:mime-version:content-type
-         :content-disposition:user-agent;
-        bh=v+ivaZQQGENDu1DDClXcamqUS/0jKNm4nbxg/bhbicM=;
-        b=QrEfbbSXykndbfHaVcsCh+XVEgazK9teW1OPauD2IA19bbinPcI2MwEVGQMY5nAZ84
-         /FFat2+8yiRrOj7C5J38ojXngTGItBUKQyFn5zpBiXZFE0lHy8oB0YnsojTRs7Hrrlkn
-         7o4Tnbr7uabtBu2Hf6ZR+NArpDA8Cyum07NTgr3trvgEs9gEKkewq+qHywqC+YXA1ryP
-         /s9LquYpOfAmhS9ZhdPVmzwR26c+fOOE532lgpbCyZF1Q67zydUyPhvmN//Oy1+OrsMD
-         4s1auJAKCJARx4xSLyBbaZyRJJ2gnlm2g4jHsVYi9yeSyS4O+kjPv9rbprLgsygbbyk3
-         0C2Q==
+Content-Transfer-Encoding: base64
+Return-path: <y2038-bounces@lists.linaro.org>
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20120113;
+ h=date:from:to:subject:message-id:mime-version:content-type
+ :content-disposition:user-agent;
+ bh=bIptVUuVTxFEo1vFsSr7Ryeg1fjWLUHOsXDGKtAo4GM=;
+ b=HM9xJE4OBS22qoTFGrb/cDlFOkc5Rgj12mLYKZc+QXynta6K7ymbJhVXgQ0lr3/w2v
+ HiwC+64PxpM0vGRwXhZGarzv/IjJpB7c6B4fXeO37H5bO9LvGqXbOvXIT4amCpEHydzv
+ esCt/GL9bp/WUAWXoesEQ1iup6Ynjjai7lC96guVbb5xw9aePgp1UykucV9fsUldc+d9
+ E8uedqtEMMtA0adfviQEKcE4nlRvQPl9cuzKySl5xGwwQ34FC0h8LlmJpkaw+lWD3gR2
+ XcqG97fHZ68PX9QQy+2H7JFXPPbbKoGU5sHQWcADrBnusVFlJKsy2QtdflQaZukhdNG/
+ YvIw==
 Content-Disposition: inline
-Sender: linux-kernel-owner@vger.kernel.org
-List-ID: <linux-hams.vger.kernel.org>
+List-Id: <linux-hams.vger.kernel.org>
+List-Unsubscribe: <https://lists.linaro.org/mailman/options/y2038>,
+ <mailto:y2038-request@lists.linaro.org?subject=unsubscribe>
+List-Archive: <http://lists.linaro.org/pipermail/y2038/>
+List-Post: <mailto:y2038@lists.linaro.org>
+List-Help: <mailto:y2038-request@lists.linaro.org?subject=help>
+List-Subscribe: <https://lists.linaro.org/mailman/listinfo/y2038>,
+ <mailto:y2038-request@lists.linaro.org?subject=subscribe>
+Errors-To: y2038-bounces@lists.linaro.org
+Sender: "Y2038" <y2038-bounces@lists.linaro.org>
 Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-To: jreuter@yaina.de, linux-hams@vger.kernel.org, netdev@vger.kernel.org, linux-kernel@vger.kernel.org
-Cc: julia.lawall@lip6.fr
+To: t.sailer@alumni.ethz.ch, linux-hams@vger.kernel.org, netdev@vger.kernel.org, linux-kernel@vger.kernel.org, y2038@lists.linaro.org
 
-This change has been made with the goal that kernel functions should
-return something more descriptive than -1 on failure.
-
-A variable `err` has been introduced for storing error codes.
-
-The return value of kzalloc on failure should return a -1 and not a
--ENOMEM. This was found using Coccinelle. A simplified version of
-the semantic patch used is:
-
-//<smpl>
-@@
-expression *e;
-identifier l1;
-@@
-
-e = kzalloc(...);
-if (e == NULL) {
-...
-goto l1;
-}
-l1:
-...
-return -1
-+ -ENOMEM
-;
-//</smpl
-
-Furthermore, set `err` to -ENOMEM on failure of alloc_netdev(), and to
--ENODEV on failure of register_netdev() and probe_irq_off().
-
-The single call site only checks that the return value is not 0,
-hence no change is required at the call site.
-
-Signed-off-by: Amitoj Kaur Chawla <amitoj1606@gmail.com>
----
-Not sure if -ENODEV is the right error code for probe_irq_off(irqs),
-since there are few other examples with this function.
-
- drivers/net/hamradio/dmascc.c | 13 ++++++++++---
- 1 file changed, 10 insertions(+), 3 deletions(-)
-
-diff --git a/drivers/net/hamradio/dmascc.c b/drivers/net/hamradio/dmascc.c
-index c3d3777..e4137c1 100644
---- a/drivers/net/hamradio/dmascc.c
-+++ b/drivers/net/hamradio/dmascc.c
-@@ -451,7 +451,7 @@ static const struct net_device_ops scc_netdev_ops = {
- 
- static int __init setup_adapter(int card_base, int type, int n)
- {
--	int i, irq, chip;
-+	int i, irq, chip, err;
- 	struct scc_info *info;
- 	struct net_device *dev;
- 	struct scc_priv *priv;
-@@ -463,14 +463,17 @@ static int __init setup_adapter(int card_base, int type, int n)
- 
- 	/* Initialize what is necessary for write_scc and write_scc_data */
- 	info = kzalloc(sizeof(struct scc_info), GFP_KERNEL | GFP_DMA);
--	if (!info)
-+	if (!info) {
-+		err = -ENOMEM;
- 		goto out;
-+	}
- 
- 	info->dev[0] = alloc_netdev(0, "", NET_NAME_UNKNOWN, dev_setup);
- 	if (!info->dev[0]) {
- 		printk(KERN_ERR "dmascc: "
- 		       "could not allocate memory for %s at %#3x\n",
- 		       hw[type].name, card_base);
-+		err = -ENOMEM;
- 		goto out1;
- 	}
- 
-@@ -479,6 +482,7 @@ static int __init setup_adapter(int card_base, int type, int n)
- 		printk(KERN_ERR "dmascc: "
- 		       "could not allocate memory for %s at %#3x\n",
- 		       hw[type].name, card_base);
-+		err = -ENOMEM;
- 		goto out2;
- 	}
- 	spin_lock_init(&info->register_lock);
-@@ -549,6 +553,7 @@ static int __init setup_adapter(int card_base, int type, int n)
- 		printk(KERN_ERR
- 		       "dmascc: could not find irq of %s at %#3x (irq=%d)\n",
- 		       hw[type].name, card_base, irq);
-+		err = -ENODEV;
- 		goto out3;
- 	}
- 
-@@ -585,11 +590,13 @@ static int __init setup_adapter(int card_base, int type, int n)
- 	if (register_netdev(info->dev[0])) {
- 		printk(KERN_ERR "dmascc: could not register %s\n",
- 		       info->dev[0]->name);
-+		err = -ENODEV;
- 		goto out3;
- 	}
- 	if (register_netdev(info->dev[1])) {
- 		printk(KERN_ERR "dmascc: could not register %s\n",
- 		       info->dev[1]->name);
-+		err = -ENODEV;
- 		goto out4;
- 	}
- 
-@@ -612,7 +619,7 @@ static int __init setup_adapter(int card_base, int type, int n)
-       out1:
- 	kfree(info);
-       out:
--	return -1;
-+	return err;
- }
- 
- 
--- 
-1.9.1
-
+MzIgYml0IHN5c3RlbXMgdXNpbmcgJ3N0cnVjdCB0aW1ldmFsJyB3aWxsIGJyZWFrIGluIHRoZSB5
+ZWFyIDIwMzgsIHNvCndlIHJlcGxhY2UgdGhlIGNvZGUgYXBwcm9wcmlhdGVseS4gSG93ZXZlciwg
+dGhpcyBkcml2ZXIgaXMgbm90IGJyb2tlbgppbiAyMDM4IHNpbmNlIHdlIGFyZSBvbmx5IHVzaW5n
+IG1pY3Jvc2Vjb25kcyBwb3J0aW9uIG9mIHRoZSB0aW1lLgoKVGhpcyBwYXRjaCByZXBsYWNlcyAn
+c3RydWN0IHRpbWV2YWwnIHdpdGggJ3N0cnVjdCB0aW1lc3BlYzY0Jy4gV2Ugb25seQpuZWVkIHRv
+IGZpbmQgZWxhcHNlZCBtaWNyb3NlY29uZHMgcmF0aGVyIHRoYW4gYWJzb2x1dGUgdGltZSwgc28g
+aXQncwpiZXR0ZXIgdG8gdXNlIG1vbm90b25pYyB0aW1lLCBzbyB1c2luZyBrdGltZV9nZXRfdHM2
+NCgpIG1ha2VzIHRoZSBjb2RlCm1vcmUgZWZmaWNpZW50IGFuZCBtb3JlIHJvYnVzdCBhZ2FpbnN0
+IGNvbmN1cnJlbnQgc2V0dGltZW9mZGF5KCkKY2FsbHMuCgpTaWduZWQtb2ZmLWJ5OiBBbWl0b2og
+S2F1ciBDaGF3bGEgPGFtaXRvajE2MDZAZ21haWwuY29tPgpSZXZpZXdlZC1ieTogQXJuZCBCZXJn
+bWFubiA8YXJuZEBhcm5kYi5kZT4KLS0tCiBkcml2ZXJzL25ldC9oYW1yYWRpby9iYXljb21fc2Vy
+X2ZkeC5jIHwgMTIgKysrKysrKy0tLS0tCiAxIGZpbGUgY2hhbmdlZCwgNyBpbnNlcnRpb25zKCsp
+LCA1IGRlbGV0aW9ucygtKQoKZGlmZiAtLWdpdCBhL2RyaXZlcnMvbmV0L2hhbXJhZGlvL2JheWNv
+bV9zZXJfZmR4LmMgYi9kcml2ZXJzL25ldC9oYW1yYWRpby9iYXljb21fc2VyX2ZkeC5jCmluZGV4
+IDYzNmI2NWMuLjdiOTE2ZDUgMTAwNjQ0Ci0tLSBhL2RyaXZlcnMvbmV0L2hhbXJhZGlvL2JheWNv
+bV9zZXJfZmR4LmMKKysrIGIvZHJpdmVycy9uZXQvaGFtcmFkaW8vYmF5Y29tX3Nlcl9mZHguYwpA
+QCAtODAsNiArODAsNyBAQAogI2luY2x1ZGUgPGxpbnV4L2hkbGNkcnYuaD4KICNpbmNsdWRlIDxs
+aW51eC9iYXljb20uaD4KICNpbmNsdWRlIDxsaW51eC9qaWZmaWVzLmg+CisjaW5jbHVkZSA8bGlu
+dXgvdGltZTY0Lmg+CiAKICNpbmNsdWRlIDxhc20vdWFjY2Vzcy5oPgogI2luY2x1ZGUgPGFzbS9p
+by5oPgpAQCAtMjI4LDE0ICsyMjksMTUgQEAgc3RhdGljIGlubGluZSB1bnNpZ25lZCBpbnQgaHdl
+aWdodDgodW5zaWduZWQgaW50IHcpCiAKIC8qIC0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
+LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLSAqLwogCi1zdGF0aWMgX19p
+bmxpbmVfXyB2b2lkIHNlcjEyX3J4KHN0cnVjdCBuZXRfZGV2aWNlICpkZXYsIHN0cnVjdCBiYXlj
+b21fc3RhdGUgKmJjLCBzdHJ1Y3QgdGltZXZhbCAqdHYsIHVuc2lnbmVkIGNoYXIgY3VycykKK3N0
+YXRpYyBfX2lubGluZV9fIHZvaWQgc2VyMTJfcngoc3RydWN0IG5ldF9kZXZpY2UgKmRldiwgc3Ry
+dWN0IGJheWNvbV9zdGF0ZSAqYmMsIHN0cnVjdCB0aW1lc3BlYzY0ICp0cywgdW5zaWduZWQgY2hh
+ciBjdXJzKQogewogCWludCB0aW1lZGlmZjsKIAlpbnQgYmR1czggPSBiYy0+YmF1ZF91cyA+PiAz
+OwogCWludCBiZHVzNCA9IGJjLT5iYXVkX3VzID4+IDI7CiAJaW50IGJkdXMyID0gYmMtPmJhdWRf
+dXMgPj4gMTsKIAotCXRpbWVkaWZmID0gMTAwMDAwMCArIHR2LT50dl91c2VjIC0gYmMtPm1vZGVt
+LnNlcjEyLnBsbF90aW1lOworCXRpbWVkaWZmID0gMTAwMDAwMCArIHRzLT50dl9uc2VjIC8gTlNF
+Q19QRVJfVVNFQyAtCisJCQkJCWJjLT5tb2RlbS5zZXIxMi5wbGxfdGltZTsKIAl3aGlsZSAodGlt
+ZWRpZmYgPj0gNTAwMDAwKQogCQl0aW1lZGlmZiAtPSAxMDAwMDAwOwogCXdoaWxlICh0aW1lZGlm
+ZiA+PSBiZHVzMikgewpAQCAtMjg3LDcgKzI4OSw3IEBAIHN0YXRpYyBpcnFyZXR1cm5fdCBzZXIx
+Ml9pbnRlcnJ1cHQoaW50IGlycSwgdm9pZCAqZGV2X2lkKQogewogCXN0cnVjdCBuZXRfZGV2aWNl
+ICpkZXYgPSAoc3RydWN0IG5ldF9kZXZpY2UgKilkZXZfaWQ7CiAJc3RydWN0IGJheWNvbV9zdGF0
+ZSAqYmMgPSBuZXRkZXZfcHJpdihkZXYpOwotCXN0cnVjdCB0aW1ldmFsIHR2OworCXN0cnVjdCB0
+aW1lc3BlYzY0IHRzOwogCXVuc2lnbmVkIGNoYXIgaWlyLCBtc3I7CiAJdW5zaWduZWQgaW50IHR4
+Y291bnQgPSAwOwogCkBAIC0yOTcsNyArMjk5LDcgQEAgc3RhdGljIGlycXJldHVybl90IHNlcjEy
+X2ludGVycnVwdChpbnQgaXJxLCB2b2lkICpkZXZfaWQpCiAJaWYgKChpaXIgPSBpbmIoSUlSKGRl
+di0+YmFzZV9hZGRyKSkpICYgMSkgCQogCQlyZXR1cm4gSVJRX05PTkU7CiAJLyogZ2V0IGN1cnJl
+bnQgdGltZSAqLwotCWRvX2dldHRpbWVvZmRheSgmdHYpOworCWt0aW1lX2dldF90czY0KCZ0cyk7
+CiAJbXNyID0gaW5iKE1TUihkZXYtPmJhc2VfYWRkcikpOwogCS8qIGRlbHRhIERDRCAqLwogCWlm
+ICgobXNyICYgOCkgJiYgYmMtPm9wdF9kY2QpCkBAIC0zNDAsNyArMzQyLDcgQEAgc3RhdGljIGly
+cXJldHVybl90IHNlcjEyX2ludGVycnVwdChpbnQgaXJxLCB2b2lkICpkZXZfaWQpCiAJCX0KIAkJ
+aWlyID0gaW5iKElJUihkZXYtPmJhc2VfYWRkcikpOwogCX0gd2hpbGUgKCEoaWlyICYgMSkpOwot
+CXNlcjEyX3J4KGRldiwgYmMsICZ0diwgbXNyICYgMHgxMCk7IC8qIENUUyAqLworCXNlcjEyX3J4
+KGRldiwgYmMsICZ0cywgbXNyICYgMHgxMCk7IC8qIENUUyAqLwogCWlmIChiYy0+bW9kZW0ucHR0
+ICYmIHR4Y291bnQpIHsKIAkJaWYgKGJjLT5tb2RlbS5zZXIxMi50eHNocmVnIDw9IDEpIHsKIAkJ
+CWJjLT5tb2RlbS5zZXIxMi50eHNocmVnID0gMHgxMDAwMCB8IGhkbGNkcnZfZ2V0Yml0cygmYmMt
+PmhkcnYpOwotLSAKMS45LjEKCl9fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19f
+X19fX19fX19fClkyMDM4IG1haWxpbmcgbGlzdApZMjAzOEBsaXN0cy5saW5hcm8ub3JnCmh0dHBz
+Oi8vbGlzdHMubGluYXJvLm9yZy9tYWlsbWFuL2xpc3RpbmZvL3kyMDM4Cg==
