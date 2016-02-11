@@ -1,27 +1,33 @@
-From: Thomas Sailer <t.sailer@alumni.ethz.ch>
-Subject: Re: [PATCH] net: hamradio: baycom_ser_fdx: Replace timeval
- with timespec64
-Date: Wed, 10 Feb 2016 11:45:35 +0100
-Message-ID: <56BB14CF.9070507@alumni.ethz.ch>
+From: David Miller <davem@davemloft.net>
+Subject: Re: [PATCH] net: hamradio: baycom_ser_fdx: Replace timeval with
+ timespec64
+Date: Thu, 11 Feb 2016 09:55:34 -0500 (EST)
+Message-ID: <20160211.095534.840091300723732679.davem@davemloft.net>
 References: <20160210043854.GA29381@amitoj-Inspiron-3542>
 Mime-Version: 1.0
-Content-Transfer-Encoding: base64
-Return-path: <y2038-bounces@lists.linaro.org>
+Content-Transfer-Encoding: 7bit
+Return-path: <linux-hams-owner@vger.kernel.org>
 In-Reply-To: <20160210043854.GA29381@amitoj-Inspiron-3542>
-List-Id: <linux-hams.vger.kernel.org>
-List-Unsubscribe: <https://lists.linaro.org/mailman/options/y2038>,
- <mailto:y2038-request@lists.linaro.org?subject=unsubscribe>
-List-Archive: <http://lists.linaro.org/pipermail/y2038/>
-List-Post: <mailto:y2038@lists.linaro.org>
-List-Help: <mailto:y2038-request@lists.linaro.org?subject=help>
-List-Subscribe: <https://lists.linaro.org/mailman/listinfo/y2038>,
- <mailto:y2038-request@lists.linaro.org?subject=subscribe>
-Errors-To: y2038-bounces@lists.linaro.org
-Sender: "Y2038" <y2038-bounces@lists.linaro.org>
-Content-Type: text/plain; charset="us-ascii"; format="flowed"
-To: Amitoj Kaur Chawla <amitoj1606@gmail.com>, linux-hams@vger.kernel.org, netdev@vger.kernel.org, linux-kernel@vger.kernel.org, y2038@lists.linaro.org
+Sender: linux-hams-owner@vger.kernel.org
+List-ID: <linux-hams.vger.kernel.org>
+Content-Type: Text/Plain; charset="us-ascii"
+To: amitoj1606@gmail.com
+Cc: t.sailer@alumni.ethz.ch, linux-hams@vger.kernel.org, netdev@vger.kernel.org, linux-kernel@vger.kernel.org, y2038@lists.linaro.org
 
-UmV2aWV3ZWQtYnk6IFRob21hcyBTYWlsZXIgPHQuc2FpbGVyQGFsdW1uaS5ldGh6LmNoPgoKVGhh
-bmtzIQoKX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX18KWTIw
-MzggbWFpbGluZyBsaXN0ClkyMDM4QGxpc3RzLmxpbmFyby5vcmcKaHR0cHM6Ly9saXN0cy5saW5h
-cm8ub3JnL21haWxtYW4vbGlzdGluZm8veTIwMzgK
+From: Amitoj Kaur Chawla <amitoj1606@gmail.com>
+Date: Wed, 10 Feb 2016 10:08:54 +0530
+
+> 32 bit systems using 'struct timeval' will break in the year 2038, so
+> we replace the code appropriately. However, this driver is not broken
+> in 2038 since we are only using microseconds portion of the time.
+> 
+> This patch replaces 'struct timeval' with 'struct timespec64'. We only
+> need to find elapsed microseconds rather than absolute time, so it's
+> better to use monotonic time, so using ktime_get_ts64() makes the code
+> more efficient and more robust against concurrent settimeofday()
+> calls.
+> 
+> Signed-off-by: Amitoj Kaur Chawla <amitoj1606@gmail.com>
+> Reviewed-by: Arnd Bergmann <arnd@arndb.de>
+
+Applied.
