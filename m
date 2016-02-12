@@ -1,151 +1,311 @@
 From: Thomas Osterried <thomas@x-berg.in-berlin.de>
-Subject: Re: [PATCH 1/1] Add poll method to mkiss let notify hangup to the
- user process.
-Date: Thu, 11 Feb 2016 20:14:23 +0100
-Message-ID: <20160211191423.GC24276@x-berg.in-berlin.de>
-References: <560EBE07.70801@eclis.ch>
- <1443822373-18395-1-git-send-email-jc@eclis.ch>
- <560F217B.6020106@trinnet.net>
+Subject: kernel ax25: lost and out-of-order data
+Date: Fri, 12 Feb 2016 19:12:12 +0100
+Message-ID: <20160212181212.GD24276@x-berg.in-berlin.de>
 Mime-Version: 1.0
 Return-path: <linux-hams-owner@vger.kernel.org>
 Content-Disposition: inline
-In-Reply-To: <560F217B.6020106@trinnet.net>
 Sender: linux-hams-owner@vger.kernel.org
 List-ID: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
-To: David Ranch <linux-hams@trinnet.net>
-Cc: Jean-Christian de Rivaz <jc@eclis.ch>, Thomas Osterried <thomas@osterried.de>, Ralf Baechle DL5RB <ralf@linux-mips.org>, Greg Kroah-Hartman <gregkh@linuxfoundation.org>, Jiri Slaby <jslaby@suse.com>, Peter Hurley <peter@hurleysoftware.com>, linux-hams@vger.kernel.org
+To: linux-hams@vger.kernel.org
 
 Hello,
 
-unfortunately, I cannot get my mail to Jean-Christian's ISP
-(Deferred: Connection timed out with mail.eclis.ch.).
+this is a bug report for the kernel ax25 outqueue:
 
-That's why I try it now on this list.
+- some packets with different content are transmitted with the same AX.25 sequence-number.
+- some data is sent twice; we also observe out-of-order data
 
-In short:
-- Jean-Christian's patch depends on both:
-   a patched kissattach program AND the mentioned kernel patch below.
-- Unfotunately, it does not work: kissattach does not terminate
-  (in order to prevent the panic) and the kernel still panics.
-- If we get it work, 6pack.c sould also be patched the same way as mkiss.c.
-- 6pack.c does not panic. The reason is the pre-initializiation of some
-  variables (6pack.c usefule values, mkiss.c zero).
-  I tried to use the correct values from 6pack.c in mkiss.c and this fixes
-  the panic.
-- I'd like Jean's patch to get running, because it's good if kissattach
-  gets notified that the usb device is not present anymore. Only if it's
-  terminating, /dev/ttyUSB0 will be freed (otherwise, someone who plugs
-  off-and-in will have an unsable /dev/ttyUSB0 and a new /dev/ttyUSB1).
+I generated a file with testpatterns, which consists of a line number (aligned to 256 bytes) in the form "007811 deadbeefde...\n". The file size is 2MB.
+
+I downloaded the file via an AX.25 connection from db0fhn's linux to db0fhn's linux via db0fhn's xnet ( call -r -s dl9sau bpq1 db0fhn-9 db0fhn ).
+
+I traced the packets with listen -a and stored the trace (for being able to see what happened).
+
+The files differ (/tmp/testfile.raw is the original file,  /var/ax25/testfile.raw is the file downloaded with call):
+diff /tmp/testfile.raw /var/ax25/testfile.raw
+< 000699 deadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdea
+dbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbee
+fdeadbeefdeadbeefdeadbeefdeadbeefdeadbeef
+...
 
 
-Here's my mail to Jean-Christian whith my request to verify - now to
-everyone who likes to test.
+# grep 000699 /tmp/testfile.raw /var/ax25/testfile.raw
+/tmp/testfile.raw:000699 deadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdea
+dbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbee
+fdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeef
 
-
-Hello,
-
-has anybody tried it?
-
-I've tried it on debian kernel 3.16.0-4-amd64 with a patched+recompiled mkiss.ko and the modified kissattach program.
-It does not work.
-kissattach does not get notified in his poll(). Thus still keeps alive after the usb plug-off event. Because it's not terminating, the mkiss race condition is not prevented.
-
-Interesting: if I plug usb of and then strace to the pid of kissattach, it terminates.
+=> Line number 000699 was not received.
 
 
 
-Btw, when pre-initializing
-       dev->hard_header_len    = AX25_MAX_HEADER_LEN;
-       dev->addr_len           = AX25_ADDR_LEN;
-in ax_setup() (like sp_setup() in 6pack.c does), the kernel does not panic anymore.
+listen -a shows the packets from linux to the xnet program:
+
+bpq1: fm DB0FHN-9 to DL9SAU via DB0FHN ctl I50^ pid=F0(Text) len 256
+0000  000697 deadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefd
+0040  eadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefd
+0080  eadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefd
+00C0  eadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeef.
+bpq1: fm DB0FHN-9 to DL9SAU via DB0FHN ctl I51^ pid=F0(Text) len 256
+0000  000698 deadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefd
+0040  eadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefd
+0080  eadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefd
+00C0  eadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeef.
+bpq1: fm DB0FHN-9 to DL9SAU via DB0FHN ctl I51^ pid=F0(Text) len 256
+0000  000699 deadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefd
+0040  eadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefd
+0080  eadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefd
+00C0  eadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeef.
+bpq1: fm DB0FHN-9 to DL9SAU via DB0FHN ctl I52^ pid=F0(Text) len 256
+0000  000700 deadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefd
+..
+
+You see the different content (000698 und 00069) in the SAME AX.25 sequenze-Number (I51)?
 
 
-Anyway, it would be nice if kissattach could get notice if something with the ax25 interface happened and would to the appropriate action (termination) - something Jean-Christian intended with his patch.
-Also, I like the idea of the blocking poll() instead of the previous while (1) { sleep(... )} construct. Furthermore, it's still backwards-compatible to an unpatched mkiss.ko and 6pack.ko (tested).
+This came back from the xnet digi:
 
-If we can manage his patch to work, keep in mind that we have also to patch 6pack.c, because the kissattach program is the same for spattach.
+bpq1: fm DB0FHN-9 to DL9SAU via DB0FHN* ctl I46^ pid=F0(Text) len 256
+0000  000697 deadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefd
+0040  eadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefd
+0080  eadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefd
+00C0  eadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeef.
+bpq1: fm DB0FHN-9 to DL9SAU via DB0FHN* ctl I47^ pid=F0(Text) len 256
+0000  000698 deadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefd
+0040  eadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefd
+0080  eadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefd
+00C0  eadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeef.
+bpq1: fm DB0FHN-9 to DL9SAU via DB0FHN* ctl I40^ pid=F0(Text) len 256
+0000  000700 deadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefd
+0040  eadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefd
+0080  eadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefd
+00C0  eadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeef.
+bpq1: fm DB0FHN-9 to DL9SAU via DB0FHN* ctl I41^ pid=F0(Text) len 256
+0000  000702 deadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefd
+
+=> Packet 000699 is missing.
+
+xnet did not complain about the packets with the different data and same sequence number (and silently dropped the second packet).
+
+
+A verification if data corruption has happened (loss of characters):
+
+
+root@db0fhn:/home/thomas# grep ^0 /var/ax25/testfile.raw  | awk '{print $2}' |sort -u
+deadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeef
+root@db0fhn:/home/thomas# grep ^0 /tmp/testfile.raw  | awk '{print $2}' |sort -u
+deadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeef
+root@db0fhn:/home/thomas# 
+
+=> We do not have shortened lines or wrong characters.
 
 
 
-Test scenario:
-plug-in the usb device
-kissattach /dev/ttyUSB0 ax0
-ifconfig ax0 44.128.128.1
-plug-off the usb device
-ps axwww| grep kissattach  # -> still running
-ifconfig ax0 44.128.128.1 up
-ping 44.128.128.2
-PANIC
+
+The losses of our user content lines occur blockwise:
+
+Looking for missing "lines" in the download (because it had the same sequence number than its predecessor):
+
+$ for i in $(grep ^0 /tmp/testfile.raw |awk '{print $1}'); do grep -q "^$i " /var/ax25/testfile.raw || echo $i ; done
+
+[When an error occurs, it mostly occurs more times again, and then becomes healthy again. I make it more readable by writing empty lines after a "block"]:
+
+000699
+000701
+000703
+000705
+
+001230
+001232
+001234
+001236
+001238
+001240
+001242
+
+001783
+001785
+
+002160
+002162
+002164
+002166
+002168
+002170
+002172
+
+002952
+002954
+002956
+002958
+002960
+002962
+002964
+
+003336
+003338
+003340
+003342
+003344
+003346
+
+003890
+003892
+003894
+003896
+
+004815
+004817
+004819
+004821
+004823
+004825
+004827
+
+005901
+005903
+005905
+005907
+005909
+005911
+
+006091
+006093
+006095
+006097
+006099
+006101
+006103
+
+
+The testfile ends with line number 007812.
+
+
+One thing is very obvious: after one affected packet, the next one is ok again. Most of the time, this repeats, up to 7 times.
+The largest blocks contain 7 lost lines, which means, that out of 14 packets every second packet was sent with the same sequence-number.
+
+
+
+We also had out-of-order-receiption. line numbers, where the previous packet had a higher line number than the current:
+
+
+$ LAST=0; for i in $(grep ^0 /var/ax25/testfile.raw |awk '{print $1}'); do if [ $LAST -gt $i ]; then echo $LAST $i ;fi ; LAST=$i  ; done|less
+000891 000862
+001789 001787
+001799 001787
+002179 002173
+002971 002965
+003909 003897
+$ 
+
+In the example of 001789 we look at the trace file of listen -a:
+
+bpq1: fm DB0FHN-9 to DL9SAU via DB0FHN ctl I50^ pid=F0(Text) len 256 
+0000  001786 deadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefd
+0040  eadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefd
+0080  eadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefd
+00C0  eadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeef.
+
+^ 001787 is missing
+v
+
+bpq1: fm DB0FHN-9 to DL9SAU via DB0FHN ctl I51^ pid=F0(Text) len 256 
+0000  001788 deadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefd
+0040  eadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefd
+0080  eadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefd
+00C0  eadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeef.
+bpq1: fm DB0FHN-9 to DL9SAU via DB0FHN ctl I52+ pid=F0(Text) len 256 
+0000  001789 deadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefd
+0040  eadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefd
+0080  eadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefd
+00C0  eadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeef.
+bpq1: fm DB0FHN-9 to DL9SAU via DB0FHN ctl I53+ pid=F0(Text) len 256 
+0000  001787 deadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefd
+0040  eadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefd
+0080  eadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefd
+00C0  eadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeef.
+
+^ here is 001787, which comes after 1789.
+v [be aware of the next packet for line 001790 has the same sequence-number as the previous-previous-packet]
+
+bpq1: fm DB0FHN-9 to DL9SAU via DB0FHN ctl I52^ pid=F0(Text) len 256 
+0000  001790 deadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefd
+0040  eadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefd
+0080  eadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefd
+00C0  eadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeef.
+bpq1: fm DB0FHN-9 to DL9SAU via DB0FHN ctl I53+ pid=F0(Text) len 256 
+0000  001791 deadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefd
+0040  eadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefd
+
+
+Unfortunately, it's not enough. Line 001787 was received 2 times: shown here with context +/- one line:
+
+$ grep -B1 -A1 001787 /var/ax25/testfile.raw 
+001789 deadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefd
+eadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeef
+001787 deadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeef
+001791 deadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeef
+--
+001799 deadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeef
+001787 deadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeef
+001790 deadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeef
+
+Furthermore, the second occurence is completely out of order ( 001799 , then 001787 a second time, then 001790 ).
+
+
+
+===========
+
+Consistency verify of my test environment: axspawn works ok:
+
+axspwan reads from pty of his child (login->shell->bget) and writes the output to the kernel
+
+strace -p 8312 -e write -s 2048 2> /tmp/axspawn-write-trace
+
+Original file:
+$ wc /tmp/testfile.raw 
+   7813   15626 2000128 /tmp/testfile.raw
+
+$ grep 'write(1, "0' /tmp/axspawn-write-trace |grep -v "= -1 EAGAIN (" |cut -d'"' -f2-|awk '{print $1}' |wc
+   7813    7813   54691
+
+=> every line of the file testfile.raw was written to the kernel.
+
+Every line is a direct successor of the previous line:
+$ p=-1; for i in $(grep 'write(1, "0' /tmp/axspawn-write-trace |grep -v "= -1 EAGAIN (" |cut -d'"' -f2-|awk '{print $1}'); do if [ $(echo $p +1 -$i |bc) != 0 ] ; then echo $i $p ;fi; p=$i ; done
+$ 
+
+76 times an -1 EAGAIN occured and the line was written again (because the kernel buffers were full) until it succeeded:
+$ grep 'write(1, "0' /tmp/axspawn-write-trace |grep  "= -1 EAGAIN ("|wc
+     76     760   24472
+$ 
+
+
+
+The testfile was generated with generate-testfile.c :
+
+#include <stdio.h>
+
+unsigned long datasize = 2*1000*1000L;
+
+char * payload="deadbeef";
+
+int main()
+{
+  unsigned long num = 0;
+
+  for (num = 0; (num *256) < datasize; num++) {
+    int i;
+    printf("%6.6ld ", num);
+    for (i = 0; i < 31; i++)
+      printf(payload);
+    printf("\n");
+  }
+}
+
 
 
 vy 73,
 	- Thomas  dl9sau
-
-
-
-On Fri, Oct 02, 2015 at 05:29:47PM -0700, David Ranch wrote:
-> 
-> Hello Jean-Christian, Everyone,
-> 
-> Thanks for working on this as I'm pretty sure I've bit hit by this panic as
-> well though I wasn't able to reproduce it more readily. Anyway, if this is
-> the proper fix moving forward, will the kernel not panic even if kissattach
-> is not updated?  Can you also include the needed patch for the kissattach
-> program to complete this solution?
-> 
-> --David
-> 
-> 
-> On 10/02/2015 02:46 PM, Jean-Christian de Rivaz wrote:
-> >Without this the application that use the mkiss line discipline have
-> >no way to terminate in case the corresponding serial device is
-> >removed, for example when a USB TNC is unplugged. The application must
-> >wait on poll().
-> >
-> >The kissattach application must be patched to take advantage of this
-> >feature.
-> >
-> >Signed-off-by: Jean-Christian de Rivaz <jc@eclis.ch>
-> >---
-> >  drivers/net/hamradio/mkiss.c |   15 +++++++++++++++
-> >  1 file changed, 15 insertions(+)
-> >
-> >diff --git a/drivers/net/hamradio/mkiss.c b/drivers/net/hamradio/mkiss.c
-> >index fba41e9..50cd36c 100644
-> >--- a/drivers/net/hamradio/mkiss.c
-> >+++ b/drivers/net/hamradio/mkiss.c
-> >@@ -893,6 +893,20 @@ static long mkiss_compat_ioctl(struct tty_struct *tty, struct file *file,
-> >  #endif
-> >  /*
-> >+ * Waiting until hangup is the only allowed operation. This is used
-> >+ * to notify the application in case the serial deivce is removed
-> >+ * (ex. USB). The tty_ldisc_hangup() will wake up the process.
-> >+ */
-> >+static unsigned int mkiss_poll(struct tty_struct *tty, struct file *file,
-> >+							poll_table *wait)
-> >+{
-> >+	poll_wait(file, &tty->read_wait, wait);
-> >+	poll_wait(file, &tty->write_wait, wait);
-> >+
-> >+	return 0;
-> >+}
-> >+
-> >+/*
-> >   * Handle the 'receiver data ready' interrupt.
-> >   * This function is called by the 'tty_io' module in the kernel when
-> >   * a block of data has been received, which can now be decapsulated
-> >@@ -969,6 +983,7 @@ static struct tty_ldisc_ops ax_ldisc = {
-> >  #ifdef CONFIG_COMPAT
-> >  	.compat_ioctl	= mkiss_compat_ioctl,
-> >  #endif
-> >+	.poll           = mkiss_poll,
-> >  	.receive_buf	= mkiss_receive_buf,
-> >  	.write_wakeup	= mkiss_write_wakeup
-> >  };
-> 
-> --
-> To unsubscribe from this list: send the line "unsubscribe linux-hams" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at  http://vger.kernel.org/majordomo-info.html
