@@ -1,36 +1,48 @@
-From: David Miller <davem@davemloft.net>
-Subject: Re: [PATCH] dmascc: Return correct error codes
-Date: Tue, 16 Feb 2016 15:33:01 -0500 (EST)
-Message-ID: <20160216.153301.170926451372426076.davem@davemloft.net>
-References: <20160209184236.GA23644@amitoj-Inspiron-3542>
-Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
+From: Insu Yun <wuninsu@gmail.com>
+Subject: [PATCH] rose: correct integer overflow check
+Date: Wed, 17 Feb 2016 15:25:13 -0500
+Message-ID: <1455740713-18262-1-git-send-email-wuninsu@gmail.com>
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <20160209184236.GA23644@amitoj-Inspiron-3542>
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=from:to:cc:subject:date:message-id;
+        bh=hEdGRKsWdFJE3dBP9JC6qW3a9xfcmLVTGOyFM0fABz8=;
+        b=Oc1FKliy4bQUx9ydRSRsE7ZKMu+3h7NZXZhEFeTVqo1UtqIT4Amnl29xYjEMRwOQRf
+         pxL98Uj8XaN0gxfxibb41iNxYr3njdnv96rAEdeDmZHhsM53SXBLEMsBNNcoxDoOdpF2
+         Uro2GEXCpVVRynMasiisjZEVWurTZsPAPF7IGsXn6hIBwMwgGooc8SHGg/2MsArXmfbb
+         u0ocdfk4ZYLgxPati+IhAd3tPgyD8VG5UJaKVnuKw/rAQsUK4Zsg5JyVyWcj3GOEbLB3
+         ebetFSd/1Pmy8v+PYBmnZJHoNj1ZvvPs71kgksxMd1sESvJhQgI0dl9TxTpbgnZzE3O8
+         V1aw==
 Sender: linux-hams-owner@vger.kernel.org
 List-ID: <linux-hams.vger.kernel.org>
-Content-Type: Text/Plain; charset="us-ascii"
-To: amitoj1606@gmail.com
-Cc: jreuter@yaina.de, linux-hams@vger.kernel.org, netdev@vger.kernel.org, linux-kernel@vger.kernel.org, julia.lawall@lip6.fr
+MIME-Version: 1.0
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+To: ralf@linux-mips.org, davem@davemloft.net, linux-hams@vger.kernel.org, netdev@vger.kernel.org, linux-kernel@vger.kernel.org
+Cc: taesoo@gatech.edu, yeongjin.jang@gatech.edu, insu@gatech.edu, changwoo@gatech.edu, Insu Yun <wuninsu@gmail.com>
 
-From: Amitoj Kaur Chawla <amitoj1606@gmail.com>
-Date: Wed, 10 Feb 2016 00:12:36 +0530
+Since rose_ndevs is signed integer type,
+it can be overflowed when it is negative.
 
-> This change has been made with the goal that kernel functions should
-> return something more descriptive than -1 on failure.
-> 
-> A variable `err` has been introduced for storing error codes.
-> 
-> The return value of kzalloc on failure should return a -1 and not a
-> -ENOMEM. This was found using Coccinelle. A simplified version of
-> the semantic patch used is:
- ...
-> Furthermore, set `err` to -ENOMEM on failure of alloc_netdev(), and to
-> -ENODEV on failure of register_netdev() and probe_irq_off().
-> 
-> The single call site only checks that the return value is not 0,
-> hence no change is required at the call site.
-> 
-> Signed-off-by: Amitoj Kaur Chawla <amitoj1606@gmail.com>
+Signed-off-by: Insu Yun <wuninsu@gmail.com>
+---
+ net/rose/af_rose.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-Applied to net-next, thanks.
+diff --git a/net/rose/af_rose.c b/net/rose/af_rose.c
+index 129d357..4f37fae 100644
+--- a/net/rose/af_rose.c
++++ b/net/rose/af_rose.c
+@@ -1514,7 +1514,8 @@ static int __init rose_proto_init(void)
+ 	int i;
+ 	int rc;
+ 
+-	if (rose_ndevs > 0x7FFFFFFF/sizeof(struct net_device *)) {
++	if (rose_ndevs < 0 ||
++	    rose_ndevs > 0x7FFFFFFF / sizeof(struct net_device *)) {
+ 		printk(KERN_ERR "ROSE: rose_proto_init - rose_ndevs parameter to large\n");
+ 		rc = -EINVAL;
+ 		goto out;
+-- 
+1.9.1
+
