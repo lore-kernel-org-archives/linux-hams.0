@@ -1,63 +1,30 @@
-From: Thomas Osterried <thomas@x-berg.in-berlin.de>
-Subject: Re: linux kernel-ax25 - some patches
-Date: Thu, 18 Feb 2016 14:58:10 +0100
-Message-ID: <20160218135810.GA24846@x-berg.in-berlin.de>
-References: <20160215140035.GF24276@x-berg.in-berlin.de>
+From: David Miller <davem@davemloft.net>
+Subject: Re: [PATCH] rose: correct integer overflow check
+Date: Thu, 18 Feb 2016 15:33:29 -0500 (EST)
+Message-ID: <20160218.153329.28621505199573578.davem@davemloft.net>
+References: <1455740713-18262-1-git-send-email-wuninsu@gmail.com>
 Mime-Version: 1.0
+Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
-Content-Disposition: inline
-In-Reply-To: <20160215140035.GF24276@x-berg.in-berlin.de>
+In-Reply-To: <1455740713-18262-1-git-send-email-wuninsu@gmail.com>
 Sender: linux-hams-owner@vger.kernel.org
 List-ID: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-To: linux-hams@vger.kernel.org
+Content-Type: Text/Plain; charset="us-ascii"
+To: wuninsu@gmail.com
+Cc: ralf@linux-mips.org, linux-hams@vger.kernel.org, netdev@vger.kernel.org, linux-kernel@vger.kernel.org, taesoo@gatech.edu, yeongjin.jang@gatech.edu, insu@gatech.edu, changwoo@gatech.edu
 
-Hello,
+From: Insu Yun <wuninsu@gmail.com>
+Date: Wed, 17 Feb 2016 15:25:13 -0500
 
-a small update: Please disregard my oservation #3.
-
-Explanation:
-
-IP framents have, by protocol standard, a size of n * 8  (8 is a fixed
-defined blocksize).
-
-IP header is not part of the fragmentation blocks (of course) and counts 20.
-
-=> division (256-20)/8.0 = 29.5 has a rest => length of packet:
-   29*8+20 = 252. That's the observed value.
-
-Btw, on netrom, the rest is 0 (netrom overhead 20 => netrom iface mtu 236):
-(236-20)/8.0 = 27.0
-=> Netrom payload with IP fragmented packets match exact the mtu length.
-
-vy 73,
-	- Thomas  dl9sau
-
-
-On Mon, Feb 15, 2016 at 03:00:36PM +0100, Thomas Osterried wrote:
-[..] 
-> 3. IP fragmentation in Mode DG and VC
-> -------------------------------------
+> Since rose_ndevs is signed integer type,
+> it can be overflowed when it is negative.
 > 
-> 
-> MTU of interface is 256 (== paclen).
-> 
-[..]
-> # ifconfig bpq2 mtu 256
-> 
-> bpq2: fm DL9SAU to DL9SAU-15 ctl I00^ pid=CC(IP) len 252 
-> IP: len 252 44.128.128.1->44.128.128.10 ihl 20 ttl 64 id 52882 offs 0 MF prot ICMP
-> ICMP: type Echo Request id 5113 seq 1
-> 0000  ...V............................ !"#$%&'()*+,-./0123456789:;<=>?
-> 0040  @ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_`abcdefghijklmnopqrstuvwxyz{|}~.
-> 0080  ................................................................
-> 00C0  ................................
-> bpq2: fm DL9SAU to DL9SAU-15 ctl I01+ pid=CC(IP) len 25 
-> IP: len 25 44.128.128.1->44.128.128.10 ihl 20 ttl 64 id 52882 offs 232
-> 0000  .....
-> 
-> => On both, Mode VC and Mode DG, the IP fragmentation makes packets 252 bytes long.
-> IP packets with length of 256 pass the interface with len 256, which is correct.
-[..]
+> Signed-off-by: Insu Yun <wuninsu@gmail.com>
 
+That's not how the expression is evaluated.
+
+Because of the types on the right hand side of the comparison
+the expressions are all promoted to unsigned.
+
+Did you look at the compiler's assembler output?  I did when
+reviewing your patch.
