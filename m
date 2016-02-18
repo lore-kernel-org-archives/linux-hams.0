@@ -1,30 +1,53 @@
-From: David Miller <davem@davemloft.net>
+From: Ralf Baechle <ralf@linux-mips.org>
 Subject: Re: [PATCH] rose: correct integer overflow check
-Date: Thu, 18 Feb 2016 15:33:29 -0500 (EST)
-Message-ID: <20160218.153329.28621505199573578.davem@davemloft.net>
+Date: Fri, 19 Feb 2016 00:21:36 +0100
+Message-ID: <20160218232136.GB11796@linux-mips.org>
 References: <1455740713-18262-1-git-send-email-wuninsu@gmail.com>
+ <20160218.153329.28621505199573578.davem@davemloft.net>
+ <CAGoFzNd3egg-36bg3DRU=2b5weyuf-CLTcgfWUQmY7kjdBwuNg@mail.gmail.com>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <1455740713-18262-1-git-send-email-wuninsu@gmail.com>
+Content-Disposition: inline
+In-Reply-To: <CAGoFzNd3egg-36bg3DRU=2b5weyuf-CLTcgfWUQmY7kjdBwuNg@mail.gmail.com>
 Sender: linux-hams-owner@vger.kernel.org
 List-ID: <linux-hams.vger.kernel.org>
-Content-Type: Text/Plain; charset="us-ascii"
-To: wuninsu@gmail.com
-Cc: ralf@linux-mips.org, linux-hams@vger.kernel.org, netdev@vger.kernel.org, linux-kernel@vger.kernel.org, taesoo@gatech.edu, yeongjin.jang@gatech.edu, insu@gatech.edu, changwoo@gatech.edu
+Content-Type: text/plain; charset="iso-8859-1"
+To: Insu Yun <wuninsu@gmail.com>
+Cc: David Miller <davem@davemloft.net>, linux-hams@vger.kernel.org, Netdev <netdev@vger.kernel.org>, LKML <linux-kernel@vger.kernel.org>, Taesoo Kim <taesoo@gatech.edu>, Yeongjin Jang <yeongjin.jang@gatech.edu>, "Yun, Insu" <insu@gatech.edu>, Changwoo Min <changwoo@gatech.edu>
 
-From: Insu Yun <wuninsu@gmail.com>
-Date: Wed, 17 Feb 2016 15:25:13 -0500
+On Thu, Feb 18, 2016 at 04:03:16PM -0500, Insu Yun wrote:
 
-> Since rose_ndevs is signed integer type,
-> it can be overflowed when it is negative.
-> 
-> Signed-off-by: Insu Yun <wuninsu@gmail.com>
+>=20
+>     Because of the types on the right hand side of the comparison
+>     the expressions are all promoted to unsigned.
+>=20
+>     Did you look at the compiler's assembler output?=A0 I did when
+>     reviewing your patch.
+>=20
+>=20
+> I checked the assembler output right now.
+> You are right.
+> I realized that right hand side becomes unsigned due to sizeof.
+> I think this patch is wrong.=A0
+> Thanks.=A0
 
-That's not how the expression is evaluated.
+On a different level, the current whole approach of ROSE to just genera=
+te
+a fixed number of devices at initialization time of ROSE is if not wron=
+g
+then at least very archaic.  The default number is 10 devices and proba=
+bly
+of those 9 are unused on a typical setup - that is, if the module has
+been loaded intentionally at all.
 
-Because of the types on the right hand side of the comparison
-the expressions are all promoted to unsigned.
+As a solution I've implemented a patch to support creating of ROSE
+devices through netlink plus the necessary changes to iproute2 to go
+along with that.
 
-Did you look at the compiler's assembler output?  I did when
-reviewing your patch.
+  Ralf
+--
+To unsubscribe from this list: send the line "unsubscribe linux-hams" i=
+n
+the body of a message to majordomo@vger.kernel.org
+More majordomo info at  http://vger.kernel.org/majordomo-info.html
