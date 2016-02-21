@@ -1,108 +1,88 @@
-From: f6bvp <f6bvp@free.fr>
-Subject: [Patch] rose_route_frame() NULL pointer dereference kernel panic
-Date: Sun, 21 Feb 2016 16:26:31 +0100
-Message-ID: <56C9D727.7070109@free.fr>
+From: Kristoff <kristoff@skypro.be>
+Subject: AC600 wifi USB sticks for ham-radio use (5 Ghz)
+Date: Sun, 21 Feb 2016 22:29:48 +0100
+Message-ID: <56CA2C4C.90107@skypro.be>
 Mime-Version: 1.0
 Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
 Sender: linux-hams-owner@vger.kernel.org
 List-ID: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"; format="flowed"
-To: linux-hams@vger.kernel.org, Ralf Baechle <ralf@linux-mips.org>, 'f6bvp' <f6bvp@free.fr>
+To: linux-hams@vger.kernel.org
 
-[Patch] Null pointer in rose_route_frame()
-
-Bug appears when setting a second IP to ethernet device without adding
-a route and a gateway:
-
-/sbin/ifconfig enp4s0:1 44.168.19.22 netmask 255.255.255.240
-
-If a route and a gateway are not added for subnet, and if
-ax25ipd configuration includes a destination address in this subnet,
-then a comparison of destinations address performed by ax25cmp()
-called by rose_route_frame() is facing a null pointer and a kernel
-panic occurs.
-
-Attached is the report of kernel panic followed by a report of
-successful patched function.
-
-Bernard
-
-==================================
-6,756,516974441,-;NET: Registered protocol family 3
-6,757,516978403,-;mkiss: AX.25 Multikiss, Hans Albas PE1AYX
-6,758,516979388,-;mkiss: ax0: crc mode is auto.
-6,759,516979945,-;IPv6: ADDRCONF(NETDEV_CHANGE): ax0: link becomes ready
-6,760,519023446,-;NET: Registered protocol family 11
-6,761,522043100,-;mkiss: ax0: Trying crc-smack
-6,762,522044882,-;mkiss: ax0: Trying crc-flexnet
-1,763,522044973,c;BUG: unable to handle kernel
-4,764,522044974,+;NULL pointer dereference
-4,765,522044975,+; at 0000000000000017
-1,766,522044976,c;IP:
-4,767,522044986,+; [<ffffffffc05ad0a9>] ax25cmp+0x19/0x60 [ax25]
-4,768,522044987,c;PGD 3cd61067
-4,769,522044987,+;PUD 35ac0067
-4,770,522044988,+;PMD 0
-4,771,522044989,+;
-4,772,522044990,c;Oops: 0000 [#1]
-4,773,522044991,+;SMP
-4,774,522044991,+;
-4,775,522044994,c;Modules linked in:
-4,776,522044995,+; rose
-4,777,522044996,+; mkiss
-4,778,522044996,+; ax25
-4,779,522044997,+; netconsole
-4,846,522045047,+;
-4,847,522045050,-;CPU: 1 PID: 11873 Comm: ax25ipd Not tainted 4.4.1 #2
-4,848,522045051,-;Hardware name:                  /D975XBX2, BIOS 
-BX97520J.86A.2797.2007.1008.1941 10/08/2007
-4,849,522045053,-;task: ffff880037beb500 ti: ffff880034320000 task.ti: 
-ffff880034320000
-4,850,522045055,c;RIP: 0010:[<ffffffffc05ad0a9>]
-4,851,522045058,+; [<ffffffffc05ad0a9>] ax25cmp+0x19/0x60 [ax25]
-4,852,522045059,-;RSP: 0018:ffff880034323938  EFLAGS: 00010246
-4,876,522045080,+;
-4,877,522045081,-;Call Trace:
-4,878,522045088,-; [<ffffffffc05cde6c>] rose_route_frame+0x9c/0x670 [rose]
-4,879,522045094,-; [<ffffffff810aef90>] ? __init_waitqueue_head+0x10/0x20
-4,971,522045204,+;
-0,978,522045215,-;Kernel panic - not syncing: Fatal exception in interrupt
-0,979,522045763,-;Kernel Offset: disabled
-0,980,522045763,c;Rebooting in 30 seconds..
-
-After patch is applied :
-6,767,4251903518,-;NET: Registered protocol family 3
-6,768,4251907330,-;mkiss: AX.25 Multikiss, Hans Albas PE1AYX
-6,769,4251908399,-;mkiss: ax0: crc mode is auto.
-6,770,4251909044,-;IPv6: ADDRCONF(NETDEV_CHANGE): ax0: link becomes ready
-6,771,4253957114,-;NET: Registered protocol family 11
-6,772,4256972259,-;mkiss: ax0: Trying crc-smack
-6,773,4256974292,-;mkiss: ax0: Trying crc-flexnet
-4,774,4256974372,-;Null ax25 destination !
-4,775,4256978218,-;Null ax25 destination !
-4,776,4266975133,-;Null ax25 destination !
-4,777,4267007092,-;Null ax25 destination !
-4,778,4287007148,-;Null ax25 destination !
-
-diff --git a/net/rose/rose_route.c b/net/rose/rose_route.c
-index 0fc76d8..254e528 100644
---- a/net/rose/rose_route.c
-+++ b/net/rose/rose_route.c
-@@ -863,6 +863,11 @@ int rose_route_frame(struct sk_buff *skb, ax25_cb 
-*ax25)
-         int res = 0;
-         char buf[11];
-
-+       if (ax25 == NULL) {
-+               printk("Null ax25 destination !\n");
-+               return res;
-+       }
-+
-         if (skb->len < ROSE_MIN_LEN)
-                 return res;
-         frametype = skb->data[2];
-
-Signed-off-by: Bernard Pidoux <f6bvp@free.fr>
+Hi all,
 
 
+I am interested in using wifi devices for ham-radio use, especially for 
+HSMM (adhoc, olsr) and HAMNET; e.g. by extending their frequency-range 
+for the complete hamradio bands.
+
+One of these devices I am looking at for 6 cm operations is the AC600 
+(mt7610-based).
+http://www.aliexpress.com/item/New-Mini-2-4GHz-5GHz-Dual-Band-USB-Network-Card-5dBi-Antenna-AC600-802-11ac-Wireless/32246544516.html
+
+For that, I have been hacking the kernel-driver found here:
+https://github.com/coolshou/mt7610u
+
+
+I managed to change the driver to get it to work on all channels in the 
+13 cm and 6 cm bands: channels 1 (2.412Ghz) to 6 (2.437) and channels 
+132 (5.660 Ghz) up to 168 (5.840 Ghz).
+
+As of today, I have been running pings and olsr between two linux PCs 
+(Ubuntu LTS) using these devices on 5 Ghz in wifi ad-hoc mode.
+
+
+However, I am now running into a number of issues:
+- packets being queued before being send (i.e. a one-ping per second is 
+not received at the same rate at the remote side: first 4 seconds 
+nothing is received and then a burst of 4 pings in one go)
+- packets lost
+- "iwlist freq" only shows parts of the frequencies
+- "ifconfig" does not show the ESSID you have configures (but it does 
+seams to use it).
+
+And, in short, the code can use a lot of cleaning.
+
+
+
+So I am looking for people who can help me with information about this:
+
+- does anybody have a good document that explains how userland 
+application interact with a kernel wifi network driver: sending data, 
+receiving data, iwconfig, iw, iwpriv, ...
+
+- Does anybody have experience with adapting wifi devices for ham-radio?
+I did some work on atheros-based wifi dongles to get them to operate on 
+2.3 Ghz before, but these "mt7610u" drivers seams to be a lot more 
+complex. So any advice would be helpfull.
+
+Is there documentation of other simular projects?
+
+
+- When searching the web, I found multiple different drivers for the 
+mt7610u; all a bit different and from different projects.
+Even on the kernel.org website, there is  another version for the 4.5 
+kernel.
+
+Are there other / better drivers out there for the mt7610u then the one 
+I use now, that can be more easily addapted for ham-radio use?
+
+My goal would be to run this on small unix-boards (RPi, BBB, ...) as 
+dedicated network node for HSMM or hamnet; so drivers compatible with 
+the versions of the linux kernel found on these devices are interesting.
+
+
+- Has anybody done RF measurements on these 5 Ghz wifi-sticks and looked 
+at the RF signal they transmit, e.g. when using the frequencies not 
+assigned for the official wifi-channels?
+
+- Has anybody ever tested these AC600/mr7610u devices and checked if 
+they can operate below 2.4 Ghz? (like the atheros chips)?
+
+
+Any info would be very usefull.
+
+
+73
+kristoff - ON1ARF
