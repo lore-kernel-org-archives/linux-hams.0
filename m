@@ -1,48 +1,147 @@
-From: f6bvp <f6bvp@free.fr>
-Subject: Re: [Patch] rose_route_frame() NULL pointer dereference kernel panic
-Date: Sun, 6 Mar 2016 11:58:35 +0100
-Message-ID: <56DC0D5B.1040408@free.fr>
-References: <56D5FD7A.5080104@free.fr>
- <20160303.170253.1102862150292919836.davem@davemloft.net>
- <56DAFC1A.5000408@free.fr>
- <20160305.112226.2192524821017178121.davem@davemloft.net>
- <56DB1814.2050902@free.fr>
- <20160305195715.GA16052@electric-eye.fr.zoreil.com>
- <56DC0B8A.5030708@free.fr>
+From: Willem de Bruijn <willemdebruijn.kernel@gmail.com>
+Subject: Re: [PATCH net 2/3] packet: validate variable length ll headers
+Date: Mon, 7 Mar 2016 12:38:35 -0500
+Message-ID: <CAF=yD-L0-iV=kUTQPkJ3dmH8SCJOE=ehnW4TsyXT=vkFiau+jA@mail.gmail.com>
+References: <1457124257-31486-1-git-send-email-willemdebruijn.kernel@gmail.com>
+ <1457124257-31486-3-git-send-email-willemdebruijn.kernel@gmail.com>
 Mime-Version: 1.0
-Content-Transfer-Encoding: QUOTED-PRINTABLE
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <56DC0B8A.5030708@free.fr>
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=5STxJluXU59i53HEhgc8KmkgEGr7LSgiLg193q4/JIQ=;
+        b=O2eUFRXfWjL5YdGDeJGoqybGB2aklQrALUop5th8BLW8waWysgWCBjEDDFHwgTxQOY
+         JN5lcj/wj5GKSIKJPHvaEu2Rxj60tx6t7PZe09gXXMfqj0Ebd7qLF9t3/qRK4sxsM+8c
+         k8r8cZ8l0v/x3nxQ5ogGHeDys9Um4I5cIK6j3NBUSQTjzier9vQ9UoqtXlWiDWZv9oc0
+         s9zXYsMdBeYoooyA+P7QIGZ7VCRhp/yip24UyMA2QHl85Tm3hXIcbqRbcIXkXvCee3SB
+         Ga0gV0ointShhNOT4Ncpgf0TtjGpiHE5mhMbOGNqm7juBRuWsAZQPuAhX4wxSksL4Nbo
+         7/lQ==
+In-Reply-To: <1457124257-31486-3-git-send-email-willemdebruijn.kernel@gmail.com>
 Sender: linux-hams-owner@vger.kernel.org
 List-ID: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="macroman"; format="flowed"
-To: Francois Romieu <romieu@fr.zoreil.com>
-Cc: David Miller <davem@davemloft.net>, netdev@vger.kernel.org, ralf@linux-mips.org, "Eric W. Biederman\"" <ebiederm@xmission.com>, linux-hams@vger.kernel.org, Bernard Pidoux <bernard.pidoux@free.fr>
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+To: Network Development <netdev@vger.kernel.org>
+Cc: David Miller <davem@davemloft.net>, Alan Cox <alan@linux.intel.com>, Heikki Hannikainen <hessu@hes.iki.fi>, Martin Blumenstingl <martin.blumenstingl@googlemail.com>, linux-hams@vger.kernel.org, Willem de Bruijn <willemb@google.com>
 
-=46ran=C3=A7ois,
+On Fri, Mar 4, 2016 at 3:44 PM, Willem de Bruijn
+<willemdebruijn.kernel@gmail.com> wrote:
+> From: Willem de Bruijn <willemb@google.com>
+>
+> Replace link layer header validation check ll_header_truncate with
+> more generic dev_validate_header.
+>
+> Validation based on hard_header_len incorrectly drops valid packets
+> in variable length protocols, such as AX25. dev_validate_header
+> calls header_ops.validate for such protocols to ensure correctness
+> below hard_header_len.
+>
+> See also http://comments.gmane.org/gmane.linux.network/401064
 
-Thank you for providing information about rose_rebuild_header history.
-I was not able to find Jonathan Naylor G4KLX email.
-However as rose_xmit() has been recently changed by Eric Biederman, he
-may have more precise information about rose_route_frame()
-NULL argument.
-Meanwhile, I browsed into rose_route.c release 001 you referenced and f=
-ound
-an interesting comment before rose_route_frame() :
-+/*
-+ * Route a frame to an appropriate AX.25 connection. A NULL ax25_cb
-+ * indicates an internally generated frame.
-+ */
-+int rose_route_frame(struct sk_buff *skb, ax25_cb *ax25)
+Forgot to add
 
-Now, I hope that ROSE guru will explain us what means an "internally
-generated frame" and if, by chance, it means that it is not to be sent
-via a net device, but rather to be used locally ?
+  Fixes 9c7077622dd9 ("packet: make packet_snd fail on len smaller
+than l2 header")
 
-Bernard
+This patch, if submitted to net, will have non-trivial merge conflicts
+with net-next due to
 
---
-To unsubscribe from this list: send the line "unsubscribe linux-hams" i=
-n
-the body of a message to majordomo@vger.kernel.org
-More majordomo info at  http://vger.kernel.org/majordomo-info.html
+  1d036d25e560 ("packet: tpacket_snd gso and checksum offload")
+
+I maintain a patchset on top of net-next. Can send that to supersede
+this one to resolve it (at the cost of only fixing the bug in the later
+kernel version).
+
+> Signed-off-by: Willem de Bruijn <willemb@google.com>
+> ---
+>  net/packet/af_packet.c | 38 +++++++++++++++++---------------------
+>  1 file changed, 17 insertions(+), 21 deletions(-)
+>
+> diff --git a/net/packet/af_packet.c b/net/packet/af_packet.c
+> index 992396a..488678a 100644
+> --- a/net/packet/af_packet.c
+> +++ b/net/packet/af_packet.c
+> @@ -1916,6 +1916,10 @@ retry:
+>                 goto retry;
+>         }
+>
+> +       if (!dev_validate_header(dev, skb->data, len)) {
+> +               err = -EINVAL;
+> +               goto out_unlock;
+> +       }
+>         if (len > (dev->mtu + dev->hard_header_len + extra_len) &&
+>             !packet_extra_vlan_len_allowed(dev, skb)) {
+>                 err = -EMSGSIZE;
+> @@ -2326,18 +2330,6 @@ static void tpacket_destruct_skb(struct sk_buff *skb)
+>         sock_wfree(skb);
+>  }
+>
+> -static bool ll_header_truncated(const struct net_device *dev, int len)
+> -{
+> -       /* net device doesn't like empty head */
+> -       if (unlikely(len < dev->hard_header_len)) {
+> -               net_warn_ratelimited("%s: packet size is too short (%d < %d)\n",
+> -                                    current->comm, len, dev->hard_header_len);
+> -               return true;
+> -       }
+> -
+> -       return false;
+> -}
+> -
+>  static void tpacket_set_protocol(const struct net_device *dev,
+>                                  struct sk_buff *skb)
+>  {
+> @@ -2420,14 +2412,14 @@ static int tpacket_fill_skb(struct packet_sock *po, struct sk_buff *skb,
+>                 if (unlikely(err < 0))
+>                         return -EINVAL;
+>         } else if (dev->hard_header_len) {
+> -               if (ll_header_truncated(dev, tp_len))
+> -                       return -EINVAL;
+> +               int hhlen = min_t(int, dev->hard_header_len, tp_len);
+>
+>                 skb_push(skb, dev->hard_header_len);
+> -               err = skb_store_bits(skb, 0, data,
+> -                               dev->hard_header_len);
+> +               err = skb_store_bits(skb, 0, data, hhlen);
+>                 if (unlikely(err))
+>                         return err;
+> +               if (!dev_validate_header(dev, skb->data, hhlen))
+> +                       return -EINVAL;
+>                 if (!skb->protocol)
+>                         tpacket_set_protocol(dev, skb);
+>
+> @@ -2758,14 +2750,12 @@ static int packet_snd(struct socket *sock, struct msghdr *msg, size_t len)
+>
+>         skb_set_network_header(skb, reserve);
+>
+> -       err = -EINVAL;
+>         if (sock->type == SOCK_DGRAM) {
+>                 offset = dev_hard_header(skb, dev, ntohs(proto), addr, NULL, len);
+> -               if (unlikely(offset < 0))
+> -                       goto out_free;
+> -       } else {
+> -               if (ll_header_truncated(dev, len))
+> +               if (unlikely(offset < 0)) {
+> +                       err = -EINVAL;
+>                         goto out_free;
+> +               }
+>         }
+>
+>         /* Returns -EFAULT on error */
+> @@ -2773,6 +2763,12 @@ static int packet_snd(struct socket *sock, struct msghdr *msg, size_t len)
+>         if (err)
+>                 goto out_free;
+>
+> +       if (sock->type == SOCK_RAW &&
+> +           !dev_validate_header(dev, skb->data, len)) {
+> +               err = -EINVAL;
+> +               goto out_free;
+> +       }
+> +
+>         sock_tx_timestamp(sk, &skb_shinfo(skb)->tx_flags);
+>
+>         if (!gso_type && (len > dev->mtu + reserve + extra_len) &&
+> --
+> 2.7.0.rc3.207.g0ac5344
+>
