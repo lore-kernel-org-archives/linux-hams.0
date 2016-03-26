@@ -1,38 +1,40 @@
-From: David Miller <davem@davemloft.net>
-Subject: Re: [PATCH net 0/3] validate variable length ll headers
-Date: Wed, 09 Mar 2016 15:54:44 -0500 (EST)
-Message-ID: <20160309.155444.1658110486757431732.davem@davemloft.net>
-References: <1457124257-31486-1-git-send-email-willemdebruijn.kernel@gmail.com>
+From: Colin Tuckley <colint@debian.org>
+Subject: Re: Hamlib 3.0 release announcement
+Date: Sat, 26 Mar 2016 12:43:39 +0000
+Message-ID: <56F683FB.3080702@debian.org>
+References: <20150919142829.GS3787@n0nb.us>
 Mime-Version: 1.0
 Content-Transfer-Encoding: 7bit
-Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <1457124257-31486-1-git-send-email-willemdebruijn.kernel@gmail.com>
-Sender: linux-hams-owner@vger.kernel.org
-List-ID: <linux-hams.vger.kernel.org>
-Content-Type: Text/Plain; charset="us-ascii"
-To: willemdebruijn.kernel@gmail.com
-Cc: netdev@vger.kernel.org, alan@linux.intel.com, hessu@hes.iki.fi, martin.blumenstingl@googlemail.com, linux-hams@vger.kernel.org, willemb@google.com
+Return-path: <bounce-debian-hams=debian-hams=m.gmane.org@lists.debian.org>
+In-Reply-To: <20150919142829.GS3787@n0nb.us>
+Resent-Message-ID: <1_kHaKqC8kG.A.f2B.SQo9WB@bendel>
+List-Id: <linux-hams.vger.kernel.org>
+List-URL: <https://lists.debian.org/debian-hams/>
+List-Post: <mailto:debian-hams@lists.debian.org>
+List-Help: <mailto:debian-hams-request@lists.debian.org?subject=help>
+List-Subscribe: <mailto:debian-hams-request@lists.debian.org?subject=subscribe>
+List-Unsubscribe: <mailto:debian-hams-request@lists.debian.org?subject=unsubscribe>
+List-Archive: https://lists.debian.org/msgid-search/56F683FB.3080702@debian.org
+Content-Type: text/plain; charset="us-ascii"
+To: Hamlib Developers <hamlib-developer@lists.sourceforge.net>, Debian Hams <debian-hams@lists.debian.org>, Linux Hams <linux-hams@vger.kernel.org>, Dave Freese <w1hkj@bellsouth.net>, Ubuntu Hams Group <ubuntu-hams@lists.launchpad.net>
 
-From: Willem de Bruijn <willemdebruijn.kernel@gmail.com>
-Date: Fri,  4 Mar 2016 15:44:14 -0500
+On 19/09/15 15:28, Nate Bargmann wrote:
 
-> From: Willem de Bruijn <willemb@google.com>
-> 
-> Allow device-specific validation of link layer headers. Existing
-> checks drop all packets shorter than hard_header_len. For variable
-> length protocols, such packets can be valid.
-> 
-> patch 1 adds header_ops.validate and dev_validate_header
-> patch 2 replaces ll_header_truncated with dev_validate_header
-> patch 3 implements the protocol specific callback for AX25
-> 
-> Tested with a temporary eth_header_validate function. The AX25
-> code is compile-tested only at this point.
+> The Hamlib Group is pleased to announce the release of Hamlib 3.0.
 
-I'm not going to be able to send another pull request to Linus
-before -final, so please respin this against net-next and I'll
-queue it up for -stable.
+<big snip>
 
-You can add the missing Fixes: tags as well when you do this.
+> TODO:
 
-Thanks.
+> Due to the apparent lack of a libusb package for Windows 64 bit, trial
+> builds of the current Hamlib for W64 lack support for the USB backends.
+> The project should transition these backends to the newer libusb 1.0
+> series.  Target: 3.1.
+
+We have a Debian bug about this:
+
+https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=810423
+
+Is there any progress?
+
+73, Colin G8TMV
