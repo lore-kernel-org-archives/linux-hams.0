@@ -1,61 +1,64 @@
-From: Nate Bargmann <n0nb@n0nb.us>
-Subject: Re: Hamlib 3.0 release announcement
-Date: Sat, 26 Mar 2016 08:26:03 -0500
-Message-ID: <20160326132603.GL21590@n0nb.us>
-References: <20150919142829.GS3787@n0nb.us>
- <56F683FB.3080702@debian.org>
+From: folkert <folkert@vanheusden.com>
+Subject: [Linux-ham] netrom
+Date: Fri, 1 Apr 2016 20:40:09 +0200
+Message-ID: <20160401184009.GB25136@belle.intranet.vanheusden.com>
 Mime-Version: 1.0
+Return-path: <linux-hams-owner@vger.kernel.org>
+Content-Disposition: inline
+Sender: linux-hams-owner@vger.kernel.org
+List-ID: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
-Return-path: <hamlib-developer-bounces@lists.sourceforge.net>
-Content-Disposition: inline
-In-Reply-To: <56F683FB.3080702@debian.org>
-List-Id: <linux-hams.vger.kernel.org>
-List-Unsubscribe: <https://lists.sourceforge.net/lists/listinfo/hamlib-developer>,
-	<mailto:hamlib-developer-request@lists.sourceforge.net?subject=unsubscribe>
-List-Archive: <http://sourceforge.net/mailarchive/forum.php?forum_name=hamlib-developer>
-List-Post: <mailto:hamlib-developer@lists.sourceforge.net>
-List-Help: <mailto:hamlib-developer-request@lists.sourceforge.net?subject=help>
-List-Subscribe: <https://lists.sourceforge.net/lists/listinfo/hamlib-developer>,
-	<mailto:hamlib-developer-request@lists.sourceforge.net?subject=subscribe>
-Errors-To: hamlib-developer-bounces@lists.sourceforge.net
-To: debian-hams@lists.debian.org, Hamlib Developers <hamlib-developer@lists.sourceforge.net>, Linux Hams <linux-hams@vger.kernel.org>, Ubuntu Hams Group <ubuntu-hams@lists.launchpad.net>
+To: linux-hams@vger.kernel.org
 
-* On 2016 26 Mar 07:46 -0500, Colin Tuckley wrote:
-> On 19/09/15 15:28, Nate Bargmann wrote:
-> 
-> > The Hamlib Group is pleased to announce the release of Hamlib 3.0.
-> 
-> <big snip>
-> 
-> > TODO:
-> 
-> > Due to the apparent lack of a libusb package for Windows 64 bit, trial
-> > builds of the current Hamlib for W64 lack support for the USB backends.
-> > The project should transition these backends to the newer libusb 1.0
-> > series.  Target: 3.1.
-> 
-> We have a Debian bug about this:
-> 
-> https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=810423
-> 
-> Is there any progress?
+Hi,
 
-Yes, the forthcoming 3.1 now uses libusb 1.0.  I just merged the changes
-into the master branch this past week.
+I'm trying to get netrom working.
+Somehow it always fails:
 
-73, Nate
+root@savannah:~# modprobe netrom
+root@savannah:~# nrattach nr0
+nrattach: cannot find free NET/ROM device
+
+Before that, no nrattach was running and also the netrom module was not
+loaded.
+
+/etc/ax25/nrports contains:
+nr0      FH2LOR-2        svnnah   235     netrom
+
+/etc/ax25/nrbroadcast contains:
+ax0	5	192	100	1
+
+and /etc/ax25/axports contains:
+ax0	FH2LOR-1	115200	254	1	AX.25 over LoRa
+
+dmesg says:
+[ 8780.389979] NET: Registered protocol family 6
+
+ifconfig of ax0:
+root@savannah:~# ifconfig ax0
+ax0       Link encap:AMPR AX.25  HWaddr FH2LOR-1  
+          inet addr:192.168.5.2  Bcast:192.168.5.255  Mask:255.255.255.0
+          UP BROADCAST RUNNING  MTU:254  Metric:1
+          RX packets:925 errors:0 dropped:0 overruns:0 frame:0
+          TX packets:343 errors:0 dropped:0 overruns:0 carrier:0
+          collisions:0 txqueuelen:10 
+          RX bytes:36408 (35.5 KiB)  TX bytes:22806 (22.2 KiB)
+
+after the netrom module was loaded I get 4 'nrx' devices:
+nr0       Link encap:AMPR NET/ROM  HWaddr   
+          UP RUNNING NOARP  MTU:236  Metric:1
+          RX packets:0 errors:0 dropped:0 overruns:0 frame:0
+          TX packets:0 errors:0 dropped:0 overruns:0 carrier:0
+          collisions:0 txqueuelen:0 
+          RX bytes:0 (0.0 B)  TX bytes:0 (0.0 B)
+... upto nr3
+
+any ideas?
+
+
+Folkert van Heusden
 
 -- 
-
-"The optimist proclaims that we live in the best of all
-possible worlds.  The pessimist fears this is true."
-
-Ham radio, Linux, bikes, and more: http://www.n0nb.us
-
-------------------------------------------------------------------------------
-Transform Data into Opportunity.
-Accelerate data analysis in your applications with
-Intel Data Analytics Acceleration Library.
-Click to learn more.
-http://pubads.g.doubleclick.net/gampad/clk?id=278785351&iu=/4140
+----------------------------------------------------------------------
+Phone: +31-6-41278122, PGP-key: 1F28D8AE, www.vanheusden.com
