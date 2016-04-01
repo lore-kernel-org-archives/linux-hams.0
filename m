@@ -1,7 +1,7 @@
 From: folkert <folkert@vanheusden.com>
-Subject: [Linux-ham] netrom
-Date: Fri, 1 Apr 2016 20:40:09 +0200
-Message-ID: <20160401184009.GB25136@belle.intranet.vanheusden.com>
+Subject: icmp
+Date: Fri, 1 Apr 2016 20:42:26 +0200
+Message-ID: <20160401184226.GC25136@belle.intranet.vanheusden.com>
 Mime-Version: 1.0
 Return-path: <linux-hams-owner@vger.kernel.org>
 Content-Disposition: inline
@@ -13,48 +13,24 @@ To: linux-hams@vger.kernel.org
 
 Hi,
 
-I'm trying to get netrom working.
-Somehow it always fails:
+This evening I succeeded in doing ICMP over AX.25 over LoRa(!)!
 
-root@savannah:~# modprobe netrom
-root@savannah:~# nrattach nr0
-nrattach: cannot find free NET/ROM device
+root@savannah:~/data/mkiss_moteino# ping -i 5 192.168.5.1
+PING 192.168.5.1 (192.168.5.1) 56(84) bytes of data.
+64 bytes from 192.168.5.1: icmp_seq=4 ttl=64 time=4524 ms
+64 bytes from 192.168.5.1: icmp_seq=7 ttl=64 time=1601 ms
+64 bytes from 192.168.5.1: icmp_seq=8 ttl=64 time=1601 ms
+64 bytes from 192.168.5.1: icmp_seq=9 ttl=64 time=1601 ms
+^C
+--- 192.168.5.1 ping statistics ---
+9 packets transmitted, 4 received, 55% packet loss, time 40005ms
+rtt min/avg/max/mdev = 1601.358/2332.248/4524.246/1265.550 ms
 
-Before that, no nrattach was running and also the netrom module was not
-loaded.
 
-/etc/ax25/nrports contains:
-nr0      FH2LOR-2        svnnah   235     netrom
+Strange thing is that I need to add a -i something to ping; the regular
+1 second ping confuses things (-i 2 also works).
 
-/etc/ax25/nrbroadcast contains:
-ax0	5	192	100	1
-
-and /etc/ax25/axports contains:
-ax0	FH2LOR-1	115200	254	1	AX.25 over LoRa
-
-dmesg says:
-[ 8780.389979] NET: Registered protocol family 6
-
-ifconfig of ax0:
-root@savannah:~# ifconfig ax0
-ax0       Link encap:AMPR AX.25  HWaddr FH2LOR-1  
-          inet addr:192.168.5.2  Bcast:192.168.5.255  Mask:255.255.255.0
-          UP BROADCAST RUNNING  MTU:254  Metric:1
-          RX packets:925 errors:0 dropped:0 overruns:0 frame:0
-          TX packets:343 errors:0 dropped:0 overruns:0 carrier:0
-          collisions:0 txqueuelen:10 
-          RX bytes:36408 (35.5 KiB)  TX bytes:22806 (22.2 KiB)
-
-after the netrom module was loaded I get 4 'nrx' devices:
-nr0       Link encap:AMPR NET/ROM  HWaddr   
-          UP RUNNING NOARP  MTU:236  Metric:1
-          RX packets:0 errors:0 dropped:0 overruns:0 frame:0
-          TX packets:0 errors:0 dropped:0 overruns:0 carrier:0
-          collisions:0 txqueuelen:0 
-          RX bytes:0 (0.0 B)  TX bytes:0 (0.0 B)
-... upto nr3
-
-any ideas?
+Software used: https://github.com/flok99/arduino-kiss
 
 
 Folkert van Heusden
