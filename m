@@ -1,15 +1,16 @@
 From: folkert <folkert@vanheusden.com>
-Subject: Re: [Linux-ham] netrom
-Date: Fri, 8 Apr 2016 11:44:00 +0200
-Message-ID: <20160408094400.GS25136@belle.intranet.vanheusden.com>
-References: <20160401184009.GB25136@belle.intranet.vanheusden.com>
- <56FECDF1.5090701@trinnet.net>
- <20160401201200.GE25136@belle.intranet.vanheusden.com>
- <56FEE62F.40003@trinnet.net>
+Subject: Re: icmp
+Date: Fri, 8 Apr 2016 13:40:44 +0200
+Message-ID: <20160408114043.GV25136@belle.intranet.vanheusden.com>
+References: <20160401184226.GC25136@belle.intranet.vanheusden.com>
+ <20160401190724.GD25136@belle.intranet.vanheusden.com>
+ <56FECF07.8020306@trinnet.net>
+ <20160401201429.GF25136@belle.intranet.vanheusden.com>
+ <56FEEC21.3020607@trinnet.net>
 Mime-Version: 1.0
 Return-path: <linux-hams-owner@vger.kernel.org>
 Content-Disposition: inline
-In-Reply-To: <56FEE62F.40003@trinnet.net>
+In-Reply-To: <56FEEC21.3020607@trinnet.net>
 Sender: linux-hams-owner@vger.kernel.org
 List-ID: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
@@ -17,72 +18,87 @@ Content-Transfer-Encoding: 7bit
 To: David Ranch <linux-hams@trinnet.net>
 Cc: linux-hams@vger.kernel.org
 
-On Fri, Apr 01, 2016 at 02:20:47PM -0700, David Ranch wrote:
-> >netrom      FH2LOR-2        svnnah   235     netrom
-> /etc/ax25/nrports Looks ok.
-> >axport0	5	192	100	0
-> /etc/ax25/nrbroadcast looks ok but maybe try renaming this to say "axport".
-> Maybe the trailing 0 is messing things up. Be sure to update the
-> /etc/ax25/axports file with the same name too
+"Volgens mij gebruik je instellingen SF=10 en BW=250000.
+Je stuurt dan BW/(2^SF) symbolen per seconde = 244 symbool/s
+Elk symbool codeert voor 10 bitjes, dus 2440 bits/seconde.
+Maar je spendeert ook weer de helft van je bitjes aan errorcorrectie,
+dus effectief ca 1220 bps.
+Verder zit er in elk LoRa pakketje een beetje overhead aan headers,
+preamble, CRC, etc."
 
-Problem is that there are multiple ax25 ports. I'll replace it with an
-'l' (for lora).
+To translate this: 2440 bits/sec minus error correction is around 1220
+bps and then a bit less for headers, preamble, crc, etc.
 
-> >axport0	FH2LOR-1	115200	254	8	AX.25 over LoRa
-> Looks ok though what is the RF link speed you're using?  I've seen some
-> funny buffering problems in the past so I actually use 9600 baud to the TNC
-> for a 1200baud RF link
-
-The rf-link is lora and I think it is around 300bps. The speed to the
-tnc is 115k2 because of overhead and practical reasons.
-
-> >Unfortunately it still fails:
-> >root@savannah:~# modprobe netrom
-> >root@savannah:~# nrattach netrom
-> >nrattach: cannot find free NET/ROM device
+On Fri, Apr 01, 2016 at 02:46:09PM -0700, David Ranch wrote:
 > 
-> What do you have in /etc/ax25/nrbroadcast
-
-axports: axportl FH2LOR-1        115200  254     8       AX.25 over LoRa
-nrports: netrom      FH2LOR-2        svnnah   235     netrom
-nrbroadcast: axportl 5       192     100     1
-
-> Are you sure the netrom module is loaded? Check:
-> $ lsmod | grep netrom
-> netrom                 47709  2
-> ax25                   65384  16 netrom,mkiss
-
-root@savannah:/etc/ax25# lsmod  |grep netrom
-netrom                 40573  0 
-ax25                   60033  4 mkiss,netrom
-
-root@savannah:/etc/ax25# nrattach -i 192.168.6.2 -m 236 netrom
-nrattach: cannot find free NET/ROM device
-
-> The way I load my system via my packetrig.sh startup script, I use:
-> $NRATTACH -i $AMPRIP -m 236 $VHFD710NRPORT
-> I would also recommend you to show each of the commands you're using to load
-> up your stack:
->    - Are you using the mkiss approach with PTYs or using kissattach
-> directly?
-
-Kissattach directly:
-
-/usr/sbin/kissattach -l /dev/ttyUSB0 axport0 192.168.5.2
-sleep 5
-/usr/sbin/ax25d -l
-/usr/sbin/beacon -t 1 -l axport0 'AX.25 over LoRa - contact mail@vanheusden.com for info'
-/sbin/modprobe netrom
-/usr/sbin/nrattach -i 192.168.6.2 -m 236 netrom
-/usr/sbin/netromd -i -l -t 20
-/usr/bin/nohup /usr/bin/axlisten -a -r -8 -t >> /home/folkert/ax25-lora.log &
-/usr/sbin/mheardd -l -n 1000
-
->    - Are you seeing any errors when you run each command?
-
-Something odd happened: now it suddenly works!
-What I did different is axportl instead of axport0.
-But on the other system axport0 runs fine? Puzzling.
+> Considering I have no experience with some of these LoRa data modules, what
+> is this resulting in terms of modulation type, data rate and over what kind
+> of distance?
+> 
+> --David
+> KI6ZHD
+> 
+> 
+> On 04/01/2016 01:14 PM, folkert wrote:
+> >Ah darn, of course!
+> >Thanks.
+> >
+> >Regarding the lora configuration: a friend of mine gave me the
+> >configuration-parameters for best reliability for a long distance:
+> >
+> >const RH_RF95::ModemConfig cfg = {
+> >                 // Register 0x1D:
+> >                 // BW         CR      0=explicit
+> >                 (8 << 4) | (4 << 1) | (0 << 0),
+> >                 // Register 0x1E:
+> >                 // SF       CRC enable
+> >                 (10 << 4) | (1 << 2),
+> >                 // Register 0x26:
+> >                 // bit3 = LowDataRateOptimization
+> >                 (0 << 3)
+> >         };
+> >                 rf95.setModemRegisters(&cfg);
+> >                 rf95.setFrequency(869.850);
+> >                 rf95.setPreambleLength(8);
+> >
+> >Packet loss is 12-15%.
+> >
+> >
+> >On Fri, Apr 01, 2016 at 12:41:59PM -0700, David Ranch wrote:
+> >>
+> >>This is because you have your window setting per the /etc/ax25/axports file
+> >>set to 1.   Change it to say 4 and things should work better.
+> >>
+> >>Btw.. what speed are you running your LoRa network at?  A round trip time of
+> >>1.6 seconds is quite slow but maybe that's due to the serialization delays
+> >>of running your network at say 300bps!
+> >>
+> >>--David
+> >>
+> >>
+> >>On 04/01/2016 12:07 PM, folkert wrote:
+> >>>An other strange thing: I can't have 2 packets in that 2 second
+> >>>interval. E.g. a traceroute only works if I add -N 1 -w 2.
+> >>>
+> >>>On Fri, Apr 01, 2016 at 08:42:26PM +0200, folkert wrote:
+> >>>>Hi,
+> >>>>
+> >>>>This evening I succeeded in doing ICMP over AX.25 over LoRa(!)!
+> >>>>
+> >>>>root@savannah:~/data/mkiss_moteino# ping -i 5 192.168.5.1
+> >>>>PING 192.168.5.1 (192.168.5.1) 56(84) bytes of data.
+> >>>>64 bytes from 192.168.5.1: icmp_seq=4 ttl=64 time=4524 ms
+> >>>>64 bytes from 192.168.5.1: icmp_seq=7 ttl=64 time=1601 ms
+> >>>>64 bytes from 192.168.5.1: icmp_seq=8 ttl=64 time=1601 ms
+> >>>>64 bytes from 192.168.5.1: icmp_seq=9 ttl=64 time=1601 ms
+> >>>>^C
+> >>>>--- 192.168.5.1 ping statistics ---
+> >>>>9 packets transmitted, 4 received, 55% packet loss, time 40005ms
+> >>>>rtt min/avg/max/mdev = 1601.358/2332.248/4524.246/1265.550 ms
+> >
+> >
+> >Folkert van Heusden
+> >
 
 
 Folkert van Heusden
