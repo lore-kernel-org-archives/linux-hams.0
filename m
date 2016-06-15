@@ -1,71 +1,72 @@
 From: Basil Gunn <basil@pacabunga.com>
-Subject: Re: Can only connect to RMS gateway once
-Date: Sun, 5 Jun 2016 16:46:35 -0700
-Message-ID: <20160605164635.590575cb@brox.localnet>
-References: <20160603131613.6037bcd0@brox.localnet>
-	<20160604134348.38e3c4dd@brox.localnet>
-	<575340AD.5090604@trinnet.net>
-	<20160604143214.0f97393f@brox.localnet>
+Subject: [PATCH 1/1]  AX.25: Close socket connection on session completion
+Date: Wed, 15 Jun 2016 12:20:27 -0700
+Message-ID: <20160615122027.5598cf95@brox.localnet>
 Mime-Version: 1.0
 Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <20160604143214.0f97393f@brox.localnet>
 Sender: linux-hams-owner@vger.kernel.org
 List-ID: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
-To: linux-hams@vger.kernel.org
-Cc: David Ranch <linux-hams@trinnet.net>, Jeremy McDermond <mcdermj@xenotropic.com>
+To: driverdev-devel@linuxdriverproject.org
+Cc: Ralf Baechle <ralf@linux-mips.org>, Thomas Osterried <thomas@osterried.de>, greg@kroah.com, linux-hams@vger.kernel.org, jreuter@jaina.de, davem@davemloft.net
 
-Below is a unified diff of the 4 files I changed in kernel 4.2.y from
-the Raspbian repo.  At least for my case this fixed the problem of an
-open socket not getting closed & preventing anymore connections from
-the original connection callsign. In newer kernels (after 4.1.21)
-an ax25_ disconnect was occurring and stopping the heartbeat timer. The
-socket free code runs off the heartbeat timer.
+A socket connection made in ax.25 is not closed when session is
+completed.  The heartbeat timer is stopped prematurely and this is
+where the socket gets closed. Allow heatbeat timer to run to close
+socket. Symptom occurs in kernels >= 4.2.0
 
-/Basil Gunn n7nix
-
-
-diff -Nau ax25/af_ax25.c /home/gunn/projects/rpi/rpi-4.2.y.dev/net/ax25/af_ax25.c
---- ax25/af_ax25.c	2016-03-07 06:13:41.000000000 -0800
-+++ /home/gunn/projects/rpi/rpi-4.2.y.dev/net/ax25/af_ax25.c	2016-06-05 15:08:29.475604719 -0700
-@@ -973,7 +973,9 @@
+Signed-off-by: Basil Gunn <basil@pacabunga.com>
+---
+diff --git a/net/ax25/af_ax25.c b/net/ax25/af_ax25.c
+index fbd0acf..2fdebab 100644
+--- a/net/ax25/af_ax25.c
++++ b/net/ax25/af_ax25.c
+@@ -976,7 +976,8 @@ static int ax25_release(struct socket *sock)
  			release_sock(sk);
  			ax25_disconnect(ax25, 0);
  			lock_sock(sk);
 -			ax25_destroy_socket(ax25);
-+			if(!sock_flag(ax25->sk, SOCK_DESTROY)) {
++			if (!sock_flag(ax25->sk, SOCK_DESTROY))
 +				ax25_destroy_socket(ax25);
-+			}
  			break;
 
  		case AX25_STATE_3:
-diff -Nau ax25/ax25_ds_timer.c /home/gunn/projects/rpi/rpi-4.2.y.dev/net/ax25/ax25_ds_timer.c
---- ax25/ax25_ds_timer.c	2016-03-07 06:13:41.000000000 -0800
-+++ /home/gunn/projects/rpi/rpi-4.2.y.dev/net/ax25/ax25_ds_timer.c	2016-06-05 16:19:00.023254345 -0700
-@@ -101,7 +101,8 @@
-
+diff --git a/net/ax25/ax25_ds_timer.c b/net/ax25/ax25_ds_timer.c
+index 951cd57..5237dff 100644
+--- a/net/ax25/ax25_ds_timer.c
++++ b/net/ax25/ax25_ds_timer.c
+@@ -102,6 +102,7 @@ void ax25_ds_heartbeat_expiry(ax25_cb *ax25)
  	switch (ax25->state) {
 
--	case AX25_STATE_0:
-+		case AX25_STATE_0:
-+		case AX25_STATE_2:
+ 	case AX25_STATE_0:
++	case AX25_STATE_2:
  		/* Magic here: If we listen() and a new link dies before it
  		   is accepted() it isn't 'dead' so doesn't get removed. */
  		if (!sk || sock_flag(sk, SOCK_DESTROY) ||
-@@ -112,6 +113,8 @@
+@@ -111,6 +112,7 @@ void ax25_ds_heartbeat_expiry(ax25_cb *ax25)
+ 				sock_hold(sk);
  				ax25_destroy_socket(ax25);
  				bh_unlock_sock(sk);
++				/* Ungrab socket and destroy it */
  				sock_put(sk);
-+				ax25_cb_put(sk_to_ax25(sk));
-+
  			} else
  				ax25_destroy_socket(ax25);
+@@ -213,7 +215,8 @@ void ax25_ds_t1_timeout(ax25_cb *ax25)
+ 	case AX25_STATE_2:
+ 		if (ax25->n2count == ax25->n2) {
+ 			ax25_send_control(ax25, AX25_DISC, AX25_POLLON, AX25_COMMAND);
+-			ax25_disconnect(ax25, ETIMEDOUT);
++			if (!sock_flag(ax25->sk, SOCK_DESTROY))
++				ax25_disconnect(ax25, ETIMEDOUT);
  			return;
-diff -Nau ax25/ax25_std_timer.c /home/gunn/projects/rpi/rpi-4.2.y.dev/net/ax25/ax25_std_timer.c
---- ax25/ax25_std_timer.c	2016-03-07 06:13:41.000000000 -0800
-+++ /home/gunn/projects/rpi/rpi-4.2.y.dev/net/ax25/ax25_std_timer.c	2016-06-05 16:18:15.334583540 -0700
-@@ -38,6 +38,7 @@
+ 		} else {
+ 			ax25->n2count++;
+diff --git a/net/ax25/ax25_std_timer.c b/net/ax25/ax25_std_timer.c
+index 004467c9..2c0d6ef 100644
+--- a/net/ax25/ax25_std_timer.c
++++ b/net/ax25/ax25_std_timer.c
+@@ -38,6 +38,7 @@ void ax25_std_heartbeat_expiry(ax25_cb *ax25)
 
  	switch (ax25->state) {
  	case AX25_STATE_0:
@@ -73,48 +74,35 @@ diff -Nau ax25/ax25_std_timer.c /home/gunn/projects/rpi/rpi-4.2.y.dev/net/ax25/a
  		/* Magic here: If we listen() and a new link dies before it
  		   is accepted() it isn't 'dead' so doesn't get removed. */
  		if (!sk || sock_flag(sk, SOCK_DESTROY) ||
-@@ -48,6 +49,7 @@
+@@ -47,6 +48,7 @@ void ax25_std_heartbeat_expiry(ax25_cb *ax25)
+ 				sock_hold(sk);
  				ax25_destroy_socket(ax25);
  				bh_unlock_sock(sk);
++				/* Ungrab socket and destroy it */
  				sock_put(sk);
-+				ax25_cb_put(sk_to_ax25(sk));
  			} else
  				ax25_destroy_socket(ax25);
- 			return;
-@@ -144,7 +146,9 @@
+@@ -144,7 +146,8 @@ void ax25_std_t1timer_expiry(ax25_cb *ax25)
  	case AX25_STATE_2:
  		if (ax25->n2count == ax25->n2) {
  			ax25_send_control(ax25, AX25_DISC, AX25_POLLON, AX25_COMMAND);
 -			ax25_disconnect(ax25, ETIMEDOUT);
-+
-+			if(!sock_flag(ax25->sk, SOCK_DESTROY))
++			if (!sock_flag(ax25->sk, SOCK_DESTROY))
 +				ax25_disconnect(ax25, ETIMEDOUT);
  			return;
  		} else {
  			ax25->n2count++;
-diff -Nau ax25/ax25_subr.c /home/gunn/projects/rpi/rpi-4.2.y.dev/net/ax25/ax25_subr.c
---- ax25/ax25_subr.c	2016-03-07 06:13:41.000000000 -0800
-+++ /home/gunn/projects/rpi/rpi-4.2.y.dev/net/ax25/ax25_subr.c	2016-06-05 14:06:39.424828134 -0700
-@@ -262,9 +262,10 @@
-
- void ax25_disconnect(ax25_cb *ax25, int reason)
+diff --git a/net/ax25/ax25_subr.c b/net/ax25/ax25_subr.c
+index 3b78e84..655a7d4 100644
+--- a/net/ax25/ax25_subr.c
++++ b/net/ax25/ax25_subr.c
+@@ -264,7 +264,8 @@ void ax25_disconnect(ax25_cb *ax25, int reason)
  {
--	ax25_clear_queues(ax25);
+ 	ax25_clear_queues(ax25);
 
 -	ax25_stop_heartbeat(ax25);
-+	ax25_clear_queues(ax25);
-+	if(!sock_flag(ax25->sk, SOCK_DESTROY))
++	if (!sock_flag(ax25->sk, SOCK_DESTROY))
 +		ax25_stop_heartbeat(ax25);
  	ax25_stop_t1timer(ax25);
  	ax25_stop_t2timer(ax25);
  	ax25_stop_t3timer(ax25);
-
----------------------------------------
-
-On Sat, 4 Jun 2016 14:32:14 -0700
-Basil Gunn <basil@pacabunga.com> wrote:
-
-> It looks like the SOCK_DESTROY flag should be serviced off the
-> ax25_ds_timer or ax25_std_timer but that's not happening.
->
-> /Basil
