@@ -1,108 +1,39 @@
-From: Basil Gunn <basil@pacabunga.com>
-Subject: [PATCH 1/1]  AX.25: Close socket connection on session completion
-Date: Wed, 15 Jun 2016 12:20:27 -0700
-Message-ID: <20160615122027.5598cf95@brox.localnet>
+From: Greg KH <greg@kroah.com>
+Subject: Re: [PATCH 1/1]  AX.25: Close socket connection on session completion
+Date: Wed, 15 Jun 2016 19:33:45 -0700
+Message-ID: <20160616023345.GD14691@kroah.com>
+References: <20160615122027.5598cf95@brox.localnet>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to:x-sasl-enc
+	:x-sasl-enc; s=smtpout; bh=A20X+iyZNLJKC1tFU8Gj7Yu6DXg=; b=En8GO
+	K1mN8EiAqlpnIaWmOoqLH507XsvS9dUlvm2gOwP7yVSn7kR3tfBLiWjvJY0Cdkmv
+	s0OdmPVcscA3bdD/Ly4TVbKLF0IWsnL+llCRd3NKiCjyJOnVpSAy/iOhtuU4cWUW
+	Mlqn16cmYSrYj+r8UYB+jCMvbb5PcloKUZMrNc=
+Content-Disposition: inline
+In-Reply-To: <20160615122027.5598cf95@brox.localnet>
 Sender: linux-hams-owner@vger.kernel.org
 List-ID: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
-To: driverdev-devel@linuxdriverproject.org
-Cc: Ralf Baechle <ralf@linux-mips.org>, Thomas Osterried <thomas@osterried.de>, greg@kroah.com, linux-hams@vger.kernel.org, jreuter@jaina.de, davem@davemloft.net
+Content-Transfer-Encoding: 7bit
+To: Basil Gunn <basil@pacabunga.com>
+Cc: driverdev-devel@linuxdriverproject.org, Ralf Baechle <ralf@linux-mips.org>, Thomas Osterried <thomas@osterried.de>, linux-hams@vger.kernel.org, jreuter@jaina.de, davem@davemloft.net
 
-A socket connection made in ax.25 is not closed when session is
-completed.  The heartbeat timer is stopped prematurely and this is
-where the socket gets closed. Allow heatbeat timer to run to close
-socket. Symptom occurs in kernels >= 4.2.0
+On Wed, Jun 15, 2016 at 12:20:27PM -0700, Basil Gunn wrote:
+> A socket connection made in ax.25 is not closed when session is
+> completed.  The heartbeat timer is stopped prematurely and this is
+> where the socket gets closed. Allow heatbeat timer to run to close
+> socket. Symptom occurs in kernels >= 4.2.0
+> 
+> Signed-off-by: Basil Gunn <basil@pacabunga.com>
+> ---
+> diff --git a/net/ax25/af_ax25.c b/net/ax25/af_ax25.c
 
-Signed-off-by: Basil Gunn <basil@pacabunga.com>
----
-diff --git a/net/ax25/af_ax25.c b/net/ax25/af_ax25.c
-index fbd0acf..2fdebab 100644
---- a/net/ax25/af_ax25.c
-+++ b/net/ax25/af_ax25.c
-@@ -976,7 +976,8 @@ static int ax25_release(struct socket *sock)
- 			release_sock(sk);
- 			ax25_disconnect(ax25, 0);
- 			lock_sock(sk);
--			ax25_destroy_socket(ax25);
-+			if (!sock_flag(ax25->sk, SOCK_DESTROY))
-+				ax25_destroy_socket(ax25);
- 			break;
+Please use scripts/get_maintainer.pl to determine who to send this to
+(hint, it's not me, nor the driverdev mailing list...)
 
- 		case AX25_STATE_3:
-diff --git a/net/ax25/ax25_ds_timer.c b/net/ax25/ax25_ds_timer.c
-index 951cd57..5237dff 100644
---- a/net/ax25/ax25_ds_timer.c
-+++ b/net/ax25/ax25_ds_timer.c
-@@ -102,6 +102,7 @@ void ax25_ds_heartbeat_expiry(ax25_cb *ax25)
- 	switch (ax25->state) {
+thanks,
 
- 	case AX25_STATE_0:
-+	case AX25_STATE_2:
- 		/* Magic here: If we listen() and a new link dies before it
- 		   is accepted() it isn't 'dead' so doesn't get removed. */
- 		if (!sk || sock_flag(sk, SOCK_DESTROY) ||
-@@ -111,6 +112,7 @@ void ax25_ds_heartbeat_expiry(ax25_cb *ax25)
- 				sock_hold(sk);
- 				ax25_destroy_socket(ax25);
- 				bh_unlock_sock(sk);
-+				/* Ungrab socket and destroy it */
- 				sock_put(sk);
- 			} else
- 				ax25_destroy_socket(ax25);
-@@ -213,7 +215,8 @@ void ax25_ds_t1_timeout(ax25_cb *ax25)
- 	case AX25_STATE_2:
- 		if (ax25->n2count == ax25->n2) {
- 			ax25_send_control(ax25, AX25_DISC, AX25_POLLON, AX25_COMMAND);
--			ax25_disconnect(ax25, ETIMEDOUT);
-+			if (!sock_flag(ax25->sk, SOCK_DESTROY))
-+				ax25_disconnect(ax25, ETIMEDOUT);
- 			return;
- 		} else {
- 			ax25->n2count++;
-diff --git a/net/ax25/ax25_std_timer.c b/net/ax25/ax25_std_timer.c
-index 004467c9..2c0d6ef 100644
---- a/net/ax25/ax25_std_timer.c
-+++ b/net/ax25/ax25_std_timer.c
-@@ -38,6 +38,7 @@ void ax25_std_heartbeat_expiry(ax25_cb *ax25)
-
- 	switch (ax25->state) {
- 	case AX25_STATE_0:
-+	case AX25_STATE_2:
- 		/* Magic here: If we listen() and a new link dies before it
- 		   is accepted() it isn't 'dead' so doesn't get removed. */
- 		if (!sk || sock_flag(sk, SOCK_DESTROY) ||
-@@ -47,6 +48,7 @@ void ax25_std_heartbeat_expiry(ax25_cb *ax25)
- 				sock_hold(sk);
- 				ax25_destroy_socket(ax25);
- 				bh_unlock_sock(sk);
-+				/* Ungrab socket and destroy it */
- 				sock_put(sk);
- 			} else
- 				ax25_destroy_socket(ax25);
-@@ -144,7 +146,8 @@ void ax25_std_t1timer_expiry(ax25_cb *ax25)
- 	case AX25_STATE_2:
- 		if (ax25->n2count == ax25->n2) {
- 			ax25_send_control(ax25, AX25_DISC, AX25_POLLON, AX25_COMMAND);
--			ax25_disconnect(ax25, ETIMEDOUT);
-+			if (!sock_flag(ax25->sk, SOCK_DESTROY))
-+				ax25_disconnect(ax25, ETIMEDOUT);
- 			return;
- 		} else {
- 			ax25->n2count++;
-diff --git a/net/ax25/ax25_subr.c b/net/ax25/ax25_subr.c
-index 3b78e84..655a7d4 100644
---- a/net/ax25/ax25_subr.c
-+++ b/net/ax25/ax25_subr.c
-@@ -264,7 +264,8 @@ void ax25_disconnect(ax25_cb *ax25, int reason)
- {
- 	ax25_clear_queues(ax25);
-
--	ax25_stop_heartbeat(ax25);
-+	if (!sock_flag(ax25->sk, SOCK_DESTROY))
-+		ax25_stop_heartbeat(ax25);
- 	ax25_stop_t1timer(ax25);
- 	ax25_stop_t2timer(ax25);
- 	ax25_stop_t3timer(ax25);
+greg k-h
