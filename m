@@ -1,64 +1,63 @@
 From: Arnd Bergmann <arnd@arndb.de>
-Subject: [PATCH 0/8] net: fix old-style declarations
-Date: Thu, 16 Jun 2016 15:50:05 +0200
-Message-ID: <20160616135020.3154461-1-arnd@arndb.de>
-Return-path: <linux-kernel-owner@vger.kernel.org>
-Sender: linux-kernel-owner@vger.kernel.org
+Subject: [PATCH 4/8] hamradio: baycom: fix old-style declaration
+Date: Thu, 16 Jun 2016 15:52:11 +0200
+Message-ID: <20160616135245.3198419-4-arnd@arndb.de>
+References: <20160616135020.3154461-1-arnd@arndb.de>
+ <20160616135245.3198419-1-arnd@arndb.de>
+Return-path: <netdev-owner@vger.kernel.org>
+In-Reply-To: <20160616135245.3198419-1-arnd@arndb.de>
+Sender: netdev-owner@vger.kernel.org
 List-ID: <linux-hams.vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
-To: netdev@vger.kernel.org
-Cc: Arnd Bergmann <arnd@arndb.de>, Armin Schindler <mac@melware.de>, Karsten Keil <isdn@linux-pingi.de>, Claudiu Manoil <claudiu.manoil@freescale.com>, Thomas Sailer <t.sailer@alumni.ethz.ch>, Stanislav Yakovlev <stas.yakovlev@gmail.com>, Steffen Klassert <steffen.klassert@secunet.com>, Herbert Xu <herbert@gondor.apana.org.au>, "David S. Miller" <davem@davemloft.net>, Trond Myklebust <trond.myklebust@primarydata.com>, Anna Schumaker <anna.schumaker@netapp.com>, "J. Bruce Fields" <bfields@fieldses.org>, linux-kernel@vger.kernel.org, linux-hams@vger.kernel.org, linux-wireless@vger.kernel.org, brcm80211-dev-list@broadcom.com, linux-nfs@vger.kernel.org
+To: netdev@vger.kernel.org, Thomas Sailer <t.sailer@alumni.ethz.ch>
+Cc: Arnd Bergmann <arnd@arndb.de>, linux-hams@vger.kernel.org, linux-kernel@vger.kernel.org
 
-"make W=1" enables -Wold-style-declaration, which is generally useful
-to warn about pre-C89 code in the kernel, but it also warns about
-some harmless variations (sometimes many of them from a single
-file).
+Modern C standards expect the '__inline__' keyword to come before the return
+type in a declaration, and we get a warning for this with "make W=1":
 
-This fixes up the 8 instances I found in the networking code, there
-is another series of 12 patches for the rest of the kernel.
+drivers/net/hamradio/baycom_par.c:159:1: error: '__inline__' is not at beginning of declaration [-Werror=old-style-declaration]
 
-Arnd Bergmann (8):
-  wireless: airo: rename 'register' variable
-  wireless: brcmsmac: fix old-style declaration
-  wireless: ipw2200: fix old-style declaration
-  hamradio: baycom: fix old-style declaration
-  isdn: eicon: fix old-style declarations
-  net: gianfar: fix old-style declaration
-  net: xfrm: fix old-style declaration
-  sunrpc: fix old-style declaration
+For consistency with other drivers, I'm changing '__inline__' to 'inline'
+at the same time.
 
- drivers/isdn/hardware/eicon/divasmain.c                 | 12 ++++++------
- drivers/isdn/hardware/eicon/platform.h                  |  6 +++---
- drivers/net/ethernet/freescale/gianfar.c                |  2 +-
- drivers/net/hamradio/baycom_par.c                       |  6 +++---
- drivers/net/wireless/broadcom/brcm80211/brcmsmac/main.c |  4 ++--
- drivers/net/wireless/cisco/airo.c                       |  4 ++--
- drivers/net/wireless/intel/ipw2x00/ipw2200.c            |  2 +-
- net/ipv4/xfrm4_policy.c                                 |  8 ++++----
- net/ipv6/xfrm6_policy.c                                 |  4 ++--
- net/sunrpc/clnt.c                                       |  2 +-
- 10 files changed, 25 insertions(+), 25 deletions(-)
+Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+---
+ drivers/net/hamradio/baycom_par.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
+diff --git a/drivers/net/hamradio/baycom_par.c b/drivers/net/hamradio/baycom_par.c
+index acb636963e90..072cddce9264 100644
+--- a/drivers/net/hamradio/baycom_par.c
++++ b/drivers/net/hamradio/baycom_par.c
+@@ -156,7 +156,7 @@ struct baycom_state {
+ 
+ /* --------------------------------------------------------------------- */
+ 
+-static void __inline__ baycom_int_freq(struct baycom_state *bc)
++static inline void baycom_int_freq(struct baycom_state *bc)
+ {
+ #ifdef BAYCOM_DEBUG
+ 	unsigned long cur_jiffies = jiffies;
+@@ -192,7 +192,7 @@ static void __inline__ baycom_int_freq(struct baycom_state *bc)
+ 
+ /* --------------------------------------------------------------------- */
+ 
+-static __inline__ void par96_tx(struct net_device *dev, struct baycom_state *bc)
++static inline void par96_tx(struct net_device *dev, struct baycom_state *bc)
+ {
+ 	int i;
+ 	unsigned int data = hdlcdrv_getbits(&bc->hdrv);
+@@ -216,7 +216,7 @@ static __inline__ void par96_tx(struct net_device *dev, struct baycom_state *bc)
+ 
+ /* --------------------------------------------------------------------- */
+ 
+-static __inline__ void par96_rx(struct net_device *dev, struct baycom_state *bc)
++static inline void par96_rx(struct net_device *dev, struct baycom_state *bc)
+ {
+ 	int i;
+ 	unsigned int data, mask, mask2, descx;
 -- 
 2.9.0
 
-Cc: Armin Schindler <mac@melware.de>
-Cc: Karsten Keil <isdn@linux-pingi.de>
-Cc: Claudiu Manoil <claudiu.manoil@freescale.com>
-Cc: Thomas Sailer <t.sailer@alumni.ethz.ch>
-Cc: Stanislav Yakovlev <stas.yakovlev@gmail.com>
-Cc: Steffen Klassert <steffen.klassert@secunet.com>
-Cc: Herbert Xu <herbert@gondor.apana.org.au>
-Cc: "David S. Miller" <davem@davemloft.net>
-Cc: Trond Myklebust <trond.myklebust@primarydata.com>
-Cc: Anna Schumaker <anna.schumaker@netapp.com>
-Cc: "J. Bruce Fields" <bfields@fieldses.org>
-Cc: Arnd Bergmann <arnd@arndb.de>
-Cc: netdev@vger.kernel.org
-Cc: linux-kernel@vger.kernel.org
-Cc: linux-hams@vger.kernel.org
-Cc: linux-wireless@vger.kernel.org
-Cc: brcm80211-dev-list@broadcom.com
-Cc: linux-nfs@vger.kernel.org
