@@ -1,39 +1,64 @@
-From: Greg KH <greg@kroah.com>
-Subject: Re: [PATCH 1/1]  AX.25: Close socket connection on session completion
-Date: Wed, 15 Jun 2016 19:33:45 -0700
-Message-ID: <20160616023345.GD14691@kroah.com>
-References: <20160615122027.5598cf95@brox.localnet>
-Mime-Version: 1.0
-Return-path: <linux-hams-owner@vger.kernel.org>
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to:x-sasl-enc
-	:x-sasl-enc; s=smtpout; bh=A20X+iyZNLJKC1tFU8Gj7Yu6DXg=; b=En8GO
-	K1mN8EiAqlpnIaWmOoqLH507XsvS9dUlvm2gOwP7yVSn7kR3tfBLiWjvJY0Cdkmv
-	s0OdmPVcscA3bdD/Ly4TVbKLF0IWsnL+llCRd3NKiCjyJOnVpSAy/iOhtuU4cWUW
-	Mlqn16cmYSrYj+r8UYB+jCMvbb5PcloKUZMrNc=
-Content-Disposition: inline
-In-Reply-To: <20160615122027.5598cf95@brox.localnet>
-Sender: linux-hams-owner@vger.kernel.org
+From: Arnd Bergmann <arnd@arndb.de>
+Subject: [PATCH 0/8] net: fix old-style declarations
+Date: Thu, 16 Jun 2016 15:50:05 +0200
+Message-ID: <20160616135020.3154461-1-arnd@arndb.de>
+Return-path: <linux-kernel-owner@vger.kernel.org>
+Sender: linux-kernel-owner@vger.kernel.org
 List-ID: <linux-hams.vger.kernel.org>
+MIME-Version: 1.0
 Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
-To: Basil Gunn <basil@pacabunga.com>
-Cc: driverdev-devel@linuxdriverproject.org, Ralf Baechle <ralf@linux-mips.org>, Thomas Osterried <thomas@osterried.de>, linux-hams@vger.kernel.org, jreuter@jaina.de, davem@davemloft.net
+To: netdev@vger.kernel.org
+Cc: Arnd Bergmann <arnd@arndb.de>, Armin Schindler <mac@melware.de>, Karsten Keil <isdn@linux-pingi.de>, Claudiu Manoil <claudiu.manoil@freescale.com>, Thomas Sailer <t.sailer@alumni.ethz.ch>, Stanislav Yakovlev <stas.yakovlev@gmail.com>, Steffen Klassert <steffen.klassert@secunet.com>, Herbert Xu <herbert@gondor.apana.org.au>, "David S. Miller" <davem@davemloft.net>, Trond Myklebust <trond.myklebust@primarydata.com>, Anna Schumaker <anna.schumaker@netapp.com>, "J. Bruce Fields" <bfields@fieldses.org>, linux-kernel@vger.kernel.org, linux-hams@vger.kernel.org, linux-wireless@vger.kernel.org, brcm80211-dev-list@broadcom.com, linux-nfs@vger.kernel.org
 
-On Wed, Jun 15, 2016 at 12:20:27PM -0700, Basil Gunn wrote:
-> A socket connection made in ax.25 is not closed when session is
-> completed.  The heartbeat timer is stopped prematurely and this is
-> where the socket gets closed. Allow heatbeat timer to run to close
-> socket. Symptom occurs in kernels >= 4.2.0
-> 
-> Signed-off-by: Basil Gunn <basil@pacabunga.com>
-> ---
-> diff --git a/net/ax25/af_ax25.c b/net/ax25/af_ax25.c
+"make W=1" enables -Wold-style-declaration, which is generally useful
+to warn about pre-C89 code in the kernel, but it also warns about
+some harmless variations (sometimes many of them from a single
+file).
 
-Please use scripts/get_maintainer.pl to determine who to send this to
-(hint, it's not me, nor the driverdev mailing list...)
+This fixes up the 8 instances I found in the networking code, there
+is another series of 12 patches for the rest of the kernel.
 
-thanks,
+Arnd Bergmann (8):
+  wireless: airo: rename 'register' variable
+  wireless: brcmsmac: fix old-style declaration
+  wireless: ipw2200: fix old-style declaration
+  hamradio: baycom: fix old-style declaration
+  isdn: eicon: fix old-style declarations
+  net: gianfar: fix old-style declaration
+  net: xfrm: fix old-style declaration
+  sunrpc: fix old-style declaration
 
-greg k-h
+ drivers/isdn/hardware/eicon/divasmain.c                 | 12 ++++++------
+ drivers/isdn/hardware/eicon/platform.h                  |  6 +++---
+ drivers/net/ethernet/freescale/gianfar.c                |  2 +-
+ drivers/net/hamradio/baycom_par.c                       |  6 +++---
+ drivers/net/wireless/broadcom/brcm80211/brcmsmac/main.c |  4 ++--
+ drivers/net/wireless/cisco/airo.c                       |  4 ++--
+ drivers/net/wireless/intel/ipw2x00/ipw2200.c            |  2 +-
+ net/ipv4/xfrm4_policy.c                                 |  8 ++++----
+ net/ipv6/xfrm6_policy.c                                 |  4 ++--
+ net/sunrpc/clnt.c                                       |  2 +-
+ 10 files changed, 25 insertions(+), 25 deletions(-)
+
+-- 
+2.9.0
+
+Cc: Armin Schindler <mac@melware.de>
+Cc: Karsten Keil <isdn@linux-pingi.de>
+Cc: Claudiu Manoil <claudiu.manoil@freescale.com>
+Cc: Thomas Sailer <t.sailer@alumni.ethz.ch>
+Cc: Stanislav Yakovlev <stas.yakovlev@gmail.com>
+Cc: Steffen Klassert <steffen.klassert@secunet.com>
+Cc: Herbert Xu <herbert@gondor.apana.org.au>
+Cc: "David S. Miller" <davem@davemloft.net>
+Cc: Trond Myklebust <trond.myklebust@primarydata.com>
+Cc: Anna Schumaker <anna.schumaker@netapp.com>
+Cc: "J. Bruce Fields" <bfields@fieldses.org>
+Cc: Arnd Bergmann <arnd@arndb.de>
+Cc: netdev@vger.kernel.org
+Cc: linux-kernel@vger.kernel.org
+Cc: linux-hams@vger.kernel.org
+Cc: linux-wireless@vger.kernel.org
+Cc: brcm80211-dev-list@broadcom.com
+Cc: linux-nfs@vger.kernel.org
