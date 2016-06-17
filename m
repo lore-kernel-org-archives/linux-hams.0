@@ -1,31 +1,29 @@
 From: David Miller <davem@davemloft.net>
-Subject: Re: [PATCH 4/8] hamradio: baycom: fix old-style declaration
-Date: Thu, 16 Jun 2016 22:06:54 -0700 (PDT)
-Message-ID: <20160616.220654.973287495670086323.davem@davemloft.net>
-References: <20160616135020.3154461-1-arnd@arndb.de>
-	<20160616135245.3198419-1-arnd@arndb.de>
-	<20160616135245.3198419-4-arnd@arndb.de>
+Subject: Re: PATCH 1/1] AX.25: Close socket connection on session completion
+Date: Fri, 17 Jun 2016 11:33:19 -0700 (PDT)
+Message-ID: <20160617.113319.2120711643214980498.davem@davemloft.net>
+References: <20160616094230.1d023d0b@brox.localnet>
 Mime-Version: 1.0
 Content-Transfer-Encoding: 7bit
 Return-path: <linux-kernel-owner@vger.kernel.org>
-In-Reply-To: <20160616135245.3198419-4-arnd@arndb.de>
+In-Reply-To: <20160616094230.1d023d0b@brox.localnet>
 Sender: linux-kernel-owner@vger.kernel.org
 List-ID: <linux-hams.vger.kernel.org>
 Content-Type: Text/Plain; charset="us-ascii"
-To: arnd@arndb.de
-Cc: netdev@vger.kernel.org, t.sailer@alumni.ethz.ch, linux-hams@vger.kernel.org, linux-kernel@vger.kernel.org
+To: basil@pacabunga.com
+Cc: jreuter@yaina.de, ralf@linux-mips.org, linux-hams@vger.kernel.org, netdev@vger.kernel.org, linux-kernel@vger.kernel.org
 
-From: Arnd Bergmann <arnd@arndb.de>
-Date: Thu, 16 Jun 2016 15:52:11 +0200
+From: Basil Gunn <basil@pacabunga.com>
+Date: Thu, 16 Jun 2016 09:42:30 -0700
 
-> Modern C standards expect the '__inline__' keyword to come before the return
-> type in a declaration, and we get a warning for this with "make W=1":
+> A socket connection made in ax.25 is not closed when session is
+> completed.  The heartbeat timer is stopped prematurely and this is
+> where the socket gets closed. Allow heatbeat timer to run to close
+> socket. Symptom occurs in kernels >= 4.2.0
 > 
-> drivers/net/hamradio/baycom_par.c:159:1: error: '__inline__' is not at beginning of declaration [-Werror=old-style-declaration]
+> Originally sent 6/15/2016. Resend with distribution list matching
+> scripts/maintainer.pl output.
 > 
-> For consistency with other drivers, I'm changing '__inline__' to 'inline'
-> at the same time.
-> 
-> Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+> Signed-off-by: Basil Gunn <basil@pacabunga.com>
 
-Applied.
+What changed in 4.2.x that broke this?
