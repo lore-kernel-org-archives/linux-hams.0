@@ -1,25 +1,29 @@
-From: Thomas Osterried <thomas@x-berg.in-berlin.de>
-Subject: Re: PATCH 1/1] AX.25: Close socket connection on session completion
-Date: Sun, 19 Jun 2016 09:46:01 +0200
-Message-ID: <20160619074601.GJ24846@x-berg.in-berlin.de>
-References: <20160616094230.1d023d0b@brox.localnet>
- <20160617.113319.2120711643214980498.davem@davemloft.net>
+From: Haines Brown <haines@histomat.net>
+Subject: fldigi setup question
+Date: Sun, 19 Jun 2016 09:54:57 -0400
+Message-ID: <20160619135457.GN4605@engels.historicalmaterialism.info>
 Mime-Version: 1.0
 Return-path: <linux-hams-owner@vger.kernel.org>
 Content-Disposition: inline
-In-Reply-To: <20160617.113319.2120711643214980498.davem@davemloft.net>
 Sender: linux-hams-owner@vger.kernel.org
 List-ID: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
-To: David Miller <davem@davemloft.net>
-Cc: basil@pacabunga.com, jreuter@yaina.de, ralf@linux-mips.org, linux-hams@vger.kernel.org, netdev@vger.kernel.org, linux-kernel@vger.kernel.org
+To: linux-hams@vger.kernel.org
 
-> > socket. Symptom occurs in kernels >= 4.2.0
-[..] 
-> What changed in 4.2.x that broke this?
+I'm a newbie with a very simple question, and so hope folks will be
+tolerant.
 
-3.x'er kernel had also this problem; but there it happens rarely.
+I'm running an Elecraft K3 through a SignaLink USB to fldigi
+interface, and aim to operate PSK31 on 20 meters.
 
-vy 73,
-	- Thomas  dl9sau
+My transmitter is tuned to 14.070.15. In fldigi, I selected Op-Mode
+BPSK31. In band list I select 14070.000 USB BPSK-31. I set the Xcvr Freq
+to 14070.150.
+
+However, the waterfall ranges between about 14070.184 to 14073.014. This
+is outside the PKS31 20 meter band. All I see is vertical lines
+(carriers?) 100 Hz apart, but no signals. How do I move the waterfall to
+the proper frequency range?
+
+Haines Brown KB1GRM
