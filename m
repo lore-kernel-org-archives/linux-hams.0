@@ -1,29 +1,25 @@
-From: David Miller <davem@davemloft.net>
+From: Thomas Osterried <thomas@x-berg.in-berlin.de>
 Subject: Re: PATCH 1/1] AX.25: Close socket connection on session completion
-Date: Sat, 18 Jun 2016 20:55:45 -0700 (PDT)
-Message-ID: <20160618.205545.1211200211643065140.davem@davemloft.net>
+Date: Sun, 19 Jun 2016 09:46:01 +0200
+Message-ID: <20160619074601.GJ24846@x-berg.in-berlin.de>
 References: <20160616094230.1d023d0b@brox.localnet>
+ <20160617.113319.2120711643214980498.davem@davemloft.net>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <20160616094230.1d023d0b@brox.localnet>
+Content-Disposition: inline
+In-Reply-To: <20160617.113319.2120711643214980498.davem@davemloft.net>
 Sender: linux-hams-owner@vger.kernel.org
 List-ID: <linux-hams.vger.kernel.org>
-Content-Type: Text/Plain; charset="us-ascii"
-To: basil@pacabunga.com
-Cc: jreuter@yaina.de, ralf@linux-mips.org, linux-hams@vger.kernel.org, netdev@vger.kernel.org, linux-kernel@vger.kernel.org
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+To: David Miller <davem@davemloft.net>
+Cc: basil@pacabunga.com, jreuter@yaina.de, ralf@linux-mips.org, linux-hams@vger.kernel.org, netdev@vger.kernel.org, linux-kernel@vger.kernel.org
 
-From: Basil Gunn <basil@pacabunga.com>
-Date: Thu, 16 Jun 2016 09:42:30 -0700
+> > socket. Symptom occurs in kernels >= 4.2.0
+[..] 
+> What changed in 4.2.x that broke this?
 
-> A socket connection made in ax.25 is not closed when session is
-> completed.  The heartbeat timer is stopped prematurely and this is
-> where the socket gets closed. Allow heatbeat timer to run to close
-> socket. Symptom occurs in kernels >= 4.2.0
-> 
-> Originally sent 6/15/2016. Resend with distribution list matching
-> scripts/maintainer.pl output.
-> 
-> Signed-off-by: Basil Gunn <basil@pacabunga.com>
+3.x'er kernel had also this problem; but there it happens rarely.
 
-Applied.
+vy 73,
+	- Thomas  dl9sau
