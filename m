@@ -1,91 +1,58 @@
 From: Haines Brown <haines@histomat.net>
-Subject: Re: fldigi audio configuration.
-Date: Sun, 19 Jun 2016 19:30:21 -0400
-Message-ID: <20160619233021.GO4605@engels.historicalmaterialism.info>
-References: <20160617133418.GF4605@engels.historicalmaterialism.info>
- <1466366399.1484.34.camel@raag.org>
+Subject: Re: fldigi setup question
+Date: Wed, 22 Jun 2016 21:15:33 -0400
+Message-ID: <20160623011533.GB12415@engels.historicalmaterialism.info>
+References: <20160619135457.GN4605@engels.historicalmaterialism.info>
 Mime-Version: 1.0
-Content-Transfer-Encoding: QUOTED-PRINTABLE
 Return-path: <linux-hams-owner@vger.kernel.org>
 Content-Disposition: inline
-In-Reply-To: <1466366399.1484.34.camel@raag.org>
+In-Reply-To: <20160619135457.GN4605@engels.historicalmaterialism.info>
 Sender: linux-hams-owner@vger.kernel.org
 List-ID: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="utf-8"
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 7bit
 To: linux-hams@vger.kernel.org
 
-On Sun, Jun 19, 2016 at 10:59:59PM +0300, Apostolos Kefalas wrote:
-> On =CE=A0=CE=B1=CF=81, 2016-06-17 at 09:34 -0400, Haines Brown wrote:=
-=20
-> > I'm getting back to ham radio after many years of absence. I'm runn=
-ing
-> > an Elecraft K3, PSK31 mode, with a Signalink USB sound card feeding=
- into
-> > fldigi under Debian Wheezy.
-> >=20
->=20
-> First of all I would recommend to install Debian Jessie instead of
-> Wheezy (which is too old) if this is possible.
+There was no response to the question of my original post. I assume that
+this was because it was too open ended. So I'll be more specific.
 
-Thanks for the reply, Apostolos. I'm actually running Devuan Jessie on
-another disk on the current machine and also on another machine, but
-want to get fldigi rolling on Wheezy. My ability to get fldigi going on
-the other disk from the current one is limited by the fact that the
-Jessie disk is 64 bit and my current Wheezy is 32 bit. This probably
-precludes chroot.
+I'm running debian Wheezy with a SignaLink USB sound card and fldigi
+software. The transmitter is a K3 tuned to 14.070, TX DATA mode USB. My
+computer uses PulseAudio as default. Alsamixer also sees the presence of
+SignaLink's USB Audio CODEC, which is un-muted and at 84%.
 
-> > My question concerns fldigi audio configuration. Because I happen t=
-o
-> > have PulseAudio installed, I checked Pulse Audio in fldigi audio
-> > configuration. However, it asks for the sound server string. $ echo
-> > $PULSE_SERVER returns nothing. How do I obtain the string's value?
-> >=20
-> You don't need any server string except on very special situations, l=
-ike
-> remote audio server.
+The SignaLink USB instructions tell me to make sure the software's
+transmit and receive audio card is set to USB Audio CODEC. I go to
+fldigi, Configure, Soundcard. Although PulseAudio is present on the
+computer, not wishing to use PulseAudio for fldigi, I have selected
+PortAudio. I assume I can do this. Am I wrong?
 
-Thanks.
+PortAudio does not offer an option to choose the Transmit and Receive
+audio card, but instead the Capture and Playback card. I set PortAudio
+Capture to the SignaLink's USB Audio CODEC card. But the fldigi
+PortAudio Playback does have that option. Its options are Xonar DX (my
+computer's sound card) HDA NNvidia (motherboard audio chip), iec958,
+spdif (a cable?), pulse (PulseAudio?) and default (my computer's Xonar
+sound card?). USB Audio CODEC is not a choice. Should it be? Should I
+instead use iec958?
 
-> > Pavucontrol shows fldigi playback on and fldigi capture from. My K3
-> > receiver is set to 14.070.15 and fldigi is set to 14070.00.=20
->=20
-> If you are not controlling K3 through fldigi (flrig, hamlib, etc) the=
-n
-> its OK.
->
-> > The sound
-> > from the K3 speaker sounds like I might be getting some signals and=
- the
-> > noise produces an occasional random character in fldigi's Rx field,=
- but
-> > so far no waterfall. That is, I choose default PAL to be dark blue,=
- but
-> > waterfall area is black
->=20
-> Open pavucontrol, go to "Input Devices" and select the correct "Port"
-> where you have connected K3
+Pavucontrol sees "ALSA Plugin [fldigi]" for ALSA Capture under Recording
+and sees PCM2904 Audio Codec Analog Stereo among Output
+Devices. Question: shouldn't what pavucontol sees and the values it sets
+be irrelevant?
 
-I've finally got a waterfall. I suspect this was by selecting USB Audio
-CODEC as default card in alsamixer.
+And the fldigi waterfall is strange. Fldigi is set to PSK31 at
+14070.000. The waterfall sees noise only in a band at its center
+(14071.240 to 14071.716) and at its extreme left edge (14070.041). While
+the middle region has nothing that looks like signals (unless it itself
+is a broadband signal), the left edge looks as though it is close to the
+IM distortion of a signal just out of range. Although the central region
+has no visible PSK31 signals and I hear no PSK31 warble, it and the
+extreme left produce garbage text ("e S tite ate oee o e too="), whether
+I set the demodulation for frequency or phase shift. The only effect
+changing the demodulation is that with RTTY, the garbage is upper case.
 
-In pavucontrol, Input Devices, I see PCM2904 Audio Codec Analog Stereo
-device. Its levels are high. It is not muted or locked or set to be
-default. I see nothing about port here.
+Please help.
 
-In fldigi. I set Xcvr Freq to 14070.150, the frequency to which the K3
-is tuned. In Open List (book icon), I select "14070.000 USB BPSK31
-10000" When I go to the middle of the waterfall (1500), the frequency
-field shows 141071.662. That is, it seems fldigi's passband is outside
-the 20 meter PSK31 band and this is why I get no signals. It seems
-fldigi not listening to the 20 meter PSK31 band. The waterfall displays
-sets of simple vertical lines about 220 Hz apart, each pair separated
-by a weak line about 100 Hz from the left line.
+Haines Brown KB1GRM
 
-Haines
-
-
---
-To unsubscribe from this list: send the line "unsubscribe linux-hams" i=
-n
-the body of a message to majordomo@vger.kernel.org
-More majordomo info at  http://vger.kernel.org/majordomo-info.html
