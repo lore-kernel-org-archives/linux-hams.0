@@ -1,60 +1,25 @@
-From: David Ranch <linux-hams@trinnet.net>
+From: David Miller <davem@davemloft.net>
 Subject: Re: PATCH 1/1] AX.25: Close socket connection on session completion
-Date: Mon, 4 Jul 2016 15:48:40 -0700
-Message-ID: <577AE7C8.3040806@trinnet.net>
+Date: Mon, 04 Jul 2016 16:31:39 -0700 (PDT)
+Message-ID: <20160704.163139.628867990464911748.davem@davemloft.net>
 References: <20160616094230.1d023d0b@brox.localnet>
- <20160618.205545.1211200211643065140.davem@davemloft.net>
+	<20160618.205545.1211200211643065140.davem@davemloft.net>
+	<577AE7C8.3040806@trinnet.net>
 Mime-Version: 1.0
 Content-Transfer-Encoding: 7bit
-Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <20160618.205545.1211200211643065140.davem@davemloft.net>
-Sender: linux-hams-owner@vger.kernel.org
+Return-path: <linux-kernel-owner@vger.kernel.org>
+In-Reply-To: <577AE7C8.3040806@trinnet.net>
+Sender: linux-kernel-owner@vger.kernel.org
 List-ID: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"; format="flowed"
-To: David Miller <davem@davemloft.net>, basil@pacabunga.com
-Cc: jreuter@yaina.de, ralf@linux-mips.org, linux-hams@vger.kernel.org, netdev@vger.kernel.org, linux-kernel@vger.kernel.org
+Content-Type: Text/Plain; charset="us-ascii"
+To: linux-hams@trinnet.net
+Cc: basil@pacabunga.com, jreuter@yaina.de, ralf@linux-mips.org, linux-hams@vger.kernel.org, netdev@vger.kernel.org, linux-kernel@vger.kernel.org
 
+From: David Ranch <linux-hams@trinnet.net>
+Date: Mon, 4 Jul 2016 15:48:40 -0700
 
-Hello David,
+> How can we get this critical fix applied to the other stable kernel
+> versions?
 
-Unless I'm doing something wrong, it seems this patch has only been 
-applied to the newest
-kernel:
-
-    Git/linux-stable$ git tag -l --contains 
-4a7d99ea1b27734558feb6833f180cd38a159940
-    v4.7-rc6
-
-How can we get this critical fix applied to the other stable kernel 
-versions?  I would really hate
-to depend on all the various Distro packagers to miss on picking this up 
-as this is a critical
-toxicity fix.
-
-
-Reference: http://www.spinics.net/lists/linux-hams/msg03628.html
-
---David
-
-
-
-
-On 06/18/2016 08:55 PM, David Miller wrote:
-> From: Basil Gunn <basil@pacabunga.com>
-> Date: Thu, 16 Jun 2016 09:42:30 -0700
->
->> A socket connection made in ax.25 is not closed when session is
->> completed.  The heartbeat timer is stopped prematurely and this is
->> where the socket gets closed. Allow heatbeat timer to run to close
->> socket. Symptom occurs in kernels >= 4.2.0
->>
->> Originally sent 6/15/2016. Resend with distribution list matching
->> scripts/maintainer.pl output.
->>
->> Signed-off-by: Basil Gunn <basil@pacabunga.com>
-> Applied.
-> --
-> To unsubscribe from this list: send the line "unsubscribe linux-hams" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at  http://vger.kernel.org/majordomo-info.html
-
+Networking patches are submitted to -stable when people ask me to
+do so.  So simply ask for this when you submit your patch.
