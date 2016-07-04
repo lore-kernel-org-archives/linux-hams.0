@@ -1,90 +1,60 @@
-From: Haines Brown <haines@histomat.net>
-Subject: Re: fldigi setup question
-Date: Thu, 23 Jun 2016 07:48:30 -0400
-Message-ID: <20160623114830.GC12415@engels.historicalmaterialism.info>
-References: <20160619135457.GN4605@engels.historicalmaterialism.info>
- <20160623011533.GB12415@engels.historicalmaterialism.info>
- <1466674104.1592.6.camel@raag.org>
+From: David Ranch <linux-hams@trinnet.net>
+Subject: Re: PATCH 1/1] AX.25: Close socket connection on session completion
+Date: Mon, 4 Jul 2016 15:48:40 -0700
+Message-ID: <577AE7C8.3040806@trinnet.net>
+References: <20160616094230.1d023d0b@brox.localnet>
+ <20160618.205545.1211200211643065140.davem@davemloft.net>
 Mime-Version: 1.0
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
-Content-Disposition: inline
-In-Reply-To: <1466674104.1592.6.camel@raag.org>
+In-Reply-To: <20160618.205545.1211200211643065140.davem@davemloft.net>
 Sender: linux-hams-owner@vger.kernel.org
 List-ID: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="utf-8"
-To: linux-hams@vger.kernel.org
+Content-Type: text/plain; charset="us-ascii"; format="flowed"
+To: David Miller <davem@davemloft.net>, basil@pacabunga.com
+Cc: jreuter@yaina.de, ralf@linux-mips.org, linux-hams@vger.kernel.org, netdev@vger.kernel.org, linux-kernel@vger.kernel.org
 
-On Thu, Jun 23, 2016 at 12:28:24PM +0300, Apostolos Kefalas wrote:
-> On =CE=A4=CE=B5=CF=84, 2016-06-22 at 21:15 -0400, Haines Brown wrote:=
-=20
 
-> > The SignaLink USB instructions tell me to make sure the software's
-> > transmit and receive audio card is set to USB Audio CODEC. I go to
-> > fldigi, Configure, Soundcard. Although PulseAudio is present on the
-> > computer, not wishing to use PulseAudio for fldigi, I have selected
-> > PortAudio. I assume I can do this. Am I wrong?
->=20
-> No you are not wrong... though I can not understand why you want to d=
-o
-> that. Portaudio will use ALSA which will redirect you through
-> Pulseaudio!!!
+Hello David,
 
-I'm in process of transitioning from Wheezy to Jessie, from 32bit to
-64bit, and part of that will be to replace Pulseaudio with apulse.=20
+Unless I'm doing something wrong, it seems this patch has only been 
+applied to the newest
+kernel:
 
-> Make sure you have installed libportaudio packages.
+    Git/linux-stable$ git tag -l --contains 
+4a7d99ea1b27734558feb6833f180cd38a159940
+    v4.7-rc6
 
-I had  libportaudio2 installed.
+How can we get this critical fix applied to the other stable kernel 
+versions?  I would really hate
+to depend on all the various Distro packagers to miss on picking this up 
+as this is a critical
+toxicity fix.
 
-Your point that with PulseAdio installed ALSA ends up using it convince=
-d
-me that it would be easier to use puseaudio for the time being. So I
-told fldigi to use PulseAudio. But that leaves me with questions about
-how to configure pulseaudio. Reading and online searching do not even
-mention these things and apparently assumes the person knows that to do=
-=2E
 
-Pavucontrol shows I have three output devices: HDA NVidia Digital
-Stereo, Xonar DX, and the SignaLink USB sound card identified as PCM290=
-4
-Audio Codec Analog Stereo. This apparently is the Burr-Brown Stereo USB
-CODEC used by SignaLink.=20
+Reference: http://www.spinics.net/lists/linux-hams/msg03628.html
 
-In pavucontrol Configuration tab. for PCM2904 Audio Codec there is a
-menu of Analog profiles affecting whether mono, stereo, duplex, input,
-output, etc. I've no idea at all which to choose. I find strong signals
-with stereo + mono out or duplex, and so set it to duplex.
+--David
 
-In pavucontrol input devices there is PCM2904 Audio Codec Analog Stereo=
-,
-which is set as fall back and channel is locked. This shows some
-signal. An there is also the device Monitor PCM2904 Audio Codec Analog
-Stereo. I've no idea what this is. This does not show a signal.
 
-In pavucontrol output devices there is PCM2904 audio codec analog
-stereo. It is not set to default, but its channel is locked with anothe=
-r
-channel.
 
-In pavucontrol, Recording, there are four instances of ALSA plug-in
-[fldigi] which are locked, show a little signal and are set to capture
-from PCM2904 Audio Codec rather than from Monitor of PCM904. Again, no
-idea what "monitor" refers to. Then there is also a Fldigi capture
-from. I set this also to PCM12904 rater than monitor. It also has
-a little signal.=20
 
-I've been assuming that Playback tab in pavucontrol refers to
-transmission and Recording refers to reception. Is this so?
+On 06/18/2016 08:55 PM, David Miller wrote:
+> From: Basil Gunn <basil@pacabunga.com>
+> Date: Thu, 16 Jun 2016 09:42:30 -0700
+>
+>> A socket connection made in ax.25 is not closed when session is
+>> completed.  The heartbeat timer is stopped prematurely and this is
+>> where the socket gets closed. Allow heatbeat timer to run to close
+>> socket. Symptom occurs in kernels >= 4.2.0
+>>
+>> Originally sent 6/15/2016. Resend with distribution list matching
+>> scripts/maintainer.pl output.
+>>
+>> Signed-off-by: Basil Gunn <basil@pacabunga.com>
+> Applied.
+> --
+> To unsubscribe from this list: send the line "unsubscribe linux-hams" in
+> the body of a message to majordomo@vger.kernel.org
+> More majordomo info at  http://vger.kernel.org/majordomo-info.html
 
-My waterfall is still like before. It is black except for a 353 Hz-wide
-band of noise at 14.071.503. What looks more like a signal at the very
-left edge of the waterfall (14.070.016) produces garbage output.
-
-Haines Brown KB1GRM
-
---
-To unsubscribe from this list: send the line "unsubscribe linux-hams" i=
-n
-the body of a message to majordomo@vger.kernel.org
-More majordomo info at  http://vger.kernel.org/majordomo-info.html
