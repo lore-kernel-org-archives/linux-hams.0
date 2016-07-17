@@ -1,42 +1,47 @@
-From: Richard Stearn <richard@rns-stearn.demon.co.uk>
-Subject: [PATCH 6/6]NET:AX25:ROSE Removes a conditional return and
- corrects the return value.
-Date: Sat, 16 Jul 2016 10:46:59 +0100
-Message-ID: <201607160946.u6G9kxnD015432@ux4.g1sog>
+From: David Miller <davem@davemloft.net>
+Subject: Re: [PATCH 0/6]NET:AX25:ROSE Adds device use count, adds trap to
+ prevent kernel crash, plus other cleanup
+Date: Sat, 16 Jul 2016 22:15:49 -0700 (PDT)
+Message-ID: <20160716.221549.671177541113968993.davem@davemloft.net>
+References: <201607160940.u6G9exbE014395@ux4.g1sog>
 Mime-Version: 1.0
 Content-Transfer-Encoding: 7bit
-Return-path: <linux-hams-owner@vger.kernel.org>
-Sender: linux-hams-owner@vger.kernel.org
+Return-path: <netdev-owner@vger.kernel.org>
+In-Reply-To: <201607160940.u6G9exbE014395@ux4.g1sog>
+Sender: netdev-owner@vger.kernel.org
 List-ID: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"
-To: netdev@vger.kernel.org, linux-hams@vger.kernel.org
+Content-Type: Text/Plain; charset="us-ascii"
+To: richard@rns-stearn.demon.co.uk
+Cc: netdev@vger.kernel.org, linux-hams@vger.kernel.org
 
-Subject: [PATCH 6/6]NET:AX25:ROSE Removes a conditional return and corrects the return value.
-Removes a conditional return and corrects the return value.
 
-The ROSE header is always finished (as it is not dependant on daddr) so
-the test for daddr is not required.
+First, this is really a poorly formatted submission.
 
-Return value fixed as positive added header length.
+All of this:
 
-Signed-off-by: Richard Stearn <richard@rns-stearn.demon.co.uk>
----
- net/rose/rose_dev.c |    5 +----
- 1 file changed, 1 insertion(+), 4 deletions(-)
+====================
+Subject: [PATCH 0/6]NET:AX25:ROSE Adds device use count, adds trap to prevent kernel crash, plus other cleanup
+[PATCH 1/6]NET:AX25:ROSE
+Adds device use count for core of protocol.
+====================
 
-diff --git a/net/rose/rose_dev.c b/net/rose/rose_dev.c
-index 44eca10..dc38608 100644
---- a/net/rose/rose_dev.c
-+++ b/net/rose/rose_dev.c
-@@ -47,10 +47,7 @@ static int rose_header(struct sk_buff *skb, struct net_device *dev,
- 	*buff++ = 0x7F;				/* magic marker */
- 	*buff++ = AX25_P_IP;			/* this is an IP packet */
- 
--	if (daddr != NULL)
--		return 37;
--
--	return -37;
-+	return ROSE_MIN_LEN + 2;	/* always creates a finished header */
- }
- 
- static int rose_set_mac_address(struct net_device *dev, void *addr)
+over and over is not what belongs in this "0/6" header postings.
+
+Instead, you're supposed to write paragraphs of prose, explaining to us what
+this patch series is doing, how it is doing it, and why it is doing it that way.
+
+Next, the Subject lines should be of the form:
+
+	"[PATCH N/M] ax25: ..."
+
+Note the spaces, and the subsystem prefix is in lowercase letters, and we typically
+don't use a cascade of "x: y: z:", it's just pointless.
+
+Also, do not duplicate the Subject line in your commit log messages.
+
+Second of all, all of these new device refcount bumps create a new problem.
+You can't just do get and put all over the place.
+
+You also have to have device notifiers that kill all of the ax25/rose
+objects that point to the device when someone tries to unregister it.
+
