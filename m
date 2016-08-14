@@ -1,44 +1,35 @@
-From: walter harms <wharms@bfs.de>
-Subject: Re: [PATCH v2] ax25-tools: mheard
-Date: Mon, 18 Jul 2016 17:58:18 +0200
-Message-ID: <578CFC9A.7010801@bfs.de>
-References: <1468767193.20047.2.camel@trentalancia.net> <20160717182948.GK24846@x-berg.in-berlin.de> <1468786480.20047.4.camel@trentalancia.net> <578CE6C6.1070902@bfs.de> <20160718155057.GL24846@x-berg.in-berlin.de>
-Reply-To: wharms@bfs.de
+From: f6bvp <f6bvp@free.fr>
+Subject: [PATCH 3/6]NET:AX25:ROSE Traps calls to rose_route_frame with a NULL
+ ax25 callback
+Date: Sun, 14 Aug 2016 15:41:08 +0200
+Message-ID: <57B074F4.9050307@free.fr>
 Mime-Version: 1.0
 Content-Transfer-Encoding: 7bit
-Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <20160718155057.GL24846@x-berg.in-berlin.de>
-Sender: linux-hams-owner@vger.kernel.org
+Return-path: <netdev-owner@vger.kernel.org>
+Sender: netdev-owner@vger.kernel.org
 List-ID: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"
-To: Thomas Osterried <thomas@x-berg.in-berlin.de>
-Cc: linux-hams@vger.kernel.org
+Content-Type: text/plain; charset="us-ascii"; format="flowed"
+To: netdev@vger.kernel.org, linux-hams@vger.kernel.org
+Cc: Ralf Baechle <ralf@linux-mips.org>, Richard Stearn <richard@rns-stearn.demon.co.uk>, Bernard Pidoux <bernard.pidoux@free.fr>
 
+Hi Richard,
 
+Thanks for this patch and all others for ROSE code you sent recently.
+I already committed a similar one in february 2016.
 
-Am 18.07.2016 17:50, schrieb Thomas Osterried:
-> Thank you for your comment.
-> 
->> my i asc why you use strcpy/ctime in the first place ?
-> 
-> It's old code, written abt 20-25 years ago.
-> 
->> 	strftime(lh, sizeof(lh),"%Y-%m-%d %H:%M:%S",tm);
-> 
-> Yes, it's nicer than "Thu Jul 14 19:08:49 2016", and more economic to read.
-> I hope such a change would not break any script users may have written
-> during the last decades.
-> 
+Subject: [Patch] rose_route_frame() NULL pointer dereference kernel panic
+From: f6bvp <f6bvp@xxxxxxx>
+Date: Wed, 24 Feb 2016 17:53:11 +0100
+Cc: Ralf Baechle <ralf@xxxxxxxxxxxxxx>, "'f6bvp'" <f6bvp@xxxxxxx>, 
+davem@xxxxxxxxxxxxx
 
+You may browse linux servers for author f6bvp and see my last findings 
+about null ax25.
 
-Of cause you can also use the pattern for ctime() but so its more easy to get
-rid of unwanted artifacts. (i have actually seem code where people parsed the
-output of ctime()). One #ifdef can get you the old pattern back.
+However, despite all my efforts, I did no convince referees of the 
+patch's legitimity and it had not been accepted.
+I hope your work for improving rose code will be successful to the 
+benefit of all radioamateur packet community!
 
-note:
- instead of using mktime() you can use gmtime() and avoid funny effects with time zones.
-
-re,
- wh
-
+73 de Bernard, f6bvp
 
