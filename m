@@ -1,35 +1,176 @@
-From: f6bvp <f6bvp@free.fr>
-Subject: [PATCH 3/6]NET:AX25:ROSE Traps calls to rose_route_frame with a NULL
- ax25 callback
-Date: Sun, 14 Aug 2016 15:41:08 +0200
-Message-ID: <57B074F4.9050307@free.fr>
+From: Mikko Rapeli <mikko.rapeli@iki.fi>
+Subject: [PATCH v05 69/72] uapi rose.h: glibc netrose/rose.h header file compatibility fixes
+Date: Mon, 22 Aug 2016 20:33:26 +0200
+Message-ID: <1471890809-4383-70-git-send-email-mikko.rapeli@iki.fi>
+References: <1471890809-4383-1-git-send-email-mikko.rapeli@iki.fi>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
-Return-path: <netdev-owner@vger.kernel.org>
-Sender: netdev-owner@vger.kernel.org
+Content-Transfer-Encoding: 8bit
+Return-path: <linux-hams-owner@vger.kernel.org>
+In-Reply-To: <1471890809-4383-1-git-send-email-mikko.rapeli@iki.fi>
+Sender: linux-hams-owner@vger.kernel.org
 List-ID: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"; format="flowed"
-To: netdev@vger.kernel.org, linux-hams@vger.kernel.org
-Cc: Ralf Baechle <ralf@linux-mips.org>, Richard Stearn <richard@rns-stearn.demon.co.uk>, Bernard Pidoux <bernard.pidoux@free.fr>
+Content-Type: text/plain; charset="utf-8"
+To: linux-kernel@vger.kernel.org
+Cc: Mikko Rapeli <mikko.rapeli@iki.fi>, Ralf Baechle <ralf@linux-mips.org>, "David S. Miller" <davem@davemloft.net>, Nicolas Dichtel <nicolas.dichtel@6wind.com>, linux-hams@vger.kernel.org
 
-Hi Richard,
+Fixes these userspace compile errors and warnings when glibc
+netrose/rose.h is included before linux/rose.h:
 
-Thanks for this patch and all others for ROSE code you sent recently.
-I already committed a similar one in february 2016.
+linux/rose.h:25:0: warning: "SIOCRSGCAUSE" redefined
+linux/rose.h:26:0: warning: "SIOCRSSCAUSE" redefined
+linux/rose.h:27:0: warning: "SIOCRSL2CALL" redefined
+linux/rose.h:28:0: warning: "SIOCRSSL2CALL" redefined
+linux/rose.h:29:0: warning: "SIOCRSACCEPT" redefined
+linux/rose.h:30:0: warning: "SIOCRSCLRRT" redefined
+linux/rose.h:31:0: warning: "SIOCRSGL2CALL" redefined
+linux/rose.h:32:0: warning: "SIOCRSGFACILITIES" redefined
+linux/rose.h:47:3: error: conflicting types for ‘rose_address’
+linux/rose.h:49:8: error: redefinition of ‘struct sockaddr_rose’
+linux/rose.h:57:8: error: redefinition of ‘struct full_sockaddr_rose’
+linux/rose.h:65:8: error: redefinition of ‘struct rose_route_struct’
+linux/rose.h:74:8: error: redefinition of ‘struct rose_cause_struct’
+linux/rose.h:79:8: error: redefinition of ‘struct rose_facilities_struct’
 
-Subject: [Patch] rose_route_frame() NULL pointer dereference kernel panic
-From: f6bvp <f6bvp@xxxxxxx>
-Date: Wed, 24 Feb 2016 17:53:11 +0100
-Cc: Ralf Baechle <ralf@xxxxxxxxxxxxxx>, "'f6bvp'" <f6bvp@xxxxxxx>, 
-davem@xxxxxxxxxxxxx
+Signed-off-by: Mikko Rapeli <mikko.rapeli@iki.fi>
+---
+ include/uapi/linux/libc-compat.h | 30 ++++++++++++++++++++++++++++++
+ include/uapi/linux/rose.h        | 15 +++++++++++++++
+ 2 files changed, 45 insertions(+)
 
-You may browse linux servers for author f6bvp and see my last findings 
-about null ax25.
-
-However, despite all my efforts, I did no convince referees of the 
-patch's legitimity and it had not been accepted.
-I hope your work for improving rose code will be successful to the 
-benefit of all radioamateur packet community!
-
-73 de Bernard, f6bvp
+diff --git a/include/uapi/linux/libc-compat.h b/include/uapi/linux/libc-compat.h
+index 01bb521..acc2e75 100644
+--- a/include/uapi/linux/libc-compat.h
++++ b/include/uapi/linux/libc-compat.h
+@@ -209,6 +209,27 @@
+ 
+ #endif /* defined(__NETIPX_IPX_H) */
+ 
++/* Coordinate with glibc netrose/rose.h */
++#if defined(_NETROSE_ROSE_H)
++#define __UAPI_DEF_SIOCRSGCAUSE_TO_SIOCRSGFACILITIES	0
++#define __UAPI_DEF_ROSE_ADDRESS				0
++#define __UAPI_DEF_SOCKADDR_ROSE			0
++#define __UAPI_DEF_FULL_SOCKADDR_ROSE			0
++#define __UAPI_DEF_ROSE_ROUTE_STRUCT			0
++#define __UAPI_DEF_ROSE_CAUSE_STRUCT			0
++#define __UAPI_DEF_ROSE_FACILITIES_STRUCT		0
++
++#else /* defined(_NETROSE_ROSE_H) */
++#define __UAPI_DEF_SIOCRSGCAUSE_TO_SIOCRSGFACILITIES	1
++#define __UAPI_DEF_ROSE_ADDRESS				1
++#define __UAPI_DEF_SOCKADDR_ROSE			1
++#define __UAPI_DEF_FULL_SOCKADDR_ROSE			1
++#define __UAPI_DEF_ROSE_ROUTE_STRUCT			1
++#define __UAPI_DEF_ROSE_CAUSE_STRUCT			1
++#define __UAPI_DEF_ROSE_FACILITIES_STRUCT		1
++
++#endif /* defined(_NETROSE_ROSE_H) */
++
+ /* Definitions for sys/uio.h */
+ #if defined(_SYS_UIO_H)
+ #define __UAPI_DEF_IOVEC		0
+@@ -283,6 +304,15 @@
+ #define __UAPI_DEF_IPX_CONFIG_DATA		1
+ #define __UAPI_DEF_IPX_ROUTE_DEF		1
+ 
++/* Definitions for rose.h */
++#define __UAPI_DEF_SIOCRSGCAUSE_TO_SIOCRSGFACILITIES	1
++#define __UAPI_DEF_ROSE_ADDRESS				1
++#define __UAPI_DEF_SOCKADDR_ROSE			1
++#define __UAPI_DEF_FULL_SOCKADDR_ROSE			1
++#define __UAPI_DEF_ROSE_ROUTE_STRUCT			1
++#define __UAPI_DEF_ROSE_CAUSE_STRUCT			1
++#define __UAPI_DEF_ROSE_FACILITIES_STRUCT		1
++
+ /* Definitions for uio.h */
+ #define __UAPI_DEF_IOVEC		1
+ 
+diff --git a/include/uapi/linux/rose.h b/include/uapi/linux/rose.h
+index 1fcfe95..c39499c 100644
+--- a/include/uapi/linux/rose.h
++++ b/include/uapi/linux/rose.h
+@@ -7,6 +7,7 @@
+ #ifndef	ROSE_KERNEL_H
+ #define	ROSE_KERNEL_H
+ 
++#include <linux/libc-compat.h>
+ #include <linux/socket.h>
+ #include <linux/ax25.h>
+ 
+@@ -22,6 +23,7 @@
+ #define	ROSE_QBITINCL	6
+ #define	ROSE_HOLDBACK	7
+ 
++#if __UAPI_DEF_SIOCRSGCAUSE_TO_SIOCRSGFACILITIES
+ #define	SIOCRSGCAUSE		(SIOCPROTOPRIVATE+0)
+ #define	SIOCRSSCAUSE		(SIOCPROTOPRIVATE+1)
+ #define	SIOCRSL2CALL		(SIOCPROTOPRIVATE+2)
+@@ -30,6 +32,7 @@
+ #define	SIOCRSCLRRT		(SIOCPROTOPRIVATE+4)
+ #define	SIOCRSGL2CALL		(SIOCPROTOPRIVATE+5)
+ #define	SIOCRSGFACILITIES	(SIOCPROTOPRIVATE+6)
++#endif /* __UAPI_DEF_SIOCRSGCAUSE_TO_SIOCRSGFACILITIES */
+ 
+ #define	ROSE_DTE_ORIGINATED	0x00
+ #define	ROSE_NUMBER_BUSY	0x01
+@@ -42,10 +45,13 @@
+ #define	ROSE_LOCAL_PROCEDURE	0x13
+ #define	ROSE_SHIP_ABSENT	0x39
+ 
++#if __UAPI_DEF_ROSE_ADDRESS
+ typedef struct {
+ 	char		rose_addr[5];
+ } rose_address;
++#endif /* __UAPI_DEF_ROSE_ADDRESS */
+ 
++#if __UAPI_DEF_SOCKADDR_ROSE
+ struct sockaddr_rose {
+ 	__kernel_sa_family_t srose_family;
+ 	rose_address	srose_addr;
+@@ -53,7 +59,9 @@ struct sockaddr_rose {
+ 	int		srose_ndigis;
+ 	ax25_address	srose_digi;
+ };
++#endif /* __UAPI_DEF_SOCKADDR_ROSE */
+ 
++#if __UAPI_DEF_FULL_SOCKADDR_ROSE
+ struct full_sockaddr_rose {
+ 	__kernel_sa_family_t srose_family;
+ 	rose_address	srose_addr;
+@@ -61,7 +69,9 @@ struct full_sockaddr_rose {
+ 	unsigned int	srose_ndigis;
+ 	ax25_address	srose_digis[ROSE_MAX_DIGIS];
+ };
++#endif /* __UAPI_DEF_FULL_SOCKADDR_ROSE */
+ 
++#if __UAPI_DEF_ROSE_ROUTE_STRUCT
+ struct rose_route_struct {
+ 	rose_address	address;
+ 	unsigned short	mask;
+@@ -70,12 +80,16 @@ struct rose_route_struct {
+ 	unsigned char	ndigis;
+ 	ax25_address	digipeaters[AX25_MAX_DIGIS];
+ };
++#endif /* __UAPI_DEF_ROSE_ROUTE_STRUCT */
+ 
++#if __UAPI_DEF_ROSE_CAUSE_STRUCT
+ struct rose_cause_struct {
+ 	unsigned char	cause;
+ 	unsigned char	diagnostic;
+ };
++#endif /* __UAPI_DEF_ROSE_CAUSE_STRUCT */
+ 
++#if __UAPI_DEF_ROSE_FACILITIES_STRUCT
+ struct rose_facilities_struct {
+ 	rose_address	source_addr,   dest_addr;
+ 	ax25_address	source_call,   dest_call;
+@@ -86,5 +100,6 @@ struct rose_facilities_struct {
+ 	rose_address	fail_addr;
+ 	ax25_address	fail_call;
+ };
++#endif /* __UAPI_DEF_ROSE_FACILITIES_STRUCT */
+ 
+ #endif
+-- 
+2.8.1
 
