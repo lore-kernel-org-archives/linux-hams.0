@@ -1,24 +1,28 @@
 From: Dmitry Vyukov <dvyukov@google.com>
-Subject: 6pack: stack-out-of-bounds in sixpack_receive_buf
-Date: Sat, 3 Sep 2016 15:38:08 +0200
-Message-ID: <CACT4Y+ZXH227Gbwrr+dUN4WSFNsoSECYd-KaZyLJ8F0KCRWRBw@mail.gmail.com>
+Subject: Re: 6pack: stack-out-of-bounds in sixpack_receive_buf
+Date: Sat, 3 Sep 2016 15:38:40 +0200
+Message-ID: <CACT4Y+bhAODvzqOxQps+4y6xSRBXC7pr18wRA+bb26c2XgPFhA@mail.gmail.com>
+References: <CACT4Y+ZXH227Gbwrr+dUN4WSFNsoSECYd-KaZyLJ8F0KCRWRBw@mail.gmail.com>
 Mime-Version: 1.0
 Return-path: <linux-hams-owner@vger.kernel.org>
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20120113;
-        h=mime-version:from:date:message-id:subject:to;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
         bh=37462bopfchBxWdEciSWLbcz1JL8AuvBVM41QejictE=;
-        b=fT57rotNqHlOB+IP5tQk6HCXCmRvtzDfMXZLF1YGNBJ+VvL0CrVAI2+4gD9tl3HA5o
-         fyCv+ikJq9keeYU9BzYeBwkkxY+ZK2ZreEbKUjwSWusT2BzVvlxi8Psh1m5opqGb1CTd
-         66BjOdEpy3yaFXOx5g4LcUFvTojpAhu3h+tUi+s7JJ0eX+ahaNadvAcnwnPk/6EZw2iD
-         nYDB3L1JMwkZjz0V5drq3tdASiIMAs2h/huL97bWN8KDX55qmITNonhkm3PfwDYuaREz
-         jlFdNy97esWGjo45P+D9Zq5J5VBbZRgSO87y030tlKebxH1R8sUvrYVQA3+dTRtH0DPe
-         9xjw==
+        b=OCahjiy+gc8CaF1treJIT8mxDU6dFbTMfeT7LSPq6y1ogV+H/TsEzOkd7TtvtEUBzC
+         IicG1apWFVs1MHTQdlgGXOrHIskzRAEo7Icny5hOYgwXIkaJ6keomnZEdyoDlfwNXQTs
+         KZhcC3NItZuAOJabdiyOOAa/SryVCEGiwpI6F2SE3xpkWncDzlbwzi7+fPnh5InzlKSC
+         lacRcOWMeDaWTUMvUT/+Ai6mgiokirrDgHHLnWPBit/b86FFSUI4D2UCarLkY0suYY5t
+         yaQeNgdJAgvyWGth6A+kzAicY4qFLQLm0fBOKFWT4q6VG2u+YpYTHq6v17+00gxtvokF
+         mRGA==
+In-Reply-To: <CACT4Y+ZXH227Gbwrr+dUN4WSFNsoSECYd-KaZyLJ8F0KCRWRBw@mail.gmail.com>
 Sender: linux-hams-owner@vger.kernel.org
 List-ID: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
 To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, Peter Hurley <peter@hurleysoftware.com>, Jiri Slaby <jslaby@suse.com>, LKML <linux-kernel@vger.kernel.org>, Andreas Koensgen <ajk@comnets.uni-bremen.de>, linux-hams@vger.kernel.org, netdev <netdev@vger.kernel.org>, David Miller <davem@davemloft.net>
+Cc: syzkaller <syzkaller@googlegroups.com>
 
 Hello,
 
