@@ -1,24 +1,38 @@
-From: David Miller <davem@davemloft.net>
-Subject: Re: [PATCH] net: bpqether.h: remove if_ether.h guard
-Date: Sun, 13 Nov 2016 00:58:13 -0500 (EST)
-Message-ID: <20161113.005813.483694959887178515.davem@davemloft.net>
-References: <da8a959ec7a821eb179e5e5b40eff669daf9a338.1478776902.git.baruch@tkos.co.il>
+From: Mikko Rapeli <mikko.rapeli@iki.fi>
+Subject: Re: [PATCH v05 69/72] uapi rose.h: glibc netrose/rose.h header file
+ compatibility fixes
+Date: Wed, 16 Nov 2016 21:07:46 +0200
+Message-ID: <20161116190746.GM8342@lakka.kapsi.fi>
+References: <1471890809-4383-1-git-send-email-mikko.rapeli@iki.fi>
+ <1471890809-4383-70-git-send-email-mikko.rapeli@iki.fi>
+ <57C06258.8000807@bfs.de>
+ <20160828055918.GZ5399@lakka.kapsi.fi>
+ <65db8f70-0533-3edb-11da-5795b986a460@trinnet.net>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
-Return-path: <netdev-owner@vger.kernel.org>
-In-Reply-To: <da8a959ec7a821eb179e5e5b40eff669daf9a338.1478776902.git.baruch@tkos.co.il>
-Sender: netdev-owner@vger.kernel.org
+Return-path: <linux-hams-owner@vger.kernel.org>
+Content-Disposition: inline
+In-Reply-To: <65db8f70-0533-3edb-11da-5795b986a460@trinnet.net>
+Sender: linux-hams-owner@vger.kernel.org
 List-ID: <linux-hams.vger.kernel.org>
-Content-Type: Text/Plain; charset="us-ascii"
-To: baruch@tkos.co.il
-Cc: ralf@linux-mips.org, linux-hams@vger.kernel.org, netdev@vger.kernel.org
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+To: David Ranch <linux-hams@trinnet.net>
+Cc: walter harms <wharms@bfs.de>, linux-kernel@vger.kernel.org, linux-hams@vger.kernel.org
 
-From: Baruch Siach <baruch@tkos.co.il>
-Date: Thu, 10 Nov 2016 13:21:42 +0200
+Hi,
 
-> __LINUX_IF_ETHER_H is not defined anywhere, and if_ether.h can keep itself from
-> double inclusion, though it uses a single underscore prefix.
+On Mon, Aug 29, 2016 at 12:34:25PM -0700, David Ranch wrote:
+> Hello Mikko,
 > 
-> Signed-off-by: Baruch Siach <baruch@tkos.co.il>
+> Somewhat related, the ax25.h file from libax25-devel also has conflicts with
+> the Glibc's ax.25.h.  This creates trouble so if we could get a fix for
+> that, that would be appreciated as well though it might be a Glibc issue and
+> not a kernel issue.
 
-Applied.
+I had a look at libax25 git tree and the rose.h and ax25.h there are copies
+from glibc sources which in turn are modified copies from age old kernel
+headers. My suggestion is on Linux platforms to use the linux kernel headers
+which will co-operate nicely with glibc headers with these changes if you need
+something from them which are not available in glibc headers yet.
+
+-Mikko
