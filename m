@@ -1,142 +1,39 @@
-From: David Ranch <linux-hams@trinnet.net>
-Subject: Re: [PATCH 20/39] Annotate hardware config module parameters in
- drivers/net/hamradio/
-Date: Thu, 1 Dec 2016 08:07:54 -0800
-Message-ID: <ea1628da-fd58-7967-6675-98552e3072d3@trinnet.net>
-References: <148059537897.31612.9461043954611464597.stgit@warthog.procyon.org.uk>
- <148059553894.31612.991515699609880549.stgit@warthog.procyon.org.uk>
+From: David Miller <davem@redhat.com>
+Subject: Re: [PATCH 1/1] ax25: Fix segfault when receiving an iframe with
+ net2kiss loaded
+Date: Fri, 02 Dec 2016 11:05:10 -0500 (EST)
+Message-ID: <20161202.110510.316320127082862142.davem@redhat.com>
+References: <20161130111525.13f74728@brox.localnet>
 Mime-Version: 1.0
 Content-Transfer-Encoding: 7bit
-Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <148059553894.31612.991515699609880549.stgit@warthog.procyon.org.uk>
-Sender: linux-hams-owner@vger.kernel.org
+Return-path: <netdev-owner@vger.kernel.org>
+In-Reply-To: <20161130111525.13f74728@brox.localnet>
+Sender: netdev-owner@vger.kernel.org
 List-ID: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"; format="flowed"
-To: linux-hams@vger.kernel.org
-Cc: David Howells <dhowells@redhat.com>, Thomas Osterried <thomas@osterried.de>, Ralf Baechle <ralf@linux-mips.org>, Basil Gunn - N7NIX <basil@pacabunga.com>, "Bernard, f6bvp" <f6bvp@free.fr>
+Content-Type: Text/Plain; charset="us-ascii"
+To: basil@pacabunga.com
+Cc: jreuter@yaina.de, ralf@linux-mips.org, linux-hams@vger.kernel.org, netdev@vger.kernel.org, linux-kernel@vger.kernel.org, stable@vger.kernel.org, ed@wizkers.io, mcdermj@xenotropic.com
 
+From: Basil Gunn <basil@pacabunga.com>
+Date: Wed, 30 Nov 2016 11:15:25 -0800
 
-Hello Everyone,
+> AX.25 uses sock_queue_rcv_skb() to queue an iframe received packet.
+> This routine writes NULL to the socket buffer device structure
+> pointer. The socket buffer is subsequently serviced by
+> __netif_receiv_skb_core() which dereferences the device structure
+> pointer & segfaults.
+> 
+> The fix puts the ax25 device structure pointer back in the socket
+> buffer struct after sock_queue_rcv_skb() is called.
 
-Considering some of the recent toxicity that snuck into the Linux AX.25 
-codebase, is there anyone here that is still using some of the Baycom 
-TNC hardware that could apply this patch and TEST their systems to 
-ensure they continue to work as expected?
+You cannot do this.
 
---David
-KI6ZHD
+We have no reference count held on the device object, therefore once
+access to this SKB leaves the receive packet processing path and thus
+the RCU protected region, we must set skb->dev to NULL.
 
+Queueing the SKB to the socket causes the SKB to leave the receive
+processing path.
 
-On 12/01/2016 04:32 AM, David Howells wrote:
-> When the kernel is running in secure boot mode, we lock down the kernel to
-> prevent userspace from modifying the running kernel image.  Whilst this
-> includes prohibiting access to things like /dev/mem, it must also prevent
-> access by means of configuring driver modules in such a way as to cause a
-> device to access or modify the kernel image.
->
-> To this end, annotate module_param* statements that refer to hardware
-> configuration and indicate for future reference what type of parameter they
-> specify.  The parameter parser in the core sees this information and can
-> skip such parameters with an error message if the kernel is locked down.
-> The module initialisation then runs as normal, but just sees whatever the
-> default values for those parameters is.
->
-> Note that we do still need to do the module initialisation because some
-> drivers have viable defaults set in case parameters aren't specified and
-> some drivers support automatic configuration (e.g. PNP or PCI) in addition
-> to manually coded parameters.
->
-> This patch annotates drivers in drivers/net/hamradio/.
->
-> Suggested-by: One Thousand Gnomes <gnomes@lxorguk.ukuu.org.uk>
-> Signed-off-by: David Howells <dhowells@redhat.com>
-> cc: Thomas Sailer <t.sailer@alumni.ethz.ch>
-> cc: Joerg Reuter <jreuter@yaina.de>
-> cc: linux-hams@vger.kernel.org
-> cc: netdev@vger.kernel.org
-> ---
->
->   drivers/net/hamradio/baycom_epp.c     |    2 +-
->   drivers/net/hamradio/baycom_par.c     |    2 +-
->   drivers/net/hamradio/baycom_ser_fdx.c |    4 ++--
->   drivers/net/hamradio/baycom_ser_hdx.c |    4 ++--
->   drivers/net/hamradio/dmascc.c         |    2 +-
->   5 files changed, 7 insertions(+), 7 deletions(-)
->
-> diff --git a/drivers/net/hamradio/baycom_epp.c b/drivers/net/hamradio/baycom_epp.c
-> index 78dbc44540f6..a50b72144b93 100644
-> --- a/drivers/net/hamradio/baycom_epp.c
-> +++ b/drivers/net/hamradio/baycom_epp.c
-> @@ -1172,7 +1172,7 @@ static int iobase[NR_PORTS] = { 0x378, };
->   
->   module_param_array(mode, charp, NULL, 0);
->   MODULE_PARM_DESC(mode, "baycom operating mode");
-> -module_param_array(iobase, int, NULL, 0);
-> +module_param_hw_array(iobase, int, ioport, NULL, 0);
->   MODULE_PARM_DESC(iobase, "baycom io base address");
->   
->   MODULE_AUTHOR("Thomas M. Sailer, sailer@ife.ee.ethz.ch, hb9jnx@hb9w.che.eu");
-> diff --git a/drivers/net/hamradio/baycom_par.c b/drivers/net/hamradio/baycom_par.c
-> index 072cddce9264..cb7fe200f347 100644
-> --- a/drivers/net/hamradio/baycom_par.c
-> +++ b/drivers/net/hamradio/baycom_par.c
-> @@ -481,7 +481,7 @@ static int iobase[NR_PORTS] = { 0x378, };
->   
->   module_param_array(mode, charp, NULL, 0);
->   MODULE_PARM_DESC(mode, "baycom operating mode; eg. par96 or picpar");
-> -module_param_array(iobase, int, NULL, 0);
-> +module_param_hw_array(iobase, int, ioport, NULL, 0);
->   MODULE_PARM_DESC(iobase, "baycom io base address");
->   
->   MODULE_AUTHOR("Thomas M. Sailer, sailer@ife.ee.ethz.ch, hb9jnx@hb9w.che.eu");
-> diff --git a/drivers/net/hamradio/baycom_ser_fdx.c b/drivers/net/hamradio/baycom_ser_fdx.c
-> index 7b916d5b14b9..36d49c89d601 100644
-> --- a/drivers/net/hamradio/baycom_ser_fdx.c
-> +++ b/drivers/net/hamradio/baycom_ser_fdx.c
-> @@ -614,9 +614,9 @@ static int baud[NR_PORTS] = { [0 ... NR_PORTS-1] = 1200 };
->   
->   module_param_array(mode, charp, NULL, 0);
->   MODULE_PARM_DESC(mode, "baycom operating mode; * for software DCD");
-> -module_param_array(iobase, int, NULL, 0);
-> +module_param_hw_array(iobase, int, ioport, NULL, 0);
->   MODULE_PARM_DESC(iobase, "baycom io base address");
-> -module_param_array(irq, int, NULL, 0);
-> +module_param_hw_array(irq, int, irq, NULL, 0);
->   MODULE_PARM_DESC(irq, "baycom irq number");
->   module_param_array(baud, int, NULL, 0);
->   MODULE_PARM_DESC(baud, "baycom baud rate (300 to 4800)");
-> diff --git a/drivers/net/hamradio/baycom_ser_hdx.c b/drivers/net/hamradio/baycom_ser_hdx.c
-> index f9a8976195ba..1b310493ba8a 100644
-> --- a/drivers/net/hamradio/baycom_ser_hdx.c
-> +++ b/drivers/net/hamradio/baycom_ser_hdx.c
-> @@ -642,9 +642,9 @@ static int irq[NR_PORTS] = { 4, };
->   
->   module_param_array(mode, charp, NULL, 0);
->   MODULE_PARM_DESC(mode, "baycom operating mode; * for software DCD");
-> -module_param_array(iobase, int, NULL, 0);
-> +module_param_hw_array(iobase, int, ioport, NULL, 0);
->   MODULE_PARM_DESC(iobase, "baycom io base address");
-> -module_param_array(irq, int, NULL, 0);
-> +module_param_hw_array(irq, int, irq, NULL, 0);
->   MODULE_PARM_DESC(irq, "baycom irq number");
->   
->   MODULE_AUTHOR("Thomas M. Sailer, sailer@ife.ee.ethz.ch, hb9jnx@hb9w.che.eu");
-> diff --git a/drivers/net/hamradio/dmascc.c b/drivers/net/hamradio/dmascc.c
-> index e4137c1b3df9..f94ca7b91899 100644
-> --- a/drivers/net/hamradio/dmascc.c
-> +++ b/drivers/net/hamradio/dmascc.c
-> @@ -274,7 +274,7 @@ static unsigned long rand;
->   
->   MODULE_AUTHOR("Klaus Kudielka");
->   MODULE_DESCRIPTION("Driver for high-speed SCC boards");
-> -module_param_array(io, int, NULL, 0);
-> +module_param_hw_array(io, int, ioport, NULL, 0);
->   MODULE_LICENSE("GPL");
->   
->   static void __exit dmascc_exit(void)
->
-> --
-> To unsubscribe from this list: send the line "unsubscribe linux-hams" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at  http://vger.kernel.org/majordomo-info.html
-
+You will have to find another way to propagate this device pointer
+to the code that needs it.
