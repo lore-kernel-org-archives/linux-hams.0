@@ -1,175 +1,114 @@
-From: Sowmini Varadhan <sowmini.varadhan@oracle.com>
-Subject: AX25: help with testing/review of an ax25 patch
-Date: Wed, 25 Jan 2017 16:20:44 -0500
-Message-ID: <20170125212044.GE24934@oracle.com>
+From: Ralf Baechle <ralf@linux-mips.org>
+Subject: [PATCH] NET: mkiss/6pack: Fix SIOCSIFENCAP ioctl
+Date: Sat, 11 Feb 2017 00:01:21 +0100
+Message-ID: <20170210230121.GA27466@linux-mips.org>
+References: <20170209131211.GA16072@linux-mips.org>
 Mime-Version: 1.0
 Return-path: <linux-hams-owner@vger.kernel.org>
 Content-Disposition: inline
+In-Reply-To: <20170209131211.GA16072@linux-mips.org>
 Sender: linux-hams-owner@vger.kernel.org
 List-ID: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
-To: ralf@linux-mips.org, linux-hams@vger.kernel.org
-Cc: davem@davemloft.net
+To: "David S. Miller" <davem@davemloft.net>, netdev@vger.kernel.org
+Cc: Thomas Osterried <thomas@osterried.de>, linux-hams@vger.kernel.org
 
+When looking at Thomas' mkiss fix 7ba1b6890387 ("NET: mkiss: Fix panic")
+I noticed that the mkiss SIOCSIFENCAPS ioctl was also doing a slightly
+strange assignment 
 
-Ralf, linux-hams,
+               dev->hard_header_len = AX25_KISS_HEADER_LEN +
+                                      AX25_MAX_HEADER_LEN + 3;
 
-The patch below is a consequence of the review comments
-for the RFC patch at
-  http://patchwork.ozlabs.org/patch/719236/
+AX25_MAX_HEADER_LEN already accounts for the KISS byte so adding
+AX25_KISS_HEADER_LEN is a double allocation nor does the "+ 3" seem to
+be necessary.  So this can be simplified to
 
-which was itself a result of the disucssion at
-  https://www.spinics.net/lists/netdev/msg415870.html
+               dev->hard_header_len = AX25_MAX_HEADER_LEN
 
-According to cscope, the only in-kernel driver that provides
-a non-null ->validate is AX25, and I've made an attempt
-to get this to return the size of the validated header
-by code-inspection. However, I dont have the means or 
-expertise to test this, so I could use your testing/review
-help. Can you please take a look? 
+which after the preceeding fix is a redundant assignment of what
+ax_setup has already assigned so delete the line.  The assignments
+to dev->addr_len and dev->type are similarly redundant.
 
-thanks in advance
---Sowmini
+The SIOCSIFENCAP argument was never checked for validity.  Check that
+it is 4 and return -EINVAL if not.  The magic constant 4 dates back to
+the days when KISS was handled by the SLIP driver where it had the
+symbol name SL_MODE_AX25.
 
-diff --git a/include/linux/netdevice.h b/include/linux/netdevice.h
-index 3868c32..d233ec8 100644
---- a/include/linux/netdevice.h
-+++ b/include/linux/netdevice.h
-@@ -271,7 +271,7 @@ struct header_ops {
- 	void	(*cache_update)(struct hh_cache *hh,
- 				const struct net_device *dev,
- 				const unsigned char *haddr);
--	bool	(*validate)(const char *ll_header, unsigned int len);
-+	int	(*validate)(const char *ll_header, unsigned int len);
- };
+Since however mkiss.c only supports a single encapsulation mode there
+is no point in storing it in struct mkiss so delete all that.
+
+Note that while useless we can't delete the SIOCSIFENCAP ioctl as
+kissattach(8) is still using it and without mkiss issuing a
+SIOCSIFENCAP ioctl an older kernel that does not have Thomas' mkiss fix
+would still panic on attempt to transmit via mkiss.
+
+6pack was suffering from the same issue except there SIOCGIFENCAP was
+return 0 for the encapsulation while the spattach utility was passing 4
+for the mode, so the mode check added for 6pack is a bit more lenient
+allow the values 0 and 4 to be set.  That way we retain the option
+to set different encapsulation modes for future extensions.
+
+Signed-off-by: Ralf Baechle <ralf@linux-mips.org>
+
+ drivers/net/hamradio/6pack.c | 10 ++++------
+ drivers/net/hamradio/mkiss.c | 10 ++++------
+ 2 files changed, 8 insertions(+), 12 deletions(-)
+
+diff --git a/drivers/net/hamradio/6pack.c b/drivers/net/hamradio/6pack.c
+index 470b3dc..d949b9f 100644
+--- a/drivers/net/hamradio/6pack.c
++++ b/drivers/net/hamradio/6pack.c
+@@ -104,7 +104,6 @@ struct sixpack {
+ 	int			buffsize;       /* Max buffers sizes */
  
- /* These flag bits are private to the generic network queueing
-@@ -2685,21 +2685,21 @@ static inline int dev_parse_header(const struct sk_buff *skb,
- }
+ 	unsigned long		flags;		/* Flag values/ mode etc */
+-	unsigned char		mode;		/* 6pack mode */
  
- /* ll_header must have at least hard_header_len allocated */
--static inline bool dev_validate_header(const struct net_device *dev,
-+static inline int dev_validate_header(const struct net_device *dev,
- 				       char *ll_header, int len)
- {
- 	if (likely(len >= dev->hard_header_len))
--		return true;
-+		return len;
+ 	/* 6pack stuff */
+ 	unsigned char		tx_delay;
+@@ -723,11 +722,10 @@ static int sixpack_ioctl(struct tty_struct *tty, struct file *file,
+ 			break;
+ 		}
  
- 	if (capable(CAP_SYS_RAWIO)) {
- 		memset(ll_header + len, 0, dev->hard_header_len - len);
--		return true;
-+		return dev->hard_header_len;
- 	}
- 
- 	if (dev->header_ops && dev->header_ops->validate)
- 		return dev->header_ops->validate(ll_header, len);
- 
--	return false;
-+	return dev->hard_header_len;
- }
- 
- typedef int gifconf_func_t(struct net_device * dev, char __user * bufptr, int len);
-diff --git a/net/ax25/ax25_ip.c b/net/ax25/ax25_ip.c
-index 183b1c5..7a1c296 100644
---- a/net/ax25/ax25_ip.c
-+++ b/net/ax25/ax25_ip.c
-@@ -228,18 +228,23 @@ netdev_tx_t ax25_ip_xmit(struct sk_buff *skb)
- }
- #endif
- 
--static bool ax25_validate_header(const char *header, unsigned int len)
-+static int ax25_validate_header(const char *header, unsigned int len)
- {
- 	ax25_digi digi;
-+	const unsigned char *data;
- 
- 	if (!len)
--		return false;
-+		return -EINVAL;
- 
- 	if (header[0])
--		return true;
-+		return len;
- 
--	return ax25_addr_parse(header + 1, len - 1, NULL, NULL, &digi, NULL,
-+	data = ax25_addr_parse(header + 1, len - 1, NULL, NULL, &digi, NULL,
- 			       NULL);
-+	if (!data)
-+		return -EINVAL;
-+
-+	return (data - (const unsigned char *)header);
- }
- 
- const struct header_ops ax25_header_ops = {
-diff --git a/net/packet/af_packet.c b/net/packet/af_packet.c
-index ddbda25..7af09a3 100644
---- a/net/packet/af_packet.c
-+++ b/net/packet/af_packet.c
-@@ -1845,6 +1845,7 @@ static int packet_sendmsg_spkt(struct socket *sock, struct msghdr *msg,
- 	__be16 proto = 0;
- 	int err;
- 	int extra_len = 0;
-+	int newlen;
- 
- 	/*
- 	 *	Get and verify the address.
-@@ -1920,7 +1921,11 @@ static int packet_sendmsg_spkt(struct socket *sock, struct msghdr *msg,
- 		goto retry;
- 	}
- 
--	if (!dev_validate_header(dev, skb->data, len)) {
-+	newlen = dev_validate_header(dev, skb->data, len);
-+	/* As comments above this function indicate, a full L2 header
-+	 * must be passed to this function, so if newlen > len, bail.
-+	 */
-+	if (newlen < 0 || newlen > len) {
- 		err = -EINVAL;
- 		goto out_unlock;
- 	}
-@@ -2447,14 +2452,21 @@ static int tpacket_fill_skb(struct packet_sock *po, struct sk_buff *skb,
- 			return -EINVAL;
- 	} else if (copylen) {
- 		int hdrlen = min_t(int, copylen, tp_len);
-+		int newlen;
- 
- 		skb_push(skb, dev->hard_header_len);
- 		skb_put(skb, copylen - dev->hard_header_len);
- 		err = skb_store_bits(skb, 0, data, hdrlen);
- 		if (unlikely(err))
- 			return err;
--		if (!dev_validate_header(dev, skb->data, hdrlen))
-+		newlen = dev_validate_header(dev, skb->data, hdrlen);
-+		if (newlen < 0)
- 			return -EINVAL;
-+		/* Caller has allocated for copylen in non-paged part of
-+		 * skb so we should never find newlen > hdrlen
-+		 */
-+		WARN_ON(newlen > hdrlen);
-+
- 		if (!skb->protocol)
- 			tpacket_set_protocol(dev, skb);
- 
-@@ -2857,10 +2869,13 @@ static int packet_snd(struct socket *sock, struct msghdr *msg, size_t len)
- 	if (err)
- 		goto out_free;
- 
--	if (sock->type == SOCK_RAW &&
--	    !dev_validate_header(dev, skb->data, len)) {
--		err = -EINVAL;
--		goto out_free;
-+	if (sock->type == SOCK_RAW) {
-+		int newlen = dev_validate_header(dev, skb->data, len);
-+
-+		if (newlen < 0 || newlen > len) {
+-		sp->mode = tmp;
+-		dev->addr_len        = AX25_ADDR_LEN;
+-		dev->hard_header_len = AX25_KISS_HEADER_LEN +
+-		                       AX25_MAX_HEADER_LEN + 3;
+-		dev->type            = ARPHRD_AX25;
++		if (tmp != 0 && tmp != 4) {
 +			err = -EINVAL;
-+			goto out_free;
++			break;
 +		}
- 	}
  
- 	sock_tx_timestamp(sk, sockc.tsflags, &skb_shinfo(skb)->tx_flags);
-
-
-
-
+ 		err = 0;
+ 		break;
+diff --git a/drivers/net/hamradio/mkiss.c b/drivers/net/hamradio/mkiss.c
+index 1dfe230..cdaf819 100644
+--- a/drivers/net/hamradio/mkiss.c
++++ b/drivers/net/hamradio/mkiss.c
+@@ -71,7 +71,6 @@ struct mkiss {
+ #define AXF_KEEPTEST	3		/* Keepalive test flag		*/
+ #define AXF_OUTWAIT	4		/* is outpacket was flag	*/
+ 
+-	int		mode;
+         int		crcmode;	/* MW: for FlexNet, SMACK etc.  */
+ 	int		crcauto;	/* CRC auto mode */
+ 
+@@ -841,11 +840,10 @@ static int mkiss_ioctl(struct tty_struct *tty, struct file *file,
+ 			break;
+ 		}
+ 
+-		ax->mode = tmp;
+-		dev->addr_len        = AX25_ADDR_LEN;
+-		dev->hard_header_len = AX25_KISS_HEADER_LEN +
+-		                       AX25_MAX_HEADER_LEN + 3;
+-		dev->type            = ARPHRD_AX25;
++		if (tmp != 4) {
++			err = -EINVAL;
++			break;
++		}
+ 
+ 		err = 0;
+ 		break;
