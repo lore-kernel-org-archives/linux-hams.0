@@ -1,51 +1,39 @@
-From: David Miller <davem@davemloft.net>
-Subject: Re: [PATCH] NET: Fix /proc/net/arp for AX.25
-Date: Mon, 13 Feb 2017 22:15:51 -0500 (EST)
-Message-ID: <20170213.221551.904691736246648194.davem@davemloft.net>
-References: <20170210233857.GA13996@linux-mips.org>
+From: Ralf Baechle DL5RB <ralf@linux-mips.org>
+Subject: Re: [BUG] AX.25 sockets not destroyed
+Date: Fri, 24 Feb 2017 00:26:25 +0630
+Message-ID: <20170223175625.GB1904@linux-mips.org>
+References: <20170116.144051.1777999685832100508.davem@davemloft.net>
+ <1a4ee351-031c-932e-0332-779ce33e90e6@trinnet.net>
+ <20170201080217.4d8443bb@brox.localnet>
+ <3e3f25fc-fc60-c01b-1139-245284200656@trinnet.net>
+ <39dad041-f224-735e-adb7-e0fb42771858@free.fr>
+ <25ee9245-3595-85f7-93b8-a18d6066a2e3@free.fr>
+ <07a1454e-99a2-8cec-d50a-006257687c2e@free.fr>
+ <12e0547b-cb2c-1ca0-abc0-d849d8a62139@trinnet.net>
+ <598de982-d655-22bd-c5ba-2d9114f9fb7c@free.fr>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <20170210233857.GA13996@linux-mips.org>
+Content-Disposition: inline
+In-Reply-To: <598de982-d655-22bd-c5ba-2d9114f9fb7c@free.fr>
 Sender: linux-hams-owner@vger.kernel.org
 List-ID: <linux-hams.vger.kernel.org>
-Content-Type: Text/Plain; charset="us-ascii"
-To: ralf@linux-mips.org
-Cc: netdev@vger.kernel.org, thomas@osterried.de, linux-hams@vger.kernel.org
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+To: f6bvp <f6bvp@free.fr>
+Cc: David Ranch <dranch@trinnet.net>, Basil Gunn <basil@pacabunga.com>, Thomas Osterried <thomas@osterried.de>, linux-hams@vger.kernel.org
 
-From: Ralf Baechle <ralf@linux-mips.org>
-Date: Sat, 11 Feb 2017 00:38:57 +0100
+On Thu, Feb 23, 2017 at 02:53:36PM +0100, f6bvp wrote:
 
-> When sending ARP requests over AX.25 links the hwaddress in the neighbour
-> cache are not getting initialized.  For such an incomplete arp entry
-> ax2asc2 will generate an empty string resulting in /proc/net/arp output
-> like the following:
-> 
-> $ cat /proc/net/arp
-> IP address       HW type     Flags       HW address            Mask     Device
-> 192.168.122.1    0x1         0x2         52:54:00:00:5d:5f     *        ens3
-> 172.20.1.99      0x3         0x0              *        bpq0
-> 
-> The missing field will confuse the procfs parsing of arp(8) resulting in
-> incorrect output for the device such as the following:
-> 
-> $ arp
-> Address                  HWtype  HWaddress           Flags Mask            Iface
-> gateway                  ether   52:54:00:00:5d:5f   C                     ens3
-> 172.20.1.99                      (incomplete)                              ens3
-> 
-> This changes the content of /proc/net/arp to:
-> 
-> $ cat /proc/net/arp
-> IP address       HW type     Flags       HW address            Mask     Device
-> 172.20.1.99      0x3         0x0         *                     *        bpq0
-> 192.168.122.1    0x1         0x2         52:54:00:00:5d:5f     *        ens3
-> 
-> To do so it change ax2asc to put the string "*" in buf for a NULL address
-> argument.  Finally the HW address field is left aligned in a 17 character
-> field (the length of an ethernet HW address in the usual hex notation) for
-> readability.
-> 
-> Signed-off-by: Ralf Baechle <ralf@linux-mips.org>
+> ffff8c80b5ed5800 ax0 F6BVP-7 F4BWT-9 1 0 0 0 18446744073709549 100 0 3 0 300 0 0 9 10 5 2 256 * * *
+> ffff8c80b5ed5400 ax0 F6BVP-7 WA3MEZ-9 1 0 0 0 18446744073709549 100 0 3 0 300 0 0 9 10 5 2 256 * * *
 
-Applied, thanks Ralf.
+> then it displays a very large number for a while,
+
+The large number is an already expired t1 timer.  That means the time
+to expiry is relativly small negative number like -1616 or as a hex
+number 0xfffffffffffff9b0 which will be divied by HZ (probably 1000)
+and displayed as a something like 18446744073709550.
+
+Looking further into it.
+
+  Ralf
