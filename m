@@ -1,115 +1,103 @@
 From: f6bvp <f6bvp@free.fr>
-Subject: [BUG] AX.25 sockets not destroyed
-Date: Sat, 25 Feb 2017 14:08:51 +0100
-Message-ID: <f1dee378-ebc9-537e-642c-b27956bcb3dc@free.fr>
+Subject: [BUG] unregistered netdevice: wainting for rose0 to become free.
+ Usage count = xx
+Date: Sun, 26 Feb 2017 15:09:08 +0100
+Message-ID: <ce03a972-a3b0-ca24-5195-2fe2fd5c44d3@free.fr>
+References: <57B074F4.9050307@free.fr>
+ <57B08A9F.9060208@rns-stearn.demon.co.uk>
 Mime-Version: 1.0
-Content-Type: multipart/mixed;
- boundary="------------01FB2B28374B6D717E7B67E1"
+Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
+In-Reply-To: <57B08A9F.9060208@rns-stearn.demon.co.uk>
 Sender: linux-hams-owner@vger.kernel.org
 List-ID: <linux-hams.vger.kernel.org>
-To: linux-hams@vger.kernel.org
+Content-Type: text/plain; charset="us-ascii"; format="flowed"
+To: Richard Stearn <richard@rns-stearn.demon.co.uk>
+Cc: =?UTF-8?Q?Ralf_B=c3=a4chle_DL5RB?= <ralf@linux-mips.org>, linux-hams@vger.kernel.org, David Ranch <dranch@trinnet.net>
 
-This is a multi-part message in MIME format.
---------------01FB2B28374B6D717E7B67E1
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Hi Richard,
 
+I have just reinvestigated the long lasting rose module 
+unregister_netdevice issue with kernel 4.10.0.
 
+Here is the context: when removing rose module
 
---------------01FB2B28374B6D717E7B67E1
-Content-Type: text/plain; charset=UTF-8;
- name="Bug_AX25_sockets_not_destroyed.txt"
-Content-Transfer-Encoding: base64
-Content-Disposition: attachment;
- filename="Bug_AX25_sockets_not_destroyed.txt"
+rmmod rose
 
-77u/SGksCgpJdCdzIG5pY2UgdG8gaGF2ZSBubyBtb3JlIGtlcm5lbCBwYW5pYywgdGhhbmtz
-IHRvIEJhc2lsIEd1bm4ncyBBWC4yNSByZWNlbnRseSBhcHBsaWVkIHBhdGNoLgoKSG93ZXZl
-ciwgYW4gaXNzdWUgcmVtYWlucyB3aGVuIGFuIEFYLjI1IGNvbm5lY3Rpb24gZmFpbHMgb3Ig
-YWZ0ZXIgZGlzY29ubmVjdGluZyBmcm9tIGEgcmVtb3RlIHN0YXRpb24uCgovcHJvYy9uZXQv
-YXgyNSByZW1haW5zIHBvcHVsYXRlZCBieSBhIG51bWJlciBvZiBlbnRyaWVzIGZvcmV2ZXIg
-YXMgc2hvd24gaGVyZSA6Cgpbcm9vdEBmNmJ2cC02IGJlcm5hcmRdIyBjYXQgL3Byb2MvbmV0
-L2F4MjUKZmZmZjhjODBiNWVkNmMwMCBheDAgVE02QlZQLTEgRkU2QlZQLTEgMSAwIDAgMCAx
-NSA1MCAwIDMgMCAzMDAgMCAwIDQgMTAgNSAyIDI1NiAwIDAgMTg0OTUKZmZmZjhjODBiNWVk
-NjQwMCBheDAgVE02QlZQLTEgRjZCVlAtMSAxIDAgMCAwIDE1IDUwIDAgMyAwIDMwMCAwIDAg
-NCAxMCA1IDIgMjU2IDAgMCAxODQ5MwpmZmZmOGM4MGI1ZWY1ODAwIGF4MCBGNkJWUC02ICog
-MCAwIDAgMCAwIDEwIDAgMyAwIDMwMCAwIDAgMCAxMCA1IDIgMjU2IDAgMCAxODI5OQpmZmZm
-OGM4MGI1ZWY2MDAwIGF4MCBUTTZCVlAtMSAqIDAgMCAwIDAgMCAxMCAwIDMgMCAzMDAgMCAw
-IDAgMTAgNSAyIDI1NiAwIDAgMTgyOTYKZmZmZjhjODBiNWVkNzQwMCBheDAgVE02QlZQLTEg
-KiAwIDAgMCAwIDAgMTAgMCAzIDAgMzAwIDAgMCAwIDEwIDUgMiAyNTYgMCAwIDE4NDcyCmZm
-ZmY4YzgwYjVlZDU4MDAgYXgwIEY2QlZQLTcgRjRCV1QtOSAxIDAgMCAwIDEgNjAgMCAzIDAg
-MzAwIDAgMCA1IDEwIDUgMiAyNTYgKiAqICoKZmZmZjhjODBiNWVkNTQwMCBheDAgRjZCVlAt
-NyBXQTNNRVotOSAxIDAgMCAwIDEgNjAgMCAzIDAgMzAwIDAgMCA1IDEwIDUgMiAyNTYgKiAq
-ICoKW3Jvb3RAZjZidnAtNiBiZXJuYXJkXSMgY2F0IC9wcm9jL25ldC9heDI1CmZmZmY4Yzgw
-YjVlZDZjMDAgYXgwIFRNNkJWUC0xIEZFNkJWUC0xIDEgMCAwIDAgMTQgNTAgMCAzIDAgMzAw
-IDAgMCA0IDEwIDUgMiAyNTYgMCAwIDE4NDk1CmZmZmY4YzgwYjVlZDY0MDAgYXgwIFRNNkJW
-UC0xIEY2QlZQLTEgMSAwIDAgMCAxNCA1MCAwIDMgMCAzMDAgMCAwIDQgMTAgNSAyIDI1NiAw
-IDAgMTg0OTMKZmZmZjhjODBiNWVmNTgwMCBheDAgRjZCVlAtNiAqIDAgMCAwIDAgMCAxMCAw
-IDMgMCAzMDAgMCAwIDAgMTAgNSAyIDI1NiAwIDAgMTgyOTkKZmZmZjhjODBiNWVmNjAwMCBh
-eDAgVE02QlZQLTEgKiAwIDAgMCAwIDAgMTAgMCAzIDAgMzAwIDAgMCAwIDEwIDUgMiAyNTYg
-MCAwIDE4Mjk2CmZmZmY4YzgwYjVlZDc0MDAgYXgwIFRNNkJWUC0xICogMCAwIDAgMCAwIDEw
-IDAgMyAwIDMwMCAwIDAgMCAxMCA1IDIgMjU2IDAgMCAxODQ3MgpmZmZmOGM4MGI1ZWQ1ODAw
-IGF4MCBGNkJWUC03IEY0QldULTkgMSAwIDAgMCAwIDYwIDAgMyAwIDMwMCAwIDAgNSAxMCA1
-IDIgMjU2ICogKiAqCmZmZmY4YzgwYjVlZDU0MDAgYXgwIEY2QlZQLTcgV0EzTUVaLTkgMSAw
-IDAgMCAwIDYwIDAgMyAwIDMwMCAwIDAgNSAxMCA1IDIgMjU2ICogKiAqCltyb290QGY2YnZw
-LTYgYmVybmFyZF0jIGNhdCAvcHJvYy9uZXQvYXgyNQpmZmZmOGM4MGI1ZWQ2YzAwIGF4MCBU
-TTZCVlAtMSBGRTZCVlAtMSAxIDAgMCAwIDEzIDUwIDAgMyAwIDMwMCAwIDAgNCAxMCA1IDIg
-MjU2IDAgMCAxODQ5NQpmZmZmOGM4MGI1ZWQ2NDAwIGF4MCBUTTZCVlAtMSBGNkJWUC0xIDEg
-MCAwIDAgMTMgNTAgMCAzIDAgMzAwIDAgMCA0IDEwIDUgMiAyNTYgMCAwIDE4NDkzCmZmZmY4
-YzgwYjVlZjU4MDAgYXgwIEY2QlZQLTYgKiAwIDAgMCAwIDAgMTAgMCAzIDAgMzAwIDAgMCAw
-IDEwIDUgMiAyNTYgMCAwIDE4Mjk5CmZmZmY4YzgwYjVlZjYwMDAgYXgwIFRNNkJWUC0xICog
-MCAwIDAgMCAwIDEwIDAgMyAwIDMwMCAwIDAgMCAxMCA1IDIgMjU2IDAgMCAxODI5NgpmZmZm
-OGM4MGI1ZWQ3NDAwIGF4MCBUTTZCVlAtMSAqIDAgMCAwIDAgMCAxMCAwIDMgMCAzMDAgMCAw
-IDAgMTAgNSAyIDI1NiAwIDAgMTg0NzIKZmZmZjhjODBiNWVkNTgwMCBheDAgRjZCVlAtNyBG
-NEJXVC05IDEgMCAwIDAgMTg0NDY3NDQwNzM3MDk1NTAgNjAgMCAzIDAgMzAwIDAgMCA1IDEw
-IDUgMiAyNTYgKiAqICoKZmZmZjhjODBiNWVkNTQwMCBheDAgRjZCVlAtNyBXQTNNRVotOSAx
-IDAgMCAwIDE4NDQ2NzQ0MDczNzA5NTUwIDYwIDAgMyAwIDMwMCAwIDAgNSAxMCA1IDIgMjU2
-ICogKiAqCltyb290QGY2YnZwLTYgYmVybmFyZF0jIGNhdCAvcHJvYy9uZXQvYXgyNQpmZmZm
-OGM4MGI1ZWQ2YzAwIGF4MCBUTTZCVlAtMSBGRTZCVlAtMSAxIDAgMCAwIDc1IDEwMCAwIDMg
-MCAzMDAgMCAwIDkgMTAgNSAyIDI1NiAwIDAgMTg0OTUKZmZmZjhjODBiNWVkNjQwMCBheDAg
-VE02QlZQLTEgRjZCVlAtMSAxIDAgMCAwIDc1IDEwMCAwIDMgMCAzMDAgMCAwIDkgMTAgNSAy
-IDI1NiAwIDAgMTg0OTMKZmZmZjhjODBiNWVmNTgwMCBheDAgRjZCVlAtNiAqIDAgMCAwIDAg
-MCAxMCAwIDMgMCAzMDAgMCAwIDAgMTAgNSAyIDI1NiAwIDAgMTgyOTkKZmZmZjhjODBiNWVm
-NjAwMCBheDAgVE02QlZQLTEgKiAwIDAgMCAwIDAgMTAgMCAzIDAgMzAwIDAgMCAwIDEwIDUg
-MiAyNTYgMCAwIDE4Mjk2CmZmZmY4YzgwYjVlZDc0MDAgYXgwIFRNNkJWUC0xICogMCAwIDAg
-MCAwIDEwIDAgMyAwIDMwMCAwIDAgMCAxMCA1IDIgMjU2IDAgMCAxODQ3MgpmZmZmOGM4MGI1
-ZWQ1ODAwIGF4MCBGNkJWUC03IEY0QldULTkgMSAwIDAgMCAxODQ0Njc0NDA3MzcwOTU0OSAx
-MDAgMCAzIDAgMzAwIDAgMCA5IDEwIDUgMiAyNTYgKiAqICoKZmZmZjhjODBiNWVkNTQwMCBh
-eDAgRjZCVlAtNyBXQTNNRVotOSAxIDAgMCAwIDE4NDQ2NzQ0MDczNzA5NTQ5IDEwMCAwIDMg
-MCAzMDAgMCAwIDkgMTAgNSAyIDI1NiAqICogKgoKW3Jvb3RAZjZidnAtNiBiZXJuYXJkXSMg
-Y2F0IC9wcm9jL25ldC9heDI1CmZmZmY4YzgwOTAyNWE4MDAgYXgwIFRNNkJWUC0xIEZFNkJW
-UC0xIDEgMCAwIDAgMjUgNjAgMCAzIDAgMzAwIDAgMCA1IDEwIDUgMiAyNTYgMCAwIDI5NDE3
-CmZmZmY4YzgwOTAyNWJjMDAgYXgwIFRNNkJWUC0xIEY2QlZQLTEgMSAwIDAgMCAyNSA2MCAw
-IDMgMCAzMDAgMCAwIDUgMTAgNSAyIDI1NiAwIDAgMjk0MTYKZmZmZjhjODBiNWVmNTgwMCBh
-eDAgRjZCVlAtNiAqIDAgMCAwIDAgMCAxMCAwIDMgMCAzMDAgMCAwIDAgMTAgNSAyIDI1NiAw
-IDAgMTgyOTkKZmZmZjhjODBiNWVmNjAwMCBheDAgVE02QlZQLTEgKiAwIDAgMCAwIDAgMTAg
-MCAzIDAgMzAwIDAgMCAwIDEwIDUgMiAyNTYgMCAwIDE4Mjk2CmZmZmY4YzgwYjVlZDc0MDAg
-YXgwIFRNNkJWUC0xICogMCAwIDAgMCAwIDEwIDAgMyAwIDMwMCAwIDAgMCAxMCA1IDIgMjU2
-IDAgMCAxODQ3MgpmZmZmOGM4MGI1ZWQ1ODAwIGF4MCBGNkJWUC03IEY0QldULTkgMCAwIDAg
-MCAwIDExMCAwIDMgMCAzMDAgMCAwIDEwIDEwIDUgMiAyNTYgKiAqICoKZmZmZjhjODBiNWVk
-NTQwMCBheDAgRjZCVlAtNyBXQTNNRVotOSAwIDAgMCAwIDAgMTEwIDAgMyAwIDMwMCAwIDAg
-MTAgMTAgNSAyIDI1NiAqICogKgoKV2hpbGUgQVguMjUgY29ubmVjdGlvbnMgYXJlIGF0dGVt
-cHRlZCB3aXRoIGFkamFjZW50IG5vZGVzICg0dGggZmllbGQgPTEpIHdoZW4gc3lzdGVtIGlz
-IHN0YXJ0ZWQtdXAsIG9uZSBjYW4gc2VlIHRoYXQgOHRoIGZpZWxkwqAgCm9mIC9wcm9jL25l
-dC9heDI1IGZpcnN0IHR3byBsaW5lcyBpcyBjb3VudGluZyBkb3duIGZyb20gMTUgdG8gMTMg
-aW4gYWJvdmUgc2FtcGxlcy4KQXQgdGhlIHNhbWUgdGltZSwgZm9yIGV4YW1wbGUgb24gbGlu
-ZSAKImF4MCBGNkJWUC03IFdBM01FWi05IDEgMCAwIDAgMSA2MCAwIDMgMCAzMDAiIAp0aGUg
-OHRoIGZpZWxkIGdvZXMgZG93biBmcm9tIHNvbWUgbnVtYmVyIHRvIDAsCkY2QlZQLTcgV0Ez
-TUVaLTkgMSAwIDAgMCAwIDYwIDAgMyAwIDMwMCAwIAp0aGVuIGl0IGRpc3BsYXlzIGEgdmVy
-eSBsYXJnZSBudW1iZXIgZm9yIGEgd2hpbGUsCmF4MCBGNkJWUC03IEY0QldULTkgMSAwIDAg
-MCAxODQ0Njc0NDA3MzcwOTU0OSAxMDAgMCAzIDAgMzAwIDAKdGhlbiBpdCBzdGFydHMgYWdh
-aW4gd2l0aCBhICJub3JtYWwiIG51bWJlci4KQWZ0ZXIgYSB3aGlsZSwgYWxsIHVuY29ubmVj
-dGVkIGVudHJpZXMgc3RheSBzdGFibGUgOgpheDAgRjZCVlAtNyBGNEJXVC05IDAgMCAwIDAg
-MCAxMTAgMCAzIDAgMzAwIDAgMCAxMCAxMCA1IDIgMjU2ICogKiAqCkFuZCAvcHJvYy9uZXQv
-YXgyNSBkaXNwbGF5IHRoZSBzYW1lIHVuY29ubmVjdGVkIGVudHJpZXMgZm9yZXZlci4KCkkg
-YWxzbyBvYnNlcnZlZCB0aGF0IHRoaXMgc2l0dWF0aW9uIHByZXZlbnRzIGEgbmV3IGNvbm5l
-Y3Rpb24gdG8gb2NjdXIgZm9yIHRoZSBzYW1lIGRlc3RpbmF0aW9uIGNhbGwuCgpJIHRyaWVk
-IHRvIGFwcGx5IHNvbWUgQVguMjUgcGF0Y2ggSSBoYWQgcmVjZWl2ZWQgcHJldmlvdXNseSB3
-aXRob3V0IHN1Y2Nlc3Mgb24gc3RhYmxlIGtlcm5lbCA0LjEuMzgsIGFuZCBrZXJuZWxzIDQu
-OS4xMSBhbmQgNC4xMC4wLgpTYW1lIHN5bXB0b21zIGFyZSBzZWVuIG9uIGFsbCBteSBjb21w
-dXRlcnMgOiBpNjg2IGFuZCBSUGlzLgoKSSB0aGluayB0aGlzIG1lYW5zIHRoYXQgQVguMjUg
-c29ja2V0cyBhcmUgbmV2ZXIgY2xvc2VkIChkZXN0cm95ZWQpIHdoZW4gYSB0aW1lciBpcyBl
-eHBpcmVkIGFmdGVyIGEgY29ubmVjdGlvbiBhdHRlbXB0IG9yIGEgZGlzY29ubmVjdGlvbi4K
-CkJlcm5hcmQsIGY2YnZwCg==
---------------01FB2B28374B6D717E7B67E1--
+NET: Unregistered protocol family 11
+
+is followed by a message looping indefinitely with a random xx count 
+number :
+
+unregistered_netdevice: waiting for rose0 to become free. Usage count = xx
+unregistered_netdevice: waiting for rose0 to become free. Usage count = xx
+unregistered_netdevice: waiting for rose0 to become free. Usage count = xx
+.....
+
+I tried to apply the patches you sent to linux-netdev on 2016-07-16
+[PATCH 1/6]NET:AX25:ROSE Add device use count
+
+First I applied it and find out that it was successfully removing the 
+unregister bug.
+Then I cut it into 5 parts and unpatched the parts one by one.
+Then I applied different patch combinations in order to find out which 
+ones were sufficient to cure the unregister issue.
+Here is the result : parts 1, 2 and 5 are necessary all together.
+Part 3 and 4 of your original patch did not add anything according to 
+unregister issue (same results as with 5 parts).
+According to the result, I am not sure parts 3 and 4 are absolutely 
+necessary here.
+
+When applied, rmmod rose is correctly removing rose module and no error 
+message occurs.
+Here is your patch reduced to parts 1, 2 and 5.
+
+index 36dbc2d..89745aa 100644
+--- a/net/rose/af_rose.c
++++ b/net/rose/af_rose.c
+@@ -687,8 +687,10 @@ static int rose_bind(struct socket *sock, struct 
+sockaddr *uaddr, int addr_len)
+                 rose->source_call = user->call;
+                 ax25_uid_put(user);
+         } else {
+-               if (ax25_uid_policy && !capable(CAP_NET_BIND_SERVICE))
++               if (ax25_uid_policy && !capable(CAP_NET_BIND_SERVICE)) {
++                       dev_put(dev);
+                         return -EACCES;
++               }
+                 rose->source_call   = *source;
+         }
+
+index 36dbc2d..89745aa 100644
+--- a/net/rose/af_rose.c
++++ b/net/rose/af_rose.c
+@@ -709,6 +711,7 @@ static int rose_bind(struct socket *sock, struct 
+sockaddr *uaddr, int addr_len)
+         rose_insert_socket(sk);
+
+         sock_reset_flag(sk, SOCK_ZAPPED);
++       dev_put(dev);
+
+         return 0;
+  }
+
+diff --git a/net/rose/rose_loopback.c b/net/rose/rose_loopback.c
+index 3444562..ea48cee 100644
+--- a/net/rose/rose_loopback.c
++++ b/net/rose/rose_loopback.c
+@@ -102,6 +102,7 @@ static void rose_loopback_timer(unsigned long param)
+                         if ((dev = rose_dev_get(dest)) != NULL) {
+                                 if (rose_rx_call_request(skb, dev, 
+rose_loopback_neigh, lci_o) == 0)
+                                         kfree_skb(skb);
++                               dev_put(dev);
+                         } else {
+                                 kfree_skb(skb);
+                         }
+
+I encourage you to publish a new commit limited to this set of three 
+dev_put(dev) that are obviously missing to allow a correct removal of 
+rose module.
+
+Bernard
+
