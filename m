@@ -1,121 +1,101 @@
-From: f6bvp <f6bvp@free.fr>
-Subject: [BUG] unregistered netdevice: wainting for rose0 to become free.
- Usage count = xx
-Date: Wed, 1 Mar 2017 13:48:32 +0100
-Message-ID: <e95a1b5b-24bf-b6c6-7839-21b5c32e3226@free.fr>
-References: <ce03a972-a3b0-ca24-5195-2fe2fd5c44d3@free.fr>
- <580609a0-7a8d-6e80-98a6-8e91633875ae@free.fr>
-Mime-Version: 1.0
+From: Elena Reshetova <elena.reshetova@intel.com>
+Subject: [PATCH 00/18] net subsystem various refcounter conversions
+Date: Fri, 17 Mar 2017 13:12:41 +0200
+Message-ID: <1489749179-12063-1-git-send-email-elena.reshetova@intel.com>
+Return-path: <bridge-bounces@lists.linux-foundation.org>
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple;
+	d=intel.com; i=@intel.com; q=dns/txt; s=intel;
+	t=1489749191; x=1521285191;
+	h=from:to:cc:subject:date:message-id;
+	bh=c2dseTyKBf+B3iTzVw4ILZ5ONFHjNVSUL3774Pg2y+U=;
+	b=HWxesYehT0PfHagmA10wlJChE4QyKhlH0kkfZ31b9kPIcJQiI/wzSrMQ
+	cnrn1v673kYdMEYRk9gy0hkslEwpOg==;
+List-Id: <linux-hams.vger.kernel.org>
+List-Unsubscribe: <https://lists.linuxfoundation.org/mailman/options/bridge>, 
+	<mailto:bridge-request@lists.linux-foundation.org?subject=unsubscribe>
+List-Archive: <http://lists.linuxfoundation.org/pipermail/bridge/>
+List-Post: <mailto:bridge@lists.linux-foundation.org>
+List-Help: <mailto:bridge-request@lists.linux-foundation.org?subject=help>
+List-Subscribe: <https://lists.linuxfoundation.org/mailman/listinfo/bridge>,
+	<mailto:bridge-request@lists.linux-foundation.org?subject=subscribe>
+Sender: bridge-bounces@lists.linux-foundation.org
+Errors-To: bridge-bounces@lists.linux-foundation.org
+MIME-Version: 1.0
+Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
-Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <580609a0-7a8d-6e80-98a6-8e91633875ae@free.fr>
-Sender: linux-hams-owner@vger.kernel.org
-List-ID: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"; format="flowed"
-To: "richard@rns-stearn.co.uk >> Richard Stearn" <richard@rns-stearn.co.uk>
-Cc: linux-hams@vger.kernel.org
+To: netdev@vger.kernel.org
+Cc: bridge@lists.linux-foundation.org, linux-x25@vger.kernel.org, jhs@mojatatu.com, davem@davemloft.net, yoshfuji@linux-ipv6.org, marcel@holtmann.org, linux-decnet-user@lists.sourceforge.net, jmorris@namei.org, ralf@linux-mips.org, linux-kernel@vger.kernel.org, linux-bluetooth@vger.kernel.org, peterz@infradead.org, keescook@chromium.org, jchapman@katalix.com, 3chas3@gmail.com, linux-hams@vger.kernel.org, kuznet@ms2.inr.ac.ru, kaber@trash.net, Elena Reshetova <elena.reshetova@intel.com>, johan.hedberg@gmail.com
 
-Hi Richard,
+This series, for various network subsystem components, replaces atomic_t reference
+counters with the new refcount_t type and API (see include/linux/refcount.h).
+By doing this we prevent intentional or accidental
+underflows or overflows that can led to use-after-free vulnerabilities.
 
-I am using kernel-4.1.21 on an i686 machine for it is running AX.25 
-almost without issue present in more advanced kernels.
-However the bug "unregistered netdevice: wainting for rose0 to become 
-free" is already present in kernel 4.1.21.
-I thus applied your patch that adds three dev_put(dev) to this kernel.
-The patch was successful and removing rose module is now fine.
+The patches are fully independent and can be cherry-picked separately.
+Since we convert all kernel subsystems in the same fashion, resulting
+in about 300 patches, we have to group them for sending at least in some
+fashion to be manageable. Please excuse the long cc list.
 
+If there are no objections to the patches, please merge them via respective trees.
 
-[root@f6bvp-6 ax25]# lsmod | grep rose
-rose                   53248  0
-ax25                   65536  3 rose,mkiss,netrom
-[root@f6bvp-6 ax25]# rmmod rose
+Elena Reshetova (18):
+  net, llc: convert llc_sap.refcnt from atomic_t to refcount_t
+  net, l2tp: convert l2tp_tunnel.ref_count from atomic_t to refcount_t
+  net, l2tp: convert l2tp_session.ref_count from atomic_t to refcount_t
+  net, vxlan: convert vxlan_sock.refcnt from atomic_t to refcount_t
+  net, bluetooth: convert rfcomm_dlc.refcnt from atomic_t to refcount_t
+  net, decnet: convert dn_fib_info.fib_clntref from atomic_t to
+    refcount_t
+  net, atm: convert atm_dev.refcnt from atomic_t to refcount_t
+  net, atm: convert lec_arp_table.usage from atomic_t to refcount_t
+  net, atm: convert in_cache_entry.use from atomic_t to refcount_t
+  net, atm: convert eg_cache_entry.use from atomic_t to refcount_t
+  net, bridge: convert net_bridge_vlan.refcnt from atomic_t to
+    refcount_t
+  net, calipso: convert calipso_doi.refcount from atomic_t to refcount_t
+  net, sched: convert Qdisc.refcnt from atomic_t to refcount_t
+  net, lapb: convert lapb_cb.refcnt from atomic_t to refcount_t
+  net, ipx: convert ipx_interface.refcnt from atomic_t to refcount_t
+  net, ipx: convert ipx_route.refcnt from atomic_t to refcount_t
+  net, netrom: convert nr_neigh.refcount from atomic_t to refcount_t
+  net, netrom: convert nr_node.refcount from atomic_t to refcount_t
 
-Bernard
+ drivers/net/vxlan.c            | 10 +++++-----
+ include/linux/atmdev.h         |  7 ++++---
+ include/net/bluetooth/rfcomm.h |  8 +++++---
+ include/net/calipso.h          |  4 ++--
+ include/net/dn_fib.h           |  5 +++--
+ include/net/ipx.h              | 13 +++++++------
+ include/net/lapb.h             |  3 ++-
+ include/net/llc.h              |  6 +++---
+ include/net/netrom.h           | 13 +++++++------
+ include/net/sch_generic.h      |  3 ++-
+ include/net/vxlan.h            |  2 +-
+ net/atm/lec.c                  |  6 +++---
+ net/atm/lec_arpc.h             |  2 +-
+ net/atm/mpoa_caches.c          | 26 +++++++++++++-------------
+ net/atm/mpoa_caches.h          |  5 +++--
+ net/atm/proc.c                 |  2 +-
+ net/atm/resources.c            |  2 +-
+ net/bluetooth/rfcomm/core.c    |  4 ++--
+ net/bridge/br_private.h        |  3 ++-
+ net/bridge/br_vlan.c           |  8 ++++----
+ net/decnet/dn_fib.c            |  6 +++---
+ net/ipv6/calipso.c             | 12 ++++++------
+ net/ipx/af_ipx.c               |  6 +++---
+ net/ipx/ipx_proc.c             |  2 +-
+ net/ipx/ipx_route.c            |  2 +-
+ net/l2tp/l2tp_core.c           | 16 ++++++++--------
+ net/l2tp/l2tp_core.h           | 13 +++++++------
+ net/l2tp/l2tp_debugfs.c        |  5 ++---
+ net/l2tp/l2tp_ppp.c            |  2 +-
+ net/lapb/lapb_iface.c          |  6 +++---
+ net/llc/llc_core.c             |  2 +-
+ net/netrom/nr_route.c          |  6 +++---
+ net/sched/sch_api.c            |  8 ++++----
+ net/sched/sch_generic.c        |  8 ++++----
+ 34 files changed, 118 insertions(+), 108 deletions(-)
 
-> Hi Richard,
->
-> I have just reinvestigated the long lasting rose module
-> unregister_netdevice issue with kernel 4.10.0.
->
-> Here is the context: when removing rose module
->
-> rmmod rose
->
-> NET: Unregistered protocol family 11
->
-> is followed by a message looping indefinitely with a random xx count
-> number :
->
-> unregistered_netdevice: waiting for rose0 to become free. Usage count = xx
-> unregistered_netdevice: waiting for rose0 to become free. Usage count = xx
-> unregistered_netdevice: waiting for rose0 to become free. Usage count = xx
-> .....
->
-> I tried to apply the patches you sent to linux-netdev on 2016-07-16
-> [PATCH 1/6]NET:AX25:ROSE  Add device use count
->
-> First I applied it and find out that it was successfully removing the
-> unregister bug.
-> Then I cut it into 5 parts and unpatched the parts one by one.
-> Then I applied different patch combinations in order to find out which
-> ones were sufficient to cure the unregister issue.
-> Here is the result : parts 1, 2 and 5 are necessary all together.
-> Part 3 and 4 of your original patch did not add anything according to
-> unregister issue (same results as with 5 parts).
-> According to the result, I am not sure parts 3 and 4 are absolutely
-> necessary here.
->
-> When applied, rmmod rose is correctly removing rose module and no error
-> message occurs.
-> Here is your patch reduced to parts 1, 2 and 5.
->
-> index 36dbc2d..89745aa 100644
-> --- a/net/rose/af_rose.c
-> +++ b/net/rose/af_rose.c
-> @@ -687,8 +687,10 @@ static int rose_bind(struct socket *sock, struct
-> sockaddr *uaddr, int addr_len)
->                  rose->source_call = user->call;
->                  ax25_uid_put(user);
->          } else {
-> -               if (ax25_uid_policy && !capable(CAP_NET_BIND_SERVICE))
-> +               if (ax25_uid_policy && !capable(CAP_NET_BIND_SERVICE)) {
-> +                       dev_put(dev);
->                          return -EACCES;
-> +               }
->                  rose->source_call   = *source;
->          }
->
-> index 36dbc2d..89745aa 100644
-> --- a/net/rose/af_rose.c
-> +++ b/net/rose/af_rose.c
-> @@ -709,6 +711,7 @@ static int rose_bind(struct socket *sock, struct
-> sockaddr *uaddr, int addr_len)
->          rose_insert_socket(sk);
->
->          sock_reset_flag(sk, SOCK_ZAPPED);
-> +       dev_put(dev);
->
->          return 0;
->   }
->
-> diff --git a/net/rose/rose_loopback.c b/net/rose/rose_loopback.c
-> index 3444562..ea48cee 100644
-> --- a/net/rose/rose_loopback.c
-> +++ b/net/rose/rose_loopback.c
-> @@ -102,6 +102,7 @@ static void rose_loopback_timer(unsigned long param)
->                          if ((dev = rose_dev_get(dest)) != NULL) {
->                                  if (rose_rx_call_request(skb, dev,
-> rose_loopback_neigh, lci_o) == 0)
->                                          kfree_skb(skb);
-> +                               dev_put(dev);
->                          } else {
->                                  kfree_skb(skb);
->                          }
->
-> I encourage you to publish a new commit limited to this set of three
-> dev_put(dev) that are obviously missing to allow a correct removal of
-> rose module.
->
-> Bernard
->
+-- 
+2.7.4
 
