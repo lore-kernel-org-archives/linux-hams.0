@@ -1,8 +1,8 @@
 From: Elena Reshetova <elena.reshetova@intel.com>
-Subject: [PATCH 01/16] drivers, net,
- ethernet: convert clip_entry.refcnt from atomic_t to refcount_t
-Date: Tue, 28 Mar 2017 11:56:28 +0300
-Message-ID: <1490691403-4016-2-git-send-email-elena.reshetova@intel.com>
+Subject: [PATCH 02/16] drivers, net,
+ ethernet: convert mtk_eth.dma_refcnt from atomic_t to refcount_t
+Date: Tue, 28 Mar 2017 11:56:29 +0300
+Message-ID: <1490691403-4016-3-git-send-email-elena.reshetova@intel.com>
 References: <1490691403-4016-1-git-send-email-elena.reshetova@intel.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset="us-ascii"
@@ -15,19 +15,19 @@ DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
 	In-Reply-To:Message-Id:Date:Subject:To:From:Reply-To:Content-ID:
 	Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
 	:Resent-Message-ID:List-Owner;
-	bh=6L0efNSDqr1RAA4Mi+uQ59fOuSQ677L6eTBiD7/VTpI=; b=FyaqLZRHO+wPWq2CDTDyDceKsh
-	eIU0oYSB7OOSoqPiCs/1nqnHJBJVZt3ovGQkwBcD1lToOlQe1CrK3qKg0V7zFqK5YCG+DyXOXd+57
-	QZ6jQVwsXN6Btq/IlzWJrfQ5s6WliEisbaBIwpl296CDXxA17lS3qXiXrCi/2h8FRMN+smZhoFfVb
-	3msfU/u1a4uUmLn2J3P0b/Xkd/61mTvHYA511HIS+W9t9/gNHQbiBcgHLhc9iZvcnfx6jKIraFJJd
-	2glPq27HJWwrrSWeex/ovlPAht2pFa26H8dMGTvXE8GJNM+c7IKqmeCl5Gv3EJuiA1CCKyj8xXIoL
-	JYZinLJg==;
+	bh=YVQ1o8FUj7UnR3C7ZgORpsxBpuIJRX06I3wYwUpLIcc=; b=qT9MWHWMsyHY5Om+nie/192JQr
+	rHUDq+ruua1AeODsAQ0SfarKxqoHDkIm+Dg6yMr4AVgpdUKNcOBA5SfA0aY2Hz3YudLQDHtwLWAu3
+	e0K3M51+P6EuPBKYZcRk7ATkdH7iqBDMl/69vZlQlfQLdE6ZfdioY91RAbT3bZKG2fdY3hxIoDCH5
+	C/A4bYPJhW61zSWULGfTtQOTRKGmQjhck/jqvrWtqoIPoV7aBKnq1l98heIFpzDpDGUbZT7TIHd98
+	MWpIGDuRMzffIGR3I+O3x5+b27WRzdZJJTS+NS5ljvou/Fam+2TL/SUhP8cSpFdkTFkQMZ6DH3FXr
+	5FA0LOYQ==;
 DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=intel;
- t=1490691438; x=1522227438;
+ t=1490691445; x=1522227445;
  h=from:to:cc:subject:date:message-id:in-reply-to: references;
- bh=rnhI9y9q6jJ7oWT5Dbvrtj39AjpDrvvjUjS+eoNB5kg=;
- b=Xua202BweHIZ7KF9dZepMwVKCJbDVTeJnR+jKzuYIYFAJg0l0zdkIFXd
- +P7/B2MGBlnW6sFtVRADR4Aij5DcGg==;
+ bh=ZowmVovshKvN52910OstiIIseE3jgV8t/JJ8FD/yyuU=;
+ b=i03JHA4HXcVA3U+Bjk+Q6KzattJnZ/ml12OdVw1MAlplprqgThpa16kL
+ okCzNJhXKhd5ECweHJyow2jOHCteVg==;
 In-Reply-To: <1490691403-4016-1-git-send-email-elena.reshetova@intel.com>
 List-Id: <linux-hams.vger.kernel.org>
 List-Unsubscribe: <http://lists.infradead.org/mailman/options/linux-arm-kernel>, 
@@ -53,78 +53,65 @@ Signed-off-by: Hans Liljestrand <ishkamiel@gmail.com>
 Signed-off-by: Kees Cook <keescook@chromium.org>
 Signed-off-by: David Windsor <dwindsor@gmail.com>
 ---
- drivers/net/ethernet/chelsio/cxgb4/clip_tbl.c | 13 ++++++-------
- drivers/net/ethernet/chelsio/cxgb4/clip_tbl.h |  4 +++-
- 2 files changed, 9 insertions(+), 8 deletions(-)
+ drivers/net/ethernet/mediatek/mtk_eth_soc.c | 8 +++++---
+ drivers/net/ethernet/mediatek/mtk_eth_soc.h | 4 +++-
+ 2 files changed, 8 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/net/ethernet/chelsio/cxgb4/clip_tbl.c b/drivers/net/ethernet/chelsio/cxgb4/clip_tbl.c
-index 3103ef9..2900390 100644
---- a/drivers/net/ethernet/chelsio/cxgb4/clip_tbl.c
-+++ b/drivers/net/ethernet/chelsio/cxgb4/clip_tbl.c
-@@ -96,7 +96,8 @@ int cxgb4_clip_get(const struct net_device *dev, const u32 *lip, u8 v6)
- 		if (!ret) {
- 			ce = cte;
- 			read_unlock_bh(&ctbl->lock);
--			goto found;
-+			refcount_inc(&ce->refcnt);
-+			return 0;
- 		}
+diff --git a/drivers/net/ethernet/mediatek/mtk_eth_soc.c b/drivers/net/ethernet/mediatek/mtk_eth_soc.c
+index bf6317e..d27f9d9 100644
+--- a/drivers/net/ethernet/mediatek/mtk_eth_soc.c
++++ b/drivers/net/ethernet/mediatek/mtk_eth_soc.c
+@@ -1725,7 +1725,7 @@ static int mtk_open(struct net_device *dev)
+ 	struct mtk_eth *eth = mac->hw;
+ 
+ 	/* we run 2 netdevs on the same dma ring so we only bring it up once */
+-	if (!atomic_read(&eth->dma_refcnt)) {
++	if (!refcount_read(&eth->dma_refcnt)) {
+ 		int err = mtk_start_dma(eth);
+ 
+ 		if (err)
+@@ -1735,8 +1735,10 @@ static int mtk_open(struct net_device *dev)
+ 		napi_enable(&eth->rx_napi);
+ 		mtk_irq_enable(eth, MTK_QDMA_INT_MASK, MTK_TX_DONE_INT);
+ 		mtk_irq_enable(eth, MTK_PDMA_INT_MASK, MTK_RX_DONE_INT);
++		refcount_set(&eth->dma_refcnt, 1);
  	}
- 	read_unlock_bh(&ctbl->lock);
-@@ -108,7 +109,7 @@ int cxgb4_clip_get(const struct net_device *dev, const u32 *lip, u8 v6)
- 		list_del(&ce->list);
- 		INIT_LIST_HEAD(&ce->list);
- 		spin_lock_init(&ce->lock);
--		atomic_set(&ce->refcnt, 0);
-+		refcount_set(&ce->refcnt, 0);
- 		atomic_dec(&ctbl->nfree);
- 		list_add_tail(&ce->list, &ctbl->hash_list[hash]);
- 		if (v6) {
-@@ -138,9 +139,7 @@ int cxgb4_clip_get(const struct net_device *dev, const u32 *lip, u8 v6)
- 		return -ENOMEM;
- 	}
- 	write_unlock_bh(&ctbl->lock);
--found:
--	atomic_inc(&ce->refcnt);
--
-+	refcount_set(&ce->refcnt, 1);
- 	return 0;
- }
- EXPORT_SYMBOL(cxgb4_clip_get);
-@@ -179,7 +178,7 @@ void cxgb4_clip_release(const struct net_device *dev, const u32 *lip, u8 v6)
- found:
- 	write_lock_bh(&ctbl->lock);
- 	spin_lock_bh(&ce->lock);
--	if (atomic_dec_and_test(&ce->refcnt)) {
-+	if (refcount_dec_and_test(&ce->refcnt)) {
- 		list_del(&ce->list);
- 		INIT_LIST_HEAD(&ce->list);
- 		list_add_tail(&ce->list, &ctbl->ce_free_head);
-@@ -266,7 +265,7 @@ int clip_tbl_show(struct seq_file *seq, void *v)
- 			ip[0] = '\0';
- 			sprintf(ip, "%pISc", &ce->addr);
- 			seq_printf(seq, "%-25s   %u\n", ip,
--				   atomic_read(&ce->refcnt));
-+				   refcount_read(&ce->refcnt));
- 		}
- 	}
- 	seq_printf(seq, "Free clip entries : %d\n", atomic_read(&ctbl->nfree));
-diff --git a/drivers/net/ethernet/chelsio/cxgb4/clip_tbl.h b/drivers/net/ethernet/chelsio/cxgb4/clip_tbl.h
-index 35eb43c..a0e0ae1 100644
---- a/drivers/net/ethernet/chelsio/cxgb4/clip_tbl.h
-+++ b/drivers/net/ethernet/chelsio/cxgb4/clip_tbl.h
-@@ -10,9 +10,11 @@
-  *  release for licensing terms and conditions.
-  */
+-	atomic_inc(&eth->dma_refcnt);
++	else
++		refcount_inc(&eth->dma_refcnt);
+ 
+ 	phy_start(dev->phydev);
+ 	netif_start_queue(dev);
+@@ -1776,7 +1778,7 @@ static int mtk_stop(struct net_device *dev)
+ 	phy_stop(dev->phydev);
+ 
+ 	/* only shutdown DMA if this is the last user */
+-	if (!atomic_dec_and_test(&eth->dma_refcnt))
++	if (!refcount_dec_and_test(&eth->dma_refcnt))
+ 		return 0;
+ 
+ 	mtk_irq_disable(eth, MTK_QDMA_INT_MASK, MTK_TX_DONE_INT);
+diff --git a/drivers/net/ethernet/mediatek/mtk_eth_soc.h b/drivers/net/ethernet/mediatek/mtk_eth_soc.h
+index 99b1c8e..e5b99b7 100644
+--- a/drivers/net/ethernet/mediatek/mtk_eth_soc.h
++++ b/drivers/net/ethernet/mediatek/mtk_eth_soc.h
+@@ -15,6 +15,8 @@
+ #ifndef MTK_ETH_H
+ #define MTK_ETH_H
  
 +#include <linux/refcount.h>
 +
- struct clip_entry {
- 	spinlock_t lock;	/* Hold while modifying clip reference */
--	atomic_t refcnt;
-+	refcount_t refcnt;
- 	struct list_head list;
- 	union {
- 		struct sockaddr_in addr;
+ #define MTK_QDMA_PAGE_SIZE	2048
+ #define	MTK_MAX_RX_LENGTH	1536
+ #define MTK_TX_DMA_BUF_LEN	0x3fff
+@@ -541,7 +543,7 @@ struct mtk_eth {
+ 	struct regmap			*pctl;
+ 	u32				chip_id;
+ 	bool				hwlro;
+-	atomic_t			dma_refcnt;
++	refcount_t			dma_refcnt;
+ 	struct mtk_tx_ring		tx_ring;
+ 	struct mtk_rx_ring		rx_ring[MTK_MAX_RX_RING_NUM];
+ 	struct napi_struct		tx_napi;
 -- 
 2.7.4
