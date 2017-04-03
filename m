@@ -1,46 +1,52 @@
-From: "Reshetova, Elena" <elena.reshetova@intel.com>
-Subject: RE: [PATCH 06/16] drivers, net, mlx5: convert mlx5_cq.refcount from
- atomic_t to refcount_t
-Date: Tue, 28 Mar 2017 14:00:01 +0000
-Message-ID: <2236FBA76BA1254E88B949DDB74E612B41C82E54@IRSMSX102.ger.corp.intel.com>
+From: Kalle Valo <kvalo-sgV2jX0FEOL9JmXXK+q4OQ@public.gmane.org>
+Subject: Re: [PATCH 15/16] drivers, net, intersil: convert hostap_cmd_queue.usecnt from atomic_t to refcount_t
+Date: Mon, 03 Apr 2017 14:38:49 +0300
+Message-ID: <874ly5oh4m.fsf@kamboji.qca.qualcomm.com>
 References: <1490691403-4016-1-git-send-email-elena.reshetova@intel.com>
- <1490691403-4016-7-git-send-email-elena.reshetova@intel.com>
- <063D6719AE5E284EB5DD2968C1650D6DCFFBE8AF@AcuExch.aculab.com>
+        <1490691403-4016-16-git-send-email-elena.reshetova@intel.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 8BIT
-Return-path: <netdev-owner@vger.kernel.org>
-In-Reply-To: <063D6719AE5E284EB5DD2968C1650D6DCFFBE8AF@AcuExch.aculab.com>
-Content-Language: en-US
-Sender: netdev-owner@vger.kernel.org
+Return-path: <linux-wireless-owner-u79uwXL29TY76Z2rM5mHXA@public.gmane.org>
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
+        s=default; t=1491219537;
+        bh=WKQKYDMI2uZE2CcB7z3yb77IxetGcz5h0Ttn5GUSHH0=;
+        h=From:To:Cc:Subject:References:Date:In-Reply-To:From;
+        b=m3/jjYS96tqKca68bXD52/HrNhg9MHybs85Y8otl93479lOVHSTA3WwcGh1Soytt5
+         ACZNsWVCsIPDUCWY0QPkk6kDsZnbkyxSc0uXgfQFAHyjoRe/Te0t+P5OitMGDdxKEZ
+         dnv/Tmw/qHBRUsK4cLsqgR9ibDLcuynU+c+lwLi4=
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
+        s=default; t=1491219536;
+        bh=WKQKYDMI2uZE2CcB7z3yb77IxetGcz5h0Ttn5GUSHH0=;
+        h=From:To:Cc:Subject:References:Date:In-Reply-To:From;
+        b=XEPzU8uG5EJOO39zoiba3ZTy6Dfo9hvtQqVOH0T9+rnr3mxoTLNWcpJF+nTLaLiv8
+         D3r08Fgiu3DAm4NvDcN+z4g6p06hO7qFVaWWVdgMoDFL4KrlZW4lq/mgggFZSX0ua1
+         6A907TAl/e5ydNqFyEcpcCVXW4X3sZHLxIUVnsZ8=
+In-Reply-To: <1490691403-4016-16-git-send-email-elena.reshetova-ral2JQCrhuEAvxtiuMwx3w@public.gmane.org>
+        (Elena Reshetova's message of "Tue, 28 Mar 2017 11:56:42 +0300")
+Sender: linux-wireless-owner-u79uwXL29TY76Z2rM5mHXA@public.gmane.org
 List-ID: <linux-hams.vger.kernel.org>
-To: David Laight <David.Laight@ACULAB.COM>, "netdev@vger.kernel.org" <netdev@vger.kernel.org>
-Cc: "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>, "linux-arm-kernel@lists.infradead.org" <linux-arm-kernel@lists.infradead.org>, "linux-rdma@vger.kernel.org" <linux-rdma@vger.kernel.org>, "linux-hams@vger.kernel.org" <linux-hams@vger.kernel.org>, "linux-ppp@vger.kernel.org" <linux-ppp@vger.kernel.org>, "linux-wireless@vger.kernel.org" <linux-wireless@vger.kernel.org>, "ganeshgr@chelsio.com" <ganeshgr@chelsio.com>, "nbd@openwrt.org" <nbd@openwrt.org>, "blogic@openwrt.org" <blogic@openwrt.org>, "matthias.bgg@gmail.com" <matthias.bgg@gmail.com>, "yishaih@mellanox.com" <yishaih@mellanox.com>, "saeedm@mellanox.com" <saeedm@mellanox.com>, "matanb@mellanox.com" <matanb@mellanox.com>, "leonro@mellanox.com" <leonro@mellanox.com>, "ajk@comnets.uni-bremen.de" <aj>
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+To: Elena Reshetova <elena.reshetova-ral2JQCrhuEAvxtiuMwx3w@public.gmane.org>
+Cc: netdev-u79uwXL29TY76Z2rM5mHXA@public.gmane.org, linux-kernel-u79uwXL29TY76Z2rM5mHXA@public.gmane.org, linux-arm-kernel-IAPFreCvJWM7uuMidbF8XUB+6BGkLq7r@public.gmane.org, linux-rdma-u79uwXL29TY76Z2rM5mHXA@public.gmane.org, linux-hams-u79uwXL29TY76Z2rM5mHXA@public.gmane.org, linux-ppp-u79uwXL29TY76Z2rM5mHXA@public.gmane.org, linux-wireless-u79uwXL29TY76Z2rM5mHXA@public.gmane.org, ganeshgr-ut6Up61K2wZBDgjK7y7TUQ@public.gmane.org, nbd-p3rKhJxN3npAfugRpC6u6w@public.gmane.org, blogic-p3rKhJxN3npAfugRpC6u6w@public.gmane.org, matthias.bgg-Re5JQEeQqe8AvxtiuMwx3w@public.gmane.org, yishaih-VPRAkNaXOzVWk0Htik3J/w@public.gmane.org, saeedm-VPRAkNaXOzVWk0Htik3J/w@public.gmane.org, matanb-VPRAkNaXOzVWk0Htik3J/w@public.gmane.org, leonro-VPRAkNaXOzVWk0Htik3J/w@public.gmane.org, ajk-iz34hMvxm2Hmj42eshorlhS11BummzK+@public.gmane.org, paulus-eUNUBHrolfbYtjvyW6yDsg@public.gmane.org, j@w1.fi, peterz-wEGCiKHe2LqWVfeAwA7xHQ@public.gmane.org, keescook-F7+t8E8rja9g9hUCZPvPmw@public.gmane.org, gregkh-hQyY1W1yCW8ekmWlsbkhG0B+6BGkLq7r@public.gmane.org, Hans Liljestrand <ishkamiel-Re5JQEeQqe8AvxtiuMwx3w@public.gmane.org>, David Windsor <dwindsor-Re5JQEeQqe8AvxtiuMwx3w@public.gmane.org>
 
+Elena Reshetova <elena.reshetova-ral2JQCrhuEAvxtiuMwx3w@public.gmane.org> writes:
 
-> From: Elena Reshetova
-> > Sent: 28 March 2017 09:57
-> >
-> > refcount_t type and corresponding API should be
-> > used instead of atomic_t when the variable is used as
-> > a reference counter. This allows to avoid accidental
-> > refcounter overflows that might lead to use-after-free
-> > situations.
-> 
-> I can't help feeling that you ought to find a scheme
-> that will detect extra decrements and extra increments
-> before the counter wraps 32 bits.
-> 
-> If an extra reference is requested every 100us it takes 4.8 days
-> for the counter to increment back to zero.
-> Simple tests aren't doing to find that - but it can easily happen
-> on a system that is running for several years.
+> refcount_t type and corresponding API should be
+> used instead of atomic_t when the variable is used as
+> a reference counter. This allows to avoid accidental
+> refcounter overflows that might lead to use-after-free
+> situations.
+>
+> Signed-off-by: Elena Reshetova <elena.reshetova-ral2JQCrhuEAvxtiuMwx3w@public.gmane.org>
+> Signed-off-by: Hans Liljestrand <ishkamiel-Re5JQEeQqe8AvxtiuMwx3w@public.gmane.org>
+> Signed-off-by: Kees Cook <keescook-F7+t8E8rja9g9hUCZPvPmw@public.gmane.org>
+> Signed-off-by: David Windsor <dwindsor-Re5JQEeQqe8AvxtiuMwx3w@public.gmane.org>
+> ---
+>  drivers/net/wireless/intersil/hostap/hostap_hw.c   | 12 ++++++------
+>  drivers/net/wireless/intersil/hostap/hostap_wlan.h |  3 ++-
+>  2 files changed, 8 insertions(+), 7 deletions(-)
 
-So, you are proposing to try detecting this case instead of preventing overflows?
-Not sure how this would look like in a generic form...
+The prefix should be "hostap:", I'll fix that.
 
-
-
-> 
-> 	David
-
+-- 
+Kalle Valo
