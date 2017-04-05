@@ -1,62 +1,124 @@
-From: Kalle Valo <kvalo@codeaurora.org>
-Subject: Re: [PATCH 16/16] drivers, net, intersil: convert request_context.refcount from atomic_t to refcount_t
-Date: Wed, 05 Apr 2017 13:33:12 +0300
-Message-ID: <87k26zi1p3.fsf@kamboji.qca.qualcomm.com>
-References: <1490691403-4016-1-git-send-email-elena.reshetova@intel.com>
-        <1490691403-4016-17-git-send-email-elena.reshetova@intel.com>
-        <87zifxn2gb.fsf@kamboji.qca.qualcomm.com>
-        <2236FBA76BA1254E88B949DDB74E612B41C8741B@IRSMSX102.ger.corp.intel.com>
+From: David Howells <dhowells@redhat.com>
+Subject: [PATCH 20/38] Annotate hardware config module parameters in
+ drivers/net/hamradio/
+Date: Wed, 05 Apr 2017 17:59:49 +0100
+Message-ID: <149141158945.29162.14007212429239876813.stgit@warthog.procyon.org.uk>
+References: <149141141298.29162.5612793122429261720.stgit@warthog.procyon.org.uk>
 Mime-Version: 1.0
-Return-path: <netdev-owner@vger.kernel.org>
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
-        s=default; t=1491388400;
-        bh=b+JlqgMRARFJd8Dj0hhnOgVCh8OsRLenL/u05kXy0fM=;
-        h=From:To:Cc:Subject:References:Date:In-Reply-To:From;
-        b=fH/2LH9KTSbh1P2TZmPf/w37svsh2YULhhy7aaw0jCTjoxdCLc0QpTCvQBQ6bT709
-         tRbrnbaMedo8wkQyF4v2kOoh4D+ntMBxrqKrAoaKJuXdezmZ3Wwf8/uoCPKH9h83Ld
-         tDQdYOicR1gBqRJbX3pnXcmJBqhAKkq+yjmFxjR0=
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
-        s=default; t=1491388399;
-        bh=b+JlqgMRARFJd8Dj0hhnOgVCh8OsRLenL/u05kXy0fM=;
-        h=From:To:Cc:Subject:References:Date:In-Reply-To:From;
-        b=JmC3iyExcEBN3fvhjYrOqgfV6VDryXTcIhiPHshRQzWBqwwBUimvGDSc4FwwruVbn
-         kKdthGO/B8/9gwBXnhM4nCeYsSN9jOaDLZwZblqewQmIs148jFIq5L7BBGuPKTThVt
-         ADxXn+GrRnEd1aLLIN/IAhnROUYf+g8EHVm6wHmQ=
-In-Reply-To: <2236FBA76BA1254E88B949DDB74E612B41C8741B@IRSMSX102.ger.corp.intel.com>
-        (Elena Reshetova's message of "Tue, 4 Apr 2017 10:07:55 +0000")
-Sender: netdev-owner@vger.kernel.org
+Content-Transfer-Encoding: 7bit
+Return-path: <linux-hams-owner@vger.kernel.org>
+DKIM-Filter: OpenDKIM Filter v2.11.0 mx1.redhat.com 2F44C68E1E
+In-Reply-To: <149141141298.29162.5612793122429261720.stgit@warthog.procyon.org.uk>
+Sender: linux-hams-owner@vger.kernel.org
 List-ID: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-To: "Reshetova, Elena" <elena.reshetova@intel.com>
-Cc: "netdev@vger.kernel.org" <netdev@vger.kernel.org>, "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>, "linux-arm-kernel@lists.infradead.org" <linux-arm-kernel@lists.infradead.org>, "linux-rdma@vger.kernel.org" <linux-rdma@vger.kernel.org>, "linux-hams@vger.kernel.org" <linux-hams@vger.kernel.org>, "linux-ppp@vger.kernel.org" <linux-ppp@vger.kernel.org>, "linux-wireless@vger.kernel.org" <linux-wireless@vger.kernel.org>, "ganeshgr@chelsio.com" <ganeshgr@chelsio.com>, "nbd@openwrt.org" <nbd@openwrt.org>, "blogic@openwrt.org" <blogic@openwrt.org>, "matthias.bgg@gmail.com" <matthias.bgg@gmail.com>, "yishaih@mellanox.com" <yishaih@mellanox.com>, "saeedm@mellanox.com" <saeedm@mellanox.com>, "matanb@mellanox.com" <matanb@mellanox.com>, leonro@me
+To: linux-kernel@vger.kernel.org
+Cc: gnomes@lxorguk.ukuu.org.uk, netdev@vger.kernel.org, dhowells@redhat.com, linux-security-module@vger.kernel.org, keyrings@vger.kernel.org, gregkh@linuxfoundation.org, linux-hams@vger.kernel.org, Joerg Reuter <jreuter@yaina.de>, Thomas Sailer <t.sailer@alumni.ethz.ch>
 
-"Reshetova, Elena" <elena.reshetova@intel.com> writes:
+When the kernel is running in secure boot mode, we lock down the kernel to
+prevent userspace from modifying the running kernel image.  Whilst this
+includes prohibiting access to things like /dev/mem, it must also prevent
+access by means of configuring driver modules in such a way as to cause a
+device to access or modify the kernel image.
 
->> Elena Reshetova <elena.reshetova@intel.com> writes:
->> 
->> > refcount_t type and corresponding API should be
->> > used instead of atomic_t when the variable is used as
->> > a reference counter. This allows to avoid accidental
->> > refcounter overflows that might lead to use-after-free
->> > situations.
->> >
->> > Signed-off-by: Elena Reshetova <elena.reshetova@intel.com>
->> > Signed-off-by: Hans Liljestrand <ishkamiel@gmail.com>
->> > Signed-off-by: Kees Cook <keescook@chromium.org>
->> > Signed-off-by: David Windsor <dwindsor@gmail.com>
->> > ---
->> >  drivers/net/wireless/intersil/orinoco/orinoco_usb.c | 15 ++++++++-------
->> >  1 file changed, 8 insertions(+), 7 deletions(-)
->> 
->> The prefix should be "orinoco_usb:", I'll fix that.
->
-> Thanks for both! Will you take the patches in?
+To this end, annotate module_param* statements that refer to hardware
+configuration and indicate for future reference what type of parameter they
+specify.  The parameter parser in the core sees this information and can
+skip such parameters with an error message if the kernel is locked down.
+The module initialisation then runs as normal, but just sees whatever the
+default values for those parameters is.
 
-You mean patches 15 and 16? I didn't even look rest of the patches.
+Note that we do still need to do the module initialisation because some
+drivers have viable defaults set in case parameters aren't specified and
+some drivers support automatic configuration (e.g. PNP or PCI) in addition
+to manually coded parameters.
 
-But not sure yet because Dave doesn't seem to like the interface and I
-want to follow the discussion first.
+This patch annotates drivers in drivers/net/hamradio/.
 
--- 
-Kalle Valo
+Suggested-by: Alan Cox <gnomes@lxorguk.ukuu.org.uk>
+Signed-off-by: David Howells <dhowells@redhat.com>
+cc: Thomas Sailer <t.sailer@alumni.ethz.ch>
+cc: Joerg Reuter <jreuter@yaina.de>
+cc: linux-hams@vger.kernel.org
+cc: netdev@vger.kernel.org
+---
+
+ drivers/net/hamradio/baycom_epp.c     |    2 +-
+ drivers/net/hamradio/baycom_par.c     |    2 +-
+ drivers/net/hamradio/baycom_ser_fdx.c |    4 ++--
+ drivers/net/hamradio/baycom_ser_hdx.c |    4 ++--
+ drivers/net/hamradio/dmascc.c         |    2 +-
+ 5 files changed, 7 insertions(+), 7 deletions(-)
+
+diff --git a/drivers/net/hamradio/baycom_epp.c b/drivers/net/hamradio/baycom_epp.c
+index 594fa1407e29..1503f10122f7 100644
+--- a/drivers/net/hamradio/baycom_epp.c
++++ b/drivers/net/hamradio/baycom_epp.c
+@@ -1176,7 +1176,7 @@ static int iobase[NR_PORTS] = { 0x378, };
+ 
+ module_param_array(mode, charp, NULL, 0);
+ MODULE_PARM_DESC(mode, "baycom operating mode");
+-module_param_array(iobase, int, NULL, 0);
++module_param_hw_array(iobase, int, ioport, NULL, 0);
+ MODULE_PARM_DESC(iobase, "baycom io base address");
+ 
+ MODULE_AUTHOR("Thomas M. Sailer, sailer@ife.ee.ethz.ch, hb9jnx@hb9w.che.eu");
+diff --git a/drivers/net/hamradio/baycom_par.c b/drivers/net/hamradio/baycom_par.c
+index 809dc25909d1..92b13b39f426 100644
+--- a/drivers/net/hamradio/baycom_par.c
++++ b/drivers/net/hamradio/baycom_par.c
+@@ -481,7 +481,7 @@ static int iobase[NR_PORTS] = { 0x378, };
+ 
+ module_param_array(mode, charp, NULL, 0);
+ MODULE_PARM_DESC(mode, "baycom operating mode; eg. par96 or picpar");
+-module_param_array(iobase, int, NULL, 0);
++module_param_hw_array(iobase, int, ioport, NULL, 0);
+ MODULE_PARM_DESC(iobase, "baycom io base address");
+ 
+ MODULE_AUTHOR("Thomas M. Sailer, sailer@ife.ee.ethz.ch, hb9jnx@hb9w.che.eu");
+diff --git a/drivers/net/hamradio/baycom_ser_fdx.c b/drivers/net/hamradio/baycom_ser_fdx.c
+index ebc06822fd4d..d9a646acca20 100644
+--- a/drivers/net/hamradio/baycom_ser_fdx.c
++++ b/drivers/net/hamradio/baycom_ser_fdx.c
+@@ -614,9 +614,9 @@ static int baud[NR_PORTS] = { [0 ... NR_PORTS-1] = 1200 };
+ 
+ module_param_array(mode, charp, NULL, 0);
+ MODULE_PARM_DESC(mode, "baycom operating mode; * for software DCD");
+-module_param_array(iobase, int, NULL, 0);
++module_param_hw_array(iobase, int, ioport, NULL, 0);
+ MODULE_PARM_DESC(iobase, "baycom io base address");
+-module_param_array(irq, int, NULL, 0);
++module_param_hw_array(irq, int, irq, NULL, 0);
+ MODULE_PARM_DESC(irq, "baycom irq number");
+ module_param_array(baud, int, NULL, 0);
+ MODULE_PARM_DESC(baud, "baycom baud rate (300 to 4800)");
+diff --git a/drivers/net/hamradio/baycom_ser_hdx.c b/drivers/net/hamradio/baycom_ser_hdx.c
+index 60fcf512c208..f1c8a9ff3891 100644
+--- a/drivers/net/hamradio/baycom_ser_hdx.c
++++ b/drivers/net/hamradio/baycom_ser_hdx.c
+@@ -642,9 +642,9 @@ static int irq[NR_PORTS] = { 4, };
+ 
+ module_param_array(mode, charp, NULL, 0);
+ MODULE_PARM_DESC(mode, "baycom operating mode; * for software DCD");
+-module_param_array(iobase, int, NULL, 0);
++module_param_hw_array(iobase, int, ioport, NULL, 0);
+ MODULE_PARM_DESC(iobase, "baycom io base address");
+-module_param_array(irq, int, NULL, 0);
++module_param_hw_array(irq, int, irq, NULL, 0);
+ MODULE_PARM_DESC(irq, "baycom irq number");
+ 
+ MODULE_AUTHOR("Thomas M. Sailer, sailer@ife.ee.ethz.ch, hb9jnx@hb9w.che.eu");
+diff --git a/drivers/net/hamradio/dmascc.c b/drivers/net/hamradio/dmascc.c
+index 2479072981a1..dec6b76bc0fb 100644
+--- a/drivers/net/hamradio/dmascc.c
++++ b/drivers/net/hamradio/dmascc.c
+@@ -274,7 +274,7 @@ static unsigned long rand;
+ 
+ MODULE_AUTHOR("Klaus Kudielka");
+ MODULE_DESCRIPTION("Driver for high-speed SCC boards");
+-module_param_array(io, int, NULL, 0);
++module_param_hw_array(io, int, ioport, NULL, 0);
+ MODULE_LICENSE("GPL");
+ 
+ static void __exit dmascc_exit(void)
+
