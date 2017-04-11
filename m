@@ -1,124 +1,114 @@
-From: David Howells <dhowells@redhat.com>
-Subject: [PATCH 20/38] Annotate hardware config module parameters in
- drivers/net/hamradio/
-Date: Wed, 05 Apr 2017 17:59:49 +0100
-Message-ID: <149141158945.29162.14007212429239876813.stgit@warthog.procyon.org.uk>
-References: <149141141298.29162.5612793122429261720.stgit@warthog.procyon.org.uk>
+From: f6bvp <f6bvp@free.fr>
+Subject: Interesting Rose patch
+Date: Tue, 11 Apr 2017 19:26:48 +0200
+Message-ID: <06ce7640-bbd6-dd5e-05d9-f1afcec680e5@free.fr>
+References: <20170116.144051.1777999685832100508.davem@davemloft.net>
+ <1a4ee351-031c-932e-0332-779ce33e90e6@trinnet.net>
+ <20170201080217.4d8443bb@brox.localnet>
+ <3e3f25fc-fc60-c01b-1139-245284200656@trinnet.net>
+ <39dad041-f224-735e-adb7-e0fb42771858@free.fr>
+ <25ee9245-3595-85f7-93b8-a18d6066a2e3@free.fr>
+ <07a1454e-99a2-8cec-d50a-006257687c2e@free.fr>
+ <12e0547b-cb2c-1ca0-abc0-d849d8a62139@trinnet.net>
+ <3d0e170e-3995-84d0-007e-3d2065296237@free.fr>
+ <9f9dba49-c2a5-41e8-9382-9154802e7fbf@trinnet.net>
+ <20170327163641.0f992e2d@brox.localnet>
 Mime-Version: 1.0
 Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
-DKIM-Filter: OpenDKIM Filter v2.11.0 mx1.redhat.com 2F44C68E1E
-In-Reply-To: <149141141298.29162.5612793122429261720.stgit@warthog.procyon.org.uk>
+In-Reply-To: <20170327163641.0f992e2d@brox.localnet>
 Sender: linux-hams-owner@vger.kernel.org
 List-ID: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"
-To: linux-kernel@vger.kernel.org
-Cc: gnomes@lxorguk.ukuu.org.uk, netdev@vger.kernel.org, dhowells@redhat.com, linux-security-module@vger.kernel.org, keyrings@vger.kernel.org, gregkh@linuxfoundation.org, linux-hams@vger.kernel.org, Joerg Reuter <jreuter@yaina.de>, Thomas Sailer <t.sailer@alumni.ethz.ch>
+Content-Type: text/plain; charset="us-ascii"; format="flowed"
+To: Basil Gunn <basil@pacabunga.com>, David Ranch <dranch@trinnet.net>
+Cc: C Schuman <k4gbb1@embarqmail.com>, Richard Stearn <richard@rns-stearn.co.uk>, =?UTF-8?Q?Ralf_B=c3=a4chle_DL5RB?= <ralf@linux-mips.org>, linux-hams@vger.kernel.org
 
-When the kernel is running in secure boot mode, we lock down the kernel to
-prevent userspace from modifying the running kernel image.  Whilst this
-includes prohibiting access to things like /dev/mem, it must also prevent
-access by means of configuring driver modules in such a way as to cause a
-device to access or modify the kernel image.
+Hi,
 
-To this end, annotate module_param* statements that refer to hardware
-configuration and indicate for future reference what type of parameter they
-specify.  The parameter parser in the core sees this information and can
-skip such parameters with an error message if the kernel is locked down.
-The module initialisation then runs as normal, but just sees whatever the
-default values for those parameters is.
+I want to acknowledge here a set of very usefull ROSE patches provided 
+by richard Stearn.
 
-Note that we do still need to do the module initialisation because some
-drivers have viable defaults set in case parameters aren't specified and
-some drivers support automatic configuration (e.g. PNP or PCI) in addition
-to manually coded parameters.
+Since years, it has not been possible to set rose0 device down without 
+creating an endless loop of kernel waiting for rose to become free.
 
-This patch annotates drivers in drivers/net/hamradio/.
+Richard found that a number of dev_put(dev) were missing.
 
-Suggested-by: Alan Cox <gnomes@lxorguk.ukuu.org.uk>
-Signed-off-by: David Howells <dhowells@redhat.com>
-cc: Thomas Sailer <t.sailer@alumni.ethz.ch>
-cc: Joerg Reuter <jreuter@yaina.de>
-cc: linux-hams@vger.kernel.org
-cc: netdev@vger.kernel.org
----
+Applying the following patch subset cured the issue and allowed a clean 
+rose module removal.
 
- drivers/net/hamradio/baycom_epp.c     |    2 +-
- drivers/net/hamradio/baycom_par.c     |    2 +-
- drivers/net/hamradio/baycom_ser_fdx.c |    4 ++--
- drivers/net/hamradio/baycom_ser_hdx.c |    4 ++--
- drivers/net/hamradio/dmascc.c         |    2 +-
- 5 files changed, 7 insertions(+), 7 deletions(-)
+The following patches are part of a larger series committed by Richard 
+but rejected by Dave Miller mostly for format reasons.
 
-diff --git a/drivers/net/hamradio/baycom_epp.c b/drivers/net/hamradio/baycom_epp.c
-index 594fa1407e29..1503f10122f7 100644
---- a/drivers/net/hamradio/baycom_epp.c
-+++ b/drivers/net/hamradio/baycom_epp.c
-@@ -1176,7 +1176,7 @@ static int iobase[NR_PORTS] = { 0x378, };
- 
- module_param_array(mode, charp, NULL, 0);
- MODULE_PARM_DESC(mode, "baycom operating mode");
--module_param_array(iobase, int, NULL, 0);
-+module_param_hw_array(iobase, int, ioport, NULL, 0);
- MODULE_PARM_DESC(iobase, "baycom io base address");
- 
- MODULE_AUTHOR("Thomas M. Sailer, sailer@ife.ee.ethz.ch, hb9jnx@hb9w.che.eu");
-diff --git a/drivers/net/hamradio/baycom_par.c b/drivers/net/hamradio/baycom_par.c
-index 809dc25909d1..92b13b39f426 100644
---- a/drivers/net/hamradio/baycom_par.c
-+++ b/drivers/net/hamradio/baycom_par.c
-@@ -481,7 +481,7 @@ static int iobase[NR_PORTS] = { 0x378, };
- 
- module_param_array(mode, charp, NULL, 0);
- MODULE_PARM_DESC(mode, "baycom operating mode; eg. par96 or picpar");
--module_param_array(iobase, int, NULL, 0);
-+module_param_hw_array(iobase, int, ioport, NULL, 0);
- MODULE_PARM_DESC(iobase, "baycom io base address");
- 
- MODULE_AUTHOR("Thomas M. Sailer, sailer@ife.ee.ethz.ch, hb9jnx@hb9w.che.eu");
-diff --git a/drivers/net/hamradio/baycom_ser_fdx.c b/drivers/net/hamradio/baycom_ser_fdx.c
-index ebc06822fd4d..d9a646acca20 100644
---- a/drivers/net/hamradio/baycom_ser_fdx.c
-+++ b/drivers/net/hamradio/baycom_ser_fdx.c
-@@ -614,9 +614,9 @@ static int baud[NR_PORTS] = { [0 ... NR_PORTS-1] = 1200 };
- 
- module_param_array(mode, charp, NULL, 0);
- MODULE_PARM_DESC(mode, "baycom operating mode; * for software DCD");
--module_param_array(iobase, int, NULL, 0);
-+module_param_hw_array(iobase, int, ioport, NULL, 0);
- MODULE_PARM_DESC(iobase, "baycom io base address");
--module_param_array(irq, int, NULL, 0);
-+module_param_hw_array(irq, int, irq, NULL, 0);
- MODULE_PARM_DESC(irq, "baycom irq number");
- module_param_array(baud, int, NULL, 0);
- MODULE_PARM_DESC(baud, "baycom baud rate (300 to 4800)");
-diff --git a/drivers/net/hamradio/baycom_ser_hdx.c b/drivers/net/hamradio/baycom_ser_hdx.c
-index 60fcf512c208..f1c8a9ff3891 100644
---- a/drivers/net/hamradio/baycom_ser_hdx.c
-+++ b/drivers/net/hamradio/baycom_ser_hdx.c
-@@ -642,9 +642,9 @@ static int irq[NR_PORTS] = { 4, };
- 
- module_param_array(mode, charp, NULL, 0);
- MODULE_PARM_DESC(mode, "baycom operating mode; * for software DCD");
--module_param_array(iobase, int, NULL, 0);
-+module_param_hw_array(iobase, int, ioport, NULL, 0);
- MODULE_PARM_DESC(iobase, "baycom io base address");
--module_param_array(irq, int, NULL, 0);
-+module_param_hw_array(irq, int, irq, NULL, 0);
- MODULE_PARM_DESC(irq, "baycom irq number");
- 
- MODULE_AUTHOR("Thomas M. Sailer, sailer@ife.ee.ethz.ch, hb9jnx@hb9w.che.eu");
-diff --git a/drivers/net/hamradio/dmascc.c b/drivers/net/hamradio/dmascc.c
-index 2479072981a1..dec6b76bc0fb 100644
---- a/drivers/net/hamradio/dmascc.c
-+++ b/drivers/net/hamradio/dmascc.c
-@@ -274,7 +274,7 @@ static unsigned long rand;
- 
- MODULE_AUTHOR("Klaus Kudielka");
- MODULE_DESCRIPTION("Driver for high-speed SCC boards");
--module_param_array(io, int, NULL, 0);
-+module_param_hw_array(io, int, ioport, NULL, 0);
- MODULE_LICENSE("GPL");
- 
- static void __exit dmascc_exit(void)
+I selected and checked the minimal changes necessary to cure the 
+refcount issue.
+
+See :
+
+http://marc.info/?l=linux-hams&m=146873255413533&w=2
+
+Richard does not want to jump in again.
+
+So I would appreciate if someone could help us by confirming that this 
+patch is extremely convenient.
+
+Then someone could submit this subset to linux-hams and linux-netdev 
+referees.
+
+73 de Bernard, f6bvp
+
+----------------------------------------
+
+
+diff -ruN a/net/rose/af_rose.c b/net/rose/af_rose.c
+--- a/net/rose/af_rose.c        2017-04-03 19:02:14.205800053 +0200
++++ b/net/rose/af_rose.c        2017-04-03 12:18:02.290052819 +0200
+@@ -688,8 +688,10 @@
+                 rose->source_call = user->call;
+                 ax25_uid_put(user);
+         } else {
+-               if (ax25_uid_policy && !capable(CAP_NET_BIND_SERVICE))
++               if (ax25_uid_policy && !capable(CAP_NET_BIND_SERVICE)) {
++                       dev_put(dev);
+                         return -EACCES;
++               }
+                 rose->source_call   = *source;
+         }
+
+@@ -710,6 +712,7 @@
+         rose_insert_socket(sk);
+
+         sock_reset_flag(sk, SOCK_ZAPPED);
++       dev_put(dev);
+
+         return 0;
+  }
+diff -ruN a/net/rose/rose_loopback.c b/net/rose/rose_loopback.c
+--- a/net/rose/rose_loopback.c  2017-04-03 19:02:14.206800010 +0200
++++ b/net/rose/rose_loopback.c  2017-04-03 12:18:02.291052777 +0200
+@@ -102,6 +102,7 @@
+                         if ((dev = rose_dev_get(dest)) != NULL) {
+                                 if (rose_rx_call_request(skb, dev, 
+rose_loopback_neigh, lci_o) == 0)
+                                         kfree_skb(skb);
++                               dev_put(dev);
+                         } else {
+                                 kfree_skb(skb);
+                         }
+diff -ruN a/net/rose/rose_route.c b/net/rose/rose_route.c
+--- a/net/rose/rose_route.c     2017-04-03 19:02:14.207799967 +0200
++++ b/net/rose/rose_route.c     2017-04-03 12:18:02.290052819 +0200
+@@ -875,6 +875,11 @@
+         src_addr  = (rose_address *)(skb->data + 
+ROSE_CALL_REQ_SRC_ADDR_OFF);
+         dest_addr = (rose_address *)(skb->data + 
+ROSE_CALL_REQ_DEST_ADDR_OFF);
+
++       if (ax25 == NULL) {
++               printk(KERN_ERR "rose_route_frame : called with ax25 
+callback == NULL\n");
++               return res;
++       }
++
+         spin_lock_bh(&rose_neigh_list_lock);
+         spin_lock_bh(&rose_route_list_lock);
 
