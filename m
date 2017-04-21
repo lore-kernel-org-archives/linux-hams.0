@@ -1,98 +1,101 @@
-From: f6bvp <f6bvp@free.fr>
-Subject: Re: Interesting Rose patch
-Date: Wed, 19 Apr 2017 16:11:10 +0200
-Message-ID: <a6dd41d9-58b2-a202-c021-7d1a604c16d9@free.fr>
-References: <20170116.144051.1777999685832100508.davem@davemloft.net>
- <1a4ee351-031c-932e-0332-779ce33e90e6@trinnet.net>
- <20170201080217.4d8443bb@brox.localnet>
- <3e3f25fc-fc60-c01b-1139-245284200656@trinnet.net>
- <39dad041-f224-735e-adb7-e0fb42771858@free.fr>
- <25ee9245-3595-85f7-93b8-a18d6066a2e3@free.fr>
- <07a1454e-99a2-8cec-d50a-006257687c2e@free.fr>
- <12e0547b-cb2c-1ca0-abc0-d849d8a62139@trinnet.net>
- <3d0e170e-3995-84d0-007e-3d2065296237@free.fr>
- <9f9dba49-c2a5-41e8-9382-9154802e7fbf@trinnet.net>
- <20170327163641.0f992e2d@brox.localnet>
- <06ce7640-bbd6-dd5e-05d9-f1afcec680e5@free.fr>
- <309904235.63498.1492029796017@ox-groupware.bfs.de>
- <6bd2a0b4-12b0-0de0-7bc2-e911d3ab4446@free.fr>
- <a4f993a0-b12a-f3e6-455c-16ea2da28737@trinnet.net>
- <74b515a0-0de1-ebaf-a874-b55f2b682efe@free.fr>
+From: Andrey Konovalov <andreyknvl@google.com>
+Subject: net/rose: null-ptr-deref in rose_route_frame
+Date: Fri, 21 Apr 2017 15:29:45 +0200
+Message-ID: <CAAeHK+wukKuG=VoZAiYQqe_8Y-VPOnE6X5g9R7GB+ZAwg+rhOg@mail.gmail.com>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <74b515a0-0de1-ebaf-a874-b55f2b682efe@free.fr>
-Sender: linux-hams-owner@vger.kernel.org
+Return-path: <linux-kernel-owner@vger.kernel.org>
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=mime-version:from:date:message-id:subject:to:cc;
+        bh=sPuBwlU+cjNyId70ZMsflwi9WYBcZyUUwV72FZ2xCz8=;
+        b=uUz8GpE7fjHTZ7fVERUPowswcVT+jGW//oICYidCCtI1tQy3pdMdVqEl5+DGToVE44
+         yH2owCiwkdSozYE5S8mfHMw1vgijP1PW9SN9Dw5tQIcem8t7DCo21wJ85/U6WrQIty2N
+         8OFoKXpmIgWBueZG793LRRTutOIDd5hIxIGIh5FPe3yv3R0+2s7yM3q0Tj//kRKEAiUn
+         hWuOF2W30VhpvetyHPpPwlyYnArG1cyhalz+m0mxZow6ciS4NeF61SjLaFFh/YcG4jBP
+         gpAGsYjkJFU78OsA40zWRdTrhGDMwnCRCe42FQCQePKZuvc8U1vmYj6gfv+nLcs0GJaU
+         cKWQ==
+Sender: linux-kernel-owner@vger.kernel.org
 List-ID: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="utf-8"; format="flowed"
-To: C Schuman <k4gbb1@embarqmail.com>
-Cc: David Ranch <dranch@trinnet.net>, Basil Gunn <basil@pacabunga.com>, linux-hams@vger.kernel.org, =?UTF-8?Q?Ralf_B=c3=a4chle_DL5RB?= <ralf@linux-mips.org>, Richard Stearn <richard@rns-stearn.co.uk>
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+To: Ralf Baechle <ralf@linux-mips.org>, "David S. Miller" <davem@davemloft.net>, linux-hams@vger.kernel.org, netdev <netdev@vger.kernel.org>, LKML <linux-kernel@vger.kernel.org>
+Cc: Dmitry Vyukov <dvyukov@google.com>, Kostya Serebryany <kcc@google.com>, syzkaller <syzkaller@googlegroups.com>
 
-Charley K4GBB was kind enough to check "unregister netdevice" bug on two 
-of his hosts runing ROSE-FPAC nodes .
-Here I forward his two reports.
+Hi,
 
-Bernard
+I've got the following error report while fuzzing the kernel with syzkaller.
 
+On commit 4f7d029b9bf009fbee76bb10c0c4351a1870d2f3 (4.11-rc7).
 
-The same condition exists on this host.
+rose_xmit calls rose_route_frame(skb, ax25 = NULL), and
+rose_route_frame then dereferences ax25 when doing
+ax25cmp(&ax25->dest_addr, &rose_neigh->callsign).
 
-root@linuxlab4:~# uname -a
-Linux linuxlab4 4.1.21+ #872 Wed Apr 6 17:27:13 BST 2016 armv6l GNU/Linux
-root@linuxlab4:~# lsb_release -a
-No LSB modules are available.
-Distributor ID:    Debian
-Description:    Debian GNU/Linux 7.11 (wheezy)
-Release:    7.11
-Codename:    wheezy
-
-
-
-On Tue, Apr 18, 2017 at 2:47 PM, Charles Schuman <k4gbb1@gmail.com 
-<mailto:k4gbb1@gmail.com>> wrote:
-
-    Stopping ax25 and verifying ax25 sockets closed and rose module
-    still loaded the rmmod rose cmd
-    causes a endless loop of the following message.
-
-    root@linuxlab5:~# rmmod rose
-    Message from syslogd@linuxlab5 at Apr 18 14:37:20 ...
-      kernel:[4229400.605324] unregister_netdevice: waiting for rose0 to
-    become free. Usage count = 33
-
-    _root@linuxlab5:~# uname -a_
-    Linux linuxlab5 4.1.19+ #858 Tue Mar 15 15:52:03 GMT 2016 armv6l
-    GNU/Linux
-    _root@linuxlab5:~# lsb_release -a_
-    No LSB modules are available.
-    Distributor ID:    Debian
-    Description:    Debian GNU/Linux 7.11 (wheezy)
-    Release:    7.11
-    Codename:    wheezy
-
-
-
-    On Tue, Apr 18, 2017 at 12:58 PM, f6bvp <f6bvp@free.fr
-    <mailto:f6bvp@free.fr>> wrote:
-
-        Hello Charley,
-
-        Glad to hear from you and I hope you are fine.
-
-        I you want, you may confirm that shutting down rose0 (ifconfig rose0
-        down) and removing rose module (rmmod rose) can freeze the
-        kernel into
-        an infinite loop waiting for rose to be free.
-
-        73 de Bernard, f6bvp
-
-
-        Le 18/04/2017 à 04:24, Charles Schuman a écrit :
-         > Bernard,
-         >   I have a FPAC Node set up as a Test Bed on m RPi-B1.
-         > What would you like me to test.
-         >
-         > <<Charley>>
-         >   k4gbb
-
-
+kasan: GPF could be caused by NULL-ptr deref or user memory access
+general protection fault: 0000 [#1] SMP KASAN
+Dumping ftrace buffer:
+   (ftrace buffer empty)
+Modules linked in:
+CPU: 1 PID: 15 Comm: ksoftirqd/1 Not tainted 4.11.0-rc7+ #251
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS Bochs 01/01/2011
+task: ffff88003e10adc0 task.stack: ffff88003e148000
+RIP: 0010:ax25cmp+0x3f/0x150 net/ax25/ax25_addr.c:122
+RSP: 0018:ffff88003e14d450 EFLAGS: 00010202
+RAX: ffff88003e10adc0 RBX: ffff880069c606b8 RCX: 0000000000000002
+RDX: 0000000000000100 RSI: 0000000000000007 RDI: 0000000000000017
+RBP: ffff88003e14d488 R08: dffffc0000000000 R09: 0000000000000000
+R10: 6a8a172cb651d699 R11: dffffc0000000000 R12: dffffc0000000000
+R13: 000000000000001d R14: ffff880069c606c0 R15: 0000000000000017
+FS:  0000000000000000(0000) GS:ffff88003ed00000(0000) knlGS:0000000000000000
+CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+CR2: 000000002044ef69 CR3: 000000005682b000 CR4: 00000000000006e0
+Call Trace:
+ rose_route_frame+0x3b1/0x19f0 net/rose/rose_route.c:883
+ rose_xmit+0x7f/0x180 net/rose/rose_dev.c:110
+ __netdev_start_xmit include/linux/netdevice.h:3980 [inline]
+ netdev_start_xmit include/linux/netdevice.h:3989 [inline]
+ xmit_one net/core/dev.c:2908 [inline]
+ dev_hard_start_xmit+0x24e/0xac0 net/core/dev.c:2924
+ __dev_queue_xmit+0x1ff8/0x2840 net/core/dev.c:3391
+ dev_queue_xmit+0x17/0x20 net/core/dev.c:3424
+ bond_dev_queue_xmit+0x185/0x240 drivers/net/bonding/bond_main.c:261
+ bond_xmit_slave_id+0x1fe/0x590 drivers/net/bonding/bond_main.c:3702
+ bond_xmit_roundrobin drivers/net/bonding/bond_main.c:3779 [inline]
+ __bond_start_xmit drivers/net/bonding/bond_main.c:4037 [inline]
+ bond_start_xmit+0xb8a/0x17f0 drivers/net/bonding/bond_main.c:4071
+ __netdev_start_xmit include/linux/netdevice.h:3980 [inline]
+ netdev_start_xmit include/linux/netdevice.h:3989 [inline]
+ xmit_one net/core/dev.c:2908 [inline]
+ dev_hard_start_xmit+0x24e/0xac0 net/core/dev.c:2924
+ __dev_queue_xmit+0x1ff8/0x2840 net/core/dev.c:3391
+ dev_queue_xmit+0x17/0x20 net/core/dev.c:3424
+ neigh_connected_output+0x534/0x790 net/core/neighbour.c:1338
+ neigh_output include/net/neighbour.h:478 [inline]
+ ip6_finish_output2+0xbf8/0x2560 net/ipv6/ip6_output.c:123
+ ip6_finish_output+0x302/0x960 net/ipv6/ip6_output.c:149
+ NF_HOOK_COND include/linux/netfilter.h:246 [inline]
+ ip6_output+0x1cb/0x8d0 net/ipv6/ip6_output.c:163
+ dst_output include/net/dst.h:486 [inline]
+ NF_HOOK.constprop.39+0x115/0x650 include/linux/netfilter.h:257
+ mld_sendpack+0x6fc/0xd40 net/ipv6/mcast.c:1660
+ mld_send_cr net/ipv6/mcast.c:1951 [inline]
+ mld_ifc_timer_expire+0x3c3/0x750 net/ipv6/mcast.c:2449
+ call_timer_fn+0x23f/0x810 kernel/time/timer.c:1268
+ expire_timers kernel/time/timer.c:1307 [inline]
+ __run_timers+0x94e/0xcd0 kernel/time/timer.c:1601
+ run_timer_softirq+0x21/0x80 kernel/time/timer.c:1614
+ __do_softirq+0x2fb/0xb7d kernel/softirq.c:284
+ run_ksoftirqd+0x20/0x60 kernel/softirq.c:676
+ smpboot_thread_fn+0x562/0x860 kernel/smpboot.c:164
+ kthread+0x35e/0x430 kernel/kthread.c:231
+ ret_from_fork+0x31/0x40 arch/x86/entry/entry_64.S:430
+Code: 49 89 f6 49 bc 00 00 00 00 00 fc ff df 48 83 ec 10 48 89 7d c8
+48 89 75 d0 e8 4e 4a 57 fd 4c 89 f9 4c 89 fe 48 c1 e9 03 83 e6 07 <42>
+0f b6 0c 21 40 38 f1 7f 08 84 c9 0f 85 ef 00 00 00 4c 89 f1
+RIP: ax25cmp+0x3f/0x150 net/ax25/ax25_addr.c:122 RSP: ffff88003e14d450
+---[ end trace f569731c3e601819 ]---
+Kernel panic - not syncing: Fatal exception in interrupt
+Dumping ftrace buffer:
+   (ftrace buffer empty)
+Kernel Offset: disabled
+Rebooting in 86400 seconds..
