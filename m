@@ -1,24 +1,33 @@
-From: David Miller <davem@davemloft.net>
-Subject: Re: [PATCH] yam: use memdup_user
-Date: Mon, 08 May 2017 15:02:27 -0400 (EDT)
-Message-ID: <20170508.150227.1491065214426888698.davem@davemloft.net>
-References: <df8091d4c64a0d5a7ab0a5989f34552a5eebd15e.1493778999.git.geliangtang@gmail.com>
-        <bd8ca4a87fc128e5260c13960423f025e1b42c5c.1493783298.git.geliangtang@gmail.com>
+From: SF Markus Elfring <elfring@users.sourceforge.net>
+Subject: [PATCH 0/4] hamradio: Fine-tuning for nine function implementations
+Date: Tue, 9 May 2017 16:21:14 +0200
+Message-ID: <4c5c939a-bd55-7b88-8e41-49f5544b7658@users.sourceforge.net>
 Mime-Version: 1.0
 Content-Transfer-Encoding: 7bit
-Return-path: <netdev-owner@vger.kernel.org>
-In-Reply-To: <bd8ca4a87fc128e5260c13960423f025e1b42c5c.1493783298.git.geliangtang@gmail.com>
-Sender: netdev-owner@vger.kernel.org
+Return-path: <linux-kernel-owner@vger.kernel.org>
+Content-Language: en-US
+Sender: linux-kernel-owner@vger.kernel.org
 List-ID: <linux-hams.vger.kernel.org>
-Content-Type: Text/Plain; charset="us-ascii"
-To: geliangtang@gmail.com
-Cc: jpr@f6fbb.org, linux-hams@vger.kernel.org, netdev@vger.kernel.org, linux-kernel@vger.kernel.org
+Content-Type: text/plain; charset="us-ascii"
+To: linux-hams@vger.kernel.org, netdev@vger.kernel.org, "David S. Miller" <davem@davemloft.net>, Javier Martinez Canillas <javier@osg.samsung.com>, Jean-Paul Roubelat <jpr@f6fbb.org>
+Cc: LKML <linux-kernel@vger.kernel.org>, kernel-janitors@vger.kernel.org
 
-From: Geliang Tang <geliangtang@gmail.com>
-Date: Sat,  6 May 2017 23:42:22 +0800
+From: Markus Elfring <elfring@users.sourceforge.net>
+Date: Tue, 9 May 2017 16:11:23 +0200
 
-> Use memdup_user() helper instead of open-coding to simplify the code.
-> 
-> Signed-off-by: Geliang Tang <geliangtang@gmail.com>
+A few update suggestions were taken into account
+from static source code analysis.
 
-Applied.
+Markus Elfring (4):
+  Combine two seq_printf() calls into one in yam_seq_show()
+  Adjust four function calls together with a variable assignment
+  Use seq_puts() in bpq_seq_show()
+  Adjust four function calls together with a variable assignment
+
+ drivers/net/hamradio/bpqether.c | 14 +++++++++-----
+ drivers/net/hamradio/yam.c      | 15 +++++++++------
+ 2 files changed, 18 insertions(+), 11 deletions(-)
+
+-- 
+2.12.2
+
