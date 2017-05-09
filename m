@@ -1,45 +1,75 @@
 From: SF Markus Elfring <elfring@users.sourceforge.net>
-Subject: [PATCH 3/4] hamradio: Use seq_puts() in bpq_seq_show()
-Date: Tue, 9 May 2017 16:24:18 +0200
-Message-ID: <ef61af8b-a3b1-9d74-22e4-1df1bac08f98@users.sourceforge.net>
+Subject: [PATCH 4/4] hamradio: Adjust four function calls together with a
+ variable assignment
+Date: Tue, 9 May 2017 16:25:07 +0200
+Message-ID: <20f62ffa-b12a-f14c-df7b-96a750153823@users.sourceforge.net>
 References: <4c5c939a-bd55-7b88-8e41-49f5544b7658@users.sourceforge.net>
 Mime-Version: 1.0
 Content-Transfer-Encoding: 7bit
-Return-path: <linux-hams-owner@vger.kernel.org>
+Return-path: <linux-kernel-owner@vger.kernel.org>
 In-Reply-To: <4c5c939a-bd55-7b88-8e41-49f5544b7658@users.sourceforge.net>
 Content-Language: en-US
-Sender: linux-hams-owner@vger.kernel.org
+Sender: linux-kernel-owner@vger.kernel.org
 List-ID: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
 To: linux-hams@vger.kernel.org, netdev@vger.kernel.org, "David S. Miller" <davem@davemloft.net>, Javier Martinez Canillas <javier@osg.samsung.com>, Jean-Paul Roubelat <jpr@f6fbb.org>
 Cc: LKML <linux-kernel@vger.kernel.org>, kernel-janitors@vger.kernel.org
 
 From: Markus Elfring <elfring@users.sourceforge.net>
-Date: Tue, 9 May 2017 15:45:09 +0200
+Date: Tue, 9 May 2017 15:57:17 +0200
 
-A string which did not contain a data format specification should be put
-into a sequence. Thus use the corresponding function "seq_puts".
+The script "checkpatch.pl" pointed information out like the following.
 
-This issue was detected by using the Coccinelle software.
+ERROR: do not use assignment in if condition
+
+Thus fix affected source code places.
 
 Signed-off-by: Markus Elfring <elfring@users.sourceforge.net>
 ---
- drivers/net/hamradio/bpqether.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/hamradio/bpqether.c | 12 ++++++++----
+ 1 file changed, 8 insertions(+), 4 deletions(-)
 
 diff --git a/drivers/net/hamradio/bpqether.c b/drivers/net/hamradio/bpqether.c
-index f62e7f325cf9..eaa0f2e8e561 100644
+index eaa0f2e8e561..5e234e0ca256 100644
 --- a/drivers/net/hamradio/bpqether.c
 +++ b/drivers/net/hamradio/bpqether.c
-@@ -434,7 +434,7 @@ static int bpq_seq_show(struct seq_file *seq, void *v)
- 			bpqdev->dest_addr);
+@@ -185,7 +185,8 @@ static int bpq_rcv(struct sk_buff *skb, struct net_device *dev, struct packet_ty
+ 	if (!net_eq(dev_net(dev), &init_net))
+ 		goto drop;
  
- 		if (is_multicast_ether_addr(bpqdev->acpt_addr))
--			seq_printf(seq, "*\n");
-+			seq_puts(seq, "*\n");
- 		else
- 			seq_printf(seq, "%pM\n", bpqdev->acpt_addr);
+-	if ((skb = skb_share_check(skb, GFP_ATOMIC)) == NULL)
++	skb = skb_share_check(skb, GFP_ATOMIC);
++	if (!skb)
+ 		return NET_RX_DROP;
  
+ 	if (!pskb_may_pull(skb, sizeof(struct ethhdr)))
+@@ -286,7 +287,8 @@ static netdev_tx_t bpq_xmit(struct sk_buff *skb, struct net_device *dev)
+ 	bpq = netdev_priv(dev);
+ 
+ 	orig_dev = dev;
+-	if ((dev = bpq_get_ether_dev(dev)) == NULL) {
++	dev = bpq_get_ether_dev(dev);
++	if (!dev) {
+ 		orig_dev->stats.tx_dropped++;
+ 		kfree_skb(skb);
+ 		return NETDEV_TX_OK;
+@@ -565,12 +567,14 @@ static int bpq_device_event(struct notifier_block *this,
+ 		break;
+ 
+ 	case NETDEV_DOWN:	/* ethernet device closed -> close BPQ interface */
+-		if ((dev = bpq_get_ax25_dev(dev)) != NULL)
++		dev = bpq_get_ax25_dev(dev);
++		if (dev)
+ 			dev_close(dev);
+ 		break;
+ 
+ 	case NETDEV_UNREGISTER:	/* ethernet device removed -> free BPQ interface */
+-		if ((dev = bpq_get_ax25_dev(dev)) != NULL)
++		dev = bpq_get_ax25_dev(dev);
++		if (dev)
+ 			bpq_free_device(dev);
+ 		break;
+ 	default:
 -- 
 2.12.2
 
