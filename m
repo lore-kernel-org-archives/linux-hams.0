@@ -1,75 +1,43 @@
-From: SF Markus Elfring <elfring@users.sourceforge.net>
-Subject: [PATCH 4/4] hamradio: Adjust four function calls together with a
- variable assignment
-Date: Tue, 9 May 2017 16:25:07 +0200
-Message-ID: <20f62ffa-b12a-f14c-df7b-96a750153823@users.sourceforge.net>
+From: David Miller <davem@davemloft.net>
+Subject: Re: [PATCH 0/4] hamradio: Fine-tuning for nine function
+ implementations
+Date: Tue, 09 May 2017 10:43:51 -0400 (EDT)
+Message-ID: <20170509.104351.172861857537994111.davem@davemloft.net>
 References: <4c5c939a-bd55-7b88-8e41-49f5544b7658@users.sourceforge.net>
 Mime-Version: 1.0
 Content-Transfer-Encoding: 7bit
-Return-path: <linux-kernel-owner@vger.kernel.org>
+Return-path: <linux-hams-owner@vger.kernel.org>
 In-Reply-To: <4c5c939a-bd55-7b88-8e41-49f5544b7658@users.sourceforge.net>
-Content-Language: en-US
-Sender: linux-kernel-owner@vger.kernel.org
+Sender: linux-hams-owner@vger.kernel.org
 List-ID: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"
-To: linux-hams@vger.kernel.org, netdev@vger.kernel.org, "David S. Miller" <davem@davemloft.net>, Javier Martinez Canillas <javier@osg.samsung.com>, Jean-Paul Roubelat <jpr@f6fbb.org>
-Cc: LKML <linux-kernel@vger.kernel.org>, kernel-janitors@vger.kernel.org
+Content-Type: Text/Plain; charset="us-ascii"
+To: elfring@users.sourceforge.net
+Cc: linux-hams@vger.kernel.org, netdev@vger.kernel.org, javier@osg.samsung.com, jpr@f6fbb.org, linux-kernel@vger.kernel.org, kernel-janitors@vger.kernel.org
 
-From: Markus Elfring <elfring@users.sourceforge.net>
-Date: Tue, 9 May 2017 15:57:17 +0200
 
-The script "checkpatch.pl" pointed information out like the following.
+You can feel free to continue submitting these changes, even though
+people have asked you to back off on this, and that there is little to
+no value to this churn.
 
-ERROR: do not use assignment in if condition
+But I personally am not going to apply any of your changes...
 
-Thus fix affected source code places.
+Especially since you keep posting even though people are asking you to
+not make these changes.
 
-Signed-off-by: Markus Elfring <elfring@users.sourceforge.net>
----
- drivers/net/hamradio/bpqether.c | 12 ++++++++----
- 1 file changed, 8 insertions(+), 4 deletions(-)
+You can ignore feedback like that, and you are explicitly being
+notified that as a result, we can feel free to ignore you _too_.
 
-diff --git a/drivers/net/hamradio/bpqether.c b/drivers/net/hamradio/bpqether.c
-index eaa0f2e8e561..5e234e0ca256 100644
---- a/drivers/net/hamradio/bpqether.c
-+++ b/drivers/net/hamradio/bpqether.c
-@@ -185,7 +185,8 @@ static int bpq_rcv(struct sk_buff *skb, struct net_device *dev, struct packet_ty
- 	if (!net_eq(dev_net(dev), &init_net))
- 		goto drop;
- 
--	if ((skb = skb_share_check(skb, GFP_ATOMIC)) == NULL)
-+	skb = skb_share_check(skb, GFP_ATOMIC);
-+	if (!skb)
- 		return NET_RX_DROP;
- 
- 	if (!pskb_may_pull(skb, sizeof(struct ethhdr)))
-@@ -286,7 +287,8 @@ static netdev_tx_t bpq_xmit(struct sk_buff *skb, struct net_device *dev)
- 	bpq = netdev_priv(dev);
- 
- 	orig_dev = dev;
--	if ((dev = bpq_get_ether_dev(dev)) == NULL) {
-+	dev = bpq_get_ether_dev(dev);
-+	if (!dev) {
- 		orig_dev->stats.tx_dropped++;
- 		kfree_skb(skb);
- 		return NETDEV_TX_OK;
-@@ -565,12 +567,14 @@ static int bpq_device_event(struct notifier_block *this,
- 		break;
- 
- 	case NETDEV_DOWN:	/* ethernet device closed -> close BPQ interface */
--		if ((dev = bpq_get_ax25_dev(dev)) != NULL)
-+		dev = bpq_get_ax25_dev(dev);
-+		if (dev)
- 			dev_close(dev);
- 		break;
- 
- 	case NETDEV_UNREGISTER:	/* ethernet device removed -> free BPQ interface */
--		if ((dev = bpq_get_ax25_dev(dev)) != NULL)
-+		dev = bpq_get_ax25_dev(dev);
-+		if (dev)
- 			bpq_free_device(dev);
- 		break;
- 	default:
--- 
-2.12.2
+People who submit kernel changes in the way you do waste a lot of
+people's valuable time which could be spent on fixing real bugs,
+implementing new important features, adding new documentation to
+improve the understanding of the kernel for everyone, etc.
 
+But instead, that time is being invested to reviewing your extremely
+low value patches, many of which are undesirable.
+
+I will not stand for it as the networking maintainer and am going to
+ignore everything you submit until your approach and attitude towards
+kernel patch submission _fundamentally_ (not temporarily, or for one
+specific set of patches) changes.
+
+Thank you.
