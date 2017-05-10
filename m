@@ -1,43 +1,40 @@
-From: David Miller <davem@davemloft.net>
-Subject: Re: [PATCH 0/4] hamradio: Fine-tuning for nine function
- implementations
-Date: Tue, 09 May 2017 10:43:51 -0400 (EDT)
-Message-ID: <20170509.104351.172861857537994111.davem@davemloft.net>
+From: David Laight <David.Laight@ACULAB.COM>
+Subject: RE: [PATCH 1/4] hamradio: Combine two seq_printf() calls into one
+ in yam_seq_show()
+Date: Wed, 10 May 2017 08:48:13 +0000
+Message-ID: <063D6719AE5E284EB5DD2968C1650D6DCFFE852F@AcuExch.aculab.com>
 References: <4c5c939a-bd55-7b88-8e41-49f5544b7658@users.sourceforge.net>
+ <c2866b46-28c9-f17f-dce7-96425a17a43a@users.sourceforge.net>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
-Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <4c5c939a-bd55-7b88-8e41-49f5544b7658@users.sourceforge.net>
-Sender: linux-hams-owner@vger.kernel.org
+Content-Transfer-Encoding: base64
+Return-path: <linux-kernel-owner@vger.kernel.org>
+In-Reply-To: <c2866b46-28c9-f17f-dce7-96425a17a43a@users.sourceforge.net>
+Content-Language: en-US
+Sender: linux-kernel-owner@vger.kernel.org
 List-ID: <linux-hams.vger.kernel.org>
-Content-Type: Text/Plain; charset="us-ascii"
-To: elfring@users.sourceforge.net
-Cc: linux-hams@vger.kernel.org, netdev@vger.kernel.org, javier@osg.samsung.com, jpr@f6fbb.org, linux-kernel@vger.kernel.org, kernel-janitors@vger.kernel.org
+Content-Type: text/plain; charset="us-ascii"
+To: 'SF Markus Elfring' <elfring@users.sourceforge.net>, "linux-hams@vger.kernel.org" <linux-hams@vger.kernel.org>, "netdev@vger.kernel.org" <netdev@vger.kernel.org>, "David S. Miller" <davem@davemloft.net>, Javier Martinez Canillas <javier@osg.samsung.com>, Jean-Paul Roubelat <jpr@f6fbb.org>
+Cc: LKML <linux-kernel@vger.kernel.org>, "kernel-janitors@vger.kernel.org" <kernel-janitors@vger.kernel.org>
 
-
-You can feel free to continue submitting these changes, even though
-people have asked you to back off on this, and that there is little to
-no value to this churn.
-
-But I personally am not going to apply any of your changes...
-
-Especially since you keep posting even though people are asking you to
-not make these changes.
-
-You can ignore feedback like that, and you are explicitly being
-notified that as a result, we can feel free to ignore you _too_.
-
-People who submit kernel changes in the way you do waste a lot of
-people's valuable time which could be spent on fixing real bugs,
-implementing new important features, adding new documentation to
-improve the understanding of the kernel for everyone, etc.
-
-But instead, that time is being invested to reviewing your extremely
-low value patches, many of which are undesirable.
-
-I will not stand for it as the networking maintainer and am going to
-ignore everything you submit until your approach and attitude towards
-kernel patch submission _fundamentally_ (not temporarily, or for one
-specific set of patches) changes.
-
-Thank you.
+RnJvbTogU0YgTWFya3VzIEVsZnJpbmcNCj4gU2VudDogMDkgTWF5IDIwMTcgMTU6MjINCj4gQSBi
+aXQgb2YgZGF0YSB3YXMgcHV0IGludG8gYSBzZXF1ZW5jZSBieSB0d28gc2VwYXJhdGUgZnVuY3Rp
+b24gY2FsbHMuDQo+IFByaW50IHRoZSBzYW1lIGRhdGEgYnkgYSBzaW5nbGUgZnVuY3Rpb24gY2Fs
+bCBpbnN0ZWFkLg0KPiANCj4gVGhpcyBpc3N1ZSB3YXMgZGV0ZWN0ZWQgYnkgdXNpbmcgdGhlIENv
+Y2NpbmVsbGUgc29mdHdhcmUuDQo+IA0KPiBTaWduZWQtb2ZmLWJ5OiBNYXJrdXMgRWxmcmluZyA8
+ZWxmcmluZ0B1c2Vycy5zb3VyY2Vmb3JnZS5uZXQ+DQo+IC0tLQ0KPiAgZHJpdmVycy9uZXQvaGFt
+cmFkaW8veWFtLmMgfCAzICstLQ0KPiAgMSBmaWxlIGNoYW5nZWQsIDEgaW5zZXJ0aW9uKCspLCAy
+IGRlbGV0aW9ucygtKQ0KPiANCj4gZGlmZiAtLWdpdCBhL2RyaXZlcnMvbmV0L2hhbXJhZGlvL3lh
+bS5jIGIvZHJpdmVycy9uZXQvaGFtcmFkaW8veWFtLmMNCj4gaW5kZXggYjY4OTFhZGExZDdiLi41
+NDJmMWU1MTFkZjEgMTAwNjQ0DQo+IC0tLSBhL2RyaXZlcnMvbmV0L2hhbXJhZGlvL3lhbS5jDQo+
+ICsrKyBiL2RyaXZlcnMvbmV0L2hhbXJhZGlvL3lhbS5jDQo+IEBAIC04MzAsOCArODMwLDcgQEAg
+c3RhdGljIGludCB5YW1fc2VxX3Nob3coc3RydWN0IHNlcV9maWxlICpzZXEsIHZvaWQgKnYpDQo+
+ICAJc2VxX3ByaW50ZihzZXEsICIgIFJ4RnJhbWVzICVsdVxuIiwgZGV2LT5zdGF0cy5yeF9wYWNr
+ZXRzKTsNCj4gIAlzZXFfcHJpbnRmKHNlcSwgIiAgVHhJbnQgICAgJXVcbiIsIHlwLT5uYl9tZGlu
+dCk7DQo+ICAJc2VxX3ByaW50ZihzZXEsICIgIFJ4SW50ICAgICV1XG4iLCB5cC0+bmJfcnhpbnQp
+Ow0KPiAtCXNlcV9wcmludGYoc2VxLCAiICBSeE92ZXIgICAlbHVcbiIsIGRldi0+c3RhdHMucnhf
+Zmlmb19lcnJvcnMpOw0KPiAtCXNlcV9wcmludGYoc2VxLCAiXG4iKTsNCj4gKwlzZXFfcHJpbnRm
+KHNlcSwgIiAgUnhPdmVyICAgJWx1XG5cbiIsIGRldi0+c3RhdHMucnhfZmlmb19lcnJvcnMpOw0K
+PiAgCXJldHVybiAwOw0KDQpUaGUgY29kZSB3YXMgY29uc2lzdGVudGx5IChhbmQgcHJvYmFibHkg
+ZGVsaWJlcmF0ZWx5KSB1c2luZyBvbmUgc2VxX3ByaW50ZigpDQpjYWxsIGZvciBlYWNoIGxpbmUg
+c28gdGhhdCB0aGUgc291cmNlIGxvb2tzICdhIGJpdCBsaWtlJyB0aGUgb3V0cHV0Lg0KDQpUaGVz
+ZSBjaGFuZ2VzIGFyZSBhbGwgc3R1cGlkLg0KDQoJRGF2aWQNCg0K
