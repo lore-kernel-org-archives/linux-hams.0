@@ -1,39 +1,56 @@
-From: David Miller <davem@davemloft.net>
-Subject: Re: [PATCH v2] hdlcdrv: fix divide error bug if bitrate is 0
-Date: Fri, 19 May 2017 17:41:17 -0400 (EDT)
-Message-ID: <20170519.174117.491042433043886205.davem@davemloft.net>
-References: <CAAeHK+ya2sAtLmJ0VyP6e=13OXUw98dp1WdRFU=o5+xGFGPtbQ@mail.gmail.com>
-        <20170519132146.744-1-firogm@gmail.com>
+From: Kalle Valo <kvalo-sgV2jX0FEOL9JmXXK+q4OQ@public.gmane.org>
+Subject: Re: [15/16] hostap: convert hostap_cmd_queue.usecnt from atomic_t to
+ refcount_t
+Date: Mon, 22 May 2017 15:24:55 +0000 (UTC)
+Message-ID: <20170522152455.DF19960AEE@smtp.codeaurora.org>
+References: <1490691403-4016-16-git-send-email-elena.reshetova@intel.com>
 Mime-Version: 1.0
 Content-Transfer-Encoding: 7bit
-Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <20170519132146.744-1-firogm@gmail.com>
-Sender: linux-hams-owner@vger.kernel.org
+Return-path: <linux-rdma-owner-u79uwXL29TY76Z2rM5mHXA@public.gmane.org>
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
+        s=default; t=1495466695;
+        bh=uwUgEBLr1hKKGsJHPHtKIpNl+L4nEzs+pranrlAn93M=;
+        h=Subject:From:In-Reply-To:References:To:Cc:Date:From;
+        b=j0MLYQwwqW/L3dDfmCJ0wuZ1YxdbAS0PFEgipw5m9MD1p2v99OG4uttBsQFTit9Lk
+         cKoQYQqdRGLUzbY1xwCOoZsPQtqydUxLLFokF8Cg+AxUjqYwKt6/zcoCAboB6pbqVb
+         ipfT+b1QGRHrTYov3TazRlJ4m9d3PYC4/JXaW1cA=
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
+        s=default; t=1495466694;
+        bh=uwUgEBLr1hKKGsJHPHtKIpNl+L4nEzs+pranrlAn93M=;
+        h=Subject:From:In-Reply-To:References:To:Cc:From;
+        b=VHXsdBq4IPGGZ+TA5WkfR70CzpTnCiERuiCB0AGfprmwQWRdLTItu6sL8QLw76qy8
+         kNNyPZeFxTnyiv1on0jJDu/uhPQYnzEyHiKjySFVGGOh250ira2foM1F3rk5FD5mEn
+         tKQMhAKMyYoretDtoYR+l68zacdoQkUs4AlI1mrI=
+In-Reply-To: <1490691403-4016-16-git-send-email-elena.reshetova-ral2JQCrhuEAvxtiuMwx3w@public.gmane.org>
+Sender: linux-rdma-owner-u79uwXL29TY76Z2rM5mHXA@public.gmane.org
 List-ID: <linux-hams.vger.kernel.org>
-Content-Type: Text/Plain; charset="us-ascii"
-To: firogm@gmail.com
-Cc: t.sailer@alumni.ethz.ch, wharms@bfs.de, andreyknvl@google.com, linux-hams@vger.kernel.org, gregkh@linuxfoundation.org, netdev@vger.kernel.org
+Content-Type: text/plain; charset="us-ascii"
+To: Elena Reshetova <elena.reshetova-ral2JQCrhuEAvxtiuMwx3w@public.gmane.org>
+Cc: netdev-u79uwXL29TY76Z2rM5mHXA@public.gmane.org, linux-kernel-u79uwXL29TY76Z2rM5mHXA@public.gmane.org, linux-arm-kernel-IAPFreCvJWM7uuMidbF8XUB+6BGkLq7r@public.gmane.org, linux-rdma-u79uwXL29TY76Z2rM5mHXA@public.gmane.org, linux-hams-u79uwXL29TY76Z2rM5mHXA@public.gmane.org, linux-ppp-u79uwXL29TY76Z2rM5mHXA@public.gmane.org, linux-wireless-u79uwXL29TY76Z2rM5mHXA@public.gmane.org, ganeshgr-ut6Up61K2wZBDgjK7y7TUQ@public.gmane.org, nbd-p3rKhJxN3npAfugRpC6u6w@public.gmane.org, blogic-p3rKhJxN3npAfugRpC6u6w@public.gmane.org, matthias.bgg-Re5JQEeQqe8AvxtiuMwx3w@public.gmane.org, yishaih-VPRAkNaXOzVWk0Htik3J/w@public.gmane.org, saeedm-VPRAkNaXOzVWk0Htik3J/w@public.gmane.org, matanb-VPRAkNaXOzVWk0Htik3J/w@public.gmane.org, leonro-VPRAkNaXOzVWk0Htik3J/w@public.gmane.org, ajk-iz34hMvxm2Hmj42eshorlhS11BummzK+@public.gmane.org, paulus-eUNUBHrolfbYtjvyW6yDsg@public.gmane.org, j@w1.fi, peterz-wEGCiKHe2LqWVfeAwA7xHQ@public.gmane.org, keescook-F7+t8E8rja9g9hUCZPvPmw@public.gmane.org, gregkh-hQyY1W1yCW8ekmWlsbkhG0B+6BGkLq7r@public.gmane.org, Elena Reshetova <elena.reshetova-ral2JQCrhuEAvxtiuMwx3w@public.gmane.org>, Hans Liljestrand <ishkamiel-Re5JQEeQqe8AvxtiuMwx3w@public.gmane.org>, David Windsor <dwindsor-Re5JQEeQqe8AvxtiuMwx3w@public.gmane.org>
 
-From: Firo Yang <firogm@gmail.com>
-Date: Fri, 19 May 2017 21:21:46 +0800
+Elena Reshetova <elena.reshetova-ral2JQCrhuEAvxtiuMwx3w@public.gmane.org> wrote:
+> refcount_t type and corresponding API should be
+> used instead of atomic_t when the variable is used as
+> a reference counter. This allows to avoid accidental
+> refcounter overflows that might lead to use-after-free
+> situations.
+> 
+> Signed-off-by: Elena Reshetova <elena.reshetova-ral2JQCrhuEAvxtiuMwx3w@public.gmane.org>
+> Signed-off-by: Hans Liljestrand <ishkamiel-Re5JQEeQqe8AvxtiuMwx3w@public.gmane.org>
+> Signed-off-by: Kees Cook <keescook-F7+t8E8rja9g9hUCZPvPmw@public.gmane.org>
+> Signed-off-by: David Windsor <dwindsor-Re5JQEeQqe8AvxtiuMwx3w@public.gmane.org>
 
-> @@ -576,6 +576,10 @@ static int hdlcdrv_ioctl(struct net_device *dev, struct ifreq *ifr, int cmd)
->  	case HDLCDRVCTL_CALIBRATE:
->  		if(!capable(CAP_SYS_RAWIO))
->  			return -EPERM;
-> +		if (!netif_running(dev))
-> +			return -ENODEV;
-> +		if (!(s->par.bitrate > 0))
-> +			return -EINVAL;
+2 patches applied to wireless-drivers-next.git, thanks.
 
-This test is so un-canonical and convoluted.
+552aa585faff hostap: convert hostap_cmd_queue.usecnt from atomic_t to refcount_t
+0aeffa7041d8 orinoco_usb: convert request_context.refcount from atomic_t to refcount_t
 
-Please use something more straightforward.  I really think Alan
-Cox's patch handled this more cleanly.  Make the test something
-like "if (x <= 0) return -EINVAL;".
+-- 
+https://patchwork.kernel.org/patch/9648427/
 
-I also am not convinced about the netif_running() test and at
-best it is a separate change from this divide by zero bug fix
-so belongs in a separate patch.
+https://wireless.wiki.kernel.org/en/developers/documentation/submittingpatches
 
-Thank you.
+--
+To unsubscribe from this list: send the line "unsubscribe linux-rdma" in
+the body of a message to majordomo-u79uwXL29TY76Z2rM5mHXA@public.gmane.org
+More majordomo info at  http://vger.kernel.org/majordomo-info.html
