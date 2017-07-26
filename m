@@ -1,80 +1,53 @@
-From: "Reshetova, Elena" <elena.reshetova@intel.com>
-Subject: Re: [PATCH 00/36] v2 net subsystem misc refcounter
-	conversions
-Date: Wed, 5 Jul 2017 09:03:06 +0000
-Message-ID: <2236FBA76BA1254E88B949DDB74E612B6FF20D45@IRSMSX102.ger.corp.intel.com>
-References: <1499172811-16271-1-git-send-email-elena.reshetova@intel.com>
-	<20170704.230040.195111189904913382.davem@davemloft.net>
-Mime-Version: 1.0
+From: Arnd Bergmann <arnd@arndb.de>
+Subject: [PATCH] hamradio: dmascc: avoid -Wformat-overflow warning
+Date: Wed, 26 Jul 2017 09:55:33 +0200
+Message-ID: <20170726075548.2736340-1-arnd@arndb.de>
+Return-path: <linux-kernel-owner@vger.kernel.org>
+Sender: linux-kernel-owner@vger.kernel.org
+List-ID: <linux-hams.vger.kernel.org>
+MIME-Version: 1.0
 Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: quoted-printable
-Return-path: <bridge-bounces@lists.linux-foundation.org>
-In-Reply-To: <20170704.230040.195111189904913382.davem@davemloft.net>
-Content-Language: en-US
-List-Id: <linux-hams.vger.kernel.org>
-List-Unsubscribe: <https://lists.linuxfoundation.org/mailman/options/bridge>, 
-	<mailto:bridge-request@lists.linux-foundation.org?subject=unsubscribe>
-List-Archive: <http://lists.linuxfoundation.org/pipermail/bridge/>
-List-Post: <mailto:bridge@lists.linux-foundation.org>
-List-Help: <mailto:bridge-request@lists.linux-foundation.org?subject=help>
-List-Subscribe: <https://lists.linuxfoundation.org/mailman/listinfo/bridge>,
-	<mailto:bridge-request@lists.linux-foundation.org?subject=subscribe>
-Sender: bridge-bounces@lists.linux-foundation.org
-Errors-To: bridge-bounces@lists.linux-foundation.org
-To: David Miller <davem@davemloft.net>
-Cc: "peterz@infradead.org" <peterz@infradead.org>, "jchapman@katalix.com" <jchapman@katalix.com>, "bfields@fieldses.org" <bfields@fieldses.org>, "linux-sctp@vger.kernel.org" <linux-sctp@vger.kernel.org>, "jlayton@poochiereds.net" <jlayton@poochiereds.net>, "steffen.klassert@secunet.com" <steffen.klassert@secunet.com>, "zyan@redhat.com" <zyan@redhat.com>, "herbert@gondor.apana.org.au" <herbert@gondor.apana.org.au>, "linux-x25@vger.kernel.org" <linux-x25@vger.kernel.org>, "linux-rdma@vger.kernel.org" <linux-rdma@vger.kernel.org>, "bridge@lists.linux-foundation.org" <bridge@lists.linux-foundation.org>, "jmorris@namei.org" <jmorris@namei.org>, "3chas3@gmail.com" <3chas3@gmail.com>, "kuznet@ms2.inr.ac.ru" <kuznet@ms2.inr.ac.ru>, "jreuter@yaina.de" <jreuter@yaina.de>, "keescook@chromium.org" <keescook@chromium.org>, "santosh.shilimkar@oracle.com" <santosh.shilimkar@oracle.com>
+Content-Transfer-Encoding: 7bit
+To: Joerg Reuter <jreuter@yaina.de>
+Cc: Arnd Bergmann <arnd@arndb.de>, David Howells <dhowells@redhat.com>, linux-hams@vger.kernel.org, netdev@vger.kernel.org, linux-kernel@vger.kernel.org
 
+gcc warns that the device name might overflow:
 
-> From: Elena Reshetova <elena.reshetova@intel.com>
-> Date: Tue,  4 Jul 2017 15:52:55 +0300
->=20
-> > Changes in v2:
-> >  * rebase on top of net-next
-> >  * currently by default refcount_t =3D atomic_t (*) and uses all
-> >    atomic standard operations unless CONFIG_REFCOUNT_FULL is enabled.
-> >    This is a compromise for the systems that are critical on
-> >    performance (such as net) and cannot accept even slight delay
-> >    on the refcounter operations.
-> >
-> > This series, for various misc network components, replaces atomic_t ref=
-erence
-> > counters with the new refcount_t type and API (see include/linux/refcou=
-nt.h).
-> > By doing this we prevent intentional or accidental
-> > underflows or overflows that can led to use-after-free vulnerabilities.
-> > These are the last networking-related conversions with the exception of
-> > network drivers (to be send separately).
-> >
-> > Please excuse the long patch set, but seems like breaking it up
-> > won't save that much on CC list and most of the changes are
-> > trivial.
-> >
-> > The patches are fully independent and can be cherry-picked separately.
-> > In order to try with refcount functionality enabled in run-time,
-> > CONFIG_REFCOUNT_FULL must be enabled.
-> >
-> > NOTE: automatic kernel builder for some reason doesn't like all my
-> > network branches and regularly times out the builds on these branches.
-> > Suggestion for "waiting a day for a good coverage" doesn't work, as
-> > we have seen with generic network conversions. So please wait for the
-> > full report from kernel test rebot before merging further up.
-> > This has been compile-tested in 116 configs, but 71 timed out (includin=
-g
-> > all s390-related configs again). I am trying to see if they can fix
-> > build coverage for me in meanwhile.
-> >
-> > * The respective change is currently merged into -next as
-> >   "locking/refcount: Create unchecked atomic_t implementation".
->=20
-> Series applied, that's enough for this cycle, please.
+drivers/net/hamradio/dmascc.c: In function 'dmascc_init':
+drivers/net/hamradio/dmascc.c:584:22: error: 'sprintf' may write a terminating nul past the end of the destination [-Werror=format-overflow=]
+   sprintf(dev->name, "dmascc%i", 2 * n + i);
+drivers/net/hamradio/dmascc.c:584:3: note: 'sprintf' output between 8 and 17 bytes into a destination of size 16
+   sprintf(dev->name, "dmascc%i", 2 * n + i);
 
-Thank you very much David! I really appreciate you taking so many of these =
-conversions in
-one go! I will stop for now :)=20
+From the static data in this file, I can tell that the index is
+strictly limited to 16, so it won't overflow. This simply changes
+the sprintf() to snprintf(), which is a good idea in general,
+and shuts up this warning.
 
-With regards to net, I only have networking drivers left (16 patches in tot=
-al), but I can submit them in the
-next round. Will go bug other subsystem maintainers next :)=20
+Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+---
+I ran into this for the first time today on linux-next randconfig
+builds, but couldn't find an obvious commit that introduced it.
 
-Best Regards,
-Elena.
+I guess it's just a very rare randconfig warning, so this can go
+into net-next rather than net fixes.
+---
+ drivers/net/hamradio/dmascc.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/drivers/net/hamradio/dmascc.c b/drivers/net/hamradio/dmascc.c
+index dec6b76bc0fb..cde41200f40a 100644
+--- a/drivers/net/hamradio/dmascc.c
++++ b/drivers/net/hamradio/dmascc.c
+@@ -581,7 +581,7 @@ static int __init setup_adapter(int card_base, int type, int n)
+ 		priv->param.dma = -1;
+ 		INIT_WORK(&priv->rx_work, rx_bh);
+ 		dev->ml_priv = priv;
+-		sprintf(dev->name, "dmascc%i", 2 * n + i);
++		snprintf(dev->name, sizeof(dev->name), "dmascc%i", 2 * n + i);
+ 		dev->base_addr = card_base;
+ 		dev->irq = irq;
+ 		dev->netdev_ops = &scc_netdev_ops;
+-- 
+2.9.0
+
