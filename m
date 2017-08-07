@@ -1,43 +1,25 @@
-From: Mikko Rapeli <mikko.rapeli@iki.fi>
-Subject: [PATCH v06 20/36] uapi linux/scc.h: include linux/sockios.h
-Date: Sun,  6 Aug 2017 18:44:11 +0200
-Message-ID: <20170806164428.2273-21-mikko.rapeli@iki.fi>
-References: <20170806164428.2273-1-mikko.rapeli@iki.fi>
+From: David Miller <davem@davemloft.net>
+Subject: Re: [PATCH] hamradio: baycom: make hdlcdrv_ops const
+Date: Mon, 07 Aug 2017 14:26:58 -0700 (PDT)
+Message-ID: <20170807.142658.2234739420522951674.davem@davemloft.net>
+References: <1502009505-12973-1-git-send-email-bhumirks@gmail.com>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
 Return-path: <linux-kernel-owner@vger.kernel.org>
-In-Reply-To: <20170806164428.2273-1-mikko.rapeli@iki.fi>
+In-Reply-To: <1502009505-12973-1-git-send-email-bhumirks@gmail.com>
 Sender: linux-kernel-owner@vger.kernel.org
 List-ID: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="utf-8"
-To: linux-kernel@vger.kernel.org, linux-api@vger.kernel.org
-Cc: Mikko Rapeli <mikko.rapeli@iki.fi>, netdev@vger.kernel.org, linux-hams@vger.kernel.org, Joerg Reuter <jreuter@yaina.de>
+Content-Type: Text/Plain; charset="us-ascii"
+To: bhumirks@gmail.com
+Cc: julia.lawall@lip6.fr, t.sailer@alumni.ethz.ch, linux-hams@vger.kernel.org, netdev@vger.kernel.org, linux-kernel@vger.kernel.org
 
-Fixes userspace compilation error:
+From: Bhumika Goyal <bhumirks@gmail.com>
+Date: Sun,  6 Aug 2017 14:21:45 +0530
 
-error: ‘SIOCDEVPRIVATE’ undeclared here (not in a function)
-  SIOCSCCRESERVED = SIOCDEVPRIVATE
+> Make hdlcdrv_ops structures const as they are only passed to
+> hdlcdrv_register function. The corresponding argument is of type const,
+> so make the structures const.
+> 
+> Signed-off-by: Bhumika Goyal <bhumirks@gmail.com>
 
-Signed-off-by: Mikko Rapeli <mikko.rapeli@iki.fi>
-Cc: netdev@vger.kernel.org
-Cc: linux-hams@vger.kernel.org
-Cc: Joerg Reuter <jreuter@yaina.de>
----
- include/uapi/linux/scc.h | 1 +
- 1 file changed, 1 insertion(+)
-
-diff --git a/include/uapi/linux/scc.h b/include/uapi/linux/scc.h
-index 72b6b8153374..2992b88ca4ce 100644
---- a/include/uapi/linux/scc.h
-+++ b/include/uapi/linux/scc.h
-@@ -3,6 +3,7 @@
- #ifndef _UAPI_SCC_H
- #define _UAPI_SCC_H
- 
-+#include <linux/sockios.h>
- 
- /* selection of hardware types */
- 
--- 
-2.13.3
-
+Applied, thanks.
