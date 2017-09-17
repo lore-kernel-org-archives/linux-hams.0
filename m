@@ -1,110 +1,137 @@
-From: Kees Cook <keescook@chromium.org>
-Subject: [PATCH 20/31] net/core: Collapse redundant sk_timer callback data assignments
-Date: Thu, 31 Aug 2017 16:29:32 -0700
-Message-ID: <1504222183-61202-21-git-send-email-keescook@chromium.org>
-References: <1504222183-61202-1-git-send-email-keescook@chromium.org>
-Return-path: <linux-kernel-owner@vger.kernel.org>
+From: Sudip Mukherjee <sudipm.mukherjee@gmail.com>
+Subject: [PATCH] hamradio: baycom: use new parport device model
+Date: Sun, 17 Sep 2017 12:46:20 +0100
+Message-ID: <1505648780-4385-1-git-send-email-sudipm.mukherjee@gmail.com>
+Return-path: <linux-hams-owner@vger.kernel.org>
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=7Ws0SrovvoTs9a/Wn2s6JtcLCwHn1178wN/01Hz8rdk=;
-        b=hhlxdM0aruQZpGE1+bCGMLGbEo0/ebj/3BkJzOlglPLgusgZcydx87JtnsTCJ/zI9r
-         fsFARSkKv8eUiFLhLGkHcjB+zKFrcqqqNRcBqegS4cKoX69QcbWDhORvBrcUFYyAqqLl
-         j2vG7OrgzV7Kv8gC9yLDvhCDsjx/h3l3y79Gk=
-In-Reply-To: <1504222183-61202-1-git-send-email-keescook@chromium.org>
-Sender: linux-kernel-owner@vger.kernel.org
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id;
+        bh=AcX4mu4w7tBWxb+hanH1l04yYDD85/vQnXD0GWQ4y2o=;
+        b=IJGHLC5HdOid6aBorTOoofYXs3Ikgp07JcrxZaSybOhcFxhMzgFChmCv8yLQVNTD+Q
+         TTxvoe1mQGrYYKIjLKWJoVL5hgNUYTwW037FhnUv3Sx8tU6aYNEywH2H5MHeYT37s25n
+         5/nFkxLQO9M4WNdM47MFfaEaBVgn5aD1xqxu22EwDC/nDHZrwA7aXR2BDgmjdHS3LCIQ
+         r/Dmg1dtLLYGS+elSIUbYC6R8SCpETAQozNIoc/KeYzWsay20X+axTTHyIPJt83DtW5t
+         3/a9W99v0AHJqYzvEn9kahceNJ53vlBdCmx/cfjlkfEJFpMOvsdIqcZ3wx8UXqmFDL00
+         qsXQ==
+Sender: linux-hams-owner@vger.kernel.org
 List-ID: <linux-hams.vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
-To: Thomas Gleixner <tglx@linutronix.de>
-Cc: Kees Cook <keescook@chromium.org>, "David S. Miller" <davem@davemloft.net>, Ralf Baechle <ralf@linux-mips.org>, Andrew Hendry <andrew.hendry@gmail.com>, Eric Dumazet <edumazet@google.com>, Paolo Abeni <pabeni@redhat.com>, David Howells <dhowells@redhat.com>, Colin Ian King <colin.king@canonical.com>, Ingo Molnar <mingo@kernel.org>, linzhang <xiaolou4617@gmail.com>, netdev@vger.kernel.org, linux-hams@vger.kernel.org, linux-x25@vger.kernel.org, linux-kernel@vger.kernel.org
+To: "David S. Miller" <davem@davemloft.net>, Thomas Sailer <t.sailer@alumni.ethz.ch>
+Cc: linux-kernel@vger.kernel.org, linux-hams@vger.kernel.org, netdev@vger.kernel.org, Sudip Mukherjee <sudipm.mukherjee@gmail.com>
 
-The core sk_timer initializer can provide the common .data assignment
-instead of it being set separately in users.
+Modify baycom driver to use the new parallel port device model.
 
-Cc: "David S. Miller" <davem@davemloft.net>
-Cc: Ralf Baechle <ralf@linux-mips.org>
-Cc: Andrew Hendry <andrew.hendry@gmail.com>
-Cc: Eric Dumazet <edumazet@google.com>
-Cc: Paolo Abeni <pabeni@redhat.com>
-Cc: David Howells <dhowells@redhat.com>
-Cc: Colin Ian King <colin.king@canonical.com>
-Cc: Ingo Molnar <mingo@kernel.org>
-Cc: linzhang <xiaolou4617@gmail.com>
-Cc: netdev@vger.kernel.org
-Cc: linux-hams@vger.kernel.org
-Cc: linux-x25@vger.kernel.org
-Signed-off-by: Kees Cook <keescook@chromium.org>
+Signed-off-by: Sudip Mukherjee <sudipm.mukherjee@gmail.com>
 ---
- net/core/sock.c       | 2 +-
- net/netrom/nr_timer.c | 1 -
- net/rose/rose_timer.c | 1 -
- net/x25/af_x25.c      | 1 -
- net/x25/x25_timer.c   | 1 -
- 5 files changed, 1 insertion(+), 5 deletions(-)
 
-diff --git a/net/core/sock.c b/net/core/sock.c
-index ac2a404c73eb..5281a998ab32 100644
---- a/net/core/sock.c
-+++ b/net/core/sock.c
-@@ -2623,7 +2623,7 @@ void sock_init_data(struct socket *sock, struct sock *sk)
- 	sk_init_common(sk);
- 	sk->sk_send_head	=	NULL;
+Not tested on real hardware, only tested on qemu and verified that the
+device is binding to the driver properly in epp_open but then unbinding
+as the device was not found.
+
+ drivers/net/hamradio/baycom_epp.c | 50 +++++++++++++++++++++++++++++++++++----
+ 1 file changed, 46 insertions(+), 4 deletions(-)
+
+diff --git a/drivers/net/hamradio/baycom_epp.c b/drivers/net/hamradio/baycom_epp.c
+index 1503f10..1e62d00 100644
+--- a/drivers/net/hamradio/baycom_epp.c
++++ b/drivers/net/hamradio/baycom_epp.c
+@@ -840,6 +840,7 @@ static int epp_open(struct net_device *dev)
+ 	unsigned char tmp[128];
+ 	unsigned char stat;
+ 	unsigned long tstart;
++	struct pardev_cb par_cb;
+ 	
+         if (!pp) {
+                 printk(KERN_ERR "%s: parport at 0x%lx unknown\n", bc_drvname, dev->base_addr);
+@@ -859,8 +860,21 @@ static int epp_open(struct net_device *dev)
+                 return -EIO;
+ 	}
+ 	memset(&bc->modem, 0, sizeof(bc->modem));
+-        bc->pdev = parport_register_device(pp, dev->name, NULL, epp_wakeup, 
+-					   NULL, PARPORT_DEV_EXCL, dev);
++	memset(&par_cb, 0, sizeof(par_cb));
++	par_cb.wakeup = epp_wakeup;
++	par_cb.private = (void *)dev;
++	par_cb.flags = PARPORT_DEV_EXCL;
++	for (i = 0; i < NR_PORTS; i++)
++		if (baycom_device[i] == dev)
++			break;
++
++	if (i == NR_PORTS) {
++		pr_err("%s: no device found\n", bc_drvname);
++		parport_put_port(pp);
++		return -ENODEV;
++	}
++
++	bc->pdev = parport_register_dev_model(pp, dev->name, &par_cb, i);
+ 	parport_put_port(pp);
+         if (!bc->pdev) {
+                 printk(KERN_ERR "%s: cannot register parport at 0x%lx\n", bc_drvname, pp->base);
+@@ -1185,6 +1199,23 @@ MODULE_LICENSE("GPL");
  
--	init_timer(&sk->sk_timer);
-+	setup_timer(&sk->sk_timer, NULL, (unsigned long)sk);
+ /* --------------------------------------------------------------------- */
  
- 	sk->sk_allocation	=	GFP_KERNEL;
- 	sk->sk_rcvbuf		=	sysctl_rmem_default;
-diff --git a/net/netrom/nr_timer.c b/net/netrom/nr_timer.c
-index 94d05806a9a2..f84ce71f1f5f 100644
---- a/net/netrom/nr_timer.c
-+++ b/net/netrom/nr_timer.c
-@@ -45,7 +45,6 @@ void nr_init_timers(struct sock *sk)
- 	setup_timer(&nr->idletimer, nr_idletimer_expiry, (unsigned long)sk);
- 
- 	/* initialized by sock_init_data */
--	sk->sk_timer.data     = (unsigned long)sk;
- 	sk->sk_timer.function = &nr_heartbeat_expiry;
- }
- 
-diff --git a/net/rose/rose_timer.c b/net/rose/rose_timer.c
-index bc5469d6d9cb..6baa415b199a 100644
---- a/net/rose/rose_timer.c
-+++ b/net/rose/rose_timer.c
-@@ -36,7 +36,6 @@ void rose_start_heartbeat(struct sock *sk)
++static int baycom_epp_par_probe(struct pardevice *par_dev)
++{
++	struct device_driver *drv = par_dev->dev.driver;
++	int len = strlen(drv->name);
++
++	if (strncmp(par_dev->name, drv->name, len))
++		return -ENODEV;
++
++	return 0;
++}
++
++static struct parport_driver baycom_epp_par_driver = {
++	.name = "bce",
++	.probe = baycom_epp_par_probe,
++	.devmodel = true,
++};
++
+ static void __init baycom_epp_dev_setup(struct net_device *dev)
  {
- 	del_timer(&sk->sk_timer);
+ 	struct baycom_state *bc = netdev_priv(dev);
+@@ -1204,10 +1235,15 @@ static void __init baycom_epp_dev_setup(struct net_device *dev)
  
--	sk->sk_timer.data     = (unsigned long)sk;
- 	sk->sk_timer.function = &rose_heartbeat_expiry;
- 	sk->sk_timer.expires  = jiffies + 5 * HZ;
+ static int __init init_baycomepp(void)
+ {
+-	int i, found = 0;
++	int i, found = 0, ret;
+ 	char set_hw = 1;
  
-diff --git a/net/x25/af_x25.c b/net/x25/af_x25.c
-index 5a1a98df3499..a5ac385b9120 100644
---- a/net/x25/af_x25.c
-+++ b/net/x25/af_x25.c
-@@ -414,7 +414,6 @@ static void __x25_destroy_socket(struct sock *sk)
- 		/* Defer: outstanding buffers */
- 		sk->sk_timer.expires  = jiffies + 10 * HZ;
- 		sk->sk_timer.function = x25_destroy_timer;
--		sk->sk_timer.data = (unsigned long)sk;
- 		add_timer(&sk->sk_timer);
- 	} else {
- 		/* drop last reference so sock_put will free */
-diff --git a/net/x25/x25_timer.c b/net/x25/x25_timer.c
-index 5c5db1a36399..de5cec41d100 100644
---- a/net/x25/x25_timer.c
-+++ b/net/x25/x25_timer.c
-@@ -36,7 +36,6 @@ void x25_init_timers(struct sock *sk)
- 	setup_timer(&x25->timer, x25_timer_expiry, (unsigned long)sk);
+ 	printk(bc_drvinfo);
++
++	ret = parport_register_driver(&baycom_epp_par_driver);
++	if (ret)
++		return ret;
++
+ 	/*
+ 	 * register net devices
+ 	 */
+@@ -1241,7 +1277,12 @@ static int __init init_baycomepp(void)
+ 		found++;
+ 	}
  
- 	/* initialized by sock_init_data */
--	sk->sk_timer.data     = (unsigned long)sk;
- 	sk->sk_timer.function = &x25_heartbeat_expiry;
+-	return found ? 0 : -ENXIO;
++	if (found == 0) {
++		parport_unregister_driver(&baycom_epp_par_driver);
++		return -ENXIO;
++	}
++
++	return 0;
  }
  
+ static void __exit cleanup_baycomepp(void)
+@@ -1260,6 +1301,7 @@ static void __exit cleanup_baycomepp(void)
+ 				printk(paranoia_str, "cleanup_module");
+ 		}
+ 	}
++	parport_unregister_driver(&baycom_epp_par_driver);
+ }
+ 
+ module_init(init_baycomepp);
 -- 
 2.7.4
 
