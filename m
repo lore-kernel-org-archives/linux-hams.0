@@ -1,137 +1,132 @@
-From: Sudip Mukherjee <sudipm.mukherjee@gmail.com>
-Subject: [PATCH] hamradio: baycom: use new parport device model
-Date: Sun, 17 Sep 2017 12:46:20 +0100
-Message-ID: <1505648780-4385-1-git-send-email-sudipm.mukherjee@gmail.com>
-Return-path: <linux-hams-owner@vger.kernel.org>
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id;
-        bh=AcX4mu4w7tBWxb+hanH1l04yYDD85/vQnXD0GWQ4y2o=;
-        b=IJGHLC5HdOid6aBorTOoofYXs3Ikgp07JcrxZaSybOhcFxhMzgFChmCv8yLQVNTD+Q
-         TTxvoe1mQGrYYKIjLKWJoVL5hgNUYTwW037FhnUv3Sx8tU6aYNEywH2H5MHeYT37s25n
-         5/nFkxLQO9M4WNdM47MFfaEaBVgn5aD1xqxu22EwDC/nDHZrwA7aXR2BDgmjdHS3LCIQ
-         r/Dmg1dtLLYGS+elSIUbYC6R8SCpETAQozNIoc/KeYzWsay20X+axTTHyIPJt83DtW5t
-         3/a9W99v0AHJqYzvEn9kahceNJ53vlBdCmx/cfjlkfEJFpMOvsdIqcZ3wx8UXqmFDL00
-         qsXQ==
-Sender: linux-hams-owner@vger.kernel.org
-List-ID: <linux-hams.vger.kernel.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
+From: Thomas Sailer <t.sailer@alumni.ethz.ch>
+Subject: Re: [PATCH] hamradio: baycom: use new parport device model
+Date: Sun, 17 Sep 2017 20:20:35 +0200
+Message-ID: <413aa4e4-8b23-80e9-055d-576c9128f069@alumni.ethz.ch>
+References: <1505648780-4385-1-git-send-email-sudipm.mukherjee@gmail.com>
+Mime-Version: 1.0
 Content-Transfer-Encoding: 7bit
-To: "David S. Miller" <davem@davemloft.net>, Thomas Sailer <t.sailer@alumni.ethz.ch>
-Cc: linux-kernel@vger.kernel.org, linux-hams@vger.kernel.org, netdev@vger.kernel.org, Sudip Mukherjee <sudipm.mukherjee@gmail.com>
+Return-path: <linux-kernel-owner@vger.kernel.org>
+In-Reply-To: <1505648780-4385-1-git-send-email-sudipm.mukherjee@gmail.com>
+Content-Language: en-MW
+Sender: linux-kernel-owner@vger.kernel.org
+List-ID: <linux-hams.vger.kernel.org>
+Content-Type: text/plain; charset="us-ascii"; format="flowed"
+To: Sudip Mukherjee <sudipm.mukherjee@gmail.com>, "David S. Miller" <davem@davemloft.net>
+Cc: linux-kernel@vger.kernel.org, linux-hams@vger.kernel.org, netdev@vger.kernel.org
 
-Modify baycom driver to use the new parallel port device model.
+Acked-By: Thomas Sailer <t.sailer@alumni.ethz.ch>
 
-Signed-off-by: Sudip Mukherjee <sudipm.mukherjee@gmail.com>
----
-
-Not tested on real hardware, only tested on qemu and verified that the
-device is binding to the driver properly in epp_open but then unbinding
-as the device was not found.
-
- drivers/net/hamradio/baycom_epp.c | 50 +++++++++++++++++++++++++++++++++++----
- 1 file changed, 46 insertions(+), 4 deletions(-)
-
-diff --git a/drivers/net/hamradio/baycom_epp.c b/drivers/net/hamradio/baycom_epp.c
-index 1503f10..1e62d00 100644
---- a/drivers/net/hamradio/baycom_epp.c
-+++ b/drivers/net/hamradio/baycom_epp.c
-@@ -840,6 +840,7 @@ static int epp_open(struct net_device *dev)
- 	unsigned char tmp[128];
- 	unsigned char stat;
- 	unsigned long tstart;
-+	struct pardev_cb par_cb;
- 	
-         if (!pp) {
-                 printk(KERN_ERR "%s: parport at 0x%lx unknown\n", bc_drvname, dev->base_addr);
-@@ -859,8 +860,21 @@ static int epp_open(struct net_device *dev)
-                 return -EIO;
- 	}
- 	memset(&bc->modem, 0, sizeof(bc->modem));
--        bc->pdev = parport_register_device(pp, dev->name, NULL, epp_wakeup, 
--					   NULL, PARPORT_DEV_EXCL, dev);
-+	memset(&par_cb, 0, sizeof(par_cb));
-+	par_cb.wakeup = epp_wakeup;
-+	par_cb.private = (void *)dev;
-+	par_cb.flags = PARPORT_DEV_EXCL;
-+	for (i = 0; i < NR_PORTS; i++)
-+		if (baycom_device[i] == dev)
-+			break;
-+
-+	if (i == NR_PORTS) {
-+		pr_err("%s: no device found\n", bc_drvname);
-+		parport_put_port(pp);
-+		return -ENODEV;
-+	}
-+
-+	bc->pdev = parport_register_dev_model(pp, dev->name, &par_cb, i);
- 	parport_put_port(pp);
-         if (!bc->pdev) {
-                 printk(KERN_ERR "%s: cannot register parport at 0x%lx\n", bc_drvname, pp->base);
-@@ -1185,6 +1199,23 @@ MODULE_LICENSE("GPL");
- 
- /* --------------------------------------------------------------------- */
- 
-+static int baycom_epp_par_probe(struct pardevice *par_dev)
-+{
-+	struct device_driver *drv = par_dev->dev.driver;
-+	int len = strlen(drv->name);
-+
-+	if (strncmp(par_dev->name, drv->name, len))
-+		return -ENODEV;
-+
-+	return 0;
-+}
-+
-+static struct parport_driver baycom_epp_par_driver = {
-+	.name = "bce",
-+	.probe = baycom_epp_par_probe,
-+	.devmodel = true,
-+};
-+
- static void __init baycom_epp_dev_setup(struct net_device *dev)
- {
- 	struct baycom_state *bc = netdev_priv(dev);
-@@ -1204,10 +1235,15 @@ static void __init baycom_epp_dev_setup(struct net_device *dev)
- 
- static int __init init_baycomepp(void)
- {
--	int i, found = 0;
-+	int i, found = 0, ret;
- 	char set_hw = 1;
- 
- 	printk(bc_drvinfo);
-+
-+	ret = parport_register_driver(&baycom_epp_par_driver);
-+	if (ret)
-+		return ret;
-+
- 	/*
- 	 * register net devices
- 	 */
-@@ -1241,7 +1277,12 @@ static int __init init_baycomepp(void)
- 		found++;
- 	}
- 
--	return found ? 0 : -ENXIO;
-+	if (found == 0) {
-+		parport_unregister_driver(&baycom_epp_par_driver);
-+		return -ENXIO;
-+	}
-+
-+	return 0;
- }
- 
- static void __exit cleanup_baycomepp(void)
-@@ -1260,6 +1301,7 @@ static void __exit cleanup_baycomepp(void)
- 				printk(paranoia_str, "cleanup_module");
- 		}
- 	}
-+	parport_unregister_driver(&baycom_epp_par_driver);
- }
- 
- module_init(init_baycomepp);
--- 
-2.7.4
+Am 17.09.2017 um 13:46 schrieb Sudip Mukherjee:
+> Modify baycom driver to use the new parallel port device model.
+> 
+> Signed-off-by: Sudip Mukherjee <sudipm.mukherjee@gmail.com>
+> ---
+> 
+> Not tested on real hardware, only tested on qemu and verified that the
+> device is binding to the driver properly in epp_open but then unbinding
+> as the device was not found.
+> 
+>   drivers/net/hamradio/baycom_epp.c | 50 +++++++++++++++++++++++++++++++++++----
+>   1 file changed, 46 insertions(+), 4 deletions(-)
+> 
+> diff --git a/drivers/net/hamradio/baycom_epp.c b/drivers/net/hamradio/baycom_epp.c
+> index 1503f10..1e62d00 100644
+> --- a/drivers/net/hamradio/baycom_epp.c
+> +++ b/drivers/net/hamradio/baycom_epp.c
+> @@ -840,6 +840,7 @@ static int epp_open(struct net_device *dev)
+>   	unsigned char tmp[128];
+>   	unsigned char stat;
+>   	unsigned long tstart;
+> +	struct pardev_cb par_cb;
+>   	
+>           if (!pp) {
+>                   printk(KERN_ERR "%s: parport at 0x%lx unknown\n", bc_drvname, dev->base_addr);
+> @@ -859,8 +860,21 @@ static int epp_open(struct net_device *dev)
+>                   return -EIO;
+>   	}
+>   	memset(&bc->modem, 0, sizeof(bc->modem));
+> -        bc->pdev = parport_register_device(pp, dev->name, NULL, epp_wakeup,
+> -					   NULL, PARPORT_DEV_EXCL, dev);
+> +	memset(&par_cb, 0, sizeof(par_cb));
+> +	par_cb.wakeup = epp_wakeup;
+> +	par_cb.private = (void *)dev;
+> +	par_cb.flags = PARPORT_DEV_EXCL;
+> +	for (i = 0; i < NR_PORTS; i++)
+> +		if (baycom_device[i] == dev)
+> +			break;
+> +
+> +	if (i == NR_PORTS) {
+> +		pr_err("%s: no device found\n", bc_drvname);
+> +		parport_put_port(pp);
+> +		return -ENODEV;
+> +	}
+> +
+> +	bc->pdev = parport_register_dev_model(pp, dev->name, &par_cb, i);
+>   	parport_put_port(pp);
+>           if (!bc->pdev) {
+>                   printk(KERN_ERR "%s: cannot register parport at 0x%lx\n", bc_drvname, pp->base);
+> @@ -1185,6 +1199,23 @@ MODULE_LICENSE("GPL");
+>   
+>   /* --------------------------------------------------------------------- */
+>   
+> +static int baycom_epp_par_probe(struct pardevice *par_dev)
+> +{
+> +	struct device_driver *drv = par_dev->dev.driver;
+> +	int len = strlen(drv->name);
+> +
+> +	if (strncmp(par_dev->name, drv->name, len))
+> +		return -ENODEV;
+> +
+> +	return 0;
+> +}
+> +
+> +static struct parport_driver baycom_epp_par_driver = {
+> +	.name = "bce",
+> +	.probe = baycom_epp_par_probe,
+> +	.devmodel = true,
+> +};
+> +
+>   static void __init baycom_epp_dev_setup(struct net_device *dev)
+>   {
+>   	struct baycom_state *bc = netdev_priv(dev);
+> @@ -1204,10 +1235,15 @@ static void __init baycom_epp_dev_setup(struct net_device *dev)
+>   
+>   static int __init init_baycomepp(void)
+>   {
+> -	int i, found = 0;
+> +	int i, found = 0, ret;
+>   	char set_hw = 1;
+>   
+>   	printk(bc_drvinfo);
+> +
+> +	ret = parport_register_driver(&baycom_epp_par_driver);
+> +	if (ret)
+> +		return ret;
+> +
+>   	/*
+>   	 * register net devices
+>   	 */
+> @@ -1241,7 +1277,12 @@ static int __init init_baycomepp(void)
+>   		found++;
+>   	}
+>   
+> -	return found ? 0 : -ENXIO;
+> +	if (found == 0) {
+> +		parport_unregister_driver(&baycom_epp_par_driver);
+> +		return -ENXIO;
+> +	}
+> +
+> +	return 0;
+>   }
+>   
+>   static void __exit cleanup_baycomepp(void)
+> @@ -1260,6 +1301,7 @@ static void __exit cleanup_baycomepp(void)
+>   				printk(paranoia_str, "cleanup_module");
+>   		}
+>   	}
+> +	parport_unregister_driver(&baycom_epp_par_driver);
+>   }
+>   
+>   module_init(init_baycomepp);
+> 
 
