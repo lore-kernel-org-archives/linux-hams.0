@@ -1,65 +1,65 @@
-From: f6bvp <f6bvp@free.fr>
-Subject: Re: Fwd: Re: New Debian ax25-tools update broke mkiss utility
-Date: Thu, 19 Oct 2017 00:07:21 +0200
-Message-ID: <6df16699-c195-b4a7-d13f-d5d9a3f4ae17@free.fr>
-References: <87581d3d-a63c-d9ef-13fd-857745d79da6@trinnet.net>
- <768bffac-bdc8-a43d-39dc-5c8586a1062d@trinnet.net>
+From: "Gustavo A. R. Silva" <garsilva@embeddedor.com>
+Subject: [PATCH 1/2] net: netrom: mark expected switch fall-throughs
+Date: Thu, 19 Oct 2017 12:21:23 -0500
+Message-ID: <20171019172123.GA15219@embeddedor.com>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <768bffac-bdc8-a43d-39dc-5c8586a1062d@trinnet.net>
-Content-Language: en-US
-Sender: linux-hams-owner@vger.kernel.org
+Return-path: <netdev-owner@vger.kernel.org>
+Content-Disposition: inline
+Sender: netdev-owner@vger.kernel.org
 List-ID: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="utf-8"; format="flowed"
-To: David Ranch <dranch@trinnet.net>
-Cc: linux-hams@vger.kernel.org
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+To: Ralf Baechle <ralf@linux-mips.org>, "David S. Miller" <davem@davemloft.net>
+Cc: linux-hams@vger.kernel.org, netdev@vger.kernel.org, linux-kernel@vger.kernel.org, "Gustavo A. R. Silva" <garsilva@embeddedor.com>
 
-Hi David,
+In preparation to enabling -Wimplicit-fallthrough, mark switch cases
+where we are expecting to fall through.
 
-I cloned git Ralf's official AX.25 repository and could compile and 
-install libax25, ax25-tools and ax25-apps.
+Signed-off-by: Gustavo A. R. Silva <garsilva@embeddedor.com>
+---
+This code was tested by compilation only (GCC 7.2.0 was used).
+Please, verify if the actual intention of the code is to fall through.
 
-Sources are in http://git.linux-ax25.org/cgit/
+ net/netrom/nr_route.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-and the wiki site (http://www.linux-ax25.org/wiki/GIT) explains how to 
-clone the directories (for example):
-
-    git clonegit://git.linux-ax25.org/pub/scm/libax25
-
-Then, in order to compile sources and perform installation, I found on 
-http://www.linux-ax25.org/wiki/Compilation a bootstrap that did the job.
-
-for dir in libax25 ax25-apps ax25-tools; do
-   cd $dir && autoreconf --install --force && \
-     ./configure --prefix=/usr --sysconfdir=/etc --localstatedir=/var --mandir=/usr/share/man && \
-     make && make install && cd ..
-done
-
-There are a few warnings about missing things during ./configure process 
-and by default install is not performed on /usr/local dirs.
-
-One should edit the above script accordingly in order to get binaries 
-installed in more convenient /usr/local dirs.
-
-Then I installed FPAC and LinFBB applications and they seem to run, 
-although things need some more testing.
-
-I will report about it later.
-
-Bernard, f6bvp
-
-
-Le 14/10/2017 à 01:18, David Ranch a écrit :
->
-> Hey Bernard,
->
-> I'm curious on your thoughts of moving back to the Official AX25 
-> sources.  I do know that Ralf and Thomas have been doing a lot of work 
-> on their code base yet Lee VE7FET's repo hasn't received any updates 
-> in at least 2 years.  Maybe you can do some testing with these udated 
-> sources with FBB, FPAC, and ROSE and see if things are OK?
->
-> --David
->
+diff --git a/net/netrom/nr_route.c b/net/netrom/nr_route.c
+index 0c59354..fc9cadc 100644
+--- a/net/netrom/nr_route.c
++++ b/net/netrom/nr_route.c
+@@ -279,6 +279,7 @@ static int __must_check nr_add_node(ax25_address *nr, const char *mnemonic,
+ 			nr_node->routes[1] = nr_node->routes[2];
+ 			nr_node->routes[2] = nr_route;
+ 		}
++		/* fall through */
+ 	case 2:
+ 		if (nr_node->routes[1].quality > nr_node->routes[0].quality) {
+ 			switch (nr_node->which) {
+@@ -384,6 +385,7 @@ static int nr_del_node(ax25_address *callsign, ax25_address *neighbour, struct n
+ 				switch (i) {
+ 				case 0:
+ 					nr_node->routes[0] = nr_node->routes[1];
++					/* fall through */
+ 				case 1:
+ 					nr_node->routes[1] = nr_node->routes[2];
+ 				case 2:
+@@ -506,7 +508,7 @@ static int nr_dec_obs(void)
+ 				switch (i) {
+ 				case 0:
+ 					s->routes[0] = s->routes[1];
+-					/* Fallthrough */
++					/* fall through */
+ 				case 1:
+ 					s->routes[1] = s->routes[2];
+ 				case 2:
+@@ -553,6 +555,7 @@ void nr_rt_device_down(struct net_device *dev)
+ 						switch (i) {
+ 						case 0:
+ 							t->routes[0] = t->routes[1];
++							/* fall through */
+ 						case 1:
+ 							t->routes[1] = t->routes[2];
+ 						case 2:
+-- 
+2.7.4
 
