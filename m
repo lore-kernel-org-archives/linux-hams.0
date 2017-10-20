@@ -1,61 +1,78 @@
-From: "Gustavo A. R. Silva" <garsilva@embeddedor.com>
-Subject: [PATCH] net: rose: mark expected switch fall-throughs
-Date: Thu, 19 Oct 2017 13:03:51 -0500
-Message-ID: <20171019180351.GA11525@embeddedor.com>
-Mime-Version: 1.0
+From: Elena Reshetova <elena.reshetova@intel.com>
+Subject: [PATCH 00/15] networking drivers refcount_t conversions
+Date: Fri, 20 Oct 2017 10:23:34 +0300
+Message-ID: <1508484229-19706-1-git-send-email-elena.reshetova@intel.com>
 Return-path: <linux-kernel-owner@vger.kernel.org>
-Content-Disposition: inline
 Sender: linux-kernel-owner@vger.kernel.org
 List-ID: <linux-hams.vger.kernel.org>
+MIME-Version: 1.0
 Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
-To: Ralf Baechle <ralf@linux-mips.org>, "David S. Miller" <davem@davemloft.net>
-Cc: linux-hams@vger.kernel.org, netdev@vger.kernel.org, linux-kernel@vger.kernel.org, "Gustavo A. R. Silva" <garsilva@embeddedor.com>
+To: davem@davemloft.net
+Cc: netdev@vger.kernel.org, linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org, linux-mediatek@lists.infradead.org, linux-rdma@vger.kernel.org, linux-hams@vger.kernel.org, linux-ppp@vger.kernel.org, ganeshgr@chelsio.com, nbd@openwrt.org, john@phrozen.org, sean.wang@mediatek.com, matthias.bgg@gmail.com, yishaih@mellanox.com, saeedm@mellanox.com, matanb@mellanox.com, tariqt@mellanox.com, leonro@mellanox.com, ajk@comnets.uni-bremen.de, paulus@samba.org, zbr@ioremap.net, peterz@infradead.org, keescook@chromium.org, Elena Reshetova <elena.reshetova@intel.com>
 
-In preparation to enabling -Wimplicit-fallthrough, mark switch cases
-where we are expecting to fall through.
+Note: these are the last patches related to networking that perform
+conversion of refcounters from atomic_t to refcount_t.
+In contrast to the core network refcounter conversions that
+were merged earlier, these are much more straightforward ones.
 
-Signed-off-by: Gustavo A. R. Silva <garsilva@embeddedor.com>
----
-This code was tested by compilation only (GCC 7.2.0 was used).
-Please, verify if the actual intention of the code is to fall through.
+This series, for various networking drivers, replaces atomic_t reference
+counters with the new refcount_t type and API (see include/linux/refcount.h).
+By doing this we prevent intentional or accidental
+underflows or overflows that can led to use-after-free vulnerabilities.
 
- net/rose/rose_in.c    | 1 +
- net/rose/rose_route.c | 2 ++
- 2 files changed, 3 insertions(+)
+The patches are fully independent and can be cherry-picked separately.
+Patches are based on top of net-next.
+If there are no objections to the patches, please merge them via respective trees
 
-diff --git a/net/rose/rose_in.c b/net/rose/rose_in.c
-index 0a63947..9bbbfe3 100644
---- a/net/rose/rose_in.c
-+++ b/net/rose/rose_in.c
-@@ -219,6 +219,7 @@ static int rose_state4_machine(struct sock *sk, struct sk_buff *skb, int framety
- 	switch (frametype) {
- 	case ROSE_RESET_REQUEST:
- 		rose_write_internal(sk, ROSE_RESET_CONFIRMATION);
-+		/* fall through */
- 	case ROSE_RESET_CONFIRMATION:
- 		rose_stop_timer(sk);
- 		rose_start_idletimer(sk);
-diff --git a/net/rose/rose_route.c b/net/rose/rose_route.c
-index 452bbb3..ac0f733 100644
---- a/net/rose/rose_route.c
-+++ b/net/rose/rose_route.c
-@@ -346,6 +346,7 @@ static int rose_del_node(struct rose_route_struct *rose_route,
- 				case 0:
- 					rose_node->neighbour[0] =
- 						rose_node->neighbour[1];
-+					/* fall through */
- 				case 1:
- 					rose_node->neighbour[1] =
- 						rose_node->neighbour[2];
-@@ -507,6 +508,7 @@ void rose_rt_device_down(struct net_device *dev)
- 				switch (i) {
- 				case 0:
- 					t->neighbour[0] = t->neighbour[1];
-+					/* fall through */
- 				case 1:
- 					t->neighbour[1] = t->neighbour[2];
- 				case 2:
+Elena Reshetova (15):
+  drivers, net, ethernet: convert clip_entry.refcnt from atomic_t to
+    refcount_t
+  drivers, net, ethernet: convert mtk_eth.dma_refcnt from atomic_t to
+    refcount_t
+  drivers, net, mlx4: convert mlx4_cq.refcount from atomic_t to
+    refcount_t
+  drivers, net, mlx4: convert mlx4_qp.refcount from atomic_t to
+    refcount_t
+  drivers, net, mlx4: convert mlx4_srq.refcount from atomic_t to
+    refcount_t
+  drivers, net, mlx5: convert mlx5_cq.refcount from atomic_t to
+    refcount_t
+  drivers, net, mlx5: convert fs_node.refcount from atomic_t to
+    refcount_t
+  drivers, net, hamradio: convert sixpack.refcnt from atomic_t to
+    refcount_t
+  drivers, net: convert masces_rx_sa.refcnt from atomic_t to refcount_t
+  drivers, net: convert masces_rx_sc.refcnt from atomic_t to refcount_t
+  drivers, net: convert masces_tx_sa.refcnt from atomic_t to refcount_t
+  drivers, net, ppp: convert asyncppp.refcnt from atomic_t to refcount_t
+  drivers, net, ppp: convert ppp_file.refcnt from atomic_t to refcount_t
+  drivers, net, ppp: convert syncppp.refcnt from atomic_t to refcount_t
+  drivers, connector: convert cn_callback_entry.refcnt from atomic_t to
+    refcount_t
+
+ drivers/connector/cn_queue.c                      |  4 ++--
+ drivers/connector/connector.c                     |  2 +-
+ drivers/net/ethernet/chelsio/cxgb4/clip_tbl.c     | 13 +++++------
+ drivers/net/ethernet/chelsio/cxgb4/clip_tbl.h     |  4 +++-
+ drivers/net/ethernet/mediatek/mtk_eth_soc.c       |  8 ++++---
+ drivers/net/ethernet/mediatek/mtk_eth_soc.h       |  4 +++-
+ drivers/net/ethernet/mellanox/mlx4/cq.c           |  8 +++----
+ drivers/net/ethernet/mellanox/mlx4/qp.c           |  8 +++----
+ drivers/net/ethernet/mellanox/mlx4/srq.c          |  8 +++----
+ drivers/net/ethernet/mellanox/mlx5/core/cq.c      | 16 ++++++-------
+ drivers/net/ethernet/mellanox/mlx5/core/fs_core.c | 28 +++++++++++------------
+ drivers/net/ethernet/mellanox/mlx5/core/fs_core.h |  3 ++-
+ drivers/net/hamradio/6pack.c                      | 12 +++++-----
+ drivers/net/macsec.c                              | 25 ++++++++++----------
+ drivers/net/ppp/ppp_async.c                       | 10 ++++----
+ drivers/net/ppp/ppp_generic.c                     | 21 +++++++++--------
+ drivers/net/ppp/ppp_synctty.c                     | 11 +++++----
+ include/linux/connector.h                         |  4 ++--
+ include/linux/mlx4/device.h                       |  8 +++----
+ include/linux/mlx5/cq.h                           |  4 ++--
+ 20 files changed, 105 insertions(+), 96 deletions(-)
+
 -- 
 2.7.4
 
