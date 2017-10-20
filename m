@@ -1,130 +1,92 @@
-From: walter harms <wharms@bfs.de>
-Subject: Re: [PATCH 2/2] net: netrom: refactor code in nr_add_node
-Date: Fri, 20 Oct 2017 10:57:10 +0200
-Message-ID: <59E9BA66.4000707@bfs.de>
-References: <20171019172746.GA15332@embeddedor.com>
-Reply-To: wharms@bfs.de
+From: "Reshetova, Elena" <elena.reshetova-ral2JQCrhuEAvxtiuMwx3w@public.gmane.org>
+Subject: RE: [PATCH 02/15] drivers, net, ethernet: convert
+ mtk_eth.dma_refcnt from atomic_t to refcount_t
+Date: Fri, 20 Oct 2017 10:37:13 +0000
+Message-ID: <2236FBA76BA1254E88B949DDB74E612B802B37EE@IRSMSX102.ger.corp.intel.com>
+References: <1508484229-19706-1-git-send-email-elena.reshetova@intel.com>
+         <1508484229-19706-3-git-send-email-elena.reshetova@intel.com>
+ <1508486927.29850.12.camel@mtkswgap22>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
-Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <20171019172746.GA15332@embeddedor.com>
-Sender: linux-hams-owner@vger.kernel.org
+Content-Transfer-Encoding: base64
+Return-path: <linux-rdma-owner-u79uwXL29TY76Z2rM5mHXA@public.gmane.org>
+In-Reply-To: <1508486927.29850.12.camel@mtkswgap22>
+Content-Language: en-US
+Sender: linux-rdma-owner-u79uwXL29TY76Z2rM5mHXA@public.gmane.org
 List-ID: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"
-To: "Gustavo A. R. Silva" <garsilva@embeddedor.com>
-Cc: Ralf Baechle <ralf@linux-mips.org>, "David S. Miller" <davem@davemloft.net>, linux-hams@vger.kernel.org, netdev@vger.kernel.org
+Content-Type: text/plain; charset="windows-1254"
+To: Sean Wang <sean.wang-NuS5LvNUpcJWk0Htik3J/w@public.gmane.org>
+Cc: "davem-fT/PcQaiUtIeIZ0/mPfg9Q@public.gmane.org" <davem-fT/PcQaiUtIeIZ0/mPfg9Q@public.gmane.org>, "netdev-u79uwXL29TY76Z2rM5mHXA@public.gmane.org" <netdev-u79uwXL29TY76Z2rM5mHXA@public.gmane.org>, "linux-kernel-u79uwXL29TY76Z2rM5mHXA@public.gmane.org" <linux-kernel-u79uwXL29TY76Z2rM5mHXA@public.gmane.org>, "linux-arm-kernel-IAPFreCvJWM7uuMidbF8XUB+6BGkLq7r@public.gmane.org" <linux-arm-kernel-IAPFreCvJWM7uuMidbF8XUB+6BGkLq7r@public.gmane.org>, "linux-mediatek-IAPFreCvJWM7uuMidbF8XUB+6BGkLq7r@public.gmane.org" <linux-mediatek-IAPFreCvJWM7uuMidbF8XUB+6BGkLq7r@public.gmane.org>, "linux-rdma-u79uwXL29TY76Z2rM5mHXA@public.gmane.org" <linux-rdma-u79uwXL29TY76Z2rM5mHXA@public.gmane.org>, "linux-hams-u79uwXL29TY76Z2rM5mHXA@public.gmane.org" <linux-hams-u79uwXL29TY76Z2rM5mHXA@public.gmane.org>, "linux-ppp-u79uwXL29TY76Z2rM5mHXA@public.gmane.org" <linux-ppp-u79uwXL29TY76Z2rM5mHXA@public.gmane.org>, "ganeshgr-ut6Up61K2wZBDgjK7y7TUQ@public.gmane.org" <ganeshgr-ut6Up61K2wZBDgjK7y7TUQ@public.gmane.org>, "nbd-p3rKhJxN3npAfugRpC6u6w@public.gmane.org" <nbd-p3rKhJxN3npAfugRpC6u6w@public.gmane.org>, "john-Pj+rj9U5foFAfugRpC6u6w@public.gmane.org" <john-Pj+rj9U5foFAfugRpC6u6w@public.gmane.org>, "matthias.bgg-Re5JQEeQqe8AvxtiuMwx3w@public.gmane.org" <matthias.bgg-Re5JQEeQqe8AvxtiuMwx3w@public.gmane.org>, "yishaih-VPRAkNaXOzVWk0Htik3J/w@public.gmane.org" <yishaih-VPRAkNaXOzVWk0Htik3J/w@public.gmane.org>, "saeedm-VPRAkNaXOzVWk0Htik3J/w@public.gmane.org" <saeedm-VPRAkNaXOzVWk0Htik3J/w@public.gmane.org>, matanb@mell
 
-
-
-Am 19.10.2017 19:27, schrieb Gustavo A. R. Silva:
-> Code refactoring in order to make the code easier to read and maintain.
-> 
-> Signed-off-by: Gustavo A. R. Silva <garsilva@embeddedor.com>
-> ---
-> This code was tested by compilation only (GCC 7.2.0 was used).
-> 
->  net/netrom/nr_route.c | 63 ++++++++++++++++-----------------------------------
->  1 file changed, 20 insertions(+), 43 deletions(-)
-> 
-> diff --git a/net/netrom/nr_route.c b/net/netrom/nr_route.c
-> index fc9cadc..1e5165f 100644
-> --- a/net/netrom/nr_route.c
-> +++ b/net/netrom/nr_route.c
-> @@ -80,6 +80,23 @@ static struct nr_neigh *nr_neigh_get_dev(ax25_address *callsign,
->  
->  static void nr_remove_neigh(struct nr_neigh *);
->  
-> +/*      re-sort the routes in quality order.    */
-> +static inline void re_sort_routes(struct nr_node *nr_node, int ix_x, int ix_y)
-> +{
-> +	struct nr_route nr_route;
-> +
-> +	if (nr_node->routes[ix_y].quality > nr_node->routes[ix_x].quality) {
-> +		if (nr_node->which == ix_x)
-> +			nr_node->which = ix_y;
-> +		else if (nr_node->which == ix_y)
-> +			nr_node->which = ix_x;
-> +
-> +		nr_route              = nr_node->routes[ix_x];
-> +		nr_node->routes[ix_x] = nr_node->routes[ix_y];
-> +		nr_node->routes[ix_y] = nr_route;
-> +	}
-> +}
-> +
-
-
-Good idea, a bit of nit picking ..
-does ix_ has a special meaning ? otherwise x,y would be sufficient.
-From the code below i can see: y=x+1 Perhaps that can be used.
-
-kernel.h has a swap() macro. so you can swap(nr_node->routes[x],nr_node->routes[y]);
-
-hope that helps,
-re,
- wh
-
->  /*
->   *	Add a new route to a node, and in the process add the node and the
->   *	neighbour if it is new.
-> @@ -90,7 +107,6 @@ static int __must_check nr_add_node(ax25_address *nr, const char *mnemonic,
->  {
->  	struct nr_node  *nr_node;
->  	struct nr_neigh *nr_neigh;
-> -	struct nr_route nr_route;
->  	int i, found;
->  	struct net_device *odev;
->  
-> @@ -251,50 +267,11 @@ static int __must_check nr_add_node(ax25_address *nr, const char *mnemonic,
->  	/* Now re-sort the routes in quality order */
->  	switch (nr_node->count) {
->  	case 3:
-> -		if (nr_node->routes[1].quality > nr_node->routes[0].quality) {
-> -			switch (nr_node->which) {
-> -			case 0:
-> -				nr_node->which = 1;
-> -				break;
-> -			case 1:
-> -				nr_node->which = 0;
-> -				break;
-> -			}
-> -			nr_route           = nr_node->routes[0];
-> -			nr_node->routes[0] = nr_node->routes[1];
-> -			nr_node->routes[1] = nr_route;
-> -		}
-> -		if (nr_node->routes[2].quality > nr_node->routes[1].quality) {
-> -			switch (nr_node->which) {
-> -			case 1:  nr_node->which = 2;
-> -				break;
-> -
-> -			case 2:  nr_node->which = 1;
-> -				break;
-> -
-> -			default:
-> -				break;
-> -			}
-> -			nr_route           = nr_node->routes[1];
-> -			nr_node->routes[1] = nr_node->routes[2];
-> -			nr_node->routes[2] = nr_route;
-> -		}
-> +		re_sort_routes(nr_node, 0, 1);
-> +		re_sort_routes(nr_node, 1, 2);
->  		/* fall through */
->  	case 2:
-> -		if (nr_node->routes[1].quality > nr_node->routes[0].quality) {
-> -			switch (nr_node->which) {
-> -			case 0:  nr_node->which = 1;
-> -				break;
-> -
-> -			case 1:  nr_node->which = 0;
-> -				break;
-> -
-> -			default: break;
-> -			}
-> -			nr_route           = nr_node->routes[0];
-> -			nr_node->routes[0] = nr_node->routes[1];
-> -			nr_node->routes[1] = nr_route;
-> -			}
-> +		re_sort_routes(nr_node, 0, 1);
->  	case 1:
->  		break;
->  	}
+PiBPbiBGcmksIDIwMTctMTAtMjAgYXQgMTA6MjMgKzAzMDAsIEVsZW5hIFJlc2hldG92YSB3cm90
+ZToNCj4gPiBhdG9taWNfdCB2YXJpYWJsZXMgYXJlIGN1cnJlbnRseSB1c2VkIHRvIGltcGxlbWVu
+dCByZWZlcmVuY2UNCj4gPiBjb3VudGVycyB3aXRoIHRoZSBmb2xsb3dpbmcgcHJvcGVydGllczoN
+Cj4gPiAgLSBjb3VudGVyIGlzIGluaXRpYWxpemVkIHRvIDEgdXNpbmcgYXRvbWljX3NldCgpDQo+
+ID4gIC0gYSByZXNvdXJjZSBpcyBmcmVlZCB1cG9uIGNvdW50ZXIgcmVhY2hpbmcgemVybw0KPiA+
+ICAtIG9uY2UgY291bnRlciByZWFjaGVzIHplcm8sIGl0cyBmdXJ0aGVyDQo+ID4gICAgaW5jcmVt
+ZW50cyBhcmVuJ3QgYWxsb3dlZA0KPiA+ICAtIGNvdW50ZXIgc2NoZW1hIHVzZXMgYmFzaWMgYXRv
+bWljIG9wZXJhdGlvbnMNCj4gPiAgICAoc2V0LCBpbmMsIGluY19ub3RfemVybywgZGVjX2FuZF90
+ZXN0LCBldGMuKQ0KPiA+DQo+ID4gU3VjaCBhdG9taWMgdmFyaWFibGVzIHNob3VsZCBiZSBjb252
+ZXJ0ZWQgdG8gYSBuZXdseSBwcm92aWRlZA0KPiA+IHJlZmNvdW50X3QgdHlwZSBhbmQgQVBJIHRo
+YXQgcHJldmVudHMgYWNjaWRlbnRhbCBjb3VudGVyIG92ZXJmbG93cw0KPiA+IGFuZCB1bmRlcmZs
+b3dzLiBUaGlzIGlzIGltcG9ydGFudCBzaW5jZSBvdmVyZmxvd3MgYW5kIHVuZGVyZmxvd3MNCj4g
+PiBjYW4gbGVhZCB0byB1c2UtYWZ0ZXItZnJlZSBzaXR1YXRpb24gYW5kIGJlIGV4cGxvaXRhYmxl
+Lg0KPiA+DQo+ID4gVGhlIHZhcmlhYmxlIG10a19ldGguZG1hX3JlZmNudCBpcyB1c2VkIGFzIHB1
+cmUgcmVmZXJlbmNlIGNvdW50ZXIuDQo+ID4gQ29udmVydCBpdCB0byByZWZjb3VudF90IGFuZCBm
+aXggdXAgdGhlIG9wZXJhdGlvbnMuDQo+ID4NCj4gPiBTdWdnZXN0ZWQtYnk6IEtlZXMgQ29vayA8
+a2Vlc2Nvb2tAY2hyb21pdW0ub3JnPg0KPiA+IFJldmlld2VkLWJ5OiBEYXZpZCBXaW5kc29yIDxk
+d2luZHNvckBnbWFpbC5jb20+DQo+ID4gUmV2aWV3ZWQtYnk6IEhhbnMgTGlsamVzdHJhbmQgPGlz
+aGthbWllbEBnbWFpbC5jb20+DQo+ID4gU2lnbmVkLW9mZi1ieTogRWxlbmEgUmVzaGV0b3ZhIDxl
+bGVuYS5yZXNoZXRvdmFAaW50ZWwuY29tPg0KPiA+IC0tLQ0KPiA+ICBkcml2ZXJzL25ldC9ldGhl
+cm5ldC9tZWRpYXRlay9tdGtfZXRoX3NvYy5jIHwgOCArKysrKy0tLQ0KPiA+ICBkcml2ZXJzL25l
+dC9ldGhlcm5ldC9tZWRpYXRlay9tdGtfZXRoX3NvYy5oIHwgNCArKystDQo+ID4gIDIgZmlsZXMg
+Y2hhbmdlZCwgOCBpbnNlcnRpb25zKCspLCA0IGRlbGV0aW9ucygtKQ0KPiA+DQo+ID4gZGlmZiAt
+LWdpdCBhL2RyaXZlcnMvbmV0L2V0aGVybmV0L21lZGlhdGVrL210a19ldGhfc29jLmMNCj4gYi9k
+cml2ZXJzL25ldC9ldGhlcm5ldC9tZWRpYXRlay9tdGtfZXRoX3NvYy5jDQo+ID4gaW5kZXggNWU4
+MWE3Mi4uNTRhZGZkOSAxMDA2NDQNCj4gPiAtLS0gYS9kcml2ZXJzL25ldC9ldGhlcm5ldC9tZWRp
+YXRlay9tdGtfZXRoX3NvYy5jDQo+ID4gKysrIGIvZHJpdmVycy9uZXQvZXRoZXJuZXQvbWVkaWF0
+ZWsvbXRrX2V0aF9zb2MuYw0KPiA+IEBAIC0xODE3LDcgKzE4MTcsNyBAQCBzdGF0aWMgaW50IG10
+a19vcGVuKHN0cnVjdCBuZXRfZGV2aWNlICpkZXYpDQo+ID4gIAlzdHJ1Y3QgbXRrX2V0aCAqZXRo
+ID0gbWFjLT5odzsNCj4gPg0KPiA+ICAJLyogd2UgcnVuIDIgbmV0ZGV2cyBvbiB0aGUgc2FtZSBk
+bWEgcmluZyBzbyB3ZSBvbmx5IGJyaW5nIGl0IHVwIG9uY2UNCj4gKi8NCj4gPiAtCWlmICghYXRv
+bWljX3JlYWQoJmV0aC0+ZG1hX3JlZmNudCkpIHsNCj4gPiArCWlmICghcmVmY291bnRfcmVhZCgm
+ZXRoLT5kbWFfcmVmY250KSkgew0KPiA+ICAJCWludCBlcnIgPSBtdGtfc3RhcnRfZG1hKGV0aCk7
+DQo+ID4NCj4gPiAgCQlpZiAoZXJyKQ0KPiA+IEBAIC0xODI3LDggKzE4MjcsMTAgQEAgc3RhdGlj
+IGludCBtdGtfb3BlbihzdHJ1Y3QgbmV0X2RldmljZSAqZGV2KQ0KPiA+ICAJCW5hcGlfZW5hYmxl
+KCZldGgtPnJ4X25hcGkpOw0KPiA+ICAJCW10a190eF9pcnFfZW5hYmxlKGV0aCwgTVRLX1RYX0RP
+TkVfSU5UKTsNCj4gPiAgCQltdGtfcnhfaXJxX2VuYWJsZShldGgsIE1US19SWF9ET05FX0lOVCk7
+DQo+ID4gKwkJcmVmY291bnRfc2V0KCZldGgtPmRtYV9yZWZjbnQsIDEpOw0KPiANCj4gdGhlIGV4
+aXN0aW5nIGRyaXZlciBzZWVtcyB0byBoYXZlIGEgbWlzc2luZyBpbml0aWFsIGF0b21pY19zZXQg
+Zm9yIHRoZQ0KPiBldGgtPmRtYV9yZWZjbnQuDQo+IA0KPiA+ICAJfQ0KPiA+IC0JYXRvbWljX2lu
+YygmZXRoLT5kbWFfcmVmY250KTsNCj4gPiArCWVsc2UNCj4gPiArCQlyZWZjb3VudF9pbmMoJmV0
+aC0+ZG1hX3JlZmNudCk7DQo+ID4NCj4gDQo+IGhvdyBhYm91dCBhZGQgdGhlIGluaXRpYWwgcmVm
+Y291bnRfc2V0IGludG8gcHJvYmUgaGFuZGxlciwgYW5kIGtlZXANCj4gbG9naWMgZWxzZSB1bmNo
+YW5nZWQgPw0KDQpTdXJlLCBJIGd1ZXNzIHlvdSBtZWFuIG10a19wcm9iZSgpIGZ1bmN0aW9uPyBJ
+IGNhbiBtb3ZlIHRoZSByZWZjb3VudF9zZXQgdG8gYmUgdGhlcmUNCmFuZCByZW1vdmUgdGhpcyBj
+aGFuZ2UuIA0KDQpTaG91bGQgSSByZXNlbmQgdGhlIG1vZGlmaWVkIHBhdGNoIHRvIHlvdSAobWF5
+YmUgdGhlbiB0d28gb2YgdGhlIGV0aGVybmV0IHBhdGNoZXMpPw0KDQpCZXN0IFJlZ2FyZHMsDQpF
+bGVuYS4NCj4gDQo+ID4gIAlwaHlfc3RhcnQoZGV2LT5waHlkZXYpOw0KPiA+ICAJbmV0aWZfc3Rh
+cnRfcXVldWUoZGV2KTsNCj4gPiBAQCAtMTg2OCw3ICsxODcwLDcgQEAgc3RhdGljIGludCBtdGtf
+c3RvcChzdHJ1Y3QgbmV0X2RldmljZSAqZGV2KQ0KPiA+ICAJcGh5X3N0b3AoZGV2LT5waHlkZXYp
+Ow0KPiA+DQo+ID4gIAkvKiBvbmx5IHNodXRkb3duIERNQSBpZiB0aGlzIGlzIHRoZSBsYXN0IHVz
+ZXIgKi8NCj4gPiAtCWlmICghYXRvbWljX2RlY19hbmRfdGVzdCgmZXRoLT5kbWFfcmVmY250KSkN
+Cj4gPiArCWlmICghcmVmY291bnRfZGVjX2FuZF90ZXN0KCZldGgtPmRtYV9yZWZjbnQpKQ0KPiA+
+ICAJCXJldHVybiAwOw0KPiA+DQo+ID4gIAltdGtfdHhfaXJxX2Rpc2FibGUoZXRoLCBNVEtfVFhf
+RE9ORV9JTlQpOw0KPiA+IGRpZmYgLS1naXQgYS9kcml2ZXJzL25ldC9ldGhlcm5ldC9tZWRpYXRl
+ay9tdGtfZXRoX3NvYy5oDQo+IGIvZHJpdmVycy9uZXQvZXRoZXJuZXQvbWVkaWF0ZWsvbXRrX2V0
+aF9zb2MuaA0KPiA+IGluZGV4IDNkM2MyNGEuLmEzYWY0NjYgMTAwNjQ0DQo+ID4gLS0tIGEvZHJp
+dmVycy9uZXQvZXRoZXJuZXQvbWVkaWF0ZWsvbXRrX2V0aF9zb2MuaA0KPiA+ICsrKyBiL2RyaXZl
+cnMvbmV0L2V0aGVybmV0L21lZGlhdGVrL210a19ldGhfc29jLmgNCj4gPiBAQCAtMTUsNiArMTUs
+OCBAQA0KPiA+ICAjaWZuZGVmIE1US19FVEhfSA0KPiA+ICAjZGVmaW5lIE1US19FVEhfSA0KPiA+
+DQo+ID4gKyNpbmNsdWRlIDxsaW51eC9yZWZjb3VudC5oPg0KPiA+ICsNCj4gPiAgI2RlZmluZSBN
+VEtfUURNQV9QQUdFX1NJWkUJMjA0OA0KPiA+ICAjZGVmaW5lCU1US19NQVhfUlhfTEVOR1RICTE1
+MzYNCj4gPiAgI2RlZmluZSBNVEtfVFhfRE1BX0JVRl9MRU4JMHgzZmZmDQo+ID4gQEAgLTYzMiw3
+ICs2MzQsNyBAQCBzdHJ1Y3QgbXRrX2V0aCB7DQo+ID4gIAlzdHJ1Y3QgcmVnbWFwCQkJKnBjdGw7
+DQo+ID4gIAl1MzIJCQkJY2hpcF9pZDsNCj4gPiAgCWJvb2wJCQkJaHdscm87DQo+ID4gLQlhdG9t
+aWNfdAkJCWRtYV9yZWZjbnQ7DQo+ID4gKwlyZWZjb3VudF90CQkJZG1hX3JlZmNudDsNCj4gPiAg
+CXN0cnVjdCBtdGtfdHhfcmluZwkJdHhfcmluZzsNCj4gPiAgCXN0cnVjdCBtdGtfcnhfcmluZw0K
+PiAJcnhfcmluZ1tNVEtfTUFYX1JYX1JJTkdfTlVNXTsNCj4gPiAgCXN0cnVjdCBtdGtfcnhfcmlu
+ZwkJcnhfcmluZ19xZG1hOw0KPiANCg0K
+--
+To unsubscribe from this list: send the line "unsubscribe linux-rdma" in
+the body of a message to majordomo-u79uwXL29TY76Z2rM5mHXA@public.gmane.org
+More majordomo info at  http://vger.kernel.org/majordomo-info.html
