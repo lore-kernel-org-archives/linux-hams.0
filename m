@@ -1,128 +1,130 @@
-From: Sean Wang <sean.wang-NuS5LvNUpcJWk0Htik3J/w@public.gmane.org>
-Subject: Re: [PATCH 02/15] drivers, net, ethernet: convert
- mtk_eth.dma_refcnt from atomic_t to refcount_t
-Date: Fri, 20 Oct 2017 16:08:47 +0800
-Message-ID: <1508486927.29850.12.camel@mtkswgap22>
-References: <1508484229-19706-1-git-send-email-elena.reshetova@intel.com>
- <1508484229-19706-3-git-send-email-elena.reshetova@intel.com>
+From: walter harms <wharms@bfs.de>
+Subject: Re: [PATCH 2/2] net: netrom: refactor code in nr_add_node
+Date: Fri, 20 Oct 2017 10:57:10 +0200
+Message-ID: <59E9BA66.4000707@bfs.de>
+References: <20171019172746.GA15332@embeddedor.com>
+Reply-To: wharms@bfs.de
 Mime-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
-Return-path: <linux-mediatek-bounces+glpam-linux-mediatek=m.gmane.org-IAPFreCvJWM7uuMidbF8XUB+6BGkLq7r@public.gmane.org>
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-	d=lists.infradead.org; s=bombadil.20170209; h=Sender:
-	Content-Transfer-Encoding:Content-Type:Cc:List-Subscribe:List-Help:List-Post:
-	List-Archive:List-Unsubscribe:List-Id:MIME-Version:References:In-Reply-To:
-	Date:To:From:Subject:Message-ID:Reply-To:Content-ID:Content-Description:
-	Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:
-	List-Owner; bh=fY7iCRdnDN7DIA+fb8S1dUIREb5eXtE3NifkVMnNNRE=; b=BdQTgwcqWH5H2E
-	bRVCK0biDEqJObTzaUD8ljkpOyiOb52geYCfCFCFvV/YL2iExJjJVjIjnlHmoRkM3nGeqh/sA0Mfr
-	+32zrAR+fpqn7XwXb08PkgKQayUnm6yYVn+2GIy8aHjFJjIUhrS/OB4GFB0XJtWmtYA+XR4lstELJ
-	OpbQQN/qeW8+5sTxWOfIEL5wvet7CJoAPEqF5EgL2EE3YIMXOIoW1E5D/15dV0JkrNFQsOgWybnCu
-	XrJQ1CFScSaXgGCeX1cA1JHiwopERNC4tK3zeXXDIHEaNiclv+umXh2ZJoblHEnsK+l19uhaTk0X8
-	nplpw2zr41LbYMmMnNyw==;
-In-Reply-To: <1508484229-19706-3-git-send-email-elena.reshetova-ral2JQCrhuEAvxtiuMwx3w@public.gmane.org>
-List-Id: <linux-hams.vger.kernel.org>
-List-Unsubscribe: <http://lists.infradead.org/mailman/options/linux-mediatek>, 
- <mailto:linux-mediatek-request-IAPFreCvJWM7uuMidbF8XUB+6BGkLq7r@public.gmane.org?subject=unsubscribe>
-List-Archive: <http://lists.infradead.org/pipermail/linux-mediatek/>
-List-Post: <mailto:linux-mediatek-IAPFreCvJWM7uuMidbF8XUB+6BGkLq7r@public.gmane.org>
-List-Help: <mailto:linux-mediatek-request-IAPFreCvJWM7uuMidbF8XUB+6BGkLq7r@public.gmane.org?subject=help>
-List-Subscribe: <http://lists.infradead.org/mailman/listinfo/linux-mediatek>, 
- <mailto:linux-mediatek-request-IAPFreCvJWM7uuMidbF8XUB+6BGkLq7r@public.gmane.org?subject=subscribe>
-Sender: "Linux-mediatek" <linux-mediatek-bounces-IAPFreCvJWM7uuMidbF8XUB+6BGkLq7r@public.gmane.org>
-Errors-To: linux-mediatek-bounces+glpam-linux-mediatek=m.gmane.org-IAPFreCvJWM7uuMidbF8XUB+6BGkLq7r@public.gmane.org
-To: Elena Reshetova <elena.reshetova-ral2JQCrhuEAvxtiuMwx3w@public.gmane.org>
-Cc: peterz-wEGCiKHe2LqWVfeAwA7xHQ@public.gmane.org, matanb-VPRAkNaXOzVWk0Htik3J/w@public.gmane.org, paulus-eUNUBHrolfbYtjvyW6yDsg@public.gmane.org, zbr-i6C2adt8DTjR7s880joybQ@public.gmane.org, nbd-p3rKhJxN3npAfugRpC6u6w@public.gmane.org, linux-rdma-u79uwXL29TY76Z2rM5mHXA@public.gmane.org, saeedm-VPRAkNaXOzVWk0Htik3J/w@public.gmane.org, ganeshgr-ut6Up61K2wZBDgjK7y7TUQ@public.gmane.org, keescook-F7+t8E8rja9g9hUCZPvPmw@public.gmane.org, ajk-iz34hMvxm2Hmj42eshorlhS11BummzK+@public.gmane.org, leonro-VPRAkNaXOzVWk0Htik3J/w@public.gmane.org, linux-mediatek-IAPFreCvJWM7uuMidbF8XUB+6BGkLq7r@public.gmane.org, john-Pj+rj9U5foFAfugRpC6u6w@public.gmane.org, matthias.bgg-Re5JQEeQqe8AvxtiuMwx3w@public.gmane.org, linux-hams-u79uwXL29TY76Z2rM5mHXA@public.gmane.org, linux-arm-kernel-IAPFreCvJWM7uuMidbF8XUB+6BGkLq7r@public.gmane.org, netdev-u79uwXL29TY76Z2rM5mHXA@public.gmane.org, yishaih-VPRAkNaXOzVWk0Htik3J/w@public.gmane.org, linux-kernel-u79uwXL29TY76Z2rM5mHXA@public.gmane.org, linux-ppp-u79uwXL29TY76Z2rM5mHXA@public.gmane.org, davem-fT/PcQaiUtIeIZ0/mPfg9Q@public.gmane.org, tariqt-VPRAkNaXOzVWk0Htik3J/w@public.gmane.org
+Return-path: <linux-hams-owner@vger.kernel.org>
+In-Reply-To: <20171019172746.GA15332@embeddedor.com>
+Sender: linux-hams-owner@vger.kernel.org
+List-ID: <linux-hams.vger.kernel.org>
+Content-Type: text/plain; charset="us-ascii"
+To: "Gustavo A. R. Silva" <garsilva@embeddedor.com>
+Cc: Ralf Baechle <ralf@linux-mips.org>, "David S. Miller" <davem@davemloft.net>, linux-hams@vger.kernel.org, netdev@vger.kernel.org
 
-On Fri, 2017-10-20 at 10:23 +0300, Elena Reshetova wrote:
-> atomic_t variables are currently used to implement reference
-> counters with the following properties:
->  - counter is initialized to 1 using atomic_set()
->  - a resource is freed upon counter reaching zero
->  - once counter reaches zero, its further
->    increments aren't allowed
->  - counter schema uses basic atomic operations
->    (set, inc, inc_not_zero, dec_and_test, etc.)
+
+
+Am 19.10.2017 19:27, schrieb Gustavo A. R. Silva:
+> Code refactoring in order to make the code easier to read and maintain.
 > 
-> Such atomic variables should be converted to a newly provided
-> refcount_t type and API that prevents accidental counter overflows
-> and underflows. This is important since overflows and underflows
-> can lead to use-after-free situation and be exploitable.
-> 
-> The variable mtk_eth.dma_refcnt is used as pure reference counter.
-> Convert it to refcount_t and fix up the operations.
-> 
-> Suggested-by: Kees Cook <keescook-F7+t8E8rja9g9hUCZPvPmw@public.gmane.org>
-> Reviewed-by: David Windsor <dwindsor-Re5JQEeQqe8AvxtiuMwx3w@public.gmane.org>
-> Reviewed-by: Hans Liljestrand <ishkamiel-Re5JQEeQqe8AvxtiuMwx3w@public.gmane.org>
-> Signed-off-by: Elena Reshetova <elena.reshetova-ral2JQCrhuEAvxtiuMwx3w@public.gmane.org>
+> Signed-off-by: Gustavo A. R. Silva <garsilva@embeddedor.com>
 > ---
->  drivers/net/ethernet/mediatek/mtk_eth_soc.c | 8 +++++---
->  drivers/net/ethernet/mediatek/mtk_eth_soc.h | 4 +++-
->  2 files changed, 8 insertions(+), 4 deletions(-)
+> This code was tested by compilation only (GCC 7.2.0 was used).
 > 
-> diff --git a/drivers/net/ethernet/mediatek/mtk_eth_soc.c b/drivers/net/ethernet/mediatek/mtk_eth_soc.c
-> index 5e81a72..54adfd9 100644
-> --- a/drivers/net/ethernet/mediatek/mtk_eth_soc.c
-> +++ b/drivers/net/ethernet/mediatek/mtk_eth_soc.c
-> @@ -1817,7 +1817,7 @@ static int mtk_open(struct net_device *dev)
->  	struct mtk_eth *eth = mac->hw;
+>  net/netrom/nr_route.c | 63 ++++++++++++++++-----------------------------------
+>  1 file changed, 20 insertions(+), 43 deletions(-)
+> 
+> diff --git a/net/netrom/nr_route.c b/net/netrom/nr_route.c
+> index fc9cadc..1e5165f 100644
+> --- a/net/netrom/nr_route.c
+> +++ b/net/netrom/nr_route.c
+> @@ -80,6 +80,23 @@ static struct nr_neigh *nr_neigh_get_dev(ax25_address *callsign,
 >  
->  	/* we run 2 netdevs on the same dma ring so we only bring it up once */
-> -	if (!atomic_read(&eth->dma_refcnt)) {
-> +	if (!refcount_read(&eth->dma_refcnt)) {
->  		int err = mtk_start_dma(eth);
+>  static void nr_remove_neigh(struct nr_neigh *);
 >  
->  		if (err)
-> @@ -1827,8 +1827,10 @@ static int mtk_open(struct net_device *dev)
->  		napi_enable(&eth->rx_napi);
->  		mtk_tx_irq_enable(eth, MTK_TX_DONE_INT);
->  		mtk_rx_irq_enable(eth, MTK_RX_DONE_INT);
-> +		refcount_set(&eth->dma_refcnt, 1);
-
-the existing driver seems to have a missing initial atomic_set for the
-eth->dma_refcnt. 
-
->  	}
-> -	atomic_inc(&eth->dma_refcnt);
-> +	else
-> +		refcount_inc(&eth->dma_refcnt);
->  
-
-how about add the initial refcount_set into probe handler, and keep
-logic else unchanged ? 
-
->  	phy_start(dev->phydev);
->  	netif_start_queue(dev);
-> @@ -1868,7 +1870,7 @@ static int mtk_stop(struct net_device *dev)
->  	phy_stop(dev->phydev);
->  
->  	/* only shutdown DMA if this is the last user */
-> -	if (!atomic_dec_and_test(&eth->dma_refcnt))
-> +	if (!refcount_dec_and_test(&eth->dma_refcnt))
->  		return 0;
->  
->  	mtk_tx_irq_disable(eth, MTK_TX_DONE_INT);
-> diff --git a/drivers/net/ethernet/mediatek/mtk_eth_soc.h b/drivers/net/ethernet/mediatek/mtk_eth_soc.h
-> index 3d3c24a..a3af466 100644
-> --- a/drivers/net/ethernet/mediatek/mtk_eth_soc.h
-> +++ b/drivers/net/ethernet/mediatek/mtk_eth_soc.h
-> @@ -15,6 +15,8 @@
->  #ifndef MTK_ETH_H
->  #define MTK_ETH_H
->  
-> +#include <linux/refcount.h>
+> +/*      re-sort the routes in quality order.    */
+> +static inline void re_sort_routes(struct nr_node *nr_node, int ix_x, int ix_y)
+> +{
+> +	struct nr_route nr_route;
 > +
->  #define MTK_QDMA_PAGE_SIZE	2048
->  #define	MTK_MAX_RX_LENGTH	1536
->  #define MTK_TX_DMA_BUF_LEN	0x3fff
-> @@ -632,7 +634,7 @@ struct mtk_eth {
->  	struct regmap			*pctl;
->  	u32				chip_id;
->  	bool				hwlro;
-> -	atomic_t			dma_refcnt;
-> +	refcount_t			dma_refcnt;
->  	struct mtk_tx_ring		tx_ring;
->  	struct mtk_rx_ring		rx_ring[MTK_MAX_RX_RING_NUM];
->  	struct mtk_rx_ring		rx_ring_qdma;
+> +	if (nr_node->routes[ix_y].quality > nr_node->routes[ix_x].quality) {
+> +		if (nr_node->which == ix_x)
+> +			nr_node->which = ix_y;
+> +		else if (nr_node->which == ix_y)
+> +			nr_node->which = ix_x;
+> +
+> +		nr_route              = nr_node->routes[ix_x];
+> +		nr_node->routes[ix_x] = nr_node->routes[ix_y];
+> +		nr_node->routes[ix_y] = nr_route;
+> +	}
+> +}
+> +
+
+
+Good idea, a bit of nit picking ..
+does ix_ has a special meaning ? otherwise x,y would be sufficient.
+From the code below i can see: y=x+1 Perhaps that can be used.
+
+kernel.h has a swap() macro. so you can swap(nr_node->routes[x],nr_node->routes[y]);
+
+hope that helps,
+re,
+ wh
+
+>  /*
+>   *	Add a new route to a node, and in the process add the node and the
+>   *	neighbour if it is new.
+> @@ -90,7 +107,6 @@ static int __must_check nr_add_node(ax25_address *nr, const char *mnemonic,
+>  {
+>  	struct nr_node  *nr_node;
+>  	struct nr_neigh *nr_neigh;
+> -	struct nr_route nr_route;
+>  	int i, found;
+>  	struct net_device *odev;
+>  
+> @@ -251,50 +267,11 @@ static int __must_check nr_add_node(ax25_address *nr, const char *mnemonic,
+>  	/* Now re-sort the routes in quality order */
+>  	switch (nr_node->count) {
+>  	case 3:
+> -		if (nr_node->routes[1].quality > nr_node->routes[0].quality) {
+> -			switch (nr_node->which) {
+> -			case 0:
+> -				nr_node->which = 1;
+> -				break;
+> -			case 1:
+> -				nr_node->which = 0;
+> -				break;
+> -			}
+> -			nr_route           = nr_node->routes[0];
+> -			nr_node->routes[0] = nr_node->routes[1];
+> -			nr_node->routes[1] = nr_route;
+> -		}
+> -		if (nr_node->routes[2].quality > nr_node->routes[1].quality) {
+> -			switch (nr_node->which) {
+> -			case 1:  nr_node->which = 2;
+> -				break;
+> -
+> -			case 2:  nr_node->which = 1;
+> -				break;
+> -
+> -			default:
+> -				break;
+> -			}
+> -			nr_route           = nr_node->routes[1];
+> -			nr_node->routes[1] = nr_node->routes[2];
+> -			nr_node->routes[2] = nr_route;
+> -		}
+> +		re_sort_routes(nr_node, 0, 1);
+> +		re_sort_routes(nr_node, 1, 2);
+>  		/* fall through */
+>  	case 2:
+> -		if (nr_node->routes[1].quality > nr_node->routes[0].quality) {
+> -			switch (nr_node->which) {
+> -			case 0:  nr_node->which = 1;
+> -				break;
+> -
+> -			case 1:  nr_node->which = 0;
+> -				break;
+> -
+> -			default: break;
+> -			}
+> -			nr_route           = nr_node->routes[0];
+> -			nr_node->routes[0] = nr_node->routes[1];
+> -			nr_node->routes[1] = nr_route;
+> -			}
+> +		re_sort_routes(nr_node, 0, 1);
+>  	case 1:
+>  		break;
+>  	}
