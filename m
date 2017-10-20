@@ -1,80 +1,128 @@
-From: Elena Reshetova <elena.reshetova@intel.com>
-Subject: [PATCH 10/15] drivers, net: convert masces_rx_sc.refcnt from atomic_t to refcount_t
-Date: Fri, 20 Oct 2017 10:23:44 +0300
-Message-ID: <1508484229-19706-11-git-send-email-elena.reshetova@intel.com>
+From: Sean Wang <sean.wang-NuS5LvNUpcJWk0Htik3J/w@public.gmane.org>
+Subject: Re: [PATCH 02/15] drivers, net, ethernet: convert
+ mtk_eth.dma_refcnt from atomic_t to refcount_t
+Date: Fri, 20 Oct 2017 16:08:47 +0800
+Message-ID: <1508486927.29850.12.camel@mtkswgap22>
 References: <1508484229-19706-1-git-send-email-elena.reshetova@intel.com>
-Return-path: <netdev-owner@vger.kernel.org>
-In-Reply-To: <1508484229-19706-1-git-send-email-elena.reshetova@intel.com>
-Sender: netdev-owner@vger.kernel.org
-List-ID: <linux-hams.vger.kernel.org>
-MIME-Version: 1.0
+ <1508484229-19706-3-git-send-email-elena.reshetova@intel.com>
+Mime-Version: 1.0
 Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
-To: davem@davemloft.net
-Cc: netdev@vger.kernel.org, linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org, linux-mediatek@lists.infradead.org, linux-rdma@vger.kernel.org, linux-hams@vger.kernel.org, linux-ppp@vger.kernel.org, ganeshgr@chelsio.com, nbd@openwrt.org, john@phrozen.org, sean.wang@mediatek.com, matthias.bgg@gmail.com, yishaih@mellanox.com, saeedm@mellanox.com, matanb@mellanox.com, tariqt@mellanox.com, leonro@mellanox.com, ajk@comnets.uni-bremen.de, paulus@samba.org, zbr@ioremap.net, peterz@infradead.org, keescook@chromium.org, Elena Reshetova <elena.reshetova@intel.com>
+Return-path: <linux-mediatek-bounces+glpam-linux-mediatek=m.gmane.org-IAPFreCvJWM7uuMidbF8XUB+6BGkLq7r@public.gmane.org>
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+	d=lists.infradead.org; s=bombadil.20170209; h=Sender:
+	Content-Transfer-Encoding:Content-Type:Cc:List-Subscribe:List-Help:List-Post:
+	List-Archive:List-Unsubscribe:List-Id:MIME-Version:References:In-Reply-To:
+	Date:To:From:Subject:Message-ID:Reply-To:Content-ID:Content-Description:
+	Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:
+	List-Owner; bh=fY7iCRdnDN7DIA+fb8S1dUIREb5eXtE3NifkVMnNNRE=; b=BdQTgwcqWH5H2E
+	bRVCK0biDEqJObTzaUD8ljkpOyiOb52geYCfCFCFvV/YL2iExJjJVjIjnlHmoRkM3nGeqh/sA0Mfr
+	+32zrAR+fpqn7XwXb08PkgKQayUnm6yYVn+2GIy8aHjFJjIUhrS/OB4GFB0XJtWmtYA+XR4lstELJ
+	OpbQQN/qeW8+5sTxWOfIEL5wvet7CJoAPEqF5EgL2EE3YIMXOIoW1E5D/15dV0JkrNFQsOgWybnCu
+	XrJQ1CFScSaXgGCeX1cA1JHiwopERNC4tK3zeXXDIHEaNiclv+umXh2ZJoblHEnsK+l19uhaTk0X8
+	nplpw2zr41LbYMmMnNyw==;
+In-Reply-To: <1508484229-19706-3-git-send-email-elena.reshetova-ral2JQCrhuEAvxtiuMwx3w@public.gmane.org>
+List-Id: <linux-hams.vger.kernel.org>
+List-Unsubscribe: <http://lists.infradead.org/mailman/options/linux-mediatek>, 
+ <mailto:linux-mediatek-request-IAPFreCvJWM7uuMidbF8XUB+6BGkLq7r@public.gmane.org?subject=unsubscribe>
+List-Archive: <http://lists.infradead.org/pipermail/linux-mediatek/>
+List-Post: <mailto:linux-mediatek-IAPFreCvJWM7uuMidbF8XUB+6BGkLq7r@public.gmane.org>
+List-Help: <mailto:linux-mediatek-request-IAPFreCvJWM7uuMidbF8XUB+6BGkLq7r@public.gmane.org?subject=help>
+List-Subscribe: <http://lists.infradead.org/mailman/listinfo/linux-mediatek>, 
+ <mailto:linux-mediatek-request-IAPFreCvJWM7uuMidbF8XUB+6BGkLq7r@public.gmane.org?subject=subscribe>
+Sender: "Linux-mediatek" <linux-mediatek-bounces-IAPFreCvJWM7uuMidbF8XUB+6BGkLq7r@public.gmane.org>
+Errors-To: linux-mediatek-bounces+glpam-linux-mediatek=m.gmane.org-IAPFreCvJWM7uuMidbF8XUB+6BGkLq7r@public.gmane.org
+To: Elena Reshetova <elena.reshetova-ral2JQCrhuEAvxtiuMwx3w@public.gmane.org>
+Cc: peterz-wEGCiKHe2LqWVfeAwA7xHQ@public.gmane.org, matanb-VPRAkNaXOzVWk0Htik3J/w@public.gmane.org, paulus-eUNUBHrolfbYtjvyW6yDsg@public.gmane.org, zbr-i6C2adt8DTjR7s880joybQ@public.gmane.org, nbd-p3rKhJxN3npAfugRpC6u6w@public.gmane.org, linux-rdma-u79uwXL29TY76Z2rM5mHXA@public.gmane.org, saeedm-VPRAkNaXOzVWk0Htik3J/w@public.gmane.org, ganeshgr-ut6Up61K2wZBDgjK7y7TUQ@public.gmane.org, keescook-F7+t8E8rja9g9hUCZPvPmw@public.gmane.org, ajk-iz34hMvxm2Hmj42eshorlhS11BummzK+@public.gmane.org, leonro-VPRAkNaXOzVWk0Htik3J/w@public.gmane.org, linux-mediatek-IAPFreCvJWM7uuMidbF8XUB+6BGkLq7r@public.gmane.org, john-Pj+rj9U5foFAfugRpC6u6w@public.gmane.org, matthias.bgg-Re5JQEeQqe8AvxtiuMwx3w@public.gmane.org, linux-hams-u79uwXL29TY76Z2rM5mHXA@public.gmane.org, linux-arm-kernel-IAPFreCvJWM7uuMidbF8XUB+6BGkLq7r@public.gmane.org, netdev-u79uwXL29TY76Z2rM5mHXA@public.gmane.org, yishaih-VPRAkNaXOzVWk0Htik3J/w@public.gmane.org, linux-kernel-u79uwXL29TY76Z2rM5mHXA@public.gmane.org, linux-ppp-u79uwXL29TY76Z2rM5mHXA@public.gmane.org, davem-fT/PcQaiUtIeIZ0/mPfg9Q@public.gmane.org, tariqt-VPRAkNaXOzVWk0Htik3J/w@public.gmane.org
 
-atomic_t variables are currently used to implement reference
-counters with the following properties:
- - counter is initialized to 1 using atomic_set()
- - a resource is freed upon counter reaching zero
- - once counter reaches zero, its further
-   increments aren't allowed
- - counter schema uses basic atomic operations
-   (set, inc, inc_not_zero, dec_and_test, etc.)
+On Fri, 2017-10-20 at 10:23 +0300, Elena Reshetova wrote:
+> atomic_t variables are currently used to implement reference
+> counters with the following properties:
+>  - counter is initialized to 1 using atomic_set()
+>  - a resource is freed upon counter reaching zero
+>  - once counter reaches zero, its further
+>    increments aren't allowed
+>  - counter schema uses basic atomic operations
+>    (set, inc, inc_not_zero, dec_and_test, etc.)
+> 
+> Such atomic variables should be converted to a newly provided
+> refcount_t type and API that prevents accidental counter overflows
+> and underflows. This is important since overflows and underflows
+> can lead to use-after-free situation and be exploitable.
+> 
+> The variable mtk_eth.dma_refcnt is used as pure reference counter.
+> Convert it to refcount_t and fix up the operations.
+> 
+> Suggested-by: Kees Cook <keescook-F7+t8E8rja9g9hUCZPvPmw@public.gmane.org>
+> Reviewed-by: David Windsor <dwindsor-Re5JQEeQqe8AvxtiuMwx3w@public.gmane.org>
+> Reviewed-by: Hans Liljestrand <ishkamiel-Re5JQEeQqe8AvxtiuMwx3w@public.gmane.org>
+> Signed-off-by: Elena Reshetova <elena.reshetova-ral2JQCrhuEAvxtiuMwx3w@public.gmane.org>
+> ---
+>  drivers/net/ethernet/mediatek/mtk_eth_soc.c | 8 +++++---
+>  drivers/net/ethernet/mediatek/mtk_eth_soc.h | 4 +++-
+>  2 files changed, 8 insertions(+), 4 deletions(-)
+> 
+> diff --git a/drivers/net/ethernet/mediatek/mtk_eth_soc.c b/drivers/net/ethernet/mediatek/mtk_eth_soc.c
+> index 5e81a72..54adfd9 100644
+> --- a/drivers/net/ethernet/mediatek/mtk_eth_soc.c
+> +++ b/drivers/net/ethernet/mediatek/mtk_eth_soc.c
+> @@ -1817,7 +1817,7 @@ static int mtk_open(struct net_device *dev)
+>  	struct mtk_eth *eth = mac->hw;
+>  
+>  	/* we run 2 netdevs on the same dma ring so we only bring it up once */
+> -	if (!atomic_read(&eth->dma_refcnt)) {
+> +	if (!refcount_read(&eth->dma_refcnt)) {
+>  		int err = mtk_start_dma(eth);
+>  
+>  		if (err)
+> @@ -1827,8 +1827,10 @@ static int mtk_open(struct net_device *dev)
+>  		napi_enable(&eth->rx_napi);
+>  		mtk_tx_irq_enable(eth, MTK_TX_DONE_INT);
+>  		mtk_rx_irq_enable(eth, MTK_RX_DONE_INT);
+> +		refcount_set(&eth->dma_refcnt, 1);
 
-Such atomic variables should be converted to a newly provided
-refcount_t type and API that prevents accidental counter overflows
-and underflows. This is important since overflows and underflows
-can lead to use-after-free situation and be exploitable.
+the existing driver seems to have a missing initial atomic_set for the
+eth->dma_refcnt. 
 
-The variable masces_rx_sc.refcnt is used as pure reference counter.
-Convert it to refcount_t and fix up the operations.
+>  	}
+> -	atomic_inc(&eth->dma_refcnt);
+> +	else
+> +		refcount_inc(&eth->dma_refcnt);
+>  
 
-Suggested-by: Kees Cook <keescook@chromium.org>
-Reviewed-by: David Windsor <dwindsor@gmail.com>
-Reviewed-by: Hans Liljestrand <ishkamiel@gmail.com>
-Signed-off-by: Elena Reshetova <elena.reshetova@intel.com>
----
- drivers/net/macsec.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+how about add the initial refcount_set into probe handler, and keep
+logic else unchanged ? 
 
-diff --git a/drivers/net/macsec.c b/drivers/net/macsec.c
-index 733e1c2..e0aeb51 100644
---- a/drivers/net/macsec.c
-+++ b/drivers/net/macsec.c
-@@ -172,7 +172,7 @@ struct macsec_rx_sc {
- 	bool active;
- 	struct macsec_rx_sa __rcu *sa[MACSEC_NUM_AN];
- 	struct pcpu_rx_sc_stats __percpu *stats;
--	atomic_t refcnt;
-+	refcount_t refcnt;
- 	struct rcu_head rcu_head;
- };
- 
-@@ -331,12 +331,12 @@ static void free_rx_sc_rcu(struct rcu_head *head)
- 
- static struct macsec_rx_sc *macsec_rxsc_get(struct macsec_rx_sc *sc)
- {
--	return atomic_inc_not_zero(&sc->refcnt) ? sc : NULL;
-+	return refcount_inc_not_zero(&sc->refcnt) ? sc : NULL;
- }
- 
- static void macsec_rxsc_put(struct macsec_rx_sc *sc)
- {
--	if (atomic_dec_and_test(&sc->refcnt))
-+	if (refcount_dec_and_test(&sc->refcnt))
- 		call_rcu(&sc->rcu_head, free_rx_sc_rcu);
- }
- 
-@@ -1411,7 +1411,7 @@ static struct macsec_rx_sc *create_rx_sc(struct net_device *dev, sci_t sci)
- 
- 	rx_sc->sci = sci;
- 	rx_sc->active = true;
--	atomic_set(&rx_sc->refcnt, 1);
-+	refcount_set(&rx_sc->refcnt, 1);
- 
- 	secy = &macsec_priv(dev)->secy;
- 	rcu_assign_pointer(rx_sc->next, secy->rx_sc);
--- 
-2.7.4
-
+>  	phy_start(dev->phydev);
+>  	netif_start_queue(dev);
+> @@ -1868,7 +1870,7 @@ static int mtk_stop(struct net_device *dev)
+>  	phy_stop(dev->phydev);
+>  
+>  	/* only shutdown DMA if this is the last user */
+> -	if (!atomic_dec_and_test(&eth->dma_refcnt))
+> +	if (!refcount_dec_and_test(&eth->dma_refcnt))
+>  		return 0;
+>  
+>  	mtk_tx_irq_disable(eth, MTK_TX_DONE_INT);
+> diff --git a/drivers/net/ethernet/mediatek/mtk_eth_soc.h b/drivers/net/ethernet/mediatek/mtk_eth_soc.h
+> index 3d3c24a..a3af466 100644
+> --- a/drivers/net/ethernet/mediatek/mtk_eth_soc.h
+> +++ b/drivers/net/ethernet/mediatek/mtk_eth_soc.h
+> @@ -15,6 +15,8 @@
+>  #ifndef MTK_ETH_H
+>  #define MTK_ETH_H
+>  
+> +#include <linux/refcount.h>
+> +
+>  #define MTK_QDMA_PAGE_SIZE	2048
+>  #define	MTK_MAX_RX_LENGTH	1536
+>  #define MTK_TX_DMA_BUF_LEN	0x3fff
+> @@ -632,7 +634,7 @@ struct mtk_eth {
+>  	struct regmap			*pctl;
+>  	u32				chip_id;
+>  	bool				hwlro;
+> -	atomic_t			dma_refcnt;
+> +	refcount_t			dma_refcnt;
+>  	struct mtk_tx_ring		tx_ring;
+>  	struct mtk_rx_ring		rx_ring[MTK_MAX_RX_RING_NUM];
+>  	struct mtk_rx_ring		rx_ring_qdma;
