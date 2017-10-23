@@ -1,54 +1,44 @@
-From: "Gustavo A. R. Silva" <garsilva@embeddedor.com>
-Subject: Re: [PATCH v2 2/2] net: netrom: refactor code in nr_add_node
-Date: Sun, 22 Oct 2017 20:39:42 -0500
-Message-ID: <20171022203942.Horde.vHHdAHmZbpcBFTJEP0yIy9k@gator4166.hostgator.com>
-References: <20171022194136.Horde.CG1baKiAVuDlzYkA6GaU9Xb@gator4166.hostgator.com>
- <20171023010840.GA32460@embeddedor.com>
- <20171023.021813.1166611788274727571.davem@davemloft.net>
+From: "Reshetova, Elena" <elena.reshetova@intel.com>
+Subject: RE: [PATCH 00/15] networking drivers refcount_t conversions
+Date: Mon, 23 Oct 2017 06:34:53 +0000
+Message-ID: <2236FBA76BA1254E88B949DDB74E612B802B41C4@IRSMSX102.ger.corp.intel.com>
+References: <1508484229-19706-1-git-send-email-elena.reshetova@intel.com>
+ <20171022.023132.2040144937883625039.davem@davemloft.net>
 Mime-Version: 1.0
-Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <20171023.021813.1166611788274727571.davem@davemloft.net>
-Content-Disposition: inline
-Sender: linux-hams-owner@vger.kernel.org
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 8BIT
+Return-path: <linux-ppp-owner@vger.kernel.org>
+In-Reply-To: <20171022.023132.2040144937883625039.davem@davemloft.net>
+Content-Language: en-US
+Sender: linux-ppp-owner@vger.kernel.org
 List-ID: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"; format="flowed"; delsp="Yes"
-Content-Transfer-Encoding: 7bit
 To: David Miller <davem@davemloft.net>
-Cc: ralf@linux-mips.org, wharms@bfs.de, linux-hams@vger.kernel.org, netdev@vger.kernel.org, linux-kernel@vger.kernel.org
+Cc: "netdev@vger.kernel.org" <netdev@vger.kernel.org>, "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>, "linux-arm-kernel@lists.infradead.org" <linux-arm-kernel@lists.infradead.org>, "linux-mediatek@lists.infradead.org" <linux-mediatek@lists.infradead.org>, "linux-rdma@vger.kernel.org" <linux-rdma@vger.kernel.org>, "linux-hams@vger.kernel.org" <linux-hams@vger.kernel.org>, "linux-ppp@vger.kernel.org" <linux-ppp@vger.kernel.org>, "ganeshgr@chelsio.com" <ganeshgr@chelsio.com>, "nbd@openwrt.org" <nbd@openwrt.org>, "john@phrozen.org" <john@phrozen.org>, "sean.wang@mediatek.com" <sean.wang@mediatek.com>, "matthias.bgg@gmail.com" <matthias.bgg@gmail.com>, "yishaih@mellanox.com" <yishaih@mellanox.com>, "saeedm@mellanox.com" <saeedm@mellanox.com>, matan
 
 
-Quoting David Miller <davem@davemloft.net>:
+> From: Elena Reshetova <elena.reshetova@intel.com>
+> Date: Fri, 20 Oct 2017 10:23:34 +0300
+> 
+> > Note: these are the last patches related to networking that perform
+> > conversion of refcounters from atomic_t to refcount_t.
+> > In contrast to the core network refcounter conversions that
+> > were merged earlier, these are much more straightforward ones.
+> >
+> > This series, for various networking drivers, replaces atomic_t reference
+> > counters with the new refcount_t type and API (see include/linux/refcount.h).
+> > By doing this we prevent intentional or accidental
+> > underflows or overflows that can led to use-after-free vulnerabilities.
+> >
+> > The patches are fully independent and can be cherry-picked separately.
+> > Patches are based on top of net-next.
+> > If there are no objections to the patches, please merge them via respective trees
+> 
+> I've applied this entire series to net-next.  If there are any fixups or
+> follow-ups please send them as relative patches.
+> 
+> Thank you.
 
-> From: "Gustavo A. R. Silva" <garsilva@embeddedor.com>
-> Date: Sun, 22 Oct 2017 20:08:40 -0500
->
->> Code refactoring in order to make it easier to read and maintain.
->>
->> Signed-off-by: Gustavo A. R. Silva <garsilva@embeddedor.com>
->
-> Gustavo, always when reposting a new version of a patch that is part of
-> a series you must _always_ repost the entire patch series.
->
+Thank you very much David! Will send fixups separately.
 
-OK. I got it.
-
-> Also, a proper patch series must begine with a "[PATCH 0/2] ..."
-> header posting explaining at a high level what the patch series
-> is doing, how it is doing it, and why it is doing it that way.
->
-
-Yeah, in this case I thought there was no need for this as both  
-patches are not actually related in terms of functionality. But now  
-that I'm writing this, maybe that is precisely the reason why I should  
-have posted such header...?
-
-Thanks
---
-Gustavo A. R. Silva
-
-
-
-
-
-
-
+Best Regards,
+Elena.
