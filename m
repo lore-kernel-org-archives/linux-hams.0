@@ -1,105 +1,154 @@
-From: "Reshetova, Elena" <elena.reshetova@intel.com>
-Subject: RE: [PATCH 02/15] drivers, net, ethernet: convert
- mtk_eth.dma_refcnt from atomic_t to refcount_t
-Date: Mon, 23 Oct 2017 06:37:09 +0000
-Message-ID: <2236FBA76BA1254E88B949DDB74E612B802B41DE@IRSMSX102.ger.corp.intel.com>
-References: <1508484229-19706-1-git-send-email-elena.reshetova@intel.com>
-         <1508484229-19706-3-git-send-email-elena.reshetova@intel.com>
-         <1508486927.29850.12.camel@mtkswgap22>
-         <2236FBA76BA1254E88B949DDB74E612B802B37EE@IRSMSX102.ger.corp.intel.com>
- <1508645199.29850.16.camel@mtkswgap22>
+From: David Ranch <linux-hams@trinnet.net>
+Subject: Fwd: [PATCH v2 2/2] net: netrom: refactor code in nr_add_node
+Date: Mon, 23 Oct 2017 09:19:10 -0700
+Message-ID: <882a3c4b-c917-cd9b-9eeb-ea74f92a265d@trinnet.net>
+References: <20171023010840.GA32460@embeddedor.com>
 Mime-Version: 1.0
-Content-Transfer-Encoding: base64
-Return-path: <linux-ppp-owner@vger.kernel.org>
-In-Reply-To: <1508645199.29850.16.camel@mtkswgap22>
-Content-Language: en-US
-Sender: linux-ppp-owner@vger.kernel.org
+Content-Transfer-Encoding: 7bit
+Return-path: <linux-hams-owner@vger.kernel.org>
+In-Reply-To: <20171023010840.GA32460@embeddedor.com>
+Sender: linux-hams-owner@vger.kernel.org
 List-ID: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="windows-1254"
-To: Sean Wang <sean.wang@mediatek.com>
-Cc: "davem@davemloft.net" <davem@davemloft.net>, "netdev@vger.kernel.org" <netdev@vger.kernel.org>, "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>, "linux-arm-kernel@lists.infradead.org" <linux-arm-kernel@lists.infradead.org>, "linux-mediatek@lists.infradead.org" <linux-mediatek@lists.infradead.org>, "linux-rdma@vger.kernel.org" <linux-rdma@vger.kernel.org>, "linux-hams@vger.kernel.org" <linux-hams@vger.kernel.org>, "linux-ppp@vger.kernel.org" <linux-ppp@vger.kernel.org>, "ganeshgr@chelsio.com" <ganeshgr@chelsio.com>, "nbd@openwrt.org" <nbd@openwrt.org>, "john@phrozen.org" <john@phrozen.org>, "matthias.bgg@gmail.com" <matthias.bgg@gmail.com>, "yishaih@mellanox.com" <yishaih@mellanox.com>, "saeedm@mellanox.com" <saeedm@mellanox.com>, matanb@mell
+Content-Type: text/plain; charset="us-ascii"; format="flowed"
+To: Linux Hams <linux-hams@vger.kernel.org>
+Cc: Ralf Baechle <ralf@linux-mips.org>, Thomas Osterried <thomas@osterried.de>, "Bernard, f6bvp" <f6bvp@free.fr>, "David S. Miller" <davem@davemloft.net>, "Gustavo A. R. Silva" <garsilva@embeddedor.com>
 
-PiBPbiBGcmksIDIwMTctMTAtMjAgYXQgMTA6MzcgKzAwMDAsIFJlc2hldG92YSwgRWxlbmEgd3Jv
-dGU6DQo+ID4gPiBPbiBGcmksIDIwMTctMTAtMjAgYXQgMTA6MjMgKzAzMDAsIEVsZW5hIFJlc2hl
-dG92YSB3cm90ZToNCj4gPiA+ID4gYXRvbWljX3QgdmFyaWFibGVzIGFyZSBjdXJyZW50bHkgdXNl
-ZCB0byBpbXBsZW1lbnQgcmVmZXJlbmNlDQo+ID4gPiA+IGNvdW50ZXJzIHdpdGggdGhlIGZvbGxv
-d2luZyBwcm9wZXJ0aWVzOg0KPiA+ID4gPiAgLSBjb3VudGVyIGlzIGluaXRpYWxpemVkIHRvIDEg
-dXNpbmcgYXRvbWljX3NldCgpDQo+ID4gPiA+ICAtIGEgcmVzb3VyY2UgaXMgZnJlZWQgdXBvbiBj
-b3VudGVyIHJlYWNoaW5nIHplcm8NCj4gPiA+ID4gIC0gb25jZSBjb3VudGVyIHJlYWNoZXMgemVy
-bywgaXRzIGZ1cnRoZXINCj4gPiA+ID4gICAgaW5jcmVtZW50cyBhcmVuJ3QgYWxsb3dlZA0KPiA+
-ID4gPiAgLSBjb3VudGVyIHNjaGVtYSB1c2VzIGJhc2ljIGF0b21pYyBvcGVyYXRpb25zDQo+ID4g
-PiA+ICAgIChzZXQsIGluYywgaW5jX25vdF96ZXJvLCBkZWNfYW5kX3Rlc3QsIGV0Yy4pDQo+ID4g
-PiA+DQo+ID4gPiA+IFN1Y2ggYXRvbWljIHZhcmlhYmxlcyBzaG91bGQgYmUgY29udmVydGVkIHRv
-IGEgbmV3bHkgcHJvdmlkZWQNCj4gPiA+ID4gcmVmY291bnRfdCB0eXBlIGFuZCBBUEkgdGhhdCBw
-cmV2ZW50cyBhY2NpZGVudGFsIGNvdW50ZXIgb3ZlcmZsb3dzDQo+ID4gPiA+IGFuZCB1bmRlcmZs
-b3dzLiBUaGlzIGlzIGltcG9ydGFudCBzaW5jZSBvdmVyZmxvd3MgYW5kIHVuZGVyZmxvd3MNCj4g
-PiA+ID4gY2FuIGxlYWQgdG8gdXNlLWFmdGVyLWZyZWUgc2l0dWF0aW9uIGFuZCBiZSBleHBsb2l0
-YWJsZS4NCj4gPiA+ID4NCj4gPiA+ID4gVGhlIHZhcmlhYmxlIG10a19ldGguZG1hX3JlZmNudCBp
-cyB1c2VkIGFzIHB1cmUgcmVmZXJlbmNlIGNvdW50ZXIuDQo+ID4gPiA+IENvbnZlcnQgaXQgdG8g
-cmVmY291bnRfdCBhbmQgZml4IHVwIHRoZSBvcGVyYXRpb25zLg0KPiA+ID4gPg0KPiA+ID4gPiBT
-dWdnZXN0ZWQtYnk6IEtlZXMgQ29vayA8a2Vlc2Nvb2tAY2hyb21pdW0ub3JnPg0KPiA+ID4gPiBS
-ZXZpZXdlZC1ieTogRGF2aWQgV2luZHNvciA8ZHdpbmRzb3JAZ21haWwuY29tPg0KPiA+ID4gPiBS
-ZXZpZXdlZC1ieTogSGFucyBMaWxqZXN0cmFuZCA8aXNoa2FtaWVsQGdtYWlsLmNvbT4NCj4gPiA+
-ID4gU2lnbmVkLW9mZi1ieTogRWxlbmEgUmVzaGV0b3ZhIDxlbGVuYS5yZXNoZXRvdmFAaW50ZWwu
-Y29tPg0KPiA+ID4gPiAtLS0NCj4gPiA+ID4gIGRyaXZlcnMvbmV0L2V0aGVybmV0L21lZGlhdGVr
-L210a19ldGhfc29jLmMgfCA4ICsrKysrLS0tDQo+ID4gPiA+ICBkcml2ZXJzL25ldC9ldGhlcm5l
-dC9tZWRpYXRlay9tdGtfZXRoX3NvYy5oIHwgNCArKystDQo+ID4gPiA+ICAyIGZpbGVzIGNoYW5n
-ZWQsIDggaW5zZXJ0aW9ucygrKSwgNCBkZWxldGlvbnMoLSkNCj4gPiA+ID4NCj4gPiA+ID4gZGlm
-ZiAtLWdpdCBhL2RyaXZlcnMvbmV0L2V0aGVybmV0L21lZGlhdGVrL210a19ldGhfc29jLmMNCj4g
-PiA+IGIvZHJpdmVycy9uZXQvZXRoZXJuZXQvbWVkaWF0ZWsvbXRrX2V0aF9zb2MuYw0KPiA+ID4g
-PiBpbmRleCA1ZTgxYTcyLi41NGFkZmQ5IDEwMDY0NA0KPiA+ID4gPiAtLS0gYS9kcml2ZXJzL25l
-dC9ldGhlcm5ldC9tZWRpYXRlay9tdGtfZXRoX3NvYy5jDQo+ID4gPiA+ICsrKyBiL2RyaXZlcnMv
-bmV0L2V0aGVybmV0L21lZGlhdGVrL210a19ldGhfc29jLmMNCj4gPiA+ID4gQEAgLTE4MTcsNyAr
-MTgxNyw3IEBAIHN0YXRpYyBpbnQgbXRrX29wZW4oc3RydWN0IG5ldF9kZXZpY2UgKmRldikNCj4g
-PiA+ID4gIAlzdHJ1Y3QgbXRrX2V0aCAqZXRoID0gbWFjLT5odzsNCj4gPiA+ID4NCj4gPiA+ID4g
-IAkvKiB3ZSBydW4gMiBuZXRkZXZzIG9uIHRoZSBzYW1lIGRtYSByaW5nIHNvIHdlIG9ubHkgYnJp
-bmcgaXQgdXAgb25jZQ0KPiA+ID4gKi8NCj4gPiA+ID4gLQlpZiAoIWF0b21pY19yZWFkKCZldGgt
-PmRtYV9yZWZjbnQpKSB7DQo+ID4gPiA+ICsJaWYgKCFyZWZjb3VudF9yZWFkKCZldGgtPmRtYV9y
-ZWZjbnQpKSB7DQo+ID4gPiA+ICAJCWludCBlcnIgPSBtdGtfc3RhcnRfZG1hKGV0aCk7DQo+ID4g
-PiA+DQo+ID4gPiA+ICAJCWlmIChlcnIpDQo+ID4gPiA+IEBAIC0xODI3LDggKzE4MjcsMTAgQEAg
-c3RhdGljIGludCBtdGtfb3BlbihzdHJ1Y3QgbmV0X2RldmljZSAqZGV2KQ0KPiA+ID4gPiAgCQlu
-YXBpX2VuYWJsZSgmZXRoLT5yeF9uYXBpKTsNCj4gPiA+ID4gIAkJbXRrX3R4X2lycV9lbmFibGUo
-ZXRoLCBNVEtfVFhfRE9ORV9JTlQpOw0KPiA+ID4gPiAgCQltdGtfcnhfaXJxX2VuYWJsZShldGgs
-IE1US19SWF9ET05FX0lOVCk7DQo+ID4gPiA+ICsJCXJlZmNvdW50X3NldCgmZXRoLT5kbWFfcmVm
-Y250LCAxKTsNCj4gPiA+DQo+ID4gPiB0aGUgZXhpc3RpbmcgZHJpdmVyIHNlZW1zIHRvIGhhdmUg
-YSBtaXNzaW5nIGluaXRpYWwgYXRvbWljX3NldCBmb3IgdGhlDQo+ID4gPiBldGgtPmRtYV9yZWZj
-bnQuDQo+ID4gPg0KPiA+ID4gPiAgCX0NCj4gPiA+ID4gLQlhdG9taWNfaW5jKCZldGgtPmRtYV9y
-ZWZjbnQpOw0KPiA+ID4gPiArCWVsc2UNCj4gPiA+ID4gKwkJcmVmY291bnRfaW5jKCZldGgtPmRt
-YV9yZWZjbnQpOw0KPiA+ID4gPg0KPiA+ID4NCj4gPiA+IGhvdyBhYm91dCBhZGQgdGhlIGluaXRp
-YWwgcmVmY291bnRfc2V0IGludG8gcHJvYmUgaGFuZGxlciwgYW5kIGtlZXANCj4gPiA+IGxvZ2lj
-IGVsc2UgdW5jaGFuZ2VkID8NCj4gPg0KPiA+IFN1cmUsIEkgZ3Vlc3MgeW91IG1lYW4gbXRrX3By
-b2JlKCkgZnVuY3Rpb24/IEkgY2FuIG1vdmUgdGhlIHJlZmNvdW50X3NldCB0byBiZQ0KPiB0aGVy
-ZQ0KPiA+IGFuZCByZW1vdmUgdGhpcyBjaGFuZ2UuDQo+ID4NCj4gPiBTaG91bGQgSSByZXNlbmQg
-dGhlIG1vZGlmaWVkIHBhdGNoIHRvIHlvdSAobWF5YmUgdGhlbiB0d28gb2YgdGhlIGV0aGVybmV0
-DQo+IHBhdGNoZXMpPw0KPiA+DQo+ID4gQmVzdCBSZWdhcmRzLA0KPiA+IEVsZW5hLg0KPiANCj4g
-VGhlIGVudGlyZSBzZXJpZXMgaGFzIGJlZW4gYXBwbGllcyB0byBuZXQtbmV4dCwgSSB0aGluayBJ
-IGNhbiBtYWtlIHRoZQ0KPiBmb2xsb3ctdXBzIHBhdGNoZXMgcmVsYXRpdmUgdG8geW91ciB3b3Jr
-Lg0KPiANCj4gCVNlYW4NCg0KWWVzLCBJIGp1c3Qgbm90aWNlZCB0aGF0IERhdmlkIHRvb2sgdGhl
-bSBhbGwuIA0KU3VyZSwgaWYgeW91IHdhbnQgdG8gc2VuZCB0aGUgZm9sbG93IHVwIHlvdXJzZWxm
-LCBJIGNlcnRhaW5seSB3b3VsZCBub3QgbWluZCwgDQpJIHN0aWxsIGhhdmUgbWFueSBvZiB0aGVz
-ZSByZWNvdW50IHBhdGNoZXMgZm9yIGRpZmZlcmVudCBwYXJ0cyBvZiBrZXJuZWwgOikNCg0KVGhh
-bmsgeW91IQ0KDQpCZXN0IFJlZ2FyZHMsDQpFbGVuYS4NCj4gDQo+ID4gPg0KPiA+ID4gPiAgCXBo
-eV9zdGFydChkZXYtPnBoeWRldik7DQo+ID4gPiA+ICAJbmV0aWZfc3RhcnRfcXVldWUoZGV2KTsN
-Cj4gPiA+ID4gQEAgLTE4NjgsNyArMTg3MCw3IEBAIHN0YXRpYyBpbnQgbXRrX3N0b3Aoc3RydWN0
-IG5ldF9kZXZpY2UgKmRldikNCj4gPiA+ID4gIAlwaHlfc3RvcChkZXYtPnBoeWRldik7DQo+ID4g
-PiA+DQo+ID4gPiA+ICAJLyogb25seSBzaHV0ZG93biBETUEgaWYgdGhpcyBpcyB0aGUgbGFzdCB1
-c2VyICovDQo+ID4gPiA+IC0JaWYgKCFhdG9taWNfZGVjX2FuZF90ZXN0KCZldGgtPmRtYV9yZWZj
-bnQpKQ0KPiA+ID4gPiArCWlmICghcmVmY291bnRfZGVjX2FuZF90ZXN0KCZldGgtPmRtYV9yZWZj
-bnQpKQ0KPiA+ID4gPiAgCQlyZXR1cm4gMDsNCj4gPiA+ID4NCj4gPiA+ID4gIAltdGtfdHhfaXJx
-X2Rpc2FibGUoZXRoLCBNVEtfVFhfRE9ORV9JTlQpOw0KPiA+ID4gPiBkaWZmIC0tZ2l0IGEvZHJp
-dmVycy9uZXQvZXRoZXJuZXQvbWVkaWF0ZWsvbXRrX2V0aF9zb2MuaA0KPiA+ID4gYi9kcml2ZXJz
-L25ldC9ldGhlcm5ldC9tZWRpYXRlay9tdGtfZXRoX3NvYy5oDQo+ID4gPiA+IGluZGV4IDNkM2My
-NGEuLmEzYWY0NjYgMTAwNjQ0DQo+ID4gPiA+IC0tLSBhL2RyaXZlcnMvbmV0L2V0aGVybmV0L21l
-ZGlhdGVrL210a19ldGhfc29jLmgNCj4gPiA+ID4gKysrIGIvZHJpdmVycy9uZXQvZXRoZXJuZXQv
-bWVkaWF0ZWsvbXRrX2V0aF9zb2MuaA0KPiA+ID4gPiBAQCAtMTUsNiArMTUsOCBAQA0KPiA+ID4g
-PiAgI2lmbmRlZiBNVEtfRVRIX0gNCj4gPiA+ID4gICNkZWZpbmUgTVRLX0VUSF9IDQo+ID4gPiA+
-DQo+ID4gPiA+ICsjaW5jbHVkZSA8bGludXgvcmVmY291bnQuaD4NCj4gPiA+ID4gKw0KPiA+ID4g
-PiAgI2RlZmluZSBNVEtfUURNQV9QQUdFX1NJWkUJMjA0OA0KPiA+ID4gPiAgI2RlZmluZQlNVEtf
-TUFYX1JYX0xFTkdUSAkxNTM2DQo+ID4gPiA+ICAjZGVmaW5lIE1US19UWF9ETUFfQlVGX0xFTgkw
-eDNmZmYNCj4gPiA+ID4gQEAgLTYzMiw3ICs2MzQsNyBAQCBzdHJ1Y3QgbXRrX2V0aCB7DQo+ID4g
-PiA+ICAJc3RydWN0IHJlZ21hcAkJCSpwY3RsOw0KPiA+ID4gPiAgCXUzMgkJCQljaGlwX2lkOw0K
-PiA+ID4gPiAgCWJvb2wJCQkJaHdscm87DQo+ID4gPiA+IC0JYXRvbWljX3QJCQlkbWFfcmVmY250
-Ow0KPiA+ID4gPiArCXJlZmNvdW50X3QJCQlkbWFfcmVmY250Ow0KPiA+ID4gPiAgCXN0cnVjdCBt
-dGtfdHhfcmluZwkJdHhfcmluZzsNCj4gPiA+ID4gIAlzdHJ1Y3QgbXRrX3J4X3JpbmcNCj4gPiA+
-IAlyeF9yaW5nW01US19NQVhfUlhfUklOR19OVU1dOw0KPiA+ID4gPiAgCXN0cnVjdCBtdGtfcnhf
-cmluZwkJcnhfcmluZ19xZG1hOw0KPiA+ID4NCj4gPg0KPiANCg0K
+Hey Everyone,
+
+There are a LOT of patches coming in for the Linux AX.25 stack such as 
+this one below where people are proposing changes and they OPENLY state:
+
+    "This code was tested by compilation only"
+
+That's NOT testing.  We have seen over the last year or two, several 
+toxic commits have come into the kernel that have been extremely painful 
+to rollback and/or modify to remove the toxicity.  I completely 
+appreciate people trying to keep the AX.25 stack cleaned up but it's 
+CRITICAL that we get some AX.25 regress suites running so people can 
+confirm that their proposed commits don't break anything before allowing 
+the commits.   I've been trying to find out who to discuss this proposed 
+testing harness but I've been unable to get a name.  Once I get a name, 
+I'm happy to help contribute some testing suites, etc. once I understand 
+the framework that this team(s) use.
+
+--David
+KI6ZHD
+
+
+-------- Forwarded Message --------
+Subject: 	[PATCH v2 2/2] net: netrom: refactor code in nr_add_node
+Date: 	Sun, 22 Oct 2017 20:08:40 -0500
+From: 	Gustavo A. R. Silva <garsilva@embeddedor.com>
+To: 	Ralf Baechle <ralf@linux-mips.org>, David S. Miller 
+<davem@davemloft.net>, walter harms <wharms@bfs.de>
+CC: 	linux-hams@vger.kernel.org, netdev@vger.kernel.org, 
+linux-kernel@vger.kernel.org, Gustavo A. R. Silva <garsilva@embeddedor.com>
+
+
+
+Code refactoring in order to make it easier to read and maintain.
+
+Signed-off-by: Gustavo A. R. Silva <garsilva@embeddedor.com>
+---
+This code was tested by compilation only.
+
+Changes in v2:
+  Make use of the swap macro and remove inline keyword.
+
+  net/netrom/nr_route.c | 59 ++++++++++++++-------------------------------------
+  1 file changed, 16 insertions(+), 43 deletions(-)
+
+diff --git a/net/netrom/nr_route.c b/net/netrom/nr_route.c
+index fc9cadc..505e142 100644
+--- a/net/netrom/nr_route.c
++++ b/net/netrom/nr_route.c
+@@ -80,6 +80,19 @@ static struct nr_neigh *nr_neigh_get_dev(ax25_address *callsign,
+  
+  static void nr_remove_neigh(struct nr_neigh *);
+  
++/*      re-sort the routes in quality order.    */
++static void re_sort_routes(struct nr_node *nr_node, int x, int y)
++{
++	if (nr_node->routes[y].quality > nr_node->routes[x].quality) {
++		if (nr_node->which == x)
++			nr_node->which = y;
++		else if (nr_node->which == y)
++			nr_node->which = x;
++
++		swap(nr_node->routes[x], nr_node->routes[y]);
++	}
++}
++
+  /*
+   *	Add a new route to a node, and in the process add the node and the
+   *	neighbour if it is new.
+@@ -90,7 +103,6 @@ static int __must_check nr_add_node(ax25_address *nr, const char *mnemonic,
+  {
+  	struct nr_node  *nr_node;
+  	struct nr_neigh *nr_neigh;
+-	struct nr_route nr_route;
+  	int i, found;
+  	struct net_device *odev;
+  
+@@ -251,50 +263,11 @@ static int __must_check nr_add_node(ax25_address *nr, const char *mnemonic,
+  	/* Now re-sort the routes in quality order */
+  	switch (nr_node->count) {
+  	case 3:
+-		if (nr_node->routes[1].quality > nr_node->routes[0].quality) {
+-			switch (nr_node->which) {
+-			case 0:
+-				nr_node->which = 1;
+-				break;
+-			case 1:
+-				nr_node->which = 0;
+-				break;
+-			}
+-			nr_route           = nr_node->routes[0];
+-			nr_node->routes[0] = nr_node->routes[1];
+-			nr_node->routes[1] = nr_route;
+-		}
+-		if (nr_node->routes[2].quality > nr_node->routes[1].quality) {
+-			switch (nr_node->which) {
+-			case 1:  nr_node->which = 2;
+-				break;
+-
+-			case 2:  nr_node->which = 1;
+-				break;
+-
+-			default:
+-				break;
+-			}
+-			nr_route           = nr_node->routes[1];
+-			nr_node->routes[1] = nr_node->routes[2];
+-			nr_node->routes[2] = nr_route;
+-		}
++		re_sort_routes(nr_node, 0, 1);
++		re_sort_routes(nr_node, 1, 2);
+  		/* fall through */
+  	case 2:
+-		if (nr_node->routes[1].quality > nr_node->routes[0].quality) {
+-			switch (nr_node->which) {
+-			case 0:  nr_node->which = 1;
+-				break;
+-
+-			case 1:  nr_node->which = 0;
+-				break;
+-
+-			default: break;
+-			}
+-			nr_route           = nr_node->routes[0];
+-			nr_node->routes[0] = nr_node->routes[1];
+-			nr_node->routes[1] = nr_route;
+-			}
++		re_sort_routes(nr_node, 0, 1);
+  	case 1:
+  		break;
+  	}
+-- 
+2.7.4
+
+--
+To unsubscribe from this list: send the line "unsubscribe linux-hams" in
+the body of a message to majordomo@vger.kernel.org
+More majordomo info at  http://vger.kernel.org/majordomo-info.html
+
