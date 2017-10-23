@@ -1,66 +1,142 @@
-From: Bernard Pidoux <bernard.pidoux@free.fr>
-Subject: [PATCH] net/rose : fix rose module to become free
-Date: Sun, 22 Oct 2017 22:25:33 +0200
-Message-ID: <bbf56ef6-aa7e-a1d2-2d3a-2be06f5261d9@free.fr>
-References: <bcb1563f-a5c8-c5ab-b10a-aeaee376838a@free.fr>
+From: "Gustavo A. R. Silva" <garsilva@embeddedor.com>
+Subject: Re: [PATCH 2/2] net: netrom: refactor code in nr_add_node
+Date: Sun, 22 Oct 2017 19:41:36 -0500
+Message-ID: <20171022194136.Horde.CG1baKiAVuDlzYkA6GaU9Xb@gator4166.hostgator.com>
+References: <20171019172746.GA15332@embeddedor.com>
+ <59E9BA66.4000707@bfs.de>
+ <20171020110600.Horde.X15IwxxrG50sNBWbTzaM1pB@gator4166.hostgator.com>
+ <59EA2A2D.4040003@bfs.de>
 Mime-Version: 1.0
-Content-Type: multipart/mixed;
- boundary="------------8816916A9602997B4153E036"
-Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <bcb1563f-a5c8-c5ab-b10a-aeaee376838a@free.fr>
-Content-Language: en-US
-Sender: linux-hams-owner@vger.kernel.org
+Return-path: <netdev-owner@vger.kernel.org>
+In-Reply-To: <59EA2A2D.4040003@bfs.de>
+Content-Disposition: inline
+Sender: netdev-owner@vger.kernel.org
 List-ID: <linux-hams.vger.kernel.org>
-To: =?UTF-8?Q?Ralf_B=c3=a4chle_DL5RB?= <ralf@linux-mips.org>
-Cc: Richard Stearn <richard@rns-stearn.co.uk>, linux-hams@vger.kernel.org, davem@davemloft.net
-
-This is a multi-part message in MIME format.
---------------8816916A9602997B4153E036
-Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Type: text/plain; charset="us-ascii"; format="flowed"; delsp="Yes"
 Content-Transfer-Encoding: 7bit
-
-Trying to remove rose device invariably makes console sending endless 
-message
-"waiting for rose module to become free" with a random fixed count.
-This has been confirmed by many ROSE/FPAC users on all kernel versions 
-for ages.
-Richard Stearn investigated the issue and found that dev_put(dev) were 
-missing:
-two in rose_bind() and one in rose_loopback_timer().
-Once patch is applied, rose can be removed cleanly.
-Patch tested by Charley k4gbb and Bernard f6bvp.
-
-Signed-off-by: Bernard Pidoux <bernard.pidoux@free.fr>
-
----
+To: walter harms <wharms@bfs.de>
+Cc: Ralf Baechle <ralf@linux-mips.org>, "David S. Miller" <davem@davemloft.net>, linux-hams@vger.kernel.org, netdev@vger.kernel.org
 
 
---------------8816916A9602997B4153E036
-Content-Type: text/plain; charset=UTF-8;
- name="rose-patch"
-Content-Transfer-Encoding: base64
-Content-Disposition: attachment;
- filename="rose-patch"
+Quoting walter harms <wharms@bfs.de>:
 
-ZGlmZiAtLWdpdCBhL25ldC9yb3NlL2FmX3Jvc2UuYyBiL25ldC9yb3NlL2FmX3Jvc2UuYwpp
-bmRleCA0YTk3MjkyNTcwMjMuLjQ0NzY1ODJjMTcxMCAxMDA2NDQKLS0tIGEvbmV0L3Jvc2Uv
-YWZfcm9zZS5jCisrKyBiL25ldC9yb3NlL2FmX3Jvc2UuYwpAQCAtNjg4LDggKzY4OCwxMCBA
-QCBzdGF0aWMgaW50IHJvc2VfYmluZChzdHJ1Y3Qgc29ja2V0ICpzb2NrLCBzdHJ1Y3Qgc29j
-a2FkZHIgKnVhZGRyLCBpbnQgYWRkcl9sZW4pCiAJCXJvc2UtPnNvdXJjZV9jYWxsID0gdXNl
-ci0+Y2FsbDsKIAkJYXgyNV91aWRfcHV0KHVzZXIpOwogCX0gZWxzZSB7Ci0JCWlmIChheDI1
-X3VpZF9wb2xpY3kgJiYgIWNhcGFibGUoQ0FQX05FVF9CSU5EX1NFUlZJQ0UpKQorCQlpZiAo
-YXgyNV91aWRfcG9saWN5ICYmICFjYXBhYmxlKENBUF9ORVRfQklORF9TRVJWSUNFKSkgewor
-CQkJZGV2X3B1dChkZXYpOwogCQkJcmV0dXJuIC1FQUNDRVM7CisJCX0KIAkJcm9zZS0+c291
-cmNlX2NhbGwgICA9ICpzb3VyY2U7CiAJfQogCkBAIC03MTEsNiArNzEzLDggQEAgc3RhdGlj
-IGludCByb3NlX2JpbmQoc3RydWN0IHNvY2tldCAqc29jaywgc3RydWN0IHNvY2thZGRyICp1
-YWRkciwgaW50IGFkZHJfbGVuKQogCiAJc29ja19yZXNldF9mbGFnKHNrLCBTT0NLX1pBUFBF
-RCk7CiAKKwlkZXZfcHV0KGRldik7CisKIAlyZXR1cm4gMDsKIH0KIApkaWZmIC0tZ2l0IGEv
-bmV0L3Jvc2Uvcm9zZV9sb29wYmFjay5jIGIvbmV0L3Jvc2Uvcm9zZV9sb29wYmFjay5jCmlu
-ZGV4IDM0NDQ1NjIwNmI3MC4uOTU4YWMyNGE5ZDQ3IDEwMDY0NAotLS0gYS9uZXQvcm9zZS9y
-b3NlX2xvb3BiYWNrLmMKKysrIGIvbmV0L3Jvc2Uvcm9zZV9sb29wYmFjay5jCkBAIC0xMDIs
-NiArMTAyLDcgQEAgc3RhdGljIHZvaWQgcm9zZV9sb29wYmFja190aW1lcih1bnNpZ25lZCBs
-b25nIHBhcmFtKQogCQkJaWYgKChkZXYgPSByb3NlX2Rldl9nZXQoZGVzdCkpICE9IE5VTEwp
-IHsKIAkJCQlpZiAocm9zZV9yeF9jYWxsX3JlcXVlc3Qoc2tiLCBkZXYsIHJvc2VfbG9vcGJh
-Y2tfbmVpZ2gsIGxjaV9vKSA9PSAwKQogCQkJCQlrZnJlZV9za2Ioc2tiKTsKKwkJCQkJZGV2
-X3B1dChkZXYpOwogCQkJfSBlbHNlIHsKIAkJCQlrZnJlZV9za2Ioc2tiKTsKIAkJCX0K
---------------8816916A9602997B4153E036--
+> Am 20.10.2017 18:06, schrieb Gustavo A. R. Silva:
+>> Hi Walter,
+>>
+>> Quoting walter harms <wharms@bfs.de>:
+>>
+>>> Am 19.10.2017 19:27, schrieb Gustavo A. R. Silva:
+>>>> Code refactoring in order to make the code easier to read and maintain.
+>>>>
+>>>> Signed-off-by: Gustavo A. R. Silva <garsilva@embeddedor.com>
+>>>> ---
+>>>> This code was tested by compilation only (GCC 7.2.0 was used).
+>>>>
+>>>>  net/netrom/nr_route.c | 63
+>>>> ++++++++++++++++-----------------------------------
+>>>>  1 file changed, 20 insertions(+), 43 deletions(-)
+>>>>
+>>>> diff --git a/net/netrom/nr_route.c b/net/netrom/nr_route.c
+>>>> index fc9cadc..1e5165f 100644
+>>>> --- a/net/netrom/nr_route.c
+>>>> +++ b/net/netrom/nr_route.c
+>>>> @@ -80,6 +80,23 @@ static struct nr_neigh
+>>>> *nr_neigh_get_dev(ax25_address *callsign,
+>>>>
+>>>>  static void nr_remove_neigh(struct nr_neigh *);
+>>>>
+>>>> +/*      re-sort the routes in quality order.    */
+>>>> +static inline void re_sort_routes(struct nr_node *nr_node, int ix_x,
+>>>> int ix_y)
+>>>> +{
+>>>> +    struct nr_route nr_route;
+>>>> +
+>>>> +    if (nr_node->routes[ix_y].quality >
+>>>> nr_node->routes[ix_x].quality) {
+>>>> +        if (nr_node->which == ix_x)
+>>>> +            nr_node->which = ix_y;
+>>>> +        else if (nr_node->which == ix_y)
+>>>> +            nr_node->which = ix_x;
+>>>> +
+>>>> +        nr_route              = nr_node->routes[ix_x];
+>>>> +        nr_node->routes[ix_x] = nr_node->routes[ix_y];
+>>>> +        nr_node->routes[ix_y] = nr_route;
+>>>> +    }
+>>>> +}
+>>>> +
+>>>
+>>>
+>>> Good idea, a bit of nit picking ..
+>>> does ix_ has a special meaning ? otherwise x,y would be sufficient.
+>>
+>> ix typical stands for index, but I think just x and y are fine too.
+>>
+>>> From the code below i can see: y=x+1 Perhaps that can be used.
+>>>
+>>
+>> So are you proposing to use two arguments instead of three?
+>>
+>> re_sort_routes(nr_node, 0);
+>>
+>
+> I am not sure, i would wait a bit and see if what improves readability.
+> as Kevin Dawson pointed out: this is a sort here.
+> Maybe there a nice way to do something like that (i do not know):
+>
+> case 3:
+>   re_sort_routes(nr_node, 1,2)
+> case 2:
+>   re_sort_routes(nr_node, 0,1)
+> case 1:
+>   break;
+>
+> The question is: Is the sorted list needed or simply the maximum ?
+>
+> NTL is a good thing to chop down the function in smaller digestible
+> peaces.
+>
+
+I'll use the swap macro as you suggested and leave the rest of this  
+patch as is for now.
+
+Dawson:
+Thanks for pointing out the thing about the inline keyword. I'll remove it.
+
+Thanks
+--
+Gustavo A. R. Silva
+
+> re,
+>  wh
+>
+>>
+>>> kernel.h has a swap() macro. so you can
+>>> swap(nr_node->routes[x],nr_node->routes[y]);
+>>>
+>>
+>> Nice, I will use that macro.
+>>
+>>> hope that helps,
+>>
+>> Definitely. I appreciate your comments.
+>>
+>
+>
+>
+>
+>> Thanks!
+>> --
+>> Gustavo A. R. Silva
+>>
+>>
+>>
+>>
+>>
+>>
+>>
+
+
+
+
+
+
