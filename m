@@ -1,154 +1,201 @@
-From: David Ranch <linux-hams@trinnet.net>
-Subject: Fwd: [PATCH v2 2/2] net: netrom: refactor code in nr_add_node
-Date: Mon, 23 Oct 2017 09:19:10 -0700
-Message-ID: <882a3c4b-c917-cd9b-9eeb-ea74f92a265d@trinnet.net>
-References: <20171023010840.GA32460@embeddedor.com>
+From: Kees Cook <keescook@chromium.org>
+Subject: [PATCH] net: ax25: Convert timers to use timer_setup()
+Date: Tue, 24 Oct 2017 01:45:39 -0700
+Message-ID: <20171024084539.GA23749@beast>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <20171023010840.GA32460@embeddedor.com>
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google;
+        h=date:from:to:cc:subject:message-id:mime-version:content-disposition;
+        bh=s9YFjvrJvWc0KpeBiA9fK79KL8FDl3k6+q0syxbqtPo=;
+        b=c/H+Ac7jSHSgYVfkKwWD/879ZIyEGD6Hg46STzDe/6jUsuGRRCIWybpA1E97ZfF6kN
+         ZM+0ae2resZ5SjzcxIsI8wX1I5mxa+ClZ5rojIS0V760YuNJ0ysXbdp0tO9X7PaRqnZe
+         3GYd2T1UjF59TMtqlMYaUkOBgO1hl9xk+fFjc=
+Content-Disposition: inline
 Sender: linux-hams-owner@vger.kernel.org
 List-ID: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"; format="flowed"
-To: Linux Hams <linux-hams@vger.kernel.org>
-Cc: Ralf Baechle <ralf@linux-mips.org>, Thomas Osterried <thomas@osterried.de>, "Bernard, f6bvp" <f6bvp@free.fr>, "David S. Miller" <davem@davemloft.net>, "Gustavo A. R. Silva" <garsilva@embeddedor.com>
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+To: "David S. Miller" <davem@davemloft.net>
+Cc: Joerg Reuter <jreuter@yaina.de>, Ralf Baechle <ralf@linux-mips.org>, linux-hams@vger.kernel.org, netdev@vger.kernel.org, linux-kernel@vger.kernel.org
 
-Hey Everyone,
+In preparation for unconditionally passing the struct timer_list pointer to
+all timer callbacks, switch to using the new timer_setup() and from_timer()
+to pass the timer pointer explicitly.
 
-There are a LOT of patches coming in for the Linux AX.25 stack such as 
-this one below where people are proposing changes and they OPENLY state:
-
-    "This code was tested by compilation only"
-
-That's NOT testing.  We have seen over the last year or two, several 
-toxic commits have come into the kernel that have been extremely painful 
-to rollback and/or modify to remove the toxicity.  I completely 
-appreciate people trying to keep the AX.25 stack cleaned up but it's 
-CRITICAL that we get some AX.25 regress suites running so people can 
-confirm that their proposed commits don't break anything before allowing 
-the commits.   I've been trying to find out who to discuss this proposed 
-testing harness but I've been unable to get a name.  Once I get a name, 
-I'm happy to help contribute some testing suites, etc. once I understand 
-the framework that this team(s) use.
-
---David
-KI6ZHD
-
-
--------- Forwarded Message --------
-Subject: 	[PATCH v2 2/2] net: netrom: refactor code in nr_add_node
-Date: 	Sun, 22 Oct 2017 20:08:40 -0500
-From: 	Gustavo A. R. Silva <garsilva@embeddedor.com>
-To: 	Ralf Baechle <ralf@linux-mips.org>, David S. Miller 
-<davem@davemloft.net>, walter harms <wharms@bfs.de>
-CC: 	linux-hams@vger.kernel.org, netdev@vger.kernel.org, 
-linux-kernel@vger.kernel.org, Gustavo A. R. Silva <garsilva@embeddedor.com>
-
-
-
-Code refactoring in order to make it easier to read and maintain.
-
-Signed-off-by: Gustavo A. R. Silva <garsilva@embeddedor.com>
+Cc: Joerg Reuter <jreuter@yaina.de>
+Cc: Ralf Baechle <ralf@linux-mips.org>
+Cc: "David S. Miller" <davem@davemloft.net>
+Cc: linux-hams@vger.kernel.org
+Cc: netdev@vger.kernel.org
+Signed-off-by: Kees Cook <keescook@chromium.org>
 ---
-This code was tested by compilation only.
+ net/ax25/af_ax25.c       |  7 +++----
+ net/ax25/ax25_ds_timer.c |  9 ++++-----
+ net/ax25/ax25_timer.c    | 41 ++++++++++++++++++++---------------------
+ 3 files changed, 27 insertions(+), 30 deletions(-)
 
-Changes in v2:
-  Make use of the swap macro and remove inline keyword.
-
-  net/netrom/nr_route.c | 59 ++++++++++++++-------------------------------------
-  1 file changed, 16 insertions(+), 43 deletions(-)
-
-diff --git a/net/netrom/nr_route.c b/net/netrom/nr_route.c
-index fc9cadc..505e142 100644
---- a/net/netrom/nr_route.c
-+++ b/net/netrom/nr_route.c
-@@ -80,6 +80,19 @@ static struct nr_neigh *nr_neigh_get_dev(ax25_address *callsign,
-  
-  static void nr_remove_neigh(struct nr_neigh *);
-  
-+/*      re-sort the routes in quality order.    */
-+static void re_sort_routes(struct nr_node *nr_node, int x, int y)
-+{
-+	if (nr_node->routes[y].quality > nr_node->routes[x].quality) {
-+		if (nr_node->which == x)
-+			nr_node->which = y;
-+		else if (nr_node->which == y)
-+			nr_node->which = x;
-+
-+		swap(nr_node->routes[x], nr_node->routes[y]);
-+	}
-+}
-+
-  /*
-   *	Add a new route to a node, and in the process add the node and the
-   *	neighbour if it is new.
-@@ -90,7 +103,6 @@ static int __must_check nr_add_node(ax25_address *nr, const char *mnemonic,
-  {
-  	struct nr_node  *nr_node;
-  	struct nr_neigh *nr_neigh;
--	struct nr_route nr_route;
-  	int i, found;
-  	struct net_device *odev;
-  
-@@ -251,50 +263,11 @@ static int __must_check nr_add_node(ax25_address *nr, const char *mnemonic,
-  	/* Now re-sort the routes in quality order */
-  	switch (nr_node->count) {
-  	case 3:
--		if (nr_node->routes[1].quality > nr_node->routes[0].quality) {
--			switch (nr_node->which) {
--			case 0:
--				nr_node->which = 1;
--				break;
--			case 1:
--				nr_node->which = 0;
--				break;
--			}
--			nr_route           = nr_node->routes[0];
--			nr_node->routes[0] = nr_node->routes[1];
--			nr_node->routes[1] = nr_route;
--		}
--		if (nr_node->routes[2].quality > nr_node->routes[1].quality) {
--			switch (nr_node->which) {
--			case 1:  nr_node->which = 2;
--				break;
--
--			case 2:  nr_node->which = 1;
--				break;
--
--			default:
--				break;
--			}
--			nr_route           = nr_node->routes[1];
--			nr_node->routes[1] = nr_node->routes[2];
--			nr_node->routes[2] = nr_route;
--		}
-+		re_sort_routes(nr_node, 0, 1);
-+		re_sort_routes(nr_node, 1, 2);
-  		/* fall through */
-  	case 2:
--		if (nr_node->routes[1].quality > nr_node->routes[0].quality) {
--			switch (nr_node->which) {
--			case 0:  nr_node->which = 1;
--				break;
--
--			case 1:  nr_node->which = 0;
--				break;
--
--			default: break;
--			}
--			nr_route           = nr_node->routes[0];
--			nr_node->routes[0] = nr_node->routes[1];
--			nr_node->routes[1] = nr_route;
--			}
-+		re_sort_routes(nr_node, 0, 1);
-  	case 1:
-  		break;
-  	}
+diff --git a/net/ax25/af_ax25.c b/net/ax25/af_ax25.c
+index f3f9d18891de..06eac1f50c5e 100644
+--- a/net/ax25/af_ax25.c
++++ b/net/ax25/af_ax25.c
+@@ -268,9 +268,9 @@ void ax25_destroy_socket(ax25_cb *);
+ /*
+  *	Handler for deferred kills.
+  */
+-static void ax25_destroy_timer(unsigned long data)
++static void ax25_destroy_timer(struct timer_list *t)
+ {
+-	ax25_cb *ax25=(ax25_cb *)data;
++	ax25_cb *ax25 = from_timer(ax25, t, dtimer);
+ 	struct sock *sk;
+ 
+ 	sk=ax25->sk;
+@@ -326,8 +326,7 @@ void ax25_destroy_socket(ax25_cb *ax25)
+ 	if (ax25->sk != NULL) {
+ 		if (sk_has_allocations(ax25->sk)) {
+ 			/* Defer: outstanding buffers */
+-			setup_timer(&ax25->dtimer, ax25_destroy_timer,
+-					(unsigned long)ax25);
++			timer_setup(&ax25->dtimer, ax25_destroy_timer, 0);
+ 			ax25->dtimer.expires  = jiffies + 2 * HZ;
+ 			add_timer(&ax25->dtimer);
+ 		} else {
+diff --git a/net/ax25/ax25_ds_timer.c b/net/ax25/ax25_ds_timer.c
+index 5fb2104b7304..e9d11313d45b 100644
+--- a/net/ax25/ax25_ds_timer.c
++++ b/net/ax25/ax25_ds_timer.c
+@@ -29,7 +29,7 @@
+ #include <linux/mm.h>
+ #include <linux/interrupt.h>
+ 
+-static void ax25_ds_timeout(unsigned long);
++static void ax25_ds_timeout(struct timer_list *);
+ 
+ /*
+  *	Add DAMA slave timeout timer to timer list.
+@@ -41,8 +41,7 @@ static void ax25_ds_timeout(unsigned long);
+ 
+ void ax25_ds_setup_timer(ax25_dev *ax25_dev)
+ {
+-	setup_timer(&ax25_dev->dama.slave_timer, ax25_ds_timeout,
+-		    (unsigned long)ax25_dev);
++	timer_setup(&ax25_dev->dama.slave_timer, ax25_ds_timeout, 0);
+ }
+ 
+ void ax25_ds_del_timer(ax25_dev *ax25_dev)
+@@ -66,9 +65,9 @@ void ax25_ds_set_timer(ax25_dev *ax25_dev)
+  *	Silently discard all (slave) connections in case our master forgot us...
+  */
+ 
+-static void ax25_ds_timeout(unsigned long arg)
++static void ax25_ds_timeout(struct timer_list *t)
+ {
+-	ax25_dev *ax25_dev = (struct ax25_dev *) arg;
++	ax25_dev *ax25_dev = from_timer(ax25_dev, t, dama.slave_timer);
+ 	ax25_cb *ax25;
+ 
+ 	if (ax25_dev == NULL || !ax25_dev->dama.slave)
+diff --git a/net/ax25/ax25_timer.c b/net/ax25/ax25_timer.c
+index 23a6f38a80bf..c47b7ee1e4da 100644
+--- a/net/ax25/ax25_timer.c
++++ b/net/ax25/ax25_timer.c
+@@ -33,20 +33,19 @@
+ #include <linux/mm.h>
+ #include <linux/interrupt.h>
+ 
+-static void ax25_heartbeat_expiry(unsigned long);
+-static void ax25_t1timer_expiry(unsigned long);
+-static void ax25_t2timer_expiry(unsigned long);
+-static void ax25_t3timer_expiry(unsigned long);
+-static void ax25_idletimer_expiry(unsigned long);
++static void ax25_heartbeat_expiry(struct timer_list *);
++static void ax25_t1timer_expiry(struct timer_list *);
++static void ax25_t2timer_expiry(struct timer_list *);
++static void ax25_t3timer_expiry(struct timer_list *);
++static void ax25_idletimer_expiry(struct timer_list *);
+ 
+ void ax25_setup_timers(ax25_cb *ax25)
+ {
+-	setup_timer(&ax25->timer, ax25_heartbeat_expiry, (unsigned long)ax25);
+-	setup_timer(&ax25->t1timer, ax25_t1timer_expiry, (unsigned long)ax25);
+-	setup_timer(&ax25->t2timer, ax25_t2timer_expiry, (unsigned long)ax25);
+-	setup_timer(&ax25->t3timer, ax25_t3timer_expiry, (unsigned long)ax25);
+-	setup_timer(&ax25->idletimer, ax25_idletimer_expiry,
+-		    (unsigned long)ax25);
++	timer_setup(&ax25->timer, ax25_heartbeat_expiry, 0);
++	timer_setup(&ax25->t1timer, ax25_t1timer_expiry, 0);
++	timer_setup(&ax25->t2timer, ax25_t2timer_expiry, 0);
++	timer_setup(&ax25->t3timer, ax25_t3timer_expiry, 0);
++	timer_setup(&ax25->idletimer, ax25_idletimer_expiry, 0);
+ }
+ 
+ void ax25_start_heartbeat(ax25_cb *ax25)
+@@ -120,10 +119,10 @@ unsigned long ax25_display_timer(struct timer_list *timer)
+ 
+ EXPORT_SYMBOL(ax25_display_timer);
+ 
+-static void ax25_heartbeat_expiry(unsigned long param)
++static void ax25_heartbeat_expiry(struct timer_list *t)
+ {
+ 	int proto = AX25_PROTO_STD_SIMPLEX;
+-	ax25_cb *ax25 = (ax25_cb *)param;
++	ax25_cb *ax25 = from_timer(ax25, t, timer);
+ 
+ 	if (ax25->ax25_dev)
+ 		proto = ax25->ax25_dev->values[AX25_VALUES_PROTOCOL];
+@@ -145,9 +144,9 @@ static void ax25_heartbeat_expiry(unsigned long param)
+ 	}
+ }
+ 
+-static void ax25_t1timer_expiry(unsigned long param)
++static void ax25_t1timer_expiry(struct timer_list *t)
+ {
+-	ax25_cb *ax25 = (ax25_cb *)param;
++	ax25_cb *ax25 = from_timer(ax25, t, t1timer);
+ 
+ 	switch (ax25->ax25_dev->values[AX25_VALUES_PROTOCOL]) {
+ 	case AX25_PROTO_STD_SIMPLEX:
+@@ -164,9 +163,9 @@ static void ax25_t1timer_expiry(unsigned long param)
+ 	}
+ }
+ 
+-static void ax25_t2timer_expiry(unsigned long param)
++static void ax25_t2timer_expiry(struct timer_list *t)
+ {
+-	ax25_cb *ax25 = (ax25_cb *)param;
++	ax25_cb *ax25 = from_timer(ax25, t, t2timer);
+ 
+ 	switch (ax25->ax25_dev->values[AX25_VALUES_PROTOCOL]) {
+ 	case AX25_PROTO_STD_SIMPLEX:
+@@ -183,9 +182,9 @@ static void ax25_t2timer_expiry(unsigned long param)
+ 	}
+ }
+ 
+-static void ax25_t3timer_expiry(unsigned long param)
++static void ax25_t3timer_expiry(struct timer_list *t)
+ {
+-	ax25_cb *ax25 = (ax25_cb *)param;
++	ax25_cb *ax25 = from_timer(ax25, t, t3timer);
+ 
+ 	switch (ax25->ax25_dev->values[AX25_VALUES_PROTOCOL]) {
+ 	case AX25_PROTO_STD_SIMPLEX:
+@@ -204,9 +203,9 @@ static void ax25_t3timer_expiry(unsigned long param)
+ 	}
+ }
+ 
+-static void ax25_idletimer_expiry(unsigned long param)
++static void ax25_idletimer_expiry(struct timer_list *t)
+ {
+-	ax25_cb *ax25 = (ax25_cb *)param;
++	ax25_cb *ax25 = from_timer(ax25, t, idletimer);
+ 
+ 	switch (ax25->ax25_dev->values[AX25_VALUES_PROTOCOL]) {
+ 	case AX25_PROTO_STD_SIMPLEX:
 -- 
 2.7.4
 
---
-To unsubscribe from this list: send the line "unsubscribe linux-hams" in
-the body of a message to majordomo@vger.kernel.org
-More majordomo info at  http://vger.kernel.org/majordomo-info.html
 
+-- 
+Kees Cook
+Pixel Security
