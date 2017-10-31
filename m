@@ -1,60 +1,82 @@
-From: David Ranch <linux-hams@trinnet.net>
-Subject: Re: [PATCH v3 0/2] refactor code and mark expected switch
- fall-throughs
-Date: Sat, 28 Oct 2017 21:15:45 -0700
-Message-ID: <f0f38830-badd-1859-a9ba-5ac5452f8847@trinnet.net>
-References: <b0e6de21-b258-dc78-4710-a61b81ec419c@trinnet.net>
- <20171027144853.Horde.ExzHfROE4gaCiHalihXFClP@gator4166.hostgator.com>
- <e5c376f0-fdd0-78a7-a40f-0b990cff0023@trinnet.net>
- <20171029.104541.1487088453362795756.davem@davemloft.net>
+From: Stephen Hemminger <stephen@networkplumber.org>
+Subject: Fw: [Bug 197169] New: duplicate packets
+Date: Tue, 31 Oct 2017 21:52:42 +0100
+Message-ID: <20171031215242.2cf3d29e@shemminger-XPS-13-9360>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
-Return-path: <netdev-owner@vger.kernel.org>
-In-Reply-To: <20171029.104541.1487088453362795756.davem@davemloft.net>
-Sender: netdev-owner@vger.kernel.org
+Content-Transfer-Encoding: quoted-printable
+Return-path: <linux-hams-owner@vger.kernel.org>
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=networkplumber-org.20150623.gappssmtp.com; s=20150623;
+        h=date:from:to:subject:message-id:mime-version
+         :content-transfer-encoding;
+        bh=GLPdM7PLrorxbGW1NdGu3aoNQcVThNzCYQ44vlfiMSM=;
+        b=Uvo6IiaDAINKiMqCHxbGZ0wuOM/hHje7R/KEWvmvrqaHSFejqzIy7w/Ie8K9uK5/87
+         XmBYaxeSU0cZvUoO6SEtQCmpqyICRN3mlxh7OUSgD50vpVqXI7HKsgt1RAlMxTom0DGa
+         uwy0YGKLrFXvLPz8NZmynoUMqFBzJYzWo5vPvEDG4VNiOcPOrvMFq08inlEtIu7Q05JV
+         pfqUpD0iPLJAq2fKDk2yEzQ87SvCNTLwjWRRTgji0tZKlvE84/Zx0AGYr3MCFQvDQo5B
+         /4Q63rfgPkDuw207SGlpiWOWK39GDGiDDM/aDlyyqw0UBZEFpkg3WJYgxWtspx6cXRh+
+         hSsA==
+Sender: linux-hams-owner@vger.kernel.org
 List-ID: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"; format="flowed"
-To: David Miller <davem@davemloft.net>
-Cc: garsilva@embeddedor.com, linux-hams@vger.kernel.org, netdev@vger.kernel.org, ralf@linux-mips.org, wharms@bfs.de, hal@kd.net.au, f6bvp@free.fr, thomas@osterried.de
+Content-Type: text/plain; charset="utf-8"
+To: linux-hams@vger.kernel.org, ralf@linux-mips.org
+
+This showed up on Bugzilla for networking
+
+Begin forwarded message:
+
+Date: Mon, 09 Oct 2017 12:39:47 +0000
+From: bugzilla-daemon@bugzilla.kernel.org
+To: stephen@networkplumber.org
+Subject: [Bug 197169] New: duplicate packets
 
 
-Hello David,
+https://bugzilla.kernel.org/show_bug.cgi?id=3D197169
 
-Thanks for the reply.  I completely admit that there aren't many changes 
-going into this section of code.  Unfortunately, we've had some nasty 
-breaks that took quite a long while to get fixed.
+            Bug ID: 197169
+           Summary: duplicate packets
+           Product: Networking
+           Version: 2.5
+    Kernel Version: 4.9.30
+          Hardware: x86-64
+                OS: Linux
+              Tree: Mainline
+            Status: NEW
+          Severity: normal
+          Priority: P1
+         Component: Other
+          Assignee: stephen@networkplumber.org
+          Reporter: bpulk@s.gnet.hu
+        Regression: No
 
-Can you point me in the direction of this kbuild test robot (URLs, etc) 
-so I can better understand if it makes sense to add tests there?  For 
-example, do you know if it's "changed based" so only certain tests will 
-run if given files are updated?
+all outgoing packets are duplicated on ax25 interface
 
---David
-KI6ZHD
+steps to reproduce:
 
+kissattach /dev/ttyS0 radio
+ifconfig ax0 10.0.0.2
+arp -H ax25 -s 10.0.0.111 TEST-0
+tshark -i ax0
+ping -c1 10.0.0.111           =20
 
-On 10/28/2017 06:45 PM, David Miller wrote:
-> From: David Ranch <linux-hams@trinnet.net>
-> Date: Sat, 28 Oct 2017 10:53:24 -0700
->
->> Does anyone else have thoughts on this topic?
->
-> I think you are making a mountain out of a mole hill.
->
-> If you care so much about this, set things up so that entities such as
-> the kbuild test robot run whatever tests you think are necessary.
->
-> Otherwise, continually test the stack yourself and report any
-> regressions here as fast as you can.
->
-> If soemone can't be bothered to verify or test someone's change in 2
-> or 3 days, except in extreme circumstances, I absolutely refuse to
-> burdon the submitter and let their patches rot in the queue.
->
-> That's unacceptable.
->
-> That's the proper way to deal with this, without unreasonably
-> burdoning people who just want to keep the code across the tree modern
-> and more up to date.
->
-> Thank you.
+root@debian:~# tshark -i ax0
+Running as user "root" and group "root". This could be dangerous.
+tshark: Lua: Error during loading:
+ [string "/usr/share/wireshark/init.lua"]:44: dofile has been disabled due =
+to
+running Wireshark as superuser. See
+https://wiki.wireshark.org/CaptureSetup/CapturePrivileges for help in runni=
+ng
+Wireshark as an unprivileged user.
+Capturing on 'ax0'
+
+    1 0.000000000     10.0.0.2 =E2=86=92 10.0.0.111   ICMP 101 Echo (ping) =
+request=20
+id=3D0x11a4, seq=3D1/256, ttl=3D64
+    2 0.000005518     10.0.0.2 =E2=86=92 10.0.0.111   ICMP 101 Echo (ping) =
+request=20
+id=3D0x11a4, seq=3D1/256, ttl=3D64
+
+--=20
+You are receiving this mail because:
+You are the assignee for the bug.
