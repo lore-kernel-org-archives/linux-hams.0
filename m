@@ -1,29 +1,47 @@
-From: David Miller <davem@davemloft.net>
+From: "Gustavo A. R. Silva" <garsilva@embeddedor.com>
 Subject: Re: [PATCH v3 0/2] refactor code and mark expected switch
  fall-throughs
-Date: Wed, 01 Nov 2017 20:46:58 +0900 (KST)
-Message-ID: <20171101.204658.787298649317439690.davem@davemloft.net>
+Date: Wed, 01 Nov 2017 12:34:15 -0500
+Message-ID: <20171101123415.Horde.loz1BKI5e4PY4wt8KJqogy7@gator4166.hostgator.com>
 References: <20171022203942.Horde.vHHdAHmZbpcBFTJEP0yIy9k@gator4166.hostgator.com>
-        <cover.1509080630.git.garsilva@embeddedor.com>
+ <cover.1509080630.git.garsilva@embeddedor.com>
+ <20171101.204658.787298649317439690.davem@davemloft.net>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
-Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <cover.1509080630.git.garsilva@embeddedor.com>
-Sender: linux-hams-owner@vger.kernel.org
+Return-path: <linux-kernel-owner@vger.kernel.org>
+In-Reply-To: <20171101.204658.787298649317439690.davem@davemloft.net>
+Content-Disposition: inline
+Sender: linux-kernel-owner@vger.kernel.org
 List-ID: <linux-hams.vger.kernel.org>
-Content-Type: Text/Plain; charset="us-ascii"
-To: garsilva@embeddedor.com
+Content-Type: text/plain; charset="us-ascii"; format="flowed"; delsp="Yes"
+Content-Transfer-Encoding: 7bit
+To: David Miller <davem@davemloft.net>
 Cc: linux-hams@vger.kernel.org, netdev@vger.kernel.org, linux-kernel@vger.kernel.org, ralf@linux-mips.org, wharms@bfs.de, hal@kd.net.au
 
-From: "Gustavo A. R. Silva" <garsilva@embeddedor.com>
-Date: Fri, 27 Oct 2017 00:50:57 -0500
 
-> The aim of this patchset is firstly to refactor code in nr_route.c in order to make it
-> easier to read and maintain and, secondly, to mark some expected switch fall-throughs
-> in preparation to enabling -Wimplicit-fallthrough.
-> 
-> I have to mention that I did not implement any unit test.
-> If someone has any suggestions on how I could test this piece of code
-> it'd be greatly appreciated.
+Quoting David Miller <davem@davemloft.net>:
 
-Series applied, thank you.
+> From: "Gustavo A. R. Silva" <garsilva@embeddedor.com>
+> Date: Fri, 27 Oct 2017 00:50:57 -0500
+>
+>> The aim of this patchset is firstly to refactor code in nr_route.c  
+>> in order to make it
+>> easier to read and maintain and, secondly, to mark some expected  
+>> switch fall-throughs
+>> in preparation to enabling -Wimplicit-fallthrough.
+>>
+>> I have to mention that I did not implement any unit test.
+>> If someone has any suggestions on how I could test this piece of code
+>> it'd be greatly appreciated.
+>
+> Series applied, thank you.
+
+Glad to help.
+
+Thanks
+--
+Gustavo A. R. Silva
+
+
+
+
+
