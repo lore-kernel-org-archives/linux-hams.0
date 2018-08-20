@@ -1,206 +1,152 @@
-From: Anna Schumaker <Anna.Schumaker@Netapp.com>
-Subject: Re: [PATCH PATCH net-next 15/18] sunrpc: whitespace fixes
-Date: Fri, 27 Jul 2018 16:39:39 -0400
-Message-ID: <c4ca53ea-80d8-9fa1-15ce-ce9c5e4bc6ac@Netapp.com>
-References: <20180724192918.31165-1-sthemmin@microsoft.com>
- <20180724192918.31165-16-sthemmin@microsoft.com>
+From: Nate Bargmann <n0nb@n0nb.us>
+Subject: Hamlib 3.3 released
+Date: Mon, 20 Aug 2018 11:29:33 -0500
+Message-ID: <20180820162933.ybic6bdww2dgl6xl@n0nb.us>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
-Return-path: <netdev-owner@vger.kernel.org>
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=netapp.onmicrosoft.com; s=selector1-netapp-com;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=ya3eFeY9GkehIb6kjyIYsc4H3lPgwhKU8iIpNQiPGLg=;
- b=GVfTKFjprVwR+qtQz0zcj4ZlSSvUrpIeklnZjxZbspjhRmKOj1J0WdbE7dM9WMeEjeylm+9xEw/CaLThN4XR2c3p3FU5yLqx3mbQqhnkRaFCfO6FFmEGP0oeFAs/L/nnvu81S7RvTNDmB48SyjQslL6OYzdx16ciqBYLDq3ODRQ=
-In-Reply-To: <20180724192918.31165-16-sthemmin@microsoft.com>
-Content-Language: en-GB
-Sender: netdev-owner@vger.kernel.org
-List-ID: <linux-hams.vger.kernel.org>
+Content-Type: multipart/mixed; boundary="===============0713726666610959477=="
+Return-path: <hamlib-developer-bounces@lists.sourceforge.net>
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+ d=sourceforge.net; s=x; h=Content-Type:MIME-Version:Message-ID:Subject:To:
+ From:Date:Sender:Reply-To:Cc:Content-Transfer-Encoding:Content-ID:
+ Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
+ :Resent-Message-ID:In-Reply-To:References:List-Id:List-Help:List-Unsubscribe:
+ List-Subscribe:List-Post:List-Owner:List-Archive;
+ bh=mNdnbvT7on9s+jDEZ2UNy2gCJ15TKWlKsbGQlu1tzQQ=; b=mcunOGvYi8WR+KEdLad6W+n2Mc
+ VvH49lxhCM5IUNRYMAhuW58TEVNSOJDzoQ3Frn0wtvnKy6jX6DrprEEOthDYXYS94QpjJz+UUzPgY
+ ppyp86RT+ZTUGJwbWgG9z9h3UtBgo6VZ40tTtrs4EvFzr4x3XerQieN1m4SfqbSyFQus=;
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=sf.net; s=x
+ ;
+ h=Content-Type:MIME-Version:Message-ID:Subject:To:From:Date:Sender:Reply-To
+ :Cc:Content-Transfer-Encoding:Content-ID:Content-Description:Resent-Date:
+ Resent-From:Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:In-Reply-To:
+ References:List-Id:List-Help:List-Unsubscribe:List-Subscribe:List-Post:
+ List-Owner:List-Archive; bh=mNdnbvT7on9s+jDEZ2UNy2gCJ15TKWlKsbGQlu1tzQQ=; b=Y
+ lWhUIK9qGEWQF9+8UqL0GP94fiXCvoB3NQVzUftumSaLhaHLpDCrD8MTrk9zg36U6jZe9MTYuIUft
+ oAwWMiG8ctnnKeT2OXQBT+pEf1DLH8gBxqrF1Cz6DfpikpdQmUJKcPNy+Znp+rmeX6ha86f0oQULR
+ NNFCEIGZIqC4D2e8=;
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=n0nb.us;
+ s=default; h=Content-Type:MIME-Version:Message-ID:Subject:To:From:Date:Sender
+ :Reply-To:Cc:Content-Transfer-Encoding:Content-ID:Content-Description:
+ Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:
+ In-Reply-To:References:List-Id:List-Help:List-Unsubscribe:List-Subscribe:
+ List-Post:List-Owner:List-Archive;
+ bh=mNdnbvT7on9s+jDEZ2UNy2gCJ15TKWlKsbGQlu1tzQQ=; b=VdBIHKXBkfWkYK4isYDPfBbiQ7
+ Z+29Eyqs9vJ4Y5QAnrl+77GFUn6UFN01MFcK+G8RWCI1cSXZ94t4G2E49vTT42UnQxLpK+bAqQ+8d
+ O/6qsBr8p7bpqsca154nz2q3iKrAxocczY/QrW+iXxJJ0QwGJ+/U+ZfQoFsMh7IEMxWM=;
+List-Id: <linux-hams.vger.kernel.org>
+List-Unsubscribe: <https://lists.sourceforge.net/lists/options/hamlib-developer>, 
+ <mailto:hamlib-developer-request@lists.sourceforge.net?subject=unsubscribe>
+List-Archive: <http://sourceforge.net/mailarchive/forum.php?forum_name=hamlib-developer>
+List-Post: <mailto:hamlib-developer@lists.sourceforge.net>
+List-Help: <mailto:hamlib-developer-request@lists.sourceforge.net?subject=help>
+List-Subscribe: <https://lists.sourceforge.net/lists/listinfo/hamlib-developer>, 
+ <mailto:hamlib-developer-request@lists.sourceforge.net?subject=subscribe>
+Errors-To: hamlib-developer-bounces@lists.sourceforge.net
+To: Hamlib Developers <hamlib-developer@lists.sourceforge.net>, Linux Hams <linux-hams@vger.kernel.org>
+
+
+--===============0713726666610959477==
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="pfht7jgcudu5es53"
+Content-Disposition: inline
+
+
+--pfht7jgcudu5es53
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
+
+Hamlib 3.3 is released!
+
+This release represents the last of the current ABI and API that has
+been in place since the early releases of the 1.2.x series.  While a
+point release might be made in the future to fix any serious bug, work
+will continue for Hamlib 4.0 which will have an incompatible ABI and
+some changes to the API, requiring a recompilation of C linked programs
+at a minimum.
+
+The source tarball and Windows 32 and 64 binary builds can be downloaded
+=66rom:
+
+https://sourceforge.net/projects/hamlib/files/hamlib/3.3/
+
+or
+
+https://github.com/Hamlib/Hamlib/releases/tag/3.3
+
+Along with MD5SUM and SHA1SUM signatures, all files have been signed by
+my GPG key as a detached signature in the respective .asc files.
+
+Major changes since Hamlib 3.2:
+
+Version 3.3
+        2018-08-20
+        * New models, R&S xk2100, TRXMAnager, Meade LX200
+        * HTML manual is now generated at 'make dist' so users don't
+          need GNU Info tools installed.  TNX Greg, N1DAM for the suggestio=
+n.
+        * Handle longer udev generated file names up to 512 characters
+        * Add debug time stamps with new '-Z' option and '--debug-time-stam=
+ps'
+          options to rigctl, rotctl, rigctld, and rotctld utilities.
+        * rigctld/rotctld continue working after serial or TCP device
+          disappears.
+        * Updates and fixes to FT-817, K3, IC-7300, AOR 3030, TM-D710,
+          OMNI VII, TH-D72, Flrig, TS-590, piHPSDR, TS-2000, and netrigctl.
+        * Update utility manual pages (section 1) and remove their reference
+          material from the Info manual so it only needs to be update in one
+          file.
+        * Add new general project manual pages (section 7) and edit the Info
+          manual to match.  These should not change much so keeping them in
+          sync should not be too much of a burden.  The Info manual may be
+          removed at some point in the future.
+        * Last planned release of the present API/ABI.  Future releases will
+          require recompilation and relinking by client programs using the C
+          library interface (programs that only use the network daemons sho=
+uld
+          be unaffected).
+
+73, Nate, N0NB
+
+--=20
+
+"The optimist proclaims that we live in the best of all
+possible worlds.  The pessimist fears this is true."
+
+Web: http://www.n0nb.us  GPG key: D55A8819  GitHub: N0NB
+
+--pfht7jgcudu5es53
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iEYEABECAAYFAlt67G0ACgkQ+yxRMNVaiBkkdACdEzqa13M/q1UcudcJsV1C1Snx
+bp4Ani9I7hq3ZnnB/sxYOMb5FQrXjSLm
+=15vZ
+-----END PGP SIGNATURE-----
+
+--pfht7jgcudu5es53--
+
+
+--===============0713726666610959477==
 Content-Type: text/plain; charset="us-ascii"
-To: Stephen Hemminger <stephen@networkplumber.org>, davem@davemloft.net, ericvh@gmail.com, rminnich@sandia.gov, lucho@ionkov.net, ralf@linux-mips.org, jreuter@yaina.de, pablo@netfilter.org, kadlec@blackhole.kfki.hu, fw@strlen.de, alex.aring@gmail.com, stefan@datenfreihafen.org, kuznet@ms2.inr.ac.ru, yoshfuji@linux-ipv6.org, johannes@sipsolutions.net, jhs@mojatatu.com, xiyou.wangcong@gmail.com, jiri@resnulli.us, vyasevich@gmail.com, nhorman@tuxdriver.com, marcelo.leitner@gmail.com, trond.myklebust@hammerspace.com, steffen.klassert@secunet.com, herbert@gondor.apana.org.au
-Cc: netdev@vger.kernel.org, v9fs-developer@lists.sourceforge.net, linux-hams@vger.kernel.org, ceph-devel@vger.kernel.org, linux-decnet-user@lists.sourceforge.net, netfilter-devel@vger.kernel.org, coreteam@netfilter.org, linux-wpan@vger.kernel.org, linux-s390@vger.kernel.org, linux-wireless@vger.kernel.org, linux-rdma@vger.kernel.org, linux-sctp@vger.kernel.org, linux-nfs@vger.kernel.org, linux-x25@vger.kernel.org, Stephen Hemminger <sthemmin@microsoft.com>
+MIME-Version: 1.0
+Content-Transfer-Encoding: 7bit
+Content-Disposition: inline
 
-On 07/24/2018 03:29 PM, Stephen Hemminger wrote:
-> Remove trailing whitespace and blank line at EOF
+------------------------------------------------------------------------------
+Check out the vibrant tech community on one of the world's most
+engaging tech sites, Slashdot.org! http://sdm.link/slashdot
+--===============0713726666610959477==
+Content-Type: text/plain; charset="us-ascii"
+MIME-Version: 1.0
+Content-Transfer-Encoding: 7bit
+Content-Disposition: inline
 
-Looks good to me, I've applied it to my tree.
+_______________________________________________
+Hamlib-developer mailing list
+Hamlib-developer@lists.sourceforge.net
+https://lists.sourceforge.net/lists/listinfo/hamlib-developer
 
-Thanks!
-Anna
+--===============0713726666610959477==--
 
-> 
-> Signed-off-by: Stephen Hemminger <stephen@networkplumber.org>
-> ---
->  net/sunrpc/auth_gss/auth_gss.c          | 2 +-
->  net/sunrpc/auth_gss/gss_generic_token.c | 1 -
->  net/sunrpc/auth_gss/gss_krb5_crypto.c   | 1 -
->  net/sunrpc/auth_gss/gss_krb5_keys.c     | 1 -
->  net/sunrpc/auth_gss/gss_krb5_seal.c     | 1 -
->  net/sunrpc/auth_gss/gss_krb5_unseal.c   | 1 -
->  net/sunrpc/auth_gss/gss_krb5_wrap.c     | 1 -
->  net/sunrpc/auth_gss/svcauth_gss.c       | 2 +-
->  net/sunrpc/backchannel_rqst.c           | 1 -
->  net/sunrpc/clnt.c                       | 2 +-
->  net/sunrpc/rpcb_clnt.c                  | 2 +-
->  net/sunrpc/stats.c                      | 1 -
->  net/sunrpc/sunrpc.h                     | 1 -
->  net/sunrpc/xprt.c                       | 2 +-
->  net/sunrpc/xprtsock.c                   | 1 -
->  15 files changed, 5 insertions(+), 15 deletions(-)
-> 
-> diff --git a/net/sunrpc/auth_gss/auth_gss.c b/net/sunrpc/auth_gss/auth_gss.c
-> index be8f103d22fd..b67ad98a36a6 100644
-> --- a/net/sunrpc/auth_gss/auth_gss.c
-> +++ b/net/sunrpc/auth_gss/auth_gss.c
-> @@ -1571,7 +1571,7 @@ static int gss_cred_is_negative_entry(struct rpc_cred *cred)
->  	if (test_bit(RPCAUTH_CRED_NEGATIVE, &cred->cr_flags)) {
->  		unsigned long now = jiffies;
->  		unsigned long begin, expire;
-> -		struct gss_cred *gss_cred; 
-> +		struct gss_cred *gss_cred;
->  
->  		gss_cred = container_of(cred, struct gss_cred, gc_base);
->  		begin = gss_cred->gc_upcall_timestamp;
-> diff --git a/net/sunrpc/auth_gss/gss_generic_token.c b/net/sunrpc/auth_gss/gss_generic_token.c
-> index 254defe446a7..fe97f3106536 100644
-> --- a/net/sunrpc/auth_gss/gss_generic_token.c
-> +++ b/net/sunrpc/auth_gss/gss_generic_token.c
-> @@ -231,4 +231,3 @@ g_verify_token_header(struct xdr_netobj *mech, int *body_size,
->  }
->  
->  EXPORT_SYMBOL_GPL(g_verify_token_header);
-> -
-> diff --git a/net/sunrpc/auth_gss/gss_krb5_crypto.c b/net/sunrpc/auth_gss/gss_krb5_crypto.c
-> index 8654494b4d0a..a1acee106faa 100644
-> --- a/net/sunrpc/auth_gss/gss_krb5_crypto.c
-> +++ b/net/sunrpc/auth_gss/gss_krb5_crypto.c
-> @@ -1077,4 +1077,3 @@ krb5_rc4_setup_enc_key(struct krb5_ctx *kctx, struct crypto_skcipher *cipher,
->  	dprintk("%s: returning %d\n", __func__, err);
->  	return err;
->  }
-> -
-> diff --git a/net/sunrpc/auth_gss/gss_krb5_keys.c b/net/sunrpc/auth_gss/gss_krb5_keys.c
-> index 870133146026..f7fe2d2b851f 100644
-> --- a/net/sunrpc/auth_gss/gss_krb5_keys.c
-> +++ b/net/sunrpc/auth_gss/gss_krb5_keys.c
-> @@ -324,4 +324,3 @@ u32 gss_krb5_aes_make_key(const struct gss_krb5_enctype *gk5e,
->  err_out:
->  	return ret;
->  }
-> -
-> diff --git a/net/sunrpc/auth_gss/gss_krb5_seal.c b/net/sunrpc/auth_gss/gss_krb5_seal.c
-> index 94a2b3f082a8..eaad9bc7a0bd 100644
-> --- a/net/sunrpc/auth_gss/gss_krb5_seal.c
-> +++ b/net/sunrpc/auth_gss/gss_krb5_seal.c
-> @@ -229,4 +229,3 @@ gss_get_mic_kerberos(struct gss_ctx *gss_ctx, struct xdr_buf *text,
->  		return gss_get_mic_v2(ctx, text, token);
->  	}
->  }
-> -
-> diff --git a/net/sunrpc/auth_gss/gss_krb5_unseal.c b/net/sunrpc/auth_gss/gss_krb5_unseal.c
-> index b601a73cc9db..ef2b25b86d2f 100644
-> --- a/net/sunrpc/auth_gss/gss_krb5_unseal.c
-> +++ b/net/sunrpc/auth_gss/gss_krb5_unseal.c
-> @@ -225,4 +225,3 @@ gss_verify_mic_kerberos(struct gss_ctx *gss_ctx,
->  		return gss_verify_mic_v2(ctx, message_buffer, read_token);
->  	}
->  }
-> -
-> diff --git a/net/sunrpc/auth_gss/gss_krb5_wrap.c b/net/sunrpc/auth_gss/gss_krb5_wrap.c
-> index a737c2da0837..286fd22404f2 100644
-> --- a/net/sunrpc/auth_gss/gss_krb5_wrap.c
-> +++ b/net/sunrpc/auth_gss/gss_krb5_wrap.c
-> @@ -623,4 +623,3 @@ gss_unwrap_kerberos(struct gss_ctx *gctx, int offset, struct xdr_buf *buf)
->  		return gss_unwrap_kerberos_v2(kctx, offset, buf);
->  	}
->  }
-> -
-> diff --git a/net/sunrpc/auth_gss/svcauth_gss.c b/net/sunrpc/auth_gss/svcauth_gss.c
-> index 5089dbb96d58..860f2a1bbb67 100644
-> --- a/net/sunrpc/auth_gss/svcauth_gss.c
-> +++ b/net/sunrpc/auth_gss/svcauth_gss.c
-> @@ -1389,7 +1389,7 @@ static void destroy_use_gss_proxy_proc_entry(struct net *net)
->  	struct sunrpc_net *sn = net_generic(net, sunrpc_net_id);
->  
->  	if (sn->use_gssp_proc) {
-> -		remove_proc_entry("use-gss-proxy", sn->proc_net_rpc); 
-> +		remove_proc_entry("use-gss-proxy", sn->proc_net_rpc);
->  		clear_gssp_clnt(sn);
->  	}
->  }
-> diff --git a/net/sunrpc/backchannel_rqst.c b/net/sunrpc/backchannel_rqst.c
-> index c2c68a15b59d..3c15a99b9700 100644
-> --- a/net/sunrpc/backchannel_rqst.c
-> +++ b/net/sunrpc/backchannel_rqst.c
-> @@ -362,4 +362,3 @@ void xprt_complete_bc_request(struct rpc_rqst *req, uint32_t copied)
->  	wake_up(&bc_serv->sv_cb_waitq);
->  	spin_unlock(&bc_serv->sv_cb_lock);
->  }
-> -
-> diff --git a/net/sunrpc/clnt.c b/net/sunrpc/clnt.c
-> index d839c33ae7d9..3818e4d55c66 100644
-> --- a/net/sunrpc/clnt.c
-> +++ b/net/sunrpc/clnt.c
-> @@ -892,7 +892,7 @@ rpc_free_client(struct rpc_clnt *clnt)
->  /*
->   * Free an RPC client
->   */
-> -static struct rpc_clnt * 
-> +static struct rpc_clnt *
->  rpc_free_auth(struct rpc_clnt *clnt)
->  {
->  	if (clnt->cl_auth == NULL)
-> diff --git a/net/sunrpc/rpcb_clnt.c b/net/sunrpc/rpcb_clnt.c
-> index c526f8fb37c9..c7872bc13860 100644
-> --- a/net/sunrpc/rpcb_clnt.c
-> +++ b/net/sunrpc/rpcb_clnt.c
-> @@ -213,7 +213,7 @@ static void rpcb_set_local(struct net *net, struct rpc_clnt *clnt,
->  	sn->rpcb_local_clnt = clnt;
->  	sn->rpcb_local_clnt4 = clnt4;
->  	sn->rpcb_is_af_local = is_af_local ? 1 : 0;
-> -	smp_wmb(); 
-> +	smp_wmb();
->  	sn->rpcb_users = 1;
->  	dprintk("RPC:       created new rpcb local clients (rpcb_local_clnt: "
->  		"%p, rpcb_local_clnt4: %p) for net %x%s\n",
-> diff --git a/net/sunrpc/stats.c b/net/sunrpc/stats.c
-> index f68aa46c9dd7..86f316503c7c 100644
-> --- a/net/sunrpc/stats.c
-> +++ b/net/sunrpc/stats.c
-> @@ -310,4 +310,3 @@ void rpc_proc_exit(struct net *net)
->  	dprintk("RPC:       unregistering /proc/net/rpc\n");
->  	remove_proc_entry("rpc", net->proc_net);
->  }
-> -
-> diff --git a/net/sunrpc/sunrpc.h b/net/sunrpc/sunrpc.h
-> index 09a0315ea77b..c9bacb3c930f 100644
-> --- a/net/sunrpc/sunrpc.h
-> +++ b/net/sunrpc/sunrpc.h
-> @@ -57,4 +57,3 @@ int svc_send_common(struct socket *sock, struct xdr_buf *xdr,
->  int rpc_clients_notifier_register(void);
->  void rpc_clients_notifier_unregister(void);
->  #endif /* _NET_SUNRPC_SUNRPC_H */
-> -
-> diff --git a/net/sunrpc/xprt.c b/net/sunrpc/xprt.c
-> index 3fabf9f6a0f9..a8db2e3f8904 100644
-> --- a/net/sunrpc/xprt.c
-> +++ b/net/sunrpc/xprt.c
-> @@ -880,7 +880,7 @@ static void xprt_wait_on_pinned_rqst(struct rpc_rqst *req)
->  __must_hold(&req->rq_xprt->recv_lock)
->  {
->  	struct rpc_task *task = req->rq_task;
-> -	
-> +
->  	if (task && test_bit(RPC_TASK_MSG_RECV, &task->tk_runstate)) {
->  		spin_unlock(&req->rq_xprt->recv_lock);
->  		set_bit(RPC_TASK_MSG_RECV_WAIT, &task->tk_runstate);
-> diff --git a/net/sunrpc/xprtsock.c b/net/sunrpc/xprtsock.c
-> index 9e1c5024aba9..6b7539c0466e 100644
-> --- a/net/sunrpc/xprtsock.c
-> +++ b/net/sunrpc/xprtsock.c
-> @@ -3375,4 +3375,3 @@ module_param_named(tcp_max_slot_table_entries, xprt_max_tcp_slot_table_entries,
->  		   max_slot_table_size, 0644);
->  module_param_named(udp_slot_table_entries, xprt_udp_slot_table_entries,
->  		   slot_table_size, 0644);
-> -
-> 
