@@ -1,79 +1,85 @@
-From: Stephen Hemminger <stephen@networkplumber.org>
+From: Haiyang Zhang via dev <ovs-dev-yBygre7rU0TnMu66kgdUjQ@public.gmane.org>
 Subject: Re: [PATCH net-next 17/22] hv_netvsc: fix return type of
  ndo_start_xmit function
-Date: Thu, 20 Sep 2018 07:43:41 -0700
-Message-ID: <20180920074341.3acef75c@xeon-e3>
+Date: Thu, 20 Sep 2018 14:50:23 +0000
+Message-ID: <BN6PR21MB016180C794F26A279345A17FCA130@BN6PR21MB0161.namprd21.prod.outlook.com>
 References: <20180920123306.14772-1-yuehaibing@huawei.com>
- <20180920123306.14772-18-yuehaibing@huawei.com>
+	<20180920123306.14772-18-yuehaibing@huawei.com>
+	<20180920074341.3acef75c@xeon-e3>
+Reply-To: Haiyang Zhang <haiyangz-0li6OtcxBFHby3iVrkZq2A@public.gmane.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
-Return-path: <driverdev-devel-bounces@linuxdriverproject.org>
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=networkplumber-org.20150623.gappssmtp.com; s=20150623;
- h=date:from:to:cc:subject:message-id:in-reply-to:references
- :mime-version:content-transfer-encoding;
- bh=IMh67bFzXYsSjFzkNuNujAEl+sClz0tuOhbC4dpgoyY=;
- b=MVFSBRAaOMdYp78m+VvV0KS64e98NrH22dreGFDk6vsFfL01kzDgd1Ko2qLc3kgWRz
- 7mqCwSNfJP9CtozlgY0mtYO1tXoj6SglHM6UDasGICKpCEeCBwc+vMkJ+HG+p3R//6cB
- 8ffKAmMmFDVN/xVy6HXC6r9cGd2BGQ1T2TzyGqcN0cwMCrkKaY1f00mmE21CyCmzzjQt
- q2u8Beo0i7dv+TqPoNJJkMEqetqPd4N4VZFuL7YoycD/JMrbxxrQYRGFYetYO0V3DBfs
- t0ApGAAkspgK1KaUM+cKE17aP7EgvnGOnnWR8W/aozDQIp+Tvnrj9AIuyRwoosOUdE7U
- dUvQ==
-In-Reply-To: <20180920123306.14772-18-yuehaibing@huawei.com>
+Return-path: <ovs-dev-bounces-yBygre7rU0TnMu66kgdUjQ@public.gmane.org>
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+	s=selector1;
+	h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+	bh=QVW4wOwWiM0hEEpsyCOzA3YjTqwqwvBJrvrckb5YdPw=;
+	b=EyEaaNL+JswgdCLcd20iA+p2g4ND4O4vh0hbsOtnFO/0MEqxJCWmYCj7o/JZGoz5oP1RWKEw/jaaTr9mMLi/LpRK6t8FddlFXP1DzTO+hVCUExiOXwapNgA2PqophY+8l9hjlDYdM3pjVq5CEDkmHpK+weiIl3ovu+B/YD1qIbk=
+In-Reply-To: <20180920074341.3acef75c@xeon-e3>
+Content-Language: en-US
 List-Id: <linux-hams.vger.kernel.org>
-List-Unsubscribe: <http://driverdev.linuxdriverproject.org/mailman/options/driverdev-devel>, 
- <mailto:driverdev-devel-request@linuxdriverproject.org?subject=unsubscribe>
-List-Archive: <http://driverdev.linuxdriverproject.org/pipermail/driverdev-devel/>
-List-Post: <mailto:driverdev-devel@linuxdriverproject.org>
-List-Help: <mailto:driverdev-devel-request@linuxdriverproject.org?subject=help>
-List-Subscribe: <http://driverdev.linuxdriverproject.org/mailman/listinfo/driverdev-devel>, 
- <mailto:driverdev-devel-request@linuxdriverproject.org?subject=subscribe>
-Errors-To: driverdev-devel-bounces@linuxdriverproject.org
-Sender: "devel" <driverdev-devel-bounces@linuxdriverproject.org>
-To: YueHaibing <yuehaibing@huawei.com>
-Cc: dmitry.tarnyagin@lockless.no, madalin.bucur@nxp.com, linux-mips@linux-mips.org, linux@armlinux.org.uk, pantelis.antoniou@gmail.com, t.sailer@alumni.ethz.ch, dev@openvswitch.org, f.fainelli@gmail.com, arvid.brodin@alten.se, michal.simek@xilinx.com, pshelar@ovn.org, m-karicheri2@ti.com, xen-devel@lists.xenproject.org, jreuter@yaina.de, sammy@sammy.net, grygorii.strashko@ti.com, w-kwok2@ti.com, haiyangz@microsoft.com, steve.glendinning@shawell.net, linux-can@vger.kernel.org, claudiu.manoil@nxp.com, paul.durrant@citrix.com, mkl@pengutronix.de, linux-hams@vger.kernel.org, linux-omap@vger.kernel.org, linux-arm-kernel@lists.infradead.org, wei.liu2@citrix.com, nico@fluxnic.net, netdev@vger.kernel.org, linux-usb@vger.kernel.org, linux-kernel@vger.kernel.org, ralf@linux-mips.org, leoyang.li@nxp.com, wg@grandegger.com, devel@linuxdriverproject.org, linuxppc-dev@lists.ozlabs.org, da
+List-Unsubscribe: <https://mail.openvswitch.org/mailman/options/ovs-dev>,
+	<mailto:ovs-dev-request-yBygre7rU0TnMu66kgdUjQ@public.gmane.org?subject=unsubscribe>
+List-Archive: <http://mail.openvswitch.org/pipermail/ovs-dev/>
+List-Post: <mailto:ovs-dev-yBygre7rU0TnMu66kgdUjQ@public.gmane.org>
+List-Help: <mailto:ovs-dev-request-yBygre7rU0TnMu66kgdUjQ@public.gmane.org?subject=help>
+List-Subscribe: <https://mail.openvswitch.org/mailman/listinfo/ovs-dev>,
+	<mailto:ovs-dev-request-yBygre7rU0TnMu66kgdUjQ@public.gmane.org?subject=subscribe>
+Sender: ovs-dev-bounces-yBygre7rU0TnMu66kgdUjQ@public.gmane.org
+Errors-To: ovs-dev-bounces-yBygre7rU0TnMu66kgdUjQ@public.gmane.org
+To: Stephen Hemminger <stephen-OTpzqLSitTUnbdJkjeBofR2eb7JE58TQ@public.gmane.org>, YueHaibing <yuehaibing-hv44wF8Li93QT0dZR+AlfA@public.gmane.org>
+Cc: "dmitry.tarnyagin-0TCahj4L2NoXWF+eFR7m5Q@public.gmane.org" <dmitry.tarnyagin-0TCahj4L2NoXWF+eFR7m5Q@public.gmane.org>, "madalin.bucur-3arQi8VN3Tc@public.gmane.org" <madalin.bucur-3arQi8VN3Tc@public.gmane.org>, "linux-mips-6z/3iImG2C8G8FEW9MqTrA@public.gmane.org" <linux-mips-6z/3iImG2C8G8FEW9MqTrA@public.gmane.org>, "linux-I+IVW8TIWO2tmTQ+vhA3Yw@public.gmane.org" <linux-I+IVW8TIWO2tmTQ+vhA3Yw@public.gmane.org>, "pantelis.antoniou-Re5JQEeQqe8AvxtiuMwx3w@public.gmane.org" <pantelis.antoniou-Re5JQEeQqe8AvxtiuMwx3w@public.gmane.org>, KY Srinivasan <kys-0li6OtcxBFHby3iVrkZq2A@public.gmane.org>, "t.sailer-aAjG49QhEdKVRmA6MYkXiA@public.gmane.org" <t.sailer-aAjG49QhEdKVRmA6MYkXiA@public.gmane.org>, "dev-yBygre7rU0TnMu66kgdUjQ@public.gmane.org" <dev-yBygre7rU0TnMu66kgdUjQ@public.gmane.org>, "f.fainelli-Re5JQEeQqe8AvxtiuMwx3w@public.gmane.org" <f.fainelli-Re5JQEeQqe8AvxtiuMwx3w@public.gmane.org>, "arvid.brodin-SVm98a2vdck@public.gmane.org" <arvid.brodin-SVm98a2vdck@public.gmane.org>, "michal.simek-gjFFaj9aHVfQT0dZR+AlfA@public.gmane.org" <michal.simek-gjFFaj9aHVfQT0dZR+AlfA@public.gmane.org>, "m-karicheri2-l0cyMroinI0@public.gmane.org" <m-karicheri2-l0cyMroinI0@public.gmane.org>, "xen-devel-GuqFBffKawtpuQazS67q72D2FQJk+8+b@public.gmane.org" <xen-devel-GuqFBffKawtpuQazS67q72D2FQJk+8+b@public.gmane.org>, "jreuter-K7Hl1MveuGQ@public.gmane.org" <jreuter-K7Hl1MveuGQ@public.gmane.org>, "sammy-4OGMY2YDKIVeoWH0uzbU5w@public.gmane.org" <sammy-4OGMY2YDKIVeoWH0uzbU5w@public.gmane.org>, "grygorii.strashko-l0cyMroinI0@public.gmane.org" <grygorii.strashko-l0cyMroinI0@public.gmane.org>, "w-kwok2-l0cyMroinI0@public.gmane.org" <w-kwok2-l0cyMroinI0@public.gmane.org>, "steve.glendinning-nksJyM/082jR7s880joybQ@public.gmane.org" <steve.gl>
 
-On Thu, 20 Sep 2018 20:33:01 +0800
-YueHaibing <yuehaibing@huawei.com> wrote:
 
-> The method ndo_start_xmit() is defined as returning an 'netdev_tx_t',
-> which is a typedef for an enum type, so make sure the implementation in
-> this driver has returns 'netdev_tx_t' value, and change the function
-> return type to netdev_tx_t.
-> 
-> Found by coccinelle.
-> 
-> Signed-off-by: YueHaibing <yuehaibing@huawei.com>
-> ---
->  drivers/net/hyperv/netvsc_drv.c | 10 +++++++---
->  1 file changed, 7 insertions(+), 3 deletions(-)
-> 
-> diff --git a/drivers/net/hyperv/netvsc_drv.c b/drivers/net/hyperv/netvsc_drv.c
-> index 3af6d8d..056c472 100644
-> --- a/drivers/net/hyperv/netvsc_drv.c
-> +++ b/drivers/net/hyperv/netvsc_drv.c
-> @@ -511,7 +511,8 @@ static int netvsc_vf_xmit(struct net_device *net, struct net_device *vf_netdev,
->  	return rc;
->  }
->  
-> -static int netvsc_start_xmit(struct sk_buff *skb, struct net_device *net)
-> +static netdev_tx_t
-> +netvsc_start_xmit(struct sk_buff *skb, struct net_device *net)
->  {
->  	struct net_device_context *net_device_ctx = netdev_priv(net);
->  	struct hv_netvsc_packet *packet = NULL;
-> @@ -528,8 +529,11 @@ static int netvsc_start_xmit(struct sk_buff *skb, struct net_device *net)
->  	 */
->  	vf_netdev = rcu_dereference_bh(net_device_ctx->vf_netdev);
->  	if (vf_netdev && netif_running(vf_netdev) &&
-> -	    !netpoll_tx_running(net))
-> -		return netvsc_vf_xmit(net, vf_netdev, skb);
-> +	    !netpoll_tx_running(net)) {
-> +		ret = netvsc_vf_xmit(net, vf_netdev, skb);
-> +		if (ret)
-> +			return NETDEV_TX_BUSY;
-> +	}
 
-Sorry, the new code is wrong. It will fall through if ret == 0 (NETDEV_TX_OK)
-Please review and test your patches.
+> -----Original Message-----
+> From: Stephen Hemminger <stephen-OTpzqLSitTUnbdJkjeBofR2eb7JE58TQ@public.gmane.org>
+> Sent: Thursday, September 20, 2018 10:44 AM
+> To: YueHaibing <yuehaibing-hv44wF8Li93QT0dZR+AlfA@public.gmane.org>
+> Cc: davem-fT/PcQaiUtIeIZ0/mPfg9Q@public.gmane.org; dmitry.tarnyagin-0TCahj4L2NoXWF+eFR7m5Q@public.gmane.org;
+> wg-5Yr1BZd7O62+XT7JhA+gdA@public.gmane.org; mkl-bIcnvbaLZ9MEGnE8C9+IrQ@public.gmane.org; michal.simek-gjFFaj9aHVfQT0dZR+AlfA@public.gmane.org;
+> hsweeten-3FF4nKcrg1dE2c76skzGb0EOCMrvLtNR@public.gmane.org; madalin.bucur-3arQi8VN3Tc@public.gmane.org;
+> pantelis.antoniou-Re5JQEeQqe8AvxtiuMwx3w@public.gmane.org; claudiu.manoil-3arQi8VN3Tc@public.gmane.org; leoyang.li-3arQi8VN3Tc@public.gmane.org;
+> linux-I+IVW8TIWO2tmTQ+vhA3Yw@public.gmane.org; sammy-4OGMY2YDKIVeoWH0uzbU5w@public.gmane.org; ralf-6z/3iImG2C8G8FEW9MqTrA@public.gmane.org;
+> nico-vtqb6HGKxmzR7s880joybQ@public.gmane.org; steve.glendinning-nksJyM/082jR7s880joybQ@public.gmane.org; f.fainelli-Re5JQEeQqe8AvxtiuMwx3w@public.gmane.org;
+> grygorii.strashko-l0cyMroinI0@public.gmane.org; w-kwok2-l0cyMroinI0@public.gmane.org; m-karicheri2-l0cyMroinI0@public.gmane.org;
+> t.sailer-aAjG49QhEdKVRmA6MYkXiA@public.gmane.org; jreuter-K7Hl1MveuGQ@public.gmane.org; KY Srinivasan <kys-0li6OtcxBFHby3iVrkZq2A@public.gmane.org>;
+> Haiyang Zhang <haiyangz-0li6OtcxBFHby3iVrkZq2A@public.gmane.org>; wei.liu2-Sxgqhf6Nn4DQT0dZR+AlfA@public.gmane.org;
+> paul.durrant-Sxgqhf6Nn4DQT0dZR+AlfA@public.gmane.org; arvid.brodin-SVm98a2vdck@public.gmane.org; pshelar-LZ6Gd1LRuIk@public.gmane.org;
+> dev-yBygre7rU0TnMu66kgdUjQ@public.gmane.org; linux-mips-6z/3iImG2C8G8FEW9MqTrA@public.gmane.org; xen-
+> devel-GuqFBffKawtpuQazS67q72D2FQJk+8+b@public.gmane.org; netdev-u79uwXL29TY76Z2rM5mHXA@public.gmane.org; linux-usb-u79uwXL29TY76Z2rM5mHXA@public.gmane.org;
+> linux-kernel-u79uwXL29TY76Z2rM5mHXA@public.gmane.org; linux-can-u79uwXL29TY76Z2rM5mHXA@public.gmane.org;
+> devel-tBiZLqfeLfOHmIFyCCdPziST3g8Odh+X@public.gmane.org; linux-hams-u79uwXL29TY76Z2rM5mHXA@public.gmane.org; linux-
+> omap-u79uwXL29TY76Z2rM5mHXA@public.gmane.org; linuxppc-dev-uLR06cmDAlY/bJ5BZ2RsiQ@public.gmane.org; linux-arm-
+> kernel-IAPFreCvJWM7uuMidbF8XUB+6BGkLq7r@public.gmane.org
+> Subject: Re: [PATCH net-next 17/22] hv_netvsc: fix return type of
+> ndo_start_xmit function
+> 
+> On Thu, 20 Sep 2018 20:33:01 +0800
+> YueHaibing <yuehaibing-hv44wF8Li93QT0dZR+AlfA@public.gmane.org> wrote:
+> > int netvsc_start_xmit(struct sk_buff *skb, struct net_device *net)
+> >  	 */
+> >  	vf_netdev = rcu_dereference_bh(net_device_ctx->vf_netdev);
+> >  	if (vf_netdev && netif_running(vf_netdev) &&
+> > -	    !netpoll_tx_running(net))
+> > -		return netvsc_vf_xmit(net, vf_netdev, skb);
+> > +	    !netpoll_tx_running(net)) {
+> > +		ret = netvsc_vf_xmit(net, vf_netdev, skb);
+> > +		if (ret)
+> > +			return NETDEV_TX_BUSY;
+> > +	}
+> 
+> Sorry, the new code is wrong. It will fall through if ret == 0 (NETDEV_TX_OK)
+> Please review and test your patches.
+
+Plus consideration of -- For error case, please just return NETDEV_TX_OK. We 
+are not sure if the error can go away after retrying, returning NETDEV_TX_BUSY 
+may cause infinite retry from the upper layer.
+
+So, let's just always return NETDEV_TX_OK like this:
+		netvsc_vf_xmit(net, vf_netdev, skb);
+		return NETDEV_TX_OK;
+
+Thanks,
+- Haiyang
