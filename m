@@ -1,80 +1,66 @@
-From: Stefan Schmidt <stefan@datenfreihafen.org>
-Subject: Re: [PATCH net-next 1/3] net: rework SIOCGSTAMP ioctl handling
-Date: Fri, 21 Sep 2018 11:14:36 +0200
-Message-ID: <5cca03b6-8d3d-5f18-778f-a5d5e70c2218@datenfreihafen.org>
-References: <20180829130308.3504560-1-arnd@arndb.de>
+From: YueHaibing <yuehaibing@huawei.com>
+Subject: [PATCH net-next] net: hamradio: fix return type of ndo_start_xmit function
+Date: Wed, 26 Sep 2018 17:40:22 +0800
+Message-ID: <20180926094022.22632-1-yuehaibing@huawei.com>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
-Return-path: <netdev-owner@vger.kernel.org>
-In-Reply-To: <20180829130308.3504560-1-arnd@arndb.de>
-Content-Language: en-US
-Sender: netdev-owner@vger.kernel.org
+Return-path: <linux-kernel-owner@vger.kernel.org>
+Sender: linux-kernel-owner@vger.kernel.org
 List-ID: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
-To: Arnd Bergmann <arnd@arndb.de>, netdev@vger.kernel.org, "David S . Miller" <davem@davemloft.net>
-Cc: linux-arch@vger.kernel.org, y2038@lists.linaro.org, Eric Dumazet <edumazet@google.com>, Willem de Bruijn <willemb@google.com>, linux-kernel@vger.kernel.org, linux-hams@vger.kernel.org, linux-bluetooth@vger.kernel.org, linux-can@vger.kernel.org, dccp@vger.kernel.org, linux-wpan@vger.kernel.org, linux-sctp@vger.kernel.org, linux-x25@vger.kernel.org
+Content-Transfer-Encoding: 7bit
+To: davem@davemloft.net, t.sailer@alumni.ethz.ch, jreuter@yaina.de
+Cc: linux-kernel@vger.kernel.org, netdev@vger.kernel.org, linux-hams@vger.kernel.org, YueHaibing <yuehaibing@huawei.com>
 
-Hello Arnd.
+The method ndo_start_xmit() is defined as returning an 'netdev_tx_t',
+which is a typedef for an enum type, so make sure the implementation in
+this driver has returns 'netdev_tx_t' value, and change the function
+return type to netdev_tx_t.
 
-On 8/29/18 2:59 PM, Arnd Bergmann wrote:
-> The SIOCGSTAMP/SIOCGSTAMPNS ioctl commands are implemented by many
-> socket protocol handlers, and all of those end up calling the same
-> sock_get_timestamp()/sock_get_timestampns() helper functions, which
-> results in a lot of duplicate code.
-> 
-> With the introduction of 64-bit time_t on 32-bit architectures, this
-> gets worse, as we then need four different ioctl commands in each
-> socket protocol implementation.
-> 
-> To simplify that, let's add a new .gettstamp() operation in
-> struct proto_ops, and move ioctl implementation into the common
-> sock_ioctl()/compat_sock_ioctl_trans() functions that these all go
-> through.
-> 
-> We can reuse the sock_get_timestamp() implementation, but generalize
-> it so it can deal with both native and compat mode, as well as
-> timeval and timespec structures.
-> 
-> Signed-off-by: Arnd Bergmann <arnd@arndb.de>
-> ---
->  include/linux/net.h          |  2 ++
->  include/net/compat.h         |  3 --
->  include/net/sock.h           |  4 +--
->  net/appletalk/ddp.c          |  7 +----
->  net/atm/ioctl.c              | 16 -----------
->  net/atm/pvc.c                |  1 +
->  net/atm/svc.c                |  1 +
->  net/ax25/af_ax25.c           |  9 +-----
->  net/bluetooth/af_bluetooth.c |  8 ------
->  net/bluetooth/l2cap_sock.c   |  1 +
->  net/bluetooth/rfcomm/sock.c  |  1 +
->  net/bluetooth/sco.c          |  1 +
->  net/can/af_can.c             |  6 ----
->  net/can/bcm.c                |  1 +
->  net/can/raw.c                |  1 +
->  net/compat.c                 | 54 ------------------------------------
->  net/core/sock.c              | 38 +++++++++++--------------
->  net/dccp/ipv4.c              |  1 +
->  net/dccp/ipv6.c              |  1 +
->  net/ieee802154/socket.c      |  6 ++--
->  net/ipv4/af_inet.c           |  9 ++----
->  net/ipv6/af_inet6.c          |  8 ++----
->  net/ipv6/raw.c               |  1 +
->  net/l2tp/l2tp_ip.c           |  1 +
->  net/l2tp/l2tp_ip6.c          |  1 +
->  net/netrom/af_netrom.c       | 14 +---------
->  net/packet/af_packet.c       |  7 ++---
->  net/qrtr/qrtr.c              |  4 +--
->  net/rose/af_rose.c           |  7 +----
->  net/sctp/ipv6.c              |  1 +
->  net/sctp/protocol.c          |  1 +
->  net/socket.c                 | 48 ++++++++++----------------------
->  net/x25/af_x25.c             | 27 +-----------------
->  33 files changed, 63 insertions(+), 228 deletions(-)
+Found by coccinelle.
 
-For the net/ieee802154/socket. part I am fine with this change.
+Signed-off-by: YueHaibing <yuehaibing@huawei.com>
+---
+ drivers/net/hamradio/baycom_epp.c | 3 ++-
+ drivers/net/hamradio/dmascc.c     | 4 ++--
+ 2 files changed, 4 insertions(+), 3 deletions(-)
 
-Acked-by: Stefan Schmidt <stefan@datenfreihafen.org>
+diff --git a/drivers/net/hamradio/baycom_epp.c b/drivers/net/hamradio/baycom_epp.c
+index 1e62d00..f4ceccf 100644
+--- a/drivers/net/hamradio/baycom_epp.c
++++ b/drivers/net/hamradio/baycom_epp.c
+@@ -772,7 +772,8 @@ static void epp_bh(struct work_struct *work)
+  * ===================== network driver interface =========================
+  */
+ 
+-static int baycom_send_packet(struct sk_buff *skb, struct net_device *dev)
++static netdev_tx_t
++baycom_send_packet(struct sk_buff *skb, struct net_device *dev)
+ {
+ 	struct baycom_state *bc = netdev_priv(dev);
+ 
+diff --git a/drivers/net/hamradio/dmascc.c b/drivers/net/hamradio/dmascc.c
+index cde4120..2798870 100644
+--- a/drivers/net/hamradio/dmascc.c
++++ b/drivers/net/hamradio/dmascc.c
+@@ -239,7 +239,7 @@ struct scc_info {
+ static int scc_open(struct net_device *dev);
+ static int scc_close(struct net_device *dev);
+ static int scc_ioctl(struct net_device *dev, struct ifreq *ifr, int cmd);
+-static int scc_send_packet(struct sk_buff *skb, struct net_device *dev);
++static netdev_tx_t scc_send_packet(struct sk_buff *skb, struct net_device *dev);
+ static int scc_set_mac_address(struct net_device *dev, void *sa);
+ 
+ static inline void tx_on(struct scc_priv *priv);
+@@ -921,7 +921,7 @@ static int scc_ioctl(struct net_device *dev, struct ifreq *ifr, int cmd)
+ }
+ 
+ 
+-static int scc_send_packet(struct sk_buff *skb, struct net_device *dev)
++static netdev_tx_t scc_send_packet(struct sk_buff *skb, struct net_device *dev)
+ {
+ 	struct scc_priv *priv = dev->ml_priv;
+ 	unsigned long flags;
+-- 
+1.8.3.1
 
-regards
-Stefan Schmidt
+
