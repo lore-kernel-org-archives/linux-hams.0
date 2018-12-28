@@ -1,82 +1,149 @@
-From: syzbot <syzbot+1a2c456a1ea08fa5b5f7@syzkaller.appspotmail.com>
-Subject: general protection fault in ax25cmp
-Date: Fri, 28 Dec 2018 11:51:03 -0800
-Message-ID: <000000000000199a53057e1a62ff@google.com>
+From: syzbot <syzbot+ae6bb869cbed29b29040@syzkaller.appspotmail.com>
+Subject: KASAN: use-after-free Read in ax25_fillin_cb
+Date: Fri, 28 Dec 2018 14:51:04 -0800
+Message-ID: <000000000000da8f65057e1ce530@google.com>
 Mime-Version: 1.0
 Return-path: <linux-kernel-owner@vger.kernel.org>
 Sender: linux-kernel-owner@vger.kernel.org
 List-ID: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"; format="flowed"; delsp="yes"
 Content-Transfer-Encoding: 7bit
-To: davem@davemloft.net, linux-hams@vger.kernel.org, linux-kernel@vger.kernel.org, netdev@vger.kernel.org, ralf@linux-mips.org, syzkaller-bugs@googlegroups.com
+To: davem@davemloft.net, jreuter@yaina.de, linux-hams@vger.kernel.org, linux-kernel@vger.kernel.org, netdev@vger.kernel.org, ralf@linux-mips.org, syzkaller-bugs@googlegroups.com
 
 Hello,
 
 syzbot found the following crash on:
 
-HEAD commit:    d8924c0d76aa Merge tag 'devprop-4.21-rc1' of git://git.ker..
+HEAD commit:    8fe28cb58bcb Linux 4.20
 git tree:       upstream
-console output: https://syzkaller.appspot.com/x/log.txt?x=145051dd400000
-kernel config:  https://syzkaller.appspot.com/x/.config?x=91a256823ef17263
-dashboard link: https://syzkaller.appspot.com/bug?extid=1a2c456a1ea08fa5b5f7
+console output: https://syzkaller.appspot.com/x/log.txt?x=11502b15400000
+kernel config:  https://syzkaller.appspot.com/x/.config?x=7d581260bae0899a
+dashboard link: https://syzkaller.appspot.com/bug?extid=ae6bb869cbed29b29040
 compiler:       gcc (GCC) 8.0.1 20180413 (experimental)
-syz repro:      https://syzkaller.appspot.com/x/repro.syz?x=1683ae57400000
-C reproducer:   https://syzkaller.appspot.com/x/repro.c?x=1410f3af400000
+syz repro:      https://syzkaller.appspot.com/x/repro.syz?x=1114eac3400000
 
 IMPORTANT: if you fix the bug, please add the following tag to the commit:
-Reported-by: syzbot+1a2c456a1ea08fa5b5f7@syzkaller.appspotmail.com
+Reported-by: syzbot+ae6bb869cbed29b29040@syzkaller.appspotmail.com
 
-kasan: CONFIG_KASAN_INLINE enabled
-kasan: GPF could be caused by NULL-ptr deref or user memory access
-general protection fault: 0000 [#1] PREEMPT SMP KASAN
-CPU: 1 PID: 2660 Comm: aoe_tx0 Not tainted 4.20.0+ #388
+IPv6: ADDRCONF(NETDEV_CHANGE): veth1: link becomes ready
+IPv6: ADDRCONF(NETDEV_CHANGE): veth0: link becomes ready
+8021q: adding VLAN 0 to HW filter on device team0
+==================================================================
+BUG: KASAN: use-after-free in ax25_fillin_cb_from_dev  
+net/ax25/af_ax25.c:450 [inline]
+BUG: KASAN: use-after-free in ax25_fillin_cb+0x6d5/0x810  
+net/ax25/af_ax25.c:477
+Read of size 4 at addr ffff8881ccecc438 by task syz-executor5/11370
+
+CPU: 1 PID: 11370 Comm: syz-executor5 Not tainted 4.20.0 #387
 Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS  
 Google 01/01/2011
-RIP: 0010:ax25cmp+0x3e/0x180 net/ax25/ax25_addr.c:122
-Code: f6 41 55 49 89 fd 41 54 49 89 f4 53 48 83 ec 10 48 89 7d d0 48 89 75  
-c8 e8 ff 46 7f fa 4c 89 e8 4c 89 ea 48 c1 e8 03 83 e2 07 <42> 0f b6 04 38  
-38 d0 7f 08 84 c0 0f 85 23 01 00 00 4c 89 e0 4c 89
-RSP: 0018:ffff8881ce3cf3c8 EFLAGS: 00010202
-RAX: 0000000000000002 RBX: ffff8881c5a59800 RCX: 0000000000000001
-RDX: 0000000000000007 RSI: ffffffff86ff11d1 RDI: 0000000000000017
-RBP: ffff8881ce3cf400 R08: ffffed1039c79e70 R09: ffffed1039c79e6f
-R10: ffffed1039c79e6f R11: 0000000000000003 R12: ffff8881c5a59808
-R13: 0000000000000017 R14: 0000000000000000 R15: dffffc0000000000
-FS:  0000000000000000(0000) GS:ffff8881daf00000(0000) knlGS:0000000000000000
-CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-CR2: 00007ffe5864d7d4 CR3: 000000000946a000 CR4: 00000000001406e0
-DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
-DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
 Call Trace:
-  rose_route_frame+0x2d6/0x19b0 net/rose/rose_route.c:885
-  rose_xmit+0x8e/0x180 net/rose/rose_dev.c:110
-  __netdev_start_xmit include/linux/netdevice.h:4356 [inline]
-  netdev_start_xmit include/linux/netdevice.h:4365 [inline]
-  xmit_one net/core/dev.c:3257 [inline]
-  dev_hard_start_xmit+0x295/0xc90 net/core/dev.c:3273
-  __dev_queue_xmit+0x2f0d/0x3950 net/core/dev.c:3843
-  dev_queue_xmit+0x17/0x20 net/core/dev.c:3876
-  tx+0x77/0xd0 drivers/block/aoe/aoenet.c:63
-  kthread+0x296/0x4a0 drivers/block/aoe/aoecmd.c:1248
-  kthread+0x35a/0x440 kernel/kthread.c:246
-  ret_from_fork+0x3a/0x50 arch/x86/entry/entry_64.S:352
-Modules linked in:
----[ end trace 623634688d1951e4 ]---
-RIP: 0010:ax25cmp+0x3e/0x180 net/ax25/ax25_addr.c:122
-Code: f6 41 55 49 89 fd 41 54 49 89 f4 53 48 83 ec 10 48 89 7d d0 48 89 75  
-c8 e8 ff 46 7f fa 4c 89 e8 4c 89 ea 48 c1 e8 03 83 e2 07 <42> 0f b6 04 38  
-38 d0 7f 08 84 c0 0f 85 23 01 00 00 4c 89 e0 4c 89
-RSP: 0018:ffff8881ce3cf3c8 EFLAGS: 00010202
-RAX: 0000000000000002 RBX: ffff8881c5a59800 RCX: 0000000000000001
-RDX: 0000000000000007 RSI: ffffffff86ff11d1 RDI: 0000000000000017
-RBP: ffff8881ce3cf400 R08: ffffed1039c79e70 R09: ffffed1039c79e6f
-R10: ffffed1039c79e6f R11: 0000000000000003 R12: ffff8881c5a59808
-R13: 0000000000000017 R14: 0000000000000000 R15: dffffc0000000000
-FS:  0000000000000000(0000) GS:ffff8881daf00000(0000) knlGS:0000000000000000
-CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-CR2: 00007ffe5864d7d4 CR3: 000000000946a000 CR4: 00000000001406e0
-DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
-DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
+  __dump_stack lib/dump_stack.c:77 [inline]
+  dump_stack+0x1d3/0x2c6 lib/dump_stack.c:113
+  print_address_description.cold.8+0x9/0x1ff mm/kasan/report.c:256
+  kasan_report_error mm/kasan/report.c:354 [inline]
+  kasan_report.cold.9+0x242/0x309 mm/kasan/report.c:412
+  __asan_report_load4_noabort+0x14/0x20 mm/kasan/report.c:432
+  ax25_fillin_cb_from_dev net/ax25/af_ax25.c:450 [inline]
+  ax25_fillin_cb+0x6d5/0x810 net/ax25/af_ax25.c:477
+  ax25_setsockopt+0x92a/0xa20 net/ax25/af_ax25.c:663
+  __sys_setsockopt+0x1ba/0x3c0 net/socket.c:1902
+  __do_sys_setsockopt net/socket.c:1913 [inline]
+  __se_sys_setsockopt net/socket.c:1910 [inline]
+  __x64_sys_setsockopt+0xbe/0x150 net/socket.c:1910
+  do_syscall_64+0x1b9/0x820 arch/x86/entry/common.c:290
+  entry_SYSCALL_64_after_hwframe+0x49/0xbe
+RIP: 0033:0x457759
+Code: fd b3 fb ff c3 66 2e 0f 1f 84 00 00 00 00 00 66 90 48 89 f8 48 89 f7  
+48 89 d6 48 89 ca 4d 89 c2 4d 89 c8 4c 8b 4c 24 08 0f 05 <48> 3d 01 f0 ff  
+ff 0f 83 cb b3 fb ff c3 66 2e 0f 1f 84 00 00 00 00
+RSP: 002b:00007f540c347c78 EFLAGS: 00000246 ORIG_RAX: 0000000000000036
+RAX: ffffffffffffffda RBX: 0000000000000005 RCX: 0000000000457759
+RDX: 0000000000000019 RSI: 0000000000000101 RDI: 0000000000000005
+RBP: 000000000073bfa0 R08: 0000000000000010 R09: 0000000000000000
+R10: 0000000020000140 R11: 0000000000000246 R12: 00007f540c3486d4
+R13: 00000000004cb2d8 R14: 00000000004d8910 R15: 00000000ffffffff
+
+Allocated by task 11344:
+  save_stack+0x43/0xd0 mm/kasan/kasan.c:448
+  set_track mm/kasan/kasan.c:460 [inline]
+  kasan_kmalloc+0xc7/0xe0 mm/kasan/kasan.c:553
+  kmem_cache_alloc_trace+0x152/0x750 mm/slab.c:3620
+  kmalloc include/linux/slab.h:546 [inline]
+  kzalloc include/linux/slab.h:741 [inline]
+  ax25_dev_device_up+0x47/0x4d0 net/ax25/ax25_dev.c:57
+  ax25_device_event+0x208/0x2e0 net/ax25/af_ax25.c:126
+  notifier_call_chain+0x17e/0x380 kernel/notifier.c:93
+  __raw_notifier_call_chain kernel/notifier.c:394 [inline]
+  raw_notifier_call_chain+0x2d/0x40 kernel/notifier.c:401
+  call_netdevice_notifiers_info+0x3f/0x90 net/core/dev.c:1733
+  call_netdevice_notifiers net/core/dev.c:1751 [inline]
+  __dev_notify_flags+0x17a/0x480 net/core/dev.c:7545
+  dev_change_flags+0xfd/0x150 net/core/dev.c:7581
+  dev_ifsioc+0x7d6/0xa80 net/core/dev_ioctl.c:237
+  dev_ioctl+0x1b5/0xcc0 net/core/dev_ioctl.c:488
+  sock_do_ioctl+0x1f6/0x420 net/socket.c:973
+  sock_ioctl+0x313/0x690 net/socket.c:1074
+  vfs_ioctl fs/ioctl.c:46 [inline]
+  file_ioctl fs/ioctl.c:509 [inline]
+  do_vfs_ioctl+0x1de/0x1790 fs/ioctl.c:696
+  ksys_ioctl+0xa9/0xd0 fs/ioctl.c:713
+  __do_sys_ioctl fs/ioctl.c:720 [inline]
+  __se_sys_ioctl fs/ioctl.c:718 [inline]
+  __x64_sys_ioctl+0x73/0xb0 fs/ioctl.c:718
+  do_syscall_64+0x1b9/0x820 arch/x86/entry/common.c:290
+  entry_SYSCALL_64_after_hwframe+0x49/0xbe
+
+Freed by task 11339:
+  save_stack+0x43/0xd0 mm/kasan/kasan.c:448
+  set_track mm/kasan/kasan.c:460 [inline]
+  __kasan_slab_free+0x102/0x150 mm/kasan/kasan.c:521
+  kasan_slab_free+0xe/0x10 mm/kasan/kasan.c:528
+  __cache_free mm/slab.c:3498 [inline]
+  kfree+0xcf/0x230 mm/slab.c:3817
+  ax25_dev_device_down+0x164/0x2f0 net/ax25/ax25_dev.c:129
+  ax25_device_event+0x1f6/0x2e0 net/ax25/af_ax25.c:131
+  notifier_call_chain+0x17e/0x380 kernel/notifier.c:93
+  __raw_notifier_call_chain kernel/notifier.c:394 [inline]
+  raw_notifier_call_chain+0x2d/0x40 kernel/notifier.c:401
+  call_netdevice_notifiers_info+0x3f/0x90 net/core/dev.c:1733
+  call_netdevice_notifiers net/core/dev.c:1751 [inline]
+  __dev_notify_flags+0x29b/0x480 net/core/dev.c:7547
+  dev_change_flags+0xfd/0x150 net/core/dev.c:7581
+  dev_ifsioc+0x7d6/0xa80 net/core/dev_ioctl.c:237
+  dev_ioctl+0x1b5/0xcc0 net/core/dev_ioctl.c:488
+  sock_do_ioctl+0x1f6/0x420 net/socket.c:973
+  sock_ioctl+0x313/0x690 net/socket.c:1074
+  vfs_ioctl fs/ioctl.c:46 [inline]
+  file_ioctl fs/ioctl.c:509 [inline]
+  do_vfs_ioctl+0x1de/0x1790 fs/ioctl.c:696
+  ksys_ioctl+0xa9/0xd0 fs/ioctl.c:713
+  __do_sys_ioctl fs/ioctl.c:720 [inline]
+  __se_sys_ioctl fs/ioctl.c:718 [inline]
+  __x64_sys_ioctl+0x73/0xb0 fs/ioctl.c:718
+  do_syscall_64+0x1b9/0x820 arch/x86/entry/common.c:290
+  entry_SYSCALL_64_after_hwframe+0x49/0xbe
+
+The buggy address belongs to the object at ffff8881ccecc400
+  which belongs to the cache kmalloc-192 of size 192
+The buggy address is located 56 bytes inside of
+  192-byte region [ffff8881ccecc400, ffff8881ccecc4c0)
+The buggy address belongs to the page:
+page:ffffea000733b300 count:1 mapcount:0 mapping:ffff8881da800040 index:0x0
+flags: 0x2fffc0000000200(slab)
+raw: 02fffc0000000200 ffffea000733b1c8 ffffea000734aac8 ffff8881da800040
+raw: 0000000000000000 ffff8881ccecc000 0000000100000010 0000000000000000
+page dumped because: kasan: bad access detected
+
+Memory state around the buggy address:
+  ffff8881ccecc300: fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb
+  ffff8881ccecc380: fb fb fb fb fb fb fb fb fc fc fc fc fc fc fc fc
+> ffff8881ccecc400: fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb
+                                         ^
+  ffff8881ccecc480: fb fb fb fb fb fb fb fb fc fc fc fc fc fc fc fc
+  ffff8881ccecc500: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+==================================================================
 
 
 ---
