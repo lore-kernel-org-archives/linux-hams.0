@@ -1,149 +1,142 @@
-From: syzbot <syzbot+ae6bb869cbed29b29040@syzkaller.appspotmail.com>
-Subject: KASAN: use-after-free Read in ax25_fillin_cb
-Date: Fri, 28 Dec 2018 14:51:04 -0800
-Message-ID: <000000000000da8f65057e1ce530@google.com>
+From: syzbot <syzbot+f621cda8b7e598908efa@syzkaller.appspotmail.com>
+Subject: inconsistent lock state in nr_find_socket
+Date: Sat, 29 Dec 2018 02:31:02 -0800
+Message-ID: <0000000000002f1f80057e26addf@google.com>
 Mime-Version: 1.0
 Return-path: <linux-kernel-owner@vger.kernel.org>
 Sender: linux-kernel-owner@vger.kernel.org
 List-ID: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"; format="flowed"; delsp="yes"
 Content-Transfer-Encoding: 7bit
-To: davem@davemloft.net, jreuter@yaina.de, linux-hams@vger.kernel.org, linux-kernel@vger.kernel.org, netdev@vger.kernel.org, ralf@linux-mips.org, syzkaller-bugs@googlegroups.com
+To: davem@davemloft.net, linux-hams@vger.kernel.org, linux-kernel@vger.kernel.org, netdev@vger.kernel.org, ralf@linux-mips.org, syzkaller-bugs@googlegroups.com
 
 Hello,
 
 syzbot found the following crash on:
 
-HEAD commit:    8fe28cb58bcb Linux 4.20
+HEAD commit:    5694cecdb092 Merge tag 'arm64-upstream' of git://git.kerne..
 git tree:       upstream
-console output: https://syzkaller.appspot.com/x/log.txt?x=11502b15400000
-kernel config:  https://syzkaller.appspot.com/x/.config?x=7d581260bae0899a
-dashboard link: https://syzkaller.appspot.com/bug?extid=ae6bb869cbed29b29040
+console output: https://syzkaller.appspot.com/x/log.txt?x=129ee73f400000
+kernel config:  https://syzkaller.appspot.com/x/.config?x=91a256823ef17263
+dashboard link: https://syzkaller.appspot.com/bug?extid=f621cda8b7e598908efa
 compiler:       gcc (GCC) 8.0.1 20180413 (experimental)
-syz repro:      https://syzkaller.appspot.com/x/repro.syz?x=1114eac3400000
+syz repro:      https://syzkaller.appspot.com/x/repro.syz?x=13b2b42d400000
+C reproducer:   https://syzkaller.appspot.com/x/repro.c?x=1220489f400000
 
 IMPORTANT: if you fix the bug, please add the following tag to the commit:
-Reported-by: syzbot+ae6bb869cbed29b29040@syzkaller.appspotmail.com
+Reported-by: syzbot+f621cda8b7e598908efa@syzkaller.appspotmail.com
 
-IPv6: ADDRCONF(NETDEV_CHANGE): veth1: link becomes ready
-IPv6: ADDRCONF(NETDEV_CHANGE): veth0: link becomes ready
-8021q: adding VLAN 0 to HW filter on device team0
-==================================================================
-BUG: KASAN: use-after-free in ax25_fillin_cb_from_dev  
-net/ax25/af_ax25.c:450 [inline]
-BUG: KASAN: use-after-free in ax25_fillin_cb+0x6d5/0x810  
-net/ax25/af_ax25.c:477
-Read of size 4 at addr ffff8881ccecc438 by task syz-executor5/11370
 
-CPU: 1 PID: 11370 Comm: syz-executor5 Not tainted 4.20.0 #387
+================================
+WARNING: inconsistent lock state
+4.20.0+ #389 Not tainted
+--------------------------------
+inconsistent {IN-SOFTIRQ-W} -> {SOFTIRQ-ON-W} usage.
+syz-executor820/11913 [HC0[0]:SC0[0]:HE1:SE1] takes:
+000000003a3617a7 (slock-AF_NETROM){+.?.}, at: spin_lock  
+include/linux/spinlock.h:329 [inline]
+000000003a3617a7 (slock-AF_NETROM){+.?.}, at: nr_find_socket+0x113/0x160  
+net/netrom/af_netrom.c:177
+{IN-SOFTIRQ-W} state was registered at:
+   lock_acquire+0x1ed/0x520 kernel/locking/lockdep.c:3844
+   __raw_spin_lock include/linux/spinlock_api_smp.h:142 [inline]
+   _raw_spin_lock+0x2d/0x40 kernel/locking/spinlock.c:144
+   spin_lock include/linux/spinlock.h:329 [inline]
+   nr_find_listener net/netrom/af_netrom.c:156 [inline]
+   nr_rx_frame+0x5f8/0x1db0 net/netrom/af_netrom.c:955
+   nr_loopback_timer+0x79/0x160 net/netrom/nr_loopback.c:62
+   call_timer_fn+0x272/0x920 kernel/time/timer.c:1325
+   expire_timers kernel/time/timer.c:1362 [inline]
+   __run_timers+0x7e5/0xc70 kernel/time/timer.c:1681
+   run_timer_softirq+0x52/0xb0 kernel/time/timer.c:1694
+   __do_softirq+0x30c/0xb2e kernel/softirq.c:292
+   invoke_softirq kernel/softirq.c:373 [inline]
+   irq_exit+0x17f/0x1c0 kernel/softirq.c:413
+   exiting_irq arch/x86/include/asm/apic.h:536 [inline]
+   smp_apic_timer_interrupt+0x1cb/0x760 arch/x86/kernel/apic/apic.c:1061
+   apic_timer_interrupt+0xf/0x20 arch/x86/entry/entry_64.S:807
+   arch_local_irq_restore arch/x86/include/asm/paravirt.h:761 [inline]
+   lock_acquire+0x268/0x520 kernel/locking/lockdep.c:3847
+   __raw_spin_lock include/linux/spinlock_api_smp.h:142 [inline]
+   _raw_spin_lock+0x2d/0x40 kernel/locking/spinlock.c:144
+   spin_lock include/linux/spinlock.h:329 [inline]
+   do_anonymous_page mm/memory.c:2947 [inline]
+   handle_pte_fault mm/memory.c:3763 [inline]
+   __handle_mm_fault+0x298c/0x5670 mm/memory.c:3889
+   handle_mm_fault+0x54f/0xc70 mm/memory.c:3926
+   do_user_addr_fault arch/x86/mm/fault.c:1423 [inline]
+   __do_page_fault+0x5e8/0xe60 arch/x86/mm/fault.c:1489
+   do_page_fault+0xf2/0x7e0 arch/x86/mm/fault.c:1520
+   page_fault+0x1e/0x30 arch/x86/entry/entry_64.S:1143
+irq event stamp: 294
+hardirqs last  enabled at (292): [<ffffffff81007da1>]  
+trace_hardirqs_on_thunk+0x1a/0x1c
+hardirqs last disabled at (293): [<ffffffff8149f9f0>]  
+__local_bh_enable_ip+0x120/0x260 kernel/softirq.c:171
+softirqs last  enabled at (294): [<ffffffff86fc0d68>] spin_unlock_bh  
+include/linux/spinlock.h:374 [inline]
+softirqs last  enabled at (294): [<ffffffff86fc0d68>]  
+nr_find_socket+0x128/0x160 net/netrom/af_netrom.c:183
+softirqs last disabled at (290): [<ffffffff86fc0c64>] spin_lock_bh  
+include/linux/spinlock.h:334 [inline]
+softirqs last disabled at (290): [<ffffffff86fc0c64>]  
+nr_find_socket+0x24/0x160 net/netrom/af_netrom.c:172
+
+other info that might help us debug this:
+  Possible unsafe locking scenario:
+
+        CPU0
+        ----
+   lock(slock-AF_NETROM);
+   <Interrupt>
+     lock(slock-AF_NETROM);
+
+  *** DEADLOCK ***
+
+1 lock held by syz-executor820/11913:
+  #0: 000000003a3617a7 (slock-AF_NETROM){+.?.}, at: spin_lock  
+include/linux/spinlock.h:329 [inline]
+  #0: 000000003a3617a7 (slock-AF_NETROM){+.?.}, at:  
+nr_find_socket+0x113/0x160 net/netrom/af_netrom.c:177
+
+stack backtrace:
+CPU: 0 PID: 11913 Comm: syz-executor820 Not tainted 4.20.0+ #389
 Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS  
 Google 01/01/2011
 Call Trace:
   __dump_stack lib/dump_stack.c:77 [inline]
   dump_stack+0x1d3/0x2c6 lib/dump_stack.c:113
-  print_address_description.cold.8+0x9/0x1ff mm/kasan/report.c:256
-  kasan_report_error mm/kasan/report.c:354 [inline]
-  kasan_report.cold.9+0x242/0x309 mm/kasan/report.c:412
-  __asan_report_load4_noabort+0x14/0x20 mm/kasan/report.c:432
-  ax25_fillin_cb_from_dev net/ax25/af_ax25.c:450 [inline]
-  ax25_fillin_cb+0x6d5/0x810 net/ax25/af_ax25.c:477
-  ax25_setsockopt+0x92a/0xa20 net/ax25/af_ax25.c:663
-  __sys_setsockopt+0x1ba/0x3c0 net/socket.c:1902
-  __do_sys_setsockopt net/socket.c:1913 [inline]
-  __se_sys_setsockopt net/socket.c:1910 [inline]
-  __x64_sys_setsockopt+0xbe/0x150 net/socket.c:1910
+  print_usage_bug.cold.59+0x320/0x41a kernel/locking/lockdep.c:2472
+  valid_state kernel/locking/lockdep.c:2485 [inline]
+  mark_lock_irq kernel/locking/lockdep.c:2679 [inline]
+  mark_lock+0x1114/0x1cc0 kernel/locking/lockdep.c:3059
+  mark_held_locks+0xc7/0x130 kernel/locking/lockdep.c:2737
+  __trace_hardirqs_on_caller kernel/locking/lockdep.c:2766 [inline]
+  lockdep_hardirqs_on+0x421/0x5c0 kernel/locking/lockdep.c:2811
+  trace_hardirqs_on+0xbd/0x310 kernel/trace/trace_preemptirq.c:30
+  __local_bh_enable_ip+0x160/0x260 kernel/softirq.c:194
+  __raw_spin_unlock_bh include/linux/spinlock_api_smp.h:176 [inline]
+  _raw_spin_unlock_bh+0x30/0x40 kernel/locking/spinlock.c:200
+  spin_unlock_bh include/linux/spinlock.h:374 [inline]
+  nr_find_socket+0x128/0x160 net/netrom/af_netrom.c:183
+  nr_find_next_circuit+0x71/0x90 net/netrom/af_netrom.c:225
+  nr_connect+0x6cb/0x1350 net/netrom/af_netrom.c:704
+  __sys_connect+0x37d/0x4c0 net/socket.c:1664
+  __do_sys_connect net/socket.c:1675 [inline]
+  __se_sys_connect net/socket.c:1672 [inline]
+  __x64_sys_connect+0x73/0xb0 net/socket.c:1672
   do_syscall_64+0x1b9/0x820 arch/x86/entry/common.c:290
   entry_SYSCALL_64_after_hwframe+0x49/0xbe
-RIP: 0033:0x457759
-Code: fd b3 fb ff c3 66 2e 0f 1f 84 00 00 00 00 00 66 90 48 89 f8 48 89 f7  
+RIP: 0033:0x4482e9
+Code: e8 cc e7 ff ff 48 83 c4 18 c3 0f 1f 80 00 00 00 00 48 89 f8 48 89 f7  
 48 89 d6 48 89 ca 4d 89 c2 4d 89 c8 4c 8b 4c 24 08 0f 05 <48> 3d 01 f0 ff  
-ff 0f 83 cb b3 fb ff c3 66 2e 0f 1f 84 00 00 00 00
-RSP: 002b:00007f540c347c78 EFLAGS: 00000246 ORIG_RAX: 0000000000000036
-RAX: ffffffffffffffda RBX: 0000000000000005 RCX: 0000000000457759
-RDX: 0000000000000019 RSI: 0000000000000101 RDI: 0000000000000005
-RBP: 000000000073bfa0 R08: 0000000000000010 R09: 0000000000000000
-R10: 0000000020000140 R11: 0000000000000246 R12: 00007f540c3486d4
-R13: 00000000004cb2d8 R14: 00000000004d8910 R15: 00000000ffffffff
-
-Allocated by task 11344:
-  save_stack+0x43/0xd0 mm/kasan/kasan.c:448
-  set_track mm/kasan/kasan.c:460 [inline]
-  kasan_kmalloc+0xc7/0xe0 mm/kasan/kasan.c:553
-  kmem_cache_alloc_trace+0x152/0x750 mm/slab.c:3620
-  kmalloc include/linux/slab.h:546 [inline]
-  kzalloc include/linux/slab.h:741 [inline]
-  ax25_dev_device_up+0x47/0x4d0 net/ax25/ax25_dev.c:57
-  ax25_device_event+0x208/0x2e0 net/ax25/af_ax25.c:126
-  notifier_call_chain+0x17e/0x380 kernel/notifier.c:93
-  __raw_notifier_call_chain kernel/notifier.c:394 [inline]
-  raw_notifier_call_chain+0x2d/0x40 kernel/notifier.c:401
-  call_netdevice_notifiers_info+0x3f/0x90 net/core/dev.c:1733
-  call_netdevice_notifiers net/core/dev.c:1751 [inline]
-  __dev_notify_flags+0x17a/0x480 net/core/dev.c:7545
-  dev_change_flags+0xfd/0x150 net/core/dev.c:7581
-  dev_ifsioc+0x7d6/0xa80 net/core/dev_ioctl.c:237
-  dev_ioctl+0x1b5/0xcc0 net/core/dev_ioctl.c:488
-  sock_do_ioctl+0x1f6/0x420 net/socket.c:973
-  sock_ioctl+0x313/0x690 net/socket.c:1074
-  vfs_ioctl fs/ioctl.c:46 [inline]
-  file_ioctl fs/ioctl.c:509 [inline]
-  do_vfs_ioctl+0x1de/0x1790 fs/ioctl.c:696
-  ksys_ioctl+0xa9/0xd0 fs/ioctl.c:713
-  __do_sys_ioctl fs/ioctl.c:720 [inline]
-  __se_sys_ioctl fs/ioctl.c:718 [inline]
-  __x64_sys_ioctl+0x73/0xb0 fs/ioctl.c:718
-  do_syscall_64+0x1b9/0x820 arch/x86/entry/common.c:290
-  entry_SYSCALL_64_after_hwframe+0x49/0xbe
-
-Freed by task 11339:
-  save_stack+0x43/0xd0 mm/kasan/kasan.c:448
-  set_track mm/kasan/kasan.c:460 [inline]
-  __kasan_slab_free+0x102/0x150 mm/kasan/kasan.c:521
-  kasan_slab_free+0xe/0x10 mm/kasan/kasan.c:528
-  __cache_free mm/slab.c:3498 [inline]
-  kfree+0xcf/0x230 mm/slab.c:3817
-  ax25_dev_device_down+0x164/0x2f0 net/ax25/ax25_dev.c:129
-  ax25_device_event+0x1f6/0x2e0 net/ax25/af_ax25.c:131
-  notifier_call_chain+0x17e/0x380 kernel/notifier.c:93
-  __raw_notifier_call_chain kernel/notifier.c:394 [inline]
-  raw_notifier_call_chain+0x2d/0x40 kernel/notifier.c:401
-  call_netdevice_notifiers_info+0x3f/0x90 net/core/dev.c:1733
-  call_netdevice_notifiers net/core/dev.c:1751 [inline]
-  __dev_notify_flags+0x29b/0x480 net/core/dev.c:7547
-  dev_change_flags+0xfd/0x150 net/core/dev.c:7581
-  dev_ifsioc+0x7d6/0xa80 net/core/dev_ioctl.c:237
-  dev_ioctl+0x1b5/0xcc0 net/core/dev_ioctl.c:488
-  sock_do_ioctl+0x1f6/0x420 net/socket.c:973
-  sock_ioctl+0x313/0x690 net/socket.c:1074
-  vfs_ioctl fs/ioctl.c:46 [inline]
-  file_ioctl fs/ioctl.c:509 [inline]
-  do_vfs_ioctl+0x1de/0x1790 fs/ioctl.c:696
-  ksys_ioctl+0xa9/0xd0 fs/ioctl.c:713
-  __do_sys_ioctl fs/ioctl.c:720 [inline]
-  __se_sys_ioctl fs/ioctl.c:718 [inline]
-  __x64_sys_ioctl+0x73/0xb0 fs/ioctl.c:718
-  do_syscall_64+0x1b9/0x820 arch/x86/entry/common.c:290
-  entry_SYSCALL_64_after_hwframe+0x49/0xbe
-
-The buggy address belongs to the object at ffff8881ccecc400
-  which belongs to the cache kmalloc-192 of size 192
-The buggy address is located 56 bytes inside of
-  192-byte region [ffff8881ccecc400, ffff8881ccecc4c0)
-The buggy address belongs to the page:
-page:ffffea000733b300 count:1 mapcount:0 mapping:ffff8881da800040 index:0x0
-flags: 0x2fffc0000000200(slab)
-raw: 02fffc0000000200 ffffea000733b1c8 ffffea000734aac8 ffff8881da800040
-raw: 0000000000000000 ffff8881ccecc000 0000000100000010 0000000000000000
-page dumped because: kasan: bad access detected
-
-Memory state around the buggy address:
-  ffff8881ccecc300: fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb
-  ffff8881ccecc380: fb fb fb fb fb fb fb fb fc fc fc fc fc fc fc fc
-> ffff8881ccecc400: fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb
-                                         ^
-  ffff8881ccecc480: fb fb fb fb fb fb fb fb fc fc fc fc fc fc fc fc
-  ffff8881ccecc500: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-==================================================================
+ff 0f 83 0b 01 fc ff c3 66 2e 0f 1f 84 00 00 00 00
+RSP: 002b:00007f6fed5b1cc8 EFLAGS: 00000246 ORIG_RAX: 000000000000002a
+RAX: ffffffffffffffda RBX: 00000000006ddc28 RCX: 00000000004482e9
+RDX: 0000000000000048 RSI: 0000000020000000 RDI: 0000000000000004
+RBP: 00000000006ddc20 R08: 00007ffd44256f4f R09: 0000000000000000
+R10: 0000000000000000 R11: 0000000000000246 R12: 00000000006ddc2c
+R13: 00007ffd44256f4f R14: 00007f6fed5b29c0 R15: 00000000006ddc20
 
 
 ---
