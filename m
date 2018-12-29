@@ -1,108 +1,103 @@
-From: Joerg Reuter <jreuter@yaina.de>
-Subject: Re: KASAN: use-after-free Read in ax25_fillin_cb
-Date: Sat, 29 Dec 2018 18:36:59 +0100
-Message-ID: <20181229173658.GA13856@yaina.de>
-References: <000000000000da8f65057e1ce530@google.com>
+From: syzbot <syzbot+6a29097222b4d3b8617c@syzkaller.appspotmail.com>
+Subject: KASAN: stack-out-of-bounds Write in ax25_getname
+Date: Sat, 29 Dec 2018 11:11:04 -0800
+Message-ID: <000000000000ed4120057e2df0c6@google.com>
 Mime-Version: 1.0
 Return-path: <linux-kernel-owner@vger.kernel.org>
-Content-Disposition: inline
-In-Reply-To: <000000000000da8f65057e1ce530@google.com>
 Sender: linux-kernel-owner@vger.kernel.org
 List-ID: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"
+Content-Type: text/plain; charset="us-ascii"; format="flowed"; delsp="yes"
 Content-Transfer-Encoding: 7bit
-To: netdev@vger.kernel.org
-Cc: davem@davemloft.net, linux-hams@vger.kernel.org, linux-kernel@vger.kernel.org, ralf@linux-mips.org, syzkaller-bugs@googlegroups.com
+To: davem@davemloft.net, jreuter@yaina.de, linux-hams@vger.kernel.org, linux-kernel@vger.kernel.org, netdev@vger.kernel.org, ralf@linux-mips.org, syzkaller-bugs@googlegroups.com
 
-On Fri, Dec 28, 2018 at 02:51:04PM -0800, syzbot wrote:
+Hello,
 
-> BUG: KASAN: use-after-free in ax25_fillin_cb_from_dev net/ax25/af_ax25.c:450
-> [inline]
-> BUG: KASAN: use-after-free in ax25_fillin_cb+0x6d5/0x810
-> net/ax25/af_ax25.c:477
-> Read of size 4 at addr ffff8881ccecc438 by task syz-executor5/11370
+syzbot found the following crash on:
 
-Not good... Why do things like this always pop up when I'm traveling?
+HEAD commit:    8fe28cb58bcb Linux 4.20
+git tree:       upstream
+console output: https://syzkaller.appspot.com/x/log.txt?x=1604d02d400000
+kernel config:  https://syzkaller.appspot.com/x/.config?x=7d581260bae0899a
+dashboard link: https://syzkaller.appspot.com/bug?extid=6a29097222b4d3b8617c
+compiler:       gcc (GCC) 8.0.1 20180413 (experimental)
+syz repro:      https://syzkaller.appspot.com/x/repro.syz?x=114a9ec3400000
 
->  ax25_fillin_cb_from_dev net/ax25/af_ax25.c:450 [inline]
->  ax25_fillin_cb+0x6d5/0x810 net/ax25/af_ax25.c:477
->  ax25_setsockopt+0x92a/0xa20 net/ax25/af_ax25.c:663
+IMPORTANT: if you fix the bug, please add the following tag to the commit:
+Reported-by: syzbot+6a29097222b4d3b8617c@syzkaller.appspotmail.com
 
-That's here:
-	// ...
-	case SO_BINDTODEVICE:
-		// ...
-		dev = dev_get_by_name(&init_net, devname);
-		if (!dev) {
-			res = -ENODEV;
-			break;
-		}
+IPv6: ADDRCONF(NETDEV_UP): veth1: link is not ready
+IPv6: ADDRCONF(NETDEV_CHANGE): veth1: link becomes ready
+IPv6: ADDRCONF(NETDEV_CHANGE): veth0: link becomes ready
+8021q: adding VLAN 0 to HW filter on device team0
+==================================================================
+BUG: KASAN: stack-out-of-bounds in memset include/linux/string.h:337  
+[inline]
+BUG: KASAN: stack-out-of-bounds in ax25_getname+0x58/0x790  
+net/ax25/af_ax25.c:1399
+Write of size 72 at addr ffff8881d8547b80 by task syz-executor0/8181
 
-		ax25->ax25_dev = ax25_dev_ax25dev(dev);
-		ax25_fillin_cb(ax25, ax25->ax25_dev);
-		dev_put(dev);
-		break;
+CPU: 0 PID: 8181 Comm: syz-executor0 Not tainted 4.20.0 #166
+Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS  
+Google 01/01/2011
+Call Trace:
+  __dump_stack lib/dump_stack.c:77 [inline]
+  dump_stack+0x1d3/0x2c6 lib/dump_stack.c:113
+  print_address_description.cold.8+0x9/0x1ff mm/kasan/report.c:256
+  kasan_report_error mm/kasan/report.c:354 [inline]
+  kasan_report.cold.9+0x242/0x309 mm/kasan/report.c:412
+  check_memory_region_inline mm/kasan/kasan.c:260 [inline]
+  check_memory_region+0x13e/0x1b0 mm/kasan/kasan.c:267
+  memset+0x23/0x40 mm/kasan/kasan.c:285
+  memset include/linux/string.h:337 [inline]
+  ax25_getname+0x58/0x790 net/ax25/af_ax25.c:1399
+  get_raw_socket drivers/vhost/net.c:1397 [inline]
+  get_socket drivers/vhost/net.c:1453 [inline]
+  vhost_net_set_backend drivers/vhost/net.c:1488 [inline]
+  vhost_net_ioctl+0x139c/0x1bf0 drivers/vhost/net.c:1679
+  vfs_ioctl fs/ioctl.c:46 [inline]
+  file_ioctl fs/ioctl.c:509 [inline]
+  do_vfs_ioctl+0x1de/0x1790 fs/ioctl.c:696
+  ksys_ioctl+0xa9/0xd0 fs/ioctl.c:713
+  __do_sys_ioctl fs/ioctl.c:720 [inline]
+  __se_sys_ioctl fs/ioctl.c:718 [inline]
+  __x64_sys_ioctl+0x73/0xb0 fs/ioctl.c:718
+  do_syscall_64+0x1b9/0x820 arch/x86/entry/common.c:290
+  entry_SYSCALL_64_after_hwframe+0x49/0xbe
+RIP: 0033:0x457759
+Code: fd b3 fb ff c3 66 2e 0f 1f 84 00 00 00 00 00 66 90 48 89 f8 48 89 f7  
+48 89 d6 48 89 ca 4d 89 c2 4d 89 c8 4c 8b 4c 24 08 0f 05 <48> 3d 01 f0 ff  
+ff 0f 83 cb b3 fb ff c3 66 2e 0f 1f 84 00 00 00 00
+RSP: 002b:00007f25cd3fbc78 EFLAGS: 00000246 ORIG_RAX: 0000000000000010
+RAX: ffffffffffffffda RBX: 0000000000000003 RCX: 0000000000457759
+RDX: 0000000020f1dff8 RSI: 000000004008af30 RDI: 0000000000000004
+RBP: 000000000073bf00 R08: 0000000000000000 R09: 0000000000000000
+R10: 0000000000000000 R11: 0000000000000246 R12: 00007f25cd3fc6d4
+R13: 00000000004c1dd4 R14: 00000000004d40e0 R15: 00000000ffffffff
 
-Thus, dev is not NULL, and neither is dev->ax25_ptr.
+The buggy address belongs to the page:
+page:ffffea00076151c0 count:0 mapcount:0 mapping:0000000000000000 index:0x0
+flags: 0x2fffc0000000000()
+raw: 02fffc0000000000 0000000000000000 ffffffff07610101 0000000000000000
+raw: 0000000000000000 0000000000000000 00000000ffffffff 0000000000000000
+page dumped because: kasan: bad access detected
 
-> Freed by task 11339:
->  [..]
->  ax25_dev_device_down+0x164/0x2f0 net/ax25/ax25_dev.c:129
->  ax25_device_event+0x1f6/0x2e0 net/ax25/af_ax25.c:131
->  notifier_call_chain+0x17e/0x380 kernel/notifier.c:93
+Memory state around the buggy address:
+  ffff8881d8547a80: 00 f2 f2 f2 f2 f2 f2 f2 00 f2 f2 f2 f2 f2 f2 f2
+  ffff8881d8547b00: 00 f2 f2 f2 f2 f2 f2 f2 04 f2 f2 f2 f2 f2 f2 f2
+> ffff8881d8547b80: 00 00 00 00 00 00 04 f2 00 00 00 00 00 00 00 00
+                                      ^
+  ffff8881d8547c00: 00 00 00 00 00 00 00 00 00 00 f1 f1 f1 f1 00 f2
+  ffff8881d8547c80: f2 f2 f2 f2 f2 f2 00 00 00 f2 f2 f2 f2 f2 00 00
+==================================================================
 
-ax25_dev_device_down() has this:
 
-       if ((s = ax25_dev_list) == ax25_dev) {
-		ax25_dev_list = s->next;
-		spin_unlock_bh(&ax25_dev_lock);
-		dev_put(dev);
-		kfree(ax25_dev);
-		return;
-	}
+---
+This bug is generated by a bot. It may contain errors.
+See https://goo.gl/tpsmEJ for more information about syzbot.
+syzbot engineers can be reached at syzkaller@googlegroups.com.
 
-	while (s != NULL && s->next != NULL) {
-		if (s->next == ax25_dev) {
-			s->next = ax25_dev->next;
-			spin_unlock_bh(&ax25_dev_lock);
-			dev_put(dev);
-			kfree(ax25_dev); // <==== here
-			return;
-		}
-
-		s = s->next;
-	}
-	spin_unlock_bh(&ax25_dev_lock);
-	dev->ax25_ptr = NULL;
-
-I hope I didn't write this... *shudders*
-
-Anyway, we are indeed missing to set dev->ax25_ptr to NULL if we're at
-the head or somewhere on the ax25_dev_list, probably because it will be
-cleaned up on removal of dev anyway. Unfortunately, in the meantime
-either someone could call setsockopt() on an existing socket, or the
-setsockopt() call got interrupted. From my POV the SO_BINDTODEVICE needs
-to get protected by this:
-
-		spin_lock_bh(&ax25_dev_lock);
-		ax25->ax25_dev = ax25_dev_ax25dev(dev);
-		if (ax25->ax25_dev != NULL) {
-			ax25_fillin_cb(ax25, ax25->ax25_dev);
-			dev_put(dev);
-		}
-		spin_unlock_bh(&ax25_dev_lock);
-
-and ax25_dev_device_down() needs to be rewritten and ensure
-that dev->ax25_ptr gets set to NULL after each kfree(ax25_dev)
-
-Unfortunately, I'm on a low bandwidth connection right now. I'd be
-grateful if someone could create a patch. This is likely not a high
-impact issue (unpriviliged users can't set up or tear down interfaces),
-still it may cause hard to find memory corruptions.
-
-	- Joerg (yes, I'm still alive)
-
--- 
-Joerg Reuter                                    http://yaina.de/jreuter
-And I make my way to where the warm scent of soil fills the evening air. 
-Everything is waiting quietly out there....                 (Anne Clark)
+syzbot will keep track of this bug report. See:
+https://goo.gl/tpsmEJ#bug-status-tracking for how to communicate with  
+syzbot.
+syzbot can test patches for this bug, for details see:
+https://goo.gl/tpsmEJ#testing-patches
