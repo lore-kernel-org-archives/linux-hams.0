@@ -1,10 +1,10 @@
-From: syzbot <syzbot+defa700d16f1bd1b9a05@syzkaller.appspotmail.com>
-Subject: KASAN: use-after-free Read in refcount_inc_not_zero_checked
-Date: Wed, 02 Jan 2019 02:35:02 -0800
-Message-ID: <000000000000d78798057e773261@google.com>
+From: syzbot <syzbot+500c69d1e21d970e461b@syzkaller.appspotmail.com>
+Subject: KASAN: use-after-free Read in lock_sock_nested
+Date: Wed, 02 Jan 2019 02:41:05 -0800
+Message-ID: <0000000000007a5aad057e7748c9@google.com>
 Mime-Version: 1.0
-Return-path: <linux-kernel-owner@vger.kernel.org>
-Sender: linux-kernel-owner@vger.kernel.org
+Return-path: <netdev-owner@vger.kernel.org>
+Sender: netdev-owner@vger.kernel.org
 List-ID: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"; format="flowed"; delsp="yes"
 Content-Transfer-Encoding: 7bit
@@ -14,27 +14,30 @@ Hello,
 
 syzbot found the following crash on:
 
-HEAD commit:    6a1d293238c1 Add linux-next specific files for 20181224
-git tree:       linux-next
-console output: https://syzkaller.appspot.com/x/log.txt?x=100ff080c00000
-kernel config:  https://syzkaller.appspot.com/x/.config?x=af046212050aa3ac
-dashboard link: https://syzkaller.appspot.com/bug?extid=defa700d16f1bd1b9a05
+HEAD commit:    e1ef035d272e Merge tag 'armsoc-defconfig' of git://git.ker..
+git tree:       upstream
+console output: https://syzkaller.appspot.com/x/log.txt?x=1674b0bb400000
+kernel config:  https://syzkaller.appspot.com/x/.config?x=9c6a26e22579190b
+dashboard link: https://syzkaller.appspot.com/bug?extid=500c69d1e21d970e461b
 compiler:       gcc (GCC) 9.0.0 20181231 (experimental)
 
 Unfortunately, I don't have any reproducer for this crash yet.
 
 IMPORTANT: if you fix the bug, please add the following tag to the commit:
-Reported-by: syzbot+defa700d16f1bd1b9a05@syzkaller.appspotmail.com
+Reported-by: syzbot+500c69d1e21d970e461b@syzkaller.appspotmail.com
 
+IPVS: ftp: loaded support on port[0] = 21
+IPVS: ftp: loaded support on port[0] = 21
+audit: type=1400 audit(1546374052.492:5134): avc:  denied  { map } for   
+pid=30025 comm="blkid" path="/sbin/blkid" dev="sda1" ino=16128  
+scontext=system_u:system_r:kernel_t:s0 tcontext=system_u:object_r:file_t:s0  
+tclass=file permissive=1
 ==================================================================
-BUG: KASAN: use-after-free in atomic_read  
-include/generated/atomic-instrumented.h:26 [inline]
-BUG: KASAN: use-after-free in refcount_inc_not_zero_checked+0x90/0x2c0  
-lib/refcount.c:120
-Read of size 4 at addr ffff8880576b03c0 by task syz-executor0/12972
+BUG: KASAN: use-after-free in perf_trace_lock_acquire+0x62d/0x7d0  
+include/trace/events/lock.h:13
+Read of size 8 at addr ffff88804fb90e78 by task syz-executor3/30043
 
-CPU: 1 PID: 12972 Comm: syz-executor0 Not tainted 4.20.0-rc7-next-20181224  
-#1
+CPU: 1 PID: 30043 Comm: syz-executor3 Not tainted 4.20.0+ #3
 Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS  
 Google 01/01/2011
 Call Trace:
@@ -42,37 +45,42 @@ Call Trace:
   dump_stack+0x1db/0x2d0 lib/dump_stack.c:113
   print_address_description.cold+0x7c/0x20d mm/kasan/report.c:187
   kasan_report.cold+0x1b/0x40 mm/kasan/report.c:317
-  check_memory_region_inline mm/kasan/generic.c:185 [inline]
-  check_memory_region+0x123/0x190 mm/kasan/generic.c:191
-  kasan_check_read+0x11/0x20 mm/kasan/common.c:100
-  atomic_read include/generated/atomic-instrumented.h:26 [inline]
-  refcount_inc_not_zero_checked+0x90/0x2c0 lib/refcount.c:120
-  refcount_inc_checked+0x17/0x70 lib/refcount.c:153
-  sock_hold include/net/sock.h:643 [inline]
-  nr_release+0x62/0x3c0 net/netrom/af_netrom.c:523
-  __sock_release+0xd3/0x250 net/socket.c:579
-  sock_close+0x1b/0x30 net/socket.c:1141
-  __fput+0x3cd/0xaa0 fs/file_table.c:279
-  ____fput+0x16/0x20 fs/file_table.c:312
-  task_work_run+0x1f4/0x2b0 kernel/task_work.c:113
-  tracehook_notify_resume include/linux/tracehook.h:188 [inline]
-  exit_to_usermode_loop+0x32a/0x3b0 arch/x86/entry/common.c:166
-  prepare_exit_to_usermode arch/x86/entry/common.c:197 [inline]
-  syscall_return_slowpath arch/x86/entry/common.c:268 [inline]
-  do_syscall_64+0x696/0x800 arch/x86/entry/common.c:293
+  __asan_report_load8_noabort+0x14/0x20 mm/kasan/generic_report.c:135
+  perf_trace_lock_acquire+0x62d/0x7d0 include/trace/events/lock.h:13
+  trace_lock_acquire include/trace/events/lock.h:13 [inline]
+  lock_acquire+0x371/0x570 kernel/locking/lockdep.c:3840
+audit: type=1400 audit(1546374052.492:5135): avc:  denied  { map } for   
+pid=30025 comm="blkid" path="/lib/x86_64-linux-gnu/libblkid.so.1.1.0"  
+dev="sda1" ino=2825 scontext=system_u:system_r:kernel_t:s0  
+tcontext=system_u:object_r:file_t:s0 tclass=file permissive=1
+  __raw_spin_lock_bh include/linux/spinlock_api_smp.h:135 [inline]
+  _raw_spin_lock_bh+0x33/0x50 kernel/locking/spinlock.c:168
+audit: type=1400 audit(1546374052.502:5136): avc:  denied  { map } for   
+pid=30024 comm="modprobe" path="/bin/kmod" dev="sda1" ino=1440  
+scontext=system_u:system_r:kernel_t:s0 tcontext=system_u:object_r:file_t:s0  
+tclass=file permissive=1
+  spin_lock_bh include/linux/spinlock.h:334 [inline]
+  lock_sock_nested+0x41/0x120 net/core/sock.c:2780
+  lock_sock include/net/sock.h:1502 [inline]
+  nr_connect+0xc77/0x1380 net/netrom/af_netrom.c:743
+  __sys_connect+0x357/0x490 net/socket.c:1664
+  __do_sys_connect net/socket.c:1675 [inline]
+  __se_sys_connect net/socket.c:1672 [inline]
+  __x64_sys_connect+0x73/0xb0 net/socket.c:1672
+  do_syscall_64+0x1a3/0x800 arch/x86/entry/common.c:290
   entry_SYSCALL_64_after_hwframe+0x49/0xbe
-RIP: 0033:0x411c91
-Code: 75 14 b8 03 00 00 00 0f 05 48 3d 01 f0 ff ff 0f 83 94 19 00 00 c3 48  
-83 ec 08 e8 0a fc ff ff 48 89 04 24 b8 03 00 00 00 0f 05 <48> 8b 3c 24 48  
-89 c2 e8 53 fc ff ff 48 89 d0 48 83 c4 08 48 3d 01
-RSP: 002b:00007fff4f364100 EFLAGS: 00000293 ORIG_RAX: 0000000000000003
-RAX: 0000000000000000 RBX: 0000000000000005 RCX: 0000000000411c91
-RDX: 0000000000000000 RSI: 000000000000123b RDI: 0000000000000004
-RBP: 0000000000000000 R08: 000000003436323b R09: 000000003436323f
-R10: 00007fff4f364030 R11: 0000000000000293 R12: 0000000000000000
-R13: 0000000000000001 R14: 00000000000014d3 R15: 0000000000000000
+RIP: 0033:0x457ec9
+Code: 6d b7 fb ff c3 66 2e 0f 1f 84 00 00 00 00 00 66 90 48 89 f8 48 89 f7  
+48 89 d6 48 89 ca 4d 89 c2 4d 89 c8 4c 8b 4c 24 08 0f 05 <48> 3d 01 f0 ff  
+ff 0f 83 3b b7 fb ff c3 66 2e 0f 1f 84 00 00 00 00
+RSP: 002b:00007f3f0371fc78 EFLAGS: 00000246 ORIG_RAX: 000000000000002a
+RAX: ffffffffffffffda RBX: 0000000000000003 RCX: 0000000000457ec9
+RDX: 0000000000000048 RSI: 0000000020000000 RDI: 0000000000000004
+RBP: 000000000073bfa0 R08: 0000000000000000 R09: 0000000000000000
+R10: 0000000000000000 R11: 0000000000000246 R12: 00007f3f037206d4
+R13: 00000000004be35a R14: 00000000004ce5e8 R15: 00000000ffffffff
 
-Allocated by task 12976:
+Allocated by task 30040:
   save_stack+0x45/0xd0 mm/kasan/common.c:73
   set_track mm/kasan/common.c:85 [inline]
   kasan_kmalloc mm/kasan/common.c:482 [inline]
@@ -82,6 +90,10 @@ Allocated by task 12976:
   kmalloc include/linux/slab.h:550 [inline]
   sk_prot_alloc+0x19c/0x2e0 net/core/sock.c:1477
   sk_alloc+0xd7/0x1690 net/core/sock.c:1531
+audit: type=1400 audit(1546374052.502:5137): avc:  denied  { map } for   
+pid=30024 comm="modprobe" path="/bin/kmod" dev="sda1" ino=1440  
+scontext=system_u:system_r:kernel_t:s0 tcontext=system_u:object_r:file_t:s0  
+tclass=file permissive=1
   nr_create+0xb9/0x5e0 net/netrom/af_netrom.c:436
   __sock_create+0x532/0x930 net/socket.c:1277
   sock_create net/socket.c:1317 [inline]
@@ -92,7 +104,7 @@ Allocated by task 12976:
   do_syscall_64+0x1a3/0x800 arch/x86/entry/common.c:290
   entry_SYSCALL_64_after_hwframe+0x49/0xbe
 
-Freed by task 12972:
+Freed by task 30035:
   save_stack+0x45/0xd0 mm/kasan/common.c:73
   set_track mm/kasan/common.c:85 [inline]
   __kasan_slab_free+0x102/0x150 mm/kasan/common.c:444
@@ -108,8 +120,8 @@ Freed by task 12972:
   nr_release+0x337/0x3c0 net/netrom/af_netrom.c:557
   __sock_release+0xd3/0x250 net/socket.c:579
   sock_close+0x1b/0x30 net/socket.c:1141
-  __fput+0x3cd/0xaa0 fs/file_table.c:279
-  ____fput+0x16/0x20 fs/file_table.c:312
+  __fput+0x3c5/0xb10 fs/file_table.c:278
+  ____fput+0x16/0x20 fs/file_table.c:309
   task_work_run+0x1f4/0x2b0 kernel/task_work.c:113
   tracehook_notify_resume include/linux/tracehook.h:188 [inline]
   exit_to_usermode_loop+0x32a/0x3b0 arch/x86/entry/common.c:166
@@ -118,26 +130,29 @@ Freed by task 12972:
   do_syscall_64+0x696/0x800 arch/x86/entry/common.c:293
   entry_SYSCALL_64_after_hwframe+0x49/0xbe
 
-The buggy address belongs to the object at ffff8880576b0340
+The buggy address belongs to the object at ffff88804fb90dc0
   which belongs to the cache kmalloc-2k of size 2048
-The buggy address is located 128 bytes inside of
-  2048-byte region [ffff8880576b0340, ffff8880576b0b40)
+The buggy address is located 184 bytes inside of
+  2048-byte region [ffff88804fb90dc0, ffff88804fb915c0)
+IPVS: ftp: loaded support on port[0] = 21
 The buggy address belongs to the page:
-page:ffffea00015dac00 count:1 mapcount:0 mapping:ffff88812c3f0c40 index:0x0  
+page:ffffea00013ee400 count:1 mapcount:0 mapping:ffff88812c3f0c40 index:0x0  
 compound_mapcount: 0
 flags: 0x1fffc0000010200(slab|head)
-raw: 01fffc0000010200 ffffea000237cc88 ffffea0002528808 ffff88812c3f0c40
-raw: 0000000000000000 ffff8880576b0340 0000000100000003 0000000000000000
+raw: 01fffc0000010200 ffffea00015f8b88 ffffea00025b1908 ffff88812c3f0c40
+raw: 0000000000000000 ffff88804fb90540 0000000100000003 0000000000000000
 page dumped because: kasan: bad access detected
 
 Memory state around the buggy address:
-  ffff8880576b0280: fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc
-  ffff8880576b0300: fc fc fc fc fc fc fc fc fb fb fb fb fb fb fb fb
-> ffff8880576b0380: fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb
-                                            ^
-  ffff8880576b0400: fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb
-  ffff8880576b0480: fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb
+  ffff88804fb90d00: 00 00 00 00 00 00 00 00 fc fc fc fc fc fc fc fc
+  ffff88804fb90d80: fc fc fc fc fc fc fc fc fb fb fb fb fb fb fb fb
+> ffff88804fb90e00: fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb
+                                                                 ^
+  ffff88804fb90e80: fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb
+  ffff88804fb90f00: fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb
 ==================================================================
+kobject: 'lo' (0000000050df09a4): kobject_add_internal: parent: 'net',  
+set: 'devices'
 
 
 ---
