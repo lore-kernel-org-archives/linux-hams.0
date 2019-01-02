@@ -1,165 +1,167 @@
-From: syzbot <syzbot+500c69d1e21d970e461b@syzkaller.appspotmail.com>
-Subject: KASAN: use-after-free Read in lock_sock_nested
-Date: Wed, 02 Jan 2019 02:41:05 -0800
-Message-ID: <0000000000007a5aad057e7748c9@google.com>
+From: Dmitry Vyukov <dvyukov@google.com>
+Subject: Re: Fwd: net/rose: GPF in rose_route_frame
+Date: Wed, 2 Jan 2019 12:45:30 +0100
+Message-ID: <CACT4Y+a3gLdXa_cQezTo5xJjPjk3XLbRtW-JcNH6-jcoF1+pFA@mail.gmail.com>
+References: <f9a2ac59-7580-ff80-9da9-c2659c8d2a92@trinnet.net> <27a9dfee-c589-18d1-1b65-a14c8c366edb@free.fr>
 Mime-Version: 1.0
 Return-path: <netdev-owner@vger.kernel.org>
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=7WQ52uURSnY6f4c1wQ0H+EmS0YQTagogeXjXtMbJ5Uo=;
+        b=NGrBaYUkgfQT+W/Fcw5vSRLqw0H/kic4MPUZhtdA6gO0I6tf2RO/gNu2VTI7arLxkq
+         0nxNAT18+tjyQv/4Jn5FV9glkor7rnHSu39sfUkFe9YW4c9M76u2hV0Z6mceYXC7QaOG
+         /t2Y0OGocrHBj1cfiyReasUfF1xE/fxXIzUXxDTchUJqO8vebxsg/k5SCwVzebL5G70P
+         h1K9VPtgaVf05ZMiG/9pXbRYs9RaC892gCMuBZC3eDLjwQLFdtJPfPK58EBut2wjdcu4
+         gupPmW3Rjzw4YpusQrwTz+N2+uYAzGM40rpc+RKHeviL/8zXWcEhrOzXWdyBHQGFjbm+
+         jmsQ==
+In-Reply-To: <27a9dfee-c589-18d1-1b65-a14c8c366edb@free.fr>
 Sender: netdev-owner@vger.kernel.org
 List-ID: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"; format="flowed"; delsp="yes"
+Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
-To: davem@davemloft.net, linux-hams@vger.kernel.org, linux-kernel@vger.kernel.org, netdev@vger.kernel.org, ralf@linux-mips.org, syzkaller-bugs@googlegroups.com
+To: Bernard Pidoux <f6bvp@free.fr>
+Cc: David Ranch <dranch@trinnet.net>, ralf@linux-mips.org, David Miller <davem@davemloft.net>, linux-hams@vger.kernel.org, netdev <netdev@vger.kernel.org>, LKML <linux-kernel@vger.kernel.org>, "Eric W. Biederman" <ebiederm@xmission.com>, syzkaller <syzkaller@googlegroups.com>
 
-Hello,
+On Tue, Jan 1, 2019 at 1:53 PM Bernard Pidoux <f6bvp@free.fr> wrote:
+>
+> Hi Dmitry,
+>
+> We noticed your message on Linux kernel, netdev and ham lists.
+>
+> Thank you for pointing  GPF due to a null pointer bug in rose module.
+>
+> Although I committed a patch about this AX25 NULL pointer in rose_route_frame, it has not been accepted yet and will probably not unless we found a simple way to reproduce the GPF. This is why we are interested in your description.
+>
+> I wonder how you could get the kernel GPF ?
+> Trying to reproduce your test I first needed to modprobe rose module before creating rose device with :
+>
+> # ip link set dev rose0 address 11:22:33:44:55
+> # ip link set dev rose0 up
+>
+> However nothing happened next !
+>
+> Did you set an AX.25 port in /etc/ax25/axports ?
+> Could you describe more explicitely what application you are running to trigger the GPF ?
+> Did you use rose_call or something else ?
+>
+> I am looking for a simpler way to trigger the bug than my usual ROSE configuration that is rather complicated in order to let maintainers be convinced as they just want to reproduce the bug conditions and watch by themselves.
+>
+> Regards,
+>
+> Bernard
 
-syzbot found the following crash on:
++mailing lists again, let's not lose information
 
-HEAD commit:    e1ef035d272e Merge tag 'armsoc-defconfig' of git://git.ker..
-git tree:       upstream
-console output: https://syzkaller.appspot.com/x/log.txt?x=1674b0bb400000
-kernel config:  https://syzkaller.appspot.com/x/.config?x=9c6a26e22579190b
-dashboard link: https://syzkaller.appspot.com/bug?extid=500c69d1e21d970e461b
-compiler:       gcc (GCC) 9.0.0 20181231 (experimental)
+Hi Bernard,
 
-Unfortunately, I don't have any reproducer for this crash yet.
+I just did what I described (2 ip invocations) on the specified kernel/config.
 
-IMPORTANT: if you fix the bug, please add the following tag to the commit:
-Reported-by: syzbot+500c69d1e21d970e461b@syzkaller.appspotmail.com
+Have you tried the kernel config that I provided? Using the same
+kernel config looks like the lowest hanging fruit when something does
+not reproduce. The fact that you need to modprobe suggests that you
+used some different config.
 
-IPVS: ftp: loaded support on port[0] = 21
-IPVS: ftp: loaded support on port[0] = 21
-audit: type=1400 audit(1546374052.492:5134): avc:  denied  { map } for   
-pid=30025 comm="blkid" path="/sbin/blkid" dev="sda1" ino=16128  
-scontext=system_u:system_r:kernel_t:s0 tcontext=system_u:object_r:file_t:s0  
-tclass=file permissive=1
-==================================================================
-BUG: KASAN: use-after-free in perf_trace_lock_acquire+0x62d/0x7d0  
-include/trace/events/lock.h:13
-Read of size 8 at addr ffff88804fb90e78 by task syz-executor3/30043
+You can download the image I am using here:
+https://github.com/google/syzkaller/blob/master/docs/syzbot.md#crash-does-not-reproduce
 
-CPU: 1 PID: 30043 Comm: syz-executor3 Not tainted 4.20.0+ #3
-Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS  
-Google 01/01/2011
-Call Trace:
-  __dump_stack lib/dump_stack.c:77 [inline]
-  dump_stack+0x1db/0x2d0 lib/dump_stack.c:113
-  print_address_description.cold+0x7c/0x20d mm/kasan/report.c:187
-  kasan_report.cold+0x1b/0x40 mm/kasan/report.c:317
-  __asan_report_load8_noabort+0x14/0x20 mm/kasan/generic_report.c:135
-  perf_trace_lock_acquire+0x62d/0x7d0 include/trace/events/lock.h:13
-  trace_lock_acquire include/trace/events/lock.h:13 [inline]
-  lock_acquire+0x371/0x570 kernel/locking/lockdep.c:3840
-audit: type=1400 audit(1546374052.492:5135): avc:  denied  { map } for   
-pid=30025 comm="blkid" path="/lib/x86_64-linux-gnu/libblkid.so.1.1.0"  
-dev="sda1" ino=2825 scontext=system_u:system_r:kernel_t:s0  
-tcontext=system_u:object_r:file_t:s0 tclass=file permissive=1
-  __raw_spin_lock_bh include/linux/spinlock_api_smp.h:135 [inline]
-  _raw_spin_lock_bh+0x33/0x50 kernel/locking/spinlock.c:168
-audit: type=1400 audit(1546374052.502:5136): avc:  denied  { map } for   
-pid=30024 comm="modprobe" path="/bin/kmod" dev="sda1" ino=1440  
-scontext=system_u:system_r:kernel_t:s0 tcontext=system_u:object_r:file_t:s0  
-tclass=file permissive=1
-  spin_lock_bh include/linux/spinlock.h:334 [inline]
-  lock_sock_nested+0x41/0x120 net/core/sock.c:2780
-  lock_sock include/net/sock.h:1502 [inline]
-  nr_connect+0xc77/0x1380 net/netrom/af_netrom.c:743
-  __sys_connect+0x357/0x490 net/socket.c:1664
-  __do_sys_connect net/socket.c:1675 [inline]
-  __se_sys_connect net/socket.c:1672 [inline]
-  __x64_sys_connect+0x73/0xb0 net/socket.c:1672
-  do_syscall_64+0x1a3/0x800 arch/x86/entry/common.c:290
-  entry_SYSCALL_64_after_hwframe+0x49/0xbe
-RIP: 0033:0x457ec9
-Code: 6d b7 fb ff c3 66 2e 0f 1f 84 00 00 00 00 00 66 90 48 89 f8 48 89 f7  
-48 89 d6 48 89 ca 4d 89 c2 4d 89 c8 4c 8b 4c 24 08 0f 05 <48> 3d 01 f0 ff  
-ff 0f 83 3b b7 fb ff c3 66 2e 0f 1f 84 00 00 00 00
-RSP: 002b:00007f3f0371fc78 EFLAGS: 00000246 ORIG_RAX: 000000000000002a
-RAX: ffffffffffffffda RBX: 0000000000000003 RCX: 0000000000457ec9
-RDX: 0000000000000048 RSI: 0000000020000000 RDI: 0000000000000004
-RBP: 000000000073bfa0 R08: 0000000000000000 R09: 0000000000000000
-R10: 0000000000000000 R11: 0000000000000246 R12: 00007f3f037206d4
-R13: 00000000004be35a R14: 00000000004ce5e8 R15: 00000000ffffffff
+I did not touch /etc/ax25/axports, it's empty in my image.
 
-Allocated by task 30040:
-  save_stack+0x45/0xd0 mm/kasan/common.c:73
-  set_track mm/kasan/common.c:85 [inline]
-  kasan_kmalloc mm/kasan/common.c:482 [inline]
-  kasan_kmalloc+0xcf/0xe0 mm/kasan/common.c:455
-  __do_kmalloc mm/slab.c:3709 [inline]
-  __kmalloc+0x15c/0x740 mm/slab.c:3718
-  kmalloc include/linux/slab.h:550 [inline]
-  sk_prot_alloc+0x19c/0x2e0 net/core/sock.c:1477
-  sk_alloc+0xd7/0x1690 net/core/sock.c:1531
-audit: type=1400 audit(1546374052.502:5137): avc:  denied  { map } for   
-pid=30024 comm="modprobe" path="/bin/kmod" dev="sda1" ino=1440  
-scontext=system_u:system_r:kernel_t:s0 tcontext=system_u:object_r:file_t:s0  
-tclass=file permissive=1
-  nr_create+0xb9/0x5e0 net/netrom/af_netrom.c:436
-  __sock_create+0x532/0x930 net/socket.c:1277
-  sock_create net/socket.c:1317 [inline]
-  __sys_socket+0x106/0x260 net/socket.c:1347
-  __do_sys_socket net/socket.c:1356 [inline]
-  __se_sys_socket net/socket.c:1354 [inline]
-  __x64_sys_socket+0x73/0xb0 net/socket.c:1354
-  do_syscall_64+0x1a3/0x800 arch/x86/entry/common.c:290
-  entry_SYSCALL_64_after_hwframe+0x49/0xbe
-
-Freed by task 30035:
-  save_stack+0x45/0xd0 mm/kasan/common.c:73
-  set_track mm/kasan/common.c:85 [inline]
-  __kasan_slab_free+0x102/0x150 mm/kasan/common.c:444
-  kasan_slab_free+0xe/0x10 mm/kasan/common.c:452
-  __cache_free mm/slab.c:3485 [inline]
-  kfree+0xcf/0x230 mm/slab.c:3804
-  sk_prot_free net/core/sock.c:1514 [inline]
-  __sk_destruct+0x76d/0xa60 net/core/sock.c:1596
-  sk_destruct+0x7b/0x90 net/core/sock.c:1604
-  __sk_free+0xce/0x300 net/core/sock.c:1615
-  sk_free+0x42/0x50 net/core/sock.c:1626
-  sock_put include/net/sock.h:1703 [inline]
-  nr_release+0x337/0x3c0 net/netrom/af_netrom.c:557
-  __sock_release+0xd3/0x250 net/socket.c:579
-  sock_close+0x1b/0x30 net/socket.c:1141
-  __fput+0x3c5/0xb10 fs/file_table.c:278
-  ____fput+0x16/0x20 fs/file_table.c:309
-  task_work_run+0x1f4/0x2b0 kernel/task_work.c:113
-  tracehook_notify_resume include/linux/tracehook.h:188 [inline]
-  exit_to_usermode_loop+0x32a/0x3b0 arch/x86/entry/common.c:166
-  prepare_exit_to_usermode arch/x86/entry/common.c:197 [inline]
-  syscall_return_slowpath arch/x86/entry/common.c:268 [inline]
-  do_syscall_64+0x696/0x800 arch/x86/entry/common.c:293
-  entry_SYSCALL_64_after_hwframe+0x49/0xbe
-
-The buggy address belongs to the object at ffff88804fb90dc0
-  which belongs to the cache kmalloc-2k of size 2048
-The buggy address is located 184 bytes inside of
-  2048-byte region [ffff88804fb90dc0, ffff88804fb915c0)
-IPVS: ftp: loaded support on port[0] = 21
-The buggy address belongs to the page:
-page:ffffea00013ee400 count:1 mapcount:0 mapping:ffff88812c3f0c40 index:0x0  
-compound_mapcount: 0
-flags: 0x1fffc0000010200(slab|head)
-raw: 01fffc0000010200 ffffea00015f8b88 ffffea00025b1908 ffff88812c3f0c40
-raw: 0000000000000000 ffff88804fb90540 0000000100000003 0000000000000000
-page dumped because: kasan: bad access detected
-
-Memory state around the buggy address:
-  ffff88804fb90d00: 00 00 00 00 00 00 00 00 fc fc fc fc fc fc fc fc
-  ffff88804fb90d80: fc fc fc fc fc fc fc fc fb fb fb fb fb fb fb fb
-> ffff88804fb90e00: fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb
-                                                                 ^
-  ffff88804fb90e80: fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb
-  ffff88804fb90f00: fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb
-==================================================================
-kobject: 'lo' (0000000050df09a4): kobject_add_internal: parent: 'net',  
-set: 'devices'
+The application I am using is literally the ip command :)
+I don't know what is rose and how it should be used, I've just looked
+at possibility of covering rose testing with syzkaller
+(https://github.com/google/syzkaller) at least in the most basic form.
 
 
----
-This bug is generated by a bot. It may contain errors.
-See https://goo.gl/tpsmEJ for more information about syzbot.
-syzbot engineers can be reached at syzkaller@googlegroups.com.
 
-syzbot will keep track of this bug report. See:
-https://goo.gl/tpsmEJ#bug-status-tracking for how to communicate with  
-syzbot.
+
+
+>  --------
+> Sujet : Fwd: net/rose: GPF in rose_route_frame
+> Date : Mon, 24 Dec 2018 19:46:12 -0800
+> De : David Ranch <dranch@trinnet.net>
+> Pour : Bernard, f6bvp <f6bvp@free.fr>
+>
+>
+> Hey Bernard,
+>
+> I assume you saw this one.  That address should be an IP address right?   What this person specified is neither a legal IP (not in octal) nor legal MAC (needs six fields).
+>
+> --David
+>
+>
+> -------- Forwarded Message --------
+> Subject: net/rose: GPF in rose_route_frame
+> Date: Mon, 24 Dec 2018 11:25:22 +0100
+> From: Dmitry Vyukov <dvyukov@google.com>
+> To: ralf@linux-mips.org, David Miller <davem@davemloft.net>, linux-hams@vger.kernel.org, netdev <netdev@vger.kernel.org>, LKML <linux-kernel@vger.kernel.org>, Eric W. Biederman <ebiederm@xmission.com>
+> CC: syzkaller <syzkaller@googlegroups.com>
+>
+>
+> Hi,
+>
+> Rose device crashes kernel after several seconds after up'ping. I am doing just:
+>
+> # ip link set dev rose0 address 11:22:33:44:55
+> # ip link set dev rose0 up
+>
+> Then after ~15 seconds or so:
+>
+> kasan: CONFIG_KASAN_INLINE enabled
+> kasan: GPF could be caused by NULL-ptr deref or user memory access
+> general protection fault: 0000 [#1] PREEMPT SMP KASAN
+> CPU: 3 PID: 2747 Comm: aoe_tx0 Not tainted 4.20.0-rc7-next-20181221 #1
+> Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.10.2-1 04/01/2014
+> RIP: 0010:ax25cmp+0x3e/0x180 net/ax25/ax25_addr.c:122
+> Code: f6 41 55 49 89 fd 41 54 49 89 f4 53 48 83 ec 10 48 89 7d d0 48
+> 89 75 c8 e8 cf 73 6d fa 4c 89 e8 4c 89 ea 48 c1 e8 03 83 e2 07 <42> 0f
+> b6 04 38 38 d0 7f 08 84 c0 0f 85 23 01 00 00 4c 89 e0 4c 89
+> RSP: 0018:ffff888069ec73c8 EFLAGS: 00010202
+> RAX: 0000000000000002 RBX: ffff888064ce8080 RCX: 0000000000000001
+> RDX: 0000000000000007 RSI: ffffffff8711cd61 RDI: 0000000000000017
+> RBP: ffff888069ec7400 R08: ffffed100d3d8e70 R09: ffffed100d3d8e6f
+> R10: ffffed100d3d8e6f R11: 0000000000000003 R12: ffff888064ce8088
+> R13: 0000000000000017 R14: 0000000000000000 R15: dffffc0000000000
+> FS:  0000000000000000(0000) GS:ffff88806c780000(0000) knlGS:0000000000000000
+> CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+> CR2: 00007f2a68767000 CR3: 0000000068f90003 CR4: 00000000001606e0
+> Call Trace:
+>  rose_route_frame+0x2d0/0x19a0 net/rose/rose_route.c:885
+>  rose_xmit+0x88/0x180 net/rose/rose_dev.c:110
+>  __netdev_start_xmit include/linux/netdevice.h:4382 [inline]
+>  netdev_start_xmit include/linux/netdevice.h:4391 [inline]
+>  xmit_one net/core/dev.c:3278 [inline]
+>  dev_hard_start_xmit+0x286/0xc80 net/core/dev.c:3294
+>  __dev_queue_xmit+0x2efb/0x3940 net/core/dev.c:3864
+>  dev_queue_xmit+0x17/0x20 net/core/dev.c:3897
+>  tx+0x77/0xd0 drivers/block/aoe/aoenet.c:63
+>  kthread+0x296/0x4a0 drivers/block/aoe/aoecmd.c:1239
+>  kthread+0x35a/0x440 kernel/kthread.c:246
+>  ret_from_fork+0x3a/0x50 arch/x86/entry/entry_64.S:352
+> Modules linked in:
+> ---[ end trace 1e8c52d44c421a9f ]---
+> RIP: 0010:ax25cmp+0x3e/0x180 net/ax25/ax25_addr.c:122
+> Code: f6 41 55 49 89 fd 41 54 49 89 f4 53 48 83 ec 10 48 89 7d d0 48
+> 89 75 c8 e8 cf 73 6d fa 4c 89 e8 4c 89 ea 48 c1 e8 03 83 e2 07 <42> 0f
+> b6 04 38 38 d0 7f 08 84 c0 0f 85 23 01 00 00 4c 89 e0 4c 89
+> RSP: 0018:ffff888069ec73c8 EFLAGS: 00010202
+> RAX: 0000000000000002 RBX: ffff888064ce8080 RCX: 0000000000000001
+> RDX: 0000000000000007 RSI: ffffffff8711cd61 RDI: 0000000000000017
+> RBP: ffff888069ec7400 R08: ffffed100d3d8e70 R09: ffffed100d3d8e6f
+> R10: ffffed100d3d8e6f R11: 0000000000000003 R12: ffff888064ce8088
+> R13: 0000000000000017 R14: 0000000000000000 R15: dffffc0000000000
+> FS:  0000000000000000(0000) GS:ffff88806c780000(0000) knlGS:0000000000000000
+> CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+> CR2: 00007f2a68767000 CR3: 0000000068f90003 CR4: 00000000001606e0
+>
+>
+> Kernel is on today's linux-next head:
+>
+> commit 340ae71f9dd421227a58c14a909b63033745dca4 (HEAD, tag:
+> next-20181221, next/master)
+> Date:   Fri Dec 21 19:27:46 2018 +1100
+>     Add linux-next specific files for 20181221
+>
+> Kernel config:
+> https://gist.githubusercontent.com/dvyukov/fccf387306df8a1042949da46028302a/raw/f817219bdb8d5ef63fdd56f17e0cc13e620e1978/gistfile1.txt
