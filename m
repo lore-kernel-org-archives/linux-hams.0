@@ -1,146 +1,153 @@
-From: syzbot <syzbot+e0b81535a27b8be39502@syzkaller.appspotmail.com>
-Subject: general protection fault in ax25_send_frame
-Date: Mon, 31 Dec 2018 14:22:03 -0800
-Message-ID: <0000000000009ea37c057e58d787@google.com>
+From: syzbot <syzbot+72f911fa716e011378ae@syzkaller.appspotmail.com>
+Subject: KASAN: use-after-free Read in nr_rx_frame
+Date: Wed, 02 Jan 2019 02:21:02 -0800
+Message-ID: <000000000000c8d239057e77004f@google.com>
 Mime-Version: 1.0
-Return-path: <netdev-owner@vger.kernel.org>
-Sender: netdev-owner@vger.kernel.org
+Return-path: <linux-kernel-owner@vger.kernel.org>
+Sender: linux-kernel-owner@vger.kernel.org
 List-ID: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"; format="flowed"; delsp="yes"
 Content-Transfer-Encoding: 7bit
-To: davem@davemloft.net, jreuter@yaina.de, linux-hams@vger.kernel.org, linux-kernel@vger.kernel.org, netdev@vger.kernel.org, ralf@linux-mips.org, syzkaller-bugs@googlegroups.com
+To: davem@davemloft.net, linux-hams@vger.kernel.org, linux-kernel@vger.kernel.org, netdev@vger.kernel.org, ralf@linux-mips.org, syzkaller-bugs@googlegroups.com
 
 Hello,
 
 syzbot found the following crash on:
 
-HEAD commit:    90cadbbf341d Merge git://git.kernel.org/pub/scm/linux/kern..
-git tree:       net-next
-console output: https://syzkaller.appspot.com/x/log.txt?x=17127500c00000
-kernel config:  https://syzkaller.appspot.com/x/.config?x=f9a32c9a4aef9af7
-dashboard link: https://syzkaller.appspot.com/bug?extid=e0b81535a27b8be39502
-compiler:       gcc (GCC) 8.0.1 20180413 (experimental)
-
-Unfortunately, I don't have any reproducer for this crash yet.
+HEAD commit:    e1ef035d272e Merge tag 'armsoc-defconfig' of git://git.ker..
+git tree:       upstream
+console output: https://syzkaller.appspot.com/x/log.txt?x=166315fd400000
+kernel config:  https://syzkaller.appspot.com/x/.config?x=9c6a26e22579190b
+dashboard link: https://syzkaller.appspot.com/bug?extid=72f911fa716e011378ae
+compiler:       gcc (GCC) 9.0.0 20181231 (experimental)
+syz repro:      https://syzkaller.appspot.com/x/repro.syz?x=172848bb400000
 
 IMPORTANT: if you fix the bug, please add the following tag to the commit:
-Reported-by: syzbot+e0b81535a27b8be39502@syzkaller.appspotmail.com
+Reported-by: syzbot+72f911fa716e011378ae@syzkaller.appspotmail.com
 
-kasan: CONFIG_KASAN_INLINE enabled
-kasan: GPF could be caused by NULL-ptr deref or user memory access
-kobject: 'loop3' (00000000a0e7275a): kobject_uevent_env
-general protection fault: 0000 [#1] PREEMPT SMP KASAN
-CPU: 1 PID: 18625 Comm: blkid Not tainted 4.20.0-rc7+ #361
+IPv6: ADDRCONF(NETDEV_UP): vxcan1: link is not ready
+8021q: adding VLAN 0 to HW filter on device batadv0
+8021q: adding VLAN 0 to HW filter on device batadv0
+==================================================================
+BUG: KASAN: use-after-free in sk_acceptq_added include/net/sock.h:855  
+[inline]
+BUG: KASAN: use-after-free in nr_rx_frame+0x1c5f/0x1d50  
+net/netrom/af_netrom.c:1012
+Read of size 4 at addr ffff8880969d07e8 by task swapper/0/0
+
+CPU: 0 PID: 0 Comm: swapper/0 Not tainted 4.20.0+ #3
 Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS  
 Google 01/01/2011
-RIP: 0010:ax25_send_frame+0xe2/0x570 net/ax25/ax25_out.c:59
-kobject: 'loop3' (00000000a0e7275a): fill_kobj_path: path  
-= '/devices/virtual/block/loop3'
-Code: 34 91 00 00 48 85 c0 0f 85 c2 03 00 00 e8 d6 bd 7e fa 48 8d bb 38 03  
-00 00 48 b8 00 00 00 00 00 fc ff df 48 89 fa 48 c1 ea 03 <80> 3c 02 00 0f  
-85 ea 03 00 00 48 8b 83 38 03 00 00 48 85 c0 48 89
-RSP: 0018:ffff8880ae707518 EFLAGS: 00010202
-RAX: dffffc0000000000 RBX: 0000000000000000 RCX: 1ffff1100a4e3951
-RDX: 0000000000000067 RSI: ffffffff86ff9d4a RDI: 0000000000000338
-RBP: ffff8880ae707558 R08: ffff88805271ca88 R09: 0000000000000002
-R10: 0000000000000000 R11: ffff88805271c1c0 R12: ffff88809aec1a88
-R13: ffffffff8be98280 R14: 0000000000000104 R15: 0000000000000000
-FS:  0000000000000000(0000) GS:ffff8880ae700000(0000) knlGS:0000000000000000
-kobject: 'loop2' (0000000016318dbe): kobject_uevent_env
-CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-CR2: 00007fff26e69ed8 CR3: 0000000097648000 CR4: 00000000001406e0
-DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
-DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
 Call Trace:
   <IRQ>
-  rose_send_frame+0xda/0x280 net/rose/rose_link.c:109
-  rose_transmit_clear_request+0x1de/0x2a0 net/rose/rose_link.c:258
-  rose_rx_call_request+0x4ea/0x1c90 net/rose/af_rose.c:999
-  rose_loopback_timer+0x26a/0x3f0 net/rose/rose_loopback.c:100
-  call_timer_fn+0x272/0x920 kernel/time/timer.c:1326
-kobject: 'loop2' (0000000016318dbe): fill_kobj_path: path  
-= '/devices/virtual/block/loop2'
-  expire_timers kernel/time/timer.c:1363 [inline]
-  __run_timers+0x7e5/0xc70 kernel/time/timer.c:1682
-kobject: 'loop5' (00000000d24778f2): kobject_uevent_env
-kobject: 'loop5' (00000000d24778f2): fill_kobj_path: path  
-= '/devices/virtual/block/loop5'
-  run_timer_softirq+0x52/0xb0 kernel/time/timer.c:1695
-  __do_softirq+0x30c/0xb2e kernel/softirq.c:292
-kobject: 'loop3' (00000000a0e7275a): kobject_uevent_env
+  __dump_stack lib/dump_stack.c:77 [inline]
+  dump_stack+0x1db/0x2d0 lib/dump_stack.c:113
+  print_address_description.cold+0x7c/0x20d mm/kasan/report.c:187
+  kasan_report.cold+0x1b/0x40 mm/kasan/report.c:317
+  __asan_report_load4_noabort+0x14/0x20 mm/kasan/generic_report.c:134
+  sk_acceptq_added include/net/sock.h:855 [inline]
+  nr_rx_frame+0x1c5f/0x1d50 net/netrom/af_netrom.c:1012
+  nr_loopback_timer+0x7b/0x170 net/netrom/nr_loopback.c:62
+  call_timer_fn+0x254/0x900 kernel/time/timer.c:1325
+  expire_timers kernel/time/timer.c:1362 [inline]
+  __run_timers+0x6fc/0xd50 kernel/time/timer.c:1681
+  run_timer_softirq+0x52/0xb0 kernel/time/timer.c:1694
+  __do_softirq+0x30b/0xb11 kernel/softirq.c:292
   invoke_softirq kernel/softirq.c:373 [inline]
-  irq_exit+0x17f/0x1c0 kernel/softirq.c:413
+  irq_exit+0x180/0x1d0 kernel/softirq.c:413
   exiting_irq arch/x86/include/asm/apic.h:536 [inline]
-  smp_apic_timer_interrupt+0x1cb/0x760 arch/x86/kernel/apic/apic.c:1061
-kobject: 'loop3' (00000000a0e7275a): fill_kobj_path: path  
-= '/devices/virtual/block/loop3'
+  smp_apic_timer_interrupt+0x1b7/0x760 arch/x86/kernel/apic/apic.c:1062
   apic_timer_interrupt+0xf/0x20 arch/x86/entry/entry_64.S:807
   </IRQ>
-RIP: 0010:write_comp_data+0x1/0x70 kernel/kcov.c:116
-Code: e5 90 43 00 e9 a6 fc ff ff 4c 89 f7 e8 38 90 43 00 e9 6f fc ff ff e8  
-9e b7 c9 ff 90 90 90 90 90 90 90 90 90 90 90 90 90 90 55 <48> 89 e5 65 4c  
-8b 04 25 40 ee 01 00 65 8b 05 0c 93 83 7e a9 00 01
-RSP: 0018:ffff888090d1f088 EFLAGS: 00000246 ORIG_RAX: ffffffffffffff13
-kobject: 'loop2' (0000000016318dbe): kobject_uevent_env
-RAX: 0000000000000000 RBX: 00007f538b24f000 RCX: ffffffff81b177ab
-RDX: 0000000000000000 RSI: 0000000000000000 RDI: 0000000000000005
-RBP: ffff888090d1f098 R08: ffff88805271c1c0 R09: fffff94000052236
-R10: fffff94000052236 R11: ffffea00002911b3 R12: 0000000000000025
-R13: ffffea00002911c8 R14: dffffc0000000000 R15: ffffea00002911c0
-kobject: 'loop2' (0000000016318dbe): fill_kobj_path: path  
-= '/devices/virtual/block/loop2'
-  zap_pte_range mm/memory.c:1082 [inline]
-  zap_pmd_range mm/memory.c:1193 [inline]
-  zap_pud_range mm/memory.c:1222 [inline]
-  zap_p4d_range mm/memory.c:1243 [inline]
-  unmap_page_range+0xc4b/0x25b0 mm/memory.c:1264
-kobject: 'loop0' (00000000f27d2df2): kobject_uevent_env
-kobject: 'loop0' (00000000f27d2df2): fill_kobj_path: path  
-= '/devices/virtual/block/loop0'
-  unmap_single_vma+0x19b/0x310 mm/memory.c:1309
-  unmap_vmas+0x125/0x200 mm/memory.c:1339
-  exit_mmap+0x2be/0x590 mm/mmap.c:3145
-kobject: 'loop3' (00000000a0e7275a): kobject_uevent_env
-  __mmput kernel/fork.c:1045 [inline]
-  mmput+0x247/0x610 kernel/fork.c:1066
-kobject: 'loop3' (00000000a0e7275a): fill_kobj_path: path  
-= '/devices/virtual/block/loop3'
-  exit_mm kernel/exit.c:545 [inline]
-  do_exit+0xe74/0x26d0 kernel/exit.c:854
-kobject: 'loop5' (00000000d24778f2): kobject_uevent_env
-kobject: 'loop5' (00000000d24778f2): fill_kobj_path: path  
-= '/devices/virtual/block/loop5'
-  do_group_exit+0x177/0x440 kernel/exit.c:970
-  __do_sys_exit_group kernel/exit.c:981 [inline]
-  __se_sys_exit_group kernel/exit.c:979 [inline]
-  __x64_sys_exit_group+0x3e/0x50 kernel/exit.c:979
-  do_syscall_64+0x1b9/0x820 arch/x86/entry/common.c:290
+RIP: 0010:native_safe_halt+0x2/0x10 arch/x86/include/asm/irqflags.h:58
+Code: ff ff ff 48 89 c7 48 89 45 d8 e8 59 49 d3 f9 48 8b 45 d8 e9 ce fe ff  
+ff 48 89 df e8 48 49 d3 f9 eb 82 90 90 90 90 90 90 fb f4 <c3> 0f 1f 00 66  
+2e 0f 1f 84 00 00 00 00 00 f4 c3 90 90 90 90 90 90
+RSP: 0018:ffffffff89807c60 EFLAGS: 00000286 ORIG_RAX: ffffffffffffff13
+RAX: 1ffffffff13249e9 RBX: 1ffffffff1300f8f RCX: 0000000000000000
+RDX: dffffc0000000000 RSI: 0000000000000001 RDI: ffffffff8987b73c
+RBP: ffffffff89807d20 R08: ffffffff8987aec0 R09: 0000000000000000
+R10: 0000000000000000 R11: 0000000000000000 R12: 0000000000000000
+R13: ffffffff89807cf8 R14: 0000000000000000 R15: ffffffff89924f38
+  arch_cpu_idle+0x10/0x20 arch/x86/kernel/process.c:555
+  default_idle_call+0x36/0x90 kernel/sched/idle.c:93
+  cpuidle_idle_call kernel/sched/idle.c:153 [inline]
+  do_idle+0x386/0x5d0 kernel/sched/idle.c:262
+  cpu_startup_entry+0x1b/0x20 kernel/sched/idle.c:353
+  rest_init+0x245/0x37b init/main.c:443
+  arch_call_rest_init+0xe/0x1b
+  start_kernel+0x882/0x8bd init/main.c:741
+  x86_64_start_reservations+0x29/0x2b arch/x86/kernel/head64.c:470
+  x86_64_start_kernel+0x77/0x7b arch/x86/kernel/head64.c:451
+  secondary_startup_64+0xa4/0xb0 arch/x86/kernel/head_64.S:243
+
+Allocated by task 10788:
+  save_stack+0x45/0xd0 mm/kasan/common.c:73
+  set_track mm/kasan/common.c:85 [inline]
+  kasan_kmalloc mm/kasan/common.c:482 [inline]
+  kasan_kmalloc+0xcf/0xe0 mm/kasan/common.c:455
+  __do_kmalloc mm/slab.c:3709 [inline]
+  __kmalloc+0x15c/0x740 mm/slab.c:3718
+  kmalloc include/linux/slab.h:550 [inline]
+  sk_prot_alloc+0x19c/0x2e0 net/core/sock.c:1477
+  sk_alloc+0xd7/0x1690 net/core/sock.c:1531
+  nr_create+0xb9/0x5e0 net/netrom/af_netrom.c:436
+  __sock_create+0x532/0x930 net/socket.c:1277
+  sock_create net/socket.c:1317 [inline]
+  __sys_socket+0x106/0x260 net/socket.c:1347
+  __do_sys_socket net/socket.c:1356 [inline]
+  __se_sys_socket net/socket.c:1354 [inline]
+  __x64_sys_socket+0x73/0xb0 net/socket.c:1354
+  do_syscall_64+0x1a3/0x800 arch/x86/entry/common.c:290
   entry_SYSCALL_64_after_hwframe+0x49/0xbe
-RIP: 0033:0x7f538b1e71e8
-Code: Bad RIP value.
-RSP: 002b:00007fff26e6cfa8 EFLAGS: 00000246 ORIG_RAX: 00000000000000e7
-RAX: ffffffffffffffda RBX: 0000000000000002 RCX: 00007f538b1e71e8
-RDX: 0000000000000002 RSI: 000000000000003c RDI: 0000000000000002
-RBP: 00007f538b4bc840 R08: 00000000000000e7 R09: ffffffffffffffa8
-R10: 00007f538b4c2740 R11: 0000000000000246 R12: 00007f538b4bc840
-R13: 0000000000000001 R14: 0000000000000000 R15: 0000000000000000
-Modules linked in:
----[ end trace 9b094a20ff9d7199 ]---
-RIP: 0010:ax25_send_frame+0xe2/0x570 net/ax25/ax25_out.c:59
-Code: 34 91 00 00 48 85 c0 0f 85 c2 03 00 00 e8 d6 bd 7e fa 48 8d bb 38 03  
-00 00 48 b8 00 00 00 00 00 fc ff df 48 89 fa 48 c1 ea 03 <80> 3c 02 00 0f  
-85 ea 03 00 00 48 8b 83 38 03 00 00 48 85 c0 48 89
-RSP: 0018:ffff8880ae707518 EFLAGS: 00010202
-RAX: dffffc0000000000 RBX: 0000000000000000 RCX: 1ffff1100a4e3951
-RDX: 0000000000000067 RSI: ffffffff86ff9d4a RDI: 0000000000000338
-RBP: ffff8880ae707558 R08: ffff88805271ca88 R09: 0000000000000002
-R10: 0000000000000000 R11: ffff88805271c1c0 R12: ffff88809aec1a88
-R13: ffffffff8be98280 R14: 0000000000000104 R15: 0000000000000000
-FS:  0000000000000000(0000) GS:ffff8880ae700000(0000) knlGS:0000000000000000
-CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-CR2: 00007f538b1e71be CR3: 0000000097648000 CR4: 00000000001406e0
-DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
-DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
+
+Freed by task 10834:
+  save_stack+0x45/0xd0 mm/kasan/common.c:73
+  set_track mm/kasan/common.c:85 [inline]
+  __kasan_slab_free+0x102/0x150 mm/kasan/common.c:444
+  kasan_slab_free+0xe/0x10 mm/kasan/common.c:452
+  __cache_free mm/slab.c:3485 [inline]
+  kfree+0xcf/0x230 mm/slab.c:3804
+  sk_prot_free net/core/sock.c:1514 [inline]
+  __sk_destruct+0x76d/0xa60 net/core/sock.c:1596
+  sk_destruct+0x7b/0x90 net/core/sock.c:1604
+  __sk_free+0xce/0x300 net/core/sock.c:1615
+  sk_free+0x42/0x50 net/core/sock.c:1626
+  sock_put include/net/sock.h:1703 [inline]
+  nr_release+0x337/0x3c0 net/netrom/af_netrom.c:557
+  __sock_release+0xd3/0x250 net/socket.c:579
+  sock_close+0x1b/0x30 net/socket.c:1141
+  __fput+0x3c5/0xb10 fs/file_table.c:278
+  ____fput+0x16/0x20 fs/file_table.c:309
+  task_work_run+0x1f4/0x2b0 kernel/task_work.c:113
+  get_signal+0x168d/0x19b0 kernel/signal.c:2347
+  do_signal+0x91/0x1e80 arch/x86/kernel/signal.c:816
+  exit_to_usermode_loop+0x2f7/0x3b0 arch/x86/entry/common.c:162
+  prepare_exit_to_usermode arch/x86/entry/common.c:197 [inline]
+  syscall_return_slowpath arch/x86/entry/common.c:268 [inline]
+  do_syscall_64+0x696/0x800 arch/x86/entry/common.c:293
+  entry_SYSCALL_64_after_hwframe+0x49/0xbe
+
+The buggy address belongs to the object at ffff8880969d0440
+  which belongs to the cache kmalloc-2k of size 2048
+The buggy address is located 936 bytes inside of
+  2048-byte region [ffff8880969d0440, ffff8880969d0c40)
+The buggy address belongs to the page:
+page:ffffea00025a7400 count:1 mapcount:0 mapping:ffff88812c3f0c40 index:0x0  
+compound_mapcount: 0
+flags: 0x1fffc0000010200(slab|head)
+raw: 01fffc0000010200 ffffea000292f708 ffffea00023ae408 ffff88812c3f0c40
+raw: 0000000000000000 ffff8880969d0440 0000000100000003 0000000000000000
+page dumped because: kasan: bad access detected
+
+Memory state around the buggy address:
+  ffff8880969d0680: fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb
+  ffff8880969d0700: fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb
+> ffff8880969d0780: fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb
+                                                           ^
+  ffff8880969d0800: fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb
+  ffff8880969d0880: fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb
+==================================================================
 
 
 ---
@@ -151,3 +158,5 @@ syzbot engineers can be reached at syzkaller@googlegroups.com.
 syzbot will keep track of this bug report. See:
 https://goo.gl/tpsmEJ#bug-status-tracking for how to communicate with  
 syzbot.
+syzbot can test patches for this bug, for details see:
+https://goo.gl/tpsmEJ#testing-patches
