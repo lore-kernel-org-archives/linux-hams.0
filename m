@@ -1,134 +1,107 @@
-From: Dmitry Vyukov <dvyukov@google.com>
-Subject: Re: [ROSE] rose dereferenced pointer kernel panic
-Date: Wed, 2 Jan 2019 12:52:09 +0100
-Message-ID: <CACT4Y+b05+AgnLxBvG6QBmHJu=vQhLc9fs9Sonp-Q+4-Kxi3UQ@mail.gmail.com>
-References: <20170116.144051.1777999685832100508.davem@davemloft.net>
- <1a4ee351-031c-932e-0332-779ce33e90e6@trinnet.net> <20170201080217.4d8443bb@brox.localnet>
- <3e3f25fc-fc60-c01b-1139-245284200656@trinnet.net> <39dad041-f224-735e-adb7-e0fb42771858@free.fr>
- <25ee9245-3595-85f7-93b8-a18d6066a2e3@free.fr> <07a1454e-99a2-8cec-d50a-006257687c2e@free.fr>
- <12e0547b-cb2c-1ca0-abc0-d849d8a62139@trinnet.net> <3d0e170e-3995-84d0-007e-3d2065296237@free.fr>
- <9f9dba49-c2a5-41e8-9382-9154802e7fbf@trinnet.net> <20170327163641.0f992e2d@brox.localnet>
- <06ce7640-bbd6-dd5e-05d9-f1afcec680e5@free.fr> <309904235.63498.1492029796017@ox-groupware.bfs.de>
- <6bd2a0b4-12b0-0de0-7bc2-e911d3ab4446@free.fr> <a4f993a0-b12a-f3e6-455c-16ea2da28737@trinnet.net>
- <74b515a0-0de1-ebaf-a874-b55f2b682efe@free.fr> <4188542e-1404-badc-cc8d-8bb07cb6d55a@free.fr>
- <969c06f8-572b-db66-3ebb-1e02205461fa@trinnet.net> <b20c7da4-66f5-0f6b-ac21-41ab075b9d69@free.fr>
- <21e6f319-f0cf-276e-a374-d44c9bd8827e@free.fr>
+From: syzbot <syzbot+55f9d3e51d49e20b2ce5@syzkaller.appspotmail.com>
+Subject: general protection fault in prepare_to_wait
+Date: Thu, 03 Jan 2019 02:44:04 -0800
+Message-ID: <000000000000fa6a2c057e8b7064@google.com>
 Mime-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-Return-path: <linux-kernel-owner@vger.kernel.org>
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=gNGCteC4MRBPwSAKxbuPYNhtqp9s9Jk2DmhI1lWL3gY=;
-        b=rZzR0IvHUHO6kuFNV52bupbgnAyOX5B1nDoRnNfXlI4k3sPFa8s20fD9vwzYYREHcb
-         yTxSCV97vjzV3ulsBDK8AGodFGZOnlcWAlKvhz+iWmWgiPzGRYxhlkuCU0lwIaMT7K7o
-         LDBe6b/p3ZOskxkGX41DKilBT1sGAmxV7naqqmzYwZfHspU2+1bROP+KXrUk7Go35Gun
-         TYs/PjkkXbFrD7+9h3R553qoXNzh1kGC2T//yoYv+iIsurU/6h7vihq15KP4S4dlMfWt
-         R1EIaPBPA8I9a77sDYDNHeeLRuteg1JouuXFzHAl3iSAPN022dzN0Grm0YkRbAD58EUL
-         jJJg==
-In-Reply-To: <21e6f319-f0cf-276e-a374-d44c9bd8827e@free.fr>
-Sender: linux-kernel-owner@vger.kernel.org
+Return-path: <netdev-owner@vger.kernel.org>
+Sender: netdev-owner@vger.kernel.org
 List-ID: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="utf-8"
-To: Bernard Pidoux <f6bvp@free.fr>
-Cc: David Ranch <linux-hams@trinnet.net>, ralf@linux-mips.org, David Miller <davem@davemloft.net>, linux-hams@vger.kernel.org, netdev <netdev@vger.kernel.org>, LKML <linux-kernel@vger.kernel.org>, syzkaller <syzkaller@googlegroups.com>
+Content-Type: text/plain; charset="us-ascii"; format="flowed"; delsp="yes"
+Content-Transfer-Encoding: 7bit
+To: davem@davemloft.net, linux-hams@vger.kernel.org, linux-kernel@vger.kernel.org, netdev@vger.kernel.org, ralf@linux-mips.org, syzkaller-bugs@googlegroups.com
 
-On Wed, Jan 2, 2019 at 12:12 AM Bernard Pidoux <f6bvp@free.fr> wrote:
->
-> Hi David,
->
-> In my previous message I should have reported the following patch rather =
-than the one I reported.
->
-> The reason is that the bug is better explained here :
->
-> https://marc.info/?l=3Dlinux-hams&m=3D154478673812818&w=3D2
->
-> and  I hope the new proposed patch is more convenient.
->
->
-> Bernard
->
->
-> Le 01/01/2019 =C3=A0 23:39, Bernard Pidoux a =C3=A9crit :
->
-> Hi David,
->
-> As you already know I am still looking for the simplest way to configure =
-a kernel rose failure situation when rose_route_frame is called with a NULL=
- pointer.
->
-> Could you explain with full details how to have "TCP/IP over AX.25 fully =
-configured" ?
->
-> More specifically how can we configure rose device without NOARP ? This i=
-s not the case when performing Dmitry Vyukov :
->
-> # ip link set dev rose0 address 11:22:33:44:55
-> # ip link set dev rose0 up
->
-> 73 de Bernard, f6bvp
->
->
-> Le 08/12/2018 =C3=A0 17:23, David Ranch a =C3=A9crit :
->
-> Hello Bernard, Everyone,
->
-> Yes, I've seen a similar behavior with another program I have here that b=
-roadcasts on all live TCP/IP interfaces when it loads.  That all depends if=
- you have TCP/IP over AX.25 fully configured on your machine.  If you do, t=
-his cp,,amd should key up your radio to send out an ARP:
->
->     ping -b -c 1 <broadcast IP on your ROSE or AX.25 interface>
->    --
->    d710: fm KI6ZHD to QST ctl UI pid=3DCC(IP) len 84
->    IP: len 84 44.4.10.39->44.4.10.127 ihl 20 ttl 64 DF prot ICMP
->    ICMP: type Echo Request id 50814 seq 1
->    P=EF=BF=BD.\
->    =EF=BF=BD~.
->    ................ !"#$%&'()*+,-./01234567
->    --
->
-> Btw, I've been aware of this ROSE panic issue for some time and I'm prett=
-y sure I forwarded those details on to you but that was many years ago.  An=
-other way to reproduce a ROSE panic is, if I remember correctly, you remove=
- the backing AX.25 interface's connection (say killing kisssattach for ax0)=
- on a ROSE interface that has an IP, that will also panic the kernel every =
-time.
->
-> --David
-> KI6ZHD
+Hello,
 
-+mailing lists
+syzbot found the following crash on:
 
-Hi Bernard,
+HEAD commit:    e888402789b9 net: hns3: call hns3_nic_net_open() while doi..
+git tree:       net
+console output: https://syzkaller.appspot.com/x/log.txt?x=11876fb3400000
+kernel config:  https://syzkaller.appspot.com/x/.config?x=b6c41ffa3d657353
+dashboard link: https://syzkaller.appspot.com/bug?extid=55f9d3e51d49e20b2ce5
+compiler:       gcc (GCC) 9.0.0 20181231 (experimental)
 
-I've provided a bit more information on what I did here:
-https://groups.google.com/d/msg/syzkaller/v-4B3zoBC-4/MVgYoeSQCgAJ
+Unfortunately, I don't have any reproducer for this crash yet.
 
-I really did not do anything fancy.
+IMPORTANT: if you fix the bug, please add the following tag to the commit:
+Reported-by: syzbot+55f9d3e51d49e20b2ce5@syzkaller.appspotmail.com
 
-FWIW I had to do the following locally just to prevent rose from
-crashing my machine all the time. I don't know if it's the right fix
-or not, I just used this as stop-gap.
-
-diff --git a/net/rose/rose_route.c b/net/rose/rose_route.c
-index 77e9f85a2c92..218308a3c02c 100644
---- a/net/rose/rose_route.c
-+++ b/net/rose/rose_route.c
-@@ -874,6 +874,8 @@ int rose_route_frame(struct sk_buff *skb, ax25_cb *ax25=
-)
-             skb->data[ROSE_CALL_REQ_ADDR_LEN_OFF] !=3D
-             ROSE_CALL_REQ_ADDR_LEN_VAL))
-                return res;
-+       if (ax25 =3D=3D NULL)
-+               return res;
-        src_addr  =3D (rose_address *)(skb->data + ROSE_CALL_REQ_SRC_ADDR_O=
-FF);
-        dest_addr =3D (rose_address *)(skb->data + ROSE_CALL_REQ_DEST_ADDR_=
-OFF);
+kasan: CONFIG_KASAN_INLINE enabled
+kasan: GPF could be caused by NULL-ptr deref or user memory access
+general protection fault: 0000 [#1] PREEMPT SMP KASAN
+CPU: 0 PID: 22808 Comm: syz-executor4 Not tainted 4.20.0+ #4
+Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS  
+Google 01/01/2011
+RIP: 0010:__lock_acquire+0x904/0x4a30 kernel/locking/lockdep.c:3215
+Code: 28 00 00 00 0f 85 32 29 00 00 48 8d 65 d8 5b 41 5c 41 5d 41 5e 41 5f  
+5d c3 48 b8 00 00 00 00 00 fc ff df 4c 89 da 48 c1 ea 03 <80> 3c 02 00 0f  
+85 2d 2c 00 00 49 81 3b e0 a3 9a 8a 0f 84 09 f8 ff
+RSP: 0018:ffff8880903ff6a0 EFLAGS: 00010006
+RAX: dffffc0000000000 RBX: 0000000000000000 RCX: 0000000000000000
+RDX: 0000000000000003 RSI: 0000000000000000 RDI: 0000000000000018
+RBP: ffff8880903ff928 R08: 0000000000000001 R09: 0000000000000001
+R10: 0000000000000001 R11: 0000000000000018 R12: ffff8880a0410200
+R13: 0000000000000001 R14: 0000000000000001 R15: 0000000000000000
+FS:  00007f56c8420700(0000) GS:ffff8880ae600000(0000) knlGS:0000000000000000
+CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+CR2: 00007f7c92bf84a0 CR3: 00000000931da000 CR4: 00000000001406f0
+DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
+kobject: 'loop1' (00000000563158a3): kobject_uevent_env
+DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
+kobject: 'loop1' (00000000563158a3): fill_kobj_path: path  
+= '/devices/virtual/block/loop1'
+Call Trace:
+kobject: 'loop2' (000000007e06da14): kobject_uevent_env
+kobject: 'loop2' (000000007e06da14): fill_kobj_path: path  
+= '/devices/virtual/block/loop2'
+  lock_acquire+0x1db/0x570 kernel/locking/lockdep.c:3841
+  __raw_spin_lock_irqsave include/linux/spinlock_api_smp.h:110 [inline]
+  _raw_spin_lock_irqsave+0x95/0xcd kernel/locking/spinlock.c:152
+  prepare_to_wait+0xa7/0x420 kernel/sched/wait.c:230
+  nr_accept+0x31f/0xa20 net/netrom/af_netrom.c:796
+kobject: 'loop1' (00000000563158a3): kobject_uevent_env
+  __sys_accept4+0x3a9/0x840 net/socket.c:1590
+kobject: 'loop1' (00000000563158a3): fill_kobj_path: path  
+= '/devices/virtual/block/loop1'
+  __do_sys_accept net/socket.c:1631 [inline]
+  __se_sys_accept net/socket.c:1628 [inline]
+  __x64_sys_accept+0x75/0xb0 net/socket.c:1628
+  do_syscall_64+0x1a3/0x800 arch/x86/entry/common.c:290
+  entry_SYSCALL_64_after_hwframe+0x49/0xbe
+RIP: 0033:0x457ec9
+Code: 6d b7 fb ff c3 66 2e 0f 1f 84 00 00 00 00 00 66 90 48 89 f8 48 89 f7  
+48 89 d6 48 89 ca 4d 89 c2 4d 89 c8 4c 8b 4c 24 08 0f 05 <48> 3d 01 f0 ff  
+ff 0f 83 3b b7 fb ff c3 66 2e 0f 1f 84 00 00 00 00
+RSP: 002b:00007f56c841fc78 EFLAGS: 00000246 ORIG_RAX: 000000000000002b
+RAX: ffffffffffffffda RBX: 0000000000000003 RCX: 0000000000457ec9
+RDX: 0000000000000000 RSI: 0000000000000000 RDI: 0000000000000005
+RBP: 000000000073c0e0 R08: 0000000000000000 R09: 0000000000000000
+R10: 0000000000000000 R11: 0000000000000246 R12: 00007f56c84206d4
+R13: 00000000004bdcb6 R14: 00000000004cdac0 R15: 00000000ffffffff
+Modules linked in:
+---[ end trace 950cf3f0884cbe4a ]---
+RIP: 0010:__lock_acquire+0x904/0x4a30 kernel/locking/lockdep.c:3215
+Code: 28 00 00 00 0f 85 32 29 00 00 48 8d 65 d8 5b 41 5c 41 5d 41 5e 41 5f  
+5d c3 48 b8 00 00 00 00 00 fc ff df 4c 89 da 48 c1 ea 03 <80> 3c 02 00 0f  
+85 2d 2c 00 00 49 81 3b e0 a3 9a 8a 0f 84 09 f8 ff
+RSP: 0018:ffff8880903ff6a0 EFLAGS: 00010006
+RAX: dffffc0000000000 RBX: 0000000000000000 RCX: 0000000000000000
+RDX: 0000000000000003 RSI: 0000000000000000 RDI: 0000000000000018
+RBP: ffff8880903ff928 R08: 0000000000000001 R09: 0000000000000001
+R10: 0000000000000001 R11: 0000000000000018 R12: ffff8880a0410200
+R13: 0000000000000001 R14: 0000000000000001 R15: 0000000000000000
+FS:  00007f56c8420700(0000) GS:ffff8880ae600000(0000) knlGS:0000000000000000
+CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+CR2: 00007f7c92bf84a0 CR3: 00000000931da000 CR4: 00000000001406f0
+DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
+DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
 
 
-rose_xmit calls rose_route_frame with ax25=3D=3DNULL, then
-rose_route_frame uses ax25 without any checks.
+---
+This bug is generated by a bot. It may contain errors.
+See https://goo.gl/tpsmEJ for more information about syzbot.
+syzbot engineers can be reached at syzkaller@googlegroups.com.
+
+syzbot will keep track of this bug report. See:
+https://goo.gl/tpsmEJ#bug-status-tracking for how to communicate with  
+syzbot.
