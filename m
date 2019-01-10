@@ -1,10 +1,10 @@
-From: syzbot <syzbot+d0b03d6dbe11a950e0ce@syzkaller.appspotmail.com>
-Subject: general protection fault in ax25_send_control
-Date: Mon, 07 Jan 2019 22:40:02 -0800
-Message-ID: <00000000000077264c057eec9ddd@google.com>
+From: syzbot <syzbot+7078ae989d857fe17988@syzkaller.appspotmail.com>
+Subject: general protection fault in rose_send_frame
+Date: Thu, 10 Jan 2019 09:38:06 -0800
+Message-ID: <00000000000089904d057f1e0ae0@google.com>
 Mime-Version: 1.0
-Return-path: <linux-kernel-owner@vger.kernel.org>
-Sender: linux-kernel-owner@vger.kernel.org
+Return-path: <netdev-owner@vger.kernel.org>
+Sender: netdev-owner@vger.kernel.org
 List-ID: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"; format="flowed"; delsp="yes"
 Content-Transfer-Encoding: 7bit
@@ -16,84 +16,116 @@ syzbot found the following crash on:
 
 HEAD commit:    b71acb0e3721 Merge branch 'linus' of git://git.kernel.org/..
 git tree:       net-next
-console output: https://syzkaller.appspot.com/x/log.txt?x=174ccdbb400000
+console output: https://syzkaller.appspot.com/x/log.txt?x=13a9acf7400000
 kernel config:  https://syzkaller.appspot.com/x/.config?x=b03c5892bb940c76
-dashboard link: https://syzkaller.appspot.com/bug?extid=d0b03d6dbe11a950e0ce
+dashboard link: https://syzkaller.appspot.com/bug?extid=7078ae989d857fe17988
 compiler:       gcc (GCC) 9.0.0 20181231 (experimental)
 
 Unfortunately, I don't have any reproducer for this crash yet.
 
 IMPORTANT: if you fix the bug, please add the following tag to the commit:
-Reported-by: syzbot+d0b03d6dbe11a950e0ce@syzkaller.appspotmail.com
+Reported-by: syzbot+7078ae989d857fe17988@syzkaller.appspotmail.com
 
-ax25_connect(): syz-executor5 uses autobind, please contact jreuter@yaina.de
-ax25_connect(): syz-executor4 uses autobind, please contact jreuter@yaina.de
 kasan: CONFIG_KASAN_INLINE enabled
 kasan: GPF could be caused by NULL-ptr deref or user memory access
 general protection fault: 0000 [#1] PREEMPT SMP KASAN
-kobject: 'loop5' (000000000a8c8c40): kobject_uevent_env
-CPU: 0 PID: 13309 Comm: syz-executor0 Not tainted 4.20.0+ #3
-kobject: 'loop5' (000000000a8c8c40): fill_kobj_path: path  
-= '/devices/virtual/block/loop5'
+CPU: 1 PID: 10446 Comm: syz-executor4 Not tainted 4.20.0+ #3
 Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS  
 Google 01/01/2011
-RIP: 0010:ax25_send_control+0x5a/0x560 net/ax25/ax25_subr.c:155
-Code: ff df 48 c1 ea 03 80 3c 02 00 0f 85 b1 04 00 00 48 b8 00 00 00 00 00  
-fc ff df 4d 8b 65 28 49 8d 7c 24 08 48 89 fa 48 c1 ea 03 <80> 3c 02 00 0f  
-85 83 04 00 00 48 b8 00 00 00 00 00 fc ff df 4d 8b
-RSP: 0018:ffff888042c377f8 EFLAGS: 00010202
-RAX: dffffc0000000000 RBX: 0000000000000043 RCX: ffffc90005de9000
-RDX: 0000000000000001 RSI: ffffffff87058725 RDI: 0000000000000008
-RBP: ffff888042c37830 R08: ffff888064a5c380 R09: ffff888064a5cc48
-R10: ffff888064a5c380 R11: 0000000000000000 R12: 0000000000000000
-kobject: 'loop4' (000000005a2eed4e): kobject_uevent_env
-R13: ffff88808baaa040 R14: 0000000000000001 R15: ffff88808baaa068
-FS:  00007f25a1e3a700(0000) GS:ffff8880ae600000(0000) knlGS:0000000000000000
+RIP: 0010:rose_send_frame+0x1a8/0x280 net/rose/rose_link.c:104
+Code: c1 ea 03 80 3c 02 00 0f 85 8d 00 00 00 48 b8 00 00 00 00 00 fc ff df  
+4c 8b 63 20 49 8d bc 24 58 03 00 00 48 89 fa 48 c1 ea 03 <80> 3c 02 00 75  
+7e 49 8b 94 24 58 03 00 00 e9 b8 fe ff ff e8 d0 e3
+RSP: 0018:ffff8880ae707780 EFLAGS: 00010202
+RAX: dffffc0000000000 RBX: ffff8882167d4540 RCX: ffffffff8703c0bb
+RDX: 000000000000006b RSI: ffffffff8703c1ec RDI: 0000000000000358
+kobject: 'loop1' (000000008f9686c7): kobject_uevent_env
+RBP: ffff8880ae7077b0 R08: ffff888089dc0480 R09: ffffed1014360d0d
+kobject: 'loop1' (000000008f9686c7): fill_kobj_path: path  
+= '/devices/virtual/block/loop1'
+R10: ffffed1014360d0c R11: ffff8880a1b06863 R12: 0000000000000000
+R13: 0000000000000078 R14: 0000000000000005 R15: ffff888096c38a40
+FS:  00007fb08678e700(0000) GS:ffff8880ae700000(0000) knlGS:0000000000000000
 CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-CR2: 0000000001f01e80 CR3: 00000000a4311000 CR4: 00000000001406f0
+CR2: 0000000000625208 CR3: 00000000645e0000 CR4: 00000000001406e0
 DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
-kobject: 'loop4' (000000005a2eed4e): fill_kobj_path: path  
-= '/devices/virtual/block/loop4'
 DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
 Call Trace:
-  ax25_release+0x503/0x680 net/ax25/af_ax25.c:974
-  __sock_release+0xd3/0x250 net/socket.c:579
-  sock_close+0x1b/0x30 net/socket.c:1141
-  __fput+0x3c5/0xaf0 fs/file_table.c:278
-  ____fput+0x16/0x20 fs/file_table.c:309
-  task_work_run+0x1f4/0x2b0 kernel/task_work.c:113
-  get_signal+0x168d/0x19b0 kernel/signal.c:2347
-  do_signal+0x91/0x1e80 arch/x86/kernel/signal.c:816
-  exit_to_usermode_loop+0x2f7/0x3b0 arch/x86/entry/common.c:162
-  prepare_exit_to_usermode arch/x86/entry/common.c:197 [inline]
-  syscall_return_slowpath arch/x86/entry/common.c:268 [inline]
-  do_syscall_64+0x696/0x800 arch/x86/entry/common.c:293
+  <IRQ>
+  rose_transmit_clear_request+0x1de/0x2a0 net/rose/rose_link.c:258
+  rose_rx_call_request+0x4f8/0x1c40 net/rose/af_rose.c:999
+  rose_loopback_timer+0x26a/0x3f0 net/rose/rose_loopback.c:100
+  call_timer_fn+0x254/0x900 kernel/time/timer.c:1325
+  expire_timers kernel/time/timer.c:1362 [inline]
+  __run_timers+0x6fc/0xd50 kernel/time/timer.c:1681
+  run_timer_softirq+0x52/0xb0 kernel/time/timer.c:1694
+  __do_softirq+0x30b/0xb11 kernel/softirq.c:292
+  invoke_softirq kernel/softirq.c:373 [inline]
+  irq_exit+0x180/0x1d0 kernel/softirq.c:413
+  exiting_irq arch/x86/include/asm/apic.h:536 [inline]
+  smp_apic_timer_interrupt+0x1b7/0x760 arch/x86/kernel/apic/apic.c:1062
+  apic_timer_interrupt+0xf/0x20 arch/x86/entry/entry_64.S:807
+  </IRQ>
+RIP: 0010:arch_local_irq_restore arch/x86/include/asm/paravirt.h:766  
+[inline]
+RIP: 0010:lock_is_held_type+0x17e/0x210 kernel/locking/lockdep.c:3881
+Code: 00 00 00 fc ff df 41 c7 85 7c 08 00 00 00 00 00 00 48 c1 e8 03 80 3c  
+10 00 75 63 48 83 3d b9 0a 2f 08 00 74 30 48 89 df 57 9d <0f> 1f 44 00 00  
+48 83 c4 08 44 89 e0 5b 41 5c 41 5d 5d c3 48 83 c4
+RSP: 0018:ffff888065f8eea8 EFLAGS: 00000282 ORIG_RAX: ffffffffffffff13
+RAX: 1ffffffff1324a06 RBX: 0000000000000282 RCX: dffffc0000000000
+RDX: dffffc0000000000 RSI: 0000000000000000 RDI: 0000000000000282
+RBP: ffff888065f8eec8 R08: ffff888089dc0480 R09: ffffed100cbf1df3
+R10: ffffed100cbf1df2 R11: 0000000000000003 R12: 0000000000000000
+R13: ffff888089dc0480 R14: dffffc0000000000 R15: ffffea0001de25c0
+  lock_is_held include/linux/lockdep.h:337 [inline]
+  xa_entry include/linux/xarray.h:902 [inline]
+  xas_reload include/linux/xarray.h:1250 [inline]
+  find_get_pages_range_tag+0x1166/0x1540 mm/filemap.c:1848
+  pagevec_lookup_range_tag+0x40/0x80 mm/swap.c:1005
+  mpage_prepare_extent_to_map+0x402/0x1950 fs/ext4/inode.c:2661
+  ext4_writepages+0x1a5e/0x4180 fs/ext4/inode.c:2881
+  do_writepages+0x99/0x1a0 mm/page-writeback.c:2328
+  __filemap_fdatawrite_range+0x352/0x470 mm/filemap.c:411
+  filemap_write_and_wait_range mm/filemap.c:633 [inline]
+  filemap_write_and_wait_range+0x4b/0xd0 mm/filemap.c:627
+  __generic_file_write_iter+0x4ea/0x630 mm/filemap.c:3251
+  ext4_file_write_iter+0x37a/0x1410 fs/ext4/file.c:266
+  call_write_iter include/linux/fs.h:1857 [inline]
+  new_sync_write fs/read_write.c:474 [inline]
+  __vfs_write+0x6e5/0xa80 fs/read_write.c:487
+  vfs_write+0x20c/0x560 fs/read_write.c:549
+  ksys_write+0x105/0x260 fs/read_write.c:598
+  __do_sys_write fs/read_write.c:610 [inline]
+  __se_sys_write fs/read_write.c:607 [inline]
+  __x64_sys_write+0x73/0xb0 fs/read_write.c:607
+  do_syscall_64+0x1a3/0x800 arch/x86/entry/common.c:290
   entry_SYSCALL_64_after_hwframe+0x49/0xbe
 RIP: 0033:0x457ec9
 Code: 6d b7 fb ff c3 66 2e 0f 1f 84 00 00 00 00 00 66 90 48 89 f8 48 89 f7  
 48 89 d6 48 89 ca 4d 89 c2 4d 89 c8 4c 8b 4c 24 08 0f 05 <48> 3d 01 f0 ff  
 ff 0f 83 3b b7 fb ff c3 66 2e 0f 1f 84 00 00 00 00
-RSP: 002b:00007f25a1e39c78 EFLAGS: 00000246 ORIG_RAX: 000000000000002a
-RAX: 0000000000000000 RBX: 0000000000000003 RCX: 0000000000457ec9
-RDX: 0000000000000048 RSI: 0000000020000140 RDI: 0000000000000004
+RSP: 002b:00007fb08678dc78 EFLAGS: 00000246 ORIG_RAX: 0000000000000001
+RAX: ffffffffffffffda RBX: 0000000000000003 RCX: 0000000000457ec9
+RDX: 00000000fffffcbe RSI: 0000000020000000 RDI: 0000000000000004
 RBP: 000000000073bf00 R08: 0000000000000000 R09: 0000000000000000
-R10: 0000000000000000 R11: 0000000000000246 R12: 00007f25a1e3a6d4
-R13: 00000000004be2ae R14: 00000000004ce648 R15: 00000000ffffffff
+R10: 0000000000000000 R11: 0000000000000246 R12: 00007fb08678e6d4
+R13: 00000000004c7155 R14: 00000000004dc898 R15: 00000000ffffffff
 Modules linked in:
----[ end trace dcff9655958a2d47 ]---
-RIP: 0010:ax25_send_control+0x5a/0x560 net/ax25/ax25_subr.c:155
-Code: ff df 48 c1 ea 03 80 3c 02 00 0f 85 b1 04 00 00 48 b8 00 00 00 00 00  
-fc ff df 4d 8b 65 28 49 8d 7c 24 08 48 89 fa 48 c1 ea 03 <80> 3c 02 00 0f  
-85 83 04 00 00 48 b8 00 00 00 00 00 fc ff df 4d 8b
-RSP: 0018:ffff888042c377f8 EFLAGS: 00010202
-RAX: dffffc0000000000 RBX: 0000000000000043 RCX: ffffc90005de9000
-RDX: 0000000000000001 RSI: ffffffff87058725 RDI: 0000000000000008
-RBP: ffff888042c37830 R08: ffff888064a5c380 R09: ffff888064a5cc48
-R10: ffff888064a5c380 R11: 0000000000000000 R12: 0000000000000000
-R13: ffff88808baaa040 R14: 0000000000000001 R15: ffff88808baaa068
-FS:  00007f25a1e3a700(0000) GS:ffff8880ae600000(0000) knlGS:0000000000000000
+---[ end trace bd566e08b493d14b ]---
+RIP: 0010:rose_send_frame+0x1a8/0x280 net/rose/rose_link.c:104
+Code: c1 ea 03 80 3c 02 00 0f 85 8d 00 00 00 48 b8 00 00 00 00 00 fc ff df  
+4c 8b 63 20 49 8d bc 24 58 03 00 00 48 89 fa 48 c1 ea 03 <80> 3c 02 00 75  
+7e 49 8b 94 24 58 03 00 00 e9 b8 fe ff ff e8 d0 e3
+RSP: 0018:ffff8880ae707780 EFLAGS: 00010202
+RAX: dffffc0000000000 RBX: ffff8882167d4540 RCX: ffffffff8703c0bb
+RDX: 000000000000006b RSI: ffffffff8703c1ec RDI: 0000000000000358
+RBP: ffff8880ae7077b0 R08: ffff888089dc0480 R09: ffffed1014360d0d
+R10: ffffed1014360d0c R11: ffff8880a1b06863 R12: 0000000000000000
+R13: 0000000000000078 R14: 0000000000000005 R15: ffff888096c38a40
+FS:  00007fb08678e700(0000) GS:ffff8880ae700000(0000) knlGS:0000000000000000
 CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-CR2: 00007ff3c6de5db8 CR3: 00000000a4311000 CR4: 00000000001406f0
+CR2: 0000000000625208 CR3: 00000000645e0000 CR4: 00000000001406e0
 DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
 DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
 
