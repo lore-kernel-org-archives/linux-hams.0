@@ -1,89 +1,118 @@
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Subject: [PATCH 4.9 07/30] net/rose: fix NULL ax25_cb kernel panic
-Date: Mon,  4 Feb 2019 11:36:45 +0100
-Message-ID: <20190204103606.690016674@linuxfoundation.org>
-References: <20190204103605.271746870@linuxfoundation.org>
+Subject: [PATCH 4.14 06/46] netrom: switch to sock timer API
+Date: Mon,  4 Feb 2019 11:36:37 +0100
+Message-ID: <20190204103609.759209482@linuxfoundation.org>
+References: <20190204103608.651205056@linuxfoundation.org>
 Mime-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Return-path: <linux-kernel-owner@vger.kernel.org>
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1549277022;
-        bh=SkkHZFh0kIQyjBHKzBGSitboX1eLfOM3T4w6Q0mNnZA=;
+        s=default; t=1549277106;
+        bh=A5tvrbnjyX35FXV8jRWbPk4P83JPI5wOhqfCzBgTgzw=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=vFdwiZB7p+NpdpSkbQBRet/KIGvilxu2nB5nWSMJfakkG7BYqyF/Rkm1l/uFIej8s
-         VecoDIxijai1d5Vu6xaM5SFGacmTnHfEA9IwzMYTEX0hDZol5kniPHWhwlcaF7zCi9
-         TBkox/5v8DeggBiPQ27DpdnGx54+pkHo50GdV5a8=
-In-Reply-To: <20190204103605.271746870@linuxfoundation.org>
+        b=tns+JAVeTI5acEhWgcl8gQRjnD4pIEehX0v4OM6vWUhRLhvQfnPjuRDcplA2uskgA
+         n47Lalgezs+T/w0etqPfn3m+sxjKAxaYrU+zQhfQARR02czVA4FAeYN298CxsNuPs9
+         ERNGSzDh99HaEe171VFGVphZfWjG4iS5BEahldzo=
+In-Reply-To: <20190204103608.651205056@linuxfoundation.org>
 Sender: linux-kernel-owner@vger.kernel.org
 List-ID: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
 To: linux-kernel@vger.kernel.org
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org, Bernard Pidoux <f6bvp@free.fr>, Dmitry Vyukov <dvyukov@google.com>, syzbot+1a2c456a1ea08fa5b5f7@syzkaller.appspotmail.com, "David S. Miller" <davem@davemloft.net>, Ralf Baechle <ralf@linux-mips.org>, linux-hams@vger.kernel.org, netdev@vger.kernel.org
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org, Ralf Baechle <ralf@linux-mips.org>, linux-hams@vger.kernel.org, Cong Wang <xiyou.wangcong@gmail.com>, "David S. Miller" <davem@davemloft.net>, syzbot+defa700d16f1bd1b9a05@syzkaller.appspotmail.com
 
-4.9-stable review patch.  If anyone has any objections, please let me know.
+4.14-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Bernard Pidoux <f6bvp@free.fr>
+From: Cong Wang <xiyou.wangcong@gmail.com>
 
-[ Upstream commit b0cf029234f9b18e10703ba5147f0389c382bccc ]
+[ Upstream commit 63346650c1a94a92be61a57416ac88c0a47c4327 ]
 
-When an internally generated frame is handled by rose_xmit(),
-rose_route_frame() is called:
+sk_reset_timer() and sk_stop_timer() properly handle
+sock refcnt for timer function. Switching to them
+could fix a refcounting bug reported by syzbot.
 
-        if (!rose_route_frame(skb, NULL)) {
-                dev_kfree_skb(skb);
-                stats->tx_errors++;
-                return NETDEV_TX_OK;
-        }
-
-We have the same code sequence in Net/Rom where an internally generated
-frame is handled by nr_xmit() calling nr_route_frame(skb, NULL).
-However, in this function NULL argument is tested while it is not in
-rose_route_frame().
-Then kernel panic occurs later on when calling ax25cmp() with a NULL
-ax25_cb argument as reported many times and recently with syzbot.
-
-We need to test if ax25 is NULL before using it.
-
-Testing:
-Built kernel with CONFIG_ROSE=y.
-
-Signed-off-by: Bernard Pidoux <f6bvp@free.fr>
-Acked-by: Dmitry Vyukov <dvyukov@google.com>
-Reported-by: syzbot+1a2c456a1ea08fa5b5f7@syzkaller.appspotmail.com
-Cc: "David S. Miller" <davem@davemloft.net>
+Reported-and-tested-by: syzbot+defa700d16f1bd1b9a05@syzkaller.appspotmail.com
 Cc: Ralf Baechle <ralf@linux-mips.org>
-Cc: Bernard Pidoux <f6bvp@free.fr>
 Cc: linux-hams@vger.kernel.org
-Cc: netdev@vger.kernel.org
-Cc: linux-kernel@vger.kernel.org
+Signed-off-by: Cong Wang <xiyou.wangcong@gmail.com>
 Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/rose/rose_route.c |    5 +++++
- 1 file changed, 5 insertions(+)
+ net/netrom/nr_timer.c |   20 ++++++++++----------
+ 1 file changed, 10 insertions(+), 10 deletions(-)
 
---- a/net/rose/rose_route.c
-+++ b/net/rose/rose_route.c
-@@ -848,6 +848,7 @@ void rose_link_device_down(struct net_de
- 
- /*
-  *	Route a frame to an appropriate AX.25 connection.
-+ *	A NULL ax25_cb indicates an internally generated frame.
-  */
- int rose_route_frame(struct sk_buff *skb, ax25_cb *ax25)
+--- a/net/netrom/nr_timer.c
++++ b/net/netrom/nr_timer.c
+@@ -53,21 +53,21 @@ void nr_start_t1timer(struct sock *sk)
  {
-@@ -865,6 +866,10 @@ int rose_route_frame(struct sk_buff *skb
+ 	struct nr_sock *nr = nr_sk(sk);
  
- 	if (skb->len < ROSE_MIN_LEN)
- 		return res;
-+
-+	if (!ax25)
-+		return rose_loopback_queue(skb, NULL);
-+
- 	frametype = skb->data[2];
- 	lci = ((skb->data[0] << 8) & 0xF00) + ((skb->data[1] << 0) & 0x0FF);
- 	if (frametype == ROSE_CALL_REQUEST &&
+-	mod_timer(&nr->t1timer, jiffies + nr->t1);
++	sk_reset_timer(sk, &nr->t1timer, jiffies + nr->t1);
+ }
+ 
+ void nr_start_t2timer(struct sock *sk)
+ {
+ 	struct nr_sock *nr = nr_sk(sk);
+ 
+-	mod_timer(&nr->t2timer, jiffies + nr->t2);
++	sk_reset_timer(sk, &nr->t2timer, jiffies + nr->t2);
+ }
+ 
+ void nr_start_t4timer(struct sock *sk)
+ {
+ 	struct nr_sock *nr = nr_sk(sk);
+ 
+-	mod_timer(&nr->t4timer, jiffies + nr->t4);
++	sk_reset_timer(sk, &nr->t4timer, jiffies + nr->t4);
+ }
+ 
+ void nr_start_idletimer(struct sock *sk)
+@@ -75,37 +75,37 @@ void nr_start_idletimer(struct sock *sk)
+ 	struct nr_sock *nr = nr_sk(sk);
+ 
+ 	if (nr->idle > 0)
+-		mod_timer(&nr->idletimer, jiffies + nr->idle);
++		sk_reset_timer(sk, &nr->idletimer, jiffies + nr->idle);
+ }
+ 
+ void nr_start_heartbeat(struct sock *sk)
+ {
+-	mod_timer(&sk->sk_timer, jiffies + 5 * HZ);
++	sk_reset_timer(sk, &sk->sk_timer, jiffies + 5 * HZ);
+ }
+ 
+ void nr_stop_t1timer(struct sock *sk)
+ {
+-	del_timer(&nr_sk(sk)->t1timer);
++	sk_stop_timer(sk, &nr_sk(sk)->t1timer);
+ }
+ 
+ void nr_stop_t2timer(struct sock *sk)
+ {
+-	del_timer(&nr_sk(sk)->t2timer);
++	sk_stop_timer(sk, &nr_sk(sk)->t2timer);
+ }
+ 
+ void nr_stop_t4timer(struct sock *sk)
+ {
+-	del_timer(&nr_sk(sk)->t4timer);
++	sk_stop_timer(sk, &nr_sk(sk)->t4timer);
+ }
+ 
+ void nr_stop_idletimer(struct sock *sk)
+ {
+-	del_timer(&nr_sk(sk)->idletimer);
++	sk_stop_timer(sk, &nr_sk(sk)->idletimer);
+ }
+ 
+ void nr_stop_heartbeat(struct sock *sk)
+ {
+-	del_timer(&sk->sk_timer);
++	sk_stop_timer(sk, &sk->sk_timer);
+ }
+ 
+ int nr_t1timer_running(struct sock *sk)
 
 
