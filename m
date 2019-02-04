@@ -1,26 +1,26 @@
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Subject: [PATCH 4.19 12/74] net/rose: fix NULL ax25_cb kernel panic
-Date: Mon,  4 Feb 2019 11:36:25 +0100
-Message-ID: <20190204103621.006589051@linuxfoundation.org>
-References: <20190204103619.714714157@linuxfoundation.org>
+Subject: [PATCH 4.14 07/46] net/rose: fix NULL ax25_cb kernel panic
+Date: Mon,  4 Feb 2019 11:36:38 +0100
+Message-ID: <20190204103609.933218831@linuxfoundation.org>
+References: <20190204103608.651205056@linuxfoundation.org>
 Mime-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Return-path: <linux-kernel-owner@vger.kernel.org>
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1549277211;
-        bh=7MQSVHbMl4YnD54Jc0Xqv37BG9fEvs9kv234saX1WOQ=;
+        s=default; t=1549277109;
+        bh=a7pN+yP8AWDUG0qGXVrXo0EcjQXFN0HWhO/Jlk6KO+o=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=Es6tCAHyyCHzlFoBPFcGQ8qVy+DIp7Loy4fpctrUQP3hQRkfwT68ib4aTTnlobtqN
-         j8+XpYza2NX13YGR5q4nm1gsh9BBv1YTgZteT35FYQIU4e9tRVueF9Ox89XuRPI3PM
-         q8dVvsap4v1FM3XwPq55cH5bebZ9n4W7W56daZBQ=
-In-Reply-To: <20190204103619.714714157@linuxfoundation.org>
+        b=NmBeKylxBCVXZX4HLzaOw2VkHAlYQ0lhVEYHFUnKPhfs6C8GxBySYKwFuMX4lt4Dy
+         HjrPIJmf1GBjdaXJkabSk7M3SEYAEkCZ6qYOYW/DJzjYMs5D3pcufeO4iMjxdd+lzF
+         1sOiLT32lBvce7P/42sNfZ8og/93v2An4YYvjnGs=
+In-Reply-To: <20190204103608.651205056@linuxfoundation.org>
 Sender: linux-kernel-owner@vger.kernel.org
 List-ID: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
 To: linux-kernel@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org, Bernard Pidoux <f6bvp@free.fr>, Dmitry Vyukov <dvyukov@google.com>, syzbot+1a2c456a1ea08fa5b5f7@syzkaller.appspotmail.com, "David S. Miller" <davem@davemloft.net>, Ralf Baechle <ralf@linux-mips.org>, linux-hams@vger.kernel.org, netdev@vger.kernel.org
 
-4.19-stable review patch.  If anyone has any objections, please let me know.
+4.14-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
@@ -66,7 +66,7 @@ Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 
 --- a/net/rose/rose_route.c
 +++ b/net/rose/rose_route.c
-@@ -850,6 +850,7 @@ void rose_link_device_down(struct net_de
+@@ -848,6 +848,7 @@ void rose_link_device_down(struct net_de
  
  /*
   *	Route a frame to an appropriate AX.25 connection.
@@ -74,7 +74,7 @@ Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
   */
  int rose_route_frame(struct sk_buff *skb, ax25_cb *ax25)
  {
-@@ -867,6 +868,10 @@ int rose_route_frame(struct sk_buff *skb
+@@ -865,6 +866,10 @@ int rose_route_frame(struct sk_buff *skb
  
  	if (skb->len < ROSE_MIN_LEN)
  		return res;
