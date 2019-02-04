@@ -1,26 +1,26 @@
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Subject: [PATCH 4.20 11/80] net/rose: fix NULL ax25_cb kernel panic
-Date: Mon,  4 Feb 2019 11:36:31 +0100
-Message-ID: <20190204103621.846077776@linuxfoundation.org>
-References: <20190204103620.287366543@linuxfoundation.org>
+Subject: [PATCH 4.19 12/74] net/rose: fix NULL ax25_cb kernel panic
+Date: Mon,  4 Feb 2019 11:36:25 +0100
+Message-ID: <20190204103621.006589051@linuxfoundation.org>
+References: <20190204103619.714714157@linuxfoundation.org>
 Mime-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Return-path: <linux-kernel-owner@vger.kernel.org>
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1549277494;
-        bh=Iwl0uWou4kdZEFY8nt+LPfQoVRg61n+VroqlLxMnf8I=;
+        s=default; t=1549277211;
+        bh=7MQSVHbMl4YnD54Jc0Xqv37BG9fEvs9kv234saX1WOQ=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=lPsLq0BxagI3pszzLEUTEQMCY293sRQLDaiJJ8Ionpb4SNpHcAukdQEbvFq9aiEtO
-         xgymFYtj/WowOw1kTkFCtSidPLSFM+hfv5gZJt3KoXat7RTNnTGOLXmYJWJrmVxZm3
-         PBOdd44CNzl4U9h4WNam1xD7IiKdWRvQI6YNvi1w=
-In-Reply-To: <20190204103620.287366543@linuxfoundation.org>
+        b=Es6tCAHyyCHzlFoBPFcGQ8qVy+DIp7Loy4fpctrUQP3hQRkfwT68ib4aTTnlobtqN
+         j8+XpYza2NX13YGR5q4nm1gsh9BBv1YTgZteT35FYQIU4e9tRVueF9Ox89XuRPI3PM
+         q8dVvsap4v1FM3XwPq55cH5bebZ9n4W7W56daZBQ=
+In-Reply-To: <20190204103619.714714157@linuxfoundation.org>
 Sender: linux-kernel-owner@vger.kernel.org
 List-ID: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
 To: linux-kernel@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org, Bernard Pidoux <f6bvp@free.fr>, Dmitry Vyukov <dvyukov@google.com>, syzbot+1a2c456a1ea08fa5b5f7@syzkaller.appspotmail.com, "David S. Miller" <davem@davemloft.net>, Ralf Baechle <ralf@linux-mips.org>, linux-hams@vger.kernel.org, netdev@vger.kernel.org
 
-4.20-stable review patch.  If anyone has any objections, please let me know.
+4.19-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
