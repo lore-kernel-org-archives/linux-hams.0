@@ -1,26 +1,26 @@
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Subject: [PATCH 3.18 19/31] netrom: switch to sock timer API
-Date: Mon,  4 Feb 2019 11:36:34 +0100
-Message-ID: <20190204103601.857070926@linuxfoundation.org>
-References: <20190204103557.903263774@linuxfoundation.org>
+Subject: [PATCH 4.4 37/65] netrom: switch to sock timer API
+Date: Mon,  4 Feb 2019 11:36:30 +0100
+Message-ID: <20190204103617.048547662@linuxfoundation.org>
+References: <20190204103610.583715954@linuxfoundation.org>
 Mime-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Return-path: <linux-kernel-owner@vger.kernel.org>
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1549276703;
-        bh=xm9wvUlBC2j4AmaFDkFJpvijn5jAl/jIVsw2YUMQIhA=;
+        s=default; t=1549276853;
+        bh=M7na6rD49OvIBsW0S4JY4hfNPoY1klJwbLnpbdkP7qU=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=m+Y8h+z0GruNuYL1jpS2xbk70BQRh+zDucltDZ9qg4he8J0xgn0knSDMpbANW8uiq
-         +mSAClT41GO0wHHH99zDOvbLUBi+1PcphKLkPNh2u0QQ5aolaAxrjQ0RX1ed9bsZ9o
-         AfZ6jnE7KORcVnAa78fKwMkhClWRoe35rSSk4fJo=
-In-Reply-To: <20190204103557.903263774@linuxfoundation.org>
+        b=MvNZ3yZkhICch7/sK4AWfnN2ncdtgdai0PrSf+DxJamBfBriB9dAm8HTbfP4Ra0yF
+         0As1mCuSqmO+Dtj+ORWmO+5FdBcedv1foJFws+4Eplo6wFFF2aKc+Z523ppTrWq9dh
+         fzEhlhqqIVet3z4Vt2UWRNVzuTs/zvjhs9YWp8WI=
+In-Reply-To: <20190204103610.583715954@linuxfoundation.org>
 Sender: linux-kernel-owner@vger.kernel.org
 List-ID: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
 To: linux-kernel@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org, Ralf Baechle <ralf@linux-mips.org>, linux-hams@vger.kernel.org, Cong Wang <xiyou.wangcong@gmail.com>, "David S. Miller" <davem@davemloft.net>, syzbot+defa700d16f1bd1b9a05@syzkaller.appspotmail.com
 
-3.18-stable review patch.  If anyone has any objections, please let me know.
+4.4-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
