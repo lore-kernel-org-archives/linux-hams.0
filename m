@@ -1,26 +1,26 @@
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Subject: [PATCH 4.14 06/46] netrom: switch to sock timer API
-Date: Mon,  4 Feb 2019 11:36:37 +0100
-Message-ID: <20190204103609.759209482@linuxfoundation.org>
-References: <20190204103608.651205056@linuxfoundation.org>
+Subject: [PATCH 4.19 11/74] netrom: switch to sock timer API
+Date: Mon,  4 Feb 2019 11:36:24 +0100
+Message-ID: <20190204103620.887576881@linuxfoundation.org>
+References: <20190204103619.714714157@linuxfoundation.org>
 Mime-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Return-path: <linux-kernel-owner@vger.kernel.org>
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1549277106;
-        bh=A5tvrbnjyX35FXV8jRWbPk4P83JPI5wOhqfCzBgTgzw=;
+        s=default; t=1549277208;
+        bh=3Ll66yEEA/ZKUsDmQKmhBrzME/jREA020KEprZgRE/c=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=tns+JAVeTI5acEhWgcl8gQRjnD4pIEehX0v4OM6vWUhRLhvQfnPjuRDcplA2uskgA
-         n47Lalgezs+T/w0etqPfn3m+sxjKAxaYrU+zQhfQARR02czVA4FAeYN298CxsNuPs9
-         ERNGSzDh99HaEe171VFGVphZfWjG4iS5BEahldzo=
-In-Reply-To: <20190204103608.651205056@linuxfoundation.org>
+        b=E8NfpzT36kPxeNehCYxnQ0bToGOB7m7JXT55W2iZmdd4uCsP/JNDabh/WOTjNzF3A
+         6RpgliC9G6Uk0PBZAHl/ypoLTQtzUs82e+UDasztjOhTrY7a4PwgIeZ/Yyp3RMh5Oo
+         t1CpN71b3ORAIM+hAMJxFERnYAVNnjnv6XxLba8Y=
+In-Reply-To: <20190204103619.714714157@linuxfoundation.org>
 Sender: linux-kernel-owner@vger.kernel.org
 List-ID: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
 To: linux-kernel@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org, Ralf Baechle <ralf@linux-mips.org>, linux-hams@vger.kernel.org, Cong Wang <xiyou.wangcong@gmail.com>, "David S. Miller" <davem@davemloft.net>, syzbot+defa700d16f1bd1b9a05@syzkaller.appspotmail.com
 
-4.14-stable review patch.  If anyone has any objections, please let me know.
+4.19-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
@@ -44,7 +44,7 @@ Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 
 --- a/net/netrom/nr_timer.c
 +++ b/net/netrom/nr_timer.c
-@@ -53,21 +53,21 @@ void nr_start_t1timer(struct sock *sk)
+@@ -52,21 +52,21 @@ void nr_start_t1timer(struct sock *sk)
  {
  	struct nr_sock *nr = nr_sk(sk);
  
@@ -69,7 +69,7 @@ Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
  }
  
  void nr_start_idletimer(struct sock *sk)
-@@ -75,37 +75,37 @@ void nr_start_idletimer(struct sock *sk)
+@@ -74,37 +74,37 @@ void nr_start_idletimer(struct sock *sk)
  	struct nr_sock *nr = nr_sk(sk);
  
  	if (nr->idle > 0)
