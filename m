@@ -1,19 +1,19 @@
 From: Sasha Levin <sashal@kernel.org>
-Subject: [PATCH AUTOSEL 4.9 20/27] ax25: fix possible use-after-free
-Date: Thu, 14 Feb 2019 21:14:17 -0500
-Message-ID: <20190215021424.178979-20-sashal@kernel.org>
-References: <20190215021424.178979-1-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 4.19 51/65] ax25: fix possible use-after-free
+Date: Thu, 14 Feb 2019 21:11:07 -0500
+Message-ID: <20190215021121.177674-51-sashal@kernel.org>
+References: <20190215021121.177674-1-sashal@kernel.org>
 Mime-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Return-path: <linux-kernel-owner@vger.kernel.org>
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1550196901;
-        bh=4xRLP+vV2ecX7DYz5d34nW25oAZdQ4RvHCil84JHo1E=;
+        s=default; t=1550196763;
+        bh=tlzfZaD3yhF+cemiFK+aToVNJ2JVwuvkpqwJQSh/lzg=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=1Hydv8ik63hpbtIIwWuGsMbRWOMyPTThGmT100j+MHFkXI+TNrFbM6Ugx6NoDqSc8
-         1YCo1fygaQ5/turidQRICORStZVlSfsxeh6MHHZuThRpmFoXgKJto1BwovmIuCzHPZ
-         NKOmsLURQMLWG6MaeA+1k6fTJ6JpbvIlLtf3j6JM=
-In-Reply-To: <20190215021424.178979-1-sashal@kernel.org>
+        b=NdQYiiJiwRGWKe7kteKhXkwfsyy1P+SpbOV6thB1qXwGpxDWS0LPRuVZTu0HBHR/O
+         Silh29N5FcOJnnt3jxw1SlEJd4XhqP04rIgxiH11R00RivK8HnBRcmPK9vosrGIskX
+         ppmqGV/J+VmznhFXJ32Duz0K8ACqNRQTGn82Tmho=
+In-Reply-To: <20190215021121.177674-1-sashal@kernel.org>
 Sender: linux-kernel-owner@vger.kernel.org
 List-ID: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
@@ -157,10 +157,10 @@ Signed-off-by: Sasha Levin <sashal@kernel.org>
  3 files changed, 22 insertions(+), 13 deletions(-)
 
 diff --git a/include/net/ax25.h b/include/net/ax25.h
-index e602f8177ebf..b507ce2b1952 100644
+index 3f9aea8087e3..8b7eb46ad72d 100644
 --- a/include/net/ax25.h
 +++ b/include/net/ax25.h
-@@ -199,6 +199,18 @@ static inline void ax25_hold_route(ax25_route *ax25_rt)
+@@ -201,6 +201,18 @@ static inline void ax25_hold_route(ax25_route *ax25_rt)
  
  void __ax25_put_route(ax25_route *ax25_rt);
  
@@ -178,9 +178,9 @@ index e602f8177ebf..b507ce2b1952 100644
 +
  static inline void ax25_put_route(ax25_route *ax25_rt)
  {
- 	if (atomic_dec_and_test(&ax25_rt->refcount))
+ 	if (refcount_dec_and_test(&ax25_rt->refcount))
 diff --git a/net/ax25/ax25_ip.c b/net/ax25/ax25_ip.c
-index 2fa3be965101..cd9a24e5b97a 100644
+index 70417e9b932d..314bbc8010fb 100644
 --- a/net/ax25/ax25_ip.c
 +++ b/net/ax25/ax25_ip.c
 @@ -114,6 +114,7 @@ netdev_tx_t ax25_ip_xmit(struct sk_buff *skb)
@@ -203,7 +203,7 @@ index 2fa3be965101..cd9a24e5b97a 100644
  }
  
 diff --git a/net/ax25/ax25_route.c b/net/ax25/ax25_route.c
-index d39097737e38..149f82bd83fd 100644
+index a0eff323af12..66f74c85cf6b 100644
 --- a/net/ax25/ax25_route.c
 +++ b/net/ax25/ax25_route.c
 @@ -40,7 +40,7 @@
@@ -215,7 +215,7 @@ index d39097737e38..149f82bd83fd 100644
  
  void ax25_rt_device_down(struct net_device *dev)
  {
-@@ -349,6 +349,7 @@ const struct file_operations ax25_route_fops = {
+@@ -335,6 +335,7 @@ const struct seq_operations ax25_rt_seqops = {
   *	Find AX.25 route
   *
   *	Only routes with a reference count of zero can be destroyed.
@@ -223,7 +223,7 @@ index d39097737e38..149f82bd83fd 100644
   */
  ax25_route *ax25_get_route(ax25_address *addr, struct net_device *dev)
  {
-@@ -356,7 +357,6 @@ ax25_route *ax25_get_route(ax25_address *addr, struct net_device *dev)
+@@ -342,7 +343,6 @@ ax25_route *ax25_get_route(ax25_address *addr, struct net_device *dev)
  	ax25_route *ax25_def_rt = NULL;
  	ax25_route *ax25_rt;
  
@@ -231,7 +231,7 @@ index d39097737e38..149f82bd83fd 100644
  	/*
  	 *	Bind to the physical interface we heard them on, or the default
  	 *	route if none is found;
-@@ -379,11 +379,6 @@ ax25_route *ax25_get_route(ax25_address *addr, struct net_device *dev)
+@@ -365,11 +365,6 @@ ax25_route *ax25_get_route(ax25_address *addr, struct net_device *dev)
  	if (ax25_spe_rt != NULL)
  		ax25_rt = ax25_spe_rt;
  
@@ -243,7 +243,7 @@ index d39097737e38..149f82bd83fd 100644
  	return ax25_rt;
  }
  
-@@ -414,9 +409,12 @@ int ax25_rt_autobind(ax25_cb *ax25, ax25_address *addr)
+@@ -400,9 +395,12 @@ int ax25_rt_autobind(ax25_cb *ax25, ax25_address *addr)
  	ax25_route *ax25_rt;
  	int err = 0;
  
@@ -258,7 +258,7 @@ index d39097737e38..149f82bd83fd 100644
  	if ((ax25->ax25_dev = ax25_dev_ax25dev(ax25_rt->dev)) == NULL) {
  		err = -EHOSTUNREACH;
  		goto put;
-@@ -451,8 +449,7 @@ int ax25_rt_autobind(ax25_cb *ax25, ax25_address *addr)
+@@ -437,8 +435,7 @@ int ax25_rt_autobind(ax25_cb *ax25, ax25_address *addr)
  	}
  
  put:
