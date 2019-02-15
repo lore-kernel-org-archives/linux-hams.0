@@ -1,87 +1,273 @@
-From: syzbot <syzbot+55f9d3e51d49e20b2ce5@syzkaller.appspotmail.com>
-Subject: Re: general protection fault in prepare_to_wait
-Date: Fri, 08 Feb 2019 04:06:03 -0800
-Message-ID: <000000000000713147058160c8d9@google.com>
-References: <000000000000fa6a2c057e8b7064@google.com>
+From: Sasha Levin <sashal@kernel.org>
+Subject: [PATCH AUTOSEL 4.14 32/40] ax25: fix possible use-after-free
+Date: Thu, 14 Feb 2019 21:13:05 -0500
+Message-ID: <20190215021313.178476-32-sashal@kernel.org>
+References: <20190215021313.178476-1-sashal@kernel.org>
 Mime-Version: 1.0
-Return-path: <netdev-owner@vger.kernel.org>
-In-Reply-To: <000000000000fa6a2c057e8b7064@google.com>
-Sender: netdev-owner@vger.kernel.org
+Content-Transfer-Encoding: 8bit
+Return-path: <stable-owner@vger.kernel.org>
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=default; t=1550196851;
+        bh=8RpRpX+ov/2W4SHPvcv0ipPfHpdbx4ZVFsym2dKMV14=;
+        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+        b=pzhc7K0qrFZRwhOBN3svRGj++pttEM8VZAe48Ue18eX6DgtTe5gvEjreWR9pf0tgP
+         VxY0lYCwewnnWJL9JU2BuY9Ntr3dFRAwiFAACYa+IOiYfazX3lvlxPiXlR6EvSM1T+
+         sEnMWXeneYaHwuQ9lcySfHd10o69FGIHXPgJU//c=
+In-Reply-To: <20190215021313.178476-1-sashal@kernel.org>
+Sender: stable-owner@vger.kernel.org
 List-ID: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"; format="flowed"; delsp="yes"
-Content-Transfer-Encoding: 7bit
-To: davem@davemloft.net, linux-hams@vger.kernel.org, linux-kernel@vger.kernel.org, netdev@vger.kernel.org, ralf@linux-mips.org, syzkaller-bugs@googlegroups.com
+Content-Type: text/plain; charset="us-ascii"
+To: linux-kernel@vger.kernel.org, stable@vger.kernel.org
+Cc: Eric Dumazet <edumazet@google.com>, Ralf Baechle <ralf@linux-mips.org>, "David S . Miller" <davem@davemloft.net>, Sasha Levin <sashal@kernel.org>, linux-hams@vger.kernel.org, netdev@vger.kernel.org
 
-syzbot has found a reproducer for the following crash on:
+From: Eric Dumazet <edumazet@google.com>
 
-HEAD commit:    ec7fd009e87c Merge branch 'ipv6-fixes'
-git tree:       net
-console output: https://syzkaller.appspot.com/x/log.txt?x=17fc3d97400000
-kernel config:  https://syzkaller.appspot.com/x/.config?x=2e0064f906afee10
-dashboard link: https://syzkaller.appspot.com/bug?extid=55f9d3e51d49e20b2ce5
-compiler:       gcc (GCC) 9.0.0 20181231 (experimental)
-syz repro:      https://syzkaller.appspot.com/x/repro.syz?x=16970150c00000
+[ Upstream commit 63530aba7826a0f8e129874df9c4d264f9db3f9e ]
 
-IMPORTANT: if you fix the bug, please add the following tag to the commit:
-Reported-by: syzbot+55f9d3e51d49e20b2ce5@syzkaller.appspotmail.com
+syzbot found that ax25 routes where not properly protected
+against concurrent use [1].
 
-8021q: adding VLAN 0 to HW filter on device batadv0
-8021q: adding VLAN 0 to HW filter on device batadv0
-8021q: adding VLAN 0 to HW filter on device batadv0
-kasan: CONFIG_KASAN_INLINE enabled
-kasan: GPF could be caused by NULL-ptr deref or user memory access
-general protection fault: 0000 [#1] PREEMPT SMP KASAN
-CPU: 0 PID: 7733 Comm: syz-executor3 Not tainted 5.0.0-rc4+ #67
-Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS  
-Google 01/01/2011
-RIP: 0010:__lock_acquire+0x8df/0x4700 kernel/locking/lockdep.c:3215
-Code: 28 00 00 00 0f 85 35 27 00 00 48 8d 65 d8 5b 41 5c 41 5d 41 5e 41 5f  
-5d c3 48 b8 00 00 00 00 00 fc ff df 4c 89 e2 48 c1 ea 03 <80> 3c 02 00 0f  
-85 dc 27 00 00 49 81 3c 24 20 25 9a 89 0f 84 03 f8
-RSP: 0018:ffff888088fa7970 EFLAGS: 00010006
-RAX: dffffc0000000000 RBX: 0000000000000000 RCX: 0000000000000000
-RDX: 0000000000000003 RSI: 0000000000000000 RDI: 0000000000000018
-RBP: ffff888088fa7b40 R08: 0000000000000001 R09: 0000000000000001
-R10: 0000000000000000 R11: 0000000000000001 R12: 0000000000000018
-R13: 0000000000000001 R14: 0000000000000000 R15: ffff888098fc60c0
-FS:  00007f2176cc4700(0000) GS:ffff8880ae800000(0000) knlGS:0000000000000000
-CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-CR2: 00007f763933ddb8 CR3: 0000000088560000 CR4: 00000000001406f0
+In this particular report the bug happened while
+copying ax25->digipeat.
+
+Fix this problem by making sure we call ax25_get_route()
+while ax25_route_lock is held, so that no modification
+could happen while using the route.
+
+The current two ax25_get_route() callers do not sleep,
+so this change should be fine.
+
+Once we do that, ax25_get_route() no longer needs to
+grab a reference on the found route.
+
+[1]
+ax25_connect(): syz-executor0 uses autobind, please contact jreuter@yaina.de
+BUG: KASAN: use-after-free in memcpy include/linux/string.h:352 [inline]
+BUG: KASAN: use-after-free in kmemdup+0x42/0x60 mm/util.c:113
+Read of size 66 at addr ffff888066641a80 by task syz-executor2/531
+
+ax25_connect(): syz-executor0 uses autobind, please contact jreuter@yaina.de
+CPU: 1 PID: 531 Comm: syz-executor2 Not tainted 5.0.0-rc2+ #10
+Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 01/01/2011
 Call Trace:
-  lock_acquire+0x16f/0x3f0 kernel/locking/lockdep.c:3841
-  __raw_spin_lock_irqsave include/linux/spinlock_api_smp.h:110 [inline]
-  _raw_spin_lock_irqsave+0x95/0xcd kernel/locking/spinlock.c:152
-  prepare_to_wait+0x7c/0x300 kernel/sched/wait.c:230
-  nr_accept+0x239/0x790 net/netrom/af_netrom.c:796
-  __sys_accept4+0x350/0x6a0 net/socket.c:1588
-  __do_sys_accept net/socket.c:1629 [inline]
-  __se_sys_accept net/socket.c:1626 [inline]
-  __x64_sys_accept+0x75/0xb0 net/socket.c:1626
-  do_syscall_64+0x103/0x610 arch/x86/entry/common.c:290
-  entry_SYSCALL_64_after_hwframe+0x49/0xbe
-RIP: 0033:0x457e39
-Code: ad b8 fb ff c3 66 2e 0f 1f 84 00 00 00 00 00 66 90 48 89 f8 48 89 f7  
-48 89 d6 48 89 ca 4d 89 c2 4d 89 c8 4c 8b 4c 24 08 0f 05 <48> 3d 01 f0 ff  
-ff 0f 83 7b b8 fb ff c3 66 2e 0f 1f 84 00 00 00 00
-RSP: 002b:00007f2176cc3c78 EFLAGS: 00000246 ORIG_RAX: 000000000000002b
-RAX: ffffffffffffffda RBX: 0000000000000003 RCX: 0000000000457e39
-RDX: 0000000000000000 RSI: 0000000000000000 RDI: 0000000000000004
-RBP: 000000000073c0e0 R08: 0000000000000000 R09: 0000000000000000
-R10: 0000000000000000 R11: 0000000000000246 R12: 00007f2176cc46d4
-R13: 00000000004bdc10 R14: 00000000004cdea0 R15: 00000000ffffffff
-Modules linked in:
----[ end trace 82c8ff081ad12861 ]---
-RIP: 0010:__lock_acquire+0x8df/0x4700 kernel/locking/lockdep.c:3215
-Code: 28 00 00 00 0f 85 35 27 00 00 48 8d 65 d8 5b 41 5c 41 5d 41 5e 41 5f  
-5d c3 48 b8 00 00 00 00 00 fc ff df 4c 89 e2 48 c1 ea 03 <80> 3c 02 00 0f  
-85 dc 27 00 00 49 81 3c 24 20 25 9a 89 0f 84 03 f8
-RSP: 0018:ffff888088fa7970 EFLAGS: 00010006
-RAX: dffffc0000000000 RBX: 0000000000000000 RCX: 0000000000000000
-RDX: 0000000000000003 RSI: 0000000000000000 RDI: 0000000000000018
-RBP: ffff888088fa7b40 R08: 0000000000000001 R09: 0000000000000001
-R10: 0000000000000000 R11: 0000000000000001 R12: 0000000000000018
-R13: 0000000000000001 R14: 0000000000000000 R15: ffff888098fc60c0
-FS:  00007f2176cc4700(0000) GS:ffff8880ae800000(0000) knlGS:0000000000000000
-CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-CR2: 00007f763933ddb8 CR3: 0000000088560000 CR4: 00000000001406f0
+ __dump_stack lib/dump_stack.c:77 [inline]
+ dump_stack+0x1db/0x2d0 lib/dump_stack.c:113
+ print_address_description.cold+0x7c/0x20d mm/kasan/report.c:187
+ kasan_report.cold+0x1b/0x40 mm/kasan/report.c:317
+ check_memory_region_inline mm/kasan/generic.c:185 [inline]
+ check_memory_region+0x123/0x190 mm/kasan/generic.c:191
+ memcpy+0x24/0x50 mm/kasan/common.c:130
+ memcpy include/linux/string.h:352 [inline]
+ kmemdup+0x42/0x60 mm/util.c:113
+ kmemdup include/linux/string.h:425 [inline]
+ ax25_rt_autobind+0x25d/0x750 net/ax25/ax25_route.c:424
+ ax25_connect.cold+0x30/0xa4 net/ax25/af_ax25.c:1224
+ __sys_connect+0x357/0x490 net/socket.c:1664
+ __do_sys_connect net/socket.c:1675 [inline]
+ __se_sys_connect net/socket.c:1672 [inline]
+ __x64_sys_connect+0x73/0xb0 net/socket.c:1672
+ do_syscall_64+0x1a3/0x800 arch/x86/entry/common.c:290
+ entry_SYSCALL_64_after_hwframe+0x49/0xbe
+RIP: 0033:0x458099
+Code: 6d b7 fb ff c3 66 2e 0f 1f 84 00 00 00 00 00 66 90 48 89 f8 48 89 f7 48 89 d6 48 89 ca 4d 89 c2 4d 89 c8 4c 8b 4c 24 08 0f 05 <48> 3d 01 f0 ff ff 0f 83 3b b7 fb ff c3 66 2e 0f 1f 84 00 00 00 00
+RSP: 002b:00007f870ee22c78 EFLAGS: 00000246 ORIG_RAX: 000000000000002a
+RAX: ffffffffffffffda RBX: 0000000000000003 RCX: 0000000000458099
+RDX: 0000000000000048 RSI: 0000000020000080 RDI: 0000000000000005
+RBP: 000000000073bf00 R08: 0000000000000000 R09: 0000000000000000
+ax25_connect(): syz-executor4 uses autobind, please contact jreuter@yaina.de
+R10: 0000000000000000 R11: 0000000000000246 R12: 00007f870ee236d4
+R13: 00000000004be48e R14: 00000000004ce9a8 R15: 00000000ffffffff
+
+Allocated by task 526:
+ save_stack+0x45/0xd0 mm/kasan/common.c:73
+ set_track mm/kasan/common.c:85 [inline]
+ __kasan_kmalloc mm/kasan/common.c:496 [inline]
+ __kasan_kmalloc.constprop.0+0xcf/0xe0 mm/kasan/common.c:469
+ kasan_kmalloc+0x9/0x10 mm/kasan/common.c:504
+ax25_connect(): syz-executor5 uses autobind, please contact jreuter@yaina.de
+ kmem_cache_alloc_trace+0x151/0x760 mm/slab.c:3609
+ kmalloc include/linux/slab.h:545 [inline]
+ ax25_rt_add net/ax25/ax25_route.c:95 [inline]
+ ax25_rt_ioctl+0x3b9/0x1270 net/ax25/ax25_route.c:233
+ ax25_ioctl+0x322/0x10b0 net/ax25/af_ax25.c:1763
+ sock_do_ioctl+0xe2/0x400 net/socket.c:950
+ sock_ioctl+0x32f/0x6c0 net/socket.c:1074
+ vfs_ioctl fs/ioctl.c:46 [inline]
+ file_ioctl fs/ioctl.c:509 [inline]
+ do_vfs_ioctl+0x107b/0x17d0 fs/ioctl.c:696
+ ksys_ioctl+0xab/0xd0 fs/ioctl.c:713
+ __do_sys_ioctl fs/ioctl.c:720 [inline]
+ __se_sys_ioctl fs/ioctl.c:718 [inline]
+ __x64_sys_ioctl+0x73/0xb0 fs/ioctl.c:718
+ do_syscall_64+0x1a3/0x800 arch/x86/entry/common.c:290
+ entry_SYSCALL_64_after_hwframe+0x49/0xbe
+
+ax25_connect(): syz-executor5 uses autobind, please contact jreuter@yaina.de
+Freed by task 550:
+ save_stack+0x45/0xd0 mm/kasan/common.c:73
+ set_track mm/kasan/common.c:85 [inline]
+ __kasan_slab_free+0x102/0x150 mm/kasan/common.c:458
+ kasan_slab_free+0xe/0x10 mm/kasan/common.c:466
+ __cache_free mm/slab.c:3487 [inline]
+ kfree+0xcf/0x230 mm/slab.c:3806
+ ax25_rt_add net/ax25/ax25_route.c:92 [inline]
+ ax25_rt_ioctl+0x304/0x1270 net/ax25/ax25_route.c:233
+ ax25_ioctl+0x322/0x10b0 net/ax25/af_ax25.c:1763
+ sock_do_ioctl+0xe2/0x400 net/socket.c:950
+ sock_ioctl+0x32f/0x6c0 net/socket.c:1074
+ vfs_ioctl fs/ioctl.c:46 [inline]
+ file_ioctl fs/ioctl.c:509 [inline]
+ do_vfs_ioctl+0x107b/0x17d0 fs/ioctl.c:696
+ ksys_ioctl+0xab/0xd0 fs/ioctl.c:713
+ __do_sys_ioctl fs/ioctl.c:720 [inline]
+ __se_sys_ioctl fs/ioctl.c:718 [inline]
+ __x64_sys_ioctl+0x73/0xb0 fs/ioctl.c:718
+ do_syscall_64+0x1a3/0x800 arch/x86/entry/common.c:290
+ entry_SYSCALL_64_after_hwframe+0x49/0xbe
+
+The buggy address belongs to the object at ffff888066641a80
+ which belongs to the cache kmalloc-96 of size 96
+The buggy address is located 0 bytes inside of
+ 96-byte region [ffff888066641a80, ffff888066641ae0)
+The buggy address belongs to the page:
+page:ffffea0001999040 count:1 mapcount:0 mapping:ffff88812c3f04c0 index:0x0
+flags: 0x1fffc0000000200(slab)
+ax25_connect(): syz-executor4 uses autobind, please contact jreuter@yaina.de
+raw: 01fffc0000000200 ffffea0001817948 ffffea0002341dc8 ffff88812c3f04c0
+raw: 0000000000000000 ffff888066641000 0000000100000020 0000000000000000
+page dumped because: kasan: bad access detected
+
+Memory state around the buggy address:
+ ffff888066641980: fb fb fb fb fb fb fb fb fb fb fb fb fc fc fc fc
+ ffff888066641a00: 00 00 00 00 00 00 00 00 02 fc fc fc fc fc fc fc
+>ffff888066641a80: fb fb fb fb fb fb fb fb fb fb fb fb fc fc fc fc
+                   ^
+ ffff888066641b00: fb fb fb fb fb fb fb fb fb fb fb fb fc fc fc fc
+ ffff888066641b80: 00 00 00 00 00 00 00 00 00 00 00 00 fc fc fc fc
+
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Cc: Ralf Baechle <ralf@linux-mips.org>
+Reported-by: syzbot <syzkaller@googlegroups.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
+---
+ include/net/ax25.h    | 12 ++++++++++++
+ net/ax25/ax25_ip.c    |  4 ++--
+ net/ax25/ax25_route.c | 19 ++++++++-----------
+ 3 files changed, 22 insertions(+), 13 deletions(-)
+
+diff --git a/include/net/ax25.h b/include/net/ax25.h
+index 76fb39c272a7..e667bca42ca4 100644
+--- a/include/net/ax25.h
++++ b/include/net/ax25.h
+@@ -200,6 +200,18 @@ static inline void ax25_hold_route(ax25_route *ax25_rt)
+ 
+ void __ax25_put_route(ax25_route *ax25_rt);
+ 
++extern rwlock_t ax25_route_lock;
++
++static inline void ax25_route_lock_use(void)
++{
++	read_lock(&ax25_route_lock);
++}
++
++static inline void ax25_route_lock_unuse(void)
++{
++	read_unlock(&ax25_route_lock);
++}
++
+ static inline void ax25_put_route(ax25_route *ax25_rt)
+ {
+ 	if (refcount_dec_and_test(&ax25_rt->refcount))
+diff --git a/net/ax25/ax25_ip.c b/net/ax25/ax25_ip.c
+index 183b1c583d56..dd526c91363d 100644
+--- a/net/ax25/ax25_ip.c
++++ b/net/ax25/ax25_ip.c
+@@ -114,6 +114,7 @@ netdev_tx_t ax25_ip_xmit(struct sk_buff *skb)
+ 	dst = (ax25_address *)(bp + 1);
+ 	src = (ax25_address *)(bp + 8);
+ 
++	ax25_route_lock_use();
+ 	route = ax25_get_route(dst, NULL);
+ 	if (route) {
+ 		digipeat = route->digipeat;
+@@ -206,9 +207,8 @@ netdev_tx_t ax25_ip_xmit(struct sk_buff *skb)
+ 	ax25_queue_xmit(skb, dev);
+ 
+ put:
+-	if (route)
+-		ax25_put_route(route);
+ 
++	ax25_route_lock_unuse();
+ 	return NETDEV_TX_OK;
+ }
+ 
+diff --git a/net/ax25/ax25_route.c b/net/ax25/ax25_route.c
+index 0446b892618a..7f369f1db7ae 100644
+--- a/net/ax25/ax25_route.c
++++ b/net/ax25/ax25_route.c
+@@ -40,7 +40,7 @@
+ #include <linux/export.h>
+ 
+ static ax25_route *ax25_route_list;
+-static DEFINE_RWLOCK(ax25_route_lock);
++DEFINE_RWLOCK(ax25_route_lock);
+ 
+ void ax25_rt_device_down(struct net_device *dev)
+ {
+@@ -349,6 +349,7 @@ const struct file_operations ax25_route_fops = {
+  *	Find AX.25 route
+  *
+  *	Only routes with a reference count of zero can be destroyed.
++ *	Must be called with ax25_route_lock read locked.
+  */
+ ax25_route *ax25_get_route(ax25_address *addr, struct net_device *dev)
+ {
+@@ -356,7 +357,6 @@ ax25_route *ax25_get_route(ax25_address *addr, struct net_device *dev)
+ 	ax25_route *ax25_def_rt = NULL;
+ 	ax25_route *ax25_rt;
+ 
+-	read_lock(&ax25_route_lock);
+ 	/*
+ 	 *	Bind to the physical interface we heard them on, or the default
+ 	 *	route if none is found;
+@@ -379,11 +379,6 @@ ax25_route *ax25_get_route(ax25_address *addr, struct net_device *dev)
+ 	if (ax25_spe_rt != NULL)
+ 		ax25_rt = ax25_spe_rt;
+ 
+-	if (ax25_rt != NULL)
+-		ax25_hold_route(ax25_rt);
+-
+-	read_unlock(&ax25_route_lock);
+-
+ 	return ax25_rt;
+ }
+ 
+@@ -414,9 +409,12 @@ int ax25_rt_autobind(ax25_cb *ax25, ax25_address *addr)
+ 	ax25_route *ax25_rt;
+ 	int err = 0;
+ 
+-	if ((ax25_rt = ax25_get_route(addr, NULL)) == NULL)
++	ax25_route_lock_use();
++	ax25_rt = ax25_get_route(addr, NULL);
++	if (!ax25_rt) {
++		ax25_route_lock_unuse();
+ 		return -EHOSTUNREACH;
+-
++	}
+ 	if ((ax25->ax25_dev = ax25_dev_ax25dev(ax25_rt->dev)) == NULL) {
+ 		err = -EHOSTUNREACH;
+ 		goto put;
+@@ -451,8 +449,7 @@ int ax25_rt_autobind(ax25_cb *ax25, ax25_address *addr)
+ 	}
+ 
+ put:
+-	ax25_put_route(ax25_rt);
+-
++	ax25_route_lock_unuse();
+ 	return err;
+ }
+ 
+-- 
+2.19.1
 
