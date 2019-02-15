@@ -1,20 +1,20 @@
 From: Sasha Levin <sashal@kernel.org>
-Subject: [PATCH AUTOSEL 4.14 32/40] ax25: fix possible use-after-free
-Date: Thu, 14 Feb 2019 21:13:05 -0500
-Message-ID: <20190215021313.178476-32-sashal@kernel.org>
-References: <20190215021313.178476-1-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 4.4 16/20] ax25: fix possible use-after-free
+Date: Thu, 14 Feb 2019 21:15:07 -0500
+Message-ID: <20190215021511.179333-16-sashal@kernel.org>
+References: <20190215021511.179333-1-sashal@kernel.org>
 Mime-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Return-path: <stable-owner@vger.kernel.org>
+Return-path: <linux-kernel-owner@vger.kernel.org>
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1550196851;
-        bh=8RpRpX+ov/2W4SHPvcv0ipPfHpdbx4ZVFsym2dKMV14=;
+        s=default; t=1550196941;
+        bh=4xRLP+vV2ecX7DYz5d34nW25oAZdQ4RvHCil84JHo1E=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=pzhc7K0qrFZRwhOBN3svRGj++pttEM8VZAe48Ue18eX6DgtTe5gvEjreWR9pf0tgP
-         VxY0lYCwewnnWJL9JU2BuY9Ntr3dFRAwiFAACYa+IOiYfazX3lvlxPiXlR6EvSM1T+
-         sEnMWXeneYaHwuQ9lcySfHd10o69FGIHXPgJU//c=
-In-Reply-To: <20190215021313.178476-1-sashal@kernel.org>
-Sender: stable-owner@vger.kernel.org
+        b=lInrbFH7v8G5sxHw5EaBlGEBQuxTLa45vB+/1JjEDf/+xom837Bic49OpA6wD8mFG
+         uszFygaGKmNlTlPE3W1R041hPCLlApg+kzfRCZAbWAd6YUjjHOaiRl8cZKNAzd/Oh8
+         eff3fFbyt+uu0792Z/RcMCrr1bbMs20zy6BMLumM=
+In-Reply-To: <20190215021511.179333-1-sashal@kernel.org>
+Sender: linux-kernel-owner@vger.kernel.org
 List-ID: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
 To: linux-kernel@vger.kernel.org, stable@vger.kernel.org
@@ -157,10 +157,10 @@ Signed-off-by: Sasha Levin <sashal@kernel.org>
  3 files changed, 22 insertions(+), 13 deletions(-)
 
 diff --git a/include/net/ax25.h b/include/net/ax25.h
-index 76fb39c272a7..e667bca42ca4 100644
+index e602f8177ebf..b507ce2b1952 100644
 --- a/include/net/ax25.h
 +++ b/include/net/ax25.h
-@@ -200,6 +200,18 @@ static inline void ax25_hold_route(ax25_route *ax25_rt)
+@@ -199,6 +199,18 @@ static inline void ax25_hold_route(ax25_route *ax25_rt)
  
  void __ax25_put_route(ax25_route *ax25_rt);
  
@@ -178,9 +178,9 @@ index 76fb39c272a7..e667bca42ca4 100644
 +
  static inline void ax25_put_route(ax25_route *ax25_rt)
  {
- 	if (refcount_dec_and_test(&ax25_rt->refcount))
+ 	if (atomic_dec_and_test(&ax25_rt->refcount))
 diff --git a/net/ax25/ax25_ip.c b/net/ax25/ax25_ip.c
-index 183b1c583d56..dd526c91363d 100644
+index 2fa3be965101..cd9a24e5b97a 100644
 --- a/net/ax25/ax25_ip.c
 +++ b/net/ax25/ax25_ip.c
 @@ -114,6 +114,7 @@ netdev_tx_t ax25_ip_xmit(struct sk_buff *skb)
@@ -203,7 +203,7 @@ index 183b1c583d56..dd526c91363d 100644
  }
  
 diff --git a/net/ax25/ax25_route.c b/net/ax25/ax25_route.c
-index 0446b892618a..7f369f1db7ae 100644
+index d39097737e38..149f82bd83fd 100644
 --- a/net/ax25/ax25_route.c
 +++ b/net/ax25/ax25_route.c
 @@ -40,7 +40,7 @@
