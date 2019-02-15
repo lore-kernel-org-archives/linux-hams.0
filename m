@@ -1,19 +1,19 @@
 From: Sasha Levin <sashal@kernel.org>
-Subject: [PATCH AUTOSEL 4.19 51/65] ax25: fix possible use-after-free
-Date: Thu, 14 Feb 2019 21:11:07 -0500
-Message-ID: <20190215021121.177674-51-sashal@kernel.org>
-References: <20190215021121.177674-1-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 4.20 59/77] ax25: fix possible use-after-free
+Date: Thu, 14 Feb 2019 21:08:37 -0500
+Message-ID: <20190215020855.176727-59-sashal@kernel.org>
+References: <20190215020855.176727-1-sashal@kernel.org>
 Mime-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Return-path: <linux-kernel-owner@vger.kernel.org>
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1550196763;
+        s=default; t=1550196634;
         bh=tlzfZaD3yhF+cemiFK+aToVNJ2JVwuvkpqwJQSh/lzg=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=NdQYiiJiwRGWKe7kteKhXkwfsyy1P+SpbOV6thB1qXwGpxDWS0LPRuVZTu0HBHR/O
-         Silh29N5FcOJnnt3jxw1SlEJd4XhqP04rIgxiH11R00RivK8HnBRcmPK9vosrGIskX
-         ppmqGV/J+VmznhFXJ32Duz0K8ACqNRQTGn82Tmho=
-In-Reply-To: <20190215021121.177674-1-sashal@kernel.org>
+        b=cvJ3nECOWcDVZgMwlGRbstDMx/5UshPNDWVF7rAFi1g2MgEZqgORWuIw7jYakLAha
+         AZ8zGX8JBJi/Hf+ZblGs3SkJTqWOuElMxENSJM3Q1Puqe5SwTXzYoC/2mKPds/ZjIC
+         311LPIaStDj9WZEwNubHw/0pvaFJ8oENpONjvBOo=
+In-Reply-To: <20190215020855.176727-1-sashal@kernel.org>
 Sender: linux-kernel-owner@vger.kernel.org
 List-ID: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
