@@ -1,40 +1,35 @@
 From: f6bvp <f6bvp@free.fr>
-Subject: [ROSE] Bug : waiting for rose module to become free
-Date: Sat, 16 Feb 2019 19:44:23 +0100
-Message-ID: <20190216194423.3727d498@draws-f6bvp>
+Subject: ax25: fix possible use-after-free
+Date: Sat, 16 Feb 2019 22:32:25 +0100
+Message-ID: <20190216223225.788b8ae7@draws-f6bvp>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 8BIT
-Return-path: <netdev-owner@vger.kernel.org>
-Sender: netdev-owner@vger.kernel.org
+Content-Transfer-Encoding: 8bit
+Return-path: <linux-kernel-owner@vger.kernel.org>
+Sender: linux-kernel-owner@vger.kernel.org
 List-ID: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"
-To: netdev@vger.kernel.org, linux-hams@vger.kernel.org
-Cc: dvyukov@google.com, richard@rns-stearn.co.uk, thomas@osterried.de, f6bvp@amsat.org
+Content-Type: text/plain; charset="utf-8"
+To: linux-kernel@vger.kernel.org, linux-hams@vger.kernel.org, linux-netdev@vger.kernel.org, Eric Dumazet <edumazet@google.com>
 
-Hi,
-A nastly bug is still pending in ROSE module that prevents it to be removed.
-When trying to remove rose module we enter into an endless loop with displayed message :
- "waiting for rose module to become free"
-A patch from Richard Stern had been committed a while ago but it did not get a chance to be applied.
+Patch applied successfully on Linux draws-f6bvp 4.14.79-v7+ #1159 SMP Sun Nov 4 17:50:20 GMT 2018 armv7l GNU/Linux
 
-https://marc.info/?l=linux-hams&m=150870350516064&w=2
+However ax25_route_lock_use and ax25_route_lock_unuse() are not declared and compile failed.
 
-Since then, there have been some changes in af_rose.c and net code architecture that prevents simply adding missing dev_put(dev) in present kernel.
+make : on entre dans le répertoire « /usr/src/linux-headers-4.14.79-v7+ »
+  CC [M]  /usr/src/linux-4.14.y/net/ax25/ax25_ip.o
+/usr/src/linux-4.14.y/net/ax25/ax25_ip.c: In function ‘ax25_ip_xmit’:
+/usr/src/linux-4.14.y/net/ax25/ax25_ip.c:117:2: error: implicit declaration of function ‘ax25_route_lock_use’ [-Werror=implicit-function-declaration]
+  ax25_route_lock_use();
+  ^~~~~~~~~~~~~~~~~~~
+/usr/src/linux-4.14.y/net/ax25/ax25_ip.c:211:2: error: implicit declaration of function ‘ax25_route_lock_unuse’ [-Werror=implicit-function-declaration]
+  ax25_route_lock_unuse();
+  ^~~~~~~~~~~~~~~~~~~~~
+cc1: some warnings being treated as errors
+scripts/Makefile.build:328 : la recette pour la cible « /usr/src/linux-4.14.y/net/ax25/ax25_ip.o » a échouée
+make[1]: *** [/usr/src/linux-4.14.y/net/ax25/ax25_ip.o] Erreur 1
+Makefile:1527 : la recette pour la cible « _module_/usr/src/linux-4.14.y/net/ax25 » a échouée
+make: *** [_module_/usr/src/linux-4.14.y/net/ax25] Erreur 2
+make : on quitte le répertoire « /usr/src/linux-headers-4.14.79-v7+ »
 
-From time to time we can observe a negative count (-1 for integer value is displayed as 65535 in /proc/net/rose_neigh) that probably means there is a bug in rose module refcount (??).
 
-/proc/net/rose_neigh
-00015 SV1HCC-9  ax0      2   1  DCE     yes   0   0
-00013 PE1OWG-11 ax0      2 65535  DCE     yes   0   0
-00011 F5KTR-11  ax0      1   1  DCE     yes   0   0
-00007 F3KT-11   ax0      2   1  DCE     yes   0   0
-00003 SK7ES-9   ax0      2   1  DTE     yes   0   0
-00002 K4GBB-9   ax0      4   0  DCE     yes   0   0
-00001 RSLOOP-0  ???      1   2  DCE     yes   0   0
-
-Help is kindly requested to get a valid patch.
-
-Bernard, 
-f6bvp
-
+Bernard, f6bvp
 
