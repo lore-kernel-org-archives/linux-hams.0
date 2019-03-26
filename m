@@ -1,164 +1,221 @@
-From: Salil Mehta <salil.mehta@huawei.com>
-Subject: RE: inconsistent lock state in ax25_std_heartbeat_expiry
-Date: Tue, 26 Mar 2019 08:38:15 +0000
-Message-ID: <ff7a386eb6164b5882471d4d7150c8cc@huawei.com>
-References: <0000000000001b07250584efbee3@google.com>
+From: Dmitry Vyukov <dvyukov@google.com>
+Subject: Re: inconsistent lock state in ax25_std_heartbeat_expiry
+Date: Tue, 26 Mar 2019 09:58:59 +0100
+Message-ID: <CACT4Y+bG0oGm5kagr1pPCxYiPw2pngnFeu2uKOtN2U05mQCRvA@mail.gmail.com>
+References: <0000000000001b07250584efbee3@google.com> <ff7a386eb6164b5882471d4d7150c8cc@huawei.com>
 Mime-Version: 1.0
-Content-Transfer-Encoding: base64
 Return-path: <linux-kernel-owner@vger.kernel.org>
-In-Reply-To: <0000000000001b07250584efbee3@google.com>
-Content-Language: en-US
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=eNU67CL3KRSSwdss3OjxyExO/2cnWeldlKeN63quYGo=;
+        b=Y/6+LuADXeTfLuYOn/bOVRy6WKfnxoOr8+EeKYJNsbh4MzOH0V4HwyRSRzlk0w2pTq
+         UX2ZLYWwewzRMbjx58WLxPI0L495JpAJQGZmDNrH2LAw3KwyJqCdCMsw6g1W3rmZlPDi
+         yHfCYs2W7IKi1FDEiuDXOKxzpwM63mbad3UxN2npO/UECp2XyJDxTcN1J8m80L7/BbZx
+         2dwKsz2sJAEvz4Om3jdBqkX7lTm2KByR2rjt+hxEunyn6RsG0XuWEOOjQhYFhvhls/bu
+         ytnv9ZAi4PmxWdBn8ZzXifE27ccuAXMuzZmuZ/mWS3qHw24XmkZLjcGdzO1VeKq0/6RQ
+         jY4g==
+In-Reply-To: <ff7a386eb6164b5882471d4d7150c8cc@huawei.com>
 Sender: linux-kernel-owner@vger.kernel.org
 List-ID: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
-To: syzbot <syzbot+e350b81e95a6a214da8a@syzkaller.appspotmail.com>, "davem@davemloft.net" <davem@davemloft.net>, "linux-hams@vger.kernel.org" <linux-hams@vger.kernel.org>, "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>, "netdev@vger.kernel.org" <netdev@vger.kernel.org>, "ralf@linux-mips.org" <ralf@linux-mips.org>, "syzkaller-bugs@googlegroups.com" <syzkaller-bugs@googlegroups.com>
+Content-Transfer-Encoding: 7bit
+To: Salil Mehta <salil.mehta@huawei.com>
+Cc: syzbot <syzbot+e350b81e95a6a214da8a@syzkaller.appspotmail.com>, "davem@davemloft.net" <davem@davemloft.net>, "linux-hams@vger.kernel.org" <linux-hams@vger.kernel.org>, "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>, "netdev@vger.kernel.org" <netdev@vger.kernel.org>, "ralf@linux-mips.org" <ralf@linux-mips.org>, "syzkaller-bugs@googlegroups.com" <syzkaller-bugs@googlegroups.com>
 
-Tm90IHJlcHJvZHVjaWJsZSBvbiBvdXIgc2V0dXAgZWl0aGVyLiBUaGFua3MgZm9yIHJlcG9ydGlu
-ZyB0aG91Z2guDQpXZSB3aWxsIGtlZXAgYW4gZXllIQ0KDQpTYWxpbC4NCj4gLS0tLS1PcmlnaW5h
-bCBNZXNzYWdlLS0tLS0NCj4gRnJvbTogbmV0ZGV2LW93bmVyQHZnZXIua2VybmVsLm9yZyBbbWFp
-bHRvOm5ldGRldi0NCj4gb3duZXJAdmdlci5rZXJuZWwub3JnXSBPbiBCZWhhbGYgT2Ygc3l6Ym90
-DQo+IFNlbnQ6IE1vbmRheSwgTWFyY2ggMjUsIDIwMTkgNjo1NSBQTQ0KPiBUbzogZGF2ZW1AZGF2
-ZW1sb2Z0Lm5ldDsgbGludXgtaGFtc0B2Z2VyLmtlcm5lbC5vcmc7IGxpbnV4LQ0KPiBrZXJuZWxA
-dmdlci5rZXJuZWwub3JnOyBuZXRkZXZAdmdlci5rZXJuZWwub3JnOyByYWxmQGxpbnV4LW1pcHMu
-b3JnOw0KPiBzeXprYWxsZXItYnVnc0Bnb29nbGVncm91cHMuY29tDQo+IFN1YmplY3Q6IGluY29u
-c2lzdGVudCBsb2NrIHN0YXRlIGluIGF4MjVfc3RkX2hlYXJ0YmVhdF9leHBpcnkNCj4gDQo+IEhl
-bGxvLA0KPiANCj4gc3l6Ym90IGZvdW5kIHRoZSBmb2xsb3dpbmcgY3Jhc2ggb246DQo+IA0KPiBI
-RUFEIGNvbW1pdDogICAgNWY1NDNhNTQgbmV0OiBobnMzOiBmaXggZm9yIG5vdCBjYWxjdWxhdGlu
-ZyB0eCBiZCBudW0NCj4gY29yci4uDQo+IGdpdCB0cmVlOiAgICAgICBuZXQNCj4gY29uc29sZSBv
-dXRwdXQ6DQo+IGh0dHBzOi8vc3l6a2FsbGVyLmFwcHNwb3QuY29tL3gvbG9nLnR4dD94PTEwYzg2
-NTJiMjAwMDAwDQo+IGtlcm5lbCBjb25maWc6DQo+IGh0dHBzOi8vc3l6a2FsbGVyLmFwcHNwb3Qu
-Y29tL3gvLmNvbmZpZz94PWYwNTkwMmJjYTIxZDg5MzUNCj4gZGFzaGJvYXJkIGxpbms6DQo+IGh0
-dHBzOi8vc3l6a2FsbGVyLmFwcHNwb3QuY29tL2J1Zz9leHRpZD1lMzUwYjgxZTk1YTZhMjE0ZGE4
-YQ0KPiBjb21waWxlcjogICAgICAgZ2NjIChHQ0MpIDkuMC4wIDIwMTgxMjMxIChleHBlcmltZW50
-YWwpDQo+IA0KPiBVbmZvcnR1bmF0ZWx5LCBJIGRvbid0IGhhdmUgYW55IHJlcHJvZHVjZXIgZm9y
-IHRoaXMgY3Jhc2ggeWV0Lg0KPiANCj4gSU1QT1JUQU5UOiBpZiB5b3UgZml4IHRoZSBidWcsIHBs
-ZWFzZSBhZGQgdGhlIGZvbGxvd2luZyB0YWcgdG8gdGhlDQo+IGNvbW1pdDoNCj4gUmVwb3J0ZWQt
-Ynk6IHN5emJvdCtlMzUwYjgxZTk1YTZhMjE0ZGE4YUBzeXprYWxsZXIuYXBwc3BvdG1haWwuY29t
-DQo+IA0KPiBicmlkZ2UwOiByZWNlaXZlZCBwYWNrZXQgb24gYnJpZGdlX3NsYXZlXzAgd2l0aCBv
-d24gYWRkcmVzcyBhcyBzb3VyY2UNCj4gYWRkcmVzcyAoYWRkcjphYTphYTphYTphYTphYToxYiwg
-dmxhbjowKQ0KPiBicmlkZ2UwOiByZWNlaXZlZCBwYWNrZXQgb24gdmV0aDBfdG9fYnJpZGdlIHdp
-dGggb3duIGFkZHJlc3MgYXMgc291cmNlDQo+IGFkZHJlc3MgKGFkZHI6NjY6NTY6MjE6NzQ6MTQ6
-ZGYsIHZsYW46MCkNCj4gYnJpZGdlMDogcmVjZWl2ZWQgcGFja2V0IG9uIGJyaWRnZV9zbGF2ZV8w
-IHdpdGggb3duIGFkZHJlc3MgYXMgc291cmNlDQo+IGFkZHJlc3MgKGFkZHI6YWE6YWE6YWE6YWE6
-YWE6MGMsIHZsYW46MCkNCj4gPT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT0NCj4gV0FS
-TklORzogaW5jb25zaXN0ZW50IGxvY2sgc3RhdGUNCj4gNS4wLjArICMxMzQgTm90IHRhaW50ZWQN
-Cj4gLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0NCj4gaW5jb25zaXN0ZW50IHtTT0ZU
-SVJRLU9OLVd9IC0+IHtJTi1TT0ZUSVJRLVd9IHVzYWdlLg0KPiBrc29mdGlycWQvMS8xNiBbSEMw
-WzBdOlNDMVsxXTpIRTE6U0UwXSB0YWtlczoNCj4gMDAwMDAwMDA4MjgyYTdkNCAoc2xvY2stQUZf
-QVgyNSl7Ky4/Ln0sIGF0OiBzcGluX2xvY2sNCj4gaW5jbHVkZS9saW51eC9zcGlubG9jay5oOjMy
-OSBbaW5saW5lXQ0KPiAwMDAwMDAwMDgyODJhN2Q0IChzbG9jay1BRl9BWDI1KXsrLj8ufSwgYXQ6
-DQo+IGF4MjVfc3RkX2hlYXJ0YmVhdF9leHBpcnkrMHg1ZC8weDNlMCBuZXQvYXgyNS9heDI1X3N0
-ZF90aW1lci5jOjM3DQo+IHtTT0ZUSVJRLU9OLVd9IHN0YXRlIHdhcyByZWdpc3RlcmVkIGF0Og0K
-PiAgICBsb2NrX2FjcXVpcmUrMHgxNmYvMHgzZjAga2VybmVsL2xvY2tpbmcvbG9ja2RlcC5jOjQy
-MTENCj4gICAgX19yYXdfc3Bpbl9sb2NrIGluY2x1ZGUvbGludXgvc3BpbmxvY2tfYXBpX3NtcC5o
-OjE0MiBbaW5saW5lXQ0KPiAgICBfcmF3X3NwaW5fbG9jaysweDJmLzB4NDAga2VybmVsL2xvY2tp
-bmcvc3BpbmxvY2suYzoxNDQNCj4gICAgc3Bpbl9sb2NrIGluY2x1ZGUvbGludXgvc3BpbmxvY2su
-aDozMjkgW2lubGluZV0NCj4gICAgYXgyNV9ydF9hdXRvYmluZCsweDNjYS8weDcyMCBuZXQvYXgy
-NS9heDI1X3JvdXRlLmM6NDMyDQo+ICAgIGF4MjVfY29ubmVjdC5jb2xkKzB4MzAvMHhhNCBuZXQv
-YXgyNS9hZl9heDI1LmM6MTIyNA0KPiAgICBfX3N5c19jb25uZWN0KzB4MjY2LzB4MzMwIG5ldC9z
-b2NrZXQuYzoxODA4DQo+ICAgIF9fZG9fc3lzX2Nvbm5lY3QgbmV0L3NvY2tldC5jOjE4MTkgW2lu
-bGluZV0NCj4gICAgX19zZV9zeXNfY29ubmVjdCBuZXQvc29ja2V0LmM6MTgxNiBbaW5saW5lXQ0K
-PiAgICBfX3g2NF9zeXNfY29ubmVjdCsweDczLzB4YjAgbmV0L3NvY2tldC5jOjE4MTYNCj4gICAg
-ZG9fc3lzY2FsbF82NCsweDEwMy8weDYxMCBhcmNoL3g4Ni9lbnRyeS9jb21tb24uYzoyOTANCj4g
-ICAgZW50cnlfU1lTQ0FMTF82NF9hZnRlcl9od2ZyYW1lKzB4NDkvMHhiZQ0KPiBpcnEgZXZlbnQg
-c3RhbXA6IDI5Njg2ODExMA0KPiBoYXJkaXJxcyBsYXN0ICBlbmFibGVkIGF0ICgyOTY4NjgxMTAp
-OiBbPGZmZmZmZmZmODcwZjFhZDg+XQ0KPiBfX3Jhd19zcGluX3VubG9ja19pcnEgaW5jbHVkZS9s
-aW51eC9zcGlubG9ja19hcGlfc21wLmg6MTY4IFtpbmxpbmVdDQo+IGhhcmRpcnFzIGxhc3QgIGVu
-YWJsZWQgYXQgKDI5Njg2ODExMCk6IFs8ZmZmZmZmZmY4NzBmMWFkOD5dDQo+IF9yYXdfc3Bpbl91
-bmxvY2tfaXJxKzB4MjgvMHg5MCBrZXJuZWwvbG9ja2luZy9zcGlubG9jay5jOjE5Mg0KPiBoYXJk
-aXJxcyBsYXN0IGRpc2FibGVkIGF0ICgyOTY4NjgxMDkpOiBbPGZmZmZmZmZmODcwZjFjNGE+XQ0K
-PiBfX3Jhd19zcGluX2xvY2tfaXJxIGluY2x1ZGUvbGludXgvc3BpbmxvY2tfYXBpX3NtcC5oOjEy
-NiBbaW5saW5lXQ0KPiBoYXJkaXJxcyBsYXN0IGRpc2FibGVkIGF0ICgyOTY4NjgxMDkpOiBbPGZm
-ZmZmZmZmODcwZjFjNGE+XQ0KPiBfcmF3X3NwaW5fbG9ja19pcnErMHgzYS8weDgwIGtlcm5lbC9s
-b2NraW5nL3NwaW5sb2NrLmM6MTYwDQo+IHNvZnRpcnFzIGxhc3QgIGVuYWJsZWQgYXQgKDI5Njg2
-ODEwMik6IFs8ZmZmZmZmZmY4NzQwMDY2Mj5dDQo+IF9fZG9fc29mdGlycSsweDY2Mi8weDk1YSBr
-ZXJuZWwvc29mdGlycS5jOjMyMA0KPiBzb2Z0aXJxcyBsYXN0IGRpc2FibGVkIGF0ICgyOTY4Njgx
-MDcpOiBbPGZmZmZmZmZmODE0NGM4YWU+XQ0KPiBydW5fa3NvZnRpcnFkDQo+IGtlcm5lbC9zb2Z0
-aXJxLmM6NjU1IFtpbmxpbmVdDQo+IHNvZnRpcnFzIGxhc3QgZGlzYWJsZWQgYXQgKDI5Njg2ODEw
-Nyk6IFs8ZmZmZmZmZmY4MTQ0YzhhZT5dDQo+IHJ1bl9rc29mdGlycWQrMHg4ZS8weDExMCBrZXJu
-ZWwvc29mdGlycS5jOjY0Nw0KPiANCj4gb3RoZXIgaW5mbyB0aGF0IG1pZ2h0IGhlbHAgdXMgZGVi
-dWcgdGhpczoNCj4gICBQb3NzaWJsZSB1bnNhZmUgbG9ja2luZyBzY2VuYXJpbzoNCj4gDQo+ICAg
-ICAgICAgQ1BVMA0KPiAgICAgICAgIC0tLS0NCj4gICAgbG9jayhzbG9jay1BRl9BWDI1KTsNCj4g
-ICAgPEludGVycnVwdD4NCj4gICAgICBsb2NrKHNsb2NrLUFGX0FYMjUpOw0KPiANCj4gICAqKiog
-REVBRExPQ0sgKioqDQo+IA0KPiAxIGxvY2sgaGVsZCBieSBrc29mdGlycWQvMS8xNjoNCj4gICAj
-MDogMDAwMDAwMDA2NTQ5MjFjMyAoKCZheDI1LT50aW1lcikpeysuLS59LCBhdDogbG9ja2RlcF9j
-b3B5X21hcA0KPiBpbmNsdWRlL2xpbnV4L2xvY2tkZXAuaDoxNzAgW2lubGluZV0NCj4gICAjMDog
-MDAwMDAwMDA2NTQ5MjFjMyAoKCZheDI1LT50aW1lcikpeysuLS59LCBhdDoNCj4gY2FsbF90aW1l
-cl9mbisweGRhLzB4NzIwDQo+IGtlcm5lbC90aW1lL3RpbWVyLmM6MTMxNQ0KPiANCj4gc3RhY2sg
-YmFja3RyYWNlOg0KPiBDUFU6IDEgUElEOiAxNiBDb21tOiBrc29mdGlycWQvMSBOb3QgdGFpbnRl
-ZCA1LjAuMCsgIzEzNA0KPiBIYXJkd2FyZSBuYW1lOiBHb29nbGUgR29vZ2xlIENvbXB1dGUgRW5n
-aW5lL0dvb2dsZSBDb21wdXRlIEVuZ2luZSwgQklPUw0KPiBHb29nbGUgMDEvMDEvMjAxMQ0KPiBD
-YWxsIFRyYWNlOg0KPiAgIF9fZHVtcF9zdGFjayBsaWIvZHVtcF9zdGFjay5jOjc3IFtpbmxpbmVd
-DQo+ICAgZHVtcF9zdGFjaysweDE3Mi8weDFmMCBsaWIvZHVtcF9zdGFjay5jOjExMw0KPiAgIHBy
-aW50X3VzYWdlX2J1Zy5jb2xkKzB4MzMwLzB4NDJhIGtlcm5lbC9sb2NraW5nL2xvY2tkZXAuYzoy
-ODM5DQo+ICAgdmFsaWRfc3RhdGUga2VybmVsL2xvY2tpbmcvbG9ja2RlcC5jOjI4NTIgW2lubGlu
-ZV0NCj4gICBtYXJrX2xvY2tfaXJxIGtlcm5lbC9sb2NraW5nL2xvY2tkZXAuYzozMDQ2IFtpbmxp
-bmVdDQo+ICAgbWFya19sb2NrKzB4ZDU4LzB4MTM4MCBrZXJuZWwvbG9ja2luZy9sb2NrZGVwLmM6
-MzQyMQ0KPiAgIG1hcmtfaXJxZmxhZ3Mga2VybmVsL2xvY2tpbmcvbG9ja2RlcC5jOjMyOTkgW2lu
-bGluZV0NCj4gICBfX2xvY2tfYWNxdWlyZSsweDE2NTQvMHgzZmIwIGtlcm5lbC9sb2NraW5nL2xv
-Y2tkZXAuYzozNjUzDQo+ICAgbG9ja19hY3F1aXJlKzB4MTZmLzB4M2YwIGtlcm5lbC9sb2NraW5n
-L2xvY2tkZXAuYzo0MjExDQo+ICAgX19yYXdfc3Bpbl9sb2NrIGluY2x1ZGUvbGludXgvc3Bpbmxv
-Y2tfYXBpX3NtcC5oOjE0MiBbaW5saW5lXQ0KPiAgIF9yYXdfc3Bpbl9sb2NrKzB4MmYvMHg0MCBr
-ZXJuZWwvbG9ja2luZy9zcGlubG9jay5jOjE0NA0KPiAgIHNwaW5fbG9jayBpbmNsdWRlL2xpbnV4
-L3NwaW5sb2NrLmg6MzI5IFtpbmxpbmVdDQo+ICAgYXgyNV9zdGRfaGVhcnRiZWF0X2V4cGlyeSsw
-eDVkLzB4M2UwIG5ldC9heDI1L2F4MjVfc3RkX3RpbWVyLmM6MzcNCj4gICBheDI1X2hlYXJ0YmVh
-dF9leHBpcnkrMHhmMy8weDEyMCBuZXQvYXgyNS9heDI1X3RpbWVyLmM6MTQxDQo+ICAgY2FsbF90
-aW1lcl9mbisweDE5MC8weDcyMCBrZXJuZWwvdGltZS90aW1lci5jOjEzMjUNCj4gICBleHBpcmVf
-dGltZXJzIGtlcm5lbC90aW1lL3RpbWVyLmM6MTM2MiBbaW5saW5lXQ0KPiAgIF9fcnVuX3RpbWVy
-cyBrZXJuZWwvdGltZS90aW1lci5jOjE2ODEgW2lubGluZV0NCj4gICBfX3J1bl90aW1lcnMga2Vy
-bmVsL3RpbWUvdGltZXIuYzoxNjQ5IFtpbmxpbmVdDQo+ICAgcnVuX3RpbWVyX3NvZnRpcnErMHg2
-NTIvMHgxNzAwIGtlcm5lbC90aW1lL3RpbWVyLmM6MTY5NA0KPiAgIF9fZG9fc29mdGlycSsweDI2
-Ni8weDk1YSBrZXJuZWwvc29mdGlycS5jOjI5Mw0KPiAgIHJ1bl9rc29mdGlycWQga2VybmVsL3Nv
-ZnRpcnEuYzo2NTUgW2lubGluZV0NCj4gICBydW5fa3NvZnRpcnFkKzB4OGUvMHgxMTAga2VybmVs
-L3NvZnRpcnEuYzo2NDcNCj4gICBzbXBib290X3RocmVhZF9mbisweDZhYi8weGExMCBrZXJuZWwv
-c21wYm9vdC5jOjE2NA0KPiAgIGt0aHJlYWQrMHgzNTcvMHg0MzAga2VybmVsL2t0aHJlYWQuYzoy
-NTMNCj4gICByZXRfZnJvbV9mb3JrKzB4M2EvMHg1MCBhcmNoL3g4Ni9lbnRyeS9lbnRyeV82NC5T
-OjM1Mg0KPiBuZXRfcmF0ZWxpbWl0OiAyMTYxMyBjYWxsYmFja3Mgc3VwcHJlc3NlZA0KPiBicmlk
-Z2UwOiByZWNlaXZlZCBwYWNrZXQgb24gdmV0aDBfdG9fYnJpZGdlIHdpdGggb3duIGFkZHJlc3Mg
-YXMgc291cmNlDQo+IGFkZHJlc3MgKGFkZHI6NjY6NTY6MjE6NzQ6MTQ6ZGYsIHZsYW46MCkNCj4g
-YnJpZGdlMDogcmVjZWl2ZWQgcGFja2V0IG9uIGJyaWRnZV9zbGF2ZV8wIHdpdGggb3duIGFkZHJl
-c3MgYXMgc291cmNlDQo+IGFkZHJlc3MgKGFkZHI6YWE6YWE6YWE6YWE6YWE6MGMsIHZsYW46MCkN
-Cj4gYnJpZGdlMDogcmVjZWl2ZWQgcGFja2V0IG9uIHZldGgwX3RvX2JyaWRnZSB3aXRoIG93biBh
-ZGRyZXNzIGFzIHNvdXJjZQ0KPiBhZGRyZXNzIChhZGRyOmFhOmFhOmFhOmFhOmFhOjBjLCB2bGFu
-OjApDQo+IGJyaWRnZTA6IHJlY2VpdmVkIHBhY2tldCBvbiB2ZXRoMF90b19icmlkZ2Ugd2l0aCBv
-d24gYWRkcmVzcyBhcyBzb3VyY2UNCj4gYWRkcmVzcyAoYWRkcjo2Njo1NjoyMTo3NDoxNDpkZiwg
-dmxhbjowKQ0KPiBicmlkZ2UwOiByZWNlaXZlZCBwYWNrZXQgb24gYnJpZGdlX3NsYXZlXzAgd2l0
-aCBvd24gYWRkcmVzcyBhcyBzb3VyY2UNCj4gYWRkcmVzcyAoYWRkcjphYTphYTphYTphYTphYTox
-YiwgdmxhbjowKQ0KPiBicmlkZ2UwOiByZWNlaXZlZCBwYWNrZXQgb24gYnJpZGdlX3NsYXZlXzAg
-d2l0aCBvd24gYWRkcmVzcyBhcyBzb3VyY2UNCj4gYWRkcmVzcyAoYWRkcjphYTphYTphYTphYTph
-YToxYiwgdmxhbjowKQ0KPiBicmlkZ2UwOiByZWNlaXZlZCBwYWNrZXQgb24gYnJpZGdlX3NsYXZl
-XzAgd2l0aCBvd24gYWRkcmVzcyBhcyBzb3VyY2UNCj4gYWRkcmVzcyAoYWRkcjphYTphYTphYTph
-YTphYToxYiwgdmxhbjowKQ0KPiBicmlkZ2UwOiByZWNlaXZlZCBwYWNrZXQgb24gYnJpZGdlX3Ns
-YXZlXzAgd2l0aCBvd24gYWRkcmVzcyBhcyBzb3VyY2UNCj4gYWRkcmVzcyAoYWRkcjphYTphYTph
-YTphYTphYToxYiwgdmxhbjowKQ0KPiBicmlkZ2UwOiByZWNlaXZlZCBwYWNrZXQgb24gYnJpZGdl
-X3NsYXZlXzAgd2l0aCBvd24gYWRkcmVzcyBhcyBzb3VyY2UNCj4gYWRkcmVzcyAoYWRkcjphYTph
-YTphYTphYTphYTowYywgdmxhbjowKQ0KPiBicmlkZ2UwOiByZWNlaXZlZCBwYWNrZXQgb24gdmV0
-aDBfdG9fYnJpZGdlIHdpdGggb3duIGFkZHJlc3MgYXMgc291cmNlDQo+IGFkZHJlc3MgKGFkZHI6
-YWE6YWE6YWE6YWE6YWE6MGMsIHZsYW46MCkNCj4gbmV0X3JhdGVsaW1pdDogMTY0MDcgY2FsbGJh
-Y2tzIHN1cHByZXNzZWQNCj4gYnJpZGdlMDogcmVjZWl2ZWQgcGFja2V0IG9uIGJyaWRnZV9zbGF2
-ZV8wIHdpdGggb3duIGFkZHJlc3MgYXMgc291cmNlDQo+IGFkZHJlc3MgKGFkZHI6YWE6YWE6YWE6
-YWE6YWE6MWIsIHZsYW46MCkNCj4gYnJpZGdlMDogcmVjZWl2ZWQgcGFja2V0IG9uIGJyaWRnZV9z
-bGF2ZV8wIHdpdGggb3duIGFkZHJlc3MgYXMgc291cmNlDQo+IGFkZHJlc3MgKGFkZHI6YWE6YWE6
-YWE6YWE6YWE6MWIsIHZsYW46MCkNCj4gYnJpZGdlMDogcmVjZWl2ZWQgcGFja2V0IG9uIGJyaWRn
-ZV9zbGF2ZV8wIHdpdGggb3duIGFkZHJlc3MgYXMgc291cmNlDQo+IGFkZHJlc3MgKGFkZHI6YWE6
-YWE6YWE6YWE6YWE6MWIsIHZsYW46MCkNCj4gYnJpZGdlMDogcmVjZWl2ZWQgcGFja2V0IG9uIGJy
-aWRnZV9zbGF2ZV8wIHdpdGggb3duIGFkZHJlc3MgYXMgc291cmNlDQo+IGFkZHJlc3MgKGFkZHI6
-YWE6YWE6YWE6YWE6YWE6MGMsIHZsYW46MCkNCj4gYnJpZGdlMDogcmVjZWl2ZWQgcGFja2V0IG9u
-IHZldGgwX3RvX2JyaWRnZSB3aXRoIG93biBhZGRyZXNzIGFzIHNvdXJjZQ0KPiBhZGRyZXNzIChh
-ZGRyOmFhOmFhOmFhOmFhOmFhOjBjLCB2bGFuOjApDQo+IGJyaWRnZTA6IHJlY2VpdmVkIHBhY2tl
-dCBvbiBicmlkZ2Vfc2xhdmVfMCB3aXRoIG93biBhZGRyZXNzIGFzIHNvdXJjZQ0KPiBhZGRyZXNz
-IChhZGRyOmFhOmFhOmFhOmFhOmFhOjFiLCB2bGFuOjApDQo+IGJyaWRnZTA6IHJlY2VpdmVkIHBh
-Y2tldCBvbiB2ZXRoMF90b19icmlkZ2Ugd2l0aCBvd24gYWRkcmVzcyBhcyBzb3VyY2UNCj4gYWRk
-cmVzcyAoYWRkcjo2Njo1NjoyMTo3NDoxNDpkZiwgdmxhbjowKQ0KPiBicmlkZ2UwOiByZWNlaXZl
-ZCBwYWNrZXQgb24gYnJpZGdlX3NsYXZlXzAgd2l0aCBvd24gYWRkcmVzcyBhcyBzb3VyY2UNCj4g
-YWRkcmVzcyAoYWRkcjphYTphYTphYTphYTphYTowYywgdmxhbjowKQ0KPiBicmlkZ2UwOiByZWNl
-aXZlZCBwYWNrZXQgb24gdmV0aDBfdG9fYnJpZGdlIHdpdGggb3duIGFkZHJlc3MgYXMgc291cmNl
-DQo+IGFkZHJlc3MgKGFkZHI6YWE6YWE6YWE6YWE6YWE6MGMsIHZsYW46MCkNCj4gYnJpZGdlMDog
-cmVjZWl2ZWQgcGFja2V0IG9uIHZldGgwX3RvX2JyaWRnZSB3aXRoIG93biBhZGRyZXNzIGFzIHNv
-dXJjZQ0KPiBhZGRyZXNzIChhZGRyOjY2OjU2OjIxOjc0OjE0OmRmLCB2bGFuOjApDQo+IA0KPiAN
-Cj4gLS0tDQo+IFRoaXMgYnVnIGlzIGdlbmVyYXRlZCBieSBhIGJvdC4gSXQgbWF5IGNvbnRhaW4g
-ZXJyb3JzLg0KPiBTZWUgaHR0cHM6Ly9nb28uZ2wvdHBzbUVKIGZvciBtb3JlIGluZm9ybWF0aW9u
-IGFib3V0IHN5emJvdC4NCj4gc3l6Ym90IGVuZ2luZWVycyBjYW4gYmUgcmVhY2hlZCBhdCBzeXpr
-YWxsZXJAZ29vZ2xlZ3JvdXBzLmNvbS4NCj4gDQo+IHN5emJvdCB3aWxsIGtlZXAgdHJhY2sgb2Yg
-dGhpcyBidWcgcmVwb3J0LiBTZWU6DQo+IGh0dHBzOi8vZ29vLmdsL3Rwc21FSiNzdGF0dXMgZm9y
-IGhvdyB0byBjb21tdW5pY2F0ZSB3aXRoIHN5emJvdC4NCg==
+On Tue, Mar 26, 2019 at 9:38 AM Salil Mehta <salil.mehta@huawei.com> wrote:
+>
+> Not reproducible on our setup either. Thanks for reporting though.
+> We will keep an eye!
+
+Hi Salil,
+
+Shouldn't these lockdep reports be self-explanatory without
+reproduction? The report contains stacks for both SOFTIRQ-ON-W and
+IN-SOFTIRQ-W contexts. So provided the lockdep report is not badly
+broken in itself, that should be enough explanation of the problem. Or
+I am missing something?
+
+
+> > -----Original Message-----
+> > From: netdev-owner@vger.kernel.org [mailto:netdev-
+> > owner@vger.kernel.org] On Behalf Of syzbot
+> > Sent: Monday, March 25, 2019 6:55 PM
+> > To: davem@davemloft.net; linux-hams@vger.kernel.org; linux-
+> > kernel@vger.kernel.org; netdev@vger.kernel.org; ralf@linux-mips.org;
+> > syzkaller-bugs@googlegroups.com
+> > Subject: inconsistent lock state in ax25_std_heartbeat_expiry
+> >
+> > Hello,
+> >
+> > syzbot found the following crash on:
+> >
+> > HEAD commit:    5f543a54 net: hns3: fix for not calculating tx bd num
+> > corr..
+> > git tree:       net
+> > console output:
+> > https://syzkaller.appspot.com/x/log.txt?x=10c8652b200000
+> > kernel config:
+> > https://syzkaller.appspot.com/x/.config?x=f05902bca21d8935
+> > dashboard link:
+> > https://syzkaller.appspot.com/bug?extid=e350b81e95a6a214da8a
+> > compiler:       gcc (GCC) 9.0.0 20181231 (experimental)
+> >
+> > Unfortunately, I don't have any reproducer for this crash yet.
+> >
+> > IMPORTANT: if you fix the bug, please add the following tag to the
+> > commit:
+> > Reported-by: syzbot+e350b81e95a6a214da8a@syzkaller.appspotmail.com
+> >
+> > bridge0: received packet on bridge_slave_0 with own address as source
+> > address (addr:aa:aa:aa:aa:aa:1b, vlan:0)
+> > bridge0: received packet on veth0_to_bridge with own address as source
+> > address (addr:66:56:21:74:14:df, vlan:0)
+> > bridge0: received packet on bridge_slave_0 with own address as source
+> > address (addr:aa:aa:aa:aa:aa:0c, vlan:0)
+> > ================================
+> > WARNING: inconsistent lock state
+> > 5.0.0+ #134 Not tainted
+> > --------------------------------
+> > inconsistent {SOFTIRQ-ON-W} -> {IN-SOFTIRQ-W} usage.
+> > ksoftirqd/1/16 [HC0[0]:SC1[1]:HE1:SE0] takes:
+> > 000000008282a7d4 (slock-AF_AX25){+.?.}, at: spin_lock
+> > include/linux/spinlock.h:329 [inline]
+> > 000000008282a7d4 (slock-AF_AX25){+.?.}, at:
+> > ax25_std_heartbeat_expiry+0x5d/0x3e0 net/ax25/ax25_std_timer.c:37
+> > {SOFTIRQ-ON-W} state was registered at:
+> >    lock_acquire+0x16f/0x3f0 kernel/locking/lockdep.c:4211
+> >    __raw_spin_lock include/linux/spinlock_api_smp.h:142 [inline]
+> >    _raw_spin_lock+0x2f/0x40 kernel/locking/spinlock.c:144
+> >    spin_lock include/linux/spinlock.h:329 [inline]
+> >    ax25_rt_autobind+0x3ca/0x720 net/ax25/ax25_route.c:432
+> >    ax25_connect.cold+0x30/0xa4 net/ax25/af_ax25.c:1224
+> >    __sys_connect+0x266/0x330 net/socket.c:1808
+> >    __do_sys_connect net/socket.c:1819 [inline]
+> >    __se_sys_connect net/socket.c:1816 [inline]
+> >    __x64_sys_connect+0x73/0xb0 net/socket.c:1816
+> >    do_syscall_64+0x103/0x610 arch/x86/entry/common.c:290
+> >    entry_SYSCALL_64_after_hwframe+0x49/0xbe
+> > irq event stamp: 296868110
+> > hardirqs last  enabled at (296868110): [<ffffffff870f1ad8>]
+> > __raw_spin_unlock_irq include/linux/spinlock_api_smp.h:168 [inline]
+> > hardirqs last  enabled at (296868110): [<ffffffff870f1ad8>]
+> > _raw_spin_unlock_irq+0x28/0x90 kernel/locking/spinlock.c:192
+> > hardirqs last disabled at (296868109): [<ffffffff870f1c4a>]
+> > __raw_spin_lock_irq include/linux/spinlock_api_smp.h:126 [inline]
+> > hardirqs last disabled at (296868109): [<ffffffff870f1c4a>]
+> > _raw_spin_lock_irq+0x3a/0x80 kernel/locking/spinlock.c:160
+> > softirqs last  enabled at (296868102): [<ffffffff87400662>]
+> > __do_softirq+0x662/0x95a kernel/softirq.c:320
+> > softirqs last disabled at (296868107): [<ffffffff8144c8ae>]
+> > run_ksoftirqd
+> > kernel/softirq.c:655 [inline]
+> > softirqs last disabled at (296868107): [<ffffffff8144c8ae>]
+> > run_ksoftirqd+0x8e/0x110 kernel/softirq.c:647
+> >
+> > other info that might help us debug this:
+> >   Possible unsafe locking scenario:
+> >
+> >         CPU0
+> >         ----
+> >    lock(slock-AF_AX25);
+> >    <Interrupt>
+> >      lock(slock-AF_AX25);
+> >
+> >   *** DEADLOCK ***
+> >
+> > 1 lock held by ksoftirqd/1/16:
+> >   #0: 00000000654921c3 ((&ax25->timer)){+.-.}, at: lockdep_copy_map
+> > include/linux/lockdep.h:170 [inline]
+> >   #0: 00000000654921c3 ((&ax25->timer)){+.-.}, at:
+> > call_timer_fn+0xda/0x720
+> > kernel/time/timer.c:1315
+> >
+> > stack backtrace:
+> > CPU: 1 PID: 16 Comm: ksoftirqd/1 Not tainted 5.0.0+ #134
+> > Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS
+> > Google 01/01/2011
+> > Call Trace:
+> >   __dump_stack lib/dump_stack.c:77 [inline]
+> >   dump_stack+0x172/0x1f0 lib/dump_stack.c:113
+> >   print_usage_bug.cold+0x330/0x42a kernel/locking/lockdep.c:2839
+> >   valid_state kernel/locking/lockdep.c:2852 [inline]
+> >   mark_lock_irq kernel/locking/lockdep.c:3046 [inline]
+> >   mark_lock+0xd58/0x1380 kernel/locking/lockdep.c:3421
+> >   mark_irqflags kernel/locking/lockdep.c:3299 [inline]
+> >   __lock_acquire+0x1654/0x3fb0 kernel/locking/lockdep.c:3653
+> >   lock_acquire+0x16f/0x3f0 kernel/locking/lockdep.c:4211
+> >   __raw_spin_lock include/linux/spinlock_api_smp.h:142 [inline]
+> >   _raw_spin_lock+0x2f/0x40 kernel/locking/spinlock.c:144
+> >   spin_lock include/linux/spinlock.h:329 [inline]
+> >   ax25_std_heartbeat_expiry+0x5d/0x3e0 net/ax25/ax25_std_timer.c:37
+> >   ax25_heartbeat_expiry+0xf3/0x120 net/ax25/ax25_timer.c:141
+> >   call_timer_fn+0x190/0x720 kernel/time/timer.c:1325
+> >   expire_timers kernel/time/timer.c:1362 [inline]
+> >   __run_timers kernel/time/timer.c:1681 [inline]
+> >   __run_timers kernel/time/timer.c:1649 [inline]
+> >   run_timer_softirq+0x652/0x1700 kernel/time/timer.c:1694
+> >   __do_softirq+0x266/0x95a kernel/softirq.c:293
+> >   run_ksoftirqd kernel/softirq.c:655 [inline]
+> >   run_ksoftirqd+0x8e/0x110 kernel/softirq.c:647
+> >   smpboot_thread_fn+0x6ab/0xa10 kernel/smpboot.c:164
+> >   kthread+0x357/0x430 kernel/kthread.c:253
+> >   ret_from_fork+0x3a/0x50 arch/x86/entry/entry_64.S:352
+> > net_ratelimit: 21613 callbacks suppressed
+> > bridge0: received packet on veth0_to_bridge with own address as source
+> > address (addr:66:56:21:74:14:df, vlan:0)
+> > bridge0: received packet on bridge_slave_0 with own address as source
+> > address (addr:aa:aa:aa:aa:aa:0c, vlan:0)
+> > bridge0: received packet on veth0_to_bridge with own address as source
+> > address (addr:aa:aa:aa:aa:aa:0c, vlan:0)
+> > bridge0: received packet on veth0_to_bridge with own address as source
+> > address (addr:66:56:21:74:14:df, vlan:0)
+> > bridge0: received packet on bridge_slave_0 with own address as source
+> > address (addr:aa:aa:aa:aa:aa:1b, vlan:0)
+> > bridge0: received packet on bridge_slave_0 with own address as source
+> > address (addr:aa:aa:aa:aa:aa:1b, vlan:0)
+> > bridge0: received packet on bridge_slave_0 with own address as source
+> > address (addr:aa:aa:aa:aa:aa:1b, vlan:0)
+> > bridge0: received packet on bridge_slave_0 with own address as source
+> > address (addr:aa:aa:aa:aa:aa:1b, vlan:0)
+> > bridge0: received packet on bridge_slave_0 with own address as source
+> > address (addr:aa:aa:aa:aa:aa:0c, vlan:0)
+> > bridge0: received packet on veth0_to_bridge with own address as source
+> > address (addr:aa:aa:aa:aa:aa:0c, vlan:0)
+> > net_ratelimit: 16407 callbacks suppressed
+> > bridge0: received packet on bridge_slave_0 with own address as source
+> > address (addr:aa:aa:aa:aa:aa:1b, vlan:0)
+> > bridge0: received packet on bridge_slave_0 with own address as source
+> > address (addr:aa:aa:aa:aa:aa:1b, vlan:0)
+> > bridge0: received packet on bridge_slave_0 with own address as source
+> > address (addr:aa:aa:aa:aa:aa:1b, vlan:0)
+> > bridge0: received packet on bridge_slave_0 with own address as source
+> > address (addr:aa:aa:aa:aa:aa:0c, vlan:0)
+> > bridge0: received packet on veth0_to_bridge with own address as source
+> > address (addr:aa:aa:aa:aa:aa:0c, vlan:0)
+> > bridge0: received packet on bridge_slave_0 with own address as source
+> > address (addr:aa:aa:aa:aa:aa:1b, vlan:0)
+> > bridge0: received packet on veth0_to_bridge with own address as source
+> > address (addr:66:56:21:74:14:df, vlan:0)
+> > bridge0: received packet on bridge_slave_0 with own address as source
+> > address (addr:aa:aa:aa:aa:aa:0c, vlan:0)
+> > bridge0: received packet on veth0_to_bridge with own address as source
+> > address (addr:aa:aa:aa:aa:aa:0c, vlan:0)
+> > bridge0: received packet on veth0_to_bridge with own address as source
+> > address (addr:66:56:21:74:14:df, vlan:0)
+> >
+> >
+> > ---
+> > This bug is generated by a bot. It may contain errors.
+> > See https://goo.gl/tpsmEJ for more information about syzbot.
+> > syzbot engineers can be reached at syzkaller@googlegroups.com.
+> >
+> > syzbot will keep track of this bug report. See:
+> > https://goo.gl/tpsmEJ#status for how to communicate with syzbot.
+>
+> --
+> You received this message because you are subscribed to the Google Groups "syzkaller-bugs" group.
+> To unsubscribe from this group and stop receiving emails from it, send an email to syzkaller-bugs+unsubscribe@googlegroups.com.
+> To view this discussion on the web visit https://groups.google.com/d/msgid/syzkaller-bugs/ff7a386eb6164b5882471d4d7150c8cc%40huawei.com.
+> For more options, visit https://groups.google.com/d/optout.
