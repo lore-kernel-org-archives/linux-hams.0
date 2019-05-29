@@ -1,7 +1,7 @@
-From: syzbot <syzbot+d6636a36d3c34bd88938@syzkaller.appspotmail.com>
-Subject: memory leak in nr_rx_frame
-Date: Mon, 27 May 2019 18:58:04 -0700
-Message-ID: <000000000000da88840589e8fe2c@google.com>
+From: syzbot <syzbot+470d1a4a7b7a7c225881@syzkaller.appspotmail.com>
+Subject: memory leak in nr_loopback_queue
+Date: Wed, 29 May 2019 13:18:05 -0700
+Message-ID: <000000000000a7f012058a0c7a65@google.com>
 Mime-Version: 1.0
 Return-path: <linux-kernel-owner@vger.kernel.org>
 Sender: linux-kernel-owner@vger.kernel.org
@@ -14,109 +14,54 @@ Hello,
 
 syzbot found the following crash on:
 
-HEAD commit:    c5b44095 Merge tag 'trace-v5.2-rc1-2' of git://git.kernel...
+HEAD commit:    9fb67d64 Merge tag 'pinctrl-v5.2-2' of git://git.kernel.or..
 git tree:       upstream
-console output: https://syzkaller.appspot.com/x/log.txt?x=135dcac4a00000
-kernel config:  https://syzkaller.appspot.com/x/.config?x=61dd9e15a761691d
-dashboard link: https://syzkaller.appspot.com/bug?extid=d6636a36d3c34bd88938
+console output: https://syzkaller.appspot.com/x/log.txt?x=15956d52a00000
+kernel config:  https://syzkaller.appspot.com/x/.config?x=64479170dcaf0e11
+dashboard link: https://syzkaller.appspot.com/bug?extid=470d1a4a7b7a7c225881
 compiler:       gcc (GCC) 9.0.0 20181231 (experimental)
-syz repro:      https://syzkaller.appspot.com/x/repro.syz?x=159ca182a00000
-C reproducer:   https://syzkaller.appspot.com/x/repro.c?x=13ac4c5ca00000
+syz repro:      https://syzkaller.appspot.com/x/repro.syz?x=11bc96a2a00000
 
 IMPORTANT: if you fix the bug, please add the following tag to the commit:
-Reported-by: syzbot+d6636a36d3c34bd88938@syzkaller.appspotmail.com
+Reported-by: syzbot+470d1a4a7b7a7c225881@syzkaller.appspotmail.com
 
-DRCONF(NETDEV_CHANGE): hsr_slave_0: link becomes ready
-executing program
-executing program
+2019/05/29 16:46:11 executed programs: 584
+2019/05/29 16:46:19 executed programs: 614
+2019/05/29 16:46:26 executed programs: 624
+2019/05/29 16:46:33 executed programs: 640
+2019/05/29 16:46:41 executed programs: 654
 BUG: memory leak
-unreferenced object 0xffff88812393a800 (size 2048):
-   comm "softirq", pid 0, jiffies 4294941705 (age 14.320s)
+unreferenced object 0xffff888117e5ba00 (size 224):
+   comm "syz-executor.2", pid 10957, jiffies 4294999655 (age 10.170s)
    hex dump (first 32 bytes):
-     00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  ................
-     06 00 07 40 00 00 00 00 00 00 00 00 00 00 00 00  ...@............
+     d0 50 cc 17 81 88 ff ff d0 50 cc 17 81 88 ff ff  .P.......P......
+     00 00 00 00 00 00 00 00 00 10 b2 08 81 88 ff ff  ................
    backtrace:
-     [<0000000040c90168>] kmemleak_alloc_recursive  
+     [<00000000af44a575>] kmemleak_alloc_recursive  
 include/linux/kmemleak.h:55 [inline]
-     [<0000000040c90168>] slab_post_alloc_hook mm/slab.h:439 [inline]
-     [<0000000040c90168>] slab_alloc mm/slab.c:3326 [inline]
-     [<0000000040c90168>] __do_kmalloc mm/slab.c:3658 [inline]
-     [<0000000040c90168>] __kmalloc+0x161/0x2c0 mm/slab.c:3669
-     [<00000000cf430504>] kmalloc include/linux/slab.h:552 [inline]
-     [<00000000cf430504>] sk_prot_alloc+0xd6/0x170 net/core/sock.c:1608
-     [<00000000d895dd9d>] sk_alloc+0x35/0x2f0 net/core/sock.c:1662
-     [<000000006dfffbd8>] nr_make_new net/netrom/af_netrom.c:479 [inline]
-     [<000000006dfffbd8>] nr_rx_frame+0x3ba/0x8a0 net/netrom/af_netrom.c:962
-     [<000000007e984676>] nr_loopback_timer+0x4e/0xd0  
-net/netrom/nr_loopback.c:62
-     [<0000000080a4b335>] call_timer_fn+0x45/0x1e0 kernel/time/timer.c:1322
-     [<00000000b58aba8b>] expire_timers kernel/time/timer.c:1366 [inline]
-     [<00000000b58aba8b>] __run_timers kernel/time/timer.c:1685 [inline]
-     [<00000000b58aba8b>] __run_timers kernel/time/timer.c:1653 [inline]
-     [<00000000b58aba8b>] run_timer_softirq+0x256/0x740  
-kernel/time/timer.c:1698
-     [<00000000c8260f2e>] __do_softirq+0x115/0x35e kernel/softirq.c:293
-     [<00000000a50d1686>] invoke_softirq kernel/softirq.c:374 [inline]
-     [<00000000a50d1686>] irq_exit+0xbb/0xe0 kernel/softirq.c:414
-     [<00000000fb3290a8>] exiting_irq arch/x86/include/asm/apic.h:536  
-[inline]
-     [<00000000fb3290a8>] smp_apic_timer_interrupt+0x7b/0x170  
-arch/x86/kernel/apic/apic.c:1068
-     [<000000001caa821f>] apic_timer_interrupt+0xf/0x20  
-arch/x86/entry/entry_64.S:806
-     [<0000000092c5e05c>] native_safe_halt+0xe/0x10  
-arch/x86/include/asm/irqflags.h:60
-     [<000000006b3a6a48>] arch_cpu_idle+0xa/0x10  
-arch/x86/kernel/process.c:571
-     [<00000000a7e7084a>] default_idle_call+0x1e/0x40 kernel/sched/idle.c:94
-     [<00000000f6ad9bb1>] cpuidle_idle_call kernel/sched/idle.c:154 [inline]
-     [<00000000f6ad9bb1>] do_idle+0x1ea/0x2c0 kernel/sched/idle.c:263
-     [<00000000711ac4f4>] cpu_startup_entry+0x1b/0x20 kernel/sched/idle.c:354
-
-BUG: memory leak
-unreferenced object 0xffff88811f3ca1e0 (size 32):
-   comm "softirq", pid 0, jiffies 4294941705 (age 14.320s)
-   hex dump (first 32 bytes):
-     00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  ................
-     03 00 00 00 03 00 00 00 0f 00 00 00 00 00 00 00  ................
-   backtrace:
-     [<000000005fe8e8f4>] kmemleak_alloc_recursive  
-include/linux/kmemleak.h:55 [inline]
-     [<000000005fe8e8f4>] slab_post_alloc_hook mm/slab.h:439 [inline]
-     [<000000005fe8e8f4>] slab_alloc mm/slab.c:3326 [inline]
-     [<000000005fe8e8f4>] kmem_cache_alloc_trace+0x13d/0x280 mm/slab.c:3553
-     [<000000003ffaa535>] kmalloc include/linux/slab.h:547 [inline]
-     [<000000003ffaa535>] kzalloc include/linux/slab.h:742 [inline]
-     [<000000003ffaa535>] selinux_sk_alloc_security+0x48/0xb0  
-security/selinux/hooks.c:5059
-     [<000000001306812e>] security_sk_alloc+0x49/0x70  
-security/security.c:2030
-     [<00000000bbbf2d36>] sk_prot_alloc+0xf1/0x170 net/core/sock.c:1611
-     [<00000000d895dd9d>] sk_alloc+0x35/0x2f0 net/core/sock.c:1662
-     [<000000006dfffbd8>] nr_make_new net/netrom/af_netrom.c:479 [inline]
-     [<000000006dfffbd8>] nr_rx_frame+0x3ba/0x8a0 net/netrom/af_netrom.c:962
-     [<000000007e984676>] nr_loopback_timer+0x4e/0xd0  
-net/netrom/nr_loopback.c:62
-     [<0000000080a4b335>] call_timer_fn+0x45/0x1e0 kernel/time/timer.c:1322
-     [<00000000b58aba8b>] expire_timers kernel/time/timer.c:1366 [inline]
-     [<00000000b58aba8b>] __run_timers kernel/time/timer.c:1685 [inline]
-     [<00000000b58aba8b>] __run_timers kernel/time/timer.c:1653 [inline]
-     [<00000000b58aba8b>] run_timer_softirq+0x256/0x740  
-kernel/time/timer.c:1698
-     [<00000000c8260f2e>] __do_softirq+0x115/0x35e kernel/softirq.c:293
-     [<00000000a50d1686>] invoke_softirq kernel/softirq.c:374 [inline]
-     [<00000000a50d1686>] irq_exit+0xbb/0xe0 kernel/softirq.c:414
-     [<00000000fb3290a8>] exiting_irq arch/x86/include/asm/apic.h:536  
-[inline]
-     [<00000000fb3290a8>] smp_apic_timer_interrupt+0x7b/0x170  
-arch/x86/kernel/apic/apic.c:1068
-     [<000000001caa821f>] apic_timer_interrupt+0xf/0x20  
-arch/x86/entry/entry_64.S:806
-     [<0000000092c5e05c>] native_safe_halt+0xe/0x10  
-arch/x86/include/asm/irqflags.h:60
-     [<000000006b3a6a48>] arch_cpu_idle+0xa/0x10  
-arch/x86/kernel/process.c:571
-     [<00000000a7e7084a>] default_idle_call+0x1e/0x40 kernel/sched/idle.c:94
+     [<00000000af44a575>] slab_post_alloc_hook mm/slab.h:439 [inline]
+     [<00000000af44a575>] slab_alloc_node mm/slab.c:3269 [inline]
+     [<00000000af44a575>] kmem_cache_alloc_node+0x153/0x2a0 mm/slab.c:3579
+     [<000000007d2ff911>] __alloc_skb+0x6e/0x210 net/core/skbuff.c:198
+     [<00000000f697bd2b>] alloc_skb include/linux/skbuff.h:1058 [inline]
+     [<00000000f697bd2b>] nr_loopback_queue+0x26/0xc0  
+net/netrom/nr_loopback.c:37
+     [<00000000eb3a969d>] nr_route_frame+0x2d1/0x340  
+net/netrom/nr_route.c:775
+     [<000000002dad2e7e>] nr_transmit_buffer+0x86/0xc0  
+net/netrom/nr_out.c:212
+     [<000000006d8f7662>] nr_write_internal+0x133/0x2e0  
+net/netrom/nr_subr.c:208
+     [<0000000004553967>] nr_establish_data_link+0x2d/0x60  
+net/netrom/nr_out.c:230
+     [<000000000382326a>] nr_connect+0x13b/0x490 net/netrom/af_netrom.c:716
+     [<00000000a27cdfc2>] __sys_connect+0x11d/0x170 net/socket.c:1840
+     [<0000000074ede9c3>] __do_sys_connect net/socket.c:1851 [inline]
+     [<0000000074ede9c3>] __se_sys_connect net/socket.c:1848 [inline]
+     [<0000000074ede9c3>] __x64_sys_connect+0x1e/0x30 net/socket.c:1848
+     [<000000000940d4eb>] do_syscall_64+0x76/0x1a0  
+arch/x86/entry/common.c:301
+     [<00000000307bfe5c>] entry_SYSCALL_64_after_hwframe+0x44/0xa9
 
 
 
