@@ -1,34 +1,32 @@
-From: walter harms <wharms@bfs.de>
+From: Eric Dumazet <eric.dumazet@gmail.com>
 Subject: Re: [PATCH] rose: af_rose: avoid overflows in rose_setsockopt()
-Date: Tue, 04 Jun 2019 15:13:50 +0200
-Message-ID: <5CF66E8E.1050100@bfs.de>
+Date: Tue, 4 Jun 2019 06:31:29 -0700
+Message-ID: <a3ac9063-b11a-347d-713b-846907765366@gmail.com>
 References: <1559650290-17054-1-git-send-email-92siuyang@gmail.com>
-Reply-To: wharms@bfs.de
 Mime-Version: 1.0
 Content-Transfer-Encoding: 7bit
 Return-path: <linux-kernel-owner@vger.kernel.org>
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=bfs.de; s=dkim201901;
-        t=1559654031; h=from:from:sender:reply-to:reply-to:subject:subject:date:date:
-         message-id:message-id:to:to:cc:cc:mime-version:mime-version:
-         content-type:content-type:
-         content-transfer-encoding:content-transfer-encoding:
-         in-reply-to:in-reply-to:references:references;
-        bh=uuat3jEUgV8d8Ls/g6U2agD8YFGq9VD0MoYpCf6RTtE=;
-        b=jbJA1LoMy6ZCrN+Yt7gIMk/+5Jeb1t7lbzGGwwakeH3JdRsN51rsO47xUy2PvFva9lwLUb
-        lLykpLmrMnIIwKNyFtk7ZJS/oEvge4iO6O+2PRd9o2lJtMPKb34xkQq5WOPrzBsEJd585J
-        g7WiJMjlrwqyfNy9nkH7CypdTokQJgR4It37Oq9YyP0CVqEZaIXTLK2G60XF3Fbtih0r6g
-        EZxwPmTpYnuP0i1+JdFnadHY98R8jRmYZcPtAVWGuAHo5X2Nq4eM58zSkWkX6FTHvW++5o
-        AipUvdLe1rM0SKWdvVgUidigbKTpUUOzyhBpTEibLMCSjWLOLb9P5EIrtTOtxA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=subject:to:references:from:message-id:date:user-agent:mime-version
+         :in-reply-to:content-language:content-transfer-encoding;
+        bh=3b5aub+eecNpo+4U92Rj62KFwfdLX+w3MzlhVC2SeQ0=;
+        b=nDr3GyLSyEbLOjZ9Kc+s6Gi2ZoFfHg9lNRMq6CdYJRbZJrSjQnpOJZ1/A21Zr+7Jz8
+         Bjr2dkpMZu6188dW0lBPP5JSEYTPmjlCXRnbtKMTBzMOO1bvVj01fkQiD6eNMotQ6p+N
+         0rCYw3UkWqbvUFw3LCUvtF6sI4iL34c7cNgg4JYHgC/0ObVA+BN5q1C/Jmc0eYfivG+J
+         eTrk46MFrtKj/4xjj/ZrQQxsPnwdg6+hH+bejYT5ePWNkVMvt0m3sB2NwM2LcAtHVGPf
+         BflIm5CRvE0Nm3swYtM70TbGRXCaimgvLr3KQWN4pkNQUd1gUDe1tge6v9xwH3zB0HIG
+         WZaA==
 In-Reply-To: <1559650290-17054-1-git-send-email-92siuyang@gmail.com>
+Content-Language: en-US
 Sender: linux-kernel-owner@vger.kernel.org
 List-ID: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
-To: Young Xiao <92siuyang@gmail.com>
-Cc: ralf@linux-mips.org, davem@davemloft.net, linux-hams@vger.kernel.org, netdev@vger.kernel.org, linux-kernel@vger.kernel.org
+To: Young Xiao <92siuyang@gmail.com>, ralf@linux-mips.org, davem@davemloft.net, linux-hams@vger.kernel.org, netdev@vger.kernel.org, linux-kernel@vger.kernel.org
 
 
 
-Am 04.06.2019 14:11, schrieb Young Xiao:
+On 6/4/19 5:11 AM, Young Xiao wrote:
 > Check setsockopt arguments to avoid overflows and return -EINVAL for
 > too large arguments.
 > 
@@ -57,11 +55,6 @@ Am 04.06.2019 14:11, schrieb Young Xiao:
 > -	if (optlen < sizeof(int))
 > +	if (optlen < sizeof(unsigned int))
 >  		return -EINVAL;
-
-I do not thing that this will change much,
-but maybe you would like to check against the sizeof (opt) here ?
-
-
 >  
 > -	if (get_user(opt, (int __user *)optval))
 > +	if (get_user(opt, (unsigned int __user *)optval))
@@ -71,8 +64,6 @@ but maybe you would like to check against the sizeof (opt) here ?
 > @@ -389,31 +389,31 @@ static int rose_setsockopt(struct socket *sock, int level, int optname,
 >  		return 0;
 >  
-
-
 >  	case ROSE_T1:
 > -		if (opt < 1)
 > +		if (opt < 1 || opt > ULONG_MAX / HZ)
@@ -100,22 +91,14 @@ but maybe you would like to check against the sizeof (opt) here ?
 >  			return -EINVAL;
 >  		rose->hb = opt * HZ;
 >  		return 0;
-
- you can simplify this jungle by checking and calculation first
- and then set the correct rose->XX
-
 >  
 >  	case ROSE_IDLE:
 > -		if (opt < 0)
 > +		if (opt < 0 || opt > ULONG_MAX / HZ)
+
+Buggy check.
+
 >  			return -EINVAL;
-
-You made opt unsigned or ?
-
 >  		rose->idle = opt * 60 * HZ;
 >  		return 0;
-
-my 2 cents,
-
-re,
- wh
+> 
