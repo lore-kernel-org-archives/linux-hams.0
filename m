@@ -1,16 +1,16 @@
 From: Eric Biggers <ebiggers@kernel.org>
-Subject: Reminder: 3 open syzbot bugs in "net/rose" subsystem
-Date: Wed, 26 Jun 2019 20:47:38 -0700
-Message-ID: <20190627034738.GB721@sol.localdomain>
+Subject: Reminder: 7 open syzbot bugs in "net/netrom" subsystem
+Date: Wed, 26 Jun 2019 20:50:32 -0700
+Message-ID: <20190627035032.GC721@sol.localdomain>
 Mime-Version: 1.0
 Return-path: <linux-kernel-owner@vger.kernel.org>
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1561607260;
-        bh=Gk8DhOP2Ik1nIRLw+1qe2bZxiYR0oCFov+5PuhMbXn8=;
+        s=default; t=1561607434;
+        bh=gWdMNsJwHbfMGgHBOlCDP6jNnVoU/wx/aHpDS3nzupI=;
         h=Date:From:To:Cc:Subject:From;
-        b=dRK32E2yGeYySYMoZ4xCHizS2q94PQxMHkmgS5vmhNGLvHs6YsHrCYtjgS4IykqPy
-         PfKSqvOcpLjYsBb1M9umdV7Il57Yu3J+sMAeSe3NB5GyLFeRu1pDnA8hD1laFBc8sJ
-         UpoWh42S6AGDvvaYh0mKrI+9VFp2m7LiHqRvDYOM=
+        b=eunkRY3FI4A0ARkDGpO4SxQleP4ByeSEDBLHG9OclKI99MOAeMl2Efe21DNPXW2co
+         Shogak7EDhhslJlBUw8lBCDFxwyNof8LSUGi/c31SaaUQvpeicCyEZd/pybVqMvaSl
+         2x+sANlAC0vpDxkjhZgQhHmA8tJg5xRlTOg/64WQ=
 Content-Disposition: inline
 Sender: linux-kernel-owner@vger.kernel.org
 List-ID: <linux-hams.vger.kernel.org>
@@ -23,76 +23,159 @@ Cc: linux-kernel@vger.kernel.org, syzkaller-bugs@googlegroups.com
 to make it better.]
 
 Of the currently open syzbot reports against the upstream kernel, I've manually
-marked 3 of them as possibly being bugs in the "net/rose" subsystem.  I've
+marked 7 of them as possibly being bugs in the "net/netrom" subsystem.  I've
 listed these reports below, sorted by an algorithm that tries to list first the
 reports most likely to be still valid, important, and actionable.
+
+Of these 7 bugs, 1 was seen in mainline in the last week.
 
 If you believe a bug is no longer valid, please close the syzbot report by
 sending a '#syz fix', '#syz dup', or '#syz invalid' command in reply to the
 original thread, as explained at https://goo.gl/tpsmEJ#status
 
-If you believe I misattributed a bug to the "net/rose" subsystem, please let me
-know, and if possible forward the report to the correct people or mailing list.
+If you believe I misattributed a bug to the "net/netrom" subsystem, please let
+me know, and if possible forward the report to the correct people or mailing
+list.
 
 Here are the bugs:
 
 --------------------------------------------------------------------------------
-Title:              general protection fault in rose_send_frame
-Last occurred:      0 days ago
-Reported:           167 days ago
+Title:              general protection fault in prepare_to_wait
+Last occurred:      1 day ago
+Reported:           174 days ago
 Branches:           Mainline and others
-Dashboard link:     https://syzkaller.appspot.com/bug?id=f46c94afb217ab49c75350adbd467d86ae2b59a6
-Original thread:    https://lkml.kernel.org/lkml/00000000000089904d057f1e0ae0@google.com/T/#u
+Dashboard link:     https://syzkaller.appspot.com/bug?id=c670fb9da2ce08f7b5101baa9426083b39ee9f90
+Original thread:    https://lkml.kernel.org/lkml/000000000000fa6a2c057e8b7064@google.com/T/#u
 
 This bug has a C reproducer.
 
 No one replied to the original thread for this bug.
 
 If you fix this bug, please add the following tag to the commit:
-    Reported-by: syzbot+7078ae989d857fe17988@syzkaller.appspotmail.com
+    Reported-by: syzbot+55f9d3e51d49e20b2ce5@syzkaller.appspotmail.com
 
 If you send any email or patch for this bug, please consider replying to the
 original thread.  For the git send-email command to use, or tips on how to reply
 if the thread isn't in your mailbox, see the "Reply instructions" at
-https://lkml.kernel.org/r/00000000000089904d057f1e0ae0@google.com
+https://lkml.kernel.org/r/000000000000fa6a2c057e8b7064@google.com
 
 --------------------------------------------------------------------------------
-Title:              INFO: rcu detected stall in rose_loopback_timer (2)
-Last occurred:      19 days ago
-Reported:           17 days ago
+Title:              memory leak in nr_create
+Last occurred:      7 days ago
+Reported:           30 days ago
+Branches:           Mainline
+Dashboard link:     https://syzkaller.appspot.com/bug?id=24be997a573ef9d497d6d7302518779b75d8119a
+Original thread:    https://lkml.kernel.org/lkml/0000000000009412c60589e804d8@google.com/T/#u
+
+This bug has a C reproducer.
+
+No one has replied to the original thread for this bug yet.
+
+If you fix this bug, please add the following tag to the commit:
+    Reported-by: syzbot+10f1194569953b72f1ae@syzkaller.appspotmail.com
+
+If you send any email or patch for this bug, please consider replying to the
+original thread.  For the git send-email command to use, or tips on how to reply
+if the thread isn't in your mailbox, see the "Reply instructions" at
+https://lkml.kernel.org/r/0000000000009412c60589e804d8@google.com
+
+--------------------------------------------------------------------------------
+Title:              memory leak in nr_rx_frame
+Last occurred:      30 days ago
+Reported:           30 days ago
+Branches:           Mainline
+Dashboard link:     https://syzkaller.appspot.com/bug?id=0c00cc3e04fe00ad69ac62fbe8464b2f0fae932a
+Original thread:    https://lkml.kernel.org/lkml/000000000000da88840589e8fe2c@google.com/T/#u
+
+This bug has a C reproducer.
+
+No one has replied to the original thread for this bug yet.
+
+If you fix this bug, please add the following tag to the commit:
+    Reported-by: syzbot+d6636a36d3c34bd88938@syzkaller.appspotmail.com
+
+If you send any email or patch for this bug, please consider replying to the
+original thread.  For the git send-email command to use, or tips on how to reply
+if the thread isn't in your mailbox, see the "Reply instructions" at
+https://lkml.kernel.org/r/000000000000da88840589e8fe2c@google.com
+
+--------------------------------------------------------------------------------
+Title:              KASAN: use-after-free Read in lock_sock_nested
+Last occurred:      24 days ago
+Reported:           175 days ago
+Branches:           Mainline and others
+Dashboard link:     https://syzkaller.appspot.com/bug?id=6c137905024f86513297b035845acecb55fa9dab
+Original thread:    https://lkml.kernel.org/lkml/0000000000007a5aad057e7748c9@google.com/T/#u
+
+This bug has a syzkaller reproducer only.
+
+No one replied to the original thread for this bug.
+
+If you fix this bug, please add the following tag to the commit:
+    Reported-by: syzbot+500c69d1e21d970e461b@syzkaller.appspotmail.com
+
+If you send any email or patch for this bug, please consider replying to the
+original thread.  For the git send-email command to use, or tips on how to reply
+if the thread isn't in your mailbox, see the "Reply instructions" at
+https://lkml.kernel.org/r/0000000000007a5aad057e7748c9@google.com
+
+--------------------------------------------------------------------------------
+Title:              KASAN: use-after-free Read in nr_release
+Last occurred:      0 days ago
+Reported:           18 days ago
 Branches:           net
-Dashboard link:     https://syzkaller.appspot.com/bug?id=42c06438fe5956ab9978486a1898ca2f23b1fc1f
-Original thread:    https://lkml.kernel.org/lkml/000000000000cf98fa058adf3615@google.com/T/#u
+Dashboard link:     https://syzkaller.appspot.com/bug?id=5332f4a9ce674d6378f0bd91af752d2be80f3aba
+Original thread:    https://lkml.kernel.org/lkml/0000000000007e8b70058acbd60f@google.com/T/#u
 
 Unfortunately, this bug does not have a reproducer.
 
 No one has replied to the original thread for this bug yet.
 
 If you fix this bug, please add the following tag to the commit:
-    Reported-by: syzbot+d37efb0ca1b82682326e@syzkaller.appspotmail.com
+    Reported-by: syzbot+6eaef7158b19e3fec3a0@syzkaller.appspotmail.com
 
 If you send any email or patch for this bug, please consider replying to the
 original thread.  For the git send-email command to use, or tips on how to reply
 if the thread isn't in your mailbox, see the "Reply instructions" at
-https://lkml.kernel.org/r/000000000000cf98fa058adf3615@google.com
+https://lkml.kernel.org/r/0000000000007e8b70058acbd60f@google.com
 
 --------------------------------------------------------------------------------
-Title:              INFO: rcu detected stall in rose_connect
-Last occurred:      25 days ago
-Reported:           22 days ago
-Branches:           net-next
-Dashboard link:     https://syzkaller.appspot.com/bug?id=0b258dc8ece5bb93dfb5a137ae25a6db300d5892
-Original thread:    https://lkml.kernel.org/lkml/00000000000017b026058a785790@google.com/T/#u
+Title:              memory leak in nr_loopback_queue
+Last occurred:      28 days ago
+Reported:           28 days ago
+Branches:           Mainline
+Dashboard link:     https://syzkaller.appspot.com/bug?id=20e5b6ff68ec36b9ba8ac5225e560a3a563f343a
+Original thread:    https://lkml.kernel.org/lkml/000000000000a7f012058a0c7a65@google.com/T/#u
 
-Unfortunately, this bug does not have a reproducer.
+This bug has a syzkaller reproducer only.
 
 No one has replied to the original thread for this bug yet.
 
 If you fix this bug, please add the following tag to the commit:
-    Reported-by: syzbot+af81c7a21a31b18bec0e@syzkaller.appspotmail.com
+    Reported-by: syzbot+470d1a4a7b7a7c225881@syzkaller.appspotmail.com
 
 If you send any email or patch for this bug, please consider replying to the
 original thread.  For the git send-email command to use, or tips on how to reply
 if the thread isn't in your mailbox, see the "Reply instructions" at
-https://lkml.kernel.org/r/00000000000017b026058a785790@google.com
+https://lkml.kernel.org/r/000000000000a7f012058a0c7a65@google.com
+
+--------------------------------------------------------------------------------
+Title:              KASAN: use-after-free Read in refcount_inc_not_zero_checked (2)
+Last occurred:      70 days ago
+Reported:           102 days ago
+Branches:           Mainline
+Dashboard link:     https://syzkaller.appspot.com/bug?id=b0192a79bb2d222d3e723d7db60dfb5e0ec0e570
+Original thread:    https://lkml.kernel.org/lkml/000000000000eea12405843bc43c@google.com/T/#u
+
+This bug has a syzkaller reproducer only.
+
+No one replied to the original thread for this bug.
+
+If you fix this bug, please add the following tag to the commit:
+    Reported-by: syzbot+eff6b596cc8194e2f029@syzkaller.appspotmail.com
+
+If you send any email or patch for this bug, please consider replying to the
+original thread.  For the git send-email command to use, or tips on how to reply
+if the thread isn't in your mailbox, see the "Reply instructions" at
+https://lkml.kernel.org/r/000000000000eea12405843bc43c@google.com
 
