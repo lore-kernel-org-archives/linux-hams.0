@@ -1,36 +1,45 @@
-From: David Miller <davem@davemloft.net>
-Subject: Re: [PATCH] net/hamradio/6pack: Fix the size of a sk_buff used in
- 'sp_bump()'
-Date: Sat, 07 Sep 2019 15:48:09 +0200 (CEST)
-Message-ID: <20190907.154809.649105225947712090.davem@davemloft.net>
-References: <20190826190209.16795-1-christophe.jaillet@wanadoo.fr>
+From: syzbot <syzbot+0d083911ab18b710da71@syzkaller.appspotmail.com>
+Subject: Re: INFO: trying to register non-static key in
+	bond_3ad_update_lacp_rate
+Date: Mon, 28 Oct 2019 21:46:01 -0700
+Message-ID: <0000000000000987900596054b0f__17199.3071840674$1572538578$gmane$org@google.com>
+References: <000000000000fc25a1059602460a@google.com>
 Mime-Version: 1.0
+Return-path: <bridge-bounces@lists.linux-foundation.org>
+In-Reply-To: <000000000000fc25a1059602460a@google.com>
+List-Id: <linux-hams.vger.kernel.org>
+List-Unsubscribe: <https://lists.linuxfoundation.org/mailman/options/bridge>, 
+	<mailto:bridge-request@lists.linux-foundation.org?subject=unsubscribe>
+List-Archive: <http://lists.linuxfoundation.org/pipermail/bridge/>
+List-Post: <mailto:bridge@lists.linux-foundation.org>
+List-Help: <mailto:bridge-request@lists.linux-foundation.org?subject=help>
+List-Subscribe: <https://lists.linuxfoundation.org/mailman/listinfo/bridge>,
+	<mailto:bridge-request@lists.linux-foundation.org?subject=subscribe>
+Sender: bridge-bounces@lists.linux-foundation.org
+Errors-To: bridge-bounces@lists.linux-foundation.org
+Content-Type: text/plain; charset="us-ascii"; format="flowed"; delsp="yes"
 Content-Transfer-Encoding: 7bit
-Return-path: <linux-kernel-owner@vger.kernel.org>
-In-Reply-To: <20190826190209.16795-1-christophe.jaillet@wanadoo.fr>
-Sender: linux-kernel-owner@vger.kernel.org
-List-ID: <linux-hams.vger.kernel.org>
-Content-Type: Text/Plain; charset="us-ascii"
-To: christophe.jaillet@wanadoo.fr
-Cc: ajk@comnets.uni-bremen.de, linux-hams@vger.kernel.org, netdev@vger.kernel.org, linux-kernel@vger.kernel.org, kernel-janitors@vger.kernel.org
+To: a@unstable.cc, alex.aring@gmail.com, allison@lohutok.net, andrew@lunn.ch, andy@greyhouse.net, ap420073@gmail.com, aroulin@cumulusnetworks.com, ast@domdv.de, b.a.t.m.a.n@lists.open-mesh.org, bridge@lists.linux-foundation.org, cleech@redhat.com, daniel@iogearbox.net, davem@davemloft.net, dcaratti@redhat.com, dsa@cumulusnetworks.com, edumazet@google.com, f.fainelli@gmail.com, fw@strlen.de, gregkh@linuxfoundation.org, gustavo@embeddedor.com, gvaradar@cisco.com, haiyangz@microsoft.com, idosch@mellanox.com, info@metux.net, ivan.khoronzhuk@linaro.org, j.vosburgh@gmail.com, j@w1.fi, jakub.kicinski@netronome.com, jhs@mojatatu.com, jiri@mellanox.com, jiri@resnulli.us, johan.hedberg@gmail.com, johannes.berg@intel.com, john.hurley@netronome.com, jwi@linux.ibm.com, kstewart@linuxfoundation.org, kvalo@codeaurora.org, kys@microsoft.com, lariel@mellanox.com, linmiaohe@hua
 
-From: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
-Date: Mon, 26 Aug 2019 21:02:09 +0200
+syzbot has bisected this bug to:
 
-> We 'allocate' 'count' bytes here. In fact, 'dev_alloc_skb' already add some
-> extra space for padding, so a bit more is allocated.
-> 
-> However, we use 1 byte for the KISS command, then copy 'count' bytes, so
-> count+1 bytes.
-> 
-> Explicitly allocate and use 1 more byte to be safe.
-> 
-> Signed-off-by: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
+commit ab92d68fc22f9afab480153bd82a20f6e2533769
+Author: Taehee Yoo <ap420073@gmail.com>
+Date:   Mon Oct 21 18:47:51 2019 +0000
 
-I applied your patch as-is, as it is correct and doesn't change the contents
-of the data put into the SKB at all.
+     net: core: add generic lockdep keys
 
-->rcount is the cooked count minus two, but then we copy effectively
-cooked count minus one bytes from one byte past the beginning of the
-cooked buffer and so all the accesses are in range on the input buffer
-side.
+bisection log:  https://syzkaller.appspot.com/x/bisect.txt?x=1467f674e00000
+start commit:   60c1769a Add linux-next specific files for 20191028
+git tree:       linux-next
+final crash:    https://syzkaller.appspot.com/x/report.txt?x=1667f674e00000
+console output: https://syzkaller.appspot.com/x/log.txt?x=1267f674e00000
+kernel config:  https://syzkaller.appspot.com/x/.config?x=cb86688f30db053d
+dashboard link: https://syzkaller.appspot.com/bug?extid=0d083911ab18b710da71
+syz repro:      https://syzkaller.appspot.com/x/repro.syz?x=15381ee0e00000
+C reproducer:   https://syzkaller.appspot.com/x/repro.c?x=11571570e00000
+
+Reported-by: syzbot+0d083911ab18b710da71@syzkaller.appspotmail.com
+Fixes: ab92d68fc22f ("net: core: add generic lockdep keys")
+
+For information about bisection process see: https://goo.gl/tpsmEJ#bisection
