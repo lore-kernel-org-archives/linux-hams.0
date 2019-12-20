@@ -1,44 +1,146 @@
-From: syzbot <syzbot+31043da7725b6ec210f1@syzkaller.appspotmail.com>
-Subject: Re: BUG: corrupted list in __dentry_kill (2)
-Date: Thu, 12 Dec 2019 03:35:00 -0800
-Message-ID: <000000000000b949ee0599802274__31506.2294759386$1576174487$gmane$org@google.com>
-References: <000000000000b6b03205997b71cf@google.com>
+From: syzbot <syzbot+caa188bdfc1eeafeb418@syzkaller.appspotmail.com>
+Subject: Re: KASAN: use-after-free Write in nr_release
+Date: Fri, 20 Dec 2019 01:37:09 -0800
+Message-ID: <000000000000f39399059a1f6b2c@google.com>
+References: <00000000000083c858059877d77c@google.com>
 Mime-Version: 1.0
-Return-path: <bridge-bounces@lists.linux-foundation.org>
-In-Reply-To: <000000000000b6b03205997b71cf@google.com>
-List-Id: <linux-hams.vger.kernel.org>
-List-Unsubscribe: <https://lists.linuxfoundation.org/mailman/options/bridge>, 
- <mailto:bridge-request@lists.linux-foundation.org?subject=unsubscribe>
-List-Archive: <http://lists.linuxfoundation.org/pipermail/bridge/>
-List-Post: <mailto:bridge@lists.linux-foundation.org>
-List-Help: <mailto:bridge-request@lists.linux-foundation.org?subject=help>
-List-Subscribe: <https://lists.linuxfoundation.org/mailman/listinfo/bridge>,
- <mailto:bridge-request@lists.linux-foundation.org?subject=subscribe>
-Errors-To: bridge-bounces@lists.linux-foundation.org
-Sender: "Bridge" <bridge-bounces@lists.linux-foundation.org>
+Return-path: <linux-kernel-owner@vger.kernel.org>
+In-Reply-To: <00000000000083c858059877d77c@google.com>
+Sender: linux-kernel-owner@vger.kernel.org
+List-ID: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"; format="flowed"; delsp="yes"
 Content-Transfer-Encoding: 7bit
-To: a@unstable.cc, alex.aring@gmail.com, allison@lohutok.net, andrew@lunn.ch, andy@greyhouse.net, ap420073@gmail.com, ast@domdv.de, ast@kernel.org, b.a.t.m.a.n@lists.open-mesh.org, bpf@vger.kernel.org, bridge@lists.linux-foundation.org, cleech@redhat.com, daniel@iogearbox.net, davem@davemloft.net, dsa@cumulusnetworks.com, dsahern@gmail.com, dvyukov@google.com, f.fainelli@gmail.com, fw@strlen.de, gregkh@linuxfoundation.org, haiyangz@microsoft.com, hawk@kernel.org, hdanton@sina.com, idosch@mellanox.com, info@metux.net, j.vosburgh@gmail.com, j@w1.fi, jakub.kicinski@netronome.com, jhs@mojatatu.com, jiri@mellanox.com, jiri@resnulli.us, johan.hedberg@gmail.com, johannes.berg@intel.com, john.fastabend@gmail.com, john.hurley@netronome.com, jwi@linux.ibm.com, kafai@fb.com, kstewart@linuxfoundation.org, kvalo@codeaurora.org, kys@microsoft.com, linux-bluetooth@vger.kernel.or
+To: davem@davemloft.net, hdanton@sina.com, linux-hams@vger.kernel.org, linux-kernel@vger.kernel.org, netdev@vger.kernel.org, ralf@linux-mips.org, syzkaller-bugs@googlegroups.com
 
-syzbot has bisected this bug to:
+syzbot has found a reproducer for the following crash on:
 
-commit ab92d68fc22f9afab480153bd82a20f6e2533769
-Author: Taehee Yoo <ap420073@gmail.com>
-Date:   Mon Oct 21 18:47:51 2019 +0000
+HEAD commit:    7e0165b2 Merge branch 'akpm' (patches from Andrew)
+git tree:       upstream
+console output: https://syzkaller.appspot.com/x/log.txt?x=13d65fa6e00000
+kernel config:  https://syzkaller.appspot.com/x/.config?x=1b59a3066828ac4c
+dashboard link: https://syzkaller.appspot.com/bug?extid=caa188bdfc1eeafeb418
+compiler:       gcc (GCC) 9.0.0 20181231 (experimental)
+syz repro:      https://syzkaller.appspot.com/x/repro.syz?x=12d9dd51e00000
 
-     net: core: add generic lockdep keys
+IMPORTANT: if you fix the bug, please add the following tag to the commit:
+Reported-by: syzbot+caa188bdfc1eeafeb418@syzkaller.appspotmail.com
 
-bisection log:  https://syzkaller.appspot.com/x/bisect.txt?x=12d37cb6e00000
-start commit:   938f49c8 Add linux-next specific files for 20191211
-git tree:       linux-next
-final crash:    https://syzkaller.appspot.com/x/report.txt?x=11d37cb6e00000
-console output: https://syzkaller.appspot.com/x/log.txt?x=16d37cb6e00000
-kernel config:  https://syzkaller.appspot.com/x/.config?x=96834c884ba7bb81
-dashboard link: https://syzkaller.appspot.com/bug?extid=31043da7725b6ec210f1
-syz repro:      https://syzkaller.appspot.com/x/repro.syz?x=12dc83dae00000
-C reproducer:   https://syzkaller.appspot.com/x/repro.c?x=16ac8396e00000
+==================================================================
+BUG: KASAN: use-after-free in atomic_fetch_add  
+include/asm-generic/atomic-instrumented.h:111 [inline]
+BUG: KASAN: use-after-free in refcount_add include/linux/refcount.h:188  
+[inline]
+BUG: KASAN: use-after-free in refcount_inc include/linux/refcount.h:228  
+[inline]
+BUG: KASAN: use-after-free in sock_hold include/net/sock.h:648 [inline]
+BUG: KASAN: use-after-free in nr_release+0x65/0x4c0  
+net/netrom/af_netrom.c:498
+Write of size 4 at addr ffff8880781a3080 by task syz-executor.0/12044
 
-Reported-by: syzbot+31043da7725b6ec210f1@syzkaller.appspotmail.com
-Fixes: ab92d68fc22f ("net: core: add generic lockdep keys")
+CPU: 1 PID: 12044 Comm: syz-executor.0 Not tainted 5.5.0-rc2-syzkaller #0
+Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS  
+Google 01/01/2011
+Call Trace:
+  __dump_stack lib/dump_stack.c:77 [inline]
+  dump_stack+0x197/0x210 lib/dump_stack.c:118
+  print_address_description.constprop.0.cold+0xd4/0x30b mm/kasan/report.c:374
+  __kasan_report.cold+0x1b/0x41 mm/kasan/report.c:506
+  kasan_report+0x12/0x20 mm/kasan/common.c:639
+  check_memory_region_inline mm/kasan/generic.c:185 [inline]
+  check_memory_region+0x134/0x1a0 mm/kasan/generic.c:192
+  __kasan_check_write+0x14/0x20 mm/kasan/common.c:101
+  atomic_fetch_add include/asm-generic/atomic-instrumented.h:111 [inline]
+  refcount_add include/linux/refcount.h:188 [inline]
+  refcount_inc include/linux/refcount.h:228 [inline]
+  sock_hold include/net/sock.h:648 [inline]
+  nr_release+0x65/0x4c0 net/netrom/af_netrom.c:498
+  __sock_release+0xce/0x280 net/socket.c:592
+  sock_close+0x1e/0x30 net/socket.c:1270
+  __fput+0x2ff/0x890 fs/file_table.c:280
+  ____fput+0x16/0x20 fs/file_table.c:313
+  task_work_run+0x145/0x1c0 kernel/task_work.c:113
+  tracehook_notify_resume include/linux/tracehook.h:188 [inline]
+  exit_to_usermode_loop+0x316/0x380 arch/x86/entry/common.c:164
+  prepare_exit_to_usermode arch/x86/entry/common.c:195 [inline]
+  syscall_return_slowpath arch/x86/entry/common.c:278 [inline]
+  do_syscall_64+0x676/0x790 arch/x86/entry/common.c:304
+  entry_SYSCALL_64_after_hwframe+0x49/0xbe
+RIP: 0033:0x4144b1
+Code: 75 14 b8 03 00 00 00 0f 05 48 3d 01 f0 ff ff 0f 83 04 1b 00 00 c3 48  
+83 ec 08 e8 0a fc ff ff 48 89 04 24 b8 03 00 00 00 0f 05 <48> 8b 3c 24 48  
+89 c2 e8 53 fc ff ff 48 89 d0 48 83 c4 08 48 3d 01
+RSP: 002b:00007ffc1b260070 EFLAGS: 00000293 ORIG_RAX: 0000000000000003
+RAX: 0000000000000000 RBX: 0000000000000006 RCX: 00000000004144b1
+RDX: 0000000000000000 RSI: 0000000000000000 RDI: 0000000000000005
+RBP: 0000000000000001 R08: ffffffffffffffff R09: ffffffffffffffff
+R10: 00007ffc1b260150 R11: 0000000000000293 R12: 000000000075c9a0
+R13: 000000000075c9a0 R14: 0000000000761390 R15: 000000000075c124
 
-For information about bisection process see: https://goo.gl/tpsmEJ#bisection
+Allocated by task 12049:
+  save_stack+0x23/0x90 mm/kasan/common.c:72
+  set_track mm/kasan/common.c:80 [inline]
+  __kasan_kmalloc mm/kasan/common.c:513 [inline]
+  __kasan_kmalloc.constprop.0+0xcf/0xe0 mm/kasan/common.c:486
+  kasan_kmalloc+0x9/0x10 mm/kasan/common.c:527
+  __do_kmalloc mm/slab.c:3656 [inline]
+  __kmalloc+0x163/0x770 mm/slab.c:3665
+  kmalloc include/linux/slab.h:561 [inline]
+  sk_prot_alloc+0x23a/0x310 net/core/sock.c:1603
+  sk_alloc+0x39/0xfd0 net/core/sock.c:1657
+  nr_create+0xb9/0x5e0 net/netrom/af_netrom.c:411
+  __sock_create+0x3ce/0x730 net/socket.c:1420
+  sock_create net/socket.c:1471 [inline]
+  __sys_socket+0x103/0x220 net/socket.c:1513
+  __do_sys_socket net/socket.c:1522 [inline]
+  __se_sys_socket net/socket.c:1520 [inline]
+  __x64_sys_socket+0x73/0xb0 net/socket.c:1520
+  do_syscall_64+0xfa/0x790 arch/x86/entry/common.c:294
+  entry_SYSCALL_64_after_hwframe+0x49/0xbe
+
+Freed by task 12044:
+  save_stack+0x23/0x90 mm/kasan/common.c:72
+  set_track mm/kasan/common.c:80 [inline]
+  kasan_set_free_info mm/kasan/common.c:335 [inline]
+  __kasan_slab_free+0x102/0x150 mm/kasan/common.c:474
+  kasan_slab_free+0xe/0x10 mm/kasan/common.c:483
+  __cache_free mm/slab.c:3426 [inline]
+  kfree+0x10a/0x2c0 mm/slab.c:3757
+  sk_prot_free net/core/sock.c:1640 [inline]
+  __sk_destruct+0x5d8/0x7f0 net/core/sock.c:1724
+  sk_destruct+0xd5/0x110 net/core/sock.c:1739
+  __sk_free+0xfb/0x360 net/core/sock.c:1750
+  sk_free+0x83/0xb0 net/core/sock.c:1761
+  sock_put include/net/sock.h:1729 [inline]
+  nr_release+0x3f4/0x4c0 net/netrom/af_netrom.c:532
+  __sock_release+0xce/0x280 net/socket.c:592
+  sock_close+0x1e/0x30 net/socket.c:1270
+  __fput+0x2ff/0x890 fs/file_table.c:280
+  ____fput+0x16/0x20 fs/file_table.c:313
+  task_work_run+0x145/0x1c0 kernel/task_work.c:113
+  tracehook_notify_resume include/linux/tracehook.h:188 [inline]
+  exit_to_usermode_loop+0x316/0x380 arch/x86/entry/common.c:164
+  prepare_exit_to_usermode arch/x86/entry/common.c:195 [inline]
+  syscall_return_slowpath arch/x86/entry/common.c:278 [inline]
+  do_syscall_64+0x676/0x790 arch/x86/entry/common.c:304
+  entry_SYSCALL_64_after_hwframe+0x49/0xbe
+
+The buggy address belongs to the object at ffff8880781a3000
+  which belongs to the cache kmalloc-2k of size 2048
+The buggy address is located 128 bytes inside of
+  2048-byte region [ffff8880781a3000, ffff8880781a3800)
+The buggy address belongs to the page:
+page:ffffea0001e068c0 refcount:1 mapcount:0 mapping:ffff8880aa400e00  
+index:0x0
+raw: 00fffe0000000200 ffffea0001e06848 ffffea0001af0088 ffff8880aa400e00
+raw: 0000000000000000 ffff8880781a3000 0000000100000001 0000000000000000
+page dumped because: kasan: bad access detected
+
+Memory state around the buggy address:
+  ffff8880781a2f80: ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff
+  ffff8880781a3000: fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb
+> ffff8880781a3080: fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb
+                    ^
+  ffff8880781a3100: fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb
+  ffff8880781a3180: fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb
+==================================================================
+
