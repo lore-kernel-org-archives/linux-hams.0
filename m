@@ -1,19 +1,19 @@
 From: Sasha Levin <sashal@kernel.org>
-Subject: [PATCH AUTOSEL 4.14 30/57] 6pack,mkiss: fix possible deadlock
-Date: Fri, 27 Dec 2019 13:01:55 -0500
-Message-ID: <20191227180222.7076-30-sashal@kernel.org>
-References: <20191227180222.7076-1-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 4.4 12/25] 6pack,mkiss: fix possible deadlock
+Date: Fri, 27 Dec 2019 13:15:36 -0500
+Message-ID: <20191227181549.8040-12-sashal@kernel.org>
+References: <20191227181549.8040-1-sashal@kernel.org>
 Mime-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Return-path: <linux-kernel-owner@vger.kernel.org>
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1577469780;
-        bh=V+y1RXXTCBSytwzMwDDRRaLL7aZVwZ/Fabbl0Ftkn6Y=;
+        s=default; t=1577470564;
+        bh=Pd7giwswZBOFusMt3mc3xVpe5NPJN7jLjBKPe19rk/Q=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=I/s0aFg1pj5zQAxMNQjz24o+/NqRhU5nw/tdkvOz4jFcuq7ISOk2lFIvlQ8F4V9Jd
-         mzC69Hw62mm6wHJ7aygtv/iTEDr722ZND8qJlJkBkJRHb3LlPD7Q5sVx65qZmMfwTn
-         pcWGi3pZ+OFk8t+b07gvzwPCcNnfmAesWalvSzxc=
-In-Reply-To: <20191227180222.7076-1-sashal@kernel.org>
+        b=eftwX/T4ZhDcbBUZ3i4TCBAqrycX5JvMN9OFRDm9Zu7O2vgE6V253gLShcGdhrkmC
+         MJNT7pjJQ8CT/aHJd8L4S4NE59XDcNsghM+Jjuu0WCIXJ7Eio9t/ciE9WjRkv64oM0
+         Id9z83UU8DCjS0TYdhiFf/8pihF8QW0ILNTnAM2s=
+In-Reply-To: <20191227181549.8040-1-sashal@kernel.org>
 Sender: linux-kernel-owner@vger.kernel.org
 List-ID: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
@@ -163,10 +163,10 @@ Signed-off-by: Sasha Levin <sashal@kernel.org>
  2 files changed, 4 insertions(+), 4 deletions(-)
 
 diff --git a/drivers/net/hamradio/6pack.c b/drivers/net/hamradio/6pack.c
-index 021a8ec411ab..6d4742d10a78 100644
+index 5a1e98547031..732c68ed166a 100644
 --- a/drivers/net/hamradio/6pack.c
 +++ b/drivers/net/hamradio/6pack.c
-@@ -665,10 +665,10 @@ static void sixpack_close(struct tty_struct *tty)
+@@ -669,10 +669,10 @@ static void sixpack_close(struct tty_struct *tty)
  {
  	struct sixpack *sp;
  
@@ -180,7 +180,7 @@ index 021a8ec411ab..6d4742d10a78 100644
  		return;
  
 diff --git a/drivers/net/hamradio/mkiss.c b/drivers/net/hamradio/mkiss.c
-index aec6c26563cf..9fd7dab42a53 100644
+index 0758d0816840..470d416f2b86 100644
 --- a/drivers/net/hamradio/mkiss.c
 +++ b/drivers/net/hamradio/mkiss.c
 @@ -783,10 +783,10 @@ static void mkiss_close(struct tty_struct *tty)
