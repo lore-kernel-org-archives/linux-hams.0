@@ -1,36 +1,40 @@
-From: syzbot <syzbot+4ec99438ed7450da6272@syzkaller.appspotmail.com>
-Subject: Re: WARNING: bad unlock balance in sch_direct_xmit
-Date: Sun, 05 Jan 2020 14:58:00 -0800
-Message-ID: <000000000000802598059b6c7989@google.com>
-References: <000000000000ab3f800598cec624@google.com>
+From: Colin King <colin.king@canonical.com>
+Subject: [PATCH] net/rose: remove redundant assignment to variable failed
+Date: Tue,  7 Jan 2020 15:24:15 +0000
+Message-ID: <20200107152415.106353-1-colin.king@canonical.com>
 Mime-Version: 1.0
+Content-Transfer-Encoding: 8bit
 Return-path: <linux-kernel-owner@vger.kernel.org>
-In-Reply-To: <000000000000ab3f800598cec624@google.com>
 Sender: linux-kernel-owner@vger.kernel.org
 List-ID: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"; format="flowed"; delsp="yes"
-Content-Transfer-Encoding: 7bit
-To: a@unstable.cc, alex.aring@gmail.com, allison@lohutok.net, andrew@lunn.ch, andy@greyhouse.net, ap420073@gmail.com, ast@domdv.de, b.a.t.m.a.n@lists.open-mesh.org, bridge@lists.linux-foundation.org, cleech@redhat.com, daniel@iogearbox.net, davem@davemloft.net, dsa@cumulusnetworks.com, f.fainelli@gmail.com, fw@strlen.de, gregkh@linuxfoundation.org, gustavo@embeddedor.com, haiyangz@microsoft.com, info@metux.net, j.vosburgh@gmail.com, j@w1.fi, jakub.kicinski@netronome.com, jhs@mojatatu.com, jiri@resnulli.us, johan.hedberg@gmail.com, johannes.berg@intel.com, jwi@linux.ibm.com, kstewart@linuxfoundation.org, kvalo@codeaurora.org, kys@microsoft.com, linmiaohe@huawei.com, linux-bluetooth@vger.kernel.org, linux-hams@vger.kernel.org, linux-hyperv@vger.kernel.org, linux-kernel@vger.kernel.org
+Content-Type: text/plain; charset="us-ascii"
+To: Ralf Baechle <ralf@linux-mips.org>, "David S . Miller" <davem@davemloft.net>, linux-hams@vger.kernel.org, netdev@vger.kernel.org
+Cc: kernel-janitors@vger.kernel.org, linux-kernel@vger.kernel.org
 
-syzbot has bisected this bug to:
+From: Colin Ian King <colin.king@canonical.com>
 
-commit ab92d68fc22f9afab480153bd82a20f6e2533769
-Author: Taehee Yoo <ap420073@gmail.com>
-Date:   Mon Oct 21 18:47:51 2019 +0000
+The variable failed is being assigned a value that is never read, the
+following goto statement jumps to the end of the function and variable
+failed is not referenced at all.  Remove the redundant assignment.
 
-     net: core: add generic lockdep keys
+Addresses-Coverity: ("Unused value")
+Signed-off-by: Colin Ian King <colin.king@canonical.com>
+---
+ net/rose/rose_route.c | 1 -
+ 1 file changed, 1 deletion(-)
 
-bisection log:  https://syzkaller.appspot.com/x/bisect.txt?x=15e88ec6e00000
-start commit:   36487907 Merge branch 'akpm' (patches from Andrew)
-git tree:       upstream
-final crash:    https://syzkaller.appspot.com/x/report.txt?x=17e88ec6e00000
-console output: https://syzkaller.appspot.com/x/log.txt?x=13e88ec6e00000
-kernel config:  https://syzkaller.appspot.com/x/.config?x=f2f3ef188b7e16cf
-dashboard link: https://syzkaller.appspot.com/bug?extid=4ec99438ed7450da6272
-syz repro:      https://syzkaller.appspot.com/x/repro.syz?x=1722c5c1e00000
-C reproducer:   https://syzkaller.appspot.com/x/repro.c?x=167aee3ee00000
+diff --git a/net/rose/rose_route.c b/net/rose/rose_route.c
+index c53307623236..5277631fa14c 100644
+--- a/net/rose/rose_route.c
++++ b/net/rose/rose_route.c
+@@ -696,7 +696,6 @@ struct rose_neigh *rose_get_neigh(rose_address *addr, unsigned char *cause,
+ 				for (i = 0; i < node->count; i++) {
+ 					if (!rose_ftimer_running(node->neighbour[i])) {
+ 						res = node->neighbour[i];
+-						failed = 0;
+ 						goto out;
+ 					}
+ 					failed = 1;
+-- 
+2.24.0
 
-Reported-by: syzbot+4ec99438ed7450da6272@syzkaller.appspotmail.com
-Fixes: ab92d68fc22f ("net: core: add generic lockdep keys")
-
-For information about bisection process see: https://goo.gl/tpsmEJ#bisection
