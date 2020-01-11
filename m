@@ -1,21 +1,33 @@
-From: syzbot <syzbot+ad4ea1dd5d26131a58a6@syzkaller.appspotmail.com>
-Subject: Re: Re: WARNING: bad unlock balance in __dev_queue_xmit
-Date: Sat, 11 Jan 2020 15:38:31 -0800
-Message-ID: <000000000000751268059be5bdfc@google.com>
-References: <CAM_iQpWN-SKjjrG_7EQ-x+7UMiu6foaNWMJuwQuwN0BGmayB+A@mail.gmail.com>
+From: Cong Wang <xiyou.wangcong@gmail.com>
+Subject: Re: WARNING: bad unlock balance in __dev_queue_xmit
+Date: Sat, 11 Jan 2020 15:38:19 -0800
+Message-ID: <CAM_iQpWN-SKjjrG_7EQ-x+7UMiu6foaNWMJuwQuwN0BGmayB+A@mail.gmail.com>
+References: <000000000000a06985059be4002e@google.com>
 Mime-Version: 1.0
-Return-path: <linux-ppp-owner@vger.kernel.org>
-In-Reply-To: <CAM_iQpWN-SKjjrG_7EQ-x+7UMiu6foaNWMJuwQuwN0BGmayB+A@mail.gmail.com>
-Sender: linux-ppp-owner@vger.kernel.org
-List-ID: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"; format="flowed"; delsp="yes"
+Return-path: <bridge-bounces@lists.linux-foundation.org>
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
+ h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+ :cc; bh=c7HFrOGQ3phE12eoMeyUfOtwv87GN61OlvlGebweSPE=;
+ b=CUzzXi3uv6xXm/4UnggMbWvrrN2Up+aCdXgbjG6cA1RSh2Hsl7MaJGyUzdoMoTmd4R
+ ZrHmzvSIQzS9GFymrJPYSFUJoVbzF0PJ/iecYAh4HGcrfH/zwmd4F6x9nsoOeailYobC
+ MujffRFXqGvkpsurYLOjgR9qmZoZeeEk+kwuIIysdTEHyy0eM0MPpC10Mh0InyVmHn1v
+ 5FsP+pOKLqj3MpjEbbWZWOZEilHIuIlxKrmee02exZm69I3xF9XolTxJTNhKMd4CPNUr
+ 7TK8yRsQode2rHqJa9VpU78VxSiyf+Oi7TyRFsjn5WlXmrtjazYZe5Wjb+yrJwuo7Mdn
+ THlQ==
+In-Reply-To: <000000000000a06985059be4002e@google.com>
+List-Id: <linux-hams.vger.kernel.org>
+List-Unsubscribe: <https://lists.linuxfoundation.org/mailman/options/bridge>, 
+ <mailto:bridge-request@lists.linux-foundation.org?subject=unsubscribe>
+List-Archive: <http://lists.linuxfoundation.org/pipermail/bridge/>
+List-Post: <mailto:bridge@lists.linux-foundation.org>
+List-Help: <mailto:bridge-request@lists.linux-foundation.org?subject=help>
+List-Subscribe: <https://lists.linuxfoundation.org/mailman/listinfo/bridge>,
+ <mailto:bridge-request@lists.linux-foundation.org?subject=subscribe>
+Errors-To: bridge-bounces@lists.linux-foundation.org
+Sender: "Bridge" <bridge-bounces@lists.linux-foundation.org>
+Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
-To: Cong Wang <xiyou.wangcong@gmail.com>
-Cc: a@unstable.cc, alex.aring@gmail.com, allison@lohutok.net, andrew@lunn.ch, andy@greyhouse.net, ap420073@gmail.com, ast@domdv.de, b.a.t.m.a.n@lists.open-mesh.org, bridge@lists.linux-foundation.org, cleech@redhat.com, daniel@iogearbox.net, davem@davemloft.net, dsa@cumulusnetworks.com, f.fainelli@gmail.com, fw@strlen.de, gregkh@linuxfoundation.org, gustavo@embeddedor.com, haiyangz@microsoft.com, info@metux.net, j.vosburgh@gmail.com, j@w1.fi, jakub.kicinski@netronome.com, jhs@mojatatu.com, jiri@resnulli.us, johan.hedberg@gmail.com, johannes.berg@intel.com, john.hurley@netronome.com, jwi@linux.ibm.com, kstewart@linuxfoundation.org, kuznet@ms2.inr.ac.ru, kvalo@codeaurora.org, kys@microsoft.com, linmiaohe@huawei.com, linux-bluetooth@vger.kernel.org, linux-hams@vger.kernel.org, linux-hyperv
+To: syzbot <syzbot+ad4ea1dd5d26131a58a6@syzkaller.appspotmail.com>
+Cc: Kate Stewart <kstewart@linuxfoundation.org>, andrew@lunn.ch, Alexander Aring <alex.aring@gmail.com>, Jakub Kicinski <jakub.kicinski@netronome.com>, ast@domdv.de, linmiaohe@huawei.com, gustavo@embeddedor.com, oss-drivers@netronome.com, linux-wireless <linux-wireless@vger.kernel.org>, a@unstable.cc, linux-hyperv@vger.kernel.org, Linux Kernel Network Developers <netdev@vger.kernel.org>, Paul Mackerras <paulus@samba.org>, linux-hams <linux-hams@vger.kernel.org>, kys@microsoft.com, Marek Lindner <mareklindner@neomailbox.ch>, Florian Fainelli <f.fainelli@gmail.com>, Daniel Borkmann <daniel@iogearbox.net>, bridge@lists.linux-foundation.org, jwi@linux.ibm.com, linux-wpan@vger.kernel.org, Kalle Valo <kvalo@codeaurora.org>, Alexey Kuznetsov <kuznet@ms2.inr.ac.ru>, Paolo Abeni <pabeni@redhat.com>, Nikolay Aleksandrov <nikolay@cumulusnetworks.com>, Marcel Holtmann <marcel@holtmann>
 
-> #syz dup: WARNING: bad unlock balance in sch_direct_xmit
-
-Your 'dup:' command is accepted, but please keep  
-syzkaller-bugs@googlegroups.com mailing list in CC next time. It serves as  
-a history of what happened with each bug report. Thank you.
-
+#syz dup: WARNING: bad unlock balance in sch_direct_xmit
