@@ -1,27 +1,26 @@
-From: David Miller <davem@davemloft.net>
-Subject: Re: [PATCH][V2] net/rose: fix spelling mistake "to" -> "too"
-Date: Fri, 24 Jan 2020 08:12:43 +0100 (CET)
-Message-ID: <20200124.081243.840308996159716293.davem@davemloft.net>
-References: <20200123092730.10909-1-colin.king@canonical.com>
+From: Marco Di Martino <iw2ohx@iw2ohx.net>
+Subject: IRC client from ax25d
+Date: Sat, 08 Feb 2020 21:45:03 +0100
+Message-ID: <5E3F1DCF.90003@iw2ohx.net>
 Mime-Version: 1.0
 Content-Transfer-Encoding: 7bit
-Return-path: <netdev-owner@vger.kernel.org>
-In-Reply-To: <20200123092730.10909-1-colin.king@canonical.com>
-Sender: netdev-owner@vger.kernel.org
+Return-path: <linux-hams-owner@vger.kernel.org>
+Sender: linux-hams-owner@vger.kernel.org
 List-ID: <linux-hams.vger.kernel.org>
-Content-Type: Text/Plain; charset="us-ascii"
-To: colin.king@canonical.com
-Cc: ralf@linux-mips.org, kuba@kernel.org, linux-hams@vger.kernel.org, netdev@vger.kernel.org, kernel-janitors@vger.kernel.org, linux-kernel@vger.kernel.org
+Content-Type: text/plain; charset="us-ascii"; format="flowed"
+To: linux-hams@vger.kernel.org
 
-From: Colin King <colin.king@canonical.com>
-Date: Thu, 23 Jan 2020 09:27:30 +0000
+Hi all,
 
-> From: Colin Ian King <colin.king@canonical.com>
-> 
-> There is a spelling mistake in a printk message. Fix it.
-> 
-> Signed-off-by: Colin Ian King <colin.king@canonical.com>
-> ---
-> V2: split the patch, the V1 included another fix.
+I would like to execute an IRC client from ax25d.
+I've tried with irc (/usr/bin/irc) with no success even using the "dumb" 
+mode.
 
-Applied.
+On the other hand, for same purpose, in the case of Convers I use axconv 
+and it works perfectly.
+
+Did anyone face the same issue ?
+Thanks.
+Regards,
+Marco
+iw2ohx
