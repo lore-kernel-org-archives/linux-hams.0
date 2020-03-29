@@ -1,74 +1,36 @@
-From: "Marco Di Martino (IW2OHX)" <iw2ohx@iw2ohx.net>
+From: David Ranch <linux-hams@trinnet.net>
 Subject: Re: New Linpac pre-release ready for testing..
-Date: Sun, 29 Mar 2020 16:28:19 +0200
-Message-ID: <e47e6651-5614-ce7a-513e-712ebfbc39ad@iw2ohx.net>
+Date: Sun, 29 Mar 2020 08:17:37 -0700
+Message-ID: <0f65254c-9308-5c87-dbe5-bf5d8b01e351@trinnet.net>
 References: <4df52fc2-29b3-dcfd-613a-cb165b411bea@trinnet.net>
+ <e47e6651-5614-ce7a-513e-712ebfbc39ad@iw2ohx.net>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <4df52fc2-29b3-dcfd-613a-cb165b411bea@trinnet.net>
-Content-Language: en-US
+In-Reply-To: <e47e6651-5614-ce7a-513e-712ebfbc39ad@iw2ohx.net>
 Sender: linux-hams-owner@vger.kernel.org
 List-ID: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="utf-8"; format="flowed"
-To: David Ranch <linux-hams@trinnet.net>, Linux Hams <linux-hams@vger.kernel.org>
+Content-Type: text/plain; charset="us-ascii"; format="flowed"
+To: Linux Hams <linux-hams@vger.kernel.org>
 
-Hello David,
 
-thanks a lot for your effort.
+Great!  Thanks for the report!
 
-Well, I've just compiled it and started having fun with Linpac.
+--David
+KI6ZHD
 
-All fine so far on Ubuntu 18.04!
 
-Regards,
-
-Marco
-
-iw2ohx
-
-On 27/03/20 18:48, David Ranch wrote:
-> Hello Everyone,
+On 03/29/2020 07:28 AM, Marco Di Martino (IW2OHX) wrote:
+> Hello David,
 >
-> If you're a Linux AX.25 user, I'm looking for compile-savvy testers to 
-> give the new version of Linpac posted in my DEVELOP branch a test:
+> thanks a lot for your effort.
 >
->    https://sourceforge.net/projects/linpac/
+> Well, I've just compiled it and started having fun with Linpac.
 >
+> All fine so far on Ubuntu 18.04!
 >
-> If you're not familiar with Linpac, the description is:
->    --
->    A modular TUI oriented (ncurses) amateur radio AX.25 keyboard to 
-> keyboard chat and PBBS program using Linux's AX.25 stack. Includes 
-> support for multiple concurrent connected sessions, a unconnected (UI) 
-> message screen, and an automated packet message client
->    --
+> Regards,
 >
+> Marco
 >
-> Compiling and install guides are available in :
->
->    - The source's README file
->    https://sourceforge.net/p/linpac/linpac/ci/develop/tree/README
->
->    - Raspberry Pi / Debian centric guide:
-> http://www.trinityos.com/HAM/CentosDigitalModes/RPi/rpi4-setup.html#28.install-linpac 
->
->
->    - Centos centric (includes screen captures):
-> http://www.trinityos.com/HAM/CentosDigitalModes/hampacketizing-centos.html#11.linpac 
->
->
->
-> If you need any help, you can post to this list or to the Discussion 
-> area on SourceForge:
->
->    https://sourceforge.net/p/linpac/discussion/
->
-> If you find any bugs / real issues, please create a ticket on Linpac's 
-> SourceForge area:
->
->    https://sourceforge.net/p/linpac/_list/tickets
->
->
-> --David
-> KI6ZHD
+> iw2ohx
