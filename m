@@ -1,26 +1,94 @@
-From: David Miller <davem@davemloft.net>
-Subject: Re: [PATCH] yam: fix possible memory leak in yam_init_driver
-Date: Thu, 04 Jun 2020 15:58:59 -0700 (PDT)
-Message-ID: <20200604.155859.185403656964744319.davem@davemloft.net>
-References: <20200604121851.63880-1-wanghai38@huawei.com>
+From: Sasha Levin <sashal@kernel.org>
+Subject: [PATCH AUTOSEL 5.6 207/606] ax25: fix setsockopt(SO_BINDTODEVICE)
+Date: Mon,  8 Jun 2020 19:05:32 -0400
+Message-ID: <20200608231211.3363633-207-sashal@kernel.org>
+References: <20200608231211.3363633-1-sashal@kernel.org>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
-Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <20200604121851.63880-1-wanghai38@huawei.com>
-Sender: linux-hams-owner@vger.kernel.org
+Content-Transfer-Encoding: 8bit
+Return-path: <stable-owner@vger.kernel.org>
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=default; t=1591658184;
+        bh=ELK744J/8qKjfSZZ7rJvMXPHFOvT+Jq9rLbg63EOrh0=;
+        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+        b=WuulyLi5frMwDGoh7bhnwR86621qQ28qkW4juvOnp6BRKDL1NtLvorC5Tg/Ce85fX
+         z2HiCkMdoDrNMttTkkvAreN++YJ3hkzRxQjW105csj4qtHulelp4Oc5TM5/RfF2Bty
+         5FhDjo5tKLpFdIoS0y02c8VrZXXlB0uQ6Agf/KMI=
+In-Reply-To: <20200608231211.3363633-1-sashal@kernel.org>
+Sender: stable-owner@vger.kernel.org
 List-ID: <linux-hams.vger.kernel.org>
-Content-Type: Text/Plain; charset="us-ascii"
-To: wanghai38@huawei.com
-Cc: jpr@f6fbb.org, kuba@kernel.org, linux-hams@vger.kernel.org, netdev@vger.kernel.org, linux-kernel@vger.kernel.org
+Content-Type: text/plain; charset="us-ascii"
+To: linux-kernel@vger.kernel.org, stable@vger.kernel.org
+Cc: Eric Dumazet <edumazet@google.com>, syzbot <syzkaller@googlegroups.com>, "David S . Miller" <davem@davemloft.net>, Greg Kroah-Hartman <gregkh@linuxfoundation.org>, linux-hams@vger.kernel.org, netdev@vger.kernel.org
 
-From: Wang Hai <wanghai38@huawei.com>
-Date: Thu, 4 Jun 2020 20:18:51 +0800
+From: Eric Dumazet <edumazet@google.com>
 
-> If register_netdev(dev) fails, free_netdev(dev) needs
-> to be called, otherwise a memory leak will occur.
-> 
-> Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-> Reported-by: Hulk Robot <hulkci@huawei.com>
-> Signed-off-by: Wang Hai <wanghai38@huawei.com>
+[ Upstream commit 687775cec056b38a4c8f3291e0dd7a9145f7b667 ]
 
-Applied, thanks.
+syzbot was able to trigger this trace [1], probably by using
+a zero optlen.
+
+While we are at it, cap optlen to IFNAMSIZ - 1 instead of IFNAMSIZ.
+
+[1]
+BUG: KMSAN: uninit-value in strnlen+0xf9/0x170 lib/string.c:569
+CPU: 0 PID: 8807 Comm: syz-executor483 Not tainted 5.7.0-rc4-syzkaller #0
+Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 01/01/2011
+Call Trace:
+ __dump_stack lib/dump_stack.c:77 [inline]
+ dump_stack+0x1c9/0x220 lib/dump_stack.c:118
+ kmsan_report+0xf7/0x1e0 mm/kmsan/kmsan_report.c:121
+ __msan_warning+0x58/0xa0 mm/kmsan/kmsan_instr.c:215
+ strnlen+0xf9/0x170 lib/string.c:569
+ dev_name_hash net/core/dev.c:207 [inline]
+ netdev_name_node_lookup net/core/dev.c:277 [inline]
+ __dev_get_by_name+0x75/0x2b0 net/core/dev.c:778
+ ax25_setsockopt+0xfa3/0x1170 net/ax25/af_ax25.c:654
+ __compat_sys_setsockopt+0x4ed/0x910 net/compat.c:403
+ __do_compat_sys_setsockopt net/compat.c:413 [inline]
+ __se_compat_sys_setsockopt+0xdd/0x100 net/compat.c:410
+ __ia32_compat_sys_setsockopt+0x62/0x80 net/compat.c:410
+ do_syscall_32_irqs_on arch/x86/entry/common.c:339 [inline]
+ do_fast_syscall_32+0x3bf/0x6d0 arch/x86/entry/common.c:398
+ entry_SYSENTER_compat+0x68/0x77 arch/x86/entry/entry_64_compat.S:139
+RIP: 0023:0xf7f57dd9
+Code: 90 e8 0b 00 00 00 f3 90 0f ae e8 eb f9 8d 74 26 00 89 3c 24 c3 90 90 90 90 90 90 90 90 90 90 90 90 51 52 55 89 e5 0f 34 cd 80 <5d> 5a 59 c3 90 90 90 90 eb 0d 90 90 90 90 90 90 90 90 90 90 90 90
+RSP: 002b:00000000ffae8c1c EFLAGS: 00000217 ORIG_RAX: 000000000000016e
+RAX: ffffffffffffffda RBX: 0000000000000003 RCX: 0000000000000101
+RDX: 0000000000000019 RSI: 0000000020000000 RDI: 0000000000000004
+RBP: 0000000000000012 R08: 0000000000000000 R09: 0000000000000000
+R10: 0000000000000000 R11: 0000000000000000 R12: 0000000000000000
+R13: 0000000000000000 R14: 0000000000000000 R15: 0000000000000000
+
+Local variable ----devname@ax25_setsockopt created at:
+ ax25_setsockopt+0xe6/0x1170 net/ax25/af_ax25.c:536
+ ax25_setsockopt+0xe6/0x1170 net/ax25/af_ax25.c:536
+
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Reported-by: syzbot <syzkaller@googlegroups.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+---
+ net/ax25/af_ax25.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
+
+diff --git a/net/ax25/af_ax25.c b/net/ax25/af_ax25.c
+index ff57ea89c27e..fd91cd34f25e 100644
+--- a/net/ax25/af_ax25.c
++++ b/net/ax25/af_ax25.c
+@@ -635,8 +635,10 @@ static int ax25_setsockopt(struct socket *sock, int level, int optname,
+ 		break;
+ 
+ 	case SO_BINDTODEVICE:
+-		if (optlen > IFNAMSIZ)
+-			optlen = IFNAMSIZ;
++		if (optlen > IFNAMSIZ - 1)
++			optlen = IFNAMSIZ - 1;
++
++		memset(devname, 0, sizeof(devname));
+ 
+ 		if (copy_from_user(devname, optval, optlen)) {
+ 			res = -EFAULT;
+-- 
+2.25.1
+
