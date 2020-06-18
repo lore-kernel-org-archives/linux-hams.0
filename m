@@ -1,19 +1,19 @@
 From: Sasha Levin <sashal@kernel.org>
-Subject: [PATCH AUTOSEL 4.9 24/80] yam: fix possible memory leak in yam_init_driver
-Date: Wed, 17 Jun 2020 21:27:23 -0400
-Message-ID: <20200618012819.609778-24-sashal@kernel.org>
-References: <20200618012819.609778-1-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 4.4 17/60] yam: fix possible memory leak in yam_init_driver
+Date: Wed, 17 Jun 2020 21:29:21 -0400
+Message-ID: <20200618013004.610532-17-sashal@kernel.org>
+References: <20200618013004.610532-1-sashal@kernel.org>
 Mime-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Return-path: <linux-kernel-owner@vger.kernel.org>
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1592443732;
-        bh=t3bBVqo47N0Y5P0/j1DPexbAI0QVtdrSXf/vXuU66xo=;
+        s=default; t=1592443829;
+        bh=UF0UMiNSTGEXiaBD/hxRUN255P/xQxc7ApPL6vwrafk=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=bne0yDpftx4Qzh0sM5cjv/FvrYVrX2PgioxX2V6uEul6uvKudfypdcXuZf5RJE4PI
-         /vAronPxJC+Tc8mvR3I9EJThofw+hTxE/2KQFP1qLl7Xzy0dPTcbDtK2qxot2+aZFI
-         w5Pi+kOtqtiQOci2ZljLe6OrzMffg0UCbZeDHG4g=
-In-Reply-To: <20200618012819.609778-1-sashal@kernel.org>
+        b=goCfsHEagFxp1pbxuW+OnWSSInUo9a2H4bhEU555PiHYm/ddmKtKI2fMpd5HH+pPh
+         0YwQYOtr0RgzLMsP7dOGseShJC78v+Vn+1Qca0nhK3oKWNQ9+thCFXDTyEmegE2fsV
+         7XxsU6nM2/t39drzKq9a2Jto9Y6w+IJQVaLaDQhE=
+In-Reply-To: <20200618013004.610532-1-sashal@kernel.org>
 Sender: linux-kernel-owner@vger.kernel.org
 List-ID: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
@@ -37,7 +37,7 @@ Signed-off-by: Sasha Levin <sashal@kernel.org>
  1 file changed, 1 insertion(+)
 
 diff --git a/drivers/net/hamradio/yam.c b/drivers/net/hamradio/yam.c
-index aaff07c10058..a453b82d1077 100644
+index 1a4729c36aa4..623e4225e7c8 100644
 --- a/drivers/net/hamradio/yam.c
 +++ b/drivers/net/hamradio/yam.c
 @@ -1160,6 +1160,7 @@ static int __init yam_init_driver(void)
