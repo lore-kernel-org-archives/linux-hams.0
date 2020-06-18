@@ -1,19 +1,19 @@
 From: Sasha Levin <sashal@kernel.org>
-Subject: [PATCH AUTOSEL 5.4 071/266] yam: fix possible memory leak in yam_init_driver
-Date: Wed, 17 Jun 2020 21:13:16 -0400
-Message-ID: <20200618011631.604574-71-sashal@kernel.org>
-References: <20200618011631.604574-1-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 4.19 040/172] yam: fix possible memory leak in yam_init_driver
+Date: Wed, 17 Jun 2020 21:20:06 -0400
+Message-ID: <20200618012218.607130-40-sashal@kernel.org>
+References: <20200618012218.607130-1-sashal@kernel.org>
 Mime-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Return-path: <stable-owner@vger.kernel.org>
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1592443090;
-        bh=2qodh3uYCK+UWwNLdpcdGPCezWMVsZdyfkfnb++3Vr8=;
+        s=default; t=1592443393;
+        bh=HMUNp5S7JgC4MKED6px7xVMS2rMtoj7TyHYEgUjlX8Q=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=rkAgnsYv0HB2NgMG1TiZYCvO06Vvdo3vIyrK61uZrDt6cuvCt84PCDtuYwZbKEaQU
-         dYehMWaquGKo1oXmTdkLY7wzfU9QEZoqWp0DmQx651ZX+14KenKfFRJmf+AW7cLADD
-         cjK/X4v6mWlo7v9dV38xpPuzBH4kayX5dYEyM69s=
-In-Reply-To: <20200618011631.604574-1-sashal@kernel.org>
+        b=1ihu6LRSyXyKrfkhblZIo3Dv1yl1+4CK834Jr3+xFQJnDGOmO93PLLnDQ9qeyKpey
+         idsRxaIte+pD/SMif5FeXbBLlYT1Ccw8VW0/bkCN8BVlhA3vVfc1IAA782clgR67Ic
+         uj1qGosRGKfb2tFxsVFX47rVNkZRQo9rOeXvrBAI=
+In-Reply-To: <20200618012218.607130-1-sashal@kernel.org>
 Sender: stable-owner@vger.kernel.org
 List-ID: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
@@ -37,10 +37,10 @@ Signed-off-by: Sasha Levin <sashal@kernel.org>
  1 file changed, 1 insertion(+)
 
 diff --git a/drivers/net/hamradio/yam.c b/drivers/net/hamradio/yam.c
-index 71cdef9fb56b..5ab53e9942f3 100644
+index ba9df430fca6..fdab49872587 100644
 --- a/drivers/net/hamradio/yam.c
 +++ b/drivers/net/hamradio/yam.c
-@@ -1133,6 +1133,7 @@ static int __init yam_init_driver(void)
+@@ -1148,6 +1148,7 @@ static int __init yam_init_driver(void)
  		err = register_netdev(dev);
  		if (err) {
  			printk(KERN_WARNING "yam: cannot register net device %s\n", dev->name);
