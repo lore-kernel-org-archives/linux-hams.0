@@ -1,20 +1,20 @@
 From: Sasha Levin <sashal@kernel.org>
-Subject: [PATCH AUTOSEL 4.4 17/60] yam: fix possible memory leak in yam_init_driver
-Date: Wed, 17 Jun 2020 21:29:21 -0400
-Message-ID: <20200618013004.610532-17-sashal@kernel.org>
-References: <20200618013004.610532-1-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 5.7 092/388] yam: fix possible memory leak in yam_init_driver
+Date: Wed, 17 Jun 2020 21:03:09 -0400
+Message-ID: <20200618010805.600873-92-sashal@kernel.org>
+References: <20200618010805.600873-1-sashal@kernel.org>
 Mime-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Return-path: <linux-kernel-owner@vger.kernel.org>
+Return-path: <linux-hams-owner@vger.kernel.org>
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1592443829;
-        bh=UF0UMiNSTGEXiaBD/hxRUN255P/xQxc7ApPL6vwrafk=;
+        s=default; t=1592442610;
+        bh=2qodh3uYCK+UWwNLdpcdGPCezWMVsZdyfkfnb++3Vr8=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=goCfsHEagFxp1pbxuW+OnWSSInUo9a2H4bhEU555PiHYm/ddmKtKI2fMpd5HH+pPh
-         0YwQYOtr0RgzLMsP7dOGseShJC78v+Vn+1Qca0nhK3oKWNQ9+thCFXDTyEmegE2fsV
-         7XxsU6nM2/t39drzKq9a2Jto9Y6w+IJQVaLaDQhE=
-In-Reply-To: <20200618013004.610532-1-sashal@kernel.org>
-Sender: linux-kernel-owner@vger.kernel.org
+        b=sW4RxGg/EbtV4qnxqA27QqE54e1P5pHc+HRbQkaXdzDw1pVQ3xvc5hm25OtWrpZLQ
+         2Lq0X+JjvYoae9espsrPXVm/rN7QfyQjwsVj7HM8YiR+4ZprNDWntZ/EHkFyvQ/c8J
+         enqkuPXCkNcQ2d6HFpucscQwefaTvLmgOK8mCH2U=
+In-Reply-To: <20200618010805.600873-1-sashal@kernel.org>
+Sender: linux-hams-owner@vger.kernel.org
 List-ID: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
 To: linux-kernel@vger.kernel.org, stable@vger.kernel.org
@@ -37,10 +37,10 @@ Signed-off-by: Sasha Levin <sashal@kernel.org>
  1 file changed, 1 insertion(+)
 
 diff --git a/drivers/net/hamradio/yam.c b/drivers/net/hamradio/yam.c
-index 1a4729c36aa4..623e4225e7c8 100644
+index 71cdef9fb56b..5ab53e9942f3 100644
 --- a/drivers/net/hamradio/yam.c
 +++ b/drivers/net/hamradio/yam.c
-@@ -1160,6 +1160,7 @@ static int __init yam_init_driver(void)
+@@ -1133,6 +1133,7 @@ static int __init yam_init_driver(void)
  		err = register_netdev(dev);
  		if (err) {
  			printk(KERN_WARNING "yam: cannot register net device %s\n", dev->name);
