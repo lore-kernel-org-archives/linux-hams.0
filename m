@@ -1,188 +1,48 @@
-From: Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH net-next 2/8] docs: networking: move z8530 to the hw driver section
-Date: Fri, 26 Jun 2020 10:27:25 -0700
-Message-ID: <20200626172731.280133-3-kuba@kernel.org>
-References: <20200626172731.280133-1-kuba@kernel.org>
+From: Randy Dunlap <rdunlap@infradead.org>
+Subject: [PATCH 1/7] Documentation: networking: arcnet: drop doubled word
+Date: Fri,  3 Jul 2020 15:41:09 -0700
+Message-ID: <20200703224115.29769-2-rdunlap@infradead.org>
+References: <20200703224115.29769-1-rdunlap@infradead.org>
 Mime-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Return-path: <linux-hams-owner@vger.kernel.org>
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1593192478;
-        bh=cacCy7pLVjJ72jb+xHXx4aPCyBqtWydxDQ5RaN1MRu8=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=tEnQH2E4YCe95A/cvyQa/SjNhHA0KlAoQnPnI3hL1yUHWX4n9srPlP7BgyqchZvHU
-         QgLBxVzyIlVx+50A4ivSAwUGjaGtGbyjTh8NkdBDfKhUZDyOEt9f/KLXDcbtwe+G/D
-         ethdyt0O8tY+jRQ4vDCKlyJ5hem7QPCwVAaHzGH0=
-In-Reply-To: <20200626172731.280133-1-kuba@kernel.org>
-Sender: linux-hams-owner@vger.kernel.org
+Return-path: <linux-doc-owner@vger.kernel.org>
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+        d=infradead.org; s=casper.20170209; h=Content-Transfer-Encoding:MIME-Version:
+        References:In-Reply-To:Message-Id:Date:Subject:Cc:To:From:Sender:Reply-To:
+        Content-Type:Content-ID:Content-Description;
+        bh=3immjcWU6Dl5EbU3oekN+THQaKhifogQrF4rzqf1vcY=; b=tag9iWYZ/1ZjktaNwyt+NguXxH
+        OM56Suxy/syqkGTKqxA8N+X7zTsyfIaJditGt//3DLSoryzMAHgUrOQKgeScP/otYAjiP6BmXSe7b
+        uslVrvtBDrJN4yjNZYBFHcoh7e8J8rtNdZ7ddejMZvSYCNSFWMlj0+VJP5LDSuBQ4FpDf/X4A7/Au
+        6P53fRLh/Abpf4jlcJTKpV79lHStiSq1kSfNFccqXMSKFpAi+RDqa2qSDMYKOeeeHF6qNWCvgKxU+
+        Qr2bJ6b227/IvF2750+eFYRyRh9wh9hFqK24jPmOfsxrtiohu+MEx+2+q9jTPfFAN7UeDZMvSGyP0
+        5ZD/8r5A==;
+In-Reply-To: <20200703224115.29769-1-rdunlap@infradead.org>
+Sender: linux-doc-owner@vger.kernel.org
 List-ID: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
-To: davem@davemloft.net
-Cc: netdev@vger.kernel.org, Jakub Kicinski <kuba@kernel.org>, jreuter@yaina.de, linux-hams@vger.kernel.org
+To: linux-kernel@vger.kernel.org
+Cc: Randy Dunlap <rdunlap@infradead.org>, Jonathan Corbet <corbet@lwn.net>, linux-doc@vger.kernel.org, "David S. Miller" <davem@davemloft.net>, Jakub Kicinski <kuba@kernel.org>, netdev@vger.kernel.org, Ralf Baechle <ralf@linux-mips.org>, linux-hams@vger.kernel.org, Wolfgang Grandegger <wg@grandegger.com>, Marc Kleine-Budde <mkl@pengutronix.de>, linux-can@vger.kernel.org, Andrew Lunn <andrew@lunn.ch>, Vivien Didelot <vivien.didelot@gmail.com>, Florian Fainelli <f.fainelli@gmail.com>, David Howells <dhowells@redhat.com>, linux-afs@lists.infradead.org
 
-Move z8530 docs to hamradio and wan subdirectories.
+Drop the doubled word "to".
 
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
---
-CC: jreuter@yaina.de
-CC: linux-hams@vger.kernel.org
+Signed-off-by: Randy Dunlap <rdunlap@infradead.org>
+Cc: Jonathan Corbet <corbet@lwn.net>
+Cc: linux-doc@vger.kernel.org
+Cc: "David S. Miller" <davem@davemloft.net>
+Cc: Jakub Kicinski <kuba@kernel.org>
+Cc: netdev@vger.kernel.org
 ---
- .../device_drivers/hamradio/index.rst          | 18 ++++++++++++++++++
- .../{ => device_drivers/hamradio}/z8530drv.rst |  0
- .../networking/device_drivers/index.rst        |  2 ++
- .../networking/device_drivers/wan/index.rst    | 18 ++++++++++++++++++
- .../{ => device_drivers/wan}/z8530book.rst     |  0
- Documentation/networking/index.rst             |  2 --
- MAINTAINERS                                    |  2 +-
- drivers/net/hamradio/Kconfig                   |  8 +++++---
- drivers/net/hamradio/scc.c                     |  2 +-
- 9 files changed, 45 insertions(+), 7 deletions(-)
- create mode 100644 Documentation/networking/device_drivers/hamradio/index.rst
- rename Documentation/networking/{ => device_drivers/hamradio}/z8530drv.rst (100%)
- create mode 100644 Documentation/networking/device_drivers/wan/index.rst
- rename Documentation/networking/{ => device_drivers/wan}/z8530book.rst (100%)
+ Documentation/networking/arcnet.rst |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/Documentation/networking/device_drivers/hamradio/index.rst b/Documentation/networking/device_drivers/hamradio/index.rst
-new file mode 100644
-index 000000000000..df03a5acbfa7
---- /dev/null
-+++ b/Documentation/networking/device_drivers/hamradio/index.rst
-@@ -0,0 +1,18 @@
-+.. SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
-+
-+Amateur Radio Device Drivers
-+============================
-+
-+Contents:
-+
-+.. toctree::
-+   :maxdepth: 2
-+
-+   z8530drv
-+
-+.. only::  subproject and html
-+
-+   Indices
-+   =======
-+
-+   * :ref:`genindex`
-diff --git a/Documentation/networking/z8530drv.rst b/Documentation/networking/device_drivers/hamradio/z8530drv.rst
-similarity index 100%
-rename from Documentation/networking/z8530drv.rst
-rename to Documentation/networking/device_drivers/hamradio/z8530drv.rst
-diff --git a/Documentation/networking/device_drivers/index.rst b/Documentation/networking/device_drivers/index.rst
-index 2d4817fc6a29..5497e3ae1ca9 100644
---- a/Documentation/networking/device_drivers/index.rst
-+++ b/Documentation/networking/device_drivers/index.rst
-@@ -11,6 +11,8 @@ Hardware Device Drivers
-    cable/index
-    cellular/index
-    ethernet/index
-+   hamradio/index
-+   wan/index
-    wifi/index
- 
- .. only::  subproject and html
-diff --git a/Documentation/networking/device_drivers/wan/index.rst b/Documentation/networking/device_drivers/wan/index.rst
-new file mode 100644
-index 000000000000..9d9ae94f00b4
---- /dev/null
-+++ b/Documentation/networking/device_drivers/wan/index.rst
-@@ -0,0 +1,18 @@
-+.. SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
-+
-+Classic WAN Device Drivers
-+==========================
-+
-+Contents:
-+
-+.. toctree::
-+   :maxdepth: 2
-+
-+   z8530book
-+
-+.. only::  subproject and html
-+
-+   Indices
-+   =======
-+
-+   * :ref:`genindex`
-diff --git a/Documentation/networking/z8530book.rst b/Documentation/networking/device_drivers/wan/z8530book.rst
-similarity index 100%
-rename from Documentation/networking/z8530book.rst
-rename to Documentation/networking/device_drivers/wan/z8530book.rst
-diff --git a/Documentation/networking/index.rst b/Documentation/networking/index.rst
-index 0186e276690a..718e04e3f7ed 100644
---- a/Documentation/networking/index.rst
-+++ b/Documentation/networking/index.rst
-@@ -20,7 +20,6 @@ Linux Networking Documentation
-    ieee802154
-    j1939
-    kapi
--   z8530book
-    msg_zerocopy
-    failover
-    net_dim
-@@ -122,7 +121,6 @@ Linux Networking Documentation
-    xfrm_proc
-    xfrm_sync
-    xfrm_sysctl
--   z8530drv
- 
- .. only::  subproject and html
- 
-diff --git a/MAINTAINERS b/MAINTAINERS
-index 43e7c9a94a48..bdde85c12b74 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -18902,7 +18902,7 @@ L:	linux-hams@vger.kernel.org
- S:	Maintained
- W:	http://yaina.de/jreuter/
- W:	http://www.qsl.net/dl1bke/
--F:	Documentation/networking/z8530drv.rst
-+F:	Documentation/networking/device_drivers/hamradio/z8530drv.rst
- F:	drivers/net/hamradio/*scc.c
- F:	drivers/net/hamradio/z8530.h
- 
-diff --git a/drivers/net/hamradio/Kconfig b/drivers/net/hamradio/Kconfig
-index 70f754abbeca..cde8b48e7bc7 100644
---- a/drivers/net/hamradio/Kconfig
-+++ b/drivers/net/hamradio/Kconfig
-@@ -84,8 +84,9 @@ config SCC
- 	help
- 	  These cards are used to connect your Linux box to an amateur radio
- 	  in order to communicate with other computers. If you want to use
--	  this, read <file:Documentation/networking/z8530drv.rst> and the
--	  AX25-HOWTO, available from
-+	  this, read
-+	  <file:Documentation/networking/device_drivers/hamradio/z8530drv.rst>
-+	  and the AX25-HOWTO, available from
- 	  <http://www.tldp.org/docs.html#howto>. Also make sure to say Y
- 	  to "Amateur Radio AX.25 Level 2" support.
- 
-@@ -98,7 +99,8 @@ config SCC_DELAY
- 	help
- 	  Say Y here if you experience problems with the SCC driver not
- 	  working properly; please read
--	  <file:Documentation/networking/z8530drv.rst> for details.
-+	  <file:Documentation/networking/device_drivers/hamradio/z8530drv.rst>
-+	  for details.
- 
- 	  If unsure, say N.
- 
-diff --git a/drivers/net/hamradio/scc.c b/drivers/net/hamradio/scc.c
-index 33fdd55c6122..1e915871baa7 100644
---- a/drivers/net/hamradio/scc.c
-+++ b/drivers/net/hamradio/scc.c
-@@ -7,7 +7,7 @@
-  *            ------------------
-  *
-  * You can find a subset of the documentation in 
-- * Documentation/networking/z8530drv.rst.
-+ * Documentation/networking/device_drivers/wan/z8530drv.rst.
-  */
- 
- /*
--- 
-2.26.2
-
+--- linux-next-20200701.orig/Documentation/networking/arcnet.rst
++++ linux-next-20200701/Documentation/networking/arcnet.rst
+@@ -434,7 +434,7 @@ can set up your network then:
+ 	ifconfig arc0 insight
+ 	route add insight arc0
+ 	route add freedom arc0	/* I would use the subnet here (like I said
+-					to to in "single protocol" above),
++					to in "single protocol" above),
+ 					but the rest of the subnet
+ 					unfortunately lies across the PPP
+ 					link on freedom, which confuses
