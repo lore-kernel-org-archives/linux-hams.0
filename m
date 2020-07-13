@@ -1,39 +1,102 @@
-From: David Howells <dhowells@redhat.com>
-Subject: Re: [PATCH 7/7] Documentation: networking: rxrpc: drop doubled word
-Date: Mon, 06 Jul 2020 17:07:49 +0100
-Message-ID: <2937968.1594051669@warthog.procyon.org.uk>
-References: <20200703224115.29769-8-rdunlap@infradead.org> <20200703224115.29769-1-rdunlap@infradead.org>
+From: "Alexander A. Klimov" <grandmaster@al2klimov.de>
+Subject: [PATCH] [NET] AX.25 Kconfig: Replace HTTP links with HTTPS ones
+Date: Mon, 13 Jul 2020 11:02:51 +0200
+Message-ID: <20200713090251.32640-1-grandmaster@al2klimov.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Return-path: <linux-can-owner@vger.kernel.org>
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-        s=mimecast20190719; t=1594051677;
-        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-         in-reply-to:in-reply-to:references:references;
-        bh=T0Tdrox1piejlTo0hG16l/0bS65uxGbesdx/bv8EYVE=;
-        b=DUJ2ur01X9/GS3igPpyCWR9LSFTdlq4imKNh4XQ5b6fNJZd4pWWmStsFzVpmFL9o0zfI5c
-        KcM9tceItscN0yiwSZ2bqnPdJ1056sqoMxsjqo5ClspVjKpx3VfAfSX/0MSgWxSQfRWh7g
-        XW4v3jNk2doDVtDz6KlaNaqp+MnqnU8=
-In-Reply-To: <20200703224115.29769-8-rdunlap@infradead.org>
-Content-ID: <2937967.1594051669.1@warthog.procyon.org.uk>
-Sender: linux-can-owner@vger.kernel.org
+Content-Transfer-Encoding: 8bit
+Return-path: <linux-hams-owner@vger.kernel.org>
+Sender: linux-hams-owner@vger.kernel.org
 List-ID: <linux-hams.vger.kernel.org>
-Content-Transfer-Encoding: 7bit
-To: Randy Dunlap <rdunlap@infradead.org>
-Cc: dhowells@redhat.com, linux-kernel@vger.kernel.org, Jonathan Corbet <corbet@lwn.net>, linux-doc@vger.kernel.org, "David S. Miller" <davem@davemloft.net>, Jakub Kicinski <kuba@kernel.org>, netdev@vger.kernel.org, Ralf Baechle <ralf@linux-mips.org>, linux-hams@vger.kernel.org, Wolfgang Grandegger <wg@grandegger.com>, Marc Kleine-Budde <mkl@pengutronix.de>, linux-can@vger.kernel.org, Andrew Lunn <andrew@lunn.ch>, Vivien Didelot <vivien.didelot@gmail.com>, Florian Fainelli <f.fainelli@gmail.com>, linux-afs@lists.infradead.org
+Content-Type: text/plain; charset="us-ascii"
+To: ralf@linux-mips.org, davem@davemloft.net, kuba@kernel.org, linux-hams@vger.kernel.org, netdev@vger.kernel.org, linux-kernel@vger.kernel.org
+Cc: "Alexander A. Klimov" <grandmaster@al2klimov.de>
 
-Randy Dunlap <rdunlap@infradead.org> wrote:
+Rationale:
+Reduces attack surface on kernel devs opening the links for MITM
+as HTTPS traffic is much harder to manipulate.
 
-> Drop the doubled word "have".
-> 
-> Signed-off-by: Randy Dunlap <rdunlap@infradead.org>
-> Cc: Jonathan Corbet <corbet@lwn.net>
-> Cc: linux-doc@vger.kernel.org
-> Cc: "David S. Miller" <davem@davemloft.net>
-> Cc: Jakub Kicinski <kuba@kernel.org>
-> Cc: netdev@vger.kernel.org
-> Cc: linux-afs@lists.infradead.org
+Deterministic algorithm:
+For each file:
+  If not .svg:
+    For each line:
+      If doesn't contain `\bxmlns\b`:
+        For each link, `\bhttp://[^# \t\r\n]*(?:\w|/)`:
+	  If neither `\bgnu\.org/license`, nor `\bmozilla\.org/MPL\b`:
+            If both the HTTP and HTTPS versions
+            return 200 OK and serve the same content:
+              Replace HTTP with HTTPS.
 
-Acked-by: David Howells <dhowells@redhat.com>
+Signed-off-by: Alexander A. Klimov <grandmaster@al2klimov.de>
+---
+ Continuing my work started at 93431e0607e5.
+ See also: git log --oneline '--author=Alexander A. Klimov <grandmaster@al2klimov.de>' v5.7..master
+ (Actually letting a shell for loop submit all this stuff for me.)
+
+ If there are any URLs to be removed completely or at least not just HTTPSified:
+ Just clearly say so and I'll *undo my change*.
+ See also: https://lkml.org/lkml/2020/6/27/64
+
+ If there are any valid, but yet not changed URLs:
+ See: https://lkml.org/lkml/2020/6/26/837
+
+ If you apply the patch, please let me know.
+
+ Sorry again to all maintainers who complained about subject lines.
+ Now I realized that you want an actually perfect prefixes,
+ not just subsystem ones.
+ I tried my best...
+ And yes, *I could* (at least half-)automate it.
+ Impossible is nothing! :)
+
+
+ net/ax25/Kconfig | 10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
+
+diff --git a/net/ax25/Kconfig b/net/ax25/Kconfig
+index 97d686d115c0..d3a9843a043d 100644
+--- a/net/ax25/Kconfig
++++ b/net/ax25/Kconfig
+@@ -8,7 +8,7 @@ menuconfig HAMRADIO
+ 	bool "Amateur Radio support"
+ 	help
+ 	  If you want to connect your Linux box to an amateur radio, answer Y
+-	  here. You want to read <http://www.tapr.org/>
++	  here. You want to read <https://www.tapr.org/>
+ 	  and more specifically about AX.25 on Linux
+ 	  <http://www.linux-ax25.org/>.
+ 
+@@ -39,11 +39,11 @@ config AX25
+ 	  Information about where to get supporting software for Linux amateur
+ 	  radio as well as information about how to configure an AX.25 port is
+ 	  contained in the AX25-HOWTO, available from
+-	  <http://www.tldp.org/docs.html#howto>. You might also want to
++	  <https://www.tldp.org/docs.html#howto>. You might also want to
+ 	  check out the file <file:Documentation/networking/ax25.rst> in the
+ 	  kernel source. More information about digital amateur radio in
+ 	  general is on the WWW at
+-	  <http://www.tapr.org/>.
++	  <https://www.tapr.org/>.
+ 
+ 	  To compile this driver as a module, choose M here: the
+ 	  module will be called ax25.
+@@ -90,7 +90,7 @@ config NETROM
+ 	  <http://www.linux-ax25.org>. You also might want to check out the
+ 	  file <file:Documentation/networking/ax25.rst>. More information about
+ 	  digital amateur radio in general is on the WWW at
+-	  <http://www.tapr.org/>.
++	  <https://www.tapr.org/>.
+ 
+ 	  To compile this driver as a module, choose M here: the
+ 	  module will be called netrom.
+@@ -109,7 +109,7 @@ config ROSE
+ 	  <http://www.linux-ax25.org>.  You also might want to check out the
+ 	  file <file:Documentation/networking/ax25.rst>. More information about
+ 	  digital amateur radio in general is on the WWW at
+-	  <http://www.tapr.org/>.
++	  <https://www.tapr.org/>.
+ 
+ 	  To compile this driver as a module, choose M here: the
+ 	  module will be called rose.
+-- 
+2.27.0
 
