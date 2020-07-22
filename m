@@ -1,42 +1,44 @@
-From: David Laight <David.Laight@ACULAB.COM>
-Subject: RE: get rid of the address_space override in setsockopt
-Date: Tue, 21 Jul 2020 10:26:58 +0000
-Message-ID: <ae6a743aaea3406596dbc89e332b6b3e@AcuMS.aculab.com>
-References: <20200720124737.118617-1-hch@lst.de>
+From: Christoph Hellwig <hch@lst.de>
+Subject: Re: [PATCH 03/24] net: add a new sockptr_t type
+Date: Wed, 22 Jul 2020 09:56:20 +0200
+Message-ID: <20200722075620.GA26554@lst.de>
+References: <20200720124737.118617-1-hch@lst.de> <20200720124737.118617-4-hch@lst.de> <20200720163748.GA1292162@gmail.com> <20200720174322.GA21785@lst.de> <20200720175543.GF1292162@gmail.com>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 8BIT
-Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <20200720124737.118617-1-hch@lst.de>
-Content-Language: en-US
-Sender: linux-hams-owner@vger.kernel.org
+Return-path: <netdev-owner@vger.kernel.org>
+Content-Disposition: inline
+In-Reply-To: <20200720175543.GF1292162@gmail.com>
+Sender: netdev-owner@vger.kernel.org
 List-ID: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
-To: 'Christoph Hellwig' <hch@lst.de>, "David S. Miller" <davem@davemloft.net>, Jakub Kicinski <kuba@kernel.org>, Alexei Starovoitov <ast@kernel.org>, Daniel Borkmann <daniel@iogearbox.net>, Alexey Kuznetsov <kuznet@ms2.inr.ac.ru>, Hideaki YOSHIFUJI <yoshfuji@linux-ipv6.org>, Eric Dumazet <edumazet@google.com>
-Cc: "linux-crypto@vger.kernel.org" <linux-crypto@vger.kernel.org>, "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>, "netdev@vger.kernel.org" <netdev@vger.kernel.org>, "bpf@vger.kernel.org" <bpf@vger.kernel.org>, "netfilter-devel@vger.kernel.org" <netfilter-devel@vger.kernel.org>, "coreteam@netfilter.org" <coreteam@netfilter.org>, "linux-sctp@vger.kernel.org" <linux-sctp@vger.kernel.org>, "linux-hams@vger.kernel.org" <linux-hams@vger.kernel.org>, "linux-bluetooth@vger.kernel.org" <linux-bluetooth@vger.kernel.org>, "bridge@lists.linux-foundation.org" <bridge@lists.linux-foundation.org>, "linux-can@vger.kernel.org" <linux-can@vger.kernel.org>, "dccp@vger.kernel.org" <dccp@vger.kernel.org>, "linux-decnet-user@lists.sourceforge.net" <linux-decnet-user@lists.sourcefor>
+Content-Transfer-Encoding: 7bit
+To: Eric Biggers <ebiggers@kernel.org>
+Cc: Christoph Hellwig <hch@lst.de>, "David S. Miller" <davem@davemloft.net>, Jakub Kicinski <kuba@kernel.org>, Alexei Starovoitov <ast@kernel.org>, Daniel Borkmann <daniel@iogearbox.net>, Alexey Kuznetsov <kuznet@ms2.inr.ac.ru>, Hideaki YOSHIFUJI <yoshfuji@linux-ipv6.org>, Eric Dumazet <edumazet@google.com>, linux-crypto@vger.kernel.org, linux-kernel@vger.kernel.org, netdev@vger.kernel.org, bpf@vger.kernel.org, netfilter-devel@vger.kernel.org, coreteam@netfilter.org, linux-sctp@vger.kernel.org, linux-hams@vger.kernel.org, linux-bluetooth@vger.kernel.org, bridge@lists.linux-foundation.org, linux-can@vger.kernel.org, dccp@vger.kernel.org, linux-decnet-user@lists.sourceforge.net, linux-wpan@vger.kernel.org, linux-s390@vger.kernel.org, mptcp@lists.01.org, 
 
-From: Christoph Hellwig
-> Sent: 20 July 2020 13:47
+On Mon, Jul 20, 2020 at 10:55:43AM -0700, Eric Biggers wrote:
+> On Mon, Jul 20, 2020 at 07:43:22PM +0200, Christoph Hellwig wrote:
+> > On Mon, Jul 20, 2020 at 09:37:48AM -0700, Eric Biggers wrote:
+> > > How does this not introduce a massive security hole when
+> > > CONFIG_ARCH_HAS_NON_OVERLAPPING_ADDRESS_SPACE?
+> > > 
+> > > AFAICS, userspace can pass in a pointer >= TASK_SIZE,
+> > > and this code makes it be treated as a kernel pointer.
+> > 
+> > Yeah, we'll need to validate that before initializing the pointer.
+> > 
+> > But thinking this a little further:  doesn't this mean any
+> > set_fs(KERNEL_DS) that has other user pointers than the one it is
+> > intended for has the same issue?  Pretty much all of these are gone
+> > in mainline now, but in older stable kernels there might be some
+> > interesting cases, especially in the compat ioctl handlers.
 > 
-> setsockopt is the last place in architecture-independ code that still
-> uses set_fs to force the uaccess routines to operate on kernel pointers.
+> Yes.  I thought that eliminating that class of bug is one of the main
+> motivations for your "remove set_fs" work.  See commit 128394eff343
+> ("sg_write()/bsg_write() is not fit to be called under KERNEL_DS") for a case
+> where this type of bug was fixed.
 > 
-> This series adds a new sockptr_t type that can contained either a kernel
-> or user pointer, and which has accessors that do the right thing, and
-> then uses it for setsockopt, starting by refactoring some low-level
-> helpers and moving them over to it before finally doing the main
-> setsockopt method.
+> Are you aware of any specific cases that weren't already fixed?  If there are
+> any, they need to be urgently fixed.
 
-Another 'gotcha' ...
-
-On an least some architectures (possibly only m68k) IIRC all structures
-are actually passed by reference.
-(This used to be true for sparc - but it may have changed in the
-last 30 years.)
-
-	David
- 
-
--
-Registered Address Lakeside, Bramley Road, Mount Farm, Milton Keynes, MK1 1PT, UK
-Registration No: 1397386 (Wales)
-
+current mainline has almost no set_fs left, and setsockopt seems
+pretty much safe.  But if we go back a long term stable release or two
+I bet I'd find one or two.
