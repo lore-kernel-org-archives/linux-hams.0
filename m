@@ -1,54 +1,46 @@
-From: Peilin Ye <yepeilin.cs@gmail.com>
-Subject: [Linux-kernel-mentees] [PATCH net] AX.25: Prevent out-of-bounds read in ax25_sendmsg()
-Date: Wed, 22 Jul 2020 12:05:12 -0400
-Message-ID: <20200722160512.370802-1-yepeilin.cs@gmail.com>
+From: Alexei Starovoitov <alexei.starovoitov@gmail.com>
+Subject: Re: get rid of the address_space override in setsockopt
+Date: Wed, 22 Jul 2020 10:09:41 -0700
+Message-ID: <CAADnVQKy0+rsRftEzp4PvxQtj7uOwybz0Nd4_h0FR37p2Q=X4w@mail.gmail.com>
+References: <20200720124737.118617-1-hch@lst.de> <20200720204756.iengwcguikj2yrxt@ast-mbp.dhcp.thefacebook.com>
+ <20200722075657.GB26554@lst.de>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 8bit
 Return-path: <linux-hams-owner@vger.kernel.org>
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=inXRPYgND6+0WE39IDvE6wldzJTBYfDxX/wQ/vOfPn0=;
-        b=a8k1mfHuBtctSv/v34AEQtJKDDMJsmzgQiLNEMGt4v2xwXaP9+GEfP4S+dVZi9N5cm
-         StZ5VmZHe2C9KFpm5eofHmXUSvhi240cLFMIKR7UoqZ+KwFyYOXEZdIAbWrh7WAmVu4o
-         7OcBxIEmwji96oE6vzBnqIvyyolTXj+IlHB/WVPIq0FWjRTz4zKz9GVi7/uWcYDDWFeu
-         OqcdP+yyS4UEjao+xsT+J2XbAySKFfuFsUPmlbi8SM84zy/p3CExBuMfJQ6sk2CPMnnJ
-         cKxPqrDOJnOgIQyJ2xBQ9c6B2wlAss8VNk//84EIuIgbdRYnnERBUNuz5E6J9LoAwTOu
-         bSAg==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=nqelWpCqH7nOe0oSyngzrBNpGRC3PyDyz91JHpls3Xk=;
+        b=QbFOpYWq197fvdaI4E7hogiJ5z6DhlnMwFbSAyObyOYxQk/ojAWvAxU5xeCwIzRoyp
+         bGpv6okHRbaDCk3F5IJgGXS3Wesi1t0HKLxD0rWbntKFa+o4FEuZ/aNqddB2gT9rJhFi
+         ekTLt46VwAAqYYSOS+Ti6gpiM2sULyDbPlDxrV2EC1wYfvYmkCiCMfUA2sia4+eUOZSm
+         DpKqJKTrsnJtuquGnG9/42hXesw1S5DhQmqbpijEy6OLbaHF8RyBbV+paN+wC914K+DB
+         Om2JyFGEZL8bVoXG7xFZFOn3b/hxnJAALpQKOVax/+9YzLSzmIzDLinAT6/sMjMDDXxC
+         pBiA==
+In-Reply-To: <20200722075657.GB26554@lst.de>
 Sender: linux-hams-owner@vger.kernel.org
 List-ID: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
-To: Joerg Reuter <jreuter@yaina.de>, Ralf Baechle <ralf@linux-mips.org>
-Cc: Peilin Ye <yepeilin.cs@gmail.com>, Greg Kroah-Hartman <gregkh@linuxfoundation.org>, syzkaller-bugs@googlegroups.com, linux-kernel-mentees@lists.linuxfoundation.org, "David S . Miller" <davem@davemloft.net>, Jakub Kicinski <kuba@kernel.org>, linux-hams@vger.kernel.org, netdev@vger.kernel.org, linux-kernel@vger.kernel.org
+Content-Transfer-Encoding: 7bit
+To: Christoph Hellwig <hch@lst.de>
+Cc: "David S. Miller" <davem@davemloft.net>, Jakub Kicinski <kuba@kernel.org>, Alexei Starovoitov <ast@kernel.org>, Daniel Borkmann <daniel@iogearbox.net>, Alexey Kuznetsov <kuznet@ms2.inr.ac.ru>, Hideaki YOSHIFUJI <yoshfuji@linux-ipv6.org>, Eric Dumazet <edumazet@google.com>, Linux Crypto Mailing List <linux-crypto@vger.kernel.org>, LKML <linux-kernel@vger.kernel.org>, Network Development <netdev@vger.kernel.org>, bpf <bpf@vger.kernel.org>, netfilter-devel <netfilter-devel@vger.kernel.org>, coreteam@netfilter.org, linux-sctp@vger.kernel.org, linux-hams@vger.kernel.org, linux-bluetooth@vger.kernel.org, "moderated list:ETHERNET BRIDGE" <bridge@lists.linux-foundation.org>, linux-can@vger.kernel.org, dccp@vger.kernel.org, linux-decnet-user@lists.sourceforge.net
 
-Checks on `addr_len` and `usax->sax25_ndigis` are insufficient.
-ax25_sendmsg() can go out of bounds when `usax->sax25_ndigis` equals to 7
-or 8. Fix it.
+On Wed, Jul 22, 2020 at 12:56 AM Christoph Hellwig <hch@lst.de> wrote:
+>
+> On Mon, Jul 20, 2020 at 01:47:56PM -0700, Alexei Starovoitov wrote:
+> > > a kernel pointer.  This is something that works for most common sockopts
+> > > (and is something that the ePBF support relies on), but unfortunately
+> > > in various corner cases we either don't use the passed in length, or in
+> > > one case actually copy data back from setsockopt, so we unfortunately
+> > > can't just always do the copy in the highlevel code, which would have
+> > > been much nicer.
+> >
+> > could you rebase on bpf-next tree and we can route it this way then?
+> > we'll also test the whole thing before applying.
+>
+> The bpf-next tree is missing all my previous setsockopt cleanups, so
+> there series won't apply.
 
-It is safe to remove `usax->sax25_ndigis > AX25_MAX_DIGIS`, since
-`addr_len` is guaranteed to be less than or equal to
-`sizeof(struct full_sockaddr_ax25)`
-
-Signed-off-by: Peilin Ye <yepeilin.cs@gmail.com>
----
- net/ax25/af_ax25.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
-
-diff --git a/net/ax25/af_ax25.c b/net/ax25/af_ax25.c
-index ef5bf116157a..0862fe49d434 100644
---- a/net/ax25/af_ax25.c
-+++ b/net/ax25/af_ax25.c
-@@ -1509,7 +1509,8 @@ static int ax25_sendmsg(struct socket *sock, struct msghdr *msg, size_t len)
- 			struct full_sockaddr_ax25 *fsa = (struct full_sockaddr_ax25 *)usax;
- 
- 			/* Valid number of digipeaters ? */
--			if (usax->sax25_ndigis < 1 || usax->sax25_ndigis > AX25_MAX_DIGIS) {
-+			if (usax->sax25_ndigis < 1 || addr_len < sizeof(struct sockaddr_ax25) +
-+			    sizeof(ax25_address) * usax->sax25_ndigis) {
- 				err = -EINVAL;
- 				goto out;
- 			}
--- 
-2.25.1
-
+Right. I've realized that after sending that email two days ago.
+Now bpf-next->net-next PR is pending and as soon as it's merged
+bpf-next will have all the recent bits.
