@@ -1,54 +1,51 @@
-From: Peilin Ye <yepeilin.cs@gmail.com>
-Subject: Re: [Linux-kernel-mentees] [PATCH net] AX.25: Fix out-of-bounds read
- in ax25_connect()
-Date: Thu, 23 Jul 2020 11:15:48 -0400
-Message-ID: <20200723151548.GB412829@PWN>
-References: <20200722151901.350003-1-yepeilin.cs@gmail.com>
- <20200722.175714.1713497446730685740.davem@davemloft.net>
+From: Jan Engelhardt <jengelh@inai.de>
+Subject: Re: [PATCH 04/26] net: add a new sockptr_t type
+Date: Thu, 23 Jul 2020 17:40:49 +0200 (CEST)
+Message-ID: <nycvar.YFH.7.77.849.2007231725090.11202@n3.vanv.qr>
+References: <20200723060908.50081-1-hch@lst.de> <20200723060908.50081-5-hch@lst.de>
 Mime-Version: 1.0
-Return-path: <linux-kernel-owner@vger.kernel.org>
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=KyocJ093PD2YbzDHrbxPUouVLOVe2BF7XP9Bhi4fh1o=;
-        b=tSaAtD1GxyjwJ2PveArLh3Q+zJiVlHY6dLhLVtfSYNs73jjvOW8FF2WUoYGV52TyF5
-         w8aPxeDiojYhblWMBFz02zV1w6Xd1ml0awr2xDX/AFPMteUXKTsIak19BG96adtMz3MO
-         5ZHY6tGyTtyoEeWRR78YZFU6j4sJCYTOQVV+qs+z5KdElgT+chPzvvtap+zIlyfcrQKa
-         w5xF7uvPrCfBQazolZFSFxVgYNIV8pNwTRSwqvbrkDvsgfPy70jBTm28ZHkRFaKhnoFj
-         xlDMrAlsRVRRsS3e01/MPCvlTb+GBwj7HY8moxVImB/lcRbD2h+XAOWOlY8Dj1oOc9QC
-         MM9A==
-Content-Disposition: inline
-In-Reply-To: <20200722.175714.1713497446730685740.davem@davemloft.net>
-Sender: linux-kernel-owner@vger.kernel.org
+Return-path: <netdev-owner@vger.kernel.org>
+In-Reply-To: <20200723060908.50081-5-hch@lst.de>
+Sender: netdev-owner@vger.kernel.org
 List-ID: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
-To: David Miller <davem@davemloft.net>
-Cc: jreuter@yaina.de, ralf@linux-mips.org, gregkh@linuxfoundation.org, syzkaller-bugs@googlegroups.com, linux-kernel-mentees@lists.linuxfoundation.org, kuba@kernel.org, linux-hams@vger.kernel.org, netdev@vger.kernel.org, linux-kernel@vger.kernel.org
+To: Christoph Hellwig <hch@lst.de>
+Cc: "David S. Miller" <davem@davemloft.net>, Jakub Kicinski <kuba@kernel.org>, Alexei Starovoitov <ast@kernel.org>, Daniel Borkmann <daniel@iogearbox.net>, Alexey Kuznetsov <kuznet@ms2.inr.ac.ru>, Hideaki YOSHIFUJI <yoshfuji@linux-ipv6.org>, Eric Dumazet <edumazet@google.com>, linux-crypto@vger.kernel.org, linux-kernel@vger.kernel.org, netdev@vger.kernel.org, bpf@vger.kernel.org, Netfilter Developer Mailing List <netfilter-devel@vger.kernel.org>, coreteam@netfilter.org, linux-sctp@vger.kernel.org, linux-hams@vger.kernel.org, linux-bluetooth@vger.kernel.org, bridge@lists.linux-foundation.org, linux-can@vger.kernel.org, dccp@vger.kernel.org, linux-decnet-user@lists.sourceforge.net, linux-wpan@vger.kernel.org, linux-s390@vger.kernel.org, mptcp@lists.01.org, lvs-de
 
-On Wed, Jul 22, 2020 at 05:57:14PM -0700, David Miller wrote:
-> From: Peilin Ye <yepeilin.cs@gmail.com>
-> Date: Wed, 22 Jul 2020 11:19:01 -0400
-> 
-> > Checks on `addr_len` and `fsa->fsa_ax25.sax25_ndigis` are insufficient.
-> > ax25_connect() can go out of bounds when `fsa->fsa_ax25.sax25_ndigis`
-> > equals to 7 or 8. Fix it.
-> > 
-> > This issue has been reported as a KMSAN uninit-value bug, because in such
-> > a case, ax25_connect() reaches into the uninitialized portion of the
-> > `struct sockaddr_storage` statically allocated in __sys_connect().
-> > 
-> > It is safe to remove `fsa->fsa_ax25.sax25_ndigis > AX25_MAX_DIGIS` because
-> > `addr_len` is guaranteed to be less than or equal to
-> > `sizeof(struct full_sockaddr_ax25)`.
-> > 
-> > Reported-by: syzbot+c82752228ed975b0a623@syzkaller.appspotmail.com
-> > Link: https://syzkaller.appspot.com/bug?id=55ef9d629f3b3d7d70b69558015b63b48d01af66
-> > Signed-off-by: Peilin Ye <yepeilin.cs@gmail.com>
-> 
-> Applied and queued up for -stable, thanks.
 
-Thank you for reviewing my patch!
+On Thursday 2020-07-23 08:08, Christoph Hellwig wrote:
+>+typedef struct {
+>+	union {
+>+		void		*kernel;
+>+		void __user	*user;
+>+	};
+>+	bool		is_kernel : 1;
+>+} sockptr_t;
+>+
+>+static inline bool sockptr_is_null(sockptr_t sockptr)
+>+{
+>+	return !sockptr.user && !sockptr.kernel;
+>+}
 
-Peilin Ye
+"""If the member used to access the contents of a union is not the same as the
+member last used to store a value, the object representation of the value that
+was stored is reinterpreted as an object representation of the new type (this
+is known as type punning). If the size of the new type is larger than the size
+of the last-written type, the contents of the excess bytes are unspecified (and
+may be a trap representation)"""
+
+As I am not too versed with the consequences of trap representations, I will
+just point out that a future revision of the C standard may introduce (proposal
+N2362) stronger C++-like requirements; as for union, that would imply a simple:
+
+"""It's undefined behavior to read from the member of the union that wasn't
+most recently written.""" [cppreference.com]
+
+
+So, in the spirit of copy_from/to_sockptr, the is_null function should read
+
+{
+	return sockptr.is_kernel ? !sockptr.user : !sockptr.kernel;
+}
+
