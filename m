@@ -1,46 +1,61 @@
-From: David Miller <davem@davemloft.net>
-Subject: Re: get rid of the address_space override in setsockopt v2
-Date: Fri, 24 Jul 2020 15:43:42 -0700 (PDT)
-Message-ID: <20200724.154342.1433271593505001306.davem@davemloft.net>
-References: <20200723060908.50081-1-hch@lst.de>
+From: David Ranch <linux-hams@trinnet.net>
+Subject: Re: [Linux-kernel-mentees] [PATCH net] AX.25: Prevent out-of-bounds
+ read in ax25_sendmsg()
+Date: Fri, 24 Jul 2020 15:25:18 -0700
+Message-ID: <9ed88432-ef95-f01a-9655-7c60158e3b09@trinnet.net>
+References: <20200722160512.370802-1-yepeilin.cs@gmail.com>
+ <20200722.180723.102622644879670834.davem@davemloft.net>
 Mime-Version: 1.0
 Content-Transfer-Encoding: 7bit
-Return-path: <netdev-owner@vger.kernel.org>
-In-Reply-To: <20200723060908.50081-1-hch@lst.de>
-Sender: netdev-owner@vger.kernel.org
+Return-path: <linux-hams-owner@vger.kernel.org>
+In-Reply-To: <20200722.180723.102622644879670834.davem@davemloft.net>
+Sender: linux-hams-owner@vger.kernel.org
 List-ID: <linux-hams.vger.kernel.org>
-Content-Type: Text/Plain; charset="us-ascii"
-To: hch@lst.de
-Cc: kuba@kernel.org, ast@kernel.org, daniel@iogearbox.net, kuznet@ms2.inr.ac.ru, yoshfuji@linux-ipv6.org, edumazet@google.com, linux-crypto@vger.kernel.org, linux-kernel@vger.kernel.org, netdev@vger.kernel.org, bpf@vger.kernel.org, netfilter-devel@vger.kernel.org, coreteam@netfilter.org, linux-sctp@vger.kernel.org, linux-hams@vger.kernel.org, linux-bluetooth@vger.kernel.org, bridge@lists.linux-foundation.org, linux-can@vger.kernel.org, dccp@vger.kernel.org, linux-decnet-user@lists.sourceforge.net, linux-wpan@vger.kernel.org, linux-s390@vger.kernel.org, mptcp@lists.01.org, lvs-devel@vger.kernel.org, rds-devel@oss.oracle.com, linux-afs@lists.infradead.org, tipc-discussion@lists.sourceforge.net, linux-x25@vger.kernel.org
+Content-Type: text/plain; charset="us-ascii"; format="flowed"
+To: David Miller <davem@davemloft.net>, yepeilin.cs@gmail.com
+Cc: jreuter@yaina.de, ralf@linux-mips.org, gregkh@linuxfoundation.org, syzkaller-bugs@googlegroups.com, linux-kernel-mentees@lists.linuxfoundation.org, kuba@kernel.org, linux-hams@vger.kernel.org, netdev@vger.kernel.org, linux-kernel@vger.kernel.org
 
-From: Christoph Hellwig <hch@lst.de>
-Date: Thu, 23 Jul 2020 08:08:42 +0200
 
-> setsockopt is the last place in architecture-independ code that still
-> uses set_fs to force the uaccess routines to operate on kernel pointers.
-> 
-> This series adds a new sockptr_t type that can contained either a kernel
-> or user pointer, and which has accessors that do the right thing, and
-> then uses it for setsockopt, starting by refactoring some low-level
-> helpers and moving them over to it before finally doing the main
-> setsockopt method.
-> 
-> Note that apparently the eBPF selftests do not even cover this path, so
-> the series has been tested with a testing patch that always copies the
-> data first and passes a kernel pointer.  This is something that works for
-> most common sockopts (and is something that the ePBF support relies on),
-> but unfortunately in various corner cases we either don't use the passed
-> in length, or in one case actually copy data back from setsockopt, or in
-> case of bpfilter straight out do not work with kernel pointers at all.
-> 
-> Against net-next/master.
-> 
-> Changes since v1:
->  - check that users don't pass in kernel addresses
->  - more bpfilter cleanups
->  - cosmetic mptcp tweak
+I need to ask the following question to the Linux kernel community as 
+the AX25 amateur radio community is already having to
+work around a few broken commits that were committed 4.1.22+:
 
-Series applied to net-next, I'm build testing and will push this out when
-that is done.
+   Is anyone actually _*testing*_ these proposed changes to make sure 
+the AX.25 and related ecosystem still work afterwards?
 
-Thanks.
+I've personally tried multiple times to recruit some help to get some of 
+these previous commits rolled back from some
+recommended kernel people including even some the original authors like 
+Alan Cox, etc without any success.  I fear that if
+more commits come into the kernel without any testing, the whole AX.25 
+stack will become toxic and unusable.
+
+I am not a kernel class developer but I am *personally* willing to help 
+out on the testing effort and even help setup regression
+topologies (VMs, containers, whatever) if there is some place that they 
+can be ideally run in a continuous delivery.
+
+If there is anyone also willing to help fix some of these previous 
+commits and get the AX.25 stack kernel back on track,
+I do have a bunch of details of the commit details, details on why those 
+committers THOUGHT they were a good idea, etc.
+
+--David
+KI6ZHD
+
+
+On 07/22/2020 06:07 PM, David Miller wrote:
+> From: Peilin Ye <yepeilin.cs@gmail.com>
+> Date: Wed, 22 Jul 2020 12:05:12 -0400
+>
+>> Checks on `addr_len` and `usax->sax25_ndigis` are insufficient.
+>> ax25_sendmsg() can go out of bounds when `usax->sax25_ndigis` equals to 7
+>> or 8. Fix it.
+>>
+>> It is safe to remove `usax->sax25_ndigis > AX25_MAX_DIGIS`, since
+>> `addr_len` is guaranteed to be less than or equal to
+>> `sizeof(struct full_sockaddr_ax25)`
+>>
+>> Signed-off-by: Peilin Ye <yepeilin.cs@gmail.com>
+> Applied.
+
