@@ -1,34 +1,48 @@
-From: syzbot <syzbot+eff6b596cc8194e2f029@syzkaller.appspotmail.com>
-Subject: Re: KASAN: use-after-free Read in refcount_inc_not_zero_checked (2)
-Date: Fri, 14 Aug 2020 11:48:08 -0700
-Message-ID: <000000000000ab163105acdadc50@google.com>
-References: <000000000000eea12405843bc43c@google.com>
+From: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
+Subject: [PATCH v6 58/80] drivers: net: hamradio: fix document location
+Date: Tue, 13 Oct 2020 13:54:13 +0200
+Message-ID: <483eed6c0db2a62b89dd0e3586493c56c4fbed1b.1602589096.git.mchehab+huawei@kernel.org>
+References: <cover.1602589096.git.mchehab+huawei@kernel.org>
 Mime-Version: 1.0
-Return-path: <linux-kernel-owner@vger.kernel.org>
-In-Reply-To: <000000000000eea12405843bc43c@google.com>
-Sender: linux-kernel-owner@vger.kernel.org
+Content-Transfer-Encoding: 8bit
+Return-path: <netdev-owner@vger.kernel.org>
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=default; t=1602590081;
+        bh=sA+LLjFnYe1xhNIVyej80xZ8cWbaGG48uMqipjGVTpU=;
+        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+        b=LSzM1wvJqUAXFS6m9P2E6qFFWxGvCxzBYv3AULvTyNSjajA3ScICrG51V1TLkaiKi
+         CRePNr1nN7U/Ga1IgdjlxjYofBzhmPtT8pg7XIeiqpTXF1OM9UNEfyotouNS+r5EbV
+         Rh7bBfxOioGCoR24o1cSUC20vntOEs+Mg6xtigEc=
+In-Reply-To: <cover.1602589096.git.mchehab+huawei@kernel.org>
+Sender: Mauro Carvalho Chehab <mchehab@kernel.org>
 List-ID: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-To: ardb@kernel.org, davem@davemloft.net, linux-efi@vger.kernel.org, linux-hams@vger.kernel.org, linux-kernel@vger.kernel.org, mingo@kernel.org, netdev@vger.kernel.org, nivedita@alum.mit.edu, ralf@linux-mips.org, syzkaller-bugs@googlegroups.com
+To: Linux Doc Mailing List <linux-doc@vger.kernel.org>
+Cc: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>, "David S. Miller" <davem@davemloft.net>, Jonathan Corbet <corbet@lwn.net>, Jakub Kicinski <kuba@kernel.org>, Joerg Reuter <jreuter@yaina.de>, linux-hams@vger.kernel.org, linux-kernel@vger.kernel.org, netdev@vger.kernel.org
 
-syzbot suspects this issue was fixed by commit:
+The hamradio docs were moved to a different dir.
+Update its location accordingly.
 
-commit 987053a30016a7d9ab3e4ad973e7c51aeb1f1ef6
-Author: Arvind Sankar <nivedita@alum.mit.edu>
-Date:   Thu Apr 30 18:28:40 2020 +0000
+Fixes: 14474950252c ("docs: networking: move z8530 to the hw driver section")
 
-    efi/x86: Move command-line initrd loading to efi_main
+Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
+---
+ drivers/net/hamradio/scc.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-bisection log:  https://syzkaller.appspot.com/x/bisect.txt?x=11680f6a900000
-start commit:   9c7dc824 Merge tag '5.1-rc-smb3' of git://git.samba.org/sf..
-git tree:       upstream
-kernel config:  https://syzkaller.appspot.com/x/.config?x=7e1aaa1cfbfe1abf
-dashboard link: https://syzkaller.appspot.com/bug?extid=eff6b596cc8194e2f029
-syz repro:      https://syzkaller.appspot.com/x/repro.syz?x=17e294a3200000
+diff --git a/drivers/net/hamradio/scc.c b/drivers/net/hamradio/scc.c
+index 1e915871baa7..36eeb80406f2 100644
+--- a/drivers/net/hamradio/scc.c
++++ b/drivers/net/hamradio/scc.c
+@@ -7,7 +7,7 @@
+  *            ------------------
+  *
+  * You can find a subset of the documentation in 
+- * Documentation/networking/device_drivers/wan/z8530drv.rst.
++ * Documentation/networking/device_drivers/hamradio/z8530drv.rst.
+  */
+ 
+ /*
+-- 
+2.26.2
 
-If the result looks correct, please mark the issue as fixed by replying with:
-
-#syz fix: efi/x86: Move command-line initrd loading to efi_main
-
-For information about bisection process see: https://goo.gl/tpsmEJ#bisection
