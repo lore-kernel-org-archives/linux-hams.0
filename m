@@ -1,8 +1,8 @@
 From: Anmol Karn <anmol.karan123@gmail.com>
 Subject: Re: [Linux-kernel-mentees] [PATCH] net: rose: Fix Null pointer
  dereference in rose_send_frame()
-Date: Thu, 15 Oct 2020 23:58:27 +0530
-Message-ID: <20201015182827.GA84192@Thinkpad>
+Date: Fri, 30 Oct 2020 16:24:13 +0530
+Message-ID: <20201030105413.GA32091@Thinkpad>
 References: <20201015001712.72976-1-anmol.karan123@gmail.com>
  <20201015051225.GA404970@kroah.com>
  <20201015141012.GB77038@Thinkpad>
@@ -13,13 +13,13 @@ DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to;
-        bh=QWq4RR483RrQf9qvcEwbqi4k6qhvE4kHX8NyfjGVvXA=;
-        b=suM0shAoEviw0J4mahfECH0DeTWgf4dZTp6LGEsWQzK/KSgZ+NC+40mf1I2SqIihzQ
-         r2xIiorWXvWrfrEpNp4gafT+LzAe9eFox9X9UPnP4GmZNw/7qQFtJYvBn+8fcs9BVKmn
-         7txz0gzyIWSDMZyhUwb9BAJQIRN4wZU1NVPoam1TMVygI/i5yc1uJsnFqcD7h2LNqUoc
-         IWqyf1YBx27sZmbwkCkX9ObUCK3Fx0OO5S+vfuUUP5CJuQbME3p+YQVlKJM3NYlUKW2b
-         W+vTovoe16ySBTvDkFdnu+oQnIsQOrAhYsiwQww9z+N5bBo+h7VNTWoBlvT57GsRVqpg
-         3Erw==
+        bh=fMSeGp1Wk17h0gEzm4qf92gRlBGhqMgJVhPuakb3z+U=;
+        b=C8L7IsXbltfbu9jYTr0xP2iybawi7lXuw/pb80Ghesam8dh98Dc7G9xHWMhvI29f8/
+         LsUWHG/EtK7vhDNQJkCEN7Cx8YZADQOdIntlon5Onj9ohl0eYTWj55gxpU3ErwRnLM1I
+         O7i/zvrMnlUNEqq4yoG9BnpdLxw5mkSgjFQ5gsyuNhsykKyvygOSK0lE8d/edtTrUd7D
+         ImjlEhhDh465RJgCmWQ+dbe9w6syuoS8KL5PoqtcLjXuxBY7TxFxQ+wdTyOp2F5lmV3W
+         HXJ42nSmKs85UhIiK02O1MxjWXpiAsCxMxe8h4pFmX38VlNU+tabktM3+b9djSluZ+2C
+         Dtxw==
 Content-Disposition: inline
 In-Reply-To: <20201015155051.GB66528@kroah.com>
 List-ID: <linux-hams.vger.kernel.org>
@@ -117,7 +117,68 @@ On Thu, Oct 15, 2020 at 05:50:51PM +0200, Greg KH wrote:
 > 
 > greg k-h
 
-Sure sir, understood.
+Hello All,
+
+I investigated further on this,
+
+Here is some things i noticed:
+
+When I followed the call trace,
+
+[ 84.241331][ C3] Call Trace:
+[ 84.241331][ C3] rose_transmit_clear_request ($SOURCE/net/rose/rose_link.c:255)
+[ 84.241331][ C3] ? lockdep_hardirqs_on ($SOURCE/kernel/locking/lockdep.c:4161)
+[ 84.241331][ C3] rose_rx_call_request ($SOURCE/net/rose/af_rose.c:999)
+[ 84.241331][ C3] ? rose_release ($SOURCE/net/rose/af_rose.c:970)
+[ 84.241331][ C3] rose_loopback_timer ($SOURCE/net/rose/rose_loopback.c:100)
+[ 84.241331][ C3] ? rose_transmit_link ($SOURCE/net/rose/rose_loopback.c:60)
+
+in the rose_send_frame() it dereferenced `neigh->dev` when called from 
+rose_transmit_clear_request(), and the first occurance of the `neigh`
+is in rose_loopback_timer() as `rose_loopback_neigh`, and it is initialized 
+in rose_add_loopback_neighh() as NULL.
+
+- net/rose/rose_route.c:381
+
+void rose_add_loopback_neigh(void)
+{
+	struct rose_neigh *sn;
+
+	rose_loopback_neigh = kmalloc(sizeof(struct rose_neigh), GFP_KERNEL);
+	if (!rose_loopback_neigh)
+		return;
+	sn = rose_loopback_neigh;
+
+	sn->callsign  = null_ax25_address;
+	sn->digipeat  = NULL;
+	sn->ax25      = NULL;
+	sn->dev       = NULL;
+	^^^^^^^^^^^^^^^^^^^^^
+
+i.e when `rose_loopback_neigh` used in rose_loopback_timer() its `->dev` was
+still NULL and rose_loopback_timer() was calling rose_rx_call_request() 
+without checking for NULL.
+
+
+I have created the following patch to check for NULL pointer.
+
+diff --git a/net/rose/rose_loopback.c b/net/rose/rose_loopback.c
+index 7b094275ea8b..cd7774cb1d07 100644
+--- a/net/rose/rose_loopback.c
++++ b/net/rose/rose_loopback.c
+@@ -96,7 +96,7 @@ static void rose_loopback_timer(struct timer_list *unused)
+                }
+ 
+                if (frametype == ROSE_CALL_REQUEST) {
+-                       if ((dev = rose_dev_get(dest)) != NULL) {
++                       if (rose_loopback_neigh->dev && (dev = rose_dev_get(dest)) != NULL) {
+                                if (rose_rx_call_request(skb, dev, rose_loopback_neigh, lci_o) == 0)
+                                        kfree_skb(skb);
+                        } else {
+
+
+
+Please, review it and give me suggestions whether i am going right or not.
 
 
 Thanks,
