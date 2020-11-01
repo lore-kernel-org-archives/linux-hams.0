@@ -1,185 +1,185 @@
-From: Anmol Karn <anmol.karan123@gmail.com>
+From: Greg KH <gregkh@linuxfoundation.org>
 Subject: Re: [Linux-kernel-mentees] [PATCH] net: rose: Fix Null pointer
  dereference in rose_send_frame()
-Date: Fri, 30 Oct 2020 16:24:13 +0530
-Message-ID: <20201030105413.GA32091@Thinkpad>
+Date: Sun, 1 Nov 2020 12:02:58 +0100
+Message-ID: <20201101110258.GA2925745@kroah.com>
 References: <20201015001712.72976-1-anmol.karan123@gmail.com>
  <20201015051225.GA404970@kroah.com>
  <20201015141012.GB77038@Thinkpad>
  <20201015155051.GB66528@kroah.com>
+ <20201030105413.GA32091@Thinkpad>
 Mime-Version: 1.0
 Return-path: <linux-kernel-owner@vger.kernel.org>
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=fMSeGp1Wk17h0gEzm4qf92gRlBGhqMgJVhPuakb3z+U=;
-        b=C8L7IsXbltfbu9jYTr0xP2iybawi7lXuw/pb80Ghesam8dh98Dc7G9xHWMhvI29f8/
-         LsUWHG/EtK7vhDNQJkCEN7Cx8YZADQOdIntlon5Onj9ohl0eYTWj55gxpU3ErwRnLM1I
-         O7i/zvrMnlUNEqq4yoG9BnpdLxw5mkSgjFQ5gsyuNhsykKyvygOSK0lE8d/edtTrUd7D
-         ImjlEhhDh465RJgCmWQ+dbe9w6syuoS8KL5PoqtcLjXuxBY7TxFxQ+wdTyOp2F5lmV3W
-         HXJ42nSmKs85UhIiK02O1MxjWXpiAsCxMxe8h4pFmX38VlNU+tabktM3+b9djSluZ+2C
-         Dtxw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=default; t=1604228535;
+        bh=5XNFiqjH2oN7J9GEbY/PVlCdxYv+WtUQcnEnB0t38U0=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=iLUHj0ReecjaVs/FH15VZkcACz93cXzUIe3yZNkNdBUr8gyqp8kffHcGoaXIjuhYV
+         N9ikhsDGmQwSl+SDDhK8JQxo5kfRSd3yYqsj6Q+fHdsp36JALoEnanuKgSS0oZ+1sL
+         XJ+lxSMYHpN9KEaTP59VrktOFwzIB9snxzHysrAc=
 Content-Disposition: inline
-In-Reply-To: <20201015155051.GB66528@kroah.com>
+In-Reply-To: <20201030105413.GA32091@Thinkpad>
 List-ID: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
-To: Greg KH <gregkh@linuxfoundation.org>
+To: Anmol Karn <anmol.karan123@gmail.com>
 Cc: ralf@linux-mips.org, davem@davemloft.net, kuba@kernel.org, netdev@vger.kernel.org, syzkaller-bugs@googlegroups.com, linux-kernel@vger.kernel.org, syzbot+a1c743815982d9496393@syzkaller.appspotmail.com, linux-hams@vger.kernel.org, linux-kernel-mentees@lists.linuxfoundation.org
 
-On Thu, Oct 15, 2020 at 05:50:51PM +0200, Greg KH wrote:
-> On Thu, Oct 15, 2020 at 07:40:12PM +0530, Anmol Karn wrote:
-> > On Thu, Oct 15, 2020 at 07:12:25AM +0200, Greg KH wrote:
-> > > On Thu, Oct 15, 2020 at 05:47:12AM +0530, Anmol Karn wrote:
-> > > > In rose_send_frame(), when comparing two ax.25 addresses, it assigns rose_call to 
-> > > > either global ROSE callsign or default port, but when the former block triggers and 
-> > > > rose_call is assigned by (ax25_address *)neigh->dev->dev_addr, a NULL pointer is 
-> > > > dereferenced by 'neigh' when dereferencing 'dev'.
+On Fri, Oct 30, 2020 at 04:24:13PM +0530, Anmol Karn wrote:
+> On Thu, Oct 15, 2020 at 05:50:51PM +0200, Greg KH wrote:
+> > On Thu, Oct 15, 2020 at 07:40:12PM +0530, Anmol Karn wrote:
+> > > On Thu, Oct 15, 2020 at 07:12:25AM +0200, Greg KH wrote:
+> > > > On Thu, Oct 15, 2020 at 05:47:12AM +0530, Anmol Karn wrote:
+> > > > > In rose_send_frame(), when comparing two ax.25 addresses, it assigns rose_call to 
+> > > > > either global ROSE callsign or default port, but when the former block triggers and 
+> > > > > rose_call is assigned by (ax25_address *)neigh->dev->dev_addr, a NULL pointer is 
+> > > > > dereferenced by 'neigh' when dereferencing 'dev'.
+> > > > > 
+> > > > > - net/rose/rose_link.c
+> > > > > This bug seems to get triggered in this line:
+> > > > > 
+> > > > > rose_call = (ax25_address *)neigh->dev->dev_addr;
+> > > > > 
+> > > > > Prevent it by checking NULL condition for neigh->dev before comparing addressed for 
+> > > > > rose_call initialization.
+> > > > > 
+> > > > > Reported-by: syzbot+a1c743815982d9496393@syzkaller.appspotmail.com 
+> > > > > Link: https://syzkaller.appspot.com/bug?id=9d2a7ca8c7f2e4b682c97578dfa3f236258300b3 
+> > > > > Signed-off-by: Anmol Karn <anmol.karan123@gmail.com>
+> > > > > ---
+> > > > > I am bit sceptical about the error return code, please suggest if anything else is 
+> > > > > appropriate in place of '-ENODEV'.
+> > > > > 
+> > > > >  net/rose/rose_link.c | 3 +++
+> > > > >  1 file changed, 3 insertions(+)
+> > > > > 
+> > > > > diff --git a/net/rose/rose_link.c b/net/rose/rose_link.c
+> > > > > index f6102e6f5161..92ea6a31d575 100644
+> > > > > --- a/net/rose/rose_link.c
+> > > > > +++ b/net/rose/rose_link.c
+> > > > > @@ -97,6 +97,9 @@ static int rose_send_frame(struct sk_buff *skb, struct rose_neigh *neigh)
+> > > > >  	ax25_address *rose_call;
+> > > > >  	ax25_cb *ax25s;
+> > > > >  
+> > > > > +	if (!neigh->dev)
+> > > > > +		return -ENODEV;
 > > > > 
-> > > > - net/rose/rose_link.c
-> > > > This bug seems to get triggered in this line:
+> > > > How can ->dev not be set at this point in time?  Shouldn't that be
+> > > > fixed, because it could change right after you check this, right?
 > > > > 
-> > > > rose_call = (ax25_address *)neigh->dev->dev_addr;
+> > > > thanks,
 > > > > 
-> > > > Prevent it by checking NULL condition for neigh->dev before comparing addressed for 
-> > > > rose_call initialization.
-> > > > 
-> > > > Reported-by: syzbot+a1c743815982d9496393@syzkaller.appspotmail.com 
-> > > > Link: https://syzkaller.appspot.com/bug?id=9d2a7ca8c7f2e4b682c97578dfa3f236258300b3 
-> > > > Signed-off-by: Anmol Karn <anmol.karan123@gmail.com>
-> > > > ---
-> > > > I am bit sceptical about the error return code, please suggest if anything else is 
-> > > > appropriate in place of '-ENODEV'.
-> > > > 
-> > > >  net/rose/rose_link.c | 3 +++
-> > > >  1 file changed, 3 insertions(+)
-> > > > 
-> > > > diff --git a/net/rose/rose_link.c b/net/rose/rose_link.c
-> > > > index f6102e6f5161..92ea6a31d575 100644
-> > > > --- a/net/rose/rose_link.c
-> > > > +++ b/net/rose/rose_link.c
-> > > > @@ -97,6 +97,9 @@ static int rose_send_frame(struct sk_buff *skb, struct rose_neigh *neigh)
-> > > >  	ax25_address *rose_call;
-> > > >  	ax25_cb *ax25s;
-> > > >  
-> > > > +	if (!neigh->dev)
-> > > > +		return -ENODEV;
+> > > > greg k-h
 > > > 
-> > > How can ->dev not be set at this point in time?  Shouldn't that be
-> > > fixed, because it could change right after you check this, right?
+> > > Hello Sir,
 > > > 
-> > > thanks,
+> > > Thanks for the review,
+> > > After following the call trace i thought, if neigh->dev is NULL it should
+> > > be checked, but I will figure out what is going on with the crash reproducer,
+> > > and I think rose_loopback_timer() is the place where problem started. 
 > > > 
-> > > greg k-h
+> > > Also, I have created a diff for checking neigh->dev before assigning ROSE callsign
+> > > , please give your suggestions on this.
+> > > 
+> > > 
+> > > diff --git a/net/rose/rose_link.c b/net/rose/rose_link.c
+> > > index f6102e6f5161..2ddd5e559442 100644
+> > > --- a/net/rose/rose_link.c
+> > > +++ b/net/rose/rose_link.c
+> > > @@ -97,10 +97,14 @@ static int rose_send_frame(struct sk_buff *skb, struct rose_neigh *neigh)
+> > >         ax25_address *rose_call;
+> > >         ax25_cb *ax25s;
+> > >  
+> > > -       if (ax25cmp(&rose_callsign, &null_ax25_address) == 0)
+> > > -               rose_call = (ax25_address *)neigh->dev->dev_addr;
+> > > -       else
+> > > -               rose_call = &rose_callsign;
+> > > +       if (neigh->dev) {
+> > > +               if (ax25cmp(&rose_callsign, &null_ax25_address) == 0)
+> > > +                       rose_call = (ax25_address *)neigh->dev->dev_addr;
+> > > +               else
+> > > +                       rose_call = &rose_callsign;
+> > > +       } else {
+> > > +               return -ENODEV;
+> > > +       }
 > > 
-> > Hello Sir,
+> > The point I am trying to make is that if someone else is setting ->dev
+> > to NULL in some other thread/context/whatever, while this is running,
+> > checking for it like this will not work.
 > > 
-> > Thanks for the review,
-> > After following the call trace i thought, if neigh->dev is NULL it should
-> > be checked, but I will figure out what is going on with the crash reproducer,
-> > and I think rose_loopback_timer() is the place where problem started. 
+> > What is the lifetime rules of that pointer?  Who initializes it, and who
+> > sets it to NULL.  Figure that out first please to determine how to check
+> > for this properly.
 > > 
-> > Also, I have created a diff for checking neigh->dev before assigning ROSE callsign
-> > , please give your suggestions on this.
+> > thanks,
 > > 
-> > 
-> > diff --git a/net/rose/rose_link.c b/net/rose/rose_link.c
-> > index f6102e6f5161..2ddd5e559442 100644
-> > --- a/net/rose/rose_link.c
-> > +++ b/net/rose/rose_link.c
-> > @@ -97,10 +97,14 @@ static int rose_send_frame(struct sk_buff *skb, struct rose_neigh *neigh)
-> >         ax25_address *rose_call;
-> >         ax25_cb *ax25s;
-> >  
-> > -       if (ax25cmp(&rose_callsign, &null_ax25_address) == 0)
-> > -               rose_call = (ax25_address *)neigh->dev->dev_addr;
-> > -       else
-> > -               rose_call = &rose_callsign;
-> > +       if (neigh->dev) {
-> > +               if (ax25cmp(&rose_callsign, &null_ax25_address) == 0)
-> > +                       rose_call = (ax25_address *)neigh->dev->dev_addr;
-> > +               else
-> > +                       rose_call = &rose_callsign;
-> > +       } else {
-> > +               return -ENODEV;
-> > +       }
+> > greg k-h
 > 
-> The point I am trying to make is that if someone else is setting ->dev
-> to NULL in some other thread/context/whatever, while this is running,
-> checking for it like this will not work.
+> Hello All,
 > 
-> What is the lifetime rules of that pointer?  Who initializes it, and who
-> sets it to NULL.  Figure that out first please to determine how to check
-> for this properly.
+> I investigated further on this,
 > 
-> thanks,
+> Here is some things i noticed:
 > 
-> greg k-h
+> When I followed the call trace,
+> 
+> [ 84.241331][ C3] Call Trace:
+> [ 84.241331][ C3] rose_transmit_clear_request ($SOURCE/net/rose/rose_link.c:255)
+> [ 84.241331][ C3] ? lockdep_hardirqs_on ($SOURCE/kernel/locking/lockdep.c:4161)
+> [ 84.241331][ C3] rose_rx_call_request ($SOURCE/net/rose/af_rose.c:999)
+> [ 84.241331][ C3] ? rose_release ($SOURCE/net/rose/af_rose.c:970)
+> [ 84.241331][ C3] rose_loopback_timer ($SOURCE/net/rose/rose_loopback.c:100)
+> [ 84.241331][ C3] ? rose_transmit_link ($SOURCE/net/rose/rose_loopback.c:60)
+> 
+> in the rose_send_frame() it dereferenced `neigh->dev` when called from 
+> rose_transmit_clear_request(), and the first occurance of the `neigh`
+> is in rose_loopback_timer() as `rose_loopback_neigh`, and it is initialized 
+> in rose_add_loopback_neighh() as NULL.
+> 
+> - net/rose/rose_route.c:381
+> 
+> void rose_add_loopback_neigh(void)
+> {
+> 	struct rose_neigh *sn;
+> 
+> 	rose_loopback_neigh = kmalloc(sizeof(struct rose_neigh), GFP_KERNEL);
+> 	if (!rose_loopback_neigh)
+> 		return;
+> 	sn = rose_loopback_neigh;
+> 
+> 	sn->callsign  = null_ax25_address;
+> 	sn->digipeat  = NULL;
+> 	sn->ax25      = NULL;
+> 	sn->dev       = NULL;
+> 	^^^^^^^^^^^^^^^^^^^^^
+> 
+> i.e when `rose_loopback_neigh` used in rose_loopback_timer() its `->dev` was
+> still NULL and rose_loopback_timer() was calling rose_rx_call_request() 
+> without checking for NULL.
+> 
+> 
+> I have created the following patch to check for NULL pointer.
+> 
+> diff --git a/net/rose/rose_loopback.c b/net/rose/rose_loopback.c
+> index 7b094275ea8b..cd7774cb1d07 100644
+> --- a/net/rose/rose_loopback.c
+> +++ b/net/rose/rose_loopback.c
+> @@ -96,7 +96,7 @@ static void rose_loopback_timer(struct timer_list *unused)
+>                 }
+>  
+>                 if (frametype == ROSE_CALL_REQUEST) {
+> -                       if ((dev = rose_dev_get(dest)) != NULL) {
+> +                       if (rose_loopback_neigh->dev && (dev = rose_dev_get(dest)) != NULL) {
+>                                 if (rose_rx_call_request(skb, dev, rose_loopback_neigh, lci_o) == 0)
+>                                         kfree_skb(skb);
+>                         } else {
+> 
+> 
+> 
+> Please, review it and give me suggestions whether i am going right or not.
 
-Hello All,
+That seems better, does it solve the syzbot test?
 
-I investigated further on this,
+thanks,
 
-Here is some things i noticed:
-
-When I followed the call trace,
-
-[ 84.241331][ C3] Call Trace:
-[ 84.241331][ C3] rose_transmit_clear_request ($SOURCE/net/rose/rose_link.c:255)
-[ 84.241331][ C3] ? lockdep_hardirqs_on ($SOURCE/kernel/locking/lockdep.c:4161)
-[ 84.241331][ C3] rose_rx_call_request ($SOURCE/net/rose/af_rose.c:999)
-[ 84.241331][ C3] ? rose_release ($SOURCE/net/rose/af_rose.c:970)
-[ 84.241331][ C3] rose_loopback_timer ($SOURCE/net/rose/rose_loopback.c:100)
-[ 84.241331][ C3] ? rose_transmit_link ($SOURCE/net/rose/rose_loopback.c:60)
-
-in the rose_send_frame() it dereferenced `neigh->dev` when called from 
-rose_transmit_clear_request(), and the first occurance of the `neigh`
-is in rose_loopback_timer() as `rose_loopback_neigh`, and it is initialized 
-in rose_add_loopback_neighh() as NULL.
-
-- net/rose/rose_route.c:381
-
-void rose_add_loopback_neigh(void)
-{
-	struct rose_neigh *sn;
-
-	rose_loopback_neigh = kmalloc(sizeof(struct rose_neigh), GFP_KERNEL);
-	if (!rose_loopback_neigh)
-		return;
-	sn = rose_loopback_neigh;
-
-	sn->callsign  = null_ax25_address;
-	sn->digipeat  = NULL;
-	sn->ax25      = NULL;
-	sn->dev       = NULL;
-	^^^^^^^^^^^^^^^^^^^^^
-
-i.e when `rose_loopback_neigh` used in rose_loopback_timer() its `->dev` was
-still NULL and rose_loopback_timer() was calling rose_rx_call_request() 
-without checking for NULL.
-
-
-I have created the following patch to check for NULL pointer.
-
-diff --git a/net/rose/rose_loopback.c b/net/rose/rose_loopback.c
-index 7b094275ea8b..cd7774cb1d07 100644
---- a/net/rose/rose_loopback.c
-+++ b/net/rose/rose_loopback.c
-@@ -96,7 +96,7 @@ static void rose_loopback_timer(struct timer_list *unused)
-                }
- 
-                if (frametype == ROSE_CALL_REQUEST) {
--                       if ((dev = rose_dev_get(dest)) != NULL) {
-+                       if (rose_loopback_neigh->dev && (dev = rose_dev_get(dest)) != NULL) {
-                                if (rose_rx_call_request(skb, dev, rose_loopback_neigh, lci_o) == 0)
-                                        kfree_skb(skb);
-                        } else {
-
-
-
-Please, review it and give me suggestions whether i am going right or not.
-
-
-Thanks,
-Anmol
+greg k-h
