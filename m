@@ -1,139 +1,81 @@
-From: Arnd Bergmann <arnd@kernel.org>
-Subject: [RFC net-next 04/28] hostap: use ndo_siocdevprivate
-Date: Fri,  6 Nov 2020 23:17:19 +0100
-Message-ID: <20201106221743.3271965-5-arnd@kernel.org>
+From: Arnd Bergmann <arnd-DgEjT+Ai2ygdnm+yROfE0A@public.gmane.org>
+Subject: [RFC net-next 07/28] phonet: use siocdevprivate
+Date: Fri,  6 Nov 2020 23:17:22 +0100
+Message-ID: <20201106221743.3271965-8-arnd@kernel.org>
 References: <20201106221743.3271965-1-arnd@kernel.org>
 Mime-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Return-path: <linux-kernel-owner@vger.kernel.org>
+Return-path: <linux-wireless-owner-u79uwXL29TY76Z2rM5mHXA@public.gmane.org>
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1604701085;
-        bh=m0RjMsn6WwofvvE4NYY1pS3GxXmUo66/XIWhjld9ez8=;
+        s=default; t=1604701094;
+        bh=0nZsvJC7bKvsWii/4F8rVLDyxbI5Zs8ZxzeJcfM4j+k=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=lZjFdbVKp25Qrql+efzzWsBxMC4g7cW6WMF5FzNZXxrLxsGCulsVre9Ry02k9fFSi
-         5z1FSAfrv26byYbPUYzDCxhfGlOr0j/0sN3hH5d48y25AJj96u+XUtOzuoY5WRV71+
-         CX6vrZapw6I+N1D/39DJFi0LvQmJa55SRHnLlDic=
-In-Reply-To: <20201106221743.3271965-1-arnd@kernel.org>
+        b=WYhuh1WeMtLDKBKefKeaic5NUOJzadJ53FzEB2UQXzCEHinw7qCsI6CYtNMqeEdoy
+         6S+yFjM7lHpx1DLzo4Uj1ON7HLGgFJLCfQxucvGzoWLz9fYorSMk3baiAp5pVpG2hb
+         Zn0EDsMTOs9P9nrFdTdwsyIEN5Us7lupQKr+BlvM=
+In-Reply-To: <20201106221743.3271965-1-arnd-DgEjT+Ai2ygdnm+yROfE0A@public.gmane.org>
 List-ID: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
-To: netdev@vger.kernel.org
-Cc: Arnd Bergmann <arnd@arndb.de>, linux-kernel@vger.kernel.org, linux-wireless@vger.kernel.org, bridge@lists.linux-foundation.org, linux-hams@vger.kernel.org, Jakub Kicinski <kuba@kernel.org>, Christoph Hellwig <hch@lst.de>, Alexander Viro <viro@zeniv.linux.org.uk>, Johannes Berg <johannes@sipsolutions.net>, Andrew Lunn <andrew@lunn.ch>, Heiner Kallweit <hkallweit1@gmail.com>
+To: netdev-u79uwXL29TY76Z2rM5mHXA@public.gmane.org
+Cc: Arnd Bergmann <arnd-r2nGTMty4D4@public.gmane.org>, linux-kernel-u79uwXL29TY76Z2rM5mHXA@public.gmane.org, linux-wireless-u79uwXL29TY76Z2rM5mHXA@public.gmane.org, bridge-cunTk1MwBs9QetFLy7KEm3xJsTq8ys+cHZ5vskTnxNA@public.gmane.org, linux-hams-u79uwXL29TY76Z2rM5mHXA@public.gmane.org, Jakub Kicinski <kuba-DgEjT+Ai2ygdnm+yROfE0A@public.gmane.org>, Christoph Hellwig <hch-jcswGhMUV9g@public.gmane.org>, Alexander Viro <viro-RmSDqhL/yNMiFSDQTTA3OLVCufUGDwFn@public.gmane.org>, Johannes Berg <johannes-cdvu00un1VgdHxzADdlk8Q@public.gmane.org>, Andrew Lunn <andrew-g2DYL2Zd6BY@public.gmane.org>, Heiner Kallweit <hkallweit1-Re5JQEeQqe8AvxtiuMwx3w@public.gmane.org>
 
-From: Arnd Bergmann <arnd@arndb.de>
+From: Arnd Bergmann <arnd-r2nGTMty4D4@public.gmane.org>
 
-hostap has a combination of iwpriv ioctls that do not work at
-all, and two SIOCDEVPRIVATE commands that work natively but
-lack a compat conversion handler.
+phonet has a single private ioctl that is broken in compat
+mode on big-endian machines today because the data returned
+from it is never copied back to user space.
 
-For the moment, move them over to the new ndo_siocdevprivate
-interface and return an error for compat mode.
+Move it over to the ndo_siocdevprivate callback, which also
+fixes the compat issue.
 
-Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+Signed-off-by: Arnd Bergmann <arnd-r2nGTMty4D4@public.gmane.org>
 ---
- drivers/net/wireless/intersil/hostap/hostap.h |  3 +-
- .../wireless/intersil/hostap/hostap_ioctl.c   | 30 +++++++++++++++----
- .../wireless/intersil/hostap/hostap_main.c    |  3 ++
- 3 files changed, 29 insertions(+), 7 deletions(-)
+ drivers/net/usb/cdc-phonet.c | 5 +++--
+ net/phonet/pn_dev.c          | 6 +++---
+ 2 files changed, 6 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/net/wireless/intersil/hostap/hostap.h b/drivers/net/wireless/intersil/hostap/hostap.h
-index c4b81ff7d7e4..0c41efa252f0 100644
---- a/drivers/net/wireless/intersil/hostap/hostap.h
-+++ b/drivers/net/wireless/intersil/hostap/hostap.h
-@@ -93,6 +93,7 @@ extern const struct iw_handler_def hostap_iw_handler_def;
- extern const struct ethtool_ops prism2_ethtool_ops;
+diff --git a/drivers/net/usb/cdc-phonet.c b/drivers/net/usb/cdc-phonet.c
+index dba847f28096..5f6d34acf871 100644
+--- a/drivers/net/usb/cdc-phonet.c
++++ b/drivers/net/usb/cdc-phonet.c
+@@ -253,7 +253,8 @@ static int usbpn_close(struct net_device *dev)
+ 	return usb_set_interface(pnd->usb, num, !pnd->active_setting);
+ }
  
- int hostap_ioctl(struct net_device *dev, struct ifreq *ifr, int cmd);
--
-+int hostap_siocdevprivate(struct net_device *dev, struct ifreq *ifr,
-+		 void __user *data, int cmd);
+-static int usbpn_ioctl(struct net_device *dev, struct ifreq *ifr, int cmd)
++static int usbpn_siocdevprivate(struct net_device *dev, struct ifreq *ifr,
++				void __user *data, int cmd)
+ {
+ 	struct if_phonet_req *req = (struct if_phonet_req *)ifr;
  
- #endif /* HOSTAP_H */
-diff --git a/drivers/net/wireless/intersil/hostap/hostap_ioctl.c b/drivers/net/wireless/intersil/hostap/hostap_ioctl.c
-index 514c7b01dbf6..7b6471e44255 100644
---- a/drivers/net/wireless/intersil/hostap/hostap_ioctl.c
-+++ b/drivers/net/wireless/intersil/hostap/hostap_ioctl.c
-@@ -3952,7 +3952,8 @@ const struct iw_handler_def hostap_iw_handler_def =
- 	.get_wireless_stats = hostap_get_wireless_stats,
+@@ -269,7 +270,7 @@ static const struct net_device_ops usbpn_ops = {
+ 	.ndo_open	= usbpn_open,
+ 	.ndo_stop	= usbpn_close,
+ 	.ndo_start_xmit = usbpn_xmit,
+-	.ndo_do_ioctl	= usbpn_ioctl,
++	.ndo_siocdevprivate = usbpn_siocdevprivate,
  };
  
--
-+/* Private ioctls (iwpriv) that have not yet been converted
-+ * into new wireless extensions API */
- int hostap_ioctl(struct net_device *dev, struct ifreq *ifr, int cmd)
- {
- 	struct iwreq *wrq = (struct iwreq *) ifr;
-@@ -3964,9 +3965,6 @@ int hostap_ioctl(struct net_device *dev, struct ifreq *ifr, int cmd)
- 	local = iface->local;
+ static void usbpn_setup(struct net_device *dev)
+diff --git a/net/phonet/pn_dev.c b/net/phonet/pn_dev.c
+index ac0fae06cc15..876d0ae5f9fd 100644
+--- a/net/phonet/pn_dev.c
++++ b/net/phonet/pn_dev.c
+@@ -233,11 +233,11 @@ static int phonet_device_autoconf(struct net_device *dev)
+ 	struct if_phonet_req req;
+ 	int ret;
  
- 	switch (cmd) {
--		/* Private ioctls (iwpriv) that have not yet been converted
--		 * into new wireless extensions API */
--
- 	case PRISM2_IOCTL_INQUIRE:
- 		if (!capable(CAP_NET_ADMIN)) ret = -EPERM;
- 		else ret = prism2_ioctl_priv_inquire(dev, (int *) wrq->u.name);
-@@ -4020,11 +4018,31 @@ int hostap_ioctl(struct net_device *dev, struct ifreq *ifr, int cmd)
- 					       wrq->u.ap_addr.sa_data);
- 		break;
- #endif /* PRISM2_NO_KERNEL_IEEE80211_MGMT */
-+	default:
-+		ret = -EOPNOTSUPP;
-+		break;
-+	}
-+
-+	return ret;
-+}
+-	if (!dev->netdev_ops->ndo_do_ioctl)
++	if (!dev->netdev_ops->ndo_siocdevprivate)
+ 		return -EOPNOTSUPP;
  
-+/* Private ioctls that are not used with iwpriv;
-+ * in SIOCDEVPRIVATE range */
-+int hostap_siocdevprivate(struct net_device *dev, struct ifreq *ifr,
-+			  void __user *data, int cmd)
-+{
-+	struct iwreq *wrq = (struct iwreq *)ifr;
-+	struct hostap_interface *iface;
-+	local_info_t *local;
-+	int ret = 0;
+-	ret = dev->netdev_ops->ndo_do_ioctl(dev, (struct ifreq *)&req,
+-						SIOCPNGAUTOCONF);
++	ret = dev->netdev_ops->ndo_siocdevprivate(dev, (struct ifreq *)&req,
++						  NULL, SIOCPNGAUTOCONF);
+ 	if (ret < 0)
+ 		return ret;
  
--		/* Private ioctls that are not used with iwpriv;
--		 * in SIOCDEVPRIVATE range */
-+	iface = netdev_priv(dev);
-+	local = iface->local;
-+
-+	if (in_compat_syscall()) /* not implemented yet */
-+		return -EOPNOTSUPP;
- 
-+	switch (cmd) {
- #ifdef PRISM2_DOWNLOAD_SUPPORT
- 	case PRISM2_IOCTL_DOWNLOAD:
- 		if (!capable(CAP_NET_ADMIN)) ret = -EPERM;
-diff --git a/drivers/net/wireless/intersil/hostap/hostap_main.c b/drivers/net/wireless/intersil/hostap/hostap_main.c
-index de97b3304115..54f67b682b6a 100644
---- a/drivers/net/wireless/intersil/hostap/hostap_main.c
-+++ b/drivers/net/wireless/intersil/hostap/hostap_main.c
-@@ -797,6 +797,7 @@ static const struct net_device_ops hostap_netdev_ops = {
- 	.ndo_open		= prism2_open,
- 	.ndo_stop		= prism2_close,
- 	.ndo_do_ioctl		= hostap_ioctl,
-+	.ndo_siocdevprivate	= hostap_siocdevprivate,
- 	.ndo_set_mac_address	= prism2_set_mac_address,
- 	.ndo_set_rx_mode	= hostap_set_multicast_list,
- 	.ndo_tx_timeout 	= prism2_tx_timeout,
-@@ -809,6 +810,7 @@ static const struct net_device_ops hostap_mgmt_netdev_ops = {
- 	.ndo_open		= prism2_open,
- 	.ndo_stop		= prism2_close,
- 	.ndo_do_ioctl		= hostap_ioctl,
-+	.ndo_siocdevprivate	= hostap_siocdevprivate,
- 	.ndo_set_mac_address	= prism2_set_mac_address,
- 	.ndo_set_rx_mode	= hostap_set_multicast_list,
- 	.ndo_tx_timeout 	= prism2_tx_timeout,
-@@ -821,6 +823,7 @@ static const struct net_device_ops hostap_master_ops = {
- 	.ndo_open		= prism2_open,
- 	.ndo_stop		= prism2_close,
- 	.ndo_do_ioctl		= hostap_ioctl,
-+	.ndo_siocdevprivate	= hostap_siocdevprivate,
- 	.ndo_set_mac_address	= prism2_set_mac_address,
- 	.ndo_set_rx_mode	= hostap_set_multicast_list,
- 	.ndo_tx_timeout 	= prism2_tx_timeout,
 -- 
 2.27.0
 
