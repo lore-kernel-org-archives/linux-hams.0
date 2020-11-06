@@ -1,86 +1,114 @@
-From: Saeed Mahameed <saeed@kernel.org>
-Subject: Re: [Linux-kernel-mentees] [PATCH v2 net] rose: Fix Null pointer
- dereference in rose_send_frame()
-Date: Fri, 06 Nov 2020 13:04:27 -0800
-Message-ID: <b97dc3f0843cc2b7d7674dbd467ad5ba40824ba3.camel@kernel.org>
-References: <20201105155600.9711-1-anmol.karan123@gmail.com>
+From: Arnd Bergmann <arnd@kernel.org>
+Subject: [RFC net-next 01/28] net: split out SIOCDEVPRIVATE handling from dev_ioctl
+Date: Fri,  6 Nov 2020 23:17:16 +0100
+Message-ID: <20201106221743.3271965-2-arnd@kernel.org>
+References: <20201106221743.3271965-1-arnd@kernel.org>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 Return-path: <linux-kernel-owner@vger.kernel.org>
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1604696669;
-        bh=9ixnt+Fdr/ysIEkQIJWSwlXkjcUJXvNSmNtHjsiEvhE=;
-        h=Subject:From:To:Cc:Date:In-Reply-To:References:From;
-        b=KFTHiXojtHgyof51PtRWCwBIRcqkJ1S5Phui0j1JLOLZBxMx9HmFYeI/5gMMBWsex
-         M1ZDm8to6GsjbAV8O9qJrgK/fj+NIBURT3UjpSq0oIcxcuHEiVF4ikFxFNt3TjXbGh
-         E17KJbrxv5tFIDQVMGAUmX9a+ESyjLPd/kFKIWgc=
-In-Reply-To: <20201105155600.9711-1-anmol.karan123@gmail.com>
+        s=default; t=1604701077;
+        bh=nzhWms5vuZRRAWciYsS79GiwdEaX2soiPILlN+tvJKA=;
+        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+        b=LdAmxG3U4urOY/6fkI9PqtC/me9sbsLzKpCacBAVSQ/mcwfsBbJ4cpC4CV4Do2xrD
+         aiTjAMSgGGO4/NxcBJ06LS16EiMsTOYV/EZfLjxjGYBvjTuJczVP43Oc9wqc9TIfm8
+         Eb7FTqm+alG3Y0CDPbAs1NPN3j4EHKQIzrGpyYf0=
+In-Reply-To: <20201106221743.3271965-1-arnd@kernel.org>
 List-ID: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
-To: Anmol Karn <anmol.karan123@gmail.com>, ralf@linux-mips.org, davem@davemloft.net, kuba@kernel.org
-Cc: gregkh@linuxfoundation.org, netdev@vger.kernel.org, linux-kernel@vger.kernel.org, linux-hams@vger.kernel.org, linux-kernel-mentees@lists.linuxfoundation.org, syzkaller-bugs@googlegroups.com, syzbot+a1c743815982d9496393@syzkaller.appspotmail.com
+To: netdev@vger.kernel.org
+Cc: Arnd Bergmann <arnd@arndb.de>, linux-kernel@vger.kernel.org, linux-wireless@vger.kernel.org, bridge@lists.linux-foundation.org, linux-hams@vger.kernel.org, Jakub Kicinski <kuba@kernel.org>, Christoph Hellwig <hch@lst.de>, Alexander Viro <viro@zeniv.linux.org.uk>, Johannes Berg <johannes@sipsolutions.net>, Andrew Lunn <andrew@lunn.ch>, Heiner Kallweit <hkallweit1@gmail.com>
 
-On Thu, 2020-11-05 at 21:26 +0530, Anmol Karn wrote:
-> rose_send_frame() dereferences `neigh->dev` when called from
-> rose_transmit_clear_request(), and the first occurance of the `neigh`
-> is in rose_loopback_timer() as `rose_loopback_neigh`, and it is
-> initialized
-> in rose_add_loopback_neigh() as NULL. i.e when `rose_loopback_neigh`
-> used in 
-> rose_loopback_timer() its `->dev` was still NULL and
-> rose_loopback_timer() 
-> was calling rose_rx_call_request() without checking for NULL.
-> 
-> - net/rose/rose_link.c
-> This bug seems to get triggered in this line:
-> 
-> rose_call = (ax25_address *)neigh->dev->dev_addr;
-> 
-> Fix it by adding NULL checking for `rose_loopback_neigh->dev` in
-> rose_loopback_timer(). 
-> 
-> Reported-and-tested-by: 
-> syzbot+a1c743815982d9496393@syzkaller.appspotmail.com 
-> Link: 
-> https://syzkaller.appspot.com/bug?id=9d2a7ca8c7f2e4b682c97578dfa3f236258300b3
->  
-> Signed-off-by: Anmol Karn <anmol.karan123@gmail.com>
+From: Arnd Bergmann <arnd@arndb.de>
 
-missing proper fixes tag.
+SIOCDEVPRIVATE ioctl commands are mainly used in really old
+drivers, and they have a number of problems:
 
-> ---
->  net/rose/rose_loopback.c | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
-> 
-> diff --git a/net/rose/rose_loopback.c b/net/rose/rose_loopback.c
-> index 7b094275ea8b..cd7774cb1d07 100644
-> --- a/net/rose/rose_loopback.c
-> +++ b/net/rose/rose_loopback.c
-> @@ -96,7 +96,7 @@ static void rose_loopback_timer(struct timer_list
-> *unused)
->  		}
->  
->  		if (frametype == ROSE_CALL_REQUEST) {
-> -			if ((dev = rose_dev_get(dest)) != NULL) {
-> +			if (rose_loopback_neigh->dev && (dev =
-> rose_dev_get(dest)) != NULL) {
->  				if (rose_rx_call_request(skb, dev,
-> rose_loopback_neigh, lci_o) == 0)
->  					kfree_skb(skb);
->  			} else {
+- They hide behind the normal .ndo_do_ioctl function that
+  is also used for other things in modern drivers, so it's
+  hard to spot a driver that actually uses one of these
 
-check patch is not happy:
+- Since drivers use a number different calling conventions,
+  it is impossible to support compat mode for them in
+  a generic way.
 
-WARNING:TYPO_SPELLING: 'occurance' may be misspelled - perhaps
-'occurrence'?
-#7: 
-rose_transmit_clear_request(), and the first occurance of the `neigh`
+- With all drivers using the same 16 commands codes, there
+  is no way to introspect the data being passed through
+  things like strace.
 
-ERROR:ASSIGN_IN_IF: do not use assignment in if condition
-#36: FILE: net/rose/rose_loopback.c:99:
-+                       if (rose_loopback_neigh->dev && (dev =
-rose_dev_get(dest)) != NULL) {
+Add a new net_device_ops callback pointer, to address the
+first two of these. Separating them from .ndo_do_ioctl
+makes it easy to grep for drivers with a .ndo_siocdevprivate
+callback, and the unwieldy name hopefully makes it easier
+to spot in code review.
 
-total: 1 errors, 1 warnings, 0 checks, 8 lines checked
+By passing the ifreq structure and the ifr_data pointer
+separately, it is no longer necessary to overload these,
+and the driver can use either one for a given command.
 
+Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+---
+ include/linux/netdevice.h |  3 +++
+ net/core/dev_ioctl.c      | 25 ++++++++++++++++++++++---
+ 2 files changed, 25 insertions(+), 3 deletions(-)
+
+diff --git a/include/linux/netdevice.h b/include/linux/netdevice.h
+index d1b7fb1241b3..93f980e1d69b 100644
+--- a/include/linux/netdevice.h
++++ b/include/linux/netdevice.h
+@@ -1301,6 +1301,9 @@ struct net_device_ops {
+ 	int			(*ndo_validate_addr)(struct net_device *dev);
+ 	int			(*ndo_do_ioctl)(struct net_device *dev,
+ 					        struct ifreq *ifr, int cmd);
++	int			(*ndo_siocdevprivate)(struct net_device *dev,
++						struct ifreq *ifr,
++						void __user *data, int cmd);
+ 	int			(*ndo_set_config)(struct net_device *dev,
+ 					          struct ifmap *map);
+ 	int			(*ndo_change_mtu)(struct net_device *dev,
+diff --git a/net/core/dev_ioctl.c b/net/core/dev_ioctl.c
+index 5822737a78f4..58daf41a4a08 100644
+--- a/net/core/dev_ioctl.c
++++ b/net/core/dev_ioctl.c
+@@ -269,6 +269,23 @@ static int dev_do_ioctl(struct net_device *dev,
+ 	return err;
+ }
+ 
++static int dev_siocdevprivate(struct net_device *dev,
++			      struct ifreq *ifr, unsigned int cmd)
++{
++	const struct net_device_ops *ops = dev->netdev_ops;
++	void __user *data = ifr->ifr_data;
++
++	if (ops->ndo_siocdevprivate) {
++		if (netif_device_present(dev))
++			return ops->ndo_siocdevprivate(dev, ifr, data, cmd);
++		else
++			return -ENODEV;
++	}
++
++	/* fall back to do_ioctl for drivers not yet converted */
++	return dev_do_ioctl(dev, ifr, cmd);
++}
++
+ /*
+  *	Perform the SIOCxIFxxx calls, inside rtnl_lock()
+  */
+@@ -346,9 +363,11 @@ static int dev_ifsioc(struct net *net, struct ifreq *ifr, unsigned int cmd)
+ 	 *	Unknown or private ioctl
+ 	 */
+ 	default:
+-		if ((cmd >= SIOCDEVPRIVATE &&
+-		    cmd <= SIOCDEVPRIVATE + 15) ||
+-		    cmd == SIOCBONDENSLAVE ||
++		if (cmd >= SIOCDEVPRIVATE &&
++		    cmd <= SIOCDEVPRIVATE + 15)
++			return dev_siocdevprivate(dev, ifr, cmd);
++
++		if (cmd == SIOCBONDENSLAVE ||
+ 		    cmd == SIOCBONDRELEASE ||
+ 		    cmd == SIOCBONDSETHWADDR ||
+ 		    cmd == SIOCBONDSLAVEINFOQUERY ||
+-- 
+2.27.0
 
