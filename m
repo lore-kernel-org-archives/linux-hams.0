@@ -1,531 +1,481 @@
-From: Arnd Bergmann <arnd-DgEjT+Ai2ygdnm+yROfE0A@public.gmane.org>
-Subject: [RFC net-next 22/28] hamradio: use ndo_siocdevprivate
-Date: Fri,  6 Nov 2020 23:17:37 +0100
-Message-ID: <20201106221743.3271965-23-arnd@kernel.org>
+From: Arnd Bergmann <arnd@kernel.org>
+Subject: [RFC net-next 24/28] ip_tunnel: use ndo_siocdevprivate
+Date: Fri,  6 Nov 2020 23:17:39 +0100
+Message-ID: <20201106221743.3271965-25-arnd@kernel.org>
 References: <20201106221743.3271965-1-arnd@kernel.org>
 Mime-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Return-path: <linux-wireless-owner-u79uwXL29TY76Z2rM5mHXA@public.gmane.org>
+Return-path: <linux-kernel-owner@vger.kernel.org>
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1604701137;
-        bh=seQyPg/UXirLn5UDyR4QGuqE/EaE7wnQkLvV23VTy/M=;
+        s=default; t=1604701143;
+        bh=ysYDM/vt/vv06eawnigqKaoLaPs4QVuHW9gnNpT3Bpk=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=0fvaG8eHtqDhlWuLYn5Jw4JHSBqRDPVhgexXPIftkIcR4fphfVJqN1q58Rtl6q2di
-         nivWSGJhlLfnR67yHeMnODWtaOEcwh6W5e4bFk15kwBxaLV0LtXZNaLdaTVARqv9tE
-         oH1rSPZl4F7ZjijKE05cPOyUOcCE3o0K/guDu+UM=
-In-Reply-To: <20201106221743.3271965-1-arnd-DgEjT+Ai2ygdnm+yROfE0A@public.gmane.org>
+        b=eR61PsmTfU34VqKAnAX8inE1MhMM4QOfgeqe42Vbbl+tT3v4wa0MnuL90l8vPHhzE
+         7ZfEs2eiSLdcEz6L9q6k2/0dgWKXm1Na/8j5ZgJEy43EPeVoHcSEdezmayrwdUHP+n
+         xSzlBqN1cQ7NxA6K1K8oUI2o0JnGwrXs2Cq2bCUs=
+In-Reply-To: <20201106221743.3271965-1-arnd@kernel.org>
 List-ID: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
-To: netdev-u79uwXL29TY76Z2rM5mHXA@public.gmane.org
-Cc: Arnd Bergmann <arnd-r2nGTMty4D4@public.gmane.org>, linux-kernel-u79uwXL29TY76Z2rM5mHXA@public.gmane.org, linux-wireless-u79uwXL29TY76Z2rM5mHXA@public.gmane.org, bridge-cunTk1MwBs9QetFLy7KEm3xJsTq8ys+cHZ5vskTnxNA@public.gmane.org, linux-hams-u79uwXL29TY76Z2rM5mHXA@public.gmane.org, Jakub Kicinski <kuba-DgEjT+Ai2ygdnm+yROfE0A@public.gmane.org>, Christoph Hellwig <hch-jcswGhMUV9g@public.gmane.org>, Alexander Viro <viro-RmSDqhL/yNMiFSDQTTA3OLVCufUGDwFn@public.gmane.org>, Johannes Berg <johannes-cdvu00un1VgdHxzADdlk8Q@public.gmane.org>, Andrew Lunn <andrew-g2DYL2Zd6BY@public.gmane.org>, Heiner Kallweit <hkallweit1-Re5JQEeQqe8AvxtiuMwx3w@public.gmane.org>
+To: netdev@vger.kernel.org
+Cc: Arnd Bergmann <arnd@arndb.de>, linux-kernel@vger.kernel.org, linux-wireless@vger.kernel.org, bridge@lists.linux-foundation.org, linux-hams@vger.kernel.org, Jakub Kicinski <kuba@kernel.org>, Christoph Hellwig <hch@lst.de>, Alexander Viro <viro@zeniv.linux.org.uk>, Johannes Berg <johannes@sipsolutions.net>, Andrew Lunn <andrew@lunn.ch>, Heiner Kallweit <hkallweit1@gmail.com>
 
-From: Arnd Bergmann <arnd-r2nGTMty4D4@public.gmane.org>
+From: Arnd Bergmann <arnd@arndb.de>
 
-hamradio uses a set of private ioctls that do seem to work
-correctly in compat mode, as they only rely on the ifr_data
-pointer.
+The various ipv4 and ipv6 tunnel drivers each implement a set
+of 12 SIOCDEVPRIVATE commands for managing tunnels. These
+all work correctly in compat mode.
 
-Move them over to the ndo_siocdevprivate callback as a cleanup.
+Move them over to the new .ndo_siocdevprivate operation.
 
-Signed-off-by: Arnd Bergmann <arnd-r2nGTMty4D4@public.gmane.org>
+Signed-off-by: Arnd Bergmann <arnd@arndb.de>
 ---
- drivers/net/hamradio/baycom_epp.c     |  9 +++++----
- drivers/net/hamradio/baycom_par.c     | 12 ++++++------
- drivers/net/hamradio/baycom_ser_fdx.c | 12 ++++++------
- drivers/net/hamradio/baycom_ser_hdx.c | 12 ++++++------
- drivers/net/hamradio/bpqether.c       |  9 +++++----
- drivers/net/hamradio/dmascc.c         | 17 +++++++----------
- drivers/net/hamradio/hdlcdrv.c        | 20 +++++++++++---------
- drivers/net/hamradio/scc.c            | 13 ++++++++-----
- drivers/net/hamradio/yam.c            | 13 ++++++-------
- include/linux/hdlcdrv.h               |  2 +-
- 10 files changed, 61 insertions(+), 58 deletions(-)
+ include/net/ip_tunnels.h |  3 ++-
+ net/ipv4/ip_gre.c        |  2 +-
+ net/ipv4/ip_tunnel.c     |  9 +++++----
+ net/ipv4/ip_vti.c        |  2 +-
+ net/ipv4/ipip.c          |  2 +-
+ net/ipv6/ip6_gre.c       | 16 ++++++++--------
+ net/ipv6/ip6_tunnel.c    | 18 ++++++++++--------
+ net/ipv6/ip6_vti.c       | 21 +++++++++++----------
+ net/ipv6/sit.c           | 35 ++++++++++++++++++-----------------
+ 9 files changed, 57 insertions(+), 51 deletions(-)
 
-diff --git a/drivers/net/hamradio/baycom_epp.c b/drivers/net/hamradio/baycom_epp.c
-index e4e4981ac1d2..bc045f358128 100644
---- a/drivers/net/hamradio/baycom_epp.c
-+++ b/drivers/net/hamradio/baycom_epp.c
-@@ -1005,7 +1005,8 @@ static int baycom_setmode(struct baycom_state *bc, const char *modestr)
+diff --git a/include/net/ip_tunnels.h b/include/net/ip_tunnels.h
+index 02ccd32542d0..98e813587e0e 100644
+--- a/include/net/ip_tunnels.h
++++ b/include/net/ip_tunnels.h
+@@ -270,7 +270,8 @@ void ip_tunnel_xmit(struct sk_buff *skb, struct net_device *dev,
+ void ip_md_tunnel_xmit(struct sk_buff *skb, struct net_device *dev,
+ 		       const u8 proto, int tunnel_hlen);
+ int ip_tunnel_ctl(struct net_device *dev, struct ip_tunnel_parm *p, int cmd);
+-int ip_tunnel_ioctl(struct net_device *dev, struct ifreq *ifr, int cmd);
++int ip_tunnel_siocdevprivate(struct net_device *dev, struct ifreq *ifr,
++			     void __user *data, int cmd);
+ int __ip_tunnel_change_mtu(struct net_device *dev, int new_mtu, bool strict);
+ int ip_tunnel_change_mtu(struct net_device *dev, int new_mtu);
  
- /* --------------------------------------------------------------------- */
- 
--static int baycom_ioctl(struct net_device *dev, struct ifreq *ifr, int cmd)
-+static int baycom_siocdevprivate(struct net_device *dev, struct ifreq *ifr,
-+				 void __user *data, int cmd)
- {
- 	struct baycom_state *bc = netdev_priv(dev);
- 	struct hdlcdrv_ioctl hi;
-@@ -1013,7 +1014,7 @@ static int baycom_ioctl(struct net_device *dev, struct ifreq *ifr, int cmd)
- 	if (cmd != SIOCDEVPRIVATE)
- 		return -ENOIOCTLCMD;
- 
--	if (copy_from_user(&hi, ifr->ifr_data, sizeof(hi)))
-+	if (copy_from_user(&hi, data, sizeof(hi)))
- 		return -EFAULT;
- 	switch (hi.cmd) {
- 	default:
-@@ -1104,7 +1105,7 @@ static int baycom_ioctl(struct net_device *dev, struct ifreq *ifr, int cmd)
- 		return HDLCDRV_PARMASK_IOBASE;
- 
- 	}
--	if (copy_to_user(ifr->ifr_data, &hi, sizeof(hi)))
-+	if (copy_to_user(data, &hi, sizeof(hi)))
- 		return -EFAULT;
- 	return 0;
+diff --git a/net/ipv4/ip_gre.c b/net/ipv4/ip_gre.c
+index e70291748889..d72841adf05e 100644
+--- a/net/ipv4/ip_gre.c
++++ b/net/ipv4/ip_gre.c
+@@ -918,7 +918,7 @@ static const struct net_device_ops ipgre_netdev_ops = {
+ 	.ndo_stop		= ipgre_close,
+ #endif
+ 	.ndo_start_xmit		= ipgre_xmit,
+-	.ndo_do_ioctl		= ip_tunnel_ioctl,
++	.ndo_siocdevprivate	= ip_tunnel_siocdevprivate,
+ 	.ndo_change_mtu		= ip_tunnel_change_mtu,
+ 	.ndo_get_stats64	= ip_tunnel_get_stats64,
+ 	.ndo_get_iflink		= ip_tunnel_get_iflink,
+diff --git a/net/ipv4/ip_tunnel.c b/net/ipv4/ip_tunnel.c
+index 8b04d1dcfec4..f2d8eec2737c 100644
+--- a/net/ipv4/ip_tunnel.c
++++ b/net/ipv4/ip_tunnel.c
+@@ -958,19 +958,20 @@ int ip_tunnel_ctl(struct net_device *dev, struct ip_tunnel_parm *p, int cmd)
  }
-@@ -1114,7 +1115,7 @@ static int baycom_ioctl(struct net_device *dev, struct ifreq *ifr, int cmd)
- static const struct net_device_ops baycom_netdev_ops = {
- 	.ndo_open	     = epp_open,
- 	.ndo_stop	     = epp_close,
--	.ndo_do_ioctl	     = baycom_ioctl,
-+	.ndo_siocdevprivate  = baycom_siocdevprivate,
- 	.ndo_start_xmit      = baycom_send_packet,
- 	.ndo_set_mac_address = baycom_set_mac_address,
- };
-diff --git a/drivers/net/hamradio/baycom_par.c b/drivers/net/hamradio/baycom_par.c
-index 6a3dc7b3f28a..fd7da5bb1fa5 100644
---- a/drivers/net/hamradio/baycom_par.c
-+++ b/drivers/net/hamradio/baycom_par.c
-@@ -380,7 +380,7 @@ static int par96_close(struct net_device *dev)
-  * ===================== hdlcdrv driver interface =========================
-  */
+ EXPORT_SYMBOL_GPL(ip_tunnel_ctl);
  
--static int baycom_ioctl(struct net_device *dev, struct ifreq *ifr,
-+static int baycom_ioctl(struct net_device *dev, void __user *data,
- 			struct hdlcdrv_ioctl *hi, int cmd);
- 
- /* --------------------------------------------------------------------- */
-@@ -408,7 +408,7 @@ static int baycom_setmode(struct baycom_state *bc, const char *modestr)
- 
- /* --------------------------------------------------------------------- */
- 
--static int baycom_ioctl(struct net_device *dev, struct ifreq *ifr,
-+static int baycom_ioctl(struct net_device *dev, void __user *data,
- 			struct hdlcdrv_ioctl *hi, int cmd)
+-int ip_tunnel_ioctl(struct net_device *dev, struct ifreq *ifr, int cmd)
++int ip_tunnel_siocdevprivate(struct net_device *dev, struct ifreq *ifr,
++			     void __user *data, int cmd)
  {
- 	struct baycom_state *bc;
-@@ -428,7 +428,7 @@ static int baycom_ioctl(struct net_device *dev, struct ifreq *ifr,
+ 	struct ip_tunnel_parm p;
+ 	int err;
  
- 	case HDLCDRVCTL_GETMODE:
- 		strcpy(hi->data.modename, bc->options ? "par96" : "picpar");
--		if (copy_to_user(ifr->ifr_data, hi, sizeof(struct hdlcdrv_ioctl)))
-+		if (copy_to_user(data, hi, sizeof(struct hdlcdrv_ioctl)))
- 			return -EFAULT;
- 		return 0;
- 
-@@ -440,7 +440,7 @@ static int baycom_ioctl(struct net_device *dev, struct ifreq *ifr,
- 
- 	case HDLCDRVCTL_MODELIST:
- 		strcpy(hi->data.modename, "par96,picpar");
--		if (copy_to_user(ifr->ifr_data, hi, sizeof(struct hdlcdrv_ioctl)))
-+		if (copy_to_user(data, hi, sizeof(struct hdlcdrv_ioctl)))
- 			return -EFAULT;
- 		return 0;
- 
-@@ -449,7 +449,7 @@ static int baycom_ioctl(struct net_device *dev, struct ifreq *ifr,
- 
- 	}
- 
--	if (copy_from_user(&bi, ifr->ifr_data, sizeof(bi)))
-+	if (copy_from_user(&bi, data, sizeof(bi)))
+-	if (copy_from_user(&p, ifr->ifr_ifru.ifru_data, sizeof(p)))
++	if (copy_from_user(&p, data, sizeof(p)))
  		return -EFAULT;
- 	switch (bi.cmd) {
- 	default:
-@@ -464,7 +464,7 @@ static int baycom_ioctl(struct net_device *dev, struct ifreq *ifr,
- #endif /* BAYCOM_DEBUG */
- 
- 	}
--	if (copy_to_user(ifr->ifr_data, &bi, sizeof(bi)))
-+	if (copy_to_user(data, &bi, sizeof(bi)))
+ 	err = dev->netdev_ops->ndo_tunnel_ctl(dev, &p, cmd);
+-	if (!err && copy_to_user(ifr->ifr_ifru.ifru_data, &p, sizeof(p)))
++	if (!err && copy_to_user(data, &p, sizeof(p)))
  		return -EFAULT;
- 	return 0;
+ 	return err;
+ }
+-EXPORT_SYMBOL_GPL(ip_tunnel_ioctl);
++EXPORT_SYMBOL_GPL(ip_tunnel_siocdevprivate);
  
-diff --git a/drivers/net/hamradio/baycom_ser_fdx.c b/drivers/net/hamradio/baycom_ser_fdx.c
-index 04bb409707fc..646f605e358f 100644
---- a/drivers/net/hamradio/baycom_ser_fdx.c
-+++ b/drivers/net/hamradio/baycom_ser_fdx.c
-@@ -462,7 +462,7 @@ static int ser12_close(struct net_device *dev)
- 
- /* --------------------------------------------------------------------- */
- 
--static int baycom_ioctl(struct net_device *dev, struct ifreq *ifr,
-+static int baycom_ioctl(struct net_device *dev, void __user *data,
- 			struct hdlcdrv_ioctl *hi, int cmd);
- 
- /* --------------------------------------------------------------------- */
-@@ -497,7 +497,7 @@ static int baycom_setmode(struct baycom_state *bc, const char *modestr)
- 
- /* --------------------------------------------------------------------- */
- 
--static int baycom_ioctl(struct net_device *dev, struct ifreq *ifr,
-+static int baycom_ioctl(struct net_device *dev, void __user *data,
- 			struct hdlcdrv_ioctl *hi, int cmd)
+ int __ip_tunnel_change_mtu(struct net_device *dev, int new_mtu, bool strict)
  {
- 	struct baycom_state *bc;
-@@ -519,7 +519,7 @@ static int baycom_ioctl(struct net_device *dev, struct ifreq *ifr,
- 		sprintf(hi->data.modename, "ser%u", bc->baud / 100);
- 		if (bc->opt_dcd <= 0)
- 			strcat(hi->data.modename, (!bc->opt_dcd) ? "*" : "+");
--		if (copy_to_user(ifr->ifr_data, hi, sizeof(struct hdlcdrv_ioctl)))
-+		if (copy_to_user(data, hi, sizeof(struct hdlcdrv_ioctl)))
- 			return -EFAULT;
- 		return 0;
+diff --git a/net/ipv4/ip_vti.c b/net/ipv4/ip_vti.c
+index b957cbee2cf7..83207ffb4007 100644
+--- a/net/ipv4/ip_vti.c
++++ b/net/ipv4/ip_vti.c
+@@ -402,7 +402,7 @@ static const struct net_device_ops vti_netdev_ops = {
+ 	.ndo_init	= vti_tunnel_init,
+ 	.ndo_uninit	= ip_tunnel_uninit,
+ 	.ndo_start_xmit	= vti_tunnel_xmit,
+-	.ndo_do_ioctl	= ip_tunnel_ioctl,
++	.ndo_siocdevprivate = ip_tunnel_siocdevprivate,
+ 	.ndo_change_mtu	= ip_tunnel_change_mtu,
+ 	.ndo_get_stats64 = ip_tunnel_get_stats64,
+ 	.ndo_get_iflink = ip_tunnel_get_iflink,
+diff --git a/net/ipv4/ipip.c b/net/ipv4/ipip.c
+index 75d35e76bec2..5f03ef42ba19 100644
+--- a/net/ipv4/ipip.c
++++ b/net/ipv4/ipip.c
+@@ -345,7 +345,7 @@ static const struct net_device_ops ipip_netdev_ops = {
+ 	.ndo_init       = ipip_tunnel_init,
+ 	.ndo_uninit     = ip_tunnel_uninit,
+ 	.ndo_start_xmit	= ipip_tunnel_xmit,
+-	.ndo_do_ioctl	= ip_tunnel_ioctl,
++	.ndo_siocdevprivate = ip_tunnel_siocdevprivate,
+ 	.ndo_change_mtu = ip_tunnel_change_mtu,
+ 	.ndo_get_stats64 = ip_tunnel_get_stats64,
+ 	.ndo_get_iflink = ip_tunnel_get_iflink,
+diff --git a/net/ipv6/ip6_gre.c b/net/ipv6/ip6_gre.c
+index 931b186d2e48..5dddb73e0a3b 100644
+--- a/net/ipv6/ip6_gre.c
++++ b/net/ipv6/ip6_gre.c
+@@ -1235,8 +1235,8 @@ static void ip6gre_tnl_parm_to_user(struct ip6_tnl_parm2 *u,
+ 	memcpy(u->name, p->name, sizeof(u->name));
+ }
  
-@@ -531,7 +531,7 @@ static int baycom_ioctl(struct net_device *dev, struct ifreq *ifr,
- 
- 	case HDLCDRVCTL_MODELIST:
- 		strcpy(hi->data.modename, "ser12,ser3,ser24");
--		if (copy_to_user(ifr->ifr_data, hi, sizeof(struct hdlcdrv_ioctl)))
-+		if (copy_to_user(data, hi, sizeof(struct hdlcdrv_ioctl)))
- 			return -EFAULT;
- 		return 0;
- 
-@@ -540,7 +540,7 @@ static int baycom_ioctl(struct net_device *dev, struct ifreq *ifr,
- 
- 	}
- 
--	if (copy_from_user(&bi, ifr->ifr_data, sizeof(bi)))
-+	if (copy_from_user(&bi, data, sizeof(bi)))
- 		return -EFAULT;
- 	switch (bi.cmd) {
- 	default:
-@@ -555,7 +555,7 @@ static int baycom_ioctl(struct net_device *dev, struct ifreq *ifr,
- #endif /* BAYCOM_DEBUG */
- 
- 	}
--	if (copy_to_user(ifr->ifr_data, &bi, sizeof(bi)))
-+	if (copy_to_user(data, &bi, sizeof(bi)))
- 		return -EFAULT;
- 	return 0;
- 
-diff --git a/drivers/net/hamradio/baycom_ser_hdx.c b/drivers/net/hamradio/baycom_ser_hdx.c
-index a1acb3a47bdb..5d1ab4840753 100644
---- a/drivers/net/hamradio/baycom_ser_hdx.c
-+++ b/drivers/net/hamradio/baycom_ser_hdx.c
-@@ -521,7 +521,7 @@ static int ser12_close(struct net_device *dev)
- 
- /* --------------------------------------------------------------------- */
- 
--static int baycom_ioctl(struct net_device *dev, struct ifreq *ifr,
-+static int baycom_ioctl(struct net_device *dev, void __user *data,
- 			struct hdlcdrv_ioctl *hi, int cmd);
- 
- /* --------------------------------------------------------------------- */
-@@ -551,7 +551,7 @@ static int baycom_setmode(struct baycom_state *bc, const char *modestr)
- 
- /* --------------------------------------------------------------------- */
- 
--static int baycom_ioctl(struct net_device *dev, struct ifreq *ifr,
-+static int baycom_ioctl(struct net_device *dev, void __user *data,
- 			struct hdlcdrv_ioctl *hi, int cmd)
+-static int ip6gre_tunnel_ioctl(struct net_device *dev,
+-	struct ifreq *ifr, int cmd)
++static int ip6gre_tunnel_siocdevprivate(struct net_device *dev,
++	struct ifreq *ifr, void __user *data, int cmd)
  {
- 	struct baycom_state *bc;
-@@ -573,7 +573,7 @@ static int baycom_ioctl(struct net_device *dev, struct ifreq *ifr,
- 		strcpy(hi->data.modename, "ser12");
- 		if (bc->opt_dcd <= 0)
- 			strcat(hi->data.modename, (!bc->opt_dcd) ? "*" : (bc->opt_dcd == -2) ? "@" : "+");
--		if (copy_to_user(ifr->ifr_data, hi, sizeof(struct hdlcdrv_ioctl)))
-+		if (copy_to_user(data, hi, sizeof(struct hdlcdrv_ioctl)))
- 			return -EFAULT;
- 		return 0;
- 
-@@ -585,7 +585,7 @@ static int baycom_ioctl(struct net_device *dev, struct ifreq *ifr,
- 
- 	case HDLCDRVCTL_MODELIST:
- 		strcpy(hi->data.modename, "ser12");
--		if (copy_to_user(ifr->ifr_data, hi, sizeof(struct hdlcdrv_ioctl)))
-+		if (copy_to_user(data, hi, sizeof(struct hdlcdrv_ioctl)))
- 			return -EFAULT;
- 		return 0;
- 
-@@ -594,7 +594,7 @@ static int baycom_ioctl(struct net_device *dev, struct ifreq *ifr,
- 
- 	}
- 
--	if (copy_from_user(&bi, ifr->ifr_data, sizeof(bi)))
-+	if (copy_from_user(&bi, data, sizeof(bi)))
- 		return -EFAULT;
- 	switch (bi.cmd) {
- 	default:
-@@ -609,7 +609,7 @@ static int baycom_ioctl(struct net_device *dev, struct ifreq *ifr,
- #endif /* BAYCOM_DEBUG */
- 
- 	}
--	if (copy_to_user(ifr->ifr_data, &bi, sizeof(bi)))
-+	if (copy_to_user(data, &bi, sizeof(bi)))
- 		return -EFAULT;
- 	return 0;
- 
-diff --git a/drivers/net/hamradio/bpqether.c b/drivers/net/hamradio/bpqether.c
-index 1ad6085994b1..d648e2fb5ae3 100644
---- a/drivers/net/hamradio/bpqether.c
-+++ b/drivers/net/hamradio/bpqether.c
-@@ -314,9 +314,10 @@ static int bpq_set_mac_address(struct net_device *dev, void *addr)
-  *					source ethernet address (broadcast
-  *					or multicast: accept all)
-  */
--static int bpq_ioctl(struct net_device *dev, struct ifreq *ifr, int cmd)
-+static int bpq_siocdevprivate(struct net_device *dev, struct ifreq *ifr,
-+			      void __user *data, int cmd)
- {
--	struct bpq_ethaddr __user *ethaddr = ifr->ifr_data;
-+	struct bpq_ethaddr __user *ethaddr = data;
- 	struct bpqdev *bpq = netdev_priv(dev);
- 	struct bpq_req req;
- 
-@@ -325,7 +326,7 @@ static int bpq_ioctl(struct net_device *dev, struct ifreq *ifr, int cmd)
- 
+ 	int err = 0;
+ 	struct ip6_tnl_parm2 p;
+@@ -1250,7 +1250,7 @@ static int ip6gre_tunnel_ioctl(struct net_device *dev,
  	switch (cmd) {
- 		case SIOCSBPQETHOPT:
--			if (copy_from_user(&req, ifr->ifr_data, sizeof(struct bpq_req)))
-+			if (copy_from_user(&req, data, sizeof(struct bpq_req)))
- 				return -EFAULT;
- 			switch (req.cmd) {
- 				case SIOCGBPQETHPARAM:
-@@ -448,7 +449,7 @@ static const struct net_device_ops bpq_netdev_ops = {
- 	.ndo_stop	     = bpq_close,
- 	.ndo_start_xmit	     = bpq_xmit,
- 	.ndo_set_mac_address = bpq_set_mac_address,
--	.ndo_do_ioctl	     = bpq_ioctl,
-+	.ndo_siocdevprivate  = bpq_siocdevprivate,
- };
- 
- static void bpq_setup(struct net_device *dev)
-diff --git a/drivers/net/hamradio/dmascc.c b/drivers/net/hamradio/dmascc.c
-index c25c8c99c5c7..5227db7a757e 100644
---- a/drivers/net/hamradio/dmascc.c
-+++ b/drivers/net/hamradio/dmascc.c
-@@ -225,7 +225,7 @@ static int read_scc_data(struct scc_priv *priv);
- 
- static int scc_open(struct net_device *dev);
- static int scc_close(struct net_device *dev);
--static int scc_ioctl(struct net_device *dev, struct ifreq *ifr, int cmd);
-+static int scc_siocdevprivate(struct net_device *dev, struct ifreq *ifr, int cmd);
- static int scc_send_packet(struct sk_buff *skb, struct net_device *dev);
- static int scc_set_mac_address(struct net_device *dev, void *sa);
- 
-@@ -432,7 +432,7 @@ static const struct net_device_ops scc_netdev_ops = {
- 	.ndo_open = scc_open,
- 	.ndo_stop = scc_close,
- 	.ndo_start_xmit = scc_send_packet,
--	.ndo_do_ioctl = scc_ioctl,
-+	.ndo_siocdevprivate = scc_siocdevprivate,
- 	.ndo_set_mac_address = scc_set_mac_address,
- };
- 
-@@ -881,15 +881,13 @@ static int scc_close(struct net_device *dev)
- }
- 
- 
--static int scc_ioctl(struct net_device *dev, struct ifreq *ifr, int cmd)
-+static int scc_siocdevprivate(struct net_device *dev, struct ifreq *ifr, void __user *data, int cmd)
- {
- 	struct scc_priv *priv = dev->ml_priv;
- 
- 	switch (cmd) {
- 	case SIOCGSCCPARAM:
--		if (copy_to_user
--		    (ifr->ifr_data, &priv->param,
--		     sizeof(struct scc_param)))
-+		if (copy_to_user(data, &priv->param, sizeof(struct scc_param)))
- 			return -EFAULT;
- 		return 0;
- 	case SIOCSSCCPARAM:
-@@ -897,13 +895,12 @@ static int scc_ioctl(struct net_device *dev, struct ifreq *ifr, int cmd)
- 			return -EPERM;
- 		if (netif_running(dev))
- 			return -EAGAIN;
--		if (copy_from_user
--		    (&priv->param, ifr->ifr_data,
--		     sizeof(struct scc_param)))
-+		if (copy_from_user(&priv->param, data,
-+				   sizeof(struct scc_param)))
- 			return -EFAULT;
- 		return 0;
- 	default:
--		return -EINVAL;
-+		return -EOPNOTSUPP;
- 	}
- }
- 
-diff --git a/drivers/net/hamradio/hdlcdrv.c b/drivers/net/hamradio/hdlcdrv.c
-index e7413a643929..0311980f9d5f 100644
---- a/drivers/net/hamradio/hdlcdrv.c
-+++ b/drivers/net/hamradio/hdlcdrv.c
-@@ -483,23 +483,25 @@ static int hdlcdrv_close(struct net_device *dev)
- 
- /* --------------------------------------------------------------------- */
- 
--static int hdlcdrv_ioctl(struct net_device *dev, struct ifreq *ifr, int cmd)
-+static int hdlcdrv_siocdevprivate(struct net_device *dev, struct ifreq *ifr,
-+				  void __user *data, int cmd)
- {
- 	struct hdlcdrv_state *s = netdev_priv(dev);
- 	struct hdlcdrv_ioctl bi;
- 
--	if (cmd != SIOCDEVPRIVATE) {
--		if (s->ops && s->ops->ioctl)
--			return s->ops->ioctl(dev, ifr, &bi, cmd);
-+	if (cmd != SIOCDEVPRIVATE)
- 		return -ENOIOCTLCMD;
--	}
--	if (copy_from_user(&bi, ifr->ifr_data, sizeof(bi)))
-+
-+	if (in_compat_syscall()) /* to be implemented */
-+		return -ENOIOCTLCMD;
-+
-+	if (copy_from_user(&bi, data, sizeof(bi)))
- 		return -EFAULT;
- 
- 	switch (bi.cmd) {
- 	default:
- 		if (s->ops && s->ops->ioctl)
--			return s->ops->ioctl(dev, ifr, &bi, cmd);
-+			return s->ops->ioctl(dev, data, &bi, cmd);
- 		return -ENOIOCTLCMD;
- 
- 	case HDLCDRVCTL_GETCHANNELPAR:
-@@ -605,7 +607,7 @@ static int hdlcdrv_ioctl(struct net_device *dev, struct ifreq *ifr, int cmd)
- 		break;
- 		
- 	}
--	if (copy_to_user(ifr->ifr_data, &bi, sizeof(bi)))
-+	if (copy_to_user(data, &bi, sizeof(bi)))
- 		return -EFAULT;
- 	return 0;
- 
-@@ -617,7 +619,7 @@ static const struct net_device_ops hdlcdrv_netdev = {
- 	.ndo_open	= hdlcdrv_open,
- 	.ndo_stop	= hdlcdrv_close,
- 	.ndo_start_xmit = hdlcdrv_send_packet,
--	.ndo_do_ioctl	= hdlcdrv_ioctl,
-+	.ndo_siocdevprivate  = hdlcdrv_siocdevprivate,
- 	.ndo_set_mac_address = hdlcdrv_set_mac_address,
- };
- 
-diff --git a/drivers/net/hamradio/scc.c b/drivers/net/hamradio/scc.c
-index 36eeb80406f2..abc086de2af4 100644
---- a/drivers/net/hamradio/scc.c
-+++ b/drivers/net/hamradio/scc.c
-@@ -210,7 +210,8 @@ static int scc_net_close(struct net_device *dev);
- static void scc_net_rx(struct scc_channel *scc, struct sk_buff *skb);
- static netdev_tx_t scc_net_tx(struct sk_buff *skb,
- 			      struct net_device *dev);
--static int scc_net_ioctl(struct net_device *dev, struct ifreq *ifr, int cmd);
-+static int scc_net_siocdevprivate(struct net_device *dev, struct ifreq *ifr,
-+				  void __user *data, int cmd);
- static int scc_net_set_mac_address(struct net_device *dev, void *addr);
- static struct net_device_stats * scc_net_get_stats(struct net_device *dev);
- 
-@@ -1550,7 +1551,7 @@ static const struct net_device_ops scc_netdev_ops = {
- 	.ndo_start_xmit	     = scc_net_tx,
- 	.ndo_set_mac_address = scc_net_set_mac_address,
- 	.ndo_get_stats       = scc_net_get_stats,
--	.ndo_do_ioctl        = scc_net_ioctl,
-+	.ndo_siocdevprivate  = scc_net_siocdevprivate,
- };
- 
- /* ----> Initialize device <----- */
-@@ -1703,7 +1704,8 @@ static netdev_tx_t scc_net_tx(struct sk_buff *skb, struct net_device *dev)
-  * SIOCSCCCAL		- send calib. pattern	arg: (struct scc_calibrate *) arg
-  */
- 
--static int scc_net_ioctl(struct net_device *dev, struct ifreq *ifr, int cmd)
-+static int scc_net_siocdevprivate(struct net_device *dev,
-+				  struct ifreq *ifr, void __user *arg, int cmd)
- {
- 	struct scc_kiss_cmd kiss_cmd;
- 	struct scc_mem_config memcfg;
-@@ -1712,8 +1714,6 @@ static int scc_net_ioctl(struct net_device *dev, struct ifreq *ifr, int cmd)
- 	struct scc_channel *scc = (struct scc_channel *) dev->ml_priv;
- 	int chan;
- 	unsigned char device_name[IFNAMSIZ];
--	void __user *arg = ifr->ifr_data;
--	
- 	
- 	if (!Driver_Initialized)
- 	{
-@@ -1722,6 +1722,9 @@ static int scc_net_ioctl(struct net_device *dev, struct ifreq *ifr, int cmd)
- 			int found = 1;
- 
- 			if (!capable(CAP_SYS_RAWIO)) return -EPERM;
-+			if (in_compat_syscall())
-+				return -EOPNOTSUPP;
-+
- 			if (!arg) return -EFAULT;
- 
- 			if (Nchips >= SCC_MAXCHIPS) 
-diff --git a/drivers/net/hamradio/yam.c b/drivers/net/hamradio/yam.c
-index 5ab53e9942f3..fa86ceaa28db 100644
---- a/drivers/net/hamradio/yam.c
-+++ b/drivers/net/hamradio/yam.c
-@@ -920,14 +920,14 @@ static int yam_close(struct net_device *dev)
- 
- /* --------------------------------------------------------------------- */
- 
--static int yam_ioctl(struct net_device *dev, struct ifreq *ifr, int cmd)
-+static int yam_siocdevprivate(struct net_device *dev, struct ifreq *ifr, void __user *data, int cmd)
- {
- 	struct yam_port *yp = netdev_priv(dev);
- 	struct yamdrv_ioctl_cfg yi;
- 	struct yamdrv_ioctl_mcs *ym;
- 	int ioctl_cmd;
- 
--	if (copy_from_user(&ioctl_cmd, ifr->ifr_data, sizeof(int)))
-+	if (copy_from_user(&ioctl_cmd, data, sizeof(int)))
- 		 return -EFAULT;
- 
- 	if (yp->magic != YAM_MAGIC)
-@@ -947,8 +947,7 @@ static int yam_ioctl(struct net_device *dev, struct ifreq *ifr, int cmd)
- 	case SIOCYAMSMCS:
- 		if (netif_running(dev))
- 			return -EINVAL;		/* Cannot change this parameter when up */
--		ym = memdup_user(ifr->ifr_data,
--				 sizeof(struct yamdrv_ioctl_mcs));
-+		ym = memdup_user(data, sizeof(struct yamdrv_ioctl_mcs));
- 		if (IS_ERR(ym))
- 			return PTR_ERR(ym);
- 		if (ym->cmd != SIOCYAMSMCS)
-@@ -965,7 +964,7 @@ static int yam_ioctl(struct net_device *dev, struct ifreq *ifr, int cmd)
- 	case SIOCYAMSCFG:
- 		if (!capable(CAP_SYS_RAWIO))
- 			return -EPERM;
--		if (copy_from_user(&yi, ifr->ifr_data, sizeof(struct yamdrv_ioctl_cfg)))
-+		if (copy_from_user(&yi, data, sizeof(struct yamdrv_ioctl_cfg)))
- 			 return -EFAULT;
- 
- 		if (yi.cmd != SIOCYAMSCFG)
-@@ -1045,7 +1044,7 @@ static int yam_ioctl(struct net_device *dev, struct ifreq *ifr, int cmd)
- 		yi.cfg.txtail = yp->txtail;
- 		yi.cfg.persist = yp->pers;
- 		yi.cfg.slottime = yp->slot;
--		if (copy_to_user(ifr->ifr_data, &yi, sizeof(struct yamdrv_ioctl_cfg)))
-+		if (copy_to_user(data, &yi, sizeof(struct yamdrv_ioctl_cfg)))
- 			 return -EFAULT;
+ 	case SIOCGETTUNNEL:
+ 		if (dev == ign->fb_tunnel_dev) {
+-			if (copy_from_user(&p, ifr->ifr_ifru.ifru_data, sizeof(p))) {
++			if (copy_from_user(&p, data, sizeof(p))) {
+ 				err = -EFAULT;
+ 				break;
+ 			}
+@@ -1261,7 +1261,7 @@ static int ip6gre_tunnel_ioctl(struct net_device *dev,
+ 		}
+ 		memset(&p, 0, sizeof(p));
+ 		ip6gre_tnl_parm_to_user(&p, &t->parms);
+-		if (copy_to_user(ifr->ifr_ifru.ifru_data, &p, sizeof(p)))
++		if (copy_to_user(data, &p, sizeof(p)))
+ 			err = -EFAULT;
  		break;
  
-@@ -1074,7 +1073,7 @@ static const struct net_device_ops yam_netdev_ops = {
- 	.ndo_open	     = yam_open,
- 	.ndo_stop	     = yam_close,
- 	.ndo_start_xmit      = yam_send_packet,
--	.ndo_do_ioctl 	     = yam_ioctl,
-+	.ndo_siocdevprivate  = yam_siocdevprivate,
- 	.ndo_set_mac_address = yam_set_mac_address,
- };
+@@ -1272,7 +1272,7 @@ static int ip6gre_tunnel_ioctl(struct net_device *dev,
+ 			goto done;
  
-diff --git a/include/linux/hdlcdrv.h b/include/linux/hdlcdrv.h
-index d4d633a49d36..5d70c3f98f5b 100644
---- a/include/linux/hdlcdrv.h
-+++ b/include/linux/hdlcdrv.h
-@@ -79,7 +79,7 @@ struct hdlcdrv_ops {
- 	 */
- 	int (*open)(struct net_device *);
- 	int (*close)(struct net_device *);
--	int (*ioctl)(struct net_device *, struct ifreq *, 
-+	int (*ioctl)(struct net_device *, void __user *,
- 		     struct hdlcdrv_ioctl *, int);
- };
+ 		err = -EFAULT;
+-		if (copy_from_user(&p, ifr->ifr_ifru.ifru_data, sizeof(p)))
++		if (copy_from_user(&p, data, sizeof(p)))
+ 			goto done;
  
+ 		err = -EINVAL;
+@@ -1309,7 +1309,7 @@ static int ip6gre_tunnel_ioctl(struct net_device *dev,
+ 
+ 			memset(&p, 0, sizeof(p));
+ 			ip6gre_tnl_parm_to_user(&p, &t->parms);
+-			if (copy_to_user(ifr->ifr_ifru.ifru_data, &p, sizeof(p)))
++			if (copy_to_user(data, &p, sizeof(p)))
+ 				err = -EFAULT;
+ 		} else
+ 			err = (cmd == SIOCADDTUNNEL ? -ENOBUFS : -ENOENT);
+@@ -1322,7 +1322,7 @@ static int ip6gre_tunnel_ioctl(struct net_device *dev,
+ 
+ 		if (dev == ign->fb_tunnel_dev) {
+ 			err = -EFAULT;
+-			if (copy_from_user(&p, ifr->ifr_ifru.ifru_data, sizeof(p)))
++			if (copy_from_user(&p, data, sizeof(p)))
+ 				goto done;
+ 			err = -ENOENT;
+ 			ip6gre_tnl_parm_from_user(&p1, &p);
+@@ -1389,7 +1389,7 @@ static const struct net_device_ops ip6gre_netdev_ops = {
+ 	.ndo_init		= ip6gre_tunnel_init,
+ 	.ndo_uninit		= ip6gre_tunnel_uninit,
+ 	.ndo_start_xmit		= ip6gre_tunnel_xmit,
+-	.ndo_do_ioctl		= ip6gre_tunnel_ioctl,
++	.ndo_siocdevprivate	= ip6gre_tunnel_siocdevprivate,
+ 	.ndo_change_mtu		= ip6_tnl_change_mtu,
+ 	.ndo_get_stats64	= ip_tunnel_get_stats64,
+ 	.ndo_get_iflink		= ip6_tnl_get_iflink,
+diff --git a/net/ipv6/ip6_tunnel.c b/net/ipv6/ip6_tunnel.c
+index a0217e5bf3bc..35853fc7db7d 100644
+--- a/net/ipv6/ip6_tunnel.c
++++ b/net/ipv6/ip6_tunnel.c
+@@ -1614,7 +1614,8 @@ ip6_tnl_parm_to_user(struct ip6_tnl_parm *u, const struct __ip6_tnl_parm *p)
+ /**
+  * ip6_tnl_ioctl - configure ipv6 tunnels from userspace
+  *   @dev: virtual device associated with tunnel
+- *   @ifr: parameters passed from userspace
++ *   @ifr: unused
++ *   @data: parameters passed from userspace
+  *   @cmd: command to be performed
+  *
+  * Description:
+@@ -1640,7 +1641,8 @@ ip6_tnl_parm_to_user(struct ip6_tnl_parm *u, const struct __ip6_tnl_parm *p)
+  **/
+ 
+ static int
+-ip6_tnl_ioctl(struct net_device *dev, struct ifreq *ifr, int cmd)
++ip6_tnl_siocdevprivate(struct net_device *dev, struct ifreq *ifr,
++		       void __user *data, int cmd)
+ {
+ 	int err = 0;
+ 	struct ip6_tnl_parm p;
+@@ -1654,7 +1656,7 @@ ip6_tnl_ioctl(struct net_device *dev, struct ifreq *ifr, int cmd)
+ 	switch (cmd) {
+ 	case SIOCGETTUNNEL:
+ 		if (dev == ip6n->fb_tnl_dev) {
+-			if (copy_from_user(&p, ifr->ifr_ifru.ifru_data, sizeof(p))) {
++			if (copy_from_user(&p, data, sizeof(p))) {
+ 				err = -EFAULT;
+ 				break;
+ 			}
+@@ -1666,7 +1668,7 @@ ip6_tnl_ioctl(struct net_device *dev, struct ifreq *ifr, int cmd)
+ 			memset(&p, 0, sizeof(p));
+ 		}
+ 		ip6_tnl_parm_to_user(&p, &t->parms);
+-		if (copy_to_user(ifr->ifr_ifru.ifru_data, &p, sizeof(p))) {
++		if (copy_to_user(data, &p, sizeof(p))) {
+ 			err = -EFAULT;
+ 		}
+ 		break;
+@@ -1676,7 +1678,7 @@ ip6_tnl_ioctl(struct net_device *dev, struct ifreq *ifr, int cmd)
+ 		if (!ns_capable(net->user_ns, CAP_NET_ADMIN))
+ 			break;
+ 		err = -EFAULT;
+-		if (copy_from_user(&p, ifr->ifr_ifru.ifru_data, sizeof(p)))
++		if (copy_from_user(&p, data, sizeof(p)))
+ 			break;
+ 		err = -EINVAL;
+ 		if (p.proto != IPPROTO_IPV6 && p.proto != IPPROTO_IPIP &&
+@@ -1700,7 +1702,7 @@ ip6_tnl_ioctl(struct net_device *dev, struct ifreq *ifr, int cmd)
+ 		if (!IS_ERR(t)) {
+ 			err = 0;
+ 			ip6_tnl_parm_to_user(&p, &t->parms);
+-			if (copy_to_user(ifr->ifr_ifru.ifru_data, &p, sizeof(p)))
++			if (copy_to_user(data, &p, sizeof(p)))
+ 				err = -EFAULT;
+ 
+ 		} else {
+@@ -1714,7 +1716,7 @@ ip6_tnl_ioctl(struct net_device *dev, struct ifreq *ifr, int cmd)
+ 
+ 		if (dev == ip6n->fb_tnl_dev) {
+ 			err = -EFAULT;
+-			if (copy_from_user(&p, ifr->ifr_ifru.ifru_data, sizeof(p)))
++			if (copy_from_user(&p, data, sizeof(p)))
+ 				break;
+ 			err = -ENOENT;
+ 			ip6_tnl_parm_from_user(&p1, &p);
+@@ -1833,7 +1835,7 @@ static const struct net_device_ops ip6_tnl_netdev_ops = {
+ 	.ndo_init	= ip6_tnl_dev_init,
+ 	.ndo_uninit	= ip6_tnl_dev_uninit,
+ 	.ndo_start_xmit = ip6_tnl_start_xmit,
+-	.ndo_do_ioctl	= ip6_tnl_ioctl,
++	.ndo_siocdevprivate = ip6_tnl_siocdevprivate,
+ 	.ndo_change_mtu = ip6_tnl_change_mtu,
+ 	.ndo_get_stats	= ip6_get_stats,
+ 	.ndo_get_iflink = ip6_tnl_get_iflink,
+diff --git a/net/ipv6/ip6_vti.c b/net/ipv6/ip6_vti.c
+index 5f9c4fdc120d..c4fe54eedd5c 100644
+--- a/net/ipv6/ip6_vti.c
++++ b/net/ipv6/ip6_vti.c
+@@ -769,13 +769,14 @@ vti6_parm_to_user(struct ip6_tnl_parm2 *u, const struct __ip6_tnl_parm *p)
+ }
+ 
+ /**
+- * vti6_ioctl - configure vti6 tunnels from userspace
++ * vti6_siocdevprivate - configure vti6 tunnels from userspace
+  *   @dev: virtual device associated with tunnel
+- *   @ifr: parameters passed from userspace
++ *   @ifr: unused
++ *   @data: parameters passed from userspace
+  *   @cmd: command to be performed
+  *
+  * Description:
+- *   vti6_ioctl() is used for managing vti6 tunnels
++ *   vti6_siocdevprivate() is used for managing vti6 tunnels
+  *   from userspace.
+  *
+  *   The possible commands are the following:
+@@ -796,7 +797,7 @@ vti6_parm_to_user(struct ip6_tnl_parm2 *u, const struct __ip6_tnl_parm *p)
+  *   %-ENODEV if attempting to change or delete a nonexisting device
+  **/
+ static int
+-vti6_ioctl(struct net_device *dev, struct ifreq *ifr, int cmd)
++vti6_siocdevprivate(struct net_device *dev, struct ifreq *ifr, void __user *data, int cmd)
+ {
+ 	int err = 0;
+ 	struct ip6_tnl_parm2 p;
+@@ -808,7 +809,7 @@ vti6_ioctl(struct net_device *dev, struct ifreq *ifr, int cmd)
+ 	switch (cmd) {
+ 	case SIOCGETTUNNEL:
+ 		if (dev == ip6n->fb_tnl_dev) {
+-			if (copy_from_user(&p, ifr->ifr_ifru.ifru_data, sizeof(p))) {
++			if (copy_from_user(&p, data, sizeof(p))) {
+ 				err = -EFAULT;
+ 				break;
+ 			}
+@@ -820,7 +821,7 @@ vti6_ioctl(struct net_device *dev, struct ifreq *ifr, int cmd)
+ 		if (!t)
+ 			t = netdev_priv(dev);
+ 		vti6_parm_to_user(&p, &t->parms);
+-		if (copy_to_user(ifr->ifr_ifru.ifru_data, &p, sizeof(p)))
++		if (copy_to_user(data, &p, sizeof(p)))
+ 			err = -EFAULT;
+ 		break;
+ 	case SIOCADDTUNNEL:
+@@ -829,7 +830,7 @@ vti6_ioctl(struct net_device *dev, struct ifreq *ifr, int cmd)
+ 		if (!ns_capable(net->user_ns, CAP_NET_ADMIN))
+ 			break;
+ 		err = -EFAULT;
+-		if (copy_from_user(&p, ifr->ifr_ifru.ifru_data, sizeof(p)))
++		if (copy_from_user(&p, data, sizeof(p)))
+ 			break;
+ 		err = -EINVAL;
+ 		if (p.proto != IPPROTO_IPV6  && p.proto != 0)
+@@ -850,7 +851,7 @@ vti6_ioctl(struct net_device *dev, struct ifreq *ifr, int cmd)
+ 		if (t) {
+ 			err = 0;
+ 			vti6_parm_to_user(&p, &t->parms);
+-			if (copy_to_user(ifr->ifr_ifru.ifru_data, &p, sizeof(p)))
++			if (copy_to_user(data, &p, sizeof(p)))
+ 				err = -EFAULT;
+ 
+ 		} else
+@@ -863,7 +864,7 @@ vti6_ioctl(struct net_device *dev, struct ifreq *ifr, int cmd)
+ 
+ 		if (dev == ip6n->fb_tnl_dev) {
+ 			err = -EFAULT;
+-			if (copy_from_user(&p, ifr->ifr_ifru.ifru_data, sizeof(p)))
++			if (copy_from_user(&p, data, sizeof(p)))
+ 				break;
+ 			err = -ENOENT;
+ 			vti6_parm_from_user(&p1, &p);
+@@ -888,7 +889,7 @@ static const struct net_device_ops vti6_netdev_ops = {
+ 	.ndo_init	= vti6_dev_init,
+ 	.ndo_uninit	= vti6_dev_uninit,
+ 	.ndo_start_xmit = vti6_tnl_xmit,
+-	.ndo_do_ioctl	= vti6_ioctl,
++	.ndo_siocdevprivate = vti6_siocdevprivate,
+ 	.ndo_get_stats64 = ip_tunnel_get_stats64,
+ 	.ndo_get_iflink = ip6_tnl_get_iflink,
+ };
+diff --git a/net/ipv6/sit.c b/net/ipv6/sit.c
+index 5e2c34c0ac97..2812941c7779 100644
+--- a/net/ipv6/sit.c
++++ b/net/ipv6/sit.c
+@@ -298,9 +298,8 @@ __ipip6_tunnel_locate_prl(struct ip_tunnel *t, __be32 addr)
+ 
+ }
+ 
+-static int ipip6_tunnel_get_prl(struct net_device *dev, struct ifreq *ifr)
++static int ipip6_tunnel_get_prl(struct net_device *dev, struct ip_tunnel_prl __user *a)
+ {
+-	struct ip_tunnel_prl __user *a = ifr->ifr_ifru.ifru_data;
+ 	struct ip_tunnel *t = netdev_priv(dev);
+ 	struct ip_tunnel_prl kprl, *kp;
+ 	struct ip_tunnel_prl_entry *prl;
+@@ -452,8 +451,8 @@ ipip6_tunnel_del_prl(struct ip_tunnel *t, struct ip_tunnel_prl *a)
+ 	return err;
+ }
+ 
+-static int ipip6_tunnel_prl_ctl(struct net_device *dev, struct ifreq *ifr,
+-		int cmd)
++static int ipip6_tunnel_prl_ctl(struct net_device *dev,
++				struct ip_tunnel_prl __user *data, int cmd)
+ {
+ 	struct ip_tunnel *t = netdev_priv(dev);
+ 	struct ip_tunnel_prl prl;
+@@ -464,7 +463,7 @@ static int ipip6_tunnel_prl_ctl(struct net_device *dev, struct ifreq *ifr,
+ 	if (dev == dev_to_sit_net(dev)->fb_tunnel_dev)
+ 		return -EINVAL;
+ 
+-	if (copy_from_user(&prl, ifr->ifr_ifru.ifru_data, sizeof(prl)))
++	if (copy_from_user(&prl, data, sizeof(prl)))
+ 		return -EFAULT;
+ 
+ 	switch (cmd) {
+@@ -1193,14 +1192,14 @@ static int ipip6_tunnel_update_6rd(struct ip_tunnel *t,
+ }
+ 
+ static int
+-ipip6_tunnel_get6rd(struct net_device *dev, struct ifreq *ifr)
++ipip6_tunnel_get6rd(struct net_device *dev, struct ip_tunnel_parm __user *data)
+ {
+ 	struct ip_tunnel *t = netdev_priv(dev);
+ 	struct ip_tunnel_6rd ip6rd;
+ 	struct ip_tunnel_parm p;
+ 
+ 	if (dev == dev_to_sit_net(dev)->fb_tunnel_dev) {
+-		if (copy_from_user(&p, ifr->ifr_ifru.ifru_data, sizeof(p)))
++		if (copy_from_user(&p, data, sizeof(p)))
+ 			return -EFAULT;
+ 		t = ipip6_tunnel_locate(t->net, &p, 0);
+ 	}
+@@ -1211,13 +1210,14 @@ ipip6_tunnel_get6rd(struct net_device *dev, struct ifreq *ifr)
+ 	ip6rd.relay_prefix = t->ip6rd.relay_prefix;
+ 	ip6rd.prefixlen = t->ip6rd.prefixlen;
+ 	ip6rd.relay_prefixlen = t->ip6rd.relay_prefixlen;
+-	if (copy_to_user(ifr->ifr_ifru.ifru_data, &ip6rd, sizeof(ip6rd)))
++	if (copy_to_user(data, &ip6rd, sizeof(ip6rd)))
+ 		return -EFAULT;
+ 	return 0;
+ }
+ 
+ static int
+-ipip6_tunnel_6rdctl(struct net_device *dev, struct ifreq *ifr, int cmd)
++ipip6_tunnel_6rdctl(struct net_device *dev, struct ip_tunnel_6rd __user *data,
++		    int cmd)
+ {
+ 	struct ip_tunnel *t = netdev_priv(dev);
+ 	struct ip_tunnel_6rd ip6rd;
+@@ -1225,7 +1225,7 @@ ipip6_tunnel_6rdctl(struct net_device *dev, struct ifreq *ifr, int cmd)
+ 
+ 	if (!ns_capable(t->net->user_ns, CAP_NET_ADMIN))
+ 		return -EPERM;
+-	if (copy_from_user(&ip6rd, ifr->ifr_ifru.ifru_data, sizeof(ip6rd)))
++	if (copy_from_user(&ip6rd, data, sizeof(ip6rd)))
+ 		return -EFAULT;
+ 
+ 	if (cmd != SIOCDEL6RD) {
+@@ -1364,27 +1364,28 @@ ipip6_tunnel_ctl(struct net_device *dev, struct ip_tunnel_parm *p, int cmd)
+ }
+ 
+ static int
+-ipip6_tunnel_ioctl(struct net_device *dev, struct ifreq *ifr, int cmd)
++ipip6_tunnel_siocdevprivate(struct net_device *dev, struct ifreq *ifr,
++			    void __user *data, int cmd)
+ {
+ 	switch (cmd) {
+ 	case SIOCGETTUNNEL:
+ 	case SIOCADDTUNNEL:
+ 	case SIOCCHGTUNNEL:
+ 	case SIOCDELTUNNEL:
+-		return ip_tunnel_ioctl(dev, ifr, cmd);
++		return ip_tunnel_siocdevprivate(dev, ifr, data, cmd);
+ 	case SIOCGETPRL:
+-		return ipip6_tunnel_get_prl(dev, ifr);
++		return ipip6_tunnel_get_prl(dev, data);
+ 	case SIOCADDPRL:
+ 	case SIOCDELPRL:
+ 	case SIOCCHGPRL:
+-		return ipip6_tunnel_prl_ctl(dev, ifr, cmd);
++		return ipip6_tunnel_prl_ctl(dev, data, cmd);
+ #ifdef CONFIG_IPV6_SIT_6RD
+ 	case SIOCGET6RD:
+-		return ipip6_tunnel_get6rd(dev, ifr);
++		return ipip6_tunnel_get6rd(dev, data);
+ 	case SIOCADD6RD:
+ 	case SIOCCHG6RD:
+ 	case SIOCDEL6RD:
+-		return ipip6_tunnel_6rdctl(dev, ifr, cmd);
++		return ipip6_tunnel_6rdctl(dev, data, cmd);
+ #endif
+ 	default:
+ 		return -EINVAL;
+@@ -1395,7 +1396,7 @@ static const struct net_device_ops ipip6_netdev_ops = {
+ 	.ndo_init	= ipip6_tunnel_init,
+ 	.ndo_uninit	= ipip6_tunnel_uninit,
+ 	.ndo_start_xmit	= sit_tunnel_xmit,
+-	.ndo_do_ioctl	= ipip6_tunnel_ioctl,
++	.ndo_siocdevprivate = ipip6_tunnel_siocdevprivate,
+ 	.ndo_get_stats64 = ip_tunnel_get_stats64,
+ 	.ndo_get_iflink = ip_tunnel_get_iflink,
+ 	.ndo_tunnel_ctl = ipip6_tunnel_ctl,
 -- 
 2.27.0
 
