@@ -1,18 +1,18 @@
 From: Arnd Bergmann <arnd@kernel.org>
-Subject: [RFC net-next 23/28] airo: use ndo_siocdevprivate
-Date: Fri,  6 Nov 2020 23:17:38 +0100
-Message-ID: <20201106221743.3271965-24-arnd@kernel.org>
+Subject: [RFC net-next 17/28] qeth: use ndo_siocdevprivate
+Date: Fri,  6 Nov 2020 23:17:32 +0100
+Message-ID: <20201106221743.3271965-18-arnd@kernel.org>
 References: <20201106221743.3271965-1-arnd@kernel.org>
 Mime-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Return-path: <linux-hams-owner@vger.kernel.org>
+Return-path: <netdev-owner@vger.kernel.org>
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1604701140;
-        bh=LJtDaUHH63i3o2EMXP8szuWYRpl83P553+fUvMeSGK8=;
+        s=default; t=1604701123;
+        bh=ThvhNKOFOFHaosgCVt+39Sx4lXYGht1uFMD73kyaQRw=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=inKXSx7pu4OlpdzCD5Ep6OcHlKJRGvMAxzNAl2slHhIwVAxkcTQLSF9WIdiliNBcA
-         WWlqw4cwyVvis73M4kp0tBT0Ckf0DK+JRoz8CDsxpgTTnZ4bqmS86gVWOviRFkdiGa
-         6uIquNqkO2we+L3RPOsWxawVmwrOMXxbf3eUuvnA=
+        b=tOpWDXH+Q4KDyV6w6IsyuUCJZc32wNUWOBB5dV0/RF2bumxz7FCAS61KdEn3vv6c9
+         uTdaPXXMZpVpamKG8qDdM5nAn3bsGbuv50ORc0NJX0ZBSyFEJIvWwimdvvzp2nH/UO
+         hOQyMJXMJzIiQm7Pnckg1zl6/nSOujSrtWGsXAdA=
 In-Reply-To: <20201106221743.3271965-1-arnd@kernel.org>
 List-ID: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
@@ -21,86 +21,126 @@ Cc: Arnd Bergmann <arnd@arndb.de>, linux-kernel@vger.kernel.org, linux-wireless@
 
 From: Arnd Bergmann <arnd@arndb.de>
 
-The airo driver overloads SIOCDEVPRIVATE ioctls with another
-set based on SIOCIWFIRSTPRIV. Only the first ones actually
-work (also in compat mode) as the others do not get passed
-down any more.
+qeth has both standard MII ioctls and custom SIOCDEVPRIVATE ones,
+all of which work correctly with compat user space.
 
-Change it over to ndo_siocdevprivate for clarification.
+Move the private ones over to the new ndo_siocdevprivate callback.
 
 Signed-off-by: Arnd Bergmann <arnd@arndb.de>
 ---
- drivers/net/wireless/cisco/airo.c | 15 ++++++++-------
- 1 file changed, 8 insertions(+), 7 deletions(-)
+ drivers/s390/net/qeth_core.h      |  2 ++
+ drivers/s390/net/qeth_core_main.c | 35 ++++++++++++++++++++++---------
+ drivers/s390/net/qeth_l3_main.c   |  6 +++---
+ 3 files changed, 30 insertions(+), 13 deletions(-)
 
-diff --git a/drivers/net/wireless/cisco/airo.c b/drivers/net/wireless/cisco/airo.c
-index 87b9398b03fd..045b9bb4db5d 100644
---- a/drivers/net/wireless/cisco/airo.c
-+++ b/drivers/net/wireless/cisco/airo.c
-@@ -1142,7 +1142,7 @@ static int waitbusy(struct airo_info *ai);
- static irqreturn_t airo_interrupt(int irq, void* dev_id);
- static int airo_thread(void *data);
- static void timer_func(struct net_device *dev);
--static int airo_ioctl(struct net_device *dev, struct ifreq *rq, int cmd);
-+static int airo_siocdevprivate(struct net_device *dev, struct ifreq *rq, void __user *, int cmd);
- static struct iw_statistics *airo_get_wireless_stats(struct net_device *dev);
- static void airo_read_wireless_stats(struct airo_info *local);
- #ifdef CISCO_EXT
-@@ -2668,7 +2668,7 @@ static const struct net_device_ops airo11_netdev_ops = {
- 	.ndo_start_xmit 	= airo_start_xmit11,
- 	.ndo_get_stats 		= airo_get_stats,
- 	.ndo_set_mac_address	= airo_set_mac_address,
--	.ndo_do_ioctl		= airo_ioctl,
-+	.ndo_siocdevprivate	= airo_siocdevprivate,
- };
+diff --git a/drivers/s390/net/qeth_core.h b/drivers/s390/net/qeth_core.h
+index f73b4756ed5e..67da90dea919 100644
+--- a/drivers/s390/net/qeth_core.h
++++ b/drivers/s390/net/qeth_core.h
+@@ -1118,6 +1118,8 @@ int qeth_do_send_packet(struct qeth_card *card, struct qeth_qdio_out_q *queue,
+ 			unsigned int offset, unsigned int hd_len,
+ 			int elements_needed);
+ int qeth_do_ioctl(struct net_device *dev, struct ifreq *rq, int cmd);
++int qeth_siocdevprivate(struct net_device *dev, struct ifreq *rq,
++			void __user *data, int cmd);
+ void qeth_dbf_longtext(debug_info_t *id, int level, char *text, ...);
+ int qeth_configure_cq(struct qeth_card *, enum qeth_cq);
+ int qeth_hw_trap(struct qeth_card *, enum qeth_diags_trap_action);
+diff --git a/drivers/s390/net/qeth_core_main.c b/drivers/s390/net/qeth_core_main.c
+index 93c9b30ab17a..7d785ddffcc0 100644
+--- a/drivers/s390/net/qeth_core_main.c
++++ b/drivers/s390/net/qeth_core_main.c
+@@ -6474,21 +6474,42 @@ struct qeth_card *qeth_get_card_by_busid(char *bus_id)
+ }
+ EXPORT_SYMBOL_GPL(qeth_get_card_by_busid);
  
- static void wifi_setup(struct net_device *dev)
-@@ -2768,7 +2768,7 @@ static const struct net_device_ops airo_netdev_ops = {
- 	.ndo_get_stats		= airo_get_stats,
- 	.ndo_set_rx_mode	= airo_set_multicast_list,
- 	.ndo_set_mac_address	= airo_set_mac_address,
--	.ndo_do_ioctl		= airo_ioctl,
-+	.ndo_siocdevprivate	= airo_siocdevprivate,
- 	.ndo_validate_addr	= eth_validate_addr,
- };
- 
-@@ -2779,7 +2779,7 @@ static const struct net_device_ops mpi_netdev_ops = {
- 	.ndo_get_stats		= airo_get_stats,
- 	.ndo_set_rx_mode	= airo_set_multicast_list,
- 	.ndo_set_mac_address	= airo_set_mac_address,
--	.ndo_do_ioctl		= airo_ioctl,
-+	.ndo_siocdevprivate	= airo_siocdevprivate,
- 	.ndo_validate_addr	= eth_validate_addr,
- };
- 
-@@ -7650,7 +7650,8 @@ static const struct iw_handler_def	airo_handler_def =
-  * Javier Achirica did a great job of merging code from the unnamed CISCO
-  * developer that added support for flashing the card.
-  */
--static int airo_ioctl(struct net_device *dev, struct ifreq *rq, int cmd)
-+static int airo_siocdevprivate(struct net_device *dev, struct ifreq *rq,
-+				void __user *data, int cmd)
+-int qeth_do_ioctl(struct net_device *dev, struct ifreq *rq, int cmd)
++int qeth_siocdevprivate(struct net_device *dev, struct ifreq *rq, void __user *data, int cmd)
  {
+ 	struct qeth_card *card = dev->ml_priv;
+-	struct mii_ioctl_data *mii_data;
  	int rc = 0;
- 	struct airo_info *ai = dev->ml_priv;
-@@ -7667,7 +7668,7 @@ static int airo_ioctl(struct net_device *dev, struct ifreq *rq, int cmd)
- 	{
- 		int val = AIROMAGIC;
- 		aironet_ioctl com;
--		if (copy_from_user(&com, rq->ifr_data, sizeof(com)))
-+		if (copy_from_user(&com, data, sizeof(com)))
- 			rc = -EFAULT;
- 		else if (copy_to_user(com.data, (char *)&val, sizeof(val)))
- 			rc = -EFAULT;
-@@ -7683,7 +7684,7 @@ static int airo_ioctl(struct net_device *dev, struct ifreq *rq, int cmd)
- 		 */
- 	{
- 		aironet_ioctl com;
--		if (copy_from_user(&com, rq->ifr_data, sizeof(com))) {
-+		if (copy_from_user(&com, data, sizeof(com))) {
- 			rc = -EFAULT;
+ 
+ 	switch (cmd) {
+ 	case SIOC_QETH_ADP_SET_SNMP_CONTROL:
+-		rc = qeth_snmp_command(card, rq->ifr_ifru.ifru_data);
++		rc = qeth_snmp_command(card, data);
+ 		break;
+ 	case SIOC_QETH_GET_CARD_TYPE:
+ 		if ((IS_OSD(card) || IS_OSM(card) || IS_OSX(card)) &&
+ 		    !IS_VM_NIC(card))
+ 			return 1;
+ 		return 0;
++	case SIOC_QETH_QUERY_OAT:
++		rc = qeth_query_oat_command(card, data);
++		break;
++	default:
++		if (card->discipline->do_ioctl)
++			rc = card->discipline->do_ioctl(dev, data, cmd);
++		else
++			rc = -EOPNOTSUPP;
++	}
++	if (rc)
++		QETH_CARD_TEXT_(card, 2, "ioce%x", rc);
++	return rc;
++}
++EXPORT_SYMBOL_GPL(qeth_siocdevprivate);
++
++int qeth_do_ioctl(struct net_device *dev, struct ifreq *rq, int cmd)
++{
++	struct qeth_card *card = dev->ml_priv;
++	struct mii_ioctl_data *mii_data;
++	int rc = 0;
++
++	switch (cmd) {
+ 	case SIOCGMIIPHY:
+ 		mii_data = if_mii(rq);
+ 		mii_data->phy_id = 0;
+@@ -6501,14 +6522,8 @@ int qeth_do_ioctl(struct net_device *dev, struct ifreq *rq, int cmd)
+ 			mii_data->val_out = qeth_mdio_read(dev,
+ 				mii_data->phy_id, mii_data->reg_num);
+ 		break;
+-	case SIOC_QETH_QUERY_OAT:
+-		rc = qeth_query_oat_command(card, rq->ifr_ifru.ifru_data);
+-		break;
+ 	default:
+-		if (card->discipline->do_ioctl)
+-			rc = card->discipline->do_ioctl(dev, rq, cmd);
+-		else
+-			rc = -EOPNOTSUPP;
++		return -EOPNOTSUPP;
+ 	}
+ 	if (rc)
+ 		QETH_CARD_TEXT_(card, 2, "ioce%x", rc);
+diff --git a/drivers/s390/net/qeth_l3_main.c b/drivers/s390/net/qeth_l3_main.c
+index b1c1d2510d55..546bebd264f2 100644
+--- a/drivers/s390/net/qeth_l3_main.c
++++ b/drivers/s390/net/qeth_l3_main.c
+@@ -1532,7 +1532,7 @@ static int qeth_l3_arp_flush_cache(struct qeth_card *card)
+ 	return rc;
+ }
+ 
+-static int qeth_l3_do_ioctl(struct net_device *dev, struct ifreq *rq, int cmd)
++static int qeth_l3_do_ioctl(struct net_device *dev, struct ifreq *rq, void __user *data, int cmd)
+ {
+ 	struct qeth_card *card = dev->ml_priv;
+ 	struct qeth_arp_cache_entry arp_entry;
+@@ -1552,13 +1552,13 @@ static int qeth_l3_do_ioctl(struct net_device *dev, struct ifreq *rq, int cmd)
+ 			rc = -EPERM;
  			break;
  		}
+-		rc = qeth_l3_arp_query(card, rq->ifr_ifru.ifru_data);
++		rc = qeth_l3_arp_query(card, data);
+ 		break;
+ 	case SIOC_QETH_ARP_ADD_ENTRY:
+ 	case SIOC_QETH_ARP_REMOVE_ENTRY:
+ 		if (!capable(CAP_NET_ADMIN))
+ 			return -EPERM;
+-		if (copy_from_user(&arp_entry, rq->ifr_data, sizeof(arp_entry)))
++		if (copy_from_user(&arp_entry, data, sizeof(arp_entry)))
+ 			return -EFAULT;
+ 
+ 		arp_cmd = (cmd == SIOC_QETH_ARP_ADD_ENTRY) ?
 -- 
 2.27.0
 
