@@ -1,94 +1,83 @@
-From: Arnd Bergmann <arnd@kernel.org>
-Subject: [RFC net-next 12/28] tehuti: use ndo_siocdevprivate
-Date: Fri,  6 Nov 2020 23:17:27 +0100
-Message-ID: <20201106221743.3271965-13-arnd@kernel.org>
+From: Arnd Bergmann <arnd-DgEjT+Ai2ygdnm+yROfE0A@public.gmane.org>
+Subject: [RFC net-next 15/28] net: usb: use ndo_siocdevprivate
+Date: Fri,  6 Nov 2020 23:17:30 +0100
+Message-ID: <20201106221743.3271965-16-arnd@kernel.org>
 References: <20201106221743.3271965-1-arnd@kernel.org>
 Mime-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Return-path: <netdev-owner@vger.kernel.org>
+Return-path: <linux-wireless-owner-u79uwXL29TY76Z2rM5mHXA@public.gmane.org>
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1604701109;
-        bh=PWlbZt8wWlmn+LUnXGXuQMunnnfW/Ks/7SA6eyhM52Y=;
+        s=default; t=1604701117;
+        bh=/cpDjwa8dOkb01yFtUHo3+36yqs3G0WmNes6UhKpcxU=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=oMzwQM4OVxtFFKwcgJNzxD9lIMwZ8Ldhj6OoNVtOTOlOh07hOQA+sAtQsWuuZsZMl
-         Wm3NC7wnZyJ4/XOyMbyFrK5kwowihD1Dxi7Y2+QvxXFEfzDs/z2M9LCIo5TP+B0Y1v
-         B/nHoqZZhKRPrZkbQ0sSnUs1ZV1HjFJLUxZOnGDQ=
-In-Reply-To: <20201106221743.3271965-1-arnd@kernel.org>
+        b=TbTQSTmHZ0f7QKkEEQGaFRuwKQy1MxygJVIz6jojqveklKc4+zOzk9u3OWxiBvSSq
+         4Uudn8oPtMe4nsAthvwJKH6FjYr4nluegVUd/PmHn9cNTSzJqu9jX0yIOAAkKX9hQi
+         r2tYL6RbzFOcphYfGdo5Dxv0xP2zBr/GLGZxgr8w=
+In-Reply-To: <20201106221743.3271965-1-arnd-DgEjT+Ai2ygdnm+yROfE0A@public.gmane.org>
 List-ID: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
-To: netdev@vger.kernel.org
-Cc: Arnd Bergmann <arnd@arndb.de>, linux-kernel@vger.kernel.org, linux-wireless@vger.kernel.org, bridge@lists.linux-foundation.org, linux-hams@vger.kernel.org, Jakub Kicinski <kuba@kernel.org>, Christoph Hellwig <hch@lst.de>, Alexander Viro <viro@zeniv.linux.org.uk>, Johannes Berg <johannes@sipsolutions.net>, Andrew Lunn <andrew@lunn.ch>, Heiner Kallweit <hkallweit1@gmail.com>
+To: netdev-u79uwXL29TY76Z2rM5mHXA@public.gmane.org
+Cc: Arnd Bergmann <arnd-r2nGTMty4D4@public.gmane.org>, linux-kernel-u79uwXL29TY76Z2rM5mHXA@public.gmane.org, linux-wireless-u79uwXL29TY76Z2rM5mHXA@public.gmane.org, bridge-cunTk1MwBs9QetFLy7KEm3xJsTq8ys+cHZ5vskTnxNA@public.gmane.org, linux-hams-u79uwXL29TY76Z2rM5mHXA@public.gmane.org, Jakub Kicinski <kuba-DgEjT+Ai2ygdnm+yROfE0A@public.gmane.org>, Christoph Hellwig <hch-jcswGhMUV9g@public.gmane.org>, Alexander Viro <viro-RmSDqhL/yNMiFSDQTTA3OLVCufUGDwFn@public.gmane.org>, Johannes Berg <johannes-cdvu00un1VgdHxzADdlk8Q@public.gmane.org>, Andrew Lunn <andrew-g2DYL2Zd6BY@public.gmane.org>, Heiner Kallweit <hkallweit1-Re5JQEeQqe8AvxtiuMwx3w@public.gmane.org>
 
-From: Arnd Bergmann <arnd@arndb.de>
+From: Arnd Bergmann <arnd-r2nGTMty4D4@public.gmane.org>
 
-Tehuti only implements private ioctl commands, and implements
-them by overriding the ifreq layout, which is broken in
-compat mode.
+The pegasus and rtl8150 drivers use SIOCDEVPRIVATE ioctls
+to access their MII registers, in place of the normal
+commands. This is broken for all compat ioctls today.
 
-Move it to the ndo_siocdevprivate callback in order to fix this.
+Change to ndo_siocdevprivate to fix it.
 
-Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+Signed-off-by: Arnd Bergmann <arnd-r2nGTMty4D4@public.gmane.org>
 ---
- drivers/net/ethernet/tehuti/tehuti.c | 18 +++++-------------
- 1 file changed, 5 insertions(+), 13 deletions(-)
+ drivers/net/usb/pegasus.c | 4 ++--
+ drivers/net/usb/rtl8150.c | 5 +++--
+ 2 files changed, 5 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/net/ethernet/tehuti/tehuti.c b/drivers/net/ethernet/tehuti/tehuti.c
-index b8f4f419173f..e25524081a30 100644
---- a/drivers/net/ethernet/tehuti/tehuti.c
-+++ b/drivers/net/ethernet/tehuti/tehuti.c
-@@ -637,7 +637,8 @@ static int bdx_range_check(struct bdx_priv *priv, u32 offset)
- 		-EINVAL : 0;
- }
+diff --git a/drivers/net/usb/pegasus.c b/drivers/net/usb/pegasus.c
+index 32e1335c94ad..7cc0727eee1a 100644
+--- a/drivers/net/usb/pegasus.c
++++ b/drivers/net/usb/pegasus.c
+@@ -988,7 +988,7 @@ static const struct ethtool_ops ops = {
+ 	.set_link_ksettings = pegasus_set_link_ksettings,
+ };
  
--static int bdx_ioctl_priv(struct net_device *ndev, struct ifreq *ifr, int cmd)
-+static int bdx_siocdevprivate(struct net_device *ndev, struct ifreq *ifr,
-+			      void __user *udata, int cmd)
+-static int pegasus_ioctl(struct net_device *net, struct ifreq *rq, int cmd)
++static int pegasus_siocdevprivate(struct net_device *net, struct ifreq *rq, void __user *udata, int cmd)
  {
- 	struct bdx_priv *priv = netdev_priv(ndev);
- 	u32 data[3];
-@@ -647,7 +648,7 @@ static int bdx_ioctl_priv(struct net_device *ndev, struct ifreq *ifr, int cmd)
+ 	__u16 *data = (__u16 *) &rq->ifr_ifru;
+ 	pegasus_t *pegasus = netdev_priv(net);
+@@ -1246,7 +1246,7 @@ static int pegasus_resume(struct usb_interface *intf)
+ static const struct net_device_ops pegasus_netdev_ops = {
+ 	.ndo_open =			pegasus_open,
+ 	.ndo_stop =			pegasus_close,
+-	.ndo_do_ioctl =			pegasus_ioctl,
++	.ndo_siocdevprivate =		pegasus_siocdevprivate,
+ 	.ndo_start_xmit =		pegasus_start_xmit,
+ 	.ndo_set_rx_mode =		pegasus_set_multicast,
+ 	.ndo_tx_timeout =		pegasus_tx_timeout,
+diff --git a/drivers/net/usb/rtl8150.c b/drivers/net/usb/rtl8150.c
+index bf8a60533f3e..bb37fb24f7d7 100644
+--- a/drivers/net/usb/rtl8150.c
++++ b/drivers/net/usb/rtl8150.c
+@@ -822,7 +822,8 @@ static const struct ethtool_ops ops = {
+ 	.get_link_ksettings = rtl8150_get_link_ksettings,
+ };
  
- 	DBG("jiffies=%ld cmd=%d\n", jiffies, cmd);
- 	if (cmd != SIOCDEVPRIVATE) {
--		error = copy_from_user(data, ifr->ifr_data, sizeof(data));
-+		error = copy_from_user(data, udata, sizeof(data));
- 		if (error) {
- 			pr_err("can't copy from user\n");
- 			RET(-EFAULT);
-@@ -669,7 +670,7 @@ static int bdx_ioctl_priv(struct net_device *ndev, struct ifreq *ifr, int cmd)
- 		data[2] = READ_REG(priv, data[1]);
- 		DBG("read_reg(0x%x)=0x%x (dec %d)\n", data[1], data[2],
- 		    data[2]);
--		error = copy_to_user(ifr->ifr_data, data, sizeof(data));
-+		error = copy_to_user(udata, data, sizeof(data));
- 		if (error)
- 			RET(-EFAULT);
- 		break;
-@@ -688,15 +689,6 @@ static int bdx_ioctl_priv(struct net_device *ndev, struct ifreq *ifr, int cmd)
- 	return 0;
- }
- 
--static int bdx_ioctl(struct net_device *ndev, struct ifreq *ifr, int cmd)
--{
--	ENTER;
--	if (cmd >= SIOCDEVPRIVATE && cmd <= (SIOCDEVPRIVATE + 15))
--		RET(bdx_ioctl_priv(ndev, ifr, cmd));
--	else
--		RET(-EOPNOTSUPP);
--}
--
- /**
-  * __bdx_vlan_rx_vid - private helper for adding/killing VLAN vid
-  * @ndev: network device
-@@ -1860,7 +1852,7 @@ static const struct net_device_ops bdx_netdev_ops = {
- 	.ndo_stop		= bdx_close,
- 	.ndo_start_xmit		= bdx_tx_transmit,
- 	.ndo_validate_addr	= eth_validate_addr,
--	.ndo_do_ioctl		= bdx_ioctl,
-+	.ndo_siocdevprivate	= bdx_siocdevprivate,
- 	.ndo_set_rx_mode	= bdx_setmulti,
- 	.ndo_change_mtu		= bdx_change_mtu,
- 	.ndo_set_mac_address	= bdx_set_mac,
+-static int rtl8150_ioctl(struct net_device *netdev, struct ifreq *rq, int cmd)
++static int rtl8150_siocdevprivate(struct net_device *netdev, struct ifreq *rq,
++				  void __user *udata, int cmd)
+ {
+ 	rtl8150_t *dev = netdev_priv(netdev);
+ 	u16 *data = (u16 *) & rq->ifr_ifru;
+@@ -850,7 +851,7 @@ static int rtl8150_ioctl(struct net_device *netdev, struct ifreq *rq, int cmd)
+ static const struct net_device_ops rtl8150_netdev_ops = {
+ 	.ndo_open		= rtl8150_open,
+ 	.ndo_stop		= rtl8150_close,
+-	.ndo_do_ioctl		= rtl8150_ioctl,
++	.ndo_siocdevprivate	= rtl8150_siocdevprivate,
+ 	.ndo_start_xmit		= rtl8150_start_xmit,
+ 	.ndo_tx_timeout		= rtl8150_tx_timeout,
+ 	.ndo_set_rx_mode	= rtl8150_set_multicast,
 -- 
 2.27.0
 
