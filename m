@@ -1,18 +1,18 @@
 From: Arnd Bergmann <arnd@kernel.org>
-Subject: [RFC net-next 14/28] fddi: use ndo_siocdevprivate
-Date: Fri,  6 Nov 2020 23:17:29 +0100
-Message-ID: <20201106221743.3271965-15-arnd@kernel.org>
+Subject: [RFC net-next 10/28] appletalk: use ndo_siocdevprivate
+Date: Fri,  6 Nov 2020 23:17:25 +0100
+Message-ID: <20201106221743.3271965-11-arnd@kernel.org>
 References: <20201106221743.3271965-1-arnd@kernel.org>
 Mime-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Return-path: <linux-kernel-owner@vger.kernel.org>
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1604701114;
-        bh=AjIS9Fwp+9zwOieexErSSkVefl0S4aqIyIhbjJBo8ns=;
+        s=default; t=1604701103;
+        bh=t9jSt2j/mn9d/2bFgxLTxkax2Wz43GPQL/9eJHs6bJg=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=XbeSOZuoctGdFTTctZYTPX/FZjuaNYEXLdm25I7crH1V5VQZOVT0UApSiH/I5+cwP
-         t7VZxDeNGE7nZoOrCDqGufbZQlQCAgH5NLZroopgIQ8g/RH2lVRa8Mh+NPVk/qh+Eq
-         nczzE6xnkVg8lqpFXIG6tp/IDPcrq7vgbV6Sme/E=
+        b=owEJfBBOcrGQlW714fU4VJ6j6FJ7Hbh4yW9r1cTx17UAATNaC3SLVafvOptINHA7Z
+         EaG/MCPttENxaPec502uc9r6GQTDeceh+9E78jLJgr+LFxYFUEJX4+YgyQEcoZwqtF
+         KW286aLoA7zhoG0sXbbFmf0dXeolD6iGldx9DmnE=
 In-Reply-To: <20201106221743.3271965-1-arnd@kernel.org>
 List-ID: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
@@ -21,76 +21,68 @@ Cc: Arnd Bergmann <arnd@arndb.de>, linux-kernel@vger.kernel.org, linux-wireless@
 
 From: Arnd Bergmann <arnd@arndb.de>
 
-The skfddi driver has a private ioctl and passes the data correctly
-through ifr_data, but the use of a pointer in s_skfp_ioctl is
-broken in compat mode.
+appletalk has three SIOCDEVPRIVATE ioctl commands that are
+broken in compat mode because the passed structure contains
+a pointer.
 
-Change the driver to use ndo_siocdevprivate and disallow calling
-it in compat mode until a conversion handler is added.
+Change it over to ndo_siocdevprivate for consistency and
+make it return an error when called in compat mode. This
+could be fixed if there are still users.
 
 Signed-off-by: Arnd Bergmann <arnd@arndb.de>
 ---
- drivers/net/fddi/skfp/skfddi.c | 18 +++++++++++-------
- 1 file changed, 11 insertions(+), 7 deletions(-)
+ drivers/net/appletalk/ipddp.c | 15 +++++++++------
+ 1 file changed, 9 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/net/fddi/skfp/skfddi.c b/drivers/net/fddi/skfp/skfddi.c
-index 69c29a2ef95d..fe3b1d041142 100644
---- a/drivers/net/fddi/skfp/skfddi.c
-+++ b/drivers/net/fddi/skfp/skfddi.c
-@@ -103,7 +103,8 @@ static struct net_device_stats *skfp_ctl_get_stats(struct net_device *dev);
- static void skfp_ctl_set_multicast_list(struct net_device *dev);
- static void skfp_ctl_set_multicast_list_wo_lock(struct net_device *dev);
- static int skfp_ctl_set_mac_address(struct net_device *dev, void *addr);
--static int skfp_ioctl(struct net_device *dev, struct ifreq *rq, int cmd);
-+static int skfp_siocdevprivate(struct net_device *dev, struct ifreq *rq,
-+			       void __user *data, int cmd);
- static netdev_tx_t skfp_send_pkt(struct sk_buff *skb,
- 				       struct net_device *dev);
- static void send_queued_packets(struct s_smc *smc);
-@@ -164,7 +165,7 @@ static const struct net_device_ops skfp_netdev_ops = {
- 	.ndo_get_stats		= skfp_ctl_get_stats,
- 	.ndo_set_rx_mode	= skfp_ctl_set_multicast_list,
- 	.ndo_set_mac_address	= skfp_ctl_set_mac_address,
--	.ndo_do_ioctl		= skfp_ioctl,
-+	.ndo_siocdevprivate	= skfp_siocdevprivate,
+diff --git a/drivers/net/appletalk/ipddp.c b/drivers/net/appletalk/ipddp.c
+index 51cf5eca9c7f..812b1c878ae7 100644
+--- a/drivers/net/appletalk/ipddp.c
++++ b/drivers/net/appletalk/ipddp.c
+@@ -54,11 +54,11 @@ static netdev_tx_t ipddp_xmit(struct sk_buff *skb,
+ static int ipddp_create(struct ipddp_route *new_rt);
+ static int ipddp_delete(struct ipddp_route *rt);
+ static struct ipddp_route* __ipddp_find_route(struct ipddp_route *rt);
+-static int ipddp_ioctl(struct net_device *dev, struct ifreq *ifr, int cmd);
++static int ipddp_siocdevprivate(struct net_device *dev, struct ifreq *ifr, void __user *data, int cmd);
+ 
+ static const struct net_device_ops ipddp_netdev_ops = {
+ 	.ndo_start_xmit		= ipddp_xmit,
+-	.ndo_do_ioctl   	= ipddp_ioctl,
++	.ndo_siocdevprivate   	= ipddp_siocdevprivate,
+ 	.ndo_set_mac_address 	= eth_mac_addr,
+ 	.ndo_validate_addr	= eth_validate_addr,
  };
+@@ -268,15 +268,18 @@ static struct ipddp_route* __ipddp_find_route(struct ipddp_route *rt)
+         return NULL;
+ }
  
- /*
-@@ -932,9 +933,9 @@ static int skfp_ctl_set_mac_address(struct net_device *dev, void *addr)
- 
- 
- /*
-- * ==============
-- * = skfp_ioctl =
-- * ==============
-+ * =======================
-+ * = skfp_siocdevprivate =
-+ * =======================
-  *   
-  * Overview:
-  *
-@@ -954,16 +955,19 @@ static int skfp_ctl_set_mac_address(struct net_device *dev, void *addr)
-  */
- 
- 
--static int skfp_ioctl(struct net_device *dev, struct ifreq *rq, int cmd)
-+static int skfp_siocdevprivate(struct net_device *dev, struct ifreq *rq, void __user *data, int cmd)
+-static int ipddp_ioctl(struct net_device *dev, struct ifreq *ifr, int cmd)
++static int ipddp_siocdevprivate(struct net_device *dev, struct ifreq *ifr,
++				void __user *data, int cmd)
  {
- 	struct s_smc *smc = netdev_priv(dev);
- 	skfddi_priv *lp = &smc->os;
- 	struct s_skfp_ioctl ioc;
- 	int status = 0;
- 
--	if (copy_from_user(&ioc, rq->ifr_data, sizeof(struct s_skfp_ioctl)))
-+	if (copy_from_user(&ioc, data, sizeof(struct s_skfp_ioctl)))
- 		return -EFAULT;
+-        struct ipddp_route __user *rt = ifr->ifr_data;
+         struct ipddp_route rcp, rcp2, *rp;
  
 +	if (in_compat_syscall())
 +		return -EOPNOTSUPP;
 +
- 	switch (ioc.cmd) {
- 	case SKFP_GET_STATS:	/* Get the driver statistics */
- 		ioc.len = sizeof(lp->MacStat);
+         if(!capable(CAP_NET_ADMIN))
+                 return -EPERM;
+ 
+-	if(copy_from_user(&rcp, rt, sizeof(rcp)))
++	if(copy_from_user(&rcp, data, sizeof(rcp)))
+ 		return -EFAULT;
+ 
+         switch(cmd)
+@@ -296,7 +299,7 @@ static int ipddp_ioctl(struct net_device *dev, struct ifreq *ifr, int cmd)
+ 			spin_unlock_bh(&ipddp_route_lock);
+ 
+ 			if (rp) {
+-				if (copy_to_user(rt, &rcp2,
++				if (copy_to_user(data, &rcp2,
+ 						 sizeof(struct ipddp_route)))
+ 					return -EFAULT;
+ 				return 0;
 -- 
 2.27.0
 
