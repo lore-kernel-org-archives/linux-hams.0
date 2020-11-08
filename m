@@ -1,73 +1,47 @@
-From: Anmol Karn <anmol.karan123@gmail.com>
-Subject: [Linux-kernel-mentees] [PATCH v3 net] rose: Fix Null pointer dereference in rose_send_frame()
-Date: Sun,  8 Nov 2020 00:48:35 +0530
-Message-ID: <20201107191835.5541-1-anmol.karan123@gmail.com>
-References: <20201107082041.GA2675@Thinkpad>
+From: Jakub Kicinski <kuba@kernel.org>
+Subject: Re: [RFC net-next 00/28] ndo_ioctl rework
+Date: Sat, 7 Nov 2020 16:06:12 -0800
+Message-ID: <20201107160612.2909063a@kicinski-fedora-pc1c0hjn.dhcp.thefacebook.com>
+References: <20201106221743.3271965-1-arnd@kernel.org>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Return-path: <linux-hams-owner@vger.kernel.org>
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=afHTW824kBEGWvvhUfZ3PFiZzmUwUob7a4RTUq6L29M=;
-        b=cKqOu8+1Y6K1ZqQHZbaNG0Qf/imNxwYLHrCnaYPfjtg1bFR6iCxQqvYVFeJnGgvSDF
-         SHD1/uk84RbB6/LX2Cp8eq56uVvybq5CatnwZBYF+iFaZv3o8SRlFQPxPEHKAbiZqWx+
-         dgoirOtOQWnq2zloVYRHazX8VP2L3m/5ZoSmzBa1/hOF5+6DFWFPx3k+avt1wRph9uRP
-         bSr4vtdlQmz+I7eQvPVIJhEBjnnzlVYVHXP+iJ0lksy3QfZG80VlXQP/RaIKjc+TlOTG
-         9Ude7XIsBHDrslUOirvX74P/H+YH9but/0OeYzCR1vqo717iHcxiQ/BydfRmQBMCg+GC
-         c/TA==
-In-Reply-To: <20201107082041.GA2675@Thinkpad>
-List-ID: <linux-hams.vger.kernel.org>
+Content-Transfer-Encoding: 7bit
+Return-path: <bridge-bounces@lists.linux-foundation.org>
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+ s=default; t=1604793973;
+ bh=O6lSemrCPL/1daHZSPh63rX8/9WvDq0mEs7nccEtOtk=;
+ h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
+ b=Ker+6/QLi3W6u+GsKg7Tu4sKydMQFZn8WqWJAnJwVTPQOB6UbXj70jUiFOtYOScPy
+ o0Y7/5HTkjv+n7D1hgDv0yQZRqeBj/UfxmWeUH8go+M83ViYE2FPnDnU45oV+YiHiB
+ mPTK0GXfZu4/Tz+CaVcowmANdoFls8MceCUpyqpM=
+In-Reply-To: <20201106221743.3271965-1-arnd@kernel.org>
+List-Id: <linux-hams.vger.kernel.org>
+List-Unsubscribe: <https://lists.linuxfoundation.org/mailman/options/bridge>, 
+ <mailto:bridge-request@lists.linux-foundation.org?subject=unsubscribe>
+List-Archive: <http://lists.linuxfoundation.org/pipermail/bridge/>
+List-Post: <mailto:bridge@lists.linux-foundation.org>
+List-Help: <mailto:bridge-request@lists.linux-foundation.org?subject=help>
+List-Subscribe: <https://lists.linuxfoundation.org/mailman/listinfo/bridge>,
+ <mailto:bridge-request@lists.linux-foundation.org?subject=subscribe>
+Errors-To: bridge-bounces@lists.linux-foundation.org
+Sender: "Bridge" <bridge-bounces@lists.linux-foundation.org>
 Content-Type: text/plain; charset="us-ascii"
-To: ralf@linux-mips.org, davem@davemloft.net, kuba@kernel.org
-Cc: saeed@kernel.org, gregkh@linuxfoundation.org, netdev@vger.kernel.org, linux-kernel@vger.kernel.org, linux-hams@vger.kernel.org, linux-kernel-mentees@lists.linuxfoundation.org, syzkaller-bugs@googlegroups.com, anmol.karan123@gmail.com, syzbot+a1c743815982d9496393@syzkaller.appspotmail.com
+To: Arnd Bergmann <arnd@kernel.org>
+Cc: Andrew Lunn <andrew@lunn.ch>, Arnd Bergmann <arnd@arndb.de>, netdev@vger.kernel.org, bridge@lists.linux-foundation.org, linux-wireless@vger.kernel.org, linux-kernel@vger.kernel.org, Alexander Viro <viro@zeniv.linux.org.uk>, linux-hams@vger.kernel.org, Johannes Berg <johannes@sipsolutions.net>, Christoph Hellwig <hch@lst.de>, Heiner Kallweit <hkallweit1@gmail.com>
 
-rose_send_frame() dereferences `neigh->dev` when called from
-rose_transmit_clear_request(), and the first occurrence of the
-`neigh` is in rose_loopback_timer() as `rose_loopback_neigh`,
-and it is initialized in rose_add_loopback_neigh() as NULL.
-i.e when `rose_loopback_neigh` used in rose_loopback_timer()
-its `->dev` was still NULL and rose_loopback_timer() was calling
-rose_rx_call_request() without checking for NULL.
+On Fri,  6 Nov 2020 23:17:15 +0100 Arnd Bergmann wrote:
+> Any suggestions on how to proceed? I think the ndo_siocdevprivate
+> change is the most interesting here, and I would like to get
+> that merged.
 
-- net/rose/rose_link.c
-This bug seems to get triggered in this line:
+Splitting out / eliminating ioctl pass-thry in general seems like 
+a nice clean up. How did you get the ndo_eth_ioctl patch done, was 
+it manual work?
 
-rose_call = (ax25_address *)neigh->dev->dev_addr;
+> For the wireless drivers, removing the old drivers
+> instead of just the dead code might be an alternative, depending
+> on whether anyone thinks there might still be users.
 
-Fix it by adding NULL checking for `rose_loopback_neigh->dev`
-in rose_loopback_timer().
-
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Reported-by: syzbot+a1c743815982d9496393@syzkaller.appspotmail.com
-Tested-by: syzbot+a1c743815982d9496393@syzkaller.appspotmail.com
-Link: https://syzkaller.appspot.com/bug?id=9d2a7ca8c7f2e4b682c97578dfa3f236258300b3
-Signed-off-by: Anmol Karn <anmol.karan123@gmail.com>
----
-Changes in v3:
-        - Corrected checkpatch warnings and errors (Suggested-by: Saeed Mahameed <saeed@kernel.org>)
-	- Added "Fixes:" tag (Suggested-by: Saeed Mahameed <saeed@kernel.org>)
-Changes in v2:
-	- Added NULL check in rose_loopback_timer() (Suggested-by: Greg KH <gregkh@linuxfoundation.org>)
-
- net/rose/rose_loopback.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-
-diff --git a/net/rose/rose_loopback.c b/net/rose/rose_loopback.c
-index 7b094275ea8b..2c51756ed7bf 100644
---- a/net/rose/rose_loopback.c
-+++ b/net/rose/rose_loopback.c
-@@ -96,7 +96,8 @@ static void rose_loopback_timer(struct timer_list *unused)
- 		}
-
- 		if (frametype == ROSE_CALL_REQUEST) {
--			if ((dev = rose_dev_get(dest)) != NULL) {
-+			dev = rose_dev_get(dest);
-+			if (rose_loopback_neigh->dev && dev) {
- 				if (rose_rx_call_request(skb, dev, rose_loopback_neigh, lci_o) == 0)
- 					kfree_skb(skb);
- 			} else {
--
-2.29.2
-
+Dunno if you want to dig into removal with a series like this, 
+anything using ioctls will be pretty old (with the exception 
+of what you separated into ndo_eth_ioctl). You may get bogged 
+down.
