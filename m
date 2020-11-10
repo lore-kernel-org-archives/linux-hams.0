@@ -1,52 +1,30 @@
-From: Kalle Valo <kvalo@codeaurora.org>
-Subject: Re: [RFC net-next 00/28] ndo_ioctl rework
-Date: Mon, 09 Nov 2020 13:25:48 +0200
-Message-ID: <87imaeg4ar.fsf@codeaurora.org>
-References: <20201106221743.3271965-1-arnd@kernel.org>
-        <20201107160612.2909063a@kicinski-fedora-pc1c0hjn.dhcp.thefacebook.com>
-        <87tuu05c23.fsf@tynnyri.adurom.net>
-        <CAK8P3a3y5WxsibmTzvhv76G+rQ1Zjo_tW0UkXku0VnZdQa-__A@mail.gmail.com>
+From: Jakub Kicinski <kuba@kernel.org>
+Subject: Re: [Linux-kernel-mentees] [PATCH v3 net] rose: Fix Null pointer
+ dereference in rose_send_frame()
+Date: Tue, 10 Nov 2020 09:58:15 -0800
+Message-ID: <20201110095815.41577920@kicinski-fedora-pc1c0hjn.dhcp.thefacebook.com>
+References: <20201107082041.GA2675@Thinkpad>
+        <20201107191835.5541-1-anmol.karan123@gmail.com>
 Mime-Version: 1.0
-Return-path: <netdev-owner@vger.kernel.org>
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1604921155; h=Content-Type: MIME-Version: Message-ID:
- In-Reply-To: Date: References: Subject: Cc: To: From: Sender;
- bh=LXllegkU9Hqrn8ABy4ZLKOXWg3z4jJFDK0NqabfEc9c=; b=nhaLo8Ony/WzbycffTPQu+ZvC6HYIaFYLtGDgnFZvRSYLxInVJziZvK89V1vjggJgqfM8MSf
- snDS9lW/1fZRMQBm8sqsJen+rn6e3uUtUN32DXBo+b4NJ3gKlYrCOLUsa5jfY/AQ3cXBcY/c
- qZtbnibyPyJIdC0EcCGwDfKhCzU=
-Sender: kvalo=codeaurora.org@mg.codeaurora.org
-In-Reply-To: <CAK8P3a3y5WxsibmTzvhv76G+rQ1Zjo_tW0UkXku0VnZdQa-__A@mail.gmail.com>
-        (Arnd Bergmann's message of "Sun, 8 Nov 2020 12:42:49 +0100")
+Content-Transfer-Encoding: 7bit
+Return-path: <linux-hams-owner@vger.kernel.org>
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=default; t=1605031097;
+        bh=RIQtxy/Q98sCLVqwPHTqyM87zYGU1ecCP3Nkry/4KJE=;
+        h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
+        b=qWbeDanDQ8LTacruEGA8MseDR7iXxqZAsBx00l+C3CFBxnBrM8oMkwL5NS+Jaytom
+         CELhIfkUkCHybYESX8bvfAsuraJ31VxvKZ7qYfQ25HYnV63ji4eoSk+N2r6ARt1qxQ
+         5hpOt3DIMPY0I8rXOeghBkcE358WN5gOnUWUzBGI=
+In-Reply-To: <20201107191835.5541-1-anmol.karan123@gmail.com>
 List-ID: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-To: Arnd Bergmann <arnd@kernel.org>
-Cc: Jakub Kicinski <kuba@kernel.org>, Networking <netdev@vger.kernel.org>, Arnd Bergmann <arnd@arndb.de>, "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>, linux-wireless <linux-wireless@vger.kernel.org>, bridge@lists.linux-foundation.org, linux-hams@vger.kernel.org, Christoph Hellwig <hch@lst.de>, Alexander Viro <viro@zeniv.linux.org.uk>, Johannes Berg <johannes@sipsolutions.net>, Andrew Lunn <andrew@lunn.ch>, Heiner Kallweit <hkallweit1@gmail.com>
+To: Anmol Karn <anmol.karan123@gmail.com>
+Cc: ralf@linux-mips.org, davem@davemloft.net, saeed@kernel.org, gregkh@linuxfoundation.org, netdev@vger.kernel.org, linux-kernel@vger.kernel.org, linux-hams@vger.kernel.org, linux-kernel-mentees@lists.linuxfoundation.org, syzkaller-bugs@googlegroups.com, syzbot+a1c743815982d9496393@syzkaller.appspotmail.com
 
-Arnd Bergmann <arnd@kernel.org> writes:
+On Sun,  8 Nov 2020 00:48:35 +0530 Anmol Karn wrote:
+> +			dev = rose_dev_get(dest);
 
-> On Sun, Nov 8, 2020 at 12:21 PM Kalle Valo <kvalo@codeaurora.org> wrote:
->> Jakub Kicinski <kuba@kernel.org> writes:
->>
->> So I don't know what to do. Should we try adding a warning like below? :)
->>
->>   "This ancient driver will be removed from the kernel in 2022, but if
->>    it still works send report to <...@...> to avoid the removal."
->>
->> How do other subsystems handle ancient drivers?
->
-> A good way to get everyone's attention would be to collect as many
-> drivers as possible that are almost certainly unused and move them to
-> drivers/staging/ with a warning like the above, as I just did for
-> drivers/wimax. That would make it to the usual news outlets
-> and lead to the remaining users (if any) noticing it so they can then
-> ask for the drivers to be moved back -- or decide it's time to let go
-> if the hardware can easily be replaced.
+this calls dev_hold internally, you never release that reference in
+case ..neigh->dev is NULL
 
-I like that. I think we first should make a list of drivers which we
-suspect are either unused or not working anymore.
-
--- 
-https://patchwork.kernel.org/project/linux-wireless/list/
-
-https://wireless.wiki.kernel.org/en/developers/documentation/submittingpatches
+> +			if (rose_loopback_neigh->dev && dev) {
