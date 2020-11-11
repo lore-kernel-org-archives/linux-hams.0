@@ -1,47 +1,78 @@
 From: Anmol Karn <anmol.karan123@gmail.com>
-Subject: Re: [Linux-kernel-mentees] [PATCH v3 net] rose: Fix Null pointer
- dereference in rose_send_frame()
-Date: Wed, 11 Nov 2020 01:15:18 +0530
-Message-ID: <20201110194518.GA97719@Thinkpad>
-References: <20201107082041.GA2675@Thinkpad>
- <20201107191835.5541-1-anmol.karan123@gmail.com>
- <20201110095815.41577920@kicinski-fedora-pc1c0hjn.dhcp.thefacebook.com>
+Subject: [Linux-kernel-mentees] [PATCH v4 net] rose: Fix Null pointer dereference in rose_send_frame()
+Date: Wed, 11 Nov 2020 22:29:54 +0530
+Message-ID: <20201111165954.14743-1-anmol.karan123@gmail.com>
+References: <20201110194518.GA97719@Thinkpad>
 Mime-Version: 1.0
+Content-Transfer-Encoding: 8bit
 Return-path: <linux-hams-owner@vger.kernel.org>
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=FlTBekxLH9k5lDusEIqJe96gy2kgeT7w1mYQIC7teW8=;
-        b=jxd//I0NFIFChmNjGPdP8n7pBMNdp35EWhyQUGVNOEFkxBmgDczY8aKnJ72aGscLiK
-         xIzyZsPlCXjMasMkWXUCKiHfHwnmx2DzZiTZm5bqBDwwcImUAC/JktCOJlZDjztgEONa
-         qtbH+61o+GqAoP48KdwdB/7mZKBkLEnlk9BjOaPasX7pLtcQ6Q07uAJxP5kDH8ge4L2c
-         GTEv8im5JOuzgIFTMM7wYc6kE0/hwOYNhJ1wCG6Yt3Gn4bx48gRzBwNUNvxN1rU7b+xR
-         Qdul0H+cR6XHCU7UAC0ShUPDT7BQuYEt/0E0UyM3aobauUNUVwjS48oRiTk9ZioZ3voB
-         7yxA==
-Content-Disposition: inline
-In-Reply-To: <20201110095815.41577920@kicinski-fedora-pc1c0hjn.dhcp.thefacebook.com>
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=c94lztZhO2eT008D4pkLhU43B72yvq0WPJWvKsO0hew=;
+        b=MOh286pQVrJTTVD8HcoPhcqT8q2yYoTL3bit4sDU9Mx5LKGgm5C8Ug8g0J6cNTUac2
+         tsuqG1uOT1cVJaLGmgl9TCVBn9lAkM/KOgQS3/MGhJg7aCfJ5Q1kicPjfxOtMzP73kOy
+         C69ar9hvwULSb6x6X2ojXTxGVhtRrXKoA4jCbGcFId4odlcU0lSSjOtUBQIM2VUanjlL
+         FtkxvSMiY5DThI3jgfnZaVl7jd/sJnnfnsz6z9PGheLKZJse9vdUc/uJAopZ2VaBYjk5
+         +Ni8MPJ/tXGN3WLucmZRebzS2Q6ifsk3YQVvbd/lG7mZXTm7MOrg1bQOp1qG6UZ/WLlp
+         ltbw==
+In-Reply-To: <20201110194518.GA97719@Thinkpad>
 List-ID: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-To: Jakub Kicinski <kuba@kernel.org>
-Cc: ralf@linux-mips.org, davem@davemloft.net, saeed@kernel.org, gregkh@linuxfoundation.org, netdev@vger.kernel.org, linux-kernel@vger.kernel.org, linux-hams@vger.kernel.org, linux-kernel-mentees@lists.linuxfoundation.org, syzkaller-bugs@googlegroups.com, syzbot+a1c743815982d9496393@syzkaller.appspotmail.com
+To: ralf@linux-mips.org, davem@davemloft.net, kuba@kernel.org
+Cc: saeed@kernel.org, gregkh@linuxfoundation.org, netdev@vger.kernel.org, linux-kernel@vger.kernel.org, linux-hams@vger.kernel.org, linux-kernel-mentees@lists.linuxfoundation.org, syzkaller-bugs@googlegroups.com, anmol.karan123@gmail.com, syzbot+a1c743815982d9496393@syzkaller.appspotmail.com
 
-Hello Sir,
+rose_send_frame() dereferences `neigh->dev` when called from
+rose_transmit_clear_request(), and the first occurrence of the
+`neigh` is in rose_loopback_timer() as `rose_loopback_neigh`,
+and it is initialized in rose_add_loopback_neigh() as NULL.
+i.e when `rose_loopback_neigh` used in rose_loopback_timer()
+its `->dev` was still NULL and rose_loopback_timer() was calling
+rose_rx_call_request() without checking for NULL.
 
-On Tue, Nov 10, 2020 at 09:58:15AM -0800, Jakub Kicinski wrote:
-> On Sun,  8 Nov 2020 00:48:35 +0530 Anmol Karn wrote:
-> > +			dev = rose_dev_get(dest);
-> 
-> this calls dev_hold internally, you never release that reference in
-> case ..neigh->dev is NULL
-> 
-> > +			if (rose_loopback_neigh->dev && dev) {
+- net/rose/rose_link.c
+This bug seems to get triggered in this line:
 
-Ah, I missed to `dev_put()` the `dev` after checking for, if neigh->dev is NULL,
-I will fix it soon and send another version.
+rose_call = (ax25_address *)neigh->dev->dev_addr;
 
-Thank you for review.
+Fix it by adding NULL checking for `rose_loopback_neigh->dev`
+in rose_loopback_timer().
 
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Reported-by: syzbot+a1c743815982d9496393@syzkaller.appspotmail.com
+Tested-by: syzbot+a1c743815982d9496393@syzkaller.appspotmail.com
+Link: https://syzkaller.appspot.com/bug?id=9d2a7ca8c7f2e4b682c97578dfa3f236258300b3
+Signed-off-by: Anmol Karn <anmol.karan123@gmail.com>
+---
+Changes in v4:
+	- Free `dev`(on dev_hold()), when neigh->dev is NULL. (Suggested-by: Jakub Kicinski <kuba@kernel.org>)
+Changes in v3:
+        - Corrected checkpatch warnings and errors (Suggested-by: Saeed Mahameed <saeed@kernel.org>)
+        - Added "Fixes:" tag (Suggested-by: Saeed Mahameed <saeed@kernel.org>)
+Changes in v2:
+        - Added NULL check in rose_loopback_timer() (Suggested-by: Greg KH <gregkh@linuxfoundation.org>)
 
-Anmol
+ net/rose/rose_loopback.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
+
+diff --git a/net/rose/rose_loopback.c b/net/rose/rose_loopback.c
+index 7b094275ea8b..6a71b6947d92 100644
+--- a/net/rose/rose_loopback.c
++++ b/net/rose/rose_loopback.c
+@@ -96,10 +96,12 @@ static void rose_loopback_timer(struct timer_list *unused)
+ 		}
+
+ 		if (frametype == ROSE_CALL_REQUEST) {
+-			if ((dev = rose_dev_get(dest)) != NULL) {
++			dev = rose_dev_get(dest);
++			if (rose_loopback_neigh->dev && dev) {
+ 				if (rose_rx_call_request(skb, dev, rose_loopback_neigh, lci_o) == 0)
+ 					kfree_skb(skb);
+ 			} else {
++				dev_put(dev);
+ 				kfree_skb(skb);
+ 			}
+ 		} else {
+--
+2.29.2
