@@ -1,48 +1,47 @@
-From: Jakub Kicinski <kuba@kernel.org>
-Subject: Re: [Linux-kernel-mentees] [PATCH v5 net] rose: Fix Null pointer
- dereference in rose_send_frame()
-Date: Fri, 20 Nov 2020 10:06:12 -0800
-Message-ID: <20201120100612.62d9d770@kicinski-fedora-pc1c0hjn.dhcp.thefacebook.com>
-References: <20201115114448.GA40574@Thinkpad>
-        <20201119191043.28813-1-anmol.karan123@gmail.com>
+From: "Gustavo A. R. Silva" <gustavoars@kernel.org>
+Subject: [PATCH 105/141] net: ax25: Fix fall-through warnings for Clang
+Date: Fri, 20 Nov 2020 12:37:53 -0600
+Message-ID: <37c8748f80572a08f33e4ce354f93d61ddfd175b.1605896060.git.gustavoars@kernel.org>
+References: <cover.1605896059.git.gustavoars@kernel.org>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1605895574;
-        bh=5QsJhiNlDYF6e5+XXwRtT9R/LRbCv501uDAH0fgcN0Q=;
-        h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
-        b=KYlbryWpufKcNB1iYssy8CcD1+/3Gqqh2EdgFmZ9rTm6f4AXmNUy1gjQvi6APx9PN
-         r1AmcaO7XP5Y1fOxjaLen/tWVjpFkEzsN+vCD9HbgGQJ5gIbMizYt3/SxLds3QVXjh
-         6sY9n3QbkPvlEyGj3Ok3Z22jd+4VvnGPpHqfme3w=
-In-Reply-To: <20201119191043.28813-1-anmol.karan123@gmail.com>
+        s=default; t=1605897468;
+        bh=oHCWpgfauurcAwVAR+BNJveAfh0IeEwBSn1ChD9wm2k=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=Uww9x3KPqN3XenRjf4rquTgz5YeYud/BQ2CKJ9L5aLyPXUM2DHjac0A03LVUU3uNH
+         luFA06KSPfcGk6EL+o7YSCRXnwfLckX8Grg5rF823Z1GQsOiNv2U7YKKeT5w2jXvPd
+         lDcd2CdsqJ665WwVneAJJb5s57wMy+Vt/JSW7RLY=
+Content-Disposition: inline
+In-Reply-To: <cover.1605896059.git.gustavoars@kernel.org>
 List-ID: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
-To: Anmol Karn <anmol.karan123@gmail.com>
-Cc: ralf@linux-mips.org, davem@davemloft.net, saeed@kernel.org, gregkh@linuxfoundation.org, netdev@vger.kernel.org, linux-kernel@vger.kernel.org, linux-hams@vger.kernel.org, linux-kernel-mentees@lists.linuxfoundation.org, syzkaller-bugs@googlegroups.com, syzbot+a1c743815982d9496393@syzkaller.appspotmail.com
+Content-Transfer-Encoding: 7bit
+To: Joerg Reuter <jreuter@yaina.de>, Ralf Baechle <ralf@linux-mips.org>, "David S. Miller" <davem@davemloft.net>, Jakub Kicinski <kuba@kernel.org>
+Cc: linux-hams@vger.kernel.org, netdev@vger.kernel.org, linux-kernel@vger.kernel.org, linux-hardening@vger.kernel.org, "Gustavo A. R. Silva" <gustavoars@kernel.org>
 
-On Fri, 20 Nov 2020 00:40:43 +0530 Anmol Karn wrote:
-> rose_send_frame() dereferences `neigh->dev` when called from
-> rose_transmit_clear_request(), and the first occurrence of the
-> `neigh` is in rose_loopback_timer() as `rose_loopback_neigh`,
-> and it is initialized in rose_add_loopback_neigh() as NULL.
-> i.e when `rose_loopback_neigh` used in rose_loopback_timer()
-> its `->dev` was still NULL and rose_loopback_timer() was calling
-> rose_rx_call_request() without checking for NULL.
-> 
-> - net/rose/rose_link.c
-> This bug seems to get triggered in this line:
-> 
-> rose_call = (ax25_address *)neigh->dev->dev_addr;
-> 
-> Fix it by adding NULL checking for `rose_loopback_neigh->dev`
-> in rose_loopback_timer().
-> 
-> Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-> Suggested-by: Jakub Kicinski <kuba@kernel.org>
-> Reported-by: syzbot+a1c743815982d9496393@syzkaller.appspotmail.com
-> Tested-by: syzbot+a1c743815982d9496393@syzkaller.appspotmail.com
-> Link: https://syzkaller.appspot.com/bug?id=9d2a7ca8c7f2e4b682c97578dfa3f236258300b3
-> Signed-off-by: Anmol Karn <anmol.karan123@gmail.com>
+In preparation to enable -Wimplicit-fallthrough for Clang, fix a warning
+by explicitly adding a break statement instead of letting the code fall
+through to the next case.
 
-Applied to net, thanks!
+Link: https://github.com/KSPP/linux/issues/115
+Signed-off-by: Gustavo A. R. Silva <gustavoars@kernel.org>
+---
+ net/ax25/af_ax25.c | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/net/ax25/af_ax25.c b/net/ax25/af_ax25.c
+index 269ee89d2c2b..2631efc6e359 100644
+--- a/net/ax25/af_ax25.c
++++ b/net/ax25/af_ax25.c
+@@ -850,6 +850,7 @@ static int ax25_create(struct net *net, struct socket *sock, int protocol,
+ 		case AX25_P_ROSE:
+ 			if (ax25_protocol_is_registered(AX25_P_ROSE))
+ 				return -ESOCKTNOSUPPORT;
++			break;
+ #endif
+ 		default:
+ 			break;
+-- 
+2.27.0
+
