@@ -1,19 +1,19 @@
 From: Lukas Bulwahn <lukas.bulwahn@gmail.com>
-Subject: [PATCH 2/5] MAINTAINERS: remove linux-mips.org references
-Date: Mon, 22 Feb 2021 17:19:02 +0100
-Message-ID: <20210222161905.1153-3-lukas.bulwahn@gmail.com>
+Subject: [PATCH 3/5] arch: mips: update references to current linux-mips list
+Date: Mon, 22 Feb 2021 17:19:03 +0100
+Message-ID: <20210222161905.1153-4-lukas.bulwahn@gmail.com>
 References: <20210222161905.1153-1-lukas.bulwahn@gmail.com>
-Return-path: <linux-hams-owner@vger.kernel.org>
+Return-path: <kernel-janitors-owner@vger.kernel.org>
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=T9Pi1/r4MEa5QWRWvsI+CTI8gMfSCUto8OFZEhxrY/g=;
-        b=CnnrMRe5GEPk3C579NMVrKv6wO+D/Qt+cOPZXOa24KjjapocTsGMKpuRs/cu/Ntl7C
-         eHVg7p8SmvTQhfqJGc4aI9Q2zvce3hW5TzGdvw05gMo7aOin8e1Yhowg8J1qU+avfula
-         AGQyFsf1U7cG/UUiTh5h0fY/I/mnrZ6WVNLTzGjDZVpdXmYrWN2x5xoXwV0HoTHzkwUn
-         wfwDAxlfrWmdeyv3OLK7qadbB0cqSXFNUl9nDO5ZVZK562V4ynlpcX462dpYfs8BVOf1
-         0/kvJrPkpLt9vTC8N2WeJvqB0sJQNRHttfYtMkInXZsGS7ZnMpBNFEmwDddQvxlidtzD
-         B0Ig==
+        bh=MfK8XHAdcFYl+ELW5xxKLzANic1ppzZqbz8B/li+uL0=;
+        b=JHfGm8yVHwxZPf1iUJfWCfKokEIq00zIu1r3zSKaL8r+o0ieJOHCAX1NqngoexxyPT
+         uilSl8cC3AJ28SpXBDlsveYM46RxtAgtt8Xkv2Cfu4xiMLXGm24Ik5M5ADXLbtGWhC0q
+         snRCaMCtVoVOgtem5i2AgQAkL2nyP5BB5GHBNmVYCNgk3UhtK3uOUqFIvMDhpPfQF/FM
+         IRpPlhAqgPRx6TxwyyhqcS3+OLNwmLbvqhV3EIJ0EJJVJvFz+LEvexK7MZK8GVTFQywL
+         wzTlc5O1JkTOnGCeLXsxiUhz0/XsWz1TE2KeED3QN81NZffESJIUMSzQUdPng+GO93Y0
+         BLhw==
 In-Reply-To: <20210222161905.1153-1-lukas.bulwahn@gmail.com>
 List-ID: <linux-hams.vger.kernel.org>
 MIME-Version: 1.0
@@ -22,50 +22,55 @@ Content-Transfer-Encoding: 7bit
 To: Thomas Bogendoerfer <tsbogend@alpha.franken.de>, linux-mips@vger.kernel.org
 Cc: "Maciej W . Rozycki" <macro@orcam.me.uk>, Tiezhu Yang <yangtiezhu@loongson.cn>, Willy Tarreau <w@1wt.eu>, linux-edac@vger.kernel.org, linux-hams@vger.kernel.org, kernel-janitors@vger.kernel.org, linux-kernel@vger.kernel.org, Lukas Bulwahn <lukas.bulwahn@gmail.com>
 
-The domain lookup for linux-mips.org fails for quite some time now. Hence,
-webpages, the patchwork instance and Ralf Baechle's email there is not
-reachable anymore.
-
-Remove all references of webpages from linux-mips.org in MAINTAINERS, and
-refer to the kernel.org's linux-mips patchwork instance instead.
+The linux-mips mailing list now lives at kernel.org. Update all references
+in the kernel tree.
 
 Signed-off-by: Lukas Bulwahn <lukas.bulwahn@gmail.com>
 ---
- MAINTAINERS | 5 +----
- 1 file changed, 1 insertion(+), 4 deletions(-)
+ arch/mips/kernel/r4k-bugs64.c | 2 +-
+ arch/mips/lib/iomap-pci.c     | 2 +-
+ arch/mips/sgi-ip32/ip32-irq.c | 2 +-
+ 3 files changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/MAINTAINERS b/MAINTAINERS
-index e949e561867d..703a50183301 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -4980,7 +4980,6 @@ DECSTATION PLATFORM SUPPORT
- M:	"Maciej W. Rozycki" <macro@orcam.me.uk>
- L:	linux-mips@vger.kernel.org
- S:	Maintained
--W:	http://www.linux-mips.org/wiki/DECstation
- F:	arch/mips/dec/
- F:	arch/mips/include/asm/dec/
- F:	arch/mips/include/asm/mach-dec/
-@@ -11932,7 +11931,6 @@ MIPS
- M:	Thomas Bogendoerfer <tsbogend@alpha.franken.de>
- L:	linux-mips@vger.kernel.org
- S:	Maintained
--W:	http://www.linux-mips.org/
- Q:	https://patchwork.kernel.org/project/linux-mips/list/
- T:	git git://git.kernel.org/pub/scm/linux/kernel/git/mips/linux.git
- F:	Documentation/devicetree/bindings/mips/
-@@ -18248,10 +18246,9 @@ F:	arch/um/os-Linux/drivers/
+diff --git a/arch/mips/kernel/r4k-bugs64.c b/arch/mips/kernel/r4k-bugs64.c
+index 1ff19f1ea5ca..35729c9e6cfa 100644
+--- a/arch/mips/kernel/r4k-bugs64.c
++++ b/arch/mips/kernel/r4k-bugs64.c
+@@ -18,7 +18,7 @@
+ static char bug64hit[] __initdata =
+ 	"reliable operation impossible!\n%s";
+ static char nowar[] __initdata =
+-	"Please report to <linux-mips@linux-mips.org>.";
++	"Please report to <linux-mips@vger.kernel.org>.";
+ static char r4kwar[] __initdata =
+ 	"Enable CPU_R4000_WORKAROUNDS to rectify.";
+ static char daddiwar[] __initdata =
+diff --git a/arch/mips/lib/iomap-pci.c b/arch/mips/lib/iomap-pci.c
+index 210f5a95ecb1..a9cb28813f0b 100644
+--- a/arch/mips/lib/iomap-pci.c
++++ b/arch/mips/lib/iomap-pci.c
+@@ -32,7 +32,7 @@ void __iomem *__pci_ioport_map(struct pci_dev *dev,
+ 		sprintf(name, "%04x:%02x", pci_domain_nr(bus), bus->number);
+ 		printk(KERN_WARNING "io_map_base of root PCI bus %s unset.  "
+ 		       "Trying to continue but you better\nfix this issue or "
+-		       "report it to linux-mips@linux-mips.org or your "
++		       "report it to linux-mips@vger.kernel.org or your "
+ 		       "vendor.\n", name);
+ #ifdef CONFIG_PCI_DOMAINS
+ 		panic("To avoid data corruption io_map_base MUST be set with "
+diff --git a/arch/mips/sgi-ip32/ip32-irq.c b/arch/mips/sgi-ip32/ip32-irq.c
+index 1bbd5bfb5458..e21ea1de05e3 100644
+--- a/arch/mips/sgi-ip32/ip32-irq.c
++++ b/arch/mips/sgi-ip32/ip32-irq.c
+@@ -343,7 +343,7 @@ static void ip32_unknown_interrupt(void)
+ 	printk("Register dump:\n");
+ 	show_regs(get_irq_regs());
  
- TURBOCHANNEL SUBSYSTEM
- M:	"Maciej W. Rozycki" <macro@orcam.me.uk>
--M:	Ralf Baechle <ralf@linux-mips.org>
- L:	linux-mips@vger.kernel.org
- S:	Maintained
--Q:	http://patchwork.linux-mips.org/project/linux-mips/list/
-+Q:	https://patchwork.kernel.org/project/linux-mips/list/
- F:	drivers/tc/
- F:	include/linux/tc.h
- 
+-	printk("Please mail this report to linux-mips@linux-mips.org\n");
++	printk("Please mail this report to linux-mips@vger.kernel.org\n");
+ 	printk("Spinning...");
+ 	while(1) ;
+ }
 -- 
 2.17.1
 
