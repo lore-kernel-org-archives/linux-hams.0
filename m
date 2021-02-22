@@ -1,19 +1,19 @@
 From: Lukas Bulwahn <lukas.bulwahn@gmail.com>
-Subject: [PATCH 3/5] arch: mips: update references to current linux-mips list
-Date: Mon, 22 Feb 2021 17:19:03 +0100
-Message-ID: <20210222161905.1153-4-lukas.bulwahn@gmail.com>
+Subject: [PATCH 4/5] arch: mips: remove dead references
+Date: Mon, 22 Feb 2021 17:19:04 +0100
+Message-ID: <20210222161905.1153-5-lukas.bulwahn@gmail.com>
 References: <20210222161905.1153-1-lukas.bulwahn@gmail.com>
 Return-path: <kernel-janitors-owner@vger.kernel.org>
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=MfK8XHAdcFYl+ELW5xxKLzANic1ppzZqbz8B/li+uL0=;
-        b=JHfGm8yVHwxZPf1iUJfWCfKokEIq00zIu1r3zSKaL8r+o0ieJOHCAX1NqngoexxyPT
-         uilSl8cC3AJ28SpXBDlsveYM46RxtAgtt8Xkv2Cfu4xiMLXGm24Ik5M5ADXLbtGWhC0q
-         snRCaMCtVoVOgtem5i2AgQAkL2nyP5BB5GHBNmVYCNgk3UhtK3uOUqFIvMDhpPfQF/FM
-         IRpPlhAqgPRx6TxwyyhqcS3+OLNwmLbvqhV3EIJ0EJJVJvFz+LEvexK7MZK8GVTFQywL
-         wzTlc5O1JkTOnGCeLXsxiUhz0/XsWz1TE2KeED3QN81NZffESJIUMSzQUdPng+GO93Y0
-         BLhw==
+        bh=DgXlL6x8IfhNkYD6R6bR2QbGGSZXQTy+PSFjbRT7U3M=;
+        b=gDQivG7bID32e/1IJ8bRg+bwJHKpg9clkyKdifX0+5PuZsqxb70qWUuw3jlzyDoC44
+         vIkvdS7ZzTtHQXkWzgoUtEaADChPUTz/gv+dd01M5dCNBsHMCqhg6Av4viSY/dmJa8GH
+         iRjYA/OuNgI4Fc0DNQ8lw4vzYgQEUeMGzJLhrjy6fgI3NdVQqsZbmT2p5TLxUI8yCT2X
+         gwhswFmVZNRk/3ek8xhVKJtXVO/E/hMuMJfM5181Ouhe7fqAG1zYZZhiPoP3mi5GdO4B
+         Hgu4fx66TQpWs6hcELGjYj60uoVJZy65Lb3zpZze03UmpVHW+5ve2olXB4cb3HtjSjEy
+         A3mw==
 In-Reply-To: <20210222161905.1153-1-lukas.bulwahn@gmail.com>
 List-ID: <linux-hams.vger.kernel.org>
 MIME-Version: 1.0
@@ -22,55 +22,97 @@ Content-Transfer-Encoding: 7bit
 To: Thomas Bogendoerfer <tsbogend@alpha.franken.de>, linux-mips@vger.kernel.org
 Cc: "Maciej W . Rozycki" <macro@orcam.me.uk>, Tiezhu Yang <yangtiezhu@loongson.cn>, Willy Tarreau <w@1wt.eu>, linux-edac@vger.kernel.org, linux-hams@vger.kernel.org, kernel-janitors@vger.kernel.org, linux-kernel@vger.kernel.org, Lukas Bulwahn <lukas.bulwahn@gmail.com>
 
-The linux-mips mailing list now lives at kernel.org. Update all references
-in the kernel tree.
+The domain lookup for linux-mips.org fails for quite some time now.
+Further, the two links:
+
+  http://decstation.unix-ag.org/
+  http://www.computer-refuge.org/classiccmp/ftp.digital.com/pub/DEC/TriAdd/
+
+refer to old webpages or contain no further technical information.
+
+Remove all those dead references.
 
 Signed-off-by: Lukas Bulwahn <lukas.bulwahn@gmail.com>
 ---
- arch/mips/kernel/r4k-bugs64.c | 2 +-
- arch/mips/lib/iomap-pci.c     | 2 +-
- arch/mips/sgi-ip32/ip32-irq.c | 2 +-
- 3 files changed, 3 insertions(+), 3 deletions(-)
+ arch/mips/Kconfig             |  8 +-------
+ arch/mips/jazz/Kconfig        | 12 +++---------
+ tools/include/nolibc/nolibc.h |  3 +--
+ 3 files changed, 5 insertions(+), 18 deletions(-)
 
-diff --git a/arch/mips/kernel/r4k-bugs64.c b/arch/mips/kernel/r4k-bugs64.c
-index 1ff19f1ea5ca..35729c9e6cfa 100644
---- a/arch/mips/kernel/r4k-bugs64.c
-+++ b/arch/mips/kernel/r4k-bugs64.c
-@@ -18,7 +18,7 @@
- static char bug64hit[] __initdata =
- 	"reliable operation impossible!\n%s";
- static char nowar[] __initdata =
--	"Please report to <linux-mips@linux-mips.org>.";
-+	"Please report to <linux-mips@vger.kernel.org>.";
- static char r4kwar[] __initdata =
- 	"Enable CPU_R4000_WORKAROUNDS to rectify.";
- static char daddiwar[] __initdata =
-diff --git a/arch/mips/lib/iomap-pci.c b/arch/mips/lib/iomap-pci.c
-index 210f5a95ecb1..a9cb28813f0b 100644
---- a/arch/mips/lib/iomap-pci.c
-+++ b/arch/mips/lib/iomap-pci.c
-@@ -32,7 +32,7 @@ void __iomem *__pci_ioport_map(struct pci_dev *dev,
- 		sprintf(name, "%04x:%02x", pci_domain_nr(bus), bus->number);
- 		printk(KERN_WARNING "io_map_base of root PCI bus %s unset.  "
- 		       "Trying to continue but you better\nfix this issue or "
--		       "report it to linux-mips@linux-mips.org or your "
-+		       "report it to linux-mips@vger.kernel.org or your "
- 		       "vendor.\n", name);
- #ifdef CONFIG_PCI_DOMAINS
- 		panic("To avoid data corruption io_map_base MUST be set with "
-diff --git a/arch/mips/sgi-ip32/ip32-irq.c b/arch/mips/sgi-ip32/ip32-irq.c
-index 1bbd5bfb5458..e21ea1de05e3 100644
---- a/arch/mips/sgi-ip32/ip32-irq.c
-+++ b/arch/mips/sgi-ip32/ip32-irq.c
-@@ -343,7 +343,7 @@ static void ip32_unknown_interrupt(void)
- 	printk("Register dump:\n");
- 	show_regs(get_irq_regs());
+diff --git a/arch/mips/Kconfig b/arch/mips/Kconfig
+index d89efba3d8a4..8cb1e2be5999 100644
+--- a/arch/mips/Kconfig
++++ b/arch/mips/Kconfig
+@@ -375,9 +375,7 @@ config MACH_DECSTATION
+ 	select SYS_SUPPORTS_1024HZ
+ 	select MIPS_L1_CACHE_SHIFT_4
+ 	help
+-	  This enables support for DEC's MIPS based workstations.  For details
+-	  see the Linux/MIPS FAQ on <http://www.linux-mips.org/> and the
+-	  DECstation porting pages on <http://decstation.unix-ag.org/>.
++	  This enables support for DEC's MIPS based workstations.
  
--	printk("Please mail this report to linux-mips@linux-mips.org\n");
-+	printk("Please mail this report to linux-mips@vger.kernel.org\n");
- 	printk("Spinning...");
- 	while(1) ;
- }
+ 	  If you have one of the following DECstation Models you definitely
+ 	  want to choose R4xx0 for the CPU Type:
+@@ -3263,10 +3261,6 @@ config TC
+ 	  processors.  TURBOchannel programming specifications are available
+ 	  at:
+ 	  <ftp://ftp.hp.com/pub/alphaserver/archive/triadd/>
+-	  and:
+-	  <http://www.computer-refuge.org/classiccmp/ftp.digital.com/pub/DEC/TriAdd/>
+-	  Linux driver support status is documented at:
+-	  <http://www.linux-mips.org/wiki/DECstation>
+ 
+ config MMU
+ 	bool
+diff --git a/arch/mips/jazz/Kconfig b/arch/mips/jazz/Kconfig
+index 42932ca98db9..162d11670c75 100644
+--- a/arch/mips/jazz/Kconfig
++++ b/arch/mips/jazz/Kconfig
+@@ -5,9 +5,7 @@ config ACER_PICA_61
+ 	select DMA_NONCOHERENT
+ 	help
+ 	  This is a machine with a R4400 133/150 MHz CPU. To compile a Linux
+-	  kernel that runs on these, say Y here. For details about Linux on
+-	  the MIPS architecture, check out the Linux/MIPS FAQ on the WWW at
+-	  <http://www.linux-mips.org/>.
++	  kernel that runs on these, say Y here.
+ 
+ config MIPS_MAGNUM_4000
+ 	bool "Support for MIPS Magnum 4000"
+@@ -16,9 +14,7 @@ config MIPS_MAGNUM_4000
+ 	select SYS_SUPPORTS_BIG_ENDIAN
+ 	help
+ 	  This is a machine with a R4000 100 MHz CPU. To compile a Linux
+-	  kernel that runs on these, say Y here. For details about Linux on
+-	  the MIPS architecture, check out the Linux/MIPS FAQ on the WWW at
+-	  <http://www.linux-mips.org/>.
++	  kernel that runs on these, say Y here.
+ 
+ config OLIVETTI_M700
+ 	bool "Support for Olivetti M700-10"
+@@ -26,6 +22,4 @@ config OLIVETTI_M700
+ 	select DMA_NONCOHERENT
+ 	help
+ 	  This is a machine with a R4000 100 MHz CPU. To compile a Linux
+-	  kernel that runs on these, say Y here. For details about Linux on
+-	  the MIPS architecture, check out the Linux/MIPS FAQ on the WWW at
+-	  <http://www.linux-mips.org/>.
++	  kernel that runs on these, say Y here.
+diff --git a/tools/include/nolibc/nolibc.h b/tools/include/nolibc/nolibc.h
+index 8b7a9830dd22..754e64c4a1d1 100644
+--- a/tools/include/nolibc/nolibc.h
++++ b/tools/include/nolibc/nolibc.h
+@@ -1027,8 +1027,7 @@ struct sys_stat_struct {
+  *   - arguments are in a0, a1, a2, a3, then the stack. The caller needs to
+  *     leave some room in the stack for the callee to save a0..a3 if needed.
+  *   - Many registers are clobbered, in fact only a0..a2 and s0..s8 are
+- *     preserved. See: https://www.linux-mips.org/wiki/Syscall as well as
+- *     scall32-o32.S in the kernel sources.
++ *     preserved. See: scall32-o32.S in the kernel sources.
+  *   - the system call is performed by calling "syscall"
+  *   - syscall return comes in v0, and register a3 needs to be checked to know
+  *     if an error occured, in which case errno is in v0.
 -- 
 2.17.1
 
