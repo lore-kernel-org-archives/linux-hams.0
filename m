@@ -1,18 +1,20 @@
 From: Lukas Bulwahn <lukas.bulwahn@gmail.com>
-Subject: [PATCH 0/5] Remove dead linux-mips.org references
-Date: Mon, 22 Feb 2021 17:19:00 +0100
-Message-ID: <20210222161905.1153-1-lukas.bulwahn@gmail.com>
-Return-path: <linux-hams-owner@vger.kernel.org>
+Subject: [PATCH 1/5] MAINTAINERS: mark sections from Ralf Baechle orphan
+Date: Mon, 22 Feb 2021 17:19:01 +0100
+Message-ID: <20210222161905.1153-2-lukas.bulwahn@gmail.com>
+References: <20210222161905.1153-1-lukas.bulwahn@gmail.com>
+Return-path: <kernel-janitors-owner@vger.kernel.org>
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id;
-        bh=jrKMxz76VrtujF1xTtdvcqWh/FiUwzdqgqPn8MABZcQ=;
-        b=tbCF6H7dNXWERfQSXS6cEb8eXbKZ4q0uTOEsLLhVC/ayjIosiu3ZdXWK3X6QJJpfTO
-         oP5eo1+Ja+BAy5CLSQIdpeEA69xPIckoipNbGE8SiK6P9ZpgTlESyb+DsYXapjzbzVi0
-         Psi4XvMUK6Zm8WwdD8/jVbGflL/RD3XZh2jY8FlNoDsxsfN/54xgI0mUW9Jm3jS8QJ6O
-         DoC//YlzI54ErTJ6HEHWpVCiIJ4k+pDXx4DAdNf2ZMUHfPcGdaDisB6IjQaE3CYT4c29
-         9pcqs6IicpJQvVRkY+tI7SsPqNeoXgRHZdsw+ET/Fa2YebRI82TOmwWxTDrXmNNsQLhB
-         c0hw==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=QVBl/nog7ajTZyJooeSLMs7Y96NRWAigPOMqPEdzv6o=;
+        b=cQDjY5GUWanhbS2OnAsCn20OlNIB06mIPJLPTBW3thWhwj6wHaBiuEnA+TF/uEib27
+         3PMUQc/Wn8h39smKNq/QUZo79D4y1WkwlN2ysS57K2iW5sigGOCw94g3HDG5tg7d6t3u
+         rbOZGqt845mDl2ZQxwoKLZELN+Jwq8l276XgcgkRwjyb6+JO99B/bZvEr6PXyClcJ+vd
+         BwWyvAC/LyQyf2eDUXJXcgrIkaYm1MIHeTzj+N1+RimfSq90z4tWBvmCgVNJk24sXpxJ
+         Yk9rDxiV1rwX0YXE+xUSi13luLVjBMt83qk7nzAHwfrNVV4F8kRCUSsv7ai4QScWCBWB
+         pKyA==
+In-Reply-To: <20210222161905.1153-1-lukas.bulwahn@gmail.com>
 List-ID: <linux-hams.vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="us-ascii"
@@ -20,95 +22,80 @@ Content-Transfer-Encoding: 7bit
 To: Thomas Bogendoerfer <tsbogend@alpha.franken.de>, linux-mips@vger.kernel.org
 Cc: "Maciej W . Rozycki" <macro@orcam.me.uk>, Tiezhu Yang <yangtiezhu@loongson.cn>, Willy Tarreau <w@1wt.eu>, linux-edac@vger.kernel.org, linux-hams@vger.kernel.org, kernel-janitors@vger.kernel.org, linux-kernel@vger.kernel.org, Lukas Bulwahn <lukas.bulwahn@gmail.com>
 
-Dear all,
+The domain lookup for linux-mips.org fails for quite some time now. Hence,
+webpages, the patchwork instance and Ralf Baechle's email there is not
+reachable anymore.
 
-The domain lookup for linux-mips.org fails for quite some time now.
-Hence, webpages, the patchwork instance and Ralf Baechle's email there is
-not reachable anymore.
+Ralf Baechle has not been active since February 2018; so, set all
+MAINTAINERS sections with Ralf as sole maintainer to Orphan, and give
+others a chance to claim maintainership if these sections are still of
+interest.
 
-First, I updated all sections in MAINTAINERS for references with linux-mips.org.
-Then, I also quickly scanned through the whole git tree for linux-mips.org
-references, and step-wise filtered out obvious copyright holder lines and
-references to old email addresses.
+Signed-off-by: Lukas Bulwahn <lukas.bulwahn@gmail.com>
+---
+ MAINTAINERS | 15 +++++----------
+ 1 file changed, 5 insertions(+), 10 deletions(-)
 
-  git ls-files | xargs grep "linux-mips.org" | \
-    grep -v -i "Copyright" | grep -v -i "MODULE_AUTHOR" | grep -v -i "written" | \
-    grep -v "Ralf" | grep -v "Maciej" | grep -v "Yoichi" | grep -v "Ladislav"
-
-
-I removed dead references or replaced them with their living counterparts if
-available. However, these two cases remain and somebody might want to have a look:
-
-  1. case in ./arch/mips/include/asm/page.h:
-
-<snip>
-/*
- * RELOC_HIDE was originally added by 6007b903dfe5f1d13e0c711ac2894bdd4a61b1ad
- * (lmo) rsp. 8431fd094d625b94d364fe393076ccef88e6ce18 (kernel.org).  The
- * discussion can be found in
- * https://lore.kernel.org/lkml/a2ebde260608230500o3407b108hc03debb9da6e62c@mail.gmail.com
- *
- * It is unclear if the misscompilations mentioned in
- * https://lore.kernel.org/lkml/1281303490-390-1-git-send-email-namhyung@gmail.com
- * also affect MIPS so we keep this one until GCC 3.x has been retired
- * before we can apply https://patchwork.linux-mips.org/patch/1541/
- */
-</snip>
-
-  Decision: Keep as is. Although GCC 3.x is long retired, it is unclear what
-  https://patchwork.linux-mips.org/patch/1541/ is and if it has been already
-  applied or not.
-  Question: does anyone know how to identify this patch?
-
-
-  2. case in ./drivers/parport/parport_ip32.c:
-
-    linux-mips.org tree is referred to in an old To do item:
-
-<snip>
- * To do:
- *
- *      Fully implement ECP mode.
- *      EPP and ECP mode need to be tested.  I currently do not own any
- *      peripheral supporting these extended mode, and cannot test them.
- *      If DMA mode works well, decide if support for PIO FIFO modes should be
- *      dropped.
- *      Use the io{read,write} family functions when they become available in
- *      the linux-mips.org tree.  Note: the MIPS specific functions readsb()
- *      and writesb() are to be translated by ioread8_rep() and iowrite8_rep()
- *      respectively.
-</snip>
-
-  Decision: Keep as is; anyone that wants to follow up on this will probably
-  understand that the reference is outdated anyway.
-
-
-Please comment on these clean-up patches on this administrative topic.
-
-Patch set applies cleanly on next-20210222.
-
-Thanks,
-
-Lukas
-
-
-Lukas Bulwahn (5):
-  MAINTAINERS: mark sections from Ralf Baechle orphan
-  MAINTAINERS: remove linux-mips.org references
-  arch: mips: update references to current linux-mips list
-  arch: mips: remove dead references
-  MIPS: SGI-IP27: fix spelling in Copyright
-
- MAINTAINERS                     | 20 ++++++--------------
- arch/mips/Kconfig               |  8 +-------
- arch/mips/jazz/Kconfig          | 12 +++---------
- arch/mips/kernel/r4k-bugs64.c   |  2 +-
- arch/mips/lib/iomap-pci.c       |  2 +-
- arch/mips/sgi-ip27/ip27-timer.c |  4 ++--
- arch/mips/sgi-ip32/ip32-irq.c   |  2 +-
- tools/include/nolibc/nolibc.h   |  3 +--
- 8 files changed, 16 insertions(+), 37 deletions(-)
-
+diff --git a/MAINTAINERS b/MAINTAINERS
+index 7924907cd7cc..e949e561867d 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -2997,9 +2997,8 @@ F:	Documentation/devicetree/bindings/iio/adc/avia-hx711.yaml
+ F:	drivers/iio/adc/hx711.c
+ 
+ AX.25 NETWORK LAYER
+-M:	Ralf Baechle <ralf@linux-mips.org>
+ L:	linux-hams@vger.kernel.org
+-S:	Maintained
++S:	Orphan
+ W:	http://www.linux-ax25.org/
+ F:	include/net/ax25.h
+ F:	include/uapi/linux/ax25.h
+@@ -6341,10 +6340,9 @@ S:	Maintained
+ F:	drivers/edac/highbank*
+ 
+ EDAC-CAVIUM OCTEON
+-M:	Ralf Baechle <ralf@linux-mips.org>
+ L:	linux-edac@vger.kernel.org
+ L:	linux-mips@vger.kernel.org
+-S:	Supported
++S:	Orphan
+ F:	drivers/edac/octeon_edac*
+ 
+ EDAC-CAVIUM THUNDERX
+@@ -9307,9 +9305,8 @@ F:	Documentation/devicetree/bindings/iio/gyroscope/invensense,mpu3050.txt
+ F:	drivers/iio/gyro/mpu3050*
+ 
+ IOC3 ETHERNET DRIVER
+-M:	Ralf Baechle <ralf@linux-mips.org>
+ L:	linux-mips@vger.kernel.org
+-S:	Maintained
++S:	Orphan
+ F:	drivers/net/ethernet/sgi/ioc3-eth.c
+ 
+ IOMAP FILESYSTEM LIBRARY
+@@ -12378,9 +12375,8 @@ F:	net/bridge/br_netfilter*.c
+ F:	net/netfilter/
+ 
+ NETROM NETWORK LAYER
+-M:	Ralf Baechle <ralf@linux-mips.org>
+ L:	linux-hams@vger.kernel.org
+-S:	Maintained
++S:	Orphan
+ W:	http://www.linux-ax25.org/
+ F:	include/net/netrom.h
+ F:	include/uapi/linux/netrom.h
+@@ -15473,9 +15469,8 @@ F:	include/linux/mfd/rohm-generic.h
+ F:	include/linux/mfd/rohm-shared.h
+ 
+ ROSE NETWORK LAYER
+-M:	Ralf Baechle <ralf@linux-mips.org>
+ L:	linux-hams@vger.kernel.org
+-S:	Maintained
++S:	Orphan
+ W:	http://www.linux-ax25.org/
+ F:	include/net/rose.h
+ F:	include/uapi/linux/rose.h
 -- 
 2.17.1
 
