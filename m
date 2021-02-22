@@ -1,48 +1,33 @@
-From: Lukas Bulwahn <lukas.bulwahn@gmail.com>
-Subject: [PATCH 5/5] MIPS: SGI-IP27: fix spelling in Copyright
-Date: Mon, 22 Feb 2021 17:19:05 +0100
-Message-ID: <20210222161905.1153-6-lukas.bulwahn@gmail.com>
+From: "Maciej W. Rozycki" <macro@orcam.me.uk>
+Subject: Re: [PATCH 0/5] Remove dead linux-mips.org references
+Date: Mon, 22 Feb 2021 18:47:38 +0100 (CET)
+Message-ID: <alpine.DEB.2.21.2102221836030.1900@angie.orcam.me.uk>
 References: <20210222161905.1153-1-lukas.bulwahn@gmail.com>
-Return-path: <linux-hams-owner@vger.kernel.org>
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=XZM02Qjnqqn9qJFAUKB25dGoRRDf53l7ATxy6Z9Woso=;
-        b=R8k9FZItQ1mBUVjy9LxAWXhyIoj0naDvVWAktpGylajzQv9gy5KIPbWu+PplCLcgrN
-         ZQw3bUelRCr2klfem4rjdCYyDRbl0p41Awk0gh4By7Ca3zRN0HiuSeFS4xArDiZ8u7+p
-         SRNf997VXgkFFoTeowUY7P9jcoNS+rHickSaY/uB/J98qbZONi3MdrxxRFQTEdJSNRVj
-         +EHTrCKksElXfIiDodnnsKyme+S+BPA1vJ3DOuu+4w9+qt/vaUHMq9OqeOlcE+TUHmBc
-         v0wcuMrw2YxXHxN7GgF7SpSCLrGUpuJnDEDeq0J7MEMRQ7o0BZ7gg8OFTU/WbG2cVAAs
-         gt4Q==
+Mime-Version: 1.0
+Return-path: <linux-mips-owner@vger.kernel.org>
 In-Reply-To: <20210222161905.1153-1-lukas.bulwahn@gmail.com>
 List-ID: <linux-hams.vger.kernel.org>
-MIME-Version: 1.0
 Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
-To: Thomas Bogendoerfer <tsbogend@alpha.franken.de>, linux-mips@vger.kernel.org
-Cc: "Maciej W . Rozycki" <macro@orcam.me.uk>, Tiezhu Yang <yangtiezhu@loongson.cn>, Willy Tarreau <w@1wt.eu>, linux-edac@vger.kernel.org, linux-hams@vger.kernel.org, kernel-janitors@vger.kernel.org, linux-kernel@vger.kernel.org, Lukas Bulwahn <lukas.bulwahn@gmail.com>
+To: Lukas Bulwahn <lukas.bulwahn@gmail.com>
+Cc: Thomas Bogendoerfer <tsbogend@alpha.franken.de>, linux-mips@vger.kernel.org, Tiezhu Yang <yangtiezhu@loongson.cn>, Willy Tarreau <w@1wt.eu>, linux-edac@vger.kernel.org, linux-hams@vger.kernel.org, kernel-janitors@vger.kernel.org, linux-kernel@vger.kernel.org
 
-This is a Copyright line, and just a typo slipped through.
+On Mon, 22 Feb 2021, Lukas Bulwahn wrote:
 
-Signed-off-by: Lukas Bulwahn <lukas.bulwahn@gmail.com>
----
- arch/mips/sgi-ip27/ip27-timer.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+> The domain lookup for linux-mips.org fails for quite some time now.
+> Hence, webpages, the patchwork instance and Ralf Baechle's email there is
+> not reachable anymore.
 
-diff --git a/arch/mips/sgi-ip27/ip27-timer.c b/arch/mips/sgi-ip27/ip27-timer.c
-index 79c434fece52..444b5e0e935f 100644
---- a/arch/mips/sgi-ip27/ip27-timer.c
-+++ b/arch/mips/sgi-ip27/ip27-timer.c
-@@ -1,7 +1,7 @@
- // SPDX-License-Identifier: GPL-2.0
- /*
-- * Copytight (C) 1999, 2000, 05, 06 Ralf Baechle (ralf@linux-mips.org)
-- * Copytight (C) 1999, 2000 Silicon Graphics, Inc.
-+ * Copyright (C) 1999, 2000, 05, 06 Ralf Baechle (ralf@linux-mips.org)
-+ * Copyright (C) 1999, 2000 Silicon Graphics, Inc.
-  */
- #include <linux/bcd.h>
- #include <linux/clockchips.h>
--- 
-2.17.1
+ I have been contacted by Ralf a couple of weeks ago and he told me there 
+had been a storage failure with the machine running linux-mips.org.
 
+ Due to a complex situation with linux-mips.org I do not want to dive the 
+details of into here recovery of the site caused some trouble, however I 
+was told it had been under way now.  So I suggest that we wait a couple of 
+weeks yet and see how it goes before going ahead with this series.
+
+ As to Ralf personal commitments WRT maintenance duties I can't speak, but 
+I have bcc-ed him on his alternative e-mail address with this message in 
+case he wants to speak up.
+
+  Maciej
