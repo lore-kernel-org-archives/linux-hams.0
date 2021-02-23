@@ -1,70 +1,75 @@
-From: Kurt Martin <kmartin@wavecomp.com>
-Subject: RE: [EXTERNAL]Re: [PATCH 0/5] Remove dead linux-mips.org references
-Date: Mon, 22 Feb 2021 18:19:56 +0000
-Message-ID: <BY5PR22MB1841658D64FB8D8B619BC870C7819@BY5PR22MB1841.namprd22.prod.outlook.com>
-References: <20210222161905.1153-1-lukas.bulwahn@gmail.com>
- <alpine.DEB.2.21.2102221836030.1900@angie.orcam.me.uk>
+From: Huacai Chen <chenhuacai@kernel.org>
+Subject: Re: [PATCH 2/5] MAINTAINERS: remove linux-mips.org references
+Date: Tue, 23 Feb 2021 09:16:37 +0800
+Message-ID: <CAAhV-H5aKEOFr32G3BZJofUQaRtqM7zsy6fX-gPCwxFhKBqa2w@mail.gmail.com>
+References: <20210222161905.1153-1-lukas.bulwahn@gmail.com> <20210222161905.1153-3-lukas.bulwahn@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="iso-8859-1"
-Content-Transfer-Encoding: quoted-printable
 Return-path: <linux-hams-owner@vger.kernel.org>
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=wavecomp.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=Gh3Gpgubv0JtMxzKGviUxyD7N+jFax6rtIhe39hrQVA=;
- b=L4VBCTb4nCiCfRVEPXkl98PHODthbETAJNNkdRvju5Xq6K2PECIHA/iO6iHmm4ZLB5zFPlHdBP5irX6VLuraqdN5kZxX1PbL+UxzABoeg4SE2CJ75i5e+TaL5LFJkxx2Ln6gCsJLDbyVknUYy6VrS3Ee0jyx7qPpKEssmKfB7D4=
-In-Reply-To: <alpine.DEB.2.21.2102221836030.1900@angie.orcam.me.uk>
-Content-Language: en-US
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1614043009;
+        bh=kDwba0vVgoevzJZ1ejp9aIx55kGXux65+VE5+XPArvQ=;
+        h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
+        b=dA0KMovrh4BCRgSKtyWZoXGvYaCHiHdqidrfcXpCsgCrKKGraOYgOGjlR87xeK9qV
+         w9kDmHR0Wgs1Hclsrb0kvsQTHtLGB/XGkgZF5cKW07ejaibXyE6Kgif5hGJvZrmhht
+         rUpJ8+IJBD8cBEYpwp472yOW71w9lomxM4kSoBttML7MiRDODkvV1/YFVPQSn9I5Pw
+         YHY3tJPjXtMI2DObywS+ZHRVjMQ5NT5CD5eVKOwZA9DaZYcPJD6g+KQ0v87UdsXxBW
+         jBaQIxpw6JKXvG9iEVtPlMxMCW+ljIV3M0v1IgOxIv7hdzYaol45Fy8YhZtyZNooLK
+         pjtKMQW08QPSg==
+In-Reply-To: <20210222161905.1153-3-lukas.bulwahn@gmail.com>
 List-ID: <linux-hams.vger.kernel.org>
-To: "Maciej W. Rozycki" <macro@orcam.me.uk>, Lukas Bulwahn <lukas.bulwahn@gmail.com>
-Cc: Thomas Bogendoerfer <tsbogend@alpha.franken.de>, "linux-mips@vger.kernel.org" <linux-mips@vger.kernel.org>, Tiezhu Yang <yangtiezhu@loongson.cn>, Willy Tarreau <w@1wt.eu>, "linux-edac@vger.kernel.org" <linux-edac@vger.kernel.org>, "linux-hams@vger.kernel.org" <linux-hams@vger.kernel.org>, "kernel-janitors@vger.kernel.org" <kernel-janitors@vger.kernel.org>, "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>
-
-Hi Everybody,
-
-This is Kurt Martin.  I'm part of the MIPS Customer Engineering team at Wav=
-e Computing.  Some of you may remember me.  I have just established contact=
- with Ralf, and I will be working with him to restore linux-mips.org back t=
-o life.  I just got the account and login information for the linux-mips.or=
-g hosting account at Hetzner from Chris Dearman.
-
-So as Maciej says, please hold off any actions at this time, and I will att=
-empt to get linux-mips.org working again as quickly as possible.  Thanks!
-
-Regards,
-Kurt
-
-Kurt Martin
-Senior Customer Support Engineer
-Wave Computing
-kmartin@wavecomp.com=A0
-o +1 408 530 5180
-
------Original Message-----
-From: Maciej W. Rozycki <macro@orcam.me.uk>=20
-Sent: Monday, February 22, 2021 9:48 AM
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 7bit
 To: Lukas Bulwahn <lukas.bulwahn@gmail.com>
-Cc: Thomas Bogendoerfer <tsbogend@alpha.franken.de>; linux-mips@vger.kernel=
-.org; Tiezhu Yang <yangtiezhu@loongson.cn>; Willy Tarreau <w@1wt.eu>; linux=
--edac@vger.kernel.org; linux-hams@vger.kernel.org; kernel-janitors@vger.ker=
-nel.org; linux-kernel@vger.kernel.org
-Subject: [EXTERNAL]Re: [PATCH 0/5] Remove dead linux-mips.org references
+Cc: Thomas Bogendoerfer <tsbogend@alpha.franken.de>, "open list:MIPS" <linux-mips@vger.kernel.org>, "Maciej W . Rozycki" <macro@orcam.me.uk>, Tiezhu Yang <yangtiezhu@loongson.cn>, Willy Tarreau <w@1wt.eu>, linux-edac@vger.kernel.org, linux-hams@vger.kernel.org, kernel-janitors@vger.kernel.org, LKML <linux-kernel@vger.kernel.org>
 
-On Mon, 22 Feb 2021, Lukas Bulwahn wrote:
+Reviewed-by: Huacai Chen <chenhuacai@kernel.org>
 
-> The domain lookup for linux-mips.org fails for quite some time now.
-> Hence, webpages, the patchwork instance and Ralf Baechle's email there=20
-> is not reachable anymore.
-
- I have been contacted by Ralf a couple of weeks ago and he told me there h=
-ad been a storage failure with the machine running linux-mips.org.
-
- Due to a complex situation with linux-mips.org I do not want to dive the d=
-etails of into here recovery of the site caused some trouble, however I was=
- told it had been under way now.  So I suggest that we wait a couple of wee=
-ks yet and see how it goes before going ahead with this series.
-
- As to Ralf personal commitments WRT maintenance duties I can't speak, but =
-I have bcc-ed him on his alternative e-mail address with this message in ca=
-se he wants to speak up.
-
-  Maciej
+On Tue, Feb 23, 2021 at 12:22 AM Lukas Bulwahn <lukas.bulwahn@gmail.com> wrote:
+>
+> The domain lookup for linux-mips.org fails for quite some time now. Hence,
+> webpages, the patchwork instance and Ralf Baechle's email there is not
+> reachable anymore.
+>
+> Remove all references of webpages from linux-mips.org in MAINTAINERS, and
+> refer to the kernel.org's linux-mips patchwork instance instead.
+>
+> Signed-off-by: Lukas Bulwahn <lukas.bulwahn@gmail.com>
+> ---
+>  MAINTAINERS | 5 +----
+>  1 file changed, 1 insertion(+), 4 deletions(-)
+>
+> diff --git a/MAINTAINERS b/MAINTAINERS
+> index e949e561867d..703a50183301 100644
+> --- a/MAINTAINERS
+> +++ b/MAINTAINERS
+> @@ -4980,7 +4980,6 @@ DECSTATION PLATFORM SUPPORT
+>  M:     "Maciej W. Rozycki" <macro@orcam.me.uk>
+>  L:     linux-mips@vger.kernel.org
+>  S:     Maintained
+> -W:     http://www.linux-mips.org/wiki/DECstation
+>  F:     arch/mips/dec/
+>  F:     arch/mips/include/asm/dec/
+>  F:     arch/mips/include/asm/mach-dec/
+> @@ -11932,7 +11931,6 @@ MIPS
+>  M:     Thomas Bogendoerfer <tsbogend@alpha.franken.de>
+>  L:     linux-mips@vger.kernel.org
+>  S:     Maintained
+> -W:     http://www.linux-mips.org/
+>  Q:     https://patchwork.kernel.org/project/linux-mips/list/
+>  T:     git git://git.kernel.org/pub/scm/linux/kernel/git/mips/linux.git
+>  F:     Documentation/devicetree/bindings/mips/
+> @@ -18248,10 +18246,9 @@ F:     arch/um/os-Linux/drivers/
+>
+>  TURBOCHANNEL SUBSYSTEM
+>  M:     "Maciej W. Rozycki" <macro@orcam.me.uk>
+> -M:     Ralf Baechle <ralf@linux-mips.org>
+>  L:     linux-mips@vger.kernel.org
+>  S:     Maintained
+> -Q:     http://patchwork.linux-mips.org/project/linux-mips/list/
+> +Q:     https://patchwork.kernel.org/project/linux-mips/list/
+>  F:     drivers/tc/
+>  F:     include/linux/tc.h
+>
+> --
+> 2.17.1
+>
