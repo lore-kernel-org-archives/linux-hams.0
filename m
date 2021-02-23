@@ -1,34 +1,38 @@
-From: "Maciej W. Rozycki" <macro@orcam.me.uk>
-Subject: Re: [PATCH 5/5] MIPS: SGI-IP27: fix spelling in Copyright
-Date: Tue, 23 Feb 2021 13:33:11 +0100 (CET)
-Message-ID: <alpine.DEB.2.21.2102231330410.1900@angie.orcam.me.uk>
-References: <20210222161905.1153-1-lukas.bulwahn@gmail.com> <20210222161905.1153-6-lukas.bulwahn@gmail.com> <CAAdtpL5yU0-0hR76zV5hDHWd7NOxa1E0g5=eteHvman1f7cWhQ@mail.gmail.com>
+From: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
+Subject: Re: [PATCH 3/5] arch: mips: update references to current linux-mips
+ list
+Date: Tue, 23 Feb 2021 13:29:28 +0100
+Message-ID: <20210223122928.GD7765@alpha.franken.de>
+References: <20210222161905.1153-1-lukas.bulwahn@gmail.com>
+ <20210222161905.1153-4-lukas.bulwahn@gmail.com>
 Mime-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <CAAdtpL5yU0-0hR76zV5hDHWd7NOxa1E0g5=eteHvman1f7cWhQ@mail.gmail.com>
+Return-path: <kernel-janitors-owner@vger.kernel.org>
+Content-Disposition: inline
+In-Reply-To: <20210222161905.1153-4-lukas.bulwahn@gmail.com>
 List-ID: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="iso-8859-1"
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <f4bug@amsat.org>
-Cc: Lukas Bulwahn <lukas.bulwahn@gmail.com>, Thomas Bogendoerfer <tsbogend@alpha.franken.de>, "open list:BROADCOM NVRAM DRIVER" <linux-mips@vger.kernel.org>, Tiezhu Yang <yangtiezhu@loongson.cn>, Willy Tarreau <w@1wt.eu>, linux-edac@vger.kernel.org, linux-hams@vger.kernel.org, kernel-janitors@vger.kernel.org, open list <linux-kernel@vger.kernel.org>
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+To: Lukas Bulwahn <lukas.bulwahn@gmail.com>
+Cc: linux-mips@vger.kernel.org, "Maciej W . Rozycki" <macro@orcam.me.uk>, Tiezhu Yang <yangtiezhu@loongson.cn>, Willy Tarreau <w@1wt.eu>, linux-edac@vger.kernel.org, linux-hams@vger.kernel.org, kernel-janitors@vger.kernel.org, linux-kernel@vger.kernel.org
 
-On Tue, 23 Feb 2021, Philippe Mathieu-Daud=C3=A9 wrote:
+On Mon, Feb 22, 2021 at 05:19:03PM +0100, Lukas Bulwahn wrote:
+> The linux-mips mailing list now lives at kernel.org. Update all references
+> in the kernel tree.
+> 
+> Signed-off-by: Lukas Bulwahn <lukas.bulwahn@gmail.com>
+> ---
+>  arch/mips/kernel/r4k-bugs64.c | 2 +-
+>  arch/mips/lib/iomap-pci.c     | 2 +-
+>  arch/mips/sgi-ip32/ip32-irq.c | 2 +-
+>  3 files changed, 3 insertions(+), 3 deletions(-)
 
-> > diff --git a/arch/mips/sgi-ip27/ip27-timer.c b/arch/mips/sgi-ip27/ip27-=
-timer.c
-> > index 79c434fece52..444b5e0e935f 100644
-> > --- a/arch/mips/sgi-ip27/ip27-timer.c
-> > +++ b/arch/mips/sgi-ip27/ip27-timer.c
-> > @@ -1,7 +1,7 @@
-> >  // SPDX-License-Identifier: GPL-2.0
-> >  /*
-> > - * Copytight (C) 1999, 2000, 05, 06 Ralf Baechle (ralf@linux-mips.org)
-> > - * Copytight (C) 1999, 2000 Silicon Graphics, Inc.
-> > + * Copyright (C) 1999, 2000, 05, 06 Ralf Baechle (ralf@linux-mips.org)
->=20
-> If the email isn't valid anymore, why keep it?
+applied only this patch to mips-next.
 
- As I noted in an earlier reply and Kurt further confirmed site recovery=20
-is under way.
+For the other patches I'll wait for how the resolution for linux-mips.org
+looks like.
 
-  Maciej
+Thomas.
+
+-- 
+Crap can work. Given enough thrust pigs will fly, but it's not necessarily a
+good idea.                                                [ RFC1925, 2.3 ]
