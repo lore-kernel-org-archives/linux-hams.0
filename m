@@ -1,21 +1,21 @@
 From: Huacai Chen <chenhuacai@kernel.org>
-Subject: Re: [PATCH 4/5] arch: mips: remove dead references
-Date: Tue, 23 Feb 2021 09:19:23 +0800
-Message-ID: <CAAhV-H6VHA3jsFt-9GjXt4zc3v8TcW3q-j6xyF4VwR3Sv7zRZA@mail.gmail.com>
-References: <20210222161905.1153-1-lukas.bulwahn@gmail.com> <20210222161905.1153-5-lukas.bulwahn@gmail.com>
+Subject: Re: [PATCH 5/5] MIPS: SGI-IP27: fix spelling in Copyright
+Date: Tue, 23 Feb 2021 09:20:04 +0800
+Message-ID: <CAAhV-H5rmym9_5X9uxAHvAJasNrVCgQSE23tv3XULE60iwMnUw@mail.gmail.com>
+References: <20210222161905.1153-1-lukas.bulwahn@gmail.com> <20210222161905.1153-6-lukas.bulwahn@gmail.com>
 Mime-Version: 1.0
-Return-path: <linux-mips-owner@vger.kernel.org>
+Return-path: <linux-hams-owner@vger.kernel.org>
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1614043176;
-        bh=yKEez1y1qrdFSuFXWvWFRklOulWdPewFMVZ5ph48XiA=;
+        s=k20201202; t=1614043217;
+        bh=DrhhhxquQa9mMMAlVDZt621WhowL2G0QRwZ1oprjFoY=;
         h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
-        b=uiNBAClTYVe5Yrm7DpLxh9jHhEleL/jm0UKCYvybv5gsN7nfOSTtGK/XFpW+UJFs5
-         kmIj13GIp/U3lXoGMp7LuUVAJb80oqwgOPQvyiddysHbiWz8NiM74oxwfz991wHWVL
-         CoJvqxpHfzeoSNaark5K3GF4CjjWslwDZFevnZajfkECzQD3I0wRxedkSDSg1T/Q6d
-         ltkSnWeooqA/SFN/0I9AASBZXN4ceADUJMBYeZNwyAKvrSaQggksSxWwTaXPwR3+2W
-         S4BgYv/lHaZmj2GS3AUNMfs73unOK17BBTO9olHf3yS6xpStGXXUQIGdZwwcBx2X6R
-         EP2h9cDWaBihg==
-In-Reply-To: <20210222161905.1153-5-lukas.bulwahn@gmail.com>
+        b=n0L7HNxZpkuc4vsHzjuYh7yIaejq5QIw6JuRdXjNKD0/Gn64F21CXixIszhcuYx9y
+         ED1+P/xk5eOPdiGNKServB7o6OGs4Vint0c1D2M0rYi/ssdYNQsz5DsM+bShMlJx9x
+         YOIOhGkTkNs/ygf+H06eHctMm2t0Saw0axjPJ/J9KHcM9j2YqzuL8b61dasurDDAnd
+         xI9snoLrknDGPxkBtAkNy605tiJeidtTsOujz4Mt2hepw+usuCUzx+tgbcQ35jw0Z4
+         fCSx4hKrSVbRkrwMZ0D/GNq9ADPx3l0S865ekxn065Xv8BitJX2EfuB4moYa5zCSbi
+         h8+peInvB92/A==
+In-Reply-To: <20210222161905.1153-6-lukas.bulwahn@gmail.com>
 List-ID: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
@@ -26,97 +26,27 @@ Reviewed-by: Huacai Chen <chenhuacai@kernel.org>
 
 On Tue, Feb 23, 2021 at 12:22 AM Lukas Bulwahn <lukas.bulwahn@gmail.com> wrote:
 >
-> The domain lookup for linux-mips.org fails for quite some time now.
-> Further, the two links:
->
->   http://decstation.unix-ag.org/
->   http://www.computer-refuge.org/classiccmp/ftp.digital.com/pub/DEC/TriAdd/
->
-> refer to old webpages or contain no further technical information.
->
-> Remove all those dead references.
+> This is a Copyright line, and just a typo slipped through.
 >
 > Signed-off-by: Lukas Bulwahn <lukas.bulwahn@gmail.com>
 > ---
->  arch/mips/Kconfig             |  8 +-------
->  arch/mips/jazz/Kconfig        | 12 +++---------
->  tools/include/nolibc/nolibc.h |  3 +--
->  3 files changed, 5 insertions(+), 18 deletions(-)
+>  arch/mips/sgi-ip27/ip27-timer.c | 4 ++--
+>  1 file changed, 2 insertions(+), 2 deletions(-)
 >
-> diff --git a/arch/mips/Kconfig b/arch/mips/Kconfig
-> index d89efba3d8a4..8cb1e2be5999 100644
-> --- a/arch/mips/Kconfig
-> +++ b/arch/mips/Kconfig
-> @@ -375,9 +375,7 @@ config MACH_DECSTATION
->         select SYS_SUPPORTS_1024HZ
->         select MIPS_L1_CACHE_SHIFT_4
->         help
-> -         This enables support for DEC's MIPS based workstations.  For details
-> -         see the Linux/MIPS FAQ on <http://www.linux-mips.org/> and the
-> -         DECstation porting pages on <http://decstation.unix-ag.org/>.
-> +         This enables support for DEC's MIPS based workstations.
->
->           If you have one of the following DECstation Models you definitely
->           want to choose R4xx0 for the CPU Type:
-> @@ -3263,10 +3261,6 @@ config TC
->           processors.  TURBOchannel programming specifications are available
->           at:
->           <ftp://ftp.hp.com/pub/alphaserver/archive/triadd/>
-> -         and:
-> -         <http://www.computer-refuge.org/classiccmp/ftp.digital.com/pub/DEC/TriAdd/>
-> -         Linux driver support status is documented at:
-> -         <http://www.linux-mips.org/wiki/DECstation>
->
->  config MMU
->         bool
-> diff --git a/arch/mips/jazz/Kconfig b/arch/mips/jazz/Kconfig
-> index 42932ca98db9..162d11670c75 100644
-> --- a/arch/mips/jazz/Kconfig
-> +++ b/arch/mips/jazz/Kconfig
-> @@ -5,9 +5,7 @@ config ACER_PICA_61
->         select DMA_NONCOHERENT
->         help
->           This is a machine with a R4400 133/150 MHz CPU. To compile a Linux
-> -         kernel that runs on these, say Y here. For details about Linux on
-> -         the MIPS architecture, check out the Linux/MIPS FAQ on the WWW at
-> -         <http://www.linux-mips.org/>.
-> +         kernel that runs on these, say Y here.
->
->  config MIPS_MAGNUM_4000
->         bool "Support for MIPS Magnum 4000"
-> @@ -16,9 +14,7 @@ config MIPS_MAGNUM_4000
->         select SYS_SUPPORTS_BIG_ENDIAN
->         help
->           This is a machine with a R4000 100 MHz CPU. To compile a Linux
-> -         kernel that runs on these, say Y here. For details about Linux on
-> -         the MIPS architecture, check out the Linux/MIPS FAQ on the WWW at
-> -         <http://www.linux-mips.org/>.
-> +         kernel that runs on these, say Y here.
->
->  config OLIVETTI_M700
->         bool "Support for Olivetti M700-10"
-> @@ -26,6 +22,4 @@ config OLIVETTI_M700
->         select DMA_NONCOHERENT
->         help
->           This is a machine with a R4000 100 MHz CPU. To compile a Linux
-> -         kernel that runs on these, say Y here. For details about Linux on
-> -         the MIPS architecture, check out the Linux/MIPS FAQ on the WWW at
-> -         <http://www.linux-mips.org/>.
-> +         kernel that runs on these, say Y here.
-> diff --git a/tools/include/nolibc/nolibc.h b/tools/include/nolibc/nolibc.h
-> index 8b7a9830dd22..754e64c4a1d1 100644
-> --- a/tools/include/nolibc/nolibc.h
-> +++ b/tools/include/nolibc/nolibc.h
-> @@ -1027,8 +1027,7 @@ struct sys_stat_struct {
->   *   - arguments are in a0, a1, a2, a3, then the stack. The caller needs to
->   *     leave some room in the stack for the callee to save a0..a3 if needed.
->   *   - Many registers are clobbered, in fact only a0..a2 and s0..s8 are
-> - *     preserved. See: https://www.linux-mips.org/wiki/Syscall as well as
-> - *     scall32-o32.S in the kernel sources.
-> + *     preserved. See: scall32-o32.S in the kernel sources.
->   *   - the system call is performed by calling "syscall"
->   *   - syscall return comes in v0, and register a3 needs to be checked to know
->   *     if an error occured, in which case errno is in v0.
+> diff --git a/arch/mips/sgi-ip27/ip27-timer.c b/arch/mips/sgi-ip27/ip27-timer.c
+> index 79c434fece52..444b5e0e935f 100644
+> --- a/arch/mips/sgi-ip27/ip27-timer.c
+> +++ b/arch/mips/sgi-ip27/ip27-timer.c
+> @@ -1,7 +1,7 @@
+>  // SPDX-License-Identifier: GPL-2.0
+>  /*
+> - * Copytight (C) 1999, 2000, 05, 06 Ralf Baechle (ralf@linux-mips.org)
+> - * Copytight (C) 1999, 2000 Silicon Graphics, Inc.
+> + * Copyright (C) 1999, 2000, 05, 06 Ralf Baechle (ralf@linux-mips.org)
+> + * Copyright (C) 1999, 2000 Silicon Graphics, Inc.
+>   */
+>  #include <linux/bcd.h>
+>  #include <linux/clockchips.h>
 > --
 > 2.17.1
 >
