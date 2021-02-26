@@ -1,45 +1,72 @@
-From: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <f4bug@amsat.org>
-Subject: Re: [PATCH 5/5] MIPS: SGI-IP27: fix spelling in Copyright
-Date: Tue, 23 Feb 2021 14:33:44 +0100
-Message-ID: <CAAdtpL4M68ton_YkEYPZPL-+Onm5+LL35pbtpRA4U6oA2gC-TA@mail.gmail.com>
+From: Lukas Bulwahn <lukas.bulwahn@gmail.com>
+Subject: Re: [PATCH 2/5] MAINTAINERS: remove linux-mips.org references
+Date: Fri, 26 Feb 2021 09:29:34 +0100
+Message-ID: <CAKXUXMygO2caTv9D1dMv9dxJSgC8=CpcT3hYsNm_ko4HXdNmeg@mail.gmail.com>
 References: <20210222161905.1153-1-lukas.bulwahn@gmail.com>
- <20210222161905.1153-6-lukas.bulwahn@gmail.com> <CAAdtpL5yU0-0hR76zV5hDHWd7NOxa1E0g5=eteHvman1f7cWhQ@mail.gmail.com>
- <alpine.DEB.2.21.2102231330410.1900@angie.orcam.me.uk>
+ <20210222161905.1153-3-lukas.bulwahn@gmail.com> <CAAdtpL4egZYCGS+2K5FQSFYcPKomosuvvrunpDskkiif5Ma5Uw@mail.gmail.com>
 Mime-Version: 1.0
 Content-Transfer-Encoding: quoted-printable
 Return-path: <kernel-janitors-owner@vger.kernel.org>
-In-Reply-To: <alpine.DEB.2.21.2102231330410.1900@angie.orcam.me.uk>
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=wv9SyvXPStH1HbSiyrd6dLJkIu8R0cmO6gcv4tLTSvQ=;
+        b=Rhl08QI0pfGUZYq6eTciDwuN89KLIIALSh8uKopiHPcUrfyNcHVdR0Y6PGJQ1Aw1Xp
+         vPXZjJhOIbKvkPRAco2v2VKNnyYBYI7anNnDxXs0xiSFo7fx91n4XiggVGMHNhhKvu4k
+         VOo44XIZnSglXqVUOvLckvmbXB7NqIerp5578rZZ7Kkq5DtCOVgLsBTzfYkva3pS5MmR
+         BAfHatL1uy5ftOMq0kGxA8XxXWQPdMPnpdScblfP9jVupdhUCn3EriJZ5//VUNid5wyo
+         f/ATH0swlnaPmd0JLN4HAMbgaAspgJBsV4EsG8vx1D8YainfyvDQL/PiOgyXGYZppUzS
+         m9qA==
+In-Reply-To: <CAAdtpL4egZYCGS+2K5FQSFYcPKomosuvvrunpDskkiif5Ma5Uw@mail.gmail.com>
 List-ID: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="iso-8859-1"
-To: "Maciej W. Rozycki" <macro@orcam.me.uk>
-Cc: Lukas Bulwahn <lukas.bulwahn@gmail.com>, Thomas Bogendoerfer <tsbogend@alpha.franken.de>, "open list:BROADCOM NVRAM DRIVER" <linux-mips@vger.kernel.org>, Tiezhu Yang <yangtiezhu@loongson.cn>, Willy Tarreau <w@1wt.eu>, linux-edac@vger.kernel.org, linux-hams@vger.kernel.org, kernel-janitors@vger.kernel.org, open list <linux-kernel@vger.kernel.org>
+Content-Type: text/plain; charset="macroman"
+To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <f4bug@amsat.org>
+Cc: Thomas Bogendoerfer <tsbogend@alpha.franken.de>, "open list:BROADCOM NVRAM DRIVER" <linux-mips@vger.kernel.org>, "Maciej W . Rozycki" <macro@orcam.me.uk>, Tiezhu Yang <yangtiezhu@loongson.cn>, Willy Tarreau <w@1wt.eu>, linux-edac@vger.kernel.org, linux-hams@vger.kernel.org, kernel-janitors@vger.kernel.org, open list <linux-kernel@vger.kernel.org>
 
-On Tue, Feb 23, 2021 at 1:33 PM Maciej W. Rozycki <macro@orcam.me.uk> wrote:
-> On Tue, 23 Feb 2021, Philippe Mathieu-Daud=C3=A9 wrote:
+On Tue, Feb 23, 2021 at 10:48 AM Philippe Mathieu-Daud=C3=A9 <f4bug@amsat.o=
+rg> wrote:
 >
-> > > diff --git a/arch/mips/sgi-ip27/ip27-timer.c b/arch/mips/sgi-ip27/ip2=
-7-timer.c
-> > > index 79c434fece52..444b5e0e935f 100644
-> > > --- a/arch/mips/sgi-ip27/ip27-timer.c
-> > > +++ b/arch/mips/sgi-ip27/ip27-timer.c
-> > > @@ -1,7 +1,7 @@
-> > >  // SPDX-License-Identifier: GPL-2.0
-> > >  /*
-> > > - * Copytight (C) 1999, 2000, 05, 06 Ralf Baechle (ralf@linux-mips.or=
-g)
-> > > - * Copytight (C) 1999, 2000 Silicon Graphics, Inc.
-> > > + * Copyright (C) 1999, 2000, 05, 06 Ralf Baechle (ralf@linux-mips.or=
-g)
+> On Mon, Feb 22, 2021 at 5:22 PM Lukas Bulwahn <lukas.bulwahn@gmail.com> w=
+rote:
 > >
-> > If the email isn't valid anymore, why keep it?
+> > The domain lookup for linux-mips.org fails for quite some time now. Hen=
+ce,
+> > webpages, the patchwork instance and Ralf Baechle's email there is not
+> > reachable anymore.
+> >
+> > Remove all references of webpages from linux-mips.org in MAINTAINERS, a=
+nd
+> > refer to the kernel.org's linux-mips patchwork instance instead.
+> >
+> > Signed-off-by: Lukas Bulwahn <lukas.bulwahn@gmail.com>
+> > ---
+> >  MAINTAINERS | 5 +----
+> >  1 file changed, 1 insertion(+), 4 deletions(-)
+> >
+> > diff --git a/MAINTAINERS b/MAINTAINERS
+> > index e949e561867d..703a50183301 100644
+> > --- a/MAINTAINERS
+> > +++ b/MAINTAINERS
+> > @@ -4980,7 +4980,6 @@ DECSTATION PLATFORM SUPPORT
+> >  M:     "Maciej W. Rozycki" <macro@orcam.me.uk>
+> >  L:     linux-mips@vger.kernel.org
+> >  S:     Maintained
+> > -W:     http://www.linux-mips.org/wiki/DECstation
 >
->  As I noted in an earlier reply and Kurt further confirmed site recovery
-> is under way.
-
-Great. Alternatively the authorship is preserved without the author
-email (but IANAL):
-
-Copyright (C) 1999, 2000, 05, 06 Ralf Baechle
-
+> Why not use the web archive? The information is still valuable.
+> https://web.archive.org/web/20190704000315/https://www.linux-mips.org/wik=
+i/DECstation
 >
->   Maciej
+
+If that information is valuable, how about adding that into the kernel
+documentation page?
+
+If linux-mips.org wiki is back, we will keep this link; if not, we
+should get a copy of that information into the documentation (where it
+can survive some time) or we simply drop it.
+
+Putting a web.archive.org link into MAINTAINERS sounds like a really
+bad idea to me.
+
+Lukas
