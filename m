@@ -1,72 +1,60 @@
-From: Lukas Bulwahn <lukas.bulwahn@gmail.com>
-Subject: Re: [PATCH 2/5] MAINTAINERS: remove linux-mips.org references
-Date: Fri, 26 Feb 2021 09:29:34 +0100
-Message-ID: <CAKXUXMygO2caTv9D1dMv9dxJSgC8=CpcT3hYsNm_ko4HXdNmeg@mail.gmail.com>
-References: <20210222161905.1153-1-lukas.bulwahn@gmail.com>
- <20210222161905.1153-3-lukas.bulwahn@gmail.com> <CAAdtpL4egZYCGS+2K5FQSFYcPKomosuvvrunpDskkiif5Ma5Uw@mail.gmail.com>
+From: "Gustavo A. R. Silva" <gustavoars@kernel.org>
+Subject: Re: [PATCH 105/141] net: ax25: Fix fall-through warnings for Clang
+Date: Thu, 4 Mar 2021 16:54:47 -0600
+Message-ID: <20210304225447.GE105908@embeddedor>
+References: <cover.1605896059.git.gustavoars@kernel.org>
+ <37c8748f80572a08f33e4ce354f93d61ddfd175b.1605896060.git.gustavoars@kernel.org>
 Mime-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-Return-path: <kernel-janitors-owner@vger.kernel.org>
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=wv9SyvXPStH1HbSiyrd6dLJkIu8R0cmO6gcv4tLTSvQ=;
-        b=Rhl08QI0pfGUZYq6eTciDwuN89KLIIALSh8uKopiHPcUrfyNcHVdR0Y6PGJQ1Aw1Xp
-         vPXZjJhOIbKvkPRAco2v2VKNnyYBYI7anNnDxXs0xiSFo7fx91n4XiggVGMHNhhKvu4k
-         VOo44XIZnSglXqVUOvLckvmbXB7NqIerp5578rZZ7Kkq5DtCOVgLsBTzfYkva3pS5MmR
-         BAfHatL1uy5ftOMq0kGxA8XxXWQPdMPnpdScblfP9jVupdhUCn3EriJZ5//VUNid5wyo
-         f/ATH0swlnaPmd0JLN4HAMbgaAspgJBsV4EsG8vx1D8YainfyvDQL/PiOgyXGYZppUzS
-         m9qA==
-In-Reply-To: <CAAdtpL4egZYCGS+2K5FQSFYcPKomosuvvrunpDskkiif5Ma5Uw@mail.gmail.com>
+Return-path: <linux-hams-owner@vger.kernel.org>
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1614898490;
+        bh=BsH7Rv59ABNnewO3nCz5tB4conpCHIF+Oo1vQDLbjus=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=LgkOVyNP190SEF80ubQ1nnUovhU3UiNfn51EtugNSZp9c3WgSfEvNQozTHXwD3Fsd
+         dwhIkmEeZ0lXpyKN/pjouV+Gu+O17KSnAekbT1D5l6uxv/SEq24AlBjBAujAPYzYrK
+         V7YEj96GoOxPv/IjBnvbQy6xIlaPFd76BYyZUhw0xjc+Hpd2xqHPGCWRDCTl07dthf
+         dnXYXxumfNRBXVaNrdymrbzq92MI6XVaEJemJxlwrJ7+BxGTUiD22L3JKZZRN3xrbj
+         aC+ECblCZEgwIdJc1zW2hgq10qWxE8asmD+HfOmlqaXFiys7ekszpJ1Abj2IWaXvJV
+         Tqk1pofAnqUAw==
+Content-Disposition: inline
+In-Reply-To: <37c8748f80572a08f33e4ce354f93d61ddfd175b.1605896060.git.gustavoars@kernel.org>
 List-ID: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="macroman"
-To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <f4bug@amsat.org>
-Cc: Thomas Bogendoerfer <tsbogend@alpha.franken.de>, "open list:BROADCOM NVRAM DRIVER" <linux-mips@vger.kernel.org>, "Maciej W . Rozycki" <macro@orcam.me.uk>, Tiezhu Yang <yangtiezhu@loongson.cn>, Willy Tarreau <w@1wt.eu>, linux-edac@vger.kernel.org, linux-hams@vger.kernel.org, kernel-janitors@vger.kernel.org, open list <linux-kernel@vger.kernel.org>
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+To: Joerg Reuter <jreuter@yaina.de>, Ralf Baechle <ralf@linux-mips.org>, "David S. Miller" <davem@davemloft.net>, Jakub Kicinski <kuba@kernel.org>
+Cc: linux-hams@vger.kernel.org, netdev@vger.kernel.org, linux-kernel@vger.kernel.org, linux-hardening@vger.kernel.org
 
-On Tue, Feb 23, 2021 at 10:48 AM Philippe Mathieu-Daud=C3=A9 <f4bug@amsat.o=
-rg> wrote:
->
-> On Mon, Feb 22, 2021 at 5:22 PM Lukas Bulwahn <lukas.bulwahn@gmail.com> w=
-rote:
-> >
-> > The domain lookup for linux-mips.org fails for quite some time now. Hen=
-ce,
-> > webpages, the patchwork instance and Ralf Baechle's email there is not
-> > reachable anymore.
-> >
-> > Remove all references of webpages from linux-mips.org in MAINTAINERS, a=
-nd
-> > refer to the kernel.org's linux-mips patchwork instance instead.
-> >
-> > Signed-off-by: Lukas Bulwahn <lukas.bulwahn@gmail.com>
-> > ---
-> >  MAINTAINERS | 5 +----
-> >  1 file changed, 1 insertion(+), 4 deletions(-)
-> >
-> > diff --git a/MAINTAINERS b/MAINTAINERS
-> > index e949e561867d..703a50183301 100644
-> > --- a/MAINTAINERS
-> > +++ b/MAINTAINERS
-> > @@ -4980,7 +4980,6 @@ DECSTATION PLATFORM SUPPORT
-> >  M:     "Maciej W. Rozycki" <macro@orcam.me.uk>
-> >  L:     linux-mips@vger.kernel.org
-> >  S:     Maintained
-> > -W:     http://www.linux-mips.org/wiki/DECstation
->
-> Why not use the web archive? The information is still valuable.
-> https://web.archive.org/web/20190704000315/https://www.linux-mips.org/wik=
-i/DECstation
->
+Hi all,
 
-If that information is valuable, how about adding that into the kernel
-documentation page?
+It's been more than 3 months; who can take this, please? :)
 
-If linux-mips.org wiki is back, we will keep this link; if not, we
-should get a copy of that information into the documentation (where it
-can survive some time) or we simply drop it.
+Thanks
+--
+Gustavo
 
-Putting a web.archive.org link into MAINTAINERS sounds like a really
-bad idea to me.
-
-Lukas
+On Fri, Nov 20, 2020 at 12:37:53PM -0600, Gustavo A. R. Silva wrote:
+> In preparation to enable -Wimplicit-fallthrough for Clang, fix a warning
+> by explicitly adding a break statement instead of letting the code fall
+> through to the next case.
+> 
+> Link: https://github.com/KSPP/linux/issues/115
+> Signed-off-by: Gustavo A. R. Silva <gustavoars@kernel.org>
+> ---
+>  net/ax25/af_ax25.c | 1 +
+>  1 file changed, 1 insertion(+)
+> 
+> diff --git a/net/ax25/af_ax25.c b/net/ax25/af_ax25.c
+> index 269ee89d2c2b..2631efc6e359 100644
+> --- a/net/ax25/af_ax25.c
+> +++ b/net/ax25/af_ax25.c
+> @@ -850,6 +850,7 @@ static int ax25_create(struct net *net, struct socket *sock, int protocol,
+>  		case AX25_P_ROSE:
+>  			if (ax25_protocol_is_registered(AX25_P_ROSE))
+>  				return -ESOCKTNOSUPPORT;
+> +			break;
+>  #endif
+>  		default:
+>  			break;
+> -- 
+> 2.27.0
+> 
