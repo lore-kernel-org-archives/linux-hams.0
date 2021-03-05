@@ -1,19 +1,19 @@
 From: "Gustavo A. R. Silva" <gustavoars@kernel.org>
-Subject: [PATCH][next] net: rose: Fix fall-through warnings for Clang
-Date: Fri, 5 Mar 2021 01:44:17 -0600
-Message-ID: <20210305074417.GA123270@embeddedor>
+Subject: [PATCH RESEND][next] net: netrom: Fix fall-through warnings for Clang
+Date: Fri, 5 Mar 2021 03:22:10 -0600
+Message-ID: <20210305092210.GA139864@embeddedor>
 Mime-Version: 1.0
 Return-path: <linux-hams-owner@vger.kernel.org>
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1614930261;
-        bh=PkWMbNHUqRE72YncI3aAbekle6zPRx7ucQ1kVnXaWHU=;
+        s=k20201202; t=1614936133;
+        bh=9B2UwE4hVVh8VCkL2+pUISD+qk8AExeqBMVyuOMGs4c=;
         h=Date:From:To:Cc:Subject:From;
-        b=RhOM/HW91RbEuOzIlgJ4q5VTneRntHm51LQS0LNMuR1Ok9mSS150JFrjZUhitK/EC
-         /iEM7YWs4MSTjH9vPuesPj9uWf7Go+2WkZS2tLC7hPUr1QSRNAoU/EV+f1ZAjnPF8/
-         eDx4i9bb5E7gU6w11cfceBE5p4we+sGAj3ywYQnA6zPMfEnwjHrCb37xESOm8aFka9
-         bpkNQSS3IKMjggJTaaJyC9ONxrOYwnOeXOnQw12MGEOn0sa7U1Bfg5sYqlstFaxUO+
-         l0sEC+xgh7CBoLbKgJ0IF3s1oIm+HPxLHjN9cn8vdwxl/m+93apAXmHLhh2P+Ar9u4
-         HICIXT3O1718g==
+        b=s0sXa8ewwCQPCZWxkZ0kWgzQib82IDRQs8L/w3gQsTIuV/TGF0xE/TlAw3PutCPbX
+         S8PzgxFxsr9p1K/ILpFpywgxfH6abrGY217uRKlaw6N8gbvUkYM1BVKn8DlEUFuGVT
+         Zka6w9/B10NSt2qgDaCgErIoS811HqjRvEmnj+uZBTE40XyAVYGMykjs6mpvgynyd5
+         xOhj3BHbcw8jqqyL74QjxwbszhSEI6LCfVmRMrKuwABN/xPlUiKBG8qLcmEWGcAqzP
+         /f+8kSDvjwMm+4GMkftHOjkvTkLfrAQU27lgN/XGMDUSi7Xvb1z/uEOwiKNxjonetZ
+         xCWw21XnCV+Nw==
 Content-Disposition: inline
 List-ID: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
@@ -28,29 +28,45 @@ letting the code fall through to the next case.
 Link: https://github.com/KSPP/linux/issues/115
 Signed-off-by: Gustavo A. R. Silva <gustavoars@kernel.org>
 ---
- net/rose/rose_route.c | 2 ++
- 1 file changed, 2 insertions(+)
+ net/netrom/nr_route.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/net/rose/rose_route.c b/net/rose/rose_route.c
-index 6e35703ff353..c0e04c261a15 100644
---- a/net/rose/rose_route.c
-+++ b/net/rose/rose_route.c
-@@ -347,6 +347,7 @@ static int rose_del_node(struct rose_route_struct *rose_route,
- 				case 1:
- 					rose_node->neighbour[1] =
- 						rose_node->neighbour[2];
-+					break;
- 				case 2:
- 					break;
- 				}
-@@ -508,6 +509,7 @@ void rose_rt_device_down(struct net_device *dev)
+diff --git a/net/netrom/nr_route.c b/net/netrom/nr_route.c
+index 78da5eab252a..de9821b6a62a 100644
+--- a/net/netrom/nr_route.c
++++ b/net/netrom/nr_route.c
+@@ -266,6 +266,7 @@ static int __must_check nr_add_node(ax25_address *nr, const char *mnemonic,
+ 		fallthrough;
+ 	case 2:
+ 		re_sort_routes(nr_node, 0, 1);
++		break;
+ 	case 1:
+ 		break;
+ 	}
+@@ -359,6 +360,7 @@ static int nr_del_node(ax25_address *callsign, ax25_address *neighbour, struct n
  					fallthrough;
  				case 1:
- 					t->neighbour[1] = t->neighbour[2];
+ 					nr_node->routes[1] = nr_node->routes[2];
 +					break;
  				case 2:
  					break;
  				}
+@@ -482,6 +484,7 @@ static int nr_dec_obs(void)
+ 					fallthrough;
+ 				case 1:
+ 					s->routes[1] = s->routes[2];
++					break;
+ 				case 2:
+ 					break;
+ 				}
+@@ -529,6 +532,7 @@ void nr_rt_device_down(struct net_device *dev)
+ 							fallthrough;
+ 						case 1:
+ 							t->routes[1] = t->routes[2];
++							break;
+ 						case 2:
+ 							break;
+ 						}
 -- 
 2.27.0
 
