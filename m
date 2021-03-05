@@ -1,72 +1,39 @@
-From: "Gustavo A. R. Silva" <gustavoars@kernel.org>
-Subject: [PATCH RESEND][next] net: netrom: Fix fall-through warnings for Clang
-Date: Fri, 5 Mar 2021 03:22:10 -0600
-Message-ID: <20210305092210.GA139864@embeddedor>
+From: Denis Efremov <efremov@linux.com>
+Subject: [PATCH] net/hamradio/6pack: remove redundant check in sp_encaps()
+Date: Fri,  5 Mar 2021 19:26:22 +0300
+Message-ID: <20210305162622.67993-1-efremov@linux.com>
 Mime-Version: 1.0
-Return-path: <linux-hams-owner@vger.kernel.org>
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1614936133;
-        bh=9B2UwE4hVVh8VCkL2+pUISD+qk8AExeqBMVyuOMGs4c=;
-        h=Date:From:To:Cc:Subject:From;
-        b=s0sXa8ewwCQPCZWxkZ0kWgzQib82IDRQs8L/w3gQsTIuV/TGF0xE/TlAw3PutCPbX
-         S8PzgxFxsr9p1K/ILpFpywgxfH6abrGY217uRKlaw6N8gbvUkYM1BVKn8DlEUFuGVT
-         Zka6w9/B10NSt2qgDaCgErIoS811HqjRvEmnj+uZBTE40XyAVYGMykjs6mpvgynyd5
-         xOhj3BHbcw8jqqyL74QjxwbszhSEI6LCfVmRMrKuwABN/xPlUiKBG8qLcmEWGcAqzP
-         /f+8kSDvjwMm+4GMkftHOjkvTkLfrAQU27lgN/XGMDUSi7Xvb1z/uEOwiKNxjonetZ
-         xCWw21XnCV+Nw==
-Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+Return-path: <netdev-owner@vger.kernel.org>
 List-ID: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-To: Ralf Baechle <ralf@linux-mips.org>, "David S. Miller" <davem@davemloft.net>, Jakub Kicinski <kuba@kernel.org>
-Cc: linux-hams@vger.kernel.org, netdev@vger.kernel.org, linux-kernel@vger.kernel.org, "Gustavo A. R. Silva" <gustavoars@kernel.org>, linux-hardening@vger.kernel.org
+To: Andreas Koensgen <ajk@comnets.uni-bremen.de>
+Cc: Denis Efremov <efremov@linux.com>, "David S. Miller" <davem@davemloft.net>, Jakub Kicinski <kuba@kernel.org>, linux-hams@vger.kernel.org, netdev@vger.kernel.org, linux-kernel@vger.kernel.org
 
-In preparation to enable -Wimplicit-fallthrough for Clang, fix multiple
-warnings by explicitly adding multiple break statements instead of
-letting the code fall through to the next case.
+"len > sp->mtu" checked twice in a row in sp_encaps().
+Remove the second check.
 
-Link: https://github.com/KSPP/linux/issues/115
-Signed-off-by: Gustavo A. R. Silva <gustavoars@kernel.org>
+Signed-off-by: Denis Efremov <efremov@linux.com>
 ---
- net/netrom/nr_route.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/net/hamradio/6pack.c | 5 -----
+ 1 file changed, 5 deletions(-)
 
-diff --git a/net/netrom/nr_route.c b/net/netrom/nr_route.c
-index 78da5eab252a..de9821b6a62a 100644
---- a/net/netrom/nr_route.c
-+++ b/net/netrom/nr_route.c
-@@ -266,6 +266,7 @@ static int __must_check nr_add_node(ax25_address *nr, const char *mnemonic,
- 		fallthrough;
- 	case 2:
- 		re_sort_routes(nr_node, 0, 1);
-+		break;
- 	case 1:
- 		break;
+diff --git a/drivers/net/hamradio/6pack.c b/drivers/net/hamradio/6pack.c
+index 71d6629e65c9..9f5b5614a150 100644
+--- a/drivers/net/hamradio/6pack.c
++++ b/drivers/net/hamradio/6pack.c
+@@ -171,11 +171,6 @@ static void sp_encaps(struct sixpack *sp, unsigned char *icp, int len)
+ 		goto out_drop;
  	}
-@@ -359,6 +360,7 @@ static int nr_del_node(ax25_address *callsign, ax25_address *neighbour, struct n
- 					fallthrough;
- 				case 1:
- 					nr_node->routes[1] = nr_node->routes[2];
-+					break;
- 				case 2:
- 					break;
- 				}
-@@ -482,6 +484,7 @@ static int nr_dec_obs(void)
- 					fallthrough;
- 				case 1:
- 					s->routes[1] = s->routes[2];
-+					break;
- 				case 2:
- 					break;
- 				}
-@@ -529,6 +532,7 @@ void nr_rt_device_down(struct net_device *dev)
- 							fallthrough;
- 						case 1:
- 							t->routes[1] = t->routes[2];
-+							break;
- 						case 2:
- 							break;
- 						}
+ 
+-	if (len > sp->mtu) {	/* sp->mtu = AX25_MTU = max. PACLEN = 256 */
+-		msg = "oversized transmit packet!";
+-		goto out_drop;
+-	}
+-
+ 	if (p[0] > 5) {
+ 		msg = "invalid KISS command";
+ 		goto out_drop;
 -- 
-2.27.0
+2.26.2
 
