@@ -1,47 +1,39 @@
-From: patchwork-bot+netdevbpf@kernel.org
-Subject: Re: [PATCH] net/hamradio/6pack: remove redundant check in sp_encaps()
-Date: Fri, 05 Mar 2021 21:10:09 +0000
-Message-ID: <161497860934.24588.18272207864656241633.git-patchwork-notify@kernel.org>
-References: <20210305162622.67993-1-efremov@linux.com>
+From: David Ranch <linux-hams@trinnet.net>
+Subject: Linux AX.25 stack now toxic for connected packet connections with
+ Ubuntu 20.04 / 5.8.0-44-generic #50
+Date: Sat, 6 Mar 2021 13:45:56 -0800
+Message-ID: <32262788-02bf-5a92-dff6-75b916390108@trinnet.net>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1614978609;
-        bh=MhaNOUG9C8mNaglH6NiBaYfSD1D026SBkCEvk86ZE4w=;
-        h=Subject:From:Date:References:In-Reply-To:To:Cc:From;
-        b=tO7X0rTMg0D2avoUDTt2mTUHPwJ9I9x1PGU/IRCBFsuO3M++XsR4PtXWLhuLpneWk
-         I5usBcsihTB2NckvsKqcfXzgdLKI2RON1wr6MYSPbRXKHpMzZXlOM2+T3xEX42/wFi
-         qpmQP4PeqNKyw6wGgC7khCit7CJChB8p5NwUSDwAxjDJMXSzefyhMZ3lSiQNevBSzu
-         Eii6Vt6ZGs/KfDuRECTeCamOxOdFAWW0AbQ+Kycxn4rDgSrf6ueeUjhi54M+DKaCIZ
-         SLNp7U3Zkzh1MVyU5VF9STWFLadmMj+3kCFlM3a39v4LMu591xtpZWMAPZEZtwqsyO
-         cYolyPDr50iIg==
-In-Reply-To: <20210305162622.67993-1-efremov@linux.com>
 List-ID: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"
-To: Denis Efremov <efremov@linux.com>
-Cc: ajk@comnets.uni-bremen.de, davem@davemloft.net, kuba@kernel.org, linux-hams@vger.kernel.org, netdev@vger.kernel.org, linux-kernel@vger.kernel.org
+Content-Type: text/plain; charset="us-ascii"; format="flowed"
+To: Linux Hams <linux-hams@vger.kernel.org>
 
-Hello:
+Hello Everyone,
 
-This patch was applied to netdev/net.git (refs/heads/master):
+I wanted to check with the larger community to see if others are 
+experiencing system crashes when making connected AX.25 sessions. I have 
+confirmed that this is NOT an RFI thing and sending unconnected (UI) 
+transmissions (beacons) small or large is fine, and even initiating the 
+beginning of connected session to a non-existent remote station callsign 
+is OK with axcall, linpac, etc.  The issue is that once a valid AX.25 
+connection is established, I begin to receive data from the remote 
+station and then seemingly when my station is to send an ACK packet, the 
+machine locks hard.  No segmentation failure, no kernel panic, the 
+Gnome3 display stays up but the screen no longer updates , nothing in 
+the logs and even stops pinging from a different machine on the LAN.  
+The machine is 100% crashed and this is 100% reproducible.
 
-On Fri,  5 Mar 2021 19:26:22 +0300 you wrote:
-> "len > sp->mtu" checked twice in a row in sp_encaps().
-> Remove the second check.
-> 
-> Signed-off-by: Denis Efremov <efremov@linux.com>
-> ---
->  drivers/net/hamradio/6pack.c | 5 -----
->  1 file changed, 5 deletions(-)
+Is anyone else seeing this?
 
-Here is the summary with links:
-  - net/hamradio/6pack: remove redundant check in sp_encaps()
-    https://git.kernel.org/netdev/net/c/85554bcd123e
-
-You are awesome, thank you!
---
-Deet-doot-dot, I am a bot.
-https://korg.docs.kernel.org/patchwork/pwbot.html
+    $ uname -a
+    Linux hampacket3 *5.8.0-44-generic #50*~20.04.1-Ubuntu SMP Wed Feb 
+10 21:07:30 UTC 2021 x86_64 x86_64 x86_64 GNU/Linux
 
 
+Any recommendations on how to get some sort of details out of my system 
+about this crash would be helpful.
+
+--David
+KI6ZHD
