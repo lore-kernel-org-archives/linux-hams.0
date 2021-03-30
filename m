@@ -1,7 +1,7 @@
 From: Wang Qing <wangqing@vivo.com>
-Subject: [PATCH 5/6] net/ax25: Delete obsolete TODO file
-Date: Tue, 30 Mar 2021 15:02:48 +0800
-Message-ID: <1617087773-7183-6-git-send-email-wangqing@vivo.com>
+Subject: [PATCH 6/6] net/decnet: Delete obsolete TODO file
+Date: Tue, 30 Mar 2021 15:02:49 +0800
+Message-ID: <1617087773-7183-7-git-send-email-wangqing@vivo.com>
 References: <1617087773-7183-1-git-send-email-wangqing@vivo.com>
 Return-path: <linux-kernel-owner@vger.kernel.org>
 In-Reply-To: <1617087773-7183-1-git-send-email-wangqing@vivo.com>
@@ -12,43 +12,63 @@ Content-Transfer-Encoding: 7bit
 To: Thomas Bogendoerfer <tsbogend@alpha.franken.de>, Adaptec OEM Raid Solutions <aacraid@microsemi.com>, "James E.J. Bottomley" <jejb@linux.ibm.com>, "Martin K. Petersen" <martin.petersen@oracle.com>, Luis de Bethencourt <luisbg@kernel.org>, Salah Triki <salah.triki@gmail.com>, David Woodhouse <dwmw2@infradead.org>, Richard Weinberger <richard@nod.at>, Ralf Baechle <ralf@linux-mips.org>, "David S. Miller" <davem@davemloft.net>, Jakub Kicinski <kuba@kernel.org>, Wang Qing <wangqing@vivo.com>, linux-mips@vger.kernel.org, linux-kernel@vger.kernel.org, linux-scsi@vger.kernel.org, linux-mtd@lists.infradead.org, linux-hams@vger.kernel.org, netdev@vger.kernel.org, linux-decnet-user@lists.sourceforge.net
 Cc: gregkh@linuxfoundation.org
 
-The TODO file here has not been updated for 13 years, and the function 
+The TODO file here has not been updated from 2005, and the function 
 development described in the file have been implemented or abandoned.
 
 Its existence will mislead developers seeking to view outdated information.
 
 Signed-off-by: Wang Qing <wangqing@vivo.com>
 ---
- net/ax25/TODO | 20 --------------------
- 1 file changed, 20 deletions(-)
- delete mode 100644 net/ax25/TODO
+ net/decnet/TODO | 40 ----------------------------------------
+ 1 file changed, 40 deletions(-)
+ delete mode 100644 net/decnet/TODO
 
-diff --git a/net/ax25/TODO b/net/ax25/TODO
+diff --git a/net/decnet/TODO b/net/decnet/TODO
 deleted file mode 100644
-index 69fb4e3..0000000
---- a/net/ax25/TODO
+index 358e9eb..0000000
+--- a/net/decnet/TODO
 +++ /dev/null
-@@ -1,20 +0,0 @@
--Do the ax25_list_lock, ax25_dev_lock, linkfail_lockreally, ax25_frag_lock and
--listen_lock have to be bh-safe?
+@@ -1,40 +0,0 @@
+-Steve's quick list of things that need finishing off:
+-[they are in no particular order and range from the trivial to the long winded]
 -
--Do the netrom and rose locks have to be bh-safe?
+- o Proper timeouts on each neighbour (in routing mode) rather than
+-   just the 60 second On-Ethernet cache value.
 -
--A device might be deleted after lookup in the SIOCADDRT ioctl but before it's
--being used.
+- o Support for X.25 linklayer
 -
--Routes to a device being taken down might be deleted by ax25_rt_device_down
--but added by somebody else before the device has been deleted fully.
+- o Support for DDCMP link layer
 -
--The ax25_rt_find_route synopsys is pervert but I somehow had to deal with
--the race caused by the static variable in it's previous implementation.
+- o The DDCMP device itself
 -
--Implement proper socket locking in netrom and rose.
+- o PPP support (rfc1762)
 -
--Check socket locking when ax25_rcv is sending to raw sockets.  In particular
--ax25_send_to_raw() seems fishy.  Heck - ax25_rcv is fishy.
+- o Lots of testing with real applications
 -
--Handle XID and TEST frames properly.
+- o Verify errors etc. against POSIX 1003.1g (draft)
+-
+- o Using send/recvmsg() to get at connect/disconnect data (POSIX 1003.1g)
+-   [maybe this should be done at socket level... the control data in the
+-    send/recvmsg() calls should simply be a vector of set/getsockopt()
+-    calls]
+-
+- o check MSG_CTRUNC is set where it should be.
+-
+- o Find all the commonality between DECnet and IPv4 routing code and extract
+-   it into a small library of routines. [probably a project for 2.7.xx]
+-
+- o Add perfect socket hashing - an idea suggested by Paul Koning. Currently
+-   we have a half-way house scheme which seems to work reasonably well, but
+-   the full scheme is still worth implementing, its not not top of my list
+-   right now.
+-
+- o Add session control message flow control
+-
+- o Add NSP message flow control
+-
+- o DECnet sendpages() function
+-
+- o AIO for DECnet
 -- 
 2.7.4
 
