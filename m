@@ -1,35 +1,58 @@
-From: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
-Subject: Re: [PATCH 1/6] mips/sgi-ip27: Delete obsolete TODO file
-Date: Tue, 30 Mar 2021 15:07:40 +0200
-Message-ID: <20210330130740.GA11217@alpha.franken.de>
+From: patchwork-bot+netdevbpf@kernel.org
+Subject: Re: [PATCH 0/6] Clean up obsolete TODO files
+Date: Wed, 31 Mar 2021 00:00:11 +0000
+Message-ID: <161714881133.29090.6649016688836045626.git-patchwork-notify@kernel.org>
 References: <1617087773-7183-1-git-send-email-wangqing@vivo.com>
- <1617087773-7183-2-git-send-email-wangqing@vivo.com>
 Mime-Version: 1.0
-Return-path: <linux-hams-owner@vger.kernel.org>
-Content-Disposition: inline
-In-Reply-To: <1617087773-7183-2-git-send-email-wangqing@vivo.com>
+Content-Transfer-Encoding: 8bit
+Return-path: <linux-scsi-owner@vger.kernel.org>
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1617148811;
+        bh=ysOe6gV6VLVY/dAxzArYun+ymQ/xTKzYhzoq2I0b7ZA=;
+        h=Subject:From:Date:References:In-Reply-To:To:Cc:From;
+        b=GUHx+9enHBcPboBFsqMeROxBsZDrztZWphS/QWzotm4t6PymL1JVfkEMME30Xpmyn
+         g16hMNrBb6yX1aelq3wYjHKsQqRMHNPbiHAEH5QorFe0QtppS4n+3mKiy5urMe+8yU
+         1GAVh7PeyFULyFpeO9scl894T+9XUZi43uMDU2ms34M4ZdKqVfKWPPWhl8/Iy+nQQ+
+         dRe1VobZ/vbEL3zA527cszGOAk56/t6yhxFM7yRkgTqFhCT+jK4wRXkjDQZcsAa5Zs
+         5XYnVt9+a/t8NpzvkB/0F4D0a4wq8R+wjKQbAAI1OvRJKkpec+Ezvo5W1CAAS5ndx7
+         G9mVp25a4iisg==
+In-Reply-To: <1617087773-7183-1-git-send-email-wangqing@vivo.com>
 List-ID: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 7bit
 To: Wang Qing <wangqing@vivo.com>
-Cc: Adaptec OEM Raid Solutions <aacraid@microsemi.com>, "James E.J. Bottomley" <jejb@linux.ibm.com>, "Martin K. Petersen" <martin.petersen@oracle.com>, Luis de Bethencourt <luisbg@kernel.org>, Salah Triki <salah.triki@gmail.com>, David Woodhouse <dwmw2@infradead.org>, Richard Weinberger <richard@nod.at>, Ralf Baechle <ralf@linux-mips.org>, "David S. Miller" <davem@davemloft.net>, Jakub Kicinski <kuba@kernel.org>, linux-mips@vger.kernel.org, linux-kernel@vger.kernel.org, linux-scsi@vger.kernel.org, linux-mtd@lists.infradead.org, linux-hams@vger.kernel.org, netdev@vger.kernel.org, linux-decnet-user@lists.sourceforge.net, gregkh@linuxfoundation.org
+Cc: tsbogend@alpha.franken.de, aacraid@microsemi.com, jejb@linux.ibm.com, martin.petersen@oracle.com, luisbg@kernel.org, salah.triki@gmail.com, dwmw2@infradead.org, richard@nod.at, ralf@linux-mips.org, davem@davemloft.net, kuba@kernel.org, linux-mips@vger.kernel.org, linux-kernel@vger.kernel.org, linux-scsi@vger.kernel.org, linux-mtd@lists.infradead.org, linux-hams@vger.kernel.org, netdev@vger.kernel.org, linux-decnet-user@lists.sourceforge.net, gregkh@linuxfoundation.org
 
-On Tue, Mar 30, 2021 at 03:02:44PM +0800, Wang Qing wrote:
-> The TODO file here has not been updated for 15 years, and the function 
+Hello:
+
+This series was applied to netdev/net-next.git (refs/heads/master):
+
+On Tue, 30 Mar 2021 15:02:43 +0800 you wrote:
+> It is mentioned in the official documents of the Linux Foundation and WIKI
+> that you can participate in its development according to the TODO files of
+> each module.
+> 
+> But the TODO files here has not been updated for 15 years, and the function
 > development described in the file have been implemented or abandoned.
 > 
-> Its existence will mislead developers seeking to view outdated information.
-> 
-> Signed-off-by: Wang Qing <wangqing@vivo.com>
-> ---
->  arch/mips/sgi-ip27/TODO | 19 -------------------
->  1 file changed, 19 deletions(-)
->  delete mode 100644 arch/mips/sgi-ip27/TODO
+> [...]
 
-applied to mips-next.
+Here is the summary with links:
+  - [1/6] mips/sgi-ip27: Delete obsolete TODO file
+    https://git.kernel.org/netdev/net-next/c/0f1b2a4912b2
+  - [2/6] scsi/aacraid: Delete obsolete TODO file
+    https://git.kernel.org/netdev/net-next/c/ef843f261b88
+  - [3/6] fs/befs: Delete obsolete TODO file
+    https://git.kernel.org/netdev/net-next/c/22612b4e6039
+  - [4/6] fs/jffs2: Delete obsolete TODO file
+    https://git.kernel.org/netdev/net-next/c/ab36ba4f3a81
+  - [5/6] net/ax25: Delete obsolete TODO file
+    https://git.kernel.org/netdev/net-next/c/8d9e5bbf5c68
+  - [6/6] net/decnet: Delete obsolete TODO file
+    https://git.kernel.org/netdev/net-next/c/b9aa074b896b
 
-Thomas.
+You are awesome, thank you!
+--
+Deet-doot-dot, I am a bot.
+https://korg.docs.kernel.org/patchwork/pwbot.html
 
--- 
-Crap can work. Given enough thrust pigs will fly, but it's not necessarily a
-good idea.                                                [ RFC1925, 2.3 ]
+
