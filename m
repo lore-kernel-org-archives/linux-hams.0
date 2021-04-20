@@ -1,40 +1,84 @@
-From: Richard Weinberger <richard.weinberger@gmail.com>
-Subject: Re: [PATCH 4/6] fs/jffs2: Delete obsolete TODO file
-Date: Thu, 8 Apr 2021 00:20:17 +0200
-Message-ID: <CAFLxGvy7vKJHAms-QAyhcUiv58GYQy+zy3AZ3hP_g+tmh-X4xg@mail.gmail.com>
-References: <1617087773-7183-1-git-send-email-wangqing@vivo.com> <1617087773-7183-5-git-send-email-wangqing@vivo.com>
+From: "Gustavo A. R. Silva" <gustavo@embeddedor.com>
+Subject: Re: [PATCH RESEND][next] net: netrom: Fix fall-through warnings for
+ Clang
+Date: Tue, 20 Apr 2021 15:11:00 -0500
+Message-ID: <5047001a-e5a8-ec64-0dc7-662e7cb0d100@embeddedor.com>
+References: <20210305092210.GA139864@embeddedor>
 Mime-Version: 1.0
-Return-path: <linux-mips-owner@vger.kernel.org>
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=ner43B1c7JahH39vGo3hPzauiEoC0Ok0VtKiG5WaEkY=;
-        b=U16K0peTEaFDRZyiGqG5dTqKXCkKnJRPaNxJmbe3Q1Sg+u+XdBREmoPk9D4QGlPs5S
-         eTTzVZabqfO+GDt9sCXNTUNN7zPqDYAwEn/+f1DLP5YiPjdgVRptDaBiPpYpOQLEQWeE
-         t7lF2JbRy5iYwmiS/bJfdY9wv3rjHc1YWXsBlgjnAnXwVhZWzIfsGph7UJ6fQc4MSqkm
-         v1pgLQlSm4eycU9hOmk4BInbijaFF+2qzoygqyipg1Ovqc4qsO3VU+eZKFmfHpWgy+yM
-         cFlr/DFB9mOdGNdSs6D1jITwediB2I33I9gGyJAwfQTLgdHMu4BcSJ57rpvOpM6FRZsG
-         1NYQ==
-In-Reply-To: <1617087773-7183-5-git-send-email-wangqing@vivo.com>
+Content-Transfer-Encoding: 7bit
+Return-path: <linux-kernel-owner@vger.kernel.org>
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+        d=embeddedor.com; s=default; h=Content-Transfer-Encoding:Content-Type:
+        In-Reply-To:MIME-Version:Date:Message-ID:From:References:Cc:To:Subject:Sender
+        :Reply-To:Content-ID:Content-Description:Resent-Date:Resent-From:
+        Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:
+        List-Unsubscribe:List-Subscribe:List-Post:List-Owner:List-Archive;
+        bh=CkRrAR3rCpK4uliJ7LJ71iNQodpgSH1kYlP/RKhfhGo=; b=Ueb+udY2kyoTD5pHw4Y8wqYIni
+        nIQy8U6Ne3ALQYgfy/x0h1iEGgKxTEWlmbOT/CI/7GCpn6hu14Wa0b+PoORM7ZKHKKggosQA+Ip9l
+        CcmjjD4Wp+ApERE6f8OCqMO5l/xH92PHIlJReKlxuC+TL06N/NOvLkkOoVVV/4KIslHMQhAgFUI0j
+        taGG9CVVtPFUlvBTNxstk+vwd3dEcbymBOM0ye//KqaG0NHaY/JrVYYi6inJJMadKIFkqfUelRjs3
+        mkHzi4B1oT9bPCPX2CzNlq3seQW0Xo1CtEzEya8CQuieGZxSrRpUAphnfejKyT5oOuOSBp+7GH7Ie
+        qG+8 
+In-Reply-To: <20210305092210.GA139864@embeddedor>
+Content-Language: en-US
 List-ID: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-To: Wang Qing <wangqing@vivo.com>
-Cc: Thomas Bogendoerfer <tsbogend@alpha.franken.de>, Adaptec OEM Raid Solutions <aacraid@microsemi.com>, "James E.J. Bottomley" <jejb@linux.ibm.com>, "Martin K. Petersen" <martin.petersen@oracle.com>, Luis de Bethencourt <luisbg@kernel.org>, Salah Triki <salah.triki@gmail.com>, David Woodhouse <dwmw2@infradead.org>, Richard Weinberger <richard@nod.at>, Ralf Baechle <ralf@linux-mips.org>, "David S. Miller" <davem@davemloft.net>, Jakub Kicinski <kuba@kernel.org>, linux-mips@vger.kernel.org, LKML <linux-kernel@vger.kernel.org>, linux-scsi@vger.kernel.org, linux-mtd@lists.infradead.org, linux-hams@vger.kernel.org, netdev@vger.kernel.org, linux-decnet-user@lists.sourceforge.net, Greg KH <gregkh@linuxfoundation.org>
+To: "Gustavo A. R. Silva" <gustavoars@kernel.org>, Ralf Baechle <ralf@linux-mips.org>, "David S. Miller" <davem@davemloft.net>, Jakub Kicinski <kuba@kernel.org>
+Cc: linux-hams@vger.kernel.org, netdev@vger.kernel.org, linux-kernel@vger.kernel.org, linux-hardening@vger.kernel.org
 
-On Tue, Mar 30, 2021 at 9:07 AM Wang Qing <wangqing@vivo.com> wrote:
->
-> The TODO file here has not been updated for 14 years, and the function
-> development described in the file have been implemented or abandoned.
->
-> Its existence will mislead developers seeking to view outdated information.
+Hi all,
 
-Did you check whether all items in this list are really outdated?
-Nobody shall ever blindly follow a TODO list without checking first which
-points are still valid or not.
-Removing that file does not magically solve the issues it describes.
+Friendly ping: who can take this, please?
 
--- 
-Thanks,
-//richard
+Thanks
+--
+Gustavo
+
+On 3/5/21 03:22, Gustavo A. R. Silva wrote:
+> In preparation to enable -Wimplicit-fallthrough for Clang, fix multiple
+> warnings by explicitly adding multiple break statements instead of
+> letting the code fall through to the next case.
+> 
+> Link: https://github.com/KSPP/linux/issues/115
+> Signed-off-by: Gustavo A. R. Silva <gustavoars@kernel.org>
+> ---
+>  net/netrom/nr_route.c | 4 ++++
+>  1 file changed, 4 insertions(+)
+> 
+> diff --git a/net/netrom/nr_route.c b/net/netrom/nr_route.c
+> index 78da5eab252a..de9821b6a62a 100644
+> --- a/net/netrom/nr_route.c
+> +++ b/net/netrom/nr_route.c
+> @@ -266,6 +266,7 @@ static int __must_check nr_add_node(ax25_address *nr, const char *mnemonic,
+>  		fallthrough;
+>  	case 2:
+>  		re_sort_routes(nr_node, 0, 1);
+> +		break;
+>  	case 1:
+>  		break;
+>  	}
+> @@ -359,6 +360,7 @@ static int nr_del_node(ax25_address *callsign, ax25_address *neighbour, struct n
+>  					fallthrough;
+>  				case 1:
+>  					nr_node->routes[1] = nr_node->routes[2];
+> +					break;
+>  				case 2:
+>  					break;
+>  				}
+> @@ -482,6 +484,7 @@ static int nr_dec_obs(void)
+>  					fallthrough;
+>  				case 1:
+>  					s->routes[1] = s->routes[2];
+> +					break;
+>  				case 2:
+>  					break;
+>  				}
+> @@ -529,6 +532,7 @@ void nr_rt_device_down(struct net_device *dev)
+>  							fallthrough;
+>  						case 1:
+>  							t->routes[1] = t->routes[2];
+> +							break;
+>  						case 2:
+>  							break;
+>  						}
+> 
