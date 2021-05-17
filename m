@@ -1,100 +1,156 @@
-From: "Gustavo A. R. Silva" <gustavo@embeddedor.com>
-Subject: Re: [PATCH RESEND][next] net: netrom: Fix fall-through warnings for
- Clang
-Date: Mon, 17 May 2021 15:09:47 -0500
-Message-ID: <a3fa4bac-2b30-0954-30e6-e4202949e773@embeddedor.com>
-References: <20210305092210.GA139864@embeddedor>
- <5047001a-e5a8-ec64-0dc7-662e7cb0d100@embeddedor.com>
+From: Nate Bargmann <n0nb@n0nb.us>
+Subject: [Fwd: Hamlib 4.2 release]
+Date: Mon, 17 May 2021 13:41:36 -0500
+Message-ID: <20210517184136.wau2pbcnqm6gizet@n0nb.us>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
-Return-path: <netdev-owner@vger.kernel.org>
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-        d=embeddedor.com; s=default; h=Content-Transfer-Encoding:Content-Type:
-        In-Reply-To:MIME-Version:Date:Message-ID:References:Cc:To:From:Subject:Sender
-        :Reply-To:Content-ID:Content-Description:Resent-Date:Resent-From:
-        Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:
-        List-Unsubscribe:List-Subscribe:List-Post:List-Owner:List-Archive;
-        bh=nNkGB/SMOVehPker/eeuybln3ISVaMpsQpy10U9fYN8=; b=OIDqYC1WeuePW1/YMttvu6mq1o
-        tjzh7lKTt3baCQZH7Oh96AzHUhM2a6b+ERMwpJMivnV+wMd5a8P/zDui4b7rvb5u2mKWfzUvnWlCK
-        X5EYUVkzsRvUd+8pe1/lNR2bNtUcZuDd279Q+e8eny/jCHNnm9bTti9a3nJWzvMdaAhlA0j/XhlHe
-        gN2SI91KafFKqXTcNEYiO1PM1nzpi3if6RTJWsF+bcQKX4Gzkaq8zk+WyPjy2TqaRG/yyH4k83UQi
-        dRHuCN7ORsFmjjsrXskk4CLh8BjWwb03x7hLrNKpwbVAR6HmLpIUs6kTZMfqYZy2mBFVtKDKtkSuC
-        LCtL 
-In-Reply-To: <5047001a-e5a8-ec64-0dc7-662e7cb0d100@embeddedor.com>
-Content-Language: en-US
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="jmkjnrr3gdhy2aoa"
+Return-path: <linux-hams-owner@vger.kernel.org>
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=n0nb.us;
+        s=default; h=Content-Type:MIME-Version:Message-ID:Subject:To:From:Date:Sender
+        :Reply-To:Cc:Content-Transfer-Encoding:Content-ID:Content-Description:
+        Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:
+        In-Reply-To:References:List-Id:List-Help:List-Unsubscribe:List-Subscribe:
+        List-Post:List-Owner:List-Archive;
+        bh=O6O19Ne+tko4dtUypqHy1OVBBESytiUY3UYaX/ikdR0=; b=ExF1orZAO0Lq3YN6mYAt2C7WqR
+        KAFPpWLg6IvQ9eVtVad8x0bd1Q62SjuaVPDDXBqSMwWZW0gvwJ1USUH3523gWcClpC5GDie1g+dTs
+        Rk782Hd6mK0jOWKXBYm0bnCA16kqRkcd5K6jidp233xHdDNjPxl731ioof8Jzunpi7h8=;
+Content-Disposition: inline
 List-ID: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"
-To: "Gustavo A. R. Silva" <gustavoars@kernel.org>, Ralf Baechle <ralf@linux-mips.org>, "David S. Miller" <davem@davemloft.net>, Jakub Kicinski <kuba@kernel.org>
-Cc: linux-hams@vger.kernel.org, netdev@vger.kernel.org, linux-kernel@vger.kernel.org, linux-hardening@vger.kernel.org
+To: Linux Hams <linux-hams@vger.kernel.org>
 
-Hi Dave,
 
-I haven't received any feedback about these patches after resending them.
+--jmkjnrr3gdhy2aoa
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-We had thousands of these warnings and now we are down to less than a hundred in
-linux-next. I'm planning to take these patches in my -next tree for 5.14 as
-I'm planning to enable -Wimplicit-fallthrough for Clang for that release, too.
+----- Forwarded message from Nate Bargmann <n0nb@n0nb.us> -----
 
-Are you OK with this?
+Date: Mon, 17 May 2021 13:40:58 -0500
+=46rom: Nate Bargmann <n0nb@n0nb.us>
+To: Hamlib Developers <hamlib-developer@lists.sourceforge.net>
+Subject: Hamlib 4.2 release
+Organization: Amateur Radio!
 
-Thanks
---
-Gustavo
+After much work from Mike, W9MDB, and many others, Hamlib 4.2 has been
+released!  The files can be downloaded from:
 
-On 4/20/21 15:11, Gustavo A. R. Silva wrote:
-> Hi all,
-> 
-> Friendly ping: who can take this, please?
-> 
-> Thanks
-> --
-> Gustavo
-> 
-> On 3/5/21 03:22, Gustavo A. R. Silva wrote:
->> In preparation to enable -Wimplicit-fallthrough for Clang, fix multiple
->> warnings by explicitly adding multiple break statements instead of
->> letting the code fall through to the next case.
->>
->> Link: https://github.com/KSPP/linux/issues/115
->> Signed-off-by: Gustavo A. R. Silva <gustavoars@kernel.org>
->> ---
->>  net/netrom/nr_route.c | 4 ++++
->>  1 file changed, 4 insertions(+)
->>
->> diff --git a/net/netrom/nr_route.c b/net/netrom/nr_route.c
->> index 78da5eab252a..de9821b6a62a 100644
->> --- a/net/netrom/nr_route.c
->> +++ b/net/netrom/nr_route.c
->> @@ -266,6 +266,7 @@ static int __must_check nr_add_node(ax25_address *nr, const char *mnemonic,
->>  		fallthrough;
->>  	case 2:
->>  		re_sort_routes(nr_node, 0, 1);
->> +		break;
->>  	case 1:
->>  		break;
->>  	}
->> @@ -359,6 +360,7 @@ static int nr_del_node(ax25_address *callsign, ax25_address *neighbour, struct n
->>  					fallthrough;
->>  				case 1:
->>  					nr_node->routes[1] = nr_node->routes[2];
->> +					break;
->>  				case 2:
->>  					break;
->>  				}
->> @@ -482,6 +484,7 @@ static int nr_dec_obs(void)
->>  					fallthrough;
->>  				case 1:
->>  					s->routes[1] = s->routes[2];
->> +					break;
->>  				case 2:
->>  					break;
->>  				}
->> @@ -529,6 +532,7 @@ void nr_rt_device_down(struct net_device *dev)
->>  							fallthrough;
->>  						case 1:
->>  							t->routes[1] = t->routes[2];
->> +							break;
->>  						case 2:
->>  							break;
->>  						}
->>
+https://sourceforge.net/projects/hamlib/files/hamlib/4.2/
+
+or:
+
+https://github.com/Hamlib/Hamlib/releases/tag/4.2
+
+The source tarball and MS Windows 32 and 64 binaries are available via
+either link as are MD5SUM and SHA1SUM files and signatures for all
+files.
+
+Changes for the 4.2 release include:
+
+    * New rig_get_mode_bandwidths -- returns token set for bandwidths for g=
+iven mode
+        Rig command: \get_mode_bandwidths CW
+        Mode=3DCW
+        Normal=3D500Hz
+        Narrow=3D50Hz
+        Wide=3D2400Hz
+    * New rig_get_info  -- returns token set for all vfos where order does =
+not matter
+      This is a string return to allow for easy future expansion without ch=
+anging the API
+      New tokens may be introduced and can be skipped if not used by clients
+        Rig command: \get_rig_info
+        VFO=3DMain Freq=3D145000000 Mode=3DNone Width=3D0 RX=3D1 TX=3D1
+        VFO=3DVFOB Freq=3D145000000 Mode=3DFM Width=3D15000 RX=3D0 TX=3D0
+        Split=3D0 SatMode=3D0
+        Rig=3DDummy
+        App=3DHamlib
+        Version=3D20210429
+        CRC=3D0xf49f4708
+    * New rig_get_vfo_info
+        Rig command: \get_vfo_info VFOA
+        Freq: 145000000
+        Mode: None
+        Width: 0
+        Split: 0
+        SatMode: 0
+
+    * FILPATHLEN has changed to HAMLIB_FILPATHLEN
+
+    * USRP lib and gnuradio are deprecated and will be removed in 5.0
+    * Added Radan rotator
+    * Added Malachite SDR
+    * Major rework for PRM80
+    * Add twiddle_timeout and twiddle_rit --set-conf options
+        rigctld --set-conf=3Dtwiddle_timeout=3D5,twiddle_rit=3D1
+        This will set the twiddle timeout to 5 seconds and turn on twiddle_=
+rit
+        For twiddle timeout VFOB will not be polled for 5 seconds after VFO=
+ twiddling
+	is detected
+    * rigctld --twiddle is deprecated and will be removed in 5.0 along with
+      get_twiddle and set_twiddle
+    * Rework Doxygen manual including default layout for Doxygen 1.9.1.  So=
+ far
+      the amplifier, rotator, and utilities API sections have been updated.=
+  The
+      rig (radio) section remains to be updated.
+
+
+As noted, portions of the Doxygen manual have been updated and can be
+found at:
+
+http://hamlib.sourceforge.net/manuals/4.2/index.html
+
+As well the Wiki has been updated:
+
+https://github.com/Hamlib/Hamlib/wiki
+
+Have fun!
+
+73, Nate
+
+--=20
+
+"The optimist proclaims that we live in the best of all
+possible worlds.  The pessimist fears this is true."
+
+Web: https://www.n0nb.us
+Projects: https://github.com/N0NB
+GPG fingerprint: 82D6 4F6B 0E67 CD41 F689 BBA6 FB2C 5130 D55A 8819
+
+
+
+
+----- End forwarded message -----
+
+--=20
+
+"The optimist proclaims that we live in the best of all
+possible worlds.  The pessimist fears this is true."
+
+Web: https://www.n0nb.us
+Projects: https://github.com/N0NB
+GPG fingerprint: 82D6 4F6B 0E67 CD41 F689 BBA6 FB2C 5130 D55A 8819
+
+
+--jmkjnrr3gdhy2aoa
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQGzBAABCgAdFiEEG5vcSeqIHtMzWHg79yYl4u2+1ZgFAmCiuOAACgkQ9yYl4u2+
+1ZiLHAwAueX2Fe7h38d54bWaJfntvj1L99sYYYXbRDRc7lYyOb5o4O7GG7nxpfsS
+7qgDizAWVnFgJIQVMbddp8bKHtqXdq8o5HS1vFnpZdXEaICtiU29BIZw4azRQhvK
+xvQnvaqug4UfIEajxeCbIoaXa8MgP3aE11/KBMIbDjJ4BG3Y7wngInu1uMI7uZeT
+N6n7h4hYrGzWlKbim0KbL+8+ZSaTZ1cNoExlP0MpBCWlH5c2x2JJN7v1yLlnA6bD
+jPctkZB0rQ1RRG6YdVbiclxH8BfDVSPdXH1384S7Do3Ej+ULo8u62e2/7dwSnslF
+cvJq84M4xEqU8znq5Fz6YSzcBsFtKKITuJ7Bpz7ymYPT7yYWFB4Eno0KOXOOl/kU
+L1IwAp45r558lzRQUZ/pfOgesMq4Qwl4ceWXa5HouoBLNiEYXdSn/i6JanzVnFLA
+WLAGxwDEjr+iEkt+M8hVULudnH8KzDX7DSSopKNbRVYjH8LE9RRFpPG+VnVxp2iT
+prxl78O4
+=zge5
+-----END PGP SIGNATURE-----
+
+--jmkjnrr3gdhy2aoa--
