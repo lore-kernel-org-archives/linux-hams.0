@@ -1,118 +1,99 @@
-From: Lukas Bulwahn <lukas.bulwahn@gmail.com>
-Subject: [PATCH v2 3/3] arch: mips: remove dead references
-Date: Fri, 25 Jun 2021 13:04:19 +0200
-Message-ID: <20210625110419.24503-4-lukas.bulwahn@gmail.com>
+From: "Maciej W. Rozycki" <macro@orcam.me.uk>
+Subject: Re: [PATCH v2 0/3] Remove dead linux-mips.org references
+Date: Fri, 25 Jun 2021 17:49:44 +0200 (CEST)
+Message-ID: <alpine.DEB.2.21.2106251722470.37803@angie.orcam.me.uk>
 References: <20210625110419.24503-1-lukas.bulwahn@gmail.com>
-Return-path: <linux-mips-owner@vger.kernel.org>
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=Cev1/kJRTJEP57IBoDUiQhmbUfhTf5In9xOSIwYWmq0=;
-        b=o1IalEDk5B4n7IDiqeW+q/YfcIeXbWaJju5k4IFCaFuoZQMFVHt3BhwVm0aniMz5Uu
-         nDpBFr7E9mVJhlLJgLHqC1SRbTovu5f9T4XQBUKOVSUOCtUSpVyqqCmDciBU/d/bhynV
-         ZmBcdmAYyg52AQ8wgqjBH8bX/fhEiy+LdTXCWTpI1sYOZ1iP8OmVMnPjOtTdnNK6GZvM
-         SP3Osh3zsTRVBALc6Dx94RYZz7IX6mLZNxqawnQNEaUzUuJpOSekNokYa8rKOkToRHZu
-         Z+HL6etigqMDeBIx26ByDx3xfLe0m7EbVpkLw8oVYA2R8VSWmzJESvg8SFGtElzjC2HD
-         kjKQ==
+Mime-Version: 1.0
+Return-path: <kernel-janitors-owner@vger.kernel.org>
 In-Reply-To: <20210625110419.24503-1-lukas.bulwahn@gmail.com>
 List-ID: <linux-hams.vger.kernel.org>
-MIME-Version: 1.0
 Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
-To: Thomas Bogendoerfer <tsbogend@alpha.franken.de>, linux-mips@vger.kernel.org
-Cc: "Maciej W . Rozycki" <macro@orcam.me.uk>, Tiezhu Yang <yangtiezhu@loongson.cn>, Willy Tarreau <w@1wt.eu>, linux-edac@vger.kernel.org, linux-hams@vger.kernel.org, kernel-janitors@vger.kernel.org, linux-kernel@vger.kernel.org, Lukas Bulwahn <lukas.bulwahn@gmail.com>
+To: Lukas Bulwahn <lukas.bulwahn@gmail.com>, Ralf Baechle <ralf@linux-mips.org>, Kurt Martin <kmartin@wavecomp.com>
+Cc: Thomas Bogendoerfer <tsbogend@alpha.franken.de>, linux-mips@vger.kernel.org, Tiezhu Yang <yangtiezhu@loongson.cn>, Willy Tarreau <w@1wt.eu>, "Maciej W. Rozycki" <macro@linux-mips.org>, linux-edac@vger.kernel.org, linux-hams@vger.kernel.org, kernel-janitors@vger.kernel.org, linux-kernel@vger.kernel.org
 
-The domain lookup for linux-mips.org fails for quite some time now.
-Further, the two links:
+[Adding Ralf and Kurt to the list of recipients.]
 
-  http://decstation.unix-ag.org/
-  http://www.computer-refuge.org/classiccmp/ftp.digital.com/pub/DEC/TriAdd/
+On Fri, 25 Jun 2021, Lukas Bulwahn wrote:
 
-refer to old webpages or contain no further technical information.
+> The domain lookup for linux-mips.org fails for quite some time now. Hence,
+> webpages, the patchwork instance and Ralf Baechle's email there is not
+> reachable anymore.
 
-Remove all those dead references.
+ Well, mail forwarding has now been set up for my old LMO address, and so 
+I believe for Ralf's.  Any other resources remain unavailable.
 
-Signed-off-by: Lukas Bulwahn <lukas.bulwahn@gmail.com>
----
- arch/mips/Kconfig             |  8 +-------
- arch/mips/jazz/Kconfig        | 12 +++---------
- tools/include/nolibc/nolibc.h |  3 +--
- 3 files changed, 5 insertions(+), 18 deletions(-)
+> In the discussion of that patch series, Kurt Martin promised to get
+> linux-mips.org back online. Four months have now passed and the webpage is
+> still not back online. So, I suggest to remove these dead references.
+> Probably, we do not lose much if the linux-mips.org webpage never comes back.
 
-diff --git a/arch/mips/Kconfig b/arch/mips/Kconfig
-index cee6087cd686..1bebf7fa2882 100644
---- a/arch/mips/Kconfig
-+++ b/arch/mips/Kconfig
-@@ -379,9 +379,7 @@ config MACH_DECSTATION
- 	select SYS_SUPPORTS_1024HZ
- 	select MIPS_L1_CACHE_SHIFT_4
- 	help
--	  This enables support for DEC's MIPS based workstations.  For details
--	  see the Linux/MIPS FAQ on <http://www.linux-mips.org/> and the
--	  DECstation porting pages on <http://decstation.unix-ag.org/>.
-+	  This enables support for DEC's MIPS based workstations.
- 
- 	  If you have one of the following DECstation Models you definitely
- 	  want to choose R4xx0 for the CPU Type:
-@@ -3246,10 +3244,6 @@ config TC
- 	  processors.  TURBOchannel programming specifications are available
- 	  at:
- 	  <ftp://ftp.hp.com/pub/alphaserver/archive/triadd/>
--	  and:
--	  <http://www.computer-refuge.org/classiccmp/ftp.digital.com/pub/DEC/TriAdd/>
--	  Linux driver support status is documented at:
--	  <http://www.linux-mips.org/wiki/DECstation>
- 
- config MMU
- 	bool
-diff --git a/arch/mips/jazz/Kconfig b/arch/mips/jazz/Kconfig
-index 42932ca98db9..162d11670c75 100644
---- a/arch/mips/jazz/Kconfig
-+++ b/arch/mips/jazz/Kconfig
-@@ -5,9 +5,7 @@ config ACER_PICA_61
- 	select DMA_NONCOHERENT
- 	help
- 	  This is a machine with a R4400 133/150 MHz CPU. To compile a Linux
--	  kernel that runs on these, say Y here. For details about Linux on
--	  the MIPS architecture, check out the Linux/MIPS FAQ on the WWW at
--	  <http://www.linux-mips.org/>.
-+	  kernel that runs on these, say Y here.
- 
- config MIPS_MAGNUM_4000
- 	bool "Support for MIPS Magnum 4000"
-@@ -16,9 +14,7 @@ config MIPS_MAGNUM_4000
- 	select SYS_SUPPORTS_BIG_ENDIAN
- 	help
- 	  This is a machine with a R4000 100 MHz CPU. To compile a Linux
--	  kernel that runs on these, say Y here. For details about Linux on
--	  the MIPS architecture, check out the Linux/MIPS FAQ on the WWW at
--	  <http://www.linux-mips.org/>.
-+	  kernel that runs on these, say Y here.
- 
- config OLIVETTI_M700
- 	bool "Support for Olivetti M700-10"
-@@ -26,6 +22,4 @@ config OLIVETTI_M700
- 	select DMA_NONCOHERENT
- 	help
- 	  This is a machine with a R4000 100 MHz CPU. To compile a Linux
--	  kernel that runs on these, say Y here. For details about Linux on
--	  the MIPS architecture, check out the Linux/MIPS FAQ on the WWW at
--	  <http://www.linux-mips.org/>.
-+	  kernel that runs on these, say Y here.
-diff --git a/tools/include/nolibc/nolibc.h b/tools/include/nolibc/nolibc.h
-index 8b7a9830dd22..754e64c4a1d1 100644
---- a/tools/include/nolibc/nolibc.h
-+++ b/tools/include/nolibc/nolibc.h
-@@ -1027,8 +1027,7 @@ struct sys_stat_struct {
-  *   - arguments are in a0, a1, a2, a3, then the stack. The caller needs to
-  *     leave some room in the stack for the callee to save a0..a3 if needed.
-  *   - Many registers are clobbered, in fact only a0..a2 and s0..s8 are
-- *     preserved. See: https://www.linux-mips.org/wiki/Syscall as well as
-- *     scall32-o32.S in the kernel sources.
-+ *     preserved. See: scall32-o32.S in the kernel sources.
-  *   - the system call is performed by calling "syscall"
-  *   - syscall return comes in v0, and register a3 needs to be checked to know
-  *     if an error occured, in which case errno is in v0.
--- 
-2.17.1
+ While most resources have been migrated I think the wiki was unique and 
+valuable.  Perhaps we could preserve read-only references to archive.org 
+dumps?  It's not clear to me what our policy is here though, if any.
 
+> The domain lookup for linux-mips.org fails for quite some time now. Hence,
+> webpages, the patchwork instance and Ralf Baechle's email there is not
+> reachable anymore.
+
+ Let's see if the copy of this message intended for Ralf bounces.
+
+> I removed dead references or replaced them with their living counterparts if
+> available. However, these two cases remain and somebody might want to have a look:
+> 
+>   1. case in ./arch/mips/include/asm/page.h:
+> 
+> <snip>
+> /*
+>  * RELOC_HIDE was originally added by 6007b903dfe5f1d13e0c711ac2894bdd4a61b1ad
+>  * (lmo) rsp. 8431fd094d625b94d364fe393076ccef88e6ce18 (kernel.org).  The
+>  * discussion can be found in
+>  * https://lore.kernel.org/lkml/a2ebde260608230500o3407b108hc03debb9da6e62c@mail.gmail.com
+>  *
+>  * It is unclear if the misscompilations mentioned in
+>  * https://lore.kernel.org/lkml/1281303490-390-1-git-send-email-namhyung@gmail.com
+>  * also affect MIPS so we keep this one until GCC 3.x has been retired
+>  * before we can apply https://patchwork.linux-mips.org/patch/1541/
+>  */
+> </snip>
+> 
+>   Decision: Keep as is. Although GCC 3.x is long retired, it is unclear what
+>   https://patchwork.linux-mips.org/patch/1541/ is and if it has been already
+>   applied or not.
+>   Question: does anyone know how to identify this patch?
+
+ It's on archive.org, marked rejected:
+
+<https://web.archive.org/web/20180829170737/https://patchwork.linux-mips.org/patch/1541/>
+
+or alternatively: <https://lore.kernel.org/patchwork/patch/210989/> (with 
+no proper status).  Given the note it might make sense to re-evaluate the 
+patch.  Thanks for the heads-up!
+
+>   2. case in ./drivers/parport/parport_ip32.c:
+> 
+>     linux-mips.org tree is referred to in an old To do item:
+> 
+> <snip>
+>  * To do:
+>  *
+>  *      Fully implement ECP mode.
+>  *      EPP and ECP mode need to be tested.  I currently do not own any
+>  *      peripheral supporting these extended mode, and cannot test them.
+>  *      If DMA mode works well, decide if support for PIO FIFO modes should be
+>  *      dropped.
+>  *      Use the io{read,write} family functions when they become available in
+>  *      the linux-mips.org tree.  Note: the MIPS specific functions readsb()
+>  *      and writesb() are to be translated by ioread8_rep() and iowrite8_rep()
+>  *      respectively.
+> </snip>
+> 
+>   Decision: Keep as is; anyone that wants to follow up on this will probably
+>   understand that the reference is outdated anyway.
+
+ Note that a copy of the LMO tree remains available online at: 
+<git://git.kernel.org/pub/scm/linux/kernel/git/ralf/linux.git>, so any 
+references or git commit IDs are reachable.  Perhaps it would be good to 
+add an actual reference somewhere though.
+
+  Maciej
