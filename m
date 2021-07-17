@@ -1,9 +1,10 @@
 From: Lukas Bulwahn <lukas.bulwahn@gmail.com>
 Subject: Re: [PATCH v2 3/3] arch: mips: remove dead references
-Date: Sat, 17 Jul 2021 08:52:20 +0200
-Message-ID: <CAKXUXMxJS-H7ZtM0deSN493aQACTtbHH+y8C-f3XKANsH3UCHg@mail.gmail.com>
+Date: Sat, 17 Jul 2021 08:53:44 +0200
+Message-ID: <CAKXUXMwsiOMX0CismKBhcopkNtCUTmwDxQTC9KOBYQ2VfK6q-g@mail.gmail.com>
 References: <20210625110419.24503-1-lukas.bulwahn@gmail.com>
  <20210625110419.24503-4-lukas.bulwahn@gmail.com> <CAAdtpL6CMAbBPJr3La31Y3AYY48TjLZhDHjKWjUJxXdBS--Xmw@mail.gmail.com>
+ <alpine.DEB.2.21.2106261919300.37803@angie.orcam.me.uk>
 Mime-Version: 1.0
 Content-Transfer-Encoding: quoted-printable
 Return-path: <linux-hams-owner@vger.kernel.org>
@@ -11,56 +12,39 @@ DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc:content-transfer-encoding;
-        bh=fj4r/axWRIO6jSTkcRS6R08Hk59RDdA00RhrYBvWubg=;
-        b=PTmyJ9xuIut1vhuWMO/d0Zk/gcwgE0m2uYvkM3OcYBxo1lK07xxCASqH6KPVdIcbwB
-         O5X1X9we+GG4MGX+Wdp/or8XRYjo3q88MNgI67HDI2by+Mh3QJpei/OZFn61YSk2fU/d
-         OmnIlWWyBx4DVKy9zYNBRPd0NZEKVnTIdOYjPHJaGBQKvBWwzrjmXOsGiJs19pMP+iD6
-         qje39jgGTUS/wa2WY0VJV3hizLG961fQ43YXLd19dnhxa4KEJ2ZBhMkvaG0k3o/MC2+W
-         SGvANFiHZRzkqHjSYDIA61hBZUw8bNaVomP/aQZgJJ9gFTaOKqtKb61t61r2qm8LZimc
-         m9hA==
-In-Reply-To: <CAAdtpL6CMAbBPJr3La31Y3AYY48TjLZhDHjKWjUJxXdBS--Xmw@mail.gmail.com>
+        bh=7g1basq9FIMEpxZHyAA7wCvpnCVvOwjerdE9BRFHgr4=;
+        b=jx2mOZGG/9NAOBxuu+ImUitJqa/QecCGWQ2n/a+OaVrhni/m6bAT+dLEAV5p4xDTtQ
+         1wCnldiCQMzzE8TEP71/J0qWgJiiimwpRwzt9XfVyL/NWWJTsukjCkAM6VLOn+OgMMQY
+         PjayFSCUHZG3ScrB5X38+V/7xGbZJv/09cSd5yeUc5lixwu6sTL8jK5VqEXpS+faz2RU
+         5VoDAE4uSvYorO3I9T4Iq+SglZ3SGO5biixnFxPg3byx6luGl8wklN47LJLqj186kxhg
+         mup+Be9QlHYVrhKGVKOJ3CkVmkha11cgFzgQ1y9epECo7u3CO6bSiBQ9l8P9QqOOEyAg
+         piHg==
+In-Reply-To: <alpine.DEB.2.21.2106261919300.37803@angie.orcam.me.uk>
 List-ID: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="macroman"
-To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <f4bug@amsat.org>
-Cc: "Maciej W . Rozycki" <macro@orcam.me.uk>, Thomas Bogendoerfer <tsbogend@alpha.franken.de>, "open list:BROADCOM NVRAM DRIVER" <linux-mips@vger.kernel.org>, Tiezhu Yang <yangtiezhu@loongson.cn>, Willy Tarreau <w@1wt.eu>, linux-edac@vger.kernel.org, linux-hams@vger.kernel.org, kernel-janitors <kernel-janitors@vger.kernel.org>, open list <linux-kernel@vger.kernel.org>
+Content-Type: text/plain; charset="iso-8859-1"
+To: "Maciej W. Rozycki" <macro@orcam.me.uk>
+Cc: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <f4bug@amsat.org>, Thomas Bogendoerfer <tsbogend@alpha.franken.de>, "open list:BROADCOM NVRAM DRIVER" <linux-mips@vger.kernel.org>, Tiezhu Yang <yangtiezhu@loongson.cn>, Willy Tarreau <w@1wt.eu>, linux-edac@vger.kernel.org, linux-hams@vger.kernel.org, kernel-janitors <kernel-janitors@vger.kernel.org>, open list <linux-kernel@vger.kernel.org>
 
-On Sat, Jun 26, 2021 at 6:52 PM Philippe Mathieu-Daud=C3=A9 <f4bug@amsat.or=
-g> wrote:
+On Sat, Jun 26, 2021 at 7:22 PM Maciej W. Rozycki <macro@orcam.me.uk> wrote=
+:
 >
-> On Fri, Jun 25, 2021 at 1:05 PM Lukas Bulwahn <lukas.bulwahn@gmail.com> w=
-rote:
+> On Sat, 26 Jun 2021, Philippe Mathieu-Daud=C3=A9 wrote:
+>
+> > >   http://www.computer-refuge.org/classiccmp/ftp.digital.com/pub/DEC/T=
+riAdd/
 > >
-> > The domain lookup for linux-mips.org fails for quite some time now.
-> > Further, the two links:
-> >
-> >   http://decstation.unix-ag.org/
+> > https://web.archive.org/web/20050205114151/ftp.digital.com/pub/DEC/TriA=
+dd/
 >
-> https://web.archive.org/web/20061010210936/http://decstation.unix-ag.org/
+>  I suggest: <ftp://ftp.hp.com/pub/alphaserver/archive/triadd/> as the
+> canonical reference nowadays.  If that goes offline sometime, we can thin=
+k
+> of an alternative.
 >
-> >   http://www.computer-refuge.org/classiccmp/ftp.digital.com/pub/DEC/Tri=
-Add/
->
-> https://web.archive.org/web/20050205114151/ftp.digital.com/pub/DEC/TriAdd=
-/
->
-> > refer to old webpages or contain no further technical information.
->
-> FWIW the information is still online somewhere.
 
-Thanks, I prefer not to reference archive.org links, because I do not
-think that is generally a good practice. But maybe somebody with some
-mild interest in this architecture can support scanning through the
-archived web pages and we store any information still worth mentioning
-in the kernel Documentation?
+Thanks, Maciej. I will update the reference to that location, when I
+come across to send the next version of this patch set.
 
 Lukas
 
->
-> > Remove all those dead references.
-> >
-> > Signed-off-by: Lukas Bulwahn <lukas.bulwahn@gmail.com>
-> > ---
-> >  arch/mips/Kconfig             |  8 +-------
-> >  arch/mips/jazz/Kconfig        | 12 +++---------
-> >  tools/include/nolibc/nolibc.h |  3 +--
-> >  3 files changed, 5 insertions(+), 18 deletions(-)
+>   Maciej
