@@ -1,99 +1,63 @@
-From: Roland Schwarz <roland.schwarz@blackspace.at>
-Subject: Re: Status of the stuck sockets bugs.
-Date: Fri, 30 Jul 2021 13:47:59 +0200
-Message-ID: <b94e876a-b629-48bb-1497-bbed6c43ee9d@blackspace.at>
-References: <CAH4uzPOm9-8kfRichHCz60+VbTO+Feiy-39WtH3=WioQ_w+QHQ@mail.gmail.com>
- <CAH4uzPNOLbAvEW2XA=ReHn_ZnGM3rgRif9uTNxYB-eSpv9YD7A@mail.gmail.com>
- <YPp7qeWGSW/s4TI6@linux-mips.org>
+From: Zheng Yongjun <zhengyongjun3@huawei.com>
+Subject: [PATCH -next] net: ax25: Fix error path of ax25_init()
+Date: Sat, 31 Jul 2021 07:27:32 +0000
+Message-ID: <20210731072732.103631-1-zhengyongjun3@huawei.com>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
- protocol="application/pgp-signature";
- boundary="QmZEF2NIibBH0pAN14X22snkTGoC8mAp9"
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <YPp7qeWGSW/s4TI6@linux-mips.org>
 List-ID: <linux-hams.vger.kernel.org>
-To: linux-hams@vger.kernel.org
-Cc: Ralf Baechle <ralf@linux-mips.org>
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+To: jreuter@yaina.de, ralf@linux-mips.org, davem@davemloft.net, kuba@kernel.org, linux-hams@vger.kernel.org, netdev@vger.kernel.org, linux-kernel@vger.kernel.org
 
-This is an OpenPGP/MIME signed message (RFC 4880 and 3156)
---QmZEF2NIibBH0pAN14X22snkTGoC8mAp9
-Content-Type: multipart/mixed; boundary="WZrVOMxp4i51GT11A8BKlHkmw7COo9XG6";
- protected-headers="v1"
-From: Roland Schwarz <roland.schwarz@blackspace.at>
-To: linux-hams@vger.kernel.org
-Cc: Ralf Baechle <ralf@linux-mips.org>
-Message-ID: <b94e876a-b629-48bb-1497-bbed6c43ee9d@blackspace.at>
-Subject: Re: Status of the stuck sockets bugs.
-References: <CAH4uzPOm9-8kfRichHCz60+VbTO+Feiy-39WtH3=WioQ_w+QHQ@mail.gmail.com>
- <CAH4uzPNOLbAvEW2XA=ReHn_ZnGM3rgRif9uTNxYB-eSpv9YD7A@mail.gmail.com>
- <YPp7qeWGSW/s4TI6@linux-mips.org>
-In-Reply-To: <YPp7qeWGSW/s4TI6@linux-mips.org>
+This patch add error path for ax25_init() to avoid possible crash if some
+error occurs.
 
---WZrVOMxp4i51GT11A8BKlHkmw7COo9XG6
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: quoted-printable
+Signed-off-by: Zheng Yongjun <zhengyongjun3@huawei.com>
+---
+ net/ax25/af_ax25.c | 23 +++++++++++++++++++----
+ 1 file changed, 19 insertions(+), 4 deletions(-)
 
-FWIW:
+diff --git a/net/ax25/af_ax25.c b/net/ax25/af_ax25.c
+index 2631efc..4edc322 100644
+--- a/net/ax25/af_ax25.c
++++ b/net/ax25/af_ax25.c
+@@ -1977,17 +1977,32 @@ static int __init ax25_init(void)
+ {
+ 	int rc = proto_register(&ax25_proto, 0);
+ 
+-	if (rc != 0)
++	if (rc)
+ 		goto out;
+ 
+-	sock_register(&ax25_family_ops);
+-	dev_add_pack(&ax25_packet_type);
+-	register_netdevice_notifier(&ax25_dev_notifier);
++	rc = sock_register(&ax25_family_ops);
++	if (rc)
++		goto out_proto;
++	rc = dev_add_pack(&ax25_packet_type);
++	if (rc)
++		goto out_sock;
++	rc = register_netdevice_notifier(&ax25_dev_notifier);
++	if (rc)
++		goto out_dev;
+ 
+ 	proc_create_seq("ax25_route", 0444, init_net.proc_net, &ax25_rt_seqops);
+ 	proc_create_seq("ax25", 0444, init_net.proc_net, &ax25_info_seqops);
+ 	proc_create_seq("ax25_calls", 0444, init_net.proc_net,
+ 			&ax25_uid_seqops);
++
++	return 0;
++
++out_dev:
++	dev_remove_pack(&ax25_packet_type);
++out_sock:
++	sock_unregister(PF_AX25);
++out_proto:
++	proto_unregister(&ax25_proto);
+ out:
+ 	return rc;
+ }
+-- 
+2.9.4
 
-I am playing with direwolf to use it as a replacement for soundmodem,=20
-since soundmodem is currently lacking alsa support.
-
-I have set up two machines, one is a raspberry 4 running stock debian=20
-11.0 with kernel 5.10 and the other is a x86 ubuntu 21.04 based machine.
-
-I am using two usb soundcards with a cross over sound connection to get=20
-started.
-
-After having set up /etc/ax25/axports, on both machines I start direwolf =
-
-and use kissattach -l /dev/pts/<nr> dw0 to attach the the ports. Then I
-adjust kissparms -c 1 -p dw0 because direwolf suggests so.
-
-Without having set up any services (no ax25d entries yet and=20
-consequently no processes using the port) from one machine I try to=20
-axcall dw0 my-callsign-ssid to the other one. Of course this will not=20
-succeed since I have not set up an application on the remote peer.=20
-However when I forcibly close the connection (~. within axcall) on the=20
-other machine netstat --ax25 lists the socket in listening state, which=20
-should not be the case as I understand it. The socket being in that=20
-state will not allow me to do anything with it from the remote machine=20
-since I always get the error that the address is in use.
-
-I guess what I am observing is an incarnation of the "stuck sockets=20
-bug", yes?
-
-73 de Roland OE1RSA
-
---=20
-__________________________________________
-   _  _  | Roland Schwarz
-  |_)(_  |
-  | \__) | mailto:roland.schwarz@blackspace.at
-________| http://www.blackspace.at
-
-
---WZrVOMxp4i51GT11A8BKlHkmw7COo9XG6--
-
---QmZEF2NIibBH0pAN14X22snkTGoC8mAp9
-Content-Type: application/pgp-signature; name="OpenPGP_signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="OpenPGP_signature"
-
------BEGIN PGP SIGNATURE-----
-
-wsF5BAABCAAjFiEELmDUtkkUQD99pU+KklFj+hFsiUgFAmED5u8FAwAAAAAACgkQklFj+hFsiUin
-TBAAkJ58UzOlDpuPQsAeCAyk2kY45splNrsw52Xh/4NGZQvbMp9dPzOvFFEIaoxa0JsejFhb+ReP
-s9bln5Pw/5dBuj4BVUQXzIylslA+hlMVdB02KCGWk2VoUrix9uzJ63ObKCAGAzsezS7z5BvIts8c
-9SVuAJZ/xmHdCAyVuphQqZKm8O1qgABamyowr02z5vlm6FWN+V6yiVcIDOBfaOcKfp1ajfi6jYnh
-S32EO5GOx5I7rWmNrRy7GaCTmZF3L7j5u+1gzO794S+RRgI+6vcnQTXFFc1jFLIb2rZClmGCNyCi
-6bM44Ceg93p87EOy4Mnv3+aVC3cr7+tSpVUJwqSSgF5Zk3KChFywRCjrTzbWpT69GEFuJmdm1Z60
-Ns6a4kme9Q0snGUbMr/G274a77VnnK8hqwFKpUMFC3SkJOlv1DSK8Q9mPXUkpmNaCX5WBApEQFbG
-jrDmLR7LSftcinRZsRAZ3YQRE7J0bieCqm+iWrwLqvgPJlMFBPbhNJUkgIz+mKQnK821+wHZUjI0
-J10pXwxJ88qgJg4JMCTFACq9SO7Cf/CMnZDiWpiuX1c9wzRMkTJW+EMsd+4EMpl5WEobv0vpY128
-rnqRD4nUdev41BvPgVktw0URfcwcNW8AvyQrI4Nbg8k1TptIqkFQHNjgkCa3C1ryEsdLBNuStPLJ
-XBw=
-=blBi
------END PGP SIGNATURE-----
-
---QmZEF2NIibBH0pAN14X22snkTGoC8mAp9--
