@@ -1,132 +1,71 @@
-From: Roland Schwarz <roland.schwarz@blackspace.at>
-Subject: Re: Status of the stuck sockets bugs.
-Date: Sat, 31 Jul 2021 18:05:00 +0200
-Message-ID: <700e0381-4e63-54b0-7068-46e5fa4f1d40@blackspace.at>
-References: <CAH4uzPOm9-8kfRichHCz60+VbTO+Feiy-39WtH3=WioQ_w+QHQ@mail.gmail.com>
- <CAH4uzPNOLbAvEW2XA=ReHn_ZnGM3rgRif9uTNxYB-eSpv9YD7A@mail.gmail.com>
- <YPp7qeWGSW/s4TI6@linux-mips.org>
- <b94e876a-b629-48bb-1497-bbed6c43ee9d@blackspace.at>
+From: Vasily Averin <vvs@virtuozzo.com>
+Subject: [PATCH NET v3 0/7] skbuff: introduce skb_expand_head()
+Date: Mon, 2 Aug 2021 11:52:08 +0300
+Message-ID: <b2683c7f-1d89-5189-b90c-de54a859bd81@virtuozzo.com>
+References: <15eba3b2-80e2-5547-8ad9-167d810ad7e3@virtuozzo.com>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
- protocol="application/pgp-signature";
- boundary="cq8Yp29J7Ycxiwy2IqxVGR9Vma2tbUMcD"
-Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <b94e876a-b629-48bb-1497-bbed6c43ee9d@blackspace.at>
-List-ID: <linux-hams.vger.kernel.org>
-To: linux-hams@vger.kernel.org
-Cc: Ralf Baechle <ralf@linux-mips.org>, d.vanderlocht@gmail.com
-
-This is an OpenPGP/MIME signed message (RFC 4880 and 3156)
---cq8Yp29J7Ycxiwy2IqxVGR9Vma2tbUMcD
-Content-Type: multipart/mixed; boundary="ICsrtM2LOSClKH1ooZITommubpj8tPNLc";
- protected-headers="v1"
-From: Roland Schwarz <roland.schwarz@blackspace.at>
-To: linux-hams@vger.kernel.org
-Cc: Ralf Baechle <ralf@linux-mips.org>, d.vanderlocht@gmail.com
-Message-ID: <700e0381-4e63-54b0-7068-46e5fa4f1d40@blackspace.at>
-Subject: Re: Status of the stuck sockets bugs.
-References: <CAH4uzPOm9-8kfRichHCz60+VbTO+Feiy-39WtH3=WioQ_w+QHQ@mail.gmail.com>
- <CAH4uzPNOLbAvEW2XA=ReHn_ZnGM3rgRif9uTNxYB-eSpv9YD7A@mail.gmail.com>
- <YPp7qeWGSW/s4TI6@linux-mips.org>
- <b94e876a-b629-48bb-1497-bbed6c43ee9d@blackspace.at>
-In-Reply-To: <b94e876a-b629-48bb-1497-bbed6c43ee9d@blackspace.at>
-
---ICsrtM2LOSClKH1ooZITommubpj8tPNLc
-Content-Type: multipart/mixed;
- boundary="------------EBC368BF6C6FE2525B2F8A44"
+Content-Transfer-Encoding: 7bit
+Return-path: <bpf-owner@vger.kernel.org>
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+        d=virtuozzo.com; s=relay; h=Content-Type:MIME-Version:Date:Message-ID:Subject
+        :From; bh=iZalwKKRF7cBwjAJmDHOFv5MqOcJkgfwIJ4xQNpZEZo=; b=aUiQcSe703uzPp04bWp
+        c01e+RnR9s0jPQmP9819VzZmrY4TW5RKsXiYvegTbQgDGpsURjt3ov2omkUypyQxD6Pfc+y0phAKh
+        8M3VfmOdRiP7SWec5Okl/ZBSRgiqOMeVT3z74SrXkMrBsLp/V7dllkgJffcJhfP5DUrH9RL+POU=;
+In-Reply-To: <15eba3b2-80e2-5547-8ad9-167d810ad7e3@virtuozzo.com>
 Content-Language: en-US
+List-ID: <linux-hams.vger.kernel.org>
+Content-Type: text/plain; charset="us-ascii"
+To: "David S. Miller" <davem@davemloft.net>, Hideaki YOSHIFUJI <yoshfuji@linux-ipv6.org>, David Ahern <dsahern@kernel.org>, Jakub Kicinski <kuba@kernel.org>, Eric Dumazet <eric.dumazet@gmail.com>
+Cc: netdev@vger.kernel.org, Joerg Reuter <jreuter@yaina.de>, Ralf Baechle <ralf@linux-mips.org>, linux-hams@vger.kernel.org, Alexei Starovoitov <ast@kernel.org>, Daniel Borkmann <daniel@iogearbox.net>, Andrii Nakryiko <andrii@kernel.org>, Martin KaFai Lau <kafai@fb.com>, Song Liu <songliubraving@fb.com>, Yonghong Song <yhs@fb.com>, KP Singh <kpsingh@kernel.org>, bpf@vger.kernel.org, linux-kernel@vger.kernel.org
 
-This is a multi-part message in MIME format.
---------------EBC368BF6C6FE2525B2F8A44
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: quoted-printable
+currently if skb does not have enough headroom skb_realloc_headrom is called.
+It is not optimal because it creates new skb.
 
-Partly answering my question by myself:
+this patch set introduces new helper skb_expand_head()
+Unlike skb_realloc_headroom, it does not allocate a new skb if possible; 
+copies skb->sk on new skb when as needed and frees original skb in case of failures.
 
-Am 30.07.21 um 13:47 schrieb Roland Schwarz:
- > I guess what I am observing is an incarnation of the "stuck sockets
- > bug", yes?
+This helps to simplify ip[6]_finish_output2(), ip6_xmit() and few other
+functions in vrf, ax25 and bpf.
 
-I applied YO2LOJ's changes to the current sources and verified that now=20
-the connection is not left stuck in listening mode.
+There are few other cases where this helper can be used 
+but it requires an additional investigations. 
 
-What I still do not understand why the socket still signals connected=20
-when doing an axcall from a remote machine although there is no peer=20
-process connected. Is this normal behavior of the socket layer?
+v3 changes:
+ - ax25 compilation warning fixed
+ - v5.14-rc4 rebase
+ - now it does not depend on non-committed pathces
 
-Attached to this mail also is a (hopefully) properly formatted=20
-patchfile. At least I was able to apply it to a current kernel source=20
-tree. I also have verified that these are the only changes that have=20
-been introduced by YO2LOJ with respect to stock kernel.
-
-vy 73 de Roland oe1rsa
-
---=20
-__________________________________________
-   _  _  | Roland Schwarz
-  |_)(_  |
-  | \__) | mailto:roland.schwarz@blackspace.at
-________| http://www.blackspace.at
-
---------------EBC368BF6C6FE2525B2F8A44
-Content-Type: text/x-patch; charset=UTF-8;
- name="0001-apply-YO2LOJ-s-changes-for-proper-connection-cleanup.patch"
-Content-Transfer-Encoding: quoted-printable
-Content-Disposition: attachment;
- filename*0="0001-apply-YO2LOJ-s-changes-for-proper-connection-cleanup.pa";
- filename*1="tch"
-
-=46rom aebb2b16522e50af1acf50d5d198e027aabc3513 Mon Sep 17 00:00:00 2001
-From: Roland Schwarz <roland.schwarz@blackspace.at>
-Date: Sat, 31 Jul 2021 17:51:34 +0200
-Subject: [PATCH] apply YO2LOJ's changes for proper connection cleanup
-
----
- net/ax25/ax25_subr.c | 5 +++++
- 1 file changed, 5 insertions(+)
-
-diff --git a/net/ax25/ax25_subr.c b/net/ax25/ax25_subr.c
-index 15ab812c4fe4..7ee0b56513e7 100644
---- a/net/ax25/ax25_subr.c
-+++ b/net/ax25/ax25_subr.c
-@@ -285,4 +285,9 @@ void ax25_disconnect(ax25_cb *ax25, int reason)
- 		bh_unlock_sock(ax25->sk);
- 		local_bh_enable();
- 	}
-+	else
-+	{
-+		// YO2LOJ: this is needed for proper NETROM connection cleanup on time=
-out
-+		ax25_destroy_socket(ax25);
-+	}
- }
---=20
-2.30.2
+v2 changes:
+ - helper's name was changed to skb_expand_head
+ - fixed few mistakes inside skb_expand_head():
+    skb_set_owner_w should set sk on nskb
+    kfree was replaced by kfree_skb()
+    improved warning message
+ - added minor refactoring in changed functions in vrf and bpf patches
+ - removed kfree_skb() in ax25_rt_build_path caller ax25_ip_xmit
 
 
---------------EBC368BF6C6FE2525B2F8A44--
+Vasily Averin (7):
+  skbuff: introduce skb_expand_head()
+  ipv6: use skb_expand_head in ip6_finish_output2
+  ipv6: use skb_expand_head in ip6_xmit
+  ipv4: use skb_expand_head in ip_finish_output2
+  vrf: use skb_expand_head in vrf_finish_output
+  ax25: use skb_expand_head
+  bpf: use skb_expand_head in bpf_out_neigh_v4/6
 
---ICsrtM2LOSClKH1ooZITommubpj8tPNLc--
+ drivers/net/vrf.c      | 21 +++++---------
+ include/linux/skbuff.h |  1 +
+ net/ax25/ax25_ip.c     |  4 +--
+ net/ax25/ax25_out.c    | 13 ++-------
+ net/ax25/ax25_route.c  | 13 ++-------
+ net/core/filter.c      | 27 ++++-------------
+ net/core/skbuff.c      | 42 +++++++++++++++++++++++++++
+ net/ipv4/ip_output.c   | 13 ++-------
+ net/ipv6/ip6_output.c  | 78 +++++++++++++++++---------------------------------
+ 9 files changed, 91 insertions(+), 121 deletions(-)
 
---cq8Yp29J7Ycxiwy2IqxVGR9Vma2tbUMcD
-Content-Type: application/pgp-signature; name="OpenPGP_signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="OpenPGP_signature"
+-- 
+1.8.3.1
 
------BEGIN PGP SIGNATURE-----
-
-wsF5BAABCAAjFiEELmDUtkkUQD99pU+KklFj+hFsiUgFAmEFdKwFAwAAAAAACgkQklFj+hFsiUis
-gA//Uh9kvx/WyAqRrMR66pj+oaYP4HUp1f+xdwAUgWU2qWcLWGtG1WQosNHu+Gmqkfu6L+NGhNG3
-UlFJ2VFE46eJG5VbS3B1VGpxwrctS8ydqpWXSUJ88iQlAP3OoltLk3bYXvymlydtLGzkEuORhP8q
-2kdz3yrsOTYFYKhkz0dfU3EAxUPgXNUZGNXErvqLymN8bAY1J/HCv2fVQOhQjk47019VURriveJr
-MRQdHpsGXhvRUV9xbtbBjX+7fSFUR39Aplbl2geIsra64UMQkLai32BZYaT4nCEgsQ7ts+R1ehvN
-Lbq603zO7jE+mTtmgx7jjSTlcFYCHnZ+UmNOI40I9qEZtrR6vqInJHO7Pz0cASOAfa11OgqXFCiQ
-ulCkcL4UgbmoHCD1zTXyCvyLNj1CEnlvww7zqDXPAHaCWJcNku8gIKny/yKz2VxRdgZAhmc8SDW6
-yBO7zSZ7hGYKdzfzoTCcSg+1F/EEDeQ9SZ7BKVd+ANo986xUL0jsOLw+r1NXdVLT5mzDKtgjJQhH
-VaMBtK1zJC2tdsL/Z+CLu6riP54vfxtRpEjevF8IW0fyAoUfV2IRT7h+xdDV+OrX7B06U3vxZlb3
-oGhe8OuEsUze4DvD3kOtE72+kLp9WIx8807lP6eqloX38uv8VDLJy2wann8L3P7buXzkbWS75n4W
-+PQ=
-=VFKX
------END PGP SIGNATURE-----
-
---cq8Yp29J7Ycxiwy2IqxVGR9Vma2tbUMcD--
