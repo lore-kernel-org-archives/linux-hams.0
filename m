@@ -1,71 +1,102 @@
 From: Vasily Averin <vvs@virtuozzo.com>
-Subject: [PATCH NET v3 0/7] skbuff: introduce skb_expand_head()
-Date: Mon, 2 Aug 2021 11:52:08 +0300
-Message-ID: <b2683c7f-1d89-5189-b90c-de54a859bd81@virtuozzo.com>
+Subject: [PATCH NET v3 1/7] skbuff: introduce skb_expand_head()
+Date: Mon, 2 Aug 2021 11:52:15 +0300
+Message-ID: <44880c9b-3611-5d26-9bbc-50e1b2264f1f@virtuozzo.com>
 References: <15eba3b2-80e2-5547-8ad9-167d810ad7e3@virtuozzo.com>
+ <cover.1627891754.git.vvs@virtuozzo.com>
 Mime-Version: 1.0
 Content-Transfer-Encoding: 7bit
-Return-path: <bpf-owner@vger.kernel.org>
+Return-path: <linux-hams-owner@vger.kernel.org>
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
         d=virtuozzo.com; s=relay; h=Content-Type:MIME-Version:Date:Message-ID:Subject
-        :From; bh=iZalwKKRF7cBwjAJmDHOFv5MqOcJkgfwIJ4xQNpZEZo=; b=aUiQcSe703uzPp04bWp
-        c01e+RnR9s0jPQmP9819VzZmrY4TW5RKsXiYvegTbQgDGpsURjt3ov2omkUypyQxD6Pfc+y0phAKh
-        8M3VfmOdRiP7SWec5Okl/ZBSRgiqOMeVT3z74SrXkMrBsLp/V7dllkgJffcJhfP5DUrH9RL+POU=;
-In-Reply-To: <15eba3b2-80e2-5547-8ad9-167d810ad7e3@virtuozzo.com>
+        :From; bh=tAY88asZF2lnIac1kxZ5VSRxDa9BzKen9bRoCOT7Gjs=; b=QtpX3bKexjzADh0gSoh
+        ggPQpEZOSKAm9u0vanUNKrf8b+dbAAO8uQTvVixOcePwf8GB7EscY0zK+XZOrzDFq2zWLV8kBjUy9
+        s4fmLv9mJT0ZEXctNY2VBxtefKO+0UhVWn96ius4WuzsvztSs8lDn30p1/r0ttM1RQ2Wmdb8xCQ=;
+In-Reply-To: <cover.1627891754.git.vvs@virtuozzo.com>
 Content-Language: en-US
 List-ID: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
 To: "David S. Miller" <davem@davemloft.net>, Hideaki YOSHIFUJI <yoshfuji@linux-ipv6.org>, David Ahern <dsahern@kernel.org>, Jakub Kicinski <kuba@kernel.org>, Eric Dumazet <eric.dumazet@gmail.com>
 Cc: netdev@vger.kernel.org, Joerg Reuter <jreuter@yaina.de>, Ralf Baechle <ralf@linux-mips.org>, linux-hams@vger.kernel.org, Alexei Starovoitov <ast@kernel.org>, Daniel Borkmann <daniel@iogearbox.net>, Andrii Nakryiko <andrii@kernel.org>, Martin KaFai Lau <kafai@fb.com>, Song Liu <songliubraving@fb.com>, Yonghong Song <yhs@fb.com>, KP Singh <kpsingh@kernel.org>, bpf@vger.kernel.org, linux-kernel@vger.kernel.org
 
-currently if skb does not have enough headroom skb_realloc_headrom is called.
-It is not optimal because it creates new skb.
+Like skb_realloc_headroom(), new helper increases headroom of specified skb.
+Unlike skb_realloc_headroom(), it does not allocate a new skb if possible;
+copies skb->sk on new skb when as needed and frees original skb in case
+of failures.
 
-this patch set introduces new helper skb_expand_head()
-Unlike skb_realloc_headroom, it does not allocate a new skb if possible; 
-copies skb->sk on new skb when as needed and frees original skb in case of failures.
+This helps to simplify ip[6]_finish_output2() and a few other similar cases.
 
-This helps to simplify ip[6]_finish_output2(), ip6_xmit() and few other
-functions in vrf, ax25 and bpf.
-
-There are few other cases where this helper can be used 
-but it requires an additional investigations. 
-
-v3 changes:
- - ax25 compilation warning fixed
- - v5.14-rc4 rebase
- - now it does not depend on non-committed pathces
-
-v2 changes:
- - helper's name was changed to skb_expand_head
- - fixed few mistakes inside skb_expand_head():
-    skb_set_owner_w should set sk on nskb
-    kfree was replaced by kfree_skb()
-    improved warning message
- - added minor refactoring in changed functions in vrf and bpf patches
- - removed kfree_skb() in ax25_rt_build_path caller ax25_ip_xmit
-
-
-Vasily Averin (7):
-  skbuff: introduce skb_expand_head()
-  ipv6: use skb_expand_head in ip6_finish_output2
-  ipv6: use skb_expand_head in ip6_xmit
-  ipv4: use skb_expand_head in ip_finish_output2
-  vrf: use skb_expand_head in vrf_finish_output
-  ax25: use skb_expand_head
-  bpf: use skb_expand_head in bpf_out_neigh_v4/6
-
- drivers/net/vrf.c      | 21 +++++---------
+Signed-off-by: Vasily Averin <vvs@virtuozzo.com>
+---
  include/linux/skbuff.h |  1 +
- net/ax25/ax25_ip.c     |  4 +--
- net/ax25/ax25_out.c    | 13 ++-------
- net/ax25/ax25_route.c  | 13 ++-------
- net/core/filter.c      | 27 ++++-------------
- net/core/skbuff.c      | 42 +++++++++++++++++++++++++++
- net/ipv4/ip_output.c   | 13 ++-------
- net/ipv6/ip6_output.c  | 78 +++++++++++++++++---------------------------------
- 9 files changed, 91 insertions(+), 121 deletions(-)
+ net/core/skbuff.c      | 42 ++++++++++++++++++++++++++++++++++++++++++
+ 2 files changed, 43 insertions(+)
 
+diff --git a/include/linux/skbuff.h b/include/linux/skbuff.h
+index b2db9cd..ec8a783 100644
+--- a/include/linux/skbuff.h
++++ b/include/linux/skbuff.h
+@@ -1179,6 +1179,7 @@ static inline struct sk_buff *__pskb_copy(struct sk_buff *skb, int headroom,
+ int pskb_expand_head(struct sk_buff *skb, int nhead, int ntail, gfp_t gfp_mask);
+ struct sk_buff *skb_realloc_headroom(struct sk_buff *skb,
+ 				     unsigned int headroom);
++struct sk_buff *skb_expand_head(struct sk_buff *skb, unsigned int headroom);
+ struct sk_buff *skb_copy_expand(const struct sk_buff *skb, int newheadroom,
+ 				int newtailroom, gfp_t priority);
+ int __must_check skb_to_sgvec_nomark(struct sk_buff *skb, struct scatterlist *sg,
+diff --git a/net/core/skbuff.c b/net/core/skbuff.c
+index fc7942c..0c70b2b 100644
+--- a/net/core/skbuff.c
++++ b/net/core/skbuff.c
+@@ -1786,6 +1786,48 @@ struct sk_buff *skb_realloc_headroom(struct sk_buff *skb, unsigned int headroom)
+ EXPORT_SYMBOL(skb_realloc_headroom);
+ 
+ /**
++ *	skb_expand_head - reallocate header of &sk_buff
++ *	@skb: buffer to reallocate
++ *	@headroom: needed headroom
++ *
++ *	Unlike skb_realloc_headroom, this one does not allocate a new skb
++ *	if possible; copies skb->sk to new skb as needed
++ *	and frees original skb in case of failures.
++ *
++ *	It expect increased headroom and generates warning otherwise.
++ */
++
++struct sk_buff *skb_expand_head(struct sk_buff *skb, unsigned int headroom)
++{
++	int delta = headroom - skb_headroom(skb);
++
++	if (WARN_ONCE(delta <= 0,
++		      "%s is expecting an increase in the headroom", __func__))
++		return skb;
++
++	/* pskb_expand_head() might crash, if skb is shared */
++	if (skb_shared(skb)) {
++		struct sk_buff *nskb = skb_clone(skb, GFP_ATOMIC);
++
++		if (likely(nskb)) {
++			if (skb->sk)
++				skb_set_owner_w(nskb, skb->sk);
++			consume_skb(skb);
++		} else {
++			kfree_skb(skb);
++		}
++		skb = nskb;
++	}
++	if (skb &&
++	    pskb_expand_head(skb, SKB_DATA_ALIGN(delta), 0, GFP_ATOMIC)) {
++		kfree_skb(skb);
++		skb = NULL;
++	}
++	return skb;
++}
++EXPORT_SYMBOL(skb_expand_head);
++
++/**
+  *	skb_copy_expand	-	copy and expand sk_buff
+  *	@skb: buffer to copy
+  *	@newheadroom: new free bytes at head
 -- 
 1.8.3.1
 
