@@ -1,116 +1,74 @@
 From: Vasily Averin <vvs@virtuozzo.com>
-Subject: [PATCH NET v3 6/7] ax25: use skb_expand_head
-Date: Mon, 2 Aug 2021 11:52:47 +0300
-Message-ID: <1c156cb1-af0d-d110-7786-67e3290e9345@virtuozzo.com>
-References: <15eba3b2-80e2-5547-8ad9-167d810ad7e3@virtuozzo.com>
- <cover.1627891754.git.vvs@virtuozzo.com>
+Subject: [PATCH NET v4 0/7] skbuff: introduce skb_expand_head()
+Date: Fri, 6 Aug 2021 10:49:47 +0300
+Message-ID: <0d3366bb-e19c-dbd4-0ba5-a3e6aff55b4e@virtuozzo.com>
+References: <ccce7edb-54dd-e6bf-1e84-0ec320d8886c@linux.ibm.com>
 Mime-Version: 1.0
 Content-Transfer-Encoding: 7bit
-Return-path: <linux-hams-owner@vger.kernel.org>
+Return-path: <bpf-owner@vger.kernel.org>
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
         d=virtuozzo.com; s=relay; h=Content-Type:MIME-Version:Date:Message-ID:Subject
-        :From; bh=LZDj+Rl8XjJSfORqoOhYb7G114M/+nHSCpKbOxlgHdo=; b=aRJ+0Dcol/tJhRYVIto
-        q/4cZNxWQGbLBHbDNatys6W85da2cc8V2mQrvrcqS5n94fU8ZP9HKDclIX1a6rMHO3+KyiZIxX+No
-        Ct5JMGZI3ags0YKOE5z85LHngTWCh0E+mhRUZz2zkpugdhI1xZAF8uDXLuJB/bMfQ4+yXJfcu7c=;
-In-Reply-To: <cover.1627891754.git.vvs@virtuozzo.com>
+        :From; bh=1zrt4eD5My5s1TavWa+RtWePr0aKNve+a9G2rEups6w=; b=UntW2gkOIhY7AG/px1s
+        aDHUKObFYRILEDQo8XD1g/gTZUcQOBlIaPXulfzv1QkDSp5I3/p9wwr0jbXW+kcKiH2YDKNz+ItNm
+        dgnxgXQF4oDf/jof6q6FARXpZTkqCJXp6F3xhMVG4ky3vp91eKYvO/f3sSixUORCbsdhABiy0PY=;
+In-Reply-To: <ccce7edb-54dd-e6bf-1e84-0ec320d8886c@linux.ibm.com>
 Content-Language: en-US
 List-ID: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
 To: "David S. Miller" <davem@davemloft.net>, Hideaki YOSHIFUJI <yoshfuji@linux-ipv6.org>, David Ahern <dsahern@kernel.org>, Jakub Kicinski <kuba@kernel.org>, Eric Dumazet <eric.dumazet@gmail.com>
-Cc: netdev@vger.kernel.org, Joerg Reuter <jreuter@yaina.de>, Ralf Baechle <ralf@linux-mips.org>, linux-hams@vger.kernel.org, linux-kernel@vger.kernel.org
+Cc: netdev@vger.kernel.org, Joerg Reuter <jreuter@yaina.de>, Ralf Baechle <ralf@linux-mips.org>, linux-hams@vger.kernel.org, Alexei Starovoitov <ast@kernel.org>, Daniel Borkmann <daniel@iogearbox.net>, Andrii Nakryiko <andrii@kernel.org>, Martin KaFai Lau <kafai@fb.com>, Song Liu <songliubraving@fb.com>, Yonghong Song <yhs@fb.com>, KP Singh <kpsingh@kernel.org>, bpf@vger.kernel.org, linux-kernel@vger.kernel.org, kernel@openvz.org, Julian Wiedmann <jwi@linux.ibm.com>
 
-Use skb_expand_head() in ax25_transmit_buffer and ax25_rt_build_path.
-Unlike skb_realloc_headroom, new helper does not allocate a new skb if possible.
+currently if skb does not have enough headroom skb_realloc_headrom is called.
+It is not optimal because it creates new skb.
 
-Signed-off-by: Vasily Averin <vvs@virtuozzo.com>
----
- net/ax25/ax25_ip.c    |  4 +---
- net/ax25/ax25_out.c   | 13 +++----------
- net/ax25/ax25_route.c | 13 +++----------
- 3 files changed, 7 insertions(+), 23 deletions(-)
+this patch set introduces new helper skb_expand_head()
+Unlike skb_realloc_headroom, it does not allocate a new skb if possible; 
+copies skb->sk on new skb when as needed and frees original skb in case of failures.
 
-diff --git a/net/ax25/ax25_ip.c b/net/ax25/ax25_ip.c
-index e4f63dd..3624977 100644
---- a/net/ax25/ax25_ip.c
-+++ b/net/ax25/ax25_ip.c
-@@ -193,10 +193,8 @@ netdev_tx_t ax25_ip_xmit(struct sk_buff *skb)
- 	skb_pull(skb, AX25_KISS_HEADER_LEN);
- 
- 	if (digipeat != NULL) {
--		if ((ourskb = ax25_rt_build_path(skb, src, dst, route->digipeat)) == NULL) {
--			kfree_skb(skb);
-+		if ((ourskb = ax25_rt_build_path(skb, src, dst, route->digipeat)) == NULL)
- 			goto put;
--		}
- 
- 		skb = ourskb;
- 	}
-diff --git a/net/ax25/ax25_out.c b/net/ax25/ax25_out.c
-index f53751b..22f2f66 100644
---- a/net/ax25/ax25_out.c
-+++ b/net/ax25/ax25_out.c
-@@ -325,7 +325,6 @@ void ax25_kick(ax25_cb *ax25)
- 
- void ax25_transmit_buffer(ax25_cb *ax25, struct sk_buff *skb, int type)
- {
--	struct sk_buff *skbn;
- 	unsigned char *ptr;
- 	int headroom;
- 
-@@ -336,18 +335,12 @@ void ax25_transmit_buffer(ax25_cb *ax25, struct sk_buff *skb, int type)
- 
- 	headroom = ax25_addr_size(ax25->digipeat);
- 
--	if (skb_headroom(skb) < headroom) {
--		if ((skbn = skb_realloc_headroom(skb, headroom)) == NULL) {
-+	if (unlikely(skb_headroom(skb) < headroom)) {
-+		skb = skb_expand_head(skb, headroom);
-+		if (!skb) {
- 			printk(KERN_CRIT "AX.25: ax25_transmit_buffer - out of memory\n");
--			kfree_skb(skb);
- 			return;
- 		}
--
--		if (skb->sk != NULL)
--			skb_set_owner_w(skbn, skb->sk);
--
--		consume_skb(skb);
--		skb = skbn;
- 	}
- 
- 	ptr = skb_push(skb, headroom);
-diff --git a/net/ax25/ax25_route.c b/net/ax25/ax25_route.c
-index b40e0bc..d0b2e09 100644
---- a/net/ax25/ax25_route.c
-+++ b/net/ax25/ax25_route.c
-@@ -441,24 +441,17 @@ int ax25_rt_autobind(ax25_cb *ax25, ax25_address *addr)
- struct sk_buff *ax25_rt_build_path(struct sk_buff *skb, ax25_address *src,
- 	ax25_address *dest, ax25_digi *digi)
- {
--	struct sk_buff *skbn;
- 	unsigned char *bp;
- 	int len;
- 
- 	len = digi->ndigi * AX25_ADDR_LEN;
- 
--	if (skb_headroom(skb) < len) {
--		if ((skbn = skb_realloc_headroom(skb, len)) == NULL) {
-+	if (unlikely(skb_headroom(skb) < len)) {
-+		skb = skb_expand_head(skb, len);
-+		if (!skb) {
- 			printk(KERN_CRIT "AX.25: ax25_dg_build_path - out of memory\n");
- 			return NULL;
- 		}
--
--		if (skb->sk != NULL)
--			skb_set_owner_w(skbn, skb->sk);
--
--		consume_skb(skb);
--
--		skb = skbn;
- 	}
- 
- 	bp = skb_push(skb, len);
+This helps to simplify ip[6]_finish_output2(), ip6_xmit() and few other
+functions in vrf, ax25 and bpf.
+
+There are few other cases where this helper can be used 
+but it requires an additional investigations. 
+
+v4 changes:
+ - fixed null pointer dereference in vrf patch reported by Julian Wiedmann
+
+v3 changes:
+ - ax25 compilation warning fixed
+ - v5.14-rc4 rebase
+ - now it does not depend on non-committed pathces
+
+v2 changes:
+ - helper's name was changed to skb_expand_head
+ - fixed few mistakes inside skb_expand_head():
+    skb_set_owner_w should set sk on nskb
+    kfree was replaced by kfree_skb()
+    improved warning message
+ - added minor refactoring in changed functions in vrf and bpf patches
+ - removed kfree_skb() in ax25_rt_build_path caller ax25_ip_xmit
+
+
+Vasily Averin (7):
+  skbuff: introduce skb_expand_head()
+  ipv6: use skb_expand_head in ip6_finish_output2
+  ipv6: use skb_expand_head in ip6_xmit
+  ipv4: use skb_expand_head in ip_finish_output2
+  vrf: use skb_expand_head in vrf_finish_output
+  ax25: use skb_expand_head
+  bpf: use skb_expand_head in bpf_out_neigh_v4/6
+
+ drivers/net/vrf.c      | 23 ++++++---------
+ include/linux/skbuff.h |  1 +
+ net/ax25/ax25_ip.c     |  4 +--
+ net/ax25/ax25_out.c    | 13 ++-------
+ net/ax25/ax25_route.c  | 13 ++-------
+ net/core/filter.c      | 27 ++++-------------
+ net/core/skbuff.c      | 42 +++++++++++++++++++++++++++
+ net/ipv4/ip_output.c   | 13 ++-------
+ net/ipv6/ip6_output.c  | 78 +++++++++++++++++---------------------------------
+ 9 files changed, 92 insertions(+), 122 deletions(-)
+
 -- 
 1.8.3.1
 
