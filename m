@@ -1,85 +1,46 @@
-From: Pavel Skripkin <paskripkin@gmail.com>
-Subject: [PATCH v2] net: 6pack: fix slab-out-of-bounds in decode_data
-Date: Fri, 13 Aug 2021 18:14:33 +0300
-Message-ID: <20210813151433.22493-1-paskripkin@gmail.com>
+From: Dan Carpenter <dan.carpenter@oracle.com>
+Subject: Re: [PATCH v2] net: 6pack: fix slab-out-of-bounds in decode_data
+Date: Sat, 14 Aug 2021 00:09:22 +0300
+Message-ID: <20210813210922.GD1931@kadam>
 References: <20210813145834.GC1931@kadam>
+ <20210813151433.22493-1-paskripkin@gmail.com>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 8bit
 Return-path: <linux-hams-owner@vger.kernel.org>
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=date : from : to : cc
+ : subject : message-id : references : content-type : in-reply-to :
+ mime-version; s=corp-2021-07-09;
+ bh=dGXzcssF5FkRLb59x+pQ+esr0VkDnGIDsMpNSdOWyrg=;
+ b=l6h/u4lTA4fYE7ZtgDadWGgyOJbUqdDr8wZa4QsAhyF97TvuCjlFAaDyOExh552cULeI
+ twCDaMlhk/TVC0B8l3Ohgzmoc+ZLOCQxs/0lEM1pNU0VOmcjBCyhn2JH3tgcbyoc0mMW
+ e21ZfDKkJaQ8US4Nzx2fIQK+UCIm3ZtcUIH6HSKqYWi5AW+HWydH5moKtneqzrw70G4f
+ 3U0QaahI4IcEzGYNDqak5u0GppnoEsg+WmcrXxvkZ0DtU3ZZI+sJwmZqYEji62P75REo
+ 6SaYD+POUOkqFm9fA9THqfV7AHelcLQl3Ej5juk6JaYIJB6y3rpLRW7ghtkZ2Z80kVqS hg== 
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=date : from : to : cc
+ : subject : message-id : references : content-type : in-reply-to :
+ mime-version; s=corp-2020-01-29;
+ bh=dGXzcssF5FkRLb59x+pQ+esr0VkDnGIDsMpNSdOWyrg=;
+ b=OrIXTcj6lKomVcIPe7o9R6zi88qDtbOwlFTgoc9BB7KAoQsR2hOcqm8a4O7EPOCoPcoo
+ MBVHnPxSzsPf9P/6EsLbnhytRa1F2amm5Bf1ERePgIfrX3mjxkPB7/3pFPlTX9Nhd6Nt
+ Gyy4jvS1zAFvb0hAM/AbSay+gULPhe+By11ejxrdDtbyieDCHynC5ARRy4iPEa+F+VkV
+ +JiTaxlhdNq8wwQ0wIm/qw+MyBvOcRE2TnSESxCi6d+YYmVVhXWCf+8bE0RStQ599fzJ
+ 0DofGXWB0xQKwdN8AHlPkkUyFliAuRSH//G+QaN6vi5sD/G9hcDflCTkKYgaF/K6oSk/ MQ== 
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=qGBykzUHvO+mc7m2ZKZa337KSvPaPnpDZaAGPG4FlFk=;
-        b=QKxeBCKrnNdm3R2q7WeaN94xWSbe/WNi98zc2dW9Dj7KtQVa27JD8wo4H5X9Aqh9CC
-         9QGXM8FajTygobcNOOPNr0pi1Jjbb2arclodxpqb5+mCclK3iFunzvvbnZv9Y3xT4Pi9
-         4dEwSEIDIJyVw4+8GpMQClxB/wVjYBGWKSngLnnTlXhaLFJZMpiOiy5OluO2FUL8jkpv
-         1uVFeyuNokLgq6xtIReFGKVeIaG4iYCEvdd0LkkmBLt96R4LaK2QADx5i8XJMCm9XlaF
-         67G65ecQjJvM7BT6VUpAYblvcfdIO/ULZ30zllGle568EeF3oACnKBz4+ZIJgv6MO8pF
-         fYSQ==
-In-Reply-To: <20210813145834.GC1931@kadam>
+ d=oracle.onmicrosoft.com; s=selector2-oracle-onmicrosoft-com;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=dGXzcssF5FkRLb59x+pQ+esr0VkDnGIDsMpNSdOWyrg=;
+ b=SV/8NSFohSd7EhMDPkHtq14BNiEHgBfyPqMIGX3sw6c8KwhtO2+OxnLNVh6yNN/biCwahsll6Lk4r+O6o8vNrOW8KSzTm0ud6qp0TOe6/Rx0/kIqOMFA19pLLt46qEd48i4i0gv/EnkzqDeNZBRQirStgfNW6k6o59OuQML9b/U=
+Content-Disposition: inline
+In-Reply-To: <20210813151433.22493-1-paskripkin@gmail.com>
 List-ID: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
-To: ajk@comnets.uni-bremen.de, davem@davemloft.net, kuba@kernel.org
-Cc: linux-hams@vger.kernel.org, netdev@vger.kernel.org, linux-kernel@vger.kernel.org, dan.carpenter@oracle.com, Pavel Skripkin <paskripkin@gmail.com>, syzbot+fc8cd9a673d4577fb2e4@syzkaller.appspotmail.com
+Content-Transfer-Encoding: 7bit
+To: Pavel Skripkin <paskripkin@gmail.com>
+Cc: ajk@comnets.uni-bremen.de, davem@davemloft.net, kuba@kernel.org, linux-hams@vger.kernel.org, netdev@vger.kernel.org, linux-kernel@vger.kernel.org, syzbot+fc8cd9a673d4577fb2e4@syzkaller.appspotmail.com
 
-Syzbot reported slab-out-of bounds write in decode_data().
-The problem was in missing validation checks.
+Great!
 
-Syzbot's reproducer generated malicious input, which caused
-decode_data() to be called a lot in sixpack_decode(). Since
-rx_count_cooked is only 400 bytes and noone reported before,
-that 400 bytes is not enough, let's just check if input is malicious
-and complain about buffer overrun.
+Reviewed-by: Dan Carpenter <dan.carpenter@oracle.com>
 
-Fail log:
-==================================================================
-BUG: KASAN: slab-out-of-bounds in drivers/net/hamradio/6pack.c:843
-Write of size 1 at addr ffff888087c5544e by task kworker/u4:0/7
-
-CPU: 0 PID: 7 Comm: kworker/u4:0 Not tainted 5.6.0-rc3-syzkaller #0
-...
-Workqueue: events_unbound flush_to_ldisc
-Call Trace:
- __dump_stack lib/dump_stack.c:77 [inline]
- dump_stack+0x197/0x210 lib/dump_stack.c:118
- print_address_description.constprop.0.cold+0xd4/0x30b mm/kasan/report.c:374
- __kasan_report.cold+0x1b/0x32 mm/kasan/report.c:506
- kasan_report+0x12/0x20 mm/kasan/common.c:641
- __asan_report_store1_noabort+0x17/0x20 mm/kasan/generic_report.c:137
- decode_data.part.0+0x23b/0x270 drivers/net/hamradio/6pack.c:843
- decode_data drivers/net/hamradio/6pack.c:965 [inline]
- sixpack_decode drivers/net/hamradio/6pack.c:968 [inline]
-
-Reported-and-tested-by: syzbot+fc8cd9a673d4577fb2e4@syzkaller.appspotmail.com
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Signed-off-by: Pavel Skripkin <paskripkin@gmail.com>
----
-
-Changes in v2:
-	+ 3 -> +2 (Reported by Dan Carpenter)
-
----
- drivers/net/hamradio/6pack.c | 6 ++++++
- 1 file changed, 6 insertions(+)
-
-diff --git a/drivers/net/hamradio/6pack.c b/drivers/net/hamradio/6pack.c
-index fcf3af76b6d7..8fe8887d506a 100644
---- a/drivers/net/hamradio/6pack.c
-+++ b/drivers/net/hamradio/6pack.c
-@@ -827,6 +827,12 @@ static void decode_data(struct sixpack *sp, unsigned char inbyte)
- 		return;
- 	}
- 
-+	if (sp->rx_count_cooked + 2 >= sizeof(sp->cooked_buf)) {
-+		pr_err("6pack: cooked buffer overrun, data loss\n");
-+		sp->rx_count = 0;
-+		return;
-+	}
-+
- 	buf = sp->raw_buf;
- 	sp->cooked_buf[sp->rx_count_cooked++] =
- 		buf[0] | ((buf[1] << 2) & 0xc0);
--- 
-2.32.0
+regards,
+dan carpenter
 
