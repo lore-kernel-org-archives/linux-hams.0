@@ -1,50 +1,65 @@
-From: patchwork-bot+netdevbpf@kernel.org
-Subject: Re: [PATCH v2] net: 6pack: fix slab-out-of-bounds in decode_data
-Date: Mon, 16 Aug 2021 10:10:05 +0000
-Message-ID: <162910860507.22499.6005898561031397786.git-patchwork-notify@kernel.org>
-References: <20210813151433.22493-1-paskripkin@gmail.com>
+From: Guenter Roeck <linux@roeck-us.net>
+Subject: [PATCH] net: 6pack: Fix tx timeout and slot time
+Date: Wed,  8 Sep 2021 20:57:43 -0700
+Message-ID: <20210909035743.1247042-1-linux@roeck-us.net>
 Mime-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Return-path: <linux-hams-owner@vger.kernel.org>
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1629108605;
-        bh=KJPNTC//0nL+YtlEMo8Zl6dCsMjS6QiZE7FS5Us2VI4=;
-        h=Subject:From:Date:References:In-Reply-To:To:Cc:From;
-        b=QZdmMHyJgfy5gHsSCNGHM+stTZWeVm2PeREK2vu7LrqnML99fSK8AMfLgbBANBmGb
-         5dYc2bCDd2/kVRBF7KXLYKcCNWxAlCio8UkeER5BT+6OfzU21xwxVZ92uBgoKwoLQv
-         XkNylvBvSaboyJWfnoW2D9PQYR+CiEq00dXUmNxJfer4LVjFORMEhOVk5ZZdZDeTUB
-         PTLWMXF1dnKUVGSGr5LPhPWWJmd61MuImkyNgodRxn875w3LVjFXQ0fqgCV/+IpMx9
-         pU6ijXRWahV1Dsu0JODMelXv8OR2/KPA9zrL0O3zKy7suOvQx2QncybrwWGxqG2Zns
-         w3Xg5ulbcymsA==
-In-Reply-To: <20210813151433.22493-1-paskripkin@gmail.com>
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=sender:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=6nfIMaaVLj1YzU7mkiPI+ONBiuveYWVyPFsoIJsROgY=;
+        b=btMnqgkad9oUWL8mWAP6fG+U3m+iZ/3foSLMTZfyTk3Lxf2embDq4Ngbcs+9GH0ug5
+         ckt+fhaat3Eky7CIB2UW+LxLzXN0lV+YOY60ZtKPLu121XgUM2Gjc8OjCprtcnMNaHPf
+         Pf7G39qXQlIpL/1VVlPHROupfdlrSG0XVmskKdcmmrHKjBmDKwRvgLnQGPTD1kaG/rg0
+         dnD0KNMldZWbnq5QM2xo7KycXDsZ38DfiiTY0izkrGMzDVc0QgCqasqsuCuuVkApy7LY
+         ugm8dcynjpnc16BlUdDJ6wtb9n4HymTgl2u98X6qE0kc5kvAJIi9Gopuj3npHmucBpdf
+         1KWg==
+Sender: Guenter Roeck <groeck7@gmail.com>
 List-ID: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
-To: Pavel Skripkin <paskripkin@gmail.com>
-Cc: ajk@comnets.uni-bremen.de, davem@davemloft.net, kuba@kernel.org, linux-hams@vger.kernel.org, netdev@vger.kernel.org, linux-kernel@vger.kernel.org, dan.carpenter@oracle.com, syzbot+fc8cd9a673d4577fb2e4@syzkaller.appspotmail.com
+To: Andreas Koensgen <ajk@comnets.uni-bremen.de>
+Cc: "David S . Miller" <davem@davemloft.net>, Jakub Kicinski <kuba@kernel.org>, linux-hams@vger.kernel.org, netdev@vger.kernel.org, linux-kernel@vger.kernel.org, Guenter Roeck <linux@roeck-us.net>
 
-Hello:
+tx timeout and slot time are currently specified in units of HZ.
+On Alpha, HZ is defined as 1024. When building alpha:allmodconfig,
+this results in the following error message.
 
-This patch was applied to netdev/net.git (refs/heads/master):
+drivers/net/hamradio/6pack.c: In function 'sixpack_open':
+drivers/net/hamradio/6pack.c:71:41: error:
+	unsigned conversion from 'int' to 'unsigned char'
+	changes value from '256' to '0'
 
-On Fri, 13 Aug 2021 18:14:33 +0300 you wrote:
-> Syzbot reported slab-out-of bounds write in decode_data().
-> The problem was in missing validation checks.
-> 
-> Syzbot's reproducer generated malicious input, which caused
-> decode_data() to be called a lot in sixpack_decode(). Since
-> rx_count_cooked is only 400 bytes and noone reported before,
-> that 400 bytes is not enough, let's just check if input is malicious
-> and complain about buffer overrun.
-> 
-> [...]
+In the 6PACK protocol, tx timeout is specified in units of 10 ms
+and transmitted over the wire. Defining a value dependent on HZ
+doesn't really make sense. Assume that the intent was to set tx
+timeout and slot time based on a HZ value of 100 and use constants
+instead of values depending on HZ for SIXP_TXDELAY and SIXP_SLOTTIME.
 
-Here is the summary with links:
-  - [v2] net: 6pack: fix slab-out-of-bounds in decode_data
-    https://git.kernel.org/netdev/net/c/19d1532a1876
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+---
+No idea if this is correct or even makes sense. Compile tested only.
 
-You are awesome, thank you!
---
-Deet-doot-dot, I am a bot.
-https://korg.docs.kernel.org/patchwork/pwbot.html
+ drivers/net/hamradio/6pack.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
+diff --git a/drivers/net/hamradio/6pack.c b/drivers/net/hamradio/6pack.c
+index 8fe8887d506a..6192244b304a 100644
+--- a/drivers/net/hamradio/6pack.c
++++ b/drivers/net/hamradio/6pack.c
+@@ -68,9 +68,9 @@
+ #define SIXP_DAMA_OFF		0
+ 
+ /* default level 2 parameters */
+-#define SIXP_TXDELAY			(HZ/4)	/* in 1 s */
++#define SIXP_TXDELAY			25	/* 250 ms */
+ #define SIXP_PERSIST			50	/* in 256ths */
+-#define SIXP_SLOTTIME			(HZ/10)	/* in 1 s */
++#define SIXP_SLOTTIME			10	/* 100 ms */
+ #define SIXP_INIT_RESYNC_TIMEOUT	(3*HZ/2) /* in 1 s */
+ #define SIXP_RESYNC_TIMEOUT		5*HZ	/* in 1 s */
+ 
+-- 
+2.33.0
 
