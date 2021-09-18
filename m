@@ -1,95 +1,59 @@
-From: Roland Schwarz <roland.schwarz@blackspace.at>
+From: David Ranch <linux-hams@trinnet.net>
 Subject: Re: unknown kiss packet: 0x80 0x9e
-Date: Sat, 18 Sep 2021 12:49:22 +0200
-Message-ID: <0ef34530-6a91-c3e2-4f52-18eb3546eeff@blackspace.at>
+Date: Sat, 18 Sep 2021 09:58:04 -0700
+Message-ID: <3be878a4-d1ef-1179-cf53-bed047c23a99@trinnet.net>
 References: <654f3a4d-6420-4fba-e6d9-5693a67f6459@blackspace.at>
  <47ff7a73-dbe7-fcf3-f99f-36e63d709520@trinnet.net>
+ <0ef34530-6a91-c3e2-4f52-18eb3546eeff@blackspace.at>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
- protocol="application/pgp-signature";
- boundary="7UvCGiZMzEpnaOmgbB7hnnt0UHAPA16HZ"
+Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <47ff7a73-dbe7-fcf3-f99f-36e63d709520@trinnet.net>
+In-Reply-To: <0ef34530-6a91-c3e2-4f52-18eb3546eeff@blackspace.at>
 List-ID: <linux-hams.vger.kernel.org>
-To: David Ranch <linux-hams@trinnet.net>, linux-hams@vger.kernel.org
-
-This is an OpenPGP/MIME signed message (RFC 4880 and 3156)
---7UvCGiZMzEpnaOmgbB7hnnt0UHAPA16HZ
-Content-Type: multipart/mixed; boundary="wISMhekhzyCTqqzY891FUBIcyG5PE6IzS";
- protected-headers="v1"
-From: Roland Schwarz <roland.schwarz@blackspace.at>
-To: David Ranch <linux-hams@trinnet.net>, linux-hams@vger.kernel.org
-Message-ID: <0ef34530-6a91-c3e2-4f52-18eb3546eeff@blackspace.at>
-Subject: Re: unknown kiss packet: 0x80 0x9e
-References: <654f3a4d-6420-4fba-e6d9-5693a67f6459@blackspace.at>
- <47ff7a73-dbe7-fcf3-f99f-36e63d709520@trinnet.net>
-In-Reply-To: <47ff7a73-dbe7-fcf3-f99f-36e63d709520@trinnet.net>
-
---wISMhekhzyCTqqzY891FUBIcyG5PE6IzS
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: quoted-printable
-
-Hello David,
-
-On 17.09.21 at 17:54 wrote David Ranch:
-> Are you trying to use Thomas Sailer's "soundmodem" program? =20
-
-Yes.
-
-> If so, it's=20
-> quite old these days.
-
-I know.
-
-> =C2=A0 You will find that Direwolf
-
-I tried it and have to agree, that it really performs well and it has=20
-the FX25 implementation, however it lacks features I'd like to use i.e.=20
-multibaud mode.
-
-> or even G8BPQ's port=20
-> of UZ7HO's "soundmodem" will offer better decoding rates, stability, et=
-c.
-
-Did'nt hear about this modem. Can you put me a pointer pls?
-
-Btw.: What I like about soundmodem is it clean design and good=20
-integration into the linux stack. Using direwolf needs a little more=20
-"hacking" to use it as a TNC for the linux stack. But of course it does=20
-work.
-
-73 roland, oe1rsa
-
---=20
-__________________________________________
-   _  _  | Roland Schwarz
-  |_)(_  |
-  | \__) | mailto:roland.schwarz@blackspace.at
-________| http://www.blackspace.at
+Content-Type: text/plain; charset="us-ascii"; format="flowed"
+To: linux-hams@vger.kernel.org
 
 
---wISMhekhzyCTqqzY891FUBIcyG5PE6IzS--
+Hello Roland,
 
---7UvCGiZMzEpnaOmgbB7hnnt0UHAPA16HZ
-Content-Type: application/pgp-signature; name="OpenPGP_signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="OpenPGP_signature"
 
------BEGIN PGP SIGNATURE-----
+> I tried it and have to agree, that it really performs well and it has
+> the FX25 implementation, however it lacks features I'd like to use i.e.
+> multibaud mode.
 
-wsF5BAABCAAjFiEELmDUtkkUQD99pU+KklFj+hFsiUgFAmFFxDIFAwAAAAAACgkQklFj+hFsiUjU
-JA/+NG4Ad1QlwKSCymWTa302zb9rK8cU3nVeRGgYbZczXL7XRJJqC3VtbJdcY7pXv+5dAp6rBqsV
-KK9bAK+iwhUZNKQslXHNA/ah9UQtYuPE5XKmxxpRVJEIjrKvEqOImJd7EPJkkVpuNOmoNEvQPsDR
-PrCNaR8P7gf0jvIVMAAjLVS6uLjeIqL8Oa2joXzWq2DaEb0w6qSrMqAkn4mepG3AyDcPaIPIi35P
-EGB+EPumXNx9S02+Dls3T9Ohz6cf9fog49jJ05WHLc2aG0KJpBKwnlcksAbiGFcVumIa4ugRaBwS
-HfXG5a4qjzfe/rBwdirhjj0zGor/VQEr+Xi95uNASKultG88Qd/44SEwnJqX6y4r7kJJqJcd57jL
-fbhJ5Fk1KblvFeidrg90H/0r0D77wvqzWhCFMwnqHlZUu77EOqbjDEwlH8NkhZMcpYoOh/c4NOCT
-fzNBIqUwuOy9VJANZvl+ILSGAtTuLC5CEPrk3oEDKEUyhagffcbjufiBw4/9uB2gO31vNHWYfFUW
-iemV1yIr+JZtscL7JfW98LCrBZhdd3E+jpvFXlKIno+iYQD32z+w5kbNBjIP9YFCtIeQJOJTmwpR
-VV1V5gg74sKXxbyogl77d/TDVdnHlGoMikJ/MrgN9o+bKl9dh2XROUE41fkBw9hVkmyguo5K0QFw
-blw=
-=qE+Z
------END PGP SIGNATURE-----
+Ok.. the choice is yours but when you're only getting about a 60% decode 
+rate compared to Direwolf, you're loosing a lot of packets on a single 
+baud rate let alone multiple.
 
---7UvCGiZMzEpnaOmgbB7hnnt0UHAPA16HZ--
+
+>> or even G8BPQ's port of UZ7HO's "soundmodem" will offer better
+>> decoding rates, stability, etc.
+>
+> Did'nt hear about this modem. Can you put me a pointer pls?
+
+Please search for "UZ7HO soundmodem" and it will come right up.  It's a 
+Windows only program written in Delphi but it's written and tested to 
+work with WINE.
+
+
+As a correction, G8BPQ's TNCPi9k6's Teensy TNC doesn't use UZ7HO's 
+soundmodem code but instead, he ported Thomas Sailer's soundmodem code 
+his TNCPi9k6 hardware TNC.
+
+https://www.cantab.net/users/john.wiseman/Documents/TeensyTNC.txt
+
+
+> Btw.: What I like about soundmodem is it clean design and good
+> integration into the linux stack. Using direwolf needs a little more
+> "hacking" to use it as a TNC for the linux stack. But of course it does
+> work.
+
+I started with Thomas Sailer's soundmodem softTNC and Linux and now use 
+WB2OSZ's Direwolf.  Setting up both soft-tncs is a bit different but I 
+wouldn't say that one is more difficult than the other.  If you'd like 
+to see some examples, I have an Rpi-centric document here:
+
+    https://www.trinityos.com/HAM/CentosDigitalModes/RPi/rpi4-setup.html
+
+--David
+KI6ZHD
