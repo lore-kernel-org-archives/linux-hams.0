@@ -1,85 +1,89 @@
-From: Dave van der Locht <d.vanderlocht@gmail.com>
-Subject: Re: AX25 disconnect patch and ROSE socket failure
-Date: Mon, 20 Sep 2021 14:17:57 +0200
-Message-ID: <CAH4uzPOF9Gj4he+ZpQ93rtPuTei43LoJAmrKpHBPt8OokFzgAg@mail.gmail.com>
-References: <8b7a1545-3631-b62d-6430-4a51652023ba@free.fr> <CAH4uzPPVfYnRzGH5OTL6JX7JC64sY5XSsurHBLt=EOV+EPbJ2A@mail.gmail.com>
- <45792400-294f-b496-9c7e-679d19614884@free.fr> <CAH4uzPPtsgz8tnQXwukDVL7=_pgfnK8OS+J8tdHBnsnJE1m5kw@mail.gmail.com>
- <ca4f0c90-53e6-24e8-9a51-f079d6da574c@trinnet.net> <a5d51093-fb07-0683-e094-9da57d9f25fa@blackspace.at>
- <CAH4uzPOO2zDHnP9V0_iYPMb85qM6FcaSEYz3iqiPuMr7rx90+Q@mail.gmail.com> <3345fdf3-26e7-5f2c-cbf0-53026a76399a@blackspace.at>
-Mime-Version: 1.0
-Return-path: <linux-hams-owner@vger.kernel.org>
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=iDmSRXxV/4NC5Np3GCK1I6Wb2BD3eKB1qP7dPjMtRaQ=;
-        b=U2Rfn4bdrm+/vlusqwXJxKZoJaIoN1jQgbAlLydtzMO87Mz5bqpJF4RmvoTv46wScS
-         fgY63JiX93az0YH9mbRbuUdVxGW6dZh4w6bptfR11eCQYelJBTOs8VQKKrVEIMZWtzvH
-         fXL1/cxcGGj5IM0c0mcAui8y7UjbbOkO82/9wxRcMUEvqWcm6jvc3eh1/NpvgXKMC8qL
-         wFFpnLFjuWQqYjbyTNfFZi4wvWH/NYF78SfsqG5oKOVJYhMiiqs4RRJIWjZnFb4wjrLE
-         VdK37ZGQw+ZFET8ZZNMztfIjMCCBV6VcN/HDl9AB11dhVdmDRQcvH5jQIcOPFvlRVFC1
-         +w5A==
-In-Reply-To: <3345fdf3-26e7-5f2c-cbf0-53026a76399a@blackspace.at>
+From: Ralf Baechle <ralf@linux-mips.org>
+Subject: [PATCH v2 0/6] iproute2: Add basic AX.25, NETROM and ROSE support.
+Date: Sun, 19 Sep 2021 15:55:58 +0200
+Message-ID: <cover.1632059758.git.ralf@linux-mips.org>
+Return-path: <netdev-owner@vger.kernel.org>
 List-ID: <linux-hams.vger.kernel.org>
+MIME-Version: 1.0
 Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
-To: Roland Schwarz <roland.schwarz@blackspace.at>
-Cc: linux-hams@vger.kernel.org, David Ranch <linux-hams@trinnet.net>
+To: Stephen Hemminger <stephen@networkplumber.org>
+Cc: netdev@vger.kernel.org, linux-hams@vger.kernel.org
 
-Hi Roland,
+net-tools contain support for these three protocol but are deprecated and
+no longer installed by default by many distributions.  Iproute2 otoh has
+no support at all and will dump the addresses of these protocols which
+actually are pretty human readable as hex numbers:
 
-Op ma 20 sep. 2021 om 12:53 schreef Roland Schwarz
-<roland.schwarz@blackspace.at>:
->
-> Hallo Dave,
->
-> On 19.09.21 at 20:07 wrote Dave van der Locht:
->
-> > Well... That problem is there for quite some years now and there still
-> > isn't a solution.
->
-> Have you seen Ralfs comment?
-> > I wasn't even aware of these patches and an internet search didn't turn
-> > up anything.
->
-> So it looks to me as if no one had tried to contact the maintainer via
-> this list before. I don't believe it is the duty of a maintainer to
-> track all possible places on the net for issues, do you?
+# ip link show dev bpq0
+3: bpq0: <UP,LOWER_UP> mtu 256 qdisc noqueue state UNKNOWN mode DEFAULT group default qlen 1000
+    link/ax25 88:98:60:a0:92:40:02 brd a2:a6:a8:40:40:40:00
+# ip link show dev nr0
+4: nr0: <NOARP,UP,LOWER_UP> mtu 236 qdisc noqueue state UNKNOWN mode DEFAULT group default qlen 1000
+    link/netrom 88:98:60:a0:92:40:0a brd 00:00:00:00:00:00:00
+# ip link show dev rose0
+8: rose0: <NOARP,UP,LOWER_UP> mtu 249 qdisc noqueue state UNKNOWN mode DEFAULT group default qlen 1000
+    link/rose 65:09:33:30:00 brd 00:00:00:00:00
 
-I've seen Ralf's comment, which suprised me. I was told by several HAM
-application developers that particular patch has been rejected several
-times in the past and there are more threads here regarding the issue.
-I don't know by who and the technical reason/explanation about it and
-its complete history. Of coarse I understand it isn't a task of a
-maintainer to keep track of all possible places on the net regarding
-this issue.
+This series adds basic support for the three protocols to print addresses:
 
-Hopefully it will be investigated and solved now Ralf is aware of the issue.
+# ip link show dev bpq0
+3: bpq0: <UP,LOWER_UP> mtu 256 qdisc noqueue state UNKNOWN mode DEFAULT group default qlen 1000
+    link/ax25 DL0PI-1 brd QST-0
+# ip link show dev nr0
+4: nr0: <NOARP,UP,LOWER_UP> mtu 236 qdisc noqueue state UNKNOWN mode DEFAULT group default qlen 1000
+    link/netrom DL0PI-5 brd *
+# ip link show dev rose0
+8: rose0: <NOARP,UP,LOWER_UP> mtu 249 qdisc noqueue state UNKNOWN mode DEFAULT group default qlen 1000
+    link/rose 6509333000 brd 0000000000
 
->
-> > Although that proposed solution might not be the root cause I'm
-> > wondering what the real root cause is and why it's still not
-> > researched and fixed after years with everyone complaining about it.
->
-> Again it's two months at best and this is not much time.
+Ralf Baechle (6):
+  AX.25: Add ax25_ntop implementation.
+  AX.25: Print decoded addresses rather than hex numbers.
+  NETROM: Add netrom_ntop implementation.
+  NETROM: Print decoded addresses rather than hex numbers.
+  ROSE: Add rose_ntop implementation.
+  ROSE: Print decoded addresses rather than hex numbers.
 
-See my comment above.
+Changes in v2:
+ - reset commit dates.  The commit dates were still pointing back to the
+   ages of King Tutankhamun though the code is more recent and has been
+   tested based on latest iproute2.
 
->
-> > In the mean time it still seems better to have a good work-around than
-> > a pretty useless AX.25 stack.
->
-> The work around already is there. One just need to compile with the
-> patch in place.
+ Makefile          |  9 ++++++
+ include/utils.h   |  6 ++++
+ lib/ax25_ntop.c   | 82 +++++++++++++++++++++++++++++++++++++++++++++++
+ lib/ll_addr.c     |  6 ++++
+ lib/netrom_ntop.c | 23 +++++++++++++
+ lib/rose_ntop.c   | 56 ++++++++++++++++++++++++++++++++
+ 6 files changed, 182 insertions(+)
+ create mode 100644 lib/ax25_ntop.c
+ create mode 100644 lib/netrom_ntop.c
+ create mode 100644 lib/rose_ntop.c
 
-For me and a lot of other users who know how to do it I agree. For
-most HAM radio enthousiasts it's been proven to be a big challenge to
-do and keep up with kernel updates too.
-Currently there's a security issue with kernel 5.4 and up too
-regarding NETROM, so for now we're stuck to 4.19 with patch to keep
-things stable and safe regarding AX.25 + NETROM.
+-- 
+2.31.1
 
->
-> 73 de Roland oe1rsa
 
-73! Dave
+Ralf Baechle (6):
+  AX.25: Add ax25_ntop implementation.
+  AX.25: Print decoded addresses rather than hex numbers.
+  NETROM: Add netrom_ntop implementation.
+  NETROM: Print decoded addresses rather than hex numbers.
+  ROSE: Add rose_ntop implementation.
+  ROSE: Print decoded addresses rather than hex numbers.
+
+ Makefile          |  9 ++++++
+ include/utils.h   |  6 ++++
+ lib/ax25_ntop.c   | 82 +++++++++++++++++++++++++++++++++++++++++++++++
+ lib/ll_addr.c     |  6 ++++
+ lib/netrom_ntop.c | 23 +++++++++++++
+ lib/rose_ntop.c   | 56 ++++++++++++++++++++++++++++++++
+ 6 files changed, 182 insertions(+)
+ create mode 100644 lib/ax25_ntop.c
+ create mode 100644 lib/netrom_ntop.c
+ create mode 100644 lib/rose_ntop.c
+
+-- 
+2.31.1
+
