@@ -1,22 +1,22 @@
 From: Sasha Levin <sashal@kernel.org>
-Subject: [PATCH AUTOSEL 4.14 12/13] net: 6pack: Fix tx timeout and slot time
-Date: Wed, 22 Sep 2021 23:39:58 -0400
-Message-ID: <20210923033959.1421662-12-sashal@kernel.org>
-References: <20210923033959.1421662-1-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 4.9 10/11] net: 6pack: Fix tx timeout and slot time
+Date: Wed, 22 Sep 2021 23:40:26 -0400
+Message-ID: <20210923034028.1421876-10-sashal@kernel.org>
+References: <20210923034028.1421876-1-sashal@kernel.org>
 Mime-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Return-path: <linux-hams-owner@vger.kernel.org>
+Return-path: <netdev-owner@vger.kernel.org>
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1632368425;
-        bh=niVNsvTHNQOxynlgP9zW1NsnCSqdnJpzqzPaJS1XBYk=;
+        s=k20201202; t=1632368451;
+        bh=7+NKFhM/0NHgXoyM4v241ur8GF3QZ6DTmRPsWH30Xw4=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=bstQHVBhfoU6eBIUdgMIg8yTJdYF5Gn9WqnvhJXOxTzuoHOR4kH0/ilC9GQzEktTe
-         glNd/zl3nQMKiYTrdlo3im7NQY8f3t4eqJ8fzMlK7YW3pC3OZR+/NIPkhC7niaefXL
-         WkHlzGRD61IUNhhTCrYMFklbkSYEwVGDlXbEZQLU+H3F5GaOxp4TDE7FtMqhZi0bpB
-         aol7mv7RdQTI0SQt1jbsXE2j3cNZUHpXhPOFJ5V+gZOhzwPFG055kZ865fsWEky2jN
-         fk3HIUr4l3MTnad4Ai25LOeTxe8QP6IeX2ICdSuBV4N+o2MFnQCUGtmrGV5AOZHSAf
-         moVmKUzrFlFFg==
-In-Reply-To: <20210923033959.1421662-1-sashal@kernel.org>
+        b=BvteIZOapjMSBI5S4vxgWoyg3GTx8FVC5ldd2snjx+X0nquGKSEVf7QHknK8tyvfE
+         d+09feP3jhJ7snBo4E65YiOmhHXUikjG4tR1xa+td4YofIClQ86GaTwYzGbXtkFH9c
+         32DC9q+tse3qX8paTXEmxPVHWMS5vlfkjgrhUKpkLvYm3vfH6y3r2x3ektieoC8tQu
+         dYiAv7/sHnW7XJuJz+d1msDt37M5SEkw6N5yqPAJOuW7/1J99LE/hMmlU68iJ+2+8V
+         mxBFJ6ljEG99kNBvms/PtqNi+VHGL4xj1FYh3gX1OS2gmO0y3PDDAfYcyCheC9OIo5
+         aVU8ysW1TzZjA==
+In-Reply-To: <20210923034028.1421876-1-sashal@kernel.org>
 List-ID: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
 To: linux-kernel@vger.kernel.org, stable@vger.kernel.org
@@ -58,7 +58,7 @@ Signed-off-by: Sasha Levin <sashal@kernel.org>
  1 file changed, 2 insertions(+), 2 deletions(-)
 
 diff --git a/drivers/net/hamradio/6pack.c b/drivers/net/hamradio/6pack.c
-index 231eaef29266..7e430300818e 100644
+index e510dbda77e5..96fb2a2a59f0 100644
 --- a/drivers/net/hamradio/6pack.c
 +++ b/drivers/net/hamradio/6pack.c
 @@ -68,9 +68,9 @@
