@@ -1,21 +1,21 @@
 From: Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH net-next 2/6] rose: constify dev_addr passing
-Date: Tue, 12 Oct 2021 08:58:36 -0700
-Message-ID: <20211012155840.4151590-3-kuba@kernel.org>
+Subject: [PATCH net-next 4/6] ipv6: constify dev_addr passing
+Date: Tue, 12 Oct 2021 08:58:38 -0700
+Message-ID: <20211012155840.4151590-5-kuba@kernel.org>
 References: <20211012155840.4151590-1-kuba@kernel.org>
 Mime-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Return-path: <linux-hams-owner@vger.kernel.org>
+Return-path: <netdev-owner@vger.kernel.org>
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1634054329;
-        bh=T6ppLGl0aDoCFsR3Pz4UcvNQUbGl2TOczrkHIqZxPJE=;
+        s=k20201202; t=1634054330;
+        bh=ML3+Wt+Gyf2AnH9iMdE3LcG4Csto5f7/O0LmMmz7iRo=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=oNfe21BdT/D4tbKZxLpnUaNUeEY7oMjDx6G3FpsND6Hh+RaQf59yeYiyDZPcbExt7
-         tt9tZB+Dh51zUxYRONn2Ma3OJaIllqrx2sXvf+eJKlPNDdUNqVUjMhBedhbWGNjdVH
-         0u6aGS9LBJYCGDwQ/VcOKlLiYGpdRMV4UgwN6kpiMBf9QXeAabCDCNz45rXrsg1+2n
-         0pkpnTAA22BLDePAuUdN2FjNeQgl33yVw30xqZigXdmfr5Jm10EVcOE9OfhPHlCYTV
-         pvqnydVJIAeoEMhLtrryKBM/6COjdesD/LiQZLWgJk+NVcVzJhd0ZLPYT5toE/e6LE
-         8Vd9MdBKI5w/g==
+        b=Vxq4ZOWqZRaDdNoiE+sWuMw4GiSD9N1OvIPb85PwVcDWEX2TcAqImmh99TTfXF1L0
+         Mx2gu3txIJWvuHrHTrpBM/F9z5yjV7Kl2DXbCdyte8y4F6PZ8GCo9Z+JOX199Ln8Nm
+         kf0yyUwzV39e0e8EB8bXHrNDhgjevpC4fnCH9uMJCS+F0yuRFNnXVqVDSv+RvAYXRV
+         AzU4G5M6DhQMduxHSSlfePWlmKYeAZWO/GjE18DMkS08NCU90h/Nb15XlJ5/phJ/Uj
+         LG8L17FaHjMJO0nBUAwRJ8APVxSX3JT7lT2otEi8lnzcROxFZGOqtd/Y+C+4fnCvNH
+         kiVNBdtu4ByPw==
 In-Reply-To: <20211012155840.4151590-1-kuba@kernel.org>
 List-ID: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
@@ -23,138 +23,69 @@ To: davem@davemloft.net
 Cc: netdev@vger.kernel.org, ralf@linux-mips.org, jreuter@yaina.de, yoshfuji@linux-ipv6.org, dsahern@kernel.org, jmaloy@redhat.com, ying.xue@windriver.com, linux-hams@vger.kernel.org, tipc-discussion@lists.sourceforge.net, Jakub Kicinski <kuba@kernel.org>
 
 In preparation for netdev->dev_addr being constant
-make all relevant arguments in rose constant.
+make all relevant arguments in ndisc constant.
 
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 ---
- include/net/rose.h    |  8 ++++----
- net/rose/af_rose.c    |  5 +++--
- net/rose/rose_dev.c   |  6 +++---
- net/rose/rose_route.c | 10 ++++++----
- 4 files changed, 16 insertions(+), 13 deletions(-)
+ include/net/ndisc.h | 2 +-
+ net/ipv6/addrconf.c | 4 ++--
+ net/ipv6/ndisc.c    | 4 ++--
+ 3 files changed, 5 insertions(+), 5 deletions(-)
 
-diff --git a/include/net/rose.h b/include/net/rose.h
-index cf517d306a28..0f0a4ce0fee7 100644
---- a/include/net/rose.h
-+++ b/include/net/rose.h
-@@ -162,8 +162,8 @@ extern int  sysctl_rose_link_fail_timeout;
- extern int  sysctl_rose_maximum_vcs;
- extern int  sysctl_rose_window_size;
+diff --git a/include/net/ndisc.h b/include/net/ndisc.h
+index 38e4094960ce..04341d86585d 100644
+--- a/include/net/ndisc.h
++++ b/include/net/ndisc.h
+@@ -137,7 +137,7 @@ struct ndisc_options *ndisc_parse_options(const struct net_device *dev,
+ 					  u8 *opt, int opt_len,
+ 					  struct ndisc_options *ndopts);
  
--int rosecmp(rose_address *, rose_address *);
--int rosecmpm(rose_address *, rose_address *, unsigned short);
-+int rosecmp(const rose_address *, const rose_address *);
-+int rosecmpm(const rose_address *, const rose_address *, unsigned short);
- char *rose2asc(char *buf, const rose_address *);
- struct sock *rose_find_socket(unsigned int, struct rose_neigh *);
- void rose_kill_by_neigh(struct rose_neigh *);
-@@ -205,8 +205,8 @@ extern const struct seq_operations rose_node_seqops;
- extern struct seq_operations rose_route_seqops;
+-void __ndisc_fill_addr_option(struct sk_buff *skb, int type, void *data,
++void __ndisc_fill_addr_option(struct sk_buff *skb, int type, const void *data,
+ 			      int data_len, int pad);
  
- void rose_add_loopback_neigh(void);
--int __must_check rose_add_loopback_node(rose_address *);
--void rose_del_loopback_node(rose_address *);
-+int __must_check rose_add_loopback_node(const rose_address *);
-+void rose_del_loopback_node(const rose_address *);
- void rose_rt_device_down(struct net_device *);
- void rose_link_device_down(struct net_device *);
- struct net_device *rose_dev_first(void);
-diff --git a/net/rose/af_rose.c b/net/rose/af_rose.c
-index cf7d974e0f61..30a1cf4c16c6 100644
---- a/net/rose/af_rose.c
-+++ b/net/rose/af_rose.c
-@@ -109,7 +109,7 @@ char *rose2asc(char *buf, const rose_address *addr)
- /*
-  *	Compare two ROSE addresses, 0 == equal.
-  */
--int rosecmp(rose_address *addr1, rose_address *addr2)
-+int rosecmp(const rose_address *addr1, const rose_address *addr2)
+ #define NDISC_OPS_REDIRECT_DATA_SPACE	2
+diff --git a/net/ipv6/addrconf.c b/net/ipv6/addrconf.c
+index c6a90b7bbb70..d4fae16deec4 100644
+--- a/net/ipv6/addrconf.c
++++ b/net/ipv6/addrconf.c
+@@ -2237,12 +2237,12 @@ static int addrconf_ifid_6lowpan(u8 *eui, struct net_device *dev)
+ 
+ static int addrconf_ifid_ieee1394(u8 *eui, struct net_device *dev)
  {
- 	int i;
+-	union fwnet_hwaddr *ha;
++	const union fwnet_hwaddr *ha;
  
-@@ -123,7 +123,8 @@ int rosecmp(rose_address *addr1, rose_address *addr2)
- /*
-  *	Compare two ROSE addresses for only mask digits, 0 == equal.
-  */
--int rosecmpm(rose_address *addr1, rose_address *addr2, unsigned short mask)
-+int rosecmpm(const rose_address *addr1, const rose_address *addr2,
-+	     unsigned short mask)
+ 	if (dev->addr_len != FWNET_ALEN)
+ 		return -1;
+ 
+-	ha = (union fwnet_hwaddr *)dev->dev_addr;
++	ha = (const union fwnet_hwaddr *)dev->dev_addr;
+ 
+ 	memcpy(eui, &ha->uc.uniq_id, sizeof(ha->uc.uniq_id));
+ 	eui[0] ^= 2;
+diff --git a/net/ipv6/ndisc.c b/net/ipv6/ndisc.c
+index 4b098521a44c..184190b9ea25 100644
+--- a/net/ipv6/ndisc.c
++++ b/net/ipv6/ndisc.c
+@@ -142,7 +142,7 @@ struct neigh_table nd_tbl = {
+ };
+ EXPORT_SYMBOL_GPL(nd_tbl);
+ 
+-void __ndisc_fill_addr_option(struct sk_buff *skb, int type, void *data,
++void __ndisc_fill_addr_option(struct sk_buff *skb, int type, const void *data,
+ 			      int data_len, int pad)
  {
- 	unsigned int i, j;
+ 	int space = __ndisc_opt_addr_space(data_len, pad);
+@@ -165,7 +165,7 @@ void __ndisc_fill_addr_option(struct sk_buff *skb, int type, void *data,
+ EXPORT_SYMBOL_GPL(__ndisc_fill_addr_option);
  
-diff --git a/net/rose/rose_dev.c b/net/rose/rose_dev.c
-index 2a35e188b389..f1a76a5820f1 100644
---- a/net/rose/rose_dev.c
-+++ b/net/rose/rose_dev.c
-@@ -66,7 +66,7 @@ static int rose_set_mac_address(struct net_device *dev, void *addr)
- 		if (err)
- 			return err;
- 
--		rose_del_loopback_node((rose_address *)dev->dev_addr);
-+		rose_del_loopback_node((const rose_address *)dev->dev_addr);
- 	}
- 
- 	dev_addr_set(dev, sa->sa_data);
-@@ -78,7 +78,7 @@ static int rose_open(struct net_device *dev)
+ static inline void ndisc_fill_addr_option(struct sk_buff *skb, int type,
+-					  void *data, u8 icmp6_type)
++					  const void *data, u8 icmp6_type)
  {
- 	int err;
- 
--	err = rose_add_loopback_node((rose_address *)dev->dev_addr);
-+	err = rose_add_loopback_node((const rose_address *)dev->dev_addr);
- 	if (err)
- 		return err;
- 
-@@ -90,7 +90,7 @@ static int rose_open(struct net_device *dev)
- static int rose_close(struct net_device *dev)
- {
- 	netif_stop_queue(dev);
--	rose_del_loopback_node((rose_address *)dev->dev_addr);
-+	rose_del_loopback_node((const rose_address *)dev->dev_addr);
- 	return 0;
- }
- 
-diff --git a/net/rose/rose_route.c b/net/rose/rose_route.c
-index c0e04c261a15..e2e6b6b78578 100644
---- a/net/rose/rose_route.c
-+++ b/net/rose/rose_route.c
-@@ -401,7 +401,7 @@ void rose_add_loopback_neigh(void)
- /*
-  *	Add a loopback node.
-  */
--int rose_add_loopback_node(rose_address *address)
-+int rose_add_loopback_node(const rose_address *address)
- {
- 	struct rose_node *rose_node;
- 	int err = 0;
-@@ -446,7 +446,7 @@ int rose_add_loopback_node(rose_address *address)
- /*
-  *	Delete a loopback node.
-  */
--void rose_del_loopback_node(rose_address *address)
-+void rose_del_loopback_node(const rose_address *address)
- {
- 	struct rose_node *rose_node;
- 
-@@ -629,7 +629,8 @@ struct net_device *rose_dev_get(rose_address *addr)
- 
- 	rcu_read_lock();
- 	for_each_netdev_rcu(&init_net, dev) {
--		if ((dev->flags & IFF_UP) && dev->type == ARPHRD_ROSE && rosecmp(addr, (rose_address *)dev->dev_addr) == 0) {
-+		if ((dev->flags & IFF_UP) && dev->type == ARPHRD_ROSE &&
-+		    rosecmp(addr, (const rose_address *)dev->dev_addr) == 0) {
- 			dev_hold(dev);
- 			goto out;
- 		}
-@@ -646,7 +647,8 @@ static int rose_dev_exists(rose_address *addr)
- 
- 	rcu_read_lock();
- 	for_each_netdev_rcu(&init_net, dev) {
--		if ((dev->flags & IFF_UP) && dev->type == ARPHRD_ROSE && rosecmp(addr, (rose_address *)dev->dev_addr) == 0)
-+		if ((dev->flags & IFF_UP) && dev->type == ARPHRD_ROSE &&
-+		    rosecmp(addr, (const rose_address *)dev->dev_addr) == 0)
- 			goto out;
- 	}
- 	dev = NULL;
+ 	__ndisc_fill_addr_option(skb, type, data, skb->dev->addr_len,
+ 				 ndisc_addr_option_pad(skb->dev->type));
 -- 
 2.31.1
 
