@@ -1,99 +1,42 @@
-From: Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH net-next 5/6] tipc: constify dev_addr passing
-Date: Tue, 12 Oct 2021 08:58:39 -0700
-Message-ID: <20211012155840.4151590-6-kuba@kernel.org>
-References: <20211012155840.4151590-1-kuba@kernel.org>
+From: Ralf Baechle <ralf@linux-mips.org>
+Subject: Re: [PATCH] ax25: Fix use of copy_from_sockptr() in ax25_setsockopt()
+Date: Tue, 12 Oct 2021 19:10:23 +0200
+Message-ID: <YWXBfx77qrbFzLAf@linux-mips.org>
+References: <YVXkwzKZhPoD0Ods@linux-mips.org>
+ <20211012062309.GD17407@lst.de>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 8bit
 Return-path: <linux-hams-owner@vger.kernel.org>
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1634054330;
-        bh=rlJJWRLGUe+K+61yThvMk0MzMeXGMqjYPC5OxDyFXMY=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=oS2idQk24pL80eUR7gFzq15OdSF0NV73EhSIGh+7q7mrxj7W98g1p221kfdBo3cKU
-         AKzvonNd6oONFm8gIC3wST03F+sJ8qXZChB4T07hGWBPhrdaMnLKF951IvTJB6t0JL
-         IL1l5xpEOi1DptCdP/14fq3rvLqUbroS16dHpO/8wsnQl6dA4XQFn74YAkpS+RFe3g
-         O3k1rg3bNuxIoB/mQI7EvUXQvrNGikQ2GZethcnHhec3etWMBmuLj5+kk4jNLo7lxg
-         aTYyNne92Io5vWhub50n0Nzd7fQAvinHU8IYd2Kdl0Nz3Js9n9Tl22IUfJF36fqMKQ
-         zRYDfvzr6aS2A==
-In-Reply-To: <20211012155840.4151590-1-kuba@kernel.org>
+Content-Disposition: inline
+In-Reply-To: <20211012062309.GD17407@lst.de>
 List-ID: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
-To: davem@davemloft.net
-Cc: netdev@vger.kernel.org, ralf@linux-mips.org, jreuter@yaina.de, yoshfuji@linux-ipv6.org, dsahern@kernel.org, jmaloy@redhat.com, ying.xue@windriver.com, linux-hams@vger.kernel.org, tipc-discussion@lists.sourceforge.net, Jakub Kicinski <kuba@kernel.org>
+Content-Transfer-Encoding: 7bit
+To: Christoph Hellwig <hch@lst.de>
+Cc: netdev@vger.kernel.org, "David S. Miller" <davem@davemloft.net>, Jakub Kicinski <kuba@kernel.org>, Thomas Osterried <thomas@osterried.de>, linux-hams@vger.kernel.org
 
-In preparation for netdev->dev_addr being constant
-make all relevant arguments in tipc constant.
+On Tue, Oct 12, 2021 at 08:23:09AM +0200, Christoph Hellwig wrote:
 
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
----
- net/tipc/bearer.c    | 4 ++--
- net/tipc/bearer.h    | 2 +-
- net/tipc/eth_media.c | 2 +-
- net/tipc/ib_media.c  | 2 +-
- 4 files changed, 5 insertions(+), 5 deletions(-)
+> On Thu, Sep 30, 2021 at 06:24:35PM +0200, Ralf Baechle wrote:
+> > The destination pointer passed to copy_from_sockptr() is an unsigned long *
+> > but the source in userspace is an unsigned int * resulting in an integer
+> > of the wrong size being copied from userspace.
+> > 
+> > This happens to work on 32 bit but breaks 64-bit where bytes 4..7 will not
+> > be initialized.  By luck it may work on little endian but on big endian
+> > where the userspace data is copied to the upper 32 bit of the destination
+> > it's most likely going to break.
+> > 
+> > A simple test case to demonstrate this setsockopt() issue is:
+> 
+> Looks good,
+> 
+> Reviewed-by: Christoph Hellwig <hch@lst.de>
 
-diff --git a/net/tipc/bearer.c b/net/tipc/bearer.c
-index 443f8e5b9477..60bc74b76adc 100644
---- a/net/tipc/bearer.c
-+++ b/net/tipc/bearer.c
-@@ -462,7 +462,7 @@ int tipc_enable_l2_media(struct net *net, struct tipc_bearer *b,
- 	b->bcast_addr.media_id = b->media->type_id;
- 	b->bcast_addr.broadcast = TIPC_BROADCAST_SUPPORT;
- 	b->mtu = dev->mtu;
--	b->media->raw2addr(b, &b->addr, (char *)dev->dev_addr);
-+	b->media->raw2addr(b, &b->addr, (const char *)dev->dev_addr);
- 	rcu_assign_pointer(dev->tipc_ptr, b);
- 	return 0;
- }
-@@ -703,7 +703,7 @@ static int tipc_l2_device_event(struct notifier_block *nb, unsigned long evt,
- 		break;
- 	case NETDEV_CHANGEADDR:
- 		b->media->raw2addr(b, &b->addr,
--				   (char *)dev->dev_addr);
-+				   (const char *)dev->dev_addr);
- 		tipc_reset_bearer(net, b);
- 		break;
- 	case NETDEV_UNREGISTER:
-diff --git a/net/tipc/bearer.h b/net/tipc/bearer.h
-index 57c6a1a719e2..490ad6e5f7a3 100644
---- a/net/tipc/bearer.h
-+++ b/net/tipc/bearer.h
-@@ -117,7 +117,7 @@ struct tipc_media {
- 			char *msg);
- 	int (*raw2addr)(struct tipc_bearer *b,
- 			struct tipc_media_addr *addr,
--			char *raw);
-+			const char *raw);
- 	u32 priority;
- 	u32 tolerance;
- 	u32 min_win;
-diff --git a/net/tipc/eth_media.c b/net/tipc/eth_media.c
-index c68019697cfe..cb0d185e06af 100644
---- a/net/tipc/eth_media.c
-+++ b/net/tipc/eth_media.c
-@@ -60,7 +60,7 @@ static int tipc_eth_addr2msg(char *msg, struct tipc_media_addr *addr)
- /* Convert raw mac address format to media addr format */
- static int tipc_eth_raw2addr(struct tipc_bearer *b,
- 			     struct tipc_media_addr *addr,
--			     char *msg)
-+			     const char *msg)
- {
- 	memset(addr, 0, sizeof(*addr));
- 	ether_addr_copy(addr->value, msg);
-diff --git a/net/tipc/ib_media.c b/net/tipc/ib_media.c
-index 7aa9ff88458d..b9ad0434c3cd 100644
---- a/net/tipc/ib_media.c
-+++ b/net/tipc/ib_media.c
-@@ -67,7 +67,7 @@ static int tipc_ib_addr2msg(char *msg, struct tipc_media_addr *addr)
- /* Convert raw InfiniBand address format to media addr format */
- static int tipc_ib_raw2addr(struct tipc_bearer *b,
- 			    struct tipc_media_addr *addr,
--			    char *msg)
-+			    const char *msg)
- {
- 	memset(addr, 0, sizeof(*addr));
- 	memcpy(addr->value, msg, INFINIBAND_ALEN);
--- 
-2.31.1
+Sadly the kernel test robot has raised a bunch of warnings in this patch.
+To fix those I'll pull a few fixes from another patch I was planning to
+send later and merge them into this patch and post the resulting patch
+as v2.
 
+Thanks for the review,
+
+  Ralf
