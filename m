@@ -1,67 +1,50 @@
-From: Dave van der Locht <d.vanderlocht@gmail.com>
-Subject: Re: SECURITY: Some type of NETROM frames contain random fragments of
- data from memory
-Date: Fri, 15 Oct 2021 11:28:29 +0200
-Message-ID: <CAH4uzPOrW4CEvmMhqqxTV650P9JpEftgd92Z3JCZut8JXvng4w@mail.gmail.com>
-References: <CAH4uzPNH6GVX_H0eCrBUxPdgynRc9a7xLGde1_37dTCz3fgJOA@mail.gmail.com>
- <YPlpLpL3Yrz/YE6R@linux-mips.org> <CAH4uzPPuXA19KvikagjcQZmFYvTjw1nNCVQhY_07LPz_F0mmSw@mail.gmail.com>
- <YPmo1cAlGdIkapxL@linux-mips.org> <CAH4uzPMXHnR+Z60iCA41FYsbDViQ5K2kMC_YWC1r4EaWMKiT8w@mail.gmail.com>
+From: patchwork-bot+netdevbpf@kernel.org
+Subject: Re: [PATCH net] hamradio: baycom_epp: fix build for UML
+Date: Mon, 18 Oct 2021 12:00:06 +0000
+Message-ID: <163455840685.2577.7817040614905305666.git-patchwork-notify@kernel.org>
+References: <20211015021804.17005-1-rdunlap@infradead.org>
 Mime-Version: 1.0
-Return-path: <linux-hams-owner@vger.kernel.org>
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to;
-        bh=JP769O/gbMQam8I3XCZG+zCrdQnOPDAQulp4MaowRlc=;
-        b=KLy2QYm6bvZrflpofZJj0/l0kuJ9tnKwK8qTJ6ro4ojlKWu6748Bk/WREz1rBGmKMr
-         ZJA0qT+pkIgO5rc6KwfsKGuYrqUp5d5kTdUVZsD3RruXtPJnxFnSl9JJOaeAxR6sCD5v
-         oAdU5bdq1ZoOc9EvhyizFMrmkOGnO0+VMYujYFEALnyyTjxI2oG57N4RZDlkSfxRWTAF
-         Lq2ZoWigrPtTaUKxeETM1J8T9XYFWGQTxiXWK2bHeYeIVtd20bcB9SXEon26WAcvyPSX
-         DqcCFl6OO7hSmiOj3mn2FZ7P2mYY5v+Cyi1ALEQomPtCmR7cIJzDGh3cpfiBcMMgYlXI
-         CyqQ==
-In-Reply-To: <CAH4uzPMXHnR+Z60iCA41FYsbDViQ5K2kMC_YWC1r4EaWMKiT8w@mail.gmail.com>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
+Return-path: <netdev-owner@vger.kernel.org>
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1634558406;
+        bh=gtGtOrvrLSJKUmHl3YuUlIXzUghrjnKyvXs2fn+o7HA=;
+        h=Subject:From:Date:References:In-Reply-To:To:Cc:From;
+        b=ndZeUT8EOqUS0YeJAgul/hD1fu0qI++QfZTFp7BCXRu8g7cbR6k/oA6xh3Y4zBjxJ
+         wmPoS92WkEoYqVSgIm+MGZwdVBu2XsbDAzpA6cmCdUiI+kzI7TsO89Hx7kqf3C8SL4
+         0VvOlVZWhpiD39AVIb2gPD43fdbIT/lU0NTcmGz7CPFc71n5sL4w9LUfLStAGR/tJb
+         OPIJ5pfahjKvaPRc40gQt9JaFtBorJHBGI0KwF3WWE0dX+ISGFGZ5vlVd4ByKMRC5U
+         CXvdaBymBVMFQteRpl6KnIzBHNwlsr85MF7rGHT4wgx6AS1qZ5fvGOROV0+iGjhmZ6
+         DJ5zUUEoV1VSA==
+In-Reply-To: <20211015021804.17005-1-rdunlap@infradead.org>
 List-ID: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-To: Ralf Baechle <ralf@linux-mips.org>, linux-hams@vger.kernel.org
+To: Randy Dunlap <rdunlap@infradead.org>
+Cc: netdev@vger.kernel.org, linux-um@lists.infradead.org, jdike@addtoit.com, richard@nod.at, anton.ivanov@cambridgegreys.com, davem@davemloft.net, kuba@kernel.org, t.sailer@alumni.ethz.ch, linux-hams@vger.kernel.org
 
-Hi,
+Hello:
 
-Any update on the security issue? It's a shame to be forced using an
-old kernel (4.19 or lower) to not being affected by this.
-Is anybody else able and willing to investigate and resolve this
-serious breach?
+This patch was applied to netdev/net.git (master)
+by David S. Miller <davem@davemloft.net>:
 
-73! Dave
+On Thu, 14 Oct 2021 19:18:04 -0700 you wrote:
+> On i386, the baycom_epp driver wants to inspect X86 CPU features (TSC)
+> and then act on that data, but that info is not available when running
+> on UML, so prevent that test and do the default action.
+> 
+> Prevents this build error on UML + i386:
+> 
+> ../drivers/net/hamradio/baycom_epp.c: In function ‘epp_bh’:
+> ../drivers/net/hamradio/baycom_epp.c:630:6: error: implicit declaration of function ‘boot_cpu_has’; did you mean ‘get_cpu_mask’? [-Werror=implicit-function-declaration]
+>   if (boot_cpu_has(X86_FEATURE_TSC))   \
+>       ^
+> ../drivers/net/hamradio/baycom_epp.c:658:2: note: in expansion of macro ‘GETTICK’
+>   GETTICK(time1);
+> 
+> [...]
 
-Op do 22 jul. 2021 om 19:38 schreef Dave van der Locht
-<d.vanderlocht@gmail.com>:
->
-> Ralf;
->
-> This dump is from a 32-bit ARM system indeed. Same behaviour was seen
-> on 64-bit x64.
->
-> I hope it can be found and fixed soon as it's 'leaking' sensitive information.
->
-> Kind regards,
-> Dave van der Locht
->
->
-> Op do 22 jul. 2021 om 19:20 schreef Ralf Baechle <ralf@linux-mips.org>:
-> >
-> > On Thu, Jul 22, 2021 at 03:28:30PM +0200, Dave van der Locht wrote:
-> >
-> > > Some ELF binary data fragment in a NETROM frame (I think):
-> >
-> > [...]
-> > > 0090   80 00 ff ff ff ff 7f 45 4c 46 01 01 01 00 00 00   .......ELF......
-> > > 00a0   00 00 00 00 00 00 02 00 28 00 01 00 00 00 ac 17   ........(.......
-> >
-> > I took a closer look and decoded the ELF header manually.  This would be
-> > a 32-bit ARM system, is that right?
-> >
-> > Will do yet some more decoding on the packets.  My first working theory
-> > is that memory for ththe packets is allocated too large, not zeroed and
-> > so eventually gets sent out.
-> >
-> >   Ralf
+Here is the summary with links:
+  - [net] hamradio: baycom_epp: fix build for UML
+    https://git.kernel.org/netdev/net/c/0a9bb11a5e29
+
+You are awesome, thank you!
