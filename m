@@ -1,83 +1,28 @@
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Subject: [PATCH 5.14 038/169] hamradio: baycom_epp: fix build for UML
-Date: Mon, 25 Oct 2021 21:13:39 +0200
-Message-ID: <20211025191022.696563287@linuxfoundation.org>
-References: <20211025191017.756020307@linuxfoundation.org>
+From: Brian <n1uro@n1uro.com>
+Subject: NetRom stack bug
+Date: Tue, 26 Oct 2021 13:53:16 -0400
+Message-ID: <1635270796.2318.2.camel@n1uro.com>
+Reply-To: n1uro@n1uro.com
 Mime-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
-Return-path: <linux-um-bounces+glud-user-mode-linux-devel=m.gmane-mx.org@lists.infradead.org>
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-	d=lists.infradead.org; s=bombadil.20210309; h=Sender:
-	Content-Transfer-Encoding:Content-Type:List-Subscribe:List-Help:List-Post:
-	List-Archive:List-Unsubscribe:List-Id:MIME-Version:References:In-Reply-To:
-	Message-Id:Date:Subject:Cc:To:From:Reply-To:Content-ID:Content-Description:
-	Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:
-	List-Owner; bh=a31YufXcycf4jodYBJpi+HvY+42cxaasIHiw3JxIyg4=; b=rEczS7RgtwMSn+
-	1EwqU5TyLB2nYEnveCqCWk2OJARFbDWAX9IS4iiGqPG/K+iQlSJtMisoDEhum3LlMC8DmcqkprYxM
-	EL6iIYQ2iQPMljEJaJq34cIe5RzSPuD/IQd3lCBbK3rmUnLU0fiyjnlJJ7QP2znJknWg8K0N256e0
-	w/loVcIqYmYdyxl3ZWJCt3Io8yvqMJF5atKrp5HHNsP4rKmjpaAKR8mGNumTdtnc1tB02Y+fmky0X
-	9PzMtCqoof6coqY1lNP8em0ONW/THMa55ElXA3dQR0v98Udes8Roj8V6iuecmxCYDVAwDkvkRP7ZZ
-	x211jc0LpLmmioUmC2lw==;
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
- s=korg; t=1635190773;
- bh=x78di4Y7cau7oQeUDkoo6UR9fiq7T4VUxl685vD7tkM=;
- h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
- b=I2GorxHfUzq1wPWvRMsH+a5EIrG29etv8trXzgAOPQAd8uI6GdgzvXuMHWwLagAog
- WXVd/k/gUF6p8FaK8sVi9upnRiRf4E6AJ+AHbHMFALLNAXs9aKckgNi32BAxuaJEOb
- tdjbDcEKCYuhm18LNqJcKYVfnOCq31j6C2bqj8P0=
-In-Reply-To: <20211025191017.756020307@linuxfoundation.org>
-List-Id: <linux-hams.vger.kernel.org>
-List-Unsubscribe: <http://lists.infradead.org/mailman/options/linux-um>,
- <mailto:linux-um-request@lists.infradead.org?subject=unsubscribe>
-List-Archive: <http://lists.infradead.org/pipermail/linux-um/>
-List-Post: <mailto:linux-um@lists.infradead.org>
-List-Help: <mailto:linux-um-request@lists.infradead.org?subject=help>
-List-Subscribe: <http://lists.infradead.org/mailman/listinfo/linux-um>,
- <mailto:linux-um-request@lists.infradead.org?subject=subscribe>
-Sender: "linux-um" <linux-um-bounces@lists.infradead.org>
-Errors-To: linux-um-bounces+glud-user-mode-linux-devel=m.gmane-mx.org@lists.infradead.org
-To: linux-kernel@vger.kernel.org
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org, Randy Dunlap <rdunlap@infradead.org>, linux-um@lists.infradead.org, Jeff Dike <jdike@addtoit.com>, Richard Weinberger <richard@nod.at>, Anton Ivanov <anton.ivanov@cambridgegreys.com>, "David S. Miller" <davem@davemloft.net>, Jakub Kicinski <kuba@kernel.org>, Thomas Sailer <t.sailer@alumni.ethz.ch>, linux-hams@vger.kernel.org, Sasha Levin <sashal@kernel.org>
+Content-Transfer-Encoding: 7bit
+Return-path: <linux-hams-owner@vger.kernel.org>
+List-ID: <linux-hams.vger.kernel.org>
+Content-Type: text/plain; charset="us-ascii"
+To: linux-hams@vger.kernel.org
 
-RnJvbTogUmFuZHkgRHVubGFwIDxyZHVubGFwQGluZnJhZGVhZC5vcmc+CgpbIFVwc3RyZWFtIGNv
-bW1pdCAwYTliYjExYTVlMjk4ZTcyYjY3NTI1NWE0YmIyODkzNTEzMDAwNTg0IF0KCk9uIGkzODYs
-IHRoZSBiYXljb21fZXBwIGRyaXZlciB3YW50cyB0byBpbnNwZWN0IFg4NiBDUFUgZmVhdHVyZXMg
-KFRTQykKYW5kIHRoZW4gYWN0IG9uIHRoYXQgZGF0YSwgYnV0IHRoYXQgaW5mbyBpcyBub3QgYXZh
-aWxhYmxlIHdoZW4gcnVubmluZwpvbiBVTUwsIHNvIHByZXZlbnQgdGhhdCB0ZXN0IGFuZCBkbyB0
-aGUgZGVmYXVsdCBhY3Rpb24uCgpQcmV2ZW50cyB0aGlzIGJ1aWxkIGVycm9yIG9uIFVNTCArIGkz
-ODY6CgouLi9kcml2ZXJzL25ldC9oYW1yYWRpby9iYXljb21fZXBwLmM6IEluIGZ1bmN0aW9uIOKA
-mGVwcF9iaOKAmToKLi4vZHJpdmVycy9uZXQvaGFtcmFkaW8vYmF5Y29tX2VwcC5jOjYzMDo2OiBl
-cnJvcjogaW1wbGljaXQgZGVjbGFyYXRpb24gb2YgZnVuY3Rpb24g4oCYYm9vdF9jcHVfaGFz4oCZ
-OyBkaWQgeW91IG1lYW4g4oCYZ2V0X2NwdV9tYXNr4oCZPyBbLVdlcnJvcj1pbXBsaWNpdC1mdW5j
-dGlvbi1kZWNsYXJhdGlvbl0KICBpZiAoYm9vdF9jcHVfaGFzKFg4Nl9GRUFUVVJFX1RTQykpICAg
-XAogICAgICBeCi4uL2RyaXZlcnMvbmV0L2hhbXJhZGlvL2JheWNvbV9lcHAuYzo2NTg6Mjogbm90
-ZTogaW4gZXhwYW5zaW9uIG9mIG1hY3JvIOKAmEdFVFRJQ0vigJkKICBHRVRUSUNLKHRpbWUxKTsK
-CkZpeGVzOiA2OGY1ZDNmM2I2NTQgKCJ1bTogYWRkIFBDSSBvdmVyIHZpcnRpbyBlbXVsYXRpb24g
-ZHJpdmVyIikKU2lnbmVkLW9mZi1ieTogUmFuZHkgRHVubGFwIDxyZHVubGFwQGluZnJhZGVhZC5v
-cmc+CkNjOiBsaW51eC11bUBsaXN0cy5pbmZyYWRlYWQub3JnCkNjOiBKZWZmIERpa2UgPGpkaWtl
-QGFkZHRvaXQuY29tPgpDYzogUmljaGFyZCBXZWluYmVyZ2VyIDxyaWNoYXJkQG5vZC5hdD4KQ2M6
-IEFudG9uIEl2YW5vdiA8YW50b24uaXZhbm92QGNhbWJyaWRnZWdyZXlzLmNvbT4KQ2M6ICJEYXZp
-ZCBTLiBNaWxsZXIiIDxkYXZlbUBkYXZlbWxvZnQubmV0PgpDYzogSmFrdWIgS2ljaW5za2kgPGt1
-YmFAa2VybmVsLm9yZz4KQ2M6IFRob21hcyBTYWlsZXIgPHQuc2FpbGVyQGFsdW1uaS5ldGh6LmNo
-PgpDYzogbGludXgtaGFtc0B2Z2VyLmtlcm5lbC5vcmcKU2lnbmVkLW9mZi1ieTogRGF2aWQgUy4g
-TWlsbGVyIDxkYXZlbUBkYXZlbWxvZnQubmV0PgpTaWduZWQtb2ZmLWJ5OiBTYXNoYSBMZXZpbiA8
-c2FzaGFsQGtlcm5lbC5vcmc+Ci0tLQogZHJpdmVycy9uZXQvaGFtcmFkaW8vYmF5Y29tX2VwcC5j
-IHwgNiArKystLS0KIDEgZmlsZSBjaGFuZ2VkLCAzIGluc2VydGlvbnMoKyksIDMgZGVsZXRpb25z
-KC0pCgpkaWZmIC0tZ2l0IGEvZHJpdmVycy9uZXQvaGFtcmFkaW8vYmF5Y29tX2VwcC5jIGIvZHJp
-dmVycy9uZXQvaGFtcmFkaW8vYmF5Y29tX2VwcC5jCmluZGV4IDQ0MzVhMTE5NTE5NC4uOGVhOGQ1
-MGY4MWM0IDEwMDY0NAotLS0gYS9kcml2ZXJzL25ldC9oYW1yYWRpby9iYXljb21fZXBwLmMKKysr
-IGIvZHJpdmVycy9uZXQvaGFtcmFkaW8vYmF5Y29tX2VwcC5jCkBAIC02MjMsMTYgKzYyMywxNiBA
-QCBzdGF0aWMgaW50IHJlY2VpdmUoc3RydWN0IG5ldF9kZXZpY2UgKmRldiwgaW50IGNudCkKIAog
-LyogLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
-LS0tLS0tLS0tLS0tLS0tICovCiAKLSNpZmRlZiBfX2kzODZfXworI2lmIGRlZmluZWQoX19pMzg2
-X18pICYmICFkZWZpbmVkKENPTkZJR19VTUwpCiAjaW5jbHVkZSA8YXNtL21zci5oPgogI2RlZmlu
-ZSBHRVRUSUNLKHgpCQkJCQkJXAogKHsJCQkJCQkJCVwKIAlpZiAoYm9vdF9jcHVfaGFzKFg4Nl9G
-RUFUVVJFX1RTQykpCQkJXAogCQl4ID0gKHVuc2lnbmVkIGludClyZHRzYygpOwkJCVwKIH0pCi0j
-ZWxzZSAvKiBfX2kzODZfXyAqLworI2Vsc2UgLyogX19pMzg2X18gICYmICFDT05GSUdfVU1MICov
-CiAjZGVmaW5lIEdFVFRJQ0soeCkKLSNlbmRpZiAvKiBfX2kzODZfXyAqLworI2VuZGlmIC8qIF9f
-aTM4Nl9fICAmJiAhQ09ORklHX1VNTCAqLwogCiBzdGF0aWMgdm9pZCBlcHBfYmgoc3RydWN0IHdv
-cmtfc3RydWN0ICp3b3JrKQogewotLSAKMi4zMy4wCgoKCgpfX19fX19fX19fX19fX19fX19fX19f
-X19fX19fX19fX19fX19fX19fX19fX19fXwpsaW51eC11bSBtYWlsaW5nIGxpc3QKbGludXgtdW1A
-bGlzdHMuaW5mcmFkZWFkLm9yZwpodHRwOi8vbGlzdHMuaW5mcmFkZWFkLm9yZy9tYWlsbWFuL2xp
-c3RpbmZvL2xpbnV4LXVtCg==
+Greetings;
+
+Is there any status report on the NetRom status bug getting fixed?
+Unfortunately many users feel this is a bug within URONode code and it
+is NOT. This is a bug where the kernel protocol stack is NOT closing
+unused sockets which could in theory make it vulnerable to compromise.
+-- 
+I crashed into a dwarf at a traffic light. He said "I'm not
+happy." so I asked which one was he.
+-----
+73 de Brian N1URO
+Linux Partner Developer
+Decades long Linux SysAdmin, DNS Host, Email Host
+IPv6 Certified
+URONode, axMail-FAX, HTPPU Ham software developer
+Nutmeg VHF NTS Net - Net Manager
