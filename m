@@ -1,96 +1,70 @@
-From: Dave van der Locht <d.vanderlocht@gmail.com>
-Subject: Re: NET/ROM bug fix from YO2LOJ?
-Date: Thu, 18 Nov 2021 20:33:49 +0100
-Message-ID: <CAH4uzPOoEXhv_K_NbU15-VTGiCe6c8p8Rtmrcdx496Abw6_mvw@mail.gmail.com>
-References: <27764.1637253551@yamaloka.gajendra.net> <CAH4uzPM9YzJPzLRCLSRWf17vim9ADmAiLM_G+yTDWDuXgzLhAA@mail.gmail.com>
+From: Roland Schwarz <roland.schwarz@blackspace.at>
+Subject: soundmodem bit rot prevention
+Date: Sun, 28 Nov 2021 18:22:52 +0100
+Message-ID: <208413a5-c061-2008-0760-f4d4ed55fcdb@blackspace.at>
 Mime-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha256;
+ protocol="application/pgp-signature";
+ boundary="------------S08P10Zc60astzSZo9sWopvA"
 Return-path: <linux-hams-owner@vger.kernel.org>
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=Osdmt6KQJEoo8LvyMiysgFPoOg+0TDeSsNxZUakAU7w=;
-        b=NPAzVyetR6ZqWFgE5bOIjoEct2D6hVBVSBot8yAVGIIauolfMQvJhC7nZUqTefKcW5
-         XPQJDwkgdZyLldwIoB1bArQqmy/Ly9jKZ+xLFijS8czQdDP+ZJIm1COsjKR4McMHuxt8
-         ML9qu+xkCott8jzQeZ4s82Cdsnx4F7xAjwtT5V/JNozAr4GMOypqZ6EJ7yTor1o47Gf8
-         GDBxAfk59Y2f2xy0n5XAmwTHgQlaTSJ8XhzOOv4sq4bg3imHARfGl4ZjIHazGoNdHtlH
-         9vySFsj3A0wZ2/YUFakWM7E1yq4d5Q1ecBXtfraec4ctEUMhUr0lOKsNoa4gimQjLGMO
-         HpLA==
-In-Reply-To: <CAH4uzPM9YzJPzLRCLSRWf17vim9ADmAiLM_G+yTDWDuXgzLhAA@mail.gmail.com>
+Content-Language: en-US
 List-ID: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-To: Dan Cross <crossd@gmail.com>
-Cc: linux-hams@vger.kernel.org
+To: linux-hams@vger.kernel.org
 
-Dan; Here's a link to the latest one in the archive I was referring to:
+This is an OpenPGP/MIME signed message (RFC 4880 and 3156)
+--------------S08P10Zc60astzSZo9sWopvA
+Content-Type: multipart/mixed; boundary="------------M1b4srDhUDQuqTOwQ4Bc80wV";
+ protected-headers="v1"
+From: Roland Schwarz <roland.schwarz@blackspace.at>
+To: linux-hams@vger.kernel.org
+Message-ID: <208413a5-c061-2008-0760-f4d4ed55fcdb@blackspace.at>
+Subject: soundmodem bit rot prevention
 
-https://marc.info/?l=linux-hams&m=162774747419380&q=p7
+--------------M1b4srDhUDQuqTOwQ4Bc80wV
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: base64
 
-73! Dave
+VG8gYWxsIHdobyBjYXJlLA0KDQpJIGdhdmUgdGhlIHNvdW5kbW9kZW0gc29tZSBsb3ZlIHRv
+IHNhdmUgaXQgZnJvbSBiaXQgcm90LiBJIGtub3cgdGhlIG1vc3QgDQppbXBvcnRhbnQgcHJv
+YmxlbSBpcyBkZXBlbmRlbmN5IG9uIGxlZ2FjeSBndGsyLiBIb3dldmVyLCB0aGlzIGlzIG5v
+dCANCnJlc29sdmVkIHlldC4gSSBhbSB3b3JraW5nIG9uIGEgc29sdXRpb24uDQoNCkkgaGF2
+ZSBmaXhlZCB0aGUgd2FybmluZ3MgYW5kIHNvbWUgaXNzdWVzIHdoaWNoIHdlcmUgZm91bmQg
+YnkgY2xhbmcgDQp0aWR5LiBJIGFsc28gaGF2ZSBhZGRlZCBzeXN0ZW1kIHN1cHBvcnQgYW5k
+IHN0YXJ0ZWQgaW1wcm92aW5nIHRoZSBkb2NzDQpieSBmaWxsaW5nIHRoZSBSRUFETUUgZmls
+ZSB3aXRoIHRleHQuDQoNCk1vc3QgaW1wb3J0YW50bHkgKGZvciBtZSkgaXMgdGhlIGFkZGl0
+aW9uIG9mIEJMUiAoYmFzZWxpbmUgcmVzdG9yYXRpb24pIA0KdG8gdGhlIDk2MDBCZCBtb2Rl
+bS4gVGhpcyBhZGRpdGlvbiBhbGxvd2VkIG1lIHRvIHVzZSBhIFlhZXN1IEZUTS00MDBYRCAN
+CndpdGggOTYwMEJkIHdoaWNoIHNpbXBseSBkaWQgbm90IHdvcmsgd2l0aG91dCBCTFIgYXQg
+YWxsLiBJIGV4cGVjdCBvdGhlcg0KdHJhbnNjZWl2ZXJzIHRvIGJlbmVmaXQgZnJvbSB0aGlz
+IGFkZGl0aW9uIGFzIHdlbGwuIEkgd291bGQgYmUgdmVyeSANCmludGVyZXN0ZWQgb2YgeW91
+ciBmaW5kaW5ncy4NCg0KVGhlIGNvZGUgaXMgYWxzbyBvbiBnaXRsYWIgbmVhciBUaG9tYXMg
+U2FpbGVycyByZXBvOg0KDQpodHRwczovL2dpdGxhYi5jb20vcGFja2V0cmFkaW8vc291bmRt
+b2RlbQ0KDQp2eSA3MyBkZSBSb2xhbmQsIG9lMXJzYQ0KDQoNCi0tIA0KX19fX19fX19fX19f
+X19fX19fX19fX19fX19fX19fX19fX19fX19fX19fDQogICBfICBfICB8IFJvbGFuZCBTY2h3
+YXJ6DQogIHxfKShfICB8DQogIHwgXF9fKSB8IG1haWx0bzpyb2xhbmQuc2Nod2FyekBibGFj
+a3NwYWNlLmF0DQpfX19fX19fX3wgaHR0cDovL3d3dy5ibGFja3NwYWNlLmF0DQo=
 
-Op do 18 nov. 2021 om 20:30 schreef Dave van der Locht
-<d.vanderlocht@gmail.com>:
->
-> The patch itself made it to this list several times as far as I know.
-> I also had some conversation here with the maintainer (Ralf) where
-> it's mentioned including what YO2LOJ did in his patch.
-> Roland Schwarz posted the patch too on 31th July 2021 with subject:
-> [PATCH] apply YO2LOJ's changes for proper connection cleanup.
->
-> I'm curious too if someone is tracking the issue, any status requests
-> remain unanswered. It won't be because there's no additional context
-> provided. There's lots of provided... Which can be found in the
-> archive.
->
-> Maybe it isn't the _right_ fix, but it seems to work pretty well for
-> everyone using it. And if it isn't the _right_ fix, what is...
->
-> The same seems to happen with a serious security issue I reported
-> where random fragments of data from memory is leaking into NETROM
-> frames with kernel 5.4 and up.
-> Unfortunately I'm not very capable of debugging the kernel stuff
-> myself. After some conversations with the maintainer, and providing
-> more info and a dump regarding that, there's silence too without any
-> response to status requests from anyone.
->
-> 73! Dave
->
-> Op do 18 nov. 2021 om 19:37 schreef Dan Cross <crossd@gmail.com>:
-> >
-> > On October 26 2021, N1URO sent a message to this list asking
-> > about getting "the NetRom status bug" fixed.  There was no
-> > additional context, so perhaps it's unsurprising that no one
-> > responded.
-> >
-> > However, his message appears to refer to a legitimate bug in
-> > which NET/ROM sockets can be left in an invalid state after
-> > closing.  Marius Petrescu, YO2LOJ, has a small patch for this
-> > on his web site, but from my searching, I can't find any record
-> > that it ever made it to either this list or the LKML.
-> >
-> > Marius's fix is short (slightly reformatted for kernels style):
-> >
-> > --- ../reference/linux/net/ax25/ax25_subr.c     Thu Nov 18 15:33:53 2021
-> > +++ ax25_subr.c Thu Nov 18 16:05:36 2021
-> > @@ -284,5 +284,8 @@
-> >                 }
-> >                 bh_unlock_sock(ax25->sk);
-> >                 local_bh_enable();
-> > +       } else {
-> > +               // YO2LOJ: this is needed for proper NETROM connection cleanup on timeout
-> > +               ax25_destroy_socket(ax25);
-> >         }
-> >  }
-> >
-> > I do not know whether this is the _right_ fix for this issue,
-> > but it seems that additional context towards getting it fixed
-> > would be helpful, hence this message.
-> >
-> > Is anyone tracking this issue?
-> >
-> > Thanks and 73,
-> >
-> >         - Dan C.
-> >           (KZ2X)
-> >
+--------------M1b4srDhUDQuqTOwQ4Bc80wV--
+
+--------------S08P10Zc60astzSZo9sWopvA
+Content-Type: application/pgp-signature; name="OpenPGP_signature.asc"
+Content-Description: OpenPGP digital signature
+Content-Disposition: attachment; filename="OpenPGP_signature"
+
+-----BEGIN PGP SIGNATURE-----
+
+wsF5BAABCAAjFiEELmDUtkkUQD99pU+KklFj+hFsiUgFAmGjuuwFAwAAAAAACgkQklFj+hFsiUhy
+WA/+MRt0Pug3tba2PoY+ieLnCiDQxjTtzpyeCsiyt0Qy3Skyks4YnirdrNHhdiy+gYaZBAOfI5ZM
+oTQspTc8a1OzpUMFIx9BYwpUgXINT8KFvetjp8FiG9k836HO4R7C4hs0vFZALwbA/TqcV03103L8
+Q+ST2R3dUcwUMKvMrV+kecFgVSjyY4VIiZVcD7VirZUAiZqDwRVztBw5XNxQRYF5yw5vqVGGsfW9
+U5BT4+qTIDK8dOoC4zNbH21bYSfv23Qcwy8oFP3EoqsYQZ8bo/eslClVm7FENAVlKqwgccRMm736
+tiHmnJ9CvOOeJ8ZtV/AxMTZtoWyggezyZr1zElad8wjCgjKoPKlmP+XdQnXE6r3eDwPSp8EZ3JJH
+qX+poc3+PCXZk+FqdrcclSHnwHfl6+9tMHIhUtxw5jl4cUmsUVOOLVjScFeECCBbPkxTTXHJi2S/
+DexF80Gpqy1a+ncupAh3YbCh7Jc507t5NH/8U0Q4/vJtaQ+F38iRszSp+0dMUnDue+fjrDI5yixz
+9ooa6xO7JewAeCDCHQpjW7oE404vu+bO9G9YOc5B8hjhZRxTcSrIHspItHCHe/Ts3J8F2fNP1QRI
+lqUkkXFYrepLILxT2rGP7jIJnTZAwdW39oqkOiCTUkduiabKrxrO/XDt/sl5jFDLX5vF9R3J02Xw
+VRo=
+=bHFK
+-----END PGP SIGNATURE-----
+
+--------------S08P10Zc60astzSZo9sWopvA--
