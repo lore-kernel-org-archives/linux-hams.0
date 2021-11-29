@@ -1,70 +1,80 @@
-From: Roland Schwarz <roland.schwarz@blackspace.at>
-Subject: soundmodem bit rot prevention
-Date: Sun, 28 Nov 2021 18:22:52 +0100
-Message-ID: <208413a5-c061-2008-0760-f4d4ed55fcdb@blackspace.at>
+From: "Dave Hibberd" <d@vehibberd.com>
+Subject: Re: soundmodem bit rot prevention
+Date: Mon, 29 Nov 2021 11:59:59 +0000
+Message-ID: <09fdc26a-0db0-4545-b655-9e4c9d5f56a0@www.fastmail.com>
+References: <208413a5-c061-2008-0760-f4d4ed55fcdb@blackspace.at>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
- protocol="application/pgp-signature";
- boundary="------------S08P10Zc60astzSZo9sWopvA"
 Return-path: <linux-hams-owner@vger.kernel.org>
-Content-Language: en-US
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=vehibberd.com;
+         h=mime-version:message-id:in-reply-to:references:date:from:to
+        :subject:content-type; s=fm1; bh=NR/y/tWZz8x8waskEWZnlj+BMHQxuQA
+        4pkw6CSUUh/M=; b=C2JPSQFqQPg21KguAMN6lrrLhL7Ul6NXy72qURX/EOnCujR
+        wyGR0vv70fyb3Ztp1oUcpg0d659Z0plNY8n4qqvMhPBJL0m4bOsgHYlBMZl8uN40
+        90KYz78gLPvC5I+nfRHo8AFjcbg5h4eJ071rlrUqwEIa8cRV/Gye4EiEuMn4Gc8z
+        kgsRxv5rPS/8lB90pwdc+dgi0pd5SQLWmgricagfyyRX9YP524kZjf23ZLceLRtl
+        MaDeB9f+/pt3QDw8aM2ZBDGHVdQVM03IxPWYc8tCr55uWewoGQIhKGGwVn/E4HVP
+        LNGqkNTwCpgzeWY9Rn4B8VUynMnXbmAidpEYTQg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+        messagingengine.com; h=content-type:date:from:in-reply-to
+        :message-id:mime-version:references:subject:to:x-me-proxy
+        :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; bh=NR/y/t
+        WZz8x8waskEWZnlj+BMHQxuQA4pkw6CSUUh/M=; b=IBnWR5R7qqCoXpGui9GsZk
+        pCWl0HzbkT1zuIzqaIPqE/cCCOtljoBxcdLIrzJGhKBvDXLqVJf0tJN1GPIcZ2gf
+        6R2YRnbJZ3XZglPv6wXtgR9LAPeJkG3SABuyTxYb6zLMIV0gvUdafi2aSyGRtpHt
+        lY52vQpmOiVoXlxFZO+PGQk19WUf4aciMYHyuqUOba8HfXhVKM0LRJVt/i1vnnr1
+        05QmMYz1nKA7zBHlXclR3r1CbKhvaBHfS6rO18xg4189mI/7eFT13Jrvx4scAvUQ
+        AzeoGOVsHxrRdZwrB/Hco2O/Y3sdx1Sw8DHN36j1ZOYqfKdv+jRMTCbt2HXQxROQ
+        ==
+In-Reply-To: <208413a5-c061-2008-0760-f4d4ed55fcdb@blackspace.at>
 List-ID: <linux-hams.vger.kernel.org>
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 7bit
 To: linux-hams@vger.kernel.org
 
-This is an OpenPGP/MIME signed message (RFC 4880 and 3156)
---------------S08P10Zc60astzSZo9sWopvA
-Content-Type: multipart/mixed; boundary="------------M1b4srDhUDQuqTOwQ4Bc80wV";
- protected-headers="v1"
-From: Roland Schwarz <roland.schwarz@blackspace.at>
-To: linux-hams@vger.kernel.org
-Message-ID: <208413a5-c061-2008-0760-f4d4ed55fcdb@blackspace.at>
-Subject: soundmodem bit rot prevention
+Hey there,
 
---------------M1b4srDhUDQuqTOwQ4Bc80wV
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: base64
+Great work, thanks for taking this on and thank you for caring!
 
-VG8gYWxsIHdobyBjYXJlLA0KDQpJIGdhdmUgdGhlIHNvdW5kbW9kZW0gc29tZSBsb3ZlIHRv
-IHNhdmUgaXQgZnJvbSBiaXQgcm90LiBJIGtub3cgdGhlIG1vc3QgDQppbXBvcnRhbnQgcHJv
-YmxlbSBpcyBkZXBlbmRlbmN5IG9uIGxlZ2FjeSBndGsyLiBIb3dldmVyLCB0aGlzIGlzIG5v
-dCANCnJlc29sdmVkIHlldC4gSSBhbSB3b3JraW5nIG9uIGEgc29sdXRpb24uDQoNCkkgaGF2
-ZSBmaXhlZCB0aGUgd2FybmluZ3MgYW5kIHNvbWUgaXNzdWVzIHdoaWNoIHdlcmUgZm91bmQg
-YnkgY2xhbmcgDQp0aWR5LiBJIGFsc28gaGF2ZSBhZGRlZCBzeXN0ZW1kIHN1cHBvcnQgYW5k
-IHN0YXJ0ZWQgaW1wcm92aW5nIHRoZSBkb2NzDQpieSBmaWxsaW5nIHRoZSBSRUFETUUgZmls
-ZSB3aXRoIHRleHQuDQoNCk1vc3QgaW1wb3J0YW50bHkgKGZvciBtZSkgaXMgdGhlIGFkZGl0
-aW9uIG9mIEJMUiAoYmFzZWxpbmUgcmVzdG9yYXRpb24pIA0KdG8gdGhlIDk2MDBCZCBtb2Rl
-bS4gVGhpcyBhZGRpdGlvbiBhbGxvd2VkIG1lIHRvIHVzZSBhIFlhZXN1IEZUTS00MDBYRCAN
-CndpdGggOTYwMEJkIHdoaWNoIHNpbXBseSBkaWQgbm90IHdvcmsgd2l0aG91dCBCTFIgYXQg
-YWxsLiBJIGV4cGVjdCBvdGhlcg0KdHJhbnNjZWl2ZXJzIHRvIGJlbmVmaXQgZnJvbSB0aGlz
-IGFkZGl0aW9uIGFzIHdlbGwuIEkgd291bGQgYmUgdmVyeSANCmludGVyZXN0ZWQgb2YgeW91
-ciBmaW5kaW5ncy4NCg0KVGhlIGNvZGUgaXMgYWxzbyBvbiBnaXRsYWIgbmVhciBUaG9tYXMg
-U2FpbGVycyByZXBvOg0KDQpodHRwczovL2dpdGxhYi5jb20vcGFja2V0cmFkaW8vc291bmRt
-b2RlbQ0KDQp2eSA3MyBkZSBSb2xhbmQsIG9lMXJzYQ0KDQoNCi0tIA0KX19fX19fX19fX19f
-X19fX19fX19fX19fX19fX19fX19fX19fX19fX19fDQogICBfICBfICB8IFJvbGFuZCBTY2h3
-YXJ6DQogIHxfKShfICB8DQogIHwgXF9fKSB8IG1haWx0bzpyb2xhbmQuc2Nod2FyekBibGFj
-a3NwYWNlLmF0DQpfX19fX19fX3wgaHR0cDovL3d3dy5ibGFja3NwYWNlLmF0DQo=
+I possibly can't test BLR as I'm not wholly sure what it is and what use it would be on my test rigs (FT-7900, FT-100D) - what's the benefit of the feature? 
 
---------------M1b4srDhUDQuqTOwQ4Bc80wV--
+I'm keeping track of this, when you get to GTK-3 relative stability, we can think about migrating the soundmodem debian package to the codebase :)
 
---------------S08P10Zc60astzSZo9sWopvA
-Content-Type: application/pgp-signature; name="OpenPGP_signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="OpenPGP_signature"
+Cheers,
 
------BEGIN PGP SIGNATURE-----
+-- 
+  Hibby
+  MM0RFN
 
-wsF5BAABCAAjFiEELmDUtkkUQD99pU+KklFj+hFsiUgFAmGjuuwFAwAAAAAACgkQklFj+hFsiUhy
-WA/+MRt0Pug3tba2PoY+ieLnCiDQxjTtzpyeCsiyt0Qy3Skyks4YnirdrNHhdiy+gYaZBAOfI5ZM
-oTQspTc8a1OzpUMFIx9BYwpUgXINT8KFvetjp8FiG9k836HO4R7C4hs0vFZALwbA/TqcV03103L8
-Q+ST2R3dUcwUMKvMrV+kecFgVSjyY4VIiZVcD7VirZUAiZqDwRVztBw5XNxQRYF5yw5vqVGGsfW9
-U5BT4+qTIDK8dOoC4zNbH21bYSfv23Qcwy8oFP3EoqsYQZ8bo/eslClVm7FENAVlKqwgccRMm736
-tiHmnJ9CvOOeJ8ZtV/AxMTZtoWyggezyZr1zElad8wjCgjKoPKlmP+XdQnXE6r3eDwPSp8EZ3JJH
-qX+poc3+PCXZk+FqdrcclSHnwHfl6+9tMHIhUtxw5jl4cUmsUVOOLVjScFeECCBbPkxTTXHJi2S/
-DexF80Gpqy1a+ncupAh3YbCh7Jc507t5NH/8U0Q4/vJtaQ+F38iRszSp+0dMUnDue+fjrDI5yixz
-9ooa6xO7JewAeCDCHQpjW7oE404vu+bO9G9YOc5B8hjhZRxTcSrIHspItHCHe/Ts3J8F2fNP1QRI
-lqUkkXFYrepLILxT2rGP7jIJnTZAwdW39oqkOiCTUkduiabKrxrO/XDt/sl5jFDLX5vF9R3J02Xw
-VRo=
-=bHFK
------END PGP SIGNATURE-----
-
---------------S08P10Zc60astzSZo9sWopvA--
+On Sun, 28 Nov 2021, at 5:22 PM, Roland Schwarz wrote:
+> To all who care,
+>
+> I gave the soundmodem some love to save it from bit rot. I know the most 
+> important problem is dependency on legacy gtk2. However, this is not 
+> resolved yet. I am working on a solution.
+>
+> I have fixed the warnings and some issues which were found by clang 
+> tidy. I also have added systemd support and started improving the docs
+> by filling the README file with text.
+>
+> Most importantly (for me) is the addition of BLR (baseline restoration) 
+> to the 9600Bd modem. This addition allowed me to use a Yaesu FTM-400XD 
+> with 9600Bd which simply did not work without BLR at all. I expect other
+> transceivers to benefit from this addition as well. I would be very 
+> interested of your findings.
+>
+> The code is also on gitlab near Thomas Sailers repo:
+>
+> https://gitlab.com/packetradio/soundmodem
+>
+> vy 73 de Roland, oe1rsa
+>
+>
+> -- 
+> __________________________________________
+>    _  _  | Roland Schwarz
+>   |_)(_  |
+>   | \__) | mailto:roland.schwarz@blackspace.at
+> ________| http://www.blackspace.at
+>
+> Attachments:
+> * OpenPGP_signature
