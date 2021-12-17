@@ -1,71 +1,64 @@
-From: Dan Carpenter <dan.carpenter-QHcLZuEGTsvQT0dZR+AlfA@public.gmane.org>
-Subject: [bug report] net: pass a sockptr_t into ->setsockopt
-Date: Thu, 16 Dec 2021 16:05:56 +0300
-Message-ID: <20211216130556.GA11248@kili>
+From: Lin Ma <linma@zju.edu.cn>
+Subject: [PATCH v0] ax25: NPD bug when detaching AX25 device
+Date: Fri, 17 Dec 2021 10:29:41 +0800
+Message-ID: <20211217022941.27901-1-linma@zju.edu.cn>
 Mime-Version: 1.0
-Return-path: <linux-bluetooth-owner-u79uwXL29TY76Z2rM5mHXA@public.gmane.org>
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=date : from : to : cc
- : subject : message-id : content-type : mime-version; s=corp-2021-07-09;
- bh=4eW4zllmH57Q4b5k9WLykTxxet/J9cCKbfaJH3KASZU=;
- b=iM5BcOfEVTH+TmtShty/IdgAbrAaS+yMVmc6AgEwSQtsSPm7hKv7DbOVos5jLdMYjrr0
- 9BnLpZxl8U1NagOuX5ApVWoLFL3+rPAsMBCW5KBZhxwdF1ZxN5RbCRMbcRUZU9gA/jn4
- TmfSE+1E63dqI6hE0RGLBnmWimVQ/NUjekV2Ha2H6Q4JJPHdek3JTPReXdwcXlwUtldN
- GjwT7+fM8WzYID6+jYnSuw5ditS419Lc+wmSeNlYv2qgxW2iCaGH6DqhdiSUsABOHiQi
- dPlWWo6Yl6DOR/jZm02oX9rRGN+fGaZftN9h4BnWrdKyOJzbOeK3AUieL7US7KB3Q5x6 uA== 
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oracle.onmicrosoft.com; s=selector2-oracle-onmicrosoft-com;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=4eW4zllmH57Q4b5k9WLykTxxet/J9cCKbfaJH3KASZU=;
- b=bd2x/s4hMFpV09s//7cPhilUWA7G3QyjFbCRAE2eNAzI7q0Z4ka7jf4G82JgEixj1T+FZn2WyVACMQl846ORS4cMQlIPeSMw+VZvafpVEv/C/me2egy8IV/Y9UTARMsGNY/QUWujwSY1aE886JcN9oAiAmQYprOrPzNSJrgbOLw=
-Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+Return-path: <linux-hams-owner@vger.kernel.org>
 List-ID: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-To: hch-jcswGhMUV9g@public.gmane.org
-Cc: linux-hams-u79uwXL29TY76Z2rM5mHXA@public.gmane.org, linux-bluetooth-u79uwXL29TY76Z2rM5mHXA@public.gmane.org
+To: linux-hams@vger.kernel.org
+Cc: jreuter@yaina.de, ralf@linux-mips.org, davem@davemloft.net, kuba@kernel.org, netdev@vger.kernel.org, nagi@zju.edu.cn, Lin Ma <linma@zju.edu.cn>
 
-Hello Christoph Hellwig,
+The existing cleanup routine implementation is not well synchronized
+with the syscall routine. When a device is detaching, below race could
+occur.
 
-The patch a7b75c5a8c41: "net: pass a sockptr_t into ->setsockopt"
-from Jul 23, 2020, leads to the following Smatch static checker
-warnings:
+static int ax25_sendmsg(...) {
+  ...
+  lock_sock()
+  ax25 = sk_to_ax25(sk);
+  if (ax25->ax25_dev == NULL) // CHECK
+  ...
+  ax25_queue_xmit(skb, ax25->ax25_dev->dev); // USE
+  ...
+}
 
-net/netrom/af_netrom.c:309 nr_setsockopt() warn: not copying enough bytes for '&opt' (8 vs 4 bytes)
-net/bluetooth/hci_sock.c:1940 hci_sock_setsockopt() warn: not copying enough bytes for '&opt' (4 vs 2 bytes)
-net/bluetooth/l2cap_sock.c:1088 l2cap_sock_setsockopt() warn: not copying enough bytes for '&opt' (4 vs 2 bytes)
-net/bluetooth/l2cap_sock.c:1119 l2cap_sock_setsockopt() warn: not copying enough bytes for '&opt' (4 vs 1 bytes)
-net/ax25/af_ax25.c:546 ax25_setsockopt() warn: not copying enough bytes for '&opt' (8 vs 4 bytes)
+static void ax25_kill_by_device(...) {
+  ...
+  if (s->ax25_dev == ax25_dev) {
+    s->ax25_dev = NULL;
+    ...
+}
 
-net/netrom/af_netrom.c
-    296 static int nr_setsockopt(struct socket *sock, int level, int optname,
-    297                 sockptr_t optval, unsigned int optlen)
-    298 {
-    299         struct sock *sk = sock->sk;
-    300         struct nr_sock *nr = nr_sk(sk);
-    301         unsigned long opt;
-                ^^^^^^^^^^^^^^^^^^
+Other syscall functions like ax25_getsockopt, ax25_getname,
+ax25_info_show also suffer from similar races. To fix them, this patch
+introduce lock_sock() into ax25_kill_by_device in order to guarantee
+that the nullify action in cleanup routine cannot proceed when another
+socket request is pending.
 
-    302 
-    303         if (level != SOL_NETROM)
-    304                 return -ENOPROTOOPT;
-    305 
-    306         if (optlen < sizeof(unsigned int))
-    307                 return -EINVAL;
-    308 
---> 309         if (copy_from_sockptr(&opt, optval, sizeof(unsigned int)))
+Signed-off-by: Hanjie Wu <nagi@zju.edu.cn>
+Signed-off-by: Lin Ma <linma@zju.edu.cn>
+---
+ net/ax25/af_ax25.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-Originally this was if (get_user(opt, (unsigned int __user *)optval))
-which is weird but actually works.  Now the last two bytes are
-uninitialized.
+diff --git a/net/ax25/af_ax25.c b/net/ax25/af_ax25.c
+index 2f34bbdde0e8..cfca99e295b8 100644
+--- a/net/ax25/af_ax25.c
++++ b/net/ax25/af_ax25.c
+@@ -85,8 +85,10 @@ static void ax25_kill_by_device(struct net_device *dev)
+ again:
+ 	ax25_for_each(s, &ax25_list) {
+ 		if (s->ax25_dev == ax25_dev) {
+-			s->ax25_dev = NULL;
+ 			spin_unlock_bh(&ax25_list_lock);
++			lock_sock(s->sk);
++			s->ax25_dev = NULL;
++			release_sock(s->sk);
+ 			ax25_disconnect(s, ENETUNREACH);
+ 			spin_lock_bh(&ax25_list_lock);
+ 
+-- 
+2.33.1
 
-    310                 return -EFAULT;
-    311 
-    312         switch (optname) {
-    313         case NETROM_T1:
-    314                 if (opt < 1 || opt > ULONG_MAX / HZ)
-    315                         return -EINVAL;
-    316                 nr->t1 = opt * HZ;
-    317                 return 0;
-
-regards,
-dan carpenter
