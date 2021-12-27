@@ -1,22 +1,22 @@
 From: Sasha Levin <sashal@kernel.org>
-Subject: [PATCH AUTOSEL 4.14 2/4] ax25: NPD bug when detaching AX25 device
-Date: Mon, 27 Dec 2021 14:06:27 -0500
-Message-ID: <20211227190629.1043445-2-sashal@kernel.org>
-References: <20211227190629.1043445-1-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 4.9 2/4] ax25: NPD bug when detaching AX25 device
+Date: Mon, 27 Dec 2021 14:06:44 -0500
+Message-ID: <20211227190647.1043514-2-sashal@kernel.org>
+References: <20211227190647.1043514-1-sashal@kernel.org>
 Mime-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Return-path: <linux-hams-owner@vger.kernel.org>
+Return-path: <netdev-owner@vger.kernel.org>
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1640632003;
-        bh=lBTqxLmvB/WOYzwlcaOetSC8KuIrbI3m3B+bQ56rGN4=;
+        s=k20201202; t=1640632010;
+        bh=055HlUvUQ2TxKb4Z4cpIUxi7M++pUMXyhB1W32PSMEI=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=XAap15nqSkVKL85uZr/mJ5lgm0lBNEyhiOt40huue794vElcOQUSxagSZgS2dRkv5
-         NdhopwlN9pcdFZ/osYsZ8FAmyBOQ9wuA2cNUiXecWqsRmW+mAhnoJatkgVDDyI5D0O
-         Qscs+Qmlm/hsxTQtrbeizX6GrYRHw5BRvNHeyXMjuC7B1R+eNbcSRzmSABzju1iOWs
-         mG4iAeK/wg+4vaT9QmChFHai6fC1wvk3YI6ogJ9LFdyVwS0NJZoh6E8L122tFDg3iB
-         4ZPRLfBstVuoHfdC7bhl3efPfLleBbsAXgroeQlkgvW4ETbHswTjR5lirbtpUA1dh3
-         YHkEQk3LikpKg==
-In-Reply-To: <20211227190629.1043445-1-sashal@kernel.org>
+        b=i5aDzhN2vpuie1Sq8m1Ky624ZP2lRHIZXJdrUIvRL+CnlN2IjTGmhYcvo0jV5ec56
+         lajKuZ2i8IpZdPs9HIG27TNQ2hPUZuRlwjHM8onUmQBl6vDUtvNlvYAlW/w50+7Dce
+         Homz+eSFRYv+SKUMVQuAMhmeP6bpFmj7Mqr6Rq/8hAXoljAFNPlnydggKImSS51vc8
+         sUGNbAiTgj1KwJ1BPRYRhOJDkqC1bfJgjK6gcymQb1NAJR9OlGjygR7C2mfvK92QPg
+         rcFnWSFWvaRuAND4DRoT5is/4Y9RT7qYqfjutyIcAwzRfzMO8qX13B+hM8MCbkeNNn
+         +RWg2Dx5TtgIg==
+In-Reply-To: <20211227190647.1043514-1-sashal@kernel.org>
 List-ID: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
 To: linux-kernel@vger.kernel.org, stable@vger.kernel.org
@@ -62,7 +62,7 @@ Signed-off-by: Sasha Levin <sashal@kernel.org>
  1 file changed, 3 insertions(+), 1 deletion(-)
 
 diff --git a/net/ax25/af_ax25.c b/net/ax25/af_ax25.c
-index 6915eebc7a4a9..0232afd9d9c3c 100644
+index 64fede18aa33f..f4c8567e91b38 100644
 --- a/net/ax25/af_ax25.c
 +++ b/net/ax25/af_ax25.c
 @@ -88,8 +88,10 @@ static void ax25_kill_by_device(struct net_device *dev)
