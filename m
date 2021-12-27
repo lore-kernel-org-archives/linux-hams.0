@@ -1,56 +1,82 @@
-From: patchwork-bot+netdevbpf@kernel.org
-Subject: Re: [PATCH v0] ax25: NPD bug when detaching AX25 device
-Date: Sat, 18 Dec 2021 12:40:10 +0000
-Message-ID: <163983121017.1461.2630742040562872080.git-patchwork-notify@kernel.org>
-References: <20211217022941.27901-1-linma@zju.edu.cn>
+From: Sasha Levin <sashal@kernel.org>
+Subject: [PATCH AUTOSEL 5.15 17/26] ax25: NPD bug when detaching AX25 device
+Date: Mon, 27 Dec 2021 14:03:18 -0500
+Message-ID: <20211227190327.1042326-17-sashal@kernel.org>
+References: <20211227190327.1042326-1-sashal@kernel.org>
 Mime-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Return-path: <linux-hams-owner@vger.kernel.org>
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1639831210;
-        bh=FFGB3RVCB4aGnm21eSkJPuLKnXWaHQmdFoXWAE6bFbY=;
-        h=Subject:From:Date:References:In-Reply-To:To:Cc:From;
-        b=MbCre2X9znaR5kVnA1IqQx5PI1if92J3Cs5WBC6MPztINXd/dUPHSp5iYZckgMGTC
-         0RkzsNpBw5os7Y/NoKZ1C4H7s3PyiGiPeXmlDFFPdkCQSQ20NrxvNLT0BaTpwFtaSk
-         68FHDrNrHiTW2qp7BxnhrrULXAHwAS5MDcmAhwH2LZCKg3vjIcRK4aV8Y5kyGEzPNF
-         XhAYN6rDuWeSlzh+fdrnyma8YgKntbvF1zTfS3kvhq5makB3/WWPm1g3YUHRcb0LEP
-         onFgLBW+OP9vTTdEQCriufLgNPbWsFqKvQwScoZp28Hh/rxkyxpLYNG4LiQ+71qrzl
-         6Hhcfe8xTYTUg==
-In-Reply-To: <20211217022941.27901-1-linma@zju.edu.cn>
+        s=k20201202; t=1640631865;
+        bh=roB+SCMH2AgvaUDqtoiGsZMBVDgqtp2YNKHpbTuGR4U=;
+        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+        b=cfogjNiAl/3ubd1pSyv9Yx+vYbaIuyi9bxc3Po61NtJU5DySESL4AW2AajrEn17/G
+         DRPU3Jlxs/OcJogdtKC+YBsYQfhp/VoeoUqEMrD4I+JB3QAt4Jai+VHhGw8mm6A2I3
+         Qb50gflT4BTDa1s7cpNICyHQB6D+dq6QzV+rgfDb4OoAY0xvARsCp+fxCeQfMip+fd
+         TYCbTsB13Dan3lnp49z9C6G2caGSrT5JP6A39QfhQf3DC4gNeabScWqt97Pjyvgey5
+         H0PXEkmY92KfiWpHdKMyQBcHBPZDiI6YMQlS7CH9qF+rXg7F5b9f6sspAG/grqzo6V
+         Db4/qXMNYzM3A==
+In-Reply-To: <20211227190327.1042326-1-sashal@kernel.org>
 List-ID: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
-To: Lin Ma <linma@zju.edu.cn>
-Cc: linux-hams@vger.kernel.org, jreuter@yaina.de, ralf@linux-mips.org, davem@davemloft.net, kuba@kernel.org, netdev@vger.kernel.org, nagi@zju.edu.cn
+To: linux-kernel@vger.kernel.org, stable@vger.kernel.org
+Cc: Lin Ma <linma@zju.edu.cn>, Hanjie Wu <nagi@zju.edu.cn>, "David S . Miller" <davem@davemloft.net>, Sasha Levin <sashal@kernel.org>, jreuter@yaina.de, kuba@kernel.org, linux-hams@vger.kernel.org, netdev@vger.kernel.org
 
-Hello:
+From: Lin Ma <linma@zju.edu.cn>
 
-This patch was applied to netdev/net.git (master)
-by David S. Miller <davem@davemloft.net>:
+[ Upstream commit 1ade48d0c27d5da1ccf4b583d8c5fc8b534a3ac8 ]
 
-On Fri, 17 Dec 2021 10:29:41 +0800 you wrote:
-> The existing cleanup routine implementation is not well synchronized
-> with the syscall routine. When a device is detaching, below race could
-> occur.
-> 
-> static int ax25_sendmsg(...) {
->   ...
->   lock_sock()
->   ax25 = sk_to_ax25(sk);
->   if (ax25->ax25_dev == NULL) // CHECK
->   ...
->   ax25_queue_xmit(skb, ax25->ax25_dev->dev); // USE
->   ...
-> }
-> 
-> [...]
+The existing cleanup routine implementation is not well synchronized
+with the syscall routine. When a device is detaching, below race could
+occur.
 
-Here is the summary with links:
-  - [v0] ax25: NPD bug when detaching AX25 device
-    https://git.kernel.org/netdev/net/c/1ade48d0c27d
+static int ax25_sendmsg(...) {
+  ...
+  lock_sock()
+  ax25 = sk_to_ax25(sk);
+  if (ax25->ax25_dev == NULL) // CHECK
+  ...
+  ax25_queue_xmit(skb, ax25->ax25_dev->dev); // USE
+  ...
+}
 
-You are awesome, thank you!
+static void ax25_kill_by_device(...) {
+  ...
+  if (s->ax25_dev == ax25_dev) {
+    s->ax25_dev = NULL;
+    ...
+}
+
+Other syscall functions like ax25_getsockopt, ax25_getname,
+ax25_info_show also suffer from similar races. To fix them, this patch
+introduce lock_sock() into ax25_kill_by_device in order to guarantee
+that the nullify action in cleanup routine cannot proceed when another
+socket request is pending.
+
+Signed-off-by: Hanjie Wu <nagi@zju.edu.cn>
+Signed-off-by: Lin Ma <linma@zju.edu.cn>
+Signed-off-by: David S. Miller <davem@davemloft.net>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
+---
+ net/ax25/af_ax25.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
+
+diff --git a/net/ax25/af_ax25.c b/net/ax25/af_ax25.c
+index 2631efc6e359f..aa7785687e757 100644
+--- a/net/ax25/af_ax25.c
++++ b/net/ax25/af_ax25.c
+@@ -85,8 +85,10 @@ static void ax25_kill_by_device(struct net_device *dev)
+ again:
+ 	ax25_for_each(s, &ax25_list) {
+ 		if (s->ax25_dev == ax25_dev) {
+-			s->ax25_dev = NULL;
+ 			spin_unlock_bh(&ax25_list_lock);
++			lock_sock(s->sk);
++			s->ax25_dev = NULL;
++			release_sock(s->sk);
+ 			ax25_disconnect(s, ENETUNREACH);
+ 			spin_lock_bh(&ax25_list_lock);
+ 
 -- 
-Deet-doot-dot, I am a bot.
-https://korg.docs.kernel.org/patchwork/pwbot.html
-
+2.34.1
 
