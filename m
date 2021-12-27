@@ -1,22 +1,20 @@
 From: Sasha Levin <sashal@kernel.org>
-Subject: [PATCH AUTOSEL 4.9 2/4] ax25: NPD bug when detaching AX25 device
-Date: Mon, 27 Dec 2021 14:06:44 -0500
-Message-ID: <20211227190647.1043514-2-sashal@kernel.org>
-References: <20211227190647.1043514-1-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 4.4 1/3] ax25: NPD bug when detaching AX25 device
+Date: Mon, 27 Dec 2021 14:06:51 -0500
+Message-ID: <20211227190653.1043578-1-sashal@kernel.org>
 Mime-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Return-path: <netdev-owner@vger.kernel.org>
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1640632010;
+        s=k20201202; t=1640632016;
         bh=055HlUvUQ2TxKb4Z4cpIUxi7M++pUMXyhB1W32PSMEI=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=i5aDzhN2vpuie1Sq8m1Ky624ZP2lRHIZXJdrUIvRL+CnlN2IjTGmhYcvo0jV5ec56
-         lajKuZ2i8IpZdPs9HIG27TNQ2hPUZuRlwjHM8onUmQBl6vDUtvNlvYAlW/w50+7Dce
-         Homz+eSFRYv+SKUMVQuAMhmeP6bpFmj7Mqr6Rq/8hAXoljAFNPlnydggKImSS51vc8
-         sUGNbAiTgj1KwJ1BPRYRhOJDkqC1bfJgjK6gcymQb1NAJR9OlGjygR7C2mfvK92QPg
-         rcFnWSFWvaRuAND4DRoT5is/4Y9RT7qYqfjutyIcAwzRfzMO8qX13B+hM8MCbkeNNn
-         +RWg2Dx5TtgIg==
-In-Reply-To: <20211227190647.1043514-1-sashal@kernel.org>
+        h=From:To:Cc:Subject:Date:From;
+        b=k3jfpFaILbD9AsX5fG/Et+VaFTQnwI4SeHGxKaacFk2SU6Sm95b//7P1GAw22wyyv
+         Ueuv8IUzUkd5q0Qhkm6EgKK5craMA9L02jr6Enp6t9ksArojoN08Zl2ArcT/rG1b/h
+         qnsTtABe2+3Em4eAYTbXRZfNoSW4L6Fo2yETtRNbR2R18QS5Yb/E4vzD8Hnw1Nnu4V
+         pBiFj0M9ZIfIdig03YtjTzfuaI0TxcAYPizbTTks65Q3W6aschOU7ijTlXTdjGTuTR
+         T8HJy+KJRpOuYMb9C7PYo0mQT/NkLMNj9J3Py/fxgEmM44YgQCMNeLFNVsXCIXC/Rm
+         3Nuees14JkYWQ==
 List-ID: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
 To: linux-kernel@vger.kernel.org, stable@vger.kernel.org
