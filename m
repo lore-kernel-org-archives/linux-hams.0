@@ -1,24 +1,24 @@
 From: Jakub Kicinski <kuba-DgEjT+Ai2ygdnm+yROfE0A@public.gmane.org>
-Subject: [PATCH bpf-next] net: don't include filter.h from net/sock.h
-Date: Tue, 28 Dec 2021 11:25:19 -0800
-Message-ID: <20211228192519.386913-1-kuba@kernel.org>
+Subject: [PATCH bpf-next v2] net: don't include filter.h from net/sock.h
+Date: Tue, 28 Dec 2021 16:49:13 -0800
+Message-ID: <20211229004913.513372-1-kuba@kernel.org>
 Mime-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Return-path: <linux-bluetooth-owner-u79uwXL29TY76Z2rM5mHXA@public.gmane.org>
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1640719530;
-        bh=OiUkchb5cjAHs/7wjwgee5V8uvmcMDpNzAiPy9t9pDs=;
+        s=k20201202; t=1640738959;
+        bh=Dhya06A0fsx6OYnJ8Pjm6y+72X0rTVqijoy15oG2628=;
         h=From:To:Cc:Subject:Date:From;
-        b=OS6kekIbWoYJtLQ99sfUZtotdPiuG1fAxDRiQhUwCmrjG6NK5/ixB0D9tWkP0tsvX
-         hGFDNCsk+QqWWJx2dNgsa9NI4Zk8IFpCikH1NRO1mmzEGc5mqrBUM8iyLCDWRDcRwa
-         cMgqcyBDr8TadEv6ZYkbssKMEKlDgtq++au67/kWxvNT6/xR4XvXTmOxXnSCujPw4e
-         60CvMZVs+iI987teAxgIsijpd+TW/axRp+h909WvFaitxYF/vmCLjf452GN5dS5zDc
-         ODZhAN1yxLJiPIgn5uii3i8PQGU4z0BF1HOz0D8Dszx6vfh1f8vbO6QPoXASUxQEnK
-         vIL98jXdKJNKg==
+        b=Dch51jiREzZYD523mD7zioHHOComr1ilsab6W7ZGkrFBwWG0AuJoH5Jc+5mSAZ3bf
+         9F6WwefnUarYiyfh8KnJSfn1SiHhDiy6Wf+kyGfNREEbhQUVbg7QoNd3JOHs1NsF95
+         BB7jmzOeGW1P6hCtZ8qj4BZA3YyljGiG9kMBYfuvDoeEK2LZZpErMnraqhKqYPvzPx
+         tmx3FO6askTKzUqfZzrqadeuupl/hkduOGCOUWK2d3Sto2/QLPrZ8VYlxlx4ykGi7p
+         BK4gSMUwI5tnThp1QBt7wlffSUIy1ufVXFFokrYblqtBv+bvmLyVWRU6DhRX1mn6Bh
+         iXWWVXMXEp0mg==
 List-ID: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
 To: ast-DgEjT+Ai2ygdnm+yROfE0A@public.gmane.org, daniel-FeC+5ew28dpmcu3hnIyYJQ@public.gmane.org
-Cc: bpf-u79uwXL29TY76Z2rM5mHXA@public.gmane.org, netdev-u79uwXL29TY76Z2rM5mHXA@public.gmane.org, Jakub Kicinski <kuba-DgEjT+Ai2ygdnm+yROfE0A@public.gmane.org>, marcel-kz+m5ild9QBg9hUCZPvPmw@public.gmane.org, johan.hedberg-Re5JQEeQqe8AvxtiuMwx3w@public.gmane.org, luiz.dentz-Re5JQEeQqe8AvxtiuMwx3w@public.gmane.org, dledford-H+wXaHxf7aLQT0dZR+AlfA@public.gmane.org, jgg-uk2M96/98Pc@public.gmane.org, mustafa.ismail-ral2JQCrhuEAvxtiuMwx3w@public.gmane.org, shiraz.saleem-ral2JQCrhuEAvxtiuMwx3w@public.gmane.org, leon-DgEjT+Ai2ygdnm+yROfE0A@public.gmane.org, ap420073-Re5JQEeQqe8AvxtiuMwx3w@public.gmane.org, wg-5Yr1BZd7O62+XT7JhA+gdA@public.gmane.org, mkl-bIcnvbaLZ9MEGnE8C9+IrQ@public.gmane.org, woojung.huh-UWL1GkI3JZL3oGB3hsPCZA@public.gmane.org, UNGLinuxDriver-UWL1GkI3JZL3oGB3hsPCZA@public.gmane.org, andrew-g2DYL2Zd6BY@public.gmane.org, vivien.didelot-Re5JQEeQqe8AvxtiuMwx3w@public.gmane.org, f.fainelli-Re5JQEeQqe8AvxtiuMwx3w@public.gmane.org, olteanv-Re5JQEeQqe8AvxtiuMwx3w@public.gmane.org, george.mccollister-Re5JQEeQqe8AvxtiuMwx3w@public.gmane.org, michael.chan-dY08KVG/lbpWk0Htik3J/w@public.gmane.org, jesse.brandeburg-ral2JQCrhuEAvxtiuMwx3w@public.gmane.org, anthony.l.nguyen-ral2JQCrhuEAvxtiuMwx3w@public.gmane.org, hawk-DgEjT+Ai2ygdnm+yROfE0A@public.gmane.org, john.fastabend-Re5JQEeQqe8AvxtiuMwx3w@public.gmane.org, tariqt-DDmLM1+adcrQT0dZR+AlfA@public.gmane.org, saeedm-DDmLM1+adcrQT0dZR+AlfA@public.gmane.org, ecree.xilinx-Re5JQEeQqe8AvxtiuMwx3w@public.gmane.org, habetsm.xilinx-Re5JQEeQqe8AvxtiuMwx3w@public.gmane.org, jreuter-K7Hl1MveuGQ@public.gmane.org, dsahern-DgEjT+Ai2ygdnm+yROfE0A@public.gmane.org, kvalo-sgV2jX0FEOL9JmXXK+q4OQ@public.gmane.org, pkshih-Rasf1IRRPZFBDgjK7y7TUQ@public.gmane.org, trond.mykle
+Cc: bpf-u79uwXL29TY76Z2rM5mHXA@public.gmane.org, netdev-u79uwXL29TY76Z2rM5mHXA@public.gmane.org, Jakub Kicinski <kuba-DgEjT+Ai2ygdnm+yROfE0A@public.gmane.org>, Marc Kleine-Budde <mkl-bIcnvbaLZ9MEGnE8C9+IrQ@public.gmane.org>, marcel-kz+m5ild9QBg9hUCZPvPmw@public.gmane.org, johan.hedberg-Re5JQEeQqe8AvxtiuMwx3w@public.gmane.org, luiz.dentz-Re5JQEeQqe8AvxtiuMwx3w@public.gmane.org, dledford-H+wXaHxf7aLQT0dZR+AlfA@public.gmane.org, jgg-uk2M96/98Pc@public.gmane.org, mustafa.ismail-ral2JQCrhuEAvxtiuMwx3w@public.gmane.org, shiraz.saleem-ral2JQCrhuEAvxtiuMwx3w@public.gmane.org, leon-DgEjT+Ai2ygdnm+yROfE0A@public.gmane.org, ap420073-Re5JQEeQqe8AvxtiuMwx3w@public.gmane.org, wg-5Yr1BZd7O62+XT7JhA+gdA@public.gmane.org, woojung.huh-UWL1GkI3JZL3oGB3hsPCZA@public.gmane.org, andrew-g2DYL2Zd6BY@public.gmane.org, vivien.didelot-Re5JQEeQqe8AvxtiuMwx3w@public.gmane.org, f.fainelli-Re5JQEeQqe8AvxtiuMwx3w@public.gmane.org, olteanv-Re5JQEeQqe8AvxtiuMwx3w@public.gmane.org, george.mccollister-Re5JQEeQqe8AvxtiuMwx3w@public.gmane.org, michael.chan-dY08KVG/lbpWk0Htik3J/w@public.gmane.org, jesse.brandeburg-ral2JQCrhuEAvxtiuMwx3w@public.gmane.org, anthony.l.nguyen-ral2JQCrhuEAvxtiuMwx3w@public.gmane.org, hawk-DgEjT+Ai2ygdnm+yROfE0A@public.gmane.org, john.fastabend-Re5JQEeQqe8AvxtiuMwx3w@public.gmane.org, tariqt-DDmLM1+adcrQT0dZR+AlfA@public.gmane.org, saeedm-DDmLM1+adcrQT0dZR+AlfA@public.gmane.org, ecree.xilinx-Re5JQEeQqe8AvxtiuMwx3w@public.gmane.org, habetsm.xilinx-Re5JQEeQqe8AvxtiuMwx3w@public.gmane.org, jreuter-K7Hl1MveuGQ@public.gmane.org, dsahern-DgEjT+Ai2ygdnm+yROfE0A@public.gmane.org, kvalo-sgV2jX0FEOL9JmXXK+q4OQ@public.gmane.org, pkshih-Rasf1IRRPZFBDgjK7y7TUQ@public.gmane.org, trond.myklebust@hamme
 
 sock.h is pretty heavily used (5k objects rebuilt on x86 after
 it's touched). We can drop the include of filter.h from it and
@@ -29,8 +29,13 @@ is touched from ~5k to ~1k.
 There's a lot of missing includes this was masking. Primarily
 in networking tho, this time.
 
+Acked-by: Marc Kleine-Budde <mkl-bIcnvbaLZ9MEGnE8C9+IrQ@public.gmane.org>
 Signed-off-by: Jakub Kicinski <kuba-DgEjT+Ai2ygdnm+yROfE0A@public.gmane.org>
 ---
+v2: https://lore.kernel.org/all/20211228192519.386913-1-kuba-DgEjT+Ai2ygdnm+yROfE0A@public.gmane.org/
+ - fix build in bond on ia64
+ - fix build in ip6_fib with randconfig
+
 CC: marcel-kz+m5ild9QBg9hUCZPvPmw@public.gmane.org
 CC: johan.hedberg-Re5JQEeQqe8AvxtiuMwx3w@public.gmane.org
 CC: luiz.dentz-Re5JQEeQqe8AvxtiuMwx3w@public.gmane.org
@@ -41,9 +46,7 @@ CC: shiraz.saleem-ral2JQCrhuEAvxtiuMwx3w@public.gmane.org
 CC: leon-DgEjT+Ai2ygdnm+yROfE0A@public.gmane.org
 CC: ap420073-Re5JQEeQqe8AvxtiuMwx3w@public.gmane.org
 CC: wg-5Yr1BZd7O62+XT7JhA+gdA@public.gmane.org
-CC: mkl-bIcnvbaLZ9MEGnE8C9+IrQ@public.gmane.org
 CC: woojung.huh-UWL1GkI3JZL3oGB3hsPCZA@public.gmane.org
-CC: UNGLinuxDriver-UWL1GkI3JZL3oGB3hsPCZA@public.gmane.org
 CC: andrew-g2DYL2Zd6BY@public.gmane.org
 CC: vivien.didelot-Re5JQEeQqe8AvxtiuMwx3w@public.gmane.org
 CC: f.fainelli-Re5JQEeQqe8AvxtiuMwx3w@public.gmane.org
@@ -111,6 +114,7 @@ CC: virtualization-cunTk1MwBs9QetFLy7KEm3xJsTq8ys+cHZ5vskTnxNA@public.gmane.org
  drivers/infiniband/hw/mlx5/qp.c                   | 1 +
  drivers/net/amt.c                                 | 1 +
  drivers/net/appletalk/ipddp.c                     | 1 +
+ drivers/net/bonding/bond_main.c                   | 1 +
  drivers/net/can/usb/peak_usb/pcan_usb.c           | 1 +
  drivers/net/dsa/microchip/ksz8795.c               | 1 +
  drivers/net/dsa/xrs700x/xrs700x.c                 | 1 +
@@ -155,6 +159,7 @@ CC: virtualization-cunTk1MwBs9QetFLy7KEm3xJsTq8ys+cHZ5vskTnxNA@public.gmane.org
  net/dsa/dsa_priv.h                                | 1 +
  net/ethtool/ioctl.c                               | 1 +
  net/ipv4/nexthop.c                                | 1 +
+ net/ipv6/ip6_fib.c                                | 1 +
  net/ipv6/seg6_local.c                             | 1 +
  net/iucv/af_iucv.c                                | 1 +
  net/kcm/kcmsock.c                                 | 1 +
@@ -171,7 +176,7 @@ CC: virtualization-cunTk1MwBs9QetFLy7KEm3xJsTq8ys+cHZ5vskTnxNA@public.gmane.org
  net/xdp/xskmap.c                                  | 1 +
  net/xfrm/xfrm_state.c                             | 1 +
  net/xfrm/xfrm_user.c                              | 1 +
- 68 files changed, 78 insertions(+), 1 deletion(-)
+ 70 files changed, 80 insertions(+), 1 deletion(-)
 
 diff --git a/drivers/bluetooth/btqca.c b/drivers/bluetooth/btqca.c
 index be04d74037d2..f7bf311d7910 100644
@@ -269,6 +274,18 @@ index 5566daefbff4..d558535390f9 100644
  #include <linux/module.h>
  #include <linux/kernel.h>
  #include <linux/init.h>
+diff --git a/drivers/net/bonding/bond_main.c b/drivers/net/bonding/bond_main.c
+index 0f39ad2af81c..d483f1102a9e 100644
+--- a/drivers/net/bonding/bond_main.c
++++ b/drivers/net/bonding/bond_main.c
+@@ -35,6 +35,7 @@
+ #include <linux/module.h>
+ #include <linux/types.h>
+ #include <linux/fcntl.h>
++#include <linux/filter.h>
+ #include <linux/interrupt.h>
+ #include <linux/ptrace.h>
+ #include <linux/ioport.h>
 diff --git a/drivers/net/can/usb/peak_usb/pcan_usb.c b/drivers/net/can/usb/peak_usb/pcan_usb.c
 index 876218752766..ac6772fe9746 100644
 --- a/drivers/net/can/usb/peak_usb/pcan_usb.c
@@ -809,6 +826,18 @@ index 1319d093cdda..eeafeccebb8d 100644
  #include <net/arp.h>
  #include <net/ipv6_stubs.h>
  #include <net/lwtunnel.h>
+diff --git a/net/ipv6/ip6_fib.c b/net/ipv6/ip6_fib.c
+index 0371d2c14145..463c37dea449 100644
+--- a/net/ipv6/ip6_fib.c
++++ b/net/ipv6/ip6_fib.c
+@@ -15,6 +15,7 @@
+ 
+ #define pr_fmt(fmt) "IPv6: " fmt
+ 
++#include <linux/bpf.h>
+ #include <linux/errno.h>
+ #include <linux/types.h>
+ #include <linux/net.h>
 diff --git a/net/ipv6/seg6_local.c b/net/ipv6/seg6_local.c
 index 2dc40b3f373e..a5eea182149d 100644
 --- a/net/ipv6/seg6_local.c
