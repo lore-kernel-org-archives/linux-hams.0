@@ -1,40 +1,59 @@
-From: Jakub Kicinski <kuba@kernel.org>
-Subject: Re: [PATCH bpf-next v2] net: don't include filter.h from net/sock.h
-Date: Wed, 29 Dec 2021 09:20:12 -0800
-Message-ID: <20211229092012.635e9f2b@kicinski-fedora-PC1C0HJN.hsd1.ca.comcast.net>
-References: <20211229004913.513372-1-kuba@kernel.org>
-        <5a82690c-7dc0-81de-4dd6-06e26e4b9b92@gmail.com>
+From: Roland Schwarz <roland.schwarz@blackspace.at>
+Subject: soundmodem with gtk3 configurator
+Date: Sat, 1 Jan 2022 19:19:20 +0100
+Message-ID: <2a8d6ea6-71bd-d89a-349b-fb6b473aca82@blackspace.at>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
-Return-path: <bpf-owner@vger.kernel.org>
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1640798414;
-        bh=mD55XiGnaxJafKvRs4q7sk9He7DhV4oGwfUm+8MHPSs=;
-        h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
-        b=c871heSWCTctS4GfXo9h3MeEdIN3+xN1XMTHmku30iWA8RKuAHoL9vEPa3clSxk3I
-         lYqgCYWrSaJvGEZkpKVFAlQ4aUWz0M2PkvdzVNqxJaC37+/H1MBCvkHWOKkmk8kwm1
-         sM3b5PIfgSqaCVOjfeV9864HlRBayb4Fua7XLpkebqflAstoOxvBMvEvKw31u31AL2
-         iTr8zj8c7GeUnyCv0B2NghKXe3exAf+GB/HqdoF3SN797ly5jlaudliZlisbwPBJMn
-         kAX6iM2/LNnkDDiHXND27O7a4DttQZLqab3RVRCQmetqRSTEGQP4cWlwwRwo5w887t
-         ZwiJE97ykLWog==
-In-Reply-To: <5a82690c-7dc0-81de-4dd6-06e26e4b9b92@gmail.com>
+Content-Type: multipart/signed; micalg=pgp-sha256;
+ protocol="application/pgp-signature";
+ boundary="------------3Dcm5glJvoDGEqFVyKmB0epJ"
+Return-path: <linux-hams-owner@vger.kernel.org>
+Content-Language: en-US
 List-ID: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"
-To: Florian Fainelli <f.fainelli@gmail.com>
-Cc: ast@kernel.org, daniel@iogearbox.net, bpf@vger.kernel.org, netdev@vger.kernel.org, linux-bluetooth@vger.kernel.org, linux-rdma@vger.kernel.org, linux-can@vger.kernel.org, intel-wired-lan@lists.osuosl.org, linux-hams@vger.kernel.org, ath11k@lists.infradead.org, linux-wireless@vger.kernel.org, linux-nfs@vger.kernel.org, linux-fsdevel@vger.kernel.org, bridge@lists.linux-foundation.org, linux-decnet-user@lists.sourceforge.net, linux-s390@vger.kernel.org, netfilter-devel@vger.kernel.org, coreteam@netfilter.org, virtualization@lists.linux-foundation.org, Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+To: linux-hams@vger.kernel.org
 
-On Tue, 28 Dec 2021 17:33:39 -0800 Florian Fainelli wrote:
-> It would be nice if we used the number of files rebuilt because of a 
-> header file change as another metric that the kernel is evaluated with 
-> from release to release (or even on a commit by commit basis). Food for 
-> thought.
+This is an OpenPGP/MIME signed message (RFC 4880 and 3156)
+--------------3Dcm5glJvoDGEqFVyKmB0epJ
+Content-Type: multipart/mixed; boundary="------------e6qzUOb5NcVYmVgAkbq9S6HA";
+ protected-headers="v1"
+From: Roland Schwarz <roland.schwarz@blackspace.at>
+To: linux-hams@vger.kernel.org
+Message-ID: <2a8d6ea6-71bd-d89a-349b-fb6b473aca82@blackspace.at>
+Subject: soundmodem with gtk3 configurator
 
-Maybe Andy has some thoughts, he has been working on dropping
-unnecessary includes of kernel.h, it seems.
+--------------e6qzUOb5NcVYmVgAkbq9S6HA
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: base64
 
-It'd be cool to plug something that'd warn us about significant
-increases in dependencies into the patchwork build bot.
+SGFwcHkgbmV3IHllYXIgdG8gYWxsIQ0KDQpGb3IgdGhvc2Ugd2hvIGNhcmU6DQpEdXJpbmcg
+dGhlIGhvbGlkYXlzIEkgaGF2ZSByZS1pbXBsZW1lbnRlZCB0aGUgc291bmRtb2RlbSBjb25m
+aWd1cmF0aW9uIA0KdXNpbmcgZ3RrMy4gVGhlIHVwZGF0ZWQgc291cmNlIHRyZWUgaXMgYXZh
+aWxhYmxlIG9uDQoNCmh0dHBzOi8vZ2l0bGFiLmNvbS9wYWNrZXRyYWRpby9zb3VuZG1vZGVt
+DQoNCnZ5IDczIFJvbGFuZCwgb2UxcnNhDQoNCi0tIA0KX19fX19fX19fX19fX19fX19fX19f
+X19fX19fX19fX19fX19fX19fX19fDQogICBfICBfICB8IFJvbGFuZCBTY2h3YXJ6DQogIHxf
+KShfICB8DQogIHwgXF9fKSB8IG1haWx0bzpyb2xhbmQuc2Nod2FyekBibGFja3NwYWNlLmF0
+DQpfX19fX19fX3wgaHR0cDovL3d3dy5ibGFja3NwYWNlLmF0DQo=
 
-I have one more small series which un-includes uapi/bpf.h from
-netdevice.h at which point I hope we'll be largely in the clear 
-from build bot performance perspective.
+--------------e6qzUOb5NcVYmVgAkbq9S6HA--
+
+--------------3Dcm5glJvoDGEqFVyKmB0epJ
+Content-Type: application/pgp-signature; name="OpenPGP_signature.asc"
+Content-Description: OpenPGP digital signature
+Content-Disposition: attachment; filename="OpenPGP_signature"
+
+-----BEGIN PGP SIGNATURE-----
+
+wsF5BAABCAAjFiEELmDUtkkUQD99pU+KklFj+hFsiUgFAmHQmygFAwAAAAAACgkQklFj+hFsiUhw
+CQ//UQe9W2QfUf3BOT4IWMJXqNrJt6+FNDRjSNYH1uWMKmXHPPoJ98q9LjQw7NRPJguKEmw0eF2e
+LdvghknudKJH2GhBiWqKoHUDzT5YZN6hcB2GPWg0ukCDHsYqaxHsZ0p2PfQzmJIHT020E8Xzwzse
+BEjHydySWstdfcOdGU3hZuM2h/kUIzxrWJcdfXxyIQn/0riRHlq4flwvgSVkA0h9R8lL1lKPvzmV
+zSJO9kZC7kO5ZRuMCmnVOxA0SV/pelCj0CF+PVLE901EtYFM4NioPpxFXpe85L0IWrJWraQDYOiK
+vrysMDfh5xEWRSDnpCTCRy192AgXXsldo2HtdHQ/JrRf1xZWbx3gvDGqsEuzFmgiVhMI7pp20Wt6
+Hzy++E7rjhgDe1aydB4uTbCIFdfgEV83Y6J0RvHGsaCoGsIlLTqwOoMdmNYcDCoMdcmIzo8Qs9Hd
+dI6Fo7EB58HqWEXS4XUoL05mFx+2DNKr8YrcN5L0+3P/CSxqaCIKMzQh84iBxP67OMr7c4kyG0kL
+8BQyxtbi0DAQxaMRggKMVBoud3vPISSM0jw+w4aio6TpShPI+FIw0vmYZ2JdkNbROuRDhqyhP2K5
+t+1baqwoqi1K0zaycGuMrFWhxAPArwTlpSbksls5+1G0AIHto9h21Zjt6bV7/c6+voYYjLZfryIt
+u04=
+=rQ2d
+-----END PGP SIGNATURE-----
+
+--------------3Dcm5glJvoDGEqFVyKmB0epJ--
