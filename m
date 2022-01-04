@@ -1,49 +1,57 @@
-From: patchwork-bot+netdevbpf@kernel.org
-Subject: Re: [PATCH] netrom: fix copying in user data in nr_setsockopt
-Date: Tue, 04 Jan 2022 12:40:10 +0000
-Message-ID: <164130001057.24992.16411426784038058921.git-patchwork-notify@kernel.org>
-References: <20220104092126.172508-1-hch@lst.de>
+From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Subject: Re: [PATCH bpf-next v2] net: don't include filter.h from net/sock.h
+Date: Tue, 4 Jan 2022 17:42:34 +0200
+Message-ID: <YdRq6vKceOqscaKK@smile.fi.intel.com>
+References: <20211229004913.513372-1-kuba@kernel.org>
+ <5a82690c-7dc0-81de-4dd6-06e26e4b9b92@gmail.com>
+ <20211229092012.635e9f2b@kicinski-fedora-PC1C0HJN.hsd1.ca.comcast.net>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 8bit
 Return-path: <linux-hams-owner@vger.kernel.org>
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1641300010;
-        bh=E1qmSjqC/aHssBJwzDrvVpd10JpyZ01jMBr+08BO3Sc=;
-        h=Subject:From:Date:References:In-Reply-To:To:Cc:From;
-        b=HbvAfqFJERRXpyJN1K+xs9iXFkWM0Ob+nCmCNFmc/3apPzPcyHCfEC+ooTUtjOji3
-         /OVp6GQmVH/niyzfUfUAM+hitBwvgLGOh+lprX5H2Nz0oRbFlAGmiz+ouKhgVerwta
-         BTGSj0k+gCNYKtzFdSHWZ1X5uuvgP3P6lmDnQQg8vbaXq4kgeTz3yWDrmVtle3CRpA
-         f9AjujCbjG/Td8X9UZ6KZYOGpgXXlo0LP9utVYONMenpktZv6G6+4CTB3//j+aege8
-         vIAxlaNhbd9nTNx+z9incKWiQYuQ0VCGDaapu1mW8S33u49K+2vPn5PtF16fLXIFmu
-         eNbt3w8wYCWsw==
-In-Reply-To: <20220104092126.172508-1-hch@lst.de>
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1641311038; x=1672847038;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:in-reply-to;
+  bh=22y9EjrBRaMVy/mz9REdCI0A1LxLuq5BPOq8HpG1+gg=;
+  b=UnovQSwallIVIqbAQyjb9NCARDilaA1Ue7nDtEe8kXT723v2h7NU6tzj
+   LD6SUjbvz3nozkJw8+lesaECkScGnd3tq1MXNUhS6ph/dAAdDj9SGhGDW
+   t9O1lZy5P95H2zSPB49Cg2C+Q5W4gojbfFrRI+7YvtubgVf3LL17XC36p
+   iRNu6nngL5TFQCIXF/T+2ah1UzGqBz3z9U3LSSr/hy1MHXgIHwiXKsXYk
+   5KYL4R3+5otT7W3IRllPUq6NF+Cxf78guqRC8FDxs0dMLx8dPHYp6PXL/
+   QGseiTvWtgDcIgNUhUWJTKsqAffWp71R3vWF4Ng/dugEYwryWUUfNtkUd
+   Q==;
+Content-Disposition: inline
+In-Reply-To: <20211229092012.635e9f2b@kicinski-fedora-PC1C0HJN.hsd1.ca.comcast.net>
 List-ID: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
-To: Christoph Hellwig <hch@lst.de>
-Cc: ralf@linux-mips.org, davem@davemloft.net, kuba@kernel.org, linux-hams@vger.kernel.org, netdev@vger.kernel.org, dan.carpenter@oracle.com
+Content-Transfer-Encoding: 7bit
+To: Jakub Kicinski <kuba@kernel.org>, mingo@kernel.org
+Cc: Florian Fainelli <f.fainelli@gmail.com>, ast@kernel.org, daniel@iogearbox.net, bpf@vger.kernel.org, netdev@vger.kernel.org, linux-bluetooth@vger.kernel.org, linux-rdma@vger.kernel.org, linux-can@vger.kernel.org, intel-wired-lan@lists.osuosl.org, linux-hams@vger.kernel.org, ath11k@lists.infradead.org, linux-wireless@vger.kernel.org, linux-nfs@vger.kernel.org, linux-fsdevel@vger.kernel.org, bridge@lists.linux-foundation.org, linux-decnet-user@lists.sourceforge.net, linux-s390@vger.kernel.org, netfilter-devel@vger.kernel.org, coreteam@netfilter.org, virtualization@lists.linux-foundation.org
 
-Hello:
-
-This patch was applied to netdev/net.git (master)
-by David S. Miller <davem@davemloft.net>:
-
-On Tue,  4 Jan 2022 10:21:26 +0100 you wrote:
-> This code used to copy in an unsigned long worth of data before
-> the sockptr_t conversion, so restore that.
+On Wed, Dec 29, 2021 at 09:20:12AM -0800, Jakub Kicinski wrote:
+> On Tue, 28 Dec 2021 17:33:39 -0800 Florian Fainelli wrote:
+> > It would be nice if we used the number of files rebuilt because of a 
+> > header file change as another metric that the kernel is evaluated with 
+> > from release to release (or even on a commit by commit basis). Food for 
+> > thought.
 > 
-> Fixes: a7b75c5a8c41 ("net: pass a sockptr_t into ->setsockopt")
-> Reported-by: Dan Carpenter <dan.carpenter@oracle.com>
-> Signed-off-by: Christoph Hellwig <hch@lst.de>
+> Maybe Andy has some thoughts, he has been working on dropping
+> unnecessary includes of kernel.h, it seems.
+
+With this [1] announcement I believe Ingo is the best to tell you if this is a
+right direction.
+
+> It'd be cool to plug something that'd warn us about significant
+> increases in dependencies into the patchwork build bot.
 > 
-> [...]
+> I have one more small series which un-includes uapi/bpf.h from
+> netdevice.h at which point I hope we'll be largely in the clear 
+> from build bot performance perspective.
 
-Here is the summary with links:
-  - netrom: fix copying in user data in nr_setsockopt
-    https://git.kernel.org/netdev/net/c/3087a6f36ee0
+[1]: https://lore.kernel.org/lkml/YdIfz+LMewetSaEB@gmail.com/T/#u
 
-You are awesome, thank you!
 -- 
-Deet-doot-dot, I am a bot.
-https://korg.docs.kernel.org/patchwork/pwbot.html
+With Best Regards,
+Andy Shevchenko
 
 
