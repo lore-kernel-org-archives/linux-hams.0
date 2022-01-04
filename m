@@ -1,59 +1,48 @@
-From: Roland Schwarz <roland.schwarz@blackspace.at>
-Subject: soundmodem with gtk3 configurator
-Date: Sat, 1 Jan 2022 19:19:20 +0100
-Message-ID: <2a8d6ea6-71bd-d89a-349b-fb6b473aca82@blackspace.at>
+From: Christoph Hellwig <hch@lst.de>
+Subject: [PATCH] netrom: fix copying in user data in nr_setsockopt
+Date: Tue,  4 Jan 2022 10:21:26 +0100
+Message-ID: <20220104092126.172508-1-hch@lst.de>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
- protocol="application/pgp-signature";
- boundary="------------3Dcm5glJvoDGEqFVyKmB0epJ"
+Content-Transfer-Encoding: 8bit
 Return-path: <linux-hams-owner@vger.kernel.org>
-Content-Language: en-US
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+        d=infradead.org; s=bombadil.20210309; h=Content-Transfer-Encoding:
+        MIME-Version:Message-Id:Date:Subject:Cc:To:From:Sender:Reply-To:Content-Type:
+        Content-ID:Content-Description:In-Reply-To:References;
+        bh=/EGiF3exvN0CmzCzzHj2LPHV2IaoCNuj0zydEgdxAKE=; b=Pt15MAngYfgJqqKX4nxiaLuLfe
+        QKoioIJ57OZVAbpbRmhHVEwZLKRRbl0YSRQenum4jJg9v9GFSZMkGq/Y4YCpF9vBsXDZ0+/rAxNro
+        5rw7jTN1M/7Hhfhuj855xCp5nkhUJ23hBnVGWw7tQYhfXuVC/eIT6k4m+1QO7sz+P/N93rDXwoWDA
+        CC6wtP9nX0oi61HzMBjubVvAv4r4Tmb2UDWSo+ATNn7CFB8nlJ32uw77vR2m76uKlQp3lA23nCwUV
+        0uPnk61gPWH40ZIsSNp1TRj4vUgPDRvpKmyKuCMfDdZB/sz/MLIqVlot+gnCxVsD7qN5szaxGTD/5
+        r3M9jzZQ==;
 List-ID: <linux-hams.vger.kernel.org>
-To: linux-hams@vger.kernel.org
+Content-Type: text/plain; charset="us-ascii"
+To: ralf@linux-mips.org, davem@davemloft.net, kuba@kernel.org
+Cc: linux-hams@vger.kernel.org, netdev@vger.kernel.org, Dan Carpenter <dan.carpenter@oracle.com>
 
-This is an OpenPGP/MIME signed message (RFC 4880 and 3156)
---------------3Dcm5glJvoDGEqFVyKmB0epJ
-Content-Type: multipart/mixed; boundary="------------e6qzUOb5NcVYmVgAkbq9S6HA";
- protected-headers="v1"
-From: Roland Schwarz <roland.schwarz@blackspace.at>
-To: linux-hams@vger.kernel.org
-Message-ID: <2a8d6ea6-71bd-d89a-349b-fb6b473aca82@blackspace.at>
-Subject: soundmodem with gtk3 configurator
+This code used to copy in an unsigned long worth of data before
+the sockptr_t conversion, so restore that.
 
---------------e6qzUOb5NcVYmVgAkbq9S6HA
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: base64
+Fixes: a7b75c5a8c41 ("net: pass a sockptr_t into ->setsockopt")
+Reported-by: Dan Carpenter <dan.carpenter@oracle.com>
+Signed-off-by: Christoph Hellwig <hch@lst.de>
+---
+ net/netrom/af_netrom.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-SGFwcHkgbmV3IHllYXIgdG8gYWxsIQ0KDQpGb3IgdGhvc2Ugd2hvIGNhcmU6DQpEdXJpbmcg
-dGhlIGhvbGlkYXlzIEkgaGF2ZSByZS1pbXBsZW1lbnRlZCB0aGUgc291bmRtb2RlbSBjb25m
-aWd1cmF0aW9uIA0KdXNpbmcgZ3RrMy4gVGhlIHVwZGF0ZWQgc291cmNlIHRyZWUgaXMgYXZh
-aWxhYmxlIG9uDQoNCmh0dHBzOi8vZ2l0bGFiLmNvbS9wYWNrZXRyYWRpby9zb3VuZG1vZGVt
-DQoNCnZ5IDczIFJvbGFuZCwgb2UxcnNhDQoNCi0tIA0KX19fX19fX19fX19fX19fX19fX19f
-X19fX19fX19fX19fX19fX19fX19fDQogICBfICBfICB8IFJvbGFuZCBTY2h3YXJ6DQogIHxf
-KShfICB8DQogIHwgXF9fKSB8IG1haWx0bzpyb2xhbmQuc2Nod2FyekBibGFja3NwYWNlLmF0
-DQpfX19fX19fX3wgaHR0cDovL3d3dy5ibGFja3NwYWNlLmF0DQo=
+diff --git a/net/netrom/af_netrom.c b/net/netrom/af_netrom.c
+index 775064cdd0ee4..f1ba7dd3d253d 100644
+--- a/net/netrom/af_netrom.c
++++ b/net/netrom/af_netrom.c
+@@ -306,7 +306,7 @@ static int nr_setsockopt(struct socket *sock, int level, int optname,
+ 	if (optlen < sizeof(unsigned int))
+ 		return -EINVAL;
+ 
+-	if (copy_from_sockptr(&opt, optval, sizeof(unsigned int)))
++	if (copy_from_sockptr(&opt, optval, sizeof(unsigned long)))
+ 		return -EFAULT;
+ 
+ 	switch (optname) {
+-- 
+2.30.2
 
---------------e6qzUOb5NcVYmVgAkbq9S6HA--
-
---------------3Dcm5glJvoDGEqFVyKmB0epJ
-Content-Type: application/pgp-signature; name="OpenPGP_signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="OpenPGP_signature"
-
------BEGIN PGP SIGNATURE-----
-
-wsF5BAABCAAjFiEELmDUtkkUQD99pU+KklFj+hFsiUgFAmHQmygFAwAAAAAACgkQklFj+hFsiUhw
-CQ//UQe9W2QfUf3BOT4IWMJXqNrJt6+FNDRjSNYH1uWMKmXHPPoJ98q9LjQw7NRPJguKEmw0eF2e
-LdvghknudKJH2GhBiWqKoHUDzT5YZN6hcB2GPWg0ukCDHsYqaxHsZ0p2PfQzmJIHT020E8Xzwzse
-BEjHydySWstdfcOdGU3hZuM2h/kUIzxrWJcdfXxyIQn/0riRHlq4flwvgSVkA0h9R8lL1lKPvzmV
-zSJO9kZC7kO5ZRuMCmnVOxA0SV/pelCj0CF+PVLE901EtYFM4NioPpxFXpe85L0IWrJWraQDYOiK
-vrysMDfh5xEWRSDnpCTCRy192AgXXsldo2HtdHQ/JrRf1xZWbx3gvDGqsEuzFmgiVhMI7pp20Wt6
-Hzy++E7rjhgDe1aydB4uTbCIFdfgEV83Y6J0RvHGsaCoGsIlLTqwOoMdmNYcDCoMdcmIzo8Qs9Hd
-dI6Fo7EB58HqWEXS4XUoL05mFx+2DNKr8YrcN5L0+3P/CSxqaCIKMzQh84iBxP67OMr7c4kyG0kL
-8BQyxtbi0DAQxaMRggKMVBoud3vPISSM0jw+w4aio6TpShPI+FIw0vmYZ2JdkNbROuRDhqyhP2K5
-t+1baqwoqi1K0zaycGuMrFWhxAPArwTlpSbksls5+1G0AIHto9h21Zjt6bV7/c6+voYYjLZfryIt
-u04=
-=rQ2d
------END PGP SIGNATURE-----
-
---------------3Dcm5glJvoDGEqFVyKmB0epJ--
