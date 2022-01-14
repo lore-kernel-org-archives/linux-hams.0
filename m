@@ -1,126 +1,47 @@
-From: Hangyu Hua <hbh25y@gmail.com>
+From: Eric Dumazet <eric.dumazet@gmail.com>
 Subject: Re: [PATCH net] ax25: use after free in ax25_connect
-Date: Fri, 14 Jan 2022 14:54:31 +0800
-Message-ID: <ff65d70b-b6e1-3b35-8bd0-92f6f022cd5d@gmail.com>
+Date: Fri, 14 Jan 2022 07:19:56 -0800
+Message-ID: <8fc4701f-c151-0545-c047-a5df90575d69@gmail.com>
 References: <20220111042048.43532-1-hbh25y@gmail.com>
  <f35292c0-621f-3f07-87ed-2533bfd1496e@gmail.com>
  <f48850cb-8e26-afa0-576c-691bb4be5587@gmail.com>
  <571c72e8-2111-6aa0-1bd7-e0af7fc50539@gmail.com>
  <80007b3e-eba8-1fbe-302d-4398830843dd@gmail.com>
+ <ff65d70b-b6e1-3b35-8bd0-92f6f022cd5d@gmail.com>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
 Return-path: <netdev-owner@vger.kernel.org>
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=subject:from:to:cc:references:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=lP+FWeLatKIgWi4K1uF9Ut4u7DuYHyR3vsLHEPtX4Zs=;
-        b=KU4eR1cryTDNQ7A8gd3td28XecdUreEOHE2hNGXuP4aR0uQ7GF0Oo3Amb1NxFA3AoR
-         5TZ76WkFeA22lB2YniQTjSFJO2RDlbg9KmYW9nTH/90Xcm+w2SqrJCt/Ni2z06aqgoR1
-         G4R2Dn67iLvf93mUxjKOpvSRoBs7pohecn7s4WTrhKP8CjVxvYGf8qAIwUYFStk62caF
-         TSUZ81SjpQrqw40x2RWbBFwrYdiCXqE78tJgq1rU3Eh5p4UdGEfAK1cM2BKWZfz2mce+
-         OxBIuY5ARrRA5Wj4UkFG8n/dSRIwBcoLD9yyMxCzZFYybpbHBcnI6ydh2N8+Xs4Yk6DC
-         rf6A==
-In-Reply-To: <80007b3e-eba8-1fbe-302d-4398830843dd@gmail.com>
+        h=message-id:date:mime-version:user-agent:subject:content-language:to
+         :cc:references:from:in-reply-to:content-transfer-encoding;
+        bh=9qFR11nHm+mhLAm3o9SpfomQXzxlqFjZg2rE8HQK518=;
+        b=EKlgr34LKZ98bPASCBMZGjdPQDoh5Eg4rIu8TfP0G8iiYVTKmaX0lhr36pnp3ey/j1
+         CDS/je9FWYN3bieeoqUXTWKj8QAsgu1tzHapYnFBxB5PfsbmdCAqo6+WWJTIAsMWCmRc
+         VIAgLy9pzAH10q3QWBr7CHz7s4+duuq1KQPryh2wXce0TYfP+5tL1YlkVZqyYV73/vhR
+         05i4ax74+8oqKViVOdNlTPmW2S0Ps8zLRyoVINGStPrnOHtvw58ssKjYGE0yewKzupQm
+         eirsDOJ+1UTBTiPQfvNJK95IpaiYcL9Gcm/M44157vWtiMmhSJwQbkXJd3pKmbq7d933
+         yy6A==
 Content-Language: en-US
+In-Reply-To: <ff65d70b-b6e1-3b35-8bd0-92f6f022cd5d@gmail.com>
 List-ID: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="utf-8"; format="flowed"
-To: Eric Dumazet <eric.dumazet@gmail.com>, jreuter@yaina.de, ralf@linux-mips.org, davem@davemloft.net, kuba@kernel.org
+Content-Type: text/plain; charset="us-ascii"; format="flowed"
+To: Hangyu Hua <hbh25y@gmail.com>, jreuter@yaina.de, ralf@linux-mips.org, davem@davemloft.net, kuba@kernel.org
 Cc: linux-hams@vger.kernel.org, netdev@vger.kernel.org, linux-kernel@vger.kernel.org
 
-Any suggestions for this patch ? Guys.
 
-I think putting sk_to_ax25 after lock_sock(sk) here will avoid any 
-possilbe race conditions like other functions in ax25_proto_ops.
+On 1/13/22 22:54, Hangyu Hua wrote:
+> Any suggestions for this patch ? Guys.
+>
+> I think putting sk_to_ax25 after lock_sock(sk) here will avoid any 
+> possilbe race conditions like other functions in ax25_proto_ops. CTING) {
+>
 
-On 2022/1/12 下午7:11, Hangyu Hua wrote:
-> Yes.
-> 
-> And there are two ways to release ax25, ax25_release and time expiry. I 
-> tested that ax25_release will not be invoked before ax25_connect is done 
-> by closing fd from user space. I think the reason is that __sys_connect 
-> use fdget() to protect fd. But i can't test if a function like 
-> ax25_std_heartbeat_expiry will release ax25 between sk_to_ax25(sk) and 
-> lock_sock(sk).
-> 
-> So i think it's better to protect sk_to_ax25(sk) by a lock. Beacause 
-> functions like ax25_release use sk_to_ax25 after a lock.
-> 
-> 
-> On 2022/1/12 下午5:59, Eric Dumazet wrote:
->>
->> On 1/11/22 18:13, Hangyu Hua wrote:
->>> I try to use ax25_release to trigger this bug like this:
->>> ax25_release                 ax25_connect
->>> lock_sock(sk);
->>> -----------------------------sk = sock->sk;
->>> -----------------------------ax25 = sk_to_ax25(sk);
->>> ax25_destroy_socket(ax25);
->>> release_sock(sk);
->>> -----------------------------lock_sock(sk);
->>> -----------------------------use ax25 again
->>>
->>> But i failed beacause their have large speed difference. And i
->>> don't have a physical device to test other function in ax25.
->>> Anyway, i still think there will have a function to trigger this
->>> race condition like ax25_destroy_timer. Beacause Any ohter
->>> functions in ax25_proto_ops like ax25_bind protect ax25_sock by 
->>> lock_sock(sk).
->>
->>
->> For a given sk pointer, sk_to_ax25(sk) is always returning the same 
->> value,
->>
->> regardless of sk lock being held or not.
->>
->> ax25_sk(sk)->cb  is set only from ax25_create() or ax25_make_new()
->>
->> ax25_connect can not be called until these operations have completed ?
->>
->>
->>
->>>
->>> Thanks.
->>>
->>>
->>>
->>>
->>> On 2022/1/12 上午4:56, Eric Dumazet wrote:
->>>>
->>>> On 1/10/22 20:20, Hangyu Hua wrote:
->>>>> sk_to_ax25(sk) needs to be called after lock_sock(sk) to avoid UAF
->>>>> caused by a race condition.
->>>>
->>>> Can you describe what race condition you have found exactly ?
->>>>
->>>> sk pointer can not change.
->>>>
->>>>
->>>>> Signed-off-by: Hangyu Hua <hbh25y@gmail.com>
->>>>> ---
->>>>>   net/ax25/af_ax25.c | 4 +++-
->>>>>   1 file changed, 3 insertions(+), 1 deletion(-)
->>>>>
->>>>> diff --git a/net/ax25/af_ax25.c b/net/ax25/af_ax25.c
->>>>> index cfca99e295b8..c5d62420a2a8 100644
->>>>> --- a/net/ax25/af_ax25.c
->>>>> +++ b/net/ax25/af_ax25.c
->>>>> @@ -1127,7 +1127,7 @@ static int __must_check ax25_connect(struct 
->>>>> socket *sock,
->>>>>       struct sockaddr *uaddr, int addr_len, int flags)
->>>>>   {
->>>>>       struct sock *sk = sock->sk;
->>>>> -    ax25_cb *ax25 = sk_to_ax25(sk), *ax25t;
->>>>> +    ax25_cb *ax25, *ax25t;
->>>>>       struct full_sockaddr_ax25 *fsa = (struct full_sockaddr_ax25 
->>>>> *)uaddr;
->>>>>       ax25_digi *digi = NULL;
->>>>>       int ct = 0, err = 0;
->>>>> @@ -1155,6 +1155,8 @@ static int __must_check ax25_connect(struct 
->>>>> socket *sock,
->>>>>       lock_sock(sk);
->>>>> +    ax25 = sk_to_ax25(sk);
->>>>> +
->>>>>       /* deal with restarts */
->>>>>       if (sock->state == SS_CONNECTING) {
->>>>>           switch (sk->sk_state) {
+As explained, your patch is not needed.
+
+You failed to describe how a race was possible.
+
+Just moving code around wont help.
+
+How about providing a stack trace or some syzbot repro ?
+
