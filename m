@@ -1,47 +1,59 @@
-From: Eric Dumazet <eric.dumazet@gmail.com>
-Subject: Re: [PATCH net] ax25: use after free in ax25_connect
-Date: Fri, 14 Jan 2022 07:19:56 -0800
-Message-ID: <8fc4701f-c151-0545-c047-a5df90575d69@gmail.com>
-References: <20220111042048.43532-1-hbh25y@gmail.com>
- <f35292c0-621f-3f07-87ed-2533bfd1496e@gmail.com>
- <f48850cb-8e26-afa0-576c-691bb4be5587@gmail.com>
- <571c72e8-2111-6aa0-1bd7-e0af7fc50539@gmail.com>
- <80007b3e-eba8-1fbe-302d-4398830843dd@gmail.com>
- <ff65d70b-b6e1-3b35-8bd0-92f6f022cd5d@gmail.com>
+From: Roland Schwarz <roland.schwarz@blackspace.at>
+Subject: Please explain /proc/net/ax25_route
+Date: Sun, 16 Jan 2022 12:33:57 +0100
+Message-ID: <74ced8bf-f742-b2d2-b2bb-3eff2b168cd8@blackspace.at>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
-Return-path: <netdev-owner@vger.kernel.org>
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=message-id:date:mime-version:user-agent:subject:content-language:to
-         :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=9qFR11nHm+mhLAm3o9SpfomQXzxlqFjZg2rE8HQK518=;
-        b=EKlgr34LKZ98bPASCBMZGjdPQDoh5Eg4rIu8TfP0G8iiYVTKmaX0lhr36pnp3ey/j1
-         CDS/je9FWYN3bieeoqUXTWKj8QAsgu1tzHapYnFBxB5PfsbmdCAqo6+WWJTIAsMWCmRc
-         VIAgLy9pzAH10q3QWBr7CHz7s4+duuq1KQPryh2wXce0TYfP+5tL1YlkVZqyYV73/vhR
-         05i4ax74+8oqKViVOdNlTPmW2S0Ps8zLRyoVINGStPrnOHtvw58ssKjYGE0yewKzupQm
-         eirsDOJ+1UTBTiPQfvNJK95IpaiYcL9Gcm/M44157vWtiMmhSJwQbkXJd3pKmbq7d933
-         yy6A==
+Content-Type: multipart/signed; micalg=pgp-sha256;
+ protocol="application/pgp-signature";
+ boundary="------------yeUscaEF8ko3kuD600nQkc9S"
+Return-path: <linux-hams-owner@vger.kernel.org>
 Content-Language: en-US
-In-Reply-To: <ff65d70b-b6e1-3b35-8bd0-92f6f022cd5d@gmail.com>
 List-ID: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"; format="flowed"
-To: Hangyu Hua <hbh25y@gmail.com>, jreuter@yaina.de, ralf@linux-mips.org, davem@davemloft.net, kuba@kernel.org
-Cc: linux-hams@vger.kernel.org, netdev@vger.kernel.org, linux-kernel@vger.kernel.org
+To: linux-hams@vger.kernel.org
 
+This is an OpenPGP/MIME signed message (RFC 4880 and 3156)
+--------------yeUscaEF8ko3kuD600nQkc9S
+Content-Type: multipart/mixed; boundary="------------0c5O4F0v3EaqDJdyM3FNjd1b";
+ protected-headers="v1"
+From: Roland Schwarz <roland.schwarz@blackspace.at>
+To: linux-hams@vger.kernel.org
+Message-ID: <74ced8bf-f742-b2d2-b2bb-3eff2b168cd8@blackspace.at>
+Subject: Please explain /proc/net/ax25_route
 
-On 1/13/22 22:54, Hangyu Hua wrote:
-> Any suggestions for this patch ? Guys.
->
-> I think putting sk_to_ax25 after lock_sock(sk) here will avoid any 
-> possilbe race conditions like other functions in ax25_proto_ops. CTING) {
->
+--------------0c5O4F0v3EaqDJdyM3FNjd1b
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: base64
 
-As explained, your patch is not needed.
+RGVhciBhbGwsDQoNCmNhbiBhbnlvbmUsIHBsZWFzZSwgZ2l2ZSBtZSBhIGhlbHBpbmcgaGFu
+ZCB1bmRlcnN0YW5kaW5nIGF4MjUga2VybmVsIA0Kcm91dGluZz8gV2lsbCB0aGUgdGFibGVz
+IGFsbG93IGRpZ2lwZWF0aW5nIG9mIGF4MjUgZnJhbWVzIG9yIGFyZSB0aGV5IA0Kb25seSBt
+ZWFudCBmb3IgdXNlIHdpdGggYXhpcD8NCg0KVGhhbmsgeW91LA0KNzMgb2UxcnNhDQoNCi0t
+IA0KX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fDQogICBfICBf
+ICB8IFJvbGFuZCBTY2h3YXJ6DQogIHxfKShfICB8DQogIHwgXF9fKSB8IG1haWx0bzpyb2xh
+bmQuc2Nod2FyekBibGFja3NwYWNlLmF0DQpfX19fX19fX3wgaHR0cDovL3d3dy5ibGFja3Nw
+YWNlLmF0DQo=
 
-You failed to describe how a race was possible.
+--------------0c5O4F0v3EaqDJdyM3FNjd1b--
 
-Just moving code around wont help.
+--------------yeUscaEF8ko3kuD600nQkc9S
+Content-Type: application/pgp-signature; name="OpenPGP_signature.asc"
+Content-Description: OpenPGP digital signature
+Content-Disposition: attachment; filename="OpenPGP_signature"
 
-How about providing a stack trace or some syzbot repro ?
+-----BEGIN PGP SIGNATURE-----
 
+wsF5BAABCAAjFiEELmDUtkkUQD99pU+KklFj+hFsiUgFAmHkAqUFAwAAAAAACgkQklFj+hFsiUgQ
+eRAAi5cxCXf/NN2m0HBqBPNRV+Bq+7nCtx3qmwoCYgyPL4l/O4loXEDi526MT24anyP4Ejrp2R6W
+8jlRXNVI1UAUvAHweGckH6pUuhJKAE+9F6Ii6govBgPIt3xjKsqMfxO/04RwUk7S/mf4lkf8cCbB
+3PootdlJqZ2EtNWEx0lFW8oQZ6AMH72Wlw22oDVcU3VZqV6u6aOiMFh4f2UdJufnxRFIW25M6xAw
+5+6v5OIjyYQ38TcMmQAMRsm1v5Olk52dQHPW1cDS1m+fCFD+EUQXEQWPg9qyR8kJDGvOu8NMMYN5
+5qX5PAkA7PWTOMljlbX2BZQBdQ6aa6cryJDFZBKOWmuP/Wjbgd1SbgE5SPhP/yDiHbR3or9v+SPR
+stvUkELThPQN4tJYTlnE5TzfBPWkE/18f9i2Pq6AQFtmbGhzcSeOsKA03BMVA2ltKpVZnqSJqlwm
+gOahTjKytOsi9F2oEmT5YmRB8uEzIFT/Ra5wFKk0lgZfENC09niqkKcdsMOA4tEyyRRrdyhY2uA6
+0zhkujR8iH/Ee++IiVDmU7jhG9Xt67WzW14UbEXC2VzGue9BGaDdSD8/nYeTjVJZVbgfar3CIte8
+wm9hRLsPQKWUaiq8cEzj5wrJhhpwaIPSAx6KEYl8Gkqvush8NgHExTPRCcS777B5QhJI37gnUDHi
+Abg=
+=qwDY
+-----END PGP SIGNATURE-----
+
+--------------yeUscaEF8ko3kuD600nQkc9S--
