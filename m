@@ -1,50 +1,49 @@
-From: Thomas Osterried <thomas@osterried.de>
-Subject: Re: Please explain /proc/net/ax25_route
-Date: Mon, 17 Jan 2022 12:55:26 +0100
-Message-ID: <20220117115526.GA18529@x-berg.in-berlin.de>
-References: <74ced8bf-f742-b2d2-b2bb-3eff2b168cd8@blackspace.at>
+From: Dan Carpenter <dan.carpenter@oracle.com>
+Subject: Re: SIOCGIFCONF and AF_AX25
+Date: Mon, 17 Jan 2022 16:51:06 +0300
+Message-ID: <20220117135106.GG1951@kadam>
+References: <bdf30a4d-4ffa-9228-8cfd-74c52f8bdb40@blackspace.at>
 Mime-Version: 1.0
 Return-path: <linux-hams-owner@vger.kernel.org>
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=date : from : to : cc
+ : subject : message-id : references : content-type : in-reply-to :
+ mime-version; s=corp-2021-07-09;
+ bh=2pFlVIYH/bPVlmHR6HMIOhb7ebkCeRaAaPg1GGq5Dw8=;
+ b=FjBsyIOTDL5yuZGFwLPVhwn6AXiD33tCpbFMURd55Wn9/zy/G42o60GKZS1jyjx+8Fr9
+ F0ojtSY6LTydrZ7k9COCMdfrDaRzpPj0CFJzQ1X45mZ0eb3S26Tzhge6R3pWj3GPwFGf
+ yenaOzXi8XGBXhVNHcb4+Alap5E3yZgVwvQ+LcyrDQ8/gQjw/WNWrNH0dOyAg8OaMxnJ
+ YIhD/cfJNxKJrbEtYc0yQju+30PgC5sooYmdHfskLU+DkhP+tMBadASUw+pAIojaNQQN
+ TAv2JnAmryH/Bq4vvmiTiknRnopbgmBkW+cpt7q+yIm6jnbdHrJWcS9mqVSvlYHmZ6Lc QA== 
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=oracle.onmicrosoft.com; s=selector2-oracle-onmicrosoft-com;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=2pFlVIYH/bPVlmHR6HMIOhb7ebkCeRaAaPg1GGq5Dw8=;
+ b=cGZ4jxAyW1TTBW1bKjDKOz316RzCKDXWIWmcocfW+HSFng8SrKNSofMaKm+XaLhrxE/0z54ixF06RhPSlfmmhHoI1ZCkH0mqt/3R1sacD2MQbS8kEnYb+Z6Vglakq5XiXBjgtEbXmBufDc3qDZAVFt2Q6kbQDHwLziJ232bkwzQ=
 Content-Disposition: inline
-In-Reply-To: <74ced8bf-f742-b2d2-b2bb-3eff2b168cd8@blackspace.at>
+In-Reply-To: <bdf30a4d-4ffa-9228-8cfd-74c52f8bdb40@blackspace.at>
 List-ID: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
 To: Roland Schwarz <roland.schwarz@blackspace.at>
 Cc: linux-hams@vger.kernel.org
 
-Hello Roland,
-
-On Sun, Jan 16, 2022 at 12:33:57PM +0100, Roland Schwarz wrote:
-> Dear all,
+On Sun, Jan 16, 2022 at 05:54:53PM +0100, Roland Schwarz wrote:
+> Using ioctl SIOCGIFCONF one was able to list all interfaces, including
+> AF_AX25.
 > 
-> can anyone, please, give me a helping hand understanding ax25 kernel
-> routing? Will the tables allow digipeating of ax25 frames or are they only
-> meant for use with axip?
+> This seems to be not be the case any more. I discovered it by trying to find
+> out why N1UROs axdigi stopped working.
+> 
+> Is this a bug, or is there some other means how the interfaces can be
+> enumerated?
 
-Unfortunately, linux kernel ax25 does not implement (even simple) AX.2 layer2 digipeating.
+In the kernel, the rule is "you're not allowed to break userspace".
+What that means is that you can change the User facing API so long as
+people don't notice and/or complain.  Since you are complaining that
+means it is a bug.
 
-This functionality is up to userspace programs. Personaly, I think simple digipeating
-would be great (for reasons as performance and simplicity), butt that's another story.
+Can you use git bisect to find out which patch broke this?
 
-The kernel routing table is basically for IP over AX.25.
-You see the reference for ax25_ip_xmit in ax25_ip_xmit in ax25_ip.c
-If kernel likes to send an IP-frame, it requests IP routes for interfces, finds i.e.
-an AX.25 ARP for that route, and need two things to know:
-1. use Mode VC or Mode DG?
-2. is it directly reachable or via an ax25 path (that's why the struct has the
-   digi path information).
-This is done without interaction with userspace utilities.
+regards,
+dan carpenter
 
-For beeing easily able to see the content of that routing table, it's available through
-/proc.
-It can be filled and adjusted from userspace with axparms (by hand, startup script, etc.)
-or by ax25rtd.
-
-The userspace programs use ioctls via ax25_ioctl()
-like SIOCADDRT, SIOCDELRT, SIOCAX25OPTRT,
-in af_ax25.c, which calls ax25_rt_ioctl() in ax25_route.c
-
-
-vy 73,
-		- Thomas  dl9sau
