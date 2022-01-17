@@ -1,49 +1,73 @@
-From: Dan Carpenter <dan.carpenter@oracle.com>
+From: Roland Schwarz <roland.schwarz@blackspace.at>
 Subject: Re: SIOCGIFCONF and AF_AX25
-Date: Mon, 17 Jan 2022 16:51:06 +0300
-Message-ID: <20220117135106.GG1951@kadam>
+Date: Mon, 17 Jan 2022 17:56:46 +0100
+Message-ID: <8e0e1cf4-3bcc-a020-8b5c-cc7618c683a3@blackspace.at>
 References: <bdf30a4d-4ffa-9228-8cfd-74c52f8bdb40@blackspace.at>
+ <20220117135106.GG1951@kadam>
 Mime-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha256;
+ protocol="application/pgp-signature";
+ boundary="------------S5wN4biJ0ueALfvZGFuvAi95"
 Return-path: <linux-hams-owner@vger.kernel.org>
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=date : from : to : cc
- : subject : message-id : references : content-type : in-reply-to :
- mime-version; s=corp-2021-07-09;
- bh=2pFlVIYH/bPVlmHR6HMIOhb7ebkCeRaAaPg1GGq5Dw8=;
- b=FjBsyIOTDL5yuZGFwLPVhwn6AXiD33tCpbFMURd55Wn9/zy/G42o60GKZS1jyjx+8Fr9
- F0ojtSY6LTydrZ7k9COCMdfrDaRzpPj0CFJzQ1X45mZ0eb3S26Tzhge6R3pWj3GPwFGf
- yenaOzXi8XGBXhVNHcb4+Alap5E3yZgVwvQ+LcyrDQ8/gQjw/WNWrNH0dOyAg8OaMxnJ
- YIhD/cfJNxKJrbEtYc0yQju+30PgC5sooYmdHfskLU+DkhP+tMBadASUw+pAIojaNQQN
- TAv2JnAmryH/Bq4vvmiTiknRnopbgmBkW+cpt7q+yIm6jnbdHrJWcS9mqVSvlYHmZ6Lc QA== 
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oracle.onmicrosoft.com; s=selector2-oracle-onmicrosoft-com;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=2pFlVIYH/bPVlmHR6HMIOhb7ebkCeRaAaPg1GGq5Dw8=;
- b=cGZ4jxAyW1TTBW1bKjDKOz316RzCKDXWIWmcocfW+HSFng8SrKNSofMaKm+XaLhrxE/0z54ixF06RhPSlfmmhHoI1ZCkH0mqt/3R1sacD2MQbS8kEnYb+Z6Vglakq5XiXBjgtEbXmBufDc3qDZAVFt2Q6kbQDHwLziJ232bkwzQ=
-Content-Disposition: inline
-In-Reply-To: <bdf30a4d-4ffa-9228-8cfd-74c52f8bdb40@blackspace.at>
+Content-Language: en-US
+In-Reply-To: <20220117135106.GG1951@kadam>
 List-ID: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-To: Roland Schwarz <roland.schwarz@blackspace.at>
+To: Dan Carpenter <dan.carpenter@oracle.com>
 Cc: linux-hams@vger.kernel.org
 
-On Sun, Jan 16, 2022 at 05:54:53PM +0100, Roland Schwarz wrote:
-> Using ioctl SIOCGIFCONF one was able to list all interfaces, including
-> AF_AX25.
-> 
-> This seems to be not be the case any more. I discovered it by trying to find
-> out why N1UROs axdigi stopped working.
-> 
-> Is this a bug, or is there some other means how the interfaces can be
-> enumerated?
+This is an OpenPGP/MIME signed message (RFC 4880 and 3156)
+--------------S5wN4biJ0ueALfvZGFuvAi95
+Content-Type: multipart/mixed; boundary="------------1xWx3zhSNkU5BxtZI6J61TgP";
+ protected-headers="v1"
+From: Roland Schwarz <roland.schwarz@blackspace.at>
+To: Dan Carpenter <dan.carpenter@oracle.com>
+Cc: linux-hams@vger.kernel.org
+Message-ID: <8e0e1cf4-3bcc-a020-8b5c-cc7618c683a3@blackspace.at>
+Subject: Re: SIOCGIFCONF and AF_AX25
+References: <bdf30a4d-4ffa-9228-8cfd-74c52f8bdb40@blackspace.at>
+ <20220117135106.GG1951@kadam>
+In-Reply-To: <20220117135106.GG1951@kadam>
 
-In the kernel, the rule is "you're not allowed to break userspace".
-What that means is that you can change the User facing API so long as
-people don't notice and/or complain.  Since you are complaining that
-means it is a bug.
+--------------1xWx3zhSNkU5BxtZI6J61TgP
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: base64
 
-Can you use git bisect to find out which patch broke this?
+DQoNCk9uIDE3LjAxLjIyIGF0IDE0OjUxIHdyb3RlIERhbiBDYXJwZW50ZXI6DQo+IENhbiB5
+b3UgdXNlIGdpdCBiaXNlY3QgdG8gZmluZCBvdXQgd2hpY2ggcGF0Y2ggYnJva2UgdGhpcz8N
+Cg0KVGhhbmsgeW91IGZvciBjb21pbmcgYmFjay4gSXQgc2VlbXMgaG93ZXZlciB0aGVyZSBp
+cyBubyBidWcuIEkgd2FzIA0KZXhwZWN0aW5nIHRoYXQgTjFVUk8ncyBheGRpZ2kgd291bGQg
+d29yayBvbiBwbGFpbiBBWDI1IHBvcnRzLCBpLmUuIHN1Y2ggDQp0aGF0IGhhdmUgbm8gSVAg
+YWRkcmVzcyBhc3NpZ25lZC4gSXQgdHVybnMgb3V0LCB0aGF0IGFzIHNvb24gYXMgSSBhc3Np
+Z24gDQpJUCBhZGRyZXNzZXMgdGhlIGludGVyZmFjZXMgYXJlIGVudW1lcmF0ZWQgYXMgZXhw
+ZWN0ZWQuDQoNClNvIGl0IGlzIG5vdCBhIGtlcm5lbCBidWcsIGFuZCBub3QgbGlrZWx5IGEg
+YnVnIGF0IGFsbCwgcHJvYmFibHkgb25seSANCmxhY2tpbmcgZG9jdW1lbnRhdGlvbiAob3Ig
+bXkgaW5hYmlsaXR5IHRvIGZpbmQgaXQpLg0KDQo3MyBSb2xhbmQNCg0KLS0gDQpfX19fX19f
+X19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX18NCiAgIF8gIF8gIHwgUm9sYW5k
+IFNjaHdhcnoNCiAgfF8pKF8gIHwNCiAgfCBcX18pIHwgbWFpbHRvOnJvbGFuZC5zY2h3YXJ6
+QGJsYWNrc3BhY2UuYXQNCl9fX19fX19ffCBodHRwOi8vd3d3LmJsYWNrc3BhY2UuYXQNCg==
 
-regards,
-dan carpenter
 
+--------------1xWx3zhSNkU5BxtZI6J61TgP--
+
+--------------S5wN4biJ0ueALfvZGFuvAi95
+Content-Type: application/pgp-signature; name="OpenPGP_signature.asc"
+Content-Description: OpenPGP digital signature
+Content-Disposition: attachment; filename="OpenPGP_signature"
+
+-----BEGIN PGP SIGNATURE-----
+
+wsF5BAABCAAjFiEELmDUtkkUQD99pU+KklFj+hFsiUgFAmHln84FAwAAAAAACgkQklFj+hFsiUh6
+Gg/9GY7c95WDSCP2MIhIi4RsCVlQIpfRrAGo6DqVAymHLicDybt0/SmBRmGcvKTk8IPniZu9D5aM
+5wy4nwqHX5yeQncvW1NChKNzlp/92+IKKXjn/ie6MHvUXdCV6MRZhWiN/CyodZPuQLeLyNK8ABvc
+7J9qfM5wtcLCatkth6fa6qQ2n/iyFBJeNmKoTypySgKioDQjlOcsVOK4Qi6LINEdGMPmDRdg7G9t
+l/3huDrGsBMngLPSQTSl6eR+rnCZsj2aMho9hmsJJ9VAH+OJvKJKeT1nf474D6WwCsNfIxe23zzY
+nI2+BRTBdwl9E6X/EGnAy/EncKlF0KSt745tniGm5vToa5I9oA0DozZO/cTnJZWqEXmZfDywb+Xt
+qsUpFwW6kM8JAy58qu3cToWuzoAPxx2th/0o/YOB0oiPDjQH08/jnU7JZL8sLHX3xPdPoD6LLSDS
+btBz5Wqs2Dk+ItD6lNirC6qQxDo9btPnP1/IRGTpwOt+A0EisJ0XkO3wlazPhat6MnZs8RN1Jk+0
+3jC3UEun0P9b1CQkHde1n0F2JQQWywuORpEHCxL6elGD1YC+NkP4hJeQhaV9rDj5jg5qqwvyXwHp
+3KkHfXS1Q+B1hVU2Q/skBzSVo2246rKrp9dxiu/dav59wj/tZkJR1aTZK4NNT0Xwm8lQToxJAREv
+O0c=
+=YrRe
+-----END PGP SIGNATURE-----
+
+--------------S5wN4biJ0ueALfvZGFuvAi95--
