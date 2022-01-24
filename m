@@ -1,73 +1,49 @@
-From: Roland Schwarz <roland.schwarz@blackspace.at>
-Subject: Re: SIOCGIFCONF and AF_AX25
-Date: Mon, 17 Jan 2022 17:56:46 +0100
-Message-ID: <8e0e1cf4-3bcc-a020-8b5c-cc7618c683a3@blackspace.at>
-References: <bdf30a4d-4ffa-9228-8cfd-74c52f8bdb40@blackspace.at>
- <20220117135106.GG1951@kadam>
+From: Hangyu Hua <hbh25y@gmail.com>
+Subject: [PATCH] yam: fix a memory leak in yam_siocdevprivate()
+Date: Mon, 24 Jan 2022 11:29:54 +0800
+Message-ID: <20220124032954.18283-1-hbh25y@gmail.com>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
- protocol="application/pgp-signature";
- boundary="------------S5wN4biJ0ueALfvZGFuvAi95"
+Content-Transfer-Encoding: 8bit
 Return-path: <linux-hams-owner@vger.kernel.org>
-Content-Language: en-US
-In-Reply-To: <20220117135106.GG1951@kadam>
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=RX6Av1jIiyqXvZYjcpZEeGLsyORkpiw+PH/GcVKGsHk=;
+        b=TVighjXmld8xjrLsacTJCmUi8xhvnHU+SU2zVkR93VRMOoaA5A+oScrkxaodwFq50j
+         78/84wVestiPhMtV2WWr3chJ1UgTcgLk21X1vCXpcT9tjr6Isqd3Aq88uLTDu4l6QeTO
+         p2FqyiqbFX6Vqh88Hxkswi+eXed7BvZ5NmtHAMAXow3ydduW6bWMnZBn6EExFHWi9tpK
+         CQpBl3KoSRE93i6HsJw1reE+KifNt06FM+UG0NVK6AXRBikPLAJt6SQSMExulX9fcCVv
+         cHvmrh8L3NxdjvkxG7HfsSoA81UzF1MR9ckRBb27O8nll8mJvC2UkOUIDXYYA+mNcIQe
+         16EA==
 List-ID: <linux-hams.vger.kernel.org>
-To: Dan Carpenter <dan.carpenter@oracle.com>
-Cc: linux-hams@vger.kernel.org
+Content-Type: text/plain; charset="us-ascii"
+To: jpr@f6fbb.org, davem@davemloft.net, kuba@kernel.org, wang6495@umn.edu
+Cc: linux-hams@vger.kernel.org, netdev@vger.kernel.org, linux-kernel@vger.kernel.org, Hangyu Hua <hbh25y@gmail.com>
 
-This is an OpenPGP/MIME signed message (RFC 4880 and 3156)
---------------S5wN4biJ0ueALfvZGFuvAi95
-Content-Type: multipart/mixed; boundary="------------1xWx3zhSNkU5BxtZI6J61TgP";
- protected-headers="v1"
-From: Roland Schwarz <roland.schwarz@blackspace.at>
-To: Dan Carpenter <dan.carpenter@oracle.com>
-Cc: linux-hams@vger.kernel.org
-Message-ID: <8e0e1cf4-3bcc-a020-8b5c-cc7618c683a3@blackspace.at>
-Subject: Re: SIOCGIFCONF and AF_AX25
-References: <bdf30a4d-4ffa-9228-8cfd-74c52f8bdb40@blackspace.at>
- <20220117135106.GG1951@kadam>
-In-Reply-To: <20220117135106.GG1951@kadam>
+ym needs to be free when ym->cmd != SIOCYAMSMCS.
 
---------------1xWx3zhSNkU5BxtZI6J61TgP
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: base64
+Fixes: 0781168e23a2 ("yam: fix a missing-check bug")
+Signed-off-by: Hangyu Hua <hbh25y@gmail.com>
+---
+ drivers/net/hamradio/yam.c | 4 +---
+ 1 file changed, 1 insertion(+), 3 deletions(-)
 
-DQoNCk9uIDE3LjAxLjIyIGF0IDE0OjUxIHdyb3RlIERhbiBDYXJwZW50ZXI6DQo+IENhbiB5
-b3UgdXNlIGdpdCBiaXNlY3QgdG8gZmluZCBvdXQgd2hpY2ggcGF0Y2ggYnJva2UgdGhpcz8N
-Cg0KVGhhbmsgeW91IGZvciBjb21pbmcgYmFjay4gSXQgc2VlbXMgaG93ZXZlciB0aGVyZSBp
-cyBubyBidWcuIEkgd2FzIA0KZXhwZWN0aW5nIHRoYXQgTjFVUk8ncyBheGRpZ2kgd291bGQg
-d29yayBvbiBwbGFpbiBBWDI1IHBvcnRzLCBpLmUuIHN1Y2ggDQp0aGF0IGhhdmUgbm8gSVAg
-YWRkcmVzcyBhc3NpZ25lZC4gSXQgdHVybnMgb3V0LCB0aGF0IGFzIHNvb24gYXMgSSBhc3Np
-Z24gDQpJUCBhZGRyZXNzZXMgdGhlIGludGVyZmFjZXMgYXJlIGVudW1lcmF0ZWQgYXMgZXhw
-ZWN0ZWQuDQoNClNvIGl0IGlzIG5vdCBhIGtlcm5lbCBidWcsIGFuZCBub3QgbGlrZWx5IGEg
-YnVnIGF0IGFsbCwgcHJvYmFibHkgb25seSANCmxhY2tpbmcgZG9jdW1lbnRhdGlvbiAob3Ig
-bXkgaW5hYmlsaXR5IHRvIGZpbmQgaXQpLg0KDQo3MyBSb2xhbmQNCg0KLS0gDQpfX19fX19f
-X19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX18NCiAgIF8gIF8gIHwgUm9sYW5k
-IFNjaHdhcnoNCiAgfF8pKF8gIHwNCiAgfCBcX18pIHwgbWFpbHRvOnJvbGFuZC5zY2h3YXJ6
-QGJsYWNrc3BhY2UuYXQNCl9fX19fX19ffCBodHRwOi8vd3d3LmJsYWNrc3BhY2UuYXQNCg==
+diff --git a/drivers/net/hamradio/yam.c b/drivers/net/hamradio/yam.c
+index 6376b8485976..980f2be32f05 100644
+--- a/drivers/net/hamradio/yam.c
++++ b/drivers/net/hamradio/yam.c
+@@ -950,9 +950,7 @@ static int yam_siocdevprivate(struct net_device *dev, struct ifreq *ifr, void __
+ 		ym = memdup_user(data, sizeof(struct yamdrv_ioctl_mcs));
+ 		if (IS_ERR(ym))
+ 			return PTR_ERR(ym);
+-		if (ym->cmd != SIOCYAMSMCS)
+-			return -EINVAL;
+-		if (ym->bitrate > YAM_MAXBITRATE) {
++		if (ym->cmd != SIOCYAMSMCS || ym->bitrate > YAM_MAXBITRATE) {
+ 			kfree(ym);
+ 			return -EINVAL;
+ 		}
+-- 
+2.25.1
 
-
---------------1xWx3zhSNkU5BxtZI6J61TgP--
-
---------------S5wN4biJ0ueALfvZGFuvAi95
-Content-Type: application/pgp-signature; name="OpenPGP_signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="OpenPGP_signature"
-
------BEGIN PGP SIGNATURE-----
-
-wsF5BAABCAAjFiEELmDUtkkUQD99pU+KklFj+hFsiUgFAmHln84FAwAAAAAACgkQklFj+hFsiUh6
-Gg/9GY7c95WDSCP2MIhIi4RsCVlQIpfRrAGo6DqVAymHLicDybt0/SmBRmGcvKTk8IPniZu9D5aM
-5wy4nwqHX5yeQncvW1NChKNzlp/92+IKKXjn/ie6MHvUXdCV6MRZhWiN/CyodZPuQLeLyNK8ABvc
-7J9qfM5wtcLCatkth6fa6qQ2n/iyFBJeNmKoTypySgKioDQjlOcsVOK4Qi6LINEdGMPmDRdg7G9t
-l/3huDrGsBMngLPSQTSl6eR+rnCZsj2aMho9hmsJJ9VAH+OJvKJKeT1nf474D6WwCsNfIxe23zzY
-nI2+BRTBdwl9E6X/EGnAy/EncKlF0KSt745tniGm5vToa5I9oA0DozZO/cTnJZWqEXmZfDywb+Xt
-qsUpFwW6kM8JAy58qu3cToWuzoAPxx2th/0o/YOB0oiPDjQH08/jnU7JZL8sLHX3xPdPoD6LLSDS
-btBz5Wqs2Dk+ItD6lNirC6qQxDo9btPnP1/IRGTpwOt+A0EisJ0XkO3wlazPhat6MnZs8RN1Jk+0
-3jC3UEun0P9b1CQkHde1n0F2JQQWywuORpEHCxL6elGD1YC+NkP4hJeQhaV9rDj5jg5qqwvyXwHp
-3KkHfXS1Q+B1hVU2Q/skBzSVo2246rKrp9dxiu/dav59wj/tZkJR1aTZK4NNT0Xwm8lQToxJAREv
-O0c=
-=YrRe
------END PGP SIGNATURE-----
-
---------------S5wN4biJ0ueALfvZGFuvAi95--
