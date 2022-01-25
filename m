@@ -1,49 +1,65 @@
-From: Hangyu Hua <hbh25y@gmail.com>
-Subject: [PATCH] yam: fix a memory leak in yam_siocdevprivate()
-Date: Mon, 24 Jan 2022 11:29:54 +0800
-Message-ID: <20220124032954.18283-1-hbh25y@gmail.com>
+From: Bernard Pidoux <bernard.pidoux@sorbonne-universite.fr>
+Subject: [AX25] ipv6 incompatible with AX.25
+Date: Tue, 25 Jan 2022 12:46:25 +0100
+Message-ID: <581f0c8e-f4fb-523d-df6e-7a973b506c34@sorbonne-universite.fr>
+References: <4B2CD772.1030106@upmc.fr> <4B2D1025.1020106@gmail.com>
+ <4B2E6729.1090102@free.fr> <4B507FAA.8010007@free.fr>
+ <20100115203654.GA3084@del.dom.local> <4DFA6A59.2000709@free.fr>
+Reply-To: f6bvp@free.fr
 Mime-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Return-path: <linux-hams-owner@vger.kernel.org>
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=RX6Av1jIiyqXvZYjcpZEeGLsyORkpiw+PH/GcVKGsHk=;
-        b=TVighjXmld8xjrLsacTJCmUi8xhvnHU+SU2zVkR93VRMOoaA5A+oScrkxaodwFq50j
-         78/84wVestiPhMtV2WWr3chJ1UgTcgLk21X1vCXpcT9tjr6Isqd3Aq88uLTDu4l6QeTO
-         p2FqyiqbFX6Vqh88Hxkswi+eXed7BvZ5NmtHAMAXow3ydduW6bWMnZBn6EExFHWi9tpK
-         CQpBl3KoSRE93i6HsJw1reE+KifNt06FM+UG0NVK6AXRBikPLAJt6SQSMExulX9fcCVv
-         cHvmrh8L3NxdjvkxG7HfsSoA81UzF1MR9ckRBb27O8nll8mJvC2UkOUIDXYYA+mNcIQe
-         16EA==
+Content-Language: fr
+In-Reply-To: <4DFA6A59.2000709@free.fr>
 List-ID: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"
-To: jpr@f6fbb.org, davem@davemloft.net, kuba@kernel.org, wang6495@umn.edu
-Cc: linux-hams@vger.kernel.org, netdev@vger.kernel.org, linux-kernel@vger.kernel.org, Hangyu Hua <hbh25y@gmail.com>
+Content-Type: text/plain; charset="utf-8"; format="flowed"
+To: linux-hams@vger.kernel.org
+Cc: List for the LINUX version of FBB <xfbb@f6fbb.org>, fpac@f6fbb.org, F3KT <f3kt@free.fr>, F6BVP <f6bvp@free.fr>
 
-ym needs to be free when ym->cmd != SIOCYAMSMCS.
+Hi,
 
-Fixes: 0781168e23a2 ("yam: fix a missing-check bug")
-Signed-off-by: Hangyu Hua <hbh25y@gmail.com>
----
- drivers/net/hamradio/yam.c | 4 +---
- 1 file changed, 1 insertion(+), 3 deletions(-)
+Recently installing a new node for kernel rose module debugging (...) I 
+experienced a few connexion troubles.
 
-diff --git a/drivers/net/hamradio/yam.c b/drivers/net/hamradio/yam.c
-index 6376b8485976..980f2be32f05 100644
---- a/drivers/net/hamradio/yam.c
-+++ b/drivers/net/hamradio/yam.c
-@@ -950,9 +950,7 @@ static int yam_siocdevprivate(struct net_device *dev, struct ifreq *ifr, void __
- 		ym = memdup_user(data, sizeof(struct yamdrv_ioctl_mcs));
- 		if (IS_ERR(ym))
- 			return PTR_ERR(ym);
--		if (ym->cmd != SIOCYAMSMCS)
--			return -EINVAL;
--		if (ym->bitrate > YAM_MAXBITRATE) {
-+		if (ym->cmd != SIOCYAMSMCS || ym->bitrate > YAM_MAXBITRATE) {
- 			kfree(ym);
- 			return -EINVAL;
- 		}
--- 
-2.25.1
+Some are already known AX.25 bug and rose bug that I wanted to 
+investigate taking advantage of kernel Ubuntu 5.4.151 source 
+availability that can be patched and module recompiled.
+
+Here is a new feature interfering with AX.25 connexions as displayed in 
+/var/log/syslog :
+
+Jan 25 12:16:31 f6bvp-Ubuntu kernel: [ 6942.400016] IPv6: 
+ADDRCONF(NETDEV_CHANGE): ax0: link becomes ready
+
+After some investigations I added the following four lines in 
+/etc/sysctl.conf and rebooted :
+
+# Disable ipv6
+net.ipv6.conf.all.disable_ipv6=1
+net.ipv6.conf.default.disable_ipv6=1
+net.ipv6.conf.lo.disable_ipv6=1
+
+Then no more ipv6 are shown by ifconfig and AX25 connexions via LAN are 
+now ok !
+
+enp5s0: flags=4163<UP,BROADCAST,RUNNING,MULTICAST>  mtu 1500
+         inet 44.168.19.21  netmask 255.255.255.240  broadcast 44.168.19.31
+         ether 00:23:54:8d:41:e9  txqueuelen 1000  (Ethernet)
+         RX packets 44907  bytes 60439240 (60.4 MB)
+         RX errors 0  dropped 53  overruns 0  frame 0
+         TX packets 16668  bytes 2115347 (2.1 MB)
+         TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
+
+Looking at my ROSE/FPAC nodes I found that I could perform the same 
+changes on my RaspBerry Pis nodes for better results.
+
+I hope this will help and I have a question. Shall this line be 
+uncommented in sysctl.conf ?
+
+# Uncomment the next line to enable packet forwarding for IPv4
+#net.ipv4.ip_forward=1
+
+I actually have the following in my ax25start script :
+
+ax25start:echo 1 > /proc/sys/net/ipv4/ip_forward
 
