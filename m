@@ -1,101 +1,101 @@
-From: David Ranch <linux-hams@trinnet.net>
-Subject: Re: [AX25] ipv6 incompatible with AX.25
-Date: Tue, 25 Jan 2022 10:14:30 -0800
-Message-ID: <2394eae7-dada-f43e-40b9-fae929212913@trinnet.net>
-References: <4B2CD772.1030106@upmc.fr> <4B2D1025.1020106@gmail.com>
- <4B2E6729.1090102@free.fr> <4B507FAA.8010007@free.fr>
- <20100115203654.GA3084@del.dom.local> <4DFA6A59.2000709@free.fr>
- <581f0c8e-f4fb-523d-df6e-7a973b506c34@sorbonne-universite.fr>
+From: Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH net-next 06/15] net: ax25: remove route refcount
+Date: Wed, 26 Jan 2022 11:11:00 -0800
+Message-ID: <20220126191109.2822706-7-kuba@kernel.org>
+References: <20220126191109.2822706-1-kuba@kernel.org>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
-Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <581f0c8e-f4fb-523d-df6e-7a973b506c34@sorbonne-universite.fr>
+Content-Transfer-Encoding: 8bit
+Return-path: <netdev-owner@vger.kernel.org>
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1643224275;
+        bh=BA2e2HnqZ/HYDxnRurH7RJ+YTM+xt7SWekxZOj76Phs=;
+        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+        b=YwoQ6IVgWlR78tEKo2FVMCjSqxj3P/jRmvXetz5ucFGyOw6NeAtxvngtymt1vuILZ
+         ZNrHbpPK6kfxSY5qw4jb/E5GmU0vg9ilvcmM4lLhnjUVBYBcg4fw/P8lJVKSqcz3Ph
+         vx57VhNH9R+fLVa4lNsij5LxfTIRJNCLMS+4VXnBNI7NvmU+3+/I7TgzfaAmcA7v5e
+         sgRW+aLTuTmDG7aSZtNYHy7mvtrtF0toq+i9O/TH5pk4vVGojbannPK8FKp0Ituen5
+         oXlqUMt9kSWk3NNI38KfUzy/7mIDHGjWKbjQusDcyG0CwPthvuc4usnmwkeIXUlHoT
+         GaAfUS5u5Hl+w==
+In-Reply-To: <20220126191109.2822706-1-kuba@kernel.org>
 List-ID: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"; format="flowed"
-To: f6bvp@free.fr, linux-hams@vger.kernel.org
-Cc: List for the LINUX version of FBB <xfbb@f6fbb.org>, fpac@f6fbb.org, F3KT <f3kt@free.fr>
+Content-Type: text/plain; charset="us-ascii"
+To: davem@davemloft.net
+Cc: netdev@vger.kernel.org, Jakub Kicinski <kuba@kernel.org>, ralf@linux-mips.org, linux-hams@vger.kernel.org
 
+Nothing takes the refcount since v4.9.
 
-Hey Bernard,
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+---
+CC: ralf@linux-mips.org
+CC: linux-hams@vger.kernel.org
+---
+ include/net/ax25.h    | 12 ------------
+ net/ax25/ax25_route.c |  5 ++---
+ 2 files changed, 2 insertions(+), 15 deletions(-)
 
-When you saw the lines:
+diff --git a/include/net/ax25.h b/include/net/ax25.h
+index 526e49589197..cb628c5d7c5b 100644
+--- a/include/net/ax25.h
++++ b/include/net/ax25.h
+@@ -187,18 +187,12 @@ typedef struct {
+ 
+ typedef struct ax25_route {
+ 	struct ax25_route	*next;
+-	refcount_t		refcount;
+ 	ax25_address		callsign;
+ 	struct net_device	*dev;
+ 	ax25_digi		*digipeat;
+ 	char			ip_mode;
+ } ax25_route;
+ 
+-static inline void ax25_hold_route(ax25_route *ax25_rt)
+-{
+-	refcount_inc(&ax25_rt->refcount);
+-}
+-
+ void __ax25_put_route(ax25_route *ax25_rt);
+ 
+ extern rwlock_t ax25_route_lock;
+@@ -213,12 +207,6 @@ static inline void ax25_route_lock_unuse(void)
+ 	read_unlock(&ax25_route_lock);
+ }
+ 
+-static inline void ax25_put_route(ax25_route *ax25_rt)
+-{
+-	if (refcount_dec_and_test(&ax25_rt->refcount))
+-		__ax25_put_route(ax25_rt);
+-}
+-
+ typedef struct {
+ 	char			slave;			/* slave_mode?   */
+ 	struct timer_list	slave_timer;		/* timeout timer */
+diff --git a/net/ax25/ax25_route.c b/net/ax25/ax25_route.c
+index d0b2e094bd55..be97dc6a53cb 100644
+--- a/net/ax25/ax25_route.c
++++ b/net/ax25/ax25_route.c
+@@ -111,7 +111,6 @@ static int __must_check ax25_rt_add(struct ax25_routes_struct *route)
+ 		return -ENOMEM;
+ 	}
+ 
+-	refcount_set(&ax25_rt->refcount, 1);
+ 	ax25_rt->callsign     = route->dest_addr;
+ 	ax25_rt->dev          = ax25_dev->dev;
+ 	ax25_rt->digipeat     = NULL;
+@@ -160,12 +159,12 @@ static int ax25_rt_del(struct ax25_routes_struct *route)
+ 		    ax25cmp(&route->dest_addr, &s->callsign) == 0) {
+ 			if (ax25_route_list == s) {
+ 				ax25_route_list = s->next;
+-				ax25_put_route(s);
++				__ax25_put_route(s);
+ 			} else {
+ 				for (t = ax25_route_list; t != NULL; t = t->next) {
+ 					if (t->next == s) {
+ 						t->next = s->next;
+-						ax25_put_route(s);
++						__ax25_put_route(s);
+ 						break;
+ 					}
+ 				}
+-- 
+2.34.1
 
---
-Jan 25 12:16:31 f6bvp-Ubuntu kernel: [ 6942.400016] IPv6:
-ADDRCONF(NETDEV_CHANGE): ax0: link becomes ready
---
-
-was the AX25 interface not up and usable for classic packet regardless 
-of it's IPv6 state?  Generally speaking, I had been been disabling IPv6 
-for the longest time but I've been leaving it enabled as all of us need 
-to start embracing IPv6.  Anyway, on my Ubuntu 20.04 machine, I have 
-IPv6 enabled with AX25 interfaces present though I only have a link 
-local address on my primary Ethernet interface (no IPv6 on ax0).  It 
-should be noted I do NOT use AXIPv4 and it wouldn't surprised me if 
-AXIPv6 doesn't work. There are a lot of tools in modern Linuxes that 
-don't even support all aspects of AX25, NETROM, ROSE, etc. in modern 
-tools like "ip", etc.  Many of us have to resort to installing legacy 
-tools like ifconfig and route to get the job done.
-
---
-$ ip addr
-
-1: lo: <LOOPBACK,UP,LOWER_UP> mtu 65536 qdisc noqueue state UNKNOWN 
-group default qlen 1000
-     link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
-     inet 127.0.0.1/8 scope host lo
-        valid_lft forever preferred_lft forever
-     inet6 ::1/128 scope host
-        valid_lft forever preferred_lft forever
-2: eth0: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc fq_codel state 
-UP group default qlen 1000
-     link/ether xx:xx:xx:xx:xx:xx brd ff:ff:ff:ff:ff:ff
-     altname enp0s31f6
-     inet 192.168.0.25/24 brd 192.168.0.255 scope global dynamic 
-noprefixroute eth0
-        valid_lft 66471sec preferred_lft 66471sec
-     inet6 fe80::xxxx:xxxx:xxxx:xxxx/64 scope link
-        valid_lft forever preferred_lft forever
-3: wlan0: <NO-CARRIER,BROADCAST,MULTICAST,UP> mtu 1500 qdisc noqueue 
-state DOWN group default qlen 1000
-     link/ether xx:xx:xx:xx:xx:xx brd ff:ff:ff:ff:ff:ff
-     altname wlp4s0
-4: virbr0: <NO-CARRIER,BROADCAST,MULTICAST,UP> mtu 1500 qdisc noqueue 
-state DOWN group default qlen 1000
-     link/ether xx:xx:xx:xx:xx:xx brd ff:ff:ff:ff:ff:ff
-     inet 192.168.122.1/24 brd 192.168.122.255 scope global virbr0
-        valid_lft forever preferred_lft forever
-5: virbr0-nic: <BROADCAST,MULTICAST> mtu 1500 qdisc fq_codel master 
-virbr0 state DOWN group default qlen 1000
-     link/ether xx:xx:xx:xx:xx:xx brd ff:ff:ff:ff:ff:ff
-11: ax0: <BROADCAST,UP,LOWER_UP> mtu 255 qdisc fq_codel state UNKNOWN 
-group default qlen 10
-     link/ax25 xx:xx:xx:xx:xx:xx:xx brd a2:a6:a8:40:40:40:00
-     inet 44.128.0.1/24 scope global ax0
-        valid_lft forever preferred_lft forever
---
-
-
-> I hope this will help and I have a question. Shall this line be 
-> uncommented in sysctl.conf ?
->
-> # Uncomment the next line to enable packet forwarding for IPv4
-> #net.ipv4.ip_forward=1
-
-I question if you really want this on as this should only be enabled if 
-you what your LInux device to be a router (aka.. forwarding packets 
-between one interface and another).  This is NOT used if remote stations 
-just want to reach your machine via IP.  Fyi, this kernel /proc command 
-alone isn't enough to get routing working.  You also need to setup 
-forwarding policies using tools like iptables (legacy) or nftables 
-(newest way).
-
-
-> I actually have the following in my ax25start script :
->
-> ax25start:echo 1 > /proc/sys/net/ipv4/ip_forward
-
-Same point as above.
-
---David
-KI6ZHD
