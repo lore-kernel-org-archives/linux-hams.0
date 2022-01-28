@@ -1,182 +1,207 @@
-From: David Ranch <linux-hams@trinnet.net>
-Subject: Re: [PATCH net-next 06/15] net: ax25: remove route refcount
-Date: Thu, 27 Jan 2022 07:58:40 -0800
-Message-ID: <f6749b58-ab8a-094c-5e07-c5a7ca5200c9@trinnet.net>
-References: <20220126191109.2822706-1-kuba@kernel.org>
- <20220126191109.2822706-7-kuba@kernel.org>
- <20220127091858.GF18529@x-berg.in-berlin.de>
-Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
+From: Duoming Zhou <duoming@zju.edu.cn>
+Subject: [PATCH 2/2] ax25: add refcount in ax25_dev to avoid UAF bugs
+Date: Fri, 28 Jan 2022 12:47:16 +0800
+Message-ID: <855641b37699b6ff501c4bae8370d26f59da9c81.1643343397.git.duoming@zju.edu.cn>
+References: <cover.1643343397.git.duoming@zju.edu.cn>
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <20220127091858.GF18529@x-berg.in-berlin.de>
+In-Reply-To: <cover.1643343397.git.duoming@zju.edu.cn>
+In-Reply-To: <cover.1643343397.git.duoming@zju.edu.cn>
+References: <cover.1643343397.git.duoming@zju.edu.cn>
 List-ID: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"; format="flowed"
-To: Thomas Osterried <thomas@osterried.de>, Jakub Kicinski <kuba@kernel.org>
-Cc: davem@davemloft.net, netdev@vger.kernel.org, ralf@linux-mips.org, linux-hams@vger.kernel.org
+MIME-Version: 1.0
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+To: linux-hams@vger.kernel.org
+Cc: jreuter@yaina.de, ralf@linux-mips.org, davem@davemloft.net, kuba@kernel.org, netdev@vger.kernel.org, linux-kernel@vger.kernel.org, Duoming Zhou <duoming@zju.edu.cn>
 
+If we dereference ax25_dev after we call kfree(ax25_dev) in
+ax25_dev_device_down(), it will lead to concurrency UAF bugs.
+There are eight syscall functions suffer from UAF bugs, include
+ax25_bind(), ax25_release(), ax25_connect(), ax25_ioctl(),
+ax25_getname(), ax25_sendmsg(), ax25_getsockopt() and
+ax25_info_show().
 
-Curious, has this change been tested with an actual testbed to confirm 
-it doesn't break anything?  We *have* to stop allowing good intentioned 
-but naive developers from submitting patches when they've never tested 
-the resulting change.
+One of the concurrency UAF can be shown as below:
 
---David
-KI6ZHD
+  (USE)                       |    (FREE)
+                              |  ax25_device_event
+                              |    ax25_dev_device_down
+ax25_bind                     |    ...
+  ...                         |      kfree(ax25_dev)
+  ax25_fillin_cb()            |    ...
+    ax25_fillin_cb_from_dev() |
+  ...                         |
 
+The root cause of UAF bugs is that kfree(ax25_dev) in
+ax25_dev_device_down() is not protected by any locks.
+When ax25_dev, which there are still pointers point to,
+is released, the concurrency UAF bug will happen.
 
-On 01/27/2022 01:18 AM, Thomas Osterried wrote:
-> Hello,
->
->   think it's absolutely correct to state
->    "Nothing takes the refcount since v4.9."
-> because in ax25_rt_add(),
->    refcount_set(&ax25_rt->refcount, 1);
-> is used (for every new ax25_rt entry).
->
-> But nothing does an increment.
-> There's one function in include/net/ax25.h ,
->    ax25_hold_route() which would refcount_inc(&ax25_rt->refcount)
-> but it's not called from anywhere.
->
-> => It's value is always 1, and the deleting function ax25_put_route() decrements it again before freeing.
->     I also see no sense in this (anymore).
->
->
-> Every struct ax25_route_list operation is assured with either
->    write_lock_bh(&ax25_route_lock);
->    write_unlock_bh(&ax25_route_lock);
-> or
->    the struct ax25_route returned from functions is assured by calling read_lock(&ax25_route_lock).
->
-> -> No refcount is needed.
->
->
-> => It's good to tidy up stuff that's needed anymore.
->
-> But keep in mind:
-> The code has strong similarities with include/net/x25.h and x25/x25_route.c ,
-> especially in the parts of ax25_hold_route() and ax25_rt_add().
-> This will get lost.
->
->
-> But there a things a bot does not know: human readable senteces.
-> ax25_get_route() is introduced with:
->
->    /*
->     *      Find AX.25 route
->     *
->     *      Only routes with a reference count of zero can be destroyed.
->     *      Must be called with ax25_route_lock read locked.
->     */
->
-> The first sentence informs: ax25_rt entries may be freed during the ax25_route_list operation.
-> It mentiones reference count (which will exist anymore).
-> The conclusion of the first sentence is "Must be called with ax25_route_lock read locked.". This is still true and assured.
-> I don't think it has to explain why the read lock is necessary (it's obvious, that routes could be deleted or added to the list). ->
->
->    /*
->     *      Find AX.25 route
->     *
->     *      Must be called with ax25_route_lock read locked.
->     */
->
-> should be enough.
->
-> ff-topic:
-> =========
->
-> About read_lock)(): Inconsistent use.
-> It's
->    directly called,
-> and by
->    ax25_route_lock_use(), which calls read_lock():
->    {
->            read_lock(&ax25_route_lock);
->    }
->
-> This makes the code harder to read.
-> There's also a function ax25_rt_seq_stop() that calls read_unlock() instead of calling ax25_route_lock_unuse(), which does the same.
->
->
-> vy 73,
-> 	- Thomas  dl9sau
->
-> On Wed, Jan 26, 2022 at 11:11:00AM -0800, Jakub Kicinski wrote:
->> Nothing takes the refcount since v4.9.
->>
->> Signed-off-by: Jakub Kicinski<kuba@kernel.org>
->> ---
->> CC:ralf@linux-mips.org
->> CC:linux-hams@vger.kernel.org
->> ---
->>   include/net/ax25.h    | 12 ------------
->>   net/ax25/ax25_route.c |  5 ++---
->>   2 files changed, 2 insertions(+), 15 deletions(-)
->>
->> diff --git a/include/net/ax25.h b/include/net/ax25.h
->> index 526e49589197..cb628c5d7c5b 100644
->> --- a/include/net/ax25.h
->> +++ b/include/net/ax25.h
->> @@ -187,18 +187,12 @@ typedef struct {
->>   
->>   typedef struct ax25_route {
->>   	struct ax25_route	*next;
->> -	refcount_t		refcount;
->>   	ax25_address		callsign;
->>   	struct net_device	*dev;
->>   	ax25_digi		*digipeat;
->>   	char			ip_mode;
->>   } ax25_route;
->>   
->> -static inline void ax25_hold_route(ax25_route *ax25_rt)
->> -{
->> -	refcount_inc(&ax25_rt->refcount);
->> -}
->> -
->>   void __ax25_put_route(ax25_route *ax25_rt);
->>   
->>   extern rwlock_t ax25_route_lock;
->> @@ -213,12 +207,6 @@ static inline void ax25_route_lock_unuse(void)
->>   	read_unlock(&ax25_route_lock);
->>   }
->>   
->> -static inline void ax25_put_route(ax25_route *ax25_rt)
->> -{
->> -	if (refcount_dec_and_test(&ax25_rt->refcount))
->> -		__ax25_put_route(ax25_rt);
->> -}
->> -
->>   typedef struct {
->>   	char			slave;			/* slave_mode?   */
->>   	struct timer_list	slave_timer;		/* timeout timer */
->> diff --git a/net/ax25/ax25_route.c b/net/ax25/ax25_route.c
->> index d0b2e094bd55..be97dc6a53cb 100644
->> --- a/net/ax25/ax25_route.c
->> +++ b/net/ax25/ax25_route.c
->> @@ -111,7 +111,6 @@ static int __must_check ax25_rt_add(struct ax25_routes_struct *route)
->>   		return -ENOMEM;
->>   	}
->>   
->> -	refcount_set(&ax25_rt->refcount, 1);
->>   	ax25_rt->callsign     = route->dest_addr;
->>   	ax25_rt->dev          = ax25_dev->dev;
->>   	ax25_rt->digipeat     = NULL;
->> @@ -160,12 +159,12 @@ static int ax25_rt_del(struct ax25_routes_struct *route)
->>   		    ax25cmp(&route->dest_addr, &s->callsign) == 0) {
->>   			if (ax25_route_list == s) {
->>   				ax25_route_list = s->next;
->> -				ax25_put_route(s);
->> +				__ax25_put_route(s);
->>   			} else {
->>   				for (t = ax25_route_list; t != NULL; t = t->next) {
->>   					if (t->next == s) {
->>   						t->next = s->next;
->> -						ax25_put_route(s);
->> +						__ax25_put_route(s);
->>   						break;
->>   					}
->>   				}
->> -- 
->> 2.34.1
->>
+This patch introduces refcount into ax25_dev in order to
+guarantee that there are no pointers point to it when ax25_dev
+is released.
+
+Signed-off-by: Duoming Zhou <duoming@zju.edu.cn>
+---
+ include/net/ax25.h    | 10 ++++++++++
+ net/ax25/af_ax25.c    |  2 ++
+ net/ax25/ax25_dev.c   | 12 ++++++++++--
+ net/ax25/ax25_route.c |  3 +++
+ 4 files changed, 25 insertions(+), 2 deletions(-)
+
+diff --git a/include/net/ax25.h b/include/net/ax25.h
+index 526e4958919..50b417df622 100644
+--- a/include/net/ax25.h
++++ b/include/net/ax25.h
+@@ -239,6 +239,7 @@ typedef struct ax25_dev {
+ #if defined(CONFIG_AX25_DAMA_SLAVE) || defined(CONFIG_AX25_DAMA_MASTER)
+ 	ax25_dama_info		dama;
+ #endif
++	refcount_t		refcount;
+ } ax25_dev;
+ 
+ typedef struct ax25_cb {
+@@ -293,6 +294,15 @@ static __inline__ void ax25_cb_put(ax25_cb *ax25)
+ 	}
+ }
+ 
++#define ax25_dev_hold(__ax25_dev) \
++	refcount_inc(&((__ax25_dev)->refcount))
++
++static __inline__ void ax25_dev_put(ax25_dev *ax25_dev)
++{
++	if (refcount_dec_and_test(&ax25_dev->refcount)) {
++		kfree(ax25_dev);
++	}
++}
+ static inline __be16 ax25_type_trans(struct sk_buff *skb, struct net_device *dev)
+ {
+ 	skb->dev      = dev;
+diff --git a/net/ax25/af_ax25.c b/net/ax25/af_ax25.c
+index 44a8730c26a..32f61978ff2 100644
+--- a/net/ax25/af_ax25.c
++++ b/net/ax25/af_ax25.c
+@@ -91,6 +91,7 @@ static void ax25_kill_by_device(struct net_device *dev)
+ 			spin_unlock_bh(&ax25_list_lock);
+ 			lock_sock(sk);
+ 			s->ax25_dev = NULL;
++			ax25_dev_put(ax25_dev);
+ 			release_sock(sk);
+ 			ax25_disconnect(s, ENETUNREACH);
+ 			spin_lock_bh(&ax25_list_lock);
+@@ -439,6 +440,7 @@ static int ax25_ctl_ioctl(const unsigned int cmd, void __user *arg)
+ 	  }
+ 
+ out_put:
++	ax25_dev_put(ax25_dev);
+ 	ax25_cb_put(ax25);
+ 	return ret;
+ 
+diff --git a/net/ax25/ax25_dev.c b/net/ax25/ax25_dev.c
+index 256fadb94df..770b787fb7b 100644
+--- a/net/ax25/ax25_dev.c
++++ b/net/ax25/ax25_dev.c
+@@ -37,6 +37,7 @@ ax25_dev *ax25_addr_ax25dev(ax25_address *addr)
+ 	for (ax25_dev = ax25_dev_list; ax25_dev != NULL; ax25_dev = ax25_dev->next)
+ 		if (ax25cmp(addr, (const ax25_address *)ax25_dev->dev->dev_addr) == 0) {
+ 			res = ax25_dev;
++			ax25_dev_hold(ax25_dev);
+ 		}
+ 	spin_unlock_bh(&ax25_dev_lock);
+ 
+@@ -56,6 +57,7 @@ void ax25_dev_device_up(struct net_device *dev)
+ 		return;
+ 	}
+ 
++	refcount_set(&ax25_dev->refcount, 1);
+ 	dev->ax25_ptr     = ax25_dev;
+ 	ax25_dev->dev     = dev;
+ 	dev_hold_track(dev, &ax25_dev->dev_tracker, GFP_ATOMIC);
+@@ -83,6 +85,7 @@ void ax25_dev_device_up(struct net_device *dev)
+ 	spin_lock_bh(&ax25_dev_lock);
+ 	ax25_dev->next = ax25_dev_list;
+ 	ax25_dev_list  = ax25_dev;
++	ax25_dev_hold(ax25_dev);
+ 	spin_unlock_bh(&ax25_dev_lock);
+ 
+ 	ax25_register_dev_sysctl(ax25_dev);
+@@ -112,20 +115,22 @@ void ax25_dev_device_down(struct net_device *dev)
+ 
+ 	if ((s = ax25_dev_list) == ax25_dev) {
+ 		ax25_dev_list = s->next;
++		ax25_dev_put(ax25_dev);
+ 		spin_unlock_bh(&ax25_dev_lock);
+ 		dev->ax25_ptr = NULL;
+ 		dev_put_track(dev, &ax25_dev->dev_tracker);
+-		kfree(ax25_dev);
++		ax25_dev_put(ax25_dev);
+ 		return;
+ 	}
+ 
+ 	while (s != NULL && s->next != NULL) {
+ 		if (s->next == ax25_dev) {
+ 			s->next = ax25_dev->next;
++			ax25_dev_put(ax25_dev);
+ 			spin_unlock_bh(&ax25_dev_lock);
+ 			dev->ax25_ptr = NULL;
+ 			dev_put_track(dev, &ax25_dev->dev_tracker);
+-			kfree(ax25_dev);
++			ax25_dev_put(ax25_dev);
+ 			return;
+ 		}
+ 
+@@ -133,6 +138,7 @@ void ax25_dev_device_down(struct net_device *dev)
+ 	}
+ 	spin_unlock_bh(&ax25_dev_lock);
+ 	dev->ax25_ptr = NULL;
++	ax25_dev_put(ax25_dev);
+ }
+ 
+ int ax25_fwd_ioctl(unsigned int cmd, struct ax25_fwd_struct *fwd)
+@@ -149,6 +155,7 @@ int ax25_fwd_ioctl(unsigned int cmd, struct ax25_fwd_struct *fwd)
+ 		if (ax25_dev->forward != NULL)
+ 			return -EINVAL;
+ 		ax25_dev->forward = fwd_dev->dev;
++		ax25_dev_put(fwd_dev);
+ 		break;
+ 
+ 	case SIOCAX25DELFWD:
+@@ -161,6 +168,7 @@ int ax25_fwd_ioctl(unsigned int cmd, struct ax25_fwd_struct *fwd)
+ 		return -EINVAL;
+ 	}
+ 
++	ax25_dev_put(ax25_dev);
+ 	return 0;
+ }
+ 
+diff --git a/net/ax25/ax25_route.c b/net/ax25/ax25_route.c
+index d0b2e094bd5..1e32693833e 100644
+--- a/net/ax25/ax25_route.c
++++ b/net/ax25/ax25_route.c
+@@ -116,6 +116,7 @@ static int __must_check ax25_rt_add(struct ax25_routes_struct *route)
+ 	ax25_rt->dev          = ax25_dev->dev;
+ 	ax25_rt->digipeat     = NULL;
+ 	ax25_rt->ip_mode      = ' ';
++	ax25_dev_put(ax25_dev);
+ 	if (route->digi_count != 0) {
+ 		if ((ax25_rt->digipeat = kmalloc(sizeof(ax25_digi), GFP_ATOMIC)) == NULL) {
+ 			write_unlock_bh(&ax25_route_lock);
+@@ -172,6 +173,7 @@ static int ax25_rt_del(struct ax25_routes_struct *route)
+ 			}
+ 		}
+ 	}
++	ax25_dev_put(ax25_dev);
+ 	write_unlock_bh(&ax25_route_lock);
+ 
+ 	return 0;
+@@ -214,6 +216,7 @@ static int ax25_rt_opt(struct ax25_route_opt_struct *rt_option)
+ 	}
+ 
+ out:
++	ax25_dev_put(ax25_dev);
+ 	write_unlock_bh(&ax25_route_lock);
+ 	return err;
+ }
+-- 
+2.17.1
 
