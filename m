@@ -1,75 +1,110 @@
-From: "Bernard Pidoux , f6bvp" <f6bvp@free.fr>
-Subject: Re: [AX25] ipv6 incompatible with AX.25
-Date: Mon, 31 Jan 2022 18:36:14 +0100
-Message-ID: <0b54ca91-5463-12e5-09fa-8977b85a30b9@free.fr>
-References: <4B2CD772.1030106@upmc.fr> <4B2D1025.1020106@gmail.com>
- <4B2E6729.1090102@free.fr> <4B507FAA.8010007@free.fr>
- <20100115203654.GA3084@del.dom.local> <4DFA6A59.2000709@free.fr>
- <581f0c8e-f4fb-523d-df6e-7a973b506c34@sorbonne-universite.fr>
- <2394eae7-dada-f43e-40b9-fae929212913@trinnet.net>
- <724d87c5-3029-702a-32c9-b64677a2da0e@free.fr>
+From: Dan Carpenter <dan.carpenter@oracle.com>
+Subject: Re: [PATCH 2/2] ax25: add refcount in ax25_dev to avoid UAF bugs
+Date: Mon, 31 Jan 2022 20:37:29 +0300
+Message-ID: <20220131173729.GN1951@kadam>
+References: <cover.1643343397.git.duoming@zju.edu.cn>
+ <855641b37699b6ff501c4bae8370d26f59da9c81.1643343397.git.duoming@zju.edu.cn>
 Mime-Version: 1.0
-Content-Type: multipart/mixed; boundary="------------5iivTm9tdneCDbuCxgDLGWgF"
-Return-path: <linux-hams-owner@vger.kernel.org>
-Content-Language: fr
-In-Reply-To: <724d87c5-3029-702a-32c9-b64677a2da0e@free.fr>
+Return-path: <netdev-owner@vger.kernel.org>
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=date : from : to : cc
+ : subject : message-id : references : content-type : in-reply-to :
+ mime-version; s=corp-2021-07-09;
+ bh=iqVY+LqOqw9FLPL140wR8K/FJe7A4UCXMQVUTTDmRiA=;
+ b=qkd0+a8yOpATc4IaAda0uJfZ3vl6F7Jwk7fXltxokxEW230EJ+npCnR8UGughO0WGQcb
+ EsjImPXonz0h7KS96KEIYdFDaGfA3rJIBmBZksZhEVH+0NUC3iTrNXq9lsfYUNNvjEMB
+ dlz8ydfUB3HrbkTfT/OsYGimYtrsCB6N6eomySDcK1GeEQT7pG5ShyO5tjYAKD4XZXEd
+ 4Gb+yYqogiUPKOQEaPDGjlJBg8cXynV1I0ADxPyJCOEoPYq3SkfLxbzm98FOb3rV9Cd0
+ HjMqChHdUGtKveQfyeykT6e6rUJlrGwZ0S8peijZfQqaYMdMeR4Gq9ofl2gAZZ2HjqYF mA== 
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=oracle.onmicrosoft.com; s=selector2-oracle-onmicrosoft-com;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=iqVY+LqOqw9FLPL140wR8K/FJe7A4UCXMQVUTTDmRiA=;
+ b=idHubIz+An6ZFKAgMlYSIeNaOvRQlPOGlLN491nG7ISrSOcqnkm22qvCqA9Npz37I7VUmisLz/pmLOC1dgeiQhCqKUyQbb4hcOJeKARWtEyJh/gGuN/0plOkWFGt++6PppEkmO/LvofLFBpx9zmRvlZt9y9QJ54SwrJsdrc12Lk=
+Content-Disposition: inline
+In-Reply-To: <855641b37699b6ff501c4bae8370d26f59da9c81.1643343397.git.duoming@zju.edu.cn>
 List-ID: <linux-hams.vger.kernel.org>
-To: David Ranch <linux-hams@trinnet.net>, linux-hams@vger.kernel.org
-Cc: List for the LINUX version of FBB <xfbb@f6fbb.org>
-
-This is a multi-part message in MIME format.
---------------5iivTm9tdneCDbuCxgDLGWgF
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
+To: Duoming Zhou <duoming@zju.edu.cn>
+Cc: linux-hams@vger.kernel.org, jreuter@yaina.de, ralf@linux-mips.org, davem@davemloft.net, kuba@kernel.org, netdev@vger.kernel.org, linux-kernel@vger.kernel.org
 
-Hello David,
+On Fri, Jan 28, 2022 at 12:47:16PM +0800, Duoming Zhou wrote:
+> If we dereference ax25_dev after we call kfree(ax25_dev) in
+> ax25_dev_device_down(), it will lead to concurrency UAF bugs.
+> There are eight syscall functions suffer from UAF bugs, include
+> ax25_bind(), ax25_release(), ax25_connect(), ax25_ioctl(),
+> ax25_getname(), ax25_sendmsg(), ax25_getsockopt() and
+> ax25_info_show().
+> 
+> One of the concurrency UAF can be shown as below:
+> 
+>   (USE)                       |    (FREE)
+>                               |  ax25_device_event
+>                               |    ax25_dev_device_down
+> ax25_bind                     |    ...
+>   ...                         |      kfree(ax25_dev)
+>   ax25_fillin_cb()            |    ...
+>     ax25_fillin_cb_from_dev() |
+>   ...                         |
+> 
+> The root cause of UAF bugs is that kfree(ax25_dev) in
+> ax25_dev_device_down() is not protected by any locks.
+> When ax25_dev, which there are still pointers point to,
+> is released, the concurrency UAF bug will happen.
+> 
+> This patch introduces refcount into ax25_dev in order to
+> guarantee that there are no pointers point to it when ax25_dev
+> is released.
+> 
+> Signed-off-by: Duoming Zhou <duoming@zju.edu.cn>
 
-To answer more precisely your question I prefere to include the listing 
-of an ./ax25up script initializing AX.25 on my Ubuntu PC followed by 
-dmesg and ifconfig messages.
+I pointed out a few bugs in my previous email.  I've had more time to
+look at it now.
 
-Without disabling IPv6 I confirm that my LAN AX.25 was not behaving 
-correctly as I wrote before.
+Basically you just want to audit all the calls sites which call
+ax25_dev_ax25dev() and make sure all the error paths decrement.  Most
+of them are buggy.  I'm testing a new Smatch check which is supposed to
+detect these sorts of bugs.
 
-It is strange that there are still two messages about IPv6 while 
-Ethernet device had previously been disabled in Ubuntu as shown.
+I think the refcount in ax25_bind() needs a matching decrement.  Where
+is that?  I don't know networking well enough to know the answer to
+this...
 
-Then ifconfig shows that IPv6 is also disabled by command in the script.
+> @@ -112,20 +115,22 @@ void ax25_dev_device_down(struct net_device *dev)
+>  
+>  	if ((s = ax25_dev_list) == ax25_dev) {
+>  		ax25_dev_list = s->next;
+> +		ax25_dev_put(ax25_dev);
 
-73 de Bernard, f6bvp
+It would be more readable to do ax25_dev_put(ax25_dev_list).  It's weird
+to put ax25_dev here and then a couple lines later
 
+>  		spin_unlock_bh(&ax25_dev_lock);
+>  		dev->ax25_ptr = NULL;
+>  		dev_put_track(dev, &ax25_dev->dev_tracker);
+> -		kfree(ax25_dev);
+> +		ax25_dev_put(ax25_dev);
 
+Here
 
---------------5iivTm9tdneCDbuCxgDLGWgF
-Content-Type: text/plain; charset=UTF-8; name="IPv6.txt"
-Content-Disposition: attachment; filename="IPv6.txt"
-Content-Transfer-Encoding: base64
+>  		return;
+>  	}
+>  
+>  	while (s != NULL && s->next != NULL) {
+>  		if (s->next == ax25_dev) {
+>  			s->next = ax25_dev->next;
+> +			ax25_dev_put(ax25_dev);
 
-ICAgMTEuMDIwNDcwXSBJUHY2OiBBRERSQ09ORihORVRERVZfQ0hBTkdFKTogZW5wNXMwOiBs
-aW5rIGJlY29tZXMgcmVhZHkKLi4uLi4uLgpbICAgNzcuMjc5ODcyXSBORVQ6IFJlZ2lzdGVy
-ZWQgcHJvdG9jb2wgZmFtaWx5IDMKWyAgIDc3LjI4MjgxMF0gbWtpc3M6IEFYLjI1IE11bHRp
-a2lzcywgSGFucyBBbGJhcyBQRTFBWVgKWyAgIDc3LjI4MzM5MV0gbWtpc3M6IGF4MDogY3Jj
-IG1vZGUgaXMgYXV0by4KWyAgIDc3LjI4MzU0Ml0gSVB2NjogQUREUkNPTkYoTkVUREVWX0NI
-QU5HRSk6IGF4MDogbGluayBiZWNvbWVzIHJlYWR5ClsgICA3OS4zMDM3NDJdIE5FVDogUmVn
-aXN0ZXJlZCBwcm90b2NvbCBmYW1pbHkgNgpbICAgOTUuNTA0ODY4XSBta2lzczogYXgwOiBU
-cnlpbmcgY3JjLXNtYWNrClsgICA5NS41MDUxMjhdIG1raXNzOiBheDA6IFRyeWluZyBjcmMt
-ZmxleG5ldAoKCi4vYXgyNXVwCm5ldC5pcHY2LmNvbmYuYWxsLmRpc2FibGVfaXB2NiA9IDEK
-L2Jpbi9ybTogY2Fubm90IHJlbW92ZSAnL3Zhci9heDI1L2ZiYi8qLnJlcyc6IE5vIHN1Y2gg
-ZmlsZSBvciBkaXJlY3RvcnkKSW5zdGFsbGluZyBheDI1aXBkIFVuaXg5OCBtYXN0ZXIgcHNl
-dWRvIHR0eQpJbnN0YWxsaW5nIGEgS0lTUyBsaW5rIG9uIGV0aGVybmV0IHBvcnQKUG9ydCBh
-eHVkcCBhdHRhY2hlZCB0byBheDAKU3RhcnRpbmcgTmV0Um9tLi4uCkluaXQgTmV0cm9tCk5F
-VC9ST00gcG9ydCBuZXRub2QgYm91bmQgdG8gZGV2aWNlIG5yMAoKIE5FVDogUmVnaXN0ZXJl
-ZCBwcm90b2NvbCBmYW1pbHkgMwpbICAgNjUuMDMyODExXSBta2lzczogQVguMjUgTXVsdGlr
-aXNzLCBIYW5zIEFsYmFzIFBFMUFZWApbICAgNjUuMDMzNTUyXSBta2lzczogYXgwOiBjcmMg
-bW9kZSBpcyBhdXRvLgpbICAgNjUuMDMzNzM5XSBJUHY2OiBBRERSQ09ORihORVRERVZfQ0hB
-TkdFKTogYXgwOiBsaW5rIGJlY29tZXMgcmVhZHkKWyAgIDY3LjA2MDU0NF0gTkVUOiBSZWdp
-c3RlcmVkIHByb3RvY29sIGZhbWlseSA2ClsgICA4My4yNjU4MDZdIG1raXNzOiBheDA6IFRy
-eWluZyBjcmMtc21hY2sKWyAgIDgzLjI2NTk3MF0gbWtpc3M6IGF4MDogVHJ5aW5nIGNyYy1m
-bGV4bmV0CgpheDA6IGZsYWdzPTY3PFVQLEJST0FEQ0FTVCxSVU5OSU5HPiAgbXR1IDI1Mwog
-ICAgICAgIGF4MjUgRjZCVlAtNCAgdHhxdWV1ZWxlbiAxMCAgKEFNUFIgQVguMjUpCiAgICAg
-ICAgUlggcGFja2V0cyAwICBieXRlcyAwICgwLjAgQikKICAgICAgICBSWCBlcnJvcnMgMCAg
-ZHJvcHBlZCAwICBvdmVycnVucyAwICBmcmFtZSAwCiAgICAgICAgVFggcGFja2V0cyA2ICBi
-eXRlcyAzMDcgKDMwNy4wIEIpCiAgICAgICAgVFggZXJyb3JzIDAgIGRyb3BwZWQgMCBvdmVy
-cnVucyAwICBjYXJyaWVyIDAgIGNvbGxpc2lvbnMgMAoK
+Same.
 
---------------5iivTm9tdneCDbuCxgDLGWgF--
+>  			spin_unlock_bh(&ax25_dev_lock);
+>  			dev->ax25_ptr = NULL;
+>  			dev_put_track(dev, &ax25_dev->dev_tracker);
+> -			kfree(ax25_dev);
+> +			ax25_dev_put(ax25_dev);
+>  			return;
+>  		}
+>  
+
+regards,
+dan carpenter
