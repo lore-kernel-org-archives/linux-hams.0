@@ -1,51 +1,117 @@
-From: patchwork-bot+netdevbpf@kernel.org
-Subject: Re: [PATCH 0/2] ax25: fix NPD and UAF bugs when detaching ax25 device
-Date: Fri, 28 Jan 2022 15:10:11 +0000
-Message-ID: <164338261149.2420.16351407833253880236.git-patchwork-notify@kernel.org>
-References: <cover.1643343397.git.duoming@zju.edu.cn>
+From: "Bernard Pidoux , f6bvp" <f6bvp@free.fr>
+Subject: [ROSE] rose socket destination address empty in connect tests
+Date: Mon, 31 Jan 2022 13:04:59 +0100
+Message-ID: <f571bd58-b16d-9e99-1ce0-c98e1f327924@free.fr>
+References: <4B2CD772.1030106@upmc.fr> <4B2D1025.1020106@gmail.com>
+ <4B2E6729.1090102@free.fr> <4B507FAA.8010007@free.fr>
+ <20100115203654.GA3084@del.dom.local> <4DFA6A59.2000709@free.fr>
+ <581f0c8e-f4fb-523d-df6e-7a973b506c34@sorbonne-universite.fr>
+ <2394eae7-dada-f43e-40b9-fae929212913@trinnet.net>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Return-path: <netdev-owner@vger.kernel.org>
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1643382611;
-        bh=upUbrLfCOw1Vh49+BWsrSMrdEFkeqSF7qD5m4/nErbE=;
-        h=Subject:From:Date:References:In-Reply-To:To:Cc:From;
-        b=f40k58h+NqKXYK97fudU+SvGvOU2UCg79e7tCoGp4zuokN3COhljw/VHXZX/AGjh+
-         L8pLlaRxIhwoFD/IqZLwh6spSXii6r77FrvEqUa9qslSPr6gpti/qZXBI2dFvgzd7Z
-         7Os/M0rr1U/uoUNHg5UosNCGfErfemp6rdBN5svTbdRud/6GzDa7wuDkNKIHlHRSBm
-         aw8CnEGJ5D0mgghBzcY8R8NZRmelVkvHq+5NdY3Rj+LAyQN0qOSbaLhaGZ/sqlEGc2
-         WgTi6Ha2WYCDPL5HxK+jVRSc4a9aGaDrH2lzKmSEWbJyCrbKN1iKcOiSMY83Wf3g6t
-         lL+y4oOyyTHpQ==
-In-Reply-To: <cover.1643343397.git.duoming@zju.edu.cn>
+Content-Type: multipart/mixed; boundary="------------6TJtqtZ091Xa4Tzkd7yYMq3V"
+Return-path: <linux-hams-owner@vger.kernel.org>
+Content-Language: fr
+In-Reply-To: <2394eae7-dada-f43e-40b9-fae929212913@trinnet.net>
 List-ID: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"
-To: Duoming Zhou <duoming@zju.edu.cn>
-Cc: linux-hams@vger.kernel.org, jreuter@yaina.de, ralf@linux-mips.org, davem@davemloft.net, kuba@kernel.org, netdev@vger.kernel.org, linux-kernel@vger.kernel.org
+To: David Ranch <linux-hams@trinnet.net>, linux-hams@vger.kernel.org
+Cc: F3KT <f3kt@free.fr>
 
-Hello:
+This is a multi-part message in MIME format.
+--------------6TJtqtZ091Xa4Tzkd7yYMq3V
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-This series was applied to netdev/net.git (master)
-by David S. Miller <davem@davemloft.net>:
+I noticed and already reported elsewhere that rose protocol had been 
+broken since kernel 5.4.83.
 
-On Fri, 28 Jan 2022 12:47:14 +0800 you wrote:
-> There are NPD and UAF bugs when detaching ax25 device, we
-> use lock and refcount to mitigate these bugs.
-> 
-> Duoming Zhou (2):
->   ax25: improve the incomplete fix to avoid UAF and NPD bugs
->   ax25: add refcount in ax25_dev to avoid UAF bugs
-> 
-> [...]
+The symptom is a very long delay during some connect requests 
+terminating after a connection timed out.
 
-Here is the summary with links:
-  - [1/2] ax25: improve the incomplete fix to avoid UAF and NPD bugs
-    https://git.kernel.org/netdev/net/c/4e0f718daf97
-  - [2/2] ax25: add refcount in ax25_dev to avoid UAF bugs
-    https://git.kernel.org/netdev/net/c/d01ffb9eee4a
+As suggested by David, using "rose_call" utility from ax25tools package, 
+I finally found that the reason of failure is an empty destination 
+address as shown in rose sockets displayed by netstat.
 
-You are awesome, thank you!
--- 
-Deet-doot-dot, I am a bot.
-https://korg.docs.kernel.org/patchwork/pwbot.html
+By the way, I am glad rose protocol dump patch I committed a while ago 
+is now incorporated into netstat, despite --rose option is still 
+undocumented in netstat manual and help. Only --ax25 and --netrom are 
+documented.
+
+In attached file I demonstrate that rose socket destination address is 
+correctly populated when rose_call is used in kernel 5.4.79 but 
+unfortunately the address field is empty in kernel 5.4.83 and following 
+kernels. I added netrom_call for comparison.
+
+This explains clearly why connect request stays in a waiting loop with 
+rose protocole !
+
+Now, one has to find where rose socket destination address is erased or 
+forgotten in rose module or libc !
+
+Bernard, f6bvp
 
 
+--------------6TJtqtZ091Xa4Tzkd7yYMq3V
+Content-Type: text/plain; charset=UTF-8; name="Rose_call_comparison.txt"
+Content-Disposition: attachment; filename="Rose_call_comparison.txt"
+Content-Transfer-Encoding: base64
+
+TGludXggZjZidnAtVWJ1bnR1IDUuNC4wLTk2LWdlbmVyaWMgIzEwOS1VYnVudHUgU01QIFdl
+ZCBKYW4gMTIgMTY6NDk6MTYgVVRDIDIwMjIgeDg2XzY0IHg4Nl82NCB4ODZfNjQgR05VL0xp
+bnV4CgpuZXRyb21fY2FsbCBuZXRub2QgZjZidnAgZjZidnAtMTQKbmV0cm9tX2NhbGwgbmV0
+bm9kIGY2YnZwIGY2YnZwLTIKcm9zZV9jYWxsIHJvc2UwIGY2YnZwIGY2YnZwLTQgMjA4MDE3
+NTUyNApyb3NlX2NhbGwgcm9zZTAgZjZidnAgZjZidnAtOCAyMDgwMTc1NTIwCgpuZXRzdGF0
+IC0tcm9zZSAtLW5ldHJvbQpBY3RpdmUgTkVUL1JPTSBzb2NrZXRzIGF0IGY2YnZwLTQgKFVi
+dW50dSA1LjQuMC05NikKVXNlciAgICAgICBEZXN0ICAgICAgIFNvdXJjZSAgICAgRGV2aWNl
+ICBTdGF0ZSAgICAgICAgVnIvVnMgICAgU2VuZC1RICBSZWN2LVEKRjZCVlAtMCAgICBGNkJW
+UC0xNCAgIEY2QlZQLTIgICAgbnIwICAgICBDT05OIFNFTlQgICAgMDAwLzAwMCAgMCAgICAg
+ICAwICAgICAKRjZCVlAtMCAgICBGNkJWUC0yICAgIEY2QlZQLTIgICAgbnIwICAgICBFU1RB
+QkxJU0hFRCAgMDAwLzAwMSAgMCAgICAgICAwICAgICAKRjZCVlAtMCAgICBGNkJWUC0yICAg
+IEY2QlZQLTIgICAgbnIwICAgICBFU1RBQkxJU0hFRCAgMDAxLzAwMCAgMCAgICAgICAwICAg
+ICAKKiAgICAgICAgICAqICAgICAgICAgIEY2QlZQLTIgICAgbnIwICAgICBMSVNURU5JTkcg
+ICAgMDAwLzAwMCAgMCAgICAgICAwICAgICAKKiAgICAgICAgICAqICAgICAgICAgIEY2QlZQ
+LTIgICAgbnIwICAgICBMSVNURU5JTkcgICAgMDAwLzAwMCAgMCAgICAgICAwCi0tLS0tLS0t
+LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
+LS0tLS0tLS0tLS0tLS0tLQpBY3RpdmUgUk9TRSBzb2NrZXRzIGF0IGY2YnZwLTQgKFVidW50
+dSAgNS40LjAtOTYpCmRlc3RfYWRkciAgIGRlc3RfY2FsbCAgc3JjX2FkZHIgICAgc3JjX2Nh
+bGwgIGRldiAgIGxjaSBuZWlnaCAgIHN0YXRlCiAgICAgICAgICAgIEY2QlZQLTggICAgMjA4
+MDE3NTUyNCAgRjZCVlAtMCAgIHJvc2UwICAgMSAgICAgMiAgIEVTVEFCTElTSEVECiAgICAg
+ICAgICAgIEY2QlZQLTQgICAgMjA4MDE3NTUyNCAgRjZCVlAtMCAgIHJvc2UwICAgMiAgICAg
+MSAgIERJU0MgU0VOVAogICAgICAgICAgICAqICAgICAgICAgIDIwODAxNzU1MjQgIEZQQUQt
+MCAgICByb3NlMCAgIDAgICAgIDAgICBMSVNURU5JTkcKICAgICAgICAgICAgKiAgICAgICAg
+ICAyMDgwMTc1NTI0ICA/Pz8/Pz8tPyAgcm9zZTAgICAwICAgICAwICAgTElTVEVOSU5HCi0t
+LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
+LS0tLS0tLS0tLS0tLS0tLS0tLS0tLQpyb3NlIG5vZGUgZjZidnAtNCBjb25uZWN0ZWQgYnkg
+YSByb3NlX2NhbGwgZnJvbSBmNmJ2cCBhdCByZW1vdGUgbm9kZSBmNmJ2cC04CnJvc2VfY2Fs
+bCByb3NlMCBmNmJ2cCBmNmJ2cC00IDIwODAxNzU1MjQKcm9zZV9jYWxsIHJvc2UwIGY2YnZw
+IGY2YnZwLTggMjA4MDE3NTUyMApBY3RpdmUgTkVUL1JPTSBzb2NrZXRzIGF0IGY2YnZwLTgg
+KGtlcm5lbCA1LjQuNzkpClVzZXIgICAgICAgRGVzdCAgICAgICBTb3VyY2UgICAgIERldmlj
+ZSAgU3RhdGUgICAgICAgIFZyL1ZzICAgIFNlbmQtUSAgUmVjdi1RCiogICAgICAgICAgKiAg
+ICAgICAgICBGNkJWUC0yICAgIG5yMCAgICAgTElTVEVOSU5HICAgIDAwMC8wMDAgIDAgICAg
+ICAgMCAgICAgCiogICAgICAgICAgKiAgICAgICAgICBGNkJWUC0yICAgIG5yMCAgICAgTElT
+VEVOSU5HICAgIDAwMC8wMDAgIDAgICAgICAgMAotLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
+LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0K
+bmV0cm9tX2NhbGwgbmV0bm9kIGY2YnZwIEJWUE44OmY2YnZwLTE0Cm5ldHJvbV9jYWxsIG5l
+dG5vZCBmNmJ2cCBCVlBONDpGNkJWUC0yCnNvY2tldHMgTkVUL1JPTSBhY3RpdmVzIGF0IGY2
+YnZwLTggKGtlcm5lbCA1LjQuNzkpClV0aWxpc2F0ciAgRGVzdCAgICAgICBTb3VyY2UgICAg
+IFBlcmlwaCAgRXRhdCAgICAgICAgIFZyL1ZzICAgIFNlbmQtUSAgUmVjdi1RCkY2QlZQLTAg
+ICAgRjZCVlAtMiAgICBGNkJWUC0xNCAgIG5yMCAgICAgQ09OTiBTRU5UICAgIDAwMC8wMDAg
+IDAgICAgICAgMCAgICAgCkY2QlZQLTAgICAgRjZCVlAtMTQgICBGNkJWUC0xNCAgIG5yMCAg
+ICAgRVNUQUJMSVNIRUQgIDAwMC8wMDEgIDAgICAgICAgMCAgICAgCkY2QlZQLTAgICAgRjZC
+VlAtMTQgICBGNkJWUC0xNCAgIG5yMCAgICAgRVNUQUJMSVNIRUQgIDAwMS8wMDAgIDAgICAg
+ICAgMCAgICAgCiogICAgICAgICAgKiAgICAgICAgICBGNkJWUC0xNCAgIG5yMCAgICAgTElT
+VEVOSU5HICAgIDAwMC8wMDAgIDAgICAgICAgMCAgICAgCiogICAgICAgICAgKiAgICAgICAg
+ICBGNkJWUC0xNCAgIG5yMCAgICAgTElTVEVOSU5HICAgIDAwMC8wMDAgIDAgICAgICAgMAot
+LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
+LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tCnJvc2Ugbm9kZSBmNmJ2cC04IGNvbm5lY3RlZCBi
+eSBhIHJvc2VfY2FsbCBmcm9tIGY2YnZwLTgKcm9zZV9jYWxsIHJvc2UwIGY2YnZwIGY2YnZw
+LTggMjA4MDE3NTUyMApBY3RpdmUgUk9TRSBzb2NrZXRzIGF0IGY2YnZwLTggKGtlcm5lbCA1
+LjQuNzkpCmRlc3RfYWRkciAgIGRlc3RfY2FsbCAgc3JjX2FkZHIgICAgc3JjX2NhbGwgIGRl
+diAgIGxjaSBuZWlnaCAgIHN0YXRlCjIwODAxNzU1MjQgIEY2QlZQLTQgICAgMjA4MDE3NTUy
+MCAgRjZCVlAtMCAgIHJvc2UwICAzMiAgICAyMyAgIEVTVEFCTElTSEVECjIwODAxNzU1MjAg
+IEY2QlZQLTAgICAgMjA4MDE3NTUyMCAgRjZCVlAtOCAgIHJvc2UwICAzMSAgICAgMSAgIEVT
+VEFCTElTSEVECiogICAgICAgICAgICogICAgICAgICAgMjA4MDE3NTUyMCAgRjZCVlAtMSAg
+IHJvc2UwICAgMCAgICAgMCAgIExJU1RFTklORwotLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
+LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0K
+Cg==
+
+--------------6TJtqtZ091Xa4Tzkd7yYMq3V--
