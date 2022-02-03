@@ -1,33 +1,33 @@
-From: Dan Carpenter <dan.carpenter@oracle.com>
+From: patchwork-bot+netdevbpf@kernel.org
 Subject: Re: [PATCH] ax25: fix reference count leaks of ax25_dev
-Date: Thu, 3 Feb 2022 20:14:11 +0300
-Message-ID: <20220203171411.GH1978@kadam>
+Date: Thu, 03 Feb 2022 23:00:08 +0000
+Message-ID: <164392920890.21168.4177402356117050169.git-patchwork-notify@kernel.org>
 References: <20220203150811.42256-1-duoming@zju.edu.cn>
 Mime-Version: 1.0
+Content-Transfer-Encoding: 8bit
 Return-path: <linux-hams-owner@vger.kernel.org>
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=date : from : to : cc
- : subject : message-id : references : content-type : in-reply-to :
- mime-version; s=corp-2021-07-09;
- bh=sYRSApGCeocH1y/kOKYU8MRcPNLAYqzO/pUpPpzk+uo=;
- b=hO+7tnNZCrcth2KHsTvj7R67aa40IYXyE4buGu5seykZ9/n2YSNTJzgQkpHc+Ck2MrQ0
- 0mX9GZ06HDch7rnfDC/TxRlblaBfCZEsSDz8Zvy4vfF0CPWCrOPyYwW07exH65Nu4wyt
- HVi/savceMKRLphWPX9Wcbc4YPXymp5lykt7jsGEshbEFFvhJ3Yy9dy0ynVrc6E93iQP
- YBIO+pcwEeKD19G5O0h3PEYC28hcN0MsgASm6BK0twiiaGy1OR130+zPQ8aMkrDP7gBg
- Jc5T5frq1z8ToYP9PRvOzOxW6oAt03ewpmeN3WWHUjm5xoYhWyQxZKJbXOyP27+UCP4w GA== 
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oracle.onmicrosoft.com; s=selector2-oracle-onmicrosoft-com;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=sYRSApGCeocH1y/kOKYU8MRcPNLAYqzO/pUpPpzk+uo=;
- b=IeajfuG5ATQJil4+0axinTynTJh4zvHpbAU3xTKip3deGGdv2jFmce3E9wCNVKQO9Y+5VwUY4aw5ho7kVt4OG6KczpP6LMBGSbsJ2BaoGtv+XbWZVBXssLcscKcu6/chDv12fIwe0XCsazExGiY/5U1XfqIGeDzDx2cBFoNr0PY=
-Content-Disposition: inline
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1643929209;
+        bh=xG9Vb129YKjRhraPRERPha+AEnhPVoJ7a5WjOMrgaeU=;
+        h=Subject:From:Date:References:In-Reply-To:To:Cc:From;
+        b=dtKRCoW8qndvtNlR6dhPX/Ob5y4VyTN3YyIVXdVw9slI8G8TlKxTLP3Ou1vxvhsqW
+         Rbr9wF61A2JV/wbAd2gTKG6sa6edNevFU+ibqSWj4av93FXPDLPwXjdjJzwZfI+n6t
+         nfXNLMfNNK3fbdwl0tYk3dBlirDYiUZY+SoPge/FDfHAL+RRYsYTpfDSO+sC/sF00l
+         qFL6E9sJqGTmoD+mI8uTKd9CVd5cR6z2NqLXNW/6cfIyWWfjRbEjeYk0isIlqcgtC2
+         LzrP6+baBa44/0xNeibv+tAmdzb+Gdyrb3kCAOkkJYSPa8nM4WBknSerzOsVInO4Pv
+         tTvihmu4/YygQ==
 In-Reply-To: <20220203150811.42256-1-duoming@zju.edu.cn>
 List-ID: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 7bit
 To: Duoming Zhou <duoming@zju.edu.cn>
-Cc: linux-hams@vger.kernel.org, thomas@osteried.de, jreuter@yaina.de, ralf@linux-mips.org, davem@davemloft.net, kuba@kernel.org, netdev@vger.kernel.org, linux-kernel@vger.kernel.org
+Cc: linux-hams@vger.kernel.org, dan.carpenter@oracle.com, thomas@osteried.de, jreuter@yaina.de, ralf@linux-mips.org, davem@davemloft.net, kuba@kernel.org, netdev@vger.kernel.org, linux-kernel@vger.kernel.org
 
-On Thu, Feb 03, 2022 at 11:08:11PM +0800, Duoming Zhou wrote:
+Hello:
+
+This patch was applied to netdev/net.git (master)
+by Jakub Kicinski <kuba@kernel.org>:
+
+On Thu,  3 Feb 2022 23:08:11 +0800 you wrote:
 > The previous commit d01ffb9eee4a ("ax25: add refcount in ax25_dev
 > to avoid UAF bugs") introduces refcount into ax25_dev, but there
 > are reference leak paths in ax25_ctl_ioctl(), ax25_fwd_ioctl(),
@@ -36,14 +36,15 @@ On Thu, Feb 03, 2022 at 11:08:11PM +0800, Duoming Zhou wrote:
 > This patch uses ax25_dev_put() and adjusts the position of
 > ax25_addr_ax25dev() to fix reference cout leaks of ax25_dev.
 > 
-> Fixes: d01ffb9eee4a ("ax25: add refcount in ax25_dev to avoid UAF bugs")
-> Signed-off-by: Duoming Zhou <duoming@zju.edu.cn>
-> ---
+> [...]
 
-Much better, thanks!
+Here is the summary with links:
+  - ax25: fix reference count leaks of ax25_dev
+    https://git.kernel.org/netdev/net/c/87563a043cef
 
-Reviewed-by: Dan Carpenter <dan.carpenter@oracle.com>
+You are awesome, thank you!
+-- 
+Deet-doot-dot, I am a bot.
+https://korg.docs.kernel.org/patchwork/pwbot.html
 
-regards,
-dan carpenter
 
