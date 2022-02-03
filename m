@@ -1,245 +1,49 @@
-From: Duoming Zhou <duoming@zju.edu.cn>
-Subject: [PATCH] ax25: fix reference count leaks of ax25_dev
-Date: Thu,  3 Feb 2022 23:08:11 +0800
-Message-ID: <20220203150811.42256-1-duoming@zju.edu.cn>
-Return-path: <netdev-owner@vger.kernel.org>
+From: Dan Carpenter <dan.carpenter@oracle.com>
+Subject: Re: [PATCH] ax25: fix reference count leaks of ax25_dev
+Date: Thu, 3 Feb 2022 20:14:11 +0300
+Message-ID: <20220203171411.GH1978@kadam>
+References: <20220203150811.42256-1-duoming@zju.edu.cn>
+Mime-Version: 1.0
+Return-path: <linux-hams-owner@vger.kernel.org>
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=date : from : to : cc
+ : subject : message-id : references : content-type : in-reply-to :
+ mime-version; s=corp-2021-07-09;
+ bh=sYRSApGCeocH1y/kOKYU8MRcPNLAYqzO/pUpPpzk+uo=;
+ b=hO+7tnNZCrcth2KHsTvj7R67aa40IYXyE4buGu5seykZ9/n2YSNTJzgQkpHc+Ck2MrQ0
+ 0mX9GZ06HDch7rnfDC/TxRlblaBfCZEsSDz8Zvy4vfF0CPWCrOPyYwW07exH65Nu4wyt
+ HVi/savceMKRLphWPX9Wcbc4YPXymp5lykt7jsGEshbEFFvhJ3Yy9dy0ynVrc6E93iQP
+ YBIO+pcwEeKD19G5O0h3PEYC28hcN0MsgASm6BK0twiiaGy1OR130+zPQ8aMkrDP7gBg
+ Jc5T5frq1z8ToYP9PRvOzOxW6oAt03ewpmeN3WWHUjm5xoYhWyQxZKJbXOyP27+UCP4w GA== 
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=oracle.onmicrosoft.com; s=selector2-oracle-onmicrosoft-com;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=sYRSApGCeocH1y/kOKYU8MRcPNLAYqzO/pUpPpzk+uo=;
+ b=IeajfuG5ATQJil4+0axinTynTJh4zvHpbAU3xTKip3deGGdv2jFmce3E9wCNVKQO9Y+5VwUY4aw5ho7kVt4OG6KczpP6LMBGSbsJ2BaoGtv+XbWZVBXssLcscKcu6/chDv12fIwe0XCsazExGiY/5U1XfqIGeDzDx2cBFoNr0PY=
+Content-Disposition: inline
+In-Reply-To: <20220203150811.42256-1-duoming@zju.edu.cn>
 List-ID: <linux-hams.vger.kernel.org>
-MIME-Version: 1.0
 Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
-To: linux-hams@vger.kernel.org
-Cc: dan.carpenter@oracle.com, thomas@osteried.de, jreuter@yaina.de, ralf@linux-mips.org, davem@davemloft.net, kuba@kernel.org, netdev@vger.kernel.org, linux-kernel@vger.kernel.org, Duoming Zhou <duoming@zju.edu.cn>
+To: Duoming Zhou <duoming@zju.edu.cn>
+Cc: linux-hams@vger.kernel.org, thomas@osteried.de, jreuter@yaina.de, ralf@linux-mips.org, davem@davemloft.net, kuba@kernel.org, netdev@vger.kernel.org, linux-kernel@vger.kernel.org
 
-The previous commit d01ffb9eee4a ("ax25: add refcount in ax25_dev
-to avoid UAF bugs") introduces refcount into ax25_dev, but there
-are reference leak paths in ax25_ctl_ioctl(), ax25_fwd_ioctl(),
-ax25_rt_add(), ax25_rt_del() and ax25_rt_opt().
+On Thu, Feb 03, 2022 at 11:08:11PM +0800, Duoming Zhou wrote:
+> The previous commit d01ffb9eee4a ("ax25: add refcount in ax25_dev
+> to avoid UAF bugs") introduces refcount into ax25_dev, but there
+> are reference leak paths in ax25_ctl_ioctl(), ax25_fwd_ioctl(),
+> ax25_rt_add(), ax25_rt_del() and ax25_rt_opt().
+> 
+> This patch uses ax25_dev_put() and adjusts the position of
+> ax25_addr_ax25dev() to fix reference cout leaks of ax25_dev.
+> 
+> Fixes: d01ffb9eee4a ("ax25: add refcount in ax25_dev to avoid UAF bugs")
+> Signed-off-by: Duoming Zhou <duoming@zju.edu.cn>
+> ---
 
-This patch uses ax25_dev_put() and adjusts the position of
-ax25_addr_ax25dev() to fix reference cout leaks of ax25_dev.
+Much better, thanks!
 
-Fixes: d01ffb9eee4a ("ax25: add refcount in ax25_dev to avoid UAF bugs")
-Signed-off-by: Duoming Zhou <duoming@zju.edu.cn>
----
- include/net/ax25.h    |  8 +++++---
- net/ax25/af_ax25.c    | 12 ++++++++----
- net/ax25/ax25_dev.c   | 24 +++++++++++++++++-------
- net/ax25/ax25_route.c | 16 +++++++++++-----
- 4 files changed, 41 insertions(+), 19 deletions(-)
+Reviewed-by: Dan Carpenter <dan.carpenter@oracle.com>
 
-diff --git a/include/net/ax25.h b/include/net/ax25.h
-index 50b417df622..8221af1811d 100644
---- a/include/net/ax25.h
-+++ b/include/net/ax25.h
-@@ -294,10 +294,12 @@ static __inline__ void ax25_cb_put(ax25_cb *ax25)
- 	}
- }
- 
--#define ax25_dev_hold(__ax25_dev) \
--	refcount_inc(&((__ax25_dev)->refcount))
-+static inline void ax25_dev_hold(ax25_dev *ax25_dev)
-+{
-+	refcount_inc(&ax25_dev->refcount);
-+}
- 
--static __inline__ void ax25_dev_put(ax25_dev *ax25_dev)
-+static inline void ax25_dev_put(ax25_dev *ax25_dev)
- {
- 	if (refcount_dec_and_test(&ax25_dev->refcount)) {
- 		kfree(ax25_dev);
-diff --git a/net/ax25/af_ax25.c b/net/ax25/af_ax25.c
-index 32f61978ff2..3e49d28824e 100644
---- a/net/ax25/af_ax25.c
-+++ b/net/ax25/af_ax25.c
-@@ -359,21 +359,25 @@ static int ax25_ctl_ioctl(const unsigned int cmd, void __user *arg)
- 	if (copy_from_user(&ax25_ctl, arg, sizeof(ax25_ctl)))
- 		return -EFAULT;
- 
--	if ((ax25_dev = ax25_addr_ax25dev(&ax25_ctl.port_addr)) == NULL)
--		return -ENODEV;
--
- 	if (ax25_ctl.digi_count > AX25_MAX_DIGIS)
- 		return -EINVAL;
- 
- 	if (ax25_ctl.arg > ULONG_MAX / HZ && ax25_ctl.cmd != AX25_KILL)
- 		return -EINVAL;
- 
-+	ax25_dev = ax25_addr_ax25dev(&ax25_ctl.port_addr);
-+	if (!ax25_dev)
-+		return -ENODEV;
-+
- 	digi.ndigi = ax25_ctl.digi_count;
- 	for (k = 0; k < digi.ndigi; k++)
- 		digi.calls[k] = ax25_ctl.digi_addr[k];
- 
--	if ((ax25 = ax25_find_cb(&ax25_ctl.source_addr, &ax25_ctl.dest_addr, &digi, ax25_dev->dev)) == NULL)
-+	ax25 = ax25_find_cb(&ax25_ctl.source_addr, &ax25_ctl.dest_addr, &digi, ax25_dev->dev);
-+	if (!ax25) {
-+		ax25_dev_put(ax25_dev);
- 		return -ENOTCONN;
-+	}
- 
- 	switch (ax25_ctl.cmd) {
- 	case AX25_KILL:
-diff --git a/net/ax25/ax25_dev.c b/net/ax25/ax25_dev.c
-index 770b787fb7b..d2a244e1c26 100644
---- a/net/ax25/ax25_dev.c
-+++ b/net/ax25/ax25_dev.c
-@@ -85,8 +85,8 @@ void ax25_dev_device_up(struct net_device *dev)
- 	spin_lock_bh(&ax25_dev_lock);
- 	ax25_dev->next = ax25_dev_list;
- 	ax25_dev_list  = ax25_dev;
--	ax25_dev_hold(ax25_dev);
- 	spin_unlock_bh(&ax25_dev_lock);
-+	ax25_dev_hold(ax25_dev);
- 
- 	ax25_register_dev_sysctl(ax25_dev);
- }
-@@ -115,8 +115,8 @@ void ax25_dev_device_down(struct net_device *dev)
- 
- 	if ((s = ax25_dev_list) == ax25_dev) {
- 		ax25_dev_list = s->next;
--		ax25_dev_put(ax25_dev);
- 		spin_unlock_bh(&ax25_dev_lock);
-+		ax25_dev_put(ax25_dev);
- 		dev->ax25_ptr = NULL;
- 		dev_put_track(dev, &ax25_dev->dev_tracker);
- 		ax25_dev_put(ax25_dev);
-@@ -126,8 +126,8 @@ void ax25_dev_device_down(struct net_device *dev)
- 	while (s != NULL && s->next != NULL) {
- 		if (s->next == ax25_dev) {
- 			s->next = ax25_dev->next;
--			ax25_dev_put(ax25_dev);
- 			spin_unlock_bh(&ax25_dev_lock);
-+			ax25_dev_put(ax25_dev);
- 			dev->ax25_ptr = NULL;
- 			dev_put_track(dev, &ax25_dev->dev_tracker);
- 			ax25_dev_put(ax25_dev);
-@@ -150,25 +150,35 @@ int ax25_fwd_ioctl(unsigned int cmd, struct ax25_fwd_struct *fwd)
- 
- 	switch (cmd) {
- 	case SIOCAX25ADDFWD:
--		if ((fwd_dev = ax25_addr_ax25dev(&fwd->port_to)) == NULL)
-+		fwd_dev = ax25_addr_ax25dev(&fwd->port_to);
-+		if (!fwd_dev) {
-+			ax25_dev_put(ax25_dev);
- 			return -EINVAL;
--		if (ax25_dev->forward != NULL)
-+		}
-+		if (ax25_dev->forward) {
-+			ax25_dev_put(fwd_dev);
-+			ax25_dev_put(ax25_dev);
- 			return -EINVAL;
-+		}
- 		ax25_dev->forward = fwd_dev->dev;
- 		ax25_dev_put(fwd_dev);
-+		ax25_dev_put(ax25_dev);
- 		break;
- 
- 	case SIOCAX25DELFWD:
--		if (ax25_dev->forward == NULL)
-+		if (!ax25_dev->forward) {
-+			ax25_dev_put(ax25_dev);
- 			return -EINVAL;
-+		}
- 		ax25_dev->forward = NULL;
-+		ax25_dev_put(ax25_dev);
- 		break;
- 
- 	default:
-+		ax25_dev_put(ax25_dev);
- 		return -EINVAL;
- 	}
- 
--	ax25_dev_put(ax25_dev);
- 	return 0;
- }
- 
-diff --git a/net/ax25/ax25_route.c b/net/ax25/ax25_route.c
-index 1e32693833e..9751207f775 100644
---- a/net/ax25/ax25_route.c
-+++ b/net/ax25/ax25_route.c
-@@ -75,11 +75,13 @@ static int __must_check ax25_rt_add(struct ax25_routes_struct *route)
- 	ax25_dev *ax25_dev;
- 	int i;
- 
--	if ((ax25_dev = ax25_addr_ax25dev(&route->port_addr)) == NULL)
--		return -EINVAL;
- 	if (route->digi_count > AX25_MAX_DIGIS)
- 		return -EINVAL;
- 
-+	ax25_dev = ax25_addr_ax25dev(&route->port_addr);
-+	if (!ax25_dev)
-+		return -EINVAL;
-+
- 	write_lock_bh(&ax25_route_lock);
- 
- 	ax25_rt = ax25_route_list;
-@@ -91,6 +93,7 @@ static int __must_check ax25_rt_add(struct ax25_routes_struct *route)
- 			if (route->digi_count != 0) {
- 				if ((ax25_rt->digipeat = kmalloc(sizeof(ax25_digi), GFP_ATOMIC)) == NULL) {
- 					write_unlock_bh(&ax25_route_lock);
-+					ax25_dev_put(ax25_dev);
- 					return -ENOMEM;
- 				}
- 				ax25_rt->digipeat->lastrepeat = -1;
-@@ -101,6 +104,7 @@ static int __must_check ax25_rt_add(struct ax25_routes_struct *route)
- 				}
- 			}
- 			write_unlock_bh(&ax25_route_lock);
-+			ax25_dev_put(ax25_dev);
- 			return 0;
- 		}
- 		ax25_rt = ax25_rt->next;
-@@ -108,6 +112,7 @@ static int __must_check ax25_rt_add(struct ax25_routes_struct *route)
- 
- 	if ((ax25_rt = kmalloc(sizeof(ax25_route), GFP_ATOMIC)) == NULL) {
- 		write_unlock_bh(&ax25_route_lock);
-+		ax25_dev_put(ax25_dev);
- 		return -ENOMEM;
- 	}
- 
-@@ -116,11 +121,11 @@ static int __must_check ax25_rt_add(struct ax25_routes_struct *route)
- 	ax25_rt->dev          = ax25_dev->dev;
- 	ax25_rt->digipeat     = NULL;
- 	ax25_rt->ip_mode      = ' ';
--	ax25_dev_put(ax25_dev);
- 	if (route->digi_count != 0) {
- 		if ((ax25_rt->digipeat = kmalloc(sizeof(ax25_digi), GFP_ATOMIC)) == NULL) {
- 			write_unlock_bh(&ax25_route_lock);
- 			kfree(ax25_rt);
-+			ax25_dev_put(ax25_dev);
- 			return -ENOMEM;
- 		}
- 		ax25_rt->digipeat->lastrepeat = -1;
-@@ -133,6 +138,7 @@ static int __must_check ax25_rt_add(struct ax25_routes_struct *route)
- 	ax25_rt->next   = ax25_route_list;
- 	ax25_route_list = ax25_rt;
- 	write_unlock_bh(&ax25_route_lock);
-+	ax25_dev_put(ax25_dev);
- 
- 	return 0;
- }
-@@ -173,8 +179,8 @@ static int ax25_rt_del(struct ax25_routes_struct *route)
- 			}
- 		}
- 	}
--	ax25_dev_put(ax25_dev);
- 	write_unlock_bh(&ax25_route_lock);
-+	ax25_dev_put(ax25_dev);
- 
- 	return 0;
- }
-@@ -216,8 +222,8 @@ static int ax25_rt_opt(struct ax25_route_opt_struct *rt_option)
- 	}
- 
- out:
--	ax25_dev_put(ax25_dev);
- 	write_unlock_bh(&ax25_route_lock);
-+	ax25_dev_put(ax25_dev);
- 	return err;
- }
- 
--- 
-2.17.1
+regards,
+dan carpenter
 
