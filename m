@@ -1,22 +1,22 @@
 From: Sasha Levin <sashal@kernel.org>
-Subject: [PATCH AUTOSEL 4.14 5/8] ax25: improve the incomplete fix to avoid UAF and NPD bugs
-Date: Wed,  9 Feb 2022 13:44:58 -0500
-Message-ID: <20220209184502.48363-5-sashal@kernel.org>
-References: <20220209184502.48363-1-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 4.9 5/7] ax25: improve the incomplete fix to avoid UAF and NPD bugs
+Date: Wed,  9 Feb 2022 13:45:48 -0500
+Message-ID: <20220209184550.48481-5-sashal@kernel.org>
+References: <20220209184550.48481-1-sashal@kernel.org>
 Mime-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Return-path: <netdev-owner@vger.kernel.org>
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1644432337;
-        bh=CiNSoGFlVE7Yc/N15ISxD4jbOC0FtDELKkzSvEf6aAY=;
+        s=k20201202; t=1644432388;
+        bh=/hVOJlsFWLKRbsZ0LCXQz1BHsIWJgYUIFS3HbLPfFkY=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=tkgR2V0CrGDviOcODJMOxzjSypcHNastaiSh+H448/feaxkdOu8kG+2KhIIob1lki
-         Mrcfpu+VnlXBr7dh7oIugzO/S2oeR7GciWbyBH09jhac5EZcSL421ra+xObyf5WEKT
-         tC6pB1JIk7N9Hjj5x3rVfpr7TVSAG4Rga7Gsm+YxlGs3UTBHcUl4e7rWTjNEpdr1G0
-         eId6FYoarGd9Y8ql6KC2cSREE5HA+3hFA4UJO09azaZXCKBog/tmFMD8HW1JsmoukR
-         Gr1kxdxE8LPB5DvrMuf7epdeAqefHmqovwVQ+I97H4hGkj/7O6s82e26ejeiO6RuqD
-         t9vnj7DxmTYZA==
-In-Reply-To: <20220209184502.48363-1-sashal@kernel.org>
+        b=CFxpYPxhRXeqtH0r3P4DDmFWn2HD+UpHlbPKBkFV0snn5CZ/O/wUtATLrsz1q0tZ+
+         uxI5kzT+6bNqtcloKIq0Ki+p1dglPLCt5c5qzgH/3fKBMizXEkHlYYLCt4HGsGBG0u
+         IT2EZxRPlDEtFnWvzk9i+LQIBIlr+LKK6yxsqYhuVKvnc7iBcMRRx8zExqWq8x1wmX
+         McBox1+zA9TOah1fUqJXyo4e7SAV5XM+OjWYV5ujgfEdJwT7NmfIJIS9t9QqIK6oMp
+         b/g0vwspVc63n+W9NR/dykpNrwqx2hjJ5mL5GqbUQUktehPIUXgrbbfaLTt9eRGnKz
+         FN3XQiDy6ZzTQ==
+In-Reply-To: <20220209184550.48481-1-sashal@kernel.org>
 List-ID: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
 To: linux-kernel@vger.kernel.org, stable@vger.kernel.org
@@ -74,7 +74,7 @@ Signed-off-by: Sasha Levin <sashal@kernel.org>
  1 file changed, 6 insertions(+), 3 deletions(-)
 
 diff --git a/net/ax25/af_ax25.c b/net/ax25/af_ax25.c
-index 0232afd9d9c3c..36d2e1dfa1e6b 100644
+index f4c8567e91b38..c4ef1be59cb19 100644
 --- a/net/ax25/af_ax25.c
 +++ b/net/ax25/af_ax25.c
 @@ -80,6 +80,7 @@ static void ax25_kill_by_device(struct net_device *dev)
