@@ -1,109 +1,76 @@
-From: Sasha Levin <sashal@kernel.org>
-Subject: [PATCH AUTOSEL 4.9 5/7] ax25: improve the incomplete fix to avoid UAF and NPD bugs
-Date: Wed,  9 Feb 2022 13:45:48 -0500
-Message-ID: <20220209184550.48481-5-sashal@kernel.org>
-References: <20220209184550.48481-1-sashal@kernel.org>
-Mime-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Return-path: <netdev-owner@vger.kernel.org>
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1644432388;
-        bh=/hVOJlsFWLKRbsZ0LCXQz1BHsIWJgYUIFS3HbLPfFkY=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=CFxpYPxhRXeqtH0r3P4DDmFWn2HD+UpHlbPKBkFV0snn5CZ/O/wUtATLrsz1q0tZ+
-         uxI5kzT+6bNqtcloKIq0Ki+p1dglPLCt5c5qzgH/3fKBMizXEkHlYYLCt4HGsGBG0u
-         IT2EZxRPlDEtFnWvzk9i+LQIBIlr+LKK6yxsqYhuVKvnc7iBcMRRx8zExqWq8x1wmX
-         McBox1+zA9TOah1fUqJXyo4e7SAV5XM+OjWYV5ujgfEdJwT7NmfIJIS9t9QqIK6oMp
-         b/g0vwspVc63n+W9NR/dykpNrwqx2hjJ5mL5GqbUQUktehPIUXgrbbfaLTt9eRGnKz
-         FN3XQiDy6ZzTQ==
-In-Reply-To: <20220209184550.48481-1-sashal@kernel.org>
-List-ID: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"
-To: linux-kernel@vger.kernel.org, stable@vger.kernel.org
-Cc: Duoming Zhou <duoming@zju.edu.cn>, "David S . Miller" <davem@davemloft.net>, Sasha Levin <sashal@kernel.org>, jreuter@yaina.de, kuba@kernel.org, linux-hams@vger.kernel.org, netdev@vger.kernel.org
-
 From: Duoming Zhou <duoming@zju.edu.cn>
+Subject: [PATCH] drivers: hamradio: 6pack: fix UAF bug caused by mod_timer()
+Date: Wed, 16 Feb 2022 10:35:49 +0800
+Message-ID: <20220216023549.50223-1-duoming@zju.edu.cn>
+Return-path: <linux-hams-owner@vger.kernel.org>
+List-ID: <linux-hams.vger.kernel.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+To: linux-hams@vger.kernel.org
+Cc: ajk@comnets.uni-bremen.de, davem@davemloft.net, kuba@kernel.org, netdev@vger.kernel.org, linux-kernel@vger.kernel.org, Duoming Zhou <duoming@zju.edu.cn>
 
-[ Upstream commit 4e0f718daf97d47cf7dec122da1be970f145c809 ]
+Although del_timer_sync() in sixpack_close() waits for the timer handler
+to finish its execution and then releases the timer, the mod_timer()
+in sp_xmit_on_air() could be called by userspace syscall such as
+ax25_sendmsg(), ax25_connect() and ax25_ioctl() and wakes up the timer
+again. If the timer uses sp_xmit_on_air() to write data on pty work queue
+that already released by unregister_netdev(), the UAF bug will happen.
 
-The previous commit 1ade48d0c27d ("ax25: NPD bug when detaching
-AX25 device") introduce lock_sock() into ax25_kill_by_device to
-prevent NPD bug. But the concurrency NPD or UAF bug will occur,
-when lock_sock() or release_sock() dereferences the ax25_cb->sock.
+One of the possible race conditions is shown below:
 
-The NULL pointer dereference bug can be shown as below:
+      (USE)                     |      (FREE)
+ax25_sendmsg()                  |
+  ax25_queue_xmit()             |
+    ...                         |
+    sp_encaps()                 |  sixpack_close()
+      sp_xmit_on_air()          |    del_timer_sync(&sp->tx_t)
+        mod_timer(&sp->tx_t,..) |    ...
+        (wait a while)          |    unregister_netdev(sp->dev)) //FREE
+      sp_xmit_on_air()          |    ...
+        pty_write()             |
+          queue_work_on() //USE |
 
-ax25_kill_by_device()        | ax25_release()
-                             |   ax25_destroy_socket()
-                             |     ax25_cb_del()
-  ...                        |     ...
-                             |     ax25->sk=NULL;
-  lock_sock(s->sk); //(1)    |
-  s->ax25_dev = NULL;        |     ...
-  release_sock(s->sk); //(2) |
-  ...                        |
+The corresponding fail log is shown below:
+===============================================================
+BUG: KASAN: use-after-free in __run_timers.part.0+0x170/0x470
+Write of size 8 at addr ffff88800a652ab8 by task swapper/2/0
+...
+Call Trace:
+  ...
+  queue_work_on+0x3f/0x50
+  pty_write+0xcd/0xe0pty_write+0xcd/0xe0
+  sp_xmit_on_air+0xb2/0x1f0
+  call_timer_fn+0x28/0x150
+  __run_timers.part.0+0x3c2/0x470
+  run_timer_softirq+0x3b/0x80
+  __do_softirq+0xf1/0x380
+  ...
 
-The root cause is that the sock is set to null before dereference
-site (1) or (2). Therefore, this patch extracts the ax25_cb->sock
-in advance, and uses ax25_list_lock to protect it, which can synchronize
-with ax25_cb_del() and ensure the value of sock is not null before
-dereference sites.
-
-The concurrency UAF bug can be shown as below:
-
-ax25_kill_by_device()        | ax25_release()
-                             |   ax25_destroy_socket()
-  ...                        |   ...
-                             |   sock_put(sk); //FREE
-  lock_sock(s->sk); //(1)    |
-  s->ax25_dev = NULL;        |   ...
-  release_sock(s->sk); //(2) |
-  ...                        |
-
-The root cause is that the sock is released before dereference
-site (1) or (2). Therefore, this patch uses sock_hold() to increase
-the refcount of sock and uses ax25_list_lock to protect it, which
-can synchronize with ax25_cb_del() in ax25_destroy_socket() and
-ensure the sock wil not be released before dereference sites.
+This patch add condition check in sp_xmit_on_air(). If the
+registration status of net_device is not equal to NETREG_REGISTERED,
+the sp_xmit_on_air() will not write data to pty work queue and
+return instead.
 
 Signed-off-by: Duoming Zhou <duoming@zju.edu.cn>
-Signed-off-by: David S. Miller <davem@davemloft.net>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ax25/af_ax25.c | 9 ++++++---
- 1 file changed, 6 insertions(+), 3 deletions(-)
+ drivers/net/hamradio/6pack.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/net/ax25/af_ax25.c b/net/ax25/af_ax25.c
-index f4c8567e91b38..c4ef1be59cb19 100644
---- a/net/ax25/af_ax25.c
-+++ b/net/ax25/af_ax25.c
-@@ -80,6 +80,7 @@ static void ax25_kill_by_device(struct net_device *dev)
- {
- 	ax25_dev *ax25_dev;
- 	ax25_cb *s;
-+	struct sock *sk;
- 
- 	if ((ax25_dev = ax25_dev_ax25dev(dev)) == NULL)
- 		return;
-@@ -88,13 +89,15 @@ static void ax25_kill_by_device(struct net_device *dev)
- again:
- 	ax25_for_each(s, &ax25_list) {
- 		if (s->ax25_dev == ax25_dev) {
-+			sk = s->sk;
-+			sock_hold(sk);
- 			spin_unlock_bh(&ax25_list_lock);
--			lock_sock(s->sk);
-+			lock_sock(sk);
- 			s->ax25_dev = NULL;
--			release_sock(s->sk);
-+			release_sock(sk);
- 			ax25_disconnect(s, ENETUNREACH);
- 			spin_lock_bh(&ax25_list_lock);
+diff --git a/drivers/net/hamradio/6pack.c b/drivers/net/hamradio/6pack.c
+index b1fc153125d..7ee25e06915 100644
+--- a/drivers/net/hamradio/6pack.c
++++ b/drivers/net/hamradio/6pack.c
+@@ -141,7 +141,8 @@ static void sp_xmit_on_air(struct timer_list *t)
+ 	struct sixpack *sp = from_timer(sp, t, tx_t);
+ 	int actual, when = sp->slottime;
+ 	static unsigned char random;
 -
-+			sock_put(sk);
- 			/* The entry could have been deleted from the
- 			 * list meanwhile and thus the next pointer is
- 			 * no longer valid.  Play it safe and restart
++	if (sp->dev->reg_state !=  NETREG_REGISTERED)
++		return;
+ 	random = random * 17 + 41;
+ 
+ 	if (((sp->status1 & SIXP_DCD_MASK) == 0) && (random < sp->persistence)) {
 -- 
-2.34.1
+2.17.1
 
