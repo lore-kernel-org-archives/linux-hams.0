@@ -1,92 +1,91 @@
-From: Jakub Kicinski <kuba@kernel.org>
-Subject: Re: [PATCH] drivers: hamradio: 6pack: fix UAF bug caused by
- mod_timer()
-Date: Tue, 15 Feb 2022 20:39:55 -0800
-Message-ID: <20220215203955.7d7a3eed@kicinski-fedora-pc1c0hjn.dhcp.thefacebook.com>
-References: <20220216023549.50223-1-duoming@zju.edu.cn>
-Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
-Return-path: <netdev-owner@vger.kernel.org>
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1644986397;
-        bh=TRr0KbHGQ6VSMXeClTJJpeHHqHgnwq8p1DX2o2QIs4g=;
-        h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
-        b=QcvuhjqbAglbz0SNpwprhw39RnVThqGeht23o2gi2Vx67yX25E82uUW2Ypqb3MqrE
-         EuQaMoyhIGLOfZRjOF3E5K+YXILn2M4P9lxAMBh1JR73ymlX6FIGqT0eIWDcas6Qv8
-         XFYBegm7ew/nywWU534yPd8iK47jBrRzOu71uXoEK7Qf0w7rLP1PPHHqQ+ySdSxWu/
-         VojONYFcTonO4eRTxwJCo7Wuzyhwz5ciJ7FOljtl4Or6rpxmWJU0Mso6WQc19mzz4t
-         lhvrIKwagr8ktHBksEUXFm7PW3UTnGimzcp7PmFR914/RQYsosIdhPQ+O2pDtT9ghs
-         QAEtQpfGVxLpw==
-In-Reply-To: <20220216023549.50223-1-duoming@zju.edu.cn>
+From: Duoming Zhou <duoming@zju.edu.cn>
+Subject: [PATCH V2] drivers: hamradio: 6pack: fix UAF bug caused by mod_timer()
+Date: Wed, 16 Feb 2022 23:56:04 +0800
+Message-ID: <20220216155604.92827-1-duoming@zju.edu.cn>
+Return-path: <linux-hams-owner@vger.kernel.org>
 List-ID: <linux-hams.vger.kernel.org>
+MIME-Version: 1.0
 Content-Type: text/plain; charset="us-ascii"
-To: Duoming Zhou <duoming@zju.edu.cn>
-Cc: linux-hams@vger.kernel.org, ajk@comnets.uni-bremen.de, davem@davemloft.net, netdev@vger.kernel.org, linux-kernel@vger.kernel.org
+Content-Transfer-Encoding: 7bit
+To: linux-hams@vger.kernel.org
+Cc: kuba@kernel.org, ajk@comnets.uni-bremen.de, davem@davemloft.net, netdev@vger.kernel.org, linux-kernel@vger.kernel.org, Duoming Zhou <duoming@zju.edu.cn>
 
-On Wed, 16 Feb 2022 10:35:49 +0800 Duoming Zhou wrote:
-> Although del_timer_sync() in sixpack_close() waits for the timer handler
-> to finish its execution and then releases the timer, the mod_timer()
-> in sp_xmit_on_air() could be called by userspace syscall such as
-> ax25_sendmsg(), ax25_connect() and ax25_ioctl() and wakes up the timer
-> again. If the timer uses sp_xmit_on_air() to write data on pty work queue
-> that already released by unregister_netdev(), the UAF bug will happen.
+Although del_timer_sync() in sixpack_close() won't return if
+there is an active timer, we could use mod_timer() in
+sp_xmit_on_air() to wake up timer again by calling userspace
+syscall such as ax25_sendmsg(), ax25_connect() and ax25_ioctl().
+If sp_xmit_on_air() registered as a callback function in
+timer_setup() calls pty_write() to use tty resources that
+already released by tty_release(), the UAF bug will happen.
 
-Do you mean sp->xbuff access? It's released right before the netdev
-itself is freed. Checking dev->something is also a UAF.
+One of the possible race conditions is shown below:
 
-> One of the possible race conditions is shown below:
-> 
->       (USE)                     |      (FREE)
-> ax25_sendmsg()                  |
->   ax25_queue_xmit()             |
->     ...                         |
->     sp_encaps()                 |  sixpack_close()
->       sp_xmit_on_air()          |    del_timer_sync(&sp->tx_t)
->         mod_timer(&sp->tx_t,..) |    ...
->         (wait a while)          |    unregister_netdev(sp->dev)) //FREE
+      (USE)                      |      (FREE)
+ax25_sendmsg()                   |
+ ax25_queue_xmit()               |
+  ...                            |
+  sp_xmit()                      |
+   sp_encaps()                   | sixpack_close()
+    sp_xmit_on_air()             |  del_timer_sync(&sp->tx_t)
+     mod_timer(&sp->tx_t,...)    |  ...
+                                 |  unregister_netdev()
+                                 |  ...
+     (wait a while)              | tty_release()
+                                 |  tty_release_struct()
+                                 |   release_tty()
+    sp_xmit_on_air()             |    tty_kref_put(tty_struct) //FREE
+     pty_write(tty_struct) //USE |    ...
 
-Please clarify what is getting freed. 
+The corresponding fail log is shown below:
+===============================================================
+BUG: KASAN: use-after-free in __run_timers.part.0+0x170/0x470
+Write of size 8 at addr ffff88800a652ab8 by task swapper/2/0
+...
+Call Trace:
+  ...
+  queue_work_on+0x3f/0x50
+  pty_write+0xcd/0xe0pty_write+0xcd/0xe0
+  sp_xmit_on_air+0xb2/0x1f0
+  call_timer_fn+0x28/0x150
+  __run_timers.part.0+0x3c2/0x470
+  run_timer_softirq+0x3b/0x80
+  __do_softirq+0xf1/0x380
+  ...
 
->       sp_xmit_on_air()          |    ...
->         pty_write()             |
->           queue_work_on() //USE |
-> 
-> The corresponding fail log is shown below:
-> ===============================================================
-> BUG: KASAN: use-after-free in __run_timers.part.0+0x170/0x470
-> Write of size 8 at addr ffff88800a652ab8 by task swapper/2/0
-> ...
-> Call Trace:
->   ...
->   queue_work_on+0x3f/0x50
->   pty_write+0xcd/0xe0pty_write+0xcd/0xe0
->   sp_xmit_on_air+0xb2/0x1f0
->   call_timer_fn+0x28/0x150
->   __run_timers.part.0+0x3c2/0x470
->   run_timer_softirq+0x3b/0x80
->   __do_softirq+0xf1/0x380
->   ...
-> 
-> This patch add condition check in sp_xmit_on_air(). If the
-> registration status of net_device is not equal to NETREG_REGISTERED,
-> the sp_xmit_on_air() will not write data to pty work queue and
-> return instead.
+This patch reorders the del_timer_sync() after the unregister_netdev()
+to avoid UAF bugs. Because the unregister_netdev() is well synchronized,
+it flushs out any pending queues, waits the refcount of net_device
+decreases to zero and removes net_device from kernel. There is not any
+running routines after executing unregister_netdev(). Therefore, we could
+not arouse timer from userspace again.
 
-I don't think this works as mentioned above. The question is why the tx
-queue is not stopped.
+Signed-off-by: Duoming Zhou <duoming@zju.edu.cn>
+---
+Changes in V2:
+  - Make the commit message more clearer.
+  - Modify the patch code.
+---
+ drivers/net/hamradio/6pack.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-> diff --git a/drivers/net/hamradio/6pack.c b/drivers/net/hamradio/6pack.c
-> index b1fc153125d..7ee25e06915 100644
-> --- a/drivers/net/hamradio/6pack.c
-> +++ b/drivers/net/hamradio/6pack.c
-> @@ -141,7 +141,8 @@ static void sp_xmit_on_air(struct timer_list *t)
->  	struct sixpack *sp = from_timer(sp, t, tx_t);
->  	int actual, when = sp->slottime;
->  	static unsigned char random;
-> -
-> +	if (sp->dev->reg_state !=  NETREG_REGISTERED)
-> +		return;
->  	random = random * 17 + 41;
->  
->  	if (((sp->status1 & SIXP_DCD_MASK) == 0) && (random < sp->persistence)) {
+diff --git a/drivers/net/hamradio/6pack.c b/drivers/net/hamradio/6pack.c
+index b1fc153125d..45c3c4a1101 100644
+--- a/drivers/net/hamradio/6pack.c
++++ b/drivers/net/hamradio/6pack.c
+@@ -668,11 +668,11 @@ static void sixpack_close(struct tty_struct *tty)
+ 	 */
+ 	netif_stop_queue(sp->dev);
+ 
++	unregister_netdev(sp->dev);
++
+ 	del_timer_sync(&sp->tx_t);
+ 	del_timer_sync(&sp->resync_t);
+ 
+-	unregister_netdev(sp->dev);
+-
+ 	/* Free all 6pack frame buffers after unreg. */
+ 	kfree(sp->rbuff);
+ 	kfree(sp->xbuff);
+-- 
+2.17.1
 
