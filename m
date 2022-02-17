@@ -1,22 +1,24 @@
 From: Duoming Zhou <duoming@zju.edu.cn>
-Subject: [PATCH V2] drivers: hamradio: 6pack: fix UAF bug caused by mod_timer()
-Date: Wed, 16 Feb 2022 23:56:04 +0800
-Message-ID: <20220216155604.92827-1-duoming@zju.edu.cn>
-Return-path: <linux-hams-owner@vger.kernel.org>
+Subject: [PATCH V3] drivers: hamradio: 6pack: fix UAF bug caused by mod_timer()
+Date: Thu, 17 Feb 2022 09:43:03 +0800
+Message-ID: <20220217014303.102986-1-duoming@zju.edu.cn>
+Return-path: <netdev-owner@vger.kernel.org>
 List-ID: <linux-hams.vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
 To: linux-hams@vger.kernel.org
-Cc: kuba@kernel.org, ajk@comnets.uni-bremen.de, davem@davemloft.net, netdev@vger.kernel.org, linux-kernel@vger.kernel.org, Duoming Zhou <duoming@zju.edu.cn>
+Cc: kuba@kernel.org, ajk@comnets.uni-bremen.de, davem@davemloft.net, netdev@vger.kernel.org, linux-kernel@vger.kernel.org, linma@zju.edu.cn, Duoming Zhou <duoming@zju.edu.cn>
 
-Although del_timer_sync() in sixpack_close() won't return if
-there is an active timer, we could use mod_timer() in
-sp_xmit_on_air() to wake up timer again by calling userspace
-syscall such as ax25_sendmsg(), ax25_connect() and ax25_ioctl().
-If sp_xmit_on_air() registered as a callback function in
-timer_setup() calls pty_write() to use tty resources that
-already released by tty_release(), the UAF bug will happen.
+When a 6pack device is detaching, the sixpack_close() will act to cleanup
+necessary resources. Although del_timer_sync() in sixpack_close()
+won't return if there is an active timer, one could use mod_timer() in
+sp_xmit_on_air() to wake up timer again by calling userspace syscall such
+as ax25_sendmsg(), ax25_connect() and ax25_ioctl().
+
+This unexpected waked handler, sp_xmit_on_air(), realizes nothing about
+the undergoing cleanup and may still call pty_write() to use driver layer
+resources that have already been released.
 
 One of the possible race conditions is shown below:
 
@@ -60,11 +62,11 @@ running routines after executing unregister_netdev(). Therefore, we could
 not arouse timer from userspace again.
 
 Signed-off-by: Duoming Zhou <duoming@zju.edu.cn>
+Reviewed-by: Lin Ma <linma@zju.edu.cn>
 ---
-Changes in V2:
+Changes in V3:
   - Make the commit message more clearer.
-  - Modify the patch code.
----
+
  drivers/net/hamradio/6pack.c | 4 ++--
  1 file changed, 2 insertions(+), 2 deletions(-)
 
