@@ -1,53 +1,57 @@
-From: patchwork-bot+netdevbpf@kernel.org
-Subject: Re: [PATCH V3] drivers: hamradio: 6pack: fix UAF bug caused by
- mod_timer()
-Date: Fri, 18 Feb 2022 11:00:09 +0000
-Message-ID: <164518200987.19952.16423799122287139298.git-patchwork-notify@kernel.org>
-References: <20220217014303.102986-1-duoming@zju.edu.cn>
-Mime-Version: 1.0
-Content-Transfer-Encoding: 8bit
+From: Thomas Osterried <thomas@osterried.de>
+Subject: Re: [AX25] unreleased sockets after disconnecting
+Date: Sun, 20 Feb 2022 10:18:13 +0100
+Message-ID: <6D71ECB7-775D-4D98-B856-C48B88E4DF7C@osterried.de>
+References: <4B2CD772.1030106@upmc.fr> <4B2D1025.1020106@gmail.com>
+ <4B2E6729.1090102@free.fr> <4B507FAA.8010007@free.fr>
+ <20100115203654.GA3084@del.dom.local> <4DFA6A59.2000709@free.fr>
+ <581f0c8e-f4fb-523d-df6e-7a973b506c34@sorbonne-universite.fr>
+ <207b1242-dfb9-1832-c7f6-c4602ad2e9e6@free.fr>
+Mime-Version: 1.0 (Mac OS X Mail 15.0 \(3693.40.0.1.81\))
+Content-Transfer-Encoding: 8BIT
 Return-path: <linux-hams-owner@vger.kernel.org>
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1645182010;
-        bh=KwglRraOwOZOyLVRrYY428yqdeqobp9eallBt0vf47w=;
-        h=Subject:From:Date:References:In-Reply-To:To:Cc:From;
-        b=ifQQtPSY4h9ByFo7m6Lj86wzl27AaVnW50/hj4q6IbZZyWHhdn5Jpo3cOlrYj+vc/
-         9yCWB0LunTBgmZZj2hdX9cT7OQQ/VfMYF62XramxmF78eb3pTVWcIgil9vZlRv7hww
-         T6CTMacI2yrhfbmj8F+AMEe9DDIgtXnVPMWQn2CtSiC4KstBfHQ7ZNXtSyOOVYMPPX
-         Xv+YsTGl1fSGoZiOYTRIRw0c/lXuwxlcWuQnzSvtPTyYADPBVrPbc0DZ9SwQm1rL+t
-         XWu5b9UqGuojhVMerU/PbxjoOwqyoA0O9TrLaY5ivEVq6dN3cUHdAVL5dI3Vs7ADxh
-         C6p2I6GkPpIUg==
-In-Reply-To: <20220217014303.102986-1-duoming@zju.edu.cn>
+In-Reply-To: <207b1242-dfb9-1832-c7f6-c4602ad2e9e6@free.fr>
 List-ID: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
-To: =?utf-8?b?5ZGo5aSa5piOIDxkdW9taW5nQHpqdS5lZHUuY24+?=@ci.codeaurora.org
-Cc: linux-hams@vger.kernel.org, kuba@kernel.org, ajk@comnets.uni-bremen.de, davem@davemloft.net, netdev@vger.kernel.org, linux-kernel@vger.kernel.org, linma@zju.edu.cn
+To: "Bernard Pidoux , f6bvp" <f6bvp@free.fr>
+Cc: linux-hams@vger.kernel.org
 
-Hello:
 
-This patch was applied to netdev/net.git (master)
-by David S. Miller <davem@davemloft.net>:
 
-On Thu, 17 Feb 2022 09:43:03 +0800 you wrote:
-> When a 6pack device is detaching, the sixpack_close() will act to cleanup
-> necessary resources. Although del_timer_sync() in sixpack_close()
-> won't return if there is an active timer, one could use mod_timer() in
-> sp_xmit_on_air() to wake up timer again by calling userspace syscall such
-> as ax25_sendmsg(), ax25_connect() and ax25_ioctl().
+> Am 06.02.2022 um 22:12 schrieb Bernard Pidoux , f6bvp <f6bvp@free.fr>:
 > 
-> This unexpected waked handler, sp_xmit_on_air(), realizes nothing about
-> the undergoing cleanup and may still call pty_write() to use driver layer
-> resources that have already been released.
+> For long time it as been reported by many AX.25 users that connexions were precluded after terminating a connexion with a remote station.
 > 
-> [...]
+> Some hamradio maintainers have been pretending not to be aware of such issue for lacking proofs.
 
-Here is the summary with links:
-  - [V3] drivers: hamradio: 6pack: fix UAF bug caused by mod_timer()
-    https://git.kernel.org/netdev/net/c/efe4186e6a1b
+The problem is known. Iirc correctly, we have seen some approaches over the years to fix this issue. The last one I'd like to discuss is by YO2LOJ
+(Subject "NET/ROM bug fix from YO2LOJ?" in this list):
 
-You are awesome, thank you!
--- 
-Deet-doot-dot, I am a bot.
-https://korg.docs.kernel.org/patchwork/pwbot.html
+That patch is against the problem, that disconnected sessions still are listet, in "LISTENING" state'.
+
+I'm not sure if it is exactly your problem, because in your /proc/net/ax25 example, those sessions seem to belong to iface "???" instead of "ax0".
+
+I can reproduce (testet last week) is the following:
+boot
+configure ax25 iface
+no userspace process started
+connect from outside
+disconnect from outside
+-> 
+netstat --ax25 shows that session in LISTEN state. In contrast to your output, it refers to the interface (not to "???").
 
 
+The problem with the patch is, we observed a new, in my opinion unliked, behavior:
+now a new connection is disconnected instantly (as long as no userspace daemon is listening).
+But there are protocols like "IP mode VC" need to be able to connect, even when no userspace daemon is running.
+
+> I must restart my packet radio FPAC node (AX.25, ROSE and NetRom protocoles) every other hour in order to let connexions available again for neighbours.
+
+Perhaps you could try YO2LOJ's kernel patch and test if it helps for your urgent problem, or if there's another problem in the session-cleanup code.
+
+> Here are some evidence from cat  /proc/net/ax25 showing old remnants of connexions presumably there for ax25 sockets were not released.
+> 
+> 73 de Bernard, f6bvp
+
+vy 73,
+	- Thomas  dl9sau
