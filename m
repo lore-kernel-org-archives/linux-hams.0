@@ -1,50 +1,70 @@
-From: patchwork-bot+netdevbpf@kernel.org
-Subject: Re: [PATCH] net: hamradio: use time_is_after_jiffies() instead of open
- coding it
-Date: Mon, 28 Feb 2022 13:30:59 +0000
-Message-ID: <164605505952.13902.7199174306567919754.git-patchwork-notify@kernel.org>
-References: <1646018012-61129-1-git-send-email-wangqing@vivo.com>
+From: John Paul Morrison <jmorrison@bogomips.com>
+Subject: [PATCH] libax25 hamradio: higher baud rate support
+Date: Mon, 28 Feb 2022 10:46:38 -0800
+Message-ID: <CAO-kYtEhzohMYgk=K_jt0hQ+bdrmReUVBkAzMYTKJeAK9vcenQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Return-path: <netdev-owner@vger.kernel.org>
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1646055059;
-        bh=055+r7Bv0YKZLvW2yw6sPT6DWnJzO/MTP8OxhUtCSac=;
-        h=Subject:From:Date:References:In-Reply-To:To:Cc:From;
-        b=E584kEgauBkAa3o8F4en2NVEZC4Hk4ZoqFTLbuItRh27GHeySF6/923XzN5UXuP/b
-         INGgWhp8e7E/rsaATEq16lh9k+h13PIKyBXqSc+bu7X+lvYKOCxTWeAHGp/feK67T4
-         d+BxSZxZAUyAyrKhQxmpkmsR0bTTAvSZQuDjKJ92G+xiCEi4Q1cDjIFGcyzt6qiB5W
-         c9s1eCSLXs3P6pdURXzwE1GahI581Ep7y/Ebsck+gBY9ubuRA/e3K9R3XzaDCtFzjd
-         iUGokDX6+uvEMMtMuTfJ9UnNnl5QVN3Hzpf9QDzB5O20XDnFG4leONFkwYxb85bwKh
-         cK3OFRLKoeQDg==
-In-Reply-To: <1646018012-61129-1-git-send-email-wangqing@vivo.com>
+Return-path: <linux-hams-owner@vger.kernel.org>
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=bogomips.com; s=google;
+        h=mime-version:from:date:message-id:subject:to;
+        bh=QEvhm6SqwOZbJ1C68hIJNq3B6gugT4X8lGqjwEO/UC8=;
+        b=VtgRwj+XSbnnRPf6lygQwCYiY8kQ/JWCvYJX9N5KJwnthXdruiUYN41SSWpMYmkXxk
+         vAa4bijLgWj4ZsGCEXE4u6HCA8wYodWDL8KBtgRGQxMB3PVEKUy7650YRGUAIDkdt8BZ
+         sZRVYcRnZf6AoNWKzT3folpntI0UhNhDMl3k4=
 List-ID: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
-To: Qing Wang <wangqing@vivo.com>
-Cc: jreuter@yaina.de, davem@davemloft.net, kuba@kernel.org, linux-hams@vger.kernel.org, netdev@vger.kernel.org, linux-kernel@vger.kernel.org
+Content-Transfer-Encoding: 7bit
+To: linux-hams@vger.kernel.org
 
-Hello:
+The kissattach program rejects valid baud rates in /etc/ax25/axports
+so I updated libax25
 
-This patch was applied to netdev/net-next.git (master)
-by David S. Miller <davem@davemloft.net>:
+I tested on x86_64 and armv7l (Raspberry Pi)  up to 1.5 Mbps
 
-On Sun, 27 Feb 2022 19:13:31 -0800 you wrote:
-> From: Wang Qing <wangqing@vivo.com>
-> 
-> Use the helper function time_is_{before,after}_jiffies() to improve
-> code readability.
-> 
-> Signed-off-by: Wang Qing <wangqing@vivo.com>
-> 
-> [...]
-
-Here is the summary with links:
-  - net: hamradio: use time_is_after_jiffies() instead of open coding it
-    https://git.kernel.org/netdev/net-next/c/61c4fb9c4d09
-
-You are awesome, thank you!
--- 
-Deet-doot-dot, I am a bot.
-https://korg.docs.kernel.org/patchwork/pwbot.html
+VE7JPM
 
 
+Signed-off-by: John Paul Morrison <jmorrison@bogomips.com>
+---
+
+diff --git a/ttyutils.c b/ttyutils.c
+index a374103..981d630 100644
+--- a/ttyutils.c
++++ b/ttyutils.c
+@@ -32,6 +32,36 @@ static struct speed_struct {
+ #endif
+ #ifdef  B460800
+  {460800, B460800},
++#endif
++#ifdef  B500000
++ {500000, B500000},
++#endif
++#ifdef  B921600
++ {921600, B921600},
++#endif
++#ifdef  B1000000
++ {1000000, B1000000},
++#endif
++#ifdef  B1152000
++ {1152000, B1152000},
++#endif
++#ifdef  B1500000
++ {1500000, B1500000},
++#endif
++#ifdef  B2000000
++ {2000000, B2000000},
++#endif
++#ifdef  B2500000
++ {2500000, B2500000},
++#endif
++#ifdef  B3000000
++ {3000000, B3000000},
++#endif
++#ifdef  B3500000
++ {1000000, B3500000},
++#endif
++#ifdef  B4000000
++ {4000000, B4000000},
+ #endif
+  {-1, B0}
+ };
