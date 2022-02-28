@@ -1,57 +1,69 @@
-From: Thomas Osterried <thomas@osterried.de>
-Subject: Re: [AX25] unreleased sockets after disconnecting
-Date: Sun, 20 Feb 2022 10:18:13 +0100
-Message-ID: <6D71ECB7-775D-4D98-B856-C48B88E4DF7C@osterried.de>
-References: <4B2CD772.1030106@upmc.fr> <4B2D1025.1020106@gmail.com>
- <4B2E6729.1090102@free.fr> <4B507FAA.8010007@free.fr>
- <20100115203654.GA3084@del.dom.local> <4DFA6A59.2000709@free.fr>
- <581f0c8e-f4fb-523d-df6e-7a973b506c34@sorbonne-universite.fr>
- <207b1242-dfb9-1832-c7f6-c4602ad2e9e6@free.fr>
-Mime-Version: 1.0 (Mac OS X Mail 15.0 \(3693.40.0.1.81\))
-Content-Transfer-Encoding: 8BIT
-Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <207b1242-dfb9-1832-c7f6-c4602ad2e9e6@free.fr>
+From: Qing Wang <wangqing@vivo.com>
+Subject: [PATCH] net: hamradio: use time_is_after_jiffies() instead of open coding it
+Date: Sun, 27 Feb 2022 19:13:31 -0800
+Message-ID: <1646018012-61129-1-git-send-email-wangqing@vivo.com>
+Mime-Version: 1.0
+Return-path: <netdev-owner@vger.kernel.org>
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=vivo0.onmicrosoft.com;
+ s=selector2-vivo0-onmicrosoft-com;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=Qr+UbYZ/pNxnajqZq1NUECl1yH+wciNlUhp6REVVXZg=;
+ b=G/lz6ow2MtHQSmFDN0v7mjAMkxL1lpWJ70PJFydOfDLeBB4LdS64QoHEWpT6VRAqsxvdw9dguv+fbqrSF1RhtdwFD8tqQe5vp4L0+i9j1S3dpuQwaEvpjao1ERSwszm08cx6Pe0Z0r7LLnDkNSc/UEZ4JpHKcKpSSf/jGS2C9+U=
 List-ID: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
-To: "Bernard Pidoux , f6bvp" <f6bvp@free.fr>
-Cc: linux-hams@vger.kernel.org
+Content-Transfer-Encoding: 7bit
+To: Joerg Reuter <jreuter@yaina.de>, "David S. Miller" <davem@davemloft.net>, Jakub Kicinski <kuba@kernel.org>, linux-hams@vger.kernel.org, netdev@vger.kernel.org, linux-kernel@vger.kernel.org
+Cc: Wang Qing <wangqing@vivo.com>
 
+From: Wang Qing <wangqing@vivo.com>
 
+Use the helper function time_is_{before,after}_jiffies() to improve
+code readability.
 
-> Am 06.02.2022 um 22:12 schrieb Bernard Pidoux , f6bvp <f6bvp@free.fr>:
-> 
-> For long time it as been reported by many AX.25 users that connexions were precluded after terminating a connexion with a remote station.
-> 
-> Some hamradio maintainers have been pretending not to be aware of such issue for lacking proofs.
+Signed-off-by: Wang Qing <wangqing@vivo.com>
+---
+ drivers/net/hamradio/dmascc.c | 7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
-The problem is known. Iirc correctly, we have seen some approaches over the years to fix this issue. The last one I'd like to discuss is by YO2LOJ
-(Subject "NET/ROM bug fix from YO2LOJ?" in this list):
+diff --git a/drivers/net/hamradio/dmascc.c b/drivers/net/hamradio/dmascc.c
+index 7e52749..6e7d17a
+--- a/drivers/net/hamradio/dmascc.c
++++ b/drivers/net/hamradio/dmascc.c
+@@ -28,6 +28,7 @@
+ #include <asm/io.h>
+ #include <asm/irq.h>
+ #include <linux/uaccess.h>
++#include <linux/jiffies.h>
+ #include <net/ax25.h>
+ #include "z8530.h"
+ 
+@@ -377,7 +378,7 @@ static int __init dmascc_init(void)
+ 		udelay(2000000 / TMR_0_HZ);
+ 
+ 		/* Timing loop */
+-		while (jiffies - time < 13) {
++		while (time_is_after_jiffies(time + 13)) {
+ 			for (i = 0; i < hw[h].num_devs; i++)
+ 				if (base[i] && counting[i]) {
+ 					/* Read back Timer 1: latch; read LSB; read MSB */
+@@ -525,7 +526,7 @@ static int __init setup_adapter(int card_base, int type, int n)
+ 
+ 	/* Wait and detect IRQ */
+ 	time = jiffies;
+-	while (jiffies - time < 2 + HZ / TMR_0_HZ);
++	while (time_is_after_jiffies(time + 2 + HZ / TMR_0_HZ));
+ 	irq = probe_irq_off(irqs);
+ 
+ 	/* Clear pending interrupt, disable interrupts */
+@@ -1353,7 +1354,7 @@ static void es_isr(struct scc_priv *priv)
+ 		/* Switch state */
+ 		write_scc(priv, R15, 0);
+ 		if (priv->tx_count &&
+-		    (jiffies - priv->tx_start) < priv->param.txtimeout) {
++		    time_is_after_jiffies(priv->tx_start + priv->param.txtimeout) {
+ 			priv->state = TX_PAUSE;
+ 			start_timer(priv, priv->param.txpause, 0);
+ 		} else {
+-- 
+2.7.4
 
-That patch is against the problem, that disconnected sessions still are listet, in "LISTENING" state'.
-
-I'm not sure if it is exactly your problem, because in your /proc/net/ax25 example, those sessions seem to belong to iface "???" instead of "ax0".
-
-I can reproduce (testet last week) is the following:
-boot
-configure ax25 iface
-no userspace process started
-connect from outside
-disconnect from outside
--> 
-netstat --ax25 shows that session in LISTEN state. In contrast to your output, it refers to the interface (not to "???").
-
-
-The problem with the patch is, we observed a new, in my opinion unliked, behavior:
-now a new connection is disconnected instantly (as long as no userspace daemon is listening).
-But there are protocols like "IP mode VC" need to be able to connect, even when no userspace daemon is running.
-
-> I must restart my packet radio FPAC node (AX.25, ROSE and NetRom protocoles) every other hour in order to let connexions available again for neighbours.
-
-Perhaps you could try YO2LOJ's kernel patch and test if it helps for your urgent problem, or if there's another problem in the session-cleanup code.
-
-> Here are some evidence from cat  /proc/net/ax25 showing old remnants of connexions presumably there for ax25 sockets were not released.
-> 
-> 73 de Bernard, f6bvp
-
-vy 73,
-	- Thomas  dl9sau
