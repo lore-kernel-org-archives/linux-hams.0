@@ -1,69 +1,50 @@
-From: Qing Wang <wangqing@vivo.com>
-Subject: [PATCH] net: hamradio: use time_is_after_jiffies() instead of open coding it
-Date: Sun, 27 Feb 2022 19:13:31 -0800
-Message-ID: <1646018012-61129-1-git-send-email-wangqing@vivo.com>
+From: patchwork-bot+netdevbpf@kernel.org
+Subject: Re: [PATCH] net: hamradio: use time_is_after_jiffies() instead of open
+ coding it
+Date: Mon, 28 Feb 2022 13:30:59 +0000
+Message-ID: <164605505952.13902.7199174306567919754.git-patchwork-notify@kernel.org>
+References: <1646018012-61129-1-git-send-email-wangqing@vivo.com>
 Mime-Version: 1.0
+Content-Transfer-Encoding: 8bit
 Return-path: <netdev-owner@vger.kernel.org>
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=vivo0.onmicrosoft.com;
- s=selector2-vivo0-onmicrosoft-com;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=Qr+UbYZ/pNxnajqZq1NUECl1yH+wciNlUhp6REVVXZg=;
- b=G/lz6ow2MtHQSmFDN0v7mjAMkxL1lpWJ70PJFydOfDLeBB4LdS64QoHEWpT6VRAqsxvdw9dguv+fbqrSF1RhtdwFD8tqQe5vp4L0+i9j1S3dpuQwaEvpjao1ERSwszm08cx6Pe0Z0r7LLnDkNSc/UEZ4JpHKcKpSSf/jGS2C9+U=
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1646055059;
+        bh=055+r7Bv0YKZLvW2yw6sPT6DWnJzO/MTP8OxhUtCSac=;
+        h=Subject:From:Date:References:In-Reply-To:To:Cc:From;
+        b=E584kEgauBkAa3o8F4en2NVEZC4Hk4ZoqFTLbuItRh27GHeySF6/923XzN5UXuP/b
+         INGgWhp8e7E/rsaATEq16lh9k+h13PIKyBXqSc+bu7X+lvYKOCxTWeAHGp/feK67T4
+         d+BxSZxZAUyAyrKhQxmpkmsR0bTTAvSZQuDjKJ92G+xiCEi4Q1cDjIFGcyzt6qiB5W
+         c9s1eCSLXs3P6pdURXzwE1GahI581Ep7y/Ebsck+gBY9ubuRA/e3K9R3XzaDCtFzjd
+         iUGokDX6+uvEMMtMuTfJ9UnNnl5QVN3Hzpf9QDzB5O20XDnFG4leONFkwYxb85bwKh
+         cK3OFRLKoeQDg==
+In-Reply-To: <1646018012-61129-1-git-send-email-wangqing@vivo.com>
 List-ID: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-To: Joerg Reuter <jreuter@yaina.de>, "David S. Miller" <davem@davemloft.net>, Jakub Kicinski <kuba@kernel.org>, linux-hams@vger.kernel.org, netdev@vger.kernel.org, linux-kernel@vger.kernel.org
-Cc: Wang Qing <wangqing@vivo.com>
+To: Qing Wang <wangqing@vivo.com>
+Cc: jreuter@yaina.de, davem@davemloft.net, kuba@kernel.org, linux-hams@vger.kernel.org, netdev@vger.kernel.org, linux-kernel@vger.kernel.org
 
-From: Wang Qing <wangqing@vivo.com>
+Hello:
 
-Use the helper function time_is_{before,after}_jiffies() to improve
-code readability.
+This patch was applied to netdev/net-next.git (master)
+by David S. Miller <davem@davemloft.net>:
 
-Signed-off-by: Wang Qing <wangqing@vivo.com>
----
- drivers/net/hamradio/dmascc.c | 7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+On Sun, 27 Feb 2022 19:13:31 -0800 you wrote:
+> From: Wang Qing <wangqing@vivo.com>
+> 
+> Use the helper function time_is_{before,after}_jiffies() to improve
+> code readability.
+> 
+> Signed-off-by: Wang Qing <wangqing@vivo.com>
+> 
+> [...]
 
-diff --git a/drivers/net/hamradio/dmascc.c b/drivers/net/hamradio/dmascc.c
-index 7e52749..6e7d17a
---- a/drivers/net/hamradio/dmascc.c
-+++ b/drivers/net/hamradio/dmascc.c
-@@ -28,6 +28,7 @@
- #include <asm/io.h>
- #include <asm/irq.h>
- #include <linux/uaccess.h>
-+#include <linux/jiffies.h>
- #include <net/ax25.h>
- #include "z8530.h"
- 
-@@ -377,7 +378,7 @@ static int __init dmascc_init(void)
- 		udelay(2000000 / TMR_0_HZ);
- 
- 		/* Timing loop */
--		while (jiffies - time < 13) {
-+		while (time_is_after_jiffies(time + 13)) {
- 			for (i = 0; i < hw[h].num_devs; i++)
- 				if (base[i] && counting[i]) {
- 					/* Read back Timer 1: latch; read LSB; read MSB */
-@@ -525,7 +526,7 @@ static int __init setup_adapter(int card_base, int type, int n)
- 
- 	/* Wait and detect IRQ */
- 	time = jiffies;
--	while (jiffies - time < 2 + HZ / TMR_0_HZ);
-+	while (time_is_after_jiffies(time + 2 + HZ / TMR_0_HZ));
- 	irq = probe_irq_off(irqs);
- 
- 	/* Clear pending interrupt, disable interrupts */
-@@ -1353,7 +1354,7 @@ static void es_isr(struct scc_priv *priv)
- 		/* Switch state */
- 		write_scc(priv, R15, 0);
- 		if (priv->tx_count &&
--		    (jiffies - priv->tx_start) < priv->param.txtimeout) {
-+		    time_is_after_jiffies(priv->tx_start + priv->param.txtimeout) {
- 			priv->state = TX_PAUSE;
- 			start_timer(priv, priv->param.txpause, 0);
- 		} else {
+Here is the summary with links:
+  - net: hamradio: use time_is_after_jiffies() instead of open coding it
+    https://git.kernel.org/netdev/net-next/c/61c4fb9c4d09
+
+You are awesome, thank you!
 -- 
-2.7.4
+Deet-doot-dot, I am a bot.
+https://korg.docs.kernel.org/patchwork/pwbot.html
+
 
