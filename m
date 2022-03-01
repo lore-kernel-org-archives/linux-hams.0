@@ -1,69 +1,77 @@
-From: Qing Wang <wangqing@vivo.com>
-Subject: [PATCH V2] net: hamradio: use time_is_after_jiffies() instead of open coding it
-Date: Tue,  1 Mar 2022 04:26:16 -0800
-Message-ID: <1646137579-74993-1-git-send-email-wangqing@vivo.com>
+From: David Ranch <linux-hams@trinnet.net>
+Subject: Re: [PATCH] libax25 hamradio: higher baud rate support
+Date: Tue, 1 Mar 2022 07:54:12 -0800
+Message-ID: <440dc67d-55a2-64c0-bbdf-68b17b404fc5@trinnet.net>
+References: <CAO-kYtEhzohMYgk=K_jt0hQ+bdrmReUVBkAzMYTKJeAK9vcenQ@mail.gmail.com>
 Mime-Version: 1.0
-Return-path: <linux-hams-owner@vger.kernel.org>
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=vivo0.onmicrosoft.com;
- s=selector2-vivo0-onmicrosoft-com;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=QhiAku5LeJpF8dIyxxB/WzRL7R2lu7jVlo0UhDwjO1I=;
- b=cgBDREK1pR53RnQtb0oOrCzu3zeYz+al2pCXlJaJtw5b2/vI0tKmzO2Oh+q+xWB6Tllhh8z/jpj/X2giNwbvs9pxpGG1mPDBHohKSETLumHCu847AixeseNBv54xiPuDR5uwJAUfx6yP5kkX0iekGt+C0hjcGQBSQxwSOwW4jlE=
-List-ID: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
-To: Joerg Reuter <jreuter@yaina.de>, "David S. Miller" <davem@davemloft.net>, Jakub Kicinski <kuba@kernel.org>, linux-hams@vger.kernel.org, netdev@vger.kernel.org, linux-kernel@vger.kernel.org
-Cc: Wang Qing <wangqing@vivo.com>
+Return-path: <linux-hams-owner@vger.kernel.org>
+In-Reply-To: <CAO-kYtEhzohMYgk=K_jt0hQ+bdrmReUVBkAzMYTKJeAK9vcenQ@mail.gmail.com>
+List-ID: <linux-hams.vger.kernel.org>
+Content-Type: text/plain; charset="us-ascii"; format="flowed"
+To: John Paul Morrison <jmorrison@bogomips.com>, linux-hams@vger.kernel.org
+Cc: Thomas Osterried <thomas@osterried.de>
 
-From: Wang Qing <wangqing@vivo.com>
 
-Use the helper function time_is_{before,after}_jiffies() to improve
-code readability.
+Maybe there is no harm in allowing such speeds to be configured but what 
+kiss-capable AX.25 serial devices can support such serial speeds?  Maybe 
+just back to back serial port connected Linux computers?
 
-Signed-off-by: Wang Qing <wangqing@vivo.com>
----
- drivers/net/hamradio/dmascc.c | 7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+--David
+KI6ZHD
 
-diff --git a/drivers/net/hamradio/dmascc.c b/drivers/net/hamradio/dmascc.c
-index 7e52749..6e7d17a
---- a/drivers/net/hamradio/dmascc.c
-+++ b/drivers/net/hamradio/dmascc.c
-@@ -28,6 +28,7 @@
- #include <asm/io.h>
- #include <asm/irq.h>
- #include <linux/uaccess.h>
-+#include <linux/jiffies.h>
- #include <net/ax25.h>
- #include "z8530.h"
- 
-@@ -377,7 +378,7 @@ static int __init dmascc_init(void)
- 		udelay(2000000 / TMR_0_HZ);
- 
- 		/* Timing loop */
--		while (jiffies - time < 13) {
-+		while (time_is_after_jiffies(time + 13)) {
- 			for (i = 0; i < hw[h].num_devs; i++)
- 				if (base[i] && counting[i]) {
- 					/* Read back Timer 1: latch; read LSB; read MSB */
-@@ -525,7 +526,7 @@ static int __init setup_adapter(int card_base, int type, int n)
- 
- 	/* Wait and detect IRQ */
- 	time = jiffies;
--	while (jiffies - time < 2 + HZ / TMR_0_HZ);
-+	while (time_is_after_jiffies(time + 2 + HZ / TMR_0_HZ));
- 	irq = probe_irq_off(irqs);
- 
- 	/* Clear pending interrupt, disable interrupts */
-@@ -1353,7 +1354,7 @@ static void es_isr(struct scc_priv *priv)
- 		/* Switch state */
- 		write_scc(priv, R15, 0);
- 		if (priv->tx_count &&
--		    (jiffies - priv->tx_start) < priv->param.txtimeout) {
-+		    time_is_after_jiffies(priv->tx_start + priv->param.txtimeout)) {
- 			priv->state = TX_PAUSE;
- 			start_timer(priv, priv->param.txpause, 0);
- 		} else {
--- 
-2.7.4
+
+On 02/28/2022 10:46 AM, John Paul Morrison wrote:
+> The kissattach program rejects valid baud rates in /etc/ax25/axports
+> so I updated libax25
+>
+> I tested on x86_64 and armv7l (Raspberry Pi)  up to 1.5 Mbps
+>
+> VE7JPM
+>
+>
+> Signed-off-by: John Paul Morrison<jmorrison@bogomips.com>
+> ---
+>
+> diff --git a/ttyutils.c b/ttyutils.c
+> index a374103..981d630 100644
+> --- a/ttyutils.c
+> +++ b/ttyutils.c
+> @@ -32,6 +32,36 @@ static struct speed_struct {
+>   #endif
+>   #ifdef  B460800
+>    {460800, B460800},
+> +#endif
+> +#ifdef  B500000
+> + {500000, B500000},
+> +#endif
+> +#ifdef  B921600
+> + {921600, B921600},
+> +#endif
+> +#ifdef  B1000000
+> + {1000000, B1000000},
+> +#endif
+> +#ifdef  B1152000
+> + {1152000, B1152000},
+> +#endif
+> +#ifdef  B1500000
+> + {1500000, B1500000},
+> +#endif
+> +#ifdef  B2000000
+> + {2000000, B2000000},
+> +#endif
+> +#ifdef  B2500000
+> + {2500000, B2500000},
+> +#endif
+> +#ifdef  B3000000
+> + {3000000, B3000000},
+> +#endif
+> +#ifdef  B3500000
+> + {1000000, B3500000},
+> +#endif
+> +#ifdef  B4000000
+> + {4000000, B4000000},
+>   #endif
+>    {-1, B0}
+>   };
 
