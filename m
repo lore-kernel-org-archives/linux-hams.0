@@ -1,52 +1,78 @@
-From: David Ranch <dranch@trinnet.net>
-Subject: Re: Wireshark ax25 dissector
-Date: Wed, 2 Mar 2022 11:47:17 -0800
-Message-ID: <ad99bc17-9a89-9524-b7d8-81a4582e0380@trinnet.net>
-References: <20220301173317.AF98C28A6C6@yagi.h-net.msu.edu>
- <621F8677.3000008@rns-stearn.co.uk>
+From: Roland Schwarz <roland.schwarz@blackspace.at>
+Subject: Kernel freeze on killall kissattach
+Date: Sun, 6 Mar 2022 15:18:14 +0100
+Message-ID: <e037cff4-87fa-ce95-438d-66be0754c6b2@blackspace.at>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
+Content-Type: multipart/signed; micalg=pgp-sha256;
+ protocol="application/pgp-signature";
+ boundary="------------x3QazEQYJmm5xqj5GHTRpUCv"
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <621F8677.3000008@rns-stearn.co.uk>
+Content-Language: en-US
 List-ID: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"; format="flowed"
-To: Richard Stearn <richard@rns-stearn.co.uk>, Linux Hams <linux-hams@vger.kernel.org>
+To: linux-hams@vger.kernel.org
 
+This is an OpenPGP/MIME signed message (RFC 4880 and 3156)
+--------------x3QazEQYJmm5xqj5GHTRpUCv
+Content-Type: multipart/mixed; boundary="------------H0kwL4I6S8TAVjHbZ77qfYzz";
+ protected-headers="v1"
+From: Roland Schwarz <roland.schwarz@blackspace.at>
+To: linux-hams@vger.kernel.org
+Message-ID: <e037cff4-87fa-ce95-438d-66be0754c6b2@blackspace.at>
+Subject: Kernel freeze on killall kissattach
 
-Hello Richard,
+--------------H0kwL4I6S8TAVjHbZ77qfYzz
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: base64
 
-Ah... I think I understand now and this more of an AX-IP filter and not 
-a standard AX.25 callsign filter.  I guess the more appropriate filter 
-name should be "ax25.srcmac"?
+RGVhciBBbGwsDQoNCnBsZWFzZSBjb3JyZWN0IG1lIGlmIEkgYW0gd3JvbmcsIGJ1dCBhcyBJ
+IHVuZGVyc3RhbmQgaXQgc2hvdWxkIG5vdCBiZSANCnBvc3NpYmxlIHRvIHRyaWdnZXIgYSBr
+ZXJuZWwgZnJlZXplIGJ5IGp1c3Qga2lsbGluZyB1c2VyIHNwYWNlIHByb2Nlc3Nlcy4NCg0K
+V2hpbGUgdHJ5aW5nIHRvIHVuZGVyc3RhbmQgYSBjZXJ0YWluIGJlaGF2aW9yIG9mIHRoZSBh
+eDI1IGRyaXZlciBJIGNhbWUgDQp1cCB3aXRoIGEgc21hbGwgdGVzdCBjYXNlIHdoaWNoIEkg
+cmFuIGluIGEgdmlydHVhbCBtYWNoaW5lIChLVk0pOg0KDQpGaXJzdCBJIHRyaWVkIHdpdGgg
+YSBrZXJuZWwgZnJvbSBMaW51cyB0cmVlOg0KDQp1bmFtZSAtcg0KNS4xNy4wLXJjNisNCg0K
+Y2F0IC9ldGMvYXgyNS9heHBvcnRzDQpheDAgICAgIE9FMVJTQS0wICAgICAgICAxMTUyMDAg
+IDI1NSAgICAgNyAgICAgICBUZXN0IEENCmF4MSAgICAgT0UxUlNBLTEgICAgICAgIDExNTIw
+MCAgMjU1ICAgICA3ICAgICAgIFRlc3QgQg0KDQpzdWRvIGtpc3NhdHRhY2ggL2Rldi9wdG14
+IGF4MA0KQVguMjUgcG9ydCBheDAgYm91bmQgdG8gZGV2aWNlIGF4MA0KQXdhaXRpbmcgY2xp
+ZW50IGNvbm5lY3RzIG9uDQovZGV2L3B0cy8xDQoNCnN1ZG8ga2lzc2F0dGFjaCAvZGV2L3B0
+cy8xIGF4MQ0KQVguMjUgcG9ydCBheDEgYm91bmQgdG8gZGV2aWNlIGF4MQ0KDQpheGNhbGwg
+YXgxIE9FMVJTQS0wDQoNCk5vdyBpbiBhIHNlY29uZCB0ZXJtaW5hbDoNCnN1ZG8ga2lsbGFs
+bCBraXNzYXR0YWNoDQoNCkZpcnN0IHRlcm1pbmFsOg0KR1c0UFRTIEFYLjI1IENvbm5lY3Qg
+djEuMTENClRyeWluZy4uLg0KKioqIENvbm5lY3RlZCB0byBPRTFSU0EtMA0KKioqIENsZWFy
+ZWQNCg0KPT0+IEJ1dDogS2VybmVsIGZyZWV6ZXMNCg0KSSBjYW4gc2VlIHRoaXMgYmVoYXZp
+b3VyIGFsc28gaW4gdGhlIGRlYmlhbiBrZXJuZWw6DQoNCnVuYW1lIC1yDQo1LjEwLjAtMTEt
+YW1kNjQNCg0KVGhpcyBrZXJuZWwgYWxzbyBmcmVlemVzLiBJIHN1c3BlY3QgdGhpcyB0byBi
+ZSBhIGJ1ZyBiZWNhdXNlIGlmIEkgdHJ5IHRvIA0KcmVib290IHRoZSBtYWNoaW5lIGluc3Rl
+YWQgb2YgdGhlIGtpbGxhbGwgY29tbWFuZCB0aGUgbWFjaGluZSBkb2VzIG5vdCANCnNodXQg
+b2ZmIGFuZCByZWJvb3Qgd2hpY2ggaXMgYSBwcm9ibGVtIHdpdGggYSByZW1vdGVseSBpbnN0
+YWxsZWQgc3lzdGVtLg0KDQpBbnkgaWRlYXM/DQoNCjczIGRlIFJvbGFuZCBvZTFyc2ENCg0K
+LS0gDQpfX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX18NCiAgIF8g
+IF8gIHwgUm9sYW5kIFNjaHdhcnoNCiAgfF8pKF8gIHwNCiAgfCBcX18pIHwgbWFpbHRvOnJv
+bGFuZC5zY2h3YXJ6QGJsYWNrc3BhY2UuYXQNCl9fX19fX19ffCBodHRwOi8vd3d3LmJsYWNr
+c3BhY2UuYXQNCg==
 
---David
-KI6ZHD
+--------------H0kwL4I6S8TAVjHbZ77qfYzz--
 
+--------------x3QazEQYJmm5xqj5GHTRpUCv
+Content-Type: application/pgp-signature; name="OpenPGP_signature.asc"
+Content-Description: OpenPGP digital signature
+Content-Disposition: attachment; filename="OpenPGP_signature"
 
-On 03/02/2022 07:00 AM, Richard Stearn wrote:
-> Dennis Boone wrote:
->
->> I'm having trouble getting Wireshark's ax25 dissector to process
->> callsign filters properly.  I can't get _anything_ to match. I've tried
->> expressions like:
->
-> The ax25 dissector never had the ability to filter on a callsign in 
-> the form <CALL>-<SSID> it has always used the builtin filter primitives.
->
-> See "man wireshark-filter"
->
-> So to filter on KB8ZQZ you would use:
->
->     ax25.src[0:6] == 97:85:71:B5:A3:B5
->
-> to filter on the source address or
->
->     ax25.dst[0:6] == 97:85:71:B5:A3:B5
->
-> You can find the hexadecimal in the AX.25 line in brackets after the
-> callsign.
->
-> So it is not a bug per se.  More of the point at which I had to abandon
-> development due to ill health.
->
+-----BEGIN PGP SIGNATURE-----
 
+wsF5BAABCAAjFiEELmDUtkkUQD99pU+KklFj+hFsiUgFAmIkwqYFAwAAAAAACgkQklFj+hFsiUgi
+xxAAqQK+EpoLCi7LN9B6g0cersCbluY8WZ6N7HqHav/hlrmw1SlRvcPwAxW0/Nu+WBe0XJ3yuGHC
+518Zq8PRy1lDne+P8OxP7WmUFEptO/npEV6oleyH8clXbf2FE3WVeNTayecCElSS6q/LPThuZVFO
+0iYzqZ2VefIoOSQ2icGOXdFi7JB+TKm4pRCQG3wOnj0G694QDVegfRmJk9GNjn8dHnlwfIVdeWGi
+6mSsZenICtlR9VcGCOAdtrIf/hGl2Eg5O4D8sLyxiyN3woKlbBIOIW7T/eH3cpVAzBZ7oXErn/ha
+IkvcBCNcs0S2gSdZP5NV0J5zcnobTs9BLH2l8b46DN+sFTDA5/FjkoK3MggxFzIKAZC9YR/wtoPL
+fFMmgHQxxEzjM3vaIk2Yx8qaa8WWZAJs/Nzf6vuai+Taoi7B+V+rhjLp9SZKfu9pFVaWR4t+6pgN
+Zt/R4gqtxH6SephkQ80ckZBCqxsgKO5GidJ1mh5BHJC9TQ4WJw8IzZO2T2Gosqp2V8vL70sT31fl
+IReHrHMDxoo+qumM5ZK+01Wk0FfjCQUCUKis26aGQlVEXhwHMTcxzphleXUFHx8zlHulm6bnQulX
+bPldAH+pxyAgfwSGiumk55/kQC8CtlFpbkcu4EFc96EVBCqnXcxr5+dzuidIsTJCE1UHcC7EG1Xz
+W7s=
+=+8Kb
+-----END PGP SIGNATURE-----
+
+--------------x3QazEQYJmm5xqj5GHTRpUCv--
