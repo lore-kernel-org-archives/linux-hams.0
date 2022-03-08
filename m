@@ -1,41 +1,66 @@
-From: Dan Carpenter <dan.carpenter@oracle.com>
-Subject: Re: Kernel freeze on killall kissattach
-Date: Mon, 7 Mar 2022 13:52:25 +0300
-Message-ID: <20220307105225.GB3293@kadam>
-References: <e037cff4-87fa-ce95-438d-66be0754c6b2@blackspace.at>
- <YiUE9XaViss5I2HR@x-berg.in-berlin.de>
-Mime-Version: 1.0
+From: Duoming Zhou <duoming@zju.edu.cn>
+Subject: [PATCH] ax25: Fix NULL pointer dereference in ax25_kill_by_device
+Date: Tue,  8 Mar 2022 16:12:23 +0800
+Message-ID: <20220308081223.15919-1-duoming@zju.edu.cn>
 Return-path: <linux-hams-owner@vger.kernel.org>
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=date : from : to : cc
- : subject : message-id : references : content-type : in-reply-to :
- mime-version; s=corp-2021-07-09;
- bh=ojj6kRvLIiRoxI+3o9EiIVYdgyRDmuQR6OwytSX5f5g=;
- b=DVpmdElQlTBzFxhSprnnXVyHGdmcqFHECSsNbQvRMcW2APIYBq4hEVYTDQKGp+ROHkrG
- 9655aNZ1BdwRQIsAZS7FekqmM3CbL7YY+G3COtIeyTlsra4nl+C0NntwAB389B7n7SYe
- wG8t2ULaGCOeAWGFlToxeYvp7BJrH5Zbvtjy071hYLIJqsKHtiR/jhgUuZVxOBlCm/Dv
- 4edVJSfSfGzs48QrekzumPH+cHSCApwbY0HRQiW2i0QdRymydNu4uzNXTis7vjpiUkdg
- 1fw3lktvwk3bkju0ugB3zcLHyHcYteXbZU8ji+3aRn+0W7+u/+TgYxNb50cCtbRDJjxI HA== 
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oracle.onmicrosoft.com; s=selector2-oracle-onmicrosoft-com;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=ojj6kRvLIiRoxI+3o9EiIVYdgyRDmuQR6OwytSX5f5g=;
- b=I05nNv1ICYzHtCDqS9nkrFEXuTK/+misZBSL2sJvZBLj5HpBWXZAEbaeo3Alk2x0O4l1qz9fUOI7xsnAwrWkqArdCaosNL6M9fVk38VZ/ikmVSG5AyCoANX1fnsJ94b5H5dcuve32jqo6NvdDhuy0pzqVjHDXqBytuS/+bKdV7g=
-Content-Disposition: inline
-In-Reply-To: <YiUE9XaViss5I2HR@x-berg.in-berlin.de>
 List-ID: <linux-hams.vger.kernel.org>
+MIME-Version: 1.0
 Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
-To: Thomas Osterried <thomas@osterried.de>
-Cc: Roland Schwarz <roland.schwarz@blackspace.at>, linux-hams@vger.kernel.org
+To: linux-hams@vger.kernel.org
+Cc: netdev@vger.kernel.org, linux-kernel@vger.kernel.org, kuba@kernel.org, davem@davemloft.net, ralf@linux-mips.org, jreuter@yaina.de, Duoming Zhou <duoming@zju.edu.cn>
 
-This email is very useful but none of the correct people are CC'd.  :/
-Please resend it with the following people CC list.
+When two ax25 devices attempted to establish connection, the requester use ax25_create(),
+ax25_bind() and ax25_connect() to initiate connection. The receiver use ax25_rcv() to
+accept connection and use ax25_create_cb() in ax25_rcv() to create ax25_cb, but the
+ax25_cb->sk is NULL. When the receiver is detaching, a NULL pointer dereference bug
+caused by sock_hold(sk) in ax25_kill_by_device() will happen. The corresponding
+fail log is shown below:
 
-Hanjie Wu <nagi@zju.edu.cn>
-Lin Ma <linma@zju.edu.cn>
-David S. Miller <davem@davemloft.net>
-netdev@vger.kernel.org
+===============================================================
+BUG: KASAN: null-ptr-deref in ax25_device_event+0xfd/0x290
+Call Trace:
+...
+ax25_device_event+0xfd/0x290
+raw_notifier_call_chain+0x5e/0x70
+dev_close_many+0x174/0x220
+unregister_netdevice_many+0x1f7/0xa60
+unregister_netdevice_queue+0x12f/0x170
+unregister_netdev+0x13/0x20
+mkiss_close+0xcd/0x140
+tty_ldisc_release+0xc0/0x220
+tty_release_struct+0x17/0xa0
+tty_release+0x62d/0x670
+...
 
-regards,
-dan carpenter
+This patch add condition check in ax25_kill_by_device(). If s->sk is
+NULL, it will goto if branch to kill device.
+
+Fixes: 4e0f718daf97 ("ax25: improve the incomplete fix to avoid UAF and NPD bugs")
+Reported-by: Thomas Osterried <thomas@osterried.de>
+Signed-off-by: Duoming Zhou <duoming@zju.edu.cn>
+---
+ net/ax25/af_ax25.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
+
+diff --git a/net/ax25/af_ax25.c b/net/ax25/af_ax25.c
+index d53cbb4e250..6bd09718077 100644
+--- a/net/ax25/af_ax25.c
++++ b/net/ax25/af_ax25.c
+@@ -87,6 +87,13 @@ static void ax25_kill_by_device(struct net_device *dev)
+ 	ax25_for_each(s, &ax25_list) {
+ 		if (s->ax25_dev == ax25_dev) {
+ 			sk = s->sk;
++			if (!sk) {
++				spin_unlock_bh(&ax25_list_lock);
++				s->ax25_dev = NULL;
++				ax25_disconnect(s, ENETUNREACH);
++				spin_lock_bh(&ax25_list_lock);
++				goto again;
++			}
+ 			sock_hold(sk);
+ 			spin_unlock_bh(&ax25_list_lock);
+ 			lock_sock(sk);
+--
+2.17.1
 
