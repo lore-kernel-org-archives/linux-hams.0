@@ -1,66 +1,49 @@
-From: Duoming Zhou <duoming@zju.edu.cn>
-Subject: [PATCH] ax25: Fix NULL pointer dereference in ax25_kill_by_device
-Date: Tue,  8 Mar 2022 16:12:23 +0800
-Message-ID: <20220308081223.15919-1-duoming@zju.edu.cn>
+From: patchwork-bot+netdevbpf@kernel.org
+Subject: Re: [PATCH] ax25: Fix NULL pointer dereference in ax25_kill_by_device
+Date: Wed, 09 Mar 2022 12:50:10 +0000
+Message-ID: <164683021074.2371.639793018206811147.git-patchwork-notify@kernel.org>
+References: <20220308081223.15919-1-duoming@zju.edu.cn>
+Mime-Version: 1.0
+Content-Transfer-Encoding: 8bit
 Return-path: <linux-hams-owner@vger.kernel.org>
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1646830210;
+        bh=I6ozOdglKxYbxHYFDFEkcL7osJhYjFDadHAfNPgMPFI=;
+        h=Subject:From:Date:References:In-Reply-To:To:Cc:From;
+        b=cGlkfYnpR/eAABCt2nS59oAeCyM60fcONQKj7SwKoaBj4ZNcyfKL8KcNY/qQceRpM
+         C5RuSyJIxuC0NUVTCwJCsYrBJKFaBNRznFtoxt35vKJXC9FlFInaxj4yZCDgbvwyM/
+         cTBO0hMp7SljK1ODE6OiYBSj6AcJ+HSczZD7QOxF2+M3vgFWxVOsA9nqqTdSfpjed1
+         mJCfUUmiFC6m8Wfsj5OoLGBiXkB/DYwcOsBcojfWS7ZzEQ2e4Be1Cjg8ay0J6brBG6
+         SoUJoBpgofDL/HZgfdhg2SmV2KxUacWKQluWVkkQYB3sh+ynNh4ZN9btkZ8GRQlLE3
+         pIBuSbIIegs9w==
+In-Reply-To: <20220308081223.15919-1-duoming@zju.edu.cn>
 List-ID: <linux-hams.vger.kernel.org>
-MIME-Version: 1.0
 Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-To: linux-hams@vger.kernel.org
-Cc: netdev@vger.kernel.org, linux-kernel@vger.kernel.org, kuba@kernel.org, davem@davemloft.net, ralf@linux-mips.org, jreuter@yaina.de, Duoming Zhou <duoming@zju.edu.cn>
+To: Duoming Zhou <duoming@zju.edu.cn>
+Cc: linux-hams@vger.kernel.org, netdev@vger.kernel.org, linux-kernel@vger.kernel.org, kuba@kernel.org, davem@davemloft.net, ralf@linux-mips.org, jreuter@yaina.de
 
-When two ax25 devices attempted to establish connection, the requester use ax25_create(),
-ax25_bind() and ax25_connect() to initiate connection. The receiver use ax25_rcv() to
-accept connection and use ax25_create_cb() in ax25_rcv() to create ax25_cb, but the
-ax25_cb->sk is NULL. When the receiver is detaching, a NULL pointer dereference bug
-caused by sock_hold(sk) in ax25_kill_by_device() will happen. The corresponding
-fail log is shown below:
+Hello:
 
-===============================================================
-BUG: KASAN: null-ptr-deref in ax25_device_event+0xfd/0x290
-Call Trace:
-...
-ax25_device_event+0xfd/0x290
-raw_notifier_call_chain+0x5e/0x70
-dev_close_many+0x174/0x220
-unregister_netdevice_many+0x1f7/0xa60
-unregister_netdevice_queue+0x12f/0x170
-unregister_netdev+0x13/0x20
-mkiss_close+0xcd/0x140
-tty_ldisc_release+0xc0/0x220
-tty_release_struct+0x17/0xa0
-tty_release+0x62d/0x670
-...
+This patch was applied to netdev/net.git (master)
+by David S. Miller <davem@davemloft.net>:
 
-This patch add condition check in ax25_kill_by_device(). If s->sk is
-NULL, it will goto if branch to kill device.
+On Tue,  8 Mar 2022 16:12:23 +0800 you wrote:
+> When two ax25 devices attempted to establish connection, the requester use ax25_create(),
+> ax25_bind() and ax25_connect() to initiate connection. The receiver use ax25_rcv() to
+> accept connection and use ax25_create_cb() in ax25_rcv() to create ax25_cb, but the
+> ax25_cb->sk is NULL. When the receiver is detaching, a NULL pointer dereference bug
+> caused by sock_hold(sk) in ax25_kill_by_device() will happen. The corresponding
+> fail log is shown below:
+> 
+> [...]
 
-Fixes: 4e0f718daf97 ("ax25: improve the incomplete fix to avoid UAF and NPD bugs")
-Reported-by: Thomas Osterried <thomas@osterried.de>
-Signed-off-by: Duoming Zhou <duoming@zju.edu.cn>
----
- net/ax25/af_ax25.c | 7 +++++++
- 1 file changed, 7 insertions(+)
+Here is the summary with links:
+  - ax25: Fix NULL pointer dereference in ax25_kill_by_device
+    https://git.kernel.org/netdev/net/c/71171ac8eb34
 
-diff --git a/net/ax25/af_ax25.c b/net/ax25/af_ax25.c
-index d53cbb4e250..6bd09718077 100644
---- a/net/ax25/af_ax25.c
-+++ b/net/ax25/af_ax25.c
-@@ -87,6 +87,13 @@ static void ax25_kill_by_device(struct net_device *dev)
- 	ax25_for_each(s, &ax25_list) {
- 		if (s->ax25_dev == ax25_dev) {
- 			sk = s->sk;
-+			if (!sk) {
-+				spin_unlock_bh(&ax25_list_lock);
-+				s->ax25_dev = NULL;
-+				ax25_disconnect(s, ENETUNREACH);
-+				spin_lock_bh(&ax25_list_lock);
-+				goto again;
-+			}
- 			sock_hold(sk);
- 			spin_unlock_bh(&ax25_list_lock);
- 			lock_sock(sk);
---
-2.17.1
+You are awesome, thank you!
+-- 
+Deet-doot-dot, I am a bot.
+https://korg.docs.kernel.org/patchwork/pwbot.html
+
 
