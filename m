@@ -1,7 +1,7 @@
 From: Duoming Zhou <duoming@zju.edu.cn>
-Subject: [PATCH] ax25: Fix memory leaks caused by ax25_cb_del()
-Date: Wed,  9 Mar 2022 23:06:08 +0800
-Message-ID: <20220309150608.112090-1-duoming@zju.edu.cn>
+Subject: [PATCH V2] ax25: Fix refcount leaks caused by ax25_cb_del()
+Date: Thu, 10 Mar 2022 07:00:20 +0800
+Message-ID: <20220309230020.125785-1-duoming@zju.edu.cn>
 Return-path: <linux-hams-owner@vger.kernel.org>
 List-ID: <linux-hams.vger.kernel.org>
 MIME-Version: 1.0
@@ -14,8 +14,8 @@ The previous commit d01ffb9eee4a ("ax25: add refcount in ax25_dev to
 avoid UAF bugs") and commit feef318c855a ("ax25: fix UAF bugs of
 net_device caused by rebinding operation") increase the refcounts of
 ax25_dev and net_device in ax25_bind() and decrease the matching refcounts
-in ax25_kill_by_device() in order to prevent UAF bugs. But there are memory
-leaks.
+in ax25_kill_by_device() in order to prevent UAF bugs. But there are
+reference count leaks.
 
 If we use ax25_bind() to increase the refcounts of ax25_dev and
 net_device, then, use ax25_cb_del() invoked by ax25_destroy_socket()
@@ -23,16 +23,19 @@ to delete ax25_cb in hlist before calling ax25_kill_by_device(), the
 decrements of refcounts in ax25_kill_by_device() will not be executed,
 because ax25_cb is deleted from the hlist.
 
-This patch adds two flags in ax25_dev in order to prevent memory leaks.
-If we bind successfully, then, use ax25_cb_del() to delete ax25_cb,
-the two "test_bit" condition checks in ax25_kill_by_device() could
-pass and the refcounts could be decreased properly.
+This patch adds two flags in ax25_dev in order to prevent reference
+count leaks. If we bind successfully, then, use ax25_cb_del() to
+delete ax25_cb, the two "test_bit" condition checks in ax25_kill_by_device()
+could pass and the refcounts could be decreased properly.
 
 Fixes: d01ffb9eee4a ("ax25: add refcount in ax25_dev to avoid UAF bugs")
 Fixes: feef318c855a ("ax25: fix UAF bugs of net_device caused by rebinding operation")
 Reported-by: Thomas Osterried <thomas@osterried.de>
 Signed-off-by: Duoming Zhou <duoming@zju.edu.cn>
 ---
+Changes in V2:
+  - Change memory leak to refcount leak.
+
  include/net/ax25.h  |  7 +++++--
  net/ax25/af_ax25.c  | 10 ++++++----
  net/ax25/ax25_dev.c |  3 ++-
