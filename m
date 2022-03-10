@@ -1,142 +1,59 @@
-From: Duoming Zhou <duoming@zju.edu.cn>
-Subject: [PATCH V2] ax25: Fix NULL pointer dereferences in ax25 timers
-Date: Thu, 10 Mar 2022 22:43:47 +0800
-Message-ID: <20220310144347.102465-1-duoming@zju.edu.cn>
-Return-path: <netdev-owner@vger.kernel.org>
+From: =?UTF-8?B?5ZGo5aSa5piO?= <duoming@zju.edu.cn>
+Subject: Re: Re: [PATCH] ax25: Fix memory leaks caused by ax25_cb_del()
+Date: Fri, 11 Mar 2022 00:01:20 +0800 (GMT+08:00)
+Message-ID: <2c28edff.f82b5.17f74902e09.Coremail.duoming@zju.edu.cn>
+References: <20220309150608.112090-1-duoming@zju.edu.cn>
+ <20220310130508.GG3315@kadam>
+Mime-Version: 1.0
+Content-Transfer-Encoding: base64
+Return-path: <linux-hams-owner@vger.kernel.org>
+In-Reply-To: <20220310130508.GG3315@kadam>
 List-ID: <linux-hams.vger.kernel.org>
-MIME-Version: 1.0
 Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-To: linux-hams@vger.kernel.org
-Cc: netdev@vger.kernel.org, linux-kernel@vger.kernel.org, kuba@kernel.org, davem@davemloft.net, ralf@linux-mips.org, jreuter@yaina.de, Duoming Zhou <duoming@zju.edu.cn>
+To: Dan Carpenter <dan.carpenter@oracle.com>
+Cc: linux-hams@vger.kernel.org, netdev@vger.kernel.org, linux-kernel@vger.kernel.org, jreuter@yaina.de, kuba@kernel.org, davem@davemloft.net, ralf@linux-mips.org, thomas@osterried.de
 
-There are race conditions that may lead to null pointer dereferences in
-ax25_heartbeat_expiry(), ax25_t1timer_expiry(), ax25_t2timer_expiry(),
-ax25_t3timer_expiry() and ax25_idletimer_expiry(), when we use
-ax25_kill_by_device() to detach the ax25 device.
-
-One of the race conditions that cause null pointer dereferences can be
-shown as below:
-
-      (Thread 1)                    |      (Thread 2)
-ax25_connect()                      |
- ax25_std_establish_data_link()     |
-  ax25_start_t1timer()              |
-   mod_timer(&ax25->t1timer,..)     |
-                                    | ax25_kill_by_device()
-   (wait a time)                    |  ...
-                                    |  s->ax25_dev = NULL; //(1)
-   ax25_t1timer_expiry()            |
-    ax25->ax25_dev->values[..] //(2)|  ...
-     ...                            |
-
-We set null to ax25_cb->ax25_dev in position (1) and dereference
-the null pointer in position (2).
-
-The corresponding fail log is shown below:
-===============================================================
-BUG: kernel NULL pointer dereference, address: 0000000000000050
-CPU: 1 PID: 0 Comm: swapper/1 Not tainted 5.17.0-rc6-00794-g45690b7d0
-RIP: 0010:ax25_t1timer_expiry+0x12/0x40
-...
-Call Trace:
- call_timer_fn+0x21/0x120
- __run_timers.part.0+0x1ca/0x250
- run_timer_softirq+0x2c/0x60
- __do_softirq+0xef/0x2f3
- irq_exit_rcu+0xb6/0x100
- sysvec_apic_timer_interrupt+0xa2/0xd0
-...
-
-This patch uses ax25_disconnect() to delete timers before we set null to
-ax25_cb->ax25_dev in ax25_kill_by_device(). Function ax25_disconnect()
-will not return until all timers are stopped, because we have changed
-del_timer() to del_timer_sync(). What`s more, we add condition check in
-ax25_destroy_socket() in order to prevent ax25_stop_heartbeat() freezing,
-if there is still heartbeat.
-
-Signed-off-by: Duoming Zhou <duoming@zju.edu.cn>
----
-Changes in V2:
-  - Add condition check in ax25_destroy_socket().
-  - Fix format problem.
-
- net/ax25/af_ax25.c    |  7 ++++---
- net/ax25/ax25_timer.c | 10 +++++-----
- 2 files changed, 9 insertions(+), 8 deletions(-)
-
-diff --git a/net/ax25/af_ax25.c b/net/ax25/af_ax25.c
-index 6bd09718077..cdf6aa1d79c 100644
---- a/net/ax25/af_ax25.c
-+++ b/net/ax25/af_ax25.c
-@@ -89,18 +89,18 @@ static void ax25_kill_by_device(struct net_device *dev)
- 			sk = s->sk;
- 			if (!sk) {
- 				spin_unlock_bh(&ax25_list_lock);
--				s->ax25_dev = NULL;
- 				ax25_disconnect(s, ENETUNREACH);
-+				s->ax25_dev = NULL;
- 				spin_lock_bh(&ax25_list_lock);
- 				goto again;
- 			}
- 			sock_hold(sk);
- 			spin_unlock_bh(&ax25_list_lock);
- 			lock_sock(sk);
-+			ax25_disconnect(s, ENETUNREACH);
- 			s->ax25_dev = NULL;
- 			dev_put_track(ax25_dev->dev, &ax25_dev->dev_tracker);
- 			ax25_dev_put(ax25_dev);
--			ax25_disconnect(s, ENETUNREACH);
- 			release_sock(sk);
- 			spin_lock_bh(&ax25_list_lock);
- 			sock_put(sk);
-@@ -305,7 +305,8 @@ void ax25_destroy_socket(ax25_cb *ax25)
- 
- 	ax25_cb_del(ax25);
- 
--	ax25_stop_heartbeat(ax25);
-+	if (!ax25->sk || !sock_flag(ax25->sk, SOCK_DESTROY))
-+		ax25_stop_heartbeat(ax25);
- 	ax25_stop_t1timer(ax25);
- 	ax25_stop_t2timer(ax25);
- 	ax25_stop_t3timer(ax25);
-diff --git a/net/ax25/ax25_timer.c b/net/ax25/ax25_timer.c
-index 85865ebfdfa..99af3d1aeec 100644
---- a/net/ax25/ax25_timer.c
-+++ b/net/ax25/ax25_timer.c
-@@ -78,27 +78,27 @@ void ax25_start_idletimer(ax25_cb *ax25)
- 
- void ax25_stop_heartbeat(ax25_cb *ax25)
- {
--	del_timer(&ax25->timer);
-+	del_timer_sync(&ax25->timer);
- }
- 
- void ax25_stop_t1timer(ax25_cb *ax25)
- {
--	del_timer(&ax25->t1timer);
-+	del_timer_sync(&ax25->t1timer);
- }
- 
- void ax25_stop_t2timer(ax25_cb *ax25)
- {
--	del_timer(&ax25->t2timer);
-+	del_timer_sync(&ax25->t2timer);
- }
- 
- void ax25_stop_t3timer(ax25_cb *ax25)
- {
--	del_timer(&ax25->t3timer);
-+	del_timer_sync(&ax25->t3timer);
- }
- 
- void ax25_stop_idletimer(ax25_cb *ax25)
- {
--	del_timer(&ax25->idletimer);
-+	del_timer_sync(&ax25->idletimer);
- }
- 
- int ax25_t1timer_running(ax25_cb *ax25)
--- 
-2.17.1
-
+SGVsbG8sCgpUaGFuayB5b3UgdmVyeSBtdWNoIGZvciBwb2ludGluZyB0aGUgd3JvbmcgcGxhY2Vz
+IGluIG15IHBhdGNoLgoKPiBUaGlzIGlzIGEgdmVyeSBmcnVzdHJhdGluZyBwYXRjaCBiZWNhdXNl
+IHlvdSBtYWtlIGEgbG90IG9mIHVubmVjZXNzYXJ5Cj4gd2hpdGUgc3BhY2UgY2hhbmdlcyBhbmQg
+eW91IGRpZG4ndCBydW4gY2hlY2twYXRjaCBvbiB5b3VyIHBhdGNoLgo+IAo+IFRoZSB3aG9sZSBh
+cHByb2FjaCBmZWVscyBsaWtlIHRoZSB3cm9uZyB0aGluZy4uLgoKSSB3aWxsIGZpeCBpdC4KCj4g
+SSBoYXZlIHJlYWQgeW91ciBjb21taXQgbWVzc2FnZSwgYnV0IEkgZG9uJ3QgdW5kZXJzdGFuZCB3
+aHkgd2UgY2FuJ3QKPiBqdXN0IHVzZSBub3JtYWwgcmVmY291bnRpbmcuICBJdCBzb3VuZHMgbGlr
+ZSB0aGVyZSBpcyBhIGxheWVyaW5nCj4gdmlvbGF0aW9uIHNvbWV3aGVyZT8KClRoZSByb290IGNh
+dXNlIG9mIHJlZmNvdW50IGxlYWsgaXMgc2hvd24gYmVsb3c6CgogICAgIChUaHJlYWQgMSkgICAg
+ICAgICAgICAgICAgICAgICAgICAgIHwgICAgICAoVGhyZWFkIDIpCmF4MjVfYmluZCgpICAgICAg
+ICAgICAgICAgICAgICAgICAgICAgICAgfAogLi4uICAgICAgICAgICAgICAgICAgICAgICAgICAg
+ICAgICAgICAgIHwKIGF4MjVfYWRkcl9heDI1ZGV2KCkgICAgICAgICAgICAgICAgICAgICB8IAog
+IGF4MjVfZGV2X2hvbGQoKSAgIC8vKDEpICAgICAgICAgICAgICAgIHwKIC4uLiAgICAgICAgICAg
+ICAgICAgICAgICAgICAgICAgICAgICAgICB8CiBkZXZfaG9sZF90cmFjaygpICAgLy8oMikgICAg
+ICAgICAgICAgICAgfCAKIC4uLiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICB8
+IGF4MjVfZGVzdHJveV9zb2NrZXQoKQogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg
+ICAgICAgIHwgIGF4MjVfY2JfZGVsKCkgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg
+ICAgICAgICAgICB8ICAgLi4uIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg
+ICAgIHwgICBzcGluX2xvY2tfYmgoJmF4MjVfbGlzdF9sb2NrKTsKICAgICAgICAgICAgICAgICAg
+ICAgICAgICAgICAgICAgICAgICAgICB8ICAgaGxpc3RfZGVsX2luaXQoJmF4MjUtPmF4MjVfbm9k
+ZSk7IC8vKDMpIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIHwgICBz
+cGluX3VubG9ja19iaCgmYXgyNV9saXN0X2xvY2spOwogICAgICAgICAgICAgICAgICAgICAgICAg
+ICAgICAgICAgICAKICAgICAodGhyZWFkIDMpICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg
+ICAgICAgICAgICAgCmF4MjVfa2lsbF9ieV9kZXZpY2UoKSAgICAgICAgICAgICAgICAgICAgfAog
+c3Bpbl9sb2NrX2JoKCZheDI1X2xpc3RfbG9jayk7ICAgICAgICAgIHwKIGF4MjVfZm9yX2VhY2go
+cywgJmF4MjVfbGlzdCkgeyAgICAgICAgICB8CiAgaWYgKHMtPmF4MjVfZGV2ID09IGF4MjVfZGV2
+KSAgLy8oNCkgICAgfCAgIAogIC4uLiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg
+IHwKICAodGhlIGZvbGxvd2luZyBjb2RlIGNvdWxkIG5vdCBleGVjdXRlKSB8CgpGaXJzdGx5LCB3
+ZSB1c2UgYXgyNV9iaW5kKCkgdG8gaW5jcmVhc2UgdGhlIHJlZmNvdW50IG9mIGF4MjVfZGV2IGlu
+IApwb3NpdGlvbiAoMSkgYW5kIGluY3JlYXNlIHRoZSByZWZjb3VudCBvZiBuZXRfZGV2aWNlIGlu
+IHBvc2l0aW9uICgyKS4KClRoZW4sIHdlIHVzZSBheDI1X2NiX2RlbCgpIGludm9rZWQgYnkgYXgy
+NV9kZXN0cm95X3NvY2tldCgpCnRvIGRlbGV0ZSBheDI1X2NiIGluIGhsaXN0IGluIHBvc2l0aW9u
+ICgzKSBiZWZvcmUgY2FsbGluZyBheDI1X2tpbGxfYnlfZGV2aWNlKCkuCiAKRmluYWxseSwgdGhl
+IGRlY3JlbWVudHMgb2YgcmVmY291bnRzIGluIGF4MjVfa2lsbF9ieV9kZXZpY2UoKSB3aWxsIG5v
+dCBiZSBleGVjdXRlZCwKYmVjYXVzZSBubyBzLT5heDI1X2RldiBlcXVhbHMgdG8gYXgyNV9kZXYg
+aW4gcG9zaXRpb24gKDQpLgoKTXkgcGF0Y2ggYWRkcyB0d28gZmxhZ3MgaW4gYXgyNV9kZXYgaW4g
+b3JkZXIgdG8gcHJldmVudCByZWZlcmVuY2UgY291bnQgbGVha3MuIApJZiB0aGUgYWJvdmUgY29u
+ZGl0aW9uIGhhcHBlbnMsIHRoZSB0d28gInRlc3RfYml0IiBjaGVja3MgaW4gYXgyNV9raWxsX2J5
+X2RldmljZSgpCmNvdWxkIHBhc3MgYW5kIHRoZSByZWZjb3VudHMgY291bGQgYmUgZGVjcmVhc2Vk
+IHByb3Blcmx5LgoKPiBFdmVuIGlmIHdlIGdvIHdpdGggdGhpcyBhcHByb2FjaCAtPmtpbGxfZmxh
+ZyBhbmQgLT5iaW5kX2ZsYWcgc2hvdWxkIGJlCj4gYm9vbGVhbnMuICBJdCBtYWtlcyBubyBzZW5z
+ZSB0byBoYXZlIGEgdW5zaWduZWQgbG9uZyB3aGVyZSBvbmx5IEJJVCgyKQo+IGNhbiBiZSBzZXQu
+CgpJIHdpbGwgY2hhbmdlIGtpbGxfZmxhZyBhbmQgYmluZF9mbGFnIHRvIGJvb2xlYW5zLgoKQmVz
+dCB3aXNoZXMsCkR1b21pbmcgWmhvdQo=
