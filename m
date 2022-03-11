@@ -1,142 +1,107 @@
-From: Duoming Zhou <duoming@zju.edu.cn>
-Subject: [PATCH net 2/2] ax25: Fix NULL pointer dereferences in ax25 timers
-Date: Fri, 11 Mar 2022 15:03:07 +0800
-Message-ID: <8a9519431c30c6baa9c2135552009fcab850ae08.1646981034.git.duoming@zju.edu.cn>
-References: <cover.1646981034.git.duoming@zju.edu.cn>
-Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <cover.1646981034.git.duoming@zju.edu.cn>
-In-Reply-To: <cover.1646981034.git.duoming@zju.edu.cn>
-References: <cover.1646981034.git.duoming@zju.edu.cn>
+From: Dan Carpenter <dan.carpenter@oracle.com>
+Subject: Re: [PATCH V3] ax25: Fix refcount leaks caused by ax25_cb_del()
+Date: Fri, 11 Mar 2022 13:53:44 +0300
+Message-ID: <20220311105344.GI3293@kadam>
+References: <20220311014624.51117-1-duoming@zju.edu.cn>
+Mime-Version: 1.0
+Return-path: <netdev-owner@vger.kernel.org>
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=date : from : to : cc
+ : subject : message-id : references : content-type : in-reply-to :
+ mime-version; s=corp-2021-07-09;
+ bh=IcY6uXCp3/+iW0CzyQbMpAKcNLHHMfWleig6SiaZscg=;
+ b=JekMgv5ivfNWkgs+K8jORjucb0Hty0aY2P6wGnpv94P83Y5hTlWq2Q9UswRB8m55H1HM
+ tZxr+6j8+JKXJdkNih8jlP1bJJuk5blJWi3tc3Mwpiwb5/cIhiuy8Vn7PQi4VcoeoLb0
+ Js5PZI63UziEabH1eoFBVg30fVRpoTOOkUE44bnE7SzQwoijxSVJCk9y15u3EQT0MEg+
+ p69lNEmwyfgblbJdI95y3dFh2GZ/pMzGwT4YkoCFYNY9n/noeT8a9CPJV22klXFyAH+e
+ 4y1lh0UAu+frayc42xgI0W+AefsH+BSnCq1PTaekqx8MoSjPvCYMOIbgRVjIDaunKKL/ vg== 
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=oracle.onmicrosoft.com; s=selector2-oracle-onmicrosoft-com;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=IcY6uXCp3/+iW0CzyQbMpAKcNLHHMfWleig6SiaZscg=;
+ b=iLYZWfFt1MFbqijTsNzJ9yeNtQrYlyZXl5oAbkjh6QhGW6pMvp5xcVIO8Fyzpo2/wGDWzB32tXWzae4pgQddTixzPnGYtQzkgRzkCVz67pc/dUaya+QlyBBdz+BBXp2CPXmCylJp7B265FRdNoEKA2NrO6yZmwrvdnHi1nYugLs=
+Content-Disposition: inline
+In-Reply-To: <20220311014624.51117-1-duoming@zju.edu.cn>
 List-ID: <linux-hams.vger.kernel.org>
-MIME-Version: 1.0
 Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
-To: linux-hams@vger.kernel.org
-Cc: netdev@vger.kernel.org, linux-kernel@vger.kernel.org, jreuter@yaina.de, kuba@kernel.org, davem@davemloft.net, ralf@linux-mips.org, thomas@osterried.de, Duoming Zhou <duoming@zju.edu.cn>
+To: Duoming Zhou <duoming@zju.edu.cn>
+Cc: linux-hams@vger.kernel.org, netdev@vger.kernel.org, linux-kernel@vger.kernel.org, jreuter@yaina.de, kuba@kernel.org, davem@davemloft.net, ralf@linux-mips.org, thomas@osterried.de
 
-There are race conditions that may lead to null pointer dereferences in
-ax25_heartbeat_expiry(), ax25_t1timer_expiry(), ax25_t2timer_expiry(),
-ax25_t3timer_expiry() and ax25_idletimer_expiry(), when we use
-ax25_kill_by_device() to detach the ax25 device.
+On Fri, Mar 11, 2022 at 09:46:24AM +0800, Duoming Zhou wrote:
+> This patch adds a flag in ax25_dev in order to prevent reference count
+> leaks. If the above condition happens, the "test_bit" condition check
+> in ax25_kill_by_device() could pass and the refcounts could be
+> decreased properly.
+>
 
-One of the race conditions that cause null pointer dereferences can be
-shown as below:
+Why are you using test_bit()?  Just use booleans.
 
-      (Thread 1)                    |      (Thread 2)
-ax25_connect()                      |
- ax25_std_establish_data_link()     |
-  ax25_start_t1timer()              |
-   mod_timer(&ax25->t1timer,..)     |
-                                    | ax25_kill_by_device()
-   (wait a time)                    |  ...
-                                    |  s->ax25_dev = NULL; //(1)
-   ax25_t1timer_expiry()            |
-    ax25->ax25_dev->values[..] //(2)|  ...
-     ...                            |
+I am not a networking person but this whole thing feel like adding on
+layers of cruft.  If refcounting needs a lot of additional tracking
+information then probably the reference counts are not being done in
+the correct location.
 
-We set null to ax25_cb->ax25_dev in position (1) and dereference
-the null pointer in position (2).
+> diff --git a/net/ax25/af_ax25.c b/net/ax25/af_ax25.c
+> index 6bd09718077..fc564b87acc 100644
+> --- a/net/ax25/af_ax25.c
+> +++ b/net/ax25/af_ax25.c
+> @@ -86,6 +86,7 @@ static void ax25_kill_by_device(struct net_device *dev)
+>  again:
+>  	ax25_for_each(s, &ax25_list) {
+>  		if (s->ax25_dev == ax25_dev) {
+> +			set_bit(AX25_DEV_KILL, &ax25_dev->flag);
+>  			sk = s->sk;
+>  			if (!sk) {
+>  				spin_unlock_bh(&ax25_list_lock);
 
-The corresponding fail log is shown below:
-===============================================================
-BUG: kernel NULL pointer dereference, address: 0000000000000050
-CPU: 1 PID: 0 Comm: swapper/1 Not tainted 5.17.0-rc6-00794-g45690b7d0
-RIP: 0010:ax25_t1timer_expiry+0x12/0x40
-...
-Call Trace:
- call_timer_fn+0x21/0x120
- __run_timers.part.0+0x1ca/0x250
- run_timer_softirq+0x2c/0x60
- __do_softirq+0xef/0x2f3
- irq_exit_rcu+0xb6/0x100
- sysvec_apic_timer_interrupt+0xa2/0xd0
-...
+Why can this not be a local variable.
 
-This patch uses ax25_disconnect() to delete timers before we set null to
-ax25_cb->ax25_dev in ax25_kill_by_device(). Function ax25_disconnect()
-will not return until all timers are stopped, because we have changed
-del_timer() to del_timer_sync(). What`s more, we add condition check in
-ax25_destroy_socket(), because ax25_stop_heartbeat() will not return,
-if there is still heartbeat.
+	bool found = false;
 
-Signed-off-by: Duoming Zhou <duoming@zju.edu.cn>
----
- net/ax25/af_ax25.c    |  7 ++++---
- net/ax25/ax25_timer.c | 10 +++++-----
- 2 files changed, 9 insertions(+), 8 deletions(-)
+	ax25_for_each(s, &ax25_list) {
+		if (s->ax25_dev == ax25_dev) {
+			found = true;
+			...
 
-diff --git a/net/ax25/af_ax25.c b/net/ax25/af_ax25.c
-index fc564b87acc..46e4d0cc878 100644
---- a/net/ax25/af_ax25.c
-+++ b/net/ax25/af_ax25.c
-@@ -90,18 +90,18 @@ static void ax25_kill_by_device(struct net_device *dev)
- 			sk = s->sk;
- 			if (!sk) {
- 				spin_unlock_bh(&ax25_list_lock);
--				s->ax25_dev = NULL;
- 				ax25_disconnect(s, ENETUNREACH);
-+				s->ax25_dev = NULL;
- 				spin_lock_bh(&ax25_list_lock);
- 				goto again;
- 			}
- 			sock_hold(sk);
- 			spin_unlock_bh(&ax25_list_lock);
- 			lock_sock(sk);
-+			ax25_disconnect(s, ENETUNREACH);
- 			s->ax25_dev = NULL;
- 			dev_put_track(ax25_dev->dev, &ax25_dev->dev_tracker);
- 			ax25_dev_put(ax25_dev);
--			ax25_disconnect(s, ENETUNREACH);
- 			release_sock(sk);
- 			spin_lock_bh(&ax25_list_lock);
- 			sock_put(sk);
-@@ -310,7 +310,8 @@ void ax25_destroy_socket(ax25_cb *ax25)
- 
- 	ax25_cb_del(ax25);
- 
--	ax25_stop_heartbeat(ax25);
-+	if (!ax25->sk || !sock_flag(ax25->sk, SOCK_DESTROY))
-+		ax25_stop_heartbeat(ax25);
- 	ax25_stop_t1timer(ax25);
- 	ax25_stop_t2timer(ax25);
- 	ax25_stop_t3timer(ax25);
-diff --git a/net/ax25/ax25_timer.c b/net/ax25/ax25_timer.c
-index 85865ebfdfa..99af3d1aeec 100644
---- a/net/ax25/ax25_timer.c
-+++ b/net/ax25/ax25_timer.c
-@@ -78,27 +78,27 @@ void ax25_start_idletimer(ax25_cb *ax25)
- 
- void ax25_stop_heartbeat(ax25_cb *ax25)
- {
--	del_timer(&ax25->timer);
-+	del_timer_sync(&ax25->timer);
- }
- 
- void ax25_stop_t1timer(ax25_cb *ax25)
- {
--	del_timer(&ax25->t1timer);
-+	del_timer_sync(&ax25->t1timer);
- }
- 
- void ax25_stop_t2timer(ax25_cb *ax25)
- {
--	del_timer(&ax25->t2timer);
-+	del_timer_sync(&ax25->t2timer);
- }
- 
- void ax25_stop_t3timer(ax25_cb *ax25)
- {
--	del_timer(&ax25->t3timer);
-+	del_timer_sync(&ax25->t3timer);
- }
- 
- void ax25_stop_idletimer(ax25_cb *ax25)
- {
--	del_timer(&ax25->idletimer);
-+	del_timer_sync(&ax25->idletimer);
- }
- 
- int ax25_t1timer_running(ax25_cb *ax25)
--- 
-2.17.1
+> @@ -115,6 +116,10 @@ static void ax25_kill_by_device(struct net_device *dev)
+>  		}
+>  	}
+>  	spin_unlock_bh(&ax25_list_lock);
+> +	if (!test_bit(AX25_DEV_KILL, &ax25_dev->flag) && test_bit(AX25_DEV_BIND, &ax25_dev->flag)) {
 
+The comments for ax25_kill_by_device() say:
+
+/*
+ *      Kill all bound sockets on a dropped device.
+ */
+
+So how can test_bit(AX25_DEV_BIND, &ax25_dev->flag) ever be false at
+this location?
+
+	if (!found) {
+		dev_put_track(ax25_dev->dev, &ax25_dev->dev_tracker);
+		ax25_dev_put(ax25_dev);
+	}
+
+But even here, my instinct is that if the refcounting is were done in
+the correct place we would not need any additional variables.  Is there
+no simpler solution?
+
+> diff --git a/net/ax25/ax25_dev.c b/net/ax25/ax25_dev.c
+> index d2a244e1c26..9b04d74a1be 100644
+> --- a/net/ax25/ax25_dev.c
+> +++ b/net/ax25/ax25_dev.c
+> @@ -77,6 +77,7 @@ void ax25_dev_device_up(struct net_device *dev)
+>  	ax25_dev->values[AX25_VALUES_PACLEN]	= AX25_DEF_PACLEN;
+>  	ax25_dev->values[AX25_VALUES_PROTOCOL]  = AX25_DEF_PROTOCOL;
+>  	ax25_dev->values[AX25_VALUES_DS_TIMEOUT]= AX25_DEF_DS_TIMEOUT;
+> +	ax25_dev->flag = AX25_DEV_INIT;
+
+There is no need for this, it's allocated with kzalloc().
+
+>  
+>  #if defined(CONFIG_AX25_DAMA_SLAVE) || defined(CONFIG_AX25_DAMA_MASTER)
+>  	ax25_ds_setup_timer(ax25_dev);
+
+regards,
+dan carpenter
