@@ -1,144 +1,22 @@
-From: Duoming Zhou <duoming@zju.edu.cn>
-Subject: [PATCH net V2 2/2] ax25: Fix NULL pointer dereferences in ax25 timers
-Date: Sat, 12 Mar 2022 07:41:23 +0800
-Message-ID: <20220311234123.121230-1-duoming@zju.edu.cn>
+From: =?UTF-8?B?5ZGo5aSa5piO?= <duoming@zju.edu.cn>
+Subject: Re: Re: [PATCH V3] ax25: Fix refcount leaks caused by ax25_cb_del()
+Date: Sun, 13 Mar 2022 12:26:45 +0800 (GMT+08:00)
+Message-ID: <4364e68e.77f.17f81875881.Coremail.duoming@zju.edu.cn>
+References: <20220311014624.51117-1-duoming@zju.edu.cn>
+ <20220311105344.GI3293@kadam>
+Mime-Version: 1.0
+Content-Transfer-Encoding: base64
 Return-path: <linux-hams-owner@vger.kernel.org>
+In-Reply-To: <20220311105344.GI3293@kadam>
 List-ID: <linux-hams.vger.kernel.org>
-MIME-Version: 1.0
 Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-To: linux-hams@vger.kernel.org
-Cc: netdev@vger.kernel.org, linux-kernel@vger.kernel.org, kuba@kernel.org, davem@davemloft.net, ralf@linux-mips.org, jreuter@yaina.de, Duoming Zhou <duoming@zju.edu.cn>
+To: Dan Carpenter <dan.carpenter@oracle.com>
+Cc: linux-hams@vger.kernel.org, netdev@vger.kernel.org, linux-kernel@vger.kernel.org, jreuter@yaina.de, kuba@kernel.org, davem@davemloft.net, ralf@linux-mips.org
 
-There are race conditions that may lead to null pointer dereferences in
-ax25_heartbeat_expiry(), ax25_t1timer_expiry(), ax25_t2timer_expiry(),
-ax25_t3timer_expiry() and ax25_idletimer_expiry(), when we use
-ax25_kill_by_device() to detach the ax25 device.
-
-One of the race conditions that cause null pointer dereferences can be
-shown as below:
-
-      (Thread 1)                    |      (Thread 2)
-ax25_connect()                      |
- ax25_std_establish_data_link()     |
-  ax25_start_t1timer()              |
-   mod_timer(&ax25->t1timer,..)     |
-                                    | ax25_kill_by_device()
-   (wait a time)                    |  ...
-                                    |  s->ax25_dev = NULL; //(1)
-   ax25_t1timer_expiry()            |
-    ax25->ax25_dev->values[..] //(2)|  ...
-     ...                            |
-
-We set null to ax25_cb->ax25_dev in position (1) and dereference
-the null pointer in position (2).
-
-The corresponding fail log is shown below:
-===============================================================
-BUG: kernel NULL pointer dereference, address: 0000000000000050
-CPU: 1 PID: 0 Comm: swapper/1 Not tainted 5.17.0-rc6-00794-g45690b7d0
-RIP: 0010:ax25_t1timer_expiry+0x12/0x40
-...
-Call Trace:
- call_timer_fn+0x21/0x120
- __run_timers.part.0+0x1ca/0x250
- run_timer_softirq+0x2c/0x60
- __do_softirq+0xef/0x2f3
- irq_exit_rcu+0xb6/0x100
- sysvec_apic_timer_interrupt+0xa2/0xd0
-...
-
-This patch uses ax25_disconnect() to delete timers before we set null to
-ax25_cb->ax25_dev in ax25_kill_by_device(). Function ax25_disconnect()
-will not return until all timers are stopped, because we have changed
-del_timer() to del_timer_sync(). What`s more, we add condition check in
-ax25_destroy_socket(), because ax25_stop_heartbeat() will not return,
-if there is still heartbeat.
-
-Signed-off-by: Duoming Zhou <duoming@zju.edu.cn>
----
-Changes in V2:
-  - Based on [PATCH net V2 1/2] ax25: Fix refcount leaks caused by ax25_cb_del().
-
- net/ax25/af_ax25.c    |  9 +++++----
- net/ax25/ax25_timer.c | 10 +++++-----
- 2 files changed, 10 insertions(+), 9 deletions(-)
-
-diff --git a/net/ax25/af_ax25.c b/net/ax25/af_ax25.c
-index 0886109421a..6e4d93af53c 100644
---- a/net/ax25/af_ax25.c
-+++ b/net/ax25/af_ax25.c
-@@ -89,20 +89,20 @@ static void ax25_kill_by_device(struct net_device *dev)
- 			sk = s->sk;
- 			if (!sk) {
- 				spin_unlock_bh(&ax25_list_lock);
--				s->ax25_dev = NULL;
- 				ax25_disconnect(s, ENETUNREACH);
-+				s->ax25_dev = NULL;
- 				spin_lock_bh(&ax25_list_lock);
- 				goto again;
- 			}
- 			sock_hold(sk);
- 			spin_unlock_bh(&ax25_list_lock);
- 			lock_sock(sk);
--			s->ax25_dev = NULL;
-+			ax25_disconnect(s, ENETUNREACH);
- 			if (sk->sk_wq) {
- 				dev_put_track(ax25_dev->dev, &ax25_dev->dev_tracker);
- 				ax25_dev_put(ax25_dev);
- 			}
--			ax25_disconnect(s, ENETUNREACH);
-+			s->ax25_dev = NULL;
- 			release_sock(sk);
- 			spin_lock_bh(&ax25_list_lock);
- 			sock_put(sk);
-@@ -307,7 +307,8 @@ void ax25_destroy_socket(ax25_cb *ax25)
- 
- 	ax25_cb_del(ax25);
- 
--	ax25_stop_heartbeat(ax25);
-+	if (!ax25->sk || !sock_flag(ax25->sk, SOCK_DESTROY))
-+		ax25_stop_heartbeat(ax25);
- 	ax25_stop_t1timer(ax25);
- 	ax25_stop_t2timer(ax25);
- 	ax25_stop_t3timer(ax25);
-diff --git a/net/ax25/ax25_timer.c b/net/ax25/ax25_timer.c
-index 85865ebfdfa..99af3d1aeec 100644
---- a/net/ax25/ax25_timer.c
-+++ b/net/ax25/ax25_timer.c
-@@ -78,27 +78,27 @@ void ax25_start_idletimer(ax25_cb *ax25)
- 
- void ax25_stop_heartbeat(ax25_cb *ax25)
- {
--	del_timer(&ax25->timer);
-+	del_timer_sync(&ax25->timer);
- }
- 
- void ax25_stop_t1timer(ax25_cb *ax25)
- {
--	del_timer(&ax25->t1timer);
-+	del_timer_sync(&ax25->t1timer);
- }
- 
- void ax25_stop_t2timer(ax25_cb *ax25)
- {
--	del_timer(&ax25->t2timer);
-+	del_timer_sync(&ax25->t2timer);
- }
- 
- void ax25_stop_t3timer(ax25_cb *ax25)
- {
--	del_timer(&ax25->t3timer);
-+	del_timer_sync(&ax25->t3timer);
- }
- 
- void ax25_stop_idletimer(ax25_cb *ax25)
- {
--	del_timer(&ax25->idletimer);
-+	del_timer_sync(&ax25->idletimer);
- }
- 
- int ax25_t1timer_running(ax25_cb *ax25)
--- 
-2.17.1
-
+SGVsbG8sCgpPbiBGcmksIE1hciAxMSwgMjAyMiBEYW4gQ2FycGVuIHdyb3RlOgoKPiBCdXQgZXZl
+biBoZXJlLCBteSBpbnN0aW5jdCBpcyB0aGF0IGlmIHRoZSByZWZjb3VudGluZyBpcyB3ZXJlIGRv
+bmUgaW4KPiB0aGUgY29ycmVjdCBwbGFjZSB3ZSB3b3VsZCBub3QgbmVlZCBhbnkgYWRkaXRpb25h
+bCB2YXJpYWJsZXMuICBJcyB0aGVyZQo+IG5vIHNpbXBsZXIgc29sdXRpb24/CgpJIHNlbnQgIltQ
+QVRDSCBuZXQgVjIgMS8yXSBheDI1OiBGaXggcmVmY291bnQgbGVha3MgY2F1c2VkIGJ5IGF4MjVf
+Y2JfZGVsKCkiCm9uIE9uIEZyaSwgTWFyIDExLCAyMDIyLiBDb3VsZCB0aGlzIHBhdGNoIHNvbHZl
+IHlvdXIgcXVlc3Rpb24/CgpCZXN0IHdpc2hlcywKRHVvbWluZyBaaG91CgoK
