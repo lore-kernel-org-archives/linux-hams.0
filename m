@@ -1,25 +1,107 @@
-From: =?UTF-8?B?5ZGo5aSa5piO?= <duoming@zju.edu.cn>
-Subject: Re: Re: Re: [PATCH net V4 1/2] ax25: Fix refcount leaks caused by
- ax25_cb_del()
-Date: Tue, 15 Mar 2022 22:33:44 +0800 (GMT+08:00)
-Message-ID: <3c2e97d4.5434.17f8dffc573.Coremail.duoming@zju.edu.cn>
-References: <20220315015403.79201-1-duoming@zju.edu.cn>
- <20220315102657.GX3315@kadam>
- <15e4111b.5339.17f8deb1f24.Coremail.duoming@zju.edu.cn>
- <20220315141905.GB1841@kadam>
-Mime-Version: 1.0
-Content-Transfer-Encoding: base64
+From: Duoming Zhou <duoming@zju.edu.cn>
+Subject: [PATCH net V5 1/2] ax25: Fix refcount leaks caused by ax25_cb_del()
+Date: Tue, 15 Mar 2022 22:53:39 +0800
+Message-ID: <20220315145339.79647-1-duoming@zju.edu.cn>
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <20220315141905.GB1841@kadam>
 List-ID: <linux-hams.vger.kernel.org>
+MIME-Version: 1.0
 Content-Type: text/plain; charset="us-ascii"
-To: Dan Carpenter <dan.carpenter@oracle.com>
-Cc: linux-hams@vger.kernel.org, netdev@vger.kernel.org, linux-kernel@vger.kernel.org, kuba@kernel.org, davem@davemloft.net, ralf@linux-mips.org, jreuter@yaina.de, thomas@osterried.de
+Content-Transfer-Encoding: 7bit
+To: linux-hams@vger.kernel.org
+Cc: netdev@vger.kernel.org, linux-kernel@vger.kernel.org, kuba@kernel.org, davem@davemloft.net, ralf@linux-mips.org, jreuter@yaina.de, dan.carpenter@oracle.com, thomas@osterried.de, Duoming Zhou <duoming@zju.edu.cn>
 
-SGVsbG8sCgpPbiBUdWUsIDE1IE1hciAyMDIyIDE3OjE5OjA1ICswMzAwLCBEYW4gQ2FycGVudGVy
-IHdyb3RlOgoKPiBTbyB0aGUgdjMgcGF0Y2ggd2FzIGJ1Z2d5PwpJIHRoaW5rIHYzIGlzIG5vdCBh
-IGdvb2QgcGF0Y2ggdGhhdCBjb3VsZCBiZSBhcHBsaWVkIGluIHRoZSByZWFsIHdvcmxkLgoKPiBX
-aHkgd2FzIHRoaXMgbm90IGV4cGxhaW5lZCB1bmRlciB0aGUgLS0tIGN1dCBvZmYgbGluZT8KCkkg
-d2lsbCBhZGQgZXhwbGFuYXRpb24gdW5kZXIgdGhlIC0tLSBjdXQgb2ZmIGxpbmUgaW4gW1BBVENI
-IG5ldCBWNSAxLzJdCmFuZCBzZW5kIGl0IHRvIHlvdSBhcyBzb29uIGFzIHBvc3NpYmxlLgoKQmVz
-dCB3aXNoZXMsCkR1b21pbmcgWmhvdQ==
+The previous commit d01ffb9eee4a ("ax25: add refcount in ax25_dev to
+avoid UAF bugs") and commit feef318c855a ("ax25: fix UAF bugs of
+net_device caused by rebinding operation") increase the refcounts of
+ax25_dev and net_device in ax25_bind() and decrease the matching refcounts
+in ax25_kill_by_device() in order to prevent UAF bugs, but there are
+reference count leaks.
+
+The root cause of refcount leaks is shown below:
+
+     (Thread 1)                      |      (Thread 2)
+ax25_bind()                          |
+ ...                                 |
+ ax25_addr_ax25dev()                 |
+  ax25_dev_hold()   //(1)            |
+  ...                                |
+ dev_hold_track()   //(2)            |
+ ...                                 | ax25_destroy_socket()
+                                     |  ax25_cb_del()
+                                     |   ...
+                                     |   hlist_del_init() //(3)
+                                     |
+                                     |
+     (Thread 3)                      |
+ax25_kill_by_device()                |
+ ...                                 |
+ ax25_for_each(s, &ax25_list) {      |
+  if (s->ax25_dev == ax25_dev) //(4) |
+   ...                               |
+
+Firstly, we use ax25_bind() to increase the refcount of ax25_dev in
+position (1) and increase the refcount of net_device in position (2).
+Then, we use ax25_cb_del() invoked by ax25_destroy_socket() to delete
+ax25_cb in hlist in position (3) before calling ax25_kill_by_device().
+Finally, the decrements of refcounts in ax25_kill_by_device() will not
+be executed, because no s->ax25_dev equals to ax25_dev in position (4).
+
+This patch adds decrements of refcounts in ax25_release() and use
+lock_sock() to do synchronization. If refcounts decrease in ax25_release(),
+the decrements of refcounts in ax25_kill_by_device() will not be
+executed and vice versa.
+
+Fixes: d01ffb9eee4a ("ax25: add refcount in ax25_dev to avoid UAF bugs")
+Fixes: 87563a043cef ("ax25: fix reference count leaks of ax25_dev")
+Fixes: feef318c855a ("ax25: fix UAF bugs of net_device caused by rebinding operation")
+Reported-by: Thomas Osterried <thomas@osterried.de>
+Signed-off-by: Duoming Zhou <duoming@zju.edu.cn>
+---
+Changes in V5:
+  - Use sk->sk_socket to check in ax25_kill_by_device().
+
+ net/ax25/af_ax25.c | 14 +++++++++++---
+ 1 file changed, 11 insertions(+), 3 deletions(-)
+
+diff --git a/net/ax25/af_ax25.c b/net/ax25/af_ax25.c
+index 6bd09718077..cf8847cfc66 100644
+--- a/net/ax25/af_ax25.c
++++ b/net/ax25/af_ax25.c
+@@ -98,8 +98,10 @@ static void ax25_kill_by_device(struct net_device *dev)
+ 			spin_unlock_bh(&ax25_list_lock);
+ 			lock_sock(sk);
+ 			s->ax25_dev = NULL;
+-			dev_put_track(ax25_dev->dev, &ax25_dev->dev_tracker);
+-			ax25_dev_put(ax25_dev);
++			if (sk->sk_socket) {
++				dev_put_track(ax25_dev->dev, &ax25_dev->dev_tracker);
++				ax25_dev_put(ax25_dev);
++			}
+ 			ax25_disconnect(s, ENETUNREACH);
+ 			release_sock(sk);
+ 			spin_lock_bh(&ax25_list_lock);
+@@ -979,14 +981,20 @@ static int ax25_release(struct socket *sock)
+ {
+ 	struct sock *sk = sock->sk;
+ 	ax25_cb *ax25;
++	ax25_dev *ax25_dev;
+ 
+ 	if (sk == NULL)
+ 		return 0;
+ 
+ 	sock_hold(sk);
+-	sock_orphan(sk);
+ 	lock_sock(sk);
++	sock_orphan(sk);
+ 	ax25 = sk_to_ax25(sk);
++	ax25_dev = ax25->ax25_dev;
++	if (ax25_dev) {
++		dev_put_track(ax25_dev->dev, &ax25_dev->dev_tracker);
++		ax25_dev_put(ax25_dev);
++	}
+ 
+ 	if (sk->sk_type == SOCK_SEQPACKET) {
+ 		switch (ax25->state) {
+-- 
+2.17.1
+
