@@ -1,107 +1,106 @@
-From: Duoming Zhou <duoming@zju.edu.cn>
-Subject: [PATCH net V5 1/2] ax25: Fix refcount leaks caused by ax25_cb_del()
-Date: Tue, 15 Mar 2022 22:53:39 +0800
-Message-ID: <20220315145339.79647-1-duoming@zju.edu.cn>
+From: =?UTF-8?B?5ZGo5aSa5piO?= <duoming@zju.edu.cn>
+Subject: Re: Re: [PATCH net V4 2/2] ax25: Fix NULL pointer dereferences in
+ ax25 timers
+Date: Wed, 16 Mar 2022 00:30:03 +0800 (GMT+08:00)
+Message-ID: <2533f9c8.5741.17f8e6a4593.Coremail.duoming@zju.edu.cn>
+References: <20220315015654.79941-1-duoming@zju.edu.cn>
+ <c6052f5c-c1c4-18a0-a04f-e48f366200e4@gmail.com>
+Mime-Version: 1.0
+Content-Transfer-Encoding: base64
 Return-path: <linux-hams-owner@vger.kernel.org>
+In-Reply-To: <c6052f5c-c1c4-18a0-a04f-e48f366200e4@gmail.com>
 List-ID: <linux-hams.vger.kernel.org>
-MIME-Version: 1.0
 Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-To: linux-hams@vger.kernel.org
-Cc: netdev@vger.kernel.org, linux-kernel@vger.kernel.org, kuba@kernel.org, davem@davemloft.net, ralf@linux-mips.org, jreuter@yaina.de, dan.carpenter@oracle.com, thomas@osterried.de, Duoming Zhou <duoming@zju.edu.cn>
+To: Eric Dumazet <eric.dumazet@gmail.com>
+Cc: linux-hams@vger.kernel.org, netdev@vger.kernel.org, linux-kernel@vger.kernel.org, kuba@kernel.org, davem@davemloft.net, ralf@linux-mips.org, jreuter@yaina.de
 
-The previous commit d01ffb9eee4a ("ax25: add refcount in ax25_dev to
-avoid UAF bugs") and commit feef318c855a ("ax25: fix UAF bugs of
-net_device caused by rebinding operation") increase the refcounts of
-ax25_dev and net_device in ax25_bind() and decrease the matching refcounts
-in ax25_kill_by_device() in order to prevent UAF bugs, but there are
-reference count leaks.
-
-The root cause of refcount leaks is shown below:
-
-     (Thread 1)                      |      (Thread 2)
-ax25_bind()                          |
- ...                                 |
- ax25_addr_ax25dev()                 |
-  ax25_dev_hold()   //(1)            |
-  ...                                |
- dev_hold_track()   //(2)            |
- ...                                 | ax25_destroy_socket()
-                                     |  ax25_cb_del()
-                                     |   ...
-                                     |   hlist_del_init() //(3)
-                                     |
-                                     |
-     (Thread 3)                      |
-ax25_kill_by_device()                |
- ...                                 |
- ax25_for_each(s, &ax25_list) {      |
-  if (s->ax25_dev == ax25_dev) //(4) |
-   ...                               |
-
-Firstly, we use ax25_bind() to increase the refcount of ax25_dev in
-position (1) and increase the refcount of net_device in position (2).
-Then, we use ax25_cb_del() invoked by ax25_destroy_socket() to delete
-ax25_cb in hlist in position (3) before calling ax25_kill_by_device().
-Finally, the decrements of refcounts in ax25_kill_by_device() will not
-be executed, because no s->ax25_dev equals to ax25_dev in position (4).
-
-This patch adds decrements of refcounts in ax25_release() and use
-lock_sock() to do synchronization. If refcounts decrease in ax25_release(),
-the decrements of refcounts in ax25_kill_by_device() will not be
-executed and vice versa.
-
-Fixes: d01ffb9eee4a ("ax25: add refcount in ax25_dev to avoid UAF bugs")
-Fixes: 87563a043cef ("ax25: fix reference count leaks of ax25_dev")
-Fixes: feef318c855a ("ax25: fix UAF bugs of net_device caused by rebinding operation")
-Reported-by: Thomas Osterried <thomas@osterried.de>
-Signed-off-by: Duoming Zhou <duoming@zju.edu.cn>
----
-Changes in V5:
-  - Use sk->sk_socket to check in ax25_kill_by_device().
-
- net/ax25/af_ax25.c | 14 +++++++++++---
- 1 file changed, 11 insertions(+), 3 deletions(-)
-
-diff --git a/net/ax25/af_ax25.c b/net/ax25/af_ax25.c
-index 6bd09718077..cf8847cfc66 100644
---- a/net/ax25/af_ax25.c
-+++ b/net/ax25/af_ax25.c
-@@ -98,8 +98,10 @@ static void ax25_kill_by_device(struct net_device *dev)
- 			spin_unlock_bh(&ax25_list_lock);
- 			lock_sock(sk);
- 			s->ax25_dev = NULL;
--			dev_put_track(ax25_dev->dev, &ax25_dev->dev_tracker);
--			ax25_dev_put(ax25_dev);
-+			if (sk->sk_socket) {
-+				dev_put_track(ax25_dev->dev, &ax25_dev->dev_tracker);
-+				ax25_dev_put(ax25_dev);
-+			}
- 			ax25_disconnect(s, ENETUNREACH);
- 			release_sock(sk);
- 			spin_lock_bh(&ax25_list_lock);
-@@ -979,14 +981,20 @@ static int ax25_release(struct socket *sock)
- {
- 	struct sock *sk = sock->sk;
- 	ax25_cb *ax25;
-+	ax25_dev *ax25_dev;
- 
- 	if (sk == NULL)
- 		return 0;
- 
- 	sock_hold(sk);
--	sock_orphan(sk);
- 	lock_sock(sk);
-+	sock_orphan(sk);
- 	ax25 = sk_to_ax25(sk);
-+	ax25_dev = ax25->ax25_dev;
-+	if (ax25_dev) {
-+		dev_put_track(ax25_dev->dev, &ax25_dev->dev_tracker);
-+		ax25_dev_put(ax25_dev);
-+	}
- 
- 	if (sk->sk_type == SOCK_SEQPACKET) {
- 		switch (ax25->state) {
--- 
-2.17.1
-
+SGVsbG8sCgpPbiBNb24sIDE0IE1hciAyMDIyIDIwOjAzOjAwIC0wNzAwLCBFcmljIER1bWF6ZXQg
+d3JvdGU6Cj4gPiBUaGVyZSBhcmUgcmFjZSBjb25kaXRpb25zIHRoYXQgbWF5IGxlYWQgdG8gbnVs
+bCBwb2ludGVyIGRlcmVmZXJlbmNlcyBpbgo+ID4gYXgyNV9oZWFydGJlYXRfZXhwaXJ5KCksIGF4
+MjVfdDF0aW1lcl9leHBpcnkoKSwgYXgyNV90MnRpbWVyX2V4cGlyeSgpLAo+ID4gYXgyNV90M3Rp
+bWVyX2V4cGlyeSgpIGFuZCBheDI1X2lkbGV0aW1lcl9leHBpcnkoKSwgd2hlbiB3ZSB1c2UKPiA+
+IGF4MjVfa2lsbF9ieV9kZXZpY2UoKSB0byBkZXRhY2ggdGhlIGF4MjUgZGV2aWNlLgo+ID4KPiA+
+IE9uZSBvZiB0aGUgcmFjZSBjb25kaXRpb25zIHRoYXQgY2F1c2UgbnVsbCBwb2ludGVyIGRlcmVm
+ZXJlbmNlcyBjYW4gYmUKPiA+IHNob3duIGFzIGJlbG93Ogo+ID4KPiA+ICAgICAgICAoVGhyZWFk
+IDEpICAgICAgICAgICAgICAgICAgICB8ICAgICAgKFRocmVhZCAyKQo+ID4gYXgyNV9jb25uZWN0
+KCkgICAgICAgICAgICAgICAgICAgICAgIHwKPiA+ICAgYXgyNV9zdGRfZXN0YWJsaXNoX2RhdGFf
+bGluaygpICAgICB8Cj4gPiAgICBheDI1X3N0YXJ0X3QxdGltZXIoKSAgICAgICAgICAgICAgfAo+
+ID4gICAgIG1vZF90aW1lcigmYXgyNS0+dDF0aW1lciwuLikgICAgIHwKPiA+ICAgICAgICAgICAg
+ICAgICAgICAgICAgICAgICAgICAgICAgICB8IGF4MjVfa2lsbF9ieV9kZXZpY2UoKQo+ID4gICAg
+ICh3YWl0IGEgdGltZSkgICAgICAgICAgICAgICAgICAgIHwgIC4uLgo+ID4gICAgICAgICAgICAg
+ICAgICAgICAgICAgICAgICAgICAgICAgIHwgIHMtPmF4MjVfZGV2ID0gTlVMTDsgLy8oMSkKPiA+
+ICAgICBheDI1X3QxdGltZXJfZXhwaXJ5KCkgICAgICAgICAgICB8Cj4gPiAgICAgIGF4MjUtPmF4
+MjVfZGV2LT52YWx1ZXNbLi5dIC8vKDIpfCAgLi4uCj4gPiAgICAgICAuLi4gICAgICAgICAgICAg
+ICAgICAgICAgICAgICAgfAo+ID4KPiA+IFdlIHNldCBudWxsIHRvIGF4MjVfY2ItPmF4MjVfZGV2
+IGluIHBvc2l0aW9uICgxKSBhbmQgZGVyZWZlcmVuY2UKPiA+IHRoZSBudWxsIHBvaW50ZXIgaW4g
+cG9zaXRpb24gKDIpLgo+ID4KPiA+IFRoZSBjb3JyZXNwb25kaW5nIGZhaWwgbG9nIGlzIHNob3du
+IGJlbG93Ogo+ID4gPT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09
+PT09PT09PT09PT09PT09PT09Cj4gPiBCVUc6IGtlcm5lbCBOVUxMIHBvaW50ZXIgZGVyZWZlcmVu
+Y2UsIGFkZHJlc3M6IDAwMDAwMDAwMDAwMDAwNTAKPiA+IENQVTogMSBQSUQ6IDAgQ29tbTogc3dh
+cHBlci8xIE5vdCB0YWludGVkIDUuMTcuMC1yYzYtMDA3OTQtZzQ1NjkwYjdkMAo+ID4gUklQOiAw
+MDEwOmF4MjVfdDF0aW1lcl9leHBpcnkrMHgxMi8weDQwCj4gPiAuLi4KPiA+IENhbGwgVHJhY2U6
+Cj4gPiAgIGNhbGxfdGltZXJfZm4rMHgyMS8weDEyMAo+ID4gICBfX3J1bl90aW1lcnMucGFydC4w
+KzB4MWNhLzB4MjUwCj4gPiAgIHJ1bl90aW1lcl9zb2Z0aXJxKzB4MmMvMHg2MAo+ID4gICBfX2Rv
+X3NvZnRpcnErMHhlZi8weDJmMwo+ID4gICBpcnFfZXhpdF9yY3UrMHhiNi8weDEwMAo+ID4gICBz
+eXN2ZWNfYXBpY190aW1lcl9pbnRlcnJ1cHQrMHhhMi8weGQwCj4gPiAuLi4KPiA+Cj4gPiBUaGlz
+IHBhdGNoIHVzZXMgYXgyNV9kaXNjb25uZWN0KCkgdG8gZGVsZXRlIHRpbWVycyBiZWZvcmUgd2Ug
+c2V0IG51bGwgdG8KPiA+IGF4MjVfY2ItPmF4MjVfZGV2IGluIGF4MjVfa2lsbF9ieV9kZXZpY2Uo
+KS5UaGUgZnVuY3Rpb24gYXgyNV9kaXNjb25uZWN0KCkKPiA+IHdpbGwgbm90IHJldHVybiB1bnRp
+bCBhbGwgdGltZXJzIGFyZSBzdG9wcGVkLCBiZWNhdXNlIHdlIGhhdmUgY2hhbmdlZAo+ID4gZGVs
+X3RpbWVyKCkgdG8gZGVsX3RpbWVyX3N5bmMoKS4gV2hhdGBzIG1vcmUsIHdlIGFkZCBjb25kaXRp
+b24gY2hlY2sgaW4KPiA+IGF4MjVfZGVzdHJveV9zb2NrZXQoKSwgYmVjYXVzZSBheDI1X3N0b3Bf
+aGVhcnRiZWF0KCkgd2lsbCBub3QgcmV0dXJuLAo+ID4gaWYgdGhlcmUgaXMgc3RpbGwgaGVhcnRi
+ZWF0Lgo+ID4KPiA+IFNpZ25lZC1vZmYtYnk6IER1b21pbmcgWmhvdSA8ZHVvbWluZ0B6anUuZWR1
+LmNuPgo+IAo+IE1pc3NpbmcgRkl4ZXM6IHRhZyA/Cj4gCj4gCj4gPiAtLS0KPiA+IENoYW5nZXMg
+aW4gVjQ6Cj4gPiAgICAtIEJhc2VkIG9uIFtQQVRDSCBuZXQgVjQgMS8yXSBheDI1OiBGaXggcmVm
+Y291bnQgbGVha3MgY2F1c2VkIGJ5IGF4MjVfY2JfZGVsKCkuCj4gPgo+ID4gICBuZXQvYXgyNS9h
+Zl9heDI1LmMgICAgfCAgNyArKysrLS0tCj4gPiAgIG5ldC9heDI1L2F4MjVfdGltZXIuYyB8IDEw
+ICsrKysrLS0tLS0KPiA+ICAgMiBmaWxlcyBjaGFuZ2VkLCA5IGluc2VydGlvbnMoKyksIDggZGVs
+ZXRpb25zKC0pCj4gPgo+ID4gZGlmZiAtLWdpdCBhL25ldC9heDI1L2FmX2F4MjUuYyBiL25ldC9h
+eDI1L2FmX2F4MjUuYwo+ID4gaW5kZXggMDg4NjEwOTQyMWEuLmRjNjE2MWE3NWExIDEwMDY0NAo+
+ID4gLS0tIGEvbmV0L2F4MjUvYWZfYXgyNS5jCj4gPiArKysgYi9uZXQvYXgyNS9hZl9heDI1LmMK
+PiA+IEBAIC04OSwyMCArODksMjAgQEAgc3RhdGljIHZvaWQgYXgyNV9raWxsX2J5X2RldmljZShz
+dHJ1Y3QgbmV0X2RldmljZSAqZGV2KQo+ID4gICAJCQlzayA9IHMtPnNrOwo+ID4gICAJCQlpZiAo
+IXNrKSB7Cj4gPiAgIAkJCQlzcGluX3VubG9ja19iaCgmYXgyNV9saXN0X2xvY2spOwo+ID4gLQkJ
+CQlzLT5heDI1X2RldiA9IE5VTEw7Cj4gPiAgIAkJCQlheDI1X2Rpc2Nvbm5lY3QocywgRU5FVFVO
+UkVBQ0gpOwo+ID4gKwkJCQlzLT5heDI1X2RldiA9IE5VTEw7Cj4gPiAgIAkJCQlzcGluX2xvY2tf
+YmgoJmF4MjVfbGlzdF9sb2NrKTsKPiA+ICAgCQkJCWdvdG8gYWdhaW47Cj4gPiAgIAkJCX0KPiA+
+ICAgCQkJc29ja19ob2xkKHNrKTsKPiA+ICAgCQkJc3Bpbl91bmxvY2tfYmgoJmF4MjVfbGlzdF9s
+b2NrKTsKPiA+ICAgCQkJbG9ja19zb2NrKHNrKTsKPiA+ICsJCQlheDI1X2Rpc2Nvbm5lY3Qocywg
+RU5FVFVOUkVBQ0gpOwo+ID4gICAJCQlzLT5heDI1X2RldiA9IE5VTEw7Cj4gPiAgIAkJCWlmIChz
+ay0+c2tfd3EpIHsKPiA+ICAgCQkJCWRldl9wdXRfdHJhY2soYXgyNV9kZXYtPmRldiwgJmF4MjVf
+ZGV2LT5kZXZfdHJhY2tlcik7Cj4gPiAgIAkJCQlheDI1X2Rldl9wdXQoYXgyNV9kZXYpOwo+ID4g
+ICAJCQl9Cj4gPiAtCQkJYXgyNV9kaXNjb25uZWN0KHMsIEVORVRVTlJFQUNIKTsKPiA+ICAgCQkJ
+cmVsZWFzZV9zb2NrKHNrKTsKPiA+ICAgCQkJc3Bpbl9sb2NrX2JoKCZheDI1X2xpc3RfbG9jayk7
+Cj4gPiAgIAkJCXNvY2tfcHV0KHNrKTsKPiA+IEBAIC0zMDcsNyArMzA3LDggQEAgdm9pZCBheDI1
+X2Rlc3Ryb3lfc29ja2V0KGF4MjVfY2IgKmF4MjUpCj4gPiAgIAo+ID4gICAJYXgyNV9jYl9kZWwo
+YXgyNSk7Cj4gPiAgIAo+ID4gLQlheDI1X3N0b3BfaGVhcnRiZWF0KGF4MjUpOwo+ID4gKwlpZiAo
+IWF4MjUtPnNrIHx8ICFzb2NrX2ZsYWcoYXgyNS0+c2ssIFNPQ0tfREVTVFJPWSkpCj4gPiArCQlh
+eDI1X3N0b3BfaGVhcnRiZWF0KGF4MjUpOwo+ID4gICAJYXgyNV9zdG9wX3QxdGltZXIoYXgyNSk7
+Cj4gPiAgIAlheDI1X3N0b3BfdDJ0aW1lcihheDI1KTsKPiA+ICAgCWF4MjVfc3RvcF90M3RpbWVy
+KGF4MjUpOwo+ID4gZGlmZiAtLWdpdCBhL25ldC9heDI1L2F4MjVfdGltZXIuYyBiL25ldC9heDI1
+L2F4MjVfdGltZXIuYwo+ID4gaW5kZXggODU4NjVlYmZkZmEuLjk5YWYzZDFhZWVjIDEwMDY0NAo+
+ID4gLS0tIGEvbmV0L2F4MjUvYXgyNV90aW1lci5jCj4gPiArKysgYi9uZXQvYXgyNS9heDI1X3Rp
+bWVyLmMKPiA+IEBAIC03OCwyNyArNzgsMjcgQEAgdm9pZCBheDI1X3N0YXJ0X2lkbGV0aW1lcihh
+eDI1X2NiICpheDI1KQo+ID4gICAKPiA+ICAgdm9pZCBheDI1X3N0b3BfaGVhcnRiZWF0KGF4MjVf
+Y2IgKmF4MjUpCj4gPiAgIHsKPiA+IC0JZGVsX3RpbWVyKCZheDI1LT50aW1lcik7Cj4gPiArCWRl
+bF90aW1lcl9zeW5jKCZheDI1LT50aW1lcik7Cj4gPiAgIH0KPiA+ICAgCj4gPiAgIHZvaWQgYXgy
+NV9zdG9wX3QxdGltZXIoYXgyNV9jYiAqYXgyNSkKPiA+ICAgewo+ID4gLQlkZWxfdGltZXIoJmF4
+MjUtPnQxdGltZXIpOwo+ID4gKwlkZWxfdGltZXJfc3luYygmYXgyNS0+dDF0aW1lcik7Cj4gPiAg
+IH0KPiA+ICAgCj4gPiAgIHZvaWQgYXgyNV9zdG9wX3QydGltZXIoYXgyNV9jYiAqYXgyNSkKPiA+
+ICAgewo+ID4gLQlkZWxfdGltZXIoJmF4MjUtPnQydGltZXIpOwo+ID4gKwlkZWxfdGltZXJfc3lu
+YygmYXgyNS0+dDJ0aW1lcik7Cj4gPiAgIH0KPiA+ICAgCj4gPiAgIHZvaWQgYXgyNV9zdG9wX3Qz
+dGltZXIoYXgyNV9jYiAqYXgyNSkKPiA+ICAgewo+ID4gLQlkZWxfdGltZXIoJmF4MjUtPnQzdGlt
+ZXIpOwo+ID4gKwlkZWxfdGltZXJfc3luYygmYXgyNS0+dDN0aW1lcik7Cj4gPiAgIH0KPiA+ICAg
+Cj4gPiAgIHZvaWQgYXgyNV9zdG9wX2lkbGV0aW1lcihheDI1X2NiICpheDI1KQo+ID4gICB7Cj4g
+PiAtCWRlbF90aW1lcigmYXgyNS0+aWRsZXRpbWVyKTsKPiA+ICsJZGVsX3RpbWVyX3N5bmMoJmF4
+MjUtPmlkbGV0aW1lcik7Cj4gPiAgIH0KPiA+ICAgCj4gPiAgIGludCBheDI1X3QxdGltZXJfcnVu
+bmluZyhheDI1X2NiICpheDI1KQo+IAo+IAo+IAo+IEFyZSB5b3Ugc3VyZSBjYWxsaW5nIGRlbF90
+aW1lX3N5bmMoKSB3b250IGRlYWRsb2NrID8KPiAKPiAKPiBJZiB0aGUgdGltZXIgaGFuZGxlcnMg
+bmVlZCBhIGxvY2sgb3duZWQgYnkgdGhlIHRocmVhZCBjYWxsaW5nIAo+IGRlbF90aW1lcl9zeW5j
+KCksCj4gCj4gdGhlbiB0aGlzIHdpbGwgYmxvY2sgZm9yZXZlci4KCkkgdGhpbmsgdGhlcmUgaXMg
+bm8gZGVhZGxvY2suCgpGdW5jdGlvbiBheDI1X2tpbGxfYnlfZGV2aWNlKCkgd2lsbCBvbmx5IGhv
+bGQgbG9ja19zb2NrKHNrKSBiZWZvcmUgdXNpbmcgCmF4MjVfZGlzY29ubmVjdCgpIHRvIGNhbGwg
+ZGVsX3RpbWVyX3N5bmMoKS4KCkluIHRpbWVycywgd2UgaG9sZCBiaF9sb2NrX3NvY2soc2spIG9y
+IHNwaW5fbG9ja19iaCgmYXgyNV9saXN0X2xvY2spIHdoaWNoCmlzIGRpZmZlcmVudCBmcm9tIGxv
+Y2tfc29jayhzaykuCgpCZXN0IHdpc2hlcywKRHVvbWluZyBaaG91Cgo=
