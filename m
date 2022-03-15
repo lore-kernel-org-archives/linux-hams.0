@@ -1,52 +1,81 @@
-From: Dan Carpenter <dan.carpenter@oracle.com>
-Subject: Re: [PATCH] hamradio: Fix wrong assignment of 'bbc->cfg.loopback'
-Date: Tue, 15 Mar 2022 14:55:36 +0300
-Message-ID: <20220315115536.GN3293@kadam>
-References: <20220315074851.6456-1-tangmeng@uniontech.com>
+From: =?UTF-8?B?5ZGo5aSa5piO?= <duoming@zju.edu.cn>
+Subject: Re: Re: [PATCH net V4 1/2] ax25: Fix refcount leaks caused by
+ ax25_cb_del()
+Date: Tue, 15 Mar 2022 22:11:10 +0800 (GMT+08:00)
+Message-ID: <15e4111b.5339.17f8deb1f24.Coremail.duoming@zju.edu.cn>
+References: <20220315015403.79201-1-duoming@zju.edu.cn>
+ <20220315102657.GX3315@kadam>
 Mime-Version: 1.0
+Content-Transfer-Encoding: base64
 Return-path: <linux-hams-owner@vger.kernel.org>
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=date : from : to : cc
- : subject : message-id : references : content-type : in-reply-to :
- mime-version; s=corp-2021-07-09;
- bh=mbJ/NTO8WCpdBgnxiv60Nu/RQAPt/pVSPwgKA9pI1fU=;
- b=P1vYpNQgWavPwpEn/08Nzru4J1w5vSczsoPofTHgtAPt2CToeRP7xxrGppp1sjSn+X8j
- S5xNwDi6xfeD5V01nsH4RvASjwIutWQRF9SqGa7o/9b5avoZPBwIz+lnyPV3ScJVuusT
- u5WYOASpAvv2gNvK9LHeBioWGhmu/rXzwnV1r4FbbxbkQgCJOxBfRE53I3LsaKkXaHKQ
- u1KbJDgmSrQS3AcohosDGeXBMxhycHAGSB6dn8X1WMok5vZcD3S7M1QXmYltIFjNFBH4
- QuYXWji/V8RokPG8KnObF1f3ci0d3oBUcPNiXsjrxRmPxT3WfPLK2uDakEg7LN+yP26a aw== 
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oracle.onmicrosoft.com; s=selector2-oracle-onmicrosoft-com;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=mbJ/NTO8WCpdBgnxiv60Nu/RQAPt/pVSPwgKA9pI1fU=;
- b=mB10RmNODhA8HiC43R281phjcVdWBf5fzHmxZOEHuvDHlP8vdk2S3nP4cvI88syc2m43cgwfYFPYGZrVWPPyxBjjlWeVZEf8Ttd4jq8tHNSHlHwg9JLs3uJMbyTiN34OkixkkxMA0Z/X5Rzdk0tG3z/3fperPgvIQJS5ZHB3lX8=
-Content-Disposition: inline
-In-Reply-To: <20220315074851.6456-1-tangmeng@uniontech.com>
+In-Reply-To: <20220315102657.GX3315@kadam>
 List-ID: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-To: Meng Tang <tangmeng@uniontech.com>
-Cc: t.sailer@alumni.ethz.ch, davem@davemloft.net, kuba@kernel.org, linux-hams@vger.kernel.org, netdev@vger.kernel.org, linux-kernel@vger.kernel.org
+To: Dan Carpenter <dan.carpenter@oracle.com>
+Cc: linux-hams@vger.kernel.org, netdev@vger.kernel.org, linux-kernel@vger.kernel.org, kuba@kernel.org, davem@davemloft.net, ralf@linux-mips.org, jreuter@yaina.de, thomas@osterried.de
 
-On Tue, Mar 15, 2022 at 03:48:51PM +0800, Meng Tang wrote:
-> In file hamradio/baycom_epp.c, the baycom_setmode interface, there
-> is a problem with improper use of strstr.
-> 
-> Suppose that when modestr="noloopback", both conditions which are
-> 'strstr(modestr,"noloopback")' and 'strstr(modestr,"loopback")'
-> will be true(not NULL), this lead the bc->cfg.loopback variable
-> will be first assigned to 0, and then reassigned to 1.
-> 
-> This will cause 'bc->cfg.loopback = 0' will never take effect. That
-> obviously violates the logic of the code, so adjust the order of
-> their execution to solve the problem.
-> 
-> Signed-off-by: Meng Tang <tangmeng@uniontech.com>
-
-Reviewed-by: Dan Carpenter <dan.carpenter@oracle.com>
-
-This bug predates git.  :P  Did you find it by testing or reviewing the
-code?
-
-regards,
-dan carpenter
+SGVsbG8sCgpPbiBUdWUsIDE1IE1hciAyMDIyIDEzOjI2OjU3ICswMzAwLCBEYW4gQ2FycGVudGVy
+IHdyb3RlOgo+IEknbSBoYXBweSB0aGF0IHRoaXMgaXMgc2ltcGxlci4gIEknbSBub3Qgc3VwZXIg
+aGFwcHkgYWJvdXQgdGhlCj4gaWYgKHNrLT5za193cSkgY2hlY2suICBUaGF0IHNlZW1zIGxpa2Ug
+YSBmcmFnaWxlIHNpZGUtZWZmZWN0IGNvbmRpdGlvbgo+IGluc3RlYWQgb2Ygc29tZXRoaW5nIGRl
+bGliZXJhdGUuICBCdXQgSSBkb24ndCBrbm93IG5ldHdvcmtpbmcgc28gbWF5YmUKPiB0aGlzIGlz
+IHNvbWV0aGluZyB3aGljaCB3ZSBjYW4gcmVseSBvbi4KClRoZSB2YXJpYWJsZSBzay0+c2tfd3Eg
+aXMgdGhlIGFkZHJlc3Mgb2Ygd2FpdGluZyBxdWV1ZSBvZiBzb2NrLCBpdCBpcyBpbml0aWFsaXpl
+ZCB0byB0aGUgCmFkZHJlc3Mgb2Ygc29jay0+d3EgdGhyb3VnaCB0aGUgZm9sbG93aW5nIHBhdGg6
+CnNvY2tfY3JlYXRlLT5fX3NvY2tfY3JlYXRlLT5heDI1X2NyZWF0ZSgpLT5zb2NrX2luaXRfZGF0
+YSgpLT5SQ1VfSU5JVF9QT0lOVEVSKHNrLT5za193cSwgJnNvY2stPndxKS4KQmVjYXVzZSB3ZSBo
+YXZlIHVzZWQgc29ja19hbGxvYygpIHRvIGFsbG9jYXRlIHRoZSBzb2NrZXQgaW4gX19zb2NrX2Ny
+ZWF0ZSgpLCBzb2NrIG9yIHRoZSBhZGRyZXNzIG9mCnNvY2stPndxIGlzIG5vdCBudWxsLgpXaGF0
+YHMgbW9yZSwgc2stPnNrX3dxIGlzIHNldCB0byBudWxsIG9ubHkgaW4gc29ja19vcnBoYW4oKS4K
+CkFub3RoZXIgc29sdXRpb246CldlIGNvdWxkIGFsc28gdXNlIHNrLT5za19zb2NrZXQgdG8gY2hl
+Y2suIFdlIHNldCBzay0+c2tfc29ja2V0IHRvIHNvY2sgaW4gdGhlIGZvbGxvd2luZyBwYXRoOgpz
+b2NrX2NyZWF0ZSgpLT5fX3NvY2tfY3JlYXRlKCktPmF4MjVfY3JlYXRlKCktPnNvY2tfaW5pdF9k
+YXRhKCktPnNrX3NldF9zb2NrZXQoc2ssIHNvY2spLgpCZWNhdXNlIHdlIGhhdmUgdXNlZCBzb2Nr
+X2FsbG9jKCkgdG8gYWxsb2NhdGUgdGhlIHNvY2tldCBpbiBfX3NvY2tfY3JlYXRlKCksIHNvY2sg
+b3Igc2stPnNrX3NvY2tldAppcyBub3QgbnVsbC4KV2hhdGBzIG1vcmUsIHNrLT5za19zb2NrZXQg
+aXMgc2V0IHRvIG51bGwgb25seSBpbiBzb2NrX29ycGhhbigpLgoKSSB3aWxsIGNoYW5nZSB0aGUg
+aWYgKHNrLT5za193cSkgY2hlY2sgdG8gaWYoc2stPnNrX3NvY2tldCkgY2hlY2ssIGJlY2F1c2Ug
+SSB0aGluayBpdCBpcyAKZWFzaWVyIHRvIHVuZGVyc3RhbmQuCgo+IFdoZW4geW91IHNlbnQgdGhl
+IGVhcmxpZXIgcGF0Y2ggdGhlbiBJIGFza2VkIGlmIHRoZSBkZXZpY2VzIGluCj4gYXgyNV9raWxs
+X2J5X2RldmljZSgpIHdlcmUgYWx3YXlzIGJvdW5kIGFuZCBpZiB3ZSBjb3VsZCBqdXN0IHVzZSBh
+IGxvY2FsCj4gdmFyaWFibGUgaW5zdGVhZCBvZiBzb21ldGhpbmcgdGllZCB0byB0aGUgYXgyNV9k
+ZXYgc3RydWN0LiAgSSBzdGlsbAo+IHdvbmRlciBhYm91dCB0aGF0LiAgSW4gb3RoZXIgd29yZHMs
+IGNvdWxkIHdlIGp1c3QgZG8gdGhpcz8KPiAKPiBkaWZmIC0tZ2l0IGEvbmV0L2F4MjUvYWZfYXgy
+NS5jIGIvbmV0L2F4MjUvYWZfYXgyNS5jCj4gaW5kZXggNmJkMDk3MTgwNzcyLi40YWY5ZDlhOTM5
+YzYgMTAwNjQ0Cj4gLS0tIGEvbmV0L2F4MjUvYWZfYXgyNS5jCj4gKysrIGIvbmV0L2F4MjUvYWZf
+YXgyNS5jCj4gQEAgLTc4LDYgKzc4LDcgQEAgc3RhdGljIHZvaWQgYXgyNV9raWxsX2J5X2Rldmlj
+ZShzdHJ1Y3QgbmV0X2RldmljZSAqZGV2KQo+ICAJYXgyNV9kZXYgKmF4MjVfZGV2Owo+ICAJYXgy
+NV9jYiAqczsKPiAgCXN0cnVjdCBzb2NrICpzazsKPiArCWJvb2wgZm91bmQgPSBmYWxzZTsKPiAg
+Cj4gIAlpZiAoKGF4MjVfZGV2ID0gYXgyNV9kZXZfYXgyNWRldihkZXYpKSA9PSBOVUxMKQo+ICAJ
+CXJldHVybjsKPiBAQCAtODYsNiArODcsNyBAQCBzdGF0aWMgdm9pZCBheDI1X2tpbGxfYnlfZGV2
+aWNlKHN0cnVjdCBuZXRfZGV2aWNlICpkZXYpCj4gIGFnYWluOgo+ICAJYXgyNV9mb3JfZWFjaChz
+LCAmYXgyNV9saXN0KSB7Cj4gIAkJaWYgKHMtPmF4MjVfZGV2ID09IGF4MjVfZGV2KSB7Cj4gKwkJ
+CWZvdW5kID0gdHJ1ZTsKPiAgCQkJc2sgPSBzLT5zazsKPiAgCQkJaWYgKCFzaykgewo+ICAJCQkJ
+c3Bpbl91bmxvY2tfYmgoJmF4MjVfbGlzdF9sb2NrKTsKPiBAQCAtMTE1LDYgKzExNywxMSBAQCBz
+dGF0aWMgdm9pZCBheDI1X2tpbGxfYnlfZGV2aWNlKHN0cnVjdCBuZXRfZGV2aWNlICpkZXYpCj4g
+IAkJfQo+ICAJfQo+ICAJc3Bpbl91bmxvY2tfYmgoJmF4MjVfbGlzdF9sb2NrKTsKPiArCj4gKwlp
+ZiAoIWZvdW5kKSB7Cj4gKwkJZGV2X3B1dF90cmFjayhheDI1X2Rldi0+ZGV2LCAmYXgyNV9kZXYt
+PmRldl90cmFja2VyKTsKPiArCQlheDI1X2Rldl9wdXQoYXgyNV9kZXYpOwo+ICsJfQo+ICB9CgpJ
+ZiB3ZSBqdXN0IHVzZSBheDI1X2Rldl9kZXZpY2VfdXAoKSB0byBicmluZyBkZXZpY2UgdXAgd2l0
+aG91dCB1c2luZyBheDI1X2JpbmQoKSwKdGhlICJmb3VuZCIgZmxhZyBjb3VsZCBiZSBmYWxzZSB3
+aGVuIHdlIGVudGVyIGF4MjVfa2lsbF9ieV9kZXZpY2UoKSBhbmQgdGhlIHJlZmNvdW50cyAKdW5k
+ZXJmbG93IHdpbGwgaGFwcGVuLiBTbyB3ZSBzaG91bGQgdXNlIHR3byBhZGRpdGlvbmFsIHZhcmlh
+Ymxlcy4KCklmIHdlIHVzZSBhZGRpdGlvbmFsIHZhcmlhYmxlcyB0byBmaXggdGhlIGJ1ZywgSSB0
+aGluayB0aGVyZSBpcyBhIHByb2JsZW0uCkluIHRoZSByZWFsIHdvcmxkLCB0aGUgZGV2aWNlIGNv
+dWxkIGJlIGRldGFjaGVkIG9ubHkgb25jZS4gSWYgdGhlIGZvbGxvd2luZwpyYWNlIGNvbmRpdGlv
+biBoYXBwZW5zLCB3ZSBjb3VsZCBub3QgZGVhbGxvY2F0ZSBheDI1X2RldiBhbmQgbmV0X2Rldmlj
+ZSBhbnltb3JlLApiZWNhdXNlIHdlIGNvdWxkIG5vdCBjYWxsIGF4MjVfa2lsbF9ieV9kZXZpY2Uo
+KSBhZ2Fpbi4KCiAgICAgICAoVGhyZWFkIDEpICAgICAgICAgICAgICAgICB8ICAgICAgKFRocmVh
+ZCAyKQogICAgYXgyNV9iaW5kKCkgICAgICAgICAgICAgICAgICAgfAogICAgICAgICAgICAgICAg
+ICAgICAgICAgICAgICAgICAgfCAgYXgyNV9raWxsX2J5X2RldmljZSgpIC8vZGVjcmVhc2UgcmVm
+Y291bnRzCiAgICAgICAoVGhyZWFkIDMpICAgICAgICAgICAgICAgICB8CiAgICBheDI1X2JpbmQo
+KSAgICAgICAgICAgICAgICAgICB8CiAgICAgLi4uICAgICAgICAgICAgICAgICAgICAgICAgICB8
+ICAgIC4uLgogICAgIGF4MjVfZGV2X2hvbGQoKSAvLygxKSAgICAgICAgfCAgCiAgICAgZGV2X2hv
+bGRfdHJhY2soKSAvLygyKSAgICAgICB8ICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg
+ICAgIHwgIGF4MjVfZGV2X2RldmljZV9kb3duKCkKCkluIHBhdGNoICJbUEFUQ0ggbmV0IFY0IDEv
+Ml0gYXgyNTogRml4IHJlZmNvdW50IGxlYWtzIGNhdXNlZCBieSBheDI1X2NiX2RlbCgpIiwKZXZl
+biB0aGUgZGV2aWNlIGhhcyBiZWVuIGRldGFjaGVkLCB3ZSBjb3VsZCBhbHNvIGRlY3JlYXNlIHRo
+ZSByZWZjb3VucyBieSB1c2luZwpheDI1X3JlbGVhc2UoKSwgd2hpY2ggY291bGQgZW5zdXJlIGF4
+MjVfZGV2IGFuZCBuZXRfZGV2aWNlIGNvdWxkIGJlIGRlYWxsb2NhdGVkLgpTbyBJIHRoaW5rICJb
+UEFUQ0ggbmV0IFY0IDEvMl0iIGlzIGJldHRlci4KCkJlc3Qgd2lzaGVzLApEdW9taW5nIFpob3U=
 
