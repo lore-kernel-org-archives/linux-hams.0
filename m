@@ -1,107 +1,143 @@
 From: Duoming Zhou <duoming@zju.edu.cn>
-Subject: [PATCH net V4 1/2] ax25: Fix refcount leaks caused by ax25_cb_del()
-Date: Tue, 15 Mar 2022 09:54:03 +0800
-Message-ID: <20220315015403.79201-1-duoming@zju.edu.cn>
+Subject: [PATCH net V4 2/2] ax25: Fix NULL pointer dereferences in ax25 timers
+Date: Tue, 15 Mar 2022 09:56:54 +0800
+Message-ID: <20220315015654.79941-1-duoming@zju.edu.cn>
 Return-path: <linux-hams-owner@vger.kernel.org>
 List-ID: <linux-hams.vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
 To: linux-hams@vger.kernel.org
-Cc: netdev@vger.kernel.org, linux-kernel@vger.kernel.org, kuba@kernel.org, davem@davemloft.net, ralf@linux-mips.org, jreuter@yaina.de, dan.carpenter@oracle.com, thomas@osterried.de, Duoming Zhou <duoming@zju.edu.cn>
+Cc: netdev@vger.kernel.org, linux-kernel@vger.kernel.org, kuba@kernel.org, davem@davemloft.net, ralf@linux-mips.org, jreuter@yaina.de, dan.carpenter@oracle.com, Duoming Zhou <duoming@zju.edu.cn>
 
-The previous commit d01ffb9eee4a ("ax25: add refcount in ax25_dev to
-avoid UAF bugs") and commit feef318c855a ("ax25: fix UAF bugs of
-net_device caused by rebinding operation") increase the refcounts of
-ax25_dev and net_device in ax25_bind() and decrease the matching refcounts
-in ax25_kill_by_device() in order to prevent UAF bugs, but there are
-reference count leaks.
+There are race conditions that may lead to null pointer dereferences in
+ax25_heartbeat_expiry(), ax25_t1timer_expiry(), ax25_t2timer_expiry(),
+ax25_t3timer_expiry() and ax25_idletimer_expiry(), when we use
+ax25_kill_by_device() to detach the ax25 device.
 
-The root cause of refcount leaks is shown below:
+One of the race conditions that cause null pointer dereferences can be
+shown as below:
 
-     (Thread 1)                      |      (Thread 2)
-ax25_bind()                          |
- ...                                 |
- ax25_addr_ax25dev()                 |
-  ax25_dev_hold()   //(1)            |
-  ...                                |
- dev_hold_track()   //(2)            |
- ...                                 | ax25_destroy_socket()
-                                     |  ax25_cb_del()
-                                     |   ...
-                                     |   hlist_del_init() //(3)
-                                     |
-                                     |
-     (Thread 3)                      |
-ax25_kill_by_device()                |
- ...                                 |
- ax25_for_each(s, &ax25_list) {      |
-  if (s->ax25_dev == ax25_dev) //(4) |
-   ...                               |
+      (Thread 1)                    |      (Thread 2)
+ax25_connect()                      |
+ ax25_std_establish_data_link()     |
+  ax25_start_t1timer()              |
+   mod_timer(&ax25->t1timer,..)     |
+                                    | ax25_kill_by_device()
+   (wait a time)                    |  ...
+                                    |  s->ax25_dev = NULL; //(1)
+   ax25_t1timer_expiry()            |
+    ax25->ax25_dev->values[..] //(2)|  ...
+     ...                            |
 
-Firstly, we use ax25_bind() to increase the refcount of ax25_dev in
-position (1) and increase the refcount of net_device in position (2).
-Then, we use ax25_cb_del() invoked by ax25_destroy_socket() to delete
-ax25_cb in hlist in position (3) before calling ax25_kill_by_device().
-Finally, the decrements of refcounts in ax25_kill_by_device() will not
-be executed, because no s->ax25_dev equals to ax25_dev in position (4).
+We set null to ax25_cb->ax25_dev in position (1) and dereference
+the null pointer in position (2).
 
-This patch adds decrements of refcounts in ax25_release() and use
-lock_sock() to do synchronization. If refcounts decrease in ax25_release(),
-the decrements of refcounts in ax25_kill_by_device() will not be
-executed and vice versa.
+The corresponding fail log is shown below:
+===============================================================
+BUG: kernel NULL pointer dereference, address: 0000000000000050
+CPU: 1 PID: 0 Comm: swapper/1 Not tainted 5.17.0-rc6-00794-g45690b7d0
+RIP: 0010:ax25_t1timer_expiry+0x12/0x40
+...
+Call Trace:
+ call_timer_fn+0x21/0x120
+ __run_timers.part.0+0x1ca/0x250
+ run_timer_softirq+0x2c/0x60
+ __do_softirq+0xef/0x2f3
+ irq_exit_rcu+0xb6/0x100
+ sysvec_apic_timer_interrupt+0xa2/0xd0
+...
 
-Fixes: d01ffb9eee4a ("ax25: add refcount in ax25_dev to avoid UAF bugs")
-Fixes: 87563a043cef ("ax25: fix reference count leaks of ax25_dev")
-Fixes: feef318c855a ("ax25: fix UAF bugs of net_device caused by rebinding operation")
-Reported-by: Thomas Osterried <thomas@osterried.de>
+This patch uses ax25_disconnect() to delete timers before we set null to
+ax25_cb->ax25_dev in ax25_kill_by_device().The function ax25_disconnect()
+will not return until all timers are stopped, because we have changed
+del_timer() to del_timer_sync(). What`s more, we add condition check in
+ax25_destroy_socket(), because ax25_stop_heartbeat() will not return,
+if there is still heartbeat.
+
 Signed-off-by: Duoming Zhou <duoming@zju.edu.cn>
 ---
 Changes in V4:
-  - Add decrements of refcounts in ax25_release() instead of using any additional variables.
+  - Based on [PATCH net V4 1/2] ax25: Fix refcount leaks caused by ax25_cb_del().
 
- net/ax25/af_ax25.c | 14 +++++++++++---
- 1 file changed, 11 insertions(+), 3 deletions(-)
+ net/ax25/af_ax25.c    |  7 ++++---
+ net/ax25/ax25_timer.c | 10 +++++-----
+ 2 files changed, 9 insertions(+), 8 deletions(-)
 
 diff --git a/net/ax25/af_ax25.c b/net/ax25/af_ax25.c
-index 6bd09718077..0886109421a 100644
+index 0886109421a..dc6161a75a1 100644
 --- a/net/ax25/af_ax25.c
 +++ b/net/ax25/af_ax25.c
-@@ -98,8 +98,10 @@ static void ax25_kill_by_device(struct net_device *dev)
+@@ -89,20 +89,20 @@ static void ax25_kill_by_device(struct net_device *dev)
+ 			sk = s->sk;
+ 			if (!sk) {
+ 				spin_unlock_bh(&ax25_list_lock);
+-				s->ax25_dev = NULL;
+ 				ax25_disconnect(s, ENETUNREACH);
++				s->ax25_dev = NULL;
+ 				spin_lock_bh(&ax25_list_lock);
+ 				goto again;
+ 			}
+ 			sock_hold(sk);
  			spin_unlock_bh(&ax25_list_lock);
  			lock_sock(sk);
++			ax25_disconnect(s, ENETUNREACH);
  			s->ax25_dev = NULL;
--			dev_put_track(ax25_dev->dev, &ax25_dev->dev_tracker);
--			ax25_dev_put(ax25_dev);
-+			if (sk->sk_wq) {
-+				dev_put_track(ax25_dev->dev, &ax25_dev->dev_tracker);
-+				ax25_dev_put(ax25_dev);
-+			}
- 			ax25_disconnect(s, ENETUNREACH);
+ 			if (sk->sk_wq) {
+ 				dev_put_track(ax25_dev->dev, &ax25_dev->dev_tracker);
+ 				ax25_dev_put(ax25_dev);
+ 			}
+-			ax25_disconnect(s, ENETUNREACH);
  			release_sock(sk);
  			spin_lock_bh(&ax25_list_lock);
-@@ -979,14 +981,20 @@ static int ax25_release(struct socket *sock)
+ 			sock_put(sk);
+@@ -307,7 +307,8 @@ void ax25_destroy_socket(ax25_cb *ax25)
+ 
+ 	ax25_cb_del(ax25);
+ 
+-	ax25_stop_heartbeat(ax25);
++	if (!ax25->sk || !sock_flag(ax25->sk, SOCK_DESTROY))
++		ax25_stop_heartbeat(ax25);
+ 	ax25_stop_t1timer(ax25);
+ 	ax25_stop_t2timer(ax25);
+ 	ax25_stop_t3timer(ax25);
+diff --git a/net/ax25/ax25_timer.c b/net/ax25/ax25_timer.c
+index 85865ebfdfa..99af3d1aeec 100644
+--- a/net/ax25/ax25_timer.c
++++ b/net/ax25/ax25_timer.c
+@@ -78,27 +78,27 @@ void ax25_start_idletimer(ax25_cb *ax25)
+ 
+ void ax25_stop_heartbeat(ax25_cb *ax25)
  {
- 	struct sock *sk = sock->sk;
- 	ax25_cb *ax25;
-+	ax25_dev *ax25_dev;
+-	del_timer(&ax25->timer);
++	del_timer_sync(&ax25->timer);
+ }
  
- 	if (sk == NULL)
- 		return 0;
+ void ax25_stop_t1timer(ax25_cb *ax25)
+ {
+-	del_timer(&ax25->t1timer);
++	del_timer_sync(&ax25->t1timer);
+ }
  
- 	sock_hold(sk);
--	sock_orphan(sk);
- 	lock_sock(sk);
-+	sock_orphan(sk);
- 	ax25 = sk_to_ax25(sk);
-+	ax25_dev = ax25->ax25_dev;
-+	if (ax25_dev) {
-+		dev_put_track(ax25_dev->dev, &ax25_dev->dev_tracker);
-+		ax25_dev_put(ax25_dev);
-+	}
+ void ax25_stop_t2timer(ax25_cb *ax25)
+ {
+-	del_timer(&ax25->t2timer);
++	del_timer_sync(&ax25->t2timer);
+ }
  
- 	if (sk->sk_type == SOCK_SEQPACKET) {
- 		switch (ax25->state) {
+ void ax25_stop_t3timer(ax25_cb *ax25)
+ {
+-	del_timer(&ax25->t3timer);
++	del_timer_sync(&ax25->t3timer);
+ }
+ 
+ void ax25_stop_idletimer(ax25_cb *ax25)
+ {
+-	del_timer(&ax25->idletimer);
++	del_timer_sync(&ax25->idletimer);
+ }
+ 
+ int ax25_t1timer_running(ax25_cb *ax25)
 -- 
 2.17.1
 
