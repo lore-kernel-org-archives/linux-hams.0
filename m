@@ -1,53 +1,64 @@
-From: patchwork-bot+netdevbpf@kernel.org
-Subject: Re: [PATCH V5 0/2] Fix refcount leak and NPD bugs in ax25
-Date: Mon, 21 Mar 2022 11:00:10 +0000
-Message-ID: <164786041078.7161.8989814381753324978.git-patchwork-notify@kernel.org>
-References: <cover.1647563511.git.duoming@zju.edu.cn>
+From: "Paul R. Tagliamonte" <paultag@gmail.com>
+Subject: AX.25 Linux Packet Forwarding
+Date: Sun, 27 Mar 2022 20:18:11 -0400
+Message-ID: <CAO6P2QRhPXpOw6EYkeFv+QsGGZfTce98uTgTd-oYQ7L0sE5TbA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Return-path: <linux-kernel-owner@vger.kernel.org>
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1647860410;
-        bh=n6qC4hmVpj4wVG8saQK+2Vx0mlcjl2MotPLnb9j2Ah4=;
-        h=Subject:From:Date:References:In-Reply-To:To:Cc:From;
-        b=e9jjBk/m4GcECe2Y/ELBhccRNWRsggoHb9n/NvAs8SdSKbjwLgU4xAtBnWR7jb2Z5
-         ZsJin8g4vLzmxXAFKL1/ugRQdXiOauwKfjhdGjx/+n8P/jGcsXYpaJVdwc70GGhyXp
-         8nQ8U7w3EhsIqdaeyHA83+eAxi2qUHsGCA2O1MOPtrErBFDNs3B1F0CauGH1eLm4x4
-         PC8tPELsAwIulIaqylAHHvSsh//ZVf9He70DXExzhoXGV6SJcjjBnr8RRE8zaIDreG
-         1tkMlK20Oz4pFYkS0bN+VSHrQH+sNYpVscu6mTe44NR/qvlmry0bbfTq3qHf9rapDH
-         F02hvaR8vsjBA==
-In-Reply-To: <cover.1647563511.git.duoming@zju.edu.cn>
+Return-path: <linux-hams-owner@vger.kernel.org>
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=mime-version:from:date:message-id:subject:to;
+        bh=oU5QmbQSK4PQuO1dbj+0TZqeiSG/+1XnTn+GRzyFTeY=;
+        b=HfHxP6LbDoe7nrgsjE1Y1iqPNJlN8WmNifLPrZuostYKShS6agQooC6h1Auhl/gsYL
+         t1VyDlOrQCQ5DHdH/Ro3Q2OGOkW7KTRiJldkr3B9PWBiDx9xAueWvt4w3dd9F5Cw/PCZ
+         Wnqu/Pc7LU8Oxc6KUfkwCcA9qOwK0Z+a7YpulmA4Q1k30E2afaUu3X0r5sUsH8+zJ9Nk
+         YHqBCOf8+r3PHuSm4cwrgENz3r0h0RLWUga9IhOmAqSRjkBUGlnnCUKy+ZKDIvhuTuEO
+         2esEciDeIF+u6bqoMicHtLwgOodEv8RTm0rcNMWfi4xPswzsr083VBmkipw6B8MiET59
+         NObw==
 List-ID: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
-To: Duoming Zhou <duoming@zju.edu.cn>
-Cc: linux-hams@vger.kernel.org, netdev@vger.kernel.org, linux-kernel@vger.kernel.org, kuba@kernel.org, davem@davemloft.net, ralf@linux-mips.org, jreuter@yaina.de, eric.dumazet@gmail.com, dan.carpenter@oracle.com
+Content-Transfer-Encoding: 7bit
+To: linux-hams@vger.kernel.org
 
-Hello:
+Hello, Linux HAMs,
 
-This series was applied to netdev/net.git (master)
-by David S. Miller <davem@davemloft.net>:
+I'm just getting into AX.25, and I've not been able to find the right
+set of keywords to search for. I've only started learning about this
+two days ago, so pointing me to the right docs would be very welcome
+and helpful in this case.
 
-On Fri, 18 Mar 2022 08:54:03 +0800 you wrote:
-> The first patch fixes refcount leak in ax25 that could cause
-> ax25-ex-connected-session-now-listening-state-bug.
-> 
-> The second patch fixes NPD bugs in ax25 timers.
-> 
-> Duoming Zhou (2):
->   ax25: Fix refcount leaks caused by ax25_cb_del()
->   ax25: Fix NULL pointer dereferences in ax25 timers
-> 
-> [...]
+I've got a base station and a Kenwood handheld that I've got working
+with AX.25. I have a BBS I can hit via my base station, but not my
+handheld.
 
-Here is the summary with links:
-  - [V5,1/2] ax25: Fix refcount leaks caused by ax25_cb_del()
-    https://git.kernel.org/netdev/net/c/9fd75b66b8f6
-  - [V6,2/2] ax25: Fix NULL pointer dereferences in ax25 timers
-    https://git.kernel.org/netdev/net/c/fc6d01ff9ef0
+I'd like to set up my Linux box attached to my base station to forward
+AX.25 traffic on-frequency as a relay.
 
-You are awesome, thank you!
--- 
-Deet-doot-dot, I am a bot.
-https://korg.docs.kernel.org/patchwork/pwbot.html
+HT: "K3XEC-1" (Kenwood)
+Base Station: "MYRELAY" (Yaesu)
+Remote Station: "MYBBS"
 
+Assuming MYRELAY and MYBBS are valid callsigns / stations -- I'm going
+to use these so that we don't get confused by the same callsign but
+different SSIDs.
 
+I'd like to be able to (from my Laptop and Kenwood) do (as K3XEC-1):
+
+$ axcall MYBBS via MYRELAY
+
+which would result in MYRELAY sending traffic K3XEC-2>MYBBS, and
+relaying traffic back to K3XEC-2 (or something) back via
+MYRELAY>K3XEC-1 (or however it should be properly translated - still
+not comfortable with the AX.25 framing yet or if there's a convention
+there), and have my base-station relay traffic to and from.
+
+Is there something like "net.ipv4.ip_forward" but for AX.25 that would
+allow me to do this? Or a daemon or something? I'd love to allow
+anyone else nearby to use my base station, so filtering by callsign is
+not required here either.
+
+I /think/ I subscribed, but please do keep me on CC in the event I fudged up.
+
+  Paul K3XEC
+
+--
+:wq
