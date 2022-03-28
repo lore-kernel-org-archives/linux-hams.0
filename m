@@ -1,8 +1,12 @@
 From: Duoming Zhou <duoming@zju.edu.cn>
-Subject: [PATCH net 0/2] Fix UAF bugs caused by ax25_release()
-Date: Mon, 28 Mar 2022 21:00:13 +0800
-Message-ID: <cover.1648472006.git.duoming@zju.edu.cn>
+Subject: [PATCH net 2/2] ax25: Fix UAF bugs in ax25 timers
+Date: Mon, 28 Mar 2022 21:00:15 +0800
+Message-ID: <de85c3c73e00d834e3a469c07106d903114d1776.1648472006.git.duoming@zju.edu.cn>
+References: <cover.1648472006.git.duoming@zju.edu.cn>
 Return-path: <linux-hams-owner@vger.kernel.org>
+In-Reply-To: <cover.1648472006.git.duoming@zju.edu.cn>
+In-Reply-To: <cover.1648472006.git.duoming@zju.edu.cn>
+References: <cover.1648472006.git.duoming@zju.edu.cn>
 List-ID: <linux-hams.vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="us-ascii"
@@ -10,16 +14,73 @@ Content-Transfer-Encoding: 7bit
 To: linux-hams@vger.kernel.org
 Cc: netdev@vger.kernel.org, linux-kernel@vger.kernel.org, pabeni@redhat.com, kuba@kernel.org, davem@davemloft.net, ralf@linux-mips.org, jreuter@yaina.de, dan.carpenter@oracle.com, Duoming Zhou <duoming@zju.edu.cn>
 
-The first patch fixes UAF bugs in ax25_send_control, and
-the second patch fixes UAF bugs in ax25 timers.
+There are race conditions that may lead to UAF bugs in
+ax25_heartbeat_expiry(), ax25_t1timer_expiry(), ax25_t2timer_expiry(),
+ax25_t3timer_expiry() and ax25_idletimer_expiry(), when we call
+ax25_release() to deallocate ax25_dev.
 
-Duoming Zhou (2):
-  ax25: fix UAF bug in ax25_send_control()
-  ax25: Fix UAF bugs in ax25 timers
+One of the UAF bugs caused by ax25_release() is shown below:
 
- net/ax25/af_ax25.c | 13 +++++++++----
- 1 file changed, 9 insertions(+), 4 deletions(-)
+      (Thread 1)                    |      (Thread 2)
+ax25_dev_device_up() //(1)          |
+...                                 | ax25_kill_by_device()
+ax25_bind()          //(2)          |
+ax25_connect()                      | ...
+ ax25_std_establish_data_link()     |
+  ax25_start_t1timer()              | ax25_dev_device_down() //(3)
+   mod_timer(&ax25->t1timer,..)     |
+                                    | ax25_release()
+   (wait a time)                    |  ...
+                                    |  ax25_dev_put(ax25_dev) //(4)FREE
+   ax25_t1timer_expiry()            |
+    ax25->ax25_dev->values[..] //USE|  ...
+     ...                            |
 
+We increase the refcount of ax25_dev in position (1) and (2), and
+decrease the refcount of ax25_dev in position (3) and (4).
+The ax25_dev will be freed in position (4) and be used in
+ax25_t1timer_expiry().
+
+The fail log is shown below:
+==============================================================
+
+[  106.116942] BUG: KASAN: use-after-free in ax25_t1timer_expiry+0x1c/0x60
+[  106.116942] Read of size 8 at addr ffff88800bda9028 by task swapper/0/0
+[  106.116942] CPU: 0 PID: 0 Comm: swapper/0 Not tainted 5.17.0-06123-g0905eec574
+[  106.116942] Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS rel-14
+[  106.116942] Call Trace:
+...
+[  106.116942]  ax25_t1timer_expiry+0x1c/0x60
+[  106.116942]  call_timer_fn+0x122/0x3d0
+[  106.116942]  __run_timers.part.0+0x3f6/0x520
+[  106.116942]  run_timer_softirq+0x4f/0xb0
+[  106.116942]  __do_softirq+0x1c2/0x651
+...
+
+This patch adds del_timer_sync() in ax25_release(), which could ensure
+that all timers stop before we deallocate ax25_dev.
+
+Signed-off-by: Duoming Zhou <duoming@zju.edu.cn>
+---
+ net/ax25/af_ax25.c | 5 +++++
+ 1 file changed, 5 insertions(+)
+
+diff --git a/net/ax25/af_ax25.c b/net/ax25/af_ax25.c
+index f5686c463bc..363d47f9453 100644
+--- a/net/ax25/af_ax25.c
++++ b/net/ax25/af_ax25.c
+@@ -1053,6 +1053,11 @@ static int ax25_release(struct socket *sock)
+ 		ax25_destroy_socket(ax25);
+ 	}
+ 	if (ax25_dev) {
++		del_timer_sync(&ax25->timer);
++		del_timer_sync(&ax25->t1timer);
++		del_timer_sync(&ax25->t2timer);
++		del_timer_sync(&ax25->t3timer);
++		del_timer_sync(&ax25->idletimer);
+ 		dev_put_track(ax25_dev->dev, &ax25_dev->dev_tracker);
+ 		ax25_dev_put(ax25_dev);
+ 	}
 -- 
 2.17.1
 
