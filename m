@@ -1,62 +1,76 @@
-From: "Maciej W. Rozycki" <macro@orcam.me.uk>
-Subject: Re: [RFC v2 21/39] net: add HAS_IOPORT dependencies
-Date: Sun, 1 May 2022 23:48:09 +0100 (BST)
-Message-ID: <alpine.DEB.2.21.2205012324130.9383@angie.orcam.me.uk>
-References: <20220429135108.2781579-1-schnelle@linux.ibm.com> <20220429135108.2781579-36-schnelle@linux.ibm.com>
-Mime-Version: 1.0
-Return-path: <linux-arch-owner@vger.kernel.org>
-In-Reply-To: <20220429135108.2781579-36-schnelle@linux.ibm.com>
+From: Thomas Osterried <thomas@osterried.de>
+Subject: Re: [PATCH net-next 6/6] net: hamradio: remove support for DMA SCC
+ devices
+Date: Mon, 2 May 2022 03:01:24 +0200
+Message-ID: <692463B1-ABB4-4DBB-81EA-945B7D588A39@osterried.de>
+References: <20220426175436.417283-1-kuba@kernel.org>
+ <20220426175436.417283-7-kuba@kernel.org>
+ <YmhACVaakjATNFl4@x-berg.in-berlin.de> <20220426123941.5c6643ee@kernel.org>
+ <CAK8P3a3ym6uGLWxX55bc_JDWziDO0hq7K0UksMLC7_b5=aFfcQ@mail.gmail.com>
+Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3696.80.82.1.1\))
+Content-Transfer-Encoding: 8BIT
+Return-path: <linux-hams-owner@vger.kernel.org>
+In-Reply-To: <CAK8P3a3ym6uGLWxX55bc_JDWziDO0hq7K0UksMLC7_b5=aFfcQ@mail.gmail.com>
 List-ID: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-To: Niklas Schnelle <schnelle@linux.ibm.com>
-Cc: Arnd Bergmann <arnd@arndb.de>, Greg Kroah-Hartman <gregkh@linuxfoundation.org>, linux-kernel@vger.kernel.org, linux-arch@vger.kernel.org, linux-pci@vger.kernel.org, Marc Kleine-Budde <mkl@pengutronix.de>, Arnd Bergmann <arnd@kernel.org>, "David S. Miller" <davem@davemloft.net>, Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>, Michael Grzeschik <m.grzeschik@pengutronix.de>, Wolfgang Grandegger <wg@grandegger.com>, Jesse Brandeburg <jesse.brandeburg@intel.com>, Tony Nguyen <anthony.l.nguyen@intel.com>, Ralf Baechle <ralf@linux-mips.org>, "open list:NETWORKING DRIVERS" <netdev@vger.kernel.org>, "open list:CAN NETWORK DRIVERS" <linux-can@vger.kernel.org>, "moderated list:INTEL ETHERNET DRIVERS" <intel-wired-lan@lists.osuosl.org>, open
+To: Arnd Bergmann <arnd@arndb.de>
+Cc: Jakub Kicinski <kuba@kernel.org>, linux-hams@vger.kernel.org, jreuter@yaina.de
 
-On Fri, 29 Apr 2022, Niklas Schnelle wrote:
 
-> In a future patch HAS_IOPORT=n will result in inb()/outb() and friends
-> not being declared. We thus need to add HAS_IOPORT as dependency for
-> those drivers using them. It also turns out that with HAS_IOPORT handled
-> explicitly HAMRADIO does not need the !S390 dependency and successfully
-> builds the bpqether driver.
-[...]
-> diff --git a/drivers/net/fddi/Kconfig b/drivers/net/fddi/Kconfig
-> index 846bf41c2717..fa3f1e0fe143 100644
-> --- a/drivers/net/fddi/Kconfig
-> +++ b/drivers/net/fddi/Kconfig
-> @@ -29,7 +29,7 @@ config DEFZA
->  
->  config DEFXX
->  	tristate "Digital DEFTA/DEFEA/DEFPA adapter support"
-> -	depends on FDDI && (PCI || EISA || TC)
-> +	depends on FDDI && (PCI || EISA || TC) && HAS_IOPORT
->  	help
->  	  This is support for the DIGITAL series of TURBOchannel (DEFTA),
->  	  EISA (DEFEA) and PCI (DEFPA) controllers which can connect you
 
- NAK, this has to be sorted out differently (and I think we discussed it 
-before).
+> Am 27.04.2022 um 15:27 schrieb Arnd Bergmann <arnd@arndb.de>:
+> 
+> On Tue, Apr 26, 2022 at 9:39 PM Jakub Kicinski <kuba@kernel.org> wrote:
+>> 
+>> On Tue, 26 Apr 2022 20:55:05 +0200 Thomas Osterried wrote:
+>>> Jakub informed, that the dmascc driver will be removed from kernel.
+>>> 
+>>> I think, Jakub's descision should be discussed here on the list, by the users.
+>> 
+>> Thanks a lot for the forward!
+>> 
+>>> DMASCC is the "high speed DMA" driver.
+>>> SCC driver (also with Z8530) will be left in the kernel.
+>>> 
+>>> Hmm, I cannot really understand the decision of kickoff for DMASCC, and
+>>> why the code "older" SCC ISA-bus cards will be kept.
+>> 
+>> We are infamously bad at deciding when to retire code in the kernel,
+>> the arbitrary rule I used now was "does it depend on VIRT_TO_BUS".
+>> I figured the non-DMA SCC will go when ISA goes.
+> 
+> Looking at how this driver uses virt_to_bus, I think it can trivially get
+> converted to isa_virt_to_bus(), which only operates on the low 16MB.
 
- The driver works just fine with MMIO where available, so if `inb'/`outb' 
-do get removed, then only parts that rely on port I/O need to be disabled.  
-In fact there's already such provision there in drivers/net/fddi/defxx.c 
-for TURBOchannel systems (CONFIG_TC), which have no port I/O space either:
+Anyone has those cards SCC and DMA-SCC cards still in use and like to test?
 
-#if defined(CONFIG_EISA) || defined(CONFIG_PCI)
-#define dfx_use_mmio bp->mmio
-#else
-#define dfx_use_mmio true
-#endif
 
-so I guess it's just the conditional that will have to be changed to:
+> What hardware is ax25 actually used on normally? the drivers I can see
+> are based on
+> 
+> 6pack: serial (through tty layer)
+> bpqether: ethernet
+> dmascc: isa (with DMA)
+> scc: isa (without DMA)
+> baycom: serial (bypassing tty layer) or parport
+> yam: serial (bypassing tty layer)
 
-#ifdef CONFIG_HAS_IOPORT
+mkiss: serial (through tty layer)
 
-replacing the current explicit bus dependency list.  The compiler will 
-then optimise away all the port I/O stuff (though I suspect dummy function 
-declarations may be required for `inb'/`outb', etc.).
+Speaking about the serial protocols, 6pack is more sophisticated. But kiss is more common.
 
- I can verify a suitable change with a TURBOchannel configuration once the 
-MIPS part has been sorted.
+Personally, I'm a fan of the bpqether driver. It is so fast, because it gets the skb from the ethernet driver and just needs to pass the payload to the AX.25 stack (or vice versa, add ethernet header and pid, pass it to the ethernet driver, done).
 
-  Maciej
+> The ISA drivers are clearly the most obsolete, as they require a 32-bit PC
+> or 1990s RISC workstation with ISA slots.
+> 
+> The baycom and yam drivers in turn look like they could work on any
+> serial port but are written to assume an ISA-style onboard serial port
+> on a PC. You can technically still buy new machines that have those,
+> but the drivers should really be changed to go through the tty layer
+> if someone wants to use them with a USB-serial adapter or similar.
+
+Ok. Same question to our community on the mailing-list as for the (DMA)-SCC-cards: it would be interesting who is still using this hardware, while running a current kernel.
+
+vy 73,
+	- Thomas  dl9sau
