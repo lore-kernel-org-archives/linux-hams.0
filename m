@@ -1,62 +1,51 @@
-From: Jiapeng Chong <jiapeng.chong@linux.alibaba.com>
-Subject: [PATCH] [NET] ROSE: Remove unused code and clean up some inconsistent indenting
-Date: Sat,  7 May 2022 11:42:07 +0800
-Message-ID: <20220507034207.18651-1-jiapeng.chong@linux.alibaba.com>
+From: patchwork-bot+netdevbpf@kernel.org
+Subject: Re: [PATCH] [NET] ROSE: Remove unused code and clean up some inconsistent
+ indenting
+Date: Tue, 10 May 2022 00:30:14 +0000
+Message-ID: <165214261440.23610.14293636513999790192.git-patchwork-notify@kernel.org>
+References: <20220507034207.18651-1-jiapeng.chong@linux.alibaba.com>
 Mime-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Return-path: <linux-hams-owner@vger.kernel.org>
+Return-path: <netdev-owner@vger.kernel.org>
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1652142614;
+        bh=VKqlSpMwsrf8kmGASDW+ONiJ1G6G8fKLEvEmo94TDJU=;
+        h=Subject:From:Date:References:In-Reply-To:To:Cc:From;
+        b=tDdv3+rwe99pTbx81NayFxAV9v/36UDmSr2muzVCGswqWPl04YsvEPWc6VpN5+3H/
+         HpGa2rHfalgrZorUC+57W7UFX9PpW+cg6gECqR3gCiJvSJsFaUDoZ99ZrSCAMeOC3D
+         crcYd4AiErK+MQKvzga8SZqW91x2FskDm+osnS1I+VUgt7YSEgG224FeW9QM3D80HA
+         58zRuUxcV+Vk/LWJ6q6LT/vZn1orLUE8jqFCEjXnUdYZN0udwAbco9bPgzbK6Bq/Un
+         px0zq6ijB8n4rTuNt3KJ3jk8jzpxs4qDLaJQKOkc634EscON33g7RmZIrKPJO2Ci5l
+         UghSn82CTMqMQ==
+In-Reply-To: <20220507034207.18651-1-jiapeng.chong@linux.alibaba.com>
 List-ID: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
-To: ralf@linux-mips.org
-Cc: davem@davemloft.net, edumazet@google.com, kuba@kernel.org, pabeni@redhat.com, linux-hams@vger.kernel.org, netdev@vger.kernel.org, linux-kernel@vger.kernel.org, Jiapeng Chong <jiapeng.chong@linux.alibaba.com>, Abaci Robot <abaci@linux.alibaba.com>
+To: Jiapeng Chong <jiapeng.chong@linux.alibaba.com>
+Cc: ralf@linux-mips.org, davem@davemloft.net, edumazet@google.com, kuba@kernel.org, pabeni@redhat.com, linux-hams@vger.kernel.org, netdev@vger.kernel.org, linux-kernel@vger.kernel.org, abaci@linux.alibaba.com
 
-Eliminate the follow smatch warning:
+Hello:
 
-net/rose/rose_route.c:1136 rose_node_show() warn: inconsistent
-indenting.
+This patch was applied to netdev/net-next.git (master)
+by Jakub Kicinski <kuba@kernel.org>:
 
-Reported-by: Abaci Robot <abaci@linux.alibaba.com>
-Signed-off-by: Jiapeng Chong <jiapeng.chong@linux.alibaba.com>
----
- net/rose/rose_route.c | 25 +++++++++----------------
- 1 file changed, 9 insertions(+), 16 deletions(-)
+On Sat,  7 May 2022 11:42:07 +0800 you wrote:
+> Eliminate the follow smatch warning:
+> 
+> net/rose/rose_route.c:1136 rose_node_show() warn: inconsistent
+> indenting.
+> 
+> Reported-by: Abaci Robot <abaci@linux.alibaba.com>
+> Signed-off-by: Jiapeng Chong <jiapeng.chong@linux.alibaba.com>
+> 
+> [...]
 
-diff --git a/net/rose/rose_route.c b/net/rose/rose_route.c
-index e2e6b6b78578..fee6409c2bb3 100644
---- a/net/rose/rose_route.c
-+++ b/net/rose/rose_route.c
-@@ -1128,22 +1128,15 @@ static int rose_node_show(struct seq_file *seq, void *v)
- 		seq_puts(seq, "address    mask n neigh neigh neigh\n");
- 	else {
- 		const struct rose_node *rose_node = v;
--		/* if (rose_node->loopback) {
--			seq_printf(seq, "%-10s %04d 1 loopback\n",
--				   rose2asc(rsbuf, &rose_node->address),
--				   rose_node->mask);
--		} else { */
--			seq_printf(seq, "%-10s %04d %d",
--				   rose2asc(rsbuf, &rose_node->address),
--				   rose_node->mask,
--				   rose_node->count);
--
--			for (i = 0; i < rose_node->count; i++)
--				seq_printf(seq, " %05d",
--					rose_node->neighbour[i]->number);
--
--			seq_puts(seq, "\n");
--		/* } */
-+		seq_printf(seq, "%-10s %04d %d",
-+			   rose2asc(rsbuf, &rose_node->address),
-+			   rose_node->mask,
-+			   rose_node->count);
-+
-+		for (i = 0; i < rose_node->count; i++)
-+			seq_printf(seq, " %05d", rose_node->neighbour[i]->number);
-+
-+		seq_puts(seq, "\n");
- 	}
- 	return 0;
- }
+Here is the summary with links:
+  - [NET] ROSE: Remove unused code and clean up some inconsistent indenting
+    https://git.kernel.org/netdev/net-next/c/eef0dc7e517e
+
+You are awesome, thank you!
 -- 
-2.20.1.7.g153144c
+Deet-doot-dot, I am a bot.
+https://korg.docs.kernel.org/patchwork/pwbot.html
+
 
