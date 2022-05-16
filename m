@@ -1,51 +1,66 @@
-From: patchwork-bot+netdevbpf@kernel.org
-Subject: Re: [PATCH] [NET] ROSE: Remove unused code and clean up some inconsistent
- indenting
-Date: Tue, 10 May 2022 00:30:14 +0000
-Message-ID: <165214261440.23610.14293636513999790192.git-patchwork-notify@kernel.org>
-References: <20220507034207.18651-1-jiapeng.chong@linux.alibaba.com>
+From: Lu Wei <luwei32@huawei.com>
+Subject: [PATCH net-next] ax25: merge repeat codes in ax25_dev_device_down()
+Date: Mon, 16 May 2022 14:28:04 +0800
+Message-ID: <20220516062804.254742-1-luwei32@huawei.com>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Return-path: <netdev-owner@vger.kernel.org>
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1652142614;
-        bh=VKqlSpMwsrf8kmGASDW+ONiJ1G6G8fKLEvEmo94TDJU=;
-        h=Subject:From:Date:References:In-Reply-To:To:Cc:From;
-        b=tDdv3+rwe99pTbx81NayFxAV9v/36UDmSr2muzVCGswqWPl04YsvEPWc6VpN5+3H/
-         HpGa2rHfalgrZorUC+57W7UFX9PpW+cg6gECqR3gCiJvSJsFaUDoZ99ZrSCAMeOC3D
-         crcYd4AiErK+MQKvzga8SZqW91x2FskDm+osnS1I+VUgt7YSEgG224FeW9QM3D80HA
-         58zRuUxcV+Vk/LWJ6q6LT/vZn1orLUE8jqFCEjXnUdYZN0udwAbco9bPgzbK6Bq/Un
-         px0zq6ijB8n4rTuNt3KJ3jk8jzpxs4qDLaJQKOkc634EscON33g7RmZIrKPJO2Ci5l
-         UghSn82CTMqMQ==
-In-Reply-To: <20220507034207.18651-1-jiapeng.chong@linux.alibaba.com>
+Return-path: <linux-hams-owner@vger.kernel.org>
 List-ID: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
-To: Jiapeng Chong <jiapeng.chong@linux.alibaba.com>
-Cc: ralf@linux-mips.org, davem@davemloft.net, edumazet@google.com, kuba@kernel.org, pabeni@redhat.com, linux-hams@vger.kernel.org, netdev@vger.kernel.org, linux-kernel@vger.kernel.org, abaci@linux.alibaba.com
+Content-Transfer-Encoding: 7bit
+To: jreuter@yaina.de, ralf@linux-mips.org, davem@davemloft.net, edumazet@google.com, kuba@kernel.org, pabeni@redhat.com, linux-hams@vger.kernel.org, netdev@vger.kernel.org, linux-kernel@vger.kernel.org
 
-Hello:
+Merge repeat codes to reduce the duplication.
 
-This patch was applied to netdev/net-next.git (master)
-by Jakub Kicinski <kuba@kernel.org>:
+Signed-off-by: Lu Wei <luwei32@huawei.com>
+---
+ net/ax25/ax25_dev.c | 22 ++++++++++------------
+ 1 file changed, 10 insertions(+), 12 deletions(-)
 
-On Sat,  7 May 2022 11:42:07 +0800 you wrote:
-> Eliminate the follow smatch warning:
-> 
-> net/rose/rose_route.c:1136 rose_node_show() warn: inconsistent
-> indenting.
-> 
-> Reported-by: Abaci Robot <abaci@linux.alibaba.com>
-> Signed-off-by: Jiapeng Chong <jiapeng.chong@linux.alibaba.com>
-> 
-> [...]
-
-Here is the summary with links:
-  - [NET] ROSE: Remove unused code and clean up some inconsistent indenting
-    https://git.kernel.org/netdev/net-next/c/eef0dc7e517e
-
-You are awesome, thank you!
+diff --git a/net/ax25/ax25_dev.c b/net/ax25/ax25_dev.c
+index d2a244e1c260..b80fccbac62a 100644
+--- a/net/ax25/ax25_dev.c
++++ b/net/ax25/ax25_dev.c
+@@ -115,23 +115,13 @@ void ax25_dev_device_down(struct net_device *dev)
+ 
+ 	if ((s = ax25_dev_list) == ax25_dev) {
+ 		ax25_dev_list = s->next;
+-		spin_unlock_bh(&ax25_dev_lock);
+-		ax25_dev_put(ax25_dev);
+-		dev->ax25_ptr = NULL;
+-		dev_put_track(dev, &ax25_dev->dev_tracker);
+-		ax25_dev_put(ax25_dev);
+-		return;
++		goto unlock_put;
+ 	}
+ 
+ 	while (s != NULL && s->next != NULL) {
+ 		if (s->next == ax25_dev) {
+ 			s->next = ax25_dev->next;
+-			spin_unlock_bh(&ax25_dev_lock);
+-			ax25_dev_put(ax25_dev);
+-			dev->ax25_ptr = NULL;
+-			dev_put_track(dev, &ax25_dev->dev_tracker);
+-			ax25_dev_put(ax25_dev);
+-			return;
++			goto unlock_put;
+ 		}
+ 
+ 		s = s->next;
+@@ -139,6 +129,14 @@ void ax25_dev_device_down(struct net_device *dev)
+ 	spin_unlock_bh(&ax25_dev_lock);
+ 	dev->ax25_ptr = NULL;
+ 	ax25_dev_put(ax25_dev);
++	return;
++
++unlock_put:
++	spin_unlock_bh(&ax25_dev_lock);
++	ax25_dev_put(ax25_dev);
++	dev->ax25_ptr = NULL;
++	dev_put_track(dev, &ax25_dev->dev_tracker);
++	ax25_dev_put(ax25_dev);
+ }
+ 
+ int ax25_fwd_ioctl(unsigned int cmd, struct ax25_fwd_struct *fwd)
 -- 
-Deet-doot-dot, I am a bot.
-https://korg.docs.kernel.org/patchwork/pwbot.html
-
+2.17.1
 
