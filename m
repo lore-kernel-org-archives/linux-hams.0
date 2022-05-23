@@ -1,198 +1,189 @@
 From: Thomas Osterried <thomas@osterried.de>
-Subject: Re: [PATCH net-next] ax25: merge repeat codes in
- ax25_dev_device_down()
-Date: Wed, 18 May 2022 00:38:37 +0200
-Message-ID: <YoQj7eND7/2KSBFs@x-berg.in-berlin.de>
-References: <20220516062804.254742-1-luwei32@huawei.com>
-Mime-Version: 1.0
+Subject: Regression in "ax25: Fix UAF bugs in ax25 timers", patch 
+        82e31755e55fbcea6a9dfaae5fe4860ade17cbc0
+Date: Mon, 23 May 2022 07:46:57 +0200
+Message-ID: <283773C4-71DA-4631-B7B3-19497DA9D77A@osterried.de>
+Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3696.80.82.1.1\))
+Content-Transfer-Encoding: 8BIT
 Return-path: <linux-hams-owner@vger.kernel.org>
-Content-Disposition: inline
-In-Reply-To: <20220516062804.254742-1-luwei32@huawei.com>
-Sender: Thomas Osterried <thomas@x-berg.in-berlin.de>
 List-ID: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-To: Lu Wei <luwei32@huawei.com>
-Cc: jreuter@yaina.de, ralf@linux-mips.org, davem@davemloft.net, edumazet@google.com, kuba@kernel.org, pabeni@redhat.com, linux-hams@vger.kernel.org, netdev@vger.kernel.org, linux-kernel@vger.kernel.org
-
-Hello,
-
-three comments.
+To: linux-hams@vger.kernel.org, Duoming Zhou <duoming@zju.edu.cn>
+Cc: "David S. Miller" <davem@davemloft.net>, Paolo Abeni <pabeni@redhat.com>
 
 
-1. We need time for questions and discussions
-
-In the past, we had several problems with patches that went upstream which
-obviously not have been tested.
-We have several requests by our community at linux-hams, that we need
-to have a chance to read a patch proposal, and have time to test it,
-before things become worse.
+Regression due to patch 82e31755e55fbcea6a9dfaae5fe4860ade17cbc0 "ax25: Fix UAF bugs in ax25 timers",
+  https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/net/ax25/af_ax25.c?id=82e31755e55fbcea6a9dfaae5fe4860ade17cbc0
+and discussion about necessarity of
+  https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/net/ax25/ax25_subr.c?id=fc6d01ff9ef03b66d4a3a23b46fc3c3d8cf92009
+(because it addresses the same problem).
 
 
-2. Due to some patches that went in the current torwalds-tree, ax25 became
-unusable in a production environment (!).
-
-I'll come to this in another mail, with description and proposal for a fix.
-We are currently testing it and like to send it on linux-hams with request
-to comment and test.
+Due to patch 82e31755e55fbcea6a9dfaae5fe4860ade17cbc, any ax25 session is cleaned up anymore on disconnect.
+-> netstat --ax25 shows the ex-connected session it in state "LISTEN". Makes ax25 unusable in a production environment.
+=> Regression.
 
 
-3. About this patch for ax25_dev_device_down() which reached netdev-next:
+This is my proposal for a fix.
+I'd appreciate you test and give feedback.
 
-Looks good regarding the changes.
+For more details, see below.
 
-But when looking at it, it raises a question due to an older patch, that introduced
-dev_put_track().
-It's just a question of comprehension:
-  If the position of the device that has to be removed is
-    - at the head of the device list: do dev_put_track()
-    - in the the device list or at the end: dev_put_track()
-    - not in the device list: do _not_ dev_put_track().
-      Why? - Not obviously clear. I think, because an interface could exist,
-      but is set to down and thus is not part of the list (-> then you can't see
-      it as /proc/sys/net/ax25/<name>).
+$ diff -Naur af_ax25.c.orig af_ax25.c.dl9sau  
+--- af_ax25.c.orig      2022-05-04 12:16:35.229499063 +0200
++++ af_ax25.c.dl9sau    2022-05-23 06:48:06.268171116 +0200
+@@ -86,11 +86,18 @@
+ again:
+        ax25_for_each(s, &ax25_list) {
+                if (s->ax25_dev == ax25_dev) {
++                       // Stop timers. Really needed? ax25_disconnect(), that we call with arg ENETUNREACH will also stop the timers.
++                       del_timer_sync(&s->timer);
++                       del_timer_sync(&s->t1timer);
++                       del_timer_sync(&s->t2timer);
++                       del_timer_sync(&s->t3timer);
++                       del_timer_sync(&s->idletimer);
+                        sk = s->sk;
+                        if (!sk) {
+                                spin_unlock_bh(&ax25_list_lock);
+                                ax25_disconnect(s, ENETUNREACH);
+                                s->ax25_dev = NULL;
++                               ax25_cb_del(s);
+                                spin_lock_bh(&ax25_list_lock);
+                                goto again;
+                        }
+@@ -104,6 +111,7 @@
+                                ax25_dev_put(ax25_dev);
+                        }
+                        release_sock(sk);
++                       ax25_cb_del(s);
+                        spin_lock_bh(&ax25_list_lock);
+                        sock_put(sk);
+                        /* The entry could have been deleted from the
+@@ -995,9 +1003,11 @@
+        if (sk->sk_type == SOCK_SEQPACKET) {
+                switch (ax25->state) {
+                case AX25_STATE_0:
+-                       release_sock(sk);
+-                       ax25_disconnect(ax25, 0);
+-                       lock_sock(sk);
++                       if (!sock_flag(ax25->sk, SOCK_DEAD)) {
++                               release_sock(sk);
++                               ax25_disconnect(ax25, 0);
++                               lock_sock(sk);
++                       }
+                        ax25_destroy_socket(ax25);
+                        break;
+ 
+@@ -1052,12 +1062,8 @@
+                sk->sk_state_change(sk);
+                ax25_destroy_socket(ax25);
+        }
++
+        if (ax25_dev) {
+-               del_timer_sync(&ax25->timer);
+-               del_timer_sync(&ax25->t1timer);
+-               del_timer_sync(&ax25->t2timer);
+-               del_timer_sync(&ax25->t3timer);
+-               del_timer_sync(&ax25->idletimer);
+                dev_put_track(ax25_dev->dev, &ax25_dev->dev_tracker);
+                ax25_dev_put(ax25_dev);
+        }
+
+Argumentation:
+
+Author Duoming Zhou <duoming@zju.edu.cn> described his patch 82e31755e55fbcea6a9dfaae5fe4860ade17cbc0 , that lead to the regession, with:
+
+===
+ax25: Fix UAF bugs in ax25 timers
+There are race conditions that may lead to UAF bugs in
+ax25_heartbeat_expiry(), ax25_t1timer_expiry(), ax25_t2timer_expiry(),
+ax25_t3timer_expiry() and ax25_idletimer_expiry(), when we call
+ax25_release() to deallocate ax25_dev.
+
+One of the UAF bugs caused by ax25_release() is shown below:
+
+      (Thread 1)                    |      (Thread 2)
+ax25_dev_device_up() //(1)          |
+...                                 | ax25_kill_by_device()
+ax25_bind()          //(2)          |
+ax25_connect()                      | ...
+ ax25_std_establish_data_link()     |
+  ax25_start_t1timer()              | ax25_dev_device_down() //(3)
+   mod_timer(&ax25->t1timer,..)     |
+                                    | ax25_release()
+   (wait a time)                    |  ...
+                                    |  ax25_dev_put(ax25_dev) //(4)FREE
+   ax25_t1timer_expiry()            |
+    ax25->ax25_dev->values[..] //USE|  ...
+     ...                            |
+
+We increase dev in position (1) and (2), and
+decrease the refcount of ax25_dev in position (3) and (4).
+The ax25_dev will be freed in position (4) and be used in
+ax25_t1timer_expiry().
+===
 
 
--> Personally, I'd consider
+Imho, Duoming has overseen when he fixed the ifconfig device down issue, that ax25_release() is called every time a userspace program closes his socket.
+(.release        = ax25_release)
 
-- this better readable:
-
-	int found = 0;
-
-	if (ax25_dev_list == ax25_dev) {
-		ax25_dev_list = s->next;
-		found = 1;
-	} else {
-		for (s = ax25_dev_list; s != NULL && s->next != NULL; s = s->next) {
-			if (s->next == ax25_dev) {
-				s->next = s->next->next;
-				found = 1;
-				break;
-			}
-		}
-	}
-
-	spin_unlock_bh(&ax25_dev_lock);
-	ax25_dev_put(ax25_dev);
-	dev->ax25_ptr = NULL;
-	if (found)
-		dev_put_track(dev, &ax25_dev->dev_tracker);
-	ax25_dev_put(ax25_dev);
+Timers are for good, not for bad. ax25 timers are important for correct behavior of the AX25_STATE machine. And the "heartbeat" timer is used internally for correct session cleanup.
+I.e., if user closes his AX25-sessioon, kernel should send DISC upon either UA or DM are received, or until t1 expiry. The session and it's state needs still to be known for some time on normal session close. The only case where the session sate not needed anymore if you set ifcoonfig iface down.
 
 
-- ..or with goto:
-
-	int found = 1;
-
-	if (ax25_dev_list == ax25_dev) {
-		ax25_dev_list = s->next;
-		goto out;
-	}
-	for (s = ax25_dev_list; s != NULL && s->next != NULL; s = s->next) {
-		if (s->next == ax25_dev) {
-			s->next = s->next->next;
-			goto out;
-		}
-	}
-	found = 0;
-
-out:
-	spin_unlock_bh(&ax25_dev_lock);
-	ax25_dev_put(ax25_dev);
-	dev->ax25_ptr = NULL;
-	if (found)
-		dev_put_track(dev, &ax25_dev->dev_tracker);
-	ax25_dev_put(ax25_dev);
+Duoming's approach lead to
+if (ax25_dev) {  // existence of ax25_dev: normal situation for a regularly closed ax25 session
+              del_timer_sync(&ax25->timer);   // this is the "heartbeat" timer
+              del_timer_sync(&ax25->t1timer); // .. and these are the others
+              del_timer_sync(&ax25->t2timer);
+              del_timer_sync(&ax25->t3timer);
+              del_timer_sync(&ax25->idletimer);
 
 
+The assurance that timers are stopped should to go to ax25_kill_by_device() [this is for the situation, that the SysOp sets ifconfig ax25iface down], from where ax25_release() is called. See my patch suggestion.
 
-- ..than this:
+I argue, that the stopping of the timer in ax25_kill_by_device() is not really necessary, because it calls
+ax25_disconnect(s, ENETUNREACH);
+and ax25_disconnect() does:
+        if (reason == ENETUNREACH) {
+                del_timer_sync(&ax25->timer);
+                del_timer_sync(&ax25->t1timer);
+                del_timer_sync(&ax25->t2timer);
+                del_timer_sync(&ax25->t3timer);
+                del_timer_sync(&ax25->idletimer);
 
-	if ((s = ax25_dev_list) == ax25_dev) {
-		ax25_dev_list = s->next;
-		goto unlock_put;
-	}
+-> Our timers get stopped anyway.
 
-	while (s != NULL && s->next != NULL) {
-		if (s->next == ax25_dev) {
-			s->next = ax25_dev->next;
-			goto unlock_put;
-		}
+But on the other hand, Duoming had the "BUG: KASAN: use-after-free in ax25_t1timer_expiry+0x1c/0x60" issue, that inspired him for his patch..
 
-		s = s->next;
-	}
-	spin_unlock_bh(&ax25_dev_lock);
-	dev->ax25_ptr = NULL;
-	ax25_dev_put(ax25_dev);
-	return;
+But on another hand. the reason == ENETUNREACH check in ax5_disconnect is quite new: It came by Duoming's "ax25: Fix NULL pointer dereferences in ax25 timers" patch to ax25_subr.c, ten days before (commit ID fc6d01ff). If ax25_disconnect() deletes the timers correctly, it may not be needed as an insurance for ax25_kill_by_device().
+Both of Duoming's patches try to solve the same problem.
+It should be investigated if the del_timer_sync()-assurance has to be at so many different points: we stop them, and call a function that also stops them. If this is really needed, than the problem we try to resolve with this lays somewhere else.
 
-unlock_put:
-	spin_unlock_bh(&ax25_dev_lock);
-	ax25_dev_put(ax25_dev);
-	dev->ax25_ptr = NULL;
-	dev_put_track(dev, &ax25_dev->dev_tracker);
-	ax25_dev_put(ax25_dev);
 
+ax25_destroy_socket() is called on heartbeat expiry if AX25_STATE is 0. In the case we stop the timers in ax25_kill_by_device(), ax25_destroy_socket() is not called.
+ax25_cb_del() is normaly done by ax25_destroy_socket(). 
+
+If we don't call ax25_cb_del() directly, the situation is this, for a current incoming connection in state ESTABLISHED and after ifdown bpq0:
+DL9AU-3    DL9SAU-1   ???     LISTENING    000/000  0       0
+-> No timer cleans this up.
+
+If I'd try to call ax25_destroy_socket() instead of ax25_cb_del(), this would cause a refcount-underflow OOPS due to the dev_put_track-stuff.
+
+ax25_destroy_socket() would do ax25_cb_del(), and also stop timers. But it also may start timers again (ax25_start_heartbeat(sax25), or by timer_setup(&ax25->dtimer, ax25_destroy_timer, 0) ) -- which is not in our interest in this the case the device is set to down.
+
+That's why assure ax25_cb_del() in my approach.
+
+
+In the ax25_disconnect() del_timer_sync in "reason == ENETUNREACH", I suggest to revert. This was also introduced to solve the ax25_kill_by_device() problem.
+The need for enforced stopping the timers I only see in the special case when a device is set to down.
+
+
+Cc goes to David Miller and Paolo Abeni, because they committed the both patches I discussed above.
 
 
 vy 73,
 	- Thomas  dl9sau
 
 
-On Mon, May 16, 2022 at 02:28:04PM +0800, Lu Wei wrote:
-> Merge repeat codes to reduce the duplication.
-> 
-> Signed-off-by: Lu Wei <luwei32@huawei.com>
-> ---
->  net/ax25/ax25_dev.c | 22 ++++++++++------------
->  1 file changed, 10 insertions(+), 12 deletions(-)
-> 
-> diff --git a/net/ax25/ax25_dev.c b/net/ax25/ax25_dev.c
-> index d2a244e1c260..b80fccbac62a 100644
-> --- a/net/ax25/ax25_dev.c
-> +++ b/net/ax25/ax25_dev.c
-> @@ -115,23 +115,13 @@ void ax25_dev_device_down(struct net_device *dev)
->  
->  	if ((s = ax25_dev_list) == ax25_dev) {
->  		ax25_dev_list = s->next;
-> -		spin_unlock_bh(&ax25_dev_lock);
-> -		ax25_dev_put(ax25_dev);
-> -		dev->ax25_ptr = NULL;
-> -		dev_put_track(dev, &ax25_dev->dev_tracker);
-> -		ax25_dev_put(ax25_dev);
-> -		return;
-> +		goto unlock_put;
->  	}
->  
->  	while (s != NULL && s->next != NULL) {
->  		if (s->next == ax25_dev) {
->  			s->next = ax25_dev->next;
-> -			spin_unlock_bh(&ax25_dev_lock);
-> -			ax25_dev_put(ax25_dev);
-> -			dev->ax25_ptr = NULL;
-> -			dev_put_track(dev, &ax25_dev->dev_tracker);
-> -			ax25_dev_put(ax25_dev);
-> -			return;
-> +			goto unlock_put;
->  		}
->  
->  		s = s->next;
-> @@ -139,6 +129,14 @@ void ax25_dev_device_down(struct net_device *dev)
->  	spin_unlock_bh(&ax25_dev_lock);
->  	dev->ax25_ptr = NULL;
->  	ax25_dev_put(ax25_dev);
-> +	return;
-> +
-> +unlock_put:
-> +	spin_unlock_bh(&ax25_dev_lock);
-> +	ax25_dev_put(ax25_dev);
-> +	dev->ax25_ptr = NULL;
-> +	dev_put_track(dev, &ax25_dev->dev_tracker);
-> +	ax25_dev_put(ax25_dev);
->  }
->  
->  int ax25_fwd_ioctl(unsigned int cmd, struct ax25_fwd_struct *fwd)
-> -- 
-> 2.17.1
-> 
-> 
+
