@@ -1,47 +1,44 @@
 From: Thomas Osterried <thomas@osterried.de>
 Subject: Re: Regression in "ax25: Fix UAF bugs in ax25 timers", patch
  82e31755e55fbcea6a9dfaae5fe4860ade17cbc0
-Date: Mon, 23 May 2022 20:53:33 +0200
-Message-ID: <YovYLRTLOJnVW4GP@x-berg.in-berlin.de>
+Date: Mon, 23 May 2022 21:14:21 +0200
+Message-ID: <YovdDeh2Lzy3QrKM@x-berg.in-berlin.de>
 References: <283773C4-71DA-4631-B7B3-19497DA9D77A@osterried.de>
  <57922f90.2c358.180f13e25f0.Coremail.duoming@zju.edu.cn>
- <4e38f3dc-88f5-1df9-bdd4-f1d169d67439@blackspace.at>
 Mime-Version: 1.0
 Return-path: <linux-hams-owner@vger.kernel.org>
 Content-Disposition: inline
-In-Reply-To: <4e38f3dc-88f5-1df9-bdd4-f1d169d67439@blackspace.at>
+In-Reply-To: <57922f90.2c358.180f13e25f0.Coremail.duoming@zju.edu.cn>
 Sender: Thomas Osterried <thomas@x-berg.in-berlin.de>
 List-ID: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
-To: Roland Schwarz <roland.schwarz@blackspace.at>
-Cc: duoming@zju.edu.cn, Thomas Osterried <thomas@osterried.de>, linux-hams@vger.kernel.org
+To: duoming@zju.edu.cn
+Cc: Thomas Osterried <thomas@osterried.de>, linux-hams@vger.kernel.org
 
-On Mon, May 23, 2022 at 06:05:47PM +0200, Roland Schwarz wrote:
+> > Due to patch 82e31755e55fbcea6a9dfaae5fe4860ade17cbc, any ax25 session is cleaned up anymore on disconnect.
+> > -> netstat --ax25 shows the ex-connected session it in state "LISTEN". Makes ax25 unusable in a production environment.
+> > => Regression.
 > 
-> 
-> On 23.05.22 at 16:07 wrote duoming@zju.edu.cn:
-> ...>
-> > Is there any ways to reproduce this problem?
-> > 
-> 
-> As I understand it, the stuck LISTEN state is the
-> infamous long-standing "stuck sockets" bug which
-> Dave was pointing at in his mail "Status of the
-> stuck sockets bugs" from 2021-06-29.
+> Is there any ways to reproduce this problem? 
 
-No, this is a new cause, resulting to the same
-symtom (listening state ex-connected sessions).
+I found no ax25 connection that cleaned up anymore.
 
-As said, of you stop timers in cases you don't need
-to, nothing tidies up (and nothing honors
-the ax25 state machine).
+It's useful to test many (best: all) of these cases:
+incoming connection from remote. and initiate disconnect from remote.
+  [In this case, we have no socket to userspace]. and send terminate it from there.
+outgoing connection initiated by sending an ip packet to remote (iface configured for mode VC).
+  [In this case, we have no so socket to userspace]
+Incoming connection fron remote and local started ax25d which listens 
+for pid=test (-> socket is allocated).
+outgoing connection initiated by userspace connect(). and terminate it.
+
+And for each one, kill hard the remote site and 
+- see if after idle timer expiry everything goes the correct way.
+- send a packet (-> retries until retry timer expiry) and see if after timer expiry everything goes the correct way.
+
+I tested many of these combinations, but not all.
+
+All these cases can happen normaly in the real world.
 
 
-There had been cases observed (since a few years).
-I've seen such a case and have a fix I'll present
-later. But let's resolve one after another,
-not in parallel.
-
-vy 73,
-  - Thomas  dl9sau
