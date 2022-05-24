@@ -1,116 +1,226 @@
-From: duoming@zju.edu.cn
+From: Thomas Osterried <thomas@osterried.de>
 Subject: Re: Regression in "ax25: Fix UAF bugs in ax25 timers", patch
  82e31755e55fbcea6a9dfaae5fe4860ade17cbc0
-Date: Tue, 24 May 2022 18:47:49 +0800 (GMT+08:00)
-Message-ID: <56fec66b.2f2d0.180f5ae1971.Coremail.duoming@zju.edu.cn>
+Date: Tue, 24 May 2022 23:52:58 +0200
+Message-ID: <FF735FC8-5566-4E32-ACD4-7F9BC278B53F@osterried.de>
 References: <283773C4-71DA-4631-B7B3-19497DA9D77A@osterried.de>
  <20220523135214.GE4009@kadam>
  <B0C9F5C5-898E-4682-8B32-9802E1605A9E@osterried.de>
-Mime-Version: 1.0
-Content-Transfer-Encoding: base64
+ <56fec66b.2f2d0.180f5ae1971.Coremail.duoming@zju.edu.cn>
+Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3696.80.82.1.1\))
+Content-Transfer-Encoding: 8BIT
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <B0C9F5C5-898E-4682-8B32-9802E1605A9E@osterried.de>
+In-Reply-To: <56fec66b.2f2d0.180f5ae1971.Coremail.duoming@zju.edu.cn>
 List-ID: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
-To: Thomas Osterried <thomas@osterried.de>
+To: duoming@zju.edu.cn
 Cc: Dan Carpenter <dan.carpenter@oracle.com>, linux-hams@vger.kernel.org, "David S. Miller" <davem@davemloft.net>, Paolo Abeni <pabeni@redhat.com>
 
-SGVsbG8sCgpPbiBUdWUsIDI0IE1heSAyMDIyIDExOjI1OjI4ICswMjAwIFRob21hcyB3cm90ZToK
-Cj4gPiBJIHRyaWVkIHRvIGFwcGx5IHlvdXIgcGF0Y2ggYnV0IHRoZSBmb3JtYXQgaXMgd3Jvbmcu
-Li4gIDovCj4gCj4gSSB0aG91Z2h0IGl0IHdvdWxkIGhlbHAgdXMgdG8gZGlzY3VzcyB0aGUgcHJv
-YmxlbSBvbiB0aGUgbWFpbGluZ2xpc3QKPiBhdCB0aGUgY29kZSBmcmFnbWVudC4KPiBCdXQgSSBh
-bHNvIGFza2VkIGZvciB0ZXN0aW5nLCBhbmQgdGhlbiB5b3UgbmVlZCBhIHdvcmtpbmcgcGF0Y2gK
-PiBXYXMgbXkgZmF1bHQuIFNvcnJ5IGZvciB0aGF0Lgo+IAo+IAo+IGRpZmYgLS1naXQgYS9uZXQv
-YXgyNS9hZl9heDI1LmMgYi9uZXQvYXgyNS9hZl9heDI1LmMKPiBpbmRleCAzNjNkNDdmOTQ1MzIu
-LjQ5OGU5MmZiNDNiNyAxMDA2NDQKPiAtLS0gYS9uZXQvYXgyNS9hZl9heDI1LmMKPiArKysgYi9u
-ZXQvYXgyNS9hZl9heDI1LmMKPiBAQCAtODYsMTEgKzg2LDE3IEBAIHN0YXRpYyB2b2lkIGF4MjVf
-a2lsbF9ieV9kZXZpY2Uoc3RydWN0IG5ldF9kZXZpY2UgKmRldikKPiAgYWdhaW46Cj4gICAgICAg
-ICBheDI1X2Zvcl9lYWNoKHMsICZheDI1X2xpc3QpIHsKPiAgICAgICAgICAgICAgICAgaWYgKHMt
-PmF4MjVfZGV2ID09IGF4MjVfZGV2KSB7Cj4gKyAgICAgICAgICAgICAgICAgICAgICAgZGVsX3Rp
-bWVyX3N5bmMoJnMtPnRpbWVyKTsKPiArICAgICAgICAgICAgICAgICAgICAgICBkZWxfdGltZXJf
-c3luYygmcy0+dDF0aW1lcik7Cj4gKyAgICAgICAgICAgICAgICAgICAgICAgZGVsX3RpbWVyX3N5
-bmMoJnMtPnQydGltZXIpOwo+ICsgICAgICAgICAgICAgICAgICAgICAgIGRlbF90aW1lcl9zeW5j
-KCZzLT50M3RpbWVyKTsKPiArICAgICAgICAgICAgICAgICAgICAgICBkZWxfdGltZXJfc3luYygm
-cy0+aWRsZXRpbWVyKTsKClRoZXNlIGRlbF90aW1lcl9zeW5jKCkgZnVuY3Rpb25zIGFyZSB1bm5l
-Y2Vzc2FyeSwgQmVjYXVzZSB3aGVuIHRoZSBkZXZpY2UgaXMgZGV0YWNoaW5nLCAKdGhlIHJlYXNv
-biBwYXJhbWV0ZXIgb2YgYXgyNV9kaXNjb25uZWN0KCkgZXF1YWxzIHRvIEVORVRVTlJFQUNILCB0
-aGUgZGVsX3RpbWVyX3N5bmMoKQppbiBheDI1X2Rpc2Nvbm5lY3QoKSB3aWxsIGV4ZWN1dGUuCgo+
-ICAgICAgICAgICAgICAgICAgICAgICAgIHNrID0gcy0+c2s7Cj4gICAgICAgICAgICAgICAgICAg
-ICAgICAgaWYgKCFzaykgewo+ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgc3Bpbl91
-bmxvY2tfYmgoJmF4MjVfbGlzdF9sb2NrKTsKPiAgICAgICAgICAgICAgICAgICAgICAgICAgICAg
-ICAgIGF4MjVfZGlzY29ubmVjdChzLCBFTkVUVU5SRUFDSCk7Cj4gICAgICAgICAgICAgICAgICAg
-ICAgICAgICAgICAgICBzLT5heDI1X2RldiA9IE5VTEw7Cj4gKyAgICAgICAgICAgICAgICAgICAg
-ICAgICAgICAgICBheDI1X2NiX2RlbChzKTsKPiAgICAgICAgICAgICAgICAgICAgICAgICAgICAg
-ICAgIHNwaW5fbG9ja19iaCgmYXgyNV9saXN0X2xvY2spOwo+ICAgICAgICAgICAgICAgICAgICAg
-ICAgICAgICAgICAgZ290byBhZ2FpbjsKPiAgICAgICAgICAgICAgICAgICAgICAgICB9Cj4gQEAg
-LTEwNCw2ICsxMTAsNyBAQCBzdGF0aWMgdm9pZCBheDI1X2tpbGxfYnlfZGV2aWNlKHN0cnVjdCBu
-ZXRfZGV2aWNlICpkZXYpCj4gICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBheDI1X2Rl
-dl9wdXQoYXgyNV9kZXYpOwo+ICAgICAgICAgICAgICAgICAgICAgICAgIH0KPiAgICAgICAgICAg
-ICAgICAgICAgICAgICByZWxlYXNlX3NvY2soc2spOwo+ICsgICAgICAgICAgICAgICAgICAgICAg
-IGF4MjVfY2JfZGVsKHMpOwo+ICAgICAgICAgICAgICAgICAgICAgICAgIHNwaW5fbG9ja19iaCgm
-YXgyNV9saXN0X2xvY2spOwo+ICAgICAgICAgICAgICAgICAgICAgICAgIHNvY2tfcHV0KHNrKTsK
-PiAgICAgICAgICAgICAgICAgICAgICAgICAvKiBUaGUgZW50cnkgY291bGQgaGF2ZSBiZWVuIGRl
-bGV0ZWQgZnJvbSB0aGUKPiBAQCAtMTA1MiwxMiArMTA1OSw4IEBAIHN0YXRpYyBpbnQgYXgyNV9y
-ZWxlYXNlKHN0cnVjdCBzb2NrZXQgKnNvY2spCj4gICAgICAgICAgICAgICAgIHNrLT5za19zdGF0
-ZV9jaGFuZ2Uoc2spOwo+ICAgICAgICAgICAgICAgICBheDI1X2Rlc3Ryb3lfc29ja2V0KGF4MjUp
-Owo+ICAgICAgICAgfQo+ICsKPiAgICAgICAgIGlmIChheDI1X2Rldikgewo+IC0gICAgICAgICAg
-ICAgICBkZWxfdGltZXJfc3luYygmYXgyNS0+dGltZXIpOwo+IC0gICAgICAgICAgICAgICBkZWxf
-dGltZXJfc3luYygmYXgyNS0+dDF0aW1lcik7Cj4gLSAgICAgICAgICAgICAgIGRlbF90aW1lcl9z
-eW5jKCZheDI1LT50MnRpbWVyKTsKPiAtICAgICAgICAgICAgICAgZGVsX3RpbWVyX3N5bmMoJmF4
-MjUtPnQzdGltZXIpOwo+IC0gICAgICAgICAgICAgICBkZWxfdGltZXJfc3luYygmYXgyNS0+aWRs
-ZXRpbWVyKTsKPiAgICAgICAgICAgICAgICAgZGV2X3B1dF90cmFjayhheDI1X2Rldi0+ZGV2LCAm
-YXgyNV9kZXYtPmRldl90cmFja2VyKTsKPiAgICAgICAgICAgICAgICAgYXgyNV9kZXZfcHV0KGF4
-MjVfZGV2KTsKPiAgICAgICAgIH0KCkkgdGhpbmsgdGhlc2UgZGVsX3RpbWVyX3N5bmMoKSBmdW5j
-dGlvbnMgY291bGQgbm90IGJlIHJlbW92ZWQsIG90aGVyd2lzZSB0aGUgVUFGIGJ1Z3MgY2F1c2Vk
-IGJ5CnRpbWVyIGhhbmRsZXIgY291bGQgbm90IGJlIG1pdGlnYXRlZC4KCiAgICAgIChUaHJlYWQg
-MSkgICAgICAgICAgICAgICAgICAgICAgIHwgICAgICAoVGhyZWFkIDIpCmF4MjVfZGV2X2Rldmlj
-ZV91cCgpIC8vKDEpICAgICAgICAgICAgIHwKLi4uICAgICAgICAgICAgICAgICAgICAgICAgICAg
-ICAgICAgICAgfCBheDI1X2tpbGxfYnlfZGV2aWNlKCkKYXgyNV9iaW5kKCkgICAgICAgICAgLy8o
-MikgICAgICAgICAgICAgfApheDI1X2Nvbm5lY3QoKSAgICAgICAgICAgICAgICAgICAgICAgICB8
-IC4uLgogYXgyNV9zdGRfZXN0YWJsaXNoX2RhdGFfbGluaygpICAgICAgICB8CiAgYXgyNV9zdGFy
-dF90MXRpbWVyKCkgICAgICAgICAgICAgICAgIHwgYXgyNV9kZXZfZGV2aWNlX2Rvd24oKSAvLygz
-KQogICBtb2RfdGltZXIoJmF4MjUtPnQxdGltZXIsLi4pICAgICAgICB8CiAgICAgICAgICAgICAg
-ICAgICAgICAgICAgICAgICAgICAgICAgIHwgYXgyNV9yZWxlYXNlKCkKICAgKHdhaXQgYSB0aW1l
-KSAgICAgICAgICAgICAgICAgICAgICAgfCAgLi4uCiAgICAgICAgICAgICAgICAgICAgICAgICAg
-ICAgICAgICAgICAgIHwgIGF4MjVfZGV2X3B1dChheDI1X2RldikgLy8oNClGUkVFCiAgIGF4MjVf
-dDF0aW1lcl9leHBpcnkoKSAgICAgICAgICAgICAgIHwKICAgIGF4MjUtPmF4MjVfZGV2LT52YWx1
-ZXNbLi5dIC8vKDUpVVNFfCAgLi4uCiAgICAgLi4uICAgICAgICAgICAgICAgICAgICAgICAgICAg
-ICAgIHwKClRoZSBheDI1X2RldiBpcyBkZWFsbG9jYXRlZCBpbiBwb3NpdGlvbiAoNCkgYW5kIHVz
-ZSBpbiBwb3NpdGlvbiAoNSkuCgo+IEluIHRoYXQgY29udGV4dCwgSSBhc2sgdG8gcmV2ZXJ0IChh
-cyBJIGFyZ3VlZCBpbiBteSBpbml0aWFsIG1haWwpOgo+ICAgaHR0cHM6Ly9naXQua2VybmVsLm9y
-Zy9wdWIvc2NtL2xpbnV4L2tlcm5lbC9naXQvdG9ydmFsZHMvbGludXguZ2l0L2NvbW1pdC9uZXQv
-YXgyNS9heDI1X3N1YnIuYz9pZD1mYzZkMDFmZjllZjAzYjY2ZDRhM2EyM2I0NmZjM2MzZDhjZjky
-MDA5CgpUaGlzIHBhdGNoIGNvdWxkIG5vdCBiZSByZXZlcnQuIEJlY2F1c2Ugd2hlbiB0aGUgZGV2
-aWNlIGlzIGRldGFjaGluZywgdGhlIHRpbWVyIGhhbmRsZXIgY291bGQgYmUgcnVubmluZy4KSWYg
-d2UgZG8gbm90IHdhaXQgdGhlIHRpbWVyIGhhbmRsZXIgdG8gZmluaXNoLCB0aGUgTlVMTCBwb2lu
-dGVyIGRlcmVmZXJlbmNlIGJ1ZyB3aWxsIGhhcHBlbi4KCgogICAgICAoVGhyZWFkIDEpICAgICAg
-ICAgICAgICAgICAgICB8ICAgICAgKFRocmVhZCAyKQpheDI1X2Nvbm5lY3QoKSAgICAgICAgICAg
-ICAgICAgICAgICB8CiBheDI1X3N0ZF9lc3RhYmxpc2hfZGF0YV9saW5rKCkgICAgIHwKICBheDI1
-X3N0YXJ0X3QxdGltZXIoKSAgICAgICAgICAgICAgfAogICBtb2RfdGltZXIoJmF4MjUtPnQxdGlt
-ZXIsLi4pICAgICB8CiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIHwgYXgyNV9r
-aWxsX2J5X2RldmljZSgpCiAgICh3YWl0IGEgdGltZSkgICAgICAgICAgICAgICAgICAgIHwgIC4u
-LgogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICB8ICBzLT5heDI1X2RldiA9IE5V
-TEw7IC8vKDEpCiAgIGF4MjVfdDF0aW1lcl9leHBpcnkoKSAgICAgICAgICAgIHwKICAgIGF4MjUt
-PmF4MjVfZGV2LT52YWx1ZXNbLi5dIC8vKDIpfCAgLi4uCiAgICAgLi4uICAgICAgICAgICAgICAg
-ICAgICAgICAgICAgIHwKCldlIHNldCBudWxsIHRvIGF4MjVfY2ItPmF4MjVfZGV2IGluIHBvc2l0
-aW9uICgxKSBhbmQgZGVyZWZlcmVuY2UKdGhlIG51bGwgcG9pbnRlciBpbiBwb3NpdGlvbiAoMiku
-Cgo+IEluIG15IGRpZmYgZnJvbSB5ZXN0ZXJkYXksIEkgYWxzbyBoYWQgYSBwYXJ0IGFyb3VuZCAi
-Y2FzZSBBWDI1X1NUQVRFXzA6IikuCj4gVGhpcyBmaXhlcyBhbm90aGVyIHByb2JsZW0uCj4gSSBy
-ZW1vdmVkIGl0IGZyb20gbXkgcGF0Y2ggYWJvdmU6IGl0IGhhcyB0byBkaXNjdXNzZWQgbGF0ZXIg
-YXMgc2VwYXJhdGUgdG9waWMuCj4gCj4gCj4gQnR3LCBEb3VtaW5nLCB5b3UgaW50cm9kdWNlZCBk
-ZWxfdGltZXJfc3luYygpLgo+IGF4MjVfc3RvcF9oZWFydGJlYXQoKSwgYXgyNV9zdG9wX3QxdGlt
-ZXIoKSwgYXgyNV9zdG9wX3QydGltZXIoKSwgYXgyNV9zdG9wX3QzdGltZXIoKSwKPiBheDI1X3N0
-b3BfaWRsZXRpbWVyKCkgZnJvbSBheDI1X3RpbWVyLmMgdXNlIGRlbF90aW1lcigpLgo+IAo+IFdo
-eSBkbyB5b3UgdXNlIGRlbF90aW1lcl9zeW5jKCkgZGlyZWN0bHk/Cj4gQW5kIGlmIGRlbF90aW1l
-cl9zeW5jKCkgaXMgbmVlZGVkLCBpcyBpdCBvbmx5IG5lZWRlZCBpbiBhIHNwZWNpYWwgY2FzZSwK
-PiBvciBpc24ndCBpdCBjbGVhbmVyIHRvIGNoYW5nZSB0aGUgYXgyNV9zdG9wX3h4eCgpIHRpbWVy
-IGZ1bmN0aW9ucz8KCldlIGNvdWxkIG5vdCBjaGFuZ2UgZGVsX3RpbWVyKCkgaW4gYXgyNV9zdG9w
-X3h4eCgpIHRvIGRlbF90aW1lcl9zeW5jKCkuIEJlY2F1c2UKdGhlIGF4MjVfc3RvcF94eHgoKSBp
-cyBjYWxsZWQgYnkgbWFueSBmdW5jdGlvbnMgc3VjaCBhcyBheDI1X2RzX3N0YXRlMV9tYWNoaW5l
-KCksCmF4MjVfY3RsX2lvY3RsKCksIGF4MjVfcmVsZWFzZSgpIGFuZCBzbyBvbi4gSWYgd2UgYmxv
-Y2sgYW5kIHdhaXQgZm9yIHRpbWVyIGhhbmRsZXIKdG8gZmluaXNoIGluIHRoZXNlIGZ1bmN0aW9u
-cywgdGhlIHN5c3RlbSB3aWxsIGhhbmcgaW4gc29tZSBjYXNlcy4KCk9ubHkgdGhlIHJlYXNvbiBw
-YXJhbWV0ZXIgb2YgYXgyNV9kaXNjb25uZWN0KCkgZXF1YWxzIHRvIEVORVRVTlJFQUNIIHdoaWNo
-IG1lYW5zCnRoZSBkZXZpY2UgaXMgZGV0YWNoaW5nIG9yIHRoZSBheDI1IHNvY2tldCBoYXMgYmVl
-biBkZXN0cm95ZWQgc2hvdWxkIHdlIHVzZQpkZWxfdGltZXJfc3luYygpIHRvIHdhaXQgdGhlIHRp
-bWVyIGhhbmRsZXIgdG8gZmluaXNoLiAKCkJlc3QgcmVnYXJkcywKRHVvbWluZyBaaG91Cg==
+
+
+> Am 24.05.2022 um 12:47 schrieb duoming@zju.edu.cn:
+> 
+> Hello,
+> 
+> On Tue, 24 May 2022 11:25:28 +0200 Thomas wrote:
+> 
+>>> I tried to apply your patch but the format is wrong...  :/
+>> 
+>> I thought it would help us to discuss the problem on the mailinglist
+>> at the code fragment.
+>> But I also asked for testing, and then you need a working patch
+>> Was my fault. Sorry for that.
+>> 
+>> 
+>> diff --git a/net/ax25/af_ax25.c b/net/ax25/af_ax25.c
+>> index 363d47f94532..498e92fb43b7 100644
+>> --- a/net/ax25/af_ax25.c
+>> +++ b/net/ax25/af_ax25.c
+>> @@ -86,11 +86,17 @@ static void ax25_kill_by_device(struct net_device *dev)
+>> again:
+>>        ax25_for_each(s, &ax25_list) {
+>>                if (s->ax25_dev == ax25_dev) {
+>> +                       del_timer_sync(&s->timer);
+>> +                       del_timer_sync(&s->t1timer);
+>> +                       del_timer_sync(&s->t2timer);
+>> +                       del_timer_sync(&s->t3timer);
+>> +                       del_timer_sync(&s->idletimer);
+> 
+> These del_timer_sync() functions are unnecessary, Because when the device is detaching, 
+> the reason parameter of ax25_disconnect() equals to ENETUNREACH, the del_timer_sync()
+> in ax25_disconnect() will execute.
+
+On the other hand, we have the ENETUNREACH case only in exact this scenario:
+device goes down -> ax25_kill_by_device -> ax25_disconnect().
+
+That's why argued it's better here to stop the timers.
+
+> 
+>>                        sk = s->sk;
+>>                        if (!sk) {
+>>                                spin_unlock_bh(&ax25_list_lock);
+>>                                ax25_disconnect(s, ENETUNREACH);
+>>                                s->ax25_dev = NULL;
+>> +                               ax25_cb_del(s);
+>>                                spin_lock_bh(&ax25_list_lock);
+>>                                goto again;
+>>                        }
+>> @@ -104,6 +110,7 @@ static void ax25_kill_by_device(struct net_device *dev)
+>>                                ax25_dev_put(ax25_dev);
+>>                        }
+>>                        release_sock(sk);
+>> +                       ax25_cb_del(s);
+>>                        spin_lock_bh(&ax25_list_lock);
+>>                        sock_put(sk);
+>>                        /* The entry could have been deleted from the
+>> @@ -1052,12 +1059,8 @@ static int ax25_release(struct socket *sock)
+>>                sk->sk_state_change(sk);
+>>                ax25_destroy_socket(ax25);
+>>        }
+>> +
+>>        if (ax25_dev) {
+>> -               del_timer_sync(&ax25->timer);
+>> -               del_timer_sync(&ax25->t1timer);
+>> -               del_timer_sync(&ax25->t2timer);
+>> -               del_timer_sync(&ax25->t3timer);
+>> -               del_timer_sync(&ax25->idletimer);
+>>                dev_put_track(ax25_dev->dev, &ax25_dev->dev_tracker);
+>>                ax25_dev_put(ax25_dev);
+>>        }
+> 
+> I think these del_timer_sync() functions could not be removed, otherwise the UAF bugs caused by
+> timer handler could not be mitigated.
+
+I disagree. See below:
+
+> 
+> 
+>      (Thread 1)                       |      (Thread 2)
+> ax25_dev_device_up() //(1)             |
+> ...                                    | ax25_kill_by_device()
+> ax25_bind()          //(2)             |
+> ax25_connect()                         | ...
+> ax25_std_establish_data_link()        |
+>  ax25_start_t1timer()                 | ax25_dev_device_down() //(3)
+>   mod_timer(&ax25->t1timer,..)        |
+>                                       | ax25_release()
+>   (wait a time)                       |  ...
+>                                       |  ax25_dev_put(ax25_dev) //(4)FREE
+>   ax25_t1timer_expiry()               |
+>    ax25->ax25_dev->values[..] //(5)USE|  ...
+>     ...                               |
+> 
+> The ax25_dev is deallocated in position (4) and use in position (5).
+
+I see the problem.
+
+
+ax25_release() is the wrong place.
+ax25_release() is called on normal socket close() from userspace
+(i.E. termination of "call" session to a remote host).
+The (running) timers are needed for a normal session cleanup (ending DISC); 
+that's the sense of these timers.
+You see this in the
+  case AX25_STATE_3:
+  case AX25_STATE_4:
+conditions, where t1 is started.
+=> The ax25_dev != NULL condition is normal for a normal session close condition.
+
+
+If we like to delete the timers here because we are in ax25_release due to the
+ax25_kill_by_device/ax25_dev_device_down event, do we have another option to see who
+called us, and for being able to handle the case correctly?
+
+
+Or better - I already asked this question:
+ax25_kill_by_device calls ax25_disconnect(ENETUNREACH), and in
+ax25_disconnect() the timers are stopped.
+That was introduced by one of your patches.
+After this, ax25_release() is called.
+Since ax25_disconnect() already stopped the timers, there's no need to stop them
+again. ->
+  If ax25_release() is called by userspace socket_close(), timers are not stoped,
+  and session shutdown with timers runs properly.
+
+
+Furthermore:
+directly after ax25_disconnect() which you call in ax25_kill_by_device(), 
+struct ax25_cb *s s->ax25_dev is set to NULL.
+-> If ax25_release() is called for the ax25_cb, the del_timer_assurances in
+ax25_release() won't work anyway, because they are in the "if (ax25_dev) { ..." part.
+
+
+
+This would lead to the following patch:
+
+diff --git a/net/ax25/af_ax25.c b/net/ax25/af_ax25.c
+index 363d47f94532..07693eb13185 100644
+--- a/net/ax25/af_ax25.c
++++ b/net/ax25/af_ax25.c
+@@ -1052,12 +1052,8 @@ static int ax25_release(struct socket *sock)
+                sk->sk_state_change(sk);
+                ax25_destroy_socket(ax25);
+        }
++
+        if (ax25_dev) {
+-               del_timer_sync(&ax25->timer);
+-               del_timer_sync(&ax25->t1timer);
+-               del_timer_sync(&ax25->t2timer);
+-               del_timer_sync(&ax25->t3timer);
+-               del_timer_sync(&ax25->idletimer);
+                dev_put_track(ax25_dev->dev, &ax25_dev->dev_tracker);
+                ax25_dev_put(ax25_dev);
+        }
+
+
+ax25_subr.c: unchanged
+
+
+
+> 
+>      (Thread 1)                    |      (Thread 2)
+> ax25_connect()                      |
+> ax25_std_establish_data_link()     |
+>  ax25_start_t1timer()              |
+>   mod_timer(&ax25->t1timer,..)     |
+>                                    | ax25_kill_by_device()
+>   (wait a time)                    |  ...
+>                                    |  s->ax25_dev = NULL; //(1)
+>   ax25_t1timer_expiry()            |
+>    ax25->ax25_dev->values[..] //(2)|  ...
+>     ...                            |
+> 
+> We set null to ax25_cb->ax25_dev in position (1) and dereference
+> the null pointer in position (2).
+
+Well, perhaps one solution is to check in ax25_xxx_timer_expiry() if ax25->ax25_dev is not NULL.
+
+> 
+>> In my diff from yesterday, I also had a part around "case AX25_STATE_0:").
+>> This fixes another problem.
+>> I removed it from my patch above: it has to discussed later as separate topic.
+>> 
+>> 
+>> Btw, Douming, you introduced del_timer_sync().
+>> ax25_stop_heartbeat(), ax25_stop_t1timer(), ax25_stop_t2timer(), ax25_stop_t3timer(),
+>> ax25_stop_idletimer() from ax25_timer.c use del_timer().
+>> 
+>> Why do you use del_timer_sync() directly?
+>> And if del_timer_sync() is needed, is it only needed in a special case,
+>> or isn't it cleaner to change the ax25_stop_xxx() timer functions?
+> 
+> We could not change del_timer() in ax25_stop_xxx() to del_timer_sync(). Because
+> the ax25_stop_xxx() is called by many functions such as ax25_ds_state1_machine(),
+> ax25_ctl_ioctl(), ax25_release() and so on. If we block and wait for timer handler
+> to finish in these functions, the system will hang in some cases.
+> 
+> Only the reason parameter of ax25_disconnect() equals to ENETUNREACH which means
+> the device is detaching or the ax25 socket has been destroyed should we use
+> del_timer_sync() to wait the timer handler to finish. 
+> 
+> Best regards,
+> Duoming Zhou
+
+vy 73,
+	- Thomas  dl9sau
+
