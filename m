@@ -1,68 +1,113 @@
-From: duoming@zju.edu.cn
-Subject: Re: [PATCH net] ax25: Fix ax25 session cleanup problem in
- ax25_release
-Date: Fri, 27 May 2022 22:23:12 +0800 (GMT+08:00)
-Message-ID: <59bfaaa3.3a392.18105e65f66.Coremail.duoming@zju.edu.cn>
-References: <20220525112850.102363-1-duoming@zju.edu.cn>
- <YpCHtRoxEXU7UAji@x-berg.in-berlin.de>
- <0213B378-9CFF-456E-814E-B27A132CF8F3@osterried.de>
-Mime-Version: 1.0
-Content-Transfer-Encoding: base64
+From: Duoming Zhou <duoming@zju.edu.cn>
+Subject: [PATCH v2] ax25: Fix ax25 session cleanup problem in ax25_release
+Date: Fri, 27 May 2022 23:18:22 +0800
+Message-ID: <20220527151822.23217-1-duoming@zju.edu.cn>
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <0213B378-9CFF-456E-814E-B27A132CF8F3@osterried.de>
 List-ID: <linux-hams.vger.kernel.org>
+MIME-Version: 1.0
 Content-Type: text/plain; charset="us-ascii"
-To: Thomas Osterried <thomas@osterried.de>
-Cc: "David S. Miller" <davem@davemloft.net>, Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>, linux-hams@vger.kernel.org
+Content-Transfer-Encoding: 7bit
+To: linux-hams@vger.kernel.org
+Cc: jreuter@yaina.de, ralf@linux-mips.org, davem@davemloft.net, edumazet@google.com, kuba@kernel.org, pabeni@redhat.com, thomas@osterried.de, netdev@vger.kernel.org, linux-kernel@vger.kernel.org, Duoming Zhou <duoming@zju.edu.cn>
 
-SGVsbG8sCgpPbiBGcmksIDI3IE1heSAyMDIyIDEzOjI5OjMwICswMjAwIFRob21hcyB3cm90ZToK
-Cj4gPiBJIFRlc3RlZCBzZXZlcmFsIGNhc2VzOiB0aGlzIHBhdGNoIHdvcmtzIGFzIGV4cGVjdGVk
-Lgo+IAo+IFVuZm9ydHVuYXRlbHksIHRoZXJlJ3MgYW4gb3RoZXIgY2FzZSB3aGVyZSBzZXNzaW9u
-cyBhcmUgbm90IGNsZWFuZWQgdXA6Cj4gCj4gUmVtb3RlIHNpdGUgY29ubmVjdHM6Cj4gYnBxMDog
-Zm0gREw5U0FVLTE1IHRvIERMOVNBVS0xIGN0bCBTQUJNKyAxMjo1NjozMC42MjQ4NDUgCj4gYnBx
-MDogZm0gREw5U0FVLTEgdG8gREw5U0FVLTE1IGN0bCBVQS0gMTI6NTY6MzAuNjI2MDAwIAo+IAo+
-IAo+IEF0IERMOVNBVS0xOgo+IAo+ICMgbmV0c3RhdCAtLWF4MjUKPiBBY3RpdmUgQVguMjUgc29j
-a2V0cwo+IERlc3QgICAgICAgU291cmNlICAgICBEZXZpY2UgIFN0YXRlICAgICAgICBWci9WcyAg
-ICBTZW5kLVEgIFJlY3YtUQo+IERMOVNBVS0xNSAgREw5U0FVLTEgICBicHEwICAgIEVTVEFCTElT
-SEVEICAwMDAvMDAwICAwICAgICAgIDAgICAgIAo+IAo+ICMgaWZjb25maWcgYnBxMCBkb3duCj4g
-IyBuZXRzdGF0IC0tYXgyNQo+IEFjdGl2ZSBBWC4yNSBzb2NrZXRzCj4gRGVzdCAgICAgICBTb3Vy
-Y2UgICAgIERldmljZSAgU3RhdGUgICAgICAgIFZyL1ZzICAgIFNlbmQtUSAgUmVjdi1RCj4gREw5
-U0FVLTE1ICBETDlTQVUtMSAgID8/PyAgICAgTElTVEVOSU5HICAgIDAwMC8wMDAgIDAgICAgICAg
-MCAgICAgCj4gIyAKPiAKPiBXYWl0ZWQgc29tZSB0aW1lLiBObyBjaGFuZ2UuCj4gCj4gIyBybW1v
-ZCBicHFldGhlcgo+ICMgbmV0c3RhdCAtLWF4MjUKPiBBY3RpdmUgQVguMjUgc29ja2V0cwo+IERl
-c3QgICAgICAgU291cmNlICAgICBEZXZpY2UgIFN0YXRlICAgICAgICBWci9WcyAgICBTZW5kLVEg
-IFJlY3YtUQo+IERMOVNBVS0xNSAgREw5U0FVLTEgICA/Pz8gICAgIExJU1RFTklORyAgICAwMDAv
-MDAwICAwICAgICAgIDAgICAKPiAKPiAKPiBUaGlzIGlzIHRoZSBjb25kaXRpb246Cj4gYXgyNV9r
-aWxsX2J5X2RldmljZSgpCj4gICAuLi4KPiAgICAgICAgICAgICAgICAgICAgICAgICAgIGlmICgh
-c2spIHsKPiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIHNwaW5fdW5sb2NrX2JoKCZh
-eDI1X2xpc3RfbG9jayk7Cj4gICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBheDI1X2Rp
-c2Nvbm5lY3QocywgRU5FVFVOUkVBQ0gpOwo+IAkJCQlzLT5heDI1X2RldiA9IE5VTEw7Cj4gICAu
-Li4KPiAKPiA9PiBheDI1X2Rpc2Nvbm5lY3QoKToKPiAgICAgICAgIGlmIChyZWFzb24gPT0gRU5F
-VFVOUkVBQ0gpIHsKPiAgICAgICAgICAgICAgICAgZGVsX3RpbWVyX3N5bmMoJmF4MjUtPnRpbWVy
-KTsKPiAKPiAKPiAKPiAtPiBOb3RoaW5nIGNsZWFucyB0aGUgYXgyNV9jYiB1cC4KPiBheDI1X3Jl
-bGVhc2UoKSBpcyBub3QgcGFydCBvZiB0aGF0IGtpbmQgb2Ygc2Vzc2lvbnMuCj4gYXgyNV9kaXNj
-b25lY3QoKSBzdG9wcGVkIHRpbWVycy4KPiAKPiAKPiBJZiB5b3UgYWdyZWUsIHRoYXQgbm8gY29u
-Y3VycmVudCBwcm9jZXNzIGlzIGFibGUgdG8gcmUtdXNlIHRoaXMgYXgyNV9jYiwKPiBhbmQgYmVj
-YXVzZSBhbGwgdGltZXJzIGFyZSBzdG9wcGVlZCwgdGhlIGNsZWFudXAgd2l0aCAgYXgyNV9jYl9k
-ZWwocyk7Cj4gc2hvdWxkIGJlIHNhZmUuCgpJIGFncmVlLCB0aGUgYXgyNV9jYiBjb3VsZCBub3Qg
-YmUgcmUtdXNlZC4KCj4gTXkgc3VjY2Vzc2Z1bGwgdGVzdCB3YXMgdGhpczoKPiAKPiBkaWZmIC0t
-Z2l0IGEvbmV0L2F4MjUvYWZfYXgyNS5jIGIvbmV0L2F4MjUvYWZfYXgyNS5jCj4gaW5kZXggMzYz
-ZDQ3Zjk0NTMyLi5kZTQxN2I5NzRjMDcgMTAwNjQ0Cj4gLS0tIGEvbmV0L2F4MjUvYWZfYXgyNS5j
-Cj4gKysrIGIvbmV0L2F4MjUvYWZfYXgyNS5jCj4gQEAgLTkxLDYgKzkyLDcgQEAgc3RhdGljIHZv
-aWQgYXgyNV9raWxsX2J5X2RldmljZShzdHJ1Y3QgbmV0X2RldmljZSAqZGV2KQo+ICAgICAgICAg
-ICAgICAgICAgICAgICAgICAgICAgICAgc3Bpbl91bmxvY2tfYmgoJmF4MjVfbGlzdF9sb2NrKTsK
-PiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIGF4MjVfZGlzY29ubmVjdChzLCBFTkVU
-VU5SRUFDSCk7Cj4gICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBzLT5heDI1X2RldiA9
-IE5VTEw7Cj4gKyAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBheDI1X2NiX2RlbChzKTsK
-PiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIHNwaW5fbG9ja19iaCgmYXgyNV9saXN0
-X2xvY2spOwo+ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgZ290byBhZ2FpbjsKPiAg
-ICAgICAgICAgICAgICAgICAgICAgICB9Cj4gCgpJIGFncmVlLCBidXQgd2Ugc2hvdWxkIGFsc28g
-YWRkIGF4MjVfY2JfZGVsKHMpIGluIHRoZSBmb2xsb3dpbmcgcGxhY2U6CgpAQCAtMTA0LDYgKzEw
-Niw3IEBAIHN0YXRpYyB2b2lkIGF4MjVfa2lsbF9ieV9kZXZpY2Uoc3RydWN0IG5ldF9kZXZpY2Ug
-KmRldikKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBheDI1X2Rldl9wdXQoYXgyNV9k
-ZXYpOwogICAgICAgICAgICAgICAgICAgICAgICB9CiAgICAgICAgICAgICAgICAgICAgICAgIHJl
-bGVhc2Vfc29jayhzayk7CisgICAgICAgICAgICAgICAgICAgICAgIGF4MjVfY2JfZGVsKHMpOwog
-ICAgICAgICAgICAgICAgICAgICAgICBzcGluX2xvY2tfYmgoJmF4MjVfbGlzdF9sb2NrKTsKICAg
-ICAgICAgICAgICAgICAgICAgICAgc29ja19wdXQoc2spOwogICAgICAgICAgICAgICAgICAgICAg
-ICAvKiBUaGUgZW50cnkgY291bGQgaGF2ZSBiZWVuIGRlbGV0ZWQgZnJvbSB0aGUKCkJlc3QgcmVn
-YXJkcywKRHVvbWluZyBaaG91Cg==
+The timers of ax25 are used for correct session cleanup.
+If we use ax25_release() to close ax25 sessions and
+ax25_dev is not null, the del_timer_sync() functions in
+ax25_release() will execute. As a result, the sessions
+could not be cleaned up correctly, because the timers
+have stopped.
+
+This patch adds a device_up flag in ax25_dev in order to
+judge whether the device is up. If there are sessions to
+be cleaned up, the del_timer_sync() in ax25_release() will
+not execute. What's more, we add ax25_cb_del() in
+ax25_kill_by_device(), because the timers have been stopped
+and there are no functions that could delete ax25_cb if we
+do not call ax25_release().
+
+Fixes: 82e31755e55f ("ax25: Fix UAF bugs in ax25 timers")
+Reported-and-tested-by: Thomas Osterried <thomas@osterried.de>
+Signed-off-by: Duoming Zhou <duoming@zju.edu.cn>
+---
+Changes in v2:
+  - Add ax25_cb_del() in ax25_kill_by_device().
+
+ include/net/ax25.h  |  1 +
+ net/ax25/af_ax25.c  | 15 ++++++++++-----
+ net/ax25/ax25_dev.c |  1 +
+ 3 files changed, 12 insertions(+), 5 deletions(-)
+
+diff --git a/include/net/ax25.h b/include/net/ax25.h
+index 0f9790c455b..a427a05672e 100644
+--- a/include/net/ax25.h
++++ b/include/net/ax25.h
+@@ -228,6 +228,7 @@ typedef struct ax25_dev {
+ 	ax25_dama_info		dama;
+ #endif
+ 	refcount_t		refcount;
++	bool device_up;
+ } ax25_dev;
+ 
+ typedef struct ax25_cb {
+diff --git a/net/ax25/af_ax25.c b/net/ax25/af_ax25.c
+index 363d47f9453..92cbb08a6c5 100644
+--- a/net/ax25/af_ax25.c
++++ b/net/ax25/af_ax25.c
+@@ -81,6 +81,7 @@ static void ax25_kill_by_device(struct net_device *dev)
+ 
+ 	if ((ax25_dev = ax25_dev_ax25dev(dev)) == NULL)
+ 		return;
++	ax25_dev->device_up = false;
+ 
+ 	spin_lock_bh(&ax25_list_lock);
+ again:
+@@ -91,6 +92,7 @@ static void ax25_kill_by_device(struct net_device *dev)
+ 				spin_unlock_bh(&ax25_list_lock);
+ 				ax25_disconnect(s, ENETUNREACH);
+ 				s->ax25_dev = NULL;
++				ax25_cb_del(s);
+ 				spin_lock_bh(&ax25_list_lock);
+ 				goto again;
+ 			}
+@@ -104,6 +106,7 @@ static void ax25_kill_by_device(struct net_device *dev)
+ 				ax25_dev_put(ax25_dev);
+ 			}
+ 			release_sock(sk);
++			ax25_cb_del(s);
+ 			spin_lock_bh(&ax25_list_lock);
+ 			sock_put(sk);
+ 			/* The entry could have been deleted from the
+@@ -1053,11 +1056,13 @@ static int ax25_release(struct socket *sock)
+ 		ax25_destroy_socket(ax25);
+ 	}
+ 	if (ax25_dev) {
+-		del_timer_sync(&ax25->timer);
+-		del_timer_sync(&ax25->t1timer);
+-		del_timer_sync(&ax25->t2timer);
+-		del_timer_sync(&ax25->t3timer);
+-		del_timer_sync(&ax25->idletimer);
++		if (!ax25_dev->device_up) {
++			del_timer_sync(&ax25->timer);
++			del_timer_sync(&ax25->t1timer);
++			del_timer_sync(&ax25->t2timer);
++			del_timer_sync(&ax25->t3timer);
++			del_timer_sync(&ax25->idletimer);
++		}
+ 		dev_put_track(ax25_dev->dev, &ax25_dev->dev_tracker);
+ 		ax25_dev_put(ax25_dev);
+ 	}
+diff --git a/net/ax25/ax25_dev.c b/net/ax25/ax25_dev.c
+index d2a244e1c26..5451be15e07 100644
+--- a/net/ax25/ax25_dev.c
++++ b/net/ax25/ax25_dev.c
+@@ -62,6 +62,7 @@ void ax25_dev_device_up(struct net_device *dev)
+ 	ax25_dev->dev     = dev;
+ 	dev_hold_track(dev, &ax25_dev->dev_tracker, GFP_ATOMIC);
+ 	ax25_dev->forward = NULL;
++	ax25_dev->device_up = true;
+ 
+ 	ax25_dev->values[AX25_VALUES_IPDEFMODE] = AX25_DEF_IPDEFMODE;
+ 	ax25_dev->values[AX25_VALUES_AXDEFMODE] = AX25_DEF_AXDEFMODE;
+-- 
+2.17.1
+
