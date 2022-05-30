@@ -1,7 +1,7 @@
 From: Duoming Zhou <duoming@zju.edu.cn>
-Subject: [PATCH v4] ax25: Fix ax25 session cleanup problems
-Date: Mon, 30 May 2022 22:40:56 +0800
-Message-ID: <20220530144056.100002-1-duoming@zju.edu.cn>
+Subject: [PATCH net v5] ax25: Fix ax25 session cleanup problems
+Date: Mon, 30 May 2022 23:21:58 +0800
+Message-ID: <20220530152158.108619-1-duoming@zju.edu.cn>
 Return-path: <netdev-owner@vger.kernel.org>
 List-ID: <linux-hams.vger.kernel.org>
 MIME-Version: 1.0
@@ -42,8 +42,8 @@ The incoming ax25 sessions which ax25->sk is null will close
 heartbeat timer, because the check "if(!ax25->sk || ..)" is
 satisfied. As a result, the session could not be cleaned up properly.
 
-In order to solve this problem, this patch changes "||" to "&&"
-in ax25_disconnect().
+In order to solve this problem, this patch changes the improper
+check to "if(ax25->sk && ..)" in ax25_disconnect().
 
 What`s more, the ax25_disconnect() may be called twice, which is
 not necessary. For example, ax25_kill_by_device() calls
@@ -59,9 +59,12 @@ Fixes: 8a367e74c012 ("ax25: Fix segfault after sock connection timeout")
 Reported-and-tested-by: Thomas Osterried <thomas@osterried.de>
 Signed-off-by: Duoming Zhou <duoming@zju.edu.cn>
 ---
-Changes in v4:
+Changes since v1:
+  - Add ax25_cb_del() in ax25_kill_by_device().
+  - Mitigate race conditions through lock.
   - Fix session cleanup problem in ax25_disconnect().
   - Fix ax25_disconnect() may be called twice problem.
+  - Change check in ax25_disconnect() to "if(ax25->sk && ..)".
 
  include/net/ax25.h   |  1 +
  net/ax25/af_ax25.c   | 27 +++++++++++++++++----------
@@ -171,7 +174,7 @@ index d2a244e1c26..5451be15e07 100644
  	ax25_dev->values[AX25_VALUES_IPDEFMODE] = AX25_DEF_IPDEFMODE;
  	ax25_dev->values[AX25_VALUES_AXDEFMODE] = AX25_DEF_AXDEFMODE;
 diff --git a/net/ax25/ax25_subr.c b/net/ax25/ax25_subr.c
-index 3a476e4f6cd..227c2b09c52 100644
+index 3a476e4f6cd..9ff98f46dc6 100644
 --- a/net/ax25/ax25_subr.c
 +++ b/net/ax25/ax25_subr.c
 @@ -268,7 +268,7 @@ void ax25_disconnect(ax25_cb *ax25, int reason)
@@ -179,7 +182,7 @@ index 3a476e4f6cd..227c2b09c52 100644
  		del_timer_sync(&ax25->idletimer);
  	} else {
 -		if (!ax25->sk || !sock_flag(ax25->sk, SOCK_DESTROY))
-+		if (!ax25->sk && !sock_flag(ax25->sk, SOCK_DESTROY))
++		if (ax25->sk && !sock_flag(ax25->sk, SOCK_DESTROY))
  			ax25_stop_heartbeat(ax25);
  		ax25_stop_t1timer(ax25);
  		ax25_stop_t2timer(ax25);
