@@ -1,100 +1,188 @@
-From: Thomas Osterried <thomas@osterried.de>
-Subject: eax25 Poblems: setsockopt() before bind(), and
- setsockopt(AX25_EXTSEQ) after connect()
-Date: Mon, 30 May 2022 14:04:32 +0200
-Message-ID: <964A54A9-109B-47CF-A474-B7EAF87EE2D8@osterried.de>
-Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3696.80.82.1.1\))
-Content-Transfer-Encoding: 8BIT
-Return-path: <linux-hams-owner@vger.kernel.org>
+From: Duoming Zhou <duoming@zju.edu.cn>
+Subject: [PATCH v4] ax25: Fix ax25 session cleanup problems
+Date: Mon, 30 May 2022 22:40:56 +0800
+Message-ID: <20220530144056.100002-1-duoming@zju.edu.cn>
+Return-path: <netdev-owner@vger.kernel.org>
 List-ID: <linux-hams.vger.kernel.org>
+MIME-Version: 1.0
 Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 7bit
 To: linux-hams@vger.kernel.org
+Cc: jreuter@yaina.de, ralf@linux-mips.org, davem@davemloft.net, edumazet@google.com, kuba@kernel.org, pabeni@redhat.com, netdev@vger.kernel.org, linux-kernel@vger.kernel.org, thomas@osterried.de, Duoming Zhou <duoming@zju.edu.cn>
 
-Hello,
+There are session cleanup problems in ax25_release() and
+ax25_disconnect(). If we setup a session and then disconnect,
+the disconnected session is still in "LISTENING" state that
+is shown below.
 
-Roland was testing EAX25 (AX25_EMODULUS).
-Interface default mode was AX25_MODULUS.
-He used call(1) with option -m e.
+Active AX.25 sockets
+Dest       Source     Device  State        Vr/Vs    Send-Q  Recv-Q
+DL9SAU-4   DL9SAU-3   ???     LISTENING    000/000  0       0
+DL9SAU-3   DL9SAU-4   ???     LISTENING    000/000  0       0
 
-But SABM+ instead of SABME+ was sent.
+The first reason is caused by del_timer_sync() in ax25_release().
+The timers of ax25 are used for correct session cleanup. If we use
+ax25_release() to close ax25 sessions and ax25_dev is not null,
+the del_timer_sync() functions in ax25_release() will execute.
+As a result, the sessions could not be cleaned up correctly,
+because the timers have stopped.
 
+In order to solve this problem, this patch adds a device_up flag
+in ax25_dev in order to judge whether the device is up. If there
+are sessions to be cleaned up, the del_timer_sync() in
+ax25_release() will not execute. What's more, we add ax25_cb_del()
+in ax25_kill_by_device(), because the timers have been stopped
+and there are no functions that could delete ax25_cb if we do not
+call ax25_release(). Finally, we reorder the position of
+ax25_list_lock in ax25_cb_del() in order to synchronize among
+different functions that call ax25_cb_del().
 
-Cause:
-call used first setsockopt(), then bind().
+The second reason is caused by improper check in ax25_disconnect().
+The incoming ax25 sessions which ax25->sk is null will close
+heartbeat timer, because the check "if(!ax25->sk || ..)" is
+satisfied. As a result, the session could not be cleaned up properly.
 
-Flow:
-  userspace socket() ->
-  kernel:
-    ax25_create()
-     -> ax25_create_cb()
-       -> ax25_fillin_cb(ax25, NULL)   // defaults for ax25_cb
+In order to solve this problem, this patch changes "||" to "&&"
+in ax25_disconnect().
 
-  user calls bind() -> ax25_bind()
-  There:
-        if (ax25_dev) {
-                ax25_fillin_cb(ax25, ax25_dev); // overwrites ax25_cb with device defaults
+What`s more, the ax25_disconnect() may be called twice, which is
+not necessary. For example, ax25_kill_by_device() calls
+ax25_disconnect() and sets ax25->state to AX25_STATE_0, but
+ax25_release() calls ax25_disconnect() again.
 
-  because if ax25_dev != 0:
-  ax25_fillin_cb calls ax25_fillin_cb_from_dev(ax25, ax25_dev);
+In order to solve this problem, this patch add a check in
+ax25_release(). If the flag of ax25->sk equals to SOCK_DEAD,
+the ax25_disconnect() in ax25_release() should not be executed.
 
-  This overwrites (wich device defaults) all 10 variables which may have changed with
-  setsockopt() (after socket() and before bind()).
+Fixes: 82e31755e55f ("ax25: Fix UAF bugs in ax25 timers")
+Fixes: 8a367e74c012 ("ax25: Fix segfault after sock connection timeout")
+Reported-and-tested-by: Thomas Osterried <thomas@osterried.de>
+Signed-off-by: Duoming Zhou <duoming@zju.edu.cn>
+---
+Changes in v4:
+  - Fix session cleanup problem in ax25_disconnect().
+  - Fix ax25_disconnect() may be called twice problem.
 
+ include/net/ax25.h   |  1 +
+ net/ax25/af_ax25.c   | 27 +++++++++++++++++----------
+ net/ax25/ax25_dev.c  |  1 +
+ net/ax25/ax25_subr.c |  2 +-
+ 4 files changed, 20 insertions(+), 11 deletions(-)
 
-As far as I know, a programmer may expect he could call setsockopt() before and / or after bind().
-
-
-Solution:
-
-
-a) It think would be quite ugly to set for every variable a bool "xxx_was_changed__do_not_touch", 
-   for preventing ax25_fillin_cb_from_dev() to overwrite changed variables.
-
-b) printk a notice, that a program should use setsockopt() after bind()
-
-
-Any comments? What do you prefer?
-
-
-Btw, I already corrected the userspace call program in ax25-apps.
-
-
-
-
-Another fix I addeds:
-
-setsockopt() is allowed to be called after connect().
-But as soon the SABM+ is sent, we are not allowed to change the modulus.
-[SABME+ would have indicated a AX25_EMODULUS session, due to protocol spec]
-If we'd allow this, remote site acknowledges with UA an (from his view)
-AX25_MODULUS session, but we are in mode AX25_EMODULUS.
--> setsockopt(AX25_EXTSEQ) for not-unconnected sessions is now rejected.
-
-
-
-
-
-diff -Naurp net/ax25/a/af_ax25.c net/ax25/b/af_ax25.c
---- a/af_ax25.c 2022-05-30 12:26:10.564918877 +0200
-+++ b/af_ax25.c 2022-05-30 13:21:16.957386836 +0200
-@@ -573,6 +573,8 @@ static int ax25_setsockopt(struct socket
-        lock_sock(sk);
-        ax25 = sk_to_ax25(sk);
+diff --git a/include/net/ax25.h b/include/net/ax25.h
+index 0f9790c455b..a427a05672e 100644
+--- a/include/net/ax25.h
++++ b/include/net/ax25.h
+@@ -228,6 +228,7 @@ typedef struct ax25_dev {
+ 	ax25_dama_info		dama;
+ #endif
+ 	refcount_t		refcount;
++	bool device_up;
+ } ax25_dev;
  
-+        if (!ax25->ax25_dev && optname != SO_BINDTODEVICE)
-+               printk(KERN_NOTICE "ax25_setsockopt(): %s: your socket options may be overwritten by device defaults later when you bind(). Use setsockopt() after bind()\n", current->comm);
-        switch (optname) {
-        case AX25_WINDOW:
-                if (ax25->modulus == AX25_MODULUS) {
-@@ -639,6 +641,11 @@ static int ax25_setsockopt(struct socket
-                break;
+ typedef struct ax25_cb {
+diff --git a/net/ax25/af_ax25.c b/net/ax25/af_ax25.c
+index 363d47f9453..289f355e185 100644
+--- a/net/ax25/af_ax25.c
++++ b/net/ax25/af_ax25.c
+@@ -62,12 +62,12 @@ static void ax25_free_sock(struct sock *sk)
+  */
+ static void ax25_cb_del(ax25_cb *ax25)
+ {
++	spin_lock_bh(&ax25_list_lock);
+ 	if (!hlist_unhashed(&ax25->ax25_node)) {
+-		spin_lock_bh(&ax25_list_lock);
+ 		hlist_del_init(&ax25->ax25_node);
+-		spin_unlock_bh(&ax25_list_lock);
+ 		ax25_cb_put(ax25);
+ 	}
++	spin_unlock_bh(&ax25_list_lock);
+ }
  
-        case AX25_EXTSEQ:
-+               if (sk->sk_type == SOCK_SEQPACKET &&
-+                  (sock->state != SS_UNCONNECTED)) {
-+                       res = -EISCONN;
-+                       break;
-+                }
-                ax25->modulus = opt ? AX25_EMODULUS : AX25_MODULUS;
-                break;
+ /*
+@@ -81,6 +81,7 @@ static void ax25_kill_by_device(struct net_device *dev)
+ 
+ 	if ((ax25_dev = ax25_dev_ax25dev(dev)) == NULL)
+ 		return;
++	ax25_dev->device_up = false;
+ 
+ 	spin_lock_bh(&ax25_list_lock);
+ again:
+@@ -91,6 +92,7 @@ static void ax25_kill_by_device(struct net_device *dev)
+ 				spin_unlock_bh(&ax25_list_lock);
+ 				ax25_disconnect(s, ENETUNREACH);
+ 				s->ax25_dev = NULL;
++				ax25_cb_del(s);
+ 				spin_lock_bh(&ax25_list_lock);
+ 				goto again;
+ 			}
+@@ -103,6 +105,7 @@ static void ax25_kill_by_device(struct net_device *dev)
+ 				dev_put_track(ax25_dev->dev, &ax25_dev->dev_tracker);
+ 				ax25_dev_put(ax25_dev);
+ 			}
++			ax25_cb_del(s);
+ 			release_sock(sk);
+ 			spin_lock_bh(&ax25_list_lock);
+ 			sock_put(sk);
+@@ -995,9 +998,11 @@ static int ax25_release(struct socket *sock)
+ 	if (sk->sk_type == SOCK_SEQPACKET) {
+ 		switch (ax25->state) {
+ 		case AX25_STATE_0:
+-			release_sock(sk);
+-			ax25_disconnect(ax25, 0);
+-			lock_sock(sk);
++			if (!sock_flag(ax25->sk, SOCK_DEAD)) {
++				release_sock(sk);
++				ax25_disconnect(ax25, 0);
++				lock_sock(sk);
++			}
+ 			ax25_destroy_socket(ax25);
+ 			break;
+ 
+@@ -1053,11 +1058,13 @@ static int ax25_release(struct socket *sock)
+ 		ax25_destroy_socket(ax25);
+ 	}
+ 	if (ax25_dev) {
+-		del_timer_sync(&ax25->timer);
+-		del_timer_sync(&ax25->t1timer);
+-		del_timer_sync(&ax25->t2timer);
+-		del_timer_sync(&ax25->t3timer);
+-		del_timer_sync(&ax25->idletimer);
++		if (!ax25_dev->device_up) {
++			del_timer_sync(&ax25->timer);
++			del_timer_sync(&ax25->t1timer);
++			del_timer_sync(&ax25->t2timer);
++			del_timer_sync(&ax25->t3timer);
++			del_timer_sync(&ax25->idletimer);
++		}
+ 		dev_put_track(ax25_dev->dev, &ax25_dev->dev_tracker);
+ 		ax25_dev_put(ax25_dev);
+ 	}
+diff --git a/net/ax25/ax25_dev.c b/net/ax25/ax25_dev.c
+index d2a244e1c26..5451be15e07 100644
+--- a/net/ax25/ax25_dev.c
++++ b/net/ax25/ax25_dev.c
+@@ -62,6 +62,7 @@ void ax25_dev_device_up(struct net_device *dev)
+ 	ax25_dev->dev     = dev;
+ 	dev_hold_track(dev, &ax25_dev->dev_tracker, GFP_ATOMIC);
+ 	ax25_dev->forward = NULL;
++	ax25_dev->device_up = true;
+ 
+ 	ax25_dev->values[AX25_VALUES_IPDEFMODE] = AX25_DEF_IPDEFMODE;
+ 	ax25_dev->values[AX25_VALUES_AXDEFMODE] = AX25_DEF_AXDEFMODE;
+diff --git a/net/ax25/ax25_subr.c b/net/ax25/ax25_subr.c
+index 3a476e4f6cd..227c2b09c52 100644
+--- a/net/ax25/ax25_subr.c
++++ b/net/ax25/ax25_subr.c
+@@ -268,7 +268,7 @@ void ax25_disconnect(ax25_cb *ax25, int reason)
+ 		del_timer_sync(&ax25->t3timer);
+ 		del_timer_sync(&ax25->idletimer);
+ 	} else {
+-		if (!ax25->sk || !sock_flag(ax25->sk, SOCK_DESTROY))
++		if (!ax25->sk && !sock_flag(ax25->sk, SOCK_DESTROY))
+ 			ax25_stop_heartbeat(ax25);
+ 		ax25_stop_t1timer(ax25);
+ 		ax25_stop_t2timer(ax25);
+-- 
+2.17.1
 
