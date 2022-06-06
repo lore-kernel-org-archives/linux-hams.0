@@ -1,126 +1,93 @@
-From: Dan Carpenter <dan.carpenter@oracle.com>
-Subject: Re: [PATCH] ax25: use GFP_KERNEL over GFP_ATOMIC where possible
-Date: Mon, 6 Jun 2022 14:54:05 +0300
-Message-ID: <202206031536.t0bHoh3z-lkp__23782.8713072062$1654516610$gmane$org@intel.com>
-References: <20220602112138.8200-1-pjlafren@mtu.edu>
-Mime-Version: 1.0
-Return-path: <linux-hams-owner@vger.kernel.org>
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=date : from : to : cc
- : subject : message-id : content-type : in-reply-to : mime-version;
- s=corp-2021-07-09; bh=P/+L/xiQZxV0HmLySjLpIt1hIIjl5TNuG57e0wYQZQI=;
- b=ql9xXyTfCWpx1TuRIdLbbPQKYKnDfaa7dfR5Wh+OtOLRu8KssfgskzAXVWlqB4ae/cuy
- exUKjZyct7a8xpp9DE5OmxkM2+SKWLmyIvnE9FbHGtGB29jeXHIPa2712e1RLfGuIzGA
- Gv3TFkH7Oiet8kufRDGWn0As4QIgFdckODKMkW2M8HEz+qffxp5TZ91f/Kg/vrHwN6O4
- FwDa0kaI1kPlpa+S1FLDbTZ+Cr2bXeIzcCzzkOSQCLebYPQfvxjdT9FRMjIjE6DK7KjH
- qEk9GQaHRf8NH85IAa4lFHRitZuwT3b+euANdggoqBQ1bbHT2Mhe2LzRYAZUFM3mfnqY 8g== 
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oracle.onmicrosoft.com; s=selector2-oracle-onmicrosoft-com;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=P/+L/xiQZxV0HmLySjLpIt1hIIjl5TNuG57e0wYQZQI=;
- b=rBjRNz0Y0uHHCeMDUAcCy+Npg7TrpJ+Yn42qrItn+piUt82cHuL2Rh/uJf3okY2xZ4Hel9nWiwxNlLqv1wUAHlvkJoQHXijdznKZREq5qUA9cXTp8kmXuTRlqIJR3BIbQuSITO0dj0HwgcwWX77EIFZzn/QNeS2AuUR3DS+BXUM=
-Content-Disposition: inline
-In-Reply-To: <20220602112138.8200-1-pjlafren@mtu.edu>
+From: Duoming Zhou <duoming@zju.edu.cn>
+Subject: [PATCH net-next] ax25: Fix deadlock caused by skb_recv_datagram in ax25_recvmsg
+Date: Tue,  7 Jun 2022 00:21:38 +0800
+Message-ID: <20220606162138.81505-1-duoming@zju.edu.cn>
+Return-path: <netdev-owner@vger.kernel.org>
 List-ID: <linux-hams.vger.kernel.org>
+MIME-Version: 1.0
 Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
-To: kbuild@lists.01.org, Peter Lafreniere <pjlafren@mtu.edu>, linux-hams@vger.kernel.org
-Cc: lkp@intel.com, kbuild-all@lists.01.org, ralf@linux-mips.org, Peter Lafreniere <pjlafren@mtu.edu>
+To: linux-kernel@vger.kernel.org
+Cc: jreuter@yaina.de, ralf@linux-mips.org, davem@davemloft.net, edumazet@google.com, kuba@kernel.org, pabeni@redhat.com, netdev@vger.kernel.org, linux-hams@vger.kernel.org, thomas@osterried.de, Duoming Zhou <duoming@zju.edu.cn>
 
-[ Kbuild catches the bug as well - dan.  netdev trimmed from the CC list. ]
+The skb_recv_datagram() in ax25_recvmsg() will hold lock_sock
+and block until it receives a packet from the remote. If the client
+doesn`t connect to server and calls read() directly, it will not
+receive any packets forever. As a result, the deadlock will happen.
 
-Hi Peter,
+The fail log caused by deadlock is shown below:
 
-url:    https://github.com/intel-lab-lkp/linux/commits/Peter-Lafreniere/ax25-use-GFP_KERNEL-over-GFP_ATOMIC-where-possible/20220602-192326
-base:   https://git.kernel.org/pub/scm/linux/kernel/git/horms/ipvs.git master
-config: nios2-randconfig-m031-20220601 (https://download.01.org/0day-ci/archive/20220603/202206031536.t0bHoh3z-lkp@intel.com/config)
-compiler: nios2-linux-gcc (GCC) 11.3.0
+[  861.122612] INFO: task ax25_deadlock:148 blocked for more than 737 seconds.
+[  861.124543] "echo 0 > /proc/sys/kernel/hung_task_timeout_secs" disables this message.
+[  861.127764] Call Trace:
+[  861.129688]  <TASK>
+[  861.130743]  __schedule+0x2f9/0xb20
+[  861.131526]  schedule+0x49/0xb0
+[  861.131640]  __lock_sock+0x92/0x100
+[  861.131640]  ? destroy_sched_domains_rcu+0x20/0x20
+[  861.131640]  lock_sock_nested+0x6e/0x70
+[  861.131640]  ax25_sendmsg+0x46/0x420
+[  861.134383]  ? ax25_recvmsg+0x1e0/0x1e0
+[  861.135658]  sock_sendmsg+0x59/0x60
+[  861.136791]  __sys_sendto+0xe9/0x150
+[  861.137212]  ? __schedule+0x301/0xb20
+[  861.137710]  ? __do_softirq+0x4a2/0x4fd
+[  861.139153]  __x64_sys_sendto+0x20/0x30
+[  861.140330]  do_syscall_64+0x3b/0x90
+[  861.140731]  entry_SYSCALL_64_after_hwframe+0x46/0xb0
+[  861.141249] RIP: 0033:0x7fdf05ee4f64
+[  861.141249] RSP: 002b:00007ffe95772fc0 EFLAGS: 00000246 ORIG_RAX: 000000000000002c
+[  861.141249] RAX: ffffffffffffffda RBX: 0000565303a013f0 RCX: 00007fdf05ee4f64
+[  861.141249] RDX: 0000000000000005 RSI: 0000565303a01678 RDI: 0000000000000005
+[  861.141249] RBP: 0000000000000000 R08: 0000000000000000 R09: 0000000000000000
+[  861.141249] R10: 0000000000000000 R11: 0000000000000246 R12: 0000565303a00cf0
+[  861.141249] R13: 00007ffe957730e0 R14: 0000000000000000 R15: 0000000000000000
 
-If you fix the issue, kindly add following tag where applicable
-Reported-by: kernel test robot <lkp@intel.com>
-Reported-by: Dan Carpenter <dan.carpenter@oracle.com>
+This patch moves the skb_recv_datagram() before lock_sock() in order
+that other functions that need lock_sock could be executed.
 
-New smatch warnings:
-net/ax25/ax25_route.c:94 ax25_rt_add() warn: sleeping in atomic context
+Reported-by: Thomas Habets <thomas@@habets.se>
+Signed-off-by: Duoming Zhou <duoming@zju.edu.cn>
+---
+ net/ax25/af_ax25.c | 11 ++++++-----
+ 1 file changed, 6 insertions(+), 5 deletions(-)
 
-Old smatch warnings:
-net/ax25/ax25_route.c:113 ax25_rt_add() warn: sleeping in atomic context
-
-vim +94 net/ax25/ax25_route.c
-
-c9266b99e2def0a Ralf Baechle     2006-12-14   72  static int __must_check ax25_rt_add(struct ax25_routes_struct *route)
-^1da177e4c3f415 Linus Torvalds   2005-04-16   73  {
-^1da177e4c3f415 Linus Torvalds   2005-04-16   74  	ax25_route *ax25_rt;
-^1da177e4c3f415 Linus Torvalds   2005-04-16   75  	ax25_dev *ax25_dev;
-^1da177e4c3f415 Linus Torvalds   2005-04-16   76  	int i;
-^1da177e4c3f415 Linus Torvalds   2005-04-16   77  
-^1da177e4c3f415 Linus Torvalds   2005-04-16   78  	if (route->digi_count > AX25_MAX_DIGIS)
-^1da177e4c3f415 Linus Torvalds   2005-04-16   79  		return -EINVAL;
-^1da177e4c3f415 Linus Torvalds   2005-04-16   80  
-87563a043cef044 Duoming Zhou     2022-02-03   81  	ax25_dev = ax25_addr_ax25dev(&route->port_addr);
-87563a043cef044 Duoming Zhou     2022-02-03   82  	if (!ax25_dev)
-87563a043cef044 Duoming Zhou     2022-02-03   83  		return -EINVAL;
-87563a043cef044 Duoming Zhou     2022-02-03   84  
-4de211f1a279275 Jarek Poplawski  2008-02-11   85  	write_lock_bh(&ax25_route_lock);
-^1da177e4c3f415 Linus Torvalds   2005-04-16   86  
-^1da177e4c3f415 Linus Torvalds   2005-04-16   87  	ax25_rt = ax25_route_list;
-^1da177e4c3f415 Linus Torvalds   2005-04-16   88  	while (ax25_rt != NULL) {
-^1da177e4c3f415 Linus Torvalds   2005-04-16   89  		if (ax25cmp(&ax25_rt->callsign, &route->dest_addr) == 0 &&
-^1da177e4c3f415 Linus Torvalds   2005-04-16   90  			    ax25_rt->dev == ax25_dev->dev) {
-^1da177e4c3f415 Linus Torvalds   2005-04-16   91  			kfree(ax25_rt->digipeat);
-^1da177e4c3f415 Linus Torvalds   2005-04-16   92  			ax25_rt->digipeat = NULL;
-^1da177e4c3f415 Linus Torvalds   2005-04-16   93  			if (route->digi_count != 0) {
-10c95f710e8899b Peter Lafreniere 2022-06-02  @94  				if ((ax25_rt->digipeat = kmalloc(sizeof(ax25_digi), GFP_KERNEL)) == NULL) {
-4de211f1a279275 Jarek Poplawski  2008-02-11   95  					write_unlock_bh(&ax25_route_lock);
-87563a043cef044 Duoming Zhou     2022-02-03   96  					ax25_dev_put(ax25_dev);
-^1da177e4c3f415 Linus Torvalds   2005-04-16   97  					return -ENOMEM;
-^1da177e4c3f415 Linus Torvalds   2005-04-16   98  				}
-^1da177e4c3f415 Linus Torvalds   2005-04-16   99  				ax25_rt->digipeat->lastrepeat = -1;
-^1da177e4c3f415 Linus Torvalds   2005-04-16  100  				ax25_rt->digipeat->ndigi      = route->digi_count;
-^1da177e4c3f415 Linus Torvalds   2005-04-16  101  				for (i = 0; i < route->digi_count; i++) {
-^1da177e4c3f415 Linus Torvalds   2005-04-16  102  					ax25_rt->digipeat->repeated[i] = 0;
-^1da177e4c3f415 Linus Torvalds   2005-04-16  103  					ax25_rt->digipeat->calls[i]    = route->digi_addr[i];
-^1da177e4c3f415 Linus Torvalds   2005-04-16  104  				}
-^1da177e4c3f415 Linus Torvalds   2005-04-16  105  			}
-4de211f1a279275 Jarek Poplawski  2008-02-11  106  			write_unlock_bh(&ax25_route_lock);
-87563a043cef044 Duoming Zhou     2022-02-03  107  			ax25_dev_put(ax25_dev);
-^1da177e4c3f415 Linus Torvalds   2005-04-16  108  			return 0;
-^1da177e4c3f415 Linus Torvalds   2005-04-16  109  		}
-^1da177e4c3f415 Linus Torvalds   2005-04-16  110  		ax25_rt = ax25_rt->next;
-^1da177e4c3f415 Linus Torvalds   2005-04-16  111  	}
-^1da177e4c3f415 Linus Torvalds   2005-04-16  112  
-10c95f710e8899b Peter Lafreniere 2022-06-02  113  	if ((ax25_rt = kmalloc(sizeof(ax25_route), GFP_KERNEL)) == NULL) {
-4de211f1a279275 Jarek Poplawski  2008-02-11  114  		write_unlock_bh(&ax25_route_lock);
-87563a043cef044 Duoming Zhou     2022-02-03  115  		ax25_dev_put(ax25_dev);
-^1da177e4c3f415 Linus Torvalds   2005-04-16  116  		return -ENOMEM;
-^1da177e4c3f415 Linus Torvalds   2005-04-16  117  	}
-^1da177e4c3f415 Linus Torvalds   2005-04-16  118  
-^1da177e4c3f415 Linus Torvalds   2005-04-16  119  	ax25_rt->callsign     = route->dest_addr;
-^1da177e4c3f415 Linus Torvalds   2005-04-16  120  	ax25_rt->dev          = ax25_dev->dev;
-^1da177e4c3f415 Linus Torvalds   2005-04-16  121  	ax25_rt->digipeat     = NULL;
-^1da177e4c3f415 Linus Torvalds   2005-04-16  122  	ax25_rt->ip_mode      = ' ';
-^1da177e4c3f415 Linus Torvalds   2005-04-16  123  	if (route->digi_count != 0) {
-^1da177e4c3f415 Linus Torvalds   2005-04-16  124  		if ((ax25_rt->digipeat = kmalloc(sizeof(ax25_digi), GFP_ATOMIC)) == NULL) {
-4de211f1a279275 Jarek Poplawski  2008-02-11  125  			write_unlock_bh(&ax25_route_lock);
-^1da177e4c3f415 Linus Torvalds   2005-04-16  126  			kfree(ax25_rt);
-87563a043cef044 Duoming Zhou     2022-02-03  127  			ax25_dev_put(ax25_dev);
-^1da177e4c3f415 Linus Torvalds   2005-04-16  128  			return -ENOMEM;
-^1da177e4c3f415 Linus Torvalds   2005-04-16  129  		}
-^1da177e4c3f415 Linus Torvalds   2005-04-16  130  		ax25_rt->digipeat->lastrepeat = -1;
-^1da177e4c3f415 Linus Torvalds   2005-04-16  131  		ax25_rt->digipeat->ndigi      = route->digi_count;
-^1da177e4c3f415 Linus Torvalds   2005-04-16  132  		for (i = 0; i < route->digi_count; i++) {
-^1da177e4c3f415 Linus Torvalds   2005-04-16  133  			ax25_rt->digipeat->repeated[i] = 0;
-^1da177e4c3f415 Linus Torvalds   2005-04-16  134  			ax25_rt->digipeat->calls[i]    = route->digi_addr[i];
-^1da177e4c3f415 Linus Torvalds   2005-04-16  135  		}
-^1da177e4c3f415 Linus Torvalds   2005-04-16  136  	}
-^1da177e4c3f415 Linus Torvalds   2005-04-16  137  	ax25_rt->next   = ax25_route_list;
-^1da177e4c3f415 Linus Torvalds   2005-04-16  138  	ax25_route_list = ax25_rt;
-4de211f1a279275 Jarek Poplawski  2008-02-11  139  	write_unlock_bh(&ax25_route_lock);
-87563a043cef044 Duoming Zhou     2022-02-03  140  	ax25_dev_put(ax25_dev);
-^1da177e4c3f415 Linus Torvalds   2005-04-16  141  
-^1da177e4c3f415 Linus Torvalds   2005-04-16  142  	return 0;
-^1da177e4c3f415 Linus Torvalds   2005-04-16  143  }
-
+diff --git a/net/ax25/af_ax25.c b/net/ax25/af_ax25.c
+index 95393bb2760..02cd6087512 100644
+--- a/net/ax25/af_ax25.c
++++ b/net/ax25/af_ax25.c
+@@ -1665,6 +1665,11 @@ static int ax25_recvmsg(struct socket *sock, struct msghdr *msg, size_t size,
+ 	int copied;
+ 	int err = 0;
+ 
++	/* Now we can treat all alike */
++	skb = skb_recv_datagram(sk, flags, &err);
++	if (!skb)
++		goto done;
++
+ 	lock_sock(sk);
+ 	/*
+ 	 * 	This works for seqpacket too. The receiver has ordered the
+@@ -1675,11 +1680,6 @@ static int ax25_recvmsg(struct socket *sock, struct msghdr *msg, size_t size,
+ 		goto out;
+ 	}
+ 
+-	/* Now we can treat all alike */
+-	skb = skb_recv_datagram(sk, flags, &err);
+-	if (skb == NULL)
+-		goto out;
+-
+ 	if (!sk_to_ax25(sk)->pidincl)
+ 		skb_pull(skb, 1);		/* Remove PID */
+ 
+@@ -1725,6 +1725,7 @@ static int ax25_recvmsg(struct socket *sock, struct msghdr *msg, size_t size,
+ out:
+ 	release_sock(sk);
+ 
++done:
+ 	return err;
+ }
+ 
 -- 
-0-DAY CI Kernel Test Service
-https://01.org/lkp
+2.17.1
 
