@@ -1,120 +1,77 @@
-From: Eric Dumazet <edumazet@google.com>
-Subject: Re: [PATCH v2] net: ax25: Fix deadlock caused by skb_recv_datagram in ax25_recvmsg
-Date: Tue, 7 Jun 2022 10:06:27 -0700
-Message-ID: <CANn89iJoOvG=KrouTpe+bgAVf=mYtxE1D3m542UF96XwxKEVsQ@mail.gmail.com>
+From: duoming@zju.edu.cn
+Subject: Re: [PATCH v2] net: ax25: Fix deadlock caused by skb_recv_datagram
+ in ax25_recvmsg
+Date: Wed, 8 Jun 2022 09:02:10 +0800 (GMT+08:00)
+Message-ID: <3c463bfd.58476.18140d5501a.Coremail.duoming@zju.edu.cn>
 References: <20220607142337.78458-1-duoming@zju.edu.cn>
+ <CANn89iJoOvG=KrouTpe+bgAVf=mYtxE1D3m542UF96XwxKEVsQ@mail.gmail.com>
 Mime-Version: 1.0
+Content-Transfer-Encoding: base64
 Return-path: <linux-hams-owner@vger.kernel.org>
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20210112;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=QocnDs5w4TazSvMjzZtEO2lYhuTH55BPpRIi6NIvCgU=;
-        b=dRIKodz4tDRakIwL0rM81s0k+Y6sZzcFymClpndB8u/CNXlwMmEmdV6eO7OFiQEORL
-         RK+hl2KV8qmY2zotWqT9OqXbxCSCqmtKPR2fKLk/Mb0c+F8ZI2wckPqNLd2ds4vZP1jG
-         C/vot/RN14YqPvaWRF8f28nNs5npMlddiM4VpnBfok8fA8fMw/xmkGhAh8qIwpbGG7zA
-         etgWLnPu1MN2lSSOGQzLJHcc+BFtSeWfbom4aOkEuu1b+IVR71PRroP+Quo3BaXb/zMK
-         WLh8pUvlVbF3b6e3ZlxSjOR9QVU+ORoPadn3wP2qQZvV2aTu6gfnZelrf7gUwLUfRxot
-         fCVQ==
-In-Reply-To: <20220607142337.78458-1-duoming@zju.edu.cn>
+In-Reply-To: <CANn89iJoOvG=KrouTpe+bgAVf=mYtxE1D3m542UF96XwxKEVsQ@mail.gmail.com>
 List-ID: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-To: Duoming Zhou <duoming@zju.edu.cn>
+To: Eric Dumazet <edumazet@google.com>
 Cc: LKML <linux-kernel@vger.kernel.org>, jreuter@yaina.de, Ralf Baechle <ralf@linux-mips.org>, David Miller <davem@davemloft.net>, Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>, netdev <netdev@vger.kernel.org>, linux-hams@vger.kernel.org, thomas@osterried.de
 
-On Tue, Jun 7, 2022 at 7:24 AM Duoming Zhou <duoming@zju.edu.cn> wrote:
->
-> The skb_recv_datagram() in ax25_recvmsg() will hold lock_sock
-> and block until it receives a packet from the remote. If the client
-> doesn`t connect to server and calls read() directly, it will not
-> receive any packets forever. As a result, the deadlock will happen.
->
-> The fail log caused by deadlock is shown below:
->
-> [  369.606973] INFO: task ax25_deadlock:157 blocked for more than 245 seconds.
-> [  369.608919] "echo 0 > /proc/sys/kernel/hung_task_timeout_secs" disables this message.
-> [  369.613058] Call Trace:
-> [  369.613315]  <TASK>
-> [  369.614072]  __schedule+0x2f9/0xb20
-> [  369.615029]  schedule+0x49/0xb0
-> [  369.615734]  __lock_sock+0x92/0x100
-> [  369.616763]  ? destroy_sched_domains_rcu+0x20/0x20
-> [  369.617941]  lock_sock_nested+0x6e/0x70
-> [  369.618809]  ax25_bind+0xaa/0x210
-> [  369.619736]  __sys_bind+0xca/0xf0
-> [  369.620039]  ? do_futex+0xae/0x1b0
-> [  369.620387]  ? __x64_sys_futex+0x7c/0x1c0
-> [  369.620601]  ? fpregs_assert_state_consistent+0x19/0x40
-> [  369.620613]  __x64_sys_bind+0x11/0x20
-> [  369.621791]  do_syscall_64+0x3b/0x90
-> [  369.622423]  entry_SYSCALL_64_after_hwframe+0x46/0xb0
-> [  369.623319] RIP: 0033:0x7f43c8aa8af7
-> [  369.624301] RSP: 002b:00007f43c8197ef8 EFLAGS: 00000246 ORIG_RAX: 0000000000000031
-> [  369.625756] RAX: ffffffffffffffda RBX: 0000000000000000 RCX: 00007f43c8aa8af7
-> [  369.626724] RDX: 0000000000000010 RSI: 000055768e2021d0 RDI: 0000000000000005
-> [  369.628569] RBP: 00007f43c8197f00 R08: 0000000000000011 R09: 00007f43c8198700
-> [  369.630208] R10: 0000000000000000 R11: 0000000000000246 R12: 00007fff845e6afe
-> [  369.632240] R13: 00007fff845e6aff R14: 00007f43c8197fc0 R15: 00007f43c8198700
->
-> This patch moves the skb_recv_datagram() before lock_sock() in order
-> that other functions that need lock_sock could be executed.
->
-> Suggested-by: Thomas Osterried <thomas@osterried.de>
-> Signed-off-by: Duoming Zhou <duoming@zju.edu.cn>
-> Reported-by: Thomas Habets <thomas@@habets.se>
-> ---
-> Changes in v2:
->   - Make commit messages clearer.
->
->  net/ax25/af_ax25.c | 11 ++++++-----
->  1 file changed, 6 insertions(+), 5 deletions(-)
->
-> diff --git a/net/ax25/af_ax25.c b/net/ax25/af_ax25.c
-> index 95393bb2760..02cd6087512 100644
-> --- a/net/ax25/af_ax25.c
-> +++ b/net/ax25/af_ax25.c
-> @@ -1665,6 +1665,11 @@ static int ax25_recvmsg(struct socket *sock, struct msghdr *msg, size_t size,
->         int copied;
->         int err = 0;
->
-> +       /* Now we can treat all alike */
-> +       skb = skb_recv_datagram(sk, flags, &err);
-> +       if (!skb)
-> +               goto done;
-> +
-
-So at this point we have skb=something. This means that the following
-branch will leak it.
-
-if (sk->sk_type == SOCK_SEQPACKET && sk->sk_state != TCP_ESTABLISHED) {
-    err =  -ENOTCONN;
-    goto out;    // skb will be leaked
-}
-
-
->         /*
->          *      This works for seqpacket too. The receiver has ordered the
-> @@ -1675,11 +1680,6 @@ static int ax25_recvmsg(struct socket *sock, struct msghdr *msg, size_t size,
->                 goto out;
->         }
->
-> -       /* Now we can treat all alike */
-> -       skb = skb_recv_datagram(sk, flags, &err);
-> -       if (skb == NULL)
-> -               goto out;
-> -
->         if (!sk_to_ax25(sk)->pidincl)
->                 skb_pull(skb, 1);               /* Remove PID */
->
-> @@ -1725,6 +1725,7 @@ static int ax25_recvmsg(struct socket *sock, struct msghdr *msg, size_t size,
->  out:
->         release_sock(sk);
->
-> +done:
->         return err;
->  }
->
-> --
-> 2.17.1
->
+SGVsbG8sCgpPbiBUdWUsIDcgSnVuIDIwMjIgMTA6MDY6MjcgLTA3MDAgRXJpYyBEdW1hemV0IHdy
+b3RlOgoKPiBPbiBUdWUsIEp1biA3LCAyMDIyIGF0IDc6MjQgQU0gRHVvbWluZyBaaG91IDxkdW9t
+aW5nQHpqdS5lZHUuY24+IHdyb3RlOgo+ID4KPiA+IFRoZSBza2JfcmVjdl9kYXRhZ3JhbSgpIGlu
+IGF4MjVfcmVjdm1zZygpIHdpbGwgaG9sZCBsb2NrX3NvY2sKPiA+IGFuZCBibG9jayB1bnRpbCBp
+dCByZWNlaXZlcyBhIHBhY2tldCBmcm9tIHRoZSByZW1vdGUuIElmIHRoZSBjbGllbnQKPiA+IGRv
+ZXNuYHQgY29ubmVjdCB0byBzZXJ2ZXIgYW5kIGNhbGxzIHJlYWQoKSBkaXJlY3RseSwgaXQgd2ls
+bCBub3QKPiA+IHJlY2VpdmUgYW55IHBhY2tldHMgZm9yZXZlci4gQXMgYSByZXN1bHQsIHRoZSBk
+ZWFkbG9jayB3aWxsIGhhcHBlbi4KPiA+Cj4gPiBUaGUgZmFpbCBsb2cgY2F1c2VkIGJ5IGRlYWRs
+b2NrIGlzIHNob3duIGJlbG93Ogo+ID4KPiA+IFsgIDM2OS42MDY5NzNdIElORk86IHRhc2sgYXgy
+NV9kZWFkbG9jazoxNTcgYmxvY2tlZCBmb3IgbW9yZSB0aGFuIDI0NSBzZWNvbmRzLgo+ID4gWyAg
+MzY5LjYwODkxOV0gImVjaG8gMCA+IC9wcm9jL3N5cy9rZXJuZWwvaHVuZ190YXNrX3RpbWVvdXRf
+c2VjcyIgZGlzYWJsZXMgdGhpcyBtZXNzYWdlLgo+ID4gWyAgMzY5LjYxMzA1OF0gQ2FsbCBUcmFj
+ZToKPiA+IFsgIDM2OS42MTMzMTVdICA8VEFTSz4KPiA+IFsgIDM2OS42MTQwNzJdICBfX3NjaGVk
+dWxlKzB4MmY5LzB4YjIwCj4gPiBbICAzNjkuNjE1MDI5XSAgc2NoZWR1bGUrMHg0OS8weGIwCj4g
+PiBbICAzNjkuNjE1NzM0XSAgX19sb2NrX3NvY2srMHg5Mi8weDEwMAo+ID4gWyAgMzY5LjYxNjc2
+M10gID8gZGVzdHJveV9zY2hlZF9kb21haW5zX3JjdSsweDIwLzB4MjAKPiA+IFsgIDM2OS42MTc5
+NDFdICBsb2NrX3NvY2tfbmVzdGVkKzB4NmUvMHg3MAo+ID4gWyAgMzY5LjYxODgwOV0gIGF4MjVf
+YmluZCsweGFhLzB4MjEwCj4gPiBbICAzNjkuNjE5NzM2XSAgX19zeXNfYmluZCsweGNhLzB4ZjAK
+PiA+IFsgIDM2OS42MjAwMzldICA/IGRvX2Z1dGV4KzB4YWUvMHgxYjAKPiA+IFsgIDM2OS42MjAz
+ODddICA/IF9feDY0X3N5c19mdXRleCsweDdjLzB4MWMwCj4gPiBbICAzNjkuNjIwNjAxXSAgPyBm
+cHJlZ3NfYXNzZXJ0X3N0YXRlX2NvbnNpc3RlbnQrMHgxOS8weDQwCj4gPiBbICAzNjkuNjIwNjEz
+XSAgX194NjRfc3lzX2JpbmQrMHgxMS8weDIwCj4gPiBbICAzNjkuNjIxNzkxXSAgZG9fc3lzY2Fs
+bF82NCsweDNiLzB4OTAKPiA+IFsgIDM2OS42MjI0MjNdICBlbnRyeV9TWVNDQUxMXzY0X2FmdGVy
+X2h3ZnJhbWUrMHg0Ni8weGIwCj4gPiBbICAzNjkuNjIzMzE5XSBSSVA6IDAwMzM6MHg3ZjQzYzhh
+YThhZjcKPiA+IFsgIDM2OS42MjQzMDFdIFJTUDogMDAyYjowMDAwN2Y0M2M4MTk3ZWY4IEVGTEFH
+UzogMDAwMDAyNDYgT1JJR19SQVg6IDAwMDAwMDAwMDAwMDAwMzEKPiA+IFsgIDM2OS42MjU3NTZd
+IFJBWDogZmZmZmZmZmZmZmZmZmZkYSBSQlg6IDAwMDAwMDAwMDAwMDAwMDAgUkNYOiAwMDAwN2Y0
+M2M4YWE4YWY3Cj4gPiBbICAzNjkuNjI2NzI0XSBSRFg6IDAwMDAwMDAwMDAwMDAwMTAgUlNJOiAw
+MDAwNTU3NjhlMjAyMWQwIFJESTogMDAwMDAwMDAwMDAwMDAwNQo+ID4gWyAgMzY5LjYyODU2OV0g
+UkJQOiAwMDAwN2Y0M2M4MTk3ZjAwIFIwODogMDAwMDAwMDAwMDAwMDAxMSBSMDk6IDAwMDA3ZjQz
+YzgxOTg3MDAKPiA+IFsgIDM2OS42MzAyMDhdIFIxMDogMDAwMDAwMDAwMDAwMDAwMCBSMTE6IDAw
+MDAwMDAwMDAwMDAyNDYgUjEyOiAwMDAwN2ZmZjg0NWU2YWZlCj4gPiBbICAzNjkuNjMyMjQwXSBS
+MTM6IDAwMDA3ZmZmODQ1ZTZhZmYgUjE0OiAwMDAwN2Y0M2M4MTk3ZmMwIFIxNTogMDAwMDdmNDNj
+ODE5ODcwMAo+ID4KPiA+IFRoaXMgcGF0Y2ggbW92ZXMgdGhlIHNrYl9yZWN2X2RhdGFncmFtKCkg
+YmVmb3JlIGxvY2tfc29jaygpIGluIG9yZGVyCj4gPiB0aGF0IG90aGVyIGZ1bmN0aW9ucyB0aGF0
+IG5lZWQgbG9ja19zb2NrIGNvdWxkIGJlIGV4ZWN1dGVkLgo+ID4KPiA+IFN1Z2dlc3RlZC1ieTog
+VGhvbWFzIE9zdGVycmllZCA8dGhvbWFzQG9zdGVycmllZC5kZT4KPiA+IFNpZ25lZC1vZmYtYnk6
+IER1b21pbmcgWmhvdSA8ZHVvbWluZ0B6anUuZWR1LmNuPgo+ID4gUmVwb3J0ZWQtYnk6IFRob21h
+cyBIYWJldHMgPHRob21hc0BAaGFiZXRzLnNlPgo+ID4gLS0tCj4gPiBDaGFuZ2VzIGluIHYyOgo+
+ID4gICAtIE1ha2UgY29tbWl0IG1lc3NhZ2VzIGNsZWFyZXIuCj4gPgo+ID4gIG5ldC9heDI1L2Fm
+X2F4MjUuYyB8IDExICsrKysrKy0tLS0tCj4gPiAgMSBmaWxlIGNoYW5nZWQsIDYgaW5zZXJ0aW9u
+cygrKSwgNSBkZWxldGlvbnMoLSkKPiA+Cj4gPiBkaWZmIC0tZ2l0IGEvbmV0L2F4MjUvYWZfYXgy
+NS5jIGIvbmV0L2F4MjUvYWZfYXgyNS5jCj4gPiBpbmRleCA5NTM5M2JiMjc2MC4uMDJjZDYwODc1
+MTIgMTAwNjQ0Cj4gPiAtLS0gYS9uZXQvYXgyNS9hZl9heDI1LmMKPiA+ICsrKyBiL25ldC9heDI1
+L2FmX2F4MjUuYwo+ID4gQEAgLTE2NjUsNiArMTY2NSwxMSBAQCBzdGF0aWMgaW50IGF4MjVfcmVj
+dm1zZyhzdHJ1Y3Qgc29ja2V0ICpzb2NrLCBzdHJ1Y3QgbXNnaGRyICptc2csIHNpemVfdCBzaXpl
+LAo+ID4gICAgICAgICBpbnQgY29waWVkOwo+ID4gICAgICAgICBpbnQgZXJyID0gMDsKPiA+Cj4g
+PiArICAgICAgIC8qIE5vdyB3ZSBjYW4gdHJlYXQgYWxsIGFsaWtlICovCj4gPiArICAgICAgIHNr
+YiA9IHNrYl9yZWN2X2RhdGFncmFtKHNrLCBmbGFncywgJmVycik7Cj4gPiArICAgICAgIGlmICgh
+c2tiKQo+ID4gKyAgICAgICAgICAgICAgIGdvdG8gZG9uZTsKPiA+ICsKPiAKPiBTbyBhdCB0aGlz
+IHBvaW50IHdlIGhhdmUgc2tiPXNvbWV0aGluZy4gVGhpcyBtZWFucyB0aGF0IHRoZSBmb2xsb3dp
+bmcKPiBicmFuY2ggd2lsbCBsZWFrIGl0Lgo+IAo+IGlmIChzay0+c2tfdHlwZSA9PSBTT0NLX1NF
+UVBBQ0tFVCAmJiBzay0+c2tfc3RhdGUgIT0gVENQX0VTVEFCTElTSEVEKSB7Cj4gICAgIGVyciA9
+ICAtRU5PVENPTk47Cj4gICAgIGdvdG8gb3V0OyAgICAvLyBza2Igd2lsbCBiZSBsZWFrZWQKPiB9
+Cj4gCgpUaGFuayB5b3VyIGZvciBwb2ludGluZyBvdXQgdGhlIHByb2JsZW0hCkkgd2lsbCBhZGQg
+c2tiX2ZyZWVfZGF0YWdyYW0oKSBiZWZvcmUgZ290byBvdXQgaW4gb3JkZXIgdG8gbWl0aWdhdGUg
+dGhlIG1lbW9yeSBsZWFrLgoKICAgICAgICBpZiAoc2stPnNrX3R5cGUgPT0gU09DS19TRVFQQUNL
+RVQgJiYgc2stPnNrX3N0YXRlICE9IFRDUF9FU1RBQkxJU0hFRCkgewogICAgICAgICAgICAgICAg
+ZXJyID0gIC1FTk9UQ09OTjsKKyAgICAgICAgICAgICAgIHNrYl9mcmVlX2RhdGFncmFtKHNrLCBz
+a2IpOwogICAgICAgICAgICAgICAgZ290byBvdXQ7CiAgICAgICAgfQoKQmVzdCByZWdhcmRzLApE
+dW9taW5nIFpob3UKCg==
