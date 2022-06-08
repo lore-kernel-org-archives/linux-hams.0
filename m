@@ -1,101 +1,69 @@
-From: Duoming Zhou <duoming@zju.edu.cn>
-Subject: [PATCH v3] net: ax25: Fix deadlock caused by skb_recv_datagram in ax25_recvmsg
-Date: Wed,  8 Jun 2022 09:29:23 +0800
-Message-ID: <20220608012923.17505-1-duoming@zju.edu.cn>
-Return-path: <linux-hams-owner@vger.kernel.org>
+From: Jiri Pirko <jiri@resnulli.us>
+Subject: Re: [PATCH net-next] net: rename reference+tracking helpers
+Date: Wed, 8 Jun 2022 10:27:15 +0200
+Message-ID: <YqBdY0NzK9XJG7HC@nanopsycho>
+References: <20220608043955.919359-1-kuba@kernel.org>
+Mime-Version: 1.0
+Return-path: <netdev-owner@vger.kernel.org>
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=resnulli-us.20210112.gappssmtp.com; s=20210112;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=RO+2GICEalTGWxqDS+LJ84EPVrBk/pFANY3/dBpnczA=;
+        b=iu/4+hXctfQAi/PtOuus7Ng+2TGisjH8LOIQ9UWUu2nOercAT2Cd30VUAnyTfknNLH
+         WdK6uKicZdZC0TbPF5J7HIFl4TsLBF4H31zMAbmY0aCKC3xZ3e/ztKH5NIEPBPP6p5vb
+         4E0qwO85pXzuGOofQC0LImH2xumsNiLSqpRYJAazUnZPeRKALEdhxmhv2HNaAAd67MB1
+         xq8XigI4Rn4w7GBhBzsoZaK0ul6XLDXJTr0X/XG0srSvzlvnBiswdMZex1xSxz6yDNVL
+         8SCfZe/q1NzKDkfDZHtQUZPwF1CzgjpFRnTfTTb2OeBSNcMUk7nUBDaqyDoOooU3ARJx
+         s4sQ==
+Content-Disposition: inline
+In-Reply-To: <20220608043955.919359-1-kuba@kernel.org>
 List-ID: <linux-hams.vger.kernel.org>
-MIME-Version: 1.0
 Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
-To: linux-kernel@vger.kernel.org
-Cc: jreuter@yaina.de, ralf@linux-mips.org, davem@davemloft.net, edumazet@google.com, kuba@kernel.org, pabeni@redhat.com, netdev@vger.kernel.org, linux-hams@vger.kernel.org, thomas@osterried.de, Duoming Zhou <duoming@zju.edu.cn>
+To: Jakub Kicinski <kuba@kernel.org>
+Cc: davem@davemloft.net, netdev@vger.kernel.org, edumazet@google.com, pabeni@redhat.com, dsahern@kernel.org, steffen.klassert@secunet.com, jreuter@yaina.de, razor@blackwall.org, kgraul@linux.ibm.com, ivecera@redhat.com, jmaloy@redhat.com, ying.xue@windriver.com, lucien.xin@gmail.com, arnd@arndb.de, yajun.deng@linux.dev, atenart@kernel.org, richardsonnick@google.com, hkallweit1@gmail.com, linux-hams@vger.kernel.org, dev@openvswitch.org, linux-s390@vger.kernel.org, tipc-discussion@lists.sourceforge.net
 
-The skb_recv_datagram() in ax25_recvmsg() will hold lock_sock
-and block until it receives a packet from the remote. If the client
-doesn`t connect to server and calls read() directly, it will not
-receive any packets forever. As a result, the deadlock will happen.
+Wed, Jun 08, 2022 at 06:39:55AM CEST, kuba@kernel.org wrote:
+>Netdev reference helpers have a dev_ prefix for historic
+>reasons. Renaming the old helpers would be too much churn
 
-The fail log caused by deadlock is shown below:
+Hmm, I think it would be great to eventually rename the rest too in
+order to maintain unique prefix for netdev things. Why do you think the
+"churn" would be an issue?
 
-[  369.606973] INFO: task ax25_deadlock:157 blocked for more than 245 seconds.
-[  369.608919] "echo 0 > /proc/sys/kernel/hung_task_timeout_secs" disables this message.
-[  369.613058] Call Trace:
-[  369.613315]  <TASK>
-[  369.614072]  __schedule+0x2f9/0xb20
-[  369.615029]  schedule+0x49/0xb0
-[  369.615734]  __lock_sock+0x92/0x100
-[  369.616763]  ? destroy_sched_domains_rcu+0x20/0x20
-[  369.617941]  lock_sock_nested+0x6e/0x70
-[  369.618809]  ax25_bind+0xaa/0x210
-[  369.619736]  __sys_bind+0xca/0xf0
-[  369.620039]  ? do_futex+0xae/0x1b0
-[  369.620387]  ? __x64_sys_futex+0x7c/0x1c0
-[  369.620601]  ? fpregs_assert_state_consistent+0x19/0x40
-[  369.620613]  __x64_sys_bind+0x11/0x20
-[  369.621791]  do_syscall_64+0x3b/0x90
-[  369.622423]  entry_SYSCALL_64_after_hwframe+0x46/0xb0
-[  369.623319] RIP: 0033:0x7f43c8aa8af7
-[  369.624301] RSP: 002b:00007f43c8197ef8 EFLAGS: 00000246 ORIG_RAX: 0000000000000031
-[  369.625756] RAX: ffffffffffffffda RBX: 0000000000000000 RCX: 00007f43c8aa8af7
-[  369.626724] RDX: 0000000000000010 RSI: 000055768e2021d0 RDI: 0000000000000005
-[  369.628569] RBP: 00007f43c8197f00 R08: 0000000000000011 R09: 00007f43c8198700
-[  369.630208] R10: 0000000000000000 R11: 0000000000000246 R12: 00007fff845e6afe
-[  369.632240] R13: 00007fff845e6aff R14: 00007f43c8197fc0 R15: 00007f43c8198700
 
-This patch moves the skb_recv_datagram() before lock_sock() in order that
-other functions that need lock_sock could be executed. What`s more, we
-add skb_free_datagram() before goto out in order to mitigate memory leak.
+>but we can rename the tracking ones which are relatively
+>recent and should be the default for new code.
+>
+>Rename:
+> dev_hold_track()    -> netdev_hold()
+> dev_put_track()     -> netdev_put()
+> dev_replace_track() -> netdev_ref_replace()
 
-Suggested-by: Thomas Osterried <thomas@osterried.de>
-Signed-off-by: Duoming Zhou <duoming@zju.edu.cn>
-Reported-by: Thomas Habets <thomas@@habets.se>
----
-Changes in v3:
-  - Add skb_free_datagram() before goto out in order to mitigate memory leak.
+[...]
 
- net/ax25/af_ax25.c | 12 +++++++-----
- 1 file changed, 7 insertions(+), 5 deletions(-)
 
-diff --git a/net/ax25/af_ax25.c b/net/ax25/af_ax25.c
-index 95393bb2760..62aa5993093 100644
---- a/net/ax25/af_ax25.c
-+++ b/net/ax25/af_ax25.c
-@@ -1665,6 +1665,11 @@ static int ax25_recvmsg(struct socket *sock, struct msghdr *msg, size_t size,
- 	int copied;
- 	int err = 0;
- 
-+	/* Now we can treat all alike */
-+	skb = skb_recv_datagram(sk, flags, &err);
-+	if (!skb)
-+		goto done;
-+
- 	lock_sock(sk);
- 	/*
- 	 * 	This works for seqpacket too. The receiver has ordered the
-@@ -1672,14 +1677,10 @@ static int ax25_recvmsg(struct socket *sock, struct msghdr *msg, size_t size,
- 	 */
- 	if (sk->sk_type == SOCK_SEQPACKET && sk->sk_state != TCP_ESTABLISHED) {
- 		err =  -ENOTCONN;
-+		skb_free_datagram(sk, skb);
- 		goto out;
- 	}
- 
--	/* Now we can treat all alike */
--	skb = skb_recv_datagram(sk, flags, &err);
--	if (skb == NULL)
--		goto out;
--
- 	if (!sk_to_ax25(sk)->pidincl)
- 		skb_pull(skb, 1);		/* Remove PID */
- 
-@@ -1725,6 +1726,7 @@ static int ax25_recvmsg(struct socket *sock, struct msghdr *msg, size_t size,
- out:
- 	release_sock(sk);
- 
-+done:
- 	return err;
- }
- 
--- 
-2.17.1
+>diff --git a/drivers/net/macsec.c b/drivers/net/macsec.c
+>index 817577e713d7..815738c0e067 100644
+>--- a/drivers/net/macsec.c
+>+++ b/drivers/net/macsec.c
+>@@ -3462,7 +3462,7 @@ static int macsec_dev_init(struct net_device *dev)
+> 		memcpy(dev->broadcast, real_dev->broadcast, dev->addr_len);
+> 
+> 	/* Get macsec's reference to real_dev */
+>-	dev_hold_track(real_dev, &macsec->dev_tracker, GFP_KERNEL);
+>+	netdev_hold(real_dev, &macsec->dev_tracker, GFP_KERNEL);
 
+So we later decide to rename dev_hold() to obey the netdev_*() naming
+scheme, we would have collision. Also, seems to me odd to have:
+OLDPREFIX_x()
+and
+NEWPREFIX_x()
+to be different functions.
+
+For the sake of not making naming mess, could we rather have:
+netdev_hold_track()
+or
+netdev_hold_tr() if the prior is too long
+?
