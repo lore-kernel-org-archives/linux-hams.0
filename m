@@ -1,50 +1,101 @@
-From: Paolo Abeni <pabeni@redhat.com>
-Subject: Re: [PATCH net-next] net: rename reference+tracking helpers
-Date: Thu, 09 Jun 2022 13:49:48 +0200
-Message-ID: <b00ab3c4a12fb11ed95b2a4634e50e3cba10ec28.camel@redhat.com>
-References: <20220608043955.919359-1-kuba@kernel.org>
-         <YqBdY0NzK9XJG7HC@nanopsycho> <20220608075827.2af7a35f@kernel.org>
-         <f263209c-509c-5f6b-865c-cd5d38d29549@kernel.org>
-         <CANn89i+RCCXQDVVTB+hHasGmjdXwdm8CvkPQv3nYSLgr=MYmpA@mail.gmail.com>
+From: duoming@zju.edu.cn
+Subject: Re: [PATCH v3] net: ax25: Fix deadlock caused by skb_recv_datagram
+ in ax25_recvmsg
+Date: Thu, 9 Jun 2022 21:17:27 +0800 (GMT+08:00)
+Message-ID: <4ccdba76.5ee33.181489cd6e4.Coremail.duoming@zju.edu.cn>
+References: <20220608012923.17505-1-duoming@zju.edu.cn>
+ <22175690a4e89a78abcb8244dfd0bdd0005267a5.camel@redhat.com>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
-Return-path: <linux-hams-owner@vger.kernel.org>
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-        s=mimecast20190719; t=1654775396;
-        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-         content-transfer-encoding:content-transfer-encoding:
-         in-reply-to:in-reply-to:references:references;
-        bh=DuwhD3TtwqmPc3FtJmMtruEqS+FysyJ1M2ttopTd4UE=;
-        b=QXRwcZKUWlYp26MQSQFUIAlm65ZDBXdmXrWsmaS5F2jHuaUT47L/BKxBoJQUr41ngcOUZM
-        Um0Cnof/UJpstY+ynQi+cVLYrOFSHOAf+w0b2k8GEpDCJWbh5SsU0wATWMlh7XatWTcybt
-        s+fFlDtEIowMKHBHPuB3p371xf6uoYw=
-In-Reply-To: <CANn89i+RCCXQDVVTB+hHasGmjdXwdm8CvkPQv3nYSLgr=MYmpA@mail.gmail.com>
+Content-Transfer-Encoding: base64
+Return-path: <netdev-owner@vger.kernel.org>
+In-Reply-To: <22175690a4e89a78abcb8244dfd0bdd0005267a5.camel@redhat.com>
 List-ID: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
-To: Eric Dumazet <edumazet@google.com>, David Ahern <dsahern@kernel.org>
-Cc: Jakub Kicinski <kuba@kernel.org>, Jiri Pirko <jiri@resnulli.us>, David Miller <davem@davemloft.net>, netdev <netdev@vger.kernel.org>, Steffen Klassert <steffen.klassert@secunet.com>, jreuter@yaina.de, razor@blackwall.org, Karsten Graul <kgraul@linux.ibm.com>, ivecera@redhat.com, Jon Maloy <jmaloy@redhat.com>, Ying Xue <ying.xue@windriver.com>, Xin Long <lucien.xin@gmail.com>, Arnd Bergmann <arnd@arndb.de>, Yajun Deng <yajun.deng@linux.dev>, Antoine Tenart <atenart@kernel.org>, richardsonnick@google.com, Heiner Kallweit <hkallweit1@gmail.com>, linux-hams@vger.kernel.org, dev@openvswitch.org, linux-s390@vger.kernel.org, tipc-discussion@lists.sourceforge.net
+To: Paolo Abeni <pabeni@redhat.com>
+Cc: linux-kernel@vger.kernel.org, jreuter@yaina.de, ralf@linux-mips.org, davem@davemloft.net, edumazet@google.com, kuba@kernel.org, netdev@vger.kernel.org, linux-hams@vger.kernel.org, thomas@osterried.de
 
-On Wed, 2022-06-08 at 16:00 -0700, Eric Dumazet wrote:
-> On Wed, Jun 8, 2022 at 3:58 PM David Ahern <dsahern@kernel.org> wrote:
-> > 
-> > On 6/8/22 8:58 AM, Jakub Kicinski wrote:
-> > > IMO to encourage use of the track-capable API we could keep their names
-> > > short and call the legacy functions __netdev_hold() as I mentioned or
-> > > maybe netdev_hold_notrack().
-> > 
-> > I like that option. Similar to the old nla_parse functions that were
-> > renamed with _deprecated - makes it easier to catch new uses.
-> 
-> I think we need to clearly document the needed conversions for future
-> bugfix backports.
-> 
-
-To be on the same page: do you think we need something under
-Documentation with this patch? or with the later dev_hold rename? or
-did I misunderstood completely?
-
-Thanks!
-
-Paolo
+SGVsbG8sCgpPbiBUaHUsIDA5IEp1biAyMDIyIDEwOjQxOjAyICswMjAwIFBhb2xvIHdyb3RlOgoK
+PiBPbiBXZWQsIDIwMjItMDYtMDggYXQgMDk6MjkgKzA4MDAsIER1b21pbmcgWmhvdSB3cm90ZToK
+PiA+IFRoZSBza2JfcmVjdl9kYXRhZ3JhbSgpIGluIGF4MjVfcmVjdm1zZygpIHdpbGwgaG9sZCBs
+b2NrX3NvY2sKPiA+IGFuZCBibG9jayB1bnRpbCBpdCByZWNlaXZlcyBhIHBhY2tldCBmcm9tIHRo
+ZSByZW1vdGUuIElmIHRoZSBjbGllbnQKPiA+IGRvZXNuYHQgY29ubmVjdCB0byBzZXJ2ZXIgYW5k
+IGNhbGxzIHJlYWQoKSBkaXJlY3RseSwgaXQgd2lsbCBub3QKPiA+IHJlY2VpdmUgYW55IHBhY2tl
+dHMgZm9yZXZlci4gQXMgYSByZXN1bHQsIHRoZSBkZWFkbG9jayB3aWxsIGhhcHBlbi4KPiA+IAo+
+ID4gVGhlIGZhaWwgbG9nIGNhdXNlZCBieSBkZWFkbG9jayBpcyBzaG93biBiZWxvdzoKPiA+IAo+
+ID4gWyAgMzY5LjYwNjk3M10gSU5GTzogdGFzayBheDI1X2RlYWRsb2NrOjE1NyBibG9ja2VkIGZv
+ciBtb3JlIHRoYW4gMjQ1IHNlY29uZHMuCj4gPiBbICAzNjkuNjA4OTE5XSAiZWNobyAwID4gL3By
+b2Mvc3lzL2tlcm5lbC9odW5nX3Rhc2tfdGltZW91dF9zZWNzIiBkaXNhYmxlcyB0aGlzIG1lc3Nh
+Z2UuCj4gPiBbICAzNjkuNjEzMDU4XSBDYWxsIFRyYWNlOgo+ID4gWyAgMzY5LjYxMzMxNV0gIDxU
+QVNLPgo+ID4gWyAgMzY5LjYxNDA3Ml0gIF9fc2NoZWR1bGUrMHgyZjkvMHhiMjAKPiA+IFsgIDM2
+OS42MTUwMjldICBzY2hlZHVsZSsweDQ5LzB4YjAKPiA+IFsgIDM2OS42MTU3MzRdICBfX2xvY2tf
+c29jaysweDkyLzB4MTAwCj4gPiBbICAzNjkuNjE2NzYzXSAgPyBkZXN0cm95X3NjaGVkX2RvbWFp
+bnNfcmN1KzB4MjAvMHgyMAo+ID4gWyAgMzY5LjYxNzk0MV0gIGxvY2tfc29ja19uZXN0ZWQrMHg2
+ZS8weDcwCj4gPiBbICAzNjkuNjE4ODA5XSAgYXgyNV9iaW5kKzB4YWEvMHgyMTAKPiA+IFsgIDM2
+OS42MTk3MzZdICBfX3N5c19iaW5kKzB4Y2EvMHhmMAo+ID4gWyAgMzY5LjYyMDAzOV0gID8gZG9f
+ZnV0ZXgrMHhhZS8weDFiMAo+ID4gWyAgMzY5LjYyMDM4N10gID8gX194NjRfc3lzX2Z1dGV4KzB4
+N2MvMHgxYzAKPiA+IFsgIDM2OS42MjA2MDFdICA/IGZwcmVnc19hc3NlcnRfc3RhdGVfY29uc2lz
+dGVudCsweDE5LzB4NDAKPiA+IFsgIDM2OS42MjA2MTNdICBfX3g2NF9zeXNfYmluZCsweDExLzB4
+MjAKPiA+IFsgIDM2OS42MjE3OTFdICBkb19zeXNjYWxsXzY0KzB4M2IvMHg5MAo+ID4gWyAgMzY5
+LjYyMjQyM10gIGVudHJ5X1NZU0NBTExfNjRfYWZ0ZXJfaHdmcmFtZSsweDQ2LzB4YjAKPiA+IFsg
+IDM2OS42MjMzMTldIFJJUDogMDAzMzoweDdmNDNjOGFhOGFmNwo+ID4gWyAgMzY5LjYyNDMwMV0g
+UlNQOiAwMDJiOjAwMDA3ZjQzYzgxOTdlZjggRUZMQUdTOiAwMDAwMDI0NiBPUklHX1JBWDogMDAw
+MDAwMDAwMDAwMDAzMQo+ID4gWyAgMzY5LjYyNTc1Nl0gUkFYOiBmZmZmZmZmZmZmZmZmZmRhIFJC
+WDogMDAwMDAwMDAwMDAwMDAwMCBSQ1g6IDAwMDA3ZjQzYzhhYThhZjcKPiA+IFsgIDM2OS42MjY3
+MjRdIFJEWDogMDAwMDAwMDAwMDAwMDAxMCBSU0k6IDAwMDA1NTc2OGUyMDIxZDAgUkRJOiAwMDAw
+MDAwMDAwMDAwMDA1Cj4gPiBbICAzNjkuNjI4NTY5XSBSQlA6IDAwMDA3ZjQzYzgxOTdmMDAgUjA4
+OiAwMDAwMDAwMDAwMDAwMDExIFIwOTogMDAwMDdmNDNjODE5ODcwMAo+ID4gWyAgMzY5LjYzMDIw
+OF0gUjEwOiAwMDAwMDAwMDAwMDAwMDAwIFIxMTogMDAwMDAwMDAwMDAwMDI0NiBSMTI6IDAwMDA3
+ZmZmODQ1ZTZhZmUKPiA+IFsgIDM2OS42MzIyNDBdIFIxMzogMDAwMDdmZmY4NDVlNmFmZiBSMTQ6
+IDAwMDA3ZjQzYzgxOTdmYzAgUjE1OiAwMDAwN2Y0M2M4MTk4NzAwCj4gPiAKPiA+IFRoaXMgcGF0
+Y2ggbW92ZXMgdGhlIHNrYl9yZWN2X2RhdGFncmFtKCkgYmVmb3JlIGxvY2tfc29jaygpIGluIG9y
+ZGVyIHRoYXQKPiA+IG90aGVyIGZ1bmN0aW9ucyB0aGF0IG5lZWQgbG9ja19zb2NrIGNvdWxkIGJl
+IGV4ZWN1dGVkLiBXaGF0YHMgbW9yZSwgd2UKPiA+IGFkZCBza2JfZnJlZV9kYXRhZ3JhbSgpIGJl
+Zm9yZSBnb3RvIG91dCBpbiBvcmRlciB0byBtaXRpZ2F0ZSBtZW1vcnkgbGVhay4KPiA+IAo+ID4g
+U3VnZ2VzdGVkLWJ5OiBUaG9tYXMgT3N0ZXJyaWVkIDx0aG9tYXNAb3N0ZXJyaWVkLmRlPgo+ID4g
+U2lnbmVkLW9mZi1ieTogRHVvbWluZyBaaG91IDxkdW9taW5nQHpqdS5lZHUuY24+Cj4gPiBSZXBv
+cnRlZC1ieTogVGhvbWFzIEhhYmV0cyA8dGhvbWFzQEBoYWJldHMuc2U+Cj4gPiAtLS0KPiA+IENo
+YW5nZXMgaW4gdjM6Cj4gPiAgIC0gQWRkIHNrYl9mcmVlX2RhdGFncmFtKCkgYmVmb3JlIGdvdG8g
+b3V0IGluIG9yZGVyIHRvIG1pdGlnYXRlIG1lbW9yeSBsZWFrLgo+ID4gCj4gPiAgbmV0L2F4MjUv
+YWZfYXgyNS5jIHwgMTIgKysrKysrKy0tLS0tCj4gPiAgMSBmaWxlIGNoYW5nZWQsIDcgaW5zZXJ0
+aW9ucygrKSwgNSBkZWxldGlvbnMoLSkKPiA+IAo+ID4gZGlmZiAtLWdpdCBhL25ldC9heDI1L2Fm
+X2F4MjUuYyBiL25ldC9heDI1L2FmX2F4MjUuYwo+ID4gaW5kZXggOTUzOTNiYjI3NjAuLjYyYWE1
+OTkzMDkzIDEwMDY0NAo+ID4gLS0tIGEvbmV0L2F4MjUvYWZfYXgyNS5jCj4gPiArKysgYi9uZXQv
+YXgyNS9hZl9heDI1LmMKPiA+IEBAIC0xNjY1LDYgKzE2NjUsMTEgQEAgc3RhdGljIGludCBheDI1
+X3JlY3Ztc2coc3RydWN0IHNvY2tldCAqc29jaywgc3RydWN0IG1zZ2hkciAqbXNnLCBzaXplX3Qg
+c2l6ZSwKPiA+ICAJaW50IGNvcGllZDsKPiA+ICAJaW50IGVyciA9IDA7Cj4gPiAgCj4gPiArCS8q
+IE5vdyB3ZSBjYW4gdHJlYXQgYWxsIGFsaWtlICovCj4gPiArCXNrYiA9IHNrYl9yZWN2X2RhdGFn
+cmFtKHNrLCBmbGFncywgJmVycik7Cj4gPiArCWlmICghc2tiKQo+ID4gKwkJZ290byBkb25lOwo+
+ID4gKwo+IAo+IE5vdGUgdGhhdCB0aGlzIGNhdXNlcyBhIGJlaGF2aW9yIGNoYW5nZTogYmVmb3Jl
+IHRoaXMgcGF0Y2gsIGNhbGxpbmcKPiByZWN2bXNnKCkgb24gdW5jb25uZWN0ZWQgc2VxcGFja2V0
+IHNvY2tldHMgcmV0dXJuZWQgaW1tZWRpYXRlbGx5IHdpdGgKPiBhbiBlcnJvciAoZHVlIHRvIHRo
+ZSB0aGUgY2hlY2sgYmVsb3cpLCBub3cgaXQgYmxvY2tzLiAKPiAKPiBUaGUgY2hhbmdlIG1heSBj
+b25mdXNlICg9PSBicmVhaykgdXNlci1zcGFjZSBhcHBsaWNhdGlvbnMuIEkgdGhpbmsgaXQKPiB3
+b3VsZCBiZSBiZXR0ZXIgcmVwbGFjaW5nIHNrYl9yZWN2X2RhdGFncmFtIHdpdGggYW4gb3Blbi1j
+b2RlZCB2YXJpYW50Cj4gb2YgaXQgcmVsZWFzaW5nIHRoZSBzb2NrZXQgbG9jayBiZWZvcmUgdGhl
+Cj4gX19za2Jfd2FpdF9mb3JfbW9yZV9wYWNrZXRzKCkgY2FsbCBhbmQgcmUtYWNxdWlyaW5nIGl0
+IGFmdGVyIHN1Y2ggY2FsbC4KPiBTb21ld2hhdCBhbGlrZSBfX3VuaXhfZGdyYW1fcmVjdm1zZygp
+LgoKVGhhbmsgeW91IGZvciB5b3VyIHRpbWUgYW5kIHN1Z2dlc3Rpb25zIQpJIHRoaW5rIHRoZSBm
+b2xsb3dpbmcgbWV0aG9kIG1heSBzb2x2ZSB0aGUgcHJvYmxlbS4KCmRpZmYgLS1naXQgYS9uZXQv
+YXgyNS9hZl9heDI1LmMgYi9uZXQvYXgyNS9hZl9heDI1LmMKaW5kZXggOTUzOTNiYjI3NjAuLjUx
+YjQ0MWM4MzdjIDEwMDY0NAotLS0gYS9uZXQvYXgyNS9hZl9heDI1LmMKKysrIGIvbmV0L2F4MjUv
+YWZfYXgyNS5jCkBAIC0xNjc1LDggKzE2NzUsMTAgQEAgc3RhdGljIGludCBheDI1X3JlY3Ztc2co
+c3RydWN0IHNvY2tldCAqc29jaywgc3RydWN0IG1zZ2hkciAqbXNnLCBzaXplX3Qgc2l6ZSwKICAg
+ICAgICAgICAgICAgIGdvdG8gb3V0OwogICAgICAgIH0KCisgICAgICAgcmVsZWFzZV9zb2NrKHNr
+KTsKICAgICAgICAvKiBOb3cgd2UgY2FuIHRyZWF0IGFsbCBhbGlrZSAqLwogICAgICAgIHNrYiA9
+IHNrYl9yZWN2X2RhdGFncmFtKHNrLCBmbGFncywgJmVycik7CisgICAgICAgbG9ja19zb2NrKHNr
+KTsKICAgICAgICBpZiAoc2tiID09IE5VTEwpCiAgICAgICAgICAgICAgICBnb3RvIG91dDsKClRo
+ZSBza2JfcmVjdl9kYXRhZ3JhbSgpIGlzIGZyZWUgb2YgcmFjZSBjb25kaXRpb25zIGFuZCBjb3Vs
+ZCBiZSByZS1lbnRyYW50LgpTbyBjYWxsaW5nIHNrYl9yZWN2X2RhdGFncmFtKCkgd2l0aG91dCB0
+aGUgcHJvdGVjdGlvbiBvZiBsb2NrX3NvY2soKSBpcyBvay4KCldoYXQncyBtb3JlLCByZWxlYXNp
+bmcgdGhlIGxvY2tfc29jaygpIGJlZm9yZSBza2JfcmVjdl9kYXRhZ3JhbSgpIHdpbGwgbm90CmNh
+dXNlIFVBRiBidWdzLiBCZWNhdXNlIHRoZSBzb2NrIHdpbGwgbm90IGJlIGRlYWxsb2NhdGVkIHVu
+bGVzcyB3ZSBjYWxsCmF4MjVfcmVsZWFzZSgpLCBidXQgYXgyNV9yZWxlYXNlKCkgYW5kIGF4MjVf
+cmVjdm1zZygpIGNvdWxkIG5vdCBydW4gaW4gcGFyYWxsZWwuCgpBbHRob3VnaCB0aGUgInNrLT5z
+a19zdGF0ZSIgbWF5IGJlIGNoYW5nZWQgZHVlIHRvIHRoZSByZWxlYXNlIG9mIGxvY2tfc29jaygp
+LAppdCB3aWxsIG5vdCBpbmZsdWVuY2UgdGhlIGZvbGxvd2luZyBvcGVyYXRpb25zIGluIGF4MjVf
+cmVjdm1zZygpLgoKPiBJbiBhbnkgY2FzZSB0aGlzIGxhY2tzIGEgJ0ZpeGVzJyBwb2ludGluZyB0
+byB0aGUgY29tbWl0IGludHJvZHVjaW5nIHRoZQo+IGlzc3VlIGFkZHJlc3NlZCBoZXJlLgoKVGhl
+IGNvbW1pdCB0aGF0IG5lZWQgdG8gYmUgZml4ZWQgaXMgYmVsb3c6CkZpeGVzOiA0MGQwYTkyM2Y1
+NWEgKCJJbXBsZW1lbnQgbG9ja2luZyBvZiBpbnRlcm5hbCBkYXRhIGZvciBORVQvUk9NIGFuZCBS
+T1NFLiAiKQppbiBsaW51eC0yLjYuMTItcmMyLgoKQmVzdCByZWdhcmRzLApEdW9taW5nIFpob3U=
 
