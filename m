@@ -1,77 +1,103 @@
-From: Jiri Pirko <jiri@resnulli.us>
-Subject: Re: [PATCH net-next] net: rename reference+tracking helpers
-Date: Thu, 9 Jun 2022 06:40:15 +0200
-Message-ID: <YqF5rzIiLCJgW5Gd@nanopsycho>
-References: <20220608043955.919359-1-kuba@kernel.org>
- <YqBdY0NzK9XJG7HC@nanopsycho>
- <20220608075827.2af7a35f@kernel.org>
+From: Paolo Abeni <pabeni@redhat.com>
+Subject: Re: [PATCH v3] net: ax25: Fix deadlock caused by skb_recv_datagram
+ in ax25_recvmsg
+Date: Thu, 09 Jun 2022 10:41:02 +0200
+Message-ID: <22175690a4e89a78abcb8244dfd0bdd0005267a5.camel@redhat.com>
+References: <20220608012923.17505-1-duoming@zju.edu.cn>
 Mime-Version: 1.0
+Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=resnulli-us.20210112.gappssmtp.com; s=20210112;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=FGwLN6puZ2hD8UNyN4LTRFh855zcMnLstF1aT3B7ECg=;
-        b=vckwlfQRJJgVJD2IArXfO8ivPnho4P23qQegmr2OKAnSRJamakuH15QFoEH5y7pl8c
-         blM2Fz+NfuJjbvKPf3YJicVjEKs6XYI41DUM4AZgeS3Crl/NvLymV8vPXl3+3feBBdPi
-         Dh0y7CoHm2DXxYSBVfPuDJzyW39BDxEZ/QuF4RLdurWL9JHlbx7L1xLb/bVnpI996DX6
-         yO5r7IDiAbSEFtqx1gGfbH/pdBIO7Lx4Kmpu6yBbLPH2Xv3WD5I6wXQc3jwWOfFIHvmV
-         QyLuvDk8LkAHIqxKHe6UXt7lUONKMkrvnhW8VbmWPjsnDA6dl9FSJ7xMAqrzP8NJ9BgI
-         GnPw==
-Content-Disposition: inline
-In-Reply-To: <20220608075827.2af7a35f@kernel.org>
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+        s=mimecast20190719; t=1654764068;
+        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+         content-transfer-encoding:content-transfer-encoding:
+         in-reply-to:in-reply-to:references:references;
+        bh=J6hc+0uRrIyBBUIt2+YgJFXzhqP3fUJnP5Yt67N6e6M=;
+        b=S2tn9DEdXSFudwdQvDVNI/R+fMiFDJTmt79ucUK5x/d7RXlyDYw3EJAIIY1ZQMnulWjrTG
+        1s85Oy4yL72ghEimJhlvRe+JUwWrECBA2eYnex0BakONUpoI4m3170R7IQMVDHg5fofjIc
+        4OFOZF175qI4axO9MlN1gclXMvYk/AQ=
+In-Reply-To: <20220608012923.17505-1-duoming@zju.edu.cn>
 List-ID: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-To: Jakub Kicinski <kuba@kernel.org>
-Cc: davem@davemloft.net, netdev@vger.kernel.org, edumazet@google.com, pabeni@redhat.com, dsahern@kernel.org, steffen.klassert@secunet.com, jreuter@yaina.de, razor@blackwall.org, kgraul@linux.ibm.com, ivecera@redhat.com, jmaloy@redhat.com, ying.xue@windriver.com, lucien.xin@gmail.com, arnd@arndb.de, yajun.deng@linux.dev, atenart@kernel.org, richardsonnick@google.com, hkallweit1@gmail.com, linux-hams@vger.kernel.org, dev@openvswitch.org, linux-s390@vger.kernel.org, tipc-discussion@lists.sourceforge.net
+To: Duoming Zhou <duoming@zju.edu.cn>, linux-kernel@vger.kernel.org
+Cc: jreuter@yaina.de, ralf@linux-mips.org, davem@davemloft.net, edumazet@google.com, kuba@kernel.org, netdev@vger.kernel.org, linux-hams@vger.kernel.org, thomas@osterried.de
 
-Wed, Jun 08, 2022 at 04:58:27PM CEST, kuba@kernel.org wrote:
->On Wed, 8 Jun 2022 10:27:15 +0200 Jiri Pirko wrote:
->> Wed, Jun 08, 2022 at 06:39:55AM CEST, kuba@kernel.org wrote:
->> >Netdev reference helpers have a dev_ prefix for historic
->> >reasons. Renaming the old helpers would be too much churn  
->> 
->> Hmm, I think it would be great to eventually rename the rest too in
->> order to maintain unique prefix for netdev things. Why do you think the
->> "churn" would be an issue?
->
->Felt like we're better of moving everyone to the new tracking helpers
->than doing just a pure rename. But I'm not opposed to a pure rename.
->
->> >diff --git a/drivers/net/macsec.c b/drivers/net/macsec.c
->> >index 817577e713d7..815738c0e067 100644
->> >--- a/drivers/net/macsec.c
->> >+++ b/drivers/net/macsec.c
->> >@@ -3462,7 +3462,7 @@ static int macsec_dev_init(struct net_device *dev)
->> > 		memcpy(dev->broadcast, real_dev->broadcast, dev->addr_len);
->> > 
->> > 	/* Get macsec's reference to real_dev */
->> >-	dev_hold_track(real_dev, &macsec->dev_tracker, GFP_KERNEL);
->> >+	netdev_hold(real_dev, &macsec->dev_tracker, GFP_KERNEL);  
->> 
->> So we later decide to rename dev_hold() to obey the netdev_*() naming
->> scheme, we would have collision.
->
->dev_hold() should not be used in new code, we should use tracking
->everywhere. Given that we can name the old helpers __netdev_hold().
->
->> Also, seems to me odd to have:
->> OLDPREFIX_x()
->> and
->> NEWPREFIX_x()
->> to be different functions.
->> 
->> For the sake of not making naming mess, could we rather have:
->> netdev_hold_track()
->> or
->> netdev_hold_tr() if the prior is too long
->> ?
->
->See above, one day non-track version should be removed.
->IMO to encourage use of the track-capable API we could keep their names
->short and call the legacy functions __netdev_hold() as I mentioned or
->maybe netdev_hold_notrack().
+On Wed, 2022-06-08 at 09:29 +0800, Duoming Zhou wrote:
+> The skb_recv_datagram() in ax25_recvmsg() will hold lock_sock
+> and block until it receives a packet from the remote. If the client
+> doesn`t connect to server and calls read() directly, it will not
+> receive any packets forever. As a result, the deadlock will happen.
+> 
+> The fail log caused by deadlock is shown below:
+> 
+> [  369.606973] INFO: task ax25_deadlock:157 blocked for more than 245 seconds.
+> [  369.608919] "echo 0 > /proc/sys/kernel/hung_task_timeout_secs" disables this message.
+> [  369.613058] Call Trace:
+> [  369.613315]  <TASK>
+> [  369.614072]  __schedule+0x2f9/0xb20
+> [  369.615029]  schedule+0x49/0xb0
+> [  369.615734]  __lock_sock+0x92/0x100
+> [  369.616763]  ? destroy_sched_domains_rcu+0x20/0x20
+> [  369.617941]  lock_sock_nested+0x6e/0x70
+> [  369.618809]  ax25_bind+0xaa/0x210
+> [  369.619736]  __sys_bind+0xca/0xf0
+> [  369.620039]  ? do_futex+0xae/0x1b0
+> [  369.620387]  ? __x64_sys_futex+0x7c/0x1c0
+> [  369.620601]  ? fpregs_assert_state_consistent+0x19/0x40
+> [  369.620613]  __x64_sys_bind+0x11/0x20
+> [  369.621791]  do_syscall_64+0x3b/0x90
+> [  369.622423]  entry_SYSCALL_64_after_hwframe+0x46/0xb0
+> [  369.623319] RIP: 0033:0x7f43c8aa8af7
+> [  369.624301] RSP: 002b:00007f43c8197ef8 EFLAGS: 00000246 ORIG_RAX: 0000000000000031
+> [  369.625756] RAX: ffffffffffffffda RBX: 0000000000000000 RCX: 00007f43c8aa8af7
+> [  369.626724] RDX: 0000000000000010 RSI: 000055768e2021d0 RDI: 0000000000000005
+> [  369.628569] RBP: 00007f43c8197f00 R08: 0000000000000011 R09: 00007f43c8198700
+> [  369.630208] R10: 0000000000000000 R11: 0000000000000246 R12: 00007fff845e6afe
+> [  369.632240] R13: 00007fff845e6aff R14: 00007f43c8197fc0 R15: 00007f43c8198700
+> 
+> This patch moves the skb_recv_datagram() before lock_sock() in order that
+> other functions that need lock_sock could be executed. What`s more, we
+> add skb_free_datagram() before goto out in order to mitigate memory leak.
+> 
+> Suggested-by: Thomas Osterried <thomas@osterried.de>
+> Signed-off-by: Duoming Zhou <duoming@zju.edu.cn>
+> Reported-by: Thomas Habets <thomas@@habets.se>
+> ---
+> Changes in v3:
+>   - Add skb_free_datagram() before goto out in order to mitigate memory leak.
+> 
+>  net/ax25/af_ax25.c | 12 +++++++-----
+>  1 file changed, 7 insertions(+), 5 deletions(-)
+> 
+> diff --git a/net/ax25/af_ax25.c b/net/ax25/af_ax25.c
+> index 95393bb2760..62aa5993093 100644
+> --- a/net/ax25/af_ax25.c
+> +++ b/net/ax25/af_ax25.c
+> @@ -1665,6 +1665,11 @@ static int ax25_recvmsg(struct socket *sock, struct msghdr *msg, size_t size,
+>  	int copied;
+>  	int err = 0;
+>  
+> +	/* Now we can treat all alike */
+> +	skb = skb_recv_datagram(sk, flags, &err);
+> +	if (!skb)
+> +		goto done;
+> +
 
-Okay, that makes sense.
+Note that this causes a behavior change: before this patch, calling
+recvmsg() on unconnected seqpacket sockets returned immediatelly with
+an error (due to the the check below), now it blocks. 
+
+The change may confuse (== break) user-space applications. I think it
+would be better replacing skb_recv_datagram with an open-coded variant
+of it releasing the socket lock before the
+__skb_wait_for_more_packets() call and re-acquiring it after such call.
+Somewhat alike __unix_dgram_recvmsg().
+
+In any case this lacks a 'Fixes' pointing to the commit introducing the
+issue addressed here.
+
+Thanks,
+
+Paolo
 
