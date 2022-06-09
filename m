@@ -1,142 +1,56 @@
-From: Paolo Abeni <pabeni@redhat.com>
-Subject: Re: [PATCH v3] net: ax25: Fix deadlock caused by skb_recv_datagram
- in ax25_recvmsg
-Date: Thu, 09 Jun 2022 15:33:02 +0200
-Message-ID: <548f2a708c106fbc8784b1c4c7740643749a3952.camel@redhat.com>
-References: <20220608012923.17505-1-duoming@zju.edu.cn>
-         <22175690a4e89a78abcb8244dfd0bdd0005267a5.camel@redhat.com>
-         <4ccdba76.5ee33.181489cd6e4.Coremail.duoming@zju.edu.cn>
+From: Eric Dumazet <edumazet@google.com>
+Subject: Re: [PATCH net-next] net: rename reference+tracking helpers
+Date: Thu, 9 Jun 2022 06:53:21 -0700
+Message-ID: <CANn89iLzAY1FAJASwrDcV9xB8UvhPAWfuFsjfiRiu1F9Tu0ciA@mail.gmail.com>
+References: <20220608043955.919359-1-kuba@kernel.org> <YqBdY0NzK9XJG7HC@nanopsycho>
+ <20220608075827.2af7a35f@kernel.org> <f263209c-509c-5f6b-865c-cd5d38d29549@kernel.org>
+ <CANn89i+RCCXQDVVTB+hHasGmjdXwdm8CvkPQv3nYSLgr=MYmpA@mail.gmail.com> <b00ab3c4a12fb11ed95b2a4634e50e3cba10ec28.camel@redhat.com>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-        s=mimecast20190719; t=1654781594;
-        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-         content-transfer-encoding:content-transfer-encoding:
-         in-reply-to:in-reply-to:references:references;
-        bh=H7eSqOGTybG9EtKoOIjU4Yprkieq4QzoxbYpNEitBhc=;
-        b=G0s+h1CTIn6kNFE6Wr+kiOF8rKUnS2MeNKcX5d21WSQGraIE55oIcn2vSeX6qwrI5y7IxZ
-        b6wKekHrGJaVf4arHMtLJMHCUYfEbYR+/WFgvNCcL1NkO2rrgb6SPvwMbGi15rQZytGBwR
-        Rgwps8dG0TEFsC6YDJfvSJdLD9ip5Wc=
-In-Reply-To: <4ccdba76.5ee33.181489cd6e4.Coremail.duoming@zju.edu.cn>
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20210112;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=lxk3erEnK6X8l1h+c5LR7dYudSNnktRPy2YkDiUavZk=;
+        b=bf+4vrjXiHJ31KIu4Gn9fz0kzCJfCOU1lBmNIi3MPCYOGfE+K+yZz1oe4L1g+wVUzE
+         LNi2rjTseY7kRuZiBASR8T18LSqHIttiHYhOXHbfJASuY4nO5P0MjXUPUy+4QXCqQ7fC
+         zgGR+NTJmwqnmycnN0CYnqt72iPvh/9kRB7iy+1bF6srWKu1VG90EwBAsbXMKIVy9p8s
+         0S72jwsSQeSoBdx+gWSUIeOzQfx5ouizQ1XoVOqAo3zD+FDIH5a9G048GwSJhTs2GoOC
+         00B1oEzBvVvfgVWdJ9rXYDIVasCp7iBVzWF92aj83aQp+MbBwJyDHHrCC5LeDJn91mm1
+         bL7A==
+In-Reply-To: <b00ab3c4a12fb11ed95b2a4634e50e3cba10ec28.camel@redhat.com>
 List-ID: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
-To: duoming@zju.edu.cn
-Cc: linux-kernel@vger.kernel.org, jreuter@yaina.de, ralf@linux-mips.org, davem@davemloft.net, edumazet@google.com, kuba@kernel.org, netdev@vger.kernel.org, linux-hams@vger.kernel.org, thomas@osterried.de
+Content-Transfer-Encoding: 7bit
+To: Paolo Abeni <pabeni@redhat.com>
+Cc: David Ahern <dsahern@kernel.org>, Jakub Kicinski <kuba@kernel.org>, Jiri Pirko <jiri@resnulli.us>, David Miller <davem@davemloft.net>, netdev <netdev@vger.kernel.org>, Steffen Klassert <steffen.klassert@secunet.com>, jreuter@yaina.de, razor@blackwall.org, Karsten Graul <kgraul@linux.ibm.com>, ivecera@redhat.com, Jon Maloy <jmaloy@redhat.com>, Ying Xue <ying.xue@windriver.com>, Xin Long <lucien.xin@gmail.com>, Arnd Bergmann <arnd@arndb.de>, Yajun Deng <yajun.deng@linux.dev>, Antoine Tenart <atenart@kernel.org>, richardsonnick@google.com, Heiner Kallweit <hkallweit1@gmail.com>, linux-hams@vger.kernel.org, dev@openvswitch.org, linux-s390@vger.kernel.org, tipc-discussion@lists.sourceforge.net
 
-On Thu, 2022-06-09 at 21:17 +0800, duoming@zju.edu.cn wrote:
-> Hello,
-> 
-> On Thu, 09 Jun 2022 10:41:02 +0200 Paolo wrote:
-> 
-> > On Wed, 2022-06-08 at 09:29 +0800, Duoming Zhou wrote:
-> > > The skb_recv_datagram() in ax25_recvmsg() will hold lock_sock
-> > > and block until it receives a packet from the remote. If the client
-> > > doesn`t connect to server and calls read() directly, it will not
-> > > receive any packets forever. As a result, the deadlock will happen.
-> > > 
-> > > The fail log caused by deadlock is shown below:
-> > > 
-> > > [  369.606973] INFO: task ax25_deadlock:157 blocked for more than 245 seconds.
-> > > [  369.608919] "echo 0 > /proc/sys/kernel/hung_task_timeout_secs" disables this message.
-> > > [  369.613058] Call Trace:
-> > > [  369.613315]  <TASK>
-> > > [  369.614072]  __schedule+0x2f9/0xb20
-> > > [  369.615029]  schedule+0x49/0xb0
-> > > [  369.615734]  __lock_sock+0x92/0x100
-> > > [  369.616763]  ? destroy_sched_domains_rcu+0x20/0x20
-> > > [  369.617941]  lock_sock_nested+0x6e/0x70
-> > > [  369.618809]  ax25_bind+0xaa/0x210
-> > > [  369.619736]  __sys_bind+0xca/0xf0
-> > > [  369.620039]  ? do_futex+0xae/0x1b0
-> > > [  369.620387]  ? __x64_sys_futex+0x7c/0x1c0
-> > > [  369.620601]  ? fpregs_assert_state_consistent+0x19/0x40
-> > > [  369.620613]  __x64_sys_bind+0x11/0x20
-> > > [  369.621791]  do_syscall_64+0x3b/0x90
-> > > [  369.622423]  entry_SYSCALL_64_after_hwframe+0x46/0xb0
-> > > [  369.623319] RIP: 0033:0x7f43c8aa8af7
-> > > [  369.624301] RSP: 002b:00007f43c8197ef8 EFLAGS: 00000246 ORIG_RAX: 0000000000000031
-> > > [  369.625756] RAX: ffffffffffffffda RBX: 0000000000000000 RCX: 00007f43c8aa8af7
-> > > [  369.626724] RDX: 0000000000000010 RSI: 000055768e2021d0 RDI: 0000000000000005
-> > > [  369.628569] RBP: 00007f43c8197f00 R08: 0000000000000011 R09: 00007f43c8198700
-> > > [  369.630208] R10: 0000000000000000 R11: 0000000000000246 R12: 00007fff845e6afe
-> > > [  369.632240] R13: 00007fff845e6aff R14: 00007f43c8197fc0 R15: 00007f43c8198700
-> > > 
-> > > This patch moves the skb_recv_datagram() before lock_sock() in order that
-> > > other functions that need lock_sock could be executed. What`s more, we
-> > > add skb_free_datagram() before goto out in order to mitigate memory leak.
-> > > 
-> > > Suggested-by: Thomas Osterried <thomas@osterried.de>
-> > > Signed-off-by: Duoming Zhou <duoming@zju.edu.cn>
-> > > Reported-by: Thomas Habets <thomas@@habets.se>
-> > > ---
-> > > Changes in v3:
-> > >   - Add skb_free_datagram() before goto out in order to mitigate memory leak.
-> > > 
-> > >  net/ax25/af_ax25.c | 12 +++++++-----
-> > >  1 file changed, 7 insertions(+), 5 deletions(-)
-> > > 
-> > > diff --git a/net/ax25/af_ax25.c b/net/ax25/af_ax25.c
-> > > index 95393bb2760..62aa5993093 100644
-> > > --- a/net/ax25/af_ax25.c
-> > > +++ b/net/ax25/af_ax25.c
-> > > @@ -1665,6 +1665,11 @@ static int ax25_recvmsg(struct socket *sock, struct msghdr *msg, size_t size,
-> > >  	int copied;
-> > >  	int err = 0;
-> > >  
-> > > +	/* Now we can treat all alike */
-> > > +	skb = skb_recv_datagram(sk, flags, &err);
-> > > +	if (!skb)
-> > > +		goto done;
-> > > +
-> > 
-> > Note that this causes a behavior change: before this patch, calling
-> > recvmsg() on unconnected seqpacket sockets returned immediatelly with
-> > an error (due to the the check below), now it blocks. 
-> > 
-> > The change may confuse (== break) user-space applications. I think it
-> > would be better replacing skb_recv_datagram with an open-coded variant
-> > of it releasing the socket lock before the
-> > __skb_wait_for_more_packets() call and re-acquiring it after such call.
-> > Somewhat alike __unix_dgram_recvmsg().
-> 
-> Thank you for your time and suggestions!
-> I think the following method may solve the problem.
-> 
-> diff --git a/net/ax25/af_ax25.c b/net/ax25/af_ax25.c
-> index 95393bb2760..51b441c837c 100644
-> --- a/net/ax25/af_ax25.c
-> +++ b/net/ax25/af_ax25.c
-> @@ -1675,8 +1675,10 @@ static int ax25_recvmsg(struct socket *sock, struct msghdr *msg, size_t size,
->                 goto out;
->         }
-> 
-> +       release_sock(sk);
->         /* Now we can treat all alike */
->         skb = skb_recv_datagram(sk, flags, &err);
-> +       lock_sock(sk);
->         if (skb == NULL)
->                 goto out;
-> 
-> The skb_recv_datagram() is free of race conditions and could be re-entrant.
-> So calling skb_recv_datagram() without the protection of lock_sock() is ok.
-> 
-> What's more, releasing the lock_sock() before skb_recv_datagram() will not
-> cause UAF bugs. Because the sock will not be deallocated unless we call
-> ax25_release(), but ax25_release() and ax25_recvmsg() could not run in parallel.
-> 
-> Although the "sk->sk_state" may be changed due to the release of lock_sock(),
-> it will not influence the following operations in ax25_recvmsg().
+On Thu, Jun 9, 2022 at 4:50 AM Paolo Abeni <pabeni@redhat.com> wrote:
+>
+> On Wed, 2022-06-08 at 16:00 -0700, Eric Dumazet wrote:
+> > On Wed, Jun 8, 2022 at 3:58 PM David Ahern <dsahern@kernel.org> wrote:
+> > >
+> > > On 6/8/22 8:58 AM, Jakub Kicinski wrote:
+> > > > IMO to encourage use of the track-capable API we could keep their names
+> > > > short and call the legacy functions __netdev_hold() as I mentioned or
+> > > > maybe netdev_hold_notrack().
+> > >
+> > > I like that option. Similar to the old nla_parse functions that were
+> > > renamed with _deprecated - makes it easier to catch new uses.
+> >
+> > I think we need to clearly document the needed conversions for future
+> > bugfix backports.
+> >
+>
+> To be on the same page: do you think we need something under
+> Documentation with this patch? or with the later dev_hold rename? or
+> did I misunderstood completely?
 
-One of the downside of the above is that recvmsg() will unconditionally
-acquire and release the socket lock twice which can have non
-trivial/nasty side effects on process scheduling.
+Adding instructions in the comments describing the functions would probably help
+stable teams (or ourselves because they will ask us to take care of conflicts)
 
-With the suggested change the socket lock will be released only when
-recvmsg will block and that should produce nicer overal behavior.
+And backport the dev_put()/dev_hold() rename to kernels without
+CONFIG_NET_DEV_REFCNT_TRACKER infra.
 
-Cheers,
-
-Paolo
-
+s/dev_put()/netdev_put_notrack()/
+s/dev_hold()/netdev_hold_notrack()/
