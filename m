@@ -1,50 +1,74 @@
-From: patchwork-bot+netdevbpf@kernel.org
-Subject: Re: [PATCH net v5] net: ax25: Fix deadlock caused by skb_recv_datagram in
- ax25_recvmsg
-Date: Wed, 15 Jun 2022 12:20:13 +0000
-Message-ID: <165529561325.20387.9560588021294882995.git-patchwork-notify@kernel.org>
-References: <20220614092557.6713-1-duoming@zju.edu.cn>
+From: Peter Lafreniere <pjlafren@mtu.edu>
+Subject: [PATCH v3] ax25: use GFP_KERNEL in ax25_dev_device_up()
+Date: Wed, 15 Jun 2022 18:09:47 -0400
+Message-ID: <20220615220947.3767-1-pjlafren@mtu.edu>
 Mime-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Return-path: <linux-hams-owner@vger.kernel.org>
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1655295613;
-        bh=eDPWJ22K5Yb0l4NNxcNbEGmohnUi3JOvIlFiu925Tp8=;
-        h=Subject:From:Date:References:In-Reply-To:To:Cc:From;
-        b=HblmdovLimj0OLJSV+33FXd9CEZCXH4qIDgEpnL57XEGg0SuXURAmEhxwUFWAfDDM
-         8Y/IJert6xQaeTG4amu0DStjL4SFCl03TW7X67sM1ZIr56seVgOuxsEA7mqBs+YOOo
-         injtJwjKiAtrE96PyzYQ7fTqa/FfCaBraL2fZcz1RfEJvDe/o4tvQr6IMWx9se98Tj
-         I0j0bXfilGLg2MD0PVwjBM99I/DfdifXwiYBIUBdsOaOxJUF7LlIfU0HA7PGJtOoQ0
-         5YqZWp3ER22F7qCxhoM790wND2bsBxILzt3+I6RM4YEZNAnlwdLvamcxyKFgVIXoyd
-         d3Mrh2GIwQMjw==
-In-Reply-To: <20220614092557.6713-1-duoming@zju.edu.cn>
+Return-path: <netdev-owner@vger.kernel.org>
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=mtu.edu; s=google;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=jwBTpwlbhfCVNJ9PEhTg+PXi8hEimJhId2EarbK+x8M=;
+        b=RC7EgbpsQneQqVwvJi/QqTjQr4qObak0dsB2To0WPpzlLCMQaGlmQ53dEQIOsFbhHO
+         vHDHv+7zr0ygcDljkEYQ2Mlq8XbMvc9w9IXXXMj0nucQbsUQkt8WtN9VLugWGT9lVv4s
+         ETYvwUodDLnvOxg0DFx1ZQ8UcqK4GuPf21pFOK7w8fJ4cXRmmQ8Y519k7oiUShi2QYcN
+         iJNKSQDyyDrV5xZNc+0az+p0qtk1GjOy8CjDTBTOqRV11yqfw/PHnJ5tBI5t7GuEbIdd
+         lMYd+iYTR5mdyRivwq7TTl/YO96TDwwtrJTCmBBAkiE7p9NkYn7nDD/yYmXUjGXE/UJ3
+         ERNA==
 List-ID: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
-To: Duoming Zhou <duoming@zju.edu.cn>
-Cc: linux-hams@vger.kernel.org, pabeni@redhat.com, jreuter@yaina.de, ralf@linux-mips.org, davem@davemloft.net, edumazet@google.com, kuba@kernel.org, netdev@vger.kernel.org, linux-kernel@vger.kernel.org, thomas@osterried.de
+To: linux-hams@vger.kernel.org
+Cc: netdev@vger.kernel.org, Peter Lafreniere <pjlafren@mtu.edu>, kernel test robot <lkp@intel.com>, Dan Carpenter <dan.carpenter@oracle.com>
 
-Hello:
+ax25_dev_device_up() is only called during device setup, which is
+done in user context. In addition, ax25_dev_device_up()
+unconditionally calls ax25_register_dev_sysctl(), which already
+allocates with GFP_KERNEL.
 
-This patch was applied to netdev/net.git (master)
-by David S. Miller <davem@davemloft.net>:
+Since it is allowed to sleep in this function, here we change
+ax25_dev_device_up() to use GFP_KERNEL to reduce unnecessary
+out-of-memory errors.
 
-On Tue, 14 Jun 2022 17:25:57 +0800 you wrote:
-> The skb_recv_datagram() in ax25_recvmsg() will hold lock_sock
-> and block until it receives a packet from the remote. If the client
-> doesn`t connect to server and calls read() directly, it will not
-> receive any packets forever. As a result, the deadlock will happen.
-> 
-> The fail log caused by deadlock is shown below:
-> 
-> [...]
+Reported-by: kernel test robot <lkp@intel.com>
+Reported-by: Dan Carpenter <dan.carpenter@oracle.com>
+Signed-off-by: Peter Lafreniere <pjlafren@mtu.edu>
+---
+v2 -> v3:
+ - Rebased for clean application to net-next
 
-Here is the summary with links:
-  - [net,v5] net: ax25: Fix deadlock caused by skb_recv_datagram in ax25_recvmsg
-    https://git.kernel.org/netdev/net/c/219b51a6f040
+v1 -> v2:
+ - Renamed patch from "ax25: use GFP_KERNEL over GFP_ATOMIC where possible"
+   (Is that okay?)
+ - Removed invalid changes to ax25_rt_add()
 
-You are awesome, thank you!
+ net/ax25/ax25_dev.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/net/ax25/ax25_dev.c b/net/ax25/ax25_dev.c
+index ab88b6ac5401..2093f94f6852 100644
+--- a/net/ax25/ax25_dev.c
++++ b/net/ax25/ax25_dev.c
+@@ -52,7 +52,7 @@ void ax25_dev_device_up(struct net_device *dev)
+ {
+ 	ax25_dev *ax25_dev;
+ 
+-	if ((ax25_dev = kzalloc(sizeof(*ax25_dev), GFP_ATOMIC)) == NULL) {
++	if ((ax25_dev = kzalloc(sizeof(*ax25_dev), GFP_KERNEL)) == NULL) {
+ 		printk(KERN_ERR "AX.25: ax25_dev_device_up - out of memory\n");
+ 		return;
+ 	}
+@@ -60,7 +60,7 @@ void ax25_dev_device_up(struct net_device *dev)
+ 	refcount_set(&ax25_dev->refcount, 1);
+ 	dev->ax25_ptr     = ax25_dev;
+ 	ax25_dev->dev     = dev;
+-	netdev_hold(dev, &ax25_dev->dev_tracker, GFP_ATOMIC);
++	netdev_hold(dev, &ax25_dev->dev_tracker, GFP_KERNEL);
+ 	ax25_dev->forward = NULL;
+ 	ax25_dev->device_up = true;
+ 
+
+base-commit: fbb89d02e33a8c8f522d75882f5f19c65b722b46
 -- 
-Deet-doot-dot, I am a bot.
-https://korg.docs.kernel.org/patchwork/pwbot.html
-
+2.36.1
 
