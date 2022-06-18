@@ -1,46 +1,47 @@
 From: patchwork-bot+netdevbpf@kernel.org
-Subject: Re: [PATCH v2] hamradio: 6pack: fix array-index-out-of-bounds in
- decode_std_command()
-Date: Fri, 17 Jun 2022 10:40:14 +0000
-Message-ID: <165546241422.18293.12311208765232374431.git-patchwork-notify@kernel.org>
-References: <1655458266-27879-1-git-send-email-xujia39@huawei.com>
+Subject: Re: [PATCH v4] ax25: use GFP_KERNEL in ax25_dev_device_up()
+Date: Sat, 18 Jun 2022 03:40:12 +0000
+Message-ID: <165552361299.10717.7998088987527311239.git-patchwork-notify@kernel.org>
+References: <20220616152333.9812-1-pjlafren@mtu.edu>
 Mime-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Return-path: <linux-hams-owner@vger.kernel.org>
+Return-path: <netdev-owner@vger.kernel.org>
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1655462414;
-        bh=SIXB8pddVz1MMGWlkLcLLpXBpuhXOlmh3rxuxpd7Tos=;
+        s=k20201202; t=1655523613;
+        bh=hohAOtR0LpeUR1occu7KFZMNLwRI76rxHxBy0YVtukY=;
         h=Subject:From:Date:References:In-Reply-To:To:Cc:From;
-        b=TXQHCHskqpRVv5nRKTmuoqzyjwrEo6ZkzURjP9bjvSBf8K3yiXflycBnoVVkdB4U6
-         qupcAeExngDlpueR1MMYCAYShrJWOj3rqzkXd3Q3CdMQoNFo0coTWms9T7emAaOZDP
-         5CjvDcOFElBzvyEoKLAreZLCtDXBuu2W54Bxd/drdRpkWIeFyoSc9NJOXgibt9Usuo
-         uOErBxRg5bxhgVfAzVaojSlCnrZZZdrGJ6m8MXlT8RAqSMM/68+dTA/L0WLD8VGz6/
-         Ofbjzg2DjuDdOPTsVOzjAPBiYELdPkTcOnomeCffeIZdWFhxK3QvFC1x5ZGOunLtKe
-         C0gIoUgSiKH/Q==
-In-Reply-To: <1655458266-27879-1-git-send-email-xujia39@huawei.com>
+        b=Y1NtvL8PD9ZLuJ7ylS2p6Jcq4s4ri9YyD+I5hr/iL12KTLmGz8bBlPay5o1ORfpxK
+         i6fA8J5C6LWtW1d2DC73F7PcuJDGeOHGO3DxcZF9SMo5Dps37UleYdZhXCNwDAH90v
+         G0mgoBNNvWmRjaDJjT9u+FHq0mnX6VZx8MvYbpEEtbIWSU+0CzDO/2JRxopV939WW/
+         2GQLBI6UFyTkiCSBBhexHiEAzrbvzTo41lvICCYXQ8X8ulOvmLYumWTPJMsNgh3r2k
+         dY/6QFgIELJu2zdG1egIs930efft8Vfhn36owAAkfLgfraexO6exwokNZ9Co4ZCJv8
+         S/ntGqBWXKP0Q==
+In-Reply-To: <20220616152333.9812-1-pjlafren@mtu.edu>
 List-ID: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
-To: Xu Jia <xujia39@huawei.com>
-Cc: linux-hams@vger.kernel.org, pabeni@redhat.com, ajk@comnets.uni-bremen.de, davem@davemloft.net, kuba@kernel.org, netdev@vger.kernel.org, linux-kernel@vger.kernel.org
+To: Peter Lafreniere <pjlafren@mtu.edu>
+Cc: linux-hams@vger.kernel.org, netdev@vger.kernel.org, ralf@linux-mips.org, lkp@intel.com, dan.carpenter@oracle.com
 
 Hello:
 
-This patch was applied to netdev/net.git (master)
-by David S. Miller <davem@davemloft.net>:
+This patch was applied to netdev/net-next.git (master)
+by Jakub Kicinski <kuba@kernel.org>:
 
-On Fri, 17 Jun 2022 17:31:06 +0800 you wrote:
-> Hulk Robot reports incorrect sp->rx_count_cooked value in decode_std_command().
-> This should be caused by the subtracting from sp->rx_count_cooked before.
-> It seems that sp->rx_count_cooked value is changed to 0, which bypassed the
-> previous judgment.
+On Thu, 16 Jun 2022 11:23:33 -0400 you wrote:
+> ax25_dev_device_up() is only called during device setup, which is
+> done in user context. In addition, ax25_dev_device_up()
+> unconditionally calls ax25_register_dev_sysctl(), which already
+> allocates with GFP_KERNEL.
 > 
-> The situation is shown below:
+> Since it is allowed to sleep in this function, here we change
+> ax25_dev_device_up() to use GFP_KERNEL to reduce unnecessary
+> out-of-memory errors.
 > 
 > [...]
 
 Here is the summary with links:
-  - [v2] hamradio: 6pack: fix array-index-out-of-bounds in decode_std_command()
-    https://git.kernel.org/netdev/net/c/2b04495e21cd
+  - [v4] ax25: use GFP_KERNEL in ax25_dev_device_up()
+    https://git.kernel.org/netdev/net-next/c/f0623340fd2c
 
 You are awesome, thank you!
 -- 
