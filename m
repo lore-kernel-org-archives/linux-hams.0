@@ -1,22 +1,22 @@
 From: Sasha Levin <sashal@kernel.org>
-Subject: [PATCH AUTOSEL 5.10 13/34] hamradio: 6pack: fix array-index-out-of-bounds in decode_std_command()
-Date: Mon, 27 Jun 2022 22:22:20 -0400
-Message-ID: <20220628022241.595835-13-sashal@kernel.org>
-References: <20220628022241.595835-1-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 5.4 08/27] hamradio: 6pack: fix array-index-out-of-bounds in decode_std_command()
+Date: Mon, 27 Jun 2022 22:23:54 -0400
+Message-ID: <20220628022413.596341-8-sashal@kernel.org>
+References: <20220628022413.596341-1-sashal@kernel.org>
 Mime-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Return-path: <stable-owner@vger.kernel.org>
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1656382998;
+        s=k20201202; t=1656383072;
         bh=F5PklHD+9cTDpXg9Leq80IrJfmRoAeSbs4nZU72r4SI=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=mU1itTZjLWysU/JZAHA3S3P/5+ejyN3iYVFkIk4/iBf9fpTm7VtpmOa7DdKO2Vt+J
-         BufBRqde99kotsCxIP5uBJ6OFfJP4fUIdjshyMON41P7+ZPc3nS+M5loglqPVEfvv5
-         Ged3lRO9kCl6XnkbWlKeuw5DDDsl6CH2PXZZrII52lk0C0/Xv24gDZlO3U4nXbts+F
-         IPZ1G2wHM89c/b86kdmgDJs3Tx33i9Dr667r6dRnHk8asfDmJhym/fIgTb8N9Picu5
-         Prcca2RrPyANx6y1gC1GEXXymUSIId0iGfKO/i7d+RtSyajJPmKH4uLYHQ7450FdaI
-         qvq1xkNybgtZw==
-In-Reply-To: <20220628022241.595835-1-sashal@kernel.org>
+        b=pLnMyXQKpD3myhHY1lrGZdpeopIDQRowpfR2A+P4elec71k6VGIlvAVOMfwY+p0Fg
+         6wqfn50EWX7K++wp4CYuTxz3DbtembSd5o/t1ZaK5Knagj/uN2tFUTtXeQNXaqohEb
+         AeiYlm61LxW46Fiu+EJjVAf1ZXGtKUCkbe6ArQhjqzjnT8wQxeSwwt/HIhOh5Ycvak
+         Ylcwj9prz+zIQuRFr3Wl4Ho2R+26LfLIKWI4sXzfmqwQ72YfzJsJii7nqqKtEQQotv
+         ySaAcSAQ9yQnYI925hXDyvZsF7m96rhwcfouG6d1HJuDlGk7tVTt2Gzd7OA6/IAmxO
+         vdaBVHsYkpOaA==
+In-Reply-To: <20220628022413.596341-1-sashal@kernel.org>
 List-ID: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
 To: linux-kernel@vger.kernel.org, stable@vger.kernel.org
