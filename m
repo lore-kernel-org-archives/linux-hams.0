@@ -1,22 +1,22 @@
 From: Sasha Levin <sashal@kernel.org>
-Subject: [PATCH AUTOSEL 5.4 08/27] hamradio: 6pack: fix array-index-out-of-bounds in decode_std_command()
-Date: Mon, 27 Jun 2022 22:23:54 -0400
-Message-ID: <20220628022413.596341-8-sashal@kernel.org>
-References: <20220628022413.596341-1-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 4.19 07/22] hamradio: 6pack: fix array-index-out-of-bounds in decode_std_command()
+Date: Mon, 27 Jun 2022 22:25:02 -0400
+Message-ID: <20220628022518.596687-7-sashal@kernel.org>
+References: <20220628022518.596687-1-sashal@kernel.org>
 Mime-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Return-path: <stable-owner@vger.kernel.org>
+Return-path: <netdev-owner@vger.kernel.org>
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1656383072;
-        bh=F5PklHD+9cTDpXg9Leq80IrJfmRoAeSbs4nZU72r4SI=;
+        s=k20201202; t=1656383134;
+        bh=mZedR6n3Ii7TaYEeShSvXW3M+fV7pwYm20s84Bcb1DI=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=pLnMyXQKpD3myhHY1lrGZdpeopIDQRowpfR2A+P4elec71k6VGIlvAVOMfwY+p0Fg
-         6wqfn50EWX7K++wp4CYuTxz3DbtembSd5o/t1ZaK5Knagj/uN2tFUTtXeQNXaqohEb
-         AeiYlm61LxW46Fiu+EJjVAf1ZXGtKUCkbe6ArQhjqzjnT8wQxeSwwt/HIhOh5Ycvak
-         Ylcwj9prz+zIQuRFr3Wl4Ho2R+26LfLIKWI4sXzfmqwQ72YfzJsJii7nqqKtEQQotv
-         ySaAcSAQ9yQnYI925hXDyvZsF7m96rhwcfouG6d1HJuDlGk7tVTt2Gzd7OA6/IAmxO
-         vdaBVHsYkpOaA==
-In-Reply-To: <20220628022413.596341-1-sashal@kernel.org>
+        b=ChyImcULTAj2kPai7dBPpo8nBP/Ft8HD4L0xuJnMANupzn/f5WaXYdz9pU6Vd06DU
+         Q8NDJnhJ29SiXOC4ezSD0hpHl/sWSi0DWvqhofdwyALj7mv++PGW6GxzmVt8S+V7a6
+         d0chsOS6z/1Qxnakq+zWuZzIf9A6iwD6ZQgodNh0hTAEIIPjO/arDWLaNMB7R3xej0
+         Ru7r3MCE4dzg4E+Vv1lJHhwH81fOulmMtAjKpCQuCdzJut/wZ4yzFYmiroika5abaw
+         UzA2XJCxgKFVMPYQ964RYJX4laRWkESTfdNvsUGtG46rMdomLww6Y/kd6J36pl/nAC
+         iWFV6iJR3Z48A==
+In-Reply-To: <20220628022518.596687-1-sashal@kernel.org>
 List-ID: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
 To: linux-kernel@vger.kernel.org, stable@vger.kernel.org
@@ -78,7 +78,7 @@ Signed-off-by: Sasha Levin <sashal@kernel.org>
  1 file changed, 8 insertions(+), 1 deletion(-)
 
 diff --git a/drivers/net/hamradio/6pack.c b/drivers/net/hamradio/6pack.c
-index 83dc1c2c3b84..d92df9bafbbd 100644
+index 87094189af74..4b7bfaa97076 100644
 --- a/drivers/net/hamradio/6pack.c
 +++ b/drivers/net/hamradio/6pack.c
 @@ -99,6 +99,7 @@ struct sixpack {
@@ -95,9 +95,9 @@ index 83dc1c2c3b84..d92df9bafbbd 100644
  	spin_lock_init(&sp->lock);
 +	spin_lock_init(&sp->rxlock);
  	refcount_set(&sp->refcnt, 1);
- 	init_completion(&sp->dead);
+ 	sema_init(&sp->dead_sem, 0);
  
-@@ -925,6 +927,7 @@ static void decode_std_command(struct sixpack *sp, unsigned char cmd)
+@@ -945,6 +947,7 @@ static void decode_std_command(struct sixpack *sp, unsigned char cmd)
  			sp->led_state = 0x60;
  			/* fill trailing bytes with zeroes */
  			sp->tty->ops->write(sp->tty, &sp->led_state, 1);
@@ -105,7 +105,7 @@ index 83dc1c2c3b84..d92df9bafbbd 100644
  			rest = sp->rx_count;
  			if (rest != 0)
  				 for (i = rest; i <= 3; i++)
-@@ -942,6 +945,7 @@ static void decode_std_command(struct sixpack *sp, unsigned char cmd)
+@@ -962,6 +965,7 @@ static void decode_std_command(struct sixpack *sp, unsigned char cmd)
  				sp_bump(sp, 0);
  			}
  			sp->rx_count_cooked = 0;
@@ -113,7 +113,7 @@ index 83dc1c2c3b84..d92df9bafbbd 100644
  		}
  		break;
  	case SIXP_TX_URUN: printk(KERN_DEBUG "6pack: TX underrun\n");
-@@ -971,8 +975,11 @@ sixpack_decode(struct sixpack *sp, const unsigned char *pre_rbuff, int count)
+@@ -991,8 +995,11 @@ sixpack_decode(struct sixpack *sp, const unsigned char *pre_rbuff, int count)
  			decode_prio_command(sp, inbyte);
  		else if ((inbyte & SIXP_STD_CMD_MASK) != 0)
  			decode_std_command(sp, inbyte);
