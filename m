@@ -1,22 +1,22 @@
 From: Sasha Levin <sashal@kernel.org>
-Subject: [PATCH AUTOSEL 5.18 20/53] hamradio: 6pack: fix array-index-out-of-bounds in decode_std_command()
-Date: Mon, 27 Jun 2022 22:18:06 -0400
-Message-ID: <20220628021839.594423-20-sashal@kernel.org>
-References: <20220628021839.594423-1-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 5.15 16/41] hamradio: 6pack: fix array-index-out-of-bounds in decode_std_command()
+Date: Mon, 27 Jun 2022 22:20:35 -0400
+Message-ID: <20220628022100.595243-16-sashal@kernel.org>
+References: <20220628022100.595243-1-sashal@kernel.org>
 Mime-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Return-path: <stable-owner@vger.kernel.org>
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1656382782;
-        bh=Y9LFZ5AYICHV61HYIR74tGPitldOGzjg7gwkPbn555U=;
+        s=k20201202; t=1656382902;
+        bh=pqFvgJ8fBTY304BDoI8GuIDGiLlPge7h5+NmN2eyUEo=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=tn0mMk8dRllacvf5XMKDeYkn8I2KU9qrFH1JdWJ51TfBlOnGkwVJ3TTWjns09HuJG
-         x2VEDd1pLXkEx/GmmtfQWvv5oshFb2aBbTXTi7iFuuNP78sJ7GAZkfdUQnBxgaWXbL
-         qN55MuPMGeH5T2Y/ieg/w7+4Ep7mUhD4GIUY/NA+dM+NbX9ydD/g2PhVWnouIQf64v
-         ijJ3exkUaoCI+tlB57IXe72+fDTxdfFya+dT1Gheg49tOKoifw7n4UaaWeikJX77wc
-         Qx479YaIoIvCXuWImkYcUd6ZRLYXSdKxPpHzsxqrRlk0iY8nbP9qgaY/o4PXcemfCb
-         Pp/j5gORCb89Q==
-In-Reply-To: <20220628021839.594423-1-sashal@kernel.org>
+        b=D+XE0F0E2Tw3xRm5aOEERB3Ki6WgdJ2sg3JcdSm7HQjzQ+Gg+KFJvYy/k4zHX6qOo
+         tGvR16WoOSx5jBeL6nKuJ/zisL9mczllzCYXO0qijDzHPAagPOrv5wiza7q5AuloMo
+         KpXBLnySnyyTE47dPlzTepH1kUc7vUB8oTWejr2oyzUGLqpV/MYAHq9nYcy9I62+O1
+         6T1oqN/S9HRd5bXhqagsYwn++ECH9KdsTCe9zTc2JzGmmglHDB/hYST9cV14Rcj2gP
+         f+WwHi+qptibsuyfE+71piTfm5baUmoEoop3anvOeSQoN5A1vgbjDF5PLbB9feAVjC
+         Fl/ZkHnX3/k9w==
+In-Reply-To: <20220628022100.595243-1-sashal@kernel.org>
 List-ID: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
 To: linux-kernel@vger.kernel.org, stable@vger.kernel.org
@@ -78,7 +78,7 @@ Signed-off-by: Sasha Levin <sashal@kernel.org>
  1 file changed, 8 insertions(+), 1 deletion(-)
 
 diff --git a/drivers/net/hamradio/6pack.c b/drivers/net/hamradio/6pack.c
-index 45c3c4a1101b..9fb567524220 100644
+index 36a9fbb70402..ac2e79f0a928 100644
 --- a/drivers/net/hamradio/6pack.c
 +++ b/drivers/net/hamradio/6pack.c
 @@ -99,6 +99,7 @@ struct sixpack {
