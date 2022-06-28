@@ -1,131 +1,181 @@
-From: Sasha Levin <sashal@kernel.org>
-Subject: [PATCH AUTOSEL 4.19 07/22] hamradio: 6pack: fix array-index-out-of-bounds in decode_std_command()
-Date: Mon, 27 Jun 2022 22:25:02 -0400
-Message-ID: <20220628022518.596687-7-sashal@kernel.org>
-References: <20220628022518.596687-1-sashal@kernel.org>
+From: Paolo Abeni <pabeni@redhat.com>
+Subject: Re: [PATCH net v3 2/2] net: rose: fix null-ptr-deref caused by
+ rose_kill_by_neigh
+Date: Tue, 28 Jun 2022 13:12:40 +0200
+Message-ID: <ecac788497ea0e4e5b725226ad8b1209dc62fa0e.camel@redhat.com>
+References: <cover.1656031586.git.duoming@zju.edu.cn>
+         <c31f454f74833b2003713fffa881aabb190b8290.1656031586.git.duoming@zju.edu.cn>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Return-path: <netdev-owner@vger.kernel.org>
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1656383134;
-        bh=mZedR6n3Ii7TaYEeShSvXW3M+fV7pwYm20s84Bcb1DI=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=ChyImcULTAj2kPai7dBPpo8nBP/Ft8HD4L0xuJnMANupzn/f5WaXYdz9pU6Vd06DU
-         Q8NDJnhJ29SiXOC4ezSD0hpHl/sWSi0DWvqhofdwyALj7mv++PGW6GxzmVt8S+V7a6
-         d0chsOS6z/1Qxnakq+zWuZzIf9A6iwD6ZQgodNh0hTAEIIPjO/arDWLaNMB7R3xej0
-         Ru7r3MCE4dzg4E+Vv1lJHhwH81fOulmMtAjKpCQuCdzJut/wZ4yzFYmiroika5abaw
-         UzA2XJCxgKFVMPYQ964RYJX4laRWkESTfdNvsUGtG46rMdomLww6Y/kd6J36pl/nAC
-         iWFV6iJR3Z48A==
-In-Reply-To: <20220628022518.596687-1-sashal@kernel.org>
+Content-Transfer-Encoding: 7bit
+Return-path: <linux-hams-owner@vger.kernel.org>
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+        s=mimecast20190719; t=1656414765;
+        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+         content-transfer-encoding:content-transfer-encoding:
+         in-reply-to:in-reply-to:references:references;
+        bh=VGi3GZ3X67AUti4hXwNYjl450hU4o5zBUg9z/I0jCK0=;
+        b=Vo9fk2KEb1yAjZVHC5sO3msnWK6zdfoszELPHZfH3olkdaDveMIt4q2zBjNrUnE22H6mIa
+        Yk5JyD4I+i5H2sytG1gmIjVD6cSyGdCOSSCxQKrcyPb7SqOmNlemTIAEADESiTsOUbn7k8
+        QCxojxCwmOAAhqrZ+fn/+gw4ee555n8=
+In-Reply-To: <c31f454f74833b2003713fffa881aabb190b8290.1656031586.git.duoming@zju.edu.cn>
 List-ID: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
-To: linux-kernel@vger.kernel.org, stable@vger.kernel.org
-Cc: Xu Jia <xujia39@huawei.com>, Hulk Robot <hulkci@huawei.com>, "David S . Miller" <davem@davemloft.net>, Sasha Levin <sashal@kernel.org>, ajk@comnets.uni-bremen.de, edumazet@google.com, kuba@kernel.org, pabeni@redhat.com, linux-hams@vger.kernel.org, netdev@vger.kernel.org
+To: Duoming Zhou <duoming@zju.edu.cn>, linux-hams@vger.kernel.org
+Cc: ralf@linux-mips.org, davem@davemloft.net, edumazet@google.com, kuba@kernel.org, netdev@vger.kernel.org, linux-kernel@vger.kernel.org
 
-From: Xu Jia <xujia39@huawei.com>
+On Fri, 2022-06-24 at 09:05 +0800, Duoming Zhou wrote:
+> When the link layer connection is broken, the rose->neighbour is
+> set to null. But rose->neighbour could be used by rose_connection()
+> and rose_release() later, because there is no synchronization among
+> them. As a result, the null-ptr-deref bugs will happen.
+> 
+> One of the null-ptr-deref bugs is shown below:
+> 
+>     (thread 1)                  |        (thread 2)
+>                                 |  rose_connect
+> rose_kill_by_neigh              |    lock_sock(sk)
+>   spin_lock_bh(&rose_list_lock) |    if (!rose->neighbour)
+>   rose->neighbour = NULL;//(1)  |
+>                                 |    rose->neighbour->use++;//(2)
+> 
+> The rose->neighbour is set to null in position (1) and dereferenced
+> in position (2).
+> 
+> The KASAN report triggered by POC is shown below:
+> 
+> KASAN: null-ptr-deref in range [0x0000000000000028-0x000000000000002f]
+> ...
+> RIP: 0010:rose_connect+0x6c2/0xf30
+> RSP: 0018:ffff88800ab47d60 EFLAGS: 00000206
+> RAX: 0000000000000005 RBX: 000000000000002a RCX: 0000000000000000
+> RDX: ffff88800ab38000 RSI: ffff88800ab47e48 RDI: ffff88800ab38309
+> RBP: dffffc0000000000 R08: 0000000000000000 R09: ffffed1001567062
+> R10: dfffe91001567063 R11: 1ffff11001567061 R12: 1ffff11000d17cd0
+> R13: ffff8880068be680 R14: 0000000000000002 R15: 1ffff11000d17cd0
+> ...
+> Call Trace:
+>   <TASK>
+>   ? __local_bh_enable_ip+0x54/0x80
+>   ? selinux_netlbl_socket_connect+0x26/0x30
+>   ? rose_bind+0x5b0/0x5b0
+>   __sys_connect+0x216/0x280
+>   __x64_sys_connect+0x71/0x80
+>   do_syscall_64+0x43/0x90
+>   entry_SYSCALL_64_after_hwframe+0x46/0xb0
+> 
+> This patch adds lock_sock() in rose_kill_by_neigh() in order to
+> synchronize with rose_connect() and rose_release().
+> 
+> Meanwhile, this patch adds sock_hold() protected by rose_list_lock
+> that could synchronize with rose_remove_socket() in order to mitigate
+> UAF bug caused by lock_sock() we add.
+> 
+> What's more, there is no need using rose_neigh_list_lock to protect
+> rose_kill_by_neigh(). Because we have already used rose_neigh_list_lock
+> to protect the state change of rose_neigh in rose_link_failed(), which
+> is well synchronized.
+> 
+> Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+> Signed-off-by: Duoming Zhou <duoming@zju.edu.cn>
+> ---
+> Changes since v2:
+>   - v2: Fix refcount leak of sock.
+> 
+>  net/rose/af_rose.c    | 6 ++++++
+>  net/rose/rose_route.c | 2 ++
+>  2 files changed, 8 insertions(+)
+> 
+> diff --git a/net/rose/af_rose.c b/net/rose/af_rose.c
+> index bf2d986a6bc..5caa222c490 100644
+> --- a/net/rose/af_rose.c
+> +++ b/net/rose/af_rose.c
+> @@ -169,9 +169,15 @@ void rose_kill_by_neigh(struct rose_neigh *neigh)
+>  		struct rose_sock *rose = rose_sk(s);
+>  
+>  		if (rose->neighbour == neigh) {
+> +			sock_hold(s);
+>  			rose_disconnect(s, ENETUNREACH, ROSE_OUT_OF_ORDER, 0);
+>  			rose->neighbour->use--;
+> +			spin_unlock_bh(&rose_list_lock);
+> +			lock_sock(s);
+>  			rose->neighbour = NULL;
+> +			release_sock(s);
+> +			spin_lock_bh(&rose_list_lock);
 
-[ Upstream commit 2b04495e21cdb9b45c28c6aeb2da560184de20a3 ]
+I'm sorry, I likely was not clear enough in my previous reply. This is
+broken. If a list is [spin_]lock protected, you can't release the lock,
+reacquire it and continue traversing the list from the [now invalid]
+same iterator.
 
-Hulk Robot reports incorrect sp->rx_count_cooked value in decode_std_command().
-This should be caused by the subtracting from sp->rx_count_cooked before.
-It seems that sp->rx_count_cooked value is changed to 0, which bypassed the
-previous judgment.
+e.g. if s is removed from the list, even if the sock is not de-
+allocated due to the addtional refcount, the traversing will errnously
+stop after this sock, instead of continuing processing the remaining
+socks in the list.
 
-The situation is shown below:
-
-         (Thread 1)			|  (Thread 2)
-decode_std_command()		| resync_tnc()
-...					|
-if (rest == 2)			|
-	sp->rx_count_cooked -= 2;	|
-else if (rest == 3)			| ...
-					| sp->rx_count_cooked = 0;
-	sp->rx_count_cooked -= 1;	|
-for (i = 0; i < sp->rx_count_cooked; i++) // report error
-	checksum += sp->cooked_buf[i];
-
-sp->rx_count_cooked is a shared variable but is not protected by a lock.
-The same applies to sp->rx_count. This patch adds a lock to fix the bug.
-
-The fail log is shown below:
-=======================================================================
-UBSAN: array-index-out-of-bounds in drivers/net/hamradio/6pack.c:925:31
-index 400 is out of range for type 'unsigned char [400]'
-CPU: 3 PID: 7433 Comm: kworker/u10:1 Not tainted 5.18.0-rc5-00163-g4b97bac0756a #2
-Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS rel-1.14.0-0-g155821a1990b-prebuilt.qemu.org 04/01/2014
-Workqueue: events_unbound flush_to_ldisc
-Call Trace:
- <TASK>
- dump_stack_lvl+0xcd/0x134
- ubsan_epilogue+0xb/0x50
- __ubsan_handle_out_of_bounds.cold+0x62/0x6c
- sixpack_receive_buf+0xfda/0x1330
- tty_ldisc_receive_buf+0x13e/0x180
- tty_port_default_receive_buf+0x6d/0xa0
- flush_to_ldisc+0x213/0x3f0
- process_one_work+0x98f/0x1620
- worker_thread+0x665/0x1080
- kthread+0x2e9/0x3a0
- ret_from_fork+0x1f/0x30
- ...
-
-Reported-by: Hulk Robot <hulkci@huawei.com>
-Signed-off-by: Xu Jia <xujia39@huawei.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+A possible alternative, not even build-tested would be:
 ---
- drivers/net/hamradio/6pack.c | 9 ++++++++-
- 1 file changed, 8 insertions(+), 1 deletion(-)
-
-diff --git a/drivers/net/hamradio/6pack.c b/drivers/net/hamradio/6pack.c
-index 87094189af74..4b7bfaa97076 100644
---- a/drivers/net/hamradio/6pack.c
-+++ b/drivers/net/hamradio/6pack.c
-@@ -99,6 +99,7 @@ struct sixpack {
+diff --git a/include/net/rose.h b/include/net/rose.h
+index 0f0a4ce0fee7..090db11d528f 100644
+--- a/include/net/rose.h
++++ b/include/net/rose.h
+@@ -145,6 +145,7 @@ struct rose_sock {
+ 	struct rose_facilities_struct facilities;
+ 	struct timer_list	timer;
+ 	struct timer_list	idletimer;
++	struct rose_sock	*dl_next;
+ };
  
- 	unsigned int		rx_count;
- 	unsigned int		rx_count_cooked;
-+	spinlock_t		rxlock;
+ #define rose_sk(sk) ((struct rose_sock *)(sk))
+diff --git a/net/rose/af_rose.c b/net/rose/af_rose.c
+index 5caa222c490e..01f3c50f0921 100644
+--- a/net/rose/af_rose.c
++++ b/net/rose/af_rose.c
+@@ -162,25 +162,32 @@ static void rose_remove_socket(struct sock *sk)
+  */
+ void rose_kill_by_neigh(struct rose_neigh *neigh)
+ {
+-	struct sock *s;
++	struct rose_sock *del_list = NULL;
++	struct sock *s, *tmp;
  
- 	int			mtu;		/* Our mtu (to spot changes!) */
- 	int			buffsize;       /* Max buffers sizes */
-@@ -570,6 +571,7 @@ static int sixpack_open(struct tty_struct *tty)
- 	sp->dev = dev;
+ 	spin_lock_bh(&rose_list_lock);
+-	sk_for_each(s, &rose_list) {
++	sk_for_each_safe(s, tmp, &rose_list) {
+ 		struct rose_sock *rose = rose_sk(s);
  
- 	spin_lock_init(&sp->lock);
-+	spin_lock_init(&sp->rxlock);
- 	refcount_set(&sp->refcnt, 1);
- 	sema_init(&sp->dead_sem, 0);
- 
-@@ -945,6 +947,7 @@ static void decode_std_command(struct sixpack *sp, unsigned char cmd)
- 			sp->led_state = 0x60;
- 			/* fill trailing bytes with zeroes */
- 			sp->tty->ops->write(sp->tty, &sp->led_state, 1);
-+			spin_lock_bh(&sp->rxlock);
- 			rest = sp->rx_count;
- 			if (rest != 0)
- 				 for (i = rest; i <= 3; i++)
-@@ -962,6 +965,7 @@ static void decode_std_command(struct sixpack *sp, unsigned char cmd)
- 				sp_bump(sp, 0);
- 			}
- 			sp->rx_count_cooked = 0;
-+			spin_unlock_bh(&sp->rxlock);
+ 		if (rose->neighbour == neigh) {
+-			sock_hold(s);
+-			rose_disconnect(s, ENETUNREACH, ROSE_OUT_OF_ORDER, 0);
+-			rose->neighbour->use--;
+-			spin_unlock_bh(&rose_list_lock);
+-			lock_sock(s);
+-			rose->neighbour = NULL;
+-			release_sock(s);
+-			spin_lock_bh(&rose_list_lock);
+-			sock_put(s);
++			__sk_del_node(s);
++			s->dl_next = del_list;
++			del_list = s;
  		}
- 		break;
- 	case SIXP_TX_URUN: printk(KERN_DEBUG "6pack: TX underrun\n");
-@@ -991,8 +995,11 @@ sixpack_decode(struct sixpack *sp, const unsigned char *pre_rbuff, int count)
- 			decode_prio_command(sp, inbyte);
- 		else if ((inbyte & SIXP_STD_CMD_MASK) != 0)
- 			decode_std_command(sp, inbyte);
--		else if ((sp->status & SIXP_RX_DCD_MASK) == SIXP_RX_DCD_MASK)
-+		else if ((sp->status & SIXP_RX_DCD_MASK) == SIXP_RX_DCD_MASK) {
-+			spin_lock_bh(&sp->rxlock);
- 			decode_data(sp, inbyte);
-+			spin_unlock_bh(&sp->rxlock);
-+		}
  	}
+ 	spin_unlock_bh(&rose_list_lock);
++
++	while (del_list) {
++		s = del_list;
++		del_list = s->dl_next;
++
++		lock_sock(s);
++		rose_disconnect(s, ENETUNREACH, ROSE_OUT_OF_ORDER, 0);
++		rose->neighbour->use--;
++		rose->neighbour = NULL;
++		release_sock(s);
++		sock_put(s);
++	}
  }
  
--- 
-2.35.1
+ /*
+---
+
+Paolo
 
