@@ -1,110 +1,116 @@
-From: duoming@zju.edu.cn
-Subject: Re: [PATCH net v3 2/2] net: rose: fix null-ptr-deref caused by
- rose_kill_by_neigh
-Date: Wed, 29 Jun 2022 11:48:30 +0800 (GMT+08:00)
-Message-ID: <411487ea.1b211.181ad932398.Coremail.duoming@zju.edu.cn>
-References: <cover.1656031586.git.duoming@zju.edu.cn>
- <c31f454f74833b2003713fffa881aabb190b8290.1656031586.git.duoming@zju.edu.cn>
- <ecac788497ea0e4e5b725226ad8b1209dc62fa0e.camel@redhat.com>
-Mime-Version: 1.0
-Content-Transfer-Encoding: base64
+From: Duoming Zhou <duoming@zju.edu.cn>
+Subject: [PATCH v4] net: rose: fix null-ptr-deref caused by rose_kill_by_neigh
+Date: Wed, 29 Jun 2022 18:49:41 +0800
+Message-ID: <20220629104941.26351-1-duoming@zju.edu.cn>
 Return-path: <netdev-owner@vger.kernel.org>
-In-Reply-To: <ecac788497ea0e4e5b725226ad8b1209dc62fa0e.camel@redhat.com>
 List-ID: <linux-hams.vger.kernel.org>
+MIME-Version: 1.0
 Content-Type: text/plain; charset="us-ascii"
-To: Paolo Abeni <pabeni@redhat.com>
-Cc: linux-hams@vger.kernel.org, ralf@linux-mips.org, davem@davemloft.net, edumazet@google.com, kuba@kernel.org, netdev@vger.kernel.org, linux-kernel@vger.kernel.org
+Content-Transfer-Encoding: 7bit
+To: linux-hams@vger.kernel.org
+Cc: netdev@vger.kernel.org, linux-kernel@vger.kernel.org, ralf@linux-mips.org, davem@davemloft.net, edumazet@google.com, kuba@kernel.org, pabeni@redhat.com, Duoming Zhou <duoming@zju.edu.cn>
 
-SGVsbG8sCgpPbiBUdWUsIDI4IEp1biAyMDIyIDEzOjEyOjQwICswMjAwIFBhb2xvIEFiZW5pIHdy
-b3RlOgoKPiA+IFdoZW4gdGhlIGxpbmsgbGF5ZXIgY29ubmVjdGlvbiBpcyBicm9rZW4sIHRoZSBy
-b3NlLT5uZWlnaGJvdXIgaXMKPiA+IHNldCB0byBudWxsLiBCdXQgcm9zZS0+bmVpZ2hib3VyIGNv
-dWxkIGJlIHVzZWQgYnkgcm9zZV9jb25uZWN0aW9uKCkKPiA+IGFuZCByb3NlX3JlbGVhc2UoKSBs
-YXRlciwgYmVjYXVzZSB0aGVyZSBpcyBubyBzeW5jaHJvbml6YXRpb24gYW1vbmcKPiA+IHRoZW0u
-IEFzIGEgcmVzdWx0LCB0aGUgbnVsbC1wdHItZGVyZWYgYnVncyB3aWxsIGhhcHBlbi4KPiA+IAo+
-ID4gT25lIG9mIHRoZSBudWxsLXB0ci1kZXJlZiBidWdzIGlzIHNob3duIGJlbG93Ogo+ID4gCj4g
-PiAgICAgKHRocmVhZCAxKSAgICAgICAgICAgICAgICAgIHwgICAgICAgICh0aHJlYWQgMikKPiA+
-ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgfCAgcm9zZV9jb25uZWN0Cj4gPiByb3Nl
-X2tpbGxfYnlfbmVpZ2ggICAgICAgICAgICAgIHwgICAgbG9ja19zb2NrKHNrKQo+ID4gICBzcGlu
-X2xvY2tfYmgoJnJvc2VfbGlzdF9sb2NrKSB8ICAgIGlmICghcm9zZS0+bmVpZ2hib3VyKQo+ID4g
-ICByb3NlLT5uZWlnaGJvdXIgPSBOVUxMOy8vKDEpICB8Cj4gPiAgICAgICAgICAgICAgICAgICAg
-ICAgICAgICAgICAgIHwgICAgcm9zZS0+bmVpZ2hib3VyLT51c2UrKzsvLygyKQo+ID4gCj4gPiBU
-aGUgcm9zZS0+bmVpZ2hib3VyIGlzIHNldCB0byBudWxsIGluIHBvc2l0aW9uICgxKSBhbmQgZGVy
-ZWZlcmVuY2VkCj4gPiBpbiBwb3NpdGlvbiAoMikuCj4gPiAKPiA+IFRoZSBLQVNBTiByZXBvcnQg
-dHJpZ2dlcmVkIGJ5IFBPQyBpcyBzaG93biBiZWxvdzoKPiA+IAo+ID4gS0FTQU46IG51bGwtcHRy
-LWRlcmVmIGluIHJhbmdlIFsweDAwMDAwMDAwMDAwMDAwMjgtMHgwMDAwMDAwMDAwMDAwMDJmXQo+
-ID4gLi4uCj4gPiBSSVA6IDAwMTA6cm9zZV9jb25uZWN0KzB4NmMyLzB4ZjMwCj4gPiBSU1A6IDAw
-MTg6ZmZmZjg4ODAwYWI0N2Q2MCBFRkxBR1M6IDAwMDAwMjA2Cj4gPiBSQVg6IDAwMDAwMDAwMDAw
-MDAwMDUgUkJYOiAwMDAwMDAwMDAwMDAwMDJhIFJDWDogMDAwMDAwMDAwMDAwMDAwMAo+ID4gUkRY
-OiBmZmZmODg4MDBhYjM4MDAwIFJTSTogZmZmZjg4ODAwYWI0N2U0OCBSREk6IGZmZmY4ODgwMGFi
-MzgzMDkKPiA+IFJCUDogZGZmZmZjMDAwMDAwMDAwMCBSMDg6IDAwMDAwMDAwMDAwMDAwMDAgUjA5
-OiBmZmZmZWQxMDAxNTY3MDYyCj4gPiBSMTA6IGRmZmZlOTEwMDE1NjcwNjMgUjExOiAxZmZmZjEx
-MDAxNTY3MDYxIFIxMjogMWZmZmYxMTAwMGQxN2NkMAo+ID4gUjEzOiBmZmZmODg4MDA2OGJlNjgw
-IFIxNDogMDAwMDAwMDAwMDAwMDAwMiBSMTU6IDFmZmZmMTEwMDBkMTdjZDAKPiA+IC4uLgo+ID4g
-Q2FsbCBUcmFjZToKPiA+ICAgPFRBU0s+Cj4gPiAgID8gX19sb2NhbF9iaF9lbmFibGVfaXArMHg1
-NC8weDgwCj4gPiAgID8gc2VsaW51eF9uZXRsYmxfc29ja2V0X2Nvbm5lY3QrMHgyNi8weDMwCj4g
-PiAgID8gcm9zZV9iaW5kKzB4NWIwLzB4NWIwCj4gPiAgIF9fc3lzX2Nvbm5lY3QrMHgyMTYvMHgy
-ODAKPiA+ICAgX194NjRfc3lzX2Nvbm5lY3QrMHg3MS8weDgwCj4gPiAgIGRvX3N5c2NhbGxfNjQr
-MHg0My8weDkwCj4gPiAgIGVudHJ5X1NZU0NBTExfNjRfYWZ0ZXJfaHdmcmFtZSsweDQ2LzB4YjAK
-PiA+IAo+ID4gVGhpcyBwYXRjaCBhZGRzIGxvY2tfc29jaygpIGluIHJvc2Vfa2lsbF9ieV9uZWln
-aCgpIGluIG9yZGVyIHRvCj4gPiBzeW5jaHJvbml6ZSB3aXRoIHJvc2VfY29ubmVjdCgpIGFuZCBy
-b3NlX3JlbGVhc2UoKS4KPiA+IAo+ID4gTWVhbndoaWxlLCB0aGlzIHBhdGNoIGFkZHMgc29ja19o
-b2xkKCkgcHJvdGVjdGVkIGJ5IHJvc2VfbGlzdF9sb2NrCj4gPiB0aGF0IGNvdWxkIHN5bmNocm9u
-aXplIHdpdGggcm9zZV9yZW1vdmVfc29ja2V0KCkgaW4gb3JkZXIgdG8gbWl0aWdhdGUKPiA+IFVB
-RiBidWcgY2F1c2VkIGJ5IGxvY2tfc29jaygpIHdlIGFkZC4KPiA+IAo+ID4gV2hhdCdzIG1vcmUs
-IHRoZXJlIGlzIG5vIG5lZWQgdXNpbmcgcm9zZV9uZWlnaF9saXN0X2xvY2sgdG8gcHJvdGVjdAo+
-ID4gcm9zZV9raWxsX2J5X25laWdoKCkuIEJlY2F1c2Ugd2UgaGF2ZSBhbHJlYWR5IHVzZWQgcm9z
-ZV9uZWlnaF9saXN0X2xvY2sKPiA+IHRvIHByb3RlY3QgdGhlIHN0YXRlIGNoYW5nZSBvZiByb3Nl
-X25laWdoIGluIHJvc2VfbGlua19mYWlsZWQoKSwgd2hpY2gKPiA+IGlzIHdlbGwgc3luY2hyb25p
-emVkLgo+ID4gCj4gPiBGaXhlczogMWRhMTc3ZTRjM2Y0ICgiTGludXgtMi42LjEyLXJjMiIpCj4g
-PiBTaWduZWQtb2ZmLWJ5OiBEdW9taW5nIFpob3UgPGR1b21pbmdAemp1LmVkdS5jbj4KPiA+IC0t
-LQo+ID4gQ2hhbmdlcyBzaW5jZSB2MjoKPiA+ICAgLSB2MjogRml4IHJlZmNvdW50IGxlYWsgb2Yg
-c29jay4KPiA+IAo+ID4gIG5ldC9yb3NlL2FmX3Jvc2UuYyAgICB8IDYgKysrKysrCj4gPiAgbmV0
-L3Jvc2Uvcm9zZV9yb3V0ZS5jIHwgMiArKwo+ID4gIDIgZmlsZXMgY2hhbmdlZCwgOCBpbnNlcnRp
-b25zKCspCj4gPiAKPiA+IGRpZmYgLS1naXQgYS9uZXQvcm9zZS9hZl9yb3NlLmMgYi9uZXQvcm9z
-ZS9hZl9yb3NlLmMKPiA+IGluZGV4IGJmMmQ5ODZhNmJjLi41Y2FhMjIyYzQ5MCAxMDA2NDQKPiA+
-IC0tLSBhL25ldC9yb3NlL2FmX3Jvc2UuYwo+ID4gKysrIGIvbmV0L3Jvc2UvYWZfcm9zZS5jCj4g
-PiBAQCAtMTY5LDkgKzE2OSwxNSBAQCB2b2lkIHJvc2Vfa2lsbF9ieV9uZWlnaChzdHJ1Y3Qgcm9z
-ZV9uZWlnaCAqbmVpZ2gpCj4gPiAgCQlzdHJ1Y3Qgcm9zZV9zb2NrICpyb3NlID0gcm9zZV9zayhz
-KTsKPiA+ICAKPiA+ICAJCWlmIChyb3NlLT5uZWlnaGJvdXIgPT0gbmVpZ2gpIHsKPiA+ICsJCQlz
-b2NrX2hvbGQocyk7Cj4gPiAgCQkJcm9zZV9kaXNjb25uZWN0KHMsIEVORVRVTlJFQUNILCBST1NF
-X09VVF9PRl9PUkRFUiwgMCk7Cj4gPiAgCQkJcm9zZS0+bmVpZ2hib3VyLT51c2UtLTsKPiA+ICsJ
-CQlzcGluX3VubG9ja19iaCgmcm9zZV9saXN0X2xvY2spOwo+ID4gKwkJCWxvY2tfc29jayhzKTsK
-PiA+ICAJCQlyb3NlLT5uZWlnaGJvdXIgPSBOVUxMOwo+ID4gKwkJCXJlbGVhc2Vfc29jayhzKTsK
-PiA+ICsJCQlzcGluX2xvY2tfYmgoJnJvc2VfbGlzdF9sb2NrKTsKPiAKPiBJJ20gc29ycnksIEkg
-bGlrZWx5IHdhcyBub3QgY2xlYXIgZW5vdWdoIGluIG15IHByZXZpb3VzIHJlcGx5LiBUaGlzIGlz
-Cj4gYnJva2VuLiBJZiBhIGxpc3QgaXMgW3NwaW5fXWxvY2sgcHJvdGVjdGVkLCB5b3UgY2FuJ3Qg
-cmVsZWFzZSB0aGUgbG9jaywKPiByZWFjcXVpcmUgaXQgYW5kIGNvbnRpbnVlIHRyYXZlcnNpbmcg
-dGhlIGxpc3QgZnJvbSB0aGUgW25vdyBpbnZhbGlkXQo+IHNhbWUgaXRlcmF0b3IuCj4gCj4gZS5n
-LiBpZiBzIGlzIHJlbW92ZWQgZnJvbSB0aGUgbGlzdCwgZXZlbiBpZiB0aGUgc29jayBpcyBub3Qg
-ZGUtCj4gYWxsb2NhdGVkIGR1ZSB0byB0aGUgYWRkdGlvbmFsIHJlZmNvdW50LCB0aGUgdHJhdmVy
-c2luZyB3aWxsIGVycm5vdXNseQo+IHN0b3AgYWZ0ZXIgdGhpcyBzb2NrLCBpbnN0ZWFkIG9mIGNv
-bnRpbnVpbmcgcHJvY2Vzc2luZyB0aGUgcmVtYWluaW5nCj4gc29ja3MgaW4gdGhlIGxpc3QuCgpJ
-IHVuZGVyc3RhbmQuIFRoZSBmb2xsb3dpbmcgaXMgYSBuZXcgc29sdXRpb246CgpkaWZmIC0tZ2l0
-IGEvbmV0L3Jvc2UvYWZfcm9zZS5jIGIvbmV0L3Jvc2UvYWZfcm9zZS5jCmluZGV4IGJmMmQ5ODZh
-NmJjLi4yNGRjYmRlODhmYiAxMDA2NDQKLS0tIGEvbmV0L3Jvc2UvYWZfcm9zZS5jCisrKyBiL25l
-dC9yb3NlL2FmX3Jvc2UuYwpAQCAtMTY1LDEzICsxNjUsMjEgQEAgdm9pZCByb3NlX2tpbGxfYnlf
-bmVpZ2goc3RydWN0IHJvc2VfbmVpZ2ggKm5laWdoKQogICAgICAgIHN0cnVjdCBzb2NrICpzOwoK
-ICAgICAgICBzcGluX2xvY2tfYmgoJnJvc2VfbGlzdF9sb2NrKTsKK2FnYWluOgogICAgICAgIHNr
-X2Zvcl9lYWNoKHMsICZyb3NlX2xpc3QpIHsKICAgICAgICAgICAgICAgIHN0cnVjdCByb3NlX3Nv
-Y2sgKnJvc2UgPSByb3NlX3NrKHMpOwoKICAgICAgICAgICAgICAgIGlmIChyb3NlLT5uZWlnaGJv
-dXIgPT0gbmVpZ2gpIHsKKyAgICAgICAgICAgICAgICAgICAgICAgc29ja19ob2xkKHMpOworICAg
-ICAgICAgICAgICAgICAgICAgICBzcGluX3VubG9ja19iaCgmcm9zZV9saXN0X2xvY2spOworICAg
-ICAgICAgICAgICAgICAgICAgICBsb2NrX3NvY2socyk7CiAgICAgICAgICAgICAgICAgICAgICAg
-IHJvc2VfZGlzY29ubmVjdChzLCBFTkVUVU5SRUFDSCwgUk9TRV9PVVRfT0ZfT1JERVIsIDApOwog
-ICAgICAgICAgICAgICAgICAgICAgICByb3NlLT5uZWlnaGJvdXItPnVzZS0tOwogICAgICAgICAg
-ICAgICAgICAgICAgICByb3NlLT5uZWlnaGJvdXIgPSBOVUxMOworICAgICAgICAgICAgICAgICAg
-ICAgICByZWxlYXNlX3NvY2socyk7CisgICAgICAgICAgICAgICAgICAgICAgIHNwaW5fbG9ja19i
-aCgmcm9zZV9saXN0X2xvY2spOworICAgICAgICAgICAgICAgICAgICAgICBzb2NrX3B1dChzKTsK
-KyAgICAgICAgICAgICAgICAgICAgICAgZ290byBhZ2FpbjsKICAgICAgICAgICAgICAgIH0KICAg
-ICAgICB9CiAgICAgICAgc3Bpbl91bmxvY2tfYmgoJnJvc2VfbGlzdF9sb2NrKTsKZGlmZiAtLWdp
-dCBhL25ldC9yb3NlL3Jvc2Vfcm91dGUuYyBiL25ldC9yb3NlL3Jvc2Vfcm91dGUuYwppbmRleCBm
-ZWU2NDA5YzJiYi4uYjExNjgyOGI0MjIgMTAwNjQ0Ci0tLSBhL25ldC9yb3NlL3Jvc2Vfcm91dGUu
-YworKysgYi9uZXQvcm9zZS9yb3NlX3JvdXRlLmMKQEAgLTgyNyw3ICs4MjcsOSBAQCB2b2lkIHJv
-c2VfbGlua19mYWlsZWQoYXgyNV9jYiAqYXgyNSwgaW50IHJlYXNvbikKICAgICAgICAgICAgICAg
-IGF4MjVfY2JfcHV0KGF4MjUpOwoKICAgICAgICAgICAgICAgIHJvc2VfZGVsX3JvdXRlX2J5X25l
-aWdoKHJvc2VfbmVpZ2gpOworICAgICAgICAgICAgICAgc3Bpbl91bmxvY2tfYmgoJnJvc2VfbmVp
-Z2hfbGlzdF9sb2NrKTsKICAgICAgICAgICAgICAgIHJvc2Vfa2lsbF9ieV9uZWlnaChyb3NlX25l
-aWdoKTsKKyAgICAgICAgICAgICAgIHJldHVybjsKICAgICAgICB9CiAgICAgICAgc3Bpbl91bmxv
-Y2tfYmgoJnJvc2VfbmVpZ2hfbGlzdF9sb2NrKTsKIH0KCklmIHMgaXMgcmVtb3ZlZCBmcm9tIHRo
-ZSBsaXN0LCB0aGUgdHJhdmVyc2luZyB3aWxsIG5vdCBzdG9wIGVycm9uZW91c2x5LgoKQmVzdCBy
-ZWdhcmRzLApEdW9taW5nIFpob3U=
+When the link layer connection is broken, the rose->neighbour is
+set to null. But rose->neighbour could be used by rose_connection()
+and rose_release() later, because there is no synchronization among
+them. As a result, the null-ptr-deref bugs will happen.
+
+One of the null-ptr-deref bugs is shown below:
+
+    (thread 1)                  |        (thread 2)
+                                |  rose_connect
+rose_kill_by_neigh              |    lock_sock(sk)
+  spin_lock_bh(&rose_list_lock) |    if (!rose->neighbour)
+  rose->neighbour = NULL;//(1)  |
+                                |    rose->neighbour->use++;//(2)
+
+The rose->neighbour is set to null in position (1) and dereferenced
+in position (2).
+
+The KASAN report triggered by POC is shown below:
+
+KASAN: null-ptr-deref in range [0x0000000000000028-0x000000000000002f]
+...
+RIP: 0010:rose_connect+0x6c2/0xf30
+RSP: 0018:ffff88800ab47d60 EFLAGS: 00000206
+RAX: 0000000000000005 RBX: 000000000000002a RCX: 0000000000000000
+RDX: ffff88800ab38000 RSI: ffff88800ab47e48 RDI: ffff88800ab38309
+RBP: dffffc0000000000 R08: 0000000000000000 R09: ffffed1001567062
+R10: dfffe91001567063 R11: 1ffff11001567061 R12: 1ffff11000d17cd0
+R13: ffff8880068be680 R14: 0000000000000002 R15: 1ffff11000d17cd0
+...
+Call Trace:
+  <TASK>
+  ? __local_bh_enable_ip+0x54/0x80
+  ? selinux_netlbl_socket_connect+0x26/0x30
+  ? rose_bind+0x5b0/0x5b0
+  __sys_connect+0x216/0x280
+  __x64_sys_connect+0x71/0x80
+  do_syscall_64+0x43/0x90
+  entry_SYSCALL_64_after_hwframe+0x46/0xb0
+
+This patch adds lock_sock() in rose_kill_by_neigh() in order to
+synchronize with rose_connect() and rose_release().
+
+Meanwhile, this patch adds sock_hold() protected by rose_list_lock
+that could synchronize with rose_remove_socket() in order to mitigate
+UAF bug caused by lock_sock() we add.
+
+What's more, there is no need using rose_neigh_list_lock to protect
+rose_kill_by_neigh(). Because we have already used rose_neigh_list_lock
+to protect the state change of rose_neigh in rose_link_failed(), which
+is well synchronized.
+
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Signed-off-by: Duoming Zhou <duoming@zju.edu.cn>
+---
+Changes in v4:
+  - v4: Fix traversing erroneously stop problem.
+
+ net/rose/af_rose.c    | 8 ++++++++
+ net/rose/rose_route.c | 2 ++
+ 2 files changed, 10 insertions(+)
+
+diff --git a/net/rose/af_rose.c b/net/rose/af_rose.c
+index bf2d986a6bc..24dcbde88fb 100644
+--- a/net/rose/af_rose.c
++++ b/net/rose/af_rose.c
+@@ -165,13 +165,21 @@ void rose_kill_by_neigh(struct rose_neigh *neigh)
+ 	struct sock *s;
+ 
+ 	spin_lock_bh(&rose_list_lock);
++again:
+ 	sk_for_each(s, &rose_list) {
+ 		struct rose_sock *rose = rose_sk(s);
+ 
+ 		if (rose->neighbour == neigh) {
++			sock_hold(s);
++			spin_unlock_bh(&rose_list_lock);
++			lock_sock(s);
+ 			rose_disconnect(s, ENETUNREACH, ROSE_OUT_OF_ORDER, 0);
+ 			rose->neighbour->use--;
+ 			rose->neighbour = NULL;
++			release_sock(s);
++			spin_lock_bh(&rose_list_lock);
++			sock_put(s);
++			goto again;
+ 		}
+ 	}
+ 	spin_unlock_bh(&rose_list_lock);
+diff --git a/net/rose/rose_route.c b/net/rose/rose_route.c
+index fee6409c2bb..b116828b422 100644
+--- a/net/rose/rose_route.c
++++ b/net/rose/rose_route.c
+@@ -827,7 +827,9 @@ void rose_link_failed(ax25_cb *ax25, int reason)
+ 		ax25_cb_put(ax25);
+ 
+ 		rose_del_route_by_neigh(rose_neigh);
++		spin_unlock_bh(&rose_neigh_list_lock);
+ 		rose_kill_by_neigh(rose_neigh);
++		return;
+ 	}
+ 	spin_unlock_bh(&rose_neigh_list_lock);
+ }
+-- 
+2.17.1
+
