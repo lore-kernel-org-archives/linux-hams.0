@@ -1,49 +1,82 @@
-From: patchwork-bot+netdevbpf@kernel.org
-Subject: Re: [PATCH v3 RESEND] net: rose: fix UAF bugs caused by timer handler
-Date: Thu, 30 Jun 2022 09:40:12 +0000
-Message-ID: <165658201299.18643.15753400397215370488.git-patchwork-notify@kernel.org>
-References: <20220629002640.5693-1-duoming@zju.edu.cn>
-Mime-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Return-path: <linux-kernel-owner@vger.kernel.org>
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1656582013;
-        bh=RY4c7Pum0yD/rlWNWuPghL/24LB9E8YULvxz3Jn4vsA=;
-        h=Subject:From:Date:References:In-Reply-To:To:Cc:From;
-        b=T0VlJwQJ3Dt59UgcmGhcz+EZl+yiCOCupLsKaZoV8A10tZvI3Qh7c77/lrSQ/uxGR
-         tTtAnreuB3Uzgf7up8qNa8BMVxc650SfqBTHZ+f5qZ66UPJaeuJ0RN43sxrIs8oS4A
-         ZJNN9Zbob2AoVslMcyXCfl4HjWZcaY9+5OERTO/7nqmUd9x7t73F1mCP0T1WVKnF3q
-         yeeIJ+EMy6mzr5u7tFG1q1P7tNkbN34BAS782HN0KJcc4NqC6W9803J8BhKhZuMx67
-         PHFGKG6tsP9OwXPdbKlgQ6YDNt5Inxn5SOIlHLDwYJMA0Q/sdFeHohuMN62BG4Izju
-         6nNt74+Y3sjKA==
-In-Reply-To: <20220629002640.5693-1-duoming@zju.edu.cn>
+From: Duoming Zhou <duoming@zju.edu.cn>
+Subject: [PATCH net] net: rose: fix UAF bug caused by rose_t0timer_expiry
+Date: Thu, 30 Jun 2022 22:38:42 +0800
+Message-ID: <20220630143842.24906-1-duoming@zju.edu.cn>
+Return-path: <linux-hams-owner@vger.kernel.org>
 List-ID: <linux-hams.vger.kernel.org>
+MIME-Version: 1.0
 Content-Type: text/plain; charset="us-ascii"
-To: Duoming Zhou <duoming@zju.edu.cn>
-Cc: linux-hams@vger.kernel.org, netdev@vger.kernel.org, linux-kernel@vger.kernel.org, pabeni@redhat.com, kuba@kernel.org, edumazet@google.com, davem@davemloft.net, ralf@linux-mips.org
+Content-Transfer-Encoding: 7bit
+To: linux-hams@vger.kernel.org
+Cc: netdev@vger.kernel.org, linux-kernel@vger.kernel.org, pabeni@redhat.com, kuba@kernel.org, edumazet@google.com, davem@davemloft.net, ralf@linux-mips.org, Duoming Zhou <duoming@zju.edu.cn>
 
-Hello:
+There are UAF bugs caused by rose_t0timer_expiry(). The
+root cause is that del_timer() could not stop the timer
+handler that is running and there is no synchronization.
+One of the race conditions is shown below:
 
-This patch was applied to netdev/net.git (master)
-by Paolo Abeni <pabeni@redhat.com>:
+    (thread 1)             |        (thread 2)
+                           | rose_device_event
+                           |   rose_rt_device_down
+                           |     rose_remove_neigh
+rose_t0timer_expiry        |       rose_stop_t0timer(rose_neigh)
+  ...                      |         del_timer(&neigh->t0timer)
+                           |         kfree(rose_neigh) //[1]FREE
+  neigh->dce_mode //[2]USE |
 
-On Wed, 29 Jun 2022 08:26:40 +0800 you wrote:
-> There are UAF bugs in rose_heartbeat_expiry(), rose_timer_expiry()
-> and rose_idletimer_expiry(). The root cause is that del_timer()
-> could not stop the timer handler that is running and the refcount
-> of sock is not managed properly.
-> 
-> One of the UAF bugs is shown below:
-> 
-> [...]
+The rose_neigh is deallocated in position [1] and use in
+position [2].
 
-Here is the summary with links:
-  - [v3,RESEND] net: rose: fix UAF bugs caused by timer handler
-    https://git.kernel.org/netdev/net/c/9cc02ede6962
+The crash trace triggered by POC is like below:
 
-You are awesome, thank you!
+BUG: KASAN: use-after-free in expire_timers+0x144/0x320
+Write of size 8 at addr ffff888009b19658 by task swapper/0/0
+...
+Call Trace:
+ <IRQ>
+ dump_stack_lvl+0xbf/0xee
+ print_address_description+0x7b/0x440
+ print_report+0x101/0x230
+ ? expire_timers+0x144/0x320
+ kasan_report+0xed/0x120
+ ? expire_timers+0x144/0x320
+ expire_timers+0x144/0x320
+ __run_timers+0x3ff/0x4d0
+ run_timer_softirq+0x41/0x80
+ __do_softirq+0x233/0x544
+ ...
+
+This patch changes del_timer() in rose_stop_t0timer() and
+rose_stop_ftimer() to del_timer_sync() in order that the
+timer handler could be finished before the resources such as
+rose_neigh and so on are deallocated. As a result, the UAF
+bugs could be mitigated.
+
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Signed-off-by: Duoming Zhou <duoming@zju.edu.cn>
+---
+ net/rose/rose_link.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/net/rose/rose_link.c b/net/rose/rose_link.c
+index 8b96a56d3a4..9734d1264de 100644
+--- a/net/rose/rose_link.c
++++ b/net/rose/rose_link.c
+@@ -54,12 +54,12 @@ static void rose_start_t0timer(struct rose_neigh *neigh)
+ 
+ void rose_stop_ftimer(struct rose_neigh *neigh)
+ {
+-	del_timer(&neigh->ftimer);
++	del_timer_sync(&neigh->ftimer);
+ }
+ 
+ void rose_stop_t0timer(struct rose_neigh *neigh)
+ {
+-	del_timer(&neigh->t0timer);
++	del_timer_sync(&neigh->t0timer);
+ }
+ 
+ int rose_ftimer_running(struct rose_neigh *neigh)
 -- 
-Deet-doot-dot, I am a bot.
-https://korg.docs.kernel.org/patchwork/pwbot.html
-
+2.17.1
 
