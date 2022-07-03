@@ -1,67 +1,87 @@
-From: Jakub Kicinski <kuba@kernel.org>
+From: duoming@zju.edu.cn
 Subject: Re: [PATCH v4] net: rose: fix null-ptr-deref caused by
  rose_kill_by_neigh
-Date: Sat, 2 Jul 2022 12:01:08 -0700
-Message-ID: <20220702120108.32985427@kernel.org>
+Date: Sun, 3 Jul 2022 08:43:10 +0800 (GMT+08:00)
+Message-ID: <194120ff.22ed2.181c182e706.Coremail.duoming@zju.edu.cn>
 References: <20220629104941.26351-1-duoming@zju.edu.cn>
-        <20220701194155.5bd61e58@kernel.org>
-        <1bbd2137.23c51.181bdcb792f.Coremail.duoming@zju.edu.cn>
+ <20220701194155.5bd61e58@kernel.org>
+ <1bbd2137.23c51.181bdcb792f.Coremail.duoming@zju.edu.cn>
+ <20220702120108.32985427@kernel.org>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: base64
 Return-path: <linux-hams-owner@vger.kernel.org>
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1656788470;
-        bh=HnMLOMngzYmCfv9EoA0IJZhKk3NgHhd9m1LNgCBIWS4=;
-        h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
-        b=NgaX6wCFSwp+Ev/pL19Xb7/YByiLCukMuQAUwJVLOtjvQBUUE+xOHCj1/UgJ/0uaN
-         QvjPByZv8zCljFvQk6+YQCyBD3jAZAdQQyKAdHdD+xrwsOmxboUf6/4he2yYCBGTPP
-         1wYKW0OS7+X6hqWQMSSeex38CEBdbtsq6ojiZdZN/kPFkyRu3KcmtpnhuG2RuY8MRd
-         MB0lMhtMV9r3Yusv8Kqw7biNmmP9zSnecxvQZ2KsurVZWKpn1NwemPaysET5t1GFI4
-         sl02Zl97IVj+s5JjGZqGDgGSvD1U+QGiXD6Ot0Q/jATK+tn9G2pG9n8MHHqK3Tou2c
-         T2xFVllkI8M/Q==
-In-Reply-To: <1bbd2137.23c51.181bdcb792f.Coremail.duoming@zju.edu.cn>
+In-Reply-To: <20220702120108.32985427@kernel.org>
 List-ID: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
-To: duoming@zju.edu.cn
+To: Jakub Kicinski <kuba@kernel.org>
 Cc: linux-hams@vger.kernel.org, netdev@vger.kernel.org, linux-kernel@vger.kernel.org, ralf@linux-mips.org, davem@davemloft.net, edumazet@google.com, pabeni@redhat.com
 
-On Sat, 2 Jul 2022 15:23:57 +0800 (GMT+08:00) duoming@zju.edu.cn wrote:
-> > On Wed, 29 Jun 2022 18:49:41 +0800 Duoming Zhou wrote:  
-> > > When the link layer connection is broken, the rose->neighbour is
-> > > set to null. But rose->neighbour could be used by rose_connection()
-> > > and rose_release() later, because there is no synchronization among
-> > > them. As a result, the null-ptr-deref bugs will happen.
-> > > 
-> > > One of the null-ptr-deref bugs is shown below:
-> > > 
-> > >     (thread 1)                  |        (thread 2)
-> > >                                 |  rose_connect
-> > > rose_kill_by_neigh              |    lock_sock(sk)
-> > >   spin_lock_bh(&rose_list_lock) |    if (!rose->neighbour)
-> > >   rose->neighbour = NULL;//(1)  |
-> > >                                 |    rose->neighbour->use++;//(2)  
-> >   
-> > >  		if (rose->neighbour == neigh) {  
-> > 
-> > Why is it okay to perform this comparison without the socket lock,
-> > if we need a socket lock to clear it? Looks like rose_kill_by_neigh()
-> > is not guaranteed to clear all the uses of a neighbor.  
-> 
-> I am sorry, the comparision should also be protected with socket lock.
-> The rose_kill_by_neigh() only clear the neighbor that is passed as
-> parameter of rose_kill_by_neigh(). 
+SGVsbG8sCgpPbiBTYXQsIDIgSnVsIDIwMjIgMTI6MDE6MDggLTA3MDAgSmFrdWIgS2ljaW5za2kg
+d3JvdGU6Cgo+IE9uIFNhdCwgMiBKdWwgMjAyMiAxNToyMzo1NyArMDgwMCAoR01UKzA4OjAwKSBk
+dW9taW5nQHpqdS5lZHUuY24gd3JvdGU6Cj4gPiA+IE9uIFdlZCwgMjkgSnVuIDIwMjIgMTg6NDk6
+NDEgKzA4MDAgRHVvbWluZyBaaG91IHdyb3RlOiAgCj4gPiA+ID4gV2hlbiB0aGUgbGluayBsYXll
+ciBjb25uZWN0aW9uIGlzIGJyb2tlbiwgdGhlIHJvc2UtPm5laWdoYm91ciBpcwo+ID4gPiA+IHNl
+dCB0byBudWxsLiBCdXQgcm9zZS0+bmVpZ2hib3VyIGNvdWxkIGJlIHVzZWQgYnkgcm9zZV9jb25u
+ZWN0aW9uKCkKPiA+ID4gPiBhbmQgcm9zZV9yZWxlYXNlKCkgbGF0ZXIsIGJlY2F1c2UgdGhlcmUg
+aXMgbm8gc3luY2hyb25pemF0aW9uIGFtb25nCj4gPiA+ID4gdGhlbS4gQXMgYSByZXN1bHQsIHRo
+ZSBudWxsLXB0ci1kZXJlZiBidWdzIHdpbGwgaGFwcGVuLgo+ID4gPiA+IAo+ID4gPiA+IE9uZSBv
+ZiB0aGUgbnVsbC1wdHItZGVyZWYgYnVncyBpcyBzaG93biBiZWxvdzoKPiA+ID4gPiAKPiA+ID4g
+PiAgICAgKHRocmVhZCAxKSAgICAgICAgICAgICAgICAgIHwgICAgICAgICh0aHJlYWQgMikKPiA+
+ID4gPiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIHwgIHJvc2VfY29ubmVjdAo+ID4g
+PiA+IHJvc2Vfa2lsbF9ieV9uZWlnaCAgICAgICAgICAgICAgfCAgICBsb2NrX3NvY2soc2spCj4g
+PiA+ID4gICBzcGluX2xvY2tfYmgoJnJvc2VfbGlzdF9sb2NrKSB8ICAgIGlmICghcm9zZS0+bmVp
+Z2hib3VyKQo+ID4gPiA+ICAgcm9zZS0+bmVpZ2hib3VyID0gTlVMTDsvLygxKSAgfAo+ID4gPiA+
+ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgfCAgICByb3NlLT5uZWlnaGJvdXItPnVz
+ZSsrOy8vKDIpICAKPiA+ID4gICAKPiA+ID4gPiAgCQlpZiAocm9zZS0+bmVpZ2hib3VyID09IG5l
+aWdoKSB7ICAKPiA+ID4gCj4gPiA+IFdoeSBpcyBpdCBva2F5IHRvIHBlcmZvcm0gdGhpcyBjb21w
+YXJpc29uIHdpdGhvdXQgdGhlIHNvY2tldCBsb2NrLAo+ID4gPiBpZiB3ZSBuZWVkIGEgc29ja2V0
+IGxvY2sgdG8gY2xlYXIgaXQ/IExvb2tzIGxpa2Ugcm9zZV9raWxsX2J5X25laWdoKCkKPiA+ID4g
+aXMgbm90IGd1YXJhbnRlZWQgdG8gY2xlYXIgYWxsIHRoZSB1c2VzIG9mIGEgbmVpZ2hib3IuICAK
+PiA+IAo+ID4gSSBhbSBzb3JyeSwgdGhlIGNvbXBhcmlzaW9uIHNob3VsZCBhbHNvIGJlIHByb3Rl
+Y3RlZCB3aXRoIHNvY2tldCBsb2NrLgo+ID4gVGhlIHJvc2Vfa2lsbF9ieV9uZWlnaCgpIG9ubHkg
+Y2xlYXIgdGhlIG5laWdoYm9yIHRoYXQgaXMgcGFzc2VkIGFzCj4gPiBwYXJhbWV0ZXIgb2Ygcm9z
+ZV9raWxsX2J5X25laWdoKCkuIAo+IAo+IERvbid0IHRoaW5rIHRoYXQncyBwb3NzaWJsZSwgeW91
+J2QgaGF2ZSB0byBkcm9wIHRoZSBuZWlnaCBsb2NrIGV2ZXJ5Cj4gdGltZS4KClRoZSBuZWlnaGJv
+dXIgaXMgY2xlYXJlZCBpbiB0d28gc2l0dWF0aW9ucy4KCigxKSBXaGVuIHRoZSByb3NlIGRldmlj
+ZSBpcyBkb3duLCB0aGUgcm9zZV9saW5rX2RldmljZV9kb3duKCkgdHJhdmVyc2VzCnRoZSByb3Nl
+X25laWdoX2xpc3QgYW5kIHVzZXMgdGhlIHJvc2Vfa2lsbF9ieV9uZWlnaCgpIHRvIGNsZWFyIHRo
+ZQpuZWlnaGJvcnMgb2YgdGhlIGRldmljZS4KCnZvaWQgcm9zZV9saW5rX2RldmljZV9kb3duKHN0
+cnVjdCBuZXRfZGV2aWNlICpkZXYpCnsKCXN0cnVjdCByb3NlX25laWdoICpyb3NlX25laWdoOwoK
+CWZvciAocm9zZV9uZWlnaCA9IHJvc2VfbmVpZ2hfbGlzdDsgcm9zZV9uZWlnaCAhPSBOVUxMOyBy
+b3NlX25laWdoID0gcm9zZV9uZWlnaC0+bmV4dCkgewoJCWlmIChyb3NlX25laWdoLT5kZXYgPT0g
+ZGV2KSB7CgkJCXJvc2VfZGVsX3JvdXRlX2J5X25laWdoKHJvc2VfbmVpZ2gpOwoJCQlyb3NlX2tp
+bGxfYnlfbmVpZ2gocm9zZV9uZWlnaCk7CgkJfQoJfQp9CgpodHRwczovL2VsaXhpci5ib290bGlu
+LmNvbS9saW51eC92NS4xOS1yYzQvc291cmNlL25ldC9yb3NlL3Jvc2Vfcm91dGUuYyNMODM5Cgoo
+MikgV2hlbiB0aGUgbGV2ZWwgMiBsaW5rIGhhcyB0aW1lZCBvdXQsIHRoZSByb3NlX2xpbmtfZmFp
+bGVkKCkgY2FsbHMgcm9zZV9raWxsX2J5X25laWdoKCkKdG8gY2xlYXIgdGhlIHJvc2VfbmVpZ2gu
+CgpodHRwczovL2VsaXhpci5ib290bGluLmNvbS9saW51eC92NS4xOS1yYzQvc291cmNlL25ldC9y
+b3NlL3Jvc2Vfcm91dGUuYyNMODEzCgo+ID4gPiA+ICsJCQlzb2NrX2hvbGQocyk7Cj4gPiA+ID4g
+KwkJCXNwaW5fdW5sb2NrX2JoKCZyb3NlX2xpc3RfbG9jayk7Cj4gPiA+ID4gKwkJCWxvY2tfc29j
+ayhzKTsKPiA+ID4gPiAgCQkJcm9zZV9kaXNjb25uZWN0KHMsIEVORVRVTlJFQUNILCBST1NFX09V
+VF9PRl9PUkRFUiwgMCk7Cj4gPiA+ID4gIAkJCXJvc2UtPm5laWdoYm91ci0+dXNlLS07ICAKPiA+
+ID4gCj4gPiA+IFdoYXQgcHJvdGVjdHMgdGhlIHVzZSBjb3VudGVyPyAgCj4gPiAKPiA+IFRoZSB1
+c2UgY291bnRlciBpcyBwcm90ZWN0ZWQgYnkgc29ja2V0IGxvY2suCj4gCj4gV2hpY2ggb25lLCB0
+aGUgbmVpZ2ggb2JqZWN0IGNhbiBiZSBzaGFyZWQgYnkgbXVsdGlwbGUgc29ja2V0cywgbm8/CgpU
+aGUgc2tfZm9yX2VhY2goKSB0cmF2ZXJzZXMgdGhlIHJvc2VfbGlzdCBhbmQgdXNlcyB0aGUgbG9j
+ayBvZiB0aGUgc29ja2V0IHRoYXQgaXMgZXh0cmFjdGVkCmZyb20gdGhlIHJvc2VfbGlzdCB0byBw
+cm90ZWN0IHRoZSB1c2UgY291bnRlci4KCmRpZmYgLS1naXQgYS9uZXQvcm9zZS9hZl9yb3NlLmMg
+Yi9uZXQvcm9zZS9hZl9yb3NlLmMKaW5kZXggYmYyZDk4NmE2YmMuLjZkNTA4OGIwMzBhIDEwMDY0
+NAotLS0gYS9uZXQvcm9zZS9hZl9yb3NlLmMKKysrIGIvbmV0L3Jvc2UvYWZfcm9zZS5jCkBAIC0x
+NjUsMTQgKzE2NSwyNiBAQCB2b2lkIHJvc2Vfa2lsbF9ieV9uZWlnaChzdHJ1Y3Qgcm9zZV9uZWln
+aCAqbmVpZ2gpCiAgICAgICAgc3RydWN0IHNvY2sgKnM7CiAKICAgICAgICBzcGluX2xvY2tfYmgo
+JnJvc2VfbGlzdF9sb2NrKTsKK2FnYWluOgogICAgICAgIHNrX2Zvcl9lYWNoKHMsICZyb3NlX2xp
+c3QpIHsKICAgICAgICAgICAgICAgIHN0cnVjdCByb3NlX3NvY2sgKnJvc2UgPSByb3NlX3NrKHMp
+OwogCisgICAgICAgICAgICAgICBzb2NrX2hvbGQocyk7CisgICAgICAgICAgICAgICBzcGluX3Vu
+bG9ja19iaCgmcm9zZV9saXN0X2xvY2spOworICAgICAgICAgICAgICAgbG9ja19zb2NrKHMpOwog
+ICAgICAgICAgICAgICAgaWYgKHJvc2UtPm5laWdoYm91ciA9PSBuZWlnaCkgewogICAgICAgICAg
+ICAgICAgICAgICAgICByb3NlX2Rpc2Nvbm5lY3QocywgRU5FVFVOUkVBQ0gsIFJPU0VfT1VUX09G
+X09SREVSLCAwKTsKICAgICAgICAgICAgICAgICAgICAgICAgcm9zZS0+bmVpZ2hib3VyLT51c2Ut
+LTsKICAgICAgICAgICAgICAgICAgICAgICAgcm9zZS0+bmVpZ2hib3VyID0gTlVMTDsKKyAgICAg
+ICAgICAgICAgICAgICAgICAgcmVsZWFzZV9zb2NrKHMpOworICAgICAgICAgICAgICAgICAgICAg
+ICBzb2NrX3B1dChzKTsKKyAgICAgICAgICAgICAgICAgICAgICAgc3Bpbl9sb2NrX2JoKCZyb3Nl
+X2xpc3RfbG9jayk7CisgICAgICAgICAgICAgICAgICAgICAgIGdvdG8gYWdhaW47CiAgICAgICAg
+ICAgICAgICB9CisgICAgICAgICAgICAgICByZWxlYXNlX3NvY2socyk7CisgICAgICAgICAgICAg
+ICBzb2NrX3B1dChzKTsKKyAgICAgICAgICAgICAgIHNwaW5fbG9ja19iaCgmcm9zZV9saXN0X2xv
+Y2spOworICAgICAgICAgICAgICAgZ290byBhZ2FpbjsKICAgICAgICB9CiAgICAgICAgc3Bpbl91
+bmxvY2tfYmgoJnJvc2VfbGlzdF9sb2NrKTsKIH0KCkJlc3QgcmVnYXJkcywKRHVvbWluZyBaaG91
 
-Don't think that's possible, you'd have to drop the neigh lock every
-time.
-
-> > > +			sock_hold(s);
-> > > +			spin_unlock_bh(&rose_list_lock);
-> > > +			lock_sock(s);
-> > >  			rose_disconnect(s, ENETUNREACH, ROSE_OUT_OF_ORDER, 0);
-> > >  			rose->neighbour->use--;  
-> > 
-> > What protects the use counter?  
-> 
-> The use coounter is protected by socket lock.
-
-Which one, the neigh object can be shared by multiple sockets, no?
