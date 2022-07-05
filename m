@@ -1,87 +1,138 @@
-From: duoming@zju.edu.cn
-Subject: Re: [PATCH v4] net: rose: fix null-ptr-deref caused by
+From: Paolo Abeni <pabeni@redhat.com>
+Subject: Re: [PATCH net v5] net: rose: fix null-ptr-deref caused by
  rose_kill_by_neigh
-Date: Sun, 3 Jul 2022 08:43:10 +0800 (GMT+08:00)
-Message-ID: <194120ff.22ed2.181c182e706.Coremail.duoming@zju.edu.cn>
-References: <20220629104941.26351-1-duoming@zju.edu.cn>
- <20220701194155.5bd61e58@kernel.org>
- <1bbd2137.23c51.181bdcb792f.Coremail.duoming@zju.edu.cn>
- <20220702120108.32985427@kernel.org>
+Date: Tue, 05 Jul 2022 10:43:44 +0200
+Message-ID: <4a95703c5c1a09e3ed1a64ddf83e65e222326214.camel@redhat.com>
+References: <20220702075718.25121-1-duoming@zju.edu.cn>
 Mime-Version: 1.0
-Content-Transfer-Encoding: base64
-Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <20220702120108.32985427@kernel.org>
+Content-Transfer-Encoding: 7bit
+Return-path: <linux-kernel-owner@vger.kernel.org>
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+        s=mimecast20190719; t=1657010629;
+        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+         content-transfer-encoding:content-transfer-encoding:
+         in-reply-to:in-reply-to:references:references;
+        bh=kZy/nxlcdzOmZXOvcCR//qWGLqmbIlGg7XXJRIbpjK0=;
+        b=Q4k8p5OlrVZ9uc7Rwl7InccRx03B/hUAueBrdAdJmGSOWFeAgjAAfBaOGMc3EMXHRlIpHz
+        j01zptQDlwhfB++HgGXMn9MEX9g94dD3k6Y3yccLYob3I+IJ57/eRVV+jXMazXe+w0l+9x
+        5FGI3IKTfuWLMgEE9ZFUODI8tHd6eLg=
+In-Reply-To: <20220702075718.25121-1-duoming@zju.edu.cn>
 List-ID: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
-To: Jakub Kicinski <kuba@kernel.org>
-Cc: linux-hams@vger.kernel.org, netdev@vger.kernel.org, linux-kernel@vger.kernel.org, ralf@linux-mips.org, davem@davemloft.net, edumazet@google.com, pabeni@redhat.com
+To: Duoming Zhou <duoming@zju.edu.cn>, linux-hams@vger.kernel.org
+Cc: ralf@linux-mips.org, davem@davemloft.net, edumazet@google.com, kuba@kernel.org, netdev@vger.kernel.org, linux-kernel@vger.kernel.org
 
-SGVsbG8sCgpPbiBTYXQsIDIgSnVsIDIwMjIgMTI6MDE6MDggLTA3MDAgSmFrdWIgS2ljaW5za2kg
-d3JvdGU6Cgo+IE9uIFNhdCwgMiBKdWwgMjAyMiAxNToyMzo1NyArMDgwMCAoR01UKzA4OjAwKSBk
-dW9taW5nQHpqdS5lZHUuY24gd3JvdGU6Cj4gPiA+IE9uIFdlZCwgMjkgSnVuIDIwMjIgMTg6NDk6
-NDEgKzA4MDAgRHVvbWluZyBaaG91IHdyb3RlOiAgCj4gPiA+ID4gV2hlbiB0aGUgbGluayBsYXll
-ciBjb25uZWN0aW9uIGlzIGJyb2tlbiwgdGhlIHJvc2UtPm5laWdoYm91ciBpcwo+ID4gPiA+IHNl
-dCB0byBudWxsLiBCdXQgcm9zZS0+bmVpZ2hib3VyIGNvdWxkIGJlIHVzZWQgYnkgcm9zZV9jb25u
-ZWN0aW9uKCkKPiA+ID4gPiBhbmQgcm9zZV9yZWxlYXNlKCkgbGF0ZXIsIGJlY2F1c2UgdGhlcmUg
-aXMgbm8gc3luY2hyb25pemF0aW9uIGFtb25nCj4gPiA+ID4gdGhlbS4gQXMgYSByZXN1bHQsIHRo
-ZSBudWxsLXB0ci1kZXJlZiBidWdzIHdpbGwgaGFwcGVuLgo+ID4gPiA+IAo+ID4gPiA+IE9uZSBv
-ZiB0aGUgbnVsbC1wdHItZGVyZWYgYnVncyBpcyBzaG93biBiZWxvdzoKPiA+ID4gPiAKPiA+ID4g
-PiAgICAgKHRocmVhZCAxKSAgICAgICAgICAgICAgICAgIHwgICAgICAgICh0aHJlYWQgMikKPiA+
-ID4gPiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIHwgIHJvc2VfY29ubmVjdAo+ID4g
-PiA+IHJvc2Vfa2lsbF9ieV9uZWlnaCAgICAgICAgICAgICAgfCAgICBsb2NrX3NvY2soc2spCj4g
-PiA+ID4gICBzcGluX2xvY2tfYmgoJnJvc2VfbGlzdF9sb2NrKSB8ICAgIGlmICghcm9zZS0+bmVp
-Z2hib3VyKQo+ID4gPiA+ICAgcm9zZS0+bmVpZ2hib3VyID0gTlVMTDsvLygxKSAgfAo+ID4gPiA+
-ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgfCAgICByb3NlLT5uZWlnaGJvdXItPnVz
-ZSsrOy8vKDIpICAKPiA+ID4gICAKPiA+ID4gPiAgCQlpZiAocm9zZS0+bmVpZ2hib3VyID09IG5l
-aWdoKSB7ICAKPiA+ID4gCj4gPiA+IFdoeSBpcyBpdCBva2F5IHRvIHBlcmZvcm0gdGhpcyBjb21w
-YXJpc29uIHdpdGhvdXQgdGhlIHNvY2tldCBsb2NrLAo+ID4gPiBpZiB3ZSBuZWVkIGEgc29ja2V0
-IGxvY2sgdG8gY2xlYXIgaXQ/IExvb2tzIGxpa2Ugcm9zZV9raWxsX2J5X25laWdoKCkKPiA+ID4g
-aXMgbm90IGd1YXJhbnRlZWQgdG8gY2xlYXIgYWxsIHRoZSB1c2VzIG9mIGEgbmVpZ2hib3IuICAK
-PiA+IAo+ID4gSSBhbSBzb3JyeSwgdGhlIGNvbXBhcmlzaW9uIHNob3VsZCBhbHNvIGJlIHByb3Rl
-Y3RlZCB3aXRoIHNvY2tldCBsb2NrLgo+ID4gVGhlIHJvc2Vfa2lsbF9ieV9uZWlnaCgpIG9ubHkg
-Y2xlYXIgdGhlIG5laWdoYm9yIHRoYXQgaXMgcGFzc2VkIGFzCj4gPiBwYXJhbWV0ZXIgb2Ygcm9z
-ZV9raWxsX2J5X25laWdoKCkuIAo+IAo+IERvbid0IHRoaW5rIHRoYXQncyBwb3NzaWJsZSwgeW91
-J2QgaGF2ZSB0byBkcm9wIHRoZSBuZWlnaCBsb2NrIGV2ZXJ5Cj4gdGltZS4KClRoZSBuZWlnaGJv
-dXIgaXMgY2xlYXJlZCBpbiB0d28gc2l0dWF0aW9ucy4KCigxKSBXaGVuIHRoZSByb3NlIGRldmlj
-ZSBpcyBkb3duLCB0aGUgcm9zZV9saW5rX2RldmljZV9kb3duKCkgdHJhdmVyc2VzCnRoZSByb3Nl
-X25laWdoX2xpc3QgYW5kIHVzZXMgdGhlIHJvc2Vfa2lsbF9ieV9uZWlnaCgpIHRvIGNsZWFyIHRo
-ZQpuZWlnaGJvcnMgb2YgdGhlIGRldmljZS4KCnZvaWQgcm9zZV9saW5rX2RldmljZV9kb3duKHN0
-cnVjdCBuZXRfZGV2aWNlICpkZXYpCnsKCXN0cnVjdCByb3NlX25laWdoICpyb3NlX25laWdoOwoK
-CWZvciAocm9zZV9uZWlnaCA9IHJvc2VfbmVpZ2hfbGlzdDsgcm9zZV9uZWlnaCAhPSBOVUxMOyBy
-b3NlX25laWdoID0gcm9zZV9uZWlnaC0+bmV4dCkgewoJCWlmIChyb3NlX25laWdoLT5kZXYgPT0g
-ZGV2KSB7CgkJCXJvc2VfZGVsX3JvdXRlX2J5X25laWdoKHJvc2VfbmVpZ2gpOwoJCQlyb3NlX2tp
-bGxfYnlfbmVpZ2gocm9zZV9uZWlnaCk7CgkJfQoJfQp9CgpodHRwczovL2VsaXhpci5ib290bGlu
-LmNvbS9saW51eC92NS4xOS1yYzQvc291cmNlL25ldC9yb3NlL3Jvc2Vfcm91dGUuYyNMODM5Cgoo
-MikgV2hlbiB0aGUgbGV2ZWwgMiBsaW5rIGhhcyB0aW1lZCBvdXQsIHRoZSByb3NlX2xpbmtfZmFp
-bGVkKCkgY2FsbHMgcm9zZV9raWxsX2J5X25laWdoKCkKdG8gY2xlYXIgdGhlIHJvc2VfbmVpZ2gu
-CgpodHRwczovL2VsaXhpci5ib290bGluLmNvbS9saW51eC92NS4xOS1yYzQvc291cmNlL25ldC9y
-b3NlL3Jvc2Vfcm91dGUuYyNMODEzCgo+ID4gPiA+ICsJCQlzb2NrX2hvbGQocyk7Cj4gPiA+ID4g
-KwkJCXNwaW5fdW5sb2NrX2JoKCZyb3NlX2xpc3RfbG9jayk7Cj4gPiA+ID4gKwkJCWxvY2tfc29j
-ayhzKTsKPiA+ID4gPiAgCQkJcm9zZV9kaXNjb25uZWN0KHMsIEVORVRVTlJFQUNILCBST1NFX09V
-VF9PRl9PUkRFUiwgMCk7Cj4gPiA+ID4gIAkJCXJvc2UtPm5laWdoYm91ci0+dXNlLS07ICAKPiA+
-ID4gCj4gPiA+IFdoYXQgcHJvdGVjdHMgdGhlIHVzZSBjb3VudGVyPyAgCj4gPiAKPiA+IFRoZSB1
-c2UgY291bnRlciBpcyBwcm90ZWN0ZWQgYnkgc29ja2V0IGxvY2suCj4gCj4gV2hpY2ggb25lLCB0
-aGUgbmVpZ2ggb2JqZWN0IGNhbiBiZSBzaGFyZWQgYnkgbXVsdGlwbGUgc29ja2V0cywgbm8/CgpU
-aGUgc2tfZm9yX2VhY2goKSB0cmF2ZXJzZXMgdGhlIHJvc2VfbGlzdCBhbmQgdXNlcyB0aGUgbG9j
-ayBvZiB0aGUgc29ja2V0IHRoYXQgaXMgZXh0cmFjdGVkCmZyb20gdGhlIHJvc2VfbGlzdCB0byBw
-cm90ZWN0IHRoZSB1c2UgY291bnRlci4KCmRpZmYgLS1naXQgYS9uZXQvcm9zZS9hZl9yb3NlLmMg
-Yi9uZXQvcm9zZS9hZl9yb3NlLmMKaW5kZXggYmYyZDk4NmE2YmMuLjZkNTA4OGIwMzBhIDEwMDY0
-NAotLS0gYS9uZXQvcm9zZS9hZl9yb3NlLmMKKysrIGIvbmV0L3Jvc2UvYWZfcm9zZS5jCkBAIC0x
-NjUsMTQgKzE2NSwyNiBAQCB2b2lkIHJvc2Vfa2lsbF9ieV9uZWlnaChzdHJ1Y3Qgcm9zZV9uZWln
-aCAqbmVpZ2gpCiAgICAgICAgc3RydWN0IHNvY2sgKnM7CiAKICAgICAgICBzcGluX2xvY2tfYmgo
-JnJvc2VfbGlzdF9sb2NrKTsKK2FnYWluOgogICAgICAgIHNrX2Zvcl9lYWNoKHMsICZyb3NlX2xp
-c3QpIHsKICAgICAgICAgICAgICAgIHN0cnVjdCByb3NlX3NvY2sgKnJvc2UgPSByb3NlX3NrKHMp
-OwogCisgICAgICAgICAgICAgICBzb2NrX2hvbGQocyk7CisgICAgICAgICAgICAgICBzcGluX3Vu
-bG9ja19iaCgmcm9zZV9saXN0X2xvY2spOworICAgICAgICAgICAgICAgbG9ja19zb2NrKHMpOwog
-ICAgICAgICAgICAgICAgaWYgKHJvc2UtPm5laWdoYm91ciA9PSBuZWlnaCkgewogICAgICAgICAg
-ICAgICAgICAgICAgICByb3NlX2Rpc2Nvbm5lY3QocywgRU5FVFVOUkVBQ0gsIFJPU0VfT1VUX09G
-X09SREVSLCAwKTsKICAgICAgICAgICAgICAgICAgICAgICAgcm9zZS0+bmVpZ2hib3VyLT51c2Ut
-LTsKICAgICAgICAgICAgICAgICAgICAgICAgcm9zZS0+bmVpZ2hib3VyID0gTlVMTDsKKyAgICAg
-ICAgICAgICAgICAgICAgICAgcmVsZWFzZV9zb2NrKHMpOworICAgICAgICAgICAgICAgICAgICAg
-ICBzb2NrX3B1dChzKTsKKyAgICAgICAgICAgICAgICAgICAgICAgc3Bpbl9sb2NrX2JoKCZyb3Nl
-X2xpc3RfbG9jayk7CisgICAgICAgICAgICAgICAgICAgICAgIGdvdG8gYWdhaW47CiAgICAgICAg
-ICAgICAgICB9CisgICAgICAgICAgICAgICByZWxlYXNlX3NvY2socyk7CisgICAgICAgICAgICAg
-ICBzb2NrX3B1dChzKTsKKyAgICAgICAgICAgICAgIHNwaW5fbG9ja19iaCgmcm9zZV9saXN0X2xv
-Y2spOworICAgICAgICAgICAgICAgZ290byBhZ2FpbjsKICAgICAgICB9CiAgICAgICAgc3Bpbl91
-bmxvY2tfYmgoJnJvc2VfbGlzdF9sb2NrKTsKIH0KCkJlc3QgcmVnYXJkcywKRHVvbWluZyBaaG91
+On Sat, 2022-07-02 at 15:57 +0800, Duoming Zhou wrote:
+> When the link layer connection is broken, the rose->neighbour is
+> set to null. But rose->neighbour could be used by rose_connection()
+> and rose_release() later, because there is no synchronization among
+> them. As a result, the null-ptr-deref bugs will happen.
+> 
+> One of the null-ptr-deref bugs is shown below:
+> 
+>     (thread 1)                  |        (thread 2)
+>                                 |  rose_connect
+> rose_kill_by_neigh              |    lock_sock(sk)
+>   spin_lock_bh(&rose_list_lock) |    if (!rose->neighbour)
+>   rose->neighbour = NULL;//(1)  |
+>                                 |    rose->neighbour->use++;//(2)
+> 
+> The rose->neighbour is set to null in position (1) and dereferenced
+> in position (2).
+> 
+> The KASAN report triggered by POC is shown below:
+> 
+> KASAN: null-ptr-deref in range [0x0000000000000028-0x000000000000002f]
+> ...
+> RIP: 0010:rose_connect+0x6c2/0xf30
+> RSP: 0018:ffff88800ab47d60 EFLAGS: 00000206
+> RAX: 0000000000000005 RBX: 000000000000002a RCX: 0000000000000000
+> RDX: ffff88800ab38000 RSI: ffff88800ab47e48 RDI: ffff88800ab38309
+> RBP: dffffc0000000000 R08: 0000000000000000 R09: ffffed1001567062
+> R10: dfffe91001567063 R11: 1ffff11001567061 R12: 1ffff11000d17cd0
+> R13: ffff8880068be680 R14: 0000000000000002 R15: 1ffff11000d17cd0
+> ...
+> Call Trace:
+>   <TASK>
+>   ? __local_bh_enable_ip+0x54/0x80
+>   ? selinux_netlbl_socket_connect+0x26/0x30
+>   ? rose_bind+0x5b0/0x5b0
+>   __sys_connect+0x216/0x280
+>   __x64_sys_connect+0x71/0x80
+>   do_syscall_64+0x43/0x90
+>   entry_SYSCALL_64_after_hwframe+0x46/0xb0
+> 
+> This patch adds lock_sock() in rose_kill_by_neigh() in order to
+> synchronize with rose_connect() and rose_release().
+> 
+> Meanwhile, this patch adds sock_hold() protected by rose_list_lock
+> that could synchronize with rose_remove_socket() in order to mitigate
+> UAF bug caused by lock_sock() we add.
+> 
+> What's more, there is no need using rose_neigh_list_lock to protect
+> rose_kill_by_neigh(). Because we have already used rose_neigh_list_lock
+> to protect the state change of rose_neigh in rose_link_failed(), which
+> is well synchronized.
+> 
+> Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+> Signed-off-by: Duoming Zhou <duoming@zju.edu.cn>
+> ---
+> Changes in v5:
+>   - v5: Use socket lock to protect comparison in rose_kill_by_neigh.
+> 
+>  net/rose/af_rose.c    | 12 ++++++++++++
+>  net/rose/rose_route.c |  2 ++
+>  2 files changed, 14 insertions(+)
+> 
+> diff --git a/net/rose/af_rose.c b/net/rose/af_rose.c
+> index bf2d986a6bc..6d5088b030a 100644
+> --- a/net/rose/af_rose.c
+> +++ b/net/rose/af_rose.c
+> @@ -165,14 +165,26 @@ void rose_kill_by_neigh(struct rose_neigh *neigh)
+>  	struct sock *s;
+>  
+>  	spin_lock_bh(&rose_list_lock);
+> +again:
+>  	sk_for_each(s, &rose_list) {
+>  		struct rose_sock *rose = rose_sk(s);
+>  
+> +		sock_hold(s);
+> +		spin_unlock_bh(&rose_list_lock);
+> +		lock_sock(s);
+>  		if (rose->neighbour == neigh) {
+>  			rose_disconnect(s, ENETUNREACH, ROSE_OUT_OF_ORDER, 0);
+>  			rose->neighbour->use--;
+
+Note that the code can held different socket lock while updating
+'neighbour->use'. That really means that such updates can really race
+each other, with bad results.
+
+I think the only safe way out is using an atomic_t for 'neighbour->use'
+(likely a refcount_t would be a better option).
+
+All the above deserves a separate patch IMHO.
+
+>  			rose->neighbour = NULL;
+> +			release_sock(s);
+> +			sock_put(s);
+> +			spin_lock_bh(&rose_list_lock);
+> +			goto again;
+
+This chunk is dup of the following lines, it could be dropped...
+
+>  		}
+> +		release_sock(s);
+> +		sock_put(s);
+> +		spin_lock_bh(&rose_list_lock);
+> +		goto again;
+
+... if this would be correct, which apparently is not.
+
+What happens when 'rose->neighbour' is different from 'neigh' for first
+socket in rose_list?
+
+Cheers,
+
+Paolo
 
