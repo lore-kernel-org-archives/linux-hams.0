@@ -1,77 +1,56 @@
-From: duoming@zju.edu.cn
-Subject: Re: [PATCH net v2] net: rose: fix UAF bug caused by
- rose_t0timer_expiry
-Date: Thu, 7 Jul 2022 10:23:09 +0800 (GMT+08:00)
-Message-ID: <1dd7d69d.2fd66.181d677e20d.Coremail.duoming@zju.edu.cn>
+From: patchwork-bot+netdevbpf@kernel.org
+Subject: Re: [PATCH net v2] net: rose: fix UAF bug caused by rose_t0timer_expiry
+Date: Thu, 07 Jul 2022 03:00:13 +0000
+Message-ID: <165716281344.11165.3540358551022288195.git-patchwork-notify@kernel.org>
 References: <20220705125610.77971-1-duoming@zju.edu.cn>
- <20220706190237.477f24ee@kernel.org>
 Mime-Version: 1.0
-Content-Transfer-Encoding: base64
+Content-Transfer-Encoding: 8bit
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <20220706190237.477f24ee@kernel.org>
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1657162813;
+        bh=N8b8Kgo3TvZmFgrWYY3ovqkpBeOo6ywQTI9gO+NvEcI=;
+        h=Subject:From:Date:References:In-Reply-To:To:Cc:From;
+        b=DYo65RSKuCA308SwdH4IS29/zn5qkE/oeVaqJUNnCyepBLgX4fyYSRZ08pJORE3iq
+         XN6bn5MlDIAhE2SAURtNVGix1erky5naN9BYVUee+BSF+dzcUm/D0l1Aa//8Vj3l80
+         W/tSUvXK0bfLxlh9tp+1luFwK6Iz6SFOeMItwneLSm+O+va/AwXxOUWwAWX38q54Rf
+         KhnR5ApY7PksUeJy8GLzeEIplzlW5MNmNV95UhWmPGUQTreHdUjyuSKl081QSwd5+i
+         K4Ai8GrmyR5bKBPMjuBBps0BGJhW+rAqvryQMYLHnFc3+ZUD7fnGIv/99Ogo8eGMHy
+         YoAlLlMveOlPA==
+In-Reply-To: <20220705125610.77971-1-duoming@zju.edu.cn>
 List-ID: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
-To: Jakub Kicinski <kuba@kernel.org>
-Cc: linux-hams@vger.kernel.org, netdev@vger.kernel.org, linux-kernel@vger.kernel.org, ralf@linux-mips.org, davem@davemloft.net, edumazet@google.com, pabeni@redhat.com
+To: Duoming Zhou <duoming@zju.edu.cn>
+Cc: linux-hams@vger.kernel.org, netdev@vger.kernel.org, linux-kernel@vger.kernel.org, ralf@linux-mips.org, davem@davemloft.net, edumazet@google.com, kuba@kernel.org, pabeni@redhat.com
 
-SGVsbG8sCgpPbiBXZWQsIDYgSnVsIDIwMjIgMTk6MDI6MzcgLTA3MDAgSmFrdWIgS2ljaW5za2k6
-Cgo+IE9uIFR1ZSwgIDUgSnVsIDIwMjIgMjA6NTY6MTAgKzA4MDAgRHVvbWluZyBaaG91IHdyb3Rl
-Ogo+ID4gKwlkZWxfdGltZXJfc3luYygmcm9zZV9uZWlnaC0+dDB0aW1lcik7Cj4gCj4gLyoqCj4g
-ICogZGVsX3RpbWVyX3N5bmMgLSBkZWFjdGl2YXRlIGEgdGltZXIgYW5kIHdhaXQgZm9yIHRoZSBo
-YW5kbGVyIHRvIGZpbmlzaC4KPiBbLi4uXQo+ICAqIFN5bmNocm9uaXphdGlvbiBydWxlczogQ2Fs
-bGVycyBtdXN0IHByZXZlbnQgcmVzdGFydGluZyBvZiB0aGUgdGltZXIsCj4gICogb3RoZXJ3aXNl
-IHRoaXMgZnVuY3Rpb24gaXMgbWVhbmluZ2xlc3MuCj4gCj4gaG93IGlzIHRoZSByZXN0YXJ0aW5n
-IHByZXZlbnRlZD8gSWYgSSdtIGxvb2tpbmcgcmlnaHQgCj4gcm9zZV90MHRpbWVyX2V4cGlyeSgp
-IHJlYXJtcyB0aGUgdGltZXIuCgpUaGUgZGVsX3RpbWVyX3N5bmMoKSBjb3VsZCBzdG9wIHRoZSB0
-aW1lciB0aGF0IHJlc3RhcnQgaXRzZWxmIGluCml0cyB0aW1lciBjYWxsYmFjayBmdW5jdGlvbi4K
-ClRoZSByb290IGNhdXNlIGlzIHNob3duIGJlbG93IHdoaWNoIGlzIGEgcGFydCBvZiBjb2RlIGlu
-CmRlbF90aW1lcl9zeW5jOgoKCWRvIHsKCQlyZXQgPSB0cnlfdG9fZGVsX3RpbWVyX3N5bmModGlt
-ZXIpOwoKCQlpZiAodW5saWtlbHkocmV0IDwgMCkpIHsKCQkJZGVsX3RpbWVyX3dhaXRfcnVubmlu
-Zyh0aW1lcik7CgkJCWNwdV9yZWxheCgpOwoJCX0KCX0gd2hpbGUgKHJldCA8IDApOwoKaHR0cHM6
-Ly9lbGl4aXIuYm9vdGxpbi5jb20vbGludXgvbGF0ZXN0L3NvdXJjZS9rZXJuZWwvdGltZS90aW1l
-ci5jI0wxMzgxCgpJZiB0aGUgdGltZXIgY2FsbGJhY2sgZnVuY3Rpb24gaXMgcnVubmluZywgdGhl
-IHRyeV90b19kZWxfdGltZXJfc3luYwp3aWxsIHJldHVybiAtMS4gVGhlbiwgaXQgd2lsbCBsb29w
-IHVudGlsIHRoZSB0aW1lciBpcyBub3QgcXVldWVkIGFuZAp0aGUgaGFuZGxlciBpcyBub3QgcnVu
-bmluZyBvbiBhbnkgQ1BVLgoKQWx0aG91Z2ggdGhlIHRpbWVyIG1heSByZXN0YXJ0IGl0c2VsZiBp
-biB0aW1lciBjYWxsYmFjayBmdW5jdGlvbiwgdGhlCmRlbF90aW1lcl9zeW5jIGNvdWxkIGFsc28g
-c3RvcCBpdC4KCkluIG9yZGVyIHRvIGZ1cnRoZXIgcHJvdmUgdGhlIGRlbF90aW1lcl9zeW5jKCkg
-Y291bGQgc3RvcCB0aGUgdGltZXIgdGhhdApyZXN0YXJ0IGl0c2VsZiBpbiBpdHMgdGltZXIgaGFu
-ZGxlciwgSSB3cm90ZSB0aGUgZm9sbG93aW5nIGtlcm5lbCBtb2R1bGUKd2hvZXMgcGFydCBvZiBj
-b2RlIGlzIHNob3duIGJlbG93OgoKPT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09
-PT09PT09PT09PT09PT09PT09PT09PT09PT09PT0KCnN0cnVjdCB0aW1lcl9saXN0IG15X3RpbWVy
-OwpzdGF0aWMgdm9pZCBteV90aW1lcl9jYWxsYmFjayhzdHJ1Y3QgdGltZXJfbGlzdCAqdGltZXIp
-OwpzdGF0aWMgdm9pZCBzdGFydF90aW1lcih2b2lkKTsKCnN0YXRpYyB2b2lkIHN0YXJ0X3RpbWVy
-KHZvaWQpewogICAgZGVsX3RpbWVyKCZteV90aW1lcik7CiAgICBteV90aW1lci5leHBpcmVzID0g
-amlmZmllcytIWjsKICAgIG15X3RpbWVyLmZ1bmN0aW9uID0gbXlfdGltZXJfY2FsbGJhY2s7CiAg
-ICBhZGRfdGltZXIoJm15X3RpbWVyKTsKfQoKc3RhdGljIHZvaWQgbXlfdGltZXJfY2FsbGJhY2so
-c3RydWN0IHRpbWVyX2xpc3QgKnRpbWVyKXsKICAgIHByaW50aygiSW4gbXlfdGltZXJfZnVuY3Rp
-b24iKTsKICAgIHByaW50aygidGhlIGppZmZpZXMgaXMgJWxkXG4iLGppZmZpZXMpOwogICAgc3Rh
-cnRfdGltZXIoKTsKfQoKc3RhdGljIGludCBfX2luaXQgZGVsX3RpbWVyX3N5bmNfaW5pdCh2b2lk
-KQp7CiAgICBpbnQgcmVzdWx0OwogICAgcHJpbnRrKCJteV90aW1lciB3aWxsIGJlIGNyZWF0ZS5c
-biIpOwogICAgcHJpbnRrKCJ0aGUgamlmZmllcyBpcyA6JWxkXG4iLCBqaWZmaWVzKTsKICAgIHRp
-bWVyX3NldHVwKCZteV90aW1lcixteV90aW1lcl9jYWxsYmFjaywwKTsKICAgIHJlc3VsdCA9IG1v
-ZF90aW1lcigmbXlfdGltZXIsamlmZmllcyArIFNJWFBfVFhERUxBWSk7CiAgICBwcmludGsoInRo
-ZSBtb2RfdGltZXIgaXMgOiVkXG5cbiIscmVzdWx0KTsKICAgIHJldHVybiAwOwp9CgpzdGF0aWMg
-dm9pZCBfX2V4aXQgZGVsX3RpbWVyX3N5bmNfZXhpdCh2b2lkKQp7CiAgICBpbnQgcmVzdWx0PWRl
-bF90aW1lcl9zeW5jKCZteV90aW1lcik7CiAgICBwcmludGsoInRoZSBkZWxfdGltZXJfc3luYyBp
-cyA6JWRcblxuIiwgcmVzdWx0KTsKfQoKPT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09
-PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT0KClRoZSB0aW1lciBoYW5kbGVyIGlzIHJ1
-bm5pbmcgZnJvbSBpbnRlcnJ1cHRzIGFuZCBkZWxfdGltZXJfc3luYygpIGNvdWxkIHN0b3AKdGhl
-IHRpbWVyIHRoYXQgcmV3aW5kIGl0c2VsZiBpbiBpdHMgdGltZXIgaGFuZGxlciwgdGhlIHJlc3Vs
-dCBpcyBzaG93biBiZWxvdzoKCiMgaW5zbW9kIGRlbF90aW1lcl9zeW5jLmtvIApbICAxMDMuNTA1
-ODU3XSBteV90aW1lciB3aWxsIGJlIGNyZWF0ZS4KWyAgMTAzLjUwNTkyMl0gdGhlIGppZmZpZXMg
-aXMgOjQyOTQ3NzA4MzIKWyAgMTAzLjUwNjg0NV0gdGhlIG1vZF90aW1lciBpcyA6MApbICAxMDMu
-NTA2ODQ1XSAKIyBbICAxMDMuNTMyMzg5XSBJbiBteV90aW1lcl9mdW5jdGlvbgpbICAxMDMuNTMy
-NDUyXSB0aGUgamlmZmllcyBpcyA0Mjk0NzcwODU5ClsgIDEwNC41NzY3NjhdIEluIG15X3RpbWVy
-X2Z1bmN0aW9uClsgIDEwNC41NzcwOTZdIHRoZSBqaWZmaWVzIGlzIDQyOTQ3NzE5MDQKWyAgMTA1
-LjYwMDk0MV0gSW4gbXlfdGltZXJfZnVuY3Rpb24KWyAgMTA1LjYwMTA3Ml0gdGhlIGppZmZpZXMg
-aXMgNDI5NDc3MjkyOApbICAxMDYuNjI1Mzk3XSBJbiBteV90aW1lcl9mdW5jdGlvbgpbICAxMDYu
-NjI1NTczXSB0aGUgamlmZmllcyBpcyA0Mjk0NzczOTUyClsgIDEwNy42NDg5OTVdIEluIG15X3Rp
-bWVyX2Z1bmN0aW9uClsgIDEwNy42NDkyMTJdIHRoZSBqaWZmaWVzIGlzIDQyOTQ3NzQ5NzYKWyAg
-MTA4LjY3MzAzN10gSW4gbXlfdGltZXJfZnVuY3Rpb24KWyAgMTA4LjY3Mzc4N10gdGhlIGppZmZp
-ZXMgaXMgNDI5NDc3NjAwMQpybW1vZCBkZWxfdGltZXJfc3luYy5rbwpbICAxMDkuNjQ5NDgyXSB0
-aGUgZGVsX3RpbWVyX3N5bmMgaXMgOjEKWyAgMTA5LjY0OTQ4Ml0gCiMgCgpJZiB3ZSBjYWxsIGFu
-b3RoZXIgdGhyZWFkIHN1Y2ggYXMgYSB3b3JrX3F1ZXVlIG9yIHRoZSBjb2RlIGluIG90aGVyIHBs
-YWNlcwp0byByZXN0YXJ0IHRoZSB0aW1lciBpbnN0ZWFkIG9mIGluIGl0cyB0aW1lciBoYW5kbGVy
-LCB0aGUgZGVsX3RpbWVyX3N5bmMoKQpjb3VsZCBub3Qgc3RvcCBpdC4KCkJlc3QgcmVnYXJkcywK
-RHVvbWluZyBaaG91
+Hello:
+
+This patch was applied to netdev/net.git (master)
+by Jakub Kicinski <kuba@kernel.org>:
+
+On Tue,  5 Jul 2022 20:56:10 +0800 you wrote:
+> There are UAF bugs caused by rose_t0timer_expiry(). The
+> root cause is that del_timer() could not stop the timer
+> handler that is running and there is no synchronization.
+> One of the race conditions is shown below:
+> 
+>     (thread 1)             |        (thread 2)
+>                            | rose_device_event
+>                            |   rose_rt_device_down
+>                            |     rose_remove_neigh
+> rose_t0timer_expiry        |       rose_stop_t0timer(rose_neigh)
+>   ...                      |         del_timer(&neigh->t0timer)
+>                            |         kfree(rose_neigh) //[1]FREE
+>   neigh->dce_mode //[2]USE |
+> 
+> [...]
+
+Here is the summary with links:
+  - [net,v2] net: rose: fix UAF bug caused by rose_t0timer_expiry
+    https://git.kernel.org/netdev/net/c/148ca0451807
+
+You are awesome, thank you!
+-- 
+Deet-doot-dot, I am a bot.
+https://korg.docs.kernel.org/patchwork/pwbot.html
+
+
