@@ -1,93 +1,328 @@
-From: duoming@zju.edu.cn
-Subject: Re: [PATCH net v5] net: rose: fix null-ptr-deref caused by
- rose_kill_by_neigh
-Date: Sun, 10 Jul 2022 21:52:06 +0800 (GMT+08:00)
-Message-ID: <56319300.38660.181e861b71b.Coremail.duoming@zju.edu.cn>
-Mime-Version: 1.0
-Content-Transfer-Encoding: base64
+From: Duoming Zhou <duoming@zju.edu.cn>
+Subject: [PATCH net v6] net: rose: fix null-ptr-deref caused by rose_kill_by_neigh
+Date: Mon, 11 Jul 2022 09:31:11 +0800
+Message-ID: <20220711013111.33183-1-duoming@zju.edu.cn>
 Return-path: <netdev-owner@vger.kernel.org>
 List-ID: <linux-hams.vger.kernel.org>
+MIME-Version: 1.0
 Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 7bit
 To: linux-hams@vger.kernel.org, pabeni@redhat.com
-Cc: ralf@linux-mips.org, davem@davemloft.net, edumazet@google.com, kuba@kernel.org, netdev@vger.kernel.org, linux-kernel@vger.kernel.org
+Cc: ralf@linux-mips.org, davem@davemloft.net, edumazet@google.com, kuba@kernel.org, netdev@vger.kernel.org, linux-kernel@vger.kernel.org, Duoming Zhou <duoming@zju.edu.cn>
 
-SGVsbG8sCgpPbiBUdWUsIDA1IEp1bCAyMDIyIDEwOjQzOjQ0ICswMjAwIHBhYmVuaUByZWRoYXQu
-Y29tIHdyb3RlOgoKPiBPbiBTYXQsIDIwMjItMDctMDIgYXQgMTU6NTcgKzA4MDAsIER1b21pbmcg
-WmhvdSB3cm90ZToKPiA+IFdoZW4gdGhlIGxpbmsgbGF5ZXIgY29ubmVjdGlvbiBpcyBicm9rZW4s
-IHRoZSByb3NlLT5uZWlnaGJvdXIgaXMKPiA+IHNldCB0byBudWxsLiBCdXQgcm9zZS0+bmVpZ2hi
-b3VyIGNvdWxkIGJlIHVzZWQgYnkgcm9zZV9jb25uZWN0aW9uKCkKPiA+IGFuZCByb3NlX3JlbGVh
-c2UoKSBsYXRlciwgYmVjYXVzZSB0aGVyZSBpcyBubyBzeW5jaHJvbml6YXRpb24gYW1vbmcKPiA+
-IHRoZW0uIEFzIGEgcmVzdWx0LCB0aGUgbnVsbC1wdHItZGVyZWYgYnVncyB3aWxsIGhhcHBlbi4K
-PiA+IAo+ID4gT25lIG9mIHRoZSBudWxsLXB0ci1kZXJlZiBidWdzIGlzIHNob3duIGJlbG93Ogo+
-ID4gCj4gPiAgICAgKHRocmVhZCAxKSAgICAgICAgICAgICAgICAgIHwgICAgICAgICh0aHJlYWQg
-MikKPiA+ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgfCAgcm9zZV9jb25uZWN0Cj4g
-PiByb3NlX2tpbGxfYnlfbmVpZ2ggICAgICAgICAgICAgIHwgICAgbG9ja19zb2NrKHNrKQo+ID4g
-ICBzcGluX2xvY2tfYmgoJnJvc2VfbGlzdF9sb2NrKSB8ICAgIGlmICghcm9zZS0+bmVpZ2hib3Vy
-KQo+ID4gICByb3NlLT5uZWlnaGJvdXIgPSBOVUxMOy8vKDEpICB8Cj4gPiAgICAgICAgICAgICAg
-ICAgICAgICAgICAgICAgICAgIHwgICAgcm9zZS0+bmVpZ2hib3VyLT51c2UrKzsvLygyKQo+ID4g
-Cj4gPiBUaGUgcm9zZS0+bmVpZ2hib3VyIGlzIHNldCB0byBudWxsIGluIHBvc2l0aW9uICgxKSBh
-bmQgZGVyZWZlcmVuY2VkCj4gPiBpbiBwb3NpdGlvbiAoMikuCj4gPiAKPiA+IFRoZSBLQVNBTiBy
-ZXBvcnQgdHJpZ2dlcmVkIGJ5IFBPQyBpcyBzaG93biBiZWxvdzoKPiA+IAo+ID4gS0FTQU46IG51
-bGwtcHRyLWRlcmVmIGluIHJhbmdlIFsweDAwMDAwMDAwMDAwMDAwMjgtMHgwMDAwMDAwMDAwMDAw
-MDJmXQo+ID4gLi4uCj4gPiBSSVA6IDAwMTA6cm9zZV9jb25uZWN0KzB4NmMyLzB4ZjMwCj4gPiBS
-U1A6IDAwMTg6ZmZmZjg4ODAwYWI0N2Q2MCBFRkxBR1M6IDAwMDAwMjA2Cj4gPiBSQVg6IDAwMDAw
-MDAwMDAwMDAwMDUgUkJYOiAwMDAwMDAwMDAwMDAwMDJhIFJDWDogMDAwMDAwMDAwMDAwMDAwMAo+
-ID4gUkRYOiBmZmZmODg4MDBhYjM4MDAwIFJTSTogZmZmZjg4ODAwYWI0N2U0OCBSREk6IGZmZmY4
-ODgwMGFiMzgzMDkKPiA+IFJCUDogZGZmZmZjMDAwMDAwMDAwMCBSMDg6IDAwMDAwMDAwMDAwMDAw
-MDAgUjA5OiBmZmZmZWQxMDAxNTY3MDYyCj4gPiBSMTA6IGRmZmZlOTEwMDE1NjcwNjMgUjExOiAx
-ZmZmZjExMDAxNTY3MDYxIFIxMjogMWZmZmYxMTAwMGQxN2NkMAo+ID4gUjEzOiBmZmZmODg4MDA2
-OGJlNjgwIFIxNDogMDAwMDAwMDAwMDAwMDAwMiBSMTU6IDFmZmZmMTEwMDBkMTdjZDAKPiA+IC4u
-Lgo+ID4gQ2FsbCBUcmFjZToKPiA+ICAgPFRBU0s+Cj4gPiAgID8gX19sb2NhbF9iaF9lbmFibGVf
-aXArMHg1NC8weDgwCj4gPiAgID8gc2VsaW51eF9uZXRsYmxfc29ja2V0X2Nvbm5lY3QrMHgyNi8w
-eDMwCj4gPiAgID8gcm9zZV9iaW5kKzB4NWIwLzB4NWIwCj4gPiAgIF9fc3lzX2Nvbm5lY3QrMHgy
-MTYvMHgyODAKPiA+ICAgX194NjRfc3lzX2Nvbm5lY3QrMHg3MS8weDgwCj4gPiAgIGRvX3N5c2Nh
-bGxfNjQrMHg0My8weDkwCj4gPiAgIGVudHJ5X1NZU0NBTExfNjRfYWZ0ZXJfaHdmcmFtZSsweDQ2
-LzB4YjAKPiA+IAo+ID4gVGhpcyBwYXRjaCBhZGRzIGxvY2tfc29jaygpIGluIHJvc2Vfa2lsbF9i
-eV9uZWlnaCgpIGluIG9yZGVyIHRvCj4gPiBzeW5jaHJvbml6ZSB3aXRoIHJvc2VfY29ubmVjdCgp
-IGFuZCByb3NlX3JlbGVhc2UoKS4KPiA+IAo+ID4gTWVhbndoaWxlLCB0aGlzIHBhdGNoIGFkZHMg
-c29ja19ob2xkKCkgcHJvdGVjdGVkIGJ5IHJvc2VfbGlzdF9sb2NrCj4gPiB0aGF0IGNvdWxkIHN5
-bmNocm9uaXplIHdpdGggcm9zZV9yZW1vdmVfc29ja2V0KCkgaW4gb3JkZXIgdG8gbWl0aWdhdGUK
-PiA+IFVBRiBidWcgY2F1c2VkIGJ5IGxvY2tfc29jaygpIHdlIGFkZC4KPiA+IAo+ID4gV2hhdCdz
-IG1vcmUsIHRoZXJlIGlzIG5vIG5lZWQgdXNpbmcgcm9zZV9uZWlnaF9saXN0X2xvY2sgdG8gcHJv
-dGVjdAo+ID4gcm9zZV9raWxsX2J5X25laWdoKCkuIEJlY2F1c2Ugd2UgaGF2ZSBhbHJlYWR5IHVz
-ZWQgcm9zZV9uZWlnaF9saXN0X2xvY2sKPiA+IHRvIHByb3RlY3QgdGhlIHN0YXRlIGNoYW5nZSBv
-ZiByb3NlX25laWdoIGluIHJvc2VfbGlua19mYWlsZWQoKSwgd2hpY2gKPiA+IGlzIHdlbGwgc3lu
-Y2hyb25pemVkLgo+ID4gCj4gPiBGaXhlczogMWRhMTc3ZTRjM2Y0ICgiTGludXgtMi42LjEyLXJj
-MiIpCj4gPiBTaWduZWQtb2ZmLWJ5OiBEdW9taW5nIFpob3UgPGR1b21pbmdAemp1LmVkdS5jbj4K
-PiA+IC0tLQo+ID4gQ2hhbmdlcyBpbiB2NToKPiA+ICAgLSB2NTogVXNlIHNvY2tldCBsb2NrIHRv
-IHByb3RlY3QgY29tcGFyaXNvbiBpbiByb3NlX2tpbGxfYnlfbmVpZ2guCj4gPiAKPiA+ICBuZXQv
-cm9zZS9hZl9yb3NlLmMgICAgfCAxMiArKysrKysrKysrKysKPiA+ICBuZXQvcm9zZS9yb3NlX3Jv
-dXRlLmMgfCAgMiArKwo+ID4gIDIgZmlsZXMgY2hhbmdlZCwgMTQgaW5zZXJ0aW9ucygrKQo+ID4g
-Cj4gPiBkaWZmIC0tZ2l0IGEvbmV0L3Jvc2UvYWZfcm9zZS5jIGIvbmV0L3Jvc2UvYWZfcm9zZS5j
-Cj4gPiBpbmRleCBiZjJkOTg2YTZiYy4uNmQ1MDg4YjAzMGEgMTAwNjQ0Cj4gPiAtLS0gYS9uZXQv
-cm9zZS9hZl9yb3NlLmMKPiA+ICsrKyBiL25ldC9yb3NlL2FmX3Jvc2UuYwo+ID4gQEAgLTE2NSwx
-NCArMTY1LDI2IEBAIHZvaWQgcm9zZV9raWxsX2J5X25laWdoKHN0cnVjdCByb3NlX25laWdoICpu
-ZWlnaCkKPiA+ICAJc3RydWN0IHNvY2sgKnM7Cj4gPiAgCj4gPiAgCXNwaW5fbG9ja19iaCgmcm9z
-ZV9saXN0X2xvY2spOwo+ID4gK2FnYWluOgo+ID4gIAlza19mb3JfZWFjaChzLCAmcm9zZV9saXN0
-KSB7Cj4gPiAgCQlzdHJ1Y3Qgcm9zZV9zb2NrICpyb3NlID0gcm9zZV9zayhzKTsKPiA+ICAKPiA+
-ICsJCXNvY2tfaG9sZChzKTsKPiA+ICsJCXNwaW5fdW5sb2NrX2JoKCZyb3NlX2xpc3RfbG9jayk7
-Cj4gPiArCQlsb2NrX3NvY2socyk7Cj4gPiAgCQlpZiAocm9zZS0+bmVpZ2hib3VyID09IG5laWdo
-KSB7Cj4gPiAgCQkJcm9zZV9kaXNjb25uZWN0KHMsIEVORVRVTlJFQUNILCBST1NFX09VVF9PRl9P
-UkRFUiwgMCk7Cj4gPiAgCQkJcm9zZS0+bmVpZ2hib3VyLT51c2UtLTsKCkkgYW0gc29ycnkgZm9y
-IHRoZSBkZWxheS4KCj4gTm90ZSB0aGF0IHRoZSBjb2RlIGNhbiBoZWxkIGRpZmZlcmVudCBzb2Nr
-ZXQgbG9jayB3aGlsZSB1cGRhdGluZwo+ICduZWlnaGJvdXItPnVzZScuIFRoYXQgcmVhbGx5IG1l
-YW5zIHRoYXQgc3VjaCB1cGRhdGVzIGNhbiByZWFsbHkgcmFjZQo+IGVhY2ggb3RoZXIsIHdpdGgg
-YmFkIHJlc3VsdHMuCgpUaGFuayB5b3UgZm9yIHlvdXIgdGltZSBhbmQgc3VnZ2VzdGlvbnMhIEkg
-YWdyZWUgd2l0aCB5b3UgYW5kIEkgd2lsbCBpbXByb3ZlCnRoaXMgcGF0Y2guCgo+IEkgdGhpbmsg
-dGhlIG9ubHkgc2FmZSB3YXkgb3V0IGlzIHVzaW5nIGFuIGF0b21pY190IGZvciAnbmVpZ2hib3Vy
-LT51c2UnCj4gKGxpa2VseSBhIHJlZmNvdW50X3Qgd291bGQgYmUgYSBiZXR0ZXIgb3B0aW9uKS4K
-Ckkgd2lsbCB1c2UgcmVmY291bnRfdCB0byBtYW5hZ2UgdGhlICduZWlnaGJvdXItPnVzZScuCgo+
-IEFsbCB0aGUgYWJvdmUgZGVzZXJ2ZXMgYSBzZXBhcmF0ZSBwYXRjaCBJTUhPLgo+IAo+ID4gIAkJ
-CXJvc2UtPm5laWdoYm91ciA9IE5VTEw7Cj4gPiArCQkJcmVsZWFzZV9zb2NrKHMpOwo+ID4gKwkJ
-CXNvY2tfcHV0KHMpOwo+ID4gKwkJCXNwaW5fbG9ja19iaCgmcm9zZV9saXN0X2xvY2spOwo+ID4g
-KwkJCWdvdG8gYWdhaW47Cj4gCj4gVGhpcyBjaHVuayBpcyBkdXAgb2YgdGhlIGZvbGxvd2luZyBs
-aW5lcywgaXQgY291bGQgYmUgZHJvcHBlZC4uLgo+IAo+ID4gIAkJfQo+ID4gKwkJcmVsZWFzZV9z
-b2NrKHMpOwo+ID4gKwkJc29ja19wdXQocyk7Cj4gPiArCQlzcGluX2xvY2tfYmgoJnJvc2VfbGlz
-dF9sb2NrKTsKPiA+ICsJCWdvdG8gYWdhaW47Cj4gCj4gLi4uIGlmIHRoaXMgd291bGQgYmUgY29y
-cmVjdCwgd2hpY2ggYXBwYXJlbnRseSBpcyBub3QuCj4gCj4gV2hhdCBoYXBwZW5zIHdoZW4gJ3Jv
-c2UtPm5laWdoYm91cicgaXMgZGlmZmVyZW50IGZyb20gJ25laWdoJyBmb3IgZmlyc3QKPiBzb2Nr
-ZXQgaW4gcm9zZV9saXN0PwoKSSB1bmRlcnN0YW5kLiBJZiB0aGUgJ3Jvc2UtPm5laWdoYm91cicg
-aXMgZGlmZmVyZW50IGZyb20gJ25laWdoJyBmb3IgdGhlIGZpcnN0IHNvY2tldAppbiB0aGUgcm9z
-ZV9saXN0LCB0aGUgY29kZSB3aWxsIGdvdG8gYWdhaW4gYW5kIHJlLXNlYXJjaCB0aGUgbGlzdC4g
-VGhpcyB3aWxsIGNhdXNlCmluZmluaXRlIGxvb3AuIEkgd2lsbCBpbXByb3ZlIHRoaXMuCgpCZXN0
-IHJlZ2FyZHMsCkR1b21pbmcgWmhvdQ==
+When the link layer connection is broken, the rose->neighbour is
+set to null. But rose->neighbour could be used by rose_connection()
+and rose_release() later, because there is no synchronization among
+them. As a result, the null-ptr-deref bugs will happen.
+
+One of the null-ptr-deref bugs is shown below:
+
+    (thread 1)                  |        (thread 2)
+                                |  rose_connect
+rose_kill_by_neigh              |    lock_sock(sk)
+  spin_lock_bh(&rose_list_lock) |    if (!rose->neighbour)
+  rose->neighbour = NULL;//(1)  |
+                                |    rose->neighbour->use++;//(2)
+
+The rose->neighbour is set to null in position (1) and dereferenced
+in position (2).
+
+The KASAN report triggered by POC is shown below:
+
+KASAN: null-ptr-deref in range [0x0000000000000028-0x000000000000002f]
+...
+RIP: 0010:rose_connect+0x6c2/0xf30
+RSP: 0018:ffff88800ab47d60 EFLAGS: 00000206
+RAX: 0000000000000005 RBX: 000000000000002a RCX: 0000000000000000
+RDX: ffff88800ab38000 RSI: ffff88800ab47e48 RDI: ffff88800ab38309
+RBP: dffffc0000000000 R08: 0000000000000000 R09: ffffed1001567062
+R10: dfffe91001567063 R11: 1ffff11001567061 R12: 1ffff11000d17cd0
+R13: ffff8880068be680 R14: 0000000000000002 R15: 1ffff11000d17cd0
+...
+Call Trace:
+  <TASK>
+  ? __local_bh_enable_ip+0x54/0x80
+  ? selinux_netlbl_socket_connect+0x26/0x30
+  ? rose_bind+0x5b0/0x5b0
+  __sys_connect+0x216/0x280
+  __x64_sys_connect+0x71/0x80
+  do_syscall_64+0x43/0x90
+  entry_SYSCALL_64_after_hwframe+0x46/0xb0
+
+This patch adds lock_sock() in rose_kill_by_neigh() in order to
+synchronize with rose_connect() and rose_release(). Then, changing
+type of 'neighbour->use' from unsigned short to atomic_t in order to
+mitigate race conditions caused by holding different socket lock while
+updating 'neighbour->use'.
+
+Meanwhile, this patch adds sock_hold() protected by rose_list_lock
+that could synchronize with rose_remove_socket() in order to mitigate
+UAF bug caused by lock_sock() we add.
+
+What's more, there is no need using rose_neigh_list_lock to protect
+rose_kill_by_neigh(). Because we have already used rose_neigh_list_lock
+to protect the state change of rose_neigh in rose_link_failed(), which
+is well synchronized.
+
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Signed-off-by: Duoming Zhou <duoming@zju.edu.cn>
+---
+Changes in v6:
+  - Change sk_for_each() to sk_for_each_safe().
+  - Change type of 'neighbour->use' from unsigned short to atomic_t.
+
+ include/net/rose.h    |  2 +-
+ net/rose/af_rose.c    | 19 +++++++++++++------
+ net/rose/rose_in.c    | 12 ++++++------
+ net/rose/rose_route.c | 24 ++++++++++++------------
+ net/rose/rose_timer.c |  2 +-
+ 5 files changed, 33 insertions(+), 26 deletions(-)
+
+diff --git a/include/net/rose.h b/include/net/rose.h
+index 0f0a4ce0fee..d5ddebc556d 100644
+--- a/include/net/rose.h
++++ b/include/net/rose.h
+@@ -95,7 +95,7 @@ struct rose_neigh {
+ 	ax25_cb			*ax25;
+ 	struct net_device		*dev;
+ 	unsigned short		count;
+-	unsigned short		use;
++	atomic_t		use;
+ 	unsigned int		number;
+ 	char			restarted;
+ 	char			dce_mode;
+diff --git a/net/rose/af_rose.c b/net/rose/af_rose.c
+index bf2d986a6bc..54e7b76c4f3 100644
+--- a/net/rose/af_rose.c
++++ b/net/rose/af_rose.c
+@@ -163,16 +163,23 @@ static void rose_remove_socket(struct sock *sk)
+ void rose_kill_by_neigh(struct rose_neigh *neigh)
+ {
+ 	struct sock *s;
++	struct hlist_node *tmp;
+ 
+ 	spin_lock_bh(&rose_list_lock);
+-	sk_for_each(s, &rose_list) {
++	sk_for_each_safe(s, tmp, &rose_list) {
+ 		struct rose_sock *rose = rose_sk(s);
+ 
++		sock_hold(s);
++		spin_unlock_bh(&rose_list_lock);
++		lock_sock(s);
+ 		if (rose->neighbour == neigh) {
+ 			rose_disconnect(s, ENETUNREACH, ROSE_OUT_OF_ORDER, 0);
+-			rose->neighbour->use--;
++			atomic_dec(&rose->neighbour->use);
+ 			rose->neighbour = NULL;
+ 		}
++		release_sock(s);
++		sock_put(s);
++		spin_lock_bh(&rose_list_lock);
+ 	}
+ 	spin_unlock_bh(&rose_list_lock);
+ }
+@@ -191,7 +198,7 @@ static void rose_kill_by_device(struct net_device *dev)
+ 		if (rose->device == dev) {
+ 			rose_disconnect(s, ENETUNREACH, ROSE_OUT_OF_ORDER, 0);
+ 			if (rose->neighbour)
+-				rose->neighbour->use--;
++				atomic_dec(&rose->neighbour->use);
+ 			rose->device = NULL;
+ 		}
+ 	}
+@@ -618,7 +625,7 @@ static int rose_release(struct socket *sock)
+ 		break;
+ 
+ 	case ROSE_STATE_2:
+-		rose->neighbour->use--;
++		atomic_dec(&rose->neighbour->use);
+ 		release_sock(sk);
+ 		rose_disconnect(sk, 0, -1, -1);
+ 		lock_sock(sk);
+@@ -819,7 +826,7 @@ static int rose_connect(struct socket *sock, struct sockaddr *uaddr, int addr_le
+ 
+ 	rose->state = ROSE_STATE_1;
+ 
+-	rose->neighbour->use++;
++	atomic_inc(&rose->neighbour->use);
+ 
+ 	rose_write_internal(sk, ROSE_CALL_REQUEST);
+ 	rose_start_heartbeat(sk);
+@@ -1019,7 +1026,7 @@ int rose_rx_call_request(struct sk_buff *skb, struct net_device *dev, struct ros
+ 	make_rose->device        = dev;
+ 	make_rose->facilities    = facilities;
+ 
+-	make_rose->neighbour->use++;
++	atomic_inc(&make_rose->neighbour->use);
+ 
+ 	if (rose_sk(sk)->defer) {
+ 		make_rose->state = ROSE_STATE_5;
+diff --git a/net/rose/rose_in.c b/net/rose/rose_in.c
+index 4d67f36dce1..86168f29943 100644
+--- a/net/rose/rose_in.c
++++ b/net/rose/rose_in.c
+@@ -56,7 +56,7 @@ static int rose_state1_machine(struct sock *sk, struct sk_buff *skb, int framety
+ 	case ROSE_CLEAR_REQUEST:
+ 		rose_write_internal(sk, ROSE_CLEAR_CONFIRMATION);
+ 		rose_disconnect(sk, ECONNREFUSED, skb->data[3], skb->data[4]);
+-		rose->neighbour->use--;
++		atomic_dec(&rose->neighbour->use);
+ 		break;
+ 
+ 	default:
+@@ -79,12 +79,12 @@ static int rose_state2_machine(struct sock *sk, struct sk_buff *skb, int framety
+ 	case ROSE_CLEAR_REQUEST:
+ 		rose_write_internal(sk, ROSE_CLEAR_CONFIRMATION);
+ 		rose_disconnect(sk, 0, skb->data[3], skb->data[4]);
+-		rose->neighbour->use--;
++		atomic_dec(&rose->neighbour->use);
+ 		break;
+ 
+ 	case ROSE_CLEAR_CONFIRMATION:
+ 		rose_disconnect(sk, 0, -1, -1);
+-		rose->neighbour->use--;
++		atomic_dec(&rose->neighbour->use);
+ 		break;
+ 
+ 	default:
+@@ -120,7 +120,7 @@ static int rose_state3_machine(struct sock *sk, struct sk_buff *skb, int framety
+ 	case ROSE_CLEAR_REQUEST:
+ 		rose_write_internal(sk, ROSE_CLEAR_CONFIRMATION);
+ 		rose_disconnect(sk, 0, skb->data[3], skb->data[4]);
+-		rose->neighbour->use--;
++		atomic_dec(&rose->neighbour->use);
+ 		break;
+ 
+ 	case ROSE_RR:
+@@ -233,7 +233,7 @@ static int rose_state4_machine(struct sock *sk, struct sk_buff *skb, int framety
+ 	case ROSE_CLEAR_REQUEST:
+ 		rose_write_internal(sk, ROSE_CLEAR_CONFIRMATION);
+ 		rose_disconnect(sk, 0, skb->data[3], skb->data[4]);
+-		rose->neighbour->use--;
++		atomic_dec(&rose->neighbour->use);
+ 		break;
+ 
+ 	default:
+@@ -253,7 +253,7 @@ static int rose_state5_machine(struct sock *sk, struct sk_buff *skb, int framety
+ 	if (frametype == ROSE_CLEAR_REQUEST) {
+ 		rose_write_internal(sk, ROSE_CLEAR_CONFIRMATION);
+ 		rose_disconnect(sk, 0, skb->data[3], skb->data[4]);
+-		rose_sk(sk)->neighbour->use--;
++		atomic_dec(&rose_sk(sk)->neighbour->use);
+ 	}
+ 
+ 	return 0;
+diff --git a/net/rose/rose_route.c b/net/rose/rose_route.c
+index eb0b8197ac8..8be00a44540 100644
+--- a/net/rose/rose_route.c
++++ b/net/rose/rose_route.c
+@@ -93,7 +93,7 @@ static int __must_check rose_add_node(struct rose_route_struct *rose_route,
+ 		rose_neigh->ax25      = NULL;
+ 		rose_neigh->dev       = dev;
+ 		rose_neigh->count     = 0;
+-		rose_neigh->use       = 0;
++		atomic_set(&rose_neigh->use, 0);
+ 		rose_neigh->dce_mode  = 0;
+ 		rose_neigh->loopback  = 0;
+ 		rose_neigh->number    = rose_neigh_no++;
+@@ -263,10 +263,10 @@ static void rose_remove_route(struct rose_route *rose_route)
+ 	struct rose_route *s;
+ 
+ 	if (rose_route->neigh1 != NULL)
+-		rose_route->neigh1->use--;
++		atomic_dec(&rose_route->neigh1->use);
+ 
+ 	if (rose_route->neigh2 != NULL)
+-		rose_route->neigh2->use--;
++		atomic_dec(&rose_route->neigh2->use);
+ 
+ 	if ((s = rose_route_list) == rose_route) {
+ 		rose_route_list = rose_route->next;
+@@ -331,7 +331,7 @@ static int rose_del_node(struct rose_route_struct *rose_route,
+ 		if (rose_node->neighbour[i] == rose_neigh) {
+ 			rose_neigh->count--;
+ 
+-			if (rose_neigh->count == 0 && rose_neigh->use == 0)
++			if (rose_neigh->count == 0 && atomic_read(&rose_neigh->use) == 0)
+ 				rose_remove_neigh(rose_neigh);
+ 
+ 			rose_node->count--;
+@@ -381,7 +381,7 @@ void rose_add_loopback_neigh(void)
+ 	sn->ax25      = NULL;
+ 	sn->dev       = NULL;
+ 	sn->count     = 0;
+-	sn->use       = 0;
++	atomic_set(&sn->use, 0);
+ 	sn->dce_mode  = 1;
+ 	sn->loopback  = 1;
+ 	sn->number    = rose_neigh_no++;
+@@ -573,7 +573,7 @@ static int rose_clear_routes(void)
+ 		s          = rose_neigh;
+ 		rose_neigh = rose_neigh->next;
+ 
+-		if (s->use == 0 && !s->loopback) {
++		if (atomic_read(&s->use) == 0 && !s->loopback) {
+ 			s->count = 0;
+ 			rose_remove_neigh(s);
+ 		}
+@@ -789,13 +789,13 @@ static void rose_del_route_by_neigh(struct rose_neigh *rose_neigh)
+ 		}
+ 
+ 		if (rose_route->neigh1 == rose_neigh) {
+-			rose_route->neigh1->use--;
++			atomic_dec(&rose_route->neigh1->use);
+ 			rose_route->neigh1 = NULL;
+ 			rose_transmit_clear_request(rose_route->neigh2, rose_route->lci2, ROSE_OUT_OF_ORDER, 0);
+ 		}
+ 
+ 		if (rose_route->neigh2 == rose_neigh) {
+-			rose_route->neigh2->use--;
++			atomic_dec(&rose_route->neigh2->use);
+ 			rose_route->neigh2 = NULL;
+ 			rose_transmit_clear_request(rose_route->neigh1, rose_route->lci1, ROSE_OUT_OF_ORDER, 0);
+ 		}
+@@ -924,7 +924,7 @@ int rose_route_frame(struct sk_buff *skb, ax25_cb *ax25)
+ 			rose_clear_queues(sk);
+ 			rose->cause	 = ROSE_NETWORK_CONGESTION;
+ 			rose->diagnostic = 0;
+-			rose->neighbour->use--;
++			atomic_dec(&rose->neighbour->use);
+ 			rose->neighbour	 = NULL;
+ 			rose->lci	 = 0;
+ 			rose->state	 = ROSE_STATE_0;
+@@ -1067,8 +1067,8 @@ int rose_route_frame(struct sk_buff *skb, ax25_cb *ax25)
+ 	rose_route->lci2      = new_lci;
+ 	rose_route->neigh2    = new_neigh;
+ 
+-	rose_route->neigh1->use++;
+-	rose_route->neigh2->use++;
++	atomic_inc(&rose_route->neigh1->use);
++	atomic_inc(&rose_route->neigh2->use);
+ 
+ 	rose_route->next = rose_route_list;
+ 	rose_route_list  = rose_route;
+@@ -1195,7 +1195,7 @@ static int rose_neigh_show(struct seq_file *seq, void *v)
+ 			   (rose_neigh->loopback) ? "RSLOOP-0" : ax2asc(buf, &rose_neigh->callsign),
+ 			   rose_neigh->dev ? rose_neigh->dev->name : "???",
+ 			   rose_neigh->count,
+-			   rose_neigh->use,
++			   atomic_read(&rose_neigh->use),
+ 			   (rose_neigh->dce_mode) ? "DCE" : "DTE",
+ 			   (rose_neigh->restarted) ? "yes" : "no",
+ 			   ax25_display_timer(&rose_neigh->t0timer) / HZ,
+diff --git a/net/rose/rose_timer.c b/net/rose/rose_timer.c
+index f06ddbed3fe..9dfd4eae5d5 100644
+--- a/net/rose/rose_timer.c
++++ b/net/rose/rose_timer.c
+@@ -171,7 +171,7 @@ static void rose_timer_expiry(struct timer_list *t)
+ 		break;
+ 
+ 	case ROSE_STATE_2:	/* T3 */
+-		rose->neighbour->use--;
++		atomic_dec(&rose->neighbour->use);
+ 		rose_disconnect(sk, ETIMEDOUT, -1, -1);
+ 		break;
+ 
+-- 
+2.17.1
+
