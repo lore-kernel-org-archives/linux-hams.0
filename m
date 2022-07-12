@@ -1,24 +1,201 @@
-From: duoming@zju.edu.cn
-Subject: Re: [PATCH net v5] net: rose: fix null-ptr-deref caused by
+From: Paolo Abeni <pabeni@redhat.com>
+Subject: Re: [PATCH net v6] net: rose: fix null-ptr-deref caused by
  rose_kill_by_neigh
-Date: Tue, 12 Jul 2022 08:08:12 +0800 (GMT+08:00)
-Message-ID: <43096493.3daca.181efbc1f66.Coremail.duoming@zju.edu.cn>
-References: <56319300.38660.181e861b71b.Coremail.duoming@zju.edu.cn>
- <20220711104949.3de90fc5@kernel.org>
+Date: Tue, 12 Jul 2022 13:00:49 +0200
+Message-ID: <daa2b799956c286b2cce898bee22fb2a043f5177.camel@redhat.com>
+References: <20220711013111.33183-1-duoming@zju.edu.cn>
 Mime-Version: 1.0
-Content-Transfer-Encoding: base64
+Content-Transfer-Encoding: 7bit
 Return-path: <netdev-owner@vger.kernel.org>
-In-Reply-To: <20220711104949.3de90fc5@kernel.org>
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+        s=mimecast20190719; t=1657623654;
+        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+         content-transfer-encoding:content-transfer-encoding:
+         in-reply-to:in-reply-to:references:references;
+        bh=hBE7zQEjvdn3qPyggSpJx5iq7ng7SN8wbfn9xtyZRvg=;
+        b=hxqu56Ph3dVVpQafOfKJDmvinN6eBiEseQmW2GJl7tI39ifYGCnwPVaHyHohpWmqoUr3ug
+        Ba2iQfmG1AfxMahl3kA7mlXoylM/VdkZUa0/G8gws7kG9t324HFjEci8182H8196/lJqmn
+        gsc/TdHy6B+66GkhFOvyL6hGhc7Idm8=
+In-Reply-To: <20220711013111.33183-1-duoming@zju.edu.cn>
 List-ID: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
-To: Jakub Kicinski <kuba@kernel.org>
-Cc: linux-hams@vger.kernel.org, pabeni@redhat.com, ralf@linux-mips.org, davem@davemloft.net, edumazet@google.com, netdev@vger.kernel.org, linux-kernel@vger.kernel.org
+To: Duoming Zhou <duoming@zju.edu.cn>, linux-hams@vger.kernel.org
+Cc: ralf@linux-mips.org, davem@davemloft.net, edumazet@google.com, kuba@kernel.org, netdev@vger.kernel.org, linux-kernel@vger.kernel.org
 
-SGVsbG8sCgpPbiBNb24sIDExIEp1bCAyMDIyIDEwOjQ5OjQ5IC0wNzAwIEpha3ViIEtpY2luc2tp
-IHdyb3RlOgoKPiBVbnJlbGF0ZWQgdG8gdGhpcyBwYXJ0aWN1bGFyIHBhdGNoLCBidXQgaXQgc2Vl
-bXMgbGlrZSB5b3UncmUgd29ya2luZwo+IGEgbG90IG9uIEFGX1JPU0UsIHdvdWxkIHlvdSBjb25z
-aWRlciBhZGRpbmcgYSBnb29kIHNldCBvZiBzZWxmdGVzdHMgCj4gZm9yIGl0PyAgSXQnZCBiZSBl
-YXNpZXIgdG8geW91IHRvIHZhbGlkYXRlIHRoZSBjaGFuZ2VzIGFuZCBtdWNoIGVhc2llcgo+IGZv
-ciB1cyB0byB0cnVzdCB0aGUgZml4ZXMgc2VlaW5nIGhvdyB0aGV5IHdlcmUgdmFsaWRhdGVkLgoK
-VGhhbmsgeW91IGZvciB5b3VyIHJlcGx5LCBJIHdpbGwgdHJ5IHRvIHByb3ZpZGUgYSBzZXQgb2Yg
-c2VsZnRlc3RzLgoKQmVzdCByZWdhcmRzLApEdW9taW5nIFpob3U=
+On Mon, 2022-07-11 at 09:31 +0800, Duoming Zhou wrote:
+> When the link layer connection is broken, the rose->neighbour is
+> set to null. But rose->neighbour could be used by rose_connection()
+> and rose_release() later, because there is no synchronization among
+> them. As a result, the null-ptr-deref bugs will happen.
+> 
+> One of the null-ptr-deref bugs is shown below:
+> 
+>     (thread 1)                  |        (thread 2)
+>                                 |  rose_connect
+> rose_kill_by_neigh              |    lock_sock(sk)
+>   spin_lock_bh(&rose_list_lock) |    if (!rose->neighbour)
+>   rose->neighbour = NULL;//(1)  |
+>                                 |    rose->neighbour->use++;//(2)
+> 
+> The rose->neighbour is set to null in position (1) and dereferenced
+> in position (2).
+> 
+> The KASAN report triggered by POC is shown below:
+> 
+> KASAN: null-ptr-deref in range [0x0000000000000028-0x000000000000002f]
+> ...
+> RIP: 0010:rose_connect+0x6c2/0xf30
+> RSP: 0018:ffff88800ab47d60 EFLAGS: 00000206
+> RAX: 0000000000000005 RBX: 000000000000002a RCX: 0000000000000000
+> RDX: ffff88800ab38000 RSI: ffff88800ab47e48 RDI: ffff88800ab38309
+> RBP: dffffc0000000000 R08: 0000000000000000 R09: ffffed1001567062
+> R10: dfffe91001567063 R11: 1ffff11001567061 R12: 1ffff11000d17cd0
+> R13: ffff8880068be680 R14: 0000000000000002 R15: 1ffff11000d17cd0
+> ...
+> Call Trace:
+>   <TASK>
+>   ? __local_bh_enable_ip+0x54/0x80
+>   ? selinux_netlbl_socket_connect+0x26/0x30
+>   ? rose_bind+0x5b0/0x5b0
+>   __sys_connect+0x216/0x280
+>   __x64_sys_connect+0x71/0x80
+>   do_syscall_64+0x43/0x90
+>   entry_SYSCALL_64_after_hwframe+0x46/0xb0
+> 
+> This patch adds lock_sock() in rose_kill_by_neigh() in order to
+> synchronize with rose_connect() and rose_release(). Then, changing
+> type of 'neighbour->use' from unsigned short to atomic_t in order to
+> mitigate race conditions caused by holding different socket lock while
+> updating 'neighbour->use'.
+> 
+> Meanwhile, this patch adds sock_hold() protected by rose_list_lock
+> that could synchronize with rose_remove_socket() in order to mitigate
+> UAF bug caused by lock_sock() we add.
+> 
+> What's more, there is no need using rose_neigh_list_lock to protect
+> rose_kill_by_neigh(). Because we have already used rose_neigh_list_lock
+> to protect the state change of rose_neigh in rose_link_failed(), which
+> is well synchronized.
+> 
+> Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+> Signed-off-by: Duoming Zhou <duoming@zju.edu.cn>
+> ---
+> Changes in v6:
+>   - Change sk_for_each() to sk_for_each_safe().
+>   - Change type of 'neighbour->use' from unsigned short to atomic_t.
+> 
+>  include/net/rose.h    |  2 +-
+>  net/rose/af_rose.c    | 19 +++++++++++++------
+>  net/rose/rose_in.c    | 12 ++++++------
+>  net/rose/rose_route.c | 24 ++++++++++++------------
+>  net/rose/rose_timer.c |  2 +-
+>  5 files changed, 33 insertions(+), 26 deletions(-)
+> 
+> diff --git a/include/net/rose.h b/include/net/rose.h
+> index 0f0a4ce0fee..d5ddebc556d 100644
+> --- a/include/net/rose.h
+> +++ b/include/net/rose.h
+> @@ -95,7 +95,7 @@ struct rose_neigh {
+>  	ax25_cb			*ax25;
+>  	struct net_device		*dev;
+>  	unsigned short		count;
+> -	unsigned short		use;
+> +	atomic_t		use;
+>  	unsigned int		number;
+>  	char			restarted;
+>  	char			dce_mode;
+> diff --git a/net/rose/af_rose.c b/net/rose/af_rose.c
+> index bf2d986a6bc..54e7b76c4f3 100644
+> --- a/net/rose/af_rose.c
+> +++ b/net/rose/af_rose.c
+> @@ -163,16 +163,23 @@ static void rose_remove_socket(struct sock *sk)
+>  void rose_kill_by_neigh(struct rose_neigh *neigh)
+>  {
+>  	struct sock *s;
+> +	struct hlist_node *tmp;
+>  
+>  	spin_lock_bh(&rose_list_lock);
+> -	sk_for_each(s, &rose_list) {
+> +	sk_for_each_safe(s, tmp, &rose_list) {
+>  		struct rose_sock *rose = rose_sk(s);
+>  
+> +		sock_hold(s);
+> +		spin_unlock_bh(&rose_list_lock);
+> +		lock_sock(s);
+>  		if (rose->neighbour == neigh) {
+>  			rose_disconnect(s, ENETUNREACH, ROSE_OUT_OF_ORDER, 0);
+> -			rose->neighbour->use--;
+> +			atomic_dec(&rose->neighbour->use);
+>  			rose->neighbour = NULL;
+>  		}
+> +		release_sock(s);
+> +		sock_put(s);
+
+I'm sorry, this does not work. At this point both 's' and 'tmp' sockets
+can be freed and reused. Both iterators are not valid anymore when you
+acquire the 'rose_list_lock' later.
+
+I really think you should resort to something similar to the following
+(completelly untested, just to give an idea). In any case it would be
+better to split this change in 2 separate patches: the first patch
+replaces 'int use;' with an antomic_t and the 2nd one addresses the
+race you describe above.
+
+---
+diff --git a/net/rose/af_rose.c b/net/rose/af_rose.c
+index bf2d986a6bc3..27b1027aaedf 100644
+--- a/net/rose/af_rose.c
++++ b/net/rose/af_rose.c
+@@ -156,25 +156,45 @@ static void rose_remove_socket(struct sock *sk)
+ 	spin_unlock_bh(&rose_list_lock);
+ }
+ 
++static DEFINE_MUTEX(kill_lock);
++
+ /*
+  *	Kill all bound sockets on a broken link layer connection to a
+  *	particular neighbour.
+  */
+ void rose_kill_by_neigh(struct rose_neigh *neigh)
+ {
+-	struct sock *s;
++	HLIST_HEAD(rose_list_copy);
++	struct sock *s, *tmp;
++
++	mutex_lock(&kill_lock);
+ 
+ 	spin_lock_bh(&rose_list_lock);
+ 	sk_for_each(s, &rose_list) {
++		sock_hold(s);
++		/* sk_bind_node is apparently unused by rose. Alternatively
++		 * you can add another hlist_node to rose_sock and use it here
++		 */
++		sk_add_bind_node(s, &rose_list_copy);
++	}
++	spin_unlock_bh(&rose_list_lock);
++
++	hlist_for_each_entry_safe(s, tmp, &rose_list_copy, sk_bind_node) {
+ 		struct rose_sock *rose = rose_sk(s);
+ 
++		__sk_del_bind_node(s);
++		lock_sock(s);
+ 		if (rose->neighbour == neigh) {
+ 			rose_disconnect(s, ENETUNREACH, ROSE_OUT_OF_ORDER, 0);
+-			rose->neighbour->use--;
++			atomic_dec(&rose->neighbour->use);
+ 			rose->neighbour = NULL;
+ 		}
++		release_sock(s);
++
++		sock_put(s);
+ 	}
+-	spin_unlock_bh(&rose_list_lock);
++
++	mutex_unlock(&kill_lock);
+ }
+ 
+ /*
+---
+/P
+
