@@ -1,22 +1,23 @@
-From: Bernard f6bvp <f6bvp@free.fr>
+From: Bernard F6BVP <bernard.f6bvp@gmail.com>
 Subject: Re: [PATCH] net: rose: fix unregistered netdevice: waiting for rose0
  to become free
-Date: Sat, 23 Jul 2022 11:55:13 +0200
-Message-ID: <fb7544a1-f42e-9254-18cc-c9b071f4ca70@free.fr>
+Date: Sat, 23 Jul 2022 13:21:17 +0200
+Message-ID: <de16c149-2d93-c5d5-3eda-6751c593d996@gmail.com>
 References: <CANn89i+-THx+jTzsLDxaX9diV4hz7z4mYqwn2CjtydFp+U4gow@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: multipart/mixed; boundary="------------dl132MwUT8hB4I7T8hDR0oJH"
+Content-Type: multipart/mixed; boundary="------------6PM0hj1E9Ju9VYfbav02XwXC"
 Return-path: <linux-hams-owner@vger.kernel.org>
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=free.fr;
-        s=smtp-20201208; t=1658570123;
-        bh=2amTBDr7UZzf/QgemlY36R9hPW8RKXF9Vgybt8Yi4UM=;
-        h=Date:To:Cc:References:Subject:From:In-Reply-To:From;
-        b=ZkmqffzgKv6Q58tAjn8KOfLGx1YyYHXDrdTj2qwMpnZzoqcuck+HSvvh7bc3hoYgK
-         WZLxjMCYkIpgXw7juXSqprp5t174o58/BdWC+eaNTyCeq+TxWbnzVymNPVtur71gRi
-         4NZJiEmLE76tMJ/TfRgIwcXqwruxVU42IwhByi3ZjYp3Cv+8AyL35pUoQ7AuPHoRwW
-         +8wk10imBdilc2ZfcZBdHSngiAdzdmtO/Prkf/5HJZNxeUqtvrFB9kh/hC4xrrNpya
-         kFyC/0yI6SLy8c/7/eAwxyfw/47B/KQR/R7fBzy6+OrWwN92Dq1LMbpPl6MmxVRoJj
-         SjhqHWki7cnSw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=message-id:date:mime-version:user-agent:from:subject:to:cc
+         :references:content-language:in-reply-to;
+        bh=TMF1VA68na5tYB1bsLpmDOqqkReLjYmG9JeqZV/EFic=;
+        b=Fk0wgAD8Wb2IyFgIHbmvpbG2J5yub7gUhXcNyH1PHPArjPdKTc+QwDDMNsZx2JISzt
+         WTxI+u+c0cHLusioi/a0B+cANjHwnvjWSyb65xVGEX5bRMzfjmpGyxsYMEJApBGkgYG7
+         NEDRkhTzIUA005eGWGR47ZvcKc8DWsftWWOXM8Tn0iFi5vSeZFtN/LYCYthkyLMloDz9
+         YjtK/kYqOwpckODt9T7hKt8IGanVholjeswKAJx5Gh9bjJD/mJlD56dn+2V/hq38OCQX
+         xUIgGADTcot+gIunDEau9lOqsabqFefkcp0HDpiqkAARzGjNBJST/9SlRwA5iHtVPy/r
+         W9IA==
 Content-Language: en-US
 In-Reply-To: <CANn89i+-THx+jTzsLDxaX9diV4hz7z4mYqwn2CjtydFp+U4gow@mail.gmail.com>
 List-ID: <linux-hams.vger.kernel.org>
@@ -24,7 +25,7 @@ To: edumazet@google.com
 Cc: davem@davemloft.net, duoming@zju.edu.cn, f6bvp@free.fr, kuba@kernel.org, linux-hams@vger.kernel.org, linux-kernel@vger.kernel.org, netdev@vger.kernel.org, pabeni@redhat.com, ralf@linux-mips.org
 
 This is a multi-part message in MIME format.
---------------dl132MwUT8hB4I7T8hDR0oJH
+--------------6PM0hj1E9Ju9VYfbav02XwXC
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 
@@ -37,7 +38,8 @@ Attached is (I hope) relevant dmesg dump.
 
 
 
---------------dl132MwUT8hB4I7T8hDR0oJH
+
+--------------6PM0hj1E9Ju9VYfbav02XwXC
 Content-Type: text/plain; charset=UTF-8; name="dmesg_tracker.txt"
 Content-Disposition: attachment; filename="dmesg_tracker.txt"
 Content-Transfer-Encoding: base64
@@ -296,4 +298,4 @@ YW1pbHkKWyAgMjg1LjU1NTM2NF0gbWtpc3M6IGF4MDogVHJ5aW5nIGNyYy1zbWFjawpbICAy
 ODUuNTU1NDg1XSBta2lzczogYXgwOiBUcnlpbmcgY3JjLWZsZXhuZXQKWzE3NzUwLjUxNDQz
 MF0ga2F1ZGl0ZF9wcmludGtfc2tiOiAxNiBjYWxsYmFja3Mgc3VwcHJlc3NlZAoK
 
---------------dl132MwUT8hB4I7T8hDR0oJH--
+--------------6PM0hj1E9Ju9VYfbav02XwXC--
