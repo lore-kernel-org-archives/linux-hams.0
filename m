@@ -1,31 +1,55 @@
-From: Jakub Kicinski <kuba@kernel.org>
-Subject: Re: [PATCH] net: rose: fix unregistered netdevice: waiting for
- rose0 to become free
-Date: Fri, 22 Jul 2022 10:37:50 -0700
-Message-ID: <20220722103750.1938776d@kernel.org>
-References: <20220715154314.510ca2fb@kernel.org>
-        <9c033c36-c291-1927-079b-b4aee5f7ac08@free.fr>
-Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
-Return-path: <linux-hams-owner@vger.kernel.org>
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1658511471;
-        bh=MZHah33Q/RjQJRP+KgiWX1KH7CBqjB5/nEQHt5RSPN4=;
-        h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
-        b=AMCy899mwwwx38SabBUAi8bJzl1BiwuD+uOSw3Y0O4g0KgpWLFwS1JG2x1GJQX6h5
-         o+6cBAiIom26A85U0M8Z5bblaIsSxxOByak/IngpcrmB7VTVWu9u7i95ahqRK/jAID
-         8xSYbzbilTJGSEeGuRV54CGSGgFPxEB+4r8PwOCEPJiRAvoaJsxrZL9kNvrNltl0pI
-         2RTqO74ew4f3EUpvj20l39S7HRKiT+o8ohTLQMDUjGslO+U12tdA+PUpAk280eFopR
-         iNdFQM7sLgfiFln/ct4UQ0teGN+jzPI1sZH0uEUONIDdCNmP+nwlir5obM24If0z/a
-         ewic3FRzQOHPg==
-In-Reply-To: <9c033c36-c291-1927-079b-b4aee5f7ac08@free.fr>
+From: Duoming Zhou <duoming@zju.edu.cn>
+Subject: [PATCH net] netrom: fix sleep in atomic context bugs in timer handlers
+Date: Sat, 23 Jul 2022 11:56:46 +0800
+Message-ID: <20220723035646.29857-1-duoming@zju.edu.cn>
+Return-path: <netdev-owner@vger.kernel.org>
 List-ID: <linux-hams.vger.kernel.org>
+MIME-Version: 1.0
 Content-Type: text/plain; charset="us-ascii"
-To: Bernard f6bvp <f6bvp@free.fr>
-Cc: davem@davemloft.net, duoming@zju.edu.cn, edumazet@google.com, linux-hams@vger.kernel.org, linux-kernel@vger.kernel.org, netdev@vger.kernel.org, pabeni@redhat.com, ralf@linux-mips.org
+Content-Transfer-Encoding: 7bit
+To: linux-hams@vger.kernel.org
+Cc: ralf@linux-mips.org, davem@davemloft.net, edumazet@google.com, kuba@kernel.org, pabeni@redhat.com, netdev@vger.kernel.org, linux-kernel@vger.kernel.org, Duoming Zhou <duoming@zju.edu.cn>
 
-On Fri, 22 Jul 2022 18:41:28 +0200 Bernard f6bvp wrote:
-> User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
->  Thunderbird/91.11.0
+There are sleep in atomic context bugs in timer handlers of netrom
+such as nr_t1timer_expiry(), nr_t2timer_expiry(), nr_heartbeat_expiry(),
+nr_idletimer_expiry() and so on.
 
-Still whitespace damaged, can you try git send-email ?
+The root cause is kmemdup() with GFP_KERNEL parameter that may sleep
+could be called by different timer handlers which is in interrupt context.
+
+One of the call paths that could trigger bug is shown below:
+
+      (interrupt context)
+nr_heartbeat_expiry
+  nr_write_internal
+    nr_transmit_buffer
+      nr_route_frame
+        nr_add_node
+          kmemdup(..,GFP_KERNEL) //may sleep
+
+This patch changes gfp_t parameter of kmemdup in nr_add_node()
+from GFP_KERNEL to GFP_ATOMIC in order to prevent sleep in atomic
+context bugs.
+
+Fixes: eafff86d3bd8 ("[NETROM]: Use kmemdup")
+Signed-off-by: Duoming Zhou <duoming@zju.edu.cn>
+---
+ net/netrom/nr_route.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/net/netrom/nr_route.c b/net/netrom/nr_route.c
+index baea3cbd76c..1ddcf13de6a 100644
+--- a/net/netrom/nr_route.c
++++ b/net/netrom/nr_route.c
+@@ -163,7 +163,7 @@ static int __must_check nr_add_node(ax25_address *nr, const char *mnemonic,
+ 		if (ax25_digi != NULL && ax25_digi->ndigi > 0) {
+ 			nr_neigh->digipeat = kmemdup(ax25_digi,
+ 						     sizeof(*ax25_digi),
+-						     GFP_KERNEL);
++						     GFP_ATOMIC);
+ 			if (nr_neigh->digipeat == NULL) {
+ 				kfree(nr_neigh);
+ 				if (nr_node)
+-- 
+2.17.1
+
