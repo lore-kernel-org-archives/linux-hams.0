@@ -1,149 +1,57 @@
-From: Thomas Osterried <thomas@osterried.de>
-Subject: Re: ax25tools axgetput compile error
-Date: Sat, 30 Jul 2022 21:56:34 +0200
-Message-ID: <66D07683-48DE-4429-AE6D-69C0E2F3E165@osterried.de>
-References: <32aa83bc-481f-f025-023f-0c173b34efd4@free.fr>
- <e1a3b453-24d4-122e-9620-2c4ea2c69870@free.fr>
-Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3696.100.31\))
-Content-Transfer-Encoding: 8bit
-Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <e1a3b453-24d4-122e-9620-2c4ea2c69870@free.fr>
+From: Francois Romieu <romieu@fr.zoreil.com>
+Subject: Re: rose timer t error displayed in /proc/net/rose
+Date: Mon, 1 Aug 2022 02:39:01 +0200
+Message-ID: <YucgpeXpqwZuievg@electric-eye.fr.zoreil.com>
+References: <d5e93cc7-a91f-13d3-49a1-b50c11f0f811@free.fr>
+Mime-Version: 1.0
+Return-path: <netdev-owner@vger.kernel.org>
+DKIM-Filter: OpenDKIM Filter v2.11.0 violet.fr.zoreil.com 2710d2S42336390
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fr.zoreil.com;
+        s=v20220413; t=1659314342;
+        bh=Zxv04oT1Cg4jN72m0ayc33xrbu48Tl96Y3zZxHd+yR0=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=OSyI+AUBfRVw5UjMTX0g9/HhOzc/DxiAb0Oy1ruUwgx2MNTkiWHLsmm3bWkSemlls
+         pIRTkoltGcLYch6yIVXNPuEv+tu451qsXFzGjNmzONu4eifUxkG2KodrYncb8zHBn6
+         L/qsj3tXw7Lb05wQ9qy0NwFBFtSltT768AHVwV7k=
+Content-Disposition: inline
+In-Reply-To: <d5e93cc7-a91f-13d3-49a1-b50c11f0f811@free.fr>
 List-ID: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="utf-8"
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 7bit
 To: Bernard f6bvp <f6bvp@free.fr>
-Cc: linux-hams@vger.kernel.org
+Cc: Eric Dumazet <edumazet@google.com>, linux-hams@vger.kernel.org, Thomas Osterried DL9SAU <thomas@x-berg.in-berlin.de>, netdev@vger.kernel.org
 
-Hello Bernard,
-
-> Am 30.07.2022 um 16:08 schrieb Bernard f6bvp <f6bvp@free.fr>:
+Bernard f6bvp <f6bvp@free.fr> :
+> Rose proc timer t error
 > 
-> As a turn around I added #include <sys/type.h to axgetput.c
+> Timer t is decremented one by one during normal operations.
 > 
-> #include <sys/types.h>
+> When decreasing from 1 to 0 it displays a very large number until next clock
+> tic as demonstrated below.
 > 
-> #ifdef HAVE_CONFIG_H
-> #include <config.h>
-> #endif
-> #include "includes.h"
-> 
-> #include "axgetput.h"
-> 
-> This add made compilation possible ... although with a number of warnings in ax25tools compilation.
+> t1, t2 and t3 are correctly handled.
 
-Ah. Oh. Interesiting.
+"t" is ax25_display_timer(&rose->timer) / HZ whereas "tX" are rose->tX / HZ.
 
-Previous compiler versions "knew" what "int" is.
-And yes, todays compilers also know what int is (i.e. int main() {};) -- without including sys/types.h.
-But the preprocessor is "before" the actual compiling stuff. Perhaps there were reasons to make him less intelligent / more stupid.
+ax25_display_timer() does not like jiffies > timer->expires (and it should
+probably return plain seconds btw).
 
-I can't imagine why current gcc behaves so and considers this as error.
+You may try the hack below.
 
-
-Btw, I recently compiled it on debian bullseye with
-
-root@lax25-debug1:/usr/local/src/linux-ax25# gcc --version
-gcc (Debian 10.2.1-6) 10.2.1 20210110
-Copyright (C) 2020 Free Software Foundation, Inc.
-..
-
-
-> For example :
-> 
-> gcc -DHAVE_CONFIG_H -I. -I../.. -D_GNU_SOURCE   -g -O2 -MT axgetput.o -MD -MP -MF .deps/axgetput.Tpo -c -o axgetput.o axgetput.c
-> axgetput.c: In function 'eol_convention':
-> axgetput.c:115:17: warning: ignoring return value of 'write' declared with attribute 'warn_unused_result' [-Wunused-result]
->   115 |                 write(fderr, BIN_ON, strlen(BIN_ON));
->       |                 ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-> axgetput.c:118:17: warning: ignoring return value of 'write' declared with attribute 'warn_unused_result' [-Wunused-result]
->   118 |                 write(fderr, BIN_OFF, strlen(BIN_OFF));
->       |                 ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-> mv -f .deps/axgetput.Tpo .deps/axgetput.Po
-> gcc  -g -O2   -o axgetput axgetput.o util.o proto_bin.o
-
-
-1. on my debian bullseye, I only get these warnings:
-
-roto_bin.c: In function ‘bput’:
-proto_bin.c:167:44: warning: ‘%s’ directive writing up to 4096 bytes into a region of size 2027 [-Wformat-overflow=]
-  167 |     sprintf(err_msg, "error: cannot unlink %s (%s)\n", filename, strerror(errno));
-      |                                            ^~          ~~~~~~~~
-proto_bin.c:167:5: note: ‘sprintf’ output 26 or more bytes (assuming 4122) into a destination of size 2048
-  167 |     sprintf(err_msg, "error: cannot unlink %s (%s)\n", filename, strerror(errno));
-      |     ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-proto_bin.c:173:41: warning: ‘%s’ directive writing up to 4096 bytes into a region of size 2029 [-Wformat-overflow=]
-  173 |    sprintf(err_msg, "error: cannot open %s (%s)\n", filename, strerror(errno));
-      |                                         ^~          ~~~~~~~~
-proto_bin.c:173:4: note: ‘sprintf’ output 24 or more bytes (assuming 4120) into a destination of size 2048
-  173 |    sprintf(err_msg, "error: cannot open %s (%s)\n", filename, strerror(errno));
-      |    ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-proto_bin.c: In function ‘bget’:
-proto_bin.c:334:41: warning: ‘%s’ directive writing up to 4096 bytes into a region of size 2029 [-Wformat-overflow=]
-  334 |    sprintf(err_msg, "error: cannot open %s (%s)\n", filename, strerror(errno));
-      |                                         ^~          ~~~~~~~~
-proto_bin.c:334:4: note: ‘sprintf’ output 24 or more bytes (assuming 4120) into a destination of size 2048
-  334 |    sprintf(err_msg, "error: cannot open %s (%s)\n", filename, strerror(errno));
-      |    ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-mv -f .deps/proto_bin.Tpo .deps/proto_bin.Po
-gcc  -g -O2 -Wall   -o axgetput axgetput.o util.o proto_bin.o  
-
-
-=>
-
-
-Indeed, the compiler found a probable buffer overflow.
-err_msg should be sizeof(PATH_MAX+x).
-char err_msg[PATH_MAX*2];
-should be sufficient for text and errorstring.
-
-
-This warning I did not get with my compiler:
-
->> axgetput.c: In function 'eol_convention':
->> axgetput.c:113:17: warning: ignoring return value of 'write' declared with attribute 'warn_unused_result' [-Wunused-result]
->>   113 |                 write(fderr, BIN_ON, strlen(BIN_ON));
->>       |                 ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
->> axgetput.c:116:17: warning: ignoring return value of 'write' declared with attribute 'warn_unused_result' [-Wunused-result]
->>   116 |                 write(fderr, BIN_OFF, strlen(BIN_OFF));
->>       |                 ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
->> make[3]: *** [Makefile:380: axgetput.o] Error 1
->> make[3]: Leaving directory '/usr/local/src/ax25/linuxax25-master/ax25tools/ax25/axgetput'
->> make[2]: *** [Makefile:595: all-recursive] Error 1
->> make[2]: Leaving directory '/usr/local/src/ax25/linuxax25-master/ax25tools/ax25'
->> make[1]: *** [Makefile:392: all-recursive] Error 1
->> make[1]: Leaving directory '/usr/local/src/ax25/linuxax25-master/ax25tools'
-
-
-
-I admit i did not care. We wrote almost nothing to fderr. I expected there will be always enough buffers. And if this fails, well, then user was disconnected, axspawn terminates and user childs like bash and this we (it's child axget or axput) will be forced to terminate anyway.
-
-If we do not like to live with this warning, we can
-either
-  int throwaway;
-  throwaway = write(fderr, BIN_OFF, strlen(BIN_OFF));
-
-But this is so much ugly. Then we have to take the effort and do things right, like
-
-again:
-char *p = BIN_ON;
-n = write(fderr, p, strlen(p));
-if (n < p) {
-  if (n > 0 && n < p)
-    p = p+n;
-  sleep(10);
-  goto again;
-}  // yes this is still really ugly. I doub't this is really needed here.
-  
-
-Or use the secure_write() from util.c. And if this returns -1, then exit(1).
-
-
-I'll commit these changes later.
-Currently we have a DNS problem. Tried to reach Ralf for weeks. If this runs in my personal timeout (-- soon...), then
-we need to change the domain (I already have a plan).
-
-vy 73,
-	- Thomas  dl9sau
-
-
-
-
+diff --git a/net/ax25/ax25_timer.c b/net/ax25/ax25_timer.c
+index 85865ebfdfa2..b77433fff0c9 100644
+--- a/net/ax25/ax25_timer.c
++++ b/net/ax25/ax25_timer.c
+@@ -108,10 +108,9 @@ int ax25_t1timer_running(ax25_cb *ax25)
+ 
+ unsigned long ax25_display_timer(struct timer_list *timer)
+ {
+-	if (!timer_pending(timer))
+-		return 0;
++	long delta = timer->expires - jiffies;
+ 
+-	return timer->expires - jiffies;
++	return jiffies_delta_to_clock_t(delta) * HZ;
+ }
+ 
+ EXPORT_SYMBOL(ax25_display_timer);
