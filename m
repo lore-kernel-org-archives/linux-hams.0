@@ -1,93 +1,69 @@
-From: Bernard f6bvp <f6bvp@free.fr>
-Subject: Re: rose timer t error displayed in /proc/net/rose
-Date: Mon, 1 Aug 2022 21:33:08 +0200
-Message-ID: <3471ea58-4818-bff0-3d90-ecce2086c423@free.fr>
-References: <d5e93cc7-a91f-13d3-49a1-b50c11f0f811@free.fr>
- <YucgpeXpqwZuievg@electric-eye.fr.zoreil.com>
- <A9A8A0B7-5009-4FB0-9317-5033DE17E701@osterried.de>
- <Yuf04XIsXrQMJuUy@electric-eye.fr.zoreil.com>
+From: Francois Romieu <romieu@fr.zoreil.com>
+Subject: [PATCH v1 net 1/1] net: avoid overflow when rose /proc displays
+ timer information.
+Date: Tue, 2 Aug 2022 17:07:42 +0200
+Message-ID: <Yuk9vq7t7VhmnOXu@electric-eye.fr.zoreil.com>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Return-path: <linux-hams-owner@vger.kernel.org>
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=free.fr;
-        s=smtp-20201208; t=1659382393;
-        bh=Z2KjtwsxMMfBTjzNhCjIjURQlfJlHVWS3ieXQoK/xxI=;
-        h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-        b=NXhRQVlORbhoJqDAcRpwI2RX1EYet3rhq1lr7ejJ50XE6NaXpcB8a2YFQ/Fwko1uF
-         5dOyEDtqoYfJNYw11zn7ucluHM7EWFzfmDgEDr+R8zxbqTWmlBPnrbRaoFurhQg0MK
-         Bi9TOvL6SKJrTpqRdeH6f4/09FL6c7kPTDIc5HOhPTWLfsS5pCBnWjyy5UyT0JV29H
-         9UzCKDasklnkyvDz6o2O2Il/loCQvNP2q3WAmp1B1cqqww9Y/3Ur+XLGrN8XQBgQJZ
-         FkmcgtEhNDmK+6F1y06G7GYXOZL35GYAYKmAquy9RimKuxBjk2VVsrNPs+f3WOhnO/
-         7Fc5lZedQnJfg==
-Content-Language: en-US
-In-Reply-To: <Yuf04XIsXrQMJuUy@electric-eye.fr.zoreil.com>
+Return-path: <netdev-owner@vger.kernel.org>
+DKIM-Filter: OpenDKIM Filter v2.11.0 violet.fr.zoreil.com 272F7g5t2380071
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fr.zoreil.com;
+        s=v20220413; t=1659452862;
+        bh=2oD14gOZO93tqzNZQjZFooIHsA19Pom4E2LBsvbbNMk=;
+        h=Date:From:To:Cc:Subject:From;
+        b=jJZhLnZ/lG173aiPYJfjoqNgC2+Hp9y2Hoyocxz+Ze90D9tr/9uAp9QaD5SAADs/+
+         P5tndqCCSnO7QKJGk9RCZbmz9HEGB4bOpSMcj4SEp8UB86FXuuub48/bhJ0Kl/N/Sp
+         0/OK1RMwWLz+ZLnXs+Iaq3wvwartlGjc0HSrJf5U=
+Content-Disposition: inline
 List-ID: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="utf-8"; format="flowed"
-To: Francois Romieu <romieu@fr.zoreil.com>, Thomas Osterried <thomas@osterried.de>
-Cc: Eric Dumazet <edumazet@google.com>, linux-hams@vger.kernel.org, Thomas Osterried DL9SAU <thomas@x-berg.in-berlin.de>, netdev@vger.kernel.org
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+To: netdev@vger.kernel.org
+Cc: edumazet@google.com, davem@davemloft.net, kuba@kernel.org, pabeni@redhat.com, f6bvp@free.fr, thomas@osterried.de, thomas@x-berg.in-berlin.de, linux-hams@vger.kernel.org
 
-François, your new patch is working fine in both state 1 and 2 of rose.
+rose /proc code does not serialize timer accesses.
 
-Congrats and thanks !
+Initial report by Bernard F6BVP Pidoux exhibits overflow amounting
+to 116 ticks on its HZ=250 system.
 
-By the way, it is a very old display issue... Already present in 5.4.79 
-(32 bytes OS) for example and probably since much earlier.
+Full timer access serialization would imho be overkill as rose /proc
+does not enforce consistency between displayed ROSE_STATE_XYZ and
+timer values during changes of state.
 
-Le 01/08/2022 à 17:44, Francois Romieu a écrit :
-> Thomas Osterried <thomas@osterried.de> :
-> [...]
->> 1. why do you check for pending timer anymore?
-> s/do/don't/ ?
->
-> I don't check for pending timer because:
-> - the check is racy
-> - jiffies_delta_to_clock_t maxes negative delta to zero
->
->> 2. I'm not really sure what value jiffies_delta_to_clock_t() returns. jiffies / HZ?
->>     jiffies_delta_to_clock_t() returns clock_t.
-> I completely messed this part :o/
->
-> clock_t relates to USER_HZ like jiffies does to HZ.
->
-> [don't break the ax25]
->
-> Sure, we are in violent agreement here.
->
-> [...]
->> 1. I expect rose->timer to be restarted soon. If it does not happen, is there a bug?
-> The relevant rose state in Bernard's sample was ROSE_STATE_2.
->
-> net/rose/rose_timer.c::rose_timer_expiry would had called
-> rose_disconnect(sk, ETIMEDOUT, -1, -1) so there should not
-> be any timer restart (afaiu, etc.).
->
-> [...]
->>     => Negative may be handled due to Francois' patch now correctly.
->> delta as signed long may be negative. max(0L, -nnnn) sould result to 0L.
->>     This would result to 0. Perhaps proven by Francois, because he used this function and achieved a correct display of that idle value. Francois, am I correct, is "0" really displayed?
-> I must confess that I was not terribly professional this morning past 2AM.
->
-> The attached snippet illustrates the behavior wrt negative values
-> (make; insmod foo.ko ; sleep 1; rmmod foo.ko; dmesg | tail -n 2).
-> It also illustrates that I got the unit wrong.
->
-> This should be better:
->
-> diff --git a/net/ax25/ax25_timer.c b/net/ax25/ax25_timer.c
-> index 85865ebfdfa2..3c94e5a2d098 100644
-> --- a/net/ax25/ax25_timer.c
-> +++ b/net/ax25/ax25_timer.c
-> @@ -108,10 +108,9 @@ int ax25_t1timer_running(ax25_cb *ax25)
->   
->   unsigned long ax25_display_timer(struct timer_list *timer)
->   {
-> -	if (!timer_pending(timer))
-> -		return 0;
-> +	long delta = timer->expires - jiffies;
->   
-> -	return timer->expires - jiffies;
-> +	return max(0L, delta);
->   }
->   
->   EXPORT_SYMBOL(ax25_display_timer);
->
+The patch may also fix similar behavior in ax25 /proc, ax25 ioctl
+and netrom /proc as they all exhibit the same timer serialization
+policy. This point has not been reported though.
+
+The sole remaining use of ax25_display_timer - ax25 rtt valuation -
+may also perform marginally better but I have not analyzed it too
+deeply.
+
+Signed-off-by: Francois Romieu <romieu@fr.zoreil.com>
+Cc: Thomas DL9SAU Osterried <thomas@osterried.de>
+Link: https://lore.kernel.org/all/d5e93cc7-a91f-13d3-49a1-b50c11f0f811@free.fr/
+---
+ net/ax25/ax25_timer.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
+
+Bernard, can you formally test and add your "Tested-by:" on this one ?
+
+diff --git a/net/ax25/ax25_timer.c b/net/ax25/ax25_timer.c
+index 85865ebfdfa2..9f7cb0a7c73f 100644
+--- a/net/ax25/ax25_timer.c
++++ b/net/ax25/ax25_timer.c
+@@ -108,10 +108,12 @@ int ax25_t1timer_running(ax25_cb *ax25)
+ 
+ unsigned long ax25_display_timer(struct timer_list *timer)
+ {
++	long delta = timer->expires - jiffies;
++
+ 	if (!timer_pending(timer))
+ 		return 0;
+ 
+-	return timer->expires - jiffies;
++	return max(0L, delta);
+ }
+ 
+ EXPORT_SYMBOL(ax25_display_timer);
+-- 
+2.37.1
+
