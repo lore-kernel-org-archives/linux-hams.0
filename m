@@ -1,52 +1,184 @@
-From: patchwork-bot+netdevbpf@kernel.org
-Subject: Re: [PATCH v1 net 1/1] net: avoid overflow when rose /proc displays
- timer information.
-Date: Sat, 06 Aug 2022 02:10:13 +0000
-Message-ID: <165975181334.26957.10972886418767588216.git-patchwork-notify@kernel.org>
-References: <Yuk9vq7t7VhmnOXu@electric-eye.fr.zoreil.com>
+From: f6bvp <f6bvp@free.fr>
+Subject: [PATCH] AX25 rose_call - replacing carriage return by newlines
+Date: Sun, 7 Aug 2022 20:04:39 +0200
+Message-ID: <66c85963-fc9e-e8fa-2b82-32be5842173d@free.fr>
+References: <d5e93cc7-a91f-13d3-49a1-b50c11f0f811@free.fr>
+ <YucgpeXpqwZuievg@electric-eye.fr.zoreil.com>
+ <A9A8A0B7-5009-4FB0-9317-5033DE17E701@osterried.de>
+ <Yuf04XIsXrQMJuUy@electric-eye.fr.zoreil.com>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Return-path: <netdev-owner@vger.kernel.org>
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1659751813;
-        bh=hRJejyyiZsTASW6C3ZfgHZTv63Mj+O+arUxw/aioS2M=;
-        h=Subject:From:Date:References:In-Reply-To:To:Cc:From;
-        b=oSmAfM3yrhEI+Ga75Ac+S4t1WdoP7zkUqVf8XXHjD9MWUmh6Ar2JAXiTJTKCci6E/
-         6c6oD1PyoniYRyy75hoswrklu6fBo+uAG0iC9MDn7+a+cKZGQcZhbAhtQJFlXop6ll
-         hPvBLeKkJsk5Awj5t/ABBYglhxZVqRnBR6lgqj7PwfDXbfbh06s01ff88+gB3h425T
-         oeRpNWvTwEZKu+l6kTMpfq9mFQwFA3vCvIY7jgIKm6kjHp5Qg7+9VlPPyCTANx+80v
-         Vb5zcau2Rv/djJzhy+kFN5o4Dr61GloizlSl36ic+S06GIdvZmP7VgeNieaJ+8lMlU
-         HC2IKADR2zzOQ==
-In-Reply-To: <Yuk9vq7t7VhmnOXu@electric-eye.fr.zoreil.com>
+Content-Type: multipart/mixed; boundary="------------5j3LeEt6YOMc3wYrUcuhwrvK"
+Return-path: <linux-hams-owner@vger.kernel.org>
+Content-Language: en-US
+In-Reply-To: <Yuf04XIsXrQMJuUy@electric-eye.fr.zoreil.com>
 List-ID: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"
-To: Francois Romieu <romieu@fr.zoreil.com>
-Cc: netdev@vger.kernel.org, edumazet@google.com, davem@davemloft.net, kuba@kernel.org, pabeni@redhat.com, f6bvp@free.fr, thomas@osterried.de, thomas@x-berg.in-berlin.de, linux-hams@vger.kernel.org
+To: linux-hams@vger.kernel.org
+Cc: Thomas Osterried DL9SAU <thomas@x-berg.in-berlin.de>, netdev@vger.kernel.org, Francois Romieu <romieu@fr.zoreil.com>
 
-Hello:
+This is a multi-part message in MIME format.
+--------------5j3LeEt6YOMc3wYrUcuhwrvK
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-This patch was applied to netdev/net.git (master)
-by Jakub Kicinski <kuba@kernel.org>:
+[PATCH] AX25 rose_call - replacing carriage return by newlines
 
-On Tue, 2 Aug 2022 17:07:42 +0200 you wrote:
-> rose /proc code does not serialize timer accesses.
-> 
-> Initial report by Bernard F6BVP Pidoux exhibits overflow amounting
-> to 116 ticks on its HZ=250 system.
-> 
-> Full timer access serialization would imho be overkill as rose /proc
-> does not enforce consistency between displayed ROSE_STATE_XYZ and
-> timer values during changes of state.
-> 
-> [...]
+I have been using intensively rose_call application (part of 
+ax25tools/user_call library) while debugging rose connect issue.
 
-Here is the summary with links:
-  - [v1,net,1/1] net: avoid overflow when rose /proc displays timer information.
-    https://git.kernel.org/netdev/net/c/df1c941468fc
+However once connected rose_call displays remote message without 
+linefeed. Consequently it is impossible to read messages.
 
-You are awesome, thank you!
--- 
-Deet-doot-dot, I am a bot.
-https://korg.docs.kernel.org/patchwork/pwbot.html
+For example calling local node :
+
+# rose_call rose0 f6bvp f6bvp-4 2080175524
+Connecting to f6bvp-4 @ 2080175524 ...
+
+*** Connected
+
+F6BVP-4 (Commands = ?) : Aug  5 2022) for LINUX (help = h)
 
 
+Then issuing command P to the connected local node, all answer
+lines are superimposed.
+
+F6BVP-4 (Commands = ?) : Switch Port
+
+
+Now with the proposed patch is the complete info displayed:
+
+# ./rose_call rose0 f6bvp f6bvp-4 2080175524
+
+Connecting to f6bvp-4 @ 2080175524 ...
+
+*** Connected
+
+User call : F6BVP-0
+
+Welcome to the last release of Fpac!
+
+This file is fpac.hello and is displayed when
+
+a user connects to the node.
+
+
+
+FPAC-Node v 4.1.3 (built Aug  5 2022) for LINUX (help = h)
+
+F6BVP-4 (Commands = ?) :
+
+
+In file rose_call.c carriage returns are also replaced by newlines
+in order to let error messages to be correctly displayed.
+
+Cc: Thomas DL9SAU Osterried <thomas@osterried.de>
+Cc: Francois Romieu <romieu@fr.zoreil.com>
+Signed-off-by: Bernard Pidoux <f6bvp@free.fr>
+
+
+--------------5j3LeEt6YOMc3wYrUcuhwrvK
+Content-Type: text/x-patch; charset=UTF-8;
+ name="replace_return-linefeed_in_rose_call.patch"
+Content-Disposition: attachment;
+ filename="replace_return-linefeed_in_rose_call.patch"
+Content-Transfer-Encoding: base64
+
+ZGlmZiAtLWdpdCBhL2xpbnV4YXgyNS1tYXN0ZXItZjZidnAvYXgyNXRvb2xzL3VzZXJfY2Fs
+bC91c2VyX2lvLmMgYi9saW51eGF4MjUtbWFzdGVyL2F4MjV0b29scy91c2VyX2NhbGwvdXNl
+cl9pby5jCmluZGV4IDNiZDZhMjYuLjkyYzQ3YTYgMTAwNjQ0Ci0tLSBhL2xpbnV4YXgyNS1t
+YXN0ZXIvYXgyNXRvb2xzL3VzZXJfY2FsbC91c2VyX2lvLmMKKysrIGIvbGludXhheDI1LW1h
+c3Rlci9heDI1dG9vbHMvdXNlcl9jYWxsL3VzZXJfaW8uYwpAQCAtMTc0LDYgKzE3NCwxNiBA
+QCBpbnQgdXNlcl9yZWFkKGludCBmZCwgdm9pZCAqYnVmLCBzaXplX3QgY291bnQpCiAjZW5k
+aWYKIH0KIAordm9pZCBsaW5lZmVlZF9idWZmZXIoY2hhciAqYnVmLCBzaXplX3QgY291bnQp
+Cit7CisJaW50IGk7CisKKwlmb3IgKGk9MCA7IGkgPCBjb3VudCA7IGkrKykgeworCQlpZihi
+dWZbaV0gPT0gMHgwRCkKKwkJCWJ1ZltpXSA9IDB4MEE7CisJfQorfQorCiBpbnQgc2VsZWN0
+X2xvb3AoaW50IHMpCiB7CiAJZmRfc2V0IHJlYWRfZmQ7CkBAIC0xOTksOCArMjA5LDEwIEBA
+IGludCBzZWxlY3RfbG9vcChpbnQgcykKIAkJc2VsZWN0KHMgKyAxLCAmcmVhZF9mZCwgTlVM
+TCwgTlVMTCwgTlVMTCk7CiAKIAkJaWYgKEZEX0lTU0VUKHMsICZyZWFkX2ZkKSkgewotCQkJ
+d2hpbGUgKChuID0gdXNlcl9yZWFkKHMsIGJ1ZiwgQlVGTEVOKSkgPiAwKQorCQkJd2hpbGUg
+KChuID0gdXNlcl9yZWFkKHMsIGJ1ZiwgQlVGTEVOKSkgPiAwKSB7CisJCQkJbGluZWZlZWRf
+YnVmZmVyKGJ1ZiwgQlVGTEVOKTsKIAkJCQl1c2VyX3dyaXRlKFNURE9VVF9GSUxFTk8sIGJ1
+Ziwgbik7CisJCQl9CiAJCQlpZiAobiA9PSAwIHx8IChuIDwgMCAmJiBlcnJubyAhPSBFQUdB
+SU4pKSB7CiAJCQkJY2xvc2Uocyk7CiAJCQkJYnJlYWs7CgoKZGlmZiAtLWdpdCBhL2xpbnV4
+YXgyNS1tYXN0ZXItZjZidnAvYXgyNXRvb2xzL3VzZXJfY2FsbC9yb3NlX2NhbGwuYyBiL2xp
+bnV4YXgyNS1tYXN0ZXIvYXgyNXRvb2xzL3VzZXJfY2FsbC9yb3NlX2NhbGwuYwppbmRleCAw
+M2JiYTA4Li43YTdkZWExIDEwMDY0NAotLS0gYS9saW51eGF4MjUtbWFzdGVyLWY2YnZwL2F4
+MjV0b29scy91c2VyX2NhbGwvcm9zZV9jYWxsLmMKKysrIGIvbGludXhheDI1LW1hc3Rlci9h
+eDI1dG9vbHMvdXNlcl9jYWxsL3Jvc2VfY2FsbC5jCkBAIC00NCwxMyArNDQsMTMgQEAgaW50
+IG1haW4oaW50IGFyZ2MsIGNoYXIgKiphcmd2KQogCQkJYnJlYWs7CiAJCWNhc2UgJzonOgog
+CQljYXNlICc/JzoKLQkJCWVycigiRVJST1I6IGludmFsaWQgb3B0aW9uIHVzYWdlXG4iKTsK
+KwkJCWVycigiRVJST1I6IGludmFsaWQgb3B0aW9uIHVzYWdlXHIiKTsKIAkJCXJldHVybiAx
+OwogCQl9CiAJfQogCiAJaWYgKHBhY2xlbl9pbiA8IDEgfHwgcGFjbGVuX291dCA8IDEpIHsK
+LQkJZXJyKCJFUlJPUjogaW52YWxpZCBwYWNsZW5cbiIpOworCQllcnIoIkVSUk9SOiBpbnZh
+bGlkIHBhY2xlblxyIik7CiAJCXJldHVybiAxOwogCX0KIApAQCAtNTgsMTIgKzU4LDEyIEBA
+IGludCBtYWluKGludCBhcmdjLCBjaGFyICoqYXJndikKIAkgKiBBcmd1bWVudHMgc2hvdWxk
+IGJlICJyb3NlX2NhbGwgcG9ydCBteWNhbGwgcmVtY2FsbCByZW1hZGRyIgogCSAqLwogCWlm
+ICgoYXJnYyAtIG9wdGluZCkgIT0gNCkgewotCQlzdHJjcHkoYnVmZmVyLCAiRVJST1I6IGlu
+dmFsaWQgbnVtYmVyIG9mIHBhcmFtZXRlcnNcbiIpOworCQlzdHJjcHkoYnVmZmVyLCAiRVJS
+T1I6IGludmFsaWQgbnVtYmVyIG9mIHBhcmFtZXRlcnNcciIpOwogCQllcnIoYnVmZmVyKTsK
+IAl9CiAKIAlpZiAocnNfY29uZmlnX2xvYWRfcG9ydHMoKSA9PSAwKSB7Ci0JCXN0cmNweShi
+dWZmZXIsICJFUlJPUjogcHJvYmxlbSB3aXRoIHJzcG9ydHMgZmlsZVxuIik7CisJCXN0cmNw
+eShidWZmZXIsICJFUlJPUjogcHJvYmxlbSB3aXRoIHJzcG9ydHMgZmlsZVxyIik7CiAJCWVy
+cihidWZmZXIpOwogCX0KIApAQCAtNzUsMjcgKzc1LDI3IEBAIGludCBtYWluKGludCBhcmdj
+LCBjaGFyICoqYXJndikKIAogCWFkZHIgPSByc19jb25maWdfZ2V0X2FkZHIoYXJndltvcHRp
+bmRdKTsKIAlpZiAoYWRkciA9PSBOVUxMKSB7Ci0JCXNwcmludGYoYnVmZmVyLCAiRVJST1I6
+IGludmFsaWQgUm9zZSBwb3J0IG5hbWUgLSAlc1xuIiwgYXJndltvcHRpbmRdKTsKKwkJc3By
+aW50ZihidWZmZXIsICJFUlJPUjogaW52YWxpZCBSb3NlIHBvcnQgbmFtZSAtICVzXHIiLCBh
+cmd2W29wdGluZF0pOwogCQllcnIoYnVmZmVyKTsKIAl9CiAKIAlpZiAocm9zZV9hdG9uKGFk
+ZHIsIHJvc2ViaW5kLnNyb3NlX2FkZHIucm9zZV9hZGRyKSA9PSAtMSkgewotCQlzcHJpbnRm
+KGJ1ZmZlciwgIkVSUk9SOiBpbnZhbGlkIFJvc2UgcG9ydCBhZGRyZXNzIC0gJXNcbiIsIGFy
+Z3Zbb3B0aW5kXSk7CisJCXNwcmludGYoYnVmZmVyLCAiRVJST1I6IGludmFsaWQgUm9zZSBw
+b3J0IGFkZHJlc3MgLSAlc1xyIiwgYXJndltvcHRpbmRdKTsKIAkJZXJyKGJ1ZmZlcik7CiAJ
+fQogCiAJaWYgKGF4MjVfYXRvbl9lbnRyeShhcmd2W29wdGluZCArIDFdLCByb3NlYmluZC5z
+cm9zZV9jYWxsLmF4MjVfY2FsbCkgPT0gLTEpIHsKLQkJc3ByaW50ZihidWZmZXIsICJFUlJP
+UjogaW52YWxpZCBjYWxsc2lnbiAtICVzXG4iLCBhcmd2W29wdGluZCArIDFdKTsKKwkJc3By
+aW50ZihidWZmZXIsICJFUlJPUjogaW52YWxpZCBjYWxsc2lnbiAtICVzXHIiLCBhcmd2W29w
+dGluZCArIDFdKTsKIAkJZXJyKGJ1ZmZlcik7CiAJfQogCiAJaWYgKGF4MjVfYXRvbl9lbnRy
+eShhcmd2W29wdGluZCArIDJdLCByb3NlY29ubmVjdC5zcm9zZV9jYWxsLmF4MjVfY2FsbCkg
+PT0gLTEpIHsKLQkJc3ByaW50ZihidWZmZXIsICJFUlJPUjogaW52YWxpZCBjYWxsc2lnbiAt
+ICVzXG4iLCBhcmd2W29wdGluZCArIDJdKTsKKwkJc3ByaW50ZihidWZmZXIsICJFUlJPUjog
+aW52YWxpZCBjYWxsc2lnbiAtICVzXHIiLCBhcmd2W29wdGluZCArIDJdKTsKIAkJZXJyKGJ1
+ZmZlcik7CiAJfQogCiAJaWYgKHJvc2VfYXRvbihhcmd2W29wdGluZCArIDNdLCByb3NlY29u
+bmVjdC5zcm9zZV9hZGRyLnJvc2VfYWRkcikgPT0gLTEpIHsKLQkJc3ByaW50ZihidWZmZXIs
+ICJFUlJPUjogaW52YWxpZCBSb3NlIGFkZHJlc3MgLSAlc1xuIiwgYXJndltvcHRpbmQgKyAz
+XSk7CisJCXNwcmludGYoYnVmZmVyLCAiRVJST1I6IGludmFsaWQgUm9zZSBhZGRyZXNzIC0g
+JXNcciIsIGFyZ3Zbb3B0aW5kICsgM10pOwogCQllcnIoYnVmZmVyKTsKIAl9CiAKQEAgLTEw
+NCw3ICsxMDQsNyBAQCBpbnQgbWFpbihpbnQgYXJnYywgY2hhciAqKmFyZ3YpCiAJICovCiAJ
+cyA9IHNvY2tldChBRl9ST1NFLCBTT0NLX1NFUVBBQ0tFVCwgMCk7CiAJaWYgKHMgPCAwKSB7
+Ci0JCXNwcmludGYoYnVmZmVyLCAiRVJST1I6IGNhbm5vdCBvcGVuIFJvc2Ugc29ja2V0LCAl
+c1xuIiwgc3RyZXJyb3IoZXJybm8pKTsKKwkJc3ByaW50ZihidWZmZXIsICJFUlJPUjogY2Fu
+bm90IG9wZW4gUm9zZSBzb2NrZXQsICVzXHIiLCBzdHJlcnJvcihlcnJubykpOwogCQllcnIo
+YnVmZmVyKTsKIAl9CiAKQEAgLTExMiwxMSArMTEyLDExIEBAIGludCBtYWluKGludCBhcmdj
+LCBjaGFyICoqYXJndikKIAkgKiBTZXQgb3VyIEFYLjI1IGNhbGxzaWduIGFuZCBSb3NlIGFk
+ZHJlc3MgYWNjb3JkaW5nbHkuCiAJICovCiAJaWYgKGJpbmQocywgKHN0cnVjdCBzb2NrYWRk
+ciAqKSZyb3NlYmluZCwgYWRkcmxlbikgIT0gMCkgewotCQlzcHJpbnRmKGJ1ZmZlciwgIkVS
+Uk9SOiBjYW5ub3QgYmluZCBSb3NlIHNvY2tldCwgJXNcbiIsIHN0cmVycm9yKGVycm5vKSk7
+CisJCXNwcmludGYoYnVmZmVyLCAiRVJST1I6IGNhbm5vdCBiaW5kIFJvc2Ugc29ja2V0LCAl
+c1xyIiwgc3RyZXJyb3IoZXJybm8pKTsKIAkJZXJyKGJ1ZmZlcik7CiAJfQogCi0Jc3ByaW50
+ZihidWZmZXIsICJDb25uZWN0aW5nIHRvICVzIEAgJXMgLi4uXG4iLCBhcmd2W29wdGluZCAr
+IDJdLCBhcmd2W29wdGluZCArIDNdKTsKKwlzcHJpbnRmKGJ1ZmZlciwgIkNvbm5lY3Rpbmcg
+dG8gJXMgQCAlcyAuLi5cciIsIGFyZ3Zbb3B0aW5kICsgMl0sIGFyZ3Zbb3B0aW5kICsgM10p
+OwogCXVzZXJfd3JpdGUoU1RET1VUX0ZJTEVOTywgYnVmZmVyLCBzdHJsZW4oYnVmZmVyKSk7
+CiAKIAkvKgpAQCAtMTMyLDE2ICsxMzIsMTYgQEAgaW50IG1haW4oaW50IGFyZ2MsIGNoYXIg
+Kiphcmd2KQogCWlmIChjb25uZWN0KHMsIChzdHJ1Y3Qgc29ja2FkZHIgKikmcm9zZWNvbm5l
+Y3QsIGFkZHJsZW4pICE9IDApIHsKIAkJc3dpdGNoIChlcnJubykgewogCQljYXNlIEVDT05O
+UkVGVVNFRDoKLQkJCXN0cmNweShidWZmZXIsICIqKiogQ29ubmVjdGlvbiByZWZ1c2VkIC0g
+YWJvcnRpbmdcbiIpOworCQkJc3RyY3B5KGJ1ZmZlciwgIioqKiBDb25uZWN0aW9uIHJlZnVz
+ZWQgLSBhYm9ydGluZ1xyIik7CiAJCQlicmVhazsKIAkJY2FzZSBFTkVUVU5SRUFDSDoKLQkJ
+CXN0cmNweShidWZmZXIsICIqKiogTm8ga25vd24gcm91dGUgLSBhYm9ydGluZ1xuIik7CisJ
+CQlzdHJjcHkoYnVmZmVyLCAiKioqIE5vIGtub3duIHJvdXRlIC0gYWJvcnRpbmdcciIpOwog
+CQkJYnJlYWs7CiAJCWNhc2UgRUlOVFI6Ci0JCQlzdHJjcHkoYnVmZmVyLCAiKioqIENvbm5l
+Y3Rpb24gdGltZWQgb3V0IC0gYWJvcnRpbmdcbiIpOworCQkJc3RyY3B5KGJ1ZmZlciwgIioq
+KiBDb25uZWN0aW9uIHRpbWVkIG91dCAtIGFib3J0aW5nXHIiKTsKIAkJCWJyZWFrOwogCQlk
+ZWZhdWx0OgotCQkJc3ByaW50ZihidWZmZXIsICJFUlJPUjogY2Fubm90IGNvbm5lY3QgdG8g
+Um9zZSBhZGRyZXNzLCAlc1xuIiwgc3RyZXJyb3IoZXJybm8pKTsKKwkJCXNwcmludGYoYnVm
+ZmVyLCAiRVJST1I6IGNhbm5vdCBjb25uZWN0IHRvIFJvc2UgYWRkcmVzcywgJXNcciIsIHN0
+cmVycm9yKGVycm5vKSk7CiAJCQlicmVhazsKIAkJfQogCkBAIC0xNTMsMTIgKzE1MywxMiBA
+QCBpbnQgbWFpbihpbnQgYXJnYywgY2hhciAqKmFyZ3YpCiAJICovCiAJYWxhcm0oMCk7CiAK
+LQlzdHJjcHkoYnVmZmVyLCAiKioqIENvbm5lY3RlZFxuIik7CisJc3RyY3B5KGJ1ZmZlciwg
+IioqKiBDb25uZWN0ZWRcciIpOwogCXVzZXJfd3JpdGUoU1RET1VUX0ZJTEVOTywgYnVmZmVy
+LCBzdHJsZW4oYnVmZmVyKSk7CiAKIAlzZWxlY3RfbG9vcChzKTsKIAotCXN0cmNweShidWZm
+ZXIsICJcbioqKiBEaXNjb25uZWN0ZWRcbiIpOworCXN0cmNweShidWZmZXIsICJccioqKiBE
+aXNjb25uZWN0ZWRcciIpOwogCXVzZXJfd3JpdGUoU1RET1VUX0ZJTEVOTywgYnVmZmVyLCBz
+dHJsZW4oYnVmZmVyKSk7CiAKIAllbmRfY29tcHJlc3MoKTsK
+
+--------------5j3LeEt6YOMc3wYrUcuhwrvK--
