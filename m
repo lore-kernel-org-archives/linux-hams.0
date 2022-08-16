@@ -1,185 +1,89 @@
-From: f6bvp <f6bvp@free.fr>
-Subject: Re: Resend : [PATCH] AX25 rose_call - replacing carriage return by
- newlines
-Date: Mon, 8 Aug 2022 14:31:35 +0200
-Message-ID: <71e52ce6-438c-8a90-6241-f6c3409fab8d@free.fr>
-References: <d5e93cc7-a91f-13d3-49a1-b50c11f0f811@free.fr>
- <YucgpeXpqwZuievg@electric-eye.fr.zoreil.com>
- <A9A8A0B7-5009-4FB0-9317-5033DE17E701@osterried.de>
- <Yuf04XIsXrQMJuUy@electric-eye.fr.zoreil.com>
- <d3e987ef-2c6d-4ae4-9b58-75d25f7793c2@free.fr>
- <ABFC096C-8F65-49C9-8BB9-7B75B3CE30B7@osterried.de>
+From: bernard.f6bvp@gmail.com
+Subject: [PATCH] rose: check NULL rose_loopback_neigh->loopback
+Date: Tue, 16 Aug 2022 20:51:40 +0200
+Message-ID: <20220816185140.9129-1-bernard.f6bvp@gmail.com>
 Mime-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Return-path: <linux-hams-owner@vger.kernel.org>
-Content-Language: en-US
-In-Reply-To: <ABFC096C-8F65-49C9-8BB9-7B75B3CE30B7@osterried.de>
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc;
+        bh=LelQJvF7zxFbcLTMVJBAC3ic54PTqj8BI7T6uO42R/g=;
+        b=Jxur5a7liBp1PmhjSOcKVdU6u6dilPcqzQOqarV3aWjxxH51gEsLKvWlFjN3EWFBXO
+         BBNILfQtiFUHfDtwQZKw2sGfxi3I8QYLd0qkkjwNgrge2VU/qRN5SQmzQGrA+onAgY1z
+         d1ID1LAwkKtznqESpJSwQNFf1fSpcyzAtOG2q3UVhQyXVl2ow6feR3433o28fvAP5qT4
+         tbav2ZS49sK4W7AtL+re2ihcdqZEKnFT6aIP5P3PSM+DEnwqpdk/HC/8aCTFxuQiYj09
+         pJdZXemzm8GF7vbjBNMEqK+oslPblhQX2NzuvvUigB/n5taGdbVoO+GptZlGIhqiVY46
+         w4tw==
 List-ID: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="utf-8"; format="flowed"
-To: Thomas Osterried <thomas@osterried.de>
-Cc: linux-hams@vger.kernel.org, Francois Romieu <romieu@fr.zoreil.com>, David Ranch <dranch@trinnet.net>, F3KT <f3kt@free.fr>, Eric Dumazet <edumazet@google.com>, k4gbb1@embarqmail.com, Woldanski Lee <ve7fet@tparc.org>
+Content-Type: text/plain; charset="us-ascii"
+To: "David S . Miller" <davem@davemloft.net>, Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>, Eric Dumazet <edumazet@google.com>, Thomas Osterried <thomas@osterried.de>, Francois Romieu <romieu@fr.zoreil.com>
+Cc: linux-hams@vger.kernel.org, netdev@vger.kernel.org, Bernard <bernard.f6bvp@gmail.com>, Bernard Pidoux <f6bvp@free.fr>
 
-Hi Thomas,
+From: Bernard <bernard.f6bvp@gmail.com>
 
-Many thanks for providing your feelings about what I have done.
+Since kernel 5.4.83 rose network connections were no more possible.
+Last good rose module was with kernel 5.4.79.
 
-I understand you don't want to change old AX.25 tools that are 
-convenient for packet radio.
+Francois Romieu <romieu@fr.zoreil.com> pointed the scope of changes to
+the attached commit (3b3fd068c56e3fbea30090859216a368398e39bf
+in mainline, 7f0ddd41e2899349461b578bec18e8bd492e1765 in stable).
 
-No problem.
+Above patch added NULL check for `rose_loopback_neigh->dev`
+in rose_loopback_timer() but omitted to check rose_loopback_neigh->loopback.
 
-As I needed a simple user application to connect ROSE network I will 
-still use my application for rose kernel module debugging.
+It thus introduced a bug preventing ALL rose connect.
+The reason is that a special rose_neigh loopback has a NULL device.
 
-"call" is a multi protocol application that is working for AX25 or 
-Netrom but does abolutely not work for rose as it is quite buggy.
+This is shown in /proc/net/rose_neigh via rose_neigh_show() function :
+...
+	seq_printf(seq, "%05d %-9s %-4s   %3d %3d  %3s     %3s %3lu %3lu",
+	   rose_neigh->number,
+	   (rose_neigh->loopback) ? "RSLOOP-0" : ax2asc(buf, &rose_neigh->callsign),
+	   rose_neigh->dev ? rose_neigh->dev->name : "???",
+	   rose_neigh->count,
+...
+/proc/net/rose_neigh displays special rose_loopback_neigh->loopback callsign RSLOOP-0:
 
-This is why I preferred to adapt rose_call that is a single protocol 
-simple application.
+addr  callsign  dev  count use mode restart  t0  tf digipeaters
+00001 RSLOOP-0  ???      1   2  DCE     yes   0   0
 
-I already repaired rose module in (net-next kernel 5.19+) that had been 
-broken by a patch applied two years ago without any user checking. Very 
-bad behavior indeed from AX25 and ROSE so called maintainers. Reverting 
-the patch did the job. Without all rose users have to keep using 5.4.79 
-kernel.
+By checking rose_loopback_neigh->loopback, rose_rx_call_request() is called even in case 
+rose_loopback_neigh->dev is NULL. This repairs rose connections.
 
-I spend the last hours to repair call application and rose protocol is 
-now working. However it will take a few days to certify the whole.
+Verification with rose client application FPAC:
 
-73 de Bernard, f6bvp / ai7bg
+FPAC-Node v 4.1.3 (built Aug  5 2022) for LINUX (help = h)
+F6BVP-4 (Commands = ?) : u
+Users - AX.25 Level 2 sessions :
+Port   Callsign     Callsign  AX.25 state  ROSE state  NetRom status
+axudp  F6BVP-5   -> F6BVP-9   Connected    Connected   ---------
 
-link to commit :
+IMHO this patch should be propagated back to LTS 5.4 kernel.
 
-https://lore.kernel.org/all/20201119191043.28813-1-anmol.karan123@gmail.com/
+Signed-off-by: Bernard Pidoux <f6bvp@free.fr>
+---
+ net/rose/rose_loopback.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-link to call screen image
-http://f6bvp.org/call_screen.png
+diff --git a/net/rose/rose_loopback.c b/net/rose/rose_loopback.c
+index 11c45c8c6c16..1c673db52636 100644
+--- a/net/rose/rose_loopback.c
++++ b/net/rose/rose_loopback.c
+@@ -97,8 +97,10 @@ static void rose_loopback_timer(struct timer_list *unused)
 
+		if (frametype == ROSE_CALL_REQUEST) {
+			if (!rose_loopback_neigh->dev) {
+-				kfree_skb(skb);
+-				continue;
++				if (!rose_loopback_neigh->loopback) {
++					kfree_skb(skb);
++					continue;
++				}
+			}
 
-Le 07/08/2022 à 21:07, Thomas Osterried a écrit :
-> Hello,
-> 
-> I don't think netev@ is the right addressee here. netdev is for kernel, not for userspace programs like telnet, libreoffice or X11. Or am I wrong? I removed netdev from the list of receipients.
-> 
-> 
-> Your patch makes things bad.
-> Reason: see man page:
-> 
->         ax25_call, netrom_call, rose_call and tcp_call establish an AX.25, NET/ROM, ROSE or
->         a TCP connection in a manner suitable for calling from  either  the  ax25d  program
->         directly,  or  from the node program as an external command. By setting the command
->         line arguments appropriately it is possible to set the local  callsign  from  which
->         the call will be made. No translation of the end of lines is performed by this pro‐
->         gram.
-> 
-> 
-> Explanation:
-> EOL convention in PacketRadio is '\r'. Not '\n', and not '\r\n'. There's no algorithm possible for autodetection - so many people have tried over the years, all have failed.
-> The last sentense, "No translation of the end of lines is performed by this program." is important; it explains the purpose of the program and why it is implemented this way.
-> 
-> The sense of ax25_call is, for example, that it is called from ax25d (i.e. if user connects you to -10, you might pass the connection over to your local mailbox in the LAN).
-> Same for netrom_call, rose_call.
-> These commands are not intended for a unix user to be executed directly on the shell. That's why they reside in /usr/sbin.
-> 
-> If the program is used as intended, but with your changes, the packet-radio-user sees now in his terminal:
-> ===
-> Connecting to %s @ %s ...[linefeed]
->                          *** Connected[linefeed]
->                                                 Hello user xy, welcome to our BBS.
-> Last login...
-> mailboxprompt> [linefeed]
->                 *** Disconnected[linefeed]
-> ===
-> 
-> => his session is messed up.
-> 
-> 
-> Users from shell normally use the call command, which does the correct EOL conversion.
-> 
-> 
-> If you have a special usecase, that's out of the scope of the current demands, you may implement a comandline option for changing the EOL character behavior.
-> But rose_call becomes with such an addition more and more like call. I see no reason why this is useful.
-> 
-> Apart from EOL in the messages, you implemented an EOL-changer for the input buffer.
-> You missed implementing an EOL changer for what unix user enters (normaly, his lines end with \n): Unix users press enter and don't know, that they have to enter ^M so that remote side understands your line correctly.
-> 
-> 
-> 
-> A site note on your remark
->> However once connected rose_call displays remote message without linefeed. Consequently it is impossible to read messages.
-> 
-> If the remote site is using a software that does not behave like a normal packet-radio-software,
-> then you could either try to change all client terminal softwares in the world and make \n the new EOL standard,
-> or please the remote site to correct the EOL according to what's everywhere else used in the packet-radio world.
-> 
-> 
-> ..and one comment inline:
-> 
->> Am 07.08.2022 um 20:21 schrieb f6bvp <f6bvp@free.fr>:
->>
->> [PATCH] AX25 rose_call - replacing carriage return by newlines
->>
->> Previous patch was reversed... resending correct one.
->>
->> I have been using intensively rose_call application (part of ax25tools/user_call library) while debugging rose connect issue.
->>
->> However once connected rose_call displays remote message without linefeed. Consequently it is impossible to read messages.
->>
->> For example calling local node :
->>
->> # rose_call rose0 f6bvp f6bvp-4 2080175524
->> Connecting to f6bvp-4 @ 2080175524 ...
->>
->> *** Connected
->>
->> F6BVP-4 (Commands = ?) : Aug  5 2022) for LINUX (help = h)
->>
->>
->> Then issuing command P to the connected local node, all answer
->> lines are superimposed.
->>
->> F6BVP-4 (Commands = ?) : Switch Port
->>
->>
->> Now with the proposed patch is the complete info displayed:
->>
->> # ./rose_call rose0 f6bvp f6bvp-4 2080175524
->>
->> Connecting to f6bvp-4 @ 2080175524 ...
->>
->> *** Connected
->>
->> User call : F6BVP-0
->>
->> Welcome to the last release of Fpac!
->>
->> This file is fpac.hello and is displayed when
->>
->> a user connects to the node.
-> 
-> I see
-> 
-> many more
-> 
-> newlines.
-> 
->>
->>
->>
->> FPAC-Node v 4.1.3 (built Aug  5 2022) for LINUX (help = h)
->>
->> F6BVP-4 (Commands = ?) :
->>
->>
->> In file rose_call.c carriage returns are also replaced by newlines
->> in order to let error messages to be correctly displayed.
->>
->> Cc: Thomas DL9SAU Osterried <thomas@osterried.de>
->> Cc: Francois Romieu <romieu@fr.zoreil.com>
->> Signed-off-by: Bernard Pidoux <f6bvp@free.fr>
->>
->> <replace_return-linefeed_in_rose_call.patch>
-> 
-> 
-> vy 73,
->        - Thomas  dl9sau
+			dev = rose_dev_get(dest);
+--
+2.34.1
+
