@@ -1,36 +1,50 @@
-From: Jakub Kicinski <kuba@kernel.org>
-Subject: Re: [PATCH net-next 1/1] MAINTAINERS: update amateur radio status.
-Date: Fri, 19 Aug 2022 15:11:20 -0700
-Message-ID: <20220819151120.37830ae7@kernel.org>
-References: <Yv6fCCB3vW++EGaP@electric-eye.fr.zoreil.com>
-        <Yv9NOmXjRLf6WSCB@x-berg.in-berlin.de>
-        <Yv+xPBPpxDOSxny7@electric-eye.fr.zoreil.com>
+From: patchwork-bot+netdevbpf@kernel.org
+Subject: Re: [PATCH v2 net 1/1] rose: check NULL rose_loopback_neigh->loopback
+Date: Mon, 22 Aug 2022 13:30:14 +0000
+Message-ID: <166117501433.5977.6208963641259789772.git-patchwork-notify@kernel.org>
+References: <Yv2BhXInteHP7eJm@electric-eye.fr.zoreil.com>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 Return-path: <linux-hams-owner@vger.kernel.org>
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1660947081;
-        bh=5ZOU1HRa0GHUmzfoG0+pKTNSbyLC8sA6bEnsIms+xEg=;
-        h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
-        b=rCMSgCzX6NrxYx7bynXuMcXnUf1sV2g7FzmdSgiv7I5yoWoPEA4e9jWHt2N1ih68g
-         nukXDSLzwjzRspEaEJsNNEVKQx4Pp44Mk/ToctLUGDUFicJSS3RmYhOHTGyGL1KVOX
-         P7ngVAWR86I8ckZcbX9SikOAdznxYvNZqCqjC6yKfTGQjD3rDrLAQSHO7RzO9OwNbm
-         Q8+dqxjjWyPFRboLWK2cDX+SXtpgM/kd31FsrueT9742gB1zHuXhCxiO/ghBF4szcT
-         gTsaVzmWspWpcDeT20Tiq0IcP5vS6n0YgEcM9a4P0zjLi1vJhypkTzHuSTefzbcSSN
-         3BQNa/M15UmIw==
-In-Reply-To: <Yv+xPBPpxDOSxny7@electric-eye.fr.zoreil.com>
+        s=k20201202; t=1661175014;
+        bh=Br3dFwFRKh/ahgdNc3tJhfg8BpRtaS6hl84zqsj1IYg=;
+        h=Subject:From:Date:References:In-Reply-To:To:Cc:From;
+        b=uwG4falmfE+b83C+0Kk7MSK4UDH0aIctQdfs/EFkJ4PfZq4B1mry3qI3ypJopg7vk
+         rpES1nCLFjbW0Q1scF8OqP6uUGAvBvIWxUMgjZ63JmAxHiywNTmfBsHV3nzEjFAYKd
+         L6adaW/YBCWBJpYUDK4cvFG5q8i5lcIuvFgYbSMEsru5pRoCK80pkE1HJJWBS/W2Nw
+         lsY85GJh5w007sG4JKcHzvkINWIlcf6dHVNQSs8v9VULQqr7m9/yqdP5jYAeCaN1xb
+         jIMUpyC9wqYVB4EVSG3pajzzGeMUTRZxpK280JQqTNS04vmuJupDEKairtTTFyGlGb
+         bYKx62hp3RZog==
+In-Reply-To: <Yv2BhXInteHP7eJm@electric-eye.fr.zoreil.com>
 List-ID: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
 To: Francois Romieu <romieu@fr.zoreil.com>
-Cc: Thomas Osterried <thomas@osterried.de>, netdev@vger.kernel.org, Ralf Baechle <ralf@linux-mips.org>, linux-hams@vger.kernel.org, "David S . Miller" <davem@davemloft.net>, Paolo Abeni <pabeni@redhat.com>, Eric Dumazet <edumazet@google.com>, Bernard Pidoux <f6bvp@free.fr>
+Cc: netdev@vger.kernel.org, linux-hams@vger.kernel.org, bernard.f6bvp@gmail.com, f6bvp@free.fr, thomas@osterried.de, davem@davemloft.net, kuba@kernel.org, pabeni@redhat.com, edumazet@google.com
 
-On Fri, 19 Aug 2022 17:50:20 +0200 Francois Romieu wrote:
-> > I hoped Ralf will come back and waited with my offer to do the maintainership.
-> >
-> > A question for the process: What needs to be done to get listet as maintainer?  
+Hello:
+
+This patch was applied to netdev/net.git (master)
+by David S. Miller <davem@davemloft.net>:
+
+On Thu, 18 Aug 2022 02:02:13 +0200 you wrote:
+> From: Bernard Pidoux <f6bvp@free.fr>
 > 
-> Someone sends a patch, there's no obvious consensus against the victim (was
-> there ever ?) as he is usually known for some decent track of work or
-> unformal, de-facto maintainership and he get listed within a few days.
+> Commit 3b3fd068c56e3fbea30090859216a368398e39bf added NULL check for
+> `rose_loopback_neigh->dev` in rose_loopback_timer() but omitted to
+> check rose_loopback_neigh->loopback.
+> 
+> It thus prevents *all* rose connect.
+> 
+> [...]
 
-Yup, there can also be multiple M: and/or additional R: lines..
+Here is the summary with links:
+  - [v2,net,1/1] rose: check NULL rose_loopback_neigh->loopback
+    https://git.kernel.org/netdev/net/c/3c53cd65dece
+
+You are awesome, thank you!
+-- 
+Deet-doot-dot, I am a bot.
+https://korg.docs.kernel.org/patchwork/pwbot.html
+
+
