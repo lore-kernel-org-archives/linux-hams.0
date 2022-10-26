@@ -1,51 +1,210 @@
-From: Jakub Kicinski <kuba@kernel.org>
-Subject: Re: [AX25] patch did not fix --  was: ax25: fix incorrect
- dev_tracker usage
-Date: Mon, 24 Oct 2022 13:56:40 -0700
-Message-ID: <20221024135640.73e5eddf@kernel.org>
-References: <Yxw5siQ3FC6VHo7C@x-berg.in-berlin.de>
-        <Yxx5sJh/TLzSR5xU@x-berg.in-berlin.de>
-        <2B6541B7-FF35-41D2-8A20-18D5EEE7A919@osterried.de>
+From: =?utf-8?B?0L3QsNCx?= <nabijaczleweli@nabijaczleweli.xyz>
+Subject: [PATCH 01/15] hamradio: baycom: remove BAYCOM_MAGIC
+Date: Thu, 27 Oct 2022 00:42:37 +0200
+Message-ID: <9a453437b5c3b4b1887c1bd84455b0cc3d1c40b2.1666822928.git.nabijaczleweli@nabijaczleweli.xyz>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
-Return-path: <netdev-owner@vger.kernel.org>
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1666645002;
-        bh=v1D71vDHs/TOFPH1UUaFAJFrQmOBQFf3jInDur3DtbE=;
-        h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
-        b=V3t+wagk5Fw0To5RJ4dMzyGezxyEaKlKzC6GNC1b0x+OVjP2bRPkrcEIQ4bgpmpZc
-         ljDUJnkaYmZ5liClrNqTmMTkovDPKccLF8owV9XdHzmKXLPUdxJj+mxK5kpr8SIqhy
-         DpcF69Mxb90u7WTKRK4jZ1InVjgwRKearTId0gHKsMbqHsf6m3oVPszXe6hQ+NCDC9
-         d3Q6E+T6iUColHG2cok7F9R8LbJxjAzFVv9NxB251bvW452WN40TyGYuciYWXamBoH
-         DeCckNDT8qpFtS7T1PtCdKrerpEiiTTie5u0YN12TMHqpsvCKpKxwLd4uz86lNjKyJ
-         z+y63qw1a91Yw==
-In-Reply-To: <2B6541B7-FF35-41D2-8A20-18D5EEE7A919@osterried.de>
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="sytvmb6uz4rwgbsu"
+Return-path: <linux-doc-owner@vger.kernel.org>
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=nabijaczleweli.xyz;
+        s=202205; t=1666824158;
+        bh=aLDkrJ3n4mm7gAwDMQ1n4CJ0WOrIs4GD9cxoyIWSHEI=;
+        h=Date:From:Cc:Subject:From;
+        b=ewqx1vKtJ2h9Xs/DjWq85Dry86Wfew+vhiXIRdkzk86GMVDf+5li+FEsrHjL/9LLQ
+         VBa55g4H2bKpmI4eeD8+RHLltFVX4lhzg3b4mdC9sq0rNxaPMeBfE7YREQMCjzlA0y
+         JyoB5hXbZZNDx9UAgJ+xvTDm3qqumpKAhllTKnpj4a1wTFmmHS/7p9yrZm2gs9SxZ8
+         zFwOabAb2vdLsdvUTQ6iWPqcEml5W2qiYpHzcXBoRL1x20N+rw0dtZhcBJ6kgfR8f+
+         1clFKDBwenPDRIsvKwWqrEv5QkqJjTgT+0kT5ItEZmB5NX97+IRv/c4h19jY9kW4Z5
+         +1UEWBoqTnKEYM5pBrNuVNUAFJFLukNajVU82LMOCFM0Bd9GPgIH+OhnN3t7kgUgOz
+         MUa+O7E6gkYrKbFpm7FWrxaQQ3hlTI7n2cLaWgXH9k8dA+K1fndkigwNYYT9/+RdLR
+         1RMHEEtyQHvb3JQX+DNzz1pVbJxU9qEjgltYWFFwq9uyHavqgJUurW/kFhdi/1TFle
+         /QCuw7sl+fRIu8Cj8tva28JAQZATa0IiRaaHGsS2NfVh+OrdgYV0jUDuBnQPeNYxPa
+         RnCRBN 
+Content-Disposition: inline
 List-ID: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"
-To: Thomas Osterried <thomas@osterried.de>
-Cc: Eric Dumazet <edumazet@google.com>, "David S . Miller" <davem@davemloft.net>, Paolo Abeni <pabeni@redhat.com>, Bernard Pidoux <f6bvp@free.fr>, Duoming Zhou <duoming@zju.edu.cn>, netdev@vger.kernel.org, linux-hams@vger.kernel.org
+To: 
+Cc: Jonathan Corbet <corbet@lwn.net>, Federico Vaga <federico.vaga@vaga.pv.it>, Alex Shi <alexs@kernel.org>, Yanteng Si <siyanteng@loongson.cn>, Hu Haowen <src.res@email.cn>, Thomas Sailer <t.sailer@alumni.ethz.ch>, "David S. Miller" <davem@davemloft.net>, Eric Dumazet <edumazet@google.com>, Jakub =?utf-8?B?S2ljacWEc2tp?= <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>, Greg Kroah-Hartman <gregkh@linuxfoundation.org>, Jiri Slaby <jirislaby@kernel.org>, linux-doc@vger.kernel.org, linux-kernel@vger.kernel.org, linux-doc-tw-discuss@lists.sourceforge.net, linux-hams@vger.kernel.org, netdev@vger.kernel.org
 
-On Mon, 24 Oct 2022 20:00:00 +0200 Thomas Osterried wrote:
->  II) What consequences has the tracker counter?
-> 
->      As far as I can see by kernel messages, the netdev tracker forces the
->      kernel to wait
->        (on ifdown (i.e. ifconfig ax0 down) 
->         or rmmod (i.e. rmmod bpqether or rmmod ax25) )
->      until all references to the network device are freed.
->      If there's a bug (refcount > 0 or < 0), kernel obviously waits for ever.
 
-Small correction here - the wait is when netdev is unregistered,
-which often happens on rmmod, but also when user asks for a sw
-netdev to be deleted, or HW device is removed, etc.
+--sytvmb6uz4rwgbsu
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-> III) Is it only to track sessions initiated from userspace?
-> 
->      I think no.
+Since defanging in v2.6.12-rc1 it's set exactly once per port on probe
+and checked exactly once per port on unload: it's useless. Kill it.
 
-Correct, the trackers track the references taken on the device.
-Doesn't really matter if the reference is somehow tracable to
-a user request or not.
+Notably, magic-number.rst has never had the right value for it with the
+new-in-2.1.105 network-based driver
 
-Sorry for lack of input on the actual ax25 problem, I had looked
-briefly in September and it wasn't obvious how things work :S
+Signed-off-by: Ahelenia Ziemia=C5=84ska <nabijaczleweli@nabijaczleweli.xyz>
+Ref: https://lore.kernel.org/linux-doc/YyMlovoskUcHLEb7@kroah.com/
+---
+ Documentation/process/magic-number.rst            |  1 -
+ .../translations/it_IT/process/magic-number.rst   |  1 -
+ .../translations/zh_CN/process/magic-number.rst   |  1 -
+ .../translations/zh_TW/process/magic-number.rst   |  1 -
+ drivers/net/hamradio/baycom_epp.c                 | 15 ++-------------
+ 5 files changed, 2 insertions(+), 17 deletions(-)
+
+diff --git a/Documentation/process/magic-number.rst b/Documentation/process=
+/magic-number.rst
+index 64b5948fc1d4..87353e0207c1 100644
+--- a/Documentation/process/magic-number.rst
++++ b/Documentation/process/magic-number.rst
+@@ -73,7 +73,6 @@ APM_BIOS_MAGIC        0x4101           apm_user          =
+       ``arch/x86/kerne
+ FASYNC_MAGIC          0x4601           fasync_struct            ``include/=
+linux/fs.h``
+ SLIP_MAGIC            0x5302           slip                     ``drivers/=
+net/slip.h``
+ MGSLPC_MAGIC          0x5402           mgslpc_info              ``drivers/=
+char/pcmcia/synclink_cs.c``
+-BAYCOM_MAGIC          0x19730510       baycom_state             ``drivers/=
+net/baycom_epp.c``
+ HDLCDRV_MAGIC         0x5ac6e778       hdlcdrv_state            ``include/=
+linux/hdlcdrv.h``
+ KV_MAGIC              0x5f4b565f       kernel_vars_s            ``arch/mip=
+s/include/asm/sn/klkernvars.h``
+ CODA_MAGIC            0xC0DAC0DA       coda_file_info           ``fs/coda/=
+coda_fs_i.h``
+diff --git a/Documentation/translations/it_IT/process/magic-number.rst b/Do=
+cumentation/translations/it_IT/process/magic-number.rst
+index 02eb7eb2448e..a96712bd8a68 100644
+--- a/Documentation/translations/it_IT/process/magic-number.rst
++++ b/Documentation/translations/it_IT/process/magic-number.rst
+@@ -79,7 +79,6 @@ APM_BIOS_MAGIC        0x4101           apm_user          =
+       ``arch/x86/kerne
+ FASYNC_MAGIC          0x4601           fasync_struct            ``include/=
+linux/fs.h``
+ SLIP_MAGIC            0x5302           slip                     ``drivers/=
+net/slip.h``
+ MGSLPC_MAGIC          0x5402           mgslpc_info              ``drivers/=
+char/pcmcia/synclink_cs.c``
+-BAYCOM_MAGIC          0x19730510       baycom_state             ``drivers/=
+net/baycom_epp.c``
+ HDLCDRV_MAGIC         0x5ac6e778       hdlcdrv_state            ``include/=
+linux/hdlcdrv.h``
+ KV_MAGIC              0x5f4b565f       kernel_vars_s            ``arch/mip=
+s/include/asm/sn/klkernvars.h``
+ CODA_MAGIC            0xC0DAC0DA       coda_file_info           ``fs/coda/=
+coda_fs_i.h``
+diff --git a/Documentation/translations/zh_CN/process/magic-number.rst b/Do=
+cumentation/translations/zh_CN/process/magic-number.rst
+index 0617ce125e12..44f3a29fce57 100644
+--- a/Documentation/translations/zh_CN/process/magic-number.rst
++++ b/Documentation/translations/zh_CN/process/magic-number.rst
+@@ -62,7 +62,6 @@ APM_BIOS_MAGIC        0x4101           apm_user          =
+       ``arch/x86/kerne
+ FASYNC_MAGIC          0x4601           fasync_struct            ``include/=
+linux/fs.h``
+ SLIP_MAGIC            0x5302           slip                     ``drivers/=
+net/slip.h``
+ MGSLPC_MAGIC          0x5402           mgslpc_info              ``drivers/=
+char/pcmcia/synclink_cs.c``
+-BAYCOM_MAGIC          0x19730510       baycom_state             ``drivers/=
+net/baycom_epp.c``
+ HDLCDRV_MAGIC         0x5ac6e778       hdlcdrv_state            ``include/=
+linux/hdlcdrv.h``
+ KV_MAGIC              0x5f4b565f       kernel_vars_s            ``arch/mip=
+s/include/asm/sn/klkernvars.h``
+ CODA_MAGIC            0xC0DAC0DA       coda_file_info           ``fs/coda/=
+coda_fs_i.h``
+diff --git a/Documentation/translations/zh_TW/process/magic-number.rst b/Do=
+cumentation/translations/zh_TW/process/magic-number.rst
+index f3f7082e17c6..0fde3183e82a 100644
+--- a/Documentation/translations/zh_TW/process/magic-number.rst
++++ b/Documentation/translations/zh_TW/process/magic-number.rst
+@@ -65,7 +65,6 @@ APM_BIOS_MAGIC        0x4101           apm_user          =
+       ``arch/x86/kerne
+ FASYNC_MAGIC          0x4601           fasync_struct            ``include/=
+linux/fs.h``
+ SLIP_MAGIC            0x5302           slip                     ``drivers/=
+net/slip.h``
+ MGSLPC_MAGIC          0x5402           mgslpc_info              ``drivers/=
+char/pcmcia/synclink_cs.c``
+-BAYCOM_MAGIC          0x19730510       baycom_state             ``drivers/=
+net/baycom_epp.c``
+ HDLCDRV_MAGIC         0x5ac6e778       hdlcdrv_state            ``include/=
+linux/hdlcdrv.h``
+ KV_MAGIC              0x5f4b565f       kernel_vars_s            ``arch/mip=
+s/include/asm/sn/klkernvars.h``
+ CODA_MAGIC            0xC0DAC0DA       coda_file_info           ``fs/coda/=
+coda_fs_i.h``
+diff --git a/drivers/net/hamradio/baycom_epp.c b/drivers/net/hamradio/bayco=
+m_epp.c
+index 791b4a53d69f..8f018703e74d 100644
+--- a/drivers/net/hamradio/baycom_epp.c
++++ b/drivers/net/hamradio/baycom_epp.c
+@@ -45,13 +45,9 @@
+ /* --------------------------------------------------------------------- */
+=20
+ #define BAYCOM_DEBUG
+-#define BAYCOM_MAGIC 19730510
+=20
+ /* --------------------------------------------------------------------- */
+=20
+-static const char paranoia_str[] =3D KERN_ERR=20
+-	"baycom_epp: bad magic number for hdlcdrv_state struct in routine %s\n";
+-
+ static const char bc_drvname[] =3D "baycom_epp";
+ static const char bc_drvinfo[] =3D KERN_INFO "baycom_epp: (C) 1998-2000 Th=
+omas Sailer, HB9JNX/AE4WA\n"
+ "baycom_epp: version 0.7\n";
+@@ -152,8 +148,6 @@ static struct net_device *baycom_device[NR_PORTS];
+  */
+=20
+ struct baycom_state {
+-	int magic;
+-
+         struct pardevice *pdev;
+ 	struct net_device *dev;
+ 	unsigned int work_running;
+@@ -1210,7 +1204,6 @@ static void __init baycom_epp_dev_setup(struct net_de=
+vice *dev)
+ 	 * initialize part of the baycom_state struct
+ 	 */
+ 	bc->dev =3D dev;
+-	bc->magic =3D BAYCOM_MAGIC;
+ 	bc->cfg.fclk =3D 19666600;
+ 	bc->cfg.bps =3D 9600;
+ 	/*
+@@ -1279,12 +1272,8 @@ static void __exit cleanup_baycomepp(void)
+ 		struct net_device *dev =3D baycom_device[i];
+=20
+ 		if (dev) {
+-			struct baycom_state *bc =3D netdev_priv(dev);
+-			if (bc->magic =3D=3D BAYCOM_MAGIC) {
+-				unregister_netdev(dev);
+-				free_netdev(dev);
+-			} else
+-				printk(paranoia_str, "cleanup_module");
++			unregister_netdev(dev);
++			free_netdev(dev);
+ 		}
+ 	}
+ 	parport_unregister_driver(&baycom_epp_par_driver);
+--=20
+2.30.2
+
+--sytvmb6uz4rwgbsu
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAABCgAdFiEEfWlHToQCjFzAxEFjvP0LAY0mWPEFAmNZt8kACgkQvP0LAY0m
+WPGRmxAAnnnbG62iAw/PfP9r+ZHYqdnEFENpFaX9KRGhqzFBv2jO2yMPcQkudAo8
+nj03NcYNz4YZoRp/rePJ4xjNQ9XZuQAeqjltLETPTQZJfWtvHIj5A9XtXiYC+0ML
+frso4drfEZSMM70pSWqcl76VI4ZrYA/DT6xaML22PNiGZBsIf/EFPLvjvjTxliwA
+Ac3ndKjv/z9PbbjW8IPlw1QDQn6Tivm6ETqjkPW+MifeJJ9N26yfTEalP5AIeaGt
+ZLr9VhxFRaEiZI1kIDKWcEoZtDutDTmkwC4wo5OaDcWUIjA8jVuECoptaciQ8eqC
+n2MYUH8RCu3n5kmlzPFoK7uiHuv/AGwl4S5nyH8TnfQYXcDxGzUVv3slhmWfTpGC
+H1lTDjtCgpln+T6tF21l3WoCD5T5GAeRG5qCB8hxJgl9oN0Rr3iVcUfZJ8GBY+OT
+0kV8OSyE+zKf61xTuFSYG5nkwkxTTt0HJ/XjvYVRVnAVLaxi5rprVae+xFDMZvxc
+z3dge0UrBEa1k0xqD8kseVDCzXZyrp2juEsDNxT+76zdUK9G8thB18nDHutQU/dy
+JQNcWuY9zP1+aGyKXOqclo3PVOX0KbgNPkpLfrTHsSJp2rW13+lAvXVRRbsEY3yA
+bSZKyKCLloPepcBWUvwqPb/BH6VVPhSzNuSUPyZh12mclYKIytI=
+=MxEi
+-----END PGP SIGNATURE-----
+
+--sytvmb6uz4rwgbsu--
