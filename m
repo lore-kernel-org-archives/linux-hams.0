@@ -1,76 +1,77 @@
-From: Dan Carpenter <dan.carpenter@oracle.com>
-Subject: Re: [PATCH 01/15] hamradio: baycom: remove BAYCOM_MAGIC
-Date: Fri, 28 Oct 2022 17:07:02 +0300
-Message-ID: <Y1viBi7DAAJAn7kP@kadam>
-References: <9a453437b5c3b4b1887c1bd84455b0cc3d1c40b2.1666822928.git.nabijaczleweli@nabijaczleweli.xyz>
- <47c2bffb-6bfe-7f5d-0d2d-3cbb99d31019@gmail.com>
- <Y1vccrsHSnF1QOIb@kadam>
- <61febb47-28a4-3343-081c-4c06b87ba870@gmail.com>
+From: Zhang Qilong <zhangqilong3@huawei.com>
+Subject: [PATCH] rose: Fix NULL pointer dereference in rose_send_frame()
+Date: Sat, 29 Oct 2022 00:10:49 +0800
+Message-ID: <20221028161049.113625-1-zhangqilong3@huawei.com>
 Mime-Version: 1.0
-Return-path: <netdev-owner@vger.kernel.org>
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=date : from : to : cc
- : subject : message-id : references : content-type : in-reply-to :
- mime-version; s=corp-2022-7-12;
- bh=zDIAzTSY63brcUEUymq1GphjBGryegzoGnkVDKwZ2Tg=;
- b=b62E8tR9kIMc5Q7DphEB2Xki6uaILk6X8MvMbghu79QaBH04/67lkZ2jNExSfQAllEWt
- 1E9XJAQeDV3wtyLwcFdGyELoyqGp5bEvSP9vmttkilFQtGPEQcsDPgZxAJD2iqBzYkyM
- 4xH44tWKFyuTNq028ejGDQtXFRcHd+C4Q0/bMPOy0CZuXP2tKTcRqVYr8Hjd4WF8pMc4
- EO7DGBmT4iM0aNRDU1PUpt6kBfSNKuPqSmdfIHVjVYwh3Opd32XC7n3ngE7obrmlKnZR
- vBlUb4JufIKE5BKt1P2jR5ZGabiMTCrYSwgzAlv9zF+zuRNDMNDs3MMBzL721Kq6ZvTr tw== 
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oracle.onmicrosoft.com; s=selector2-oracle-onmicrosoft-com;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=zDIAzTSY63brcUEUymq1GphjBGryegzoGnkVDKwZ2Tg=;
- b=P2MAcoRm42y7rO5lvXCYVCHy+lWe98aGRRgRpzxwXq5LlvY4dJnQX54lvwfu1tn2edVRZEpbq1evtdfD7KSEzAZSsPTbOy/NsExnTd25DU7VyOmyvCGQ7gifucCxXryvKv6H1ce+PtrAFdFPuYvOh0bwA91cJiumM3lIaCbDaxk=
-Content-Disposition: inline
-In-Reply-To: <61febb47-28a4-3343-081c-4c06b87ba870@gmail.com>
+Content-Transfer-Encoding: 7BIT
+Return-path: <linux-hams-owner@vger.kernel.org>
 List-ID: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-To: Bagas Sanjaya <bagasdotme@gmail.com>
-Cc: =?utf-8?B?0L3QsNCx?= <nabijaczleweli@nabijaczleweli.xyz>, Jonathan Corbet <corbet@lwn.net>, Federico Vaga <federico.vaga@vaga.pv.it>, Alex Shi <alexs@kernel.org>, Yanteng Si <siyanteng@loongson.cn>, Hu Haowen <src.res@email.cn>, Thomas Sailer <t.sailer@alumni.ethz.ch>, "David S. Miller" <davem@davemloft.net>, Eric Dumazet <edumazet@google.com>, Jakub =?utf-8?B?S2ljacWEc2tp?= <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>, Greg Kroah-Hartman <gregkh@linuxfoundation.org>, Jiri Slaby <jirislaby@kernel.org>, linux-doc@vger.kernel.org, linux-kernel@vger.kernel.org, linux-doc-tw-discuss@lists.sourceforge.net, linux-hams@vger.kernel.org, netdev@vger.kernel.org
+To: ralf@linux-mips.org, davem@davemloft.net, edumazet@google.com, kuba@kernel.org, pabeni@redhat.com, f6bvp@free.fr
+Cc: linux-hams@vger.kernel.org, netdev@vger.kernel.org
 
-On Fri, Oct 28, 2022 at 08:50:59PM +0700, Bagas Sanjaya wrote:
-> On 10/28/22 20:43, Dan Carpenter wrote:
-> >>
-> >> Also, s/Kill it/Remove BAYCOM_MAGIC from magic numbers table/ (your
-> >> wording is kinda mature).
-> >>
-> > 
-> > The kernel has almost 13 thousand kills...
-> > 
-> > $ git grep -i kill | wc -l
-> > 12975
-> > $
-> > 
-> > It's fine.
-> > 
-> 
-> The word meaning depends on context. In this case, the author means
-> removing SOME_MAGIC magic number from the table, one by one until
-> the magic number documentation is removed (due to historical cruft).
+The syzkaller reported an issue:
 
-Kernel devs are naturally blood thirsty people...
+KASAN: null-ptr-deref in range [0x0000000000000380-0x0000000000000387]
+CPU: 0 PID: 4069 Comm: kworker/0:15 Not tainted 6.0.0-syzkaller-02734-g0326074ff465 #0
+Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 09/22/2022
+Workqueue: rcu_gp srcu_invoke_callbacks
+RIP: 0010:rose_send_frame+0x1dd/0x2f0 net/rose/rose_link.c:101
+Call Trace:
+ <IRQ>
+ rose_transmit_clear_request+0x1d5/0x290 net/rose/rose_link.c:255
+ rose_rx_call_request+0x4c0/0x1bc0 net/rose/af_rose.c:1009
+ rose_loopback_timer+0x19e/0x590 net/rose/rose_loopback.c:111
+ call_timer_fn+0x1a0/0x6b0 kernel/time/timer.c:1474
+ expire_timers kernel/time/timer.c:1519 [inline]
+ __run_timers.part.0+0x674/0xa80 kernel/time/timer.c:1790
+ __run_timers kernel/time/timer.c:1768 [inline]
+ run_timer_softirq+0xb3/0x1d0 kernel/time/timer.c:1803
+ __do_softirq+0x1d0/0x9c8 kernel/softirq.c:571
+ [...]
+ </IRQ>
 
-$ git log --after=2022-01-01 | grep -w kill | wc -l
-207
+It triggers NULL pointer dereference when 'neigh->dev->dev_addr' is
+called in the rose_send_frame(). It's the first occurrence of the
+`neigh` is in rose_loopback_timer() as `rose_loopback_neigh', and
+the 'dev' in 'rose_loopback_neigh' is initialized sa nullptr.
 
-When people talk about killing stuff they mostly mean deleting code.
-Look at this sample of the very first kills from January.  Seven out
-of ten times this is what they meant.
+It had been fixed by commit 3b3fd068c56e3fbea30090859216a368398e39bf
+("rose: Fix Null pointer dereference in rose_send_frame()") ever.
+But it's introduced by commit 3c53cd65dece47dd1f9d3a809f32e59d1d87b2b8
+("rose: check NULL rose_loopback_neigh->loopback") again.
 
-$ git log --after=2022-01-01 | grep -w kill | head -n 10
-    useless now, kill it.
-    net: ipa: kill ipa_table_valid()
-    net: ipa: kill two constant symbols
-      io_uring: kill hot path fixed file bitmap debug checks
-                   newattrs.ia_valid = ATTR_FORCE | kill;
-                newattrs.ia_valid = ATTR_FORCE | kill;
-                        newattrs.ia_valid = attr_force | kill;
-    kill it off before it ends up in a release. It was just part of the
-    io_uring: kill hot path fixed file bitmap debug checks
-      block: kill deprecated BUG_ON() in the flush handling
-$
+We fix it by add NULL check in rose_transmit_clear_request(). When
+the 'dev' in 'neigh' is NULL, we don't reply the request and just
+clear it.
 
-regards,
-dan carpenter
+syzkaller don't provide repro, and I provide a syz repro like:
+r0 = syz_init_net_socket$bt_sco(0x1f, 0x5, 0x2)
+ioctl$sock_inet_SIOCSIFFLAGS(r0, 0x8914, &(0x7f0000000180)={'rose0\x00', 0x201})
+r1 = syz_init_net_socket$rose(0xb, 0x5, 0x0)
+bind$rose(r1, &(0x7f00000000c0)=@full={0xb, @dev, @null, 0x0, [@null, @null, @netrom, @netrom, @default, @null]}, 0x40)
+connect$rose(r1, &(0x7f0000000240)=@short={0xb, @dev={0xbb, 0xbb, 0xbb, 0x1, 0x0}, @remote={0xcc, 0xcc, 0xcc, 0xcc, 0xcc, 0xcc, 0x1}, 0x1, @netrom={0xbb, 0xbb, 0xbb, 0xbb, 0xbb, 0x0, 0x0}}, 0x1c)
+
+Fixes: 3c53cd65dece ("rose: check NULL rose_loopback_neigh->loopback")
+Signed-off-by: Zhang Qilong <zhangqilong3@huawei.com>
+---
+ net/rose/rose_link.c | 3 +++
+ 1 file changed, 3 insertions(+)
+
+diff --git a/net/rose/rose_link.c b/net/rose/rose_link.c
+index 8b96a56d3a49..0f77ae8ef944 100644
+--- a/net/rose/rose_link.c
++++ b/net/rose/rose_link.c
+@@ -236,6 +236,9 @@ void rose_transmit_clear_request(struct rose_neigh *neigh, unsigned int lci, uns
+ 	unsigned char *dptr;
+ 	int len;
+ 
++	if (!neigh->dev)
++		return;
++
+ 	len = AX25_BPQ_HEADER_LEN + AX25_MAX_HEADER_LEN + ROSE_MIN_LEN + 3;
+ 
+ 	if ((skb = alloc_skb(len, GFP_ATOMIC)) == NULL)
+-- 
+2.25.1
+
