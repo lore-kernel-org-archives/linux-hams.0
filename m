@@ -1,48 +1,76 @@
-From: Bagas Sanjaya <bagasdotme@gmail.com>
-Subject: Re: [PATCH 11/15] hdlcdrv: remove HDLCDRV_MAGIC
-Date: Fri, 28 Oct 2022 20:54:40 +0700
-Message-ID: <9386b19f-dd99-3601-9e87-3056100dfe53@gmail.com>
+From: Dan Carpenter <dan.carpenter@oracle.com>
+Subject: Re: [PATCH 01/15] hamradio: baycom: remove BAYCOM_MAGIC
+Date: Fri, 28 Oct 2022 17:07:02 +0300
+Message-ID: <Y1viBi7DAAJAn7kP@kadam>
 References: <9a453437b5c3b4b1887c1bd84455b0cc3d1c40b2.1666822928.git.nabijaczleweli@nabijaczleweli.xyz>
- <ad19b20f5867e845a843884bbb0f107e7ea7e11a.1666822928.git.nabijaczleweli@nabijaczleweli.xyz>
+ <47c2bffb-6bfe-7f5d-0d2d-3cbb99d31019@gmail.com>
+ <Y1vccrsHSnF1QOIb@kadam>
+ <61febb47-28a4-3343-081c-4c06b87ba870@gmail.com>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Return-path: <linux-doc-owner@vger.kernel.org>
+Return-path: <netdev-owner@vger.kernel.org>
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=date : from : to : cc
+ : subject : message-id : references : content-type : in-reply-to :
+ mime-version; s=corp-2022-7-12;
+ bh=zDIAzTSY63brcUEUymq1GphjBGryegzoGnkVDKwZ2Tg=;
+ b=b62E8tR9kIMc5Q7DphEB2Xki6uaILk6X8MvMbghu79QaBH04/67lkZ2jNExSfQAllEWt
+ 1E9XJAQeDV3wtyLwcFdGyELoyqGp5bEvSP9vmttkilFQtGPEQcsDPgZxAJD2iqBzYkyM
+ 4xH44tWKFyuTNq028ejGDQtXFRcHd+C4Q0/bMPOy0CZuXP2tKTcRqVYr8Hjd4WF8pMc4
+ EO7DGBmT4iM0aNRDU1PUpt6kBfSNKuPqSmdfIHVjVYwh3Opd32XC7n3ngE7obrmlKnZR
+ vBlUb4JufIKE5BKt1P2jR5ZGabiMTCrYSwgzAlv9zF+zuRNDMNDs3MMBzL721Kq6ZvTr tw== 
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=zAImP6PWJ5WKUhDLfWykBuCXt66Oh0xkfiNtM65y4vc=;
-        b=odgyqA70A3ESvmjUlqp5hpilRZmgvLyLT/NCtcrt8ymsLwCJENdZpKZFuSXCBG+AnY
-         Q86vMciO80RAUc9b91LXgCHhLD3fLj9NKeBiIlI3CATTCHkZLfgLJZx2UwLTBFJk/GME
-         Zk4GvwmIfod3CnXPtr+jRck8cjW2nWNElHM7wK/WyLdpdkH2Xee+QBW02diy9iVkGDVB
-         Oy/a/G9W/aIytmcyDgVJ6d0FwtEwmOeyVnDwRQSfgEzx09p4bt6RxuJXvPo5zxfI/OdC
-         S7YQ4OhwxQQBNs9ySlo2ARuVeNZQzElfeINCyLkgJ4DZAiHDzbL00ZP62fZyiStptrSv
-         CWOQ==
-Content-Language: en-US
-In-Reply-To: <ad19b20f5867e845a843884bbb0f107e7ea7e11a.1666822928.git.nabijaczleweli@nabijaczleweli.xyz>
+ d=oracle.onmicrosoft.com; s=selector2-oracle-onmicrosoft-com;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=zDIAzTSY63brcUEUymq1GphjBGryegzoGnkVDKwZ2Tg=;
+ b=P2MAcoRm42y7rO5lvXCYVCHy+lWe98aGRRgRpzxwXq5LlvY4dJnQX54lvwfu1tn2edVRZEpbq1evtdfD7KSEzAZSsPTbOy/NsExnTd25DU7VyOmyvCGQ7gifucCxXryvKv6H1ce+PtrAFdFPuYvOh0bwA91cJiumM3lIaCbDaxk=
+Content-Disposition: inline
+In-Reply-To: <61febb47-28a4-3343-081c-4c06b87ba870@gmail.com>
 List-ID: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="utf-8"
-To: =?UTF-8?B?0L3QsNCx?= <nabijaczleweli@nabijaczleweli.xyz>
-Cc: Jonathan Corbet <corbet@lwn.net>, Federico Vaga <federico.vaga@vaga.pv.it>, Alex Shi <alexs@kernel.org>, Yanteng Si <siyanteng@loongson.cn>, Hu Haowen <src.res@email.cn>, Thomas Sailer <t.sailer@alumni.ethz.ch>, "David S. Miller" <davem@davemloft.net>, Eric Dumazet <edumazet@google.com>, =?UTF-8?Q?Jakub_Kici=c5=84ski?= <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>, Greg Kroah-Hartman <gregkh@linuxfoundation.org>, Jiri Slaby <jirislaby@kernel.org>, "Jason A. Donenfeld" <Jason@zx2c4.com>, Kees Cook <keescook@chromium.org>, Marc Kleine-Budde <mkl@pengutronix.de>, Wolfram Sang <wsa+renesas@sang-engineering.com>, linux-doc@vger.kernel.org, linux-kernel@vger.kernel.org, linux-doc-tw-discuss@lists.sourceforge.net, linux-hams@vger.kernel.org, ne
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+To: Bagas Sanjaya <bagasdotme@gmail.com>
+Cc: =?utf-8?B?0L3QsNCx?= <nabijaczleweli@nabijaczleweli.xyz>, Jonathan Corbet <corbet@lwn.net>, Federico Vaga <federico.vaga@vaga.pv.it>, Alex Shi <alexs@kernel.org>, Yanteng Si <siyanteng@loongson.cn>, Hu Haowen <src.res@email.cn>, Thomas Sailer <t.sailer@alumni.ethz.ch>, "David S. Miller" <davem@davemloft.net>, Eric Dumazet <edumazet@google.com>, Jakub =?utf-8?B?S2ljacWEc2tp?= <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>, Greg Kroah-Hartman <gregkh@linuxfoundation.org>, Jiri Slaby <jirislaby@kernel.org>, linux-doc@vger.kernel.org, linux-kernel@vger.kernel.org, linux-doc-tw-discuss@lists.sourceforge.net, linux-hams@vger.kernel.org, netdev@vger.kernel.org
 
-On 10/27/22 05:43, наб wrote:
-> We have largely moved away from this approach,
-> and we have better debugging instrumentation nowadays: kill it
+On Fri, Oct 28, 2022 at 08:50:59PM +0700, Bagas Sanjaya wrote:
+> On 10/28/22 20:43, Dan Carpenter wrote:
+> >>
+> >> Also, s/Kill it/Remove BAYCOM_MAGIC from magic numbers table/ (your
+> >> wording is kinda mature).
+> >>
+> > 
+> > The kernel has almost 13 thousand kills...
+> > 
+> > $ git grep -i kill | wc -l
+> > 12975
+> > $
+> > 
+> > It's fine.
+> > 
 > 
+> The word meaning depends on context. In this case, the author means
+> removing SOME_MAGIC magic number from the table, one by one until
+> the magic number documentation is removed (due to historical cruft).
 
-Same reply as [1].
+Kernel devs are naturally blood thirsty people...
 
-> Additionally, ~half HDLCDRV_MAGIC checks just early-exit instead
-> of noting the bug, so they're detrimental, if anything
-> 
+$ git log --after=2022-01-01 | grep -w kill | wc -l
+207
 
-"... instead of handling the magic number"?
+When people talk about killing stuff they mostly mean deleting code.
+Look at this sample of the very first kills from January.  Seven out
+of ten times this is what they meant.
 
-Thanks.
+$ git log --after=2022-01-01 | grep -w kill | head -n 10
+    useless now, kill it.
+    net: ipa: kill ipa_table_valid()
+    net: ipa: kill two constant symbols
+      io_uring: kill hot path fixed file bitmap debug checks
+                   newattrs.ia_valid = ATTR_FORCE | kill;
+                newattrs.ia_valid = ATTR_FORCE | kill;
+                        newattrs.ia_valid = attr_force | kill;
+    kill it off before it ends up in a release. It was just part of the
+    io_uring: kill hot path fixed file bitmap debug checks
+      block: kill deprecated BUG_ON() in the flush handling
+$
 
-[1]: https://lore.kernel.org/linux-doc/80c998ec-435f-158c-9b45-4e6844f7861b@gmail.com/
-
--- 
-An old man doll... just what I always wanted! - Clara
-
+regards,
+dan carpenter
