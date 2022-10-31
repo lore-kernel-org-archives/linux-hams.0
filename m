@@ -1,57 +1,64 @@
-From: Bagas Sanjaya <bagasdotme@gmail.com>
-Subject: [PATCH 1/2] MAINTAINERS: remove Thomas Sailer
-Date: Sat, 29 Oct 2022 20:17:33 +0700
-Message-ID: <20221029131734.616829-2-bagasdotme@gmail.com>
+From: Laura Abbott <laura@labbott.name>
+Subject: Re: [PATCH 2/2] MAINTAINERS: drop Liam Mark and Laura Abbott
+Date: Mon, 31 Oct 2022 09:44:56 -0400
+Message-ID: <aad04e06-59b0-f630-7cef-fdb557860a56@labbott.name>
 References: <20221029131734.616829-1-bagasdotme@gmail.com>
+ <20221029131734.616829-3-bagasdotme@gmail.com>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=ckPB35sVjBMDrzWuFBh75nHBRSgfYvA4i4irOYENsAM=;
-        b=fva0Bo/VRBO8ULSBc8xV/73f3qNQ5jWX7brGy3h0mHzYfuiP1hui8CnAUcEad4YMZT
-         3/nhUa1eZ3LknKtbrenWU7/uFYG4kdNDa5CWH/+gKyFZ082JtYrpZtaZEdhrtOx29Iv2
-         Rjozbi+r2hK95+sED6lFLbwVvfwmrxbDB7D9nmej5+posns0StcID200ZcrJe2PZK70f
-         eUjWu93aBe09ZLFSghEDNSftWwBNyhceIburFzEZFKxKh3LUGSHqdOMYdG8rmiTiYx4r
-         y6RZbU24RyPenj7UfB4BvuMoDNChCT/N8qpylY4xc845X4mmFmle1uEpBvb+MIcgOv2K
-         Y3EA==
-In-Reply-To: <20221029131734.616829-1-bagasdotme@gmail.com>
-X-Developer-Signature: v=1; a=openpgp-sha256; l=867; i=bagasdotme@gmail.com; h=from:subject; bh=lCAzbgb3aELI+YHQP6YBxPRDtkV84IvZ2WocqEA7ZA4=; b=owGbwMvMwCH2bWenZ2ig32LG02pJDMmx6u96vggyeX/lz3qhJvNy4VruHNOFf+I5xXnUE9bGn+Te fWJ7RykLgxgHg6yYIsukRL6m07uMRC60r3WEmcPKBDKEgYtTACZyVY3hr2QKU6qQXq4qn7RqyC1LiS zjJ2ZNn2LtC/KO9Um+23/LipFhv+/PkKiy+R3Xfk0/ofXElaG0sW+JrqTvIYGYdVtMmPbwAAA=
-X-Developer-Key: i=bagasdotme@gmail.com; a=openpgp; fpr=701B806FDCA5D3A58FFB8F7D7C276C64A5E44A1D
+        d=labbott.name; s=google;
+        h=content-transfer-encoding:in-reply-to:from:references:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=GdiREoTH65t05Ku+PPtavuVyWy6B9SaY0769wU+YJqM=;
+        b=YYwLbhpy34BnoDbH5qXqeIwThHbFHeonbYbZzXU9eQcQ1qB95pGJeddS4V3yX9mnsE
+         AwItNU7CbstZNW2hkwS93ivoL8sioeazIVSVE/WFgtBDlaHbLlHB3uE2jRHCkjG0aV+V
+         RKde887gZDhPPlQkZwkPeBuPtfQhugOInc5eI=
+Content-Language: en-US
+In-Reply-To: <20221029131734.616829-3-bagasdotme@gmail.com>
 List-ID: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"
-To: linux-kernel@vger.kernel.org, linux-hams@vger.kernel.org, linux-media@vger.kernel.org
-Cc: Bagas Sanjaya <bagasdotme@gmail.com>
+Content-Type: text/plain; charset="us-ascii"; format="flowed"
+To: Bagas Sanjaya <bagasdotme@gmail.com>, linux-kernel@vger.kernel.org, linux-hams@vger.kernel.org, linux-media@vger.kernel.org
 
-Emails to him at <t.sailer@alumni.ethz.ch> bounce (550 error). However,
-he was already listed on CREDITS. Remove him from MAINTAINERS entry.
+On 10/29/22 09:17, Bagas Sanjaya wrote:
+> Emails sent to their respective addresses listed bounces (550 error).
+> Their last post on LKML was two years ago ([1] and [2]). Remove them.
+> 
+> Link: https://lore.kernel.org/lkml/alpine.DEB.2.10.2002201508320.1846@lmark-linux.qualcomm.com/ ([1])
+> Link: https://lore.kernel.org/lkml/b85fa669-d3aa-f6c9-9631-988ae47e392c@redhat.com/ ([2])
+> Cc: Laura Abbott <laura@labbott.name>
+> Signed-off-by: Bagas Sanjaya <bagasdotme@gmail.com>
+> ---
+>   Actually Laura's last post was a year ago from her personal address,
+>   where she announced 2021 LF TAB results [3], so Cc that address.
+> 
+>   [3]: https://lore.kernel.org/lkml/6e307861-3149-a984-cc79-088559caeab2@labbott.name/
+>   
+>   MAINTAINERS | 2 --
+>   1 file changed, 2 deletions(-)
+> 
+> diff --git a/MAINTAINERS b/MAINTAINERS
+> index 63a84d3218a7b4..564c3c66077e0b 100644
+> --- a/MAINTAINERS
+> +++ b/MAINTAINERS
+> @@ -6221,8 +6221,6 @@ F:	tools/testing/selftests/dma/
+>   DMA-BUF HEAPS FRAMEWORK
+>   M:	Sumit Semwal <sumit.semwal@linaro.org>
+>   R:	Benjamin Gaignard <benjamin.gaignard@collabora.com>
+> -R:	Liam Mark <lmark@codeaurora.org>
+> -R:	Laura Abbott <labbott@redhat.com>
+>   R:	Brian Starkey <Brian.Starkey@arm.com>
+>   R:	John Stultz <jstultz@google.com>
+>   L:	linux-media@vger.kernel.org
 
-Also, mark BAYCOM/HDLCDRV DRIVERS FOR AX.25 as orphan (no maintainers
-for the subsystem as of now).
+https://lore.kernel.org/all/20200108213055.38449-1-labbott@kernel.org/
+https://lore.kernel.org/all/20211207225458.622282-1-labbott@kernel.org/
 
-Signed-off-by: Bagas Sanjaya <bagasdotme@gmail.com>
----
- MAINTAINERS | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+I've sent a request to change this twice and I don't really have the
+energy to continue chasing it down. If you can get the removal merged
+go ahead.
 
-diff --git a/MAINTAINERS b/MAINTAINERS
-index b655c704b5b813..63a84d3218a7b4 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -3589,9 +3589,8 @@ F:	include/uapi/linux/batman_adv.h
- F:	net/batman-adv/
- 
- BAYCOM/HDLCDRV DRIVERS FOR AX.25
--M:	Thomas Sailer <t.sailer@alumni.ethz.ch>
- L:	linux-hams@vger.kernel.org
--S:	Maintained
-+S:	Orphan
- W:	http://www.baycom.org/~tom/ham/ham.html
- F:	drivers/net/hamradio/baycom*
- 
--- 
-An old man doll... just what I always wanted! - Clara
-
+Thanks,
+Laura
