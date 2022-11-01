@@ -1,64 +1,154 @@
-From: Laura Abbott <laura@labbott.name>
-Subject: Re: [PATCH 2/2] MAINTAINERS: drop Liam Mark and Laura Abbott
-Date: Mon, 31 Oct 2022 09:44:56 -0400
-Message-ID: <aad04e06-59b0-f630-7cef-fdb557860a56@labbott.name>
-References: <20221029131734.616829-1-bagasdotme@gmail.com>
- <20221029131734.616829-3-bagasdotme@gmail.com>
+From: Ahelenia =?utf-8?Q?Ziemia=C5=84ska?= 
+        <nabijaczleweli@nabijaczleweli.xyz>
+Subject: [PATCH v2 00/15] magic-number.rst funeral rites
+Date: Wed, 2 Nov 2022 00:04:54 +0100
+Message-ID: <cover.1667330271.git.nabijaczleweli@nabijaczleweli.xyz>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
-Return-path: <linux-hams-owner@vger.kernel.org>
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=labbott.name; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=GdiREoTH65t05Ku+PPtavuVyWy6B9SaY0769wU+YJqM=;
-        b=YYwLbhpy34BnoDbH5qXqeIwThHbFHeonbYbZzXU9eQcQ1qB95pGJeddS4V3yX9mnsE
-         AwItNU7CbstZNW2hkwS93ivoL8sioeazIVSVE/WFgtBDlaHbLlHB3uE2jRHCkjG0aV+V
-         RKde887gZDhPPlQkZwkPeBuPtfQhugOInc5eI=
-Content-Language: en-US
-In-Reply-To: <20221029131734.616829-3-bagasdotme@gmail.com>
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="epsbez2xcv56ijjf"
+Return-path: <linux-mips-owner@vger.kernel.org>
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=nabijaczleweli.xyz;
+        s=202205; t=1667343895;
+        bh=PkAWXYqxDceSEZsozbKBt1CBt2T3QIdB9eUX7dEkLmg=;
+        h=Date:From:Cc:Subject:From;
+        b=TSFhvujd2SRCajv7R8zAVm+EuCS5Vh7AysxBgNGEvWADxkrv9qvgHW9m2Cdb5trJp
+         FcE+jF2i19LfTk6JQymlUrtpA5eztwtCkCW8RPcFjBKvB3hshGqRsE2JLsnEq4c+nt
+         fvOcsrVyWl6I3C7+O8ulD+J/uGCDcWkdGGyHAbMjg2XuyGAULVV6M5ev6enMVnJyMZ
+         NpHKD/PHQXItBON7xEKyVBFEn3I+Z5iNjue4c8/MPBye67rmFrh9SmPZflFbbBds30
+         ZAAK3IJMi3raN0h2I2WngCjORr/19e40LKbQPzDK+YXi2BeaaavH1sQfTi3aZt5397
+         Qawk3vmFpnCfw55RRNhmkJYixnh7hC5YaXFDUd1ehSoOfUGmJmHx285PCPzLeNK1r/
+         S2Dx46EXuZjQBL1i55lpJBrvcVXafn20zW6BaOUjdwJMmUIOkOh3DGKcJk8s4+cjPI
+         mipGk4QQ1v5t62MLsoj8cvueYNv+CJM/Ih0/DeztWwJaszMjD8DTbZGMgb7nP9BUhW
+         EHbs9bnZ2x74ARL2YaVpsuzPJvBZdAml5lxmc3bk/XXIrmQ1fhsWVDT4TA05dRBjC7
+         Nzk6xV 
+Content-Disposition: inline
 List-ID: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"; format="flowed"
-To: Bagas Sanjaya <bagasdotme@gmail.com>, linux-kernel@vger.kernel.org, linux-hams@vger.kernel.org, linux-media@vger.kernel.org
+To: 
+Cc: Andrew Morton <akpm@linux-foundation.org>, Kees Cook <keescook@chromium.org>, coda@cs.cmu.edu, codalist@coda.cs.cmu.edu, linux-arm-kernel@lists.infradead.org, linux-doc-tw-discuss@lists.sourceforge.net, linux-doc@vger.kernel.org, linux-fsdevel@vger.kernel.org, linux-hams@vger.kernel.org, linux-kernel@vger.kernel.org, linux-mips@vger.kernel.org, linux-scsi@vger.kernel.org, netdev@vger.kernel.org, x86@kernel.org
 
-On 10/29/22 09:17, Bagas Sanjaya wrote:
-> Emails sent to their respective addresses listed bounces (550 error).
-> Their last post on LKML was two years ago ([1] and [2]). Remove them.
-> 
-> Link: https://lore.kernel.org/lkml/alpine.DEB.2.10.2002201508320.1846@lmark-linux.qualcomm.com/ ([1])
-> Link: https://lore.kernel.org/lkml/b85fa669-d3aa-f6c9-9631-988ae47e392c@redhat.com/ ([2])
-> Cc: Laura Abbott <laura@labbott.name>
-> Signed-off-by: Bagas Sanjaya <bagasdotme@gmail.com>
-> ---
->   Actually Laura's last post was a year ago from her personal address,
->   where she announced 2021 LF TAB results [3], so Cc that address.
-> 
->   [3]: https://lore.kernel.org/lkml/6e307861-3149-a984-cc79-088559caeab2@labbott.name/
->   
->   MAINTAINERS | 2 --
->   1 file changed, 2 deletions(-)
-> 
-> diff --git a/MAINTAINERS b/MAINTAINERS
-> index 63a84d3218a7b4..564c3c66077e0b 100644
-> --- a/MAINTAINERS
-> +++ b/MAINTAINERS
-> @@ -6221,8 +6221,6 @@ F:	tools/testing/selftests/dma/
->   DMA-BUF HEAPS FRAMEWORK
->   M:	Sumit Semwal <sumit.semwal@linaro.org>
->   R:	Benjamin Gaignard <benjamin.gaignard@collabora.com>
-> -R:	Liam Mark <lmark@codeaurora.org>
-> -R:	Laura Abbott <labbott@redhat.com>
->   R:	Brian Starkey <Brian.Starkey@arm.com>
->   R:	John Stultz <jstultz@google.com>
->   L:	linux-media@vger.kernel.org
 
-https://lore.kernel.org/all/20200108213055.38449-1-labbott@kernel.org/
-https://lore.kernel.org/all/20211207225458.622282-1-labbott@kernel.org/
+--epsbez2xcv56ijjf
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-I've sent a request to change this twice and I don't really have the
-energy to continue chasing it down. If you can get the removal merged
-go ahead.
+This is a follow-up for the 18+1-patch series (
+https://lore.kernel.org/linux-kernel/8389a7b85b5c660c6891b1740b5dacc53491a4=
+1b.1663280877.git.nabijaczleweli@nabijaczleweli.xyz/
+https://lore.kernel.org/linux-kernel/20220927003727.slf4ofb7dgum6apt@tarta.=
+nabijaczleweli.xyz/
+) I sent in September, and the same reasoning applies:
 
-Thanks,
-Laura
+The entire file blames back to the start of git
+(minus whitespace from the RST translation and a typo fix):
+  * there are changelog comments for March 1994 through to Linux 2.5.74
+  * struct tty_ldisc is two pointers nowadays, so naturally no magic
+  * GDA_MAGIC is defined but unused, and it's been this way
+    since start-of-git
+  * M3_CARD_MAGIC isn't defined, because
+    commit d56b9b9c464a ("[PATCH] The scheduled removal of some OSS
+    drivers") removed the entire driver in 2006
+  * CS_CARD_MAGIC likewise since
+    commit b5d425c97f7d ("more scheduled OSS driver removal") in 2007
+  * KMALLOC_MAGIC and VMALLOC_MAGIC were removed in
+    commit e38e0cfa48ac ("[ALSA] Remove kmalloc wrappers"),
+    six months after start of git
+  * SLAB_C_MAGIC has never even appeared in git
+    (removed in 2.4.0-test3pre6)
+  * &c., &c., &c.
+
+magic-number.rst is a low-value historial relic at best and misleading
+cruft at worst.
+
+This latter half cleans out the remaining entries (either by recognising
+that they aren't actually magic numbers or by cutting them out entirely)
+and inters the file.
+
+amd64 allyesconfig builds; this largely touches code that would be
+exceedingly expensive to test (and largely untouched since the git
+import), but is very receptive to static analysis.
+
+v2:
+  Messages restyled
+  Moved printk() in synclink_cs.c became pr_warn
+  (__func__ instead of prescribed hard function name per checkpatch.pl)
+
+Ahelenia Ziemia=C5=84ska (15):
+  hamradio: baycom: remove BAYCOM_MAGIC
+  hamradio: yam: remove YAM_MAGIC
+  pcmcia: synclink_cs: remove MGSLPC_MAGIC
+  pcmcia: synclink_cs: remove dead paranoia_check, warn for missing line
+  coda: remove CODA_MAGIC
+  Documentation: remove PG_MAGIC (not a magic number)
+  MIPS: IP27: clean out sn/nmi.h
+  MIPS: IP27: remove KV_MAGIC
+  x86/APM: remove APM_BIOS_MAGIC
+  scsi: acorn: remove QUEUE_MAGIC_{FREE,USED}
+  hdlcdrv: remove HDLCDRV_MAGIC
+  drivers: net: slip: remove SLIP_MAGIC
+  fcntl: remove FASYNC_MAGIC
+  scsi: ncr53c8xx: replace CCB_MAGIC with bool busy
+  Documentation: remove magic-number.rst
+
+ Documentation/process/index.rst               |  1 -
+ Documentation/process/magic-number.rst        | 85 -----------------
+ .../translations/it_IT/process/index.rst      |  1 -
+ .../it_IT/process/magic-number.rst            | 91 -------------------
+ .../translations/zh_CN/process/index.rst      |  1 -
+ .../zh_CN/process/magic-number.rst            | 74 ---------------
+ .../translations/zh_TW/process/index.rst      |  1 -
+ .../zh_TW/process/magic-number.rst            | 77 ----------------
+ arch/mips/include/asm/sn/klkernvars.h         |  8 +-
+ arch/mips/include/asm/sn/nmi.h                | 60 ------------
+ arch/mips/sgi-ip27/ip27-klnuma.c              |  1 -
+ arch/x86/kernel/apm_32.c                      |  9 +-
+ drivers/char/pcmcia/synclink_cs.c             | 79 +---------------
+ drivers/net/hamradio/baycom_epp.c             | 15 +--
+ drivers/net/hamradio/baycom_par.c             |  1 -
+ drivers/net/hamradio/baycom_ser_fdx.c         |  3 +-
+ drivers/net/hamradio/baycom_ser_hdx.c         |  3 +-
+ drivers/net/hamradio/hdlcdrv.c                |  9 +-
+ drivers/net/hamradio/yam.c                    |  8 +-
+ drivers/net/slip/slip.c                       | 11 +--
+ drivers/net/slip/slip.h                       |  4 -
+ drivers/scsi/arm/queue.c                      | 21 -----
+ drivers/scsi/ncr53c8xx.c                      | 25 ++---
+ fs/coda/cnode.c                               |  2 +-
+ fs/coda/coda_fs_i.h                           |  2 -
+ fs/coda/file.c                                |  1 -
+ fs/fcntl.c                                    |  6 --
+ include/linux/fs.h                            |  3 -
+ include/linux/hdlcdrv.h                       |  2 -
+ 29 files changed, 29 insertions(+), 575 deletions(-)
+ delete mode 100644 Documentation/process/magic-number.rst
+ delete mode 100644 Documentation/translations/it_IT/process/magic-number.r=
+st
+ delete mode 100644 Documentation/translations/zh_CN/process/magic-number.r=
+st
+ delete mode 100644 Documentation/translations/zh_TW/process/magic-number.r=
+st
+
+--=20
+2.30.2
+
+--epsbez2xcv56ijjf
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAABCgAdFiEEfWlHToQCjFzAxEFjvP0LAY0mWPEFAmNhphIACgkQvP0LAY0m
+WPHX3w//eCKxL28PXY15VC7spPr1aftrAychBKxXUo24FVkq0kZeKR7+UGLbL0/c
+luGQoQrpIL2DNgS22EJmKh2kR9ilQe3EIWWWG6R77YUl3kjTKNYG9YcsttrVgzbO
+n1M5Bu/YlJcd+ZYZEqZ3oz7Tp4apHEdqFE7qRKVDhYq9F/wwKXFUN7AAaMEG/A7G
+9u3NjWCOSD+xX03GE8JJFd3CZBSLurvtBGO6YuTQayjp/VViUpIC9dofuVN4Ugva
+0+tlKlnVnYcFfeij5vOIjKrj+PE50c7TV4FQwetNf3T87b/D7opLKeour7Tf9l+a
+kT00fjG7zKCv9uFbjG95SkSe4e58PfT3icgXYd74vqEda5AJJuXUXTqDqSGcMgPu
+361QK4YwSq2iS8h70Fg204vmpjfcqA7Jst7C44FE7bbEFTbmDTXqNvnztLOxtJXQ
+XtmUUr2Ta+bRcNN3dQ5SLGisXvAtBbLQKaB5xBtOnAfMGO544sJ3K0t5ZzlsQqVI
+Ncw9SRZmnbQvDQJcaJI8ferdn1I7nZw8PtI8toOD3dC3zyXrTexcdtOzpjD5rlyJ
+V9KlBJ8svIf8N0hXSpPBSOfAYCJBkPJz+GIw+2RTj4HRKlcTD52JbbUaoBuifd+q
+wbrU4TONKAq3yrRweH0aH8HPDRVOm1mva4vGcFM1AM6Nbx5k7xM=
+=8xd9
+-----END PGP SIGNATURE-----
+
+--epsbez2xcv56ijjf--
