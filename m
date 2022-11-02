@@ -1,73 +1,63 @@
-From: Dan Carpenter <error27@gmail.com>
-Subject: Re: [PATCH 2/2] MAINTAINERS: drop Liam Mark and Laura Abbott
-Date: Wed, 2 Nov 2022 15:16:33 +0300
-Message-ID: <Y2JfoWTaAW6QjavL@kadam>
-References: <20221029131734.616829-1-bagasdotme@gmail.com>
- <20221029131734.616829-3-bagasdotme@gmail.com>
- <aad04e06-59b0-f630-7cef-fdb557860a56@labbott.name>
+From: Nathan Chancellor <nathan@kernel.org>
+Subject: [PATCH] hamradio: baycom_epp: Fix return type of baycom_send_packet()
+Date: Wed,  2 Nov 2022 09:06:10 -0700
+Message-ID: <20221102160610.1186145-1-nathan@kernel.org>
 Mime-Version: 1.0
-Return-path: <linux-hams-owner@vger.kernel.org>
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=9MIQpV6ASdp5EtPUFNwNW4tWoOWg8tJ6K5b3MTsbc3g=;
-        b=ajqXyytBL4q+7pjyyyhqP+XOg1aIeC4xjkoTAAYAG9mWwC+RrjG2HUgdZLMbzamOoG
-         DuOFX4E4u9k2Ce9Q53fKg/X2RudHp8Bhs4byLBP5PVNHB/BUTIFss1e2wvKafDfIL4Ji
-         ZyJDyyYYujIvEZ1xEvfNgTGvdTk6N52z+ZyxXXQ12ioIQdy4dlGM6sDaDE8jGOdcMVOi
-         YFOa9G4ts/qScAFc3RojY9AT+FSaY7FNG+BhxkpPOisibYHKX4CC9fKIe3+A8uCTTFOW
-         RUAXrwWa615oPXc01U2Q4EzWvNhVWFByUr/lW/pVkl6rHST/Tv9Bzo9ZNTK+bp5r98zA
-         xFXg==
-Content-Disposition: inline
-In-Reply-To: <aad04e06-59b0-f630-7cef-fdb557860a56@labbott.name>
+Content-Transfer-Encoding: 8bit
+Return-path: <netdev-owner@vger.kernel.org>
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1667405181;
+        bh=uC/huKB8ojZr8E05891PDIL9GMzoWr5Ol6Vawz7NAHA=;
+        h=From:To:Cc:Subject:Date:From;
+        b=qbRk6eCBhBWgx0CQOO8Ik3q+htKp2pOYraMX06ybmCfSfqt/k/glkH97uTHhjR0M6
+         hcGl8TwcwSEkKCclmwA+UvEd0fxu/Q+nq0yIqgPoMzz44jRTlrU3KiD3Lfh5AaGsSg
+         AYsmL3hr5pyJBOQQlncDwfP36xRqSCg5hYB+cOiUUcF4dSZ59FBpN4vv43478FM6kk
+         Vk2piNjs/G9UgECa0gQIiO4dZk6bIz4cGlIDiJWEGzGqpM20K9TjtVWgun7EVKBBjq
+         swIQumGh12Wn9Bt5g/0FQlavdScVCqIdG5UM/M1wtcK84sqR2JCyArpj6QTUsk3str
+         Zt28kbB47Q4JA==
 List-ID: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-To: Laura Abbott <laura@labbott.name>
-Cc: Bagas Sanjaya <bagasdotme@gmail.com>, linux-kernel@vger.kernel.org, linux-hams@vger.kernel.org, linux-media@vger.kernel.org
+To: Thomas Sailer <t.sailer@alumni.ethz.ch>, "David S. Miller" <davem@davemloft.net>, Eric Dumazet <edumazet@google.com>, Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>
+Cc: linux-hams@vger.kernel.org, netdev@vger.kernel.org, Nick Desaulniers <ndesaulniers@google.com>, Tom Rix <trix@redhat.com>, Kees Cook <keescook@chromium.org>, Sami Tolvanen <samitolvanen@google.com>, llvm@lists.linux.dev, linux-kernel@vger.kernel.org, patches@lists.linux.dev, Nathan Chancellor <nathan@kernel.org>
 
-On Mon, Oct 31, 2022 at 09:44:56AM -0400, Laura Abbott wrote:
-> On 10/29/22 09:17, Bagas Sanjaya wrote:
-> > Emails sent to their respective addresses listed bounces (550 error).
-> > Their last post on LKML was two years ago ([1] and [2]). Remove them.
-> > 
-> > Link: https://lore.kernel.org/lkml/alpine.DEB.2.10.2002201508320.1846@lmark-linux.qualcomm.com/ ([1])
-> > Link: https://lore.kernel.org/lkml/b85fa669-d3aa-f6c9-9631-988ae47e392c@redhat.com/ ([2])
-> > Cc: Laura Abbott <laura@labbott.name>
-> > Signed-off-by: Bagas Sanjaya <bagasdotme@gmail.com>
-> > ---
-> >   Actually Laura's last post was a year ago from her personal address,
-> >   where she announced 2021 LF TAB results [3], so Cc that address.
-> > 
-> >   [3]: https://lore.kernel.org/lkml/6e307861-3149-a984-cc79-088559caeab2@labbott.name/
-> >   MAINTAINERS | 2 --
-> >   1 file changed, 2 deletions(-)
-> > 
-> > diff --git a/MAINTAINERS b/MAINTAINERS
-> > index 63a84d3218a7b4..564c3c66077e0b 100644
-> > --- a/MAINTAINERS
-> > +++ b/MAINTAINERS
-> > @@ -6221,8 +6221,6 @@ F:	tools/testing/selftests/dma/
-> >   DMA-BUF HEAPS FRAMEWORK
-> >   M:	Sumit Semwal <sumit.semwal@linaro.org>
-> >   R:	Benjamin Gaignard <benjamin.gaignard@collabora.com>
-> > -R:	Liam Mark <lmark@codeaurora.org>
-> > -R:	Laura Abbott <labbott@redhat.com>
-> >   R:	Brian Starkey <Brian.Starkey@arm.com>
-> >   R:	John Stultz <jstultz@google.com>
-> >   L:	linux-media@vger.kernel.org
-> 
-> https://lore.kernel.org/all/20200108213055.38449-1-labbott@kernel.org/
-> https://lore.kernel.org/all/20211207225458.622282-1-labbott@kernel.org/
-> 
-> I've sent a request to change this twice and I don't really have the
-> energy to continue chasing it down. If you can get the removal merged
-> go ahead.
+With clang's kernel control flow integrity (kCFI, CONFIG_CFI_CLANG),
+indirect call targets are validated against the expected function
+pointer prototype to make sure the call target is valid to help mitigate
+ROP attacks. If they are not identical, there is a failure at run time,
+which manifests as either a kernel panic or thread getting killed. A
+proposed warning in clang aims to catch these at compile time, which
+reveals:
 
-You could send it through Andrew's tree.
+  drivers/net/hamradio/baycom_epp.c:1119:25: error: incompatible function pointer types initializing 'netdev_tx_t (*)(struct sk_buff *, struct net_device *)' (aka 'enum netdev_tx (*)(struct sk_buff *, struct net_device *)') with an expression of type 'int (struct sk_buff *, struct net_device *)' [-Werror,-Wincompatible-function-pointer-types-strict]
+          .ndo_start_xmit      = baycom_send_packet,
+                                ^~~~~~~~~~~~~~~~~~
+  1 error generated.
 
-Andrew Morton <akpm@linux-foundation.org>
+->ndo_start_xmit() in 'struct net_device_ops' expects a return type of
+'netdev_tx_t', not 'int'. Adjust the return type of baycom_send_packet()
+to match the prototype's to resolve the warning and CFI failure.
 
-regards,
-dan carpenter
+Link: https://github.com/ClangBuiltLinux/linux/issues/1750
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+---
+ drivers/net/hamradio/baycom_epp.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/drivers/net/hamradio/baycom_epp.c b/drivers/net/hamradio/baycom_epp.c
+index 791b4a53d69f..bd3b0c2655a2 100644
+--- a/drivers/net/hamradio/baycom_epp.c
++++ b/drivers/net/hamradio/baycom_epp.c
+@@ -758,7 +758,7 @@ static void epp_bh(struct work_struct *work)
+  * ===================== network driver interface =========================
+  */
+ 
+-static int baycom_send_packet(struct sk_buff *skb, struct net_device *dev)
++static netdev_tx_t baycom_send_packet(struct sk_buff *skb, struct net_device *dev)
+ {
+ 	struct baycom_state *bc = netdev_priv(dev);
+ 
+
+base-commit: 9abf2313adc1ca1b6180c508c25f22f9395cc780
+-- 
+2.38.1
 
