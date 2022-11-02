@@ -1,63 +1,73 @@
-From: patchwork-bot+netdevbpf@kernel.org
-Subject: Re: [PATCH] rose: Fix NULL pointer dereference in rose_send_frame()
-Date: Wed, 02 Nov 2022 12:00:15 +0000
-Message-ID: <166739041570.9516.15064436041668449705.git-patchwork-notify@kernel.org>
-References: <20221028161049.113625-1-zhangqilong3@huawei.com>
+From: Dan Carpenter <error27@gmail.com>
+Subject: Re: [PATCH 2/2] MAINTAINERS: drop Liam Mark and Laura Abbott
+Date: Wed, 2 Nov 2022 15:16:33 +0300
+Message-ID: <Y2JfoWTaAW6QjavL@kadam>
+References: <20221029131734.616829-1-bagasdotme@gmail.com>
+ <20221029131734.616829-3-bagasdotme@gmail.com>
+ <aad04e06-59b0-f630-7cef-fdb557860a56@labbott.name>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Return-path: <netdev-owner@vger.kernel.org>
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1667390415;
-        bh=oAHzqYx20UrAXdLzaz44Mlipva+q7W5GffCvEeIv77I=;
-        h=Subject:From:Date:References:In-Reply-To:To:Cc:From;
-        b=hJtb2ZhwW47lvm+6gT1/ScMDKdZq/sQUHDpVhO3Qn1ADsrj7IP3rY0sdHES/G/T4U
-         CskGeSq847JrIhaVEazFupFXU7q7Y1JOQuqgPIgJ0ZJ5hB3Br9WOjlm6u/jmxbFjz5
-         WmPouA9dhF6IakIihqDCS58aZJYPpbzorUWs5OUaPH8jWLqb1XKRnEEuWj3cAIViUK
-         wb1RVxfeLoiH+n5ArJwfYvTrEn8s9mNxmHFdCsdaONKi3i6PEJu6zbgJdnR00GW20T
-         IgSZ25dTMbYahR+NBit2FYuKstQU+m5Eq+INagKyPVhUb04F1AND6w5V1i+Tz4Evoq
-         0UrICS8qOOEYA==
-In-Reply-To: <20221028161049.113625-1-zhangqilong3@huawei.com>
+Return-path: <linux-hams-owner@vger.kernel.org>
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=9MIQpV6ASdp5EtPUFNwNW4tWoOWg8tJ6K5b3MTsbc3g=;
+        b=ajqXyytBL4q+7pjyyyhqP+XOg1aIeC4xjkoTAAYAG9mWwC+RrjG2HUgdZLMbzamOoG
+         DuOFX4E4u9k2Ce9Q53fKg/X2RudHp8Bhs4byLBP5PVNHB/BUTIFss1e2wvKafDfIL4Ji
+         ZyJDyyYYujIvEZ1xEvfNgTGvdTk6N52z+ZyxXXQ12ioIQdy4dlGM6sDaDE8jGOdcMVOi
+         YFOa9G4ts/qScAFc3RojY9AT+FSaY7FNG+BhxkpPOisibYHKX4CC9fKIe3+A8uCTTFOW
+         RUAXrwWa615oPXc01U2Q4EzWvNhVWFByUr/lW/pVkl6rHST/Tv9Bzo9ZNTK+bp5r98zA
+         xFXg==
+Content-Disposition: inline
+In-Reply-To: <aad04e06-59b0-f630-7cef-fdb557860a56@labbott.name>
 List-ID: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
-To: Zhang Qilong <zhangqilong3@huawei.com>
-Cc: ralf@linux-mips.org, davem@davemloft.net, edumazet@google.com, kuba@kernel.org, pabeni@redhat.com, f6bvp@free.fr, linux-hams@vger.kernel.org, netdev@vger.kernel.org
+Content-Transfer-Encoding: 7bit
+To: Laura Abbott <laura@labbott.name>
+Cc: Bagas Sanjaya <bagasdotme@gmail.com>, linux-kernel@vger.kernel.org, linux-hams@vger.kernel.org, linux-media@vger.kernel.org
 
-Hello:
-
-This patch was applied to netdev/net.git (master)
-by David S. Miller <davem@davemloft.net>:
-
-On Sat, 29 Oct 2022 00:10:49 +0800 you wrote:
-> The syzkaller reported an issue:
+On Mon, Oct 31, 2022 at 09:44:56AM -0400, Laura Abbott wrote:
+> On 10/29/22 09:17, Bagas Sanjaya wrote:
+> > Emails sent to their respective addresses listed bounces (550 error).
+> > Their last post on LKML was two years ago ([1] and [2]). Remove them.
+> > 
+> > Link: https://lore.kernel.org/lkml/alpine.DEB.2.10.2002201508320.1846@lmark-linux.qualcomm.com/ ([1])
+> > Link: https://lore.kernel.org/lkml/b85fa669-d3aa-f6c9-9631-988ae47e392c@redhat.com/ ([2])
+> > Cc: Laura Abbott <laura@labbott.name>
+> > Signed-off-by: Bagas Sanjaya <bagasdotme@gmail.com>
+> > ---
+> >   Actually Laura's last post was a year ago from her personal address,
+> >   where she announced 2021 LF TAB results [3], so Cc that address.
+> > 
+> >   [3]: https://lore.kernel.org/lkml/6e307861-3149-a984-cc79-088559caeab2@labbott.name/
+> >   MAINTAINERS | 2 --
+> >   1 file changed, 2 deletions(-)
+> > 
+> > diff --git a/MAINTAINERS b/MAINTAINERS
+> > index 63a84d3218a7b4..564c3c66077e0b 100644
+> > --- a/MAINTAINERS
+> > +++ b/MAINTAINERS
+> > @@ -6221,8 +6221,6 @@ F:	tools/testing/selftests/dma/
+> >   DMA-BUF HEAPS FRAMEWORK
+> >   M:	Sumit Semwal <sumit.semwal@linaro.org>
+> >   R:	Benjamin Gaignard <benjamin.gaignard@collabora.com>
+> > -R:	Liam Mark <lmark@codeaurora.org>
+> > -R:	Laura Abbott <labbott@redhat.com>
+> >   R:	Brian Starkey <Brian.Starkey@arm.com>
+> >   R:	John Stultz <jstultz@google.com>
+> >   L:	linux-media@vger.kernel.org
 > 
-> KASAN: null-ptr-deref in range [0x0000000000000380-0x0000000000000387]
-> CPU: 0 PID: 4069 Comm: kworker/0:15 Not tainted 6.0.0-syzkaller-02734-g0326074ff465 #0
-> Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 09/22/2022
-> Workqueue: rcu_gp srcu_invoke_callbacks
-> RIP: 0010:rose_send_frame+0x1dd/0x2f0 net/rose/rose_link.c:101
-> Call Trace:
->  <IRQ>
->  rose_transmit_clear_request+0x1d5/0x290 net/rose/rose_link.c:255
->  rose_rx_call_request+0x4c0/0x1bc0 net/rose/af_rose.c:1009
->  rose_loopback_timer+0x19e/0x590 net/rose/rose_loopback.c:111
->  call_timer_fn+0x1a0/0x6b0 kernel/time/timer.c:1474
->  expire_timers kernel/time/timer.c:1519 [inline]
->  __run_timers.part.0+0x674/0xa80 kernel/time/timer.c:1790
->  __run_timers kernel/time/timer.c:1768 [inline]
->  run_timer_softirq+0xb3/0x1d0 kernel/time/timer.c:1803
->  __do_softirq+0x1d0/0x9c8 kernel/softirq.c:571
->  [...]
->  </IRQ>
+> https://lore.kernel.org/all/20200108213055.38449-1-labbott@kernel.org/
+> https://lore.kernel.org/all/20211207225458.622282-1-labbott@kernel.org/
 > 
-> [...]
+> I've sent a request to change this twice and I don't really have the
+> energy to continue chasing it down. If you can get the removal merged
+> go ahead.
 
-Here is the summary with links:
-  - rose: Fix NULL pointer dereference in rose_send_frame()
-    https://git.kernel.org/netdev/net/c/e97c089d7a49
+You could send it through Andrew's tree.
 
-You are awesome, thank you!
--- 
-Deet-doot-dot, I am a bot.
-https://korg.docs.kernel.org/patchwork/pwbot.html
+Andrew Morton <akpm@linux-foundation.org>
 
+regards,
+dan carpenter
 
