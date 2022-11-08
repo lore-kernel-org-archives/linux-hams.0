@@ -1,91 +1,50 @@
-From: F6BVP <f6bvp@free.fr>
-Subject: Re: [PATCH] rose: Fix NULL pointer dereference in rose_send_frame()
-Date: Sat, 5 Nov 2022 20:07:02 +0100
-Message-ID: <0549f15a-181c-1719-987c-d5641fac3f8e@free.fr>
-References: <20221028161049.113625-1-zhangqilong3@huawei.com>
+From: "Dave Hibberd" <d@vehibberd.com>
+Subject: Replacement for linux-ax25.org git?
+Date: Tue, 08 Nov 2022 12:41:12 +0000
+Message-ID: <550e4271-a857-4540-953f-4c395e4bb2f5@app.fastmail.com>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 8bit
 Return-path: <linux-hams-owner@vger.kernel.org>
-Content-Language: fr
-In-Reply-To: <20221028161049.113625-1-zhangqilong3@huawei.com>
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=vehibberd.com;
+         h=cc:content-type:date:date:from:from:in-reply-to:message-id
+        :mime-version:reply-to:sender:subject:subject:to:to; s=fm2; t=
+        1667911259; x=1667997659; bh=k8cxV3A4BmoNa0iXlLNs9KAgUrmFGsEf+Sv
+        guRTM8/w=; b=EX2joWj2jBAhuUxCquWiMTEPWuZK6BZZLcr+8LV3W+uhOfiJVUH
+        kJ43SXWIU+pQumVahBssY5uzvRHeZmBMV2N0K3aOHC0MVo7vYCgFkiDF8gKLety+
+        Sjs/CVyRkXJHUVqws4a1o0Sk55geLXQOtaK1LoTu2n5c30V7Fk0ArkEV3X73TU7X
+        DJcj0N1KNjpWjgoKXyWgZJ1IhQkLhL9SO3qhKXeeJaf9inh9kPYiIrXWNmM5BrPy
+        MaFMWjxYzWg81+p2JvaEiTvKRBCFjzh4cK6L2T8UfgFrZyvD05tfueiRiBGU/wVl
+        fRJjX6evZantRD3zlBeTnOg86Ho/IUfsbLg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+        messagingengine.com; h=cc:content-type:date:date:feedback-id
+        :feedback-id:from:from:in-reply-to:message-id:mime-version
+        :reply-to:sender:subject:subject:to:to:x-me-proxy:x-me-proxy
+        :x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1667911259; x=
+        1667997659; bh=k8cxV3A4BmoNa0iXlLNs9KAgUrmFGsEf+SvguRTM8/w=; b=Q
+        c7V4vyUT4MBghDqzPSd7I6aD/CA+lPjhCubP8IbqNFneLkkxJ0kFRoae42TFwjq8
+        Mkzf6prt/aVMXMvcZqEZAA4zLlENm7o/5vUqPbpunHFr6fpc1Pq29wVjv4iFzuBh
+        YzM1DoCYbfHhnot35XzzIHa7+3h1jL5Z/Ass+oWoxP+lNC2C79ehXAZTF8eILT/+
+        O7eM8VH4sZgPO9n7wEJWsSzIs/cO9pFVb1DSYW6YdA+hUJupsYOANCEdLwKCYuQj
+        QOvc9Ql/mYuG6n24ALKES5H7Ws5oVRxnjJ6mGyt2OGPZS2wDDP0qc8GIIQpjmI/H
+        UdZsB+7WzzqszBAa+8bvA==
 List-ID: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="utf-8"; format="flowed"
-To: Zhang Qilong <zhangqilong3@huawei.com>, ralf@linux-mips.org, davem@davemloft.net, edumazet@google.com, kuba@kernel.org, pabeni@redhat.com
-Cc: linux-hams@vger.kernel.org, netdev@vger.kernel.org
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+To: linux-hams@vger.kernel.org
 
-ZhangQilong ni hao,
+Hi all,
 
-I have just pulled net-next 6.1.0-rc3 including  the rose_link.c patch 
-on my FPAC/ROSE hamradio node F6BVP.
+I'm one of the folks in the Debian Hamradio team with an active interest in keeping our packet tooling going. 
 
-Xie xie ni
+With the demise of linux-ax25.org and discussions here about change of maintenance, is there a new canonical repo for ax25-tools and similar where these components are held? 
 
-Zaitien
+Our last upstram mirror was about 3 years ago, we've got it tagged as 0.0.10-rc5+git20190411+3595f87 [1] - this is what will have flowed down into Ubuntu, Raspberry Pi OS etc. 
 
-Bernard,
+If there's currently active work going on with these userland components, where is it happening so we can rebase our packages? 
+If not, I guess this is something we need to make a decision on how to proceed as a community!
 
-http://f6bvp.org
 
-Le 28/10/2022 à 18:10, Zhang Qilong a écrit :
-> The syzkaller reported an issue:
->
-> KASAN: null-ptr-deref in range [0x0000000000000380-0x0000000000000387]
-> CPU: 0 PID: 4069 Comm: kworker/0:15 Not tainted 6.0.0-syzkaller-02734-g0326074ff465 #0
-> Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 09/22/2022
-> Workqueue: rcu_gp srcu_invoke_callbacks
-> RIP: 0010:rose_send_frame+0x1dd/0x2f0 net/rose/rose_link.c:101
-> Call Trace:
->   <IRQ>
->   rose_transmit_clear_request+0x1d5/0x290 net/rose/rose_link.c:255
->   rose_rx_call_request+0x4c0/0x1bc0 net/rose/af_rose.c:1009
->   rose_loopback_timer+0x19e/0x590 net/rose/rose_loopback.c:111
->   call_timer_fn+0x1a0/0x6b0 kernel/time/timer.c:1474
->   expire_timers kernel/time/timer.c:1519 [inline]
->   __run_timers.part.0+0x674/0xa80 kernel/time/timer.c:1790
->   __run_timers kernel/time/timer.c:1768 [inline]
->   run_timer_softirq+0xb3/0x1d0 kernel/time/timer.c:1803
->   __do_softirq+0x1d0/0x9c8 kernel/softirq.c:571
->   [...]
->   </IRQ>
->
-> It triggers NULL pointer dereference when 'neigh->dev->dev_addr' is
-> called in the rose_send_frame(). It's the first occurrence of the
-> `neigh` is in rose_loopback_timer() as `rose_loopback_neigh', and
-> the 'dev' in 'rose_loopback_neigh' is initialized sa nullptr.
->
-> It had been fixed by commit 3b3fd068c56e3fbea30090859216a368398e39bf
-> ("rose: Fix Null pointer dereference in rose_send_frame()") ever.
-> But it's introduced by commit 3c53cd65dece47dd1f9d3a809f32e59d1d87b2b8
-> ("rose: check NULL rose_loopback_neigh->loopback") again.
->
-> We fix it by add NULL check in rose_transmit_clear_request(). When
-> the 'dev' in 'neigh' is NULL, we don't reply the request and just
-> clear it.
->
-> syzkaller don't provide repro, and I provide a syz repro like:
-> r0 = syz_init_net_socket$bt_sco(0x1f, 0x5, 0x2)
-> ioctl$sock_inet_SIOCSIFFLAGS(r0, 0x8914, &(0x7f0000000180)={'rose0\x00', 0x201})
-> r1 = syz_init_net_socket$rose(0xb, 0x5, 0x0)
-> bind$rose(r1, &(0x7f00000000c0)=@full={0xb, @dev, @null, 0x0, [@null, @null, @netrom, @netrom, @default, @null]}, 0x40)
-> connect$rose(r1, &(0x7f0000000240)=@short={0xb, @dev={0xbb, 0xbb, 0xbb, 0x1, 0x0}, @remote={0xcc, 0xcc, 0xcc, 0xcc, 0xcc, 0xcc, 0x1}, 0x1, @netrom={0xbb, 0xbb, 0xbb, 0xbb, 0xbb, 0x0, 0x0}}, 0x1c)
->
-> Fixes: 3c53cd65dece ("rose: check NULL rose_loopback_neigh->loopback")
-> Signed-off-by: Zhang Qilong <zhangqilong3@huawei.com>
-> ---
->   net/rose/rose_link.c | 3 +++
->   1 file changed, 3 insertions(+)
->
-> diff --git a/net/rose/rose_link.c b/net/rose/rose_link.c
-> index 8b96a56d3a49..0f77ae8ef944 100644
-> --- a/net/rose/rose_link.c
-> +++ b/net/rose/rose_link.c
-> @@ -236,6 +236,9 @@ void rose_transmit_clear_request(struct rose_neigh *neigh, unsigned int lci, uns
->   	unsigned char *dptr;
->   	int len;
->   
-> +	if (!neigh->dev)
-> +		return;
-> +
->   	len = AX25_BPQ_HEADER_LEN + AX25_MAX_HEADER_LEN + ROSE_MIN_LEN + 3;
->   
->   	if ((skb = alloc_skb(len, GFP_ATOMIC)) == NULL)
+[1]: https://salsa.debian.org/debian-hamradio-team/ax25-tools/-/tree/upstream
+
+-- 
+  Hibby
+  MM0RFN
