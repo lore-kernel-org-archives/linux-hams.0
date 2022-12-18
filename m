@@ -1,76 +1,58 @@
-From: patchwork-bot+netdevbpf@kernel.org
-Subject: Re: [PATCH net v3 0/4] net: don't call dev_kfree_skb() under
- spin_lock_irqsave()
-Date: Mon, 12 Dec 2022 10:10:16 +0000
-Message-ID: <167083981658.16910.12851344633864662339.git-patchwork-notify@kernel.org>
-References: <20221208142147.2376671-1-yangyingliang@huawei.com>
+From: Borislav Petkov <bp@alien8.de>
+Subject: [PATCH] hamradio: baycom_epp: Do not use x86-specific rdtsc()
+Date: Sun, 18 Dec 2022 13:04:05 +0100
+Message-ID: <20221218120405.2431-1-bp@alien8.de>
 Mime-Version: 1.0
+Content-Transfer-Encoding: 8bit
+Return-path: <linux-hams-owner@vger.kernel.org>
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=alien8.de; s=dkim;
+        t=1671365052;
+        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+         to:to:cc:cc:mime-version:mime-version:content-type:
+         content-transfer-encoding:content-transfer-encoding:in-reply-to:
+         references; bh=qZ7D+nJuEw06972G95/KVZOO2WSZfZWhv++0SW+ZtQo=;
+        b=U3fwypfodtyAL0P58CBYz6SK6jS4gJTvWm8Tpp6gqcaZRMIN+AJbY2M8NhU8SpyIYuufk9
+        rQGrjLFAPhRxrQqF70nVZZjU3BpfMKLuYfynJDnhD7NjlLOxd8ygzZLlsoITOuZUgLW256
+        MME6mx8Mzcu1c1Twf2+HCRrxH+raQYo=
+List-ID: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-Return-path: <linux-arm-kernel-bounces+linux-arm-kernel=m.gmane-mx.org@lists.infradead.org>
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-	d=lists.infradead.org; s=bombadil.20210309; h=Sender:
-	Content-Transfer-Encoding:Content-Type:List-Subscribe:List-Help:List-Post:
-	List-Archive:List-Unsubscribe:List-Id:Cc:To:In-Reply-To:References:Date:
-	Message-Id:From:Subject:MIME-Version:Reply-To:Content-ID:Content-Description:
-	Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:
-	List-Owner; bh=qVX8ymZP5nZJqjWu+JP+heUZwzKVyAy+t6mRUiPdfuY=; b=elePTS2ids+wZl
-	pHlDfjsJZmaoXS3nC0+n0nzsmbIel2ahnyf98XRHp8yPuxM07BfNPeWMoZIwy7Z93RGDc3NR5G7HX
-	Z0KFv6FSDAeILnRB9LxSUnRzlhVTfPgg5fSb+GA5OBCf83sW2SCXR/8WxnmyDO6j5kyYxj/b7ZpLS
-	nUdR6LC9nPssZYQMbCeOqrEFjQLNCdZvtpQI+uLuKw0lObyJm88J/k1RquvFc4R0Y3igG6ijwm6LV
-	bCdLN8CkCptkJaQ4ETZfqaBkeqsAImqIymq390FZGaEKagOAdVV3/bC264SkgEnKKeAPlLEq1O/H4
-	N1w3mb/2nKl/bOSU4pfg==;
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1670839816;
-	bh=QFNLzaGC3QQ2Tj6+OzuD4bFPgh429PAk7aeLLtqqlfc=;
-	h=Subject:From:Date:References:In-Reply-To:To:Cc:From;
-	b=I4MLg2BWjXyINZYUI2Ti7MSte7xMMmcjpturaSpA448ggWU3cSlpbyntrDBXAd7fQ
-	 3012/t3JOwT9u4LkIDk/5f5CZqrIjm6p4SBvYK5cGTpKU7Lal4ma/StpsYJtKtnhZE
-	 GVrI5opa2DKNLZ2CCkp6LEKZUKr1rpKk0T+bAkmcNHRuRWZVdwb8BvQcIHp1jRy1dW
-	 SvCnSQMNgON8dS3ONtc8IK7MWe8JQNAlbnYsjripo4wtP0D9HD0avIYY5/X5U+A1Om
-	 bl3BGQUx4Q4jxhHsNOkevd58JGbqNvKLmeA/ft8Ier1i8JOpLnvMMJtjsXB2tXjz/r
-	 ybFFKFUzg/DEQ==
-In-Reply-To: <20221208142147.2376671-1-yangyingliang@huawei.com>
-List-Id: <linux-hams.vger.kernel.org>
-List-Unsubscribe: <http://lists.infradead.org/mailman/options/linux-arm-kernel>,
- <mailto:linux-arm-kernel-request@lists.infradead.org?subject=unsubscribe>
-List-Archive: <http://lists.infradead.org/pipermail/linux-arm-kernel/>
-List-Post: <mailto:linux-arm-kernel@lists.infradead.org>
-List-Help: <mailto:linux-arm-kernel-request@lists.infradead.org?subject=help>
-List-Subscribe: <http://lists.infradead.org/mailman/listinfo/linux-arm-kernel>,
- <mailto:linux-arm-kernel-request@lists.infradead.org?subject=subscribe>
-Sender: "linux-arm-kernel" <linux-arm-kernel-bounces@lists.infradead.org>
-Errors-To: linux-arm-kernel-bounces+linux-arm-kernel=m.gmane-mx.org@lists.infradead.org
-To: Yang Yingliang <yangyingliang@huawei.com>
-Cc: netdev@vger.kernel.org, davem@davemloft.net, edumazet@google.com, kuba@kernel.org, pabeni@redhat.com, leon@kernel.org, michal.simek@xilinx.com, john.linn@xilinx.com, sadanan@xilinx.com, linux-arm-kernel@lists.infradead.org, yanok@emcraft.com, jreuter@yaina.de, linux-hams@vger.kernel.org
+To: Thomas Sailer <t.sailer@alumni.ethz.ch>
+Cc: linux-hams@vger.kernel.org, netdev@vger.kernel.org, LKML <linux-kernel@vger.kernel.org>
 
-Hello:
+From: "Borislav Petkov (AMD)" <bp@alien8.de>
 
-This series was applied to netdev/net.git (master)
-by David S. Miller <davem@davemloft.net>:
+Use get_cycles() which is provided by pretty much every arch.
 
-On Thu, 8 Dec 2022 22:21:43 +0800 you wrote:
-> It is not allowed to call consume_skb() from hardware interrupt context
-> or with interrupts being disabled. This patchset replace dev_kfree_skb()
-> with dev_kfree_skb_irq/dev_consume_skb_irq() under spin_lock_irqsave()
-> in some drivers, or move dev_kfree_skb() after spin_unlock_irqrestore().
-> 
-> v2 -> v3:
->   Update commit message, and change to use dev_kfree_skb_irq() in patch #1, #3.
-> 
-> [...]
+The UML build works too because get_cycles() is a simple "return 0;"
+because the rdtsc() is optimized away there.
 
-Here is the summary with links:
-  - [net,v3,1/4] net: emaclite: don't call dev_kfree_skb() under spin_lock_irqsave()
-    https://git.kernel.org/netdev/net/c/d1678bf45f21
-  - [net,v3,2/4] net: ethernet: dnet: don't call dev_kfree_skb() under spin_lock_irqsave()
-    https://git.kernel.org/netdev/net/c/f07fadcbee2a
-  - [net,v3,3/4] hamradio: don't call dev_kfree_skb() under spin_lock_irqsave()
-    https://git.kernel.org/netdev/net/c/3727f742915f
-  - [net,v3,4/4] net: amd: lance: don't call dev_kfree_skb() under spin_lock_irqsave()
-    https://git.kernel.org/netdev/net/c/6151d105dfce
+Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
+---
+ drivers/net/hamradio/baycom_epp.c | 8 +-------
+ 1 file changed, 1 insertion(+), 7 deletions(-)
 
-You are awesome, thank you!
+diff --git a/drivers/net/hamradio/baycom_epp.c b/drivers/net/hamradio/baycom_epp.c
+index bd3b0c2655a2..83ff882f5d97 100644
+--- a/drivers/net/hamradio/baycom_epp.c
++++ b/drivers/net/hamradio/baycom_epp.c
+@@ -623,16 +623,10 @@ static int receive(struct net_device *dev, int cnt)
+ 
+ /* --------------------------------------------------------------------- */
+ 
+-#if defined(__i386__) && !defined(CONFIG_UML)
+-#include <asm/msr.h>
+ #define GETTICK(x)						\
+ ({								\
+-	if (boot_cpu_has(X86_FEATURE_TSC))			\
+-		x = (unsigned int)rdtsc();			\
++	x = (unsigned int)get_cycles();				\
+ })
+-#else /* __i386__  && !CONFIG_UML */
+-#define GETTICK(x)
+-#endif /* __i386__  && !CONFIG_UML */
+ 
+ static void epp_bh(struct work_struct *work)
+ {
 -- 
-Deet-doot-dot, I am a bot.
-https://korg.docs.kernel.org/patchwork/pwbot.html
+2.35.1
+
