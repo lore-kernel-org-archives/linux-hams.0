@@ -1,22 +1,22 @@
 From: Sasha Levin <sashal@kernel.org>
-Subject: [PATCH AUTOSEL 4.19 07/26] hamradio: baycom_epp: Fix return type of baycom_send_packet()
-Date: Sun, 18 Dec 2022 11:19:57 -0500
-Message-ID: <20221218162016.934280-7-sashal@kernel.org>
-References: <20221218162016.934280-1-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 4.14 07/23] hamradio: baycom_epp: Fix return type of baycom_send_packet()
+Date: Sun, 18 Dec 2022 11:21:33 -0500
+Message-ID: <20221218162149.935047-7-sashal@kernel.org>
+References: <20221218162149.935047-1-sashal@kernel.org>
 Mime-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Return-path: <linux-hams-owner@vger.kernel.org>
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1671380435;
-        bh=V4Wc+ag6ZBSxK/gsAMFtBzi+fvW7brfP0yj43Qrg0qQ=;
+        s=k20201202; t=1671380529;
+        bh=ONuYGq6oB24d94k2QgN3qhxbPTyBa1Lzwbl6aFqLKAo=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=LuGLDUVID8q8gjsAJUPjpul+WJ/34FWU6ViF9Sk4xzvliXSrQkLLdoc/hSDZMVmpm
-         ZsQ7AL7NBUW7lfmIuNd+p5CPUOUoe8nfH6p6DjUTRG9HjFfG6OunwVvegXxV95/IU+
-         sk/RrGyL+5UJwVwrlUYUetHb0tfBr+BKzCGIyg15CqykTRTpQSXnLhjyLmJJd2RBX2
-         cvcowiASbS+akuskq2Sna3ut994Qa6xyQ8ycG7mH2HxRis+5POvq8Mk59z+Plcn/2F
-         eP2F0qq5qrCK1Yd/vMsQVlhuj27gh9w1p/Jk/j/YYwpS+CnDKaoALX7Of6xcYh9SOb
-         gRJ15TbFPfBeA==
-In-Reply-To: <20221218162016.934280-1-sashal@kernel.org>
+        b=gn0PDFwm4eoWWDpqZx2xVtRfNVHzOUXF1hZQTViVAskwiA2TIltKixjoHmSPPK8lz
+         3BGQnNVuDZLrzaAJq6sjhYbyXvfqgS7j5DOo60I4U0dyOQsWQIaf4dlkwyZAi3MB0S
+         lRpv3NQiAk2UqaiY0pDoHkcqerSZI7Au5849PBqxlIj9JgYKkxa0Qxhw1i/9XPHtck
+         zUbfVWrcuAoCTmho+xptegKTCgZ56dKbFPCRshN6F5HyH79QEI2NSApGunjRX0fwOz
+         7vg6NaYc9ND5XRMMU3H3e6rCzNGjkmGpUv9ZLwHDeB6trvP7lWtXqVpVolum3r/Wky
+         KLFW7eqPi7RZw==
+In-Reply-To: <20221218162149.935047-1-sashal@kernel.org>
 List-ID: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
 To: linux-kernel@vger.kernel.org, stable@vger.kernel.org
@@ -54,7 +54,7 @@ Signed-off-by: Sasha Levin <sashal@kernel.org>
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/drivers/net/hamradio/baycom_epp.c b/drivers/net/hamradio/baycom_epp.c
-index 1e62d00732f2..787eaf3f4f13 100644
+index 1503f10122f7..a80948d700fe 100644
 --- a/drivers/net/hamradio/baycom_epp.c
 +++ b/drivers/net/hamradio/baycom_epp.c
 @@ -772,7 +772,7 @@ static void epp_bh(struct work_struct *work)
