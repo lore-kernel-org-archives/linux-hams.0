@@ -1,49 +1,34 @@
-From: patchwork-bot+netdevbpf@kernel.org
-Subject: Re: [PATCH] hamradio: baycom_epp: Do not use x86-specific rdtsc()
-Date: Mon, 19 Dec 2022 09:50:16 +0000
-Message-ID: <167144341633.12312.2432800353975438526.git-patchwork-notify@kernel.org>
-References: <20221218120405.2431-1-bp@alien8.de>
+From: Chris Maness <christopher.maness@gmail.com>
+Subject: Patching the Raspberry Pi OS Kernel for AX.25?
+Date: Mon, 26 Dec 2022 22:10:11 -0800
+Message-ID: <CANnsUMEtqqQbFEoUnqWtbvdeVU4i5adTH97uPUFpzWN=mOp54g@mail.gmail.com>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 8bit
 Return-path: <linux-hams-owner@vger.kernel.org>
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1671443416;
-        bh=39AaLIEWFIQskMzhGuFVWOTbXa7X4viiTu8/D1DBPKg=;
-        h=Subject:From:Date:References:In-Reply-To:To:Cc:From;
-        b=nfkqsporUMPQNhz29OmGvmQ78isR14ALdzPoe++NxCx/KRWrJDHsqMsGgOcDqwB/z
-         xe1gU70D2Z8fIzg3P4CyFOWEq28O/8oDh5FNcccSx9h5oRAv9p3RFZRDQOprc+PcTx
-         wX7GmsKRYEY9R1pa0KE8qzJjQ8aF2PxlXJeRs/rYq+shFSuwor/7dvNbexpL1UAYGd
-         AeKmyOH3rXrn/bM4/HjvPi5z9sLZaWkOSKF5UmLfZmOws3PaOmPr1KY5hGTuDhvZzQ
-         I7o3hk+ixgteDGp0T+1dPQrFkl1Fm9vb/EUL7ppY/PDb041HEf6adAS1NA5a1gINB6
-         lhoCof3dzUR7Q==
-In-Reply-To: <20221218120405.2431-1-bp@alien8.de>
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=dT50w44llys+/mkAc+IG8pekgIv3FZODTSCtmgN4+DA=;
+        b=iaVU+QymokBTwsPYPMPSu3YAMs9054gAbeb4ic48laBCMDDwegeZnL7dHiia4puYTc
+         DRUSSvmByT8m4GXIlXsY5B/kDgCQk/GFJsWGCeEb45ls6U6dAvmkS05DmSQ4LWEMrJ8s
+         HwO3v3kRyA9rTRdJV45oYBmFyMC3FNQ+EEIQMJKcaxm6JwhSubuDR7jQbJ90Kdoyf9+D
+         DUWmHJpfnPlKvpWubSFm4uf/JWvCqpvd4U3SVY+RrFO7Qqkf5v5WLfS01plsopZoWTgF
+         qf0NHUPmrwkQadbi6Doei532FstnfM8cGdjR9o5FGE7IuFwqK6EdqESPxSzOru6vAMJt
+         9kXg==
 List-ID: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
-To: Borislav Petkov <bp@alien8.de>
-Cc: t.sailer@alumni.ethz.ch, linux-hams@vger.kernel.org, netdev@vger.kernel.org, linux-kernel@vger.kernel.org
+Content-Transfer-Encoding: 7bit
+To: linux-hams@vger.kernel.org
 
-Hello:
+I would like to try to patch the current 5.15 kernel for the Pi to
+bring it up to the ax.25 code that is in 5.19.  I believe in that
+version some of the issues have been fixed, but the current kernel
+version for the Pi is 5.15.  I have never patched the kernel source
+before and I am not sure how to proceed.  I have built them before
+many moons ago.
 
-This patch was applied to netdev/net-next.git (master)
-by David S. Miller <davem@davemloft.net>:
+-KQ6UP
 
-On Sun, 18 Dec 2022 13:04:05 +0100 you wrote:
-> From: "Borislav Petkov (AMD)" <bp@alien8.de>
-> 
-> Use get_cycles() which is provided by pretty much every arch.
-> 
-> The UML build works too because get_cycles() is a simple "return 0;"
-> because the rdtsc() is optimized away there.
-> 
-> [...]
-
-Here is the summary with links:
-  - hamradio: baycom_epp: Do not use x86-specific rdtsc()
-    https://git.kernel.org/netdev/net-next/c/aba5b397cad7
-
-You are awesome, thank you!
 -- 
-Deet-doot-dot, I am a bot.
-https://korg.docs.kernel.org/patchwork/pwbot.html
-
-
+Thanks,
+Chris Maness
