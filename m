@@ -1,52 +1,45 @@
-From: David Ranch <linux-hams@trinnet.net>
-Subject: Re: Patching the Raspberry Pi OS Kernel for AX.25?
-Date: Tue, 27 Dec 2022 11:52:44 -0800
-Message-ID: <91180f1e-2ac9-95c1-ee27-d393e4d681b0@trinnet.net>
-References: <CANnsUMEtqqQbFEoUnqWtbvdeVU4i5adTH97uPUFpzWN=mOp54g@mail.gmail.com>
- <CANnsUMFvEy6TkwdVitOpRs_HhxLmt8=FKbe2=RDK3190syN9Zg@mail.gmail.com>
+From: Nate Bargmann <n0nb@n0nb.us>
+Subject: [PATCH] ttyutils.c: Correct suspected typo in speed_struct
+Date: Thu, 29 Dec 2022 12:14:20 -0600
+Message-ID: <20221229181420.998996-1-n0nb@n0nb.us>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <CANnsUMFvEy6TkwdVitOpRs_HhxLmt8=FKbe2=RDK3190syN9Zg@mail.gmail.com>
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=n0nb.us;
+        s=default; h=Content-Transfer-Encoding:MIME-Version:Message-Id:Date:Subject:
+        Cc:To:From:Sender:Reply-To:Content-Type:Content-ID:Content-Description:
+        Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:
+        In-Reply-To:References:List-Id:List-Help:List-Unsubscribe:List-Subscribe:
+        List-Post:List-Owner:List-Archive;
+        bh=4X94lelONQ5G3ZpLBIKDVbfc6ej/uijug8GrWP9aylI=; b=Sovwmk9NbPnGlzjSamkCpJ/mu4
+        KNHZX2CkbiHfyQCt6nT+EpAnPLS5yh8fDFl+k6tlFXzz+OICxfC3+VH1OGfepVkXg7LuthDzuXQKh
+        vA/z9NFxl64X2omOjLuQ82kOyFKxIMnbaGhDWTXhVkziq/bUvsDEMa1dX/5rWv+d4C5k=;
 List-ID: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"; format="flowed"
-To: linux-hams@vger.kernel.org
-Cc: Chris Maness <christopher.maness@gmail.com>
+Content-Type: text/plain; charset="us-ascii"
+To: Thomas Osterried <thomas@osterried.de>
+Cc: linux-hams@vger.kernel.org, Nate Bargmann <n0nb@n0nb.us>
 
+Looking over recent commits I noticed what looks to be a typo where
+user_speed did not match termios_speed for the B3500000 declaration.
 
-I haven't tried that one patch but there have actually been a bunch of 
-patches (5-6 of them) in say the last six months but I don't know which 
-ones have been applied to which kernel branches.  I would generally 
-recommend to just try the newer kernel version unless you really need 
-v5.15.  If you are going to try to apply the patches to the older 
-kernel, you'll need to make sure they are properly backported and you 
-will also need to apply them in the correct chronological order to avoid 
-conflicts.
+Signed-off-by: Nate Bargmann <n0nb@n0nb.us>
+---
+ ttyutils.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---David
-KI6ZHD
-
-
-
-On 12/26/2022 10:31 PM, Chris Maness wrote:
-> This looks like the patch.
->
-> https://lore.kernel.org/all/20220530152158.108619-1-duoming@zju.edu.cn/
->
-> On Mon, Dec 26, 2022 at 10:10 PM Chris Maness
-> <christopher.maness@gmail.com> wrote:
->> I would like to try to patch the current 5.15 kernel for the Pi to
->> bring it up to the ax.25 code that is in 5.19.  I believe in that
->> version some of the issues have been fixed, but the current kernel
->> version for the Pi is 5.15.  I have never patched the kernel source
->> before and I am not sure how to proceed.  I have built them before
->> many moons ago.
->>
->> -KQ6UP
->>
->> --
->> Thanks,
->> Chris Maness
->
->
+diff --git a/ttyutils.c b/ttyutils.c
+index 6ffd2fb..6bd6b56 100644
+--- a/ttyutils.c
++++ b/ttyutils.c
+@@ -61,7 +61,7 @@ static struct speed_struct {
+ 	{3000000,	B3000000},
+ #endif
+ #ifdef  B3500000
+-	{1000000,	B3500000},
++	{3500000,	B3500000},
+ #endif
+ #ifdef  B4000000
+ 	{4000000,	B4000000},
+-- 
+2.34.1
 
