@@ -1,82 +1,51 @@
-From: Nate Bargmann <n0nb@n0nb.us>
-Subject: Re: [PATCH] ttyutils.c: Correct suspected typo in speed_struct
-Date: Tue, 3 Jan 2023 07:24:39 -0600
-Message-ID: <20230103132439.p3mqom5viabx372d@n0nb.us>
-References: <20221229181420.998996-1-n0nb@n0nb.us>
- <Y7PpGuwaVXbhqfxf@kadam>
+From: Lorenzo Simoncello <lorenzo.simoncello@gmail.com>
+Subject: Re: Patching the Raspberry Pi OS Kernel for AX.25?
+Date: Fri, 13 Jan 2023 15:20:25 +0100
+Message-ID: <CAA+Jh9wEr7b68C16d6xMc8yeYco-hdFWaw0Qe+tx8t9EFh1o+w@mail.gmail.com>
+References: <CANnsUMEtqqQbFEoUnqWtbvdeVU4i5adTH97uPUFpzWN=mOp54g@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-        protocol="application/pgp-signature"; boundary="nsasw4wyrx7sfe7o"
 Return-path: <linux-hams-owner@vger.kernel.org>
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=n0nb.us;
-        s=default; h=In-Reply-To:Content-Type:MIME-Version:References:Message-ID:
-        Subject:Cc:To:From:Date:Sender:Reply-To:Content-Transfer-Encoding:Content-ID:
-        Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
-        :Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:List-Subscribe:
-        List-Post:List-Owner:List-Archive;
-        bh=vLCQ6CQEm+gpl78tSFS9ucveEjpQTykuEjx+CJXiOuA=; b=pmw8xUG2nQE+xu8ipJrqwp0Z1L
-        jKM61amEyxmcKeo+7QHf95UCkfA2PS8zfXxnvkFo7b+kbAHX9esgSsXODIk6dRXTvtmEWZRsahMpq
-        B/Ev+f4Kek3YhQtLDvhCookUd4Dv8pCvprauTYwFPB1JehZKJbzWsGkBNVf7MFeZL2E4=;
-Content-Disposition: inline
-In-Reply-To: <Y7PpGuwaVXbhqfxf@kadam>
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=to:subject:message-id:date:from:in-reply-to:references:mime-version
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=Vp7WJEQeqfECJPHW0AuERFkvo4NbV7HrEE/sJXMZfd8=;
+        b=QjPHGx5LVyYTukYBgvYG6wBr0ccvf8dR7Cy7FM1R8d51Jghstjrr6KNpTaZleU9LAx
+         uk9bQV5CL5l8hnTo9et/SFi0hvUb35+u1AkxduiiBySDBQ0vk2kJ07W4IBz5caJU75KD
+         YjUYPMItFMpdxjP1EnmECk1OGYKfo3SpeolHy87kLU1VEWuanwMfocF8mVChKTEFlN1Y
+         xpAle2PihTrgkxM2Uta9HrranVk0sAFdoAtOQlwUtvxXswy5+FaGxmLTRFdvb/eQr2+P
+         tOsn19bvi/sOTWX4snnMyXcKe1daVP3g9yQB34gEmfGKKqO7PJiViqsand+vTazpgkzV
+         S4bQ==
+In-Reply-To: <CANnsUMEtqqQbFEoUnqWtbvdeVU4i5adTH97uPUFpzWN=mOp54g@mail.gmail.com>
 List-ID: <linux-hams.vger.kernel.org>
-To: Dan Carpenter <error27@gmail.com>
-Cc: Thomas Osterried <thomas@osterried.de>, linux-hams@vger.kernel.org
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+To: linux-hams@vger.kernel.org
+
+Happy to know that some issues have been fixed :)
+I think we can find some plus info here:
+https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux.git/log/?h=linux-5.19.y&qt=grep&q=ax25
+
+We can switch the kernel branches and check which ones have been
+applied... so the problem is which branch is the better at now? :)
+If anyone checked it will be much appreciated
+
+Thanks
+Lorenzo Simoncello IW3HER
 
 
---nsasw4wyrx7sfe7o
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
-
-* On 2023 03 Jan 02:36 -0600, Dan Carpenter wrote:
-> On Thu, Dec 29, 2022 at 12:14:20PM -0600, Nate Bargmann wrote:
-> > Looking over recent commits I noticed what looks to be a typo where
-> > user_speed did not match termios_speed for the B3500000 declaration.
-> >=20
-> > Signed-off-by: Nate Bargmann <n0nb@n0nb.us>
->=20
-> It seems like Thomas is going to take care of this and apply it to the
-> correct repo?
->=20
-> In the future don't put "suspected" in the subject...  :P  You want to
-> sound more confident than that in the permanent git log.  Put those
-> kinds of waffle words under
->=20
-> > ---
->   ^^^
-> this cut off line.  "I'm not an expert blah blah bah but it definitely
-> looks like a typo.  Review carefully etc."
->=20
-> Anyway, it looks like you are correct and have eagle eyes!  Thanks for
-> the patch!
-
-Thanks for the feedback, Dan.
-
-I actually had the message worded more tersely and then after some
-reflection I figured it sounded better to offer an olive branch in my
-first submission to this project.  :-)
-
-I will be more forthright in the future.  ;-)
-
-- Nate
-
---=20
-"The optimist proclaims that we live in the best of all
-possible worlds.  The pessimist fears this is true."
-Web: https://www.n0nb.us
-Projects: https://github.com/N0NB
-GPG fingerprint: 82D6 4F6B 0E67 CD41 F689 BBA6 FB2C 5130 D55A 8819
-
-
---nsasw4wyrx7sfe7o
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iF0EABECAB0WIQSC1k9rDmfNQfaJu6b7LFEw1VqIGQUCY7QslwAKCRD7LFEw1VqI
-GdN6AJ0YUxWaJe//4ism+pLnS0kRKY/DygCeNXKENgr7233PpqmTvXRsqQOc04E=
-=5+vX
------END PGP SIGNATURE-----
-
---nsasw4wyrx7sfe7o--
+Il giorno mar 27 dic 2022 alle ore 07:34 Chris Maness
+<christopher.maness@gmail.com> ha scritto:
+>
+> I would like to try to patch the current 5.15 kernel for the Pi to
+> bring it up to the ax.25 code that is in 5.19.  I believe in that
+> version some of the issues have been fixed, but the current kernel
+> version for the Pi is 5.15.  I have never patched the kernel source
+> before and I am not sure how to proceed.  I have built them before
+> many moons ago.
+>
+> -KQ6UP
+>
+> --
+> Thanks,
+> Chris Maness
