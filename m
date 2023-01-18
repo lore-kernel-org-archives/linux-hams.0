@@ -1,9 +1,9 @@
-From: syzbot <syzbot+5fafd5cfe1fc91f6b352@syzkaller.appspotmail.com>
-Subject: [syzbot] KASAN: use-after-free Read in do_accept
-Date: Tue, 17 Jan 2023 23:25:45 -0800
-Message-ID: <000000000000818d1b05f284b967@google.com>
+From: syzbot <syzbot+969e048807b4567c3255@syzkaller.appspotmail.com>
+Subject: [syzbot] INFO: trying to register non-static key in nr_release (3)
+Date: Wed, 18 Jan 2023 14:55:35 -0800
+Message-ID: <000000000000d9e4f805f291b693@google.com>
 Mime-Version: 1.0
-Return-path: <linux-hams-owner@vger.kernel.org>
+Return-path: <netdev-owner@vger.kernel.org>
 List-ID: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
@@ -13,185 +13,126 @@ Hello,
 
 syzbot found the following issue on:
 
-HEAD commit:    d9fc1511728c Merge tag 'net-6.2-rc4' of git://git.kernel.o..
-git tree:       upstream
-console output: https://syzkaller.appspot.com/x/log.txt?x=1271a6ea480000
-kernel config:  https://syzkaller.appspot.com/x/.config?x=be6d86665513142a
-dashboard link: https://syzkaller.appspot.com/bug?extid=5fafd5cfe1fc91f6b352
-compiler:       gcc (Debian 10.2.1-6) 10.2.1 20210110, GNU ld (GNU Binutils for Debian) 2.35.2
+HEAD commit:    9598c377d828 Merge branch 'for-next/core', remote-tracking..
+git tree:       git://git.kernel.org/pub/scm/linux/kernel/git/arm64/linux.git for-kernelci
+console output: https://syzkaller.appspot.com/x/log.txt?x=15734136480000
+kernel config:  https://syzkaller.appspot.com/x/.config?x=2573056c6a11f00d
+dashboard link: https://syzkaller.appspot.com/bug?extid=969e048807b4567c3255
+compiler:       Debian clang version 13.0.1-++20220126092033+75e33f71c2da-1~exp1~20220126212112.63, GNU ld (GNU Binutils for Debian) 2.35.2
+userspace arch: arm64
 
 Unfortunately, I don't have any reproducer for this issue yet.
 
 Downloadable assets:
-disk image: https://storage.googleapis.com/syzbot-assets/9f5d8282c5e2/disk-d9fc1511.raw.xz
-vmlinux: https://storage.googleapis.com/syzbot-assets/605323a11f49/vmlinux-d9fc1511.xz
-kernel image: https://storage.googleapis.com/syzbot-assets/22d0ab6d90ac/bzImage-d9fc1511.xz
+disk image: https://storage.googleapis.com/syzbot-assets/cacd91af9835/disk-9598c377.raw.xz
+vmlinux: https://storage.googleapis.com/syzbot-assets/2cf38950caf5/vmlinux-9598c377.xz
+kernel image: https://storage.googleapis.com/syzbot-assets/bedf1643e06b/Image-9598c377.gz.xz
 
 IMPORTANT: if you fix the issue, please add the following tag to the commit:
-Reported-by: syzbot+5fafd5cfe1fc91f6b352@syzkaller.appspotmail.com
+Reported-by: syzbot+969e048807b4567c3255@syzkaller.appspotmail.com
 
-==================================================================
-BUG: KASAN: use-after-free in do_accept+0x483/0x510 net/socket.c:1848
-Read of size 8 at addr ffff88807978d398 by task syz-executor.3/5315
-
-CPU: 0 PID: 5315 Comm: syz-executor.3 Not tainted 6.2.0-rc3-syzkaller-00165-gd9fc1511728c #0
+INFO: trying to register non-static key.
+The code is fine but needs lockdep annotation, or maybe
+you didn't initialize this object before use?
+turning off the locking correctness validator.
+CPU: 0 PID: 14579 Comm: syz-executor.5 Not tainted 6.2.0-rc3-syzkaller-16387-g9598c377d828 #0
 Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 10/26/2022
-Call Trace:
- <TASK>
+Call trace:
+ dump_backtrace+0x1c4/0x1f0 arch/arm64/kernel/stacktrace.c:156
+ show_stack+0x2c/0x3c arch/arm64/kernel/stacktrace.c:163
  __dump_stack lib/dump_stack.c:88 [inline]
- dump_stack_lvl+0xd1/0x138 lib/dump_stack.c:106
- print_address_description mm/kasan/report.c:306 [inline]
- print_report+0x15e/0x461 mm/kasan/report.c:417
- kasan_report+0xbf/0x1f0 mm/kasan/report.c:517
- do_accept+0x483/0x510 net/socket.c:1848
- __sys_accept4_file net/socket.c:1897 [inline]
- __sys_accept4+0x9a/0x120 net/socket.c:1927
- __do_sys_accept net/socket.c:1944 [inline]
- __se_sys_accept net/socket.c:1941 [inline]
- __x64_sys_accept+0x75/0xb0 net/socket.c:1941
- do_syscall_x64 arch/x86/entry/common.c:50 [inline]
- do_syscall_64+0x39/0xb0 arch/x86/entry/common.c:80
- entry_SYSCALL_64_after_hwframe+0x63/0xcd
-RIP: 0033:0x7fa436a8c0c9
-Code: 28 00 00 00 75 05 48 83 c4 28 c3 e8 f1 19 00 00 90 48 89 f8 48 89 f7 48 89 d6 48 89 ca 4d 89 c2 4d 89 c8 4c 8b 4c 24 08 0f 05 <48> 3d 01 f0 ff ff 73 01 c3 48 c7 c1 b8 ff ff ff f7 d8 64 89 01 48
-RSP: 002b:00007fa437784168 EFLAGS: 00000246 ORIG_RAX: 000000000000002b
-RAX: ffffffffffffffda RBX: 00007fa436bac050 RCX: 00007fa436a8c0c9
-RDX: 0000000000000000 RSI: 0000000000000000 RDI: 0000000000000005
-RBP: 00007fa436ae7ae9 R08: 0000000000000000 R09: 0000000000000000
-R10: 0000000000000000 R11: 0000000000000246 R12: 0000000000000000
-R13: 00007ffebc6700df R14: 00007fa437784300 R15: 0000000000022000
- </TASK>
-
-Allocated by task 5294:
- kasan_save_stack+0x22/0x40 mm/kasan/common.c:45
- kasan_set_track+0x25/0x30 mm/kasan/common.c:52
- ____kasan_kmalloc mm/kasan/common.c:371 [inline]
- ____kasan_kmalloc mm/kasan/common.c:330 [inline]
- __kasan_kmalloc+0xa3/0xb0 mm/kasan/common.c:380
- kasan_kmalloc include/linux/kasan.h:211 [inline]
- __do_kmalloc_node mm/slab_common.c:968 [inline]
- __kmalloc+0x5a/0xd0 mm/slab_common.c:981
- kmalloc include/linux/slab.h:584 [inline]
- sk_prot_alloc+0x140/0x290 net/core/sock.c:2038
- sk_alloc+0x3a/0x7a0 net/core/sock.c:2091
- nr_create+0xb6/0x5f0 net/netrom/af_netrom.c:433
- __sock_create+0x359/0x790 net/socket.c:1515
- sock_create net/socket.c:1566 [inline]
- __sys_socket_create net/socket.c:1603 [inline]
- __sys_socket_create net/socket.c:1588 [inline]
- __sys_socket+0x133/0x250 net/socket.c:1636
- __do_sys_socket net/socket.c:1649 [inline]
- __se_sys_socket net/socket.c:1647 [inline]
- __x64_sys_socket+0x73/0xb0 net/socket.c:1647
- do_syscall_x64 arch/x86/entry/common.c:50 [inline]
- do_syscall_64+0x39/0xb0 arch/x86/entry/common.c:80
- entry_SYSCALL_64_after_hwframe+0x63/0xcd
-
-Freed by task 14:
- kasan_save_stack+0x22/0x40 mm/kasan/common.c:45
- kasan_set_track+0x25/0x30 mm/kasan/common.c:52
- kasan_save_free_info+0x2b/0x40 mm/kasan/generic.c:518
- ____kasan_slab_free mm/kasan/common.c:236 [inline]
- ____kasan_slab_free+0x13b/0x1a0 mm/kasan/common.c:200
- kasan_slab_free include/linux/kasan.h:177 [inline]
- __cache_free mm/slab.c:3394 [inline]
- __do_kmem_cache_free mm/slab.c:3580 [inline]
- __kmem_cache_free+0xcd/0x3b0 mm/slab.c:3587
- sk_prot_free net/core/sock.c:2074 [inline]
- __sk_destruct+0x5df/0x750 net/core/sock.c:2166
- sk_destruct net/core/sock.c:2181 [inline]
- __sk_free+0x175/0x460 net/core/sock.c:2192
- sk_free+0x7c/0xa0 net/core/sock.c:2203
- sock_put include/net/sock.h:1991 [inline]
- nr_heartbeat_expiry+0x1d7/0x460 net/netrom/nr_timer.c:148
- call_timer_fn+0x1da/0x7c0 kernel/time/timer.c:1700
- expire_timers+0x2c6/0x5c0 kernel/time/timer.c:1751
- __run_timers kernel/time/timer.c:2022 [inline]
- __run_timers kernel/time/timer.c:1995 [inline]
- run_timer_softirq+0x326/0x910 kernel/time/timer.c:2035
- __do_softirq+0x1fb/0xadc kernel/softirq.c:571
-
-The buggy address belongs to the object at ffff88807978d000
- which belongs to the cache kmalloc-2k of size 2048
-The buggy address is located 920 bytes inside of
- 2048-byte region [ffff88807978d000, ffff88807978d800)
-
-The buggy address belongs to the physical page:
-page:ffffea0001e5e340 refcount:1 mapcount:0 mapping:0000000000000000 index:0x0 pfn:0x7978d
-flags: 0xfff00000000200(slab|node=0|zone=1|lastcpupid=0x7ff)
-raw: 00fff00000000200 ffff888012440800 ffffea0001ee3a90 ffffea0001f6f310
-raw: 0000000000000000 ffff88807978d000 0000000100000001 0000000000000000
-page dumped because: kasan: bad access detected
-page_owner tracks the page as allocated
-page last allocated via order 0, migratetype Unmovable, gfp_mask 0x2c20c0(__GFP_IO|__GFP_FS|__GFP_NOWARN|__GFP_COMP|__GFP_NOMEMALLOC|__GFP_THISNODE), pid 4383, tgid 4383 (kworker/1:2), ts 156829918867, free_ts 156479265901
- prep_new_page mm/page_alloc.c:2531 [inline]
- get_page_from_freelist+0x119c/0x2ce0 mm/page_alloc.c:4283
- __alloc_pages+0x1cb/0x5b0 mm/page_alloc.c:5549
- __alloc_pages_node include/linux/gfp.h:237 [inline]
- kmem_getpages mm/slab.c:1363 [inline]
- cache_grow_begin+0x94/0x390 mm/slab.c:2574
- cache_alloc_refill+0x27f/0x380 mm/slab.c:2947
- ____cache_alloc mm/slab.c:3023 [inline]
- ____cache_alloc mm/slab.c:3006 [inline]
- __do_cache_alloc mm/slab.c:3206 [inline]
- slab_alloc_node mm/slab.c:3254 [inline]
- __kmem_cache_alloc_node+0x44f/0x510 mm/slab.c:3544
- __do_kmalloc_node mm/slab_common.c:967 [inline]
- __kmalloc_node_track_caller+0x4b/0xc0 mm/slab_common.c:988
- kmalloc_reserve net/core/skbuff.c:492 [inline]
- __alloc_skb+0xe9/0x310 net/core/skbuff.c:565
- alloc_skb include/linux/skbuff.h:1270 [inline]
- alloc_skb_with_frags+0x97/0x6c0 net/core/skbuff.c:6195
- sock_alloc_send_pskb+0x7a7/0x930 net/core/sock.c:2741
- sock_alloc_send_skb include/net/sock.h:1888 [inline]
- mld_newpack.isra.0+0x1b9/0x770 net/ipv6/mcast.c:1748
- add_grhead+0x295/0x340 net/ipv6/mcast.c:1851
- add_grec+0x1082/0x1560 net/ipv6/mcast.c:1989
- mld_send_cr net/ipv6/mcast.c:2115 [inline]
- mld_ifc_work+0x456/0xdc0 net/ipv6/mcast.c:2653
- process_one_work+0x9bf/0x1710 kernel/workqueue.c:2289
- worker_thread+0x669/0x1090 kernel/workqueue.c:2436
- kthread+0x2e8/0x3a0 kernel/kthread.c:376
-page last free stack trace:
- reset_page_owner include/linux/page_owner.h:24 [inline]
- free_pages_prepare mm/page_alloc.c:1446 [inline]
- free_pcp_prepare+0x65c/0xc00 mm/page_alloc.c:1496
- free_unref_page_prepare mm/page_alloc.c:3369 [inline]
- free_unref_page+0x1d/0x490 mm/page_alloc.c:3464
- slab_destroy mm/slab.c:1619 [inline]
- slabs_destroy+0x85/0xc0 mm/slab.c:1639
- cache_flusharray mm/slab.c:3365 [inline]
- ___cache_free+0x2ac/0x3d0 mm/slab.c:3428
- qlink_free mm/kasan/quarantine.c:168 [inline]
- qlist_free_all+0x4f/0x1a0 mm/kasan/quarantine.c:187
- kasan_quarantine_reduce+0x192/0x220 mm/kasan/quarantine.c:294
- __kasan_slab_alloc+0x63/0x90 mm/kasan/common.c:302
- kasan_slab_alloc include/linux/kasan.h:201 [inline]
- slab_post_alloc_hook mm/slab.h:761 [inline]
- slab_alloc_node mm/slab.c:3261 [inline]
- __kmem_cache_alloc_node+0x26b/0x510 mm/slab.c:3544
- kmalloc_trace+0x26/0x60 mm/slab_common.c:1062
- kmalloc include/linux/slab.h:580 [inline]
- kzalloc include/linux/slab.h:720 [inline]
- mca_alloc net/ipv6/mcast.c:880 [inline]
- __ipv6_dev_mc_inc+0x3de/0xec0 net/ipv6/mcast.c:936
- addrconf_join_solict net/ipv6/addrconf.c:2180 [inline]
- addrconf_join_solict net/ipv6/addrconf.c:2172 [inline]
- addrconf_dad_begin net/ipv6/addrconf.c:3991 [inline]
- addrconf_dad_work+0xc5a/0x12d0 net/ipv6/addrconf.c:4116
- process_one_work+0x9bf/0x1710 kernel/workqueue.c:2289
- worker_thread+0x669/0x1090 kernel/workqueue.c:2436
- kthread+0x2e8/0x3a0 kernel/kthread.c:376
- ret_from_fork+0x1f/0x30 arch/x86/entry/entry_64.S:308
-
-Memory state around the buggy address:
- ffff88807978d280: fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb
- ffff88807978d300: fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb
->ffff88807978d380: fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb
-                            ^
- ffff88807978d400: fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb
- ffff88807978d480: fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb
-==================================================================
+ dump_stack_lvl+0x104/0x16c lib/dump_stack.c:106
+ dump_stack+0x1c/0x58 lib/dump_stack.c:113
+ assign_lock_key+0x134/0x140 kernel/locking/lockdep.c:981
+ register_lock_class+0xc4/0x2f8 kernel/locking/lockdep.c:1294
+ __lock_acquire+0xa8/0x3084 kernel/locking/lockdep.c:4934
+ lock_acquire+0x100/0x1f8 kernel/locking/lockdep.c:5668
+ __raw_write_lock_bh include/linux/rwlock_api_smp.h:202 [inline]
+ _raw_write_lock_bh+0x54/0x6c kernel/locking/spinlock.c:334
+ sock_orphan include/net/sock.h:2094 [inline]
+ nr_release+0x70/0x274 net/netrom/af_netrom.c:521
+ __sock_release net/socket.c:650 [inline]
+ sock_close+0x50/0xf0 net/socket.c:1365
+ __fput+0x198/0x3e4 fs/file_table.c:320
+ ____fput+0x20/0x30 fs/file_table.c:348
+ task_work_run+0x100/0x148 kernel/task_work.c:179
+ exit_task_work include/linux/task_work.h:38 [inline]
+ do_exit+0x2b8/0xc2c kernel/exit.c:867
+ do_group_exit+0x98/0xcc kernel/exit.c:1012
+ get_signal+0xac4/0xb34 kernel/signal.c:2859
+ do_signal+0x128/0x438 arch/arm64/kernel/signal.c:1081
+ do_notify_resume+0xc0/0x1f0 arch/arm64/kernel/signal.c:1134
+ prepare_exit_to_user_mode arch/arm64/kernel/entry-common.c:137 [inline]
+ exit_to_user_mode arch/arm64/kernel/entry-common.c:142 [inline]
+ el0_svc+0x9c/0x150 arch/arm64/kernel/entry-common.c:638
+ el0t_64_sync_handler+0x84/0xf0 arch/arm64/kernel/entry-common.c:655
+ el0t_64_sync+0x190/0x194 arch/arm64/kernel/entry.S:584
+Unable to handle kernel paging request at virtual address ffff80280d4860a4
+Mem abort info:
+  ESR = 0x0000000096000045
+  EC = 0x25: DABT (current EL), IL = 32 bits
+  SET = 0, FnV = 0
+  EA = 0, S1PTW = 0
+  FSC = 0x05: level 1 translation fault
+Data abort info:
+  ISV = 0, ISS = 0x00000045
+  CM = 0, WnR = 1
+swapper pgtable: 4k pages, 48-bit VAs, pgdp=00000001c5270000
+[ffff80280d4860a4] pgd=100000023ffff003, p4d=100000023ffff003, pud=0000000000000000
+Internal error: Oops: 0000000096000045 [#1] PREEMPT SMP
+Modules linked in:
+CPU: 1 PID: 14579 Comm: syz-executor.5 Not tainted 6.2.0-rc3-syzkaller-16387-g9598c377d828 #0
+Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 10/26/2022
+pstate: 00400005 (nzcv daif +PAN -UAO -TCO -DIT -SSBS BTYPE=--)
+pc : queued_spin_lock_slowpath+0x198/0x394 kernel/locking/qspinlock.c:474
+lr : queued_spin_lock_slowpath+0x114/0x394 kernel/locking/qspinlock.c:405
+sp : ffff8000210a3a30
+x29: ffff8000210a3a30 x28: 00000000002e0003 x27: 00000000000008a0
+x26: ffff00011e099750 x25: 0000000000000000 x24: ffff0001feff1080
+x23: 0000000000000000 x22: ffff80000d51d068 x21: ffff80000d486080
+x20: 0000000000000001 x19: ffff000119aef898 x18: 00000000000003ae
+x17: ffff80000c15d8bc x16: 00000000000003b4 x15: 0000000000000001
+x14: 0000000000000000 x13: 000000000000003c x12: 0000002800000024
+x11: ffff80000d486080 x10: 0000000000080000 x9 : ffff0001feff1088
+x8 : ffff0001feff1080 x7 : 7f7f7f7f7f7f7f7f x6 : ffff80000b29d7bc
+x5 : 0000000000000000 x4 : 0000000000000001 x3 : 0000000000000000
+x2 : 0000000000000001 x1 : ffff80000d017f93 x0 : 0000000000000001
+Call trace:
+ decode_tail kernel/locking/qspinlock.c:131 [inline]
+ queued_spin_lock_slowpath+0x198/0x394 kernel/locking/qspinlock.c:471
+ queued_spin_lock include/asm-generic/qspinlock.h:114 [inline]
+ do_raw_spin_lock+0x10c/0x110 kernel/locking/spinlock_debug.c:115
+ __raw_spin_lock_bh include/linux/spinlock_api_smp.h:127 [inline]
+ _raw_spin_lock_bh+0x5c/0x6c kernel/locking/spinlock.c:178
+ spin_lock_bh include/linux/spinlock.h:355 [inline]
+ lock_sock_nested+0x88/0xd8 net/core/sock.c:3473
+ lock_sock include/net/sock.h:1725 [inline]
+ nr_release+0x98/0x274 net/netrom/af_netrom.c:522
+ __sock_release net/socket.c:650 [inline]
+ sock_close+0x50/0xf0 net/socket.c:1365
+ __fput+0x198/0x3e4 fs/file_table.c:320
+ ____fput+0x20/0x30 fs/file_table.c:348
+ task_work_run+0x100/0x148 kernel/task_work.c:179
+ exit_task_work include/linux/task_work.h:38 [inline]
+ do_exit+0x2b8/0xc2c kernel/exit.c:867
+ do_group_exit+0x98/0xcc kernel/exit.c:1012
+ get_signal+0xac4/0xb34 kernel/signal.c:2859
+ do_signal+0x128/0x438 arch/arm64/kernel/signal.c:1081
+ do_notify_resume+0xc0/0x1f0 arch/arm64/kernel/signal.c:1134
+ prepare_exit_to_user_mode arch/arm64/kernel/entry-common.c:137 [inline]
+ exit_to_user_mode arch/arm64/kernel/entry-common.c:142 [inline]
+ el0_svc+0x9c/0x150 arch/arm64/kernel/entry-common.c:638
+ el0t_64_sync_handler+0x84/0xf0 arch/arm64/kernel/entry-common.c:655
+ el0t_64_sync+0x190/0x194 arch/arm64/kernel/entry.S:584
+Code: 8b2c4ecc f85f818c 1200056b 8b2b52ab (f82b6988) 
+---[ end trace 0000000000000000 ]---
+----------------
+Code disassembly (best guess):
+   0:	8b2c4ecc 	add	x12, x22, w12, uxtw #3
+   4:	f85f818c 	ldur	x12, [x12, #-8]
+   8:	1200056b 	and	w11, w11, #0x3
+   c:	8b2b52ab 	add	x11, x21, w11, uxtw #4
+* 10:	f82b6988 	str	x8, [x12, x11] <-- trapping instruction
 
 
 ---
