@@ -1,45 +1,46 @@
 From: patchwork-bot+netdevbpf@kernel.org
-Subject: Re: [PATCH v3] net/rose: Fix to not accept on connected socket
-Date: Sat, 28 Jan 2023 08:40:17 +0000
-Message-ID: <167489521752.20245.5567947233486771877.git-patchwork-notify@kernel.org>
-References: <20230125105944.GA133314@ubuntu>
+Subject: Re: [PATCH v4] netrom: Fix use-after-free caused by accept on already
+ connected socket
+Date: Mon, 30 Jan 2023 07:40:16 +0000
+Message-ID: <167506441623.19672.3737671367502579587.git-patchwork-notify@kernel.org>
+References: <20230127023250.GA71840@ubuntu>
 Mime-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Return-path: <netdev-owner@vger.kernel.org>
+Return-path: <linux-hams-owner@vger.kernel.org>
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1674895217;
-        bh=5DtihC7IDWg5Cik8Koa582mUpiA0AhfmuQ356hSeT8M=;
+        s=k20201202; t=1675064416;
+        bh=8yVisn/1+2M3nRRRBQrIsODeQaLdwjW82PLGIyzKcXA=;
         h=Subject:From:Date:References:In-Reply-To:To:Cc:From;
-        b=ZJwRTt1zuum2KUQa62leQbyxsieOkueQThLebDT+kOalB2eclUNse3asoy8ISew0L
-         mJNlQpJ0nkfd6XzokDSouhhR32HYSs9QC1AVPq1lmo6q8AL02TMmC+O6Xetasc5dYW
-         tSpenVS2uCb2yN1yhTPHsZW4Z9fXKt98fslKgdZ8m2P16ULl5jKnklbahkEF+gBWT4
-         30eJ1qhth/ihfYnII/9n+XtM2CUBhbdQJ4PeOoCrb0zv0gxPSrIK+TJNpQFJA2oyNT
-         l86jkW2dMi/iSRpqJKLy5G7CU+mElFnwvit7a9opOz40OOLoa2SBc72GUdjqd2E+T7
-         Vdf64tSKZg75g==
-In-Reply-To: <20230125105944.GA133314@ubuntu>
+        b=p2YFUo49qUZPvGwkucOLcXGuVnqYFYJRBeuz8m22lAaRkBNOV4vuEfLQY0frgybNq
+         GaqitSzTzKYILGx97UEoq6UAdUYEn6wcbW2Td7AuWnY/DLJy21zv1QTucYT/DObAD2
+         ILEFUh7xHTp2PyK6u0UczLseP9Yz40Fpo6FeNajFGcJ28daSBgDs3x5HlVHms64XdL
+         LSGbMLenj5MKsammniCgGdmdmQYQBv5mA0rAoUPbRQIyDDMj8U8CnFpFnOUIuQ0nfu
+         +KHFv3505CqIdyr0lHhFyZezguo1DTBX9gMkJTgHtw6HA9+3hy4nWx4SJccTBnop3f
+         cI0VUPnmvE63w==
+In-Reply-To: <20230127023250.GA71840@ubuntu>
 List-ID: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
 To: Hyunwoo Kim <v4bel@theori.io>
-Cc: ralf@linux-mips.org, davem@davemloft.net, edumazet@google.com, kuba@kernel.org, pabeni@redhat.com, kuniyu@amazon.com, imv4bel@gmail.com, linux-hams@vger.kernel.org, netdev@vger.kernel.org
+Cc: ralf@linux-mips.org, davem@davemloft.net, edumazet@google.com, kuba@kernel.org, pabeni@redhat.com, kuniyu@amazon.com, imv4bel@gmail.com, linux-hams@vger.kernel.org, netdev@vger.kernel.org, syzbot+caa188bdfc1eeafeb418@syzkaller.appspotmail.com
 
 Hello:
 
 This patch was applied to netdev/net.git (master)
-by Jakub Kicinski <kuba@kernel.org>:
+by David S. Miller <davem@davemloft.net>:
 
-On Wed, 25 Jan 2023 02:59:44 -0800 you wrote:
+On Thu, 26 Jan 2023 18:32:50 -0800 you wrote:
 > If you call listen() and accept() on an already connect()ed
-> rose socket, accept() can successfully connect.
+> AF_NETROM socket, accept() can successfully connect.
 > This is because when the peer socket sends data to sendmsg,
 > the skb with its own sk stored in the connected socket's
-> sk->sk_receive_queue is connected, and rose_accept() dequeues
+> sk->sk_receive_queue is connected, and nr_accept() dequeues
 > the skb waiting in the sk->sk_receive_queue.
 > 
 > [...]
 
 Here is the summary with links:
-  - [v3] net/rose: Fix to not accept on connected socket
-    https://git.kernel.org/netdev/net/c/14caefcf9837
+  - [v4] netrom: Fix use-after-free caused by accept on already connected socket
+    https://git.kernel.org/netdev/net/c/611792920925
 
 You are awesome, thank you!
 -- 
