@@ -1,22 +1,22 @@
 From: Sasha Levin <sashal@kernel.org>
-Subject: [PATCH AUTOSEL 5.15 08/17] net/rose: Fix to not accept on connected socket
-Date: Thu,  9 Feb 2023 06:17:20 -0500
-Message-ID: <20230209111731.1892569-8-sashal@kernel.org>
-References: <20230209111731.1892569-1-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 5.10 06/13] net/rose: Fix to not accept on connected socket
+Date: Thu,  9 Feb 2023 06:18:24 -0500
+Message-ID: <20230209111833.1892896-6-sashal@kernel.org>
+References: <20230209111833.1892896-1-sashal@kernel.org>
 Mime-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Return-path: <stable-owner@vger.kernel.org>
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1675941487;
+        s=k20201202; t=1675941543;
         bh=PzVLqgik+UZhivOVOlgqzazqXqJD0EAdVX08zDOwBf4=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=Riv0Axq9xF+6hyb1fRkMxk0qoK1JeHo63A852Lyn3NLmIiIkdQNzJ40Y07JTrlLDd
-         QujsAagRa+zfFw/8OfWa30qBU8bo2hQNb42gaqfCulsioA2qJfI4WXnp8AArgY1AJZ
-         l3HEAXG/uS3a78yUT/kC+wicmycCkgJE3CyXbq3L0lkQLzpJ9jAhoO00hfT2IE5NTZ
-         utbpaHn+VVTzKngVYlcellDwzo8QwZ+n/Z9YuIiKJcxGIzVrjOSk0bjH0x7VUp49FH
-         9wmySdeXlKC7bF8dJEb0OgkxYLOE/7guoxZMraGDHboXBShx+a5PT+cbOzeQHXCB3h
-         yFoyoW/Apw+IQ==
-In-Reply-To: <20230209111731.1892569-1-sashal@kernel.org>
+        b=ecFDJBt3qzoVWke8iDbWTt+bC8uz1M/ty5gNz0/oWyLm9FegJx0sF9EWQ/lWKboB+
+         bwfwCWjljTTyhxQXASRX2BzodHeGcAGsQcC2XTIKzQqNsUbbImyjX4coxdgRy6qDhj
+         KXg8vwjuwVIvoetj3XCHZotsuAzYCGVf7xzEVLhGZuMY1QsyEjTZzTVhs7fHOCwsps
+         Rg8feFdcUdagkhXEp1yn8h9BoAZyqA6NPA5N47r77krHheqSgaGRMwSYEXSjOTLvzR
+         u4BE5dGv02pwcE9XmA5Kvl4tJpa54EWog4I0owvk7sKxNCfnkMpVSFQqvf4NsoFiVU
+         g9F1KTh6RTCoQ==
+In-Reply-To: <20230209111833.1892896-1-sashal@kernel.org>
 List-ID: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
 To: linux-kernel@vger.kernel.org, stable@vger.kernel.org
