@@ -1,22 +1,22 @@
 From: Sasha Levin <sashal@kernel.org>
-Subject: [PATCH AUTOSEL 5.10 06/13] net/rose: Fix to not accept on connected socket
-Date: Thu,  9 Feb 2023 06:18:24 -0500
-Message-ID: <20230209111833.1892896-6-sashal@kernel.org>
-References: <20230209111833.1892896-1-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 5.4 04/10] net/rose: Fix to not accept on connected socket
+Date: Thu,  9 Feb 2023 06:19:13 -0500
+Message-ID: <20230209111921.1893095-4-sashal@kernel.org>
+References: <20230209111921.1893095-1-sashal@kernel.org>
 Mime-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Return-path: <stable-owner@vger.kernel.org>
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1675941543;
-        bh=PzVLqgik+UZhivOVOlgqzazqXqJD0EAdVX08zDOwBf4=;
+        s=k20201202; t=1675941584;
+        bh=T1kifxKCcz36WRe+I26DJfv71M1mq8/SHh41hZWGDKQ=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=ecFDJBt3qzoVWke8iDbWTt+bC8uz1M/ty5gNz0/oWyLm9FegJx0sF9EWQ/lWKboB+
-         bwfwCWjljTTyhxQXASRX2BzodHeGcAGsQcC2XTIKzQqNsUbbImyjX4coxdgRy6qDhj
-         KXg8vwjuwVIvoetj3XCHZotsuAzYCGVf7xzEVLhGZuMY1QsyEjTZzTVhs7fHOCwsps
-         Rg8feFdcUdagkhXEp1yn8h9BoAZyqA6NPA5N47r77krHheqSgaGRMwSYEXSjOTLvzR
-         u4BE5dGv02pwcE9XmA5Kvl4tJpa54EWog4I0owvk7sKxNCfnkMpVSFQqvf4NsoFiVU
-         g9F1KTh6RTCoQ==
-In-Reply-To: <20230209111833.1892896-1-sashal@kernel.org>
+        b=kSmvBwcs09nxhb/DOwo8hWXAg9nlgBJDkrOOiNM2aXBP2hmNQOvG5+dSnDjgxM8jM
+         ImQdyejQ3F3+uEK4jKzVfNDIkwz+17wX7WJVnnAypytcCw5IwKWCzB/tcQ5vhLrQ4q
+         YcdOKCDun4tJY2Oru+geJcPXJqJ8fhOSmc3cn+g/kKjFKWbySp3aeJTOhx1hvGFmwk
+         NtxmZMxFQ3a0/C7JUOOOyCbxzKiadl4l+1F7NFcnQd+mLHvn/1BZRtxrbzkcTkHZqV
+         YcCQ9A8XJ2YdS0wW0G/qir4IULNVpuYesWx7lZMgpuhXiKGYQOeO9ndOslf3RiMrdE
+         NBZGNep/PBCrw==
+In-Reply-To: <20230209111921.1893095-1-sashal@kernel.org>
 List-ID: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
 To: linux-kernel@vger.kernel.org, stable@vger.kernel.org
@@ -50,10 +50,10 @@ Signed-off-by: Sasha Levin <sashal@kernel.org>
  1 file changed, 8 insertions(+)
 
 diff --git a/net/rose/af_rose.c b/net/rose/af_rose.c
-index 29a208ed8fb88..86c93cf1744b0 100644
+index 95dda29058a0e..6fb158172ddc2 100644
 --- a/net/rose/af_rose.c
 +++ b/net/rose/af_rose.c
-@@ -487,6 +487,12 @@ static int rose_listen(struct socket *sock, int backlog)
+@@ -465,6 +465,12 @@ static int rose_listen(struct socket *sock, int backlog)
  {
  	struct sock *sk = sock->sk;
  
@@ -66,7 +66,7 @@ index 29a208ed8fb88..86c93cf1744b0 100644
  	if (sk->sk_state != TCP_LISTEN) {
  		struct rose_sock *rose = rose_sk(sk);
  
-@@ -496,8 +502,10 @@ static int rose_listen(struct socket *sock, int backlog)
+@@ -474,8 +480,10 @@ static int rose_listen(struct socket *sock, int backlog)
  		memset(rose->dest_digis, 0, AX25_ADDR_LEN * ROSE_MAX_DIGIS);
  		sk->sk_max_ack_backlog = backlog;
  		sk->sk_state           = TCP_LISTEN;
