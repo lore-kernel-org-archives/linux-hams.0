@@ -1,42 +1,78 @@
-From: Jakub Kicinski <kuba@kernel.org>
-Subject: Re: [PATCH net-next] net: rose: Remove NULL check before dev_{put,
- hold}
-Date: Mon, 27 Feb 2023 18:33:49 -0800
-Message-ID: <20230227183349.68409721@kernel.org>
-References: <20230228005217.105058-1-yang.lee@linux.alibaba.com>
+From: Chris Maness <christopher.maness@gmail.com>
+Subject: Backport to LTR?
+Date: Sat, 11 Mar 2023 12:48:54 -0800
+Message-ID: <CANnsUMExojiA6ZNyH=_zjO44N4hR0ytqj-BWrRjO0L6Ox=MjsA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
 Return-path: <linux-hams-owner@vger.kernel.org>
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1677551631;
-        bh=p9MnJLALjiAb0WzYLv062jQYB+MMJnehQOB2xpAqptI=;
-        h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
-        b=P1sw0c3w83X8wXJxQkSDbdnCQbLE9mLfwVr5Z1PTjjFIq10eQsq6HOT22pGWf65xV
-         w1G6IZMzyJgQWQYXdtrWjePl22hgBCiVEqHU/cwRQcufTUweZ5tWrwMWCJbDe8YC5Z
-         cCsZ83kIpkz01NLrM3uTEguHsFGUyicSxGbaNPkQS6gGLdpWdofPKdbLhOzyekJJZt
-         6AcE3V2WzTfr7reFZF3j1zxUnPiuXcx84J7sEnSvrxZtiMwYMmlvMgSU8CAmpNu1G2
-         c5hE7gtHIe9qAKXReoh5EXSuaMGtIzWp4h98nIMN/f0NWeJI95e9abtRI0WhAS0gIG
-         fC5/CuuaTrriA==
-In-Reply-To: <20230228005217.105058-1-yang.lee@linux.alibaba.com>
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112; t=1678567747;
+        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=2kGUq7Kdmy3YCIq2jBACr2A/la99uzNeOtVsLF2JIb8=;
+        b=X0NFg2SgE8PPDcO+TK7qUadmlEKvdeK1c5ZhJ2IGmaPO64dbx7Xi2fyB+83NN746O9
+         McuM6ThKG/VhTFrpSzOQmf6jnlXf5PnGvEC4dSXe35BdsdkLeQGXLW4+Lk07wRziS26Z
+         sc3doWLdseHhkuyXsXI88PMgYFAeaqxoXe2hMq7D6jgCdmicP0ewXW1OGfuoYpIfAzJ7
+         feIDOGjAe56UQjieUKf0L6rmXYj9+a+yFyetiqvg6BwNRD6yXpy+k9TfmMFlomfCpnPb
+         eXRNQ4ZTB/9XtIv95Lh8p2jj7l6P8YoY9Ndcb4dRcCl3DmZahGZ3uO9aDW2yfx/04c6z
+         iqjw==
 List-ID: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="windows-1252"
-To: Yang Li <yang.lee@linux.alibaba.com>
-Cc: davem@davemloft.net, ralf@linux-mips.org, edumazet@google.com, pabeni@redhat.com, linux-hams@vger.kernel.org, netdev@vger.kernel.org, linux-kernel@vger.kernel.org, Abaci Robot <abaci@linux.alibaba.com>
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+To: "linux-hams@vger.kernel.org" <linux-hams@vger.kernel.org>
 
-On Tue, 28 Feb 2023 08:52:17 +0800 Yang Li wrote:
-> The call netdev_{put, hold} of dev_{put, hold} will check NULL,
-> so there is no need to check before using dev_{put, hold},
-> remove it to silence the warning=EF=BC=9A
->=20
-> ./net/rose/rose_route.c:619:2-10: WARNING: NULL check before dev_{put, ho=
-ld} functions is not needed.
+I am wondering what the process is to get maintainers to backport
+AX.25 fixes to LTS kernels.  Any suggestions?  This is a diff I pulled
+off the latest LTS kernel, so unfortunately it still has not been
+committed.
 
-# Form letter - net-next is closed
+diff linux-5.15.100/net/ax25/af_ax25.c linux-5.15.89/net/ax25/af_ax25.c
+(I patched 5.15.89 by hand, and it has been working solid on both
+x86_64 and also 64 bit Pi.
 
-The merge window for v6.3 has begun and therefore net-next is closed
-for new drivers, features, code refactoring and optimizations.
-We are currently accepting bug fixes only.
+I am going to the latest release branch and see if runs my
+Slackware-15 ok.  I will keep my stuff as a fallback.
 
-Please repost when net-next reopens after Mar 6th.
+64a65
+>       spin_lock_bh(&ax25_list_lock);
+66d66
+<               spin_lock_bh(&ax25_list_lock);
+68d67
+<               spin_unlock_bh(&ax25_list_lock);
+70a70
+>       spin_unlock_bh(&ax25_list_lock);
+83a84
+>       ax25_dev->device_up = false;
+93a95
+>                               ax25_cb_del(s);
+105a108
+>                       ax25_cb_del(s);
+998,1000c1001,1005
+<                       release_sock(sk);
+<                       ax25_disconnect(ax25, 0);
+<                       lock_sock(sk);
+---
+>                       if (!sock_flag(ax25->sk, SOCK_DEAD)) {
+>                               release_sock(sk);
+>                               ax25_disconnect(ax25, 0);
+>                               lock_sock(sk);
+>                       }
+1056,1060c1061,1067
+<               del_timer_sync(&ax25->timer);
+<               del_timer_sync(&ax25->t1timer);
+<               del_timer_sync(&ax25->t2timer);
+<               del_timer_sync(&ax25->t3timer);
+<               del_timer_sync(&ax25->idletimer);
+---
+>               if (!ax25_dev->device_up) {
+>                       del_timer_sync(&ax25->timer);
+>                       del_timer_sync(&ax25->t1timer);
+>                       del_timer_sync(&ax25->t2timer);
+>                       del_timer_sync(&ax25->t3timer);
+>                       del_timer_sync(&ax25->idletimer);
+>               }
 
-RFC patches sent for review only are obviously welcome at any time.
+
+
+-- 
+Thanks,
+Chris Maness
