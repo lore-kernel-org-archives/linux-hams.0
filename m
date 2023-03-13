@@ -1,78 +1,49 @@
-From: David Ranch <linux-hams@trinnet.net>
+From: Dan Carpenter <error27@gmail.com>
 Subject: Re: Backport to LTR?
-Date: Sun, 12 Mar 2023 11:05:54 -0700
-Message-ID: <8a2cea63-b0e2-c348-1b72-0f810c022332@trinnet.net>
+Date: Mon, 13 Mar 2023 07:23:16 +0300
+Message-ID: <32c65d90-6917-467e-9902-0d85c0a80b90@kili.mountain>
 References: <CANnsUMExojiA6ZNyH=_zjO44N4hR0ytqj-BWrRjO0L6Ox=MjsA@mail.gmail.com>
+ <8a2cea63-b0e2-c348-1b72-0f810c022332@trinnet.net>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
 Return-path: <linux-hams-owner@vger.kernel.org>
-In-Reply-To: <CANnsUMExojiA6ZNyH=_zjO44N4hR0ytqj-BWrRjO0L6Ox=MjsA@mail.gmail.com>
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112; t=1678681402;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=pa+J7kxb6xmphZHzA8aRN14EiK0ndFLTEDLd/WMUn9Q=;
+        b=SJxvfvZDU/EjO7YZqTZgJ8xYLjfgXJcRzZiiGpiDOKT87d6+My+1BJye8wNSg8uCwr
+         DnqOFQ1iVI7CTz6LOFtcYsiGD/uVBFhhwWNwza84FKvRbmLS/jaFF2Ub/ik4EZDFAG2x
+         9V/H+n+11FLC3k69HRBMgJr4r9IiLIpwEgqQfx5xEDiBkvITNYmwPfZxTEO7y01+UExn
+         M0cn61A1coJrurzfRAep/Uvq02wxjjR5prVG2jM3FkgA2vczgD2V32LActZ3/qsEzBem
+         TQZwEKbUYXdH70szobH5UyDPqGMiRfjK6uCk8p3YurAMktRKB9LbejMFXd/HH8ficl6n
+         rJ+w==
+Content-Disposition: inline
+In-Reply-To: <8a2cea63-b0e2-c348-1b72-0f810c022332@trinnet.net>
 List-ID: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"; format="flowed"
-To: "linux-hams@vger.kernel.org" <linux-hams@vger.kernel.org>
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+To: David Ranch <linux-hams@trinnet.net>
+Cc: "linux-hams@vger.kernel.org" <linux-hams@vger.kernel.org>
 
+On Sun, Mar 12, 2023 at 11:05:54AM -0700, David Ranch wrote:
+> 
+> Hello Chris,
+> 
+> I think this post covers your question:
+> 
+> https://unix.stackexchange.com/questions/715465/how-to-submit-patches-and-fixes-to-lts-linux-kernels
+> 
 
-Hello Chris,
+That's the general rules, but networking stable patches need to be
+approved by the networking maintainers so make sure you add the
+following CCs.
 
-I think this post covers your question:
+M:      "David S. Miller" <davem@davemloft.net>
+M:      Eric Dumazet <edumazet@google.com>
+M:      Jakub Kicinski <kuba@kernel.org>
+M:      Paolo Abeni <pabeni@redhat.com>
+L:      netdev@vger.kernel.org
 
-https://unix.stackexchange.com/questions/715465/how-to-submit-patches-and-fixes-to-lts-linux-kernels
-
---David
-KI6ZHD
-
-
-On 03/11/2023 12:48 PM, Chris Maness wrote:
-> I am wondering what the process is to get maintainers to backport
-> AX.25 fixes to LTS kernels.  Any suggestions?  This is a diff I pulled
-> off the latest LTS kernel, so unfortunately it still has not been
-> committed.
->
-> diff linux-5.15.100/net/ax25/af_ax25.c linux-5.15.89/net/ax25/af_ax25.c
-> (I patched 5.15.89 by hand, and it has been working solid on both
-> x86_64 and also 64 bit Pi.
->
-> I am going to the latest release branch and see if runs my
-> Slackware-15 ok.  I will keep my stuff as a fallback.
->
-> 64a65
->>        spin_lock_bh(&ax25_list_lock);
-> 66d66
-> <               spin_lock_bh(&ax25_list_lock);
-> 68d67
-> <               spin_unlock_bh(&ax25_list_lock);
-> 70a70
->>        spin_unlock_bh(&ax25_list_lock);
-> 83a84
->>        ax25_dev->device_up = false;
-> 93a95
->>                                ax25_cb_del(s);
-> 105a108
->>                        ax25_cb_del(s);
-> 998,1000c1001,1005
-> <                       release_sock(sk);
-> <                       ax25_disconnect(ax25, 0);
-> <                       lock_sock(sk);
-> ---
->>                        if (!sock_flag(ax25->sk, SOCK_DEAD)) {
->>                                release_sock(sk);
->>                                ax25_disconnect(ax25, 0);
->>                                lock_sock(sk);
->>                        }
-> 1056,1060c1061,1067
-> <               del_timer_sync(&ax25->timer);
-> <               del_timer_sync(&ax25->t1timer);
-> <               del_timer_sync(&ax25->t2timer);
-> <               del_timer_sync(&ax25->t3timer);
-> <               del_timer_sync(&ax25->idletimer);
-> ---
->>                if (!ax25_dev->device_up) {
->>                        del_timer_sync(&ax25->timer);
->>                        del_timer_sync(&ax25->t1timer);
->>                        del_timer_sync(&ax25->t2timer);
->>                        del_timer_sync(&ax25->t3timer);
->>                        del_timer_sync(&ax25->idletimer);
->>                }
->
->
+regards,
+dan carpenter
 
