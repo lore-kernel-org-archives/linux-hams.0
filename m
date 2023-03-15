@@ -1,24 +1,28 @@
 From: Chris Maness <christopher.maness@gmail.com>
 Subject: KERNEL BUG LIKELY: Kernel Panic! MKISS related
-Date: Wed, 15 Mar 2023 09:50:39 -0700
-Message-ID: <CANnsUMEG936taQ0jVUzs4FCbAOjYFKqJ=qgHkP3OJPACoYHwXA@mail.gmail.com>
+Date: Wed, 15 Mar 2023 09:54:03 -0700
+Message-ID: <CANnsUMFTYdXovM5gPC0PZ6gRDLnUPXyrnnhuZky5wbFjHf+NoA@mail.gmail.com>
+References: <20230126041636.GA2599@ubuntu> <20230126173445.97212-1-kuniyu@amazon.com>
 Mime-Version: 1.0
 Content-Transfer-Encoding: quoted-printable
 Return-path: <linux-hams-owner@vger.kernel.org>
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112; t=1678899051;
-        h=content-transfer-encoding:to:subject:message-id:date:from
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=ZoXhq8GT0Z7S+0nYPHo2hu7FEao+rkXIsLYsER9uNZg=;
-        b=jFvbmNY76QI5h6NfFAx+kVGU/IBoKIIiGSB2LfCSJ59sIvi/Y9IYxh7oQiZUT70fCS
-         S2aH1QRlT4vuLz2Oz1bMsiAAxS6BMql5t0oIB2sqIbgZto/+oqRk6Sz56cDzgOl1+gv2
-         mJsBnpXLe2GMsWSk5qUtnfFBCjAuS1kXKggzYHYu/DmC/JyGw1OcSk3iMhkqrSb2Wkot
-         wsI1lulXVXROhzbn++Z3BRpd1D5OzQkJo5Ca1jv0n+vg6gAfwbkIY+34MZI6Z3Nt0S3W
-         DZHfRJYayexRUfOtuJsoO9HBjg8kmjgJIkJzG4wUNKSS5S7QIVuseB959LUDRfaz5BGF
-         kvhQ==
+        d=gmail.com; s=20210112; t=1678899256;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=H67sFtck4pdaZVH5u5XSyic+UKJKeR5maSkvXCrf3VA=;
+        b=Jpjgzbz9BGaKI6PMhn4mZatKgsbsiL6Jrsg+ws1E4UxHBD1ILSKMLQJ1atmwabDQwU
+         xpMVe8tlDvgazr4KksQ/qCTXAEH6ofYl44cLd7pcUmHHQX2cW5GGsEsJfIuXVZz2JyWY
+         Z0d0c+nPj2VONPNSy49v6LAqRIgTVO+rmVRfcmemrbQKZokKMZt5WurRDiTOfRPbbNpF
+         F+rdny0kY0D48H57rT2s6znVllPzlmf9KXE2RuDSNvhZ73YZF5w99epJ8CW9FSNqYIDP
+         d9wcRIvrjPislFrczmeQFPHIv47cvtXWbU5qGfJ6aiHsGhe+QwiyPHm5uFvzdqL5PCfa
+         7Oxw==
+In-Reply-To: <20230126173445.97212-1-kuniyu@amazon.com>
 List-ID: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="utf-8"
-To: linux-hams@vger.kernel.org
+To: Kuniyuki Iwashima <kuniyu@amazon.com>
+Cc: v4bel@theori.io, davem@davemloft.net, edumazet@google.com, imv4bel@gmail.com, kuba@kernel.org, linux-hams@vger.kernel.org, netdev@vger.kernel.org, committer Paolo Abeni <pabeni@redhat.com>, ralf@linux-mips.org, syzbot+caa188bdfc1eeafeb418@syzkaller.appspotmail.com
 
 I noticed this on two systems except I did not get the kernel dump
 readout as X was running.   I thought it may have had to do with
@@ -239,8 +243,3 @@ uni
 
 Regards,
 Chris KQ6UP
-
-
---=20
-Thanks,
-Chris Maness
