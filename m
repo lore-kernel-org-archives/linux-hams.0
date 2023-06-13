@@ -1,179 +1,165 @@
-From: Eric Dumazet <edumazet@google.com>
-Subject: Re: Bug in the net/rom kernel module
-Date: Wed, 24 May 2023 14:19:57 +0200
-Message-ID: <CANn89iK0sw_uR1VruzLbMP5hsujkMbgvLPA1kNiE9xOgqTiLog@mail.gmail.com>
-References: <CAJE3E7JoJfrnST3dU-vu_=6T_eB5gWVBKbfUSkCMu44gkbD3iQ@mail.gmail.com>
- <CAJE3E7LfO5us9MvKZX1MMP8mUTFzO324cxshHTDSw6qkB6kHTw@mail.gmail.com>
- <CANn89iKEX9wLYA3aisvVAGKJ2mGr9K35ALZTwHeM7DwEV2+nkg@mail.gmail.com>
- <CAJE3E7+EZVLRoLohp3Y2529HpKSndFZAyakX-FcbEe9wMBe-Bg@mail.gmail.com>
- <CANn89iJ=eQhM4AJd9qZjn8JTupTpeGeGNeu=x3RAa5zvB+AMHg@mail.gmail.com>
- <CANn89iJCdrZA1t90m4obJPF1TXuf+mKFqJ5G8wo0G9LZA++Dsw@mail.gmail.com>
- <CAJE3E7+5ox6nx=j+6W4brDnzfKQVMdUiBi0ieFohQDNaWXJxEw@mail.gmail.com> <CAJE3E7Lb6aQMTGMQ4L63A=EMtYGqpsymW68nWc=nmGnJX-WKHQ@mail.gmail.com>
+From: syzbot <syzbot+d327a1f3b12e1e206c16@syzkaller.appspotmail.com>
+Subject: [syzbot] [hams?] memory leak in nr_create (3)
+Date: Tue, 13 Jun 2023 12:24:10 -0700
+Message-ID: <0000000000009612bc05fe07c73f@google.com>
 Mime-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-Return-path: <linux-hams-owner@vger.kernel.org>
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20221208; t=1684930810; x=1687522810;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=tclcAuwlMyhTCdlDMg+MSjqBD8aAUPgaKyhRRE5CVFA=;
-        b=4qAQgTMAXm9oxiBHG77N+xl6mkGQO54+GP9adXTGQ8r/WQQonNuo1QvBnrgzlSkf2W
-         4m1Y9v4kj5Q+TXP9PPmLdzFOgGww1uqddIXwHDnh3/ex4Ek02cbEoEDRPJcxZtjKujAn
-         TZxtZMepr58vKyO5KK7AiUXObXYDYsx1SntOe8gKC6OAzyvqt8PBUP1jjQ4HFMSML1e3
-         HlwXMIhxwNc7a2jU0buCENcI9TUq7gKCtLliH5550wYPcdjf9n+Pe6waTc7uLNFRD4fD
-         Ycez3GlFkNbuqmKtEkk6hTGhKqD1HP0x3rcGYRw1QWv+Xs9zS6SDM5eHTECogC4jnif5
-         qsgA==
-In-Reply-To: <CAJE3E7Lb6aQMTGMQ4L63A=EMtYGqpsymW68nWc=nmGnJX-WKHQ@mail.gmail.com>
-List-ID: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="utf-8"
-To: Simon Kapadia <szymon@kapadia.pl>
-Cc: security@kernel.org, Tom M0LTE <tom@m0lte.uk>, linux-hams@vger.kernel.org
+Return-path: <netdev+bounces-10500-gl-netdev-2=m.gmane-mx.org@vger.kernel.org>
+List-Id: <linux-hams.vger.kernel.org>
+List-Subscribe: <mailto:netdev+subscribe@vger.kernel.org>
+List-Unsubscribe: <mailto:netdev+unsubscribe@vger.kernel.org>
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+To: davem@davemloft.net, edumazet@google.com, kuba@kernel.org, linux-hams@vger.kernel.org, linux-kernel@vger.kernel.org, netdev@vger.kernel.org, pabeni@redhat.com, ralf@linux-mips.org, syzkaller-bugs@googlegroups.com
 
-On Wed, May 24, 2023 at 2:03=E2=80=AFPM Simon Kapadia <szymon@kapadia.pl> w=
-rote:
->
-> Hi Eric,
->
-> I can confirm after testing it out today that your patch does indeed beha=
-ve better than my simplified one -- only the data needed is sent out onto t=
-he network, packets are split out perfectly as expected, and everything see=
-ms to work correctly.
->
-> Many thanks for your help, please go ahead and submit the patch :-)
+Hello,
 
-Sure thing, thanks for double checking.
+syzbot found the following issue on:
 
->
-> -simon
->
->    26 144.322099355      M0GZP-2 =E2=86=92 GB7IOW       AX.25-NoL3 77 Tex=
-t
->
->
-> 0000  00 8e 84 6e 92 9e ae e0 9a 60 8e b4 a0 40 65 82   ...n.....`...@e.
->
-> 0010  f0 54 68 69 73 20 69 73 20 61 20 74 65 73 74 20   .This is a test
->
-> 0020  74 6f 20 73 65 65 20 68 6f 77 20 6c 6f 6e 67 65   to see how longe
->
-> 0030  72 20 6d 65 73 73 61 67 65 73 20 77 69 6c 6c 20   r messages will
->
-> 0040  62 65 20 73 70 6c 69 74 20 75 70 20 6f            be split up o
->
->
->    27 144.322396807      M0GZP-2 =E2=86=92 GB7IOW       AX.25-NoL3 61 Tex=
-t
->
->
-> 0000  00 8e 84 6e 92 9e ae e0 9a 60 8e b4 a0 40 65 94   ...n.....`...@e.
->
-> 0010  f0 76 65 72 20 6d 75 6c 74 69 70 6c 65 20 70 61   .ver multiple pa
->
-> 0020  63 6b 65 74 73 2c 20 61 73 73 75 6d 69 6e 67 20   ckets, assuming
->
-> 0030  74 68 61 74 20 68 61 70 70 65 6e 73 0d            that happens.
->
->
->
-> --
-> Simon Kapadia, B.A., M.Sc., C.Eng.
-> szymon@kapadia.pl | http://kapadia.pl
-> http://astrophotos.uk/
->
->
-> On Tue, 23 May 2023 at 16:04, Simon Kapadia <szymon@kapadia.pl> wrote:
->>
->> Sorry for the late reply, am doing this in the background while working.=
-  Sure, that makes sense -- includes the NETWORK_LEN in the alloc_skb but d=
-oesn't dump it onto the put.  I've rebuilt my box since setting this up las=
-t so am going to have to recompile (and that takes a good long time on a pi=
-), I'll try it out hopefully this evening when I get it all compiled but I =
-think your patch is indeed "more correct" :-)
->>
->> -simon
->>
->> --
->> Simon Kapadia, B.A., M.Sc., C.Eng.
->> szymon@kapadia.pl | http://kapadia.pl
->> http://astrophotos.uk/
->>
->>
->> On Tue, 23 May 2023 at 12:38, Eric Dumazet <edumazet@google.com> wrote:
->>>
->>> On Tue, May 23, 2023 at 1:32=E2=80=AFPM Eric Dumazet <edumazet@google.c=
-om> wrote:
->>> >
->>> > On Tue, May 23, 2023 at 12:47=E2=80=AFPM Simon Kapadia <szymon@kapadi=
-a.pl> wrote:
->>> > >
->>> > > Would be much appreciated if you could send a patch -- happy to hav=
-e my name to it, just haven't done so in this century so would likely make =
-a stylistic error or something stupid!
->>> > >
->>> > > Thanks,
->>> > >
->>> > > -simon
->>> > >
->>> > > --- linux/net/netrom/nr_subr.c.orig     2023-04-19 19:50:03.0807918=
-21 +0100
->>> > > +++ linux/net/netrom/nr_subr.c  2023-04-19 19:50:22.410995440 +0100
->>> > > @@ -149,7 +149,7 @@ void nr_write_internal(struct sock *sk,
->>> > >          */
->>> > >         skb_reserve(skb, NR_NETWORK_LEN);
->>> > >
->>> > > -       dptr =3D skb_put(skb, skb_tailroom(skb));
->>> > > +       dptr =3D skb_put(skb, len);
->>> >
->>> >
->>> > Note that this patch does not look correct to me.
->>> >
->>> > len includes NR_NETWORK_LEN at this point.
->>> >
->>> > nr_transmit_buffer() will later add:
->>> >
->>> > dptr =3D skb_push(skb, NR_NETWORK_LEN);
->>> >
->>> > If you look again at your pcap after your patch, I guess we still sen=
-d
->>> > 15 extra bytes ?
->>>
->>> I would think the following patch is more correct .
->>>
->>> diff --git a/net/netrom/nr_subr.c b/net/netrom/nr_subr.c
->>> index 3f99b432ea707e20a9620fb89cdf37d5e4f121e9..e2d2af924cff4a4103e59e0=
-4a6efe69c6fcca23e
->>> 100644
->>> --- a/net/netrom/nr_subr.c
->>> +++ b/net/netrom/nr_subr.c
->>> @@ -123,7 +123,7 @@ void nr_write_internal(struct sock *sk, int framety=
-pe)
->>>         unsigned char  *dptr;
->>>         int len, timeout;
->>>
->>> -       len =3D NR_NETWORK_LEN + NR_TRANSPORT_LEN;
->>> +       len =3D NR_TRANSPORT_LEN;
->>>
->>>         switch (frametype & 0x0F) {
->>>         case NR_CONNREQ:
->>> @@ -141,7 +141,8 @@ void nr_write_internal(struct sock *sk, int framety=
-pe)
->>>                 return;
->>>         }
->>>
->>> -       if ((skb =3D alloc_skb(len, GFP_ATOMIC)) =3D=3D NULL)
->>> +       skb =3D alloc_skb(NR_NETWORK_LEN + len, GFP_ATOMIC);
->>> +       if (!skb)
->>>                 return;
->>>
->>>         /*
->>> @@ -149,7 +150,7 @@ void nr_write_internal(struct sock *sk, int framety=
-pe)
->>>          */
->>>         skb_reserve(skb, NR_NETWORK_LEN);
->>>
->>> -       dptr =3D skb_put(skb, skb_tailroom(skb));
->>> +       dptr =3D skb_put(skb, len);
->>>
->>>         switch (frametype & 0x0F) {
->>>         case NR_CONNREQ:
+HEAD commit:    33f2b5785a2b Merge tag 'drm-fixes-2023-06-09' of git://ano..
+git tree:       upstream
+console output: https://syzkaller.appspot.com/x/log.txt?x=127f61b3280000
+kernel config:  https://syzkaller.appspot.com/x/.config?x=ee975febba574924
+dashboard link: https://syzkaller.appspot.com/bug?extid=d327a1f3b12e1e206c16
+compiler:       gcc (Debian 10.2.1-6) 10.2.1 20210110, GNU ld (GNU Binutils for Debian) 2.35.2
+syz repro:      https://syzkaller.appspot.com/x/repro.syz?x=110a6ef1280000
+
+Downloadable assets:
+disk image: https://storage.googleapis.com/syzbot-assets/33eb581c818f/disk-33f2b578.raw.xz
+vmlinux: https://storage.googleapis.com/syzbot-assets/0bcbec3a83cf/vmlinux-33f2b578.xz
+kernel image: https://storage.googleapis.com/syzbot-assets/0e577c2e8783/bzImage-33f2b578.xz
+
+IMPORTANT: if you fix the issue, please add the following tag to the commit:
+Reported-by: syzbot+d327a1f3b12e1e206c16@syzkaller.appspotmail.com
+
+2023/06/09 19:03:53 executed programs: 18
+BUG: memory leak
+unreferenced object 0xffff888114e76800 (size 2048):
+  comm "syz-executor.3", pid 5156, jiffies 4294942146 (age 20.470s)
+  hex dump (first 32 bytes):
+    00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  ................
+    06 00 07 40 00 00 00 00 00 00 00 00 00 00 00 00  ...@............
+  backtrace:
+    [<ffffffff815461aa>] __do_kmalloc_node mm/slab_common.c:965 [inline]
+    [<ffffffff815461aa>] __kmalloc+0x4a/0x120 mm/slab_common.c:979
+    [<ffffffff83dbe78d>] kmalloc include/linux/slab.h:563 [inline]
+    [<ffffffff83dbe78d>] sk_prot_alloc+0xcd/0x1b0 net/core/sock.c:2035
+    [<ffffffff83dc0f06>] sk_alloc+0x36/0x300 net/core/sock.c:2088
+    [<ffffffff843dea54>] nr_create+0x84/0x1c0 net/netrom/af_netrom.c:438
+    [<ffffffff83db6e3e>] __sock_create+0x1de/0x300 net/socket.c:1547
+    [<ffffffff83dba452>] sock_create net/socket.c:1598 [inline]
+    [<ffffffff83dba452>] __sys_socket_create net/socket.c:1635 [inline]
+    [<ffffffff83dba452>] __sys_socket_create net/socket.c:1620 [inline]
+    [<ffffffff83dba452>] __sys_socket+0xa2/0x190 net/socket.c:1663
+    [<ffffffff83dba55e>] __do_sys_socket net/socket.c:1676 [inline]
+    [<ffffffff83dba55e>] __se_sys_socket net/socket.c:1674 [inline]
+    [<ffffffff83dba55e>] __x64_sys_socket+0x1e/0x30 net/socket.c:1674
+    [<ffffffff84a17749>] do_syscall_x64 arch/x86/entry/common.c:50 [inline]
+    [<ffffffff84a17749>] do_syscall_64+0x39/0xb0 arch/x86/entry/common.c:80
+    [<ffffffff84c0008b>] entry_SYSCALL_64_after_hwframe+0x63/0xcd
+
+BUG: memory leak
+unreferenced object 0xffff8881185accc0 (size 32):
+  comm "syz-executor.3", pid 5156, jiffies 4294942146 (age 20.470s)
+  hex dump (first 32 bytes):
+    a8 d1 a3 00 81 88 ff ff 00 00 00 00 00 00 00 00  ................
+    00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  ................
+  backtrace:
+    [<ffffffff81545ac4>] kmalloc_trace+0x24/0x90 mm/slab_common.c:1057
+    [<ffffffff823168c2>] kmalloc include/linux/slab.h:559 [inline]
+    [<ffffffff823168c2>] kzalloc include/linux/slab.h:680 [inline]
+    [<ffffffff823168c2>] apparmor_sk_alloc_security+0x52/0xd0 security/apparmor/lsm.c:828
+    [<ffffffff822dbe95>] security_sk_alloc+0x35/0x70 security/security.c:4372
+    [<ffffffff83dbe7be>] sk_prot_alloc+0xfe/0x1b0 net/core/sock.c:2038
+    [<ffffffff83dc0f06>] sk_alloc+0x36/0x300 net/core/sock.c:2088
+    [<ffffffff843dea54>] nr_create+0x84/0x1c0 net/netrom/af_netrom.c:438
+    [<ffffffff83db6e3e>] __sock_create+0x1de/0x300 net/socket.c:1547
+    [<ffffffff83dba452>] sock_create net/socket.c:1598 [inline]
+    [<ffffffff83dba452>] __sys_socket_create net/socket.c:1635 [inline]
+    [<ffffffff83dba452>] __sys_socket_create net/socket.c:1620 [inline]
+    [<ffffffff83dba452>] __sys_socket+0xa2/0x190 net/socket.c:1663
+    [<ffffffff83dba55e>] __do_sys_socket net/socket.c:1676 [inline]
+    [<ffffffff83dba55e>] __se_sys_socket net/socket.c:1674 [inline]
+    [<ffffffff83dba55e>] __x64_sys_socket+0x1e/0x30 net/socket.c:1674
+    [<ffffffff84a17749>] do_syscall_x64 arch/x86/entry/common.c:50 [inline]
+    [<ffffffff84a17749>] do_syscall_64+0x39/0xb0 arch/x86/entry/common.c:80
+    [<ffffffff84c0008b>] entry_SYSCALL_64_after_hwframe+0x63/0xcd
+
+BUG: memory leak
+unreferenced object 0xffff888115867800 (size 2048):
+  comm "syz-executor.0", pid 5159, jiffies 4294942269 (age 19.240s)
+  hex dump (first 32 bytes):
+    00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  ................
+    06 00 07 40 00 00 00 00 00 00 00 00 00 00 00 00  ...@............
+  backtrace:
+    [<ffffffff815461aa>] __do_kmalloc_node mm/slab_common.c:965 [inline]
+    [<ffffffff815461aa>] __kmalloc+0x4a/0x120 mm/slab_common.c:979
+    [<ffffffff83dbe78d>] kmalloc include/linux/slab.h:563 [inline]
+    [<ffffffff83dbe78d>] sk_prot_alloc+0xcd/0x1b0 net/core/sock.c:2035
+    [<ffffffff83dc0f06>] sk_alloc+0x36/0x300 net/core/sock.c:2088
+    [<ffffffff843dea54>] nr_create+0x84/0x1c0 net/netrom/af_netrom.c:438
+    [<ffffffff83db6e3e>] __sock_create+0x1de/0x300 net/socket.c:1547
+    [<ffffffff83dba452>] sock_create net/socket.c:1598 [inline]
+    [<ffffffff83dba452>] __sys_socket_create net/socket.c:1635 [inline]
+    [<ffffffff83dba452>] __sys_socket_create net/socket.c:1620 [inline]
+    [<ffffffff83dba452>] __sys_socket+0xa2/0x190 net/socket.c:1663
+    [<ffffffff83dba55e>] __do_sys_socket net/socket.c:1676 [inline]
+    [<ffffffff83dba55e>] __se_sys_socket net/socket.c:1674 [inline]
+    [<ffffffff83dba55e>] __x64_sys_socket+0x1e/0x30 net/socket.c:1674
+    [<ffffffff84a17749>] do_syscall_x64 arch/x86/entry/common.c:50 [inline]
+    [<ffffffff84a17749>] do_syscall_64+0x39/0xb0 arch/x86/entry/common.c:80
+    [<ffffffff84c0008b>] entry_SYSCALL_64_after_hwframe+0x63/0xcd
+
+BUG: memory leak
+unreferenced object 0xffff88811896cae0 (size 32):
+  comm "syz-executor.0", pid 5159, jiffies 4294942269 (age 19.240s)
+  hex dump (first 32 bytes):
+    a8 d1 a3 00 81 88 ff ff 00 00 00 00 00 00 00 00  ................
+    00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  ................
+  backtrace:
+    [<ffffffff81545ac4>] kmalloc_trace+0x24/0x90 mm/slab_common.c:1057
+    [<ffffffff823168c2>] kmalloc include/linux/slab.h:559 [inline]
+    [<ffffffff823168c2>] kzalloc include/linux/slab.h:680 [inline]
+    [<ffffffff823168c2>] apparmor_sk_alloc_security+0x52/0xd0 security/apparmor/lsm.c:828
+    [<ffffffff822dbe95>] security_sk_alloc+0x35/0x70 security/security.c:4372
+    [<ffffffff83dbe7be>] sk_prot_alloc+0xfe/0x1b0 net/core/sock.c:2038
+    [<ffffffff83dc0f06>] sk_alloc+0x36/0x300 net/core/sock.c:2088
+    [<ffffffff843dea54>] nr_create+0x84/0x1c0 net/netrom/af_netrom.c:438
+    [<ffffffff83db6e3e>] __sock_create+0x1de/0x300 net/socket.c:1547
+    [<ffffffff83dba452>] sock_create net/socket.c:1598 [inline]
+    [<ffffffff83dba452>] __sys_socket_create net/socket.c:1635 [inline]
+    [<ffffffff83dba452>] __sys_socket_create net/socket.c:1620 [inline]
+    [<ffffffff83dba452>] __sys_socket+0xa2/0x190 net/socket.c:1663
+    [<ffffffff83dba55e>] __do_sys_socket net/socket.c:1676 [inline]
+    [<ffffffff83dba55e>] __se_sys_socket net/socket.c:1674 [inline]
+    [<ffffffff83dba55e>] __x64_sys_socket+0x1e/0x30 net/socket.c:1674
+    [<ffffffff84a17749>] do_syscall_x64 arch/x86/entry/common.c:50 [inline]
+    [<ffffffff84a17749>] do_syscall_64+0x39/0xb0 arch/x86/entry/common.c:80
+    [<ffffffff84c0008b>] entry_SYSCALL_64_after_hwframe+0x63/0xcd
+
+
+
+---
+This report is generated by a bot. It may contain errors.
+See https://goo.gl/tpsmEJ for more information about syzbot.
+syzbot engineers can be reached at syzkaller@googlegroups.com.
+
+syzbot will keep track of this issue. See:
+https://goo.gl/tpsmEJ#status for how to communicate with syzbot.
+
+If the bug is already fixed, let syzbot know by replying with:
+#syz fix: exact-commit-title
+
+If you want syzbot to run the reproducer, reply with:
+#syz test: git://repo/address.git branch-or-commit-hash
+If you attach or paste a git patch, syzbot will apply it before testing.
+
+If you want to change bug's subsystems, reply with:
+#syz set subsystems: new-subsystem
+(See the list of subsystem names on the web dashboard)
+
+If the bug is a duplicate of another bug, reply with:
+#syz dup: exact-subject-of-another-report
+
+If you want to undo deduplication, reply with:
+#syz undup
+
