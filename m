@@ -1,38 +1,52 @@
-From: Askar Safin <safinaskar@gmail.com>
-Subject: Re: [PATCH net-next v3 17/18] sock: Remove ->sendpage*() in favour of sendmsg(MSG_SPLICE_PAGES)
-Date: Sun, 2 Jul 2023 20:54:47 +0300
-Message-ID: <CAPnZJGB6gk47Hw-OE2_9eSKJ0DwOzEiL+tncMJyiOD6arw6xag@mail.gmail.com>
+From: Joel Granados <j.granados@samsung.com>
+Subject: [PATCH 09/14] ax.25: Update to register_net_sysctl_sz
+Date: Wed, 26 Jul 2023 16:06:29 +0200
+Message-ID: <20230726140635.2059334-10-j.granados@samsung.com>
+References: <20230726140635.2059334-1-j.granados@samsung.com>
+	<CGME20230726140703eucas1p2786577bcc67d5ae434671dac11870c60@eucas1p2.samsung.com>
 Mime-Version: 1.0
-Return-path: <linux-doc-owner@vger.kernel.org>
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1688320524; x=1690912524;
-        h=cc:to:subject:message-id:date:from:mime-version:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=B/346nUIZErMaap4Xzifysw7agxmNBKblpAJllVen+8=;
-        b=HS1Xpu8RutGjzNf2cNefIvO40PuyEyyWN1lXpuUm3Zm6tYXGDXwbDrBzDuJeX7KOHr
-         q1UGGgd94SVTRefQw+1rgl1gQ50uEoBHL2OdSUILUjvF+1ATH9gvheGUN++hFOwLNLid
-         1XMjRZLU+9Ge2en4fJbD50bjnQdqOwyoXZfvhIPbUVY/sq6Vm6BAvUYZPRqmTRzyIG2n
-         JWXOYS2flIDtpE0mu19bw1MyMQp5M6uow+iO1HWzOXqc6Z90+aO2nBs6Bf+FGR5IBS25
-         laBmv/H9uClBFT1isqMjJFlPY+WcanwzxZg1N8ZxZIN6sqfmOEIBN1yT1YF0buNY5Ya/
-         4xig==
-List-ID: <linux-hams.vger.kernel.org>
+Content-Transfer-Encoding: 8bit
+Return-path: <netdev+bounces-21409-gl-netdev-2=m.gmane-mx.org@vger.kernel.org>
+DKIM-Filter: OpenDKIM Filter v2.11.0 mailout1.w1.samsung.com 20230726140704euoutp016a3838b3abacf87deac9eb5cbbd5ab67~1cApBgTei3202732027euoutp01b
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=samsung.com;
+	s=mail20170921; t=1690380424;
+	bh=Nj7Ghn+kSOTETzoJsaSu9wi1agkqgAyigWTwaRVhj0w=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=HbnW/01MMcRCUhrsw3LYP6YjvDlXVP1MYApY5uoZdJmbfsrwN26OoN2OHYPgCiOBd
+	 0YucJmFEG67aChRlzsG8aquq5auZfYYNphVIxMK/01giXLTjURJ+6zxGk4TpO7tvCt
+	 6xZXQkBs3Kfs5pzrNM3yGS9pXvThzX9I2zh5pxks=
+In-Reply-To: <20230726140635.2059334-1-j.granados@samsung.com>
+List-Id: <linux-hams.vger.kernel.org>
+List-Subscribe: <mailto:netdev+subscribe@vger.kernel.org>
+List-Unsubscribe: <mailto:netdev+unsubscribe@vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-To: David Howells <dhowells@redhat.com>
-Cc: netdev@vger.kernel.org, Alexander Duyck <alexander.duyck@gmail.com>, "David S. Miller" <davem@davemloft.net>, Eric Dumazet <edumazet@google.com>, Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>, Willem de Bruijn <willemdebruijn.kernel@gmail.com>, David Ahern <dsahern@kernel.org>, Matthew Wilcox <willy@infradead.org>, Jens Axboe <axboe@kernel.dk>, linux-mm@kvack.org, linux-kernel@vger.kernel.org, Marc Kleine-Budde <mkl@pengutronix.de>, bpf@vger.kernel.org, dccp@vger.kernel.org, linux-afs@lists.infradead.org, linux-arm-msm@vger.kernel.org, linux-can@vger.kernel.org, linux-crypto@vger.kernel.org, linux-doc@vger.kernel.org, linux-fsdevel@vger.kernel.org, linux-hams@vger.kernel.org, linux-nfs@vger.kernel.org, linux-rdma@vger.kernel.org
+To: mcgrof@kernel.org, Joerg Reuter <jreuter@yaina.de>, Ralf Baechle <ralf@linux-mips.org>, "David S. Miller" <davem@davemloft.net>, Eric Dumazet <edumazet@google.com>, Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>
+Cc: willy@infradead.org, keescook@chromium.org, josh@joshtriplett.org, Joel Granados <j.granados@samsung.com>, linux-hams@vger.kernel.org, netdev@vger.kernel.org, linux-kernel@vger.kernel.org
 
-> -/* In some cases, both sendpage() and sendmsg() could have added
-> - * an skb to the write queue, but failed adding payload on it.
-> - * We need to remove it to consume less memory, but more
-> - * importantly be able to generate EPOLLOUT for Edge Trigger epoll()
-> - * users.
-> +/* In some cases, both sendmsg() could have added an skb to the write queue,
-> + * but failed adding payload on it.  We need to remove it to consume less
-> + * memory, but more importantly be able to generate EPOLLOUT for Edge Trigger
-> + * epoll() users.
->   */
+This is part of the effort to remove the sentinel (last empty) element
+from the ctl_table arrays. We update to the new function and pass it the
+array size.
 
-There is a typo here. "Both" is redundant now
+Signed-off-by: Joel Granados <j.granados@samsung.com>
+---
+ net/ax25/sysctl_net_ax25.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
+diff --git a/net/ax25/sysctl_net_ax25.c b/net/ax25/sysctl_net_ax25.c
+index 2154d004d3dc..db66e11e7fe8 100644
+--- a/net/ax25/sysctl_net_ax25.c
++++ b/net/ax25/sysctl_net_ax25.c
+@@ -159,7 +159,8 @@ int ax25_register_dev_sysctl(ax25_dev *ax25_dev)
+ 		table[k].data = &ax25_dev->values[k];
+ 
+ 	snprintf(path, sizeof(path), "net/ax25/%s", ax25_dev->dev->name);
+-	ax25_dev->sysheader = register_net_sysctl(&init_net, path, table);
++	ax25_dev->sysheader = register_net_sysctl_sz(&init_net, path, table,
++						     ARRAY_SIZE(ax25_param_table));
+ 	if (!ax25_dev->sysheader) {
+ 		kfree(table);
+ 		return -ENOMEM;
 -- 
-Askar Safin
+2.30.2
+
+
