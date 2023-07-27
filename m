@@ -1,30 +1,30 @@
 From: Joel Granados <j.granados@samsung.com>
 Subject: Re: [PATCH 09/14] ax.25: Update to register_net_sysctl_sz
-Date: Thu, 27 Jul 2023 14:31:12 +0200
-Message-ID: <20230727123112.yhgbxrhznrp6r3jt@localhost>
+Date: Thu, 27 Jul 2023 17:38:04 +0200
+Message-ID: <20230727153804.vjsofabjbkkfat25@localhost>
 References: <20230726140635.2059334-1-j.granados@samsung.com>
         <CGME20230726140703eucas1p2786577bcc67d5ae434671dac11870c60@eucas1p2.samsung.com>
         <20230726140635.2059334-10-j.granados@samsung.com>
         <ZMFfRR3PftnLHPlT@bombadil.infradead.org>
 Mime-Version: 1.0
 Content-Type: multipart/signed; micalg="pgp-sha512";
-        protocol="application/pgp-signature"; boundary="4vknydsdvtpt7ldd"
+        protocol="application/pgp-signature"; boundary="xbxmoit7mrudyotx"
 Return-path: <linux-hams-owner@vger.kernel.org>
-DKIM-Filter: OpenDKIM Filter v2.11.0 mailout2.w1.samsung.com 20230727123115euoutp02efe56ab69c0f6d93bf5e44daa135fa62~1uWRJ0u2b0676306763euoutp02q
+DKIM-Filter: OpenDKIM Filter v2.11.0 mailout1.w1.samsung.com 20230727153807euoutp019c33f5ec5929d6bfef6d3725ee255188~1w5au0E4A3207632076euoutp01V
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=samsung.com;
-        s=mail20170921; t=1690461075;
-        bh=XLMM8OV6uWDkuXMdbW6WQEC+PZrDreWRKnf1tR2c17M=;
+        s=mail20170921; t=1690472287;
+        bh=STUlWAOlDIA06osjrSwDwcVK8v733Fr4i1T10ZqvEWA=;
         h=Date:From:To:CC:Subject:In-Reply-To:References:From;
-        b=GGMFwmrg36OOUx5Yl2h9yXEBL+aHfrnF8DTSjp+nHkmqf5IKTjc9x7HupuUMKTTM8
-         Z0WDlY0b5f0e/3Hd09Wjrz0y55xIAUvgvNKLoTo0RDrfq49rxNwdicBe3N44V3DC2b
-         7NSSK1EZM8OUSh52ksQyFpLuTfdJCvE2j8/iSKPU=
+        b=SSINP7uzaRxKDkhWPSy6RDQk9D436+tDoi75XZwGm00gWj1Q5CcOzN3Su3RrYwpuL
+         LjACgNON6I5jWY2pJKnMSTDGVZl93rTdm63ruXHjLQR7jW0UmwxDWZCPKf43eu4CIL
+         gI173oU9pIVbfZNXkLGWLyWSDyvEj3bDrVlJoZ+U=
 Content-Disposition: inline
 In-Reply-To: <ZMFfRR3PftnLHPlT@bombadil.infradead.org>
 List-ID: <linux-hams.vger.kernel.org>
 To: Luis Chamberlain <mcgrof@kernel.org>
 Cc: Joerg Reuter <jreuter@yaina.de>, Ralf Baechle <ralf@linux-mips.org>, "David S. Miller" <davem@davemloft.net>, Eric Dumazet <edumazet@google.com>, Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>, willy@infradead.org, keescook@chromium.org, josh@joshtriplett.org, linux-hams@vger.kernel.org, netdev@vger.kernel.org, linux-kernel@vger.kernel.org
 
---4vknydsdvtpt7ldd
+--xbxmoit7mrudyotx
 Content-Type: text/plain; charset="us-ascii"
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
@@ -36,38 +36,40 @@ On Wed, Jul 26, 2023 at 11:00:37AM -0700, Luis Chamberlain wrote:
 > > array size.
 >=20
 > The commit log does not explain why. It also does not explain if there
-I'll add the "why".
-
 > is any delta on size at compile or runtime.
-There are no deltas in this patch set. We start seeing the deltas when
-we start removing with the next 6 chunks. I'll try to make that more
-clear in the commit message.
+Just to be on the same page:
+You mean the specific why for this commit. like for example:
+"
+We update to register_net_sysctl_sz to prepare for when the ctl_table
+array sentinels are removed.
+"
+
+right?
+
 
 >=20
 >   Luis
-
-thx for the feedback
 
 --=20
 
 Joel Granados
 
---4vknydsdvtpt7ldd
+--xbxmoit7mrudyotx
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQGzBAABCgAdFiEErkcJVyXmMSXOyyeQupfNUreWQU8FAmTCY5AACgkQupfNUreW
-QU+yAgv+NSm02fMf1oKbi5C+jAFBaaqaXxpYTOSvT3lz6av99sRRWxz3CucBCZat
-6mDgSSacaT2HmqZF40ZlcnLfEsLKUEQWHe8Y1ipMmSfqW8egaRy7UlLeRBSXxAYR
-kIPpWJlWeAqA6dtfRYD2/5dmo+j7TuPvMhCfh8z8Qa6i+AEph2nMEVaCeav+09ml
-j8Q14ppd0sIJrmyFGRRSFX6NSaVyKmGAPfnPheZl+vcxXjtgXuezt77MDpvL5Q0A
-NC2U/n5+Wjb92sSEfzT5wU4qgD8R9UIadz32Pk5L6Gh3iaWtsWkfoj+3/9Dz6zix
-Q051sYTq+FprW+WQHKXl52Ok45mG9HzmxPqvA/vtZrPHV7BEeNHwnx6gwin0OxZX
-XrKIc+NywsGsMaPPB6nrUm9f4JwHYALCMfj2cwKaURUlIdIAwyQZiJGz30vnyYIj
-G6859Eas2Y8X32Pk1sA8rrLNJcKzHw0Zs+45d15kH/PF5SdFORQeqz14fpEuXKH9
-KWyogJY0
-=P4Vs
+iQGzBAABCgAdFiEErkcJVyXmMSXOyyeQupfNUreWQU8FAmTCj1oACgkQupfNUreW
+QU/6Wgv/boBnYKcKv0VodcQJqgAMPYJRtOq0N1zq3xjIc3RF64wyLuvxJeS3mouM
+FUSKJeEGjApvCTmxWpQ7tqdRjkAh0q3UllWuryh0OhcUmHt5SPlqrA40tv2wIpBk
+nWmrjkLCRRdm4sxGdR128kNUGLaeexEYZirEf7I2QzDWkX5Y89eMwlCJ9JETyZ/Y
+MsMXPM1/US71pbEuM8GKcWTNKw1Q0yB5TEyjNOfj2W3wjtC1rq7hgMMlE5FcU44a
+eCd6TUO8uJ9DaIbHpIysKrMhz7kvgQLZpsaUWaJX/0AZK0T/JETQ+oIkt39CeAfU
+w+6xEJsCPqPYZmkYmw508U4rxNgTMvLRjAIJEqkxNeW8tMQ1qtacTcIfNSTpw9Ju
+Hb2LamLSN8O0lmOMg1eO/ndyxixv2vg08zpPemlgzYtctC2D5rtIa7j0Jo4QZ1Ia
+ZuXaO5oKHr/nU+XR+qpvYSe45gM++EkGdvLcNaE9HPm7ejXgjQ1ZPTKWLtvR6sap
+FJTVfQmF
+=ZZUn
 -----END PGP SIGNATURE-----
 
---4vknydsdvtpt7ldd--
+--xbxmoit7mrudyotx--
