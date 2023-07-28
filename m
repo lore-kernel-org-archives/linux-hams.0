@@ -1,63 +1,85 @@
-From: Luis Chamberlain <mcgrof@kernel.org>
+From: Joel Granados <j.granados@samsung.com>
 Subject: Re: [PATCH 09/14] ax.25: Update to register_net_sysctl_sz
-Date: Thu, 27 Jul 2023 08:50:49 -0700
-Message-ID: <ZMKSWewULuEH6Naa@bombadil.infradead.org>
+Date: Fri, 28 Jul 2023 09:35:36 +0200
+Message-ID: <20230728073536.egpe6to3s3pndi6r@localhost>
 References: <20230726140635.2059334-1-j.granados@samsung.com>
- <CGME20230726140703eucas1p2786577bcc67d5ae434671dac11870c60@eucas1p2.samsung.com>
- <20230726140635.2059334-10-j.granados@samsung.com>
- <ZMFfRR3PftnLHPlT@bombadil.infradead.org>
- <20230727153804.vjsofabjbkkfat25@localhost>
+        <CGME20230726140703eucas1p2786577bcc67d5ae434671dac11870c60@eucas1p2.samsung.com>
+        <20230726140635.2059334-10-j.granados@samsung.com>
+        <ZMFfRR3PftnLHPlT@bombadil.infradead.org>
+        <20230727123112.yhgbxrhznrp6r3jt@localhost>
+        <ZMKQ2OuFy1deZktP@bombadil.infradead.org>
 Mime-Version: 1.0
-Return-path: <linux-kernel-owner@vger.kernel.org>
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-        d=infradead.org; s=bombadil.20210309; h=Sender:In-Reply-To:Content-Type:
-        MIME-Version:References:Message-ID:Subject:Cc:To:From:Date:Reply-To:
-        Content-Transfer-Encoding:Content-ID:Content-Description;
-        bh=whKeVZWLhmUYByq+U/YnOMvphcGTOrmTTlmTUFROnf0=; b=boxukzui/wv967gWjsN1nu1vL8
-        BbCpncLGebuycMF8caT1clC2fsrYVjiVM2mc73Opka5/x758sffC01xiM2lgIPMU7frfQ4an8355L
-        6+cYY589IjVE6RaneL/6XS4S7mPu9V8ToD7AIcDHPMKgNE1TRdiz99eJrk6NwcR29dszNgH5KzV95
-        Zng3e1ahmT86WH2d71zAVZAaZi6NxUvKJv9JemqyJAnAUuB+C4nVfSTBVhORdn9XVkr+ti2OUmFRK
-        P+afcJV6rmETsrWIsClJ92ibmNFp+TtQ6wTN+o+L23yUuHRnpRejf2FVeu34FxgLQMai+yYiG4uJN
-        FDfIH3ZQ==;
+Content-Type: multipart/signed; micalg="pgp-sha512";
+        protocol="application/pgp-signature"; boundary="qapdrkzqpsgeioz3"
+Return-path: <linux-hams-owner@vger.kernel.org>
+DKIM-Filter: OpenDKIM Filter v2.11.0 mailout2.w1.samsung.com 20230728073539euoutp024ce08c88b937ef44594e48c547dec293~199dW91ly3106331063euoutp02F
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=samsung.com;
+        s=mail20170921; t=1690529739;
+        bh=jUzBfACVBE6PRXtosK5veJt2pcwU2AhBbGaNBCP0R8M=;
+        h=Date:From:To:CC:Subject:In-Reply-To:References:From;
+        b=biG7FzOrlqlayuOGUKkhLs3BBNP5YHjKHrq9ooM+zrk0GJXPK/CPusfD6PUt0dN6j
+         /7dgKeZ9rgRyvumFU2WK3Z8qz8AKHt+oCXLg0iC17CBw26xOPT/e23Rs32SdwKSuNu
+         q8C5scIIXExYnuSYwIn3pKM5+QNgGQ//+dweL7pk=
 Content-Disposition: inline
-In-Reply-To: <20230727153804.vjsofabjbkkfat25@localhost>
-Sender: Luis Chamberlain <mcgrof@infradead.org>
+In-Reply-To: <ZMKQ2OuFy1deZktP@bombadil.infradead.org>
 List-ID: <linux-hams.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-To: Joel Granados <j.granados@samsung.com>
+To: Luis Chamberlain <mcgrof@kernel.org>
 Cc: Joerg Reuter <jreuter@yaina.de>, Ralf Baechle <ralf@linux-mips.org>, "David S. Miller" <davem@davemloft.net>, Eric Dumazet <edumazet@google.com>, Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>, willy@infradead.org, keescook@chromium.org, josh@joshtriplett.org, linux-hams@vger.kernel.org, netdev@vger.kernel.org, linux-kernel@vger.kernel.org
 
-On Thu, Jul 27, 2023 at 05:38:04PM +0200, Joel Granados wrote:
-> On Wed, Jul 26, 2023 at 11:00:37AM -0700, Luis Chamberlain wrote:
-> > On Wed, Jul 26, 2023 at 04:06:29PM +0200, Joel Granados wrote:
-> > > This is part of the effort to remove the sentinel (last empty) element
-> > > from the ctl_table arrays. We update to the new function and pass it the
-> > > array size.
-> > 
-> > The commit log does not explain why. It also does not explain if there
-> > is any delta on size at compile or runtime.
-> Just to be on the same page:
-> You mean the specific why for this commit. like for example:
-> "
-> We update  to register_net_sysctl_sz
+--qapdrkzqpsgeioz3
+Content-Type: text/plain; charset="us-ascii"
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-I think it is clearer to just say:
+On Thu, Jul 27, 2023 at 08:44:24AM -0700, Luis Chamberlain wrote:
+> On Thu, Jul 27, 2023 at 02:31:12PM +0200, Joel Granados wrote:
+> > There are no deltas in this patch set. We start seeing the deltas when
+> > we start removing with the next 6 chunks. I'll try to make that more
+> > clear in the commit message.
+>=20
+> Indeed, even if no deltas are created it is importan then to say that.
+> If there are no deltas the "why" becomes more important. If the why is
+> to make it easier to apply subsequent patches, that must be said. When
+yes. The why for this patch set in particular is to make it easier to
+apply the sentinel removal patches.
 
-Move from register_net_sysctl() to register_net_sysctl_sz()
+I think the difficulty for me comes from having two whys: 1. The one for
+this patch set which is to make it easier to apply sentinel removal patches=
+=2E And 2.
+The one for the "big" patch (that actually removes the sentinels) which is =
+to
+reduce build time size and run time memory bloat.
 
-> to prepare for when the ctl_table
-> array sentinels are removed.
+> you iterate your new series try to review the patches as if you were not
+> the person submitting them, and try to think of ways to make it easier
+> for the patch reviewer to do less work. The less work and easier patch
+> review is the better for them.
+Ack. For all these commits I'll try to weave in the two Whys to make the
+review process a bit easier.
 
-That is not as clear. I think you should just spell it out.
+>=20
+>   Luis
 
-We want to use the syctl ARRAY_SIZE() when possible, and subsequent
-patches ... now the register_net_sysctl() <does something> while
-register_net_sysctl_sz() <does something else> and <in this case>
-this user <does something> and so we must use register_net_sysctl_sz().
+--=20
 
-> "
-> 
-> right?
+Joel Granados
 
-  Luis
+--qapdrkzqpsgeioz3
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQGzBAABCgAdFiEErkcJVyXmMSXOyyeQupfNUreWQU8FAmTDb8YACgkQupfNUreW
+QU+p5Qv+Ny6GD1gN48hVrnGHM/gw/gd6W0YawMBGaag+E9wch++MavDe3IrOjoGY
+KUr3UrXl0hkqH2lCYK0jfELRuRzahODuBPAcsxZuyBAn+DdcxOevc40IIWCBl10r
+TMrvkJeXEWCe///Jzj61eRQnG6XKCZ0CkoUS+jsA2Gnc9SqExhp1cxT/hqTcg+4G
+O3lMTR13FxIO1yx1/qMWGMTm2lAJStVksJRhteW9oCKN3yIlp3dtSDi+OgzLYscN
+4u2MtE5BEFDTRRCu4JNZ6AzmBA6IyyYDN5LxZ+gh1rIzWiJBzmfB3Jfayaff00ba
+j9UmqKJmuMKTsJHJVKTNoeuXj/6kgdWO86NWbiA/wPenp8c7K/SFpQD9a7p33pPY
+A3fQknP0dtjXjJk9oY7czXgsM+o9lfzp7RgeGwb0c44VC2npK4boBpvgW3106bbJ
+gIuQgu+NyIgEKU2ugZxKXeJYa67pRuuuPde0zajzM/W9dzJP3n279THPrODfbN+q
+S++x+6T7
+=D9gN
+-----END PGP SIGNATURE-----
+
+--qapdrkzqpsgeioz3--
