@@ -1,100 +1,165 @@
-From: Joel Granados <j.granados@samsung.com>
-Subject: Re: [PATCH 09/14] ax.25: Update to register_net_sysctl_sz
-Date: Mon, 31 Jul 2023 09:09:54 +0200
-Message-ID: <20230731070954.fb3tez2dsusikwn4@localhost>
-References: <20230726140635.2059334-1-j.granados@samsung.com>
-	<CGME20230726140703eucas1p2786577bcc67d5ae434671dac11870c60@eucas1p2.samsung.com>
-	<20230726140635.2059334-10-j.granados@samsung.com>
-	<ZMFfRR3PftnLHPlT@bombadil.infradead.org>
-	<20230727123112.yhgbxrhznrp6r3jt@localhost>
-	<ZMKQ2OuFy1deZktP@bombadil.infradead.org>
-	<20230728073536.egpe6to3s3pndi6r@localhost>
-	<ZMQF5mN7wWN2eax3@bombadil.infradead.org>
+From: Joel Granados <joel.granados@gmail.com>
+Subject: [PATCH v2 01/14] sysctl: Prefer ctl_table_header in proc_sysctl
+Date: Mon, 31 Jul 2023 09:17:15 +0200
+Message-ID: <20230731071728.3493794-2-j.granados@samsung.com>
+References: <20230731071728.3493794-1-j.granados@samsung.com>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg="pgp-sha512";
-	protocol="application/pgp-signature"; boundary="xj42hsy674mnn2ti"
-Return-path: <netdev+bounces-22696-gl-netdev-2=m.gmane-mx.org@vger.kernel.org>
-DKIM-Filter: OpenDKIM Filter v2.11.0 mailout2.w1.samsung.com 20230731070956euoutp0264de954025e344e8023c8d24a0917c29~24i3dUT0s1932919329euoutp02Z
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=samsung.com;
-	s=mail20170921; t=1690787396;
-	bh=qX81sDg++xdwGNh71jssIPoPVeEsZ1ZQdv8PBhFtj1w=;
-	h=Date:From:To:CC:Subject:In-Reply-To:References:From;
-	b=Ouvh6NB+6ieAx9TR0UowL+BAn1puroAicNMoBV/1sNkxmnbS4/GUT03IPjg8UwKc6
-	 WWpREpMgL5v75eExVFDHng2fgaEUOJQl+sx35Abl0eT9vNiKsegctQaxIchsjTwwKr
-	 WpMVZDW1v2acCCdPP4o3AEHqkrQELWGjKCKI/lVc=
+Content-Transfer-Encoding: 8bit
+Return-path: <netdev+bounces-22698-gl-netdev-2=m.gmane-mx.org@vger.kernel.org>
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20221208; t=1690787851; x=1691392651;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=9/+5UTOZSoINBQX5Idlq9s7Q/YjlqMmFruSJ92+I5og=;
+        b=aa90vhrzpcWfje6OipbZcbSYmqsQOrKCRcOH+mXZEBSAe4e9SYO9KbJpgMCHttr/yA
+         zdFVQR1LOnV+D7hAiD+KrUS2ISlvjUkq+b7yUFbiR01dxQnjTtlB3gUvsDsEdzqxQBra
+         VtmXCBuFRC2NHa/MDl3j3RRH7oueh+fFARArWcE6cGtzhOQHhoEyDoaWBNB9BNxyNorT
+         Vsk7HiljVefekG81Lh7gDtS9SFSWp6bx3r/GStCaxRX7m39RSXK/U9SkwJ+la8Y3+Sa+
+         bicaAOoBwyN9hsG7EPZFDiSfvHQfnOEmdljFsJjOX5Tmk2pevqcpTLWxI8xhB+d6ZiQD
+         aq0g==
+In-Reply-To: <20230731071728.3493794-1-j.granados@samsung.com>
 List-Id: <linux-hams.vger.kernel.org>
 List-Subscribe: <mailto:netdev+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:netdev+unsubscribe@vger.kernel.org>
-Content-Disposition: inline
-In-Reply-To: <ZMQF5mN7wWN2eax3@bombadil.infradead.org>
-To: Luis Chamberlain <mcgrof@kernel.org>
-Cc: Joerg Reuter <jreuter@yaina.de>, Ralf Baechle <ralf@linux-mips.org>, "David S. Miller" <davem@davemloft.net>, Eric Dumazet <edumazet@google.com>, Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>, willy@infradead.org, keescook@chromium.org, josh@joshtriplett.org, linux-hams@vger.kernel.org, netdev@vger.kernel.org, linux-kernel@vger.kernel.org
-
---xj42hsy674mnn2ti
 Content-Type: text/plain; charset="us-ascii"
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+To: mcgrof@kernel.org
+Cc: Catalin Marinas <catalin.marinas@arm.com>, Iurii Zaikin <yzaikin@google.com>, Jozsef Kadlecsik <kadlec@netfilter.org>, Sven Schnelle <svens@linux.ibm.com>, Marcelo Ricardo Leitner <marcelo.leitner@gmail.com>, Steffen Klassert <steffen.klassert@secunet.com>, Kees Cook <keescook@chromium.org>, "D. Wythe" <alibuda@linux.alibaba.com>, mptcp@lists.linux.dev, Jakub Kicinski <kuba@kernel.org>, Vasily Gorbik <gor@linux.ibm.com>, Paolo Abeni <pabeni@redhat.com>, coreteam@netfilter.org, Jan Karcher <jaka@linux.ibm.com>, Alexander Aring <alex.aring@gmail.com>, Will Deacon <will@kernel.org>, Stefan Schmidt <stefan@datenfreihafen.org>, Matthieu Baerts <matthieu.baerts@tessares.net>, bridge@lists.linux-foundation.org, linux-arm-kernel@lists.infradead.org, Joerg Reuter <jreuter@yaina.de>, Julian Anastasov <ja@ssi.bg>, David Ahern <dsahern@kernel.org>, netfilter-devel@vger.ker
 
-On Fri, Jul 28, 2023 at 11:16:06AM -0700, Luis Chamberlain wrote:
-> On Fri, Jul 28, 2023 at 09:35:36AM +0200, Joel Granados wrote:
-> > On Thu, Jul 27, 2023 at 08:44:24AM -0700, Luis Chamberlain wrote:
-> > > On Thu, Jul 27, 2023 at 02:31:12PM +0200, Joel Granados wrote:
-> > > > There are no deltas in this patch set. We start seeing the deltas w=
-hen
-> > > > we start removing with the next 6 chunks. I'll try to make that more
-> > > > clear in the commit message.
-> > >=20
-> > > Indeed, even if no deltas are created it is importan then to say that.
-> > > If there are no deltas the "why" becomes more important. If the why is
-> > > to make it easier to apply subsequent patches, that must be said. When
-> > yes. The why for this patch set in particular is to make it easier to
-> > apply the sentinel removal patches.
-> >=20
-> > I think the difficulty for me comes from having two whys: 1. The one for
-> > this patch set which is to make it easier to apply sentinel removal pat=
-ches. And 2.
-> > The one for the "big" patch (that actually removes the sentinels) which=
- is to
-> > reduce build time size and run time memory bloat.
->=20
-> The 2) is part of the real why, 1) is more of how to do 2) cleanly. But
-> the real why is the savings in memory because we are moving arrays out
-> of kernel/sysctl.c so we don't want to incur a size penalty. The
-> collateral to avoid increasing size in the moves also proves to save us
-> more memory overall, on the ballpark of about 64 bytes per array in the
-> kernel both at runtime and build time. The build time gain is mostly
-> on the __init stuff and so gets freed right away, but since sysctl
-> code always kzallocs the arrays passed we also save 64 bytes per array
-> in the end at runtime.
-Yes. In my new version I have tried to mention both 1 and 2 and
-differentiate between them. I stuck with the "why" for this patch set is
-to make it easier to reach 2.
+This is a preparation commit that replaces ctl_table with
+ctl_table_header as the pointer that is passed around in proc_sysctl.c.
+This will become necessary in subsequent commits when the size of the
+ctl_table array can no longer be calculated by searching for an empty
+sentinel (last empty ctl_table element) but will be carried along inside
+the ctl_table_header struct.
 
-I'll send it out today.
->=20
->   Luis
+Signed-off-by: Joel Granados <j.granados@samsung.com>
+---
+ fs/proc/proc_sysctl.c | 36 ++++++++++++++++++------------------
+ 1 file changed, 18 insertions(+), 18 deletions(-)
 
---=20
+diff --git a/fs/proc/proc_sysctl.c b/fs/proc/proc_sysctl.c
+index 5ea42653126e..94d71446da39 100644
+--- a/fs/proc/proc_sysctl.c
++++ b/fs/proc/proc_sysctl.c
+@@ -1125,11 +1125,11 @@ static int sysctl_check_table_array(const char *path, struct ctl_table *table)
+ 	return err;
+ }
+ 
+-static int sysctl_check_table(const char *path, struct ctl_table *table)
++static int sysctl_check_table(const char *path, struct ctl_table_header *header)
+ {
+ 	struct ctl_table *entry;
+ 	int err = 0;
+-	list_for_each_table_entry(entry, table) {
++	list_for_each_table_entry(entry, header->ctl_table) {
+ 		if ((entry->proc_handler == proc_dostring) ||
+ 		    (entry->proc_handler == proc_dobool) ||
+ 		    (entry->proc_handler == proc_dointvec) ||
+@@ -1159,8 +1159,7 @@ static int sysctl_check_table(const char *path, struct ctl_table *table)
+ 	return err;
+ }
+ 
+-static struct ctl_table_header *new_links(struct ctl_dir *dir, struct ctl_table *table,
+-	struct ctl_table_root *link_root)
++static struct ctl_table_header *new_links(struct ctl_dir *dir, struct ctl_table_header *head)
+ {
+ 	struct ctl_table *link_table, *entry, *link;
+ 	struct ctl_table_header *links;
+@@ -1170,7 +1169,7 @@ static struct ctl_table_header *new_links(struct ctl_dir *dir, struct ctl_table
+ 
+ 	name_bytes = 0;
+ 	nr_entries = 0;
+-	list_for_each_table_entry(entry, table) {
++	list_for_each_table_entry(entry, head->ctl_table) {
+ 		nr_entries++;
+ 		name_bytes += strlen(entry->procname) + 1;
+ 	}
+@@ -1189,12 +1188,12 @@ static struct ctl_table_header *new_links(struct ctl_dir *dir, struct ctl_table
+ 	link_name = (char *)&link_table[nr_entries + 1];
+ 	link = link_table;
+ 
+-	list_for_each_table_entry(entry, table) {
++	list_for_each_table_entry(entry, head->ctl_table) {
+ 		int len = strlen(entry->procname) + 1;
+ 		memcpy(link_name, entry->procname, len);
+ 		link->procname = link_name;
+ 		link->mode = S_IFLNK|S_IRWXUGO;
+-		link->data = link_root;
++		link->data = head->root;
+ 		link_name += len;
+ 		link++;
+ 	}
+@@ -1205,15 +1204,16 @@ static struct ctl_table_header *new_links(struct ctl_dir *dir, struct ctl_table
+ }
+ 
+ static bool get_links(struct ctl_dir *dir,
+-	struct ctl_table *table, struct ctl_table_root *link_root)
++		      struct ctl_table_header *header,
++		      struct ctl_table_root *link_root)
+ {
+-	struct ctl_table_header *head;
++	struct ctl_table_header *tmp_head;
+ 	struct ctl_table *entry, *link;
+ 
+ 	/* Are there links available for every entry in table? */
+-	list_for_each_table_entry(entry, table) {
++	list_for_each_table_entry(entry, header->ctl_table) {
+ 		const char *procname = entry->procname;
+-		link = find_entry(&head, dir, procname, strlen(procname));
++		link = find_entry(&tmp_head, dir, procname, strlen(procname));
+ 		if (!link)
+ 			return false;
+ 		if (S_ISDIR(link->mode) && S_ISDIR(entry->mode))
+@@ -1224,10 +1224,10 @@ static bool get_links(struct ctl_dir *dir,
+ 	}
+ 
+ 	/* The checks passed.  Increase the registration count on the links */
+-	list_for_each_table_entry(entry, table) {
++	list_for_each_table_entry(entry, header->ctl_table) {
+ 		const char *procname = entry->procname;
+-		link = find_entry(&head, dir, procname, strlen(procname));
+-		head->nreg++;
++		link = find_entry(&tmp_head, dir, procname, strlen(procname));
++		tmp_head->nreg++;
+ 	}
+ 	return true;
+ }
+@@ -1246,13 +1246,13 @@ static int insert_links(struct ctl_table_header *head)
+ 	if (IS_ERR(core_parent))
+ 		return 0;
+ 
+-	if (get_links(core_parent, head->ctl_table, head->root))
++	if (get_links(core_parent, head, head->root))
+ 		return 0;
+ 
+ 	core_parent->header.nreg++;
+ 	spin_unlock(&sysctl_lock);
+ 
+-	links = new_links(core_parent, head->ctl_table, head->root);
++	links = new_links(core_parent, head);
+ 
+ 	spin_lock(&sysctl_lock);
+ 	err = -ENOMEM;
+@@ -1260,7 +1260,7 @@ static int insert_links(struct ctl_table_header *head)
+ 		goto out;
+ 
+ 	err = 0;
+-	if (get_links(core_parent, head->ctl_table, head->root)) {
++	if (get_links(core_parent, head, head->root)) {
+ 		kfree(links);
+ 		goto out;
+ 	}
+@@ -1371,7 +1371,7 @@ struct ctl_table_header *__register_sysctl_table(
+ 
+ 	node = (struct ctl_node *)(header + 1);
+ 	init_header(header, root, set, node, table);
+-	if (sysctl_check_table(path, table))
++	if (sysctl_check_table(path, header))
+ 		goto fail;
+ 
+ 	spin_lock(&sysctl_lock);
+-- 
+2.30.2
 
-Joel Granados
-
---xj42hsy674mnn2ti
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQGzBAABCgAdFiEErkcJVyXmMSXOyyeQupfNUreWQU8FAmTHXkIACgkQupfNUreW
-QU+2Agv/Z16D0X3qBhPZAkn8ZBVq8+Mws95QU+VZQyb969rZ8jqAtsiVDgbyVdJm
-dKzk9Ilvi217UQLNxkwlXoXtQeChp6nXFdiO6rgIDuFKQueqwtoKnMd7iCWv3DKR
-wPtLV5j9d88jt/UkFeHvxqSOXtn4NN3/SYEHG6avS9JVCl4W6P6SHBKc/VLmDvu2
-KfQZL/qSJAB+BRtWynu+BJEZlw0+TD6/2D5SBJeQdhuTSMkldbwVfYWdKhzPks83
-8wypFtm2l3EqZstUtPC/ainbqzVBcfPXryG/ekJkBReSEH+CHrhCo9MCQYRylL9+
-Tara17WEHsgTi2fR5MAFdmAOx5QmpYtf/Swdu5u2Ytu4PkkPqtqeqFrWyvBQDQlJ
-RuC/ofKYKFrmxmY4EQ9vvTV7fnoMGHPyJbS+KBeO0NsrfV5qKCXGPufaypTgruK9
-9mhbJhg4++EBHT1sy7Mf1o2oxJb/ZjeVMrBkAOm0qjhw7TMSnXKmD9k6/le4qn8l
-RA39uFUH
-=vkUq
------END PGP SIGNATURE-----
-
---xj42hsy674mnn2ti--
 
