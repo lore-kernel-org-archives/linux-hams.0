@@ -1,51 +1,140 @@
-From: Luis Chamberlain <mcgrof@kernel.org>
-Subject: Re: [PATCH v3 00/14] sysctl: Add a size argument to register
- functions in sysctl
-Date: Tue, 15 Aug 2023 15:27:12 -0700
-Message-ID: <ZNv7wOmUPpCUFnHA@bombadil.infradead.org>
-References: <20230809105006.1198165-1-j.granados@samsung.com>
+From: syzbot <syzbot+666c97e4686410e79649@syzkaller.appspotmail.com>
+Subject: [syzbot] [hams?] general protection fault in prepare_to_wait (2)
+Date: Fri, 18 Aug 2023 09:36:53 -0700
+Message-ID: <000000000000e6c05806033522d3@google.com>
 Mime-Version: 1.0
-Return-path: <netdev+bounces-27820-gl-netdev-2=m.gmane-mx.org@vger.kernel.org>
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-	d=infradead.org; s=bombadil.20210309; h=Sender:In-Reply-To:Content-Type:
-	MIME-Version:References:Message-ID:Subject:Cc:To:From:Date:Reply-To:
-	Content-Transfer-Encoding:Content-ID:Content-Description;
-	bh=aFm90R+tDTFvDBLdwRCYQE4Y41kg8AEvvcWG6AcDlHc=; b=m+Hvj3w2nGUh/z5FvuS2WaFvCP
-	E9VTMTriBBsaYE1DW7gg45cfxPOHyZo+qnJy5YDlRNwx/8IEd6QSy1kFsWmCaI6Ayn2U1e18uzlwr
-	1+Iy9qd60pMllaFg/MtWE7G1QlLCx82ZCCAIzB8O5VbfxRwp9DMOrRwt9Ca10lMltY10Km8PtNXu/
-	L6WobTanJRf/8tEi6GPMdzrRmGdH4Dw9KByfrbTqLo06X3hWeNkANUIM+i1BPRo1BIMLMC8dpsrXD
-	Hz59LovBcm5X+3VH7+EtsxrFP7ARkSjVCRHEyC2IZkI52jv17UdFdX7UcYwBUjCHLaKBVrUaPumbs
-	W9PGgB4A==;
-List-Id: <linux-hams.vger.kernel.org>
-List-Subscribe: <mailto:netdev+subscribe@vger.kernel.org>
-List-Unsubscribe: <mailto:netdev+unsubscribe@vger.kernel.org>
-Content-Disposition: inline
-In-Reply-To: <20230809105006.1198165-1-j.granados@samsung.com>
-Sender: Luis Chamberlain <mcgrof@infradead.org>
+Return-path: <linux-hams-owner@vger.kernel.org>
+List-ID: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
-To: Joel Granados <joel.granados@gmail.com>
-Cc: rds-devel@oss.oracle.com, "David S. Miller" <davem@davemloft.net>, Florian Westphal <fw@strlen.de>, willy@infradead.org, Jan Karcher <jaka@linux.ibm.com>, Wen Gu <guwen@linux.alibaba.com>, Simon Horman <horms@verge.net.au>, Tony Lu <tonylu@linux.alibaba.com>, linux-wpan@vger.kernel.org, Matthieu Baerts <matthieu.baerts@tessares.net>, Christian Borntraeger <borntraeger@linux.ibm.com>, mptcp@lists.linux.dev, Heiko Carstens <hca@linux.ibm.com>, Stefan Schmidt <stefan@datenfreihafen.org>, Will Deacon <will@kernel.org>, Julian Anastasov <ja@ssi.bg>, netfilter-devel@vger.kernel.org, Joerg Reuter <jreuter@yaina.de>, linux-kernel@vger.kernel.org, Alexander Gordeev <agordeev@linux.ibm.com>, linux-sctp@vger.kernel.org, Xin Long <lucien.xin@gmail.com>, Herbert Xu <herbert@gondor.apana.org.au>, linux-hams@vger.kernel.org, Vasily Gorbik <gor@linux.ibm.com>, coreteam@netfilter.org
+To: davem@davemloft.net, edumazet@google.com, kuba@kernel.org, linux-hams@vger.kernel.org, linux-kernel@vger.kernel.org, netdev@vger.kernel.org, pabeni@redhat.com, ralf@linux-mips.org, syzkaller-bugs@googlegroups.com
 
-On Wed, Aug 09, 2023 at 12:49:52PM +0200, Joel Granados wrote:
-> What?
-> These commits set things up so we can start removing the sentinel elements.
-> They modify sysctl and net_sysctl internals so that registering a ctl_table
-> that contains a sentinel gives the same result as passing a table_size
-> calculated from the ctl_table array without a sentinel. We accomplish this by
-> introducing a table_size argument in the same place where procname is checked
-> for NULL. The idea is for it to keep stopping when it hits ->procname == NULL,
-> while the sentinel is still present. And when the sentinel is removed, it will
-> stop on the table_size (thx to jani.nikula@linux.intel.com for the discussion
-> that led to this). This allows us to remove sentinels from one (or several)
-> files at a time.
-> 
-> These commits are part of a bigger set containing the removal of ctl_table sentinel
-> (https://github.com/Joelgranados/linux/tree/tag/sysctl_remove_empty_elem_V3).
-> The idea is to make the review process easier by chunking the 65+ commits into
-> manageable pieces.
+Hello,
 
-Thanks, I've dropped the old set and merged this updated one onto sysctl-next.
+syzbot found the following issue on:
 
-  Luis
+HEAD commit:    ace0ab3a4b54 Revert "vlan: Fix VLAN 0 memory leak"
+git tree:       net
+console+strace: https://syzkaller.appspot.com/x/log.txt?x=152cdb63a80000
+kernel config:  https://syzkaller.appspot.com/x/.config?x=3e670757e16affb
+dashboard link: https://syzkaller.appspot.com/bug?extid=666c97e4686410e79649
+compiler:       gcc (Debian 12.2.0-14) 12.2.0, GNU ld (GNU Binutils for Debian) 2.40
+syz repro:      https://syzkaller.appspot.com/x/repro.syz?x=10a80fc3a80000
 
+Downloadable assets:
+disk image: https://storage.googleapis.com/syzbot-assets/e03bf2f0ff9c/disk-ace0ab3a.raw.xz
+vmlinux: https://storage.googleapis.com/syzbot-assets/ad6e79c01723/vmlinux-ace0ab3a.xz
+kernel image: https://storage.googleapis.com/syzbot-assets/617319e5afb7/bzImage-ace0ab3a.xz
+
+Bisection is inconclusive: the issue happens on the oldest tested release.
+
+bisection log:  https://syzkaller.appspot.com/x/bisect.txt?x=157eda9ba80000
+final oops:     https://syzkaller.appspot.com/x/report.txt?x=177eda9ba80000
+console output: https://syzkaller.appspot.com/x/log.txt?x=137eda9ba80000
+
+IMPORTANT: if you fix the issue, please add the following tag to the commit:
+Reported-by: syzbot+666c97e4686410e79649@syzkaller.appspotmail.com
+
+general protection fault, probably for non-canonical address 0xdffffc0000000003: 0000 [#1] PREEMPT SMP KASAN
+KASAN: null-ptr-deref in range [0x0000000000000018-0x000000000000001f]
+CPU: 0 PID: 5059 Comm: syz-executor.0 Not tainted 6.5.0-rc5-syzkaller-00194-gace0ab3a4b54 #0
+Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 07/26/2023
+RIP: 0010:__lock_acquire+0x109/0x5de0 kernel/locking/lockdep.c:5012
+Code: 45 85 c9 0f 84 cc 0e 00 00 44 8b 05 11 6e 23 0b 45 85 c0 0f 84 be 0d 00 00 48 ba 00 00 00 00 00 fc ff df 4c 89 d1 48 c1 e9 03 <80> 3c 11 00 0f 85 e8 40 00 00 49 81 3a a0 69 48 90 0f 84 96 0d 00
+RSP: 0018:ffffc90003d6f9e0 EFLAGS: 00010006
+RAX: ffff8880244c8000 RBX: 1ffff920007adf6c RCX: 0000000000000003
+RDX: dffffc0000000000 RSI: 0000000000000000 RDI: 0000000000000018
+RBP: 0000000000000001 R08: 0000000000000001 R09: 0000000000000001
+R10: 0000000000000018 R11: 0000000000000000 R12: 0000000000000000
+R13: 0000000000000000 R14: 0000000000000000 R15: 0000000000000000
+FS:  00007f51d519a6c0(0000) GS:ffff8880b9800000(0000) knlGS:0000000000000000
+CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+CR2: 00007f51d5158d58 CR3: 000000002943f000 CR4: 00000000003506f0
+DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
+DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
+Call Trace:
+ <TASK>
+ lock_acquire kernel/locking/lockdep.c:5761 [inline]
+ lock_acquire+0x1ae/0x510 kernel/locking/lockdep.c:5726
+ __raw_spin_lock_irqsave include/linux/spinlock_api_smp.h:110 [inline]
+ _raw_spin_lock_irqsave+0x3a/0x50 kernel/locking/spinlock.c:162
+ prepare_to_wait+0x47/0x380 kernel/sched/wait.c:269
+ nr_accept+0x20d/0x650 net/netrom/af_netrom.c:798
+ do_accept+0x3a6/0x570 net/socket.c:1872
+ __sys_accept4_file net/socket.c:1913 [inline]
+ __sys_accept4+0x99/0x120 net/socket.c:1943
+ __do_sys_accept4 net/socket.c:1954 [inline]
+ __se_sys_accept4 net/socket.c:1951 [inline]
+ __x64_sys_accept4+0x96/0x100 net/socket.c:1951
+ do_syscall_x64 arch/x86/entry/common.c:50 [inline]
+ do_syscall_64+0x38/0xb0 arch/x86/entry/common.c:80
+ entry_SYSCALL_64_after_hwframe+0x63/0xcd
+RIP: 0033:0x7f51d447cae9
+Code: 28 00 00 00 75 05 48 83 c4 28 c3 e8 e1 20 00 00 90 48 89 f8 48 89 f7 48 89 d6 48 89 ca 4d 89 c2 4d 89 c8 4c 8b 4c 24 08 0f 05 <48> 3d 01 f0 ff ff 73 01 c3 48 c7 c1 b0 ff ff ff f7 d8 64 89 01 48
+RSP: 002b:00007f51d519a0c8 EFLAGS: 00000246 ORIG_RAX: 0000000000000120
+RAX: ffffffffffffffda RBX: 00007f51d459bf80 RCX: 00007f51d447cae9
+RDX: 0000000020000400 RSI: 0000000000000000 RDI: 0000000000000004
+RBP: 00007f51d44c847a R08: 0000000000000000 R09: 0000000000000000
+R10: 0000000000000800 R11: 0000000000000246 R12: 0000000000000000
+R13: 000000000000000b R14: 00007f51d459bf80 R15: 00007ffc25c34e48
+ </TASK>
+Modules linked in:
+---[ end trace 0000000000000000 ]---
+RIP: 0010:__lock_acquire+0x109/0x5de0 kernel/locking/lockdep.c:5012
+Code: 45 85 c9 0f 84 cc 0e 00 00 44 8b 05 11 6e 23 0b 45 85 c0 0f 84 be 0d 00 00 48 ba 00 00 00 00 00 fc ff df 4c 89 d1 48 c1 e9 03 <80> 3c 11 00 0f 85 e8 40 00 00 49 81 3a a0 69 48 90 0f 84 96 0d 00
+RSP: 0018:ffffc90003d6f9e0 EFLAGS: 00010006
+RAX: ffff8880244c8000 RBX: 1ffff920007adf6c RCX: 0000000000000003
+RDX: dffffc0000000000 RSI: 0000000000000000 RDI: 0000000000000018
+RBP: 0000000000000001 R08: 0000000000000001 R09: 0000000000000001
+R10: 0000000000000018 R11: 0000000000000000 R12: 0000000000000000
+R13: 0000000000000000 R14: 0000000000000000 R15: 0000000000000000
+FS:  00007f51d519a6c0(0000) GS:ffff8880b9800000(0000) knlGS:0000000000000000
+CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+CR2: 00007f51d5158d58 CR3: 000000002943f000 CR4: 00000000003506f0
+DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
+DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
+----------------
+Code disassembly (best guess):
+   0:	45 85 c9             	test   %r9d,%r9d
+   3:	0f 84 cc 0e 00 00    	je     0xed5
+   9:	44 8b 05 11 6e 23 0b 	mov    0xb236e11(%rip),%r8d        # 0xb236e21
+  10:	45 85 c0             	test   %r8d,%r8d
+  13:	0f 84 be 0d 00 00    	je     0xdd7
+  19:	48 ba 00 00 00 00 00 	movabs $0xdffffc0000000000,%rdx
+  20:	fc ff df
+  23:	4c 89 d1             	mov    %r10,%rcx
+  26:	48 c1 e9 03          	shr    $0x3,%rcx
+* 2a:	80 3c 11 00          	cmpb   $0x0,(%rcx,%rdx,1) <-- trapping instruction
+  2e:	0f 85 e8 40 00 00    	jne    0x411c
+  34:	49 81 3a a0 69 48 90 	cmpq   $0xffffffff904869a0,(%r10)
+  3b:	0f                   	.byte 0xf
+  3c:	84                   	.byte 0x84
+  3d:	96                   	xchg   %eax,%esi
+  3e:	0d                   	.byte 0xd
+
+
+---
+This report is generated by a bot. It may contain errors.
+See https://goo.gl/tpsmEJ for more information about syzbot.
+syzbot engineers can be reached at syzkaller@googlegroups.com.
+
+syzbot will keep track of this issue. See:
+https://goo.gl/tpsmEJ#status for how to communicate with syzbot.
+For information about bisection process see: https://goo.gl/tpsmEJ#bisection
+
+If the bug is already fixed, let syzbot know by replying with:
+#syz fix: exact-commit-title
+
+If you want syzbot to run the reproducer, reply with:
+#syz test: git://repo/address.git branch-or-commit-hash
+If you attach or paste a git patch, syzbot will apply it before testing.
+
+If you want to overwrite bug's subsystems, reply with:
+#syz set subsystems: new-subsystem
+(See the list of subsystem names on the web dashboard)
+
+If the bug is a duplicate of another bug, reply with:
+#syz dup: exact-subject-of-another-report
+
+If you want to undo deduplication, reply with:
+#syz undup
