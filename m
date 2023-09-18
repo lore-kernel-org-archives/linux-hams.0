@@ -1,88 +1,57 @@
-From: Peter Lafreniere <peter@n8pjl.ca>
-Subject: [PATCH 3/3] ax25: Kconfig: Update link for linux-ax25.org
-Date: Sun, 17 Sep 2023 15:30:21 +0000
-Message-ID: <20230917152938.8231-4-peter@n8pjl.ca>
-References: <20230908113907.25053-1-peter@n8pjl.ca> <20230917152938.8231-1-peter@n8pjl.ca>
+From: patchwork-bot+netdevbpf@kernel.org
+Subject: Re: [PATCH 0/3] ax25: Update link for linux-ax25.org
+Date: Mon, 18 Sep 2023 12:00:23 +0000
+Message-ID: <169503842374.7731.4777712739974344012.git-patchwork-notify@kernel.org>
+References: <20230917152938.8231-1-peter@n8pjl.ca>
 Mime-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-Return-path: <linux-hams-owner@vger.kernel.org>
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=n8pjl.ca;
-        s=protonmail2; t=1694964627; x=1695223827;
-        bh=r9tNyhYUviuUIEjOuqr/xK8XRYTBBhupTvy6oQw3GAo=;
-        h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
-         Feedback-ID:From:To:Cc:Date:Subject:Reply-To:Feedback-ID:
-         Message-ID:BIMI-Selector;
-        b=iJhtsrVLAM+MN352MItoeVXIZAmzRmi64/3kba/5ayqO6ZUeikmUWrIfeG1WARKr7
-         SlGe4kY/YIUWmwDvHEPbb7hLAUPhTdUApEe7pWEnQjrBsQxUReIzzUmJID2CBOwlrD
-         ATLD055icLaFwn+2Q89JzofuRnqXTKDnED7z7S7g+UISYO4uZqmtKiqVmELfvkpjBp
-         8okehxph3hDO/FrJOZoV+qTGVV7u0bZZFG/mlsFIiM/89CCFxc4BzHPW9dLyFOifQE
-         nvmJhcQFp/iMNKyEiPnE73J+jxHZoiuXgxD7Xjh6Y9ELSfHWvF8ax3I3xKrhqC65Bo
-         YksA78WGaxOsQ==
+Content-Transfer-Encoding: 8bit
+Return-path: <netdev+bounces-34545-gl-netdev-2=m.gmane-mx.org@vger.kernel.org>
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1695038423;
+	bh=Ni0eR8OTKOtQebhcs2oSdkQO4hfRNZ1h4rEUJWi0vE8=;
+	h=Subject:From:Date:References:In-Reply-To:To:Cc:From;
+	b=eiiuTscW2dccO8+TpLHSgnSNMxZ0JiqNSAMjd8Wos/kboeacJemeHDVTu5FwFp6rn
+	 iHRFUM1L2lxUJBB0AKk5moSdADBuijcZ3Q0vr5pnjiF1R4NxmXbCHhcLo8nEfv0hkj
+	 2J73kOE64DXdvNEcz/TBn4aLHhdTsA2L9szhhAxm1uof1o4KG1ABABg1Fj64RH3oZ/
+	 vceplLqR6Uf5LzH8Re9erFPqGi0uXqFuge2qcp1iOXqSt7jTtedMIiH5m+orgtLLKs
+	 Kk/NTlCX8MUZoni2puvw8h6zVgTh5L/xcD9ITzICuScGD78mJK27m2sCP5Q1gnOrIQ
+	 5TFfpZ7VdF1qQ==
+List-Id: <linux-hams.vger.kernel.org>
+List-Subscribe: <mailto:netdev+subscribe@vger.kernel.org>
+List-Unsubscribe: <mailto:netdev+unsubscribe@vger.kernel.org>
 In-Reply-To: <20230917152938.8231-1-peter@n8pjl.ca>
-List-ID: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
-To: linux-hams@vger.kernel.org
-Cc: Peter Lafreniere <peter@n8pjl.ca>, thomas@osterried.de, netdev@vger.kernel.org, ralf@linux-mips.org
+To: Peter Lafreniere <peter@n8pjl.ca>
+Cc: linux-hams@vger.kernel.org, thomas@osterried.de, linux-kernel@vger.kernel.org, netdev@vger.kernel.org, ralf@linux-mips.org, linux-doc@vger.kernel.org, corbet@lwn.net
 
-http://linux-ax25.org has been down for nearly a year. Its official
-replacement is https://linux-ax25.in-berlin.de. Change all references to
-the old site in the ax25 Kconfig to its replacement.
+Hello:
 
-Link: https://marc.info/?m=3D166792551600315
-Signed-off-by: Peter Lafreniere <peter@n8pjl.ca>
----
- net/ax25/Kconfig | 16 ++++++++--------
- 1 file changed, 8 insertions(+), 8 deletions(-)
+This series was applied to netdev/net.git (main)
+by David S. Miller <davem@davemloft.net>:
 
-diff --git a/net/ax25/Kconfig b/net/ax25/Kconfig
-index d3a9843a043d..fdb666607f10 100644
---- a/net/ax25/Kconfig
-+++ b/net/ax25/Kconfig
-@@ -10,7 +10,7 @@ menuconfig HAMRADIO
- =09  If you want to connect your Linux box to an amateur radio, answer Y
- =09  here. You want to read <https://www.tapr.org/>
- =09  and more specifically about AX.25 on Linux
--=09  <http://www.linux-ax25.org/>.
-+=09  <https://linux-ax25.in-berlin.de>.
-=20
- =09  Note that the answer to this question won't directly affect the
- =09  kernel: saying N will just cause the configurator to skip all
-@@ -61,7 +61,7 @@ config AX25_DAMA_SLAVE
- =09  configuration. Linux cannot yet act as a DAMA server.  This option
- =09  only compiles DAMA slave support into the kernel.  It still needs to
- =09  be enabled at runtime.  For more about DAMA see
--=09  <http://www.linux-ax25.org>.  If unsure, say Y.
-+=09  <https://linux-ax25.in-berlin.de>.  If unsure, say Y.
-=20
- # placeholder until implemented
- config AX25_DAMA_MASTER
-@@ -87,9 +87,9 @@ config NETROM
- =09  A comprehensive listing of all the software for Linux amateur radio
- =09  users as well as information about how to configure an AX.25 port is
- =09  contained in the Linux Ham Wiki, available from
--=09  <http://www.linux-ax25.org>. You also might want to check out the
--=09  file <file:Documentation/networking/ax25.rst>. More information about
--=09  digital amateur radio in general is on the WWW at
-+=09  <https://linux-ax25.in-berlin.de>. You also might want to check out
-+=09  the file <file:Documentation/networking/ax25.rst>. More information
-+=09  about digital amateur radio in general is on the WWW at
- =09  <https://www.tapr.org/>.
-=20
- =09  To compile this driver as a module, choose M here: the
-@@ -106,9 +106,9 @@ config ROSE
- =09  A comprehensive listing of all the software for Linux amateur radio
- =09  users as well as information about how to configure an AX.25 port is
- =09  contained in the Linux Ham Wiki, available from
--=09  <http://www.linux-ax25.org>.  You also might want to check out the
--=09  file <file:Documentation/networking/ax25.rst>. More information about
--=09  digital amateur radio in general is on the WWW at
-+=09  <https://linux-ax25.in-berlin.de>.  You also might want to check out
-+=09  the file <file:Documentation/networking/ax25.rst>. More information
-+=09  about digital amateur radio in general is on the WWW at
- =09  <https://www.tapr.org/>.
-=20
- =09  To compile this driver as a module, choose M here: the
---=20
-2.42.0
+On Sun, 17 Sep 2023 15:29:44 +0000 you wrote:
+> http://linux-ax25.org has been down for nearly a year. Its official
+> replacement is https://linux-ax25.in-berlin.de.
+> 
+> Update all references to the dead link to its replacement.
+> 
+> As the three touched files are in different areas of the tree, this is
+> being sent with one patch per file.
+> 
+> [...]
+
+Here is the summary with links:
+  - [1/3] Documentation: netdev: fix dead link in ax25.rst
+    https://git.kernel.org/netdev/net/c/418f438a2db6
+  - [2/3] MAINTAINERS: Update link for linux-ax25.org
+    https://git.kernel.org/netdev/net/c/1943f2b0ac5a
+  - [3/3] ax25: Kconfig: Update link for linux-ax25.org
+    https://git.kernel.org/netdev/net/c/71273c46a348
+
+You are awesome, thank you!
+-- 
+Deet-doot-dot, I am a bot.
+https://korg.docs.kernel.org/patchwork/pwbot.html
+
 
 
