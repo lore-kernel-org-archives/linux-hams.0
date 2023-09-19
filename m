@@ -1,57 +1,89 @@
-From: patchwork-bot+netdevbpf@kernel.org
-Subject: Re: [PATCH 0/3] ax25: Update link for linux-ax25.org
-Date: Mon, 18 Sep 2023 12:00:23 +0000
-Message-ID: <169503842374.7731.4777712739974344012.git-patchwork-notify@kernel.org>
-References: <20230917152938.8231-1-peter@n8pjl.ca>
+From: Peter Lafreniere <peter@n8pjl.ca>
+Subject: [PATCH] hamradio: baycom: remove useless link in Kconfig
+Date: Tue, 19 Sep 2023 14:14:23 +0000
+Message-ID: <20230919141417.39702-1-peter@n8pjl.ca>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Return-path: <netdev+bounces-34545-gl-netdev-2=m.gmane-mx.org@vger.kernel.org>
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1695038423;
-	bh=Ni0eR8OTKOtQebhcs2oSdkQO4hfRNZ1h4rEUJWi0vE8=;
-	h=Subject:From:Date:References:In-Reply-To:To:Cc:From;
-	b=eiiuTscW2dccO8+TpLHSgnSNMxZ0JiqNSAMjd8Wos/kboeacJemeHDVTu5FwFp6rn
-	 iHRFUM1L2lxUJBB0AKk5moSdADBuijcZ3Q0vr5pnjiF1R4NxmXbCHhcLo8nEfv0hkj
-	 2J73kOE64DXdvNEcz/TBn4aLHhdTsA2L9szhhAxm1uof1o4KG1ABABg1Fj64RH3oZ/
-	 vceplLqR6Uf5LzH8Re9erFPqGi0uXqFuge2qcp1iOXqSt7jTtedMIiH5m+orgtLLKs
-	 Kk/NTlCX8MUZoni2puvw8h6zVgTh5L/xcD9ITzICuScGD78mJK27m2sCP5Q1gnOrIQ
-	 5TFfpZ7VdF1qQ==
-List-Id: <linux-hams.vger.kernel.org>
-List-Subscribe: <mailto:netdev+subscribe@vger.kernel.org>
-List-Unsubscribe: <mailto:netdev+unsubscribe@vger.kernel.org>
-In-Reply-To: <20230917152938.8231-1-peter@n8pjl.ca>
+Content-Transfer-Encoding: quoted-printable
+Return-path: <linux-hams-owner@vger.kernel.org>
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=n8pjl.ca;
+        s=protonmail2; t=1695132885; x=1695392085;
+        bh=vPL1MT90V5hwUBxn6nmVibwGx/TKACB+/zyKiiwt3hI=;
+        h=Date:To:From:Cc:Subject:Message-ID:Feedback-ID:From:To:Cc:Date:
+         Subject:Reply-To:Feedback-ID:Message-ID:BIMI-Selector;
+        b=XJ2jy0fcgXvClcpNh0sWmuLY7c/jCyOSrEd+qn8XFgCuPNn11yNaPM2decmB3xa0d
+         5OR7iplV6v3+OD+g+O/LzjHd7eiiVBnXmzd/5moakHjLDtMoW6nrIJa912pnijJrKu
+         x+29Ica/T3imO2zFcLoIJiTpiKy15C3y47L6H4DXoyMA9RFbSTB8KZi/30QQO7A+pw
+         qy5mUQzQDg7XVTsnTueJacUzSWAet8+hZzY/Z07D2+SywsYtshj9L2qd3sHRuEIHqt
+         IC1ETP4q6infWPpf1Asctv0MN1sPuErJm0rPLbUfInB/ychBzlvdYrgpnKa7N5z9LX
+         ZGrX/MEwFVBAw==
+List-ID: <linux-hams.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
-To: Peter Lafreniere <peter@n8pjl.ca>
-Cc: linux-hams@vger.kernel.org, thomas@osterried.de, linux-kernel@vger.kernel.org, netdev@vger.kernel.org, ralf@linux-mips.org, linux-doc@vger.kernel.org, corbet@lwn.net
+To: linux-hams@vger.kernel.org
+Cc: Peter Lafreniere <peter@n8pjl.ca>, netdev@vger.kernel.org
 
-Hello:
+The Kconfig help text for baycom drivers suggests that more information
+on the hardware can be found at <https://www.baycom.de>. The website now
+includes no information on their ham radio products other than a mention
+that they were once produced by the company, saying:
+"The amateur radio equipment is now no longer part and business of BayCom G=
+mbH"
 
-This series was applied to netdev/net.git (main)
-by David S. Miller <davem@davemloft.net>:
+As there is no information relavent to the baycom driver on the site,
+remove the link.
 
-On Sun, 17 Sep 2023 15:29:44 +0000 you wrote:
-> http://linux-ax25.org has been down for nearly a year. Its official
-> replacement is https://linux-ax25.in-berlin.de.
-> 
-> Update all references to the dead link to its replacement.
-> 
-> As the three touched files are in different areas of the tree, this is
-> being sent with one patch per file.
-> 
-> [...]
+Signed-off-by: Peter Lafreniere <peter@n8pjl.ca>
+---
+ drivers/net/hamradio/Kconfig | 15 +++++++--------
+ 1 file changed, 7 insertions(+), 8 deletions(-)
 
-Here is the summary with links:
-  - [1/3] Documentation: netdev: fix dead link in ax25.rst
-    https://git.kernel.org/netdev/net/c/418f438a2db6
-  - [2/3] MAINTAINERS: Update link for linux-ax25.org
-    https://git.kernel.org/netdev/net/c/1943f2b0ac5a
-  - [3/3] ax25: Kconfig: Update link for linux-ax25.org
-    https://git.kernel.org/netdev/net/c/71273c46a348
-
-You are awesome, thank you!
--- 
-Deet-doot-dot, I am a bot.
-https://korg.docs.kernel.org/patchwork/pwbot.html
-
+diff --git a/drivers/net/hamradio/Kconfig b/drivers/net/hamradio/Kconfig
+index a94c7bd5db2e..25b1f929c422 100644
+--- a/drivers/net/hamradio/Kconfig
++++ b/drivers/net/hamradio/Kconfig
+@@ -94,8 +94,8 @@ config BAYCOM_SER_FDX
+ =09  driver, "BAYCOM ser12 half-duplex driver for AX.25" is the old
+ =09  driver and still provided in case this driver does not work with
+ =09  your serial interface chip. To configure the driver, use the sethdlc
+-=09  utility available in the standard ax25 utilities package. For
+-=09  information on the modems, see <http://www.baycom.de/> and
++=09  utility available in the standard ax25 utilities package.
++=09  For more information on the modems, see
+ =09  <file:Documentation/networking/device_drivers/hamradio/baycom.rst>.
+=20
+ =09  To compile this driver as a module, choose M here: the module
+@@ -112,8 +112,7 @@ config BAYCOM_SER_HDX
+ =09  still provided in case your serial interface chip does not work with
+ =09  the full-duplex driver. This driver is deprecated.  To configure
+ =09  the driver, use the sethdlc utility available in the standard ax25
+-=09  utilities package. For information on the modems, see
+-=09  <http://www.baycom.de/> and
++=09  utilities package. For more information on the modems, see
+ =09  <file:Documentation/networking/device_drivers/hamradio/baycom.rst>.
+=20
+ =09  To compile this driver as a module, choose M here: the module
+@@ -127,8 +126,8 @@ config BAYCOM_PAR
+ =09  This is a driver for Baycom style simple amateur radio modems that
+ =09  connect to a parallel interface. The driver supports the picpar and
+ =09  par96 designs. To configure the driver, use the sethdlc utility
+-=09  available in the standard ax25 utilities package. For information on
+-=09  the modems, see <http://www.baycom.de/> and the file
++=09  available in the standard ax25 utilities package.
++=09  For more information on the modems, see
+ =09  <file:Documentation/networking/device_drivers/hamradio/baycom.rst>.
+=20
+ =09  To compile this driver as a module, choose M here: the module
+@@ -142,8 +141,8 @@ config BAYCOM_EPP
+ =09  This is a driver for Baycom style simple amateur radio modems that
+ =09  connect to a parallel interface. The driver supports the EPP
+ =09  designs. To configure the driver, use the sethdlc utility available
+-=09  in the standard ax25 utilities package. For information on the
+-=09  modems, see <http://www.baycom.de/> and the file
++=09  in the standard ax25 utilities package.
++=09  For more information on the modems, see
+ =09  <file:Documentation/networking/device_drivers/hamradio/baycom.rst>.
+=20
+ =09  To compile this driver as a module, choose M here: the module
+--=20
+2.42.0
 
 
