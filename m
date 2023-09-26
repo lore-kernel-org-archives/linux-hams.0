@@ -1,51 +1,70 @@
-From: patchwork-bot+netdevbpf@kernel.org
-Subject: Re: [PATCH] hamradio: baycom: remove useless link in Kconfig
-Date: Fri, 22 Sep 2023 07:20:23 +0000
-Message-ID: <169536722310.5471.3731844839478615297.git-patchwork-notify@kernel.org>
-References: <20230919141417.39702-1-peter@n8pjl.ca>
-Mime-Version: 1.0
-Content-Transfer-Encoding: 8bit
+From: Chengfeng Ye <dg573847474@gmail.com>
+Subject: [PATCH] ax25: Fix potential deadlock on &ax25_list_lock
+Date: Tue, 26 Sep 2023 10:57:32 +0000
+Message-ID: <20230926105732.10864-1-dg573847474@gmail.com>
 Return-path: <linux-hams-owner@vger.kernel.org>
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1695367223;
-        bh=BHybtxwY47uYYHFXoDtvlNNeebGa5opZ5WlHJz0v3Rs=;
-        h=Subject:From:Date:References:In-Reply-To:To:Cc:From;
-        b=mbSkkHZ8pd3qzc8pjpZc3Dku6xjLGdQvXmjxPtw65nHH1CkUnGvVs6oot1KwI/nUW
-         y2XX7Kl8QJCDvQAxrwW+27XENXRokAkjFfUAEHTzwZfW2xOifE8wnFpz1lG70aiMdl
-         d7NT/IRvfw9i7P8/qxZHTKQGHu+rr1vswU8LkBjxDRIL2NntQSv+JSHSnQPDkIYVwv
-         aq+JORGici5TpbU/WQM/36C4tAWvsOq8L1a6SSSpxvmNfyK9mOFCfOYb83b5mTA2oO
-         T0UItb3g4J4LGIaEqHVLl/eNsuOQ2BKE4mnxXK/o+y2OgRIfRA2Lnb+r0tlBAOBWj+
-         mdxIERzIFYRSA==
-In-Reply-To: <20230919141417.39702-1-peter@n8pjl.ca>
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1695725873; x=1696330673; darn=vger.kernel.org;
+        h=message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=PjoNcHNpSndbmROelnkAs9z2pMPBqViv/3mMpfzHcDI=;
+        b=HhA/AH+HKx5baG3aDbhCPF8xm6+w77wf9fbNvj4m0MRV9mi+66Z0tvFR42HbgCPKH3
+         /L6JvLfHz0uw+fgK44OZtTYpglKx5+Nbt8MytEn1ohDoGoaKHtoKo6QABbOWkuzqvZvL
+         USqR17uSvn9rkTf2pprXF1Kr73izDP0E+JdC9dgcJo5WeYjx29M4ff5paoJsMdWUJ4IZ
+         3gHY4ubtyBLdNrGkH/S/sQVhHgLgo1fD27F4y8YWv7zegjtjeqecQOdektgKzNfy+cK+
+         ljFjtOPu6pQqC3tPy429zGv/e0jeMrbcg/92/htZvHk6mB270+2AstzClRangqQWwCau
+         YQ8g==
 List-ID: <linux-hams.vger.kernel.org>
+MIME-Version: 1.0
 Content-Type: text/plain; charset="us-ascii"
-To: Peter Lafreniere <peter@n8pjl.ca>
-Cc: linux-hams@vger.kernel.org, netdev@vger.kernel.org
+Content-Transfer-Encoding: 7bit
+To: jreuter@yaina.de, ralf@linux-mips.org, davem@davemloft.net, edumazet@google.com, kuba@kernel.org, pabeni@redhat.com
+Cc: linux-hams@vger.kernel.org, netdev@vger.kernel.org, linux-kernel@vger.kernel.org, Chengfeng Ye <dg573847474@gmail.com>
 
-Hello:
+Timer interrupt ax25_ds_timeout() could introduce double locks on
+&ax25_list_lock.
 
-This patch was applied to netdev/net-next.git (main)
-by David S. Miller <davem@davemloft.net>:
+ax25_ioctl()
+--> ax25_ctl_ioctl()
+--> ax25_dama_off()
+--> ax25_dev_dama_off()
+--> ax25_check_dama_slave()
+--> spin_lock(&ax25_list_lock)
+<timer interrupt>
+   --> ax25_ds_timeout()
+   --> spin_lock(&ax25_list_lock)
 
-On Tue, 19 Sep 2023 14:14:23 +0000 you wrote:
-> The Kconfig help text for baycom drivers suggests that more information
-> on the hardware can be found at <https://www.baycom.de>. The website now
-> includes no information on their ham radio products other than a mention
-> that they were once produced by the company, saying:
-> "The amateur radio equipment is now no longer part and business of BayCom GmbH"
-> 
-> As there is no information relavent to the baycom driver on the site,
-> remove the link.
-> 
-> [...]
+This flaw was found by an experimental static analysis tool I am
+developing for irq-related deadlock.
 
-Here is the summary with links:
-  - hamradio: baycom: remove useless link in Kconfig
-    https://git.kernel.org/netdev/net-next/c/84c19e655b29
+To prevent the potential deadlock, the patch use spin_lock_bh()
+on &ax25_list_lock inside ax25_check_dama_slave().
 
-You are awesome, thank you!
+Signed-off-by: Chengfeng Ye <dg573847474@gmail.com>
+---
+ net/ax25/ax25_ds_subr.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/net/ax25/ax25_ds_subr.c b/net/ax25/ax25_ds_subr.c
+index f00e27df3c76..010b11303d32 100644
+--- a/net/ax25/ax25_ds_subr.c
++++ b/net/ax25/ax25_ds_subr.c
+@@ -156,13 +156,13 @@ static int ax25_check_dama_slave(ax25_dev *ax25_dev)
+ 	ax25_cb *ax25;
+ 	int res = 0;
+ 
+-	spin_lock(&ax25_list_lock);
++	spin_lock_bh(&ax25_list_lock);
+ 	ax25_for_each(ax25, &ax25_list)
+ 		if (ax25->ax25_dev == ax25_dev && (ax25->condition & AX25_COND_DAMA_MODE) && ax25->state > AX25_STATE_1) {
+ 			res = 1;
+ 			break;
+ 		}
+-	spin_unlock(&ax25_list_lock);
++	spin_unlock_bh(&ax25_list_lock);
+ 
+ 	return res;
+ }
 -- 
-Deet-doot-dot, I am a bot.
-https://korg.docs.kernel.org/patchwork/pwbot.html
-
+2.17.1
 
