@@ -1,262 +1,431 @@
-Received: from mailout2.w1.samsung.com (mailout2.w1.samsung.com [210.118.77.12])
+Received: from mx0b-001b2d01.pphosted.com (mx0b-001b2d01.pphosted.com [148.163.158.5])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 467602C1AE;
-	Fri,  5 Apr 2024 06:35:51 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=210.118.77.12
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0937D2032D;
+	Fri,  5 Apr 2024 11:18:50 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=148.163.158.5
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712298953; cv=none; b=haVN7symei8zouhJC+IfhylEnL3BJCgHCxCW9g2Jb/vY4C/XpXRIu+rjN0J/orq3RGosKQhZCcjKne6VprOomymU/blx/GKuHIwSePLjQn6NleQSAqbBSlerbmbJHyU+ENZ1pkRRzEuodZbG+yHXaMSKSPFlQVr9KWIgDS8kdDA=
+	t=1712315933; cv=none; b=h4RBwyV1031u0nogLQl3Tb0ZLMXf5jcCGq5D0UFZHhHpoGa5Zv9EqSdX3+Mot68tHzDUJyZzTzVXOlRoQrHX2mmbokLrXrzLuPd8Nf+DXoARR0IEvtbE/ocrW29qHjMv7OVH7uYEG9h28mS7+gTjhd8E42rmF7fUzAzi+5WUsu8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712298953; c=relaxed/simple;
-	bh=cO1PzXnsl05Oi3CJR79NBSXRD97u81UbzHGkGAWcnc4=;
-	h=Date:From:To:CC:Subject:Message-ID:MIME-Version:Content-Type:
-	 Content-Disposition:In-Reply-To:References; b=b/hDR6ld7SJYZVbEXhJNLyx6ntFFG2XJ9vpNjNA9AamBG7VcuAJwpYHAWPeeO1Hka9DofODSiOe4y4zTUWRoFMc68RsnxyRtwqQ4bgzXo3rPX35Co1v5gS8MxfiqldaN1yzb7Qi1faFyMB1qYT8QUbNwfaPWeBo6z6sy8e9xZ44=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=samsung.com; spf=pass smtp.mailfrom=samsung.com; dkim=pass (1024-bit key) header.d=samsung.com header.i=@samsung.com header.b=vLL9rtI/; arc=none smtp.client-ip=210.118.77.12
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=samsung.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=samsung.com
+	s=arc-20240116; t=1712315933; c=relaxed/simple;
+	bh=fHSjG8AZo0FX4nSlP+Ivgqsk4xVhRJKYEhULtlxYVso=;
+	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
+	 MIME-Version; b=V0TEO0JZ83UCDfvnGAX6nG2yOEq0hnxdancJlfBFGpcbRg6LanBfEvHIle9yumiXysGL1y0fdSDfG9olbpkyNO3hcRVHgiOdP48dn8T2BJg7nVun/ynDR8h2bS2v1lvVnxxdd0mAWxclUiKhPfT4LjEwaIQwGX1/q7bSI274sNQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com; spf=pass smtp.mailfrom=linux.ibm.com; dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.b=MeKmT5pU; arc=none smtp.client-ip=148.163.158.5
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.ibm.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=samsung.com header.i=@samsung.com header.b="vLL9rtI/"
-Received: from eucas1p2.samsung.com (unknown [182.198.249.207])
-	by mailout2.w1.samsung.com (KnoxPortal) with ESMTP id 20240405063549euoutp024dc9ce480a65aa6b4cf156e048429c46~DTtKHMJ1a2835028350euoutp02_;
-	Fri,  5 Apr 2024 06:35:49 +0000 (GMT)
-DKIM-Filter: OpenDKIM Filter v2.11.0 mailout2.w1.samsung.com 20240405063549euoutp024dc9ce480a65aa6b4cf156e048429c46~DTtKHMJ1a2835028350euoutp02_
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=samsung.com;
-	s=mail20170921; t=1712298949;
-	bh=hG667JlBEGcijqfQ0bCFe89iWwdz0RQupU+vCJJh7gI=;
-	h=Date:From:To:CC:Subject:In-Reply-To:References:From;
-	b=vLL9rtI/oHdfrQxFN0DLwcMDnqDors74/koymRS2310QBWeyv31yIBpwkwkoUeTSo
-	 lltrcZvZd/Ns7rpxicR/PWoV+HTsmfTk3gKUVuElEScvN+2fE0ruZYylFndr2yGBkj
-	 TKK9WQk2MZCNyikCJPXKZA6A0NNdI2Tce2aB5uAE=
-Received: from eusmges3new.samsung.com (unknown [203.254.199.245]) by
-	eucas1p1.samsung.com (KnoxPortal) with ESMTP id
-	20240405063549eucas1p125a1262ad66664a4616735348ea5a6aa~DTtJ6z7b90623506235eucas1p1C;
-	Fri,  5 Apr 2024 06:35:49 +0000 (GMT)
-Received: from eucas1p2.samsung.com ( [182.198.249.207]) by
-	eusmges3new.samsung.com (EUCPMTA) with SMTP id 8D.85.09552.4CB9F066; Fri,  5
-	Apr 2024 07:35:49 +0100 (BST)
-Received: from eusmtrp1.samsung.com (unknown [182.198.249.138]) by
-	eucas1p1.samsung.com (KnoxPortal) with ESMTPA id
-	20240405063548eucas1p1500de4f04b0d27fca8f29a1f02ce90b8~DTtJTtNbV3228332283eucas1p1h;
-	Fri,  5 Apr 2024 06:35:48 +0000 (GMT)
-Received: from eusmgms1.samsung.com (unknown [182.198.249.179]) by
-	eusmtrp1.samsung.com (KnoxPortal) with ESMTP id
-	20240405063548eusmtrp15c48b857f1e330de8c899a3144758be0~DTtJSCSo-2498024980eusmtrp1I;
-	Fri,  5 Apr 2024 06:35:48 +0000 (GMT)
-X-AuditID: cbfec7f5-83dff70000002550-38-660f9bc43f5c
-Received: from eusmtip1.samsung.com ( [203.254.199.221]) by
-	eusmgms1.samsung.com (EUCPMTA) with SMTP id 28.88.09146.4CB9F066; Fri,  5
-	Apr 2024 07:35:48 +0100 (BST)
-Received: from CAMSVWEXC02.scsc.local (unknown [106.1.227.72]) by
-	eusmtip1.samsung.com (KnoxPortal) with ESMTPA id
-	20240405063548eusmtip14193961009864e00ad20f3c07538b0c9~DTtI_kPvT1565515655eusmtip1k;
-	Fri,  5 Apr 2024 06:35:48 +0000 (GMT)
-Received: from localhost (106.210.248.50) by CAMSVWEXC02.scsc.local
-	(2002:6a01:e348::6a01:e348) with Microsoft SMTP Server (TLS) id 15.0.1497.2;
-	Fri, 5 Apr 2024 07:35:47 +0100
-Date: Wed, 3 Apr 2024 12:59:13 +0200
-From: Joel Granados <j.granados@samsung.com>
-To: Kuniyuki Iwashima <kuniyu@amazon.com>
-CC: <devnull+j.granados.samsung.com@kernel.org>, <Dai.Ngo@oracle.com>,
-	<alex.aring@gmail.com>, <alibuda@linux.alibaba.com>,
-	<allison.henderson@oracle.com>, <anna@kernel.org>, <bridge@lists.linux.dev>,
-	<chuck.lever@oracle.com>, <coreteam@netfilter.org>, <courmisch@gmail.com>,
-	<davem@davemloft.net>, <dccp@vger.kernel.org>, <dhowells@redhat.com>,
-	<dsahern@kernel.org>, <edumazet@google.com>, <fw@strlen.de>,
-	<geliang@kernel.org>, <guwen@linux.alibaba.com>,
-	<herbert@gondor.apana.org.au>, <horms@verge.net.au>, <ja@ssi.bg>,
-	<jaka@linux.ibm.com>, <jlayton@kernel.org>, <jmaloy@redhat.com>,
-	<jreuter@yaina.de>, <kadlec@netfilter.org>, <keescook@chromium.org>,
-	<kolga@netapp.com>, <kuba@kernel.org>, <linux-afs@lists.infradead.org>,
-	<linux-hams@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-	<linux-nfs@vger.kernel.org>, <linux-rdma@vger.kernel.org>,
-	<linux-s390@vger.kernel.org>, <linux-sctp@vger.kernel.org>,
-	<linux-wpan@vger.kernel.org>, <linux-x25@vger.kernel.org>,
-	<lucien.xin@gmail.com>, <lvs-devel@vger.kernel.org>,
-	<marc.dionne@auristor.com>, <marcelo.leitner@gmail.com>,
-	<martineau@kernel.org>, <matttbe@kernel.org>, <mcgrof@kernel.org>,
-	<miquel.raynal@bootlin.com>, <mptcp@lists.linux.dev>, <ms@dev.tdt.de>,
-	<neilb@suse.de>, <netdev@vger.kernel.org>,
-	<netfilter-devel@vger.kernel.org>, <pabeni@redhat.com>,
-	<pablo@netfilter.org>, <ralf@linux-mips.org>, <razor@blackwall.org>,
-	<rds-devel@oss.oracle.com>, <roopa@nvidia.com>, <stefan@datenfreihafen.org>,
-	<steffen.klassert@secunet.com>, <tipc-discussion@lists.sourceforge.net>,
-	<tom@talpey.com>, <tonylu@linux.alibaba.com>,
-	<trond.myklebust@hammerspace.com>, <wenjia@linux.ibm.com>,
-	<ying.xue@windriver.com>
-Subject: Re: [PATCH v2 4/4] ax.25: Remove the now superfluous sentinel
- elements from ctl_table array
-Message-ID: <20240403105913.o5jc45ijxjixbapw@joelS2.panther.com>
+	dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.b="MeKmT5pU"
+Received: from pps.filterd (m0353724.ppops.net [127.0.0.1])
+	by mx0a-001b2d01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 435AVuWR000631;
+	Fri, 5 Apr 2024 11:18:40 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=from : to : cc : subject
+ : date : message-id : in-reply-to : references : mime-version :
+ content-transfer-encoding; s=pp1;
+ bh=y0LU6CIkPpNU6xA+PTZzNEpure5X6gej72qFqBV1D20=;
+ b=MeKmT5pU6TT475aBEMiFdSZRMZDB2bfpJl6gv1Kgp1uu2pZevuhdhuONOn5o3eVIcw0U
+ wQXza84urhA4aCoLNTnf1/L9YYD0jGDn5PGkVx0X/x9snQDu50iuv8jx4Uy/rD6O26OF
+ 0TbD9GgmwBV+uEn2bZC50055yokSSntABPEknWRnDEvOz5u1Tj3fBdvNYalbTb01/6Lb
+ yKmHG35Kwc6bW/gxlSUl+EI8Ik8dG6O/ki2yWOwN3C/gK2B1Vo6uBmXItcFW/eDriNXK
+ P2kSiQLc2mCpKe2nkOxewJsgEeoVbML9KvKsDG4zz/nM7YlZ+Io++RnICTzP078/2ybk bA== 
+Received: from pps.reinject (localhost [127.0.0.1])
+	by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3xaeakr8dg-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 05 Apr 2024 11:18:39 +0000
+Received: from m0353724.ppops.net (m0353724.ppops.net [127.0.0.1])
+	by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 435BFZP2029550;
+	Fri, 5 Apr 2024 11:18:39 GMT
+Received: from ppma23.wdc07v.mail.ibm.com (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
+	by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3xaeakr8db-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 05 Apr 2024 11:18:39 +0000
+Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
+	by ppma23.wdc07v.mail.ibm.com (8.17.1.19/8.17.1.19) with ESMTP id 4359r2Bi009100;
+	Fri, 5 Apr 2024 11:18:38 GMT
+Received: from smtprelay07.fra02v.mail.ibm.com ([9.218.2.229])
+	by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 3x9epy22kd-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 05 Apr 2024 11:18:38 +0000
+Received: from smtpav01.fra02v.mail.ibm.com (smtpav01.fra02v.mail.ibm.com [10.20.54.100])
+	by smtprelay07.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id 435BIWoG50266600
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+	Fri, 5 Apr 2024 11:18:34 GMT
+Received: from smtpav01.fra02v.mail.ibm.com (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id B0B692004F;
+	Fri,  5 Apr 2024 11:18:32 +0000 (GMT)
+Received: from smtpav01.fra02v.mail.ibm.com (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id 56D212005A;
+	Fri,  5 Apr 2024 11:18:32 +0000 (GMT)
+Received: from tuxmaker.boeblingen.de.ibm.com (unknown [9.152.85.9])
+	by smtpav01.fra02v.mail.ibm.com (Postfix) with ESMTP;
+	Fri,  5 Apr 2024 11:18:32 +0000 (GMT)
+From: Niklas Schnelle <schnelle@linux.ibm.com>
+To: "David S. Miller" <davem@davemloft.net>,
+        Eric Dumazet <edumazet@google.com>, Paolo Abeni <pabeni@redhat.com>
+Cc: Michael Grzeschik <m.grzeschik@pengutronix.de>,
+        Marc Kleine-Budde <mkl@pengutronix.de>,
+        Vincent Mailhol <mailhol.vincent@wanadoo.fr>, netdev@vger.kernel.org,
+        linux-can@vger.kernel.org, intel-wired-lan@lists.osuosl.org,
+        linux-hams@vger.kernel.org, Arnd Bergmann <arnd@kernel.org>,
+        Heiko Carstens <hca@linux.ibm.com>, linux-kernel@vger.kernel.org,
+        Niklas Schnelle <schnelle@linux.ibm.com>
+Subject: [PATCH net-next 1/1] net: handle HAS_IOPORT dependencies
+Date: Fri,  5 Apr 2024 13:18:31 +0200
+Message-Id: <20240405111831.3881080-2-schnelle@linux.ibm.com>
+X-Mailer: git-send-email 2.40.1
+In-Reply-To: <20240405111831.3881080-1-schnelle@linux.ibm.com>
+References: <20240405111831.3881080-1-schnelle@linux.ibm.com>
 Precedence: bulk
 X-Mailing-List: linux-hams@vger.kernel.org
 List-Id: <linux-hams.vger.kernel.org>
 List-Subscribe: <mailto:linux-hams+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-hams+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg="pgp-sha512";
-	protocol="application/pgp-signature"; boundary="w6pan44lwventsuw"
-Content-Disposition: inline
-In-Reply-To: <20240403091625.lk35wt2iqkvabrmr@joelS2.panther.com>
-X-ClientProxiedBy: CAMSVWEXC01.scsc.local (2002:6a01:e347::6a01:e347) To
-	CAMSVWEXC02.scsc.local (2002:6a01:e348::6a01:e348)
-X-Brightmail-Tracker: H4sIAAAAAAAAA2VTa1BUZRj2O7ddNteOiPElODorIBpBVOarlooZc6ofyeBMZk3KyAFJWHBX
-	wss4rYAscrFNmhjxAkisy21RWFeWixIqCDhchAKNy3BXWBRcQEFlE46WM/173ucy3/P8+MSk
-	bZJ4kThIvo9XyP2CZYyEMlZO1r9749SbAe9pJkioUK2GrtI4GlTRMQQcNVkpMGbEE2BtHyDg
-	uUlNgqVrgIbUc4UMnK6PpuB5SzwDTWd6CXgQ+ZQCffFRAvoqu0VgTMxBkBPZRsHlgccMxA86
-	QtSlcQS9P3fT0KwdYWBSmy2CzvFuCiaPvwEn46IIuBUfAkXtvRQ0GI/ToE3IY0BT4wl/XW4n
-	oKn4NAMN5bU09FckUqBJjyKhL22IhrYkLQXlZakIuvMfEhCV+oiEKEsPCVO6KhrqEq0kpOiz
-	SWjV9CG4pr5Cw638SBFMnL1JQlmqioLKtLdAo6+hYKLWjCDZ/CcJt0udoGbMSkBdoYUGy2lX
-	SNIZCCg59kQEhvofoGaqhoCexwMMWFs3bNzE6RriaO5u9zjJPairRtzZ3EPcKVUjxU1NruQM
-	WXcILv76IMmZUtpFnLHcmUsrCOeeVVwUcQXZxxjuRlYewZm61nCac+Voi2y75GN/PjjoR17h
-	sX6nZPfz0n5R2L3F+289/JtQoSoch2zEmP0QD8SoqTgkEduyOoTHGy2McIwhXNxseKlYEG69
-	eR+9iiQVDBOCcB7hP34ZIv91XVA9pYWjEGGNqepFRCymWCc8OiSZSTOsG643t5Ez2I5dgWP1
-	CbN+ki2U4upjLfSMsIANwE86+mazUnYjvjNpN0NL2fm4+mQvNYNJdj8e6bw5ayFZB3x+WjxD
-	27Be+FFZ7iyNWRl+nPOF0PkwrjHcne2M2ca5+F5mBiMIm/FvsYkvhy3Ag1UGkYAdcW1SAiUE
-	khC+Oj0iEo4chLVHxgnBtQ5HN/e+THjhYcsRRnh5Hm4dni/0nIdPGJNJgZbi2Bhbwe2CczrM
-	lAYtS3ltWcpry1L+WybQbjit5BHzP/odrE0fIgX8CdbrH1JpSJSN7PlwZUggr/xAzke4K/1C
-	lOHyQPddoSEF6MVfrZ2uGi9CusFR9wpEiFEFcnoR7r6Q04AWUfJQOS+zk8ZvlAbYSv39Dhzk
-	FaE7FOHBvLICOYgpmb3U2X8Jb8sG+u3j9/B8GK94pRJim0UqQr1kbvDowYgdYRJHz7oyx/eX
-	R/20YCl9NKGkLtt0QM6nZT3ri81fHOG2+sqmL22UrrX2zVt+Z24nF3dcdzkhu+ZPbt57uFTh
-	7usTWuSgECV+HVAtXtvyedGRFdOuprUj285kX+7o1JoHFm7fMzGV71O5bPQbXUTYymjfjwa3
-	9Y2OLamXW8vcntgmj9nfX7EmMnPOBovXLpnoO5/+zp0lnnYxid96SrSpuou+q6gpffPC9Qcj
-	jDZBLt7LzeYgc5xzaL/xs+8N1/O7vCzenfWuVFOTNc/De+/VS7mf/up976tDW5caHDJGG99O
-	d1H7zFnX7LW1J1S9yiOzyZWbM5wud1+r3t1zpV1GKXf7ea4kFUq/fwBFmmt5JgUAAA==
-X-Brightmail-Tracker: H4sIAAAAAAAAA2WTe0yTZxTGeb9bC67zGxT3Dl3UBjZls1IEPThRZJB924zTmP3DsmnBjzst
-	tgU3xa2hitoKsrCMiIyLbChFy7jIbbJ0TGCCAcSJwkCkcgkXZVJvVIRRm2Um++/J7zzPk5OT
-	HCHpel7gIYxRaHiVQh4vYVyotrmW/jWXTy+O9GmpxdCo3QCDl/Q0aA+nEXCkbp6C6iIDAfP9
-	owQ8rztKgnVwlIb8M5UM5HYcpuD5TQMD138YIuB+6jMKTPVHCBhutgigOr0UQWlqHwU1o08Y
-	MIwvA93FRwiGTlpo+LP4bwZmio0CGHhkoWAmYxGc0usIuGpIgNr+IQo6qzNoKD5xgYHMVhl0
-	1/QTcL0+l4FOcxsNI43pFGQW6kgYLpigoS+rmAJzQz4CS9kUAbr8aRJ01rsk2M610NCePk9C
-	jslIwq3MYQS/H/2VhqtlqQJ4nPcHCQ35WgqaC5ZApqmVgsdtkwiyJ2+Q0HXJE1ofzhPQXmml
-	wZq7CrLOVRHwy/GnAqjqiIVWWysBd5+MMjB/a0tQMHeuU09zvZZHJHe//Qri8s4f5E5rr1Gc
-	bcabqyrpITjD5XGSq8vpF3DVZi+uoCKJm20sF3AVxuMM11RygeDqBgO4zDNmtEMSJt2kUiZp
-	+BXRSrUmUPKZDHylsgCQ+voFSGXrNny+0ddfsnbzpr18fEwyr1q7eY80+my9jU4cefNLY4+7
-	FjVhPXIWYtYPZ1XcI+zalf0J4dG6IAdfhssf3qAd2g3PdusZPXJZ8DxAuKt3kHQEKhEeu7dG
-	j4RCivXEDyZc7Jhh38Udk30vLGJ2NT5mOkHbsyRbLsKTpR0vBm5sJH56exjZsyI2CPfMiB39
-	qQS2mCYYu0fEvoavnBqi7Jpkk3HXaBVj95PsUnx2TmjHzuxWPN1w/kUNZiX4SelHjpUPYevz
-	EZSJ3HJeKsp5qSjnvyIH9sa35saI/+F3cHHhBOnQgdhkmqIKkMCIxHySOiEqQS2TquUJ6iRF
-	lDRCmVCBFl6lunmmshbljT+QNiJCiBqR50LS8nNpJ/KgFEoFLxGLDEGiSFfRXvlXB3iVcrcq
-	KZ5XNyL/hRt+S3q4RygX/k6h2S1b7+Mv81sf4OMfsH6d5HXRh4nH5K5slFzDx/F8Iq/6N0cI
-	nT20hDnycGyJV1FwZ3jvJ92hPmNFtQerhftJ9++Wh8wu3pVxsm25Uwp6IyhoTfTN/V88e7/s
-	1dAPprZ8I2SvJYeL0UCY153YouTmwriQK9v2zWxJ+RgFGyt2BLZE6H5rWRU/5vv1vrGUKlXb
-	XJNm/MbAaienyqVnm840l2ybm56+/dcSMfcjfVQiUU0f8ah/ZpvYmnsgZaWS3VDh7hIbb3p4
-	aWMXH1a2fXuG/1vm6OzxwE3BF2MGQhMfo4aaOM+k/sqEzojsjZqVO3fHpb2X/L3x+p6BkGXh
-	l9OjonfODilS7rSko1emumTz4c4XdG+njZvF8qV1VdqaNgyLNtu8Pt11aMgz0jo7IKHU0XKZ
-	N6lSy/8BW/wH478EAAA=
-X-CMS-MailID: 20240405063548eucas1p1500de4f04b0d27fca8f29a1f02ce90b8
-X-Msg-Generator: CA
-X-RootMTR: 20240328195008eucas1p2fc32577c64a80424c10f30e4f69fc11a
-X-EPHeader: CA
-CMS-TYPE: 201P
-X-CMS-RootMailID: 20240328195008eucas1p2fc32577c64a80424c10f30e4f69fc11a
-References: <20240328-jag-sysctl_remset_net-v2-4-52c9fad9a1af@samsung.com>
-	<CGME20240328195008eucas1p2fc32577c64a80424c10f30e4f69fc11a@eucas1p2.samsung.com>
-	<20240328194934.42278-1-kuniyu@amazon.com>
-	<20240403091625.lk35wt2iqkvabrmr@joelS2.panther.com>
+Content-Transfer-Encoding: 8bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-ORIG-GUID: RjhKE1gq53wuWnpSjOfs6S1Tu_sQCDJp
+X-Proofpoint-GUID: CptBld5yXKFHbap5VtUybL33TKqLcOoH
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2024-04-05_10,2024-04-04_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 malwarescore=0
+ priorityscore=1501 suspectscore=0 bulkscore=0 spamscore=0 mlxlogscore=999
+ mlxscore=0 impostorscore=0 phishscore=0 clxscore=1015 adultscore=0
+ lowpriorityscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2404010000 definitions=main-2404050081
 
---w6pan44lwventsuw
-Content-Type: text/plain; charset="us-ascii"
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+In a future patch HAS_IOPORT=n will disable inb()/outb() and friends at
+compile time. We thus need to add HAS_IOPORT as dependency for
+those drivers requiring them. For the DEFXX driver the use of I/O
+ports is optional and we only need to fence specific code paths. It also
+turns out that with HAS_IOPORT handled explicitly HAMRADIO does not need
+the !S390 dependency and successfully builds the bpqether driver.
 
-On Wed, Apr 03, 2024 at 11:16:25AM +0200, Joel Granados wrote:
-> On Thu, Mar 28, 2024 at 12:49:34PM -0700, Kuniyuki Iwashima wrote:
-> > From: Joel Granados via B4 Relay <devnull+j.granados.samsung.com@kernel=
-=2Eorg>
-> > Date: Thu, 28 Mar 2024 16:40:05 +0100
-> > > This commit comes at the tail end of a greater effort to remove the
-> > > empty elements at the end of the ctl_table arrays (sentinels) which w=
-ill
-> > > reduce the overall build time size of the kernel and run time memory
-> > > bloat by ~64 bytes per sentinel (further information Link :
-> > > https://lore.kernel.org/all/ZO5Yx5JFogGi%2FcBo@bombadil.infradead.org=
-/)
-> > >=20
-> > > When we remove the sentinel from ax25_param_table a buffer overflow
-> > > shows its ugly head. The sentinel's data element used to be changed w=
-hen
-> > > CONFIG_AX25_DAMA_SLAVE was not defined.
-> >=20
-> > I think it's better to define the relation explicitly between the
-> > enum and sysctl table by BUILD_BUG_ON() in ax25_register_dev_sysctl()
-> >=20
-> >   BUILD_BUG_ON(AX25_MAX_VALUES !=3D ARRAY_SIZE(ax25_param_table));
-> >=20
-> > and guard AX25_VALUES_DS_TIMEOUT with #ifdef CONFIG_AX25_DAMA_SLAVE
-> > as done for other enum.
-> This is a great idea. I'll also try to look and see where else I can add
-> the explicit relation check.
->=20
-> Thx for the review
->=20
-> >=20
-> >=20
-> > > This did not have any adverse
-> > > effects as we still stopped on the sentinel because of its null
-> > > procname. But now that we do not have the sentinel element, we are
-> > > careful to check ax25_param_table's size.
-> > >=20
-> > > Signed-off-by: Joel Granados <j.granados@samsung.com>
-> > > ---
-> > >  net/ax25/sysctl_net_ax25.c | 4 +---
-> > >  1 file changed, 1 insertion(+), 3 deletions(-)
-> > >=20
-> > > diff --git a/net/ax25/sysctl_net_ax25.c b/net/ax25/sysctl_net_ax25.c
-> > > index db66e11e7fe8..e55be8817a1e 100644
-> > > --- a/net/ax25/sysctl_net_ax25.c
-> > > +++ b/net/ax25/sysctl_net_ax25.c
-> > > @@ -141,8 +141,6 @@ static const struct ctl_table ax25_param_table[] =
-=3D {
-> > >  		.extra2		=3D &max_ds_timeout
-> > >  	},
-> > >  #endif
-> > > -
-> > > -	{ }	/* that's all, folks! */
-> > >  };
-> > > =20
-> > >  int ax25_register_dev_sysctl(ax25_dev *ax25_dev)
-> > > @@ -155,7 +153,7 @@ int ax25_register_dev_sysctl(ax25_dev *ax25_dev)
-> > >  	if (!table)
-> > >  		return -ENOMEM;
-> > > =20
-> > > -	for (k =3D 0; k < AX25_MAX_VALUES; k++)
-> > > +	for (k =3D 0; k < AX25_MAX_VALUES && k < ARRAY_SIZE(ax25_param_tabl=
-e); k++)
-And with the BUILD_BUG_ON we don't need to do the `k <
-ARRAY_SIZE(ax25_param_table)` any longer. Win/win :)
+Acked-by: Marc Kleine-Budde <mkl@pengutronix.de>
+Acked-by: Jakub Kicinski <kuba@kernel.org>
+Acked-by: Maciej W. Rozycki <macro@orcam.me.uk>
+Co-developed-by: Arnd Bergmann <arnd@kernel.org>
+Signed-off-by: Arnd Bergmann <arnd@kernel.org>
+Signed-off-by: Niklas Schnelle <schnelle@linux.ibm.com>
+---
+Note: This patch does not depend any not-yet-mainline HAS_IOPORT changes
+and may be merged via subsystem specific trees at your earliest
+convenience.
 
-> > >  		table[k].data =3D &ax25_dev->values[k];
-> > > =20
-> > >  	snprintf(path, sizeof(path), "net/ax25/%s", ax25_dev->dev->name);
-> > >=20
-> > > --=20
-> > > 2.43.0
->=20
-> --=20
->=20
-> Joel Granados
+ drivers/net/Kconfig                  | 2 +-
+ drivers/net/arcnet/Kconfig           | 2 +-
+ drivers/net/can/cc770/Kconfig        | 1 +
+ drivers/net/can/sja1000/Kconfig      | 1 +
+ drivers/net/ethernet/3com/Kconfig    | 4 ++--
+ drivers/net/ethernet/8390/Kconfig    | 6 +++---
+ drivers/net/ethernet/amd/Kconfig     | 4 ++--
+ drivers/net/ethernet/fujitsu/Kconfig | 2 +-
+ drivers/net/ethernet/intel/Kconfig   | 2 +-
+ drivers/net/ethernet/sis/Kconfig     | 4 ++--
+ drivers/net/ethernet/smsc/Kconfig    | 2 +-
+ drivers/net/ethernet/ti/Kconfig      | 2 +-
+ drivers/net/ethernet/via/Kconfig     | 1 +
+ drivers/net/ethernet/xircom/Kconfig  | 2 +-
+ drivers/net/fddi/defxx.c             | 2 +-
+ drivers/net/hamradio/Kconfig         | 6 +++---
+ drivers/net/wan/Kconfig              | 2 +-
+ net/ax25/Kconfig                     | 2 +-
+ 18 files changed, 25 insertions(+), 22 deletions(-)
 
+diff --git a/drivers/net/Kconfig b/drivers/net/Kconfig
+index 8ca0bc223b30..82a1e77ce57a 100644
+--- a/drivers/net/Kconfig
++++ b/drivers/net/Kconfig
+@@ -507,7 +507,7 @@ source "drivers/net/ipa/Kconfig"
+ 
+ config NET_SB1000
+ 	tristate "General Instruments Surfboard 1000"
+-	depends on PNP
++	depends on ISA && PNP
+ 	help
+ 	  This is a driver for the General Instrument (also known as
+ 	  NextLevel) SURFboard 1000 internal
+diff --git a/drivers/net/arcnet/Kconfig b/drivers/net/arcnet/Kconfig
+index a51b9dab6d3a..d1d07a1d4fbc 100644
+--- a/drivers/net/arcnet/Kconfig
++++ b/drivers/net/arcnet/Kconfig
+@@ -4,7 +4,7 @@
+ #
+ 
+ menuconfig ARCNET
+-	depends on NETDEVICES && (ISA || PCI || PCMCIA)
++	depends on NETDEVICES && (ISA || PCI || PCMCIA) && HAS_IOPORT
+ 	tristate "ARCnet support"
+ 	help
+ 	  If you have a network card of this type, say Y and check out the
+diff --git a/drivers/net/can/cc770/Kconfig b/drivers/net/can/cc770/Kconfig
+index 9ef1359319f0..467ef19de1c1 100644
+--- a/drivers/net/can/cc770/Kconfig
++++ b/drivers/net/can/cc770/Kconfig
+@@ -7,6 +7,7 @@ if CAN_CC770
+ 
+ config CAN_CC770_ISA
+ 	tristate "ISA Bus based legacy CC770 driver"
++	depends on ISA
+ 	help
+ 	  This driver adds legacy support for CC770 and AN82527 chips
+ 	  connected to the ISA bus using I/O port, memory mapped or
+diff --git a/drivers/net/can/sja1000/Kconfig b/drivers/net/can/sja1000/Kconfig
+index 4b2f9cb17fc3..01168db4c106 100644
+--- a/drivers/net/can/sja1000/Kconfig
++++ b/drivers/net/can/sja1000/Kconfig
+@@ -87,6 +87,7 @@ config CAN_PLX_PCI
+ 
+ config CAN_SJA1000_ISA
+ 	tristate "ISA Bus based legacy SJA1000 driver"
++	depends on ISA
+ 	help
+ 	  This driver adds legacy support for SJA1000 chips connected to
+ 	  the ISA bus using I/O port, memory mapped or indirect access.
+diff --git a/drivers/net/ethernet/3com/Kconfig b/drivers/net/ethernet/3com/Kconfig
+index 706bd59bf645..1fbab79e2be4 100644
+--- a/drivers/net/ethernet/3com/Kconfig
++++ b/drivers/net/ethernet/3com/Kconfig
+@@ -44,7 +44,7 @@ config 3C515
+ 
+ config PCMCIA_3C574
+ 	tristate "3Com 3c574 PCMCIA support"
+-	depends on PCMCIA
++	depends on PCMCIA && HAS_IOPORT
+ 	help
+ 	  Say Y here if you intend to attach a 3Com 3c574 or compatible PCMCIA
+ 	  (PC-card) Fast Ethernet card to your computer.
+@@ -54,7 +54,7 @@ config PCMCIA_3C574
+ 
+ config PCMCIA_3C589
+ 	tristate "3Com 3c589 PCMCIA support"
+-	depends on PCMCIA
++	depends on PCMCIA && HAS_IOPORT
+ 	help
+ 	  Say Y here if you intend to attach a 3Com 3c589 or compatible PCMCIA
+ 	  (PC-card) Ethernet card to your computer.
+diff --git a/drivers/net/ethernet/8390/Kconfig b/drivers/net/ethernet/8390/Kconfig
+index a4130e643342..345f250781c6 100644
+--- a/drivers/net/ethernet/8390/Kconfig
++++ b/drivers/net/ethernet/8390/Kconfig
+@@ -19,7 +19,7 @@ if NET_VENDOR_8390
+ 
+ config PCMCIA_AXNET
+ 	tristate "Asix AX88190 PCMCIA support"
+-	depends on PCMCIA
++	depends on PCMCIA && HAS_IOPORT
+ 	help
+ 	  Say Y here if you intend to attach an Asix AX88190-based PCMCIA
+ 	  (PC-card) Fast Ethernet card to your computer.  These cards are
+@@ -117,7 +117,7 @@ config NE2000
+ 
+ config NE2K_PCI
+ 	tristate "PCI NE2000 and clones support (see help)"
+-	depends on PCI
++	depends on PCI && HAS_IOPORT
+ 	select CRC32
+ 	help
+ 	  This driver is for NE2000 compatible PCI cards. It will not work
+@@ -146,7 +146,7 @@ config APNE
+ 
+ config PCMCIA_PCNET
+ 	tristate "NE2000 compatible PCMCIA support"
+-	depends on PCMCIA
++	depends on PCMCIA && HAS_IOPORT
+ 	select CRC32
+ 	help
+ 	  Say Y here if you intend to attach an NE2000 compatible PCMCIA
+diff --git a/drivers/net/ethernet/amd/Kconfig b/drivers/net/ethernet/amd/Kconfig
+index f8cc8925161c..b39c6f3e1eda 100644
+--- a/drivers/net/ethernet/amd/Kconfig
++++ b/drivers/net/ethernet/amd/Kconfig
+@@ -56,7 +56,7 @@ config LANCE
+ 
+ config PCNET32
+ 	tristate "AMD PCnet32 PCI support"
+-	depends on PCI
++	depends on PCI && HAS_IOPORT
+ 	select CRC32
+ 	select MII
+ 	help
+@@ -122,7 +122,7 @@ config MVME147_NET
+ 
+ config PCMCIA_NMCLAN
+ 	tristate "New Media PCMCIA support"
+-	depends on PCMCIA
++	depends on PCMCIA && HAS_IOPORT
+ 	help
+ 	  Say Y here if you intend to attach a New Media Ethernet or LiveWire
+ 	  PCMCIA (PC-card) Ethernet card to your computer.
+diff --git a/drivers/net/ethernet/fujitsu/Kconfig b/drivers/net/ethernet/fujitsu/Kconfig
+index 0a1400cb410a..06a28bce5d27 100644
+--- a/drivers/net/ethernet/fujitsu/Kconfig
++++ b/drivers/net/ethernet/fujitsu/Kconfig
+@@ -18,7 +18,7 @@ if NET_VENDOR_FUJITSU
+ 
+ config PCMCIA_FMVJ18X
+ 	tristate "Fujitsu FMV-J18x PCMCIA support"
+-	depends on PCMCIA
++	depends on PCMCIA && HAS_IOPORT
+ 	select CRC32
+ 	help
+ 	  Say Y here if you intend to attach a Fujitsu FMV-J18x or compatible
+diff --git a/drivers/net/ethernet/intel/Kconfig b/drivers/net/ethernet/intel/Kconfig
+index 639fbb12bd35..6e7901e12699 100644
+--- a/drivers/net/ethernet/intel/Kconfig
++++ b/drivers/net/ethernet/intel/Kconfig
+@@ -41,7 +41,7 @@ config E100
+ 
+ config E1000
+ 	tristate "Intel(R) PRO/1000 Gigabit Ethernet support"
+-	depends on PCI
++	depends on PCI && HAS_IOPORT
+ 	help
+ 	  This driver supports Intel(R) PRO/1000 gigabit ethernet family of
+ 	  adapters.  For more information on how to identify your adapter, go
+diff --git a/drivers/net/ethernet/sis/Kconfig b/drivers/net/ethernet/sis/Kconfig
+index 775d76d9890e..7e498bdbca73 100644
+--- a/drivers/net/ethernet/sis/Kconfig
++++ b/drivers/net/ethernet/sis/Kconfig
+@@ -19,7 +19,7 @@ if NET_VENDOR_SIS
+ 
+ config SIS900
+ 	tristate "SiS 900/7016 PCI Fast Ethernet Adapter support"
+-	depends on PCI
++	depends on PCI && HAS_IOPORT
+ 	select CRC32
+ 	select MII
+ 	help
+@@ -35,7 +35,7 @@ config SIS900
+ 
+ config SIS190
+ 	tristate "SiS190/SiS191 gigabit ethernet support"
+-	depends on PCI
++	depends on PCI && HAS_IOPORT
+ 	select CRC32
+ 	select MII
+ 	help
+diff --git a/drivers/net/ethernet/smsc/Kconfig b/drivers/net/ethernet/smsc/Kconfig
+index 5f22a8a4d27b..13ce9086a9ca 100644
+--- a/drivers/net/ethernet/smsc/Kconfig
++++ b/drivers/net/ethernet/smsc/Kconfig
+@@ -54,7 +54,7 @@ config SMC91X
+ 
+ config PCMCIA_SMC91C92
+ 	tristate "SMC 91Cxx PCMCIA support"
+-	depends on PCMCIA
++	depends on PCMCIA && HAS_IOPORT
+ 	select CRC32
+ 	select MII
+ 	help
+diff --git a/drivers/net/ethernet/ti/Kconfig b/drivers/net/ethernet/ti/Kconfig
+index 1530d13984d4..cfe9bd6b1d62 100644
+--- a/drivers/net/ethernet/ti/Kconfig
++++ b/drivers/net/ethernet/ti/Kconfig
+@@ -167,7 +167,7 @@ config TI_KEYSTONE_NETCP_ETHSS
+ 
+ config TLAN
+ 	tristate "TI ThunderLAN support"
+-	depends on (PCI || EISA)
++	depends on (PCI || EISA) && HAS_IOPORT
+ 	help
+ 	  If you have a PCI Ethernet network card based on the ThunderLAN chip
+ 	  which is supported by this driver, say Y here.
+diff --git a/drivers/net/ethernet/via/Kconfig b/drivers/net/ethernet/via/Kconfig
+index da287ef65be7..00773f5e4d7e 100644
+--- a/drivers/net/ethernet/via/Kconfig
++++ b/drivers/net/ethernet/via/Kconfig
+@@ -20,6 +20,7 @@ config VIA_RHINE
+ 	tristate "VIA Rhine support"
+ 	depends on PCI || (OF_IRQ && GENERIC_PCI_IOMAP)
+ 	depends on PCI || ARCH_VT8500 || COMPILE_TEST
++	depends on HAS_IOPORT
+ 	depends on HAS_DMA
+ 	select CRC32
+ 	select MII
+diff --git a/drivers/net/ethernet/xircom/Kconfig b/drivers/net/ethernet/xircom/Kconfig
+index 7497b9bea511..bfbdcf758afb 100644
+--- a/drivers/net/ethernet/xircom/Kconfig
++++ b/drivers/net/ethernet/xircom/Kconfig
+@@ -19,7 +19,7 @@ if NET_VENDOR_XIRCOM
+ 
+ config PCMCIA_XIRC2PS
+ 	tristate "Xircom 16-bit PCMCIA support"
+-	depends on PCMCIA
++	depends on PCMCIA && HAS_IOPORT
+ 	help
+ 	  Say Y here if you intend to attach a Xircom 16-bit PCMCIA (PC-card)
+ 	  Ethernet or Fast Ethernet card to your computer.
+diff --git a/drivers/net/fddi/defxx.c b/drivers/net/fddi/defxx.c
+index 1fef8a9b1a0f..0fbbb7286008 100644
+--- a/drivers/net/fddi/defxx.c
++++ b/drivers/net/fddi/defxx.c
+@@ -254,7 +254,7 @@ static const char version[] =
+ #define DFX_BUS_TC(dev) 0
+ #endif
+ 
+-#if defined(CONFIG_EISA) || defined(CONFIG_PCI)
++#ifdef CONFIG_HAS_IOPORT
+ #define dfx_use_mmio bp->mmio
+ #else
+ #define dfx_use_mmio true
+diff --git a/drivers/net/hamradio/Kconfig b/drivers/net/hamradio/Kconfig
+index 25b1f929c422..36a9aade9f33 100644
+--- a/drivers/net/hamradio/Kconfig
++++ b/drivers/net/hamradio/Kconfig
+@@ -83,7 +83,7 @@ config SCC_TRXECHO
+ 
+ config BAYCOM_SER_FDX
+ 	tristate "BAYCOM ser12 fullduplex driver for AX.25"
+-	depends on AX25 && !S390
++	depends on AX25 && HAS_IOPORT
+ 	select CRC_CCITT
+ 	help
+ 	  This is one of two drivers for Baycom style simple amateur radio
+@@ -103,7 +103,7 @@ config BAYCOM_SER_FDX
+ 
+ config BAYCOM_SER_HDX
+ 	tristate "BAYCOM ser12 halfduplex driver for AX.25"
+-	depends on AX25 && !S390
++	depends on AX25 && HAS_IOPORT
+ 	select CRC_CCITT
+ 	help
+ 	  This is one of two drivers for Baycom style simple amateur radio
+@@ -150,7 +150,7 @@ config BAYCOM_EPP
+ 
+ config YAM
+ 	tristate "YAM driver for AX.25"
+-	depends on AX25 && !S390
++	depends on AX25 && HAS_IOPORT
+ 	help
+ 	  The YAM is a modem for packet radio which connects to the serial
+ 	  port and includes some of the functions of a Terminal Node
+diff --git a/drivers/net/wan/Kconfig b/drivers/net/wan/Kconfig
+index 31ab2136cdf1..67be9857c86c 100644
+--- a/drivers/net/wan/Kconfig
++++ b/drivers/net/wan/Kconfig
+@@ -180,7 +180,7 @@ config C101
+ 
+ config FARSYNC
+ 	tristate "FarSync T-Series support"
+-	depends on HDLC && PCI
++	depends on HDLC && PCI && HAS_IOPORT
+ 	help
+ 	  Support for the FarSync T-Series X.21 (and V.35/V.24) cards by
+ 	  FarSite Communications Ltd.
+diff --git a/net/ax25/Kconfig b/net/ax25/Kconfig
+index fdb666607f10..e23a3dc14b93 100644
+--- a/net/ax25/Kconfig
++++ b/net/ax25/Kconfig
+@@ -4,7 +4,7 @@
+ #
+ 
+ menuconfig HAMRADIO
+-	depends on NET && !S390
++	depends on NET
+ 	bool "Amateur Radio support"
+ 	help
+ 	  If you want to connect your Linux box to an amateur radio, answer Y
+-- 
+2.40.1
 
-
---=20
-
-Joel Granados
-
---w6pan44lwventsuw
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQGzBAABCgAdFiEErkcJVyXmMSXOyyeQupfNUreWQU8FAmYNNoEACgkQupfNUreW
-QU/2xwv+MItPQYrz+S6dRg4Ai/4AcELCorzBdY4bODL7PVt21oRNRzkdPrq6w6ju
-ZFVkQH/WIICFHeGJ9RJGwF/e3xOzwTpg3GK0xE0s3YT4eO2R/dzV7LyIGklp7WT2
-bsnrm2zhkiKp7OZHIhHUze9HniHLvoBiJPVAMMe3YXMkEtrjxfqLOVNnyKxuHjdD
-1QuYwZvFvCXZt/1y0B/vvCeaq+hlNidK29TRRU0Bmqb4jE9WYTYtBkwxLDPw9mNo
-kZ3nbaxct86hWGyWHXS9mYjySkRbS2JqHXYoDV+u0S51ufVgo7crYSL9E93t0hu2
-O6wCfXcUw2vcypp/jivDaSw5x9ULQWg4ITiWl3wxxsaRjoUwVl7IfOk1nQYwOsCE
-K138v1DytuqhzXRyLYYf6yEfug89HG762oB0V3UAxqx6uYQlpc99DhP2ejynYco2
-Ae8GVoKvakSl5NpefEu2btStO3NdM9rueEYF77z5oIYhbkC0YnkyJZz6zDtMQY/M
-7yoIH3I9
-=Ju+L
------END PGP SIGNATURE-----
-
---w6pan44lwventsuw--
