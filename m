@@ -1,112 +1,90 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mout.web.de (mout.web.de [212.227.17.11])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C632E1509B5;
-	Fri,  3 May 2024 12:40:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 96FA515098B;
+	Fri,  3 May 2024 13:39:31 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.17.11
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714740032; cv=none; b=L6xPmDXrH9ljH/IKjKIchrOYbVbKi4rXHhuW8N5vKRyb0X2DQwyrIuip1kKRdqDCHsUY+arSKPr0Tx0pZFIkFxXdtavye60UAPsLoKDkn87zg9npehElpEi5DoNGZhvcFmfCXdhf8hvF0QCfR7VcL8Vw6HhaexysY3inqFyY890=
+	t=1714743574; cv=none; b=ew0nzqYHbLHUpKp6h7sYjYEHtlvnLNVXSXtQOkvxi2bodL9Qq4nYyk60n6cjefDqW/HYxU1rVoogzoxORG4v8DOcBRUIkLVXjg45DfgeY5biUn76uXlwxu5/TyDGKV9J0+1ar2E+1+T1xsXAsdNsgj9eLvYPh6FpwLE3rwHPh58=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714740032; c=relaxed/simple;
-	bh=ZQIGy3VXyjpVMSPeQXlgXY8wIwpxUclQuAZTLhiqvb0=;
-	h=Content-Type:MIME-Version:Subject:From:Message-Id:Date:References:
-	 In-Reply-To:To:Cc; b=PMOCsOGadK1SDPphmkkrSPEq0If1OlTCplRc2e1ctrqFQi4Q0hF7Fn6S4mR0CvNyTBNSrPqUUgy/Je99EEi9Mq3OSgh18ACms8Ih5QXkDuXzGwGCc4IY2lAnccfSwfSCplCitx4WpwG9fHfhEadhceKHiR2g/i8UVIL2C3kEH68=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=lpTqqxGO; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1714743574; c=relaxed/simple;
+	bh=wo0QU62gAcbFwDG11bIh1nXKjLRrclnV6zmqslwIfeA=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=oWZ5b2Ycr492zhS+w6YM/19dR/X4BfEYyf5Hm42HO1cYXCs9If/tp84rGFjL9jYn4/wDLG6rTo2nM1MNir4uN6wOcTxwSonMHO6CBfObf9EQX1q8Iw9B+KD22UsYYDJdn6s90KgcbGWuxR7ISNVYaGtchhRAUGYnrgwd9gEIpNc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de; spf=pass smtp.mailfrom=web.de; dkim=pass (2048-bit key) header.d=web.de header.i=markus.elfring@web.de header.b=hj4XE+y7; arc=none smtp.client-ip=212.227.17.11
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=web.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="lpTqqxGO"
-Received: by smtp.kernel.org (Postfix) with ESMTPS id 4EFC9C2BBFC;
-	Fri,  3 May 2024 12:40:31 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1714740031;
-	bh=ZQIGy3VXyjpVMSPeQXlgXY8wIwpxUclQuAZTLhiqvb0=;
-	h=Subject:From:Date:References:In-Reply-To:To:Cc:From;
-	b=lpTqqxGOOyeBYFaVqPWVBOSrF1uEPcrBw9mt9i+INNn+8jXFXP1MQGWTLdtQ08+gy
-	 WxB8nqmJCrdGXrQ69iXoStWWonk0xC1+hRY3pMr4qKwunZJvDGjQV0osOVqDM/CSkY
-	 ewO7OhWFQ8Di78EP3uuxgdyczZsW6HKMpxqIbmiviGq0XjEuT7FxAon/a6wcYHd1Ze
-	 cWNvFRYQc34ntJ7l1Udkf0twoBHQzUYhVry2lhblNdvbY7Esza3PMZzDMGHlTIrBt0
-	 2gasi9LrYO65R9XiWHOETtBCQYSrm6fQnW1ly4m/gjzukVTaXrvsjeaLoC4jRhFXh/
-	 0BUWTyFLcInxw==
-Received: from aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (localhost.localdomain [127.0.0.1])
-	by aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (Postfix) with ESMTP id 35AB9C4339F;
-	Fri,  3 May 2024 12:40:31 +0000 (UTC)
-Content-Type: text/plain; charset="utf-8"
+	dkim=pass (2048-bit key) header.d=web.de header.i=markus.elfring@web.de header.b="hj4XE+y7"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=web.de;
+	s=s29768273; t=1714743543; x=1715348343; i=markus.elfring@web.de;
+	bh=IGI0qz3dQ+k6A0uofqhrJJ6evY2iyX3SxlzugUF9+xc=;
+	h=X-UI-Sender-Class:Message-ID:Date:MIME-Version:Subject:To:Cc:
+	 References:From:In-Reply-To:Content-Type:
+	 Content-Transfer-Encoding:cc:content-transfer-encoding:
+	 content-type:date:from:message-id:mime-version:reply-to:subject:
+	 to;
+	b=hj4XE+y7o7C/GGnH6feTPHHSTb5ZeeZanw9AfycUnW3EUCwkR9guSftjaySEEAzk
+	 fSXVjDe/uWDzNfRp8vul2zb7alMn0argtyLEmTfwEh1oPtPJBpdcVt298qcJ9FgW8
+	 cyshmHA71QySuJre0VUCQQddtsVcDPBUK1UhTtBpmpjvrC0/WoSlNbaS+So5zgNNP
+	 3a9nYJw5JJm1I2cr9YIQ1MgQflHV70N864pHxhzow92e+iGY9CP/f2exD1nu5FePm
+	 BDE5mVCzCAtzS04DXMzKW48ENt+uF/Q9r18EiZ9MZAbututpUi+Rd73brFBEgE6LZ
+	 MfOkqjtNPjoqHjrbBw==
+X-UI-Sender-Class: 814a7b36-bfc1-4dae-8640-3722d8ec6cd6
+Received: from [192.168.178.21] ([94.31.83.95]) by smtp.web.de (mrweb105
+ [213.165.67.124]) with ESMTPSA (Nemesis) id 1MMGuC-1sJsHI3kNK-00Hhez; Fri, 03
+ May 2024 15:39:02 +0200
+Message-ID: <86a187fc-f5c1-4dd2-b04f-4bb645312778@web.de>
+Date: Fri, 3 May 2024 15:39:00 +0200
 Precedence: bulk
 X-Mailing-List: linux-hams@vger.kernel.org
 List-Id: <linux-hams.vger.kernel.org>
 List-Subscribe: <mailto:linux-hams+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-hams+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Subject: Re: [PATCH net-next v6 1/8] net: Remove the now superfluous sentinel
- elements from ctl_table array
-From: patchwork-bot+netdevbpf@kernel.org
-Message-Id: 
- <171474003121.32261.9596059257751321282.git-patchwork-notify@kernel.org>
-Date: Fri, 03 May 2024 12:40:31 +0000
-References: <20240501-jag-sysctl_remset_net-v6-1-370b702b6b4a@samsung.com>
-In-Reply-To: <20240501-jag-sysctl_remset_net-v6-1-370b702b6b4a@samsung.com>
-To: Joel Granados via B4 Relay <devnull+j.granados.samsung.com@kernel.org>
-Cc: davem@davemloft.net, edumazet@google.com, kuba@kernel.org,
- pabeni@redhat.com, alex.aring@gmail.com, stefan@datenfreihafen.org,
- miquel.raynal@bootlin.com, dsahern@kernel.org, steffen.klassert@secunet.com,
- herbert@gondor.apana.org.au, matttbe@kernel.org, martineau@kernel.org,
- geliang@kernel.org, ralf@linux-mips.org, courmisch@gmail.com,
- allison.henderson@oracle.com, dhowells@redhat.com, marc.dionne@auristor.com,
- marcelo.leitner@gmail.com, lucien.xin@gmail.com, wenjia@linux.ibm.com,
- jaka@linux.ibm.com, alibuda@linux.alibaba.com, tonylu@linux.alibaba.com,
- guwen@linux.alibaba.com, trond.myklebust@hammerspace.com, anna@kernel.org,
- chuck.lever@oracle.com, jlayton@kernel.org, neilb@suse.de, kolga@netapp.com,
- Dai.Ngo@oracle.com, tom@talpey.com, jmaloy@redhat.com,
- ying.xue@windriver.com, ms@dev.tdt.de, pablo@netfilter.org,
- kadlec@netfilter.org, fw@strlen.de, roopa@nvidia.com, razor@blackwall.org,
- horms@verge.net.au, ja@ssi.bg, jreuter@yaina.de, mcgrof@kernel.org,
- keescook@chromium.org, netdev@vger.kernel.org, linux-kernel@vger.kernel.org,
- dccp@vger.kernel.org, linux-wpan@vger.kernel.org, mptcp@lists.linux.dev,
- linux-hams@vger.kernel.org, linux-rdma@vger.kernel.org,
- rds-devel@oss.oracle.com, linux-afs@lists.infradead.org,
- linux-sctp@vger.kernel.org, linux-s390@vger.kernel.org,
- linux-nfs@vger.kernel.org, tipc-discussion@lists.sourceforge.net,
- linux-x25@vger.kernel.org, netfilter-devel@vger.kernel.org,
- coreteam@netfilter.org, bridge@lists.linux.dev, lvs-devel@vger.kernel.org,
- j.granados@samsung.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [v2 2/2] ax25: fix potential reference counting leak in
+ ax25_addr_ax25dev
+To: Dan Carpenter <dan.carpenter@linaro.org>,
+ Duoming Zhou <duoming@zju.edu.cn>, linux-hams@vger.kernel.org,
+ netdev@vger.kernel.org, kernel-janitors@vger.kernel.org
+Cc: "David S. Miller" <davem@davemloft.net>,
+ Eric Dumazet <edumazet@google.com>, Jakub Kicinski <kuba@kernel.org>,
+ =?UTF-8?Q?J=C3=B6rg_Reuter?= <jreuter@yaina.de>,
+ Paolo Abeni <pabeni@redhat.com>, LKML <linux-kernel@vger.kernel.org>,
+ Lars Kellogg-Stedman <lars@oddbit.com>, Simon Horman <horms@kernel.org>
+References: <cover.1714690906.git.duoming@zju.edu.cn>
+ <74e840d98f2bfc79c6059993b2fc1ed3888faba4.1714690906.git.duoming@zju.edu.cn>
+ <6eac7fc4-9ade-41bb-a861-d7f339b388f6@web.de>
+ <e471ec93-6182-4af0-9584-a35e2680c66d@moroto.mountain>
+Content-Language: en-GB
+From: Markus Elfring <Markus.Elfring@web.de>
+In-Reply-To: <e471ec93-6182-4af0-9584-a35e2680c66d@moroto.mountain>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Provags-ID: V03:K1:nd2DQJfArES+9w/0Cx8G6oyBYfgMbxDGGon9AdjSeBibAva6QhB
+ ARFO7Opz/0DOWAqwFPikyiG6wRJU6a27FBubqwGweudrWiVWgh0G1PB+0zqr5b8trETu5xR
+ p+ps/e8YWVJpqEhsnFR/yKVxF04WJBy6rn0HH4rI4xTEnQAMHc4Jd7xOdjUvO0vSWNLNoE3
+ PQZdAjTASvjJe9nbGpr8g==
+X-Spam-Flag: NO
+UI-OutboundReport: notjunk:1;M01:P0:YAgKMjnV/vk=;4QojFnJh2CxI5YSQZDmt8TFAuzI
+ rYqA6sJ9XCNZBMDMtBkxGEyU6IBAg6pZmUET1sWt+pC5ezTEyfdX2+xZpS5N4XNqTZtzDY88j
+ VQDAytfii7sqz/WR22PwdqgKtl3M6SQZrpWwbwT0SfrH0lhNO9pT958hO81fnz/DMJrkyR06+
+ tuTcHsU4SKQQATUs5qAZ/0JR3Tbwv4mscPfreVywrj+QVs0Ix8M6vELNRfZuR9QHNT5IsbUXM
+ 2l/5jmK9p/vYatVx0ly9ak2atfkfZVmGL0/WQ+XIJMnC7xqiOa9FT02KKylFihiBe/BWnIKj/
+ Y1X6JaaDDiQV6ITk9uJj9Ttrdl4Ji0E2gicEVh2nKBM+triopNoUOWKSZLbN5kiejtbuVZ0UY
+ Cv+/a+B8o5/9D2bUO5jo18MN/6pd84xmaI/YT06ctX8tGNlb+EXwLZZmo3lWo90U4xE+ptWZS
+ 4fHa8mj7XSXTW+K4tb73f6f5u2+dFCPB3Umi7KJqoCl0/lLxv89/drW2VuJjX8TvJyu6u0HK+
+ /A4gGQ8oEFYSaSXQff6c1/MbfFst7Bnyb8B/bFVxeTl62EDtbOeBw9oDPofqtvHi0XPRFllfN
+ FL5PxLoB3y6/9bNe8pajVU3kaKpZSE9SW+nD/FtQv0enD4bpxkksPCmOJqiw63/BQT7J9S1BF
+ WFT+zRfjeBJs4dGMr4iXpTbN8wAc7XIu8FuAQaoclx90SAW3osOoV8lxUvMiAFcX9VXkpfGtA
+ BN4zHuZruPPVnZOUMGdo/6qSQtsiPYuC3djzI/4rsXPcNGvQgGSGBLZZt/wxtiWusrFENxOe1
+ 9UHhkjC+oV8JqlyNBi/YCykMa0rZ+ufUGiV9G2qqekLGYXsMzZs0bQEQnIz3TjZsID
 
-Hello:
+> The commit message is fine as-is.  Please stop nit-picking.
 
-This series was applied to netdev/net-next.git (main)
-by David S. Miller <davem@davemloft.net>:
+I dare to point recurring improvement possibilities out.
+I became curious if the change acceptance will ever grow accordingly.
 
-On Wed, 01 May 2024 11:29:25 +0200 you wrote:
-> From: Joel Granados <j.granados@samsung.com>
-> 
-> This commit comes at the tail end of a greater effort to remove the
-> empty elements at the end of the ctl_table arrays (sentinels) which
-> will reduce the overall build time size of the kernel and run time
-> memory bloat by ~64 bytes per sentinel (further information Link :
-> https://lore.kernel.org/all/ZO5Yx5JFogGi%2FcBo@bombadil.infradead.org/)
-> 
-> [...]
-
-Here is the summary with links:
-  - [net-next,v6,1/8] net: Remove the now superfluous sentinel elements from ctl_table array
-    https://git.kernel.org/netdev/net-next/c/ce218712b0f6
-  - [net-next,v6,2/8] net: ipv{6,4}: Remove the now superfluous sentinel elements from ctl_table array
-    https://git.kernel.org/netdev/net-next/c/1c106eb01cee
-  - [net-next,v6,3/8] net: rds: Remove the now superfluous sentinel elements from ctl_table array
-    https://git.kernel.org/netdev/net-next/c/92bedf07836b
-  - [net-next,v6,4/8] net: sunrpc: Remove the now superfluous sentinel elements from ctl_table array
-    https://git.kernel.org/netdev/net-next/c/ca5d1fce7994
-  - [net-next,v6,5/8] net: Remove ctl_table sentinel elements from several networking subsystems
-    https://git.kernel.org/netdev/net-next/c/73dbd8cf7947
-  - [net-next,v6,6/8] netfilter: Remove the now superfluous sentinel elements from ctl_table array
-    https://git.kernel.org/netdev/net-next/c/635470eb0aa7
-  - [net-next,v6,7/8] appletalk: Remove the now superfluous sentinel elements from ctl_table array
-    https://git.kernel.org/netdev/net-next/c/e00e35e217c0
-  - [net-next,v6,8/8] ax.25: x.25: Remove the now superfluous sentinel elements from ctl_table array
-    https://git.kernel.org/netdev/net-next/c/78a7b5dbc060
-
-You are awesome, thank you!
--- 
-Deet-doot-dot, I am a bot.
-https://korg.docs.kernel.org/patchwork/pwbot.html
-
-
+Regards,
+Markus
