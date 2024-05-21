@@ -1,38 +1,82 @@
-Received: from smtp70.ord1d.emailsrvr.com (smtp70.ord1d.emailsrvr.com [184.106.54.70])
+Received: from wfhigh3-smtp.messagingengine.com (wfhigh3-smtp.messagingengine.com [64.147.123.154])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA27A17722
-	for <linux-hams@vger.kernel.org>; Tue, 21 May 2024 18:51:37 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=184.106.54.70
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E2BB714883E
+	for <linux-hams@vger.kernel.org>; Tue, 21 May 2024 19:20:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.123.154
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716317499; cv=none; b=rR84oNfm04mPtaF9DOIjL4vLvtiaW3lKMZHpPO3qv1RIe4iFFQF8ShDdlxUj9z3QRO8jC8+sgPq7WQFuoLyXEeyXfUsp7hADtm2xNxF3ZgIdZjkgGNo0MQJrezxNG3gFIDO6oiAnChH8njRaeaUAD7TOShXlcR+Qn7gNwTFZxog=
+	t=1716319248; cv=none; b=tbA8kQYnTBJth1sWyNeJjOq1JBG3/Qd7KLHTotFZEvXz0osECBtjWFbSm4wHGLMvtazpfqd5KvPjt2CJ7VC/xEbooznpr7THBDamafH+tRYRFJ/POjuRiiimFvojbemf/hRGueFEOgE/rhWQkjIvAKJXifBPV5VS0C/2NUIrZEk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716317499; c=relaxed/simple;
-	bh=ByLdzw4QQh8fKWrdpFofJt7a9ya4OEU9OiJLI7z5etE=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=oatV0jjbnhN/NwwfKhHnEy0tnz0N5TeQ7vjdBu9npQdjy8ZCPJe4Ca5+ncus9LawUr/gVcDtP/OF6TvHJcvBqVT/VE9eOmoTTgFpuVME1sn7EBCS6kp5GNEmgnwU8f2hZoLQ/p6kp469OFJeSQdU8S29VerGzKFE42Y8RVtAER8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=oddbit.com; spf=pass smtp.mailfrom=oddbit.com; dkim=pass (1024-bit key) header.d=oddbit.com header.i=@oddbit.com header.b=VyGpxGt5; arc=none smtp.client-ip=184.106.54.70
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=oddbit.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oddbit.com
+	s=arc-20240116; t=1716319248; c=relaxed/simple;
+	bh=YCFyATdwsQd6Wpk4eayNDlG/hUh1ad9D3nN/Gl9Pehc=;
+	h=From:Content-Type:Mime-Version:Subject:Date:References:To:
+	 In-Reply-To:Message-Id; b=McWplEMqjPYG8EEfn2oGs4OxyttwKFNtJdOeLZmAkwtkBJzSiLByK5M9MIiy4iA1xbZoygvGUVzt+HTr975sCCIN/fiDn4PHNt6E8uIgWLHbsXNJ8nDdXgw470DpfTqJnRZ5fvgdhpYrz49ADFpGlqmGhh+llUzio60tffVBU6M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=elite.uk.com; spf=pass smtp.mailfrom=elite.uk.com; dkim=pass (2048-bit key) header.d=elite.uk.com header.i=@elite.uk.com header.b=DeFfLBsF; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=FvBYzyFt; arc=none smtp.client-ip=64.147.123.154
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=elite.uk.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=elite.uk.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=oddbit.com header.i=@oddbit.com header.b="VyGpxGt5"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=oddbit.com;
-	s=20180920-g2b7aziw; t=1716315126;
-	bh=ByLdzw4QQh8fKWrdpFofJt7a9ya4OEU9OiJLI7z5etE=;
-	h=Date:From:To:Subject:From;
-	b=VyGpxGt5GdXfUdff9BhjNEZR2uqudqHuCRSb25ii+BIreYRRmWifHhEG+2+XLREKC
-	 1XJHN/l/RjotH3f3SrKz0o8/ykWKfLyxLD3rvYsNqPlLT/GfQ1QOypVMyYUcHzcRHT
-	 RblFi64dW0119QzsDr0r1SIJ7Wb2ryWrecqLgplk=
-X-Auth-ID: lars@oddbit.com
-Received: by smtp9.relay.ord1d.emailsrvr.com (Authenticated sender: lars-AT-oddbit.com) with ESMTPSA id 70973C00A2;
-	Tue, 21 May 2024 14:12:06 -0400 (EDT)
-Date: Tue, 21 May 2024 14:12:06 -0400
-From: Lars Kellogg-Stedman <lars@oddbit.com>
-To: David Ranch <linux-hams@trinnet.net>
-Cc: Chris Maness <christopher.maness@gmail.com>, 
-	Duoming Zhou <duoming@zju.edu.cn>, linux-hams@vger.kernel.org, dan.carpenter@linaro.org
+	dkim=pass (2048-bit key) header.d=elite.uk.com header.i=@elite.uk.com header.b="DeFfLBsF";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="FvBYzyFt"
+Received: from compute6.internal (compute6.nyi.internal [10.202.2.47])
+	by mailfhigh.west.internal (Postfix) with ESMTP id 12F6A1800188
+	for <linux-hams@vger.kernel.org>; Tue, 21 May 2024 15:20:45 -0400 (EDT)
+Received: from mailfrontend1 ([10.202.2.162])
+  by compute6.internal (MEProxy); Tue, 21 May 2024 15:20:45 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=elite.uk.com; h=
+	cc:content-transfer-encoding:content-type:content-type:date:date
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm2; t=1716319244;
+	 x=1716405644; bh=TIFl1AkLrwBI3y1fLTOpvo+Kk/x/RkEwU64ED1Ay5Qw=; b=
+	DeFfLBsF+7W6ay2uymzvz+Q58Swlh4RGeky/7lUrGlbUNz2+PCFqO6W4K4Ow5oRF
+	AOSlVDUPuIMosCwi3e3Xf6j077MEJMQLXxxafzvqvSpMHTpyhzrt3112yLvLjXxP
+	ZArdharwYL9OuwNDxv7zzpeiYWOS6gjt8DuXxS1YS6UpL01BtWZ8X7Qbw7vPRKkw
+	9w/NZBSsKAO0eeVYQxGw9q7I5ZDT/5p9fk1lsUCxaQ01/5UmBo18eVMBWxSEusIY
+	96ZEXf0yDyPXh/1lRiq5Zaa9aNA4d3ESz5SkbRHtbZMHszNMEhAfhXgu6hF+fnOG
+	GHz44Si6GFcosw99idEwjg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:content-transfer-encoding:content-type
+	:content-type:date:date:feedback-id:feedback-id:from:from
+	:in-reply-to:in-reply-to:message-id:mime-version:references
+	:reply-to:subject:subject:to:to:x-me-proxy:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1716319244; x=
+	1716405644; bh=TIFl1AkLrwBI3y1fLTOpvo+Kk/x/RkEwU64ED1Ay5Qw=; b=F
+	vBYzyFtHtji6DrV6pWgx+w2dFuYMJ3x3snHwoatrKH/cRha4k5mPjxGvHpHJhDjr
+	gvvTBceNhUatUjZYmq6MV/HicNEYdu4fXXzAMRsV6g0qoJ+JfwtO8fJzfaoFgiXx
+	oStTd59AvGleeCO5rtdvRCIh3bGINS59pO5hdeD4Fs1HgWYDkPb7sSlaKfouyopw
+	KNFIKTmXwUZ1L/SVKCq6ASdweaXdEjWKLr4Zy9nErfsXnP3/3oIvCvJQUN4fNwVo
+	Uw7JYQ0/c4RMe7AThUF+Xbnl4SmjbsKPffj6iyPG8fBvaK+3Kn6I4Y2GlwOK/6mp
+	L04arx3Bwy79y5jO/WH0A==
+X-ME-Sender: <xms:DPRMZmUSw2jB6NWXYiuao9AbCHcpXrcWbjvsec8Wds8lL7Yq4OOy1A>
+    <xme:DPRMZimvp7A3i3JixFt1JQkMsmNqEoIVM_dH3pI92HUmDgeDnRKTPZk9Bub7NYTjU
+    85OkAIwoC_ZxukRtAc>
+X-ME-Received: <xmr:DPRMZqbC8N1prQvzjly5TY7FRxXo7lJxBEkO1RLam-mWwxHg7RsbHuJxl8FwN1XDtB89XT7WTfD8VZJWg0TyNUy494I>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrvdeivddgudefgecutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfgh
+    necuuegrihhlohhuthemuceftddtnecunecujfgurhephfgtgfgguffffhfvjgfkofesth
+    hqmhdthhdtjeenucfhrhhomhepofhikhgvucfsuhhinhcuoehmihhkvgesvghlihhtvgdr
+    uhhkrdgtohhmqeenucggtffrrghtthgvrhhnpeettdefieeuieekkeejhfeffeetvddtve
+    ekheeguedvffdukeefieelieefffegtdenucevlhhushhtvghrufhiiigvpedtnecurfgr
+    rhgrmhepmhgrihhlfhhrohhmpehmihhkvgesvghlihhtvgdruhhkrdgtohhm
+X-ME-Proxy: <xmx:DPRMZtVwT3jiKbSXChzk8X7OI8H1oxBCplz2sSJfQP15yCiQoDgHkw>
+    <xmx:DPRMZgkt0o-BI9kHN_95kwPQEDexSfcEdYu0qWOGAxz3UiupVgzafQ>
+    <xmx:DPRMZiffJeRZqqO1PEBV_rULBljAlco_0kiTpzUGKJaBPSDxV3m4Bg>
+    <xmx:DPRMZiGfLicyjoBg_K6O5gnXY9I2J2J008MEgwOUTZE6yxd6GmsGhA>
+    <xmx:DPRMZsvhcY7jKLhXbZ-uNgNIWSnbOET7b7TsvSbTfSXhaMPgJe1EorhW>
+Feedback-ID: i55a1499f:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA for
+ <linux-hams@vger.kernel.org>; Tue, 21 May 2024 15:20:44 -0400 (EDT)
+From: Mike Quin <mike@elite.uk.com>
+Content-Type: text/plain;
+	charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Precedence: bulk
+X-Mailing-List: linux-hams@vger.kernel.org
+List-Id: <linux-hams.vger.kernel.org>
+List-Subscribe: <mailto:linux-hams+subscribe@vger.kernel.org>
+List-Unsubscribe: <mailto:linux-hams+unsubscribe@vger.kernel.org>
+Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3774.600.62\))
 Subject: Re: Kernel 6.9.1 AX.25 Crash
-Message-ID: <c3infeyajl4hr2tuyfmmccdv4gjbhsulaxuetozigqwqtj4jga@42eucxtsfk2y>
+Date: Tue, 21 May 2024 20:20:32 +0100
 References: <20240501060218.32898-1-duoming@zju.edu.cn>
  <my4l7ljo35dnwxl33maqhyvw7666dmuwtduwtyhnzdlb6bbf5m@5sbp4tvg246f>
  <ac6f090.eaff.18f7baadb40.Coremail.duoming@zju.edu.cn>
@@ -41,68 +85,31 @@ References: <20240501060218.32898-1-duoming@zju.edu.cn>
  <4it3k7z5sylbv4agiztmwdhaudo2orccpm5pbi24bsu6fyajfm@k3zulkrpqaof>
  <CANnsUMEq5xZUFdZdmNd=wGz+RmjxGzGY_9eaqGcgCLxs55mr9w@mail.gmail.com>
  <r3hwkyx6os3eacimhqvrs4cv4ssqajpxp3zkiqqidu6pjkj2v6@slrtgnartz3f>
- <f27710b7-253c-79ce-e214-2b8251aceead@trinnet.net>
-Precedence: bulk
-X-Mailing-List: linux-hams@vger.kernel.org
-List-Id: <linux-hams.vger.kernel.org>
-List-Subscribe: <mailto:linux-hams+subscribe@vger.kernel.org>
-List-Unsubscribe: <mailto:linux-hams+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <f27710b7-253c-79ce-e214-2b8251aceead@trinnet.net>
-X-Classification-ID: 1b9caa3d-c453-4f91-944f-452cd794edd7-1-1
+ <CAEoi9W7LN5MQPGKXZJOdtcaXvyK4PPU9yW7HWOBdq1AP3Fs7nA@mail.gmail.com>
+ <CANnsUMF=ywvcmfLjXdz_hWLSo5jC2Z0K7Qe4Pcv7j3dr6K99Jg@mail.gmail.com>
+ <a0890c99-0f42-44bb-b1f3-cdc66efdad50@app.fastmail.com>
+ <CANnsUMGf744psJZCqKoKw4ysRuH4KjhTpjR1CZZNbPr2DPQ99g@mail.gmail.com>
+To: linux-hams@vger.kernel.org
+In-Reply-To: <CANnsUMGf744psJZCqKoKw4ysRuH4KjhTpjR1CZZNbPr2DPQ99g@mail.gmail.com>
+Message-Id: <0CF70E80-C650-469D-B52D-436EC16BCBE3@elite.uk.com>
+X-Mailer: Apple Mail (2.3774.600.62)
 
-On Tue, May 21, 2024 at 08:53:06AM GMT, David Ranch wrote:
-> That said, I wanted to chime in here about your commend
-> about "very few people interested in the a.25 support in the kernel".
-> That's definitely not true.
 
-That's good to know! I based that on the amount of traffic I see here on
-the linux-hams list, and the difficulty in getting anybody to offer an
-opinion (or an alternative to) these changes. If there is a more active
-forum where people are talking about Linux and amateur radio I'm happy
-to join there as well.
 
-> The other significant issue is that the kernel branch maintainers /
-> powers at be seem to just accept these changes without any real
-> scrutiny and don't require any real testing results to confirm things
-> still work. 
+> On 21 May 2024, at 13:03, Chris Maness <christopher.maness@gmail.com> =
+wrote:
+>=20
+> netrom_call has not worked for ages.  I am using VE7FET's forked
+> userspace, not the official.  I could build another
+> system with the official userspace I suppose.  My understanding is
+> that VE7FET fixed some bugs, and I have had
+> better luck with it for the most part.
 
-I think this would typically be the job of a subsystem maintainer; this
-is another way in which the lack of a maintainer hurts the
-ax.25 stack.
+I=E2=80=99ve found axcall (as opposed to ax25_call, netrom_call etc) as =
+shipped by Debian works fine for making netrom connections.
 
-> I've asked if there is some form of a per-commit or daily CI
-> build and regression test environment that I could offer up some basic
-> toxicity test scenarios to.
+To echo other comments in the thread, thanks to the folks working on =
+this. I=E2=80=99m one of a number of amateurs who=E2=80=99ve taken a =
+recent interest in packet and I=E2=80=99ve love to make more use of =
+Linux for it.
 
-Have you put together an ax.25 test suite? I put together an automated
-test for the particular problem I'm trying to resolve (that was
-necessary in order to successfully use `git bisect run`); collecting
-these sorts of things in one place would be a great step forward.
-
-> I am hugely grateful to you (Lars) on being able to submit some meaningful
-> fixes and was able to get them committed to the mainline.
-
-Just to clear, that hasn't happened yet! The patch needs to get
-approved first.
-
-> The next major hurdle that I would love to get feedback on is how to
-> get these new changes but also create a set of backported fixes
-> committed into various Linux distributions kernels that don't strictly
-> follow the mainline kernel.  My personal interest is in the Raspberry
-> Pi OS kernel...
-
-I'm running this patch on kernel 6.6.30 on my Raspberry Pi systems; you
-can find the patch against 6.6.30 here:
-
-  https://github.com/larsks/ax25-debugging/tree/main/patches-for-6.6.30
-
-It's made my Pis much more stable. I think that if the patch gets
-accepted for the mainline kernel it should be relatively easy to get
-into the Raspberry Pi kernel as well.
-
--- 
-Lars Kellogg-Stedman <lars@oddbit.com> | larsks @ {irc,twitter,github}
-http://blog.oddbit.com/                | N1LKS
