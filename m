@@ -1,64 +1,73 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from smtp100.iad3b.emailsrvr.com (smtp100.iad3b.emailsrvr.com [146.20.161.100])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8346B142621;
-	Wed, 22 May 2024 18:54:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B1CB04C9A
+	for <linux-hams@vger.kernel.org>; Wed, 22 May 2024 19:02:01 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=146.20.161.100
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716404099; cv=none; b=U5CYLjvsPlk8uCH47sHVZh/zGJ6kf175SYqEubX7vXVUsq4k5eV4Cc8RZSgDmGqyZVPPITHy3yVHOw4c6jOYGKZQKsj0W0jopIdmoni2YUg0UuwUVcqnNAvFgJxznMnusdkiK2t88uBB9KbjrCGqdZW+eiPRgdL9sIB8+MJYwVk=
+	t=1716404523; cv=none; b=lMAhMQXiKAtSXaKyVr3U3Op9xsgyHM77sFmuj0Rupr3NOlqqFSvKzao10wwPucEhf95VZlXlrtAhfKlsaU6591UF1uNmuQrsHZcc+/DRxKzLHTPcrRoWen5s2gBDlE8+KiQ0D9ceyo+Jt3NQrl1n76N1yQwAYM935HSCrdRIi84=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716404099; c=relaxed/simple;
-	bh=AJDbIwZZLkNBkgAXspeW7IDZ79hlwr0DhW6dRqxnk6Y=;
-	h=Date:From:To:Cc:Subject:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=fvC/GXOAzVkFwh7yXUZBy/r4+9usaoR7UCnW3c14Y275NJ6c4fJiP+Ri86ZVBonn56up6XjKMPg8Hg/OW8kmJyNhrn7bbxtaz8FjSAmFUPrxYtdHiBiVTaw/4SguBKPnJnGYK7LqaWtJf50iLEDqKa4KhXbsxW5q/aHqyXkMNkA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=HcjI3aEZ; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1716404523; c=relaxed/simple;
+	bh=H0zTzTCjK4soBCluEyuZgoRZslqdQkTfZ1JW+hfHOHk=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=M0fWMsqyvCsSd17aQ+NJEt4JITZI9+j7H42AQ3kHNBV6P3FH0MZbF0ah1V+fk09Jdf3j2pCeLkZWNfZs2BH9BHfuwoXEL2o0EyOM6uqhiJdSf3a07DGnqoUzy3lpjffcSb14cZsZxQ7X7XEN7Yq1qyk5YJZzv3Gf88WY4/A/ZKQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=oddbit.com; spf=pass smtp.mailfrom=oddbit.com; dkim=pass (1024-bit key) header.d=oddbit.com header.i=@oddbit.com header.b=oiHAQExv; arc=none smtp.client-ip=146.20.161.100
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=oddbit.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oddbit.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="HcjI3aEZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DB4B9C2BBFC;
-	Wed, 22 May 2024 18:54:58 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1716404099;
-	bh=AJDbIwZZLkNBkgAXspeW7IDZ79hlwr0DhW6dRqxnk6Y=;
-	h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
-	b=HcjI3aEZdYC9r0mQQaV3YPTP7U+V+HZaw+dv2wkABfSDL2t3UNG6cifmoFzCg2cuk
-	 niu5Inu0UX4jwvBzXVxymatLBPIbVZ1Mu6C/sTrZ/+5QLPBBA7UYlEbB3Fph7yaiwe
-	 uSEaetw6Zy0sOTyZERMDkXdBQxZc4uQssgslRLPp1BTtLro8KmZBwcaXgQyIi4REbY
-	 bKuTMPYStA5FeANHOiori9CkwxbXIVyA2DWfA1VbtVunleMuFemyBpIVWkuSWHMP2H
-	 LFHggYly5CJHmxZS8+wB1uO8aU56U3SgOR9usBH29tPViv8u457YDeNpcqwxQ6p328
-	 kcqru0noJqt6Q==
-Date: Wed, 22 May 2024 11:54:58 -0700
-From: Jakub Kicinski <kuba@kernel.org>
-To: Lars Kellogg-Stedman <lars@oddbit.com>
+	dkim=pass (1024-bit key) header.d=oddbit.com header.i=@oddbit.com header.b="oiHAQExv"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=oddbit.com;
+	s=20180920-g2b7aziw; t=1716402337;
+	bh=H0zTzTCjK4soBCluEyuZgoRZslqdQkTfZ1JW+hfHOHk=;
+	h=Date:From:To:Subject:From;
+	b=oiHAQExvHkQi+FCTU5AkFRv2ZiD9ZGEeVITNRlYY063hcU6W35WH5upv66LG7QzoG
+	 tmeD+QECQ5J9Ek8s9qPl0ZVBvhWdF3An4TzhsqeKR7JsONYA7HLFcJmhJtO4x+b2cZ
+	 eSHiW+ZkWgb3DrXMR1NQ5l6GyEfnywhpikrZ1/Xw=
+X-Auth-ID: lars@oddbit.com
+Received: by smtp5.relay.iad3b.emailsrvr.com (Authenticated sender: lars-AT-oddbit.com) with ESMTPSA id EB525400C8;
+	Wed, 22 May 2024 14:25:36 -0400 (EDT)
+Date: Wed, 22 May 2024 14:25:36 -0400
+From: Lars Kellogg-Stedman <lars@oddbit.com>
+To: Jakub Kicinski <kuba@kernel.org>
 Cc: linux-hams@vger.kernel.org, netdev@vger.kernel.org
 Subject: Re: [PATCH v3] ax25: Fix refcount imbalance on inbound connections
-Message-ID: <20240522115458.3634a1ae@kernel.org>
-In-Reply-To: <yzz225joxbxptlrdqjr4u2cwk4myactk6ozz7bfpv25dqbzri4@mz5ocbxbefxp>
+Message-ID: <yzz225joxbxptlrdqjr4u2cwk4myactk6ozz7bfpv25dqbzri4@mz5ocbxbefxp>
 References: <46ydfjtpinm3py3zt6lltxje4cpdvuugaatbvx4y27m7wxc2hz@4wdtoq7yfrd5>
-	<20240521182323.600609-3-lars@oddbit.com>
-	<20240522100701.4d9edf99@kernel.org>
-	<yzz225joxbxptlrdqjr4u2cwk4myactk6ozz7bfpv25dqbzri4@mz5ocbxbefxp>
+ <20240521182323.600609-3-lars@oddbit.com>
+ <20240522100701.4d9edf99@kernel.org>
 Precedence: bulk
 X-Mailing-List: linux-hams@vger.kernel.org
 List-Id: <linux-hams.vger.kernel.org>
 List-Subscribe: <mailto:linux-hams+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-hams+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20240522100701.4d9edf99@kernel.org>
+X-Classification-ID: 227f8a22-6abb-4b73-b50d-84d59eab2358-1-1
 
-On Wed, 22 May 2024 14:25:36 -0400 Lars Kellogg-Stedman wrote:
-> > Please CC maintainers (per script/get_maintainer.pl)  
+On Wed, May 22, 2024 at 10:07:01AM GMT, Jakub Kicinski wrote:
+> correct fixes tag for this hash would be:
 > 
-> ...the ax.25 tree is currently orphaned:
-> 
->     AX.25 NETWORK LAYER
->     L:	linux-hams@vger.kernel.org
->     S:	Orphan
->     W:	https://linux-ax25.in-berlin.de
->     F:	include/net/ax25.h
->     F:	include/uapi/linux/ax25.h
->     F:	net/ax25/
+> Fixes: 7d8a3a477b3e ("ax25: Fix ax25 session cleanup problems")
 
-Fair point, but get_maintainer acts in a bit of a hierarchical fashion,
-so since we don't have AX25 maintainer and dedicated tree - the general
-networking maintainers should get CCed
+Jakub,
+
+Thanks for the correction; I'll submit a new patch with a correct Fixes:
+tag, but...
+
+> Please CC maintainers (per script/get_maintainer.pl)
+
+...the ax.25 tree is currently orphaned:
+
+    AX.25 NETWORK LAYER
+    L:	linux-hams@vger.kernel.org
+    S:	Orphan
+    W:	https://linux-ax25.in-berlin.de
+    F:	include/net/ax25.h
+    F:	include/uapi/linux/ax25.h
+    F:	net/ax25/
+
+-- 
+Lars Kellogg-Stedman <lars@oddbit.com> | larsks @ {irc,twitter,github}
+http://blog.oddbit.com/                | N1LKS
