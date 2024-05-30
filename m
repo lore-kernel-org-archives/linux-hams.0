@@ -1,81 +1,88 @@
-Received: from zg8tmja5ljk3lje4ms43mwaa.icoremail.net (zg8tmja5ljk3lje4ms43mwaa.icoremail.net [209.97.181.73])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id DC22322083;
-	Thu, 30 May 2024 05:21:13 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.97.181.73
+Received: from mail-ej1-f43.google.com (mail-ej1-f43.google.com [209.85.218.43])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E79F143878
+	for <linux-hams@vger.kernel.org>; Thu, 30 May 2024 05:23:28 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.43
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717046479; cv=none; b=KsE4jMO37YMsb+LARAEgdvL4sU4CKH4QmSJTtcpGgHXs/XMSf3+/P9sF/fF0mhOjQZUgkJ8IFweszKLCYfqI6J2TsccqcbOkatxa/Ej+X1AUOny5GoWBGuutyj48U/1tAqacK9gthycaZB0nQ0egqRs3QsCIYQ3XhUaXSJYqeNA=
+	t=1717046610; cv=none; b=Q7v7NWLKsYJuxfZ9SBdDxb8aVuc1BQq2tT6GcNlvEnelNMnahnpHJdZkKLYNv19gpAbwEH+ft1jn3iyDoR4QcVsS1T8c3bIb2guKZEaGBe1yoDk67Jwcht2UPzXTFynjuMlqiwbg2H7lvPA5AXRSPjKmjWY+0XRrIfrYbxdXm/8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717046479; c=relaxed/simple;
-	bh=voXBnrcbnkL+4T/r4d8V6UCbguNk1JucGqtbll/LvAY=;
-	h=From:To:Cc:Subject:Date:Message-Id; b=Yjq9vSHQf3z2zDAf99rPHBabsAQGxrNjBUv9T5h1Bbq/K21jOxR3+Npi+w4MJhe9c2oRemUkRdjq9IiwDj41Byy3mLaZFY2Bcz4YOcafjVPPh96N+ZLFhl5AMkzY7Cut3POvyQk98nL64059scauxtRIMkTHRNcVKCYkxk81l/Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=zju.edu.cn; spf=pass smtp.mailfrom=zju.edu.cn; arc=none smtp.client-ip=209.97.181.73
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=zju.edu.cn
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=zju.edu.cn
-Received: from ubuntu.localdomain (unknown [183.95.249.235])
-	by mail-app2 (Coremail) with SMTP id by_KCgA3VKPuC1hmh8uRAQ--.14318S2;
-	Thu, 30 May 2024 13:17:36 +0800 (CST)
-From: Duoming Zhou <duoming@zju.edu.cn>
-To: netdev@vger.kernel.org
-Cc: linux-kernel@vger.kernel.org,
-	linux-hams@vger.kernel.org,
-	pabeni@redhat.com,
-	kuba@kernel.org,
-	edumazet@google.com,
-	jreuter@yaina.de,
-	davem@davemloft.net,
-	dan.carpenter@linaro.org,
-	Duoming Zhou <duoming@zju.edu.cn>
-Subject: [PATCH net] ax25: Replace kfree() in ax25_dev_free() with ax25_dev_put()
-Date: Thu, 30 May 2024 13:17:33 +0800
-Message-Id: <20240530051733.11416-1-duoming@zju.edu.cn>
-X-Mailer: git-send-email 2.17.1
-X-CM-TRANSID:by_KCgA3VKPuC1hmh8uRAQ--.14318S2
-X-Coremail-Antispam: 1UD129KBjvdXoWrZFy3Gry8Gr1kCrWxXF15XFb_yoW3Krc_uF
-	97CF4xWw4UJr1UCw4rCF4rJrW7uw1Ygw1fGryfAFZ7t34jy3WUJrWkWr18ZF1UWrW7CrWS
-	qrn5Zr4fAF4fKjkaLaAFLSUrUUUUjb8apTn2vfkv8UJUUUU8Yxn0WfASr-VFAUDa7-sFnT
-	9fnUUIcSsGvfJTRUUUbTxFF20E14v26r4j6ryUM7CY07I20VC2zVCF04k26cxKx2IYs7xG
-	6rWj6s0DM7CIcVAFz4kK6r1j6r18M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48ve4kI8w
-	A2z4x0Y4vE2Ix0cI8IcVAFwI0_tr0E3s1l84ACjcxK6xIIjxv20xvEc7CjxVAFwI0_Cr1j
-	6rxdM28EF7xvwVC2z280aVAFwI0_GcCE3s1l84ACjcxK6I8E87Iv6xkF7I0E14v26rxl6s
-	0DM2AIxVAIcxkEcVAq07x20xvEncxIr21l5I8CrVACY4xI64kE6c02F40Ex7xfMcIj6xII
-	jxv20xvE14v26r1j6r18McIj6I8E87Iv67AKxVWUJVW8JwAm72CE4IkC6x0Yz7v_Jr0_Gr
-	1lF7xvr2IYc2Ij64vIr41lF7I21c0EjII2zVCS5cI20VAGYxC7M4IIrI8v6xkF7I0E8cxa
-	n2IY04v7MxkF7I0En4kS14v26r1q6r43MxkIecxEwVAFwVW8WwCF04k20xvY0x0EwIxGrw
-	CFx2IqxVCFs4IE7xkEbVWUJVW8JwC20s026c02F40E14v26r1j6r18MI8I3I0E7480Y4vE
-	14v26r106r1rMI8E67AF67kF1VAFwI0_Jw0_GFylIxkGc2Ij64vIr41lIxAIcVC0I7IYx2
-	IY67AKxVWUJVWUCwCI42IY6xIIjxv20xvEc7CjxVAFwI0_Jr0_Gr1lIxAIcVCF04k26cxK
-	x2IYs7xG6r1j6r1xMIIF0xvEx4A2jsIE14v26r1j6r4UMIIF0xvEx4A2jsIEc7CjxVAFwI
-	0_Jr0_GrUvcSsGvfC2KfnxnUUI43ZEXa7VUb66wtUUUUU==
-X-CM-SenderInfo: qssqjiasttq6lmxovvfxof0/1tbiAwMRAWZXToxxdgA2sS
+	s=arc-20240116; t=1717046610; c=relaxed/simple;
+	bh=TwgH/gtp7ud9+239CluIrGaOMiwBf3gKb2ExJUd3xZI=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=UwPTeZIhHagGmzvgZxErMAHGn9p8um18jo1+feUkneLAt5GpUIpllQLWAsE+0270fR1pK6Ccs+GxnU2eAzegMHds9oCXIZ5XGY02kziSYG5849XQFbwcIlQMUyp2ZRz1zR+HU3qBwlWMjaLTeOplnKP/OwMtGeN4dfS6iLi4sgU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=z5ecP7pU; arc=none smtp.client-ip=209.85.218.43
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="z5ecP7pU"
+Received: by mail-ej1-f43.google.com with SMTP id a640c23a62f3a-a626777f74eso29259666b.3
+        for <linux-hams@vger.kernel.org>; Wed, 29 May 2024 22:23:28 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1717046607; x=1717651407; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=2iZM41/7mDcxSquoq9LoXz/QTVE6+9mFjNqtqD1bGyU=;
+        b=z5ecP7pUet8Rr5WmXPgJweB86JyLIUr1s1fduu59LwQ34njQGmHLc902a1FX10vocM
+         pHzFe+rITXMnN7CsO1qcn8+5KvPSDUBanGpwEvScTC917icqNJMgC5ToIswNIQgbzd+B
+         oQ705lR1d0bXV0fNZ+tgtSvUAGi72DP5UHbQ4hSkByrmGqplXNkEwa2M1KjXI6HsuFJ3
+         k6nsfuSmVBzKkm4d/VCv5dFbVzXxnd/SsDMjGfrK8MBFAFyfY4+78YIg10jVJURd6/5u
+         6Rfo2tUl9wnoVikfuqbSkJhKXRCtFj8oFWNb8L/9MqAVkHLc4YZkK8JZED6FfuH598IS
+         +Nog==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1717046607; x=1717651407;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=2iZM41/7mDcxSquoq9LoXz/QTVE6+9mFjNqtqD1bGyU=;
+        b=wt5SnQ9MxqL5EwKO48rb1IYRWFuz1N99QWlC8jyrnVRSqJsTsgbFgogtat0ckq3cWH
+         cysSQBQojnN5Sk3HaL2KC6vuUwxsT6XRScxKx1kmPIrJvpgU1AOWXxQ4tXEwLmT1sotx
+         IPgUlbenFA/F1M+QSzEgFI7PBQQl9OSNV2Wo2Ub2VJ1vzvFeHj3VJFV+/P53seadtBfQ
+         J27cZEvXT6ituAUu2H7bdP7ydGXWO2BJR/TmW1cjJfuWqOarBiONwYLtL9iyzwd6xynd
+         gfS8jieTW4D8nbnboLvoS/YwV5xVHmAIIXovUg97Mbzfz4MF4w0ZgtkkUJq2/HF8FpAm
+         LY7g==
+X-Forwarded-Encrypted: i=1; AJvYcCWiLXnW0Sptfws7zEt8t1HBAe6A4qrsFuVQnQoIndpB1PL+Dwhz9QWiisUFax+Oq5SzhgWAki5Y5yYX1KOy2aLRGi/ro5F3nLCZJQ==
+X-Gm-Message-State: AOJu0Yxu7/Zb+cnR+1BWOYQGEYb9U3oVi5wlW4Nr8UaDTvs9AQFbgNCF
+	6qqQp7yrI+zAuTmAZcsIa//KecVKYmwP+qGvBew2I40s4xTR6eSCUxh4fTrXWOI=
+X-Google-Smtp-Source: AGHT+IGiMaKK5C7BvwqxS4g/xaQp5YmZ3lVzVjOtS7XaVjrsTEqCqQs5N4b7kUks2zW4UQQDfV9kjw==
+X-Received: by 2002:a17:906:1319:b0:a5a:5b23:c150 with SMTP id a640c23a62f3a-a65e8e7a77cmr111535866b.41.1717046607193;
+        Wed, 29 May 2024 22:23:27 -0700 (PDT)
+Received: from localhost ([102.222.70.76])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-a626cc4ff24sm788862066b.130.2024.05.29.22.23.26
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 29 May 2024 22:23:26 -0700 (PDT)
+Date: Thu, 30 May 2024 08:23:23 +0300
+From: Dan Carpenter <dan.carpenter@linaro.org>
+To: Duoming Zhou <duoming@zju.edu.cn>
+Cc: netdev@vger.kernel.org, linux-kernel@vger.kernel.org,
+	linux-hams@vger.kernel.org, pabeni@redhat.com, kuba@kernel.org,
+	edumazet@google.com, jreuter@yaina.de, davem@davemloft.net
+Subject: Re: [PATCH net] ax25: Replace kfree() in ax25_dev_free() with
+ ax25_dev_put()
+Message-ID: <69dee6e9-05c6-4d1e-9c69-a9b60125d7ab@moroto.mountain>
+References: <20240530051733.11416-1-duoming@zju.edu.cn>
 Precedence: bulk
 X-Mailing-List: linux-hams@vger.kernel.org
 List-Id: <linux-hams.vger.kernel.org>
 List-Subscribe: <mailto:linux-hams+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-hams+unsubscribe@vger.kernel.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20240530051733.11416-1-duoming@zju.edu.cn>
 
-The object "ax25_dev" is managed by reference counting. Thus it should
-not be directly released by kfree(), replace with ax25_dev_put().
+On Thu, May 30, 2024 at 01:17:33PM +0800, Duoming Zhou wrote:
+> The object "ax25_dev" is managed by reference counting. Thus it should
+> not be directly released by kfree(), replace with ax25_dev_put().
+> 
+> Fixes: d01ffb9eee4a ("ax25: add refcount in ax25_dev to avoid UAF bugs")
+> Suggested-by: Dan Carpenter <dan.carpenter@linaro.org>
+> Signed-off-by: Duoming Zhou <duoming@zju.edu.cn>
 
-Fixes: d01ffb9eee4a ("ax25: add refcount in ax25_dev to avoid UAF bugs")
-Suggested-by: Dan Carpenter <dan.carpenter@linaro.org>
-Signed-off-by: Duoming Zhou <duoming@zju.edu.cn>
----
- net/ax25/ax25_dev.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+Thanks!
 
-diff --git a/net/ax25/ax25_dev.c b/net/ax25/ax25_dev.c
-index 742d7c68e7e..9efd6690b34 100644
---- a/net/ax25/ax25_dev.c
-+++ b/net/ax25/ax25_dev.c
-@@ -196,7 +196,7 @@ void __exit ax25_dev_free(void)
- 	list_for_each_entry_safe(s, n, &ax25_dev_list, list) {
- 		netdev_put(s->dev, &s->dev_tracker);
- 		list_del(&s->list);
--		kfree(s);
-+		ax25_dev_put(s);
- 	}
- 	spin_unlock_bh(&ax25_dev_lock);
- }
--- 
-2.17.1
+Reviewed-by: Dan Carpenter <dan.carpenter@linaro.org>
+
+regards,
+dan carpenter
 
