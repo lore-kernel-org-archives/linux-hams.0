@@ -1,100 +1,60 @@
-Received: from smtp71.iad3b.emailsrvr.com (smtp71.iad3b.emailsrvr.com [146.20.161.71])
+Received: from smtp95.iad3a.emailsrvr.com (smtp95.iad3a.emailsrvr.com [173.203.187.95])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E1B4141760
-	for <linux-hams@vger.kernel.org>; Thu, 30 May 2024 21:01:39 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=146.20.161.71
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 00E5256448
+	for <linux-hams@vger.kernel.org>; Fri, 31 May 2024 14:46:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.203.187.95
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717102901; cv=none; b=YpP2Oc58tMO+6sLv6MB0ed44BEB3eBBBCjlmEacf5sAyD9o0gEM8HEXd+2daLEourcJ6oqvDx/dYqI3HSsuUWTmVVqD9untI1DQOMUe1DsBfXwhfQRePhOnqEFU3XpD5gnDiyEMDuK7MaikCo1NCqxUrjszjAJ9c5dvTBcSSe9k=
+	t=1717166811; cv=none; b=YSd7Zifcq2S67Kngh/ujKrAw7/agE+DewTeTdmsdl+dvGl1AgEgw1bLyhSrm7+tNjMXDsXj3Grak9l7nKby3eMdjXwkXLnETS+onul7YCIdca2HBX1ksde9/bve6/QXVAnG++7KYviM2k+Am1i9rp++AY/rMVrnG10QpFE3j/9E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717102901; c=relaxed/simple;
-	bh=OtwSaqGaMfFtD5beqnkIOIHKBfN2KwB6s8iaEu2Trsg=;
+	s=arc-20240116; t=1717166811; c=relaxed/simple;
+	bh=JB9QpwF6z4UCQRIkzEa4XaW6aldVA5NcHNimULkqBmg=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=PaIE8zh/fa4cUQxJVqmWimkyt9cnJs24q8TME0bCO4FVln5kKQ2pC/02G9ybiDm1i/o9u9h+37p/NVedaYTKHXn3LKMVXasIw+g9yEIdPQnlHYS0NzbWTaF4gwVW1qbLHO9um/p1/Zrn8e5mVu0JpPCxmgBAQ4B7BxZIrM0JraY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=oddbit.com; spf=pass smtp.mailfrom=oddbit.com; dkim=pass (1024-bit key) header.d=oddbit.com header.i=@oddbit.com header.b=d+quTZIt; arc=none smtp.client-ip=146.20.161.71
+	 Content-Type:Content-Disposition:In-Reply-To; b=p6TSklWYVOZ8sIOIXmycOR7PvGlXZkXoSnH2Ncvg5G0I/Qa2O3YkCaNL7zSRLl01otkLxUk+4eu6KNmFyq8h0mxfKjZi/uxHxfBOs7cHwz7affCXkhXiRM/4haETQTUZQC+2rnwChnJO6wzk1kqOUksSbcjNXkA6K630oKQu51Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=oddbit.com; spf=pass smtp.mailfrom=oddbit.com; dkim=pass (1024-bit key) header.d=oddbit.com header.i=@oddbit.com header.b=NemfQdvc; arc=none smtp.client-ip=173.203.187.95
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=oddbit.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oddbit.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=oddbit.com header.i=@oddbit.com header.b="d+quTZIt"
+	dkim=pass (1024-bit key) header.d=oddbit.com header.i=@oddbit.com header.b="NemfQdvc"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=oddbit.com;
-	s=20180920-g2b7aziw; t=1717100589;
-	bh=OtwSaqGaMfFtD5beqnkIOIHKBfN2KwB6s8iaEu2Trsg=;
+	s=20180920-g2b7aziw; t=1717165631;
+	bh=JB9QpwF6z4UCQRIkzEa4XaW6aldVA5NcHNimULkqBmg=;
 	h=Date:From:To:Subject:From;
-	b=d+quTZItRvFSOWM3TO1mMl0j6c95CPdE//iIRQuJ/kHu2V+UbA+QbDheNNZVHDjy3
-	 EIGTF06EuyHsx+NtrmHkIkuVkWUfSjUYD0th7SBeSpUn77NAh3W3bbnFfv0joAyU1f
-	 Tf8+4mqItbknDHwyUmR5pzDDExuB5xvMEc8FmCw8=
+	b=NemfQdvclzfSqb56pjylFjyZe3PjAyPHQ8q1mJzuAvTosdJ+voXmVYL2+LH4fGrb6
+	 EowLVybBon0IYCqhVnMSxAj4M1OV+mWP1iGQ1QniBTCjBrR8yZfrY6jer+8lPeJDta
+	 GkJGM1rgj4FF+UoibFAR9yGf7NwONmJMZ8WTasiE=
 X-Auth-ID: lars@oddbit.com
-Received: by smtp1.relay.iad3b.emailsrvr.com (Authenticated sender: lars-AT-oddbit.com) with ESMTPSA id 7E4136027D;
-	Thu, 30 May 2024 16:23:09 -0400 (EDT)
-Date: Thu, 30 May 2024 16:23:09 -0400
+Received: by smtp28.relay.iad3a.emailsrvr.com (Authenticated sender: lars-AT-oddbit.com) with ESMTPSA id 6DF415BF8;
+	Fri, 31 May 2024 10:27:11 -0400 (EDT)
+Date: Fri, 31 May 2024 10:27:11 -0400
 From: Lars Kellogg-Stedman <lars@oddbit.com>
-To: David Ranch <linux-hams@trinnet.net>
+To: Mike Quin <mike@elite.uk.com>
 Cc: linux-hams <linux-hams@vger.kernel.org>
 Subject: Re: Kernel fails to flush queues when closing sockets
-Message-ID: <bex6tfuzbkj4dmljg7n3yqe43274hdwqavwoj5hvm3q6eq42pu@73hzthuqmg66>
+Message-ID: <pjzz5muu67xvq5qldilqb5r3h2zlkqlzme5w7rk4t2ocabqheo@2g226jrueeas>
 References: <2qncrme5xuch2w2vzznk5eoiebdiiwcwck3dmxet73mzos7zh2@lgdxko4x5bsj>
- <a3f92265-bc95-f23d-e88c-6246d036df07@trinnet.net>
+ <6B8661C5-4FC3-44DB-8B3B-AD1621091988@elite.uk.com>
 Precedence: bulk
 X-Mailing-List: linux-hams@vger.kernel.org
 List-Id: <linux-hams.vger.kernel.org>
 List-Subscribe: <mailto:linux-hams+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-hams+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <a3f92265-bc95-f23d-e88c-6246d036df07@trinnet.net>
-X-Classification-ID: 700162ed-ca02-4590-9b9f-a63ef5e7f187-1-1
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <6B8661C5-4FC3-44DB-8B3B-AD1621091988@elite.uk.com>
+X-Classification-ID: dd727b0e-e382-4427-a7c7-7bfaeeb9342a-1-1
 
-On Thu, May 30, 2024 at 09:53:43AM GMT, David Ranch wrote:
-> > For testing purposes, I wanted a simple ax25 listener that would accept
-> > a new connection, send a fixed string, and then disconnect.
-> 
-> I can't comment on the SO_LINGER function but I'm surprised you're seeing
-> data loss like that.  Seems like that should be fixed. Anyway, as an
-> alternative test, consider setting up ax25d running a bash script with echo
-> or even "netcat" commands.
+On Thu, May 30, 2024 at 09:50:55PM GMT, Mike Quin wrote:
+> I encountered similar issues running simple commands (such as fortune)
+> from ax25d - it was necessary to add a "sleep 1” to the end of the
+> script to get any output at all.
 
-The problem with involving ax25d is that now we're also testing ax25d,
-which is why I started with a minimal socket exmaple.
+Mike,
 
-I do see slightly different behavior when ax25d is involved; using a configuration like this:
-
-    [udp0]
-    default * * * * * * - root /bin/bash bash /tmp/helloax25
-
-Where /tmp/helloax25 is an executable script that contains:
-
-    #!/bin/sh
-    echo HELLO AX.25 CALLER
-
-Results in an approximate 25% failure rate (that is, 25% of the time
-there is a successful connection but the message is not received by the
-client). I'm testing like this:
-
-    worked=0
-    failed=0
-    for i in {1..100}; do
-      if axcall -Sr udp0 radio0 | grep -q HELLO.AX.25.CALLER; then
-        let worked++
-      else
-        let failed++
-      fi
-      sleep 8
-    done
-    echo $worked $failed
-
-I see approximately the same failure rate if I replace the `helloax25`
-shell script with the compiled output of:
-
-    #include <stdio.h>
-
-    int main() {
-            printf("HELLO AX.25 CALLER\r\n");
-            fflush(stdout);
-    }
-
-I'm reasonably confident there is a kernel issue here that needs to be
-resolved.
+Thanks for chiming in. If I put together a patch for this (no guarantees :) ), I'll ping you
+for testing.
 
 -- 
 Lars Kellogg-Stedman <lars@oddbit.com> | larsks @ {irc,twitter,github}
