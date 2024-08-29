@@ -1,39 +1,41 @@
-Received: from szxga02-in.huawei.com (szxga02-in.huawei.com [45.249.212.188])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EEF6816A95E;
-	Wed, 28 Aug 2024 12:24:33 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=45.249.212.188
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 51E5C1B7906;
+	Thu, 29 Aug 2024 19:36:48 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724847875; cv=none; b=K/Q4dJjjCNckk8RBy5UBV4S+hI4WhqFCLyy/475PKmqLzX5ui3eS/r44Gv6b2f+Ssls+4inyy7K6mF2GdiiTnH4efEslIT530FQbMwUHT9BQ1MoWUIt1w/xoPOqq3zvOI+Gy0/r73yKai0WPX7FPU5hyKbvIRLPZLIGRF4+SdJA=
+	t=1724960209; cv=none; b=FcLSHyp/vjwYcc1x3N/YvVFHIV0SZILh/+LQmSW8g3DZukDckPvBd1stzLTM6e9hw9LMZzuwRzSdjX2yM6d/f8GH+o5jOge2Tb2job9L4Hu/xNgSFOB8vo9dx1MFQpr+zCB6LOAwvn93LprwwXOKb9nH6Qss4SELTfFloc2x0zk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724847875; c=relaxed/simple;
-	bh=NgFJgLaUBynhaQWd86IXwRzo8RQEzeBXvB/2iU2Sgkk=;
-	h=From:To:CC:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=XoMKPbf0jIgah1Bxtz1CRmcIi+RZn71QqOZKhHRd8nvFSouUhyd0I4iGcZjwGNndk8LAimON+CKmMyX4QzTwYXbYhPPaTZ8B3qv5d/EoloRxOB6EM/KvX+nObDTQmp0j4Dge3zM+C8PDng0u0VBRoz+Y2areLbU7Qi/d4bemT7E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=huawei.com; spf=pass smtp.mailfrom=huawei.com; arc=none smtp.client-ip=45.249.212.188
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=huawei.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=huawei.com
-Received: from mail.maildlp.com (unknown [172.19.88.194])
-	by szxga02-in.huawei.com (SkyGuard) with ESMTP id 4Wv3Sx5mdfzfZ2S;
-	Wed, 28 Aug 2024 20:22:25 +0800 (CST)
-Received: from dggpeml500022.china.huawei.com (unknown [7.185.36.66])
-	by mail.maildlp.com (Postfix) with ESMTPS id B8D99140118;
-	Wed, 28 Aug 2024 20:24:29 +0800 (CST)
-Received: from huawei.com (10.90.53.73) by dggpeml500022.china.huawei.com
- (7.185.36.66) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.1.2507.39; Wed, 28 Aug
- 2024 20:24:29 +0800
-From: Hongbo Li <lihongbo22@huawei.com>
-To: <davem@davemloft.net>, <edumazet@google.com>, <kuba@kernel.org>,
-	<pabeni@redhat.com>, <dsahern@kernel.org>, <ralf@linux-mips.org>,
-	<jmaloy@redhat.com>, <ying.xue@windriver.com>, <dan.carpenter@linaro.org>
-CC: <netdev@vger.kernel.org>, <linux-hams@vger.kernel.org>,
-	<netfilter-devel@vger.kernel.org>, <lihongbo22@huawei.com>
-Subject: [PATCH net-next v2 2/6] net/ipv6: replace deprecated strcpy with strscpy
-Date: Wed, 28 Aug 2024 20:32:20 +0800
-Message-ID: <20240828123224.3697672-3-lihongbo22@huawei.com>
-X-Mailer: git-send-email 2.34.1
+	s=arc-20240116; t=1724960209; c=relaxed/simple;
+	bh=hkL0vjS7SessfwWwpXInjTewc6+d21g556wt1xmOhz0=;
+	h=Date:From:To:Cc:Subject:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=WIXjHDgfmtb2fg9OH2rPumedY0o7pSviF06ALkd7tK8qwiYj2w/AnUkt61kUPzRb+gkYgVsDUeo/kH/fQw/RnSUd6ysYCoB4pRMMUFKg1n72JZsYyaIwtuCbTJ4AH7KSWg5Wt2E/M2l1D3DtSpeFBKMECSHyDjp3tCTizfvkkK0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=jxQpi/LB; arc=none smtp.client-ip=10.30.226.201
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="jxQpi/LB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 31E26C4CEC1;
+	Thu, 29 Aug 2024 19:36:48 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1724960208;
+	bh=hkL0vjS7SessfwWwpXInjTewc6+d21g556wt1xmOhz0=;
+	h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
+	b=jxQpi/LBJg3/+Izuxjc0OB5V9nKxYz0qywrw2DQDt2s04ikYMn/MoQzKolqw1IwA4
+	 o3H170motp0Qh2mQC+FjyZfnDaGxeCSmFxZHpEmfCU0JIRvogjDIWx/cBJE9flS8Or
+	 zQHI1Dcl5G00ks5rsS8TRf5Pvawch1WNXfc+8yrqMuSsEvshdFyoStKli0Qe6oUISi
+	 Bi84omjbBmz8lqIte4mQm0kEMmwWlirm9xsBL8gdEHsSKjv8xkpaFJT37O7O93N837
+	 NnGYrFgrOYRZyUxcxw20c9A2m6M8BUZMNjB/mfOf6bWUp5HmmhetqtnRsrruxHD9qC
+	 2d0FvVc41EfIA==
+Date: Thu, 29 Aug 2024 12:36:47 -0700
+From: Jakub Kicinski <kuba@kernel.org>
+To: Hongbo Li <lihongbo22@huawei.com>
+Cc: <davem@davemloft.net>, <edumazet@google.com>, <pabeni@redhat.com>,
+ <dsahern@kernel.org>, <ralf@linux-mips.org>, <jmaloy@redhat.com>,
+ <ying.xue@windriver.com>, <dan.carpenter@linaro.org>,
+ <netdev@vger.kernel.org>, <linux-hams@vger.kernel.org>,
+ <netfilter-devel@vger.kernel.org>
+Subject: Re: [PATCH net-next v2 0/6] replace deprecated strcpy with strscpy
+Message-ID: <20240829123647.32aaeb17@kernel.org>
 In-Reply-To: <20240828123224.3697672-1-lihongbo22@huawei.com>
 References: <20240828123224.3697672-1-lihongbo22@huawei.com>
 Precedence: bulk
@@ -42,36 +44,20 @@ List-Id: <linux-hams.vger.kernel.org>
 List-Subscribe: <mailto:linux-hams+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-hams+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-ClientProxiedBy: dggems702-chm.china.huawei.com (10.3.19.179) To
- dggpeml500022.china.huawei.com (7.185.36.66)
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
 
-The deprecated helper strcpy() performs no bounds checking on the
-destination buffer. This could result in linear overflows beyond
-the end of the buffer, leading to all kinds of misbehaviors.
-The safe replacement is strscpy() [1].
+On Wed, 28 Aug 2024 20:32:18 +0800 Hongbo Li wrote:
+> The deprecated helper strcpy() performs no bounds checking on the
+> destination buffer. This could result in linear overflows beyond
+> the end of the buffer, leading to all kinds of misbehaviors.
+> The safe replacement is strscpy() [1].
 
-Link: https://www.kernel.org/doc/html/latest/process/deprecated.html#strcpy [1]
+What's you plan? Are you going to send 200 patches like this
+just for networking?
 
-Signed-off-by: Hongbo Li <lihongbo22@huawei.com>
----
- net/ipv6/ndisc.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+$ git grep strcpy -- net/ drivers/net/ | wc -l
+199
 
-diff --git a/net/ipv6/ndisc.c b/net/ipv6/ndisc.c
-index 1e42e40fb379..aba94a348673 100644
---- a/net/ipv6/ndisc.c
-+++ b/net/ipv6/ndisc.c
-@@ -1944,7 +1944,7 @@ static void ndisc_warn_deprecated_sysctl(const struct ctl_table *ctl,
- 	static char warncomm[TASK_COMM_LEN];
- 	static int warned;
- 	if (strcmp(warncomm, current->comm) && warned < 5) {
--		strcpy(warncomm, current->comm);
-+		strscpy(warncomm, current->comm);
- 		pr_warn("process `%s' is using deprecated sysctl (%s) net.ipv6.neigh.%s.%s - use net.ipv6.neigh.%s.%s_ms instead\n",
- 			warncomm, func,
- 			dev_name, ctl->procname,
--- 
-2.34.1
-
+Please don't. I'll look thru this series but it feels like such
+a waste of time.
