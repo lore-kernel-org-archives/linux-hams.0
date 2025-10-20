@@ -1,140 +1,112 @@
-Received: from mail-wm1-f47.google.com (mail-wm1-f47.google.com [209.85.128.47])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0b-0064b401.pphosted.com (mx0b-0064b401.pphosted.com [205.220.178.238])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 632B8314A6A
-	for <linux-hams@vger.kernel.org>; Mon, 20 Oct 2025 12:57:45 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.47
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D32D2F8BDA;
+	Mon, 20 Oct 2025 13:35:14 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.178.238
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760965067; cv=none; b=fLNK3fE1hD1t2T5zo8czOhzyxPriPRH+sS9MsZUK6/33IZSC3gD2wGxpwERBuSPHfbK+MeKm9x5qQqKcKYSFNfN0gY1Ucy4HGaoPsdocQO8wfUcJuTgv9QZkwnbpffqeimqrqJURqxwMGFo2Narwq8P8hOEVsSf+q7vdrQMHfwA=
+	t=1760967316; cv=none; b=se/lRjELWV5ahIG8yofdjaABwhV2Ihw+wSiA8Idn2wtJFSyAurwtLtBwWbQanH9U2+RViLKVikpfDEXr1DgJ6+WaR9BaxSaRZnFMbbh1olY+gy0ozCe7RED7C/aFv2WWKoMk9Ss2OxOwRv+6blhbEIWrRppM2FdmP6/kouFckJU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760965067; c=relaxed/simple;
-	bh=G6FcO278eXFT1tgC313pIvONzjhfMvpa/sUOSVlAXKo=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=V40wNEAUPRHNTwiJOYb1Gl31yz7LJlH5r3vPln36G32RGGwteOr9J0INqABPqu/NRMrY8NqC4oMqSRGAbTMSG9IiShYIVl26Pb91ZlDpU1ip21HaAA7KRj6PVt7+qF8cQunlXOyVwCb9l5C5y8KH/jWcvnc6kUphbwjCFD2d00c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=KdfbC0C2; arc=none smtp.client-ip=209.85.128.47
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+	s=arc-20240116; t=1760967316; c=relaxed/simple;
+	bh=ucu/MEjAdi6pmWs46yVfUvYL1HyEffGD/qz2i/G6+p8=;
+	h=From:To:CC:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=VYLjsDnK5Amb5lD69l8RRpNkAldD5yW6QxTT2FZ7pIHhr0eSDjDvmxRBGnSl1maVkRLCJFSV80tsprjWe3UfoNdd1M7UnyA2YzLSgtPS8LWeUX0BSj0lO0vRhQgBub2hc+S4oxJjRYKptuKJN5uq5N7bIqFwKHj/FXc4LVBqFoc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=windriver.com; spf=pass smtp.mailfrom=windriver.com; dkim=pass (2048-bit key) header.d=windriver.com header.i=@windriver.com header.b=i7BdrJY3; arc=none smtp.client-ip=205.220.178.238
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=windriver.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=windriver.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="KdfbC0C2"
-Received: by mail-wm1-f47.google.com with SMTP id 5b1f17b1804b1-471066cfc2aso39409905e9.0
-        for <linux-hams@vger.kernel.org>; Mon, 20 Oct 2025 05:57:45 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1760965064; x=1761569864; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=9ao5LTkpyunEEEJuwR6nh8mnIP8EeLv+acAjQyBGn0U=;
-        b=KdfbC0C2Sce4zHSEmbnnbyWcAGIkJoui8k91GIIXvf9QEwmDeqkzykh3ylXyuwxxlq
-         DP7IKSnC2RpA88JxKrbqc4uA8FF8cFtW9mWngA+dPoriONy1wDUASCsvbzDwxN9TrYZk
-         cbW+dm+U0zWVY7zu5W32u+oVuisiiwvIx304AfzRHVMKHmxP9G12yGdUHCAUMRFsyXHQ
-         5rhidWP7CTHW844P8sgRiljMMBMKLS7MaN/K//oocxYInqH0oWzndPdCQMpk+pdmJ0/N
-         vyx+Xpn8isd6yRxsTOiZVU5s+d8msOYEEWtAf8KAM2GGXi7eff6mhjJJd7UAfWpbjU3E
-         qDeA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1760965064; x=1761569864;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=9ao5LTkpyunEEEJuwR6nh8mnIP8EeLv+acAjQyBGn0U=;
-        b=MvDQjQYggDS8T6N8Q7hJ7Y+gdDN4Gas7IMRnMz1czZKWutV7z2ZWiCd05mhHu0F6Tu
-         k/zY+/6hvPKgQRkicD2TA1tSe6IqKHhYXpt6QiW9NwP0+pKLoB+AWk/O/1pOhxwZUvg9
-         AYFOM++yBmRFhbvBgCYKuBqYKwpFrR6pnG2h2Gn8j1SslftHGWRcTRIAEJVH4MKjbRt1
-         IAHxuNjClBw79Q2IziJnW2c6BDojcC4P+CqSBqqodWYSEK38VD7aJx45Id3BJhzAkJxE
-         8zir4Y9uT/fUTcsh8vZoqgCn+ZvmJ2Vn0A7fzN70kJzB8k2AIrTRdQwFCNZINEcc3GkS
-         TNzg==
-X-Forwarded-Encrypted: i=1; AJvYcCU9Hkiow7YS/+Qq2vfTArsRHF/Y8I98uOVI2p/m4guuVXRH8X8OVEy/VV4OpLiAvI7BuPHovOcHDQvT@vger.kernel.org
-X-Gm-Message-State: AOJu0YwSPyhJR9wAOxGagbqZdI8MZu+wdmFPOhpq1Tx6+WhtyD8FHlVm
-	xyPSkigeFMl4HDTobscH3fi353ka6hV6isxGz5/8tFb0G/oocEk/wkKci3YTbbSXOgM=
-X-Gm-Gg: ASbGncumDMROL7P21OYb6LXFUZiTxlb/36btIBchizKcCQtxPI9VohIInYqJPq8v7RA
-	cEM795wMwS6KTeEoFQaxkpU6yCI7etNE8rDyuqsS7hVDaUF9KG5mL5NhkdDHi15NtPifPLtpRmS
-	6ll6ZKI2YYsxbyBxL2SnVUbwuTEkJ13w0AOX2IglObZtoS3WyjR166x0rikxS3Eo4xqQYf+D+9+
-	qJamtN9df2XrUcR3G4u0eFM8XhCjRLMHXH59+dvGyWA4Dv7IEuI8fYvSBkoZRXyQxQtN7IDs1hI
-	jwTkntMvAIRXUxuqp81UICRVT6d1e5iWbONnbnLSaon4lY1G2W/oo+f4bxXJ3DCNdvcdhnhjUwE
-	SvYFMMgDEtoo8Sn+6KmEfqHNq8wWoXQACyI6YL5IdOxsvBGLguTfHR2EZus+Z5d8l6SPAWPvFxN
-	21EVMOZcLTGR5jHQA=
-X-Google-Smtp-Source: AGHT+IHAzHSoaXW9FTqisoxwWWJ86QeGPH0Qn2VpgfeKv1K2ScSIldv6hbmEjlnUGO1KIv2vK/3+YA==
-X-Received: by 2002:a05:600c:3e07:b0:46e:450d:e037 with SMTP id 5b1f17b1804b1-4711786c560mr102540425e9.5.1760965063585;
-        Mon, 20 Oct 2025 05:57:43 -0700 (PDT)
-Received: from localhost ([41.210.143.179])
-        by smtp.gmail.com with UTF8SMTPSA id 5b1f17b1804b1-471556e17afsm140881935e9.17.2025.10.20.05.57.42
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 20 Oct 2025 05:57:43 -0700 (PDT)
-Date: Mon, 20 Oct 2025 15:33:17 +0300
-From: Dan Carpenter <dan.carpenter@linaro.org>
-To: Lizhi Xu <lizhi.xu@windriver.com>
-Cc: davem@davemloft.net, edumazet@google.com, horms@kernel.org,
-	kuba@kernel.org, linux-hams@vger.kernel.org,
-	linux-kernel@vger.kernel.org, netdev@vger.kernel.org,
-	pabeni@redhat.com,
-	syzbot+2860e75836a08b172755@syzkaller.appspotmail.com,
-	syzkaller-bugs@googlegroups.com
-Subject: Re: [PATCH V2] netrom: Prevent race conditions between multiple add
- route
-Message-ID: <aPYsDVBMUQ0X_ulN@stanley.mountain>
-References: <aPYKgFTIroUhJAJA@stanley.mountain>
- <20251020110244.3200311-1-lizhi.xu@windriver.com>
- <aPYqRJXGhCNws4d3@stanley.mountain>
+	dkim=pass (2048-bit key) header.d=windriver.com header.i=@windriver.com header.b="i7BdrJY3"
+Received: from pps.filterd (m0250811.ppops.net [127.0.0.1])
+	by mx0a-0064b401.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 59K5WBcU2112730;
+	Mon, 20 Oct 2025 13:35:01 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=windriver.com;
+	 h=cc:content-transfer-encoding:content-type:date:from
+	:in-reply-to:message-id:mime-version:references:subject:to; s=
+	PPS06212021; bh=9uGXyVAMB5KWc9aTemb30vveby9Xb/lQVPneonf9zHU=; b=
+	i7BdrJY3Wqcb5I9nGgd4vwRYUXnxeHoc8Vd59XYigK+uSywqswaSYq3W4M3SdnK8
+	vQILduarUNDavunfI0r6VPyLIWT/ftTAdjKZHzEUcAd5VlyF01PUeG2JYkoCxnpg
+	TwQcfk9kgUxmWDSSEW1iKLxXe8RTMPdAE07yCc85WMAHJoZmteufQPbcXbhJykbX
+	rIS9r3uQZ1fx/wkEmhttUiTNRpoN2Xg+q4vVYP1ORRqupTiaMgEEeArTeBNMUTbK
+	+6xBQjhbp6vTpLyE9KEw5+cmTCv6cpKyo/j7Agj4N4YR/OFcjtp5VSyfjVpOS0wf
+	bEF+4m/MDErdss/OH0jZSg==
+Received: from ala-exchng01.corp.ad.wrs.com ([128.224.246.36])
+	by mx0a-0064b401.pphosted.com (PPS) with ESMTPS id 49v03y1xhd-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT);
+	Mon, 20 Oct 2025 13:35:01 +0000 (GMT)
+Received: from ala-exchng01.corp.ad.wrs.com (10.11.224.121) by
+ ala-exchng01.corp.ad.wrs.com (10.11.224.121) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.1.2507.59; Mon, 20 Oct 2025 06:35:00 -0700
+Received: from pek-lpd-ccm6.wrs.com (10.11.232.110) by
+ ala-exchng01.corp.ad.wrs.com (10.11.224.121) with Microsoft SMTP Server id
+ 15.1.2507.59 via Frontend Transport; Mon, 20 Oct 2025 06:34:57 -0700
+From: Lizhi Xu <lizhi.xu@windriver.com>
+To: <dan.carpenter@linaro.org>
+CC: <davem@davemloft.net>, <edumazet@google.com>, <horms@kernel.org>,
+        <kuba@kernel.org>, <linux-hams@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <lizhi.xu@windriver.com>,
+        <netdev@vger.kernel.org>, <pabeni@redhat.com>,
+        <syzbot+2860e75836a08b172755@syzkaller.appspotmail.com>,
+        <syzkaller-bugs@googlegroups.com>
+Subject: [PATCH V2] netrom: Prevent race conditions between multiple add route
+Date: Mon, 20 Oct 2025 21:34:56 +0800
+Message-ID: <20251020133456.3564833-1-lizhi.xu@windriver.com>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <aPYqRJXGhCNws4d3@stanley.mountain>
+References: <aPYqRJXGhCNws4d3@stanley.mountain>
 Precedence: bulk
 X-Mailing-List: linux-hams@vger.kernel.org
 List-Id: <linux-hams.vger.kernel.org>
 List-Subscribe: <mailto:linux-hams+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-hams+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <aPYqRJXGhCNws4d3@stanley.mountain>
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-Proofpoint-GUID: 5Tz-xckAP7A_CoA36wyirgX0sxBDqwpz
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMDIwMDExMiBTYWx0ZWRfX7jYUAPKXAm0J
+ H91y8PzqKW+203dY71ZCoI05iNbhhI0yDUcPrc5fxOv4x2C1UDFsZPBNmnB72wEGJifphGCtDJ1
+ PoSI3aMbHr62X2iQfTD/OKU8M3+dDi+RiG9et5+wZb5o6plBc3dZB88C7JinXj9EcRUBSlZb92e
+ e1II3kXaTf7cMwlaUhucuOrJr+14xwKVl96WAzTgP6QDIo0mG9V+MOS0DhH5RQFMSR788tkMr/M
+ ECmEUzShyNEbfmrOtAX0JBwpg59HR7T2Zm/P8HTu7ZSYnaidT1frrRUDvM5n9ejs2EBtU/YepJs
+ FxOVMEPnGYmx2yaBQrtFLBMTIxIddPI1Y+gp4xV69+gSFmHLI0QdaJBIrmZz02fVEAi2ziHAaNM
+ 9qk7mjdycBUj2bWLC7/vL9gIUYldkQ==
+X-Proofpoint-ORIG-GUID: 5Tz-xckAP7A_CoA36wyirgX0sxBDqwpz
+X-Authority-Analysis: v=2.4 cv=Uolu9uwB c=1 sm=1 tr=0 ts=68f63a85 cx=c_pps
+ a=AbJuCvi4Y3V6hpbCNWx0WA==:117 a=AbJuCvi4Y3V6hpbCNWx0WA==:17
+ a=x6icFKpwvdMA:10 a=VkNPw1HP01LnGYTKEx00:22 a=LKzG_j_Es1a0USQ6zj0A:9
+ a=cPQSjfK2_nFv0Q5t_7PE:22
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.80.40
+ definitions=2025-10-20_04,2025-10-13_01,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ bulkscore=0 clxscore=1015 malwarescore=0 adultscore=0 priorityscore=1501
+ phishscore=0 impostorscore=0 lowpriorityscore=0 suspectscore=0 spamscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2510020000 definitions=main-2510200112
 
-On Mon, Oct 20, 2025 at 03:25:40PM +0300, Dan Carpenter wrote:
-> On Mon, Oct 20, 2025 at 07:02:44PM +0800, Lizhi Xu wrote:
-> > The root cause of the problem is that multiple different tasks initiate
-> > NETROM_NODE commands to add new routes, there is no lock between them to
-> > protect the same nr_neigh.
-> > Task0 may add the nr_neigh.refcount value of 1 on Task1 to routes[2].
-> > 
-> > When Task2 executes nr_neigh_put(nr_node->routes[2].neighbour), it will
-> > release the neighbour because its refcount value is 1.
-> > 
-> > In this case, the following situation causes a UAF:
-> > 
-> > Task0					Task1						Task2
-> > =====					=====						=====
-> > nr_add_node()
-> > nr_neigh_get_dev()			nr_add_node()
-> > 					nr_node_lock()
-> > 					nr_node->routes[2].neighbour->count--
-> > 					nr_neigh_put(nr_node->routes[2].neighbour);
-> > 					nr_remove_neigh(nr_node->routes[2].neighbour)
-> > 					nr_node_unlock()
-> > nr_node_lock()
-> > nr_node->routes[2].neighbour = nr_neigh
-> > nr_neigh_hold(nr_neigh);								nr_add_node()
-> > 											nr_neigh_put()
-> > 
-> > The solution to the problem is to use a lock to synchronize each add a route
-> > to node.
+
+On Mon, 20 Oct 2025 15:25:40 +0300, Dan Carpenter wrote:
+> Task0					Task1						Task2
+> =====					=====						=====
+> [97] nr_add_node()
+> [113] nr_neigh_get_dev()		[97] nr_add_node()
+> 					[214] nr_node_lock()
+> 					[245] nr_node->routes[2].neighbour->count--
+> 					[246] nr_neigh_put(nr_node->routes[2].neighbour);
+> 					[248] nr_remove_neigh(nr_node->routes[2].neighbour)
+> 					[283] nr_node_unlock()
+> [214] nr_node_lock()
+> [253] nr_node->routes[2].neighbour = nr_neigh
+> [254] nr_neigh_hold(nr_neigh);							[97] nr_add_node()
+> 											[XXX] nr_neigh_put()
+>                                                                                         ^^^^^^^^^^^^^^^^^^^^
 > 
-> This chart is still not right.  Let me add line numbers to your chart:
-> 
-> netrom/nr_route.c
->    214          nr_node_lock(nr_node);
->    215  
->    216          if (quality != 0)
->    217                  strscpy(nr_node->mnemonic, mnemonic);
->    218  
->    219          for (found = 0, i = 0; i < nr_node->count; i++) {
->    220                  if (nr_node->routes[i].neighbour == nr_neigh) {
->    221                          nr_node->routes[i].quality   = quality;
->    222                          nr_node->routes[i].obs_count = obs_count;
+> These charts are supposed to be chronological so [XXX] is wrong because the
+> use after free happens on line [248].  Do we really need three threads to
+> make this race work?
+The UAF problem occurs in Task2. Task1 sets the refcount of nr_neigh to 1,
+then Task0 adds it to routes[2]. Task2 releases routes[2].neighbour after
+executing [XXX]nr_neigh_put().
 
-Should we call nr_neigh->count++ if we found it?  I guess I don't
-really understand what nr_neigh->count is counting...  It would be
-really nice if someone added some comments explaining how the ref
-counting worked.
-
->    223                          found = 1;
->    224                          break;
->    225                  }
->    226          }
-
-regards,
-dan carpenter
-
+BR,
+Lizhi
