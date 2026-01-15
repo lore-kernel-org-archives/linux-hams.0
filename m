@@ -1,50 +1,50 @@
-Received: from mail-oa1-f79.google.com (mail-oa1-f79.google.com [209.85.160.79])
+Received: from mail-oo1-f78.google.com (mail-oo1-f78.google.com [209.85.161.78])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C3CA218592
-	for <linux-hams@vger.kernel.org>; Thu, 15 Jan 2026 20:15:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.79
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 90E012E54BB
+	for <linux-hams@vger.kernel.org>; Thu, 15 Jan 2026 20:26:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.161.78
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768508126; cv=none; b=jgFYI6cOreBbwACSvWk7+h7AhGDNIyF3zHrjPbJEsOxpfde7ZkPXIpJm1/56pfErEifVvFxNohGiD5YCzKE+fAugqhXYdiTuqIPMHODXYpsECnHWG1EC9u2l5U+ee/pInF4kvHSz2RjtusmjXuOvFzaZeC7EiIVuYjXaFGzK8Dg=
+	t=1768508786; cv=none; b=PrvcoRdY46rNVz77BzdIp05PZX3qK9vgQRcO1s9WjAT1oMy67lIv6AWwFq/NFZn6cdHvEjoworocN2BxohGe+zNhxVo32C8p50vTyZpQ7PVU/kLb1RQtHanQgl2z10Q67KYj8ITnimzbPqRLgKmMUyw+hesNr4vSbsq32oP1sgk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768508126; c=relaxed/simple;
-	bh=Z5acAB17dor4Dz1aGkef3WF4HTPuYFFSnSwJpAGhP+o=;
-	h=MIME-Version:Date:Message-ID:Subject:From:To:Content-Type; b=Mc2GP0IXqanwRwAW8yMZc8Q7MMdNoi4pkQKm2JSkG1u9MkTc07IiUak1uk2FsXq0wyY5r0aCu0xzxKovJRlCHppj4ilIEDB2LKHS9oWy3BnPSTiEkac8ReKV0/SRafWW8EJlSjIOy8IHMxbZegrEgQObVc/sxdF4tXShWu1GMpw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=syzkaller.appspotmail.com; spf=pass smtp.mailfrom=M3KW2WVRGUFZ5GODRSRYTGD7.apphosting.bounces.google.com; arc=none smtp.client-ip=209.85.160.79
+	s=arc-20240116; t=1768508786; c=relaxed/simple;
+	bh=2KQR2FaSiW89mvtfEUMQqvKDwhaDDfwrwnL6W59JH78=;
+	h=MIME-Version:Date:Message-ID:Subject:From:To:Content-Type; b=D1clpRVoGrNhG1I/HIKqgroUI6f7YWlxzE0hp910EW72FP+PkKji7NvJ25ZrDv1ZNkOw9NqD1X9ji9TbMaxN1wSQg2i4+SrD55/xPBjhjw0z3U+nfodqthK6dbfqV0LTX3z6wru0Jt17NYHKrE8PsjulxjPsXdVXznDjspLvmpY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=syzkaller.appspotmail.com; spf=pass smtp.mailfrom=M3KW2WVRGUFZ5GODRSRYTGD7.apphosting.bounces.google.com; arc=none smtp.client-ip=209.85.161.78
 Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=syzkaller.appspotmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=M3KW2WVRGUFZ5GODRSRYTGD7.apphosting.bounces.google.com
-Received: by mail-oa1-f79.google.com with SMTP id 586e51a60fabf-4040b9ea153so2299906fac.1
-        for <linux-hams@vger.kernel.org>; Thu, 15 Jan 2026 12:15:24 -0800 (PST)
+Received: by mail-oo1-f78.google.com with SMTP id 006d021491bc7-65f30d38617so2663268eaf.1
+        for <linux-hams@vger.kernel.org>; Thu, 15 Jan 2026 12:26:24 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1768508123; x=1769112923;
+        d=1e100.net; s=20230601; t=1768508783; x=1769113583;
         h=to:from:subject:message-id:date:mime-version:x-gm-message-state
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=KiZTjRLBlsA3Wcygqju07dmSc4w9UmIri5a110gs5xc=;
-        b=mXYiC+naxGHTPndCuiV8QJgpQoh+PVCF+MefyzrmHVxySEPVjWJxH6WRcuaZ0+s0Rn
-         gjzVE3CsN2SGMUlhYQKWCAVZd+0HpsEKT7/WUIdqDXp1Mov6e2cgYyCqBFCdj3PlsZ3P
-         ZbHBRL5DBJuB7Ko0pvQ8SuoHUtxm/uaFrJuq+XMt7ZN2xIjy/6KbbunbGaIytKf9M6Q7
-         YnKfMSJhrRSx0rz58a8bGGSPCnM6LmRy8sdfzh5rLCT+Uq0XIYNBzTCXn7HxSbwaf6XF
-         wORRJD7LMhC2iEMQbfQfC8RILIm4hYQpSNIoD0sHq1FrsW5H9hG2BPKk7DwKm7PmZ6aD
-         V3Nw==
-X-Forwarded-Encrypted: i=1; AJvYcCXoLDGoFW1LsKGnG6sdeGp2/np8uRwmcHezxLtCHruPyeol+w5q/meXr+SklMxtNXOv3QnSkeEx6n+e@vger.kernel.org
-X-Gm-Message-State: AOJu0YyihUkJFoXF9QtTDIAf9HljQ6I6VfQUjOvljTKhXudJDTWO4dtO
-	nVeE4n6gjYqy2m/5YbzvXWvgM37/Dg93DJyLE89NDCEqOUytlHdV9KzC/Es5I9Gd+rFQXQe5ilw
-	1lM7a1UBJNYT7obCBNSnaQqdZUGD1NQmay2FGQVDwr8KGMQlOD2I5u9zUiw4=
+        bh=YciuylvWouOfFUO/a9aUb04b/+eFp2Cck7QuFH19ZlY=;
+        b=IJLDyNW/Wk5RJ3V395wJLFatOxFmRV9r8ceH5VQTjQq7pGAR+/shbG4PkLo1HZftSw
+         HQDj29Fx7JCZQqIExyaJefMqynYbj9RG9kVMGqYVj+gDLmzNbg/A+EWJZxqKWwqMP6BI
+         CnFfx7ShmVf3iEA3Tj1giynV8uWlVm7E/8L9jo23Hkrt5ohN3N+/b+fvv7rihMzZtjCo
+         wvqxnk+/j1OvtYDSHr8b9uzW/AhxVg7IQ5+V6gxUQ7xou1c/GVWIHfG4+2d2JwsNM9SE
+         d02P8nwG0VfXvEvgNmeuevczLUtb5pEzscxJkVJMqdn9N5dwpk/R0khfUNK0CP6HcoyC
+         0f/A==
+X-Forwarded-Encrypted: i=1; AJvYcCUVhxRNU+Zae1NeAuDRN3HUROo5FZsgk0+0qKGEeQDZPyy0dQB52MmmQyk44ZOYonkfYbVgeRXooo8+@vger.kernel.org
+X-Gm-Message-State: AOJu0YyJkygyzBOfi5JGQtuoLl2bcaBhPNM6IeRAbN88qFn/hxjBvytf
+	1fOF7/Oc0h7+b3KhwUd8qRdd5epzcYt+j3VcBLVvNB5EdYcisALondeT2z7ZVfd3vYjHj0IaDHO
+	OCeTTnMDxe0dWs9p210+Lpn1az9HoFkvNv+rhlB/892EBtTFXCTw7W/nTxHc=
 Precedence: bulk
 X-Mailing-List: linux-hams@vger.kernel.org
 List-Id: <linux-hams.vger.kernel.org>
 List-Subscribe: <mailto:linux-hams+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-hams+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-Received: by 2002:a05:6820:c93:b0:65f:6582:6b23 with SMTP id
- 006d021491bc7-6611898345cmr182581eaf.38.1768508123564; Thu, 15 Jan 2026
- 12:15:23 -0800 (PST)
-Date: Thu, 15 Jan 2026 12:15:23 -0800
+X-Received: by 2002:a4a:ec41:0:b0:65f:64eb:8ff5 with SMTP id
+ 006d021491bc7-66117a392c9mr346801eaf.81.1768508783537; Thu, 15 Jan 2026
+ 12:26:23 -0800 (PST)
+Date: Thu, 15 Jan 2026 12:26:23 -0800
 X-Google-Appengine-App-Id: s~syzkaller
 X-Google-Appengine-App-Id-Alias: syzkaller
-Message-ID: <69694adb.050a0220.58bed.0026.GAE@google.com>
-Subject: [syzbot] [hams?] KASAN: slab-use-after-free Write in rose_send_frame
-From: syzbot <syzbot+9cc08d5dcb1fc8feee76@syzkaller.appspotmail.com>
+Message-ID: <69694d6f.050a0220.58bed.0027.GAE@google.com>
+Subject: [syzbot] [hams?] general protection fault in rose_transmit_link (4)
+From: syzbot <syzbot+d00f90e0af54102fb271@syzkaller.appspotmail.com>
 To: davem@davemloft.net, edumazet@google.com, horms@kernel.org, 
 	kuba@kernel.org, linux-hams@vger.kernel.org, linux-kernel@vger.kernel.org, 
 	netdev@vger.kernel.org, pabeni@redhat.com, syzkaller-bugs@googlegroups.com
@@ -54,157 +54,98 @@ Hello,
 
 syzbot found the following issue on:
 
-HEAD commit:    46a51f4f5eda Merge tag 'for-v6.17-rc' of git://git.kernel...
+HEAD commit:    6f3b6e91f720 Merge tag 'io_uring-6.18-20251016' of git://g..
 git tree:       upstream
-console output: https://syzkaller.appspot.com/x/log.txt?x=17204e42580000
-kernel config:  https://syzkaller.appspot.com/x/.config?x=f5b21423ca3f0a96
-dashboard link: https://syzkaller.appspot.com/bug?extid=9cc08d5dcb1fc8feee76
-compiler:       Debian clang version 20.1.8 (++20250708063551+0c9f909b7976-1~exp1~20250708183702.136), Debian LLD 20.1.8
-
-Unfortunately, I don't have any reproducer for this issue yet.
+console output: https://syzkaller.appspot.com/x/log.txt?x=1714fdcd980000
+kernel config:  https://syzkaller.appspot.com/x/.config?x=f3e7b5a3627a90dd
+dashboard link: https://syzkaller.appspot.com/bug?extid=d00f90e0af54102fb271
+compiler:       gcc (Debian 12.2.0-14+deb12u1) 12.2.0, GNU ld (GNU Binutils for Debian) 2.40
+syz repro:      https://syzkaller.appspot.com/x/repro.syz?x=12483de2580000
+C reproducer:   https://syzkaller.appspot.com/x/repro.c?x=148d5c58580000
 
 Downloadable assets:
-disk image: https://storage.googleapis.com/syzbot-assets/e7338673c380/disk-46a51f4f.raw.xz
-vmlinux: https://storage.googleapis.com/syzbot-assets/b3b702fe6d97/vmlinux-46a51f4f.xz
-kernel image: https://storage.googleapis.com/syzbot-assets/7c58e7a0c4c8/bzImage-46a51f4f.xz
+disk image (non-bootable): https://storage.googleapis.com/syzbot-assets/d900f083ada3/non_bootable_disk-6f3b6e91.raw.xz
+vmlinux: https://storage.googleapis.com/syzbot-assets/9a3a64b415ae/vmlinux-6f3b6e91.xz
+kernel image: https://storage.googleapis.com/syzbot-assets/1a864a92eaa0/bzImage-6f3b6e91.xz
 
 IMPORTANT: if you fix the issue, please add the following tag to the commit:
-Reported-by: syzbot+9cc08d5dcb1fc8feee76@syzkaller.appspotmail.com
+Reported-by: syzbot+d00f90e0af54102fb271@syzkaller.appspotmail.com
 
-==================================================================
-BUG: KASAN: slab-use-after-free in rose_send_frame+0x131/0x220 net/rose/rose_link.c:106
-Write of size 8 at addr ffff88805a57c018 by task ktimers/0/16
-
-CPU: 0 UID: 0 PID: 16 Comm: ktimers/0 Not tainted syzkaller #0 PREEMPT_{RT,(full)} 
-Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 08/18/2025
+Oops: general protection fault, probably for non-canonical address 0xdffffc0000000006: 0000 [#1] SMP KASAN NOPTI
+KASAN: null-ptr-deref in range [0x0000000000000030-0x0000000000000037]
+CPU: 1 UID: 0 PID: 6092 Comm: syz.0.17 Not tainted syzkaller #0 PREEMPT(full) 
+Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS 1.16.3-debian-1.16.3-2~bpo12+1 04/01/2014
+RIP: 0010:rose_transmit_link+0x32/0x5f0 net/rose/rose_link.c:266
+Code: 41 55 41 54 55 48 89 fd 53 48 89 f3 48 83 ec 08 e8 23 80 69 f7 48 8d 7b 36 48 b8 00 00 00 00 00 fc ff df 48 89 fa 48 c1 ea 03 <0f> b6 04 02 48 89 fa 83 e2 07 38 d0 7f 08 84 c0 0f 85 d8 04 00 00
+RSP: 0018:ffffc90003f67a00 EFLAGS: 00010207
+RAX: dffffc0000000000 RBX: 0000000000000000 RCX: ffffffff8a545988
+RDX: 0000000000000006 RSI: ffffffff8a53b88d RDI: 0000000000000036
+RBP: ffff88803bc14780 R08: 0000000000000005 R09: 000000000000001f
+R10: 0000000000000013 R11: 0000000000000000 R12: ffff888028c2e000
+R13: 0000000000000010 R14: 0000000000000013 R15: ffff88805181e41a
+FS:  00007ff7e01a96c0(0000) GS:ffff8880d6ad6000(0000) knlGS:0000000000000000
+CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+CR2: 0000562fe4bbada8 CR3: 000000003ceb8000 CR4: 0000000000352ef0
 Call Trace:
  <TASK>
- dump_stack_lvl+0x189/0x250 lib/dump_stack.c:120
- print_address_description mm/kasan/report.c:378 [inline]
- print_report+0xca/0x240 mm/kasan/report.c:482
- kasan_report+0x118/0x150 mm/kasan/report.c:595
- rose_send_frame+0x131/0x220 net/rose/rose_link.c:106
- rose_transmit_restart_request net/rose/rose_link.c:198 [inline]
- rose_t0timer_expiry+0x143/0x360 net/rose/rose_link.c:83
- call_timer_fn+0x17e/0x5f0 kernel/time/timer.c:1747
- expire_timers kernel/time/timer.c:1798 [inline]
- __run_timers kernel/time/timer.c:2372 [inline]
- __run_timer_base+0x648/0x970 kernel/time/timer.c:2384
- run_timer_base kernel/time/timer.c:2393 [inline]
- run_timer_softirq+0xb7/0x180 kernel/time/timer.c:2403
- handle_softirqs+0x22f/0x710 kernel/softirq.c:579
- __do_softirq kernel/softirq.c:613 [inline]
- run_ktimerd+0xcf/0x190 kernel/softirq.c:1043
- smpboot_thread_fn+0x53f/0xa60 kernel/smpboot.c:160
- kthread+0x70e/0x8a0 kernel/kthread.c:463
- ret_from_fork+0x439/0x7d0 arch/x86/kernel/process.c:148
- ret_from_fork_asm+0x1a/0x30 arch/x86/entry/entry_64.S:245
- </TASK>
-
-Allocated by task 11663:
- kasan_save_stack mm/kasan/common.c:47 [inline]
- kasan_save_track+0x3e/0x80 mm/kasan/common.c:68
- poison_kmalloc_redzone mm/kasan/common.c:388 [inline]
- __kasan_kmalloc+0x93/0xb0 mm/kasan/common.c:405
- kasan_kmalloc include/linux/kasan.h:260 [inline]
- __kmalloc_cache_noprof+0x1a8/0x320 mm/slub.c:4407
- kmalloc_noprof include/linux/slab.h:905 [inline]
- rose_add_node+0x26f/0xf20 net/rose/rose_route.c:85
- rose_rt_ioctl+0xd74/0x1300 net/rose/rose_route.c:748
- rose_ioctl+0x3ce/0x8b0 net/rose/af_rose.c:1381
- sock_do_ioctl+0xdc/0x300 net/socket.c:1238
- sock_ioctl+0x579/0x790 net/socket.c:1359
- vfs_ioctl fs/ioctl.c:51 [inline]
- __do_sys_ioctl fs/ioctl.c:598 [inline]
- __se_sys_ioctl+0xfc/0x170 fs/ioctl.c:584
- do_syscall_x64 arch/x86/entry/syscall_64.c:63 [inline]
- do_syscall_64+0xfa/0x3b0 arch/x86/entry/syscall_64.c:94
+ rose_write_internal+0x2f6/0x1850 net/rose/rose_subr.c:198
+ rose_release+0x1f1/0x740 net/rose/af_rose.c:671
+ __sock_release+0xb3/0x270 net/socket.c:662
+ sock_close+0x1c/0x30 net/socket.c:1455
+ __fput+0x402/0xb70 fs/file_table.c:468
+ task_work_run+0x150/0x240 kernel/task_work.c:227
+ get_signal+0x1d0/0x26d0 kernel/signal.c:2807
+ arch_do_signal_or_restart+0x8f/0x7c0 arch/x86/kernel/signal.c:337
+ exit_to_user_mode_loop+0x85/0x130 kernel/entry/common.c:40
+ exit_to_user_mode_prepare include/linux/irq-entry-common.h:225 [inline]
+ syscall_exit_to_user_mode_work include/linux/entry-common.h:175 [inline]
+ syscall_exit_to_user_mode include/linux/entry-common.h:210 [inline]
+ do_syscall_64+0x426/0xfa0 arch/x86/entry/syscall_64.c:100
  entry_SYSCALL_64_after_hwframe+0x77/0x7f
-
-Freed by task 29:
- kasan_save_stack mm/kasan/common.c:47 [inline]
- kasan_save_track+0x3e/0x80 mm/kasan/common.c:68
- kasan_save_free_info+0x46/0x50 mm/kasan/generic.c:576
- poison_slab_object mm/kasan/common.c:243 [inline]
- __kasan_slab_free+0x5b/0x80 mm/kasan/common.c:275
- kasan_slab_free include/linux/kasan.h:233 [inline]
- slab_free_hook mm/slub.c:2422 [inline]
- slab_free mm/slub.c:4695 [inline]
- kfree+0x195/0x550 mm/slub.c:4894
- rose_neigh_put include/net/rose.h:166 [inline]
- rose_timer_expiry+0x4cb/0x600 net/rose/rose_timer.c:183
- call_timer_fn+0x17e/0x5f0 kernel/time/timer.c:1747
- expire_timers kernel/time/timer.c:1798 [inline]
- __run_timers kernel/time/timer.c:2372 [inline]
- __run_timer_base+0x648/0x970 kernel/time/timer.c:2384
- run_timer_base kernel/time/timer.c:2393 [inline]
- run_timer_softirq+0xb7/0x180 kernel/time/timer.c:2403
- handle_softirqs+0x22f/0x710 kernel/softirq.c:579
- __do_softirq kernel/softirq.c:613 [inline]
- run_ktimerd+0xcf/0x190 kernel/softirq.c:1043
- smpboot_thread_fn+0x53f/0xa60 kernel/smpboot.c:160
- kthread+0x70e/0x8a0 kernel/kthread.c:463
- ret_from_fork+0x439/0x7d0 arch/x86/kernel/process.c:148
- ret_from_fork_asm+0x1a/0x30 arch/x86/entry/entry_64.S:245
-
-The buggy address belongs to the object at ffff88805a57c000
- which belongs to the cache kmalloc-512 of size 512
-The buggy address is located 24 bytes inside of
- freed 512-byte region [ffff88805a57c000, ffff88805a57c200)
-
-The buggy address belongs to the physical page:
-page: refcount:0 mapcount:0 mapping:0000000000000000 index:0xffff88805a57f800 pfn:0x5a57c
-head: order:2 mapcount:0 entire_mapcount:0 nr_pages_mapped:0 pincount:0
-flags: 0x80000000000240(workingset|head|node=0|zone=1)
-page_type: f5(slab)
-raw: 0080000000000240 ffff888019841c80 ffffea0000a34c10 ffffea00008f7510
-raw: ffff88805a57f800 000000000010000c 00000000f5000000 0000000000000000
-head: 0080000000000240 ffff888019841c80 ffffea0000a34c10 ffffea00008f7510
-head: ffff88805a57f800 000000000010000c 00000000f5000000 0000000000000000
-head: 0080000000000002 ffffea0001695f01 00000000ffffffff 00000000ffffffff
-head: 0000000000000000 0000000000000000 00000000ffffffff 0000000000000004
-page dumped because: kasan: bad access detected
-page_owner tracks the page as allocated
-page last allocated via order 2, migratetype Unmovable, gfp_mask 0xd20c0(__GFP_IO|__GFP_FS|__GFP_NOWARN|__GFP_NORETRY|__GFP_COMP|__GFP_NOMEMALLOC), pid 5851, tgid 5851 (syz-executor), ts 123546082948, free_ts 0
- set_page_owner include/linux/page_owner.h:32 [inline]
- post_alloc_hook+0x240/0x2a0 mm/page_alloc.c:1851
- prep_new_page mm/page_alloc.c:1859 [inline]
- get_page_from_freelist+0x2119/0x21b0 mm/page_alloc.c:3858
- __alloc_frozen_pages_noprof+0x181/0x370 mm/page_alloc.c:5148
- alloc_pages_mpol+0xd1/0x380 mm/mempolicy.c:2416
- alloc_slab_page mm/slub.c:2492 [inline]
- allocate_slab+0x8a/0x370 mm/slub.c:2660
- new_slab mm/slub.c:2714 [inline]
- ___slab_alloc+0x8d1/0xdc0 mm/slub.c:3901
- __slab_alloc mm/slub.c:3992 [inline]
- __slab_alloc_node mm/slub.c:4067 [inline]
- slab_alloc_node mm/slub.c:4228 [inline]
- __kmalloc_cache_noprof+0xe6/0x320 mm/slub.c:4402
- kmalloc_noprof include/linux/slab.h:905 [inline]
- kzalloc_noprof include/linux/slab.h:1039 [inline]
- mca_alloc net/ipv6/mcast.c:876 [inline]
- __ipv6_dev_mc_inc+0x44f/0xa50 net/ipv6/mcast.c:966
- ipv6_add_dev+0xea1/0x13c0 net/ipv6/addrconf.c:475
- addrconf_notify+0x794/0x1010 net/ipv6/addrconf.c:3650
- notifier_call_chain+0x1b3/0x3e0 kernel/notifier.c:85
- call_netdevice_notifiers_extack net/core/dev.c:2267 [inline]
- call_netdevice_notifiers net/core/dev.c:2281 [inline]
- register_netdevice+0x163c/0x1b10 net/core/dev.c:11244
- register_vlan_dev+0x3cb/0x800 net/8021q/vlan.c:179
- vlan_newlink+0x4b2/0x610 net/8021q/vlan_netlink.c:194
- rtnl_newlink_create+0x310/0xb00 net/core/rtnetlink.c:3825
- __rtnl_newlink net/core/rtnetlink.c:3942 [inline]
- rtnl_newlink+0x16d6/0x1c70 net/core/rtnetlink.c:4057
-page_owner free stack trace missing
-
-Memory state around the buggy address:
- ffff88805a57bf00: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
- ffff88805a57bf80: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
->ffff88805a57c000: fa fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb
-                            ^
- ffff88805a57c080: fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb
- ffff88805a57c100: fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb
-==================================================================
+RIP: 0033:0x7ff7df38efc9
+Code: ff ff c3 66 2e 0f 1f 84 00 00 00 00 00 0f 1f 40 00 48 89 f8 48 89 f7 48 89 d6 48 89 ca 4d 89 c2 4d 89 c8 4c 8b 4c 24 08 0f 05 <48> 3d 01 f0 ff ff 73 01 c3 48 c7 c1 a8 ff ff ff f7 d8 64 89 01 48
+RSP: 002b:00007ff7e01a9038 EFLAGS: 00000246 ORIG_RAX: 000000000000002a
+RAX: 0000000000000000 RBX: 00007ff7df5e5fa0 RCX: 00007ff7df38efc9
+RDX: 0000000000000040 RSI: 0000200000000140 RDI: 0000000000000005
+RBP: 00007ff7df411f91 R08: 0000000000000000 R09: 0000000000000000
+R10: 0000000000000000 R11: 0000000000000246 R12: 0000000000000000
+R13: 00007ff7df5e6038 R14: 00007ff7df5e5fa0 R15: 00007ffc5e3517f8
+ </TASK>
+Modules linked in:
+---[ end trace 0000000000000000 ]---
+RIP: 0010:rose_transmit_link+0x32/0x5f0 net/rose/rose_link.c:266
+Code: 41 55 41 54 55 48 89 fd 53 48 89 f3 48 83 ec 08 e8 23 80 69 f7 48 8d 7b 36 48 b8 00 00 00 00 00 fc ff df 48 89 fa 48 c1 ea 03 <0f> b6 04 02 48 89 fa 83 e2 07 38 d0 7f 08 84 c0 0f 85 d8 04 00 00
+RSP: 0018:ffffc90003f67a00 EFLAGS: 00010207
+RAX: dffffc0000000000 RBX: 0000000000000000 RCX: ffffffff8a545988
+RDX: 0000000000000006 RSI: ffffffff8a53b88d RDI: 0000000000000036
+RBP: ffff88803bc14780 R08: 0000000000000005 R09: 000000000000001f
+R10: 0000000000000013 R11: 0000000000000000 R12: ffff888028c2e000
+R13: 0000000000000010 R14: 0000000000000013 R15: ffff88805181e41a
+FS:  00007ff7e01a96c0(0000) GS:ffff8880d6ad6000(0000) knlGS:0000000000000000
+CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+CR2: 0000562fe4bbada8 CR3: 000000003ceb8000 CR4: 0000000000352ef0
+----------------
+Code disassembly (best guess):
+   0:	41 55                	push   %r13
+   2:	41 54                	push   %r12
+   4:	55                   	push   %rbp
+   5:	48 89 fd             	mov    %rdi,%rbp
+   8:	53                   	push   %rbx
+   9:	48 89 f3             	mov    %rsi,%rbx
+   c:	48 83 ec 08          	sub    $0x8,%rsp
+  10:	e8 23 80 69 f7       	call   0xf7698038
+  15:	48 8d 7b 36          	lea    0x36(%rbx),%rdi
+  19:	48 b8 00 00 00 00 00 	movabs $0xdffffc0000000000,%rax
+  20:	fc ff df
+  23:	48 89 fa             	mov    %rdi,%rdx
+  26:	48 c1 ea 03          	shr    $0x3,%rdx
+* 2a:	0f b6 04 02          	movzbl (%rdx,%rax,1),%eax <-- trapping instruction
+  2e:	48 89 fa             	mov    %rdi,%rdx
+  31:	83 e2 07             	and    $0x7,%edx
+  34:	38 d0                	cmp    %dl,%al
+  36:	7f 08                	jg     0x40
+  38:	84 c0                	test   %al,%al
+  3a:	0f 85 d8 04 00 00    	jne    0x518
 
 
 ---
@@ -217,6 +158,10 @@ https://goo.gl/tpsmEJ#status for how to communicate with syzbot.
 
 If the report is already addressed, let syzbot know by replying with:
 #syz fix: exact-commit-title
+
+If you want syzbot to run the reproducer, reply with:
+#syz test: git://repo/address.git branch-or-commit-hash
+If you attach or paste a git patch, syzbot will apply it before testing.
 
 If you want to overwrite report's subsystems, reply with:
 #syz set subsystems: new-subsystem
