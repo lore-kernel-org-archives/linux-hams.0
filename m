@@ -1,329 +1,162 @@
-Received: from mail-oo1-f79.google.com (mail-oo1-f79.google.com [209.85.161.79])
+Received: from mail-oa1-f69.google.com (mail-oa1-f69.google.com [209.85.160.69])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C8E7F346A0C
-	for <linux-hams@vger.kernel.org>; Fri,  6 Feb 2026 17:01:32 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.161.79
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E3F13093DF
+	for <linux-hams@vger.kernel.org>; Fri, 13 Feb 2026 22:17:35 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.69
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770397293; cv=none; b=DUdjf0uCSWwUcA6bXfK3kE/F+ybfKwxoVWL/lA/4jAFYSkCrvXMVFWUsw5awqw6/wSqUVAJuoly3VJz0ASFCsN6TVNPN4+6+CML5HOCBSRwGIsomiKE3x9cuApowOiSO5gcA99+mK3CORdJBAu41VK2XphcaAxdwU8XsEeGhSC4=
+	t=1771021056; cv=none; b=XTUMk6nlBilV0FGqwuVe/VyfiAOR/sv7ijVYqVTi8Js3tMdrnSjW/cxMvtsQnS8lMj0s5sckL/zzHAPbM2OFMGdueG5MQXCq1j5h3idsj1YMbDNsrSwANGAFhbnWvGlZuEtOHBPacq/UId8FsbZpbIxC5VaRUof7i6Ldu/QSrps=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770397293; c=relaxed/simple;
-	bh=pKVcU2JZ37tw67VJn5v4W+1Gcb/jY1TMSpQtWOKYkE0=;
-	h=MIME-Version:Date:Message-ID:Subject:From:To:Content-Type; b=gk8MYuqO/mW//fJDwk7mMEv+eZF9cXrPsV46C1evRnnQZ4ZsXQfYk589V4SoB/qO3Q2Cr8dWjedDd7URhvvWBoLzoQNojGqGwfHD6CGNQ42b7Lc89rLQAmrv8uTdCliRXB+z8ilb8SkXwzKvJpq8Ki1j3XIEBwXGSO19mn/18Ic=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=syzkaller.appspotmail.com; spf=pass smtp.mailfrom=M3KW2WVRGUFZ5GODRSRYTGD7.apphosting.bounces.google.com; arc=none smtp.client-ip=209.85.161.79
+	s=arc-20240116; t=1771021056; c=relaxed/simple;
+	bh=1DDCj1TA2rW1TMXxauVPw3Us56ynp/7idGRVAz/CKh8=;
+	h=MIME-Version:Date:In-Reply-To:Message-ID:Subject:From:To:
+	 Content-Type; b=S3QE7OJjdGL+G0xHUR9QM02h1L2mzEap5WQcTvT5IfKwetk4amxUVLbTDaMyFBkHaevy4fPerbvadnpEqDkYlqldZeG7snlZ6vhE+rPwttnlRO9oDVPxynQnxEXcPdeBh3IS3nDhmNQbG+zF/txZHbUzYe9TdRuuCjkMmvnWyfY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=syzkaller.appspotmail.com; spf=pass smtp.mailfrom=M3KW2WVRGUFZ5GODRSRYTGD7.apphosting.bounces.google.com; arc=none smtp.client-ip=209.85.160.69
 Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=syzkaller.appspotmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=M3KW2WVRGUFZ5GODRSRYTGD7.apphosting.bounces.google.com
-Received: by mail-oo1-f79.google.com with SMTP id 006d021491bc7-663006e4c3cso8212740eaf.2
-        for <linux-hams@vger.kernel.org>; Fri, 06 Feb 2026 09:01:32 -0800 (PST)
+Received: by mail-oa1-f69.google.com with SMTP id 586e51a60fabf-40ee506cf49so8701280fac.2
+        for <linux-hams@vger.kernel.org>; Fri, 13 Feb 2026 14:17:35 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1770397292; x=1771002092;
-        h=to:from:subject:message-id:date:mime-version:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=hsNq0Ae0P9x7QzAJocednScquolrBFQ3GLaKkM2R1+o=;
-        b=byiNaGg/10pqsC2Kp2iqmjBMSsNtch3a5hbq7Vt+dxgH9J3Xdra1NNogpyMVSbJIb1
-         coNxoNFRWwiBNvOuGLHW+UHu1b4Yqrdn3Izo7EZ05kPG/5D2qPofVfXwo8ACdUHzPGa8
-         hC8DCYNirxuTkgSzzQie9EVtcqGGuoa/oy5eosKaPeOE0H7tiba9hmz/dXqEx1b6dRfN
-         ZR10gzTt2Hxe8dns8FzGZqoXTMKGDB9z8aZmtMb7/YSbELemWh+lqQCkH7oeIK5zu8VT
-         q1qW9laMzG6OxDNodJWaQH2ES30IAjUFM6Jg/6FZUmqiZsn0BmlGyv8f+vRcRfMRNF4E
-         EGHg==
-X-Forwarded-Encrypted: i=1; AJvYcCV3tZMOszuu6n0Mn+GMofo4x+HnHtZmRBGtp3X4mnH1WFlgZZXLTImqm1MDYGjsyOeUGwQXzZvrNmAk@vger.kernel.org
-X-Gm-Message-State: AOJu0YxzJ6X5ZH+3FyKdBp9W6CKcYgJmsyQz/6D59YZ9pJGvVIxUu1ea
-	oQPMI0EXvyX2JOT+72GfvlamObtrQaFIHzElqs8U1v3hOymXVgMzxqldz3lx1Rw3oruZp6Jmx3+
-	2g9CeIElQI7Sjc5UrGXUVTx6GjuTFPcvoYaZS1yZrrjEiZJ4qlkV9SpEv8pw=
+        d=1e100.net; s=20230601; t=1771021054; x=1771625854;
+        h=to:from:subject:message-id:in-reply-to:date:mime-version
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=k8HJ47+9p4PuTuc5TPH2mXar9WAAqXbe2n3lnWHS7dg=;
+        b=Sf8Nhr3MqDiekc5/BRe8XmfyZ9y3MJySCrf2jmbJAr++mH33qZ0oWrOjKbwDG9JzYM
+         pajBbRYcS+DML/rWRPXN/RwEz6/QFkXud6eVNfsmetPz1rf1dyvYVt7UkkMzAwLNn2tQ
+         nsOb4Utw7ytJjgRsLXvnARAm5aoLcZDUrGPuukRioTcREZtJjNwvbT9s2EB0EO0z89g1
+         TciWT+Pobtbh1NQAGIVk/SfSJd1jZAa3/whpA6ePJIV7miw4BPosZc7ws1rADk8sOg63
+         wdNwM5nYL4F4uqerBQJ5iJXQneUeY31WQwGV2T0Cx1pP2XtxbzVkwA1Fi+/dRWRKZ2uc
+         OKkw==
+X-Forwarded-Encrypted: i=1; AJvYcCWYvMZPmoLhiTk6GyN0wjat9Y8KKNpLcfVTfjS64nrw56S1416QZ2QDpswRuJLXcfSmSqu9xt2TSzJ9@vger.kernel.org
+X-Gm-Message-State: AOJu0YxFK9xepKPD4lPAE5ysZUrFfmVJ5nLd8jLJp9hBUNOJivLeE0jb
+	BFrATLCulInOLc7PSTdKFXtpIvf9e5Cpms8C4WsNhCaTDNQOGXHVe3hTf87nK8gVj9wPx86aEjG
+	yUizWlK2sx1ezRCj+WYwTaM96dobsx2RZsJgEv9UWGo3wb1DuCD1Ju4QV90A=
 Precedence: bulk
 X-Mailing-List: linux-hams@vger.kernel.org
 List-Id: <linux-hams.vger.kernel.org>
 List-Subscribe: <mailto:linux-hams+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-hams+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-Received: by 2002:a05:6820:3096:b0:65f:6cf5:f963 with SMTP id
- 006d021491bc7-66d099c58b8mr1612059eaf.6.1770397291723; Fri, 06 Feb 2026
- 09:01:31 -0800 (PST)
-Date: Fri, 06 Feb 2026 09:01:31 -0800
+X-Received: by 2002:a4a:ec46:0:b0:65d:33de:1c56 with SMTP id
+ 006d021491bc7-6776978dc3fmr1329805eaf.64.1771021054419; Fri, 13 Feb 2026
+ 14:17:34 -0800 (PST)
+Date: Fri, 13 Feb 2026 14:17:34 -0800
+In-Reply-To: <68b7284f.050a0220.3db4df.01d7.GAE@google.com>
 X-Google-Appengine-App-Id: s~syzkaller
 X-Google-Appengine-App-Id-Alias: syzkaller
-Message-ID: <69861e6b.a00a0220.37c87e.0039.GAE@google.com>
-Subject: [syzbot] [hams?] KASAN: slab-use-after-free Read in rose_t0timer_expiry
-From: syzbot <syzbot+44cccec2c6a4501f6a45@syzkaller.appspotmail.com>
+Message-ID: <698fa2fe.a70a0220.3c8f9c.0076.GAE@google.com>
+Subject: Re: [syzbot] [hams?] WARNING: ODEBUG bug in __run_timers (3)
+From: syzbot <syzbot+7287222a6d88bdb559a7@syzkaller.appspotmail.com>
 To: davem@davemloft.net, edumazet@google.com, horms@kernel.org, 
 	kuba@kernel.org, linux-hams@vger.kernel.org, linux-kernel@vger.kernel.org, 
 	netdev@vger.kernel.org, pabeni@redhat.com, syzkaller-bugs@googlegroups.com
 Content-Type: text/plain; charset="UTF-8"
 
-Hello,
+syzbot has found a reproducer for the following issue on:
 
-syzbot found the following issue on:
-
-HEAD commit:    24cf78c73831 net/mlx5e: SHAMPO, Switch to header memcpy
-git tree:       net-next
-console output: https://syzkaller.appspot.com/x/log.txt?x=177127fa580000
-kernel config:  https://syzkaller.appspot.com/x/.config?x=2c36acc86fd56a9d
-dashboard link: https://syzkaller.appspot.com/bug?extid=44cccec2c6a4501f6a45
-compiler:       Debian clang version 21.1.8 (++20251221033036+2078da43e25a-1~exp1~20251221153213.50), Debian LLD 21.1.8
-
-Unfortunately, I don't have any reproducer for this issue yet.
+HEAD commit:    cee73b1e840c Merge tag 'riscv-for-linus-7.0-mw1' of git://..
+git tree:       upstream
+console output: https://syzkaller.appspot.com/x/log.txt?x=15eae15a580000
+kernel config:  https://syzkaller.appspot.com/x/.config?x=f71c66df48515cc1
+dashboard link: https://syzkaller.appspot.com/bug?extid=7287222a6d88bdb559a7
+compiler:       gcc (Debian 14.2.0-19) 14.2.0, GNU ld (GNU Binutils for Debian) 2.44
+syz repro:      https://syzkaller.appspot.com/x/repro.syz?x=12f68722580000
+C reproducer:   https://syzkaller.appspot.com/x/repro.c?x=114c6b3a580000
 
 Downloadable assets:
-disk image: https://storage.googleapis.com/syzbot-assets/9514a76ff576/disk-24cf78c7.raw.xz
-vmlinux: https://storage.googleapis.com/syzbot-assets/5f26244320f5/vmlinux-24cf78c7.xz
-kernel image: https://storage.googleapis.com/syzbot-assets/e0823b49ca48/bzImage-24cf78c7.xz
+disk image (non-bootable): https://storage.googleapis.com/syzbot-assets/d900f083ada3/non_bootable_disk-cee73b1e.raw.xz
+vmlinux: https://storage.googleapis.com/syzbot-assets/075d9080a7b6/vmlinux-cee73b1e.xz
+kernel image: https://storage.googleapis.com/syzbot-assets/98697e710988/bzImage-cee73b1e.xz
 
 IMPORTANT: if you fix the issue, please add the following tag to the commit:
-Reported-by: syzbot+44cccec2c6a4501f6a45@syzkaller.appspotmail.com
+Reported-by: syzbot+7287222a6d88bdb559a7@syzkaller.appspotmail.com
 
-==================================================================
-BUG: KASAN: slab-use-after-free in rose_send_frame net/rose/rose_link.c:105 [inline]
-BUG: KASAN: slab-use-after-free in rose_transmit_restart_request net/rose/rose_link.c:198 [inline]
-BUG: KASAN: slab-use-after-free in rose_t0timer_expiry+0x1ea/0x560 net/rose/rose_link.c:83
-Read of size 8 at addr ffff88803369f818 by task syz.3.19792/27398
-
-CPU: 0 UID: 0 PID: 27398 Comm: syz.3.19792 Not tainted syzkaller #0 PREEMPT(full) 
-Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 01/24/2026
+------------[ cut here ]------------
+ODEBUG: free active (active state 0) object: ffff8880375c4c90 object type: timer_list hint: rose_t0timer_expiry+0x0/0x150 include/linux/skbuff.h:2928
+WARNING: lib/debugobjects.c:612 at debug_print_object+0x18e/0x2a0 lib/debugobjects.c:612, CPU#3: swapper/3/0
+Modules linked in:
+CPU: 3 UID: 0 PID: 0 Comm: swapper/3 Not tainted syzkaller #0 PREEMPT(full) 
+Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS 1.16.3-debian-1.16.3-2 04/01/2014
+RIP: 0010:debug_print_object+0x19b/0x2a0 lib/debugobjects.c:612
+Code: b8 00 00 00 00 00 fc ff df 48 89 fa 48 c1 ea 03 80 3c 02 00 75 4f 48 8d 3d 72 78 ee 0b 41 56 48 8b 14 dd 60 ec 1a 8c 4c 89 e6 <67> 48 0f b9 3a 58 83 05 9c 48 e4 0b 01 48 83 c4 18 5b 5d 41 5c 41
+RSP: 0018:ffffc900006f8a38 EFLAGS: 00010246
+RAX: dffffc0000000000 RBX: 0000000000000003 RCX: 0000000000000000
+RDX: ffffffff8c1aeba0 RSI: ffffffff8c1ae7c0 RDI: ffffffff90e333c0
+RBP: 0000000000000001 R08: ffff8880375c4c90 R09: ffffffff8bb2c880
+R10: 0000000000000001 R11: 0000000000000000 R12: ffffffff8c1ae7c0
+R13: ffffffff8bb2c8c0 R14: ffffffff8a6eed50 R15: ffffc900006f8b38
+FS:  0000000000000000(0000) GS:ffff8880d668b000(0000) knlGS:0000000000000000
+CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+CR2: 00007f4962e00ff8 CR3: 000000003801e000 CR4: 0000000000352ef0
 Call Trace:
  <IRQ>
- dump_stack_lvl+0xe8/0x150 lib/dump_stack.c:120
- print_address_description mm/kasan/report.c:378 [inline]
- print_report+0xba/0x230 mm/kasan/report.c:482
- kasan_report+0x117/0x150 mm/kasan/report.c:595
- rose_send_frame net/rose/rose_link.c:105 [inline]
- rose_transmit_restart_request net/rose/rose_link.c:198 [inline]
- rose_t0timer_expiry+0x1ea/0x560 net/rose/rose_link.c:83
- call_timer_fn+0x192/0x5a0 kernel/time/timer.c:1748
+ __debug_check_no_obj_freed lib/debugobjects.c:1099 [inline]
+ debug_check_no_obj_freed+0x4da/0x630 lib/debugobjects.c:1129
+ slab_free_hook mm/slub.c:2601 [inline]
+ slab_free mm/slub.c:6082 [inline]
+ kfree+0x343/0x670 mm/slub.c:6399
+ rose_neigh_put include/net/rose.h:166 [inline]
+ rose_timer_expiry+0x53f/0x630 net/rose/rose_timer.c:183
+ call_timer_fn+0x19a/0x590 kernel/time/timer.c:1748
  expire_timers kernel/time/timer.c:1799 [inline]
- __run_timers kernel/time/timer.c:2373 [inline]
- __run_timer_base+0x652/0x8b0 kernel/time/timer.c:2385
- run_timer_base kernel/time/timer.c:2394 [inline]
- run_timer_softirq+0xb7/0x170 kernel/time/timer.c:2404
- handle_softirqs+0x22a/0x7c0 kernel/softirq.c:622
+ __run_timers+0x757/0xac0 kernel/time/timer.c:2373
+ __run_timer_base kernel/time/timer.c:2385 [inline]
+ __run_timer_base kernel/time/timer.c:2377 [inline]
+ run_timer_base+0x114/0x190 kernel/time/timer.c:2394
+ run_timer_softirq+0x1a/0x50 kernel/time/timer.c:2404
+ handle_softirqs+0x1ea/0x910 kernel/softirq.c:622
  __do_softirq kernel/softirq.c:656 [inline]
  invoke_softirq kernel/softirq.c:496 [inline]
- __irq_exit_rcu+0x5f/0x150 kernel/softirq.c:723
+ __irq_exit_rcu+0xef/0x150 kernel/softirq.c:723
  irq_exit_rcu+0x9/0x30 kernel/softirq.c:739
  instr_sysvec_apic_timer_interrupt arch/x86/kernel/apic/apic.c:1056 [inline]
- sysvec_apic_timer_interrupt+0xa6/0xc0 arch/x86/kernel/apic/apic.c:1056
+ sysvec_apic_timer_interrupt+0xa3/0xc0 arch/x86/kernel/apic/apic.c:1056
  </IRQ>
  <TASK>
  asm_sysvec_apic_timer_interrupt+0x1a/0x20 arch/x86/include/asm/idtentry.h:697
-RIP: 0010:unwind_next_frame+0x183/0x23c0 arch/x86/kernel/unwind_orc.c:-1
-Code: e5 18 00 00 49 8d 5e 35 48 89 d8 48 c1 e8 03 48 89 44 24 28 0f b6 04 28 84 c0 0f 85 45 1b 00 00 4c 89 6c 24 48 4c 89 64 24 20 <4c> 89 7c 24 50 48 89 5c 24 18 0f b6 1b 48 8b 44 24 30 80 3c 28 00
-RSP: 0018:ffffc9000b9b6f18 EFLAGS: 00000246
-RAX: 0000000000000000 RBX: ffffc9000b9b701d RCX: 0000000080000001
-RDX: 000000002bf25168 RSI: ffffffff8c0739e0 RDI: ffffffff8c0739a0
-RBP: dffffc0000000000 R08: ffffffff81757195 R09: ffffffff8e55a360
-R10: ffffc9000b9b7038 R11: ffffffff81af9170 R12: 1ffff92001736dfd
-R13: ffffc9000b9b7038 R14: ffffc9000b9b6fe8 R15: ffffffff81757195
- arch_stack_walk+0x11b/0x150 arch/x86/kernel/stacktrace.c:25
- stack_trace_save+0xa9/0x100 kernel/stacktrace.c:122
- kasan_save_stack mm/kasan/common.c:57 [inline]
- kasan_save_track+0x3e/0x80 mm/kasan/common.c:78
- poison_kmalloc_redzone mm/kasan/common.c:398 [inline]
- __kasan_kmalloc+0x93/0xb0 mm/kasan/common.c:415
- kasan_kmalloc include/linux/kasan.h:263 [inline]
- __do_kmalloc_node mm/slub.c:5657 [inline]
- __kmalloc_node_track_caller_noprof+0x558/0x7f0 mm/slub.c:5768
- __kmemdup_nul mm/util.c:64 [inline]
- kstrdup+0x42/0x100 mm/util.c:84
- __kernfs_new_node+0xa9/0x8e0 fs/kernfs/dir.c:633
- kernfs_new_node+0x102/0x210 fs/kernfs/dir.c:718
- __kernfs_create_file+0x4b/0x2e0 fs/kernfs/file.c:1057
- sysfs_add_file_mode_ns+0x238/0x300 fs/sysfs/file.c:313
- create_files fs/sysfs/group.c:82 [inline]
- internal_create_group+0x673/0x1180 fs/sysfs/group.c:189
- internal_create_groups fs/sysfs/group.c:229 [inline]
- sysfs_create_groups+0x59/0x120 fs/sysfs/group.c:255
- setup_port drivers/infiniband/core/sysfs.c:1247 [inline]
- ib_setup_port_attrs+0xe1b/0x2140 drivers/infiniband/core/sysfs.c:1433
- add_one_compat_dev+0x448/0x650 drivers/infiniband/core/device.c:1005
- rdma_dev_init_net+0x243/0x2f0 drivers/infiniband/core/device.c:1221
- ops_init+0x35c/0x5c0 net/core/net_namespace.c:137
- setup_net+0x118/0x340 net/core/net_namespace.c:446
- copy_net_ns+0x50e/0x730 net/core/net_namespace.c:581
- create_new_namespaces+0x3e7/0x6a0 kernel/nsproxy.c:130
- unshare_nsproxy_namespaces+0x11a/0x160 kernel/nsproxy.c:226
- ksys_unshare+0x4f4/0x900 kernel/fork.c:3171
- __do_sys_unshare kernel/fork.c:3242 [inline]
- __se_sys_unshare kernel/fork.c:3240 [inline]
- __x64_sys_unshare+0x38/0x50 kernel/fork.c:3240
- do_syscall_x64 arch/x86/entry/syscall_64.c:63 [inline]
- do_syscall_64+0xe2/0xf80 arch/x86/entry/syscall_64.c:94
- entry_SYSCALL_64_after_hwframe+0x77/0x7f
-RIP: 0033:0x7fbdee19aeb9
-Code: ff c3 66 2e 0f 1f 84 00 00 00 00 00 0f 1f 44 00 00 48 89 f8 48 89 f7 48 89 d6 48 89 ca 4d 89 c2 4d 89 c8 4c 8b 4c 24 08 0f 05 <48> 3d 01 f0 ff ff 73 01 c3 48 c7 c1 e8 ff ff ff f7 d8 64 89 01 48
-RSP: 002b:00007fbdec3ee028 EFLAGS: 00000246 ORIG_RAX: 0000000000000110
-RAX: ffffffffffffffda RBX: 00007fbdee415fa0 RCX: 00007fbdee19aeb9
-RDX: 0000000000000000 RSI: 0000000000000000 RDI: 000000006a040000
-RBP: 00007fbdee208c1f R08: 0000000000000000 R09: 0000000000000000
-R10: 0000000000000000 R11: 0000000000000246 R12: 0000000000000000
-R13: 00007fbdee416038 R14: 00007fbdee415fa0 R15: 00007fff2eb07768
+RIP: 0010:pv_native_safe_halt+0xf/0x20 arch/x86/kernel/paravirt.c:63
+Code: 0e 91 02 c3 cc cc cc cc 0f 1f 00 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90 f3 0f 1e fa eb 07 0f 00 2d 83 ed 2a 00 fb f4 <e9> 3c 34 03 00 66 2e 0f 1f 84 00 00 00 00 00 66 90 90 90 90 90 90
+RSP: 0018:ffffc90000197df0 EFLAGS: 00000202
+RAX: 0000000000128aa1 RBX: ffff88801ee8a480 RCX: ffffffff8b80ac75
+RDX: 0000000000000000 RSI: ffffffff8de6b9c0 RDI: ffffffff8c1adaa0
+RBP: 0000000000000003 R08: 0000000000000001 R09: ffffed100d4e6755
+R10: ffff88806a733aab R11: 0000000000000000 R12: ffffed1003dd1490
+R13: 0000000000000003 R14: ffffffff90d8d0d0 R15: 0000000000000000
+ arch_safe_halt arch/x86/include/asm/paravirt.h:73 [inline]
+ default_idle+0x9/0x10 arch/x86/kernel/process.c:767
+ default_idle_call+0x6c/0xb0 kernel/sched/idle.c:122
+ cpuidle_idle_call kernel/sched/idle.c:191 [inline]
+ do_idle+0x35b/0x4b0 kernel/sched/idle.c:332
+ cpu_startup_entry+0x4f/0x60 kernel/sched/idle.c:430
+ start_secondary+0x21d/0x2d0 arch/x86/kernel/smpboot.c:312
+ common_startup_64+0x13e/0x148
  </TASK>
-
-Allocated by task 21222:
- kasan_save_stack mm/kasan/common.c:57 [inline]
- kasan_save_track+0x3e/0x80 mm/kasan/common.c:78
- poison_kmalloc_redzone mm/kasan/common.c:398 [inline]
- __kasan_kmalloc+0x93/0xb0 mm/kasan/common.c:415
- kasan_kmalloc include/linux/kasan.h:263 [inline]
- __kmalloc_cache_noprof+0x3d1/0x6e0 mm/slub.c:5780
- kmalloc_noprof include/linux/slab.h:957 [inline]
- rose_add_node+0x23c/0xf00 net/rose/rose_route.c:85
- rose_rt_ioctl+0xd35/0x12a0 net/rose/rose_route.c:748
- rose_ioctl+0x3fb/0x8f0 net/rose/af_rose.c:1382
- sock_do_ioctl+0x101/0x320 net/socket.c:1254
- sock_ioctl+0x5c6/0x7f0 net/socket.c:1375
- vfs_ioctl fs/ioctl.c:51 [inline]
- __do_sys_ioctl fs/ioctl.c:597 [inline]
- __se_sys_ioctl+0xfc/0x170 fs/ioctl.c:583
- do_syscall_x64 arch/x86/entry/syscall_64.c:63 [inline]
- do_syscall_64+0xe2/0xf80 arch/x86/entry/syscall_64.c:94
- entry_SYSCALL_64_after_hwframe+0x77/0x7f
-
-Freed by task 27424:
- kasan_save_stack mm/kasan/common.c:57 [inline]
- kasan_save_track+0x3e/0x80 mm/kasan/common.c:78
- kasan_save_free_info+0x46/0x50 mm/kasan/generic.c:584
- poison_slab_object mm/kasan/common.c:253 [inline]
- __kasan_slab_free+0x5c/0x80 mm/kasan/common.c:285
- kasan_slab_free include/linux/kasan.h:235 [inline]
- slab_free_hook mm/slub.c:2540 [inline]
- slab_free mm/slub.c:6674 [inline]
- kfree+0x1be/0x650 mm/slub.c:6882
- rose_neigh_put include/net/rose.h:166 [inline]
- rose_timer_expiry+0x4cb/0x600 net/rose/rose_timer.c:183
- call_timer_fn+0x192/0x5a0 kernel/time/timer.c:1748
- expire_timers kernel/time/timer.c:1799 [inline]
- __run_timers kernel/time/timer.c:2373 [inline]
- __run_timer_base+0x652/0x8b0 kernel/time/timer.c:2385
- run_timer_base kernel/time/timer.c:2394 [inline]
- run_timer_softirq+0xb7/0x170 kernel/time/timer.c:2404
- handle_softirqs+0x22a/0x7c0 kernel/softirq.c:622
- __do_softirq kernel/softirq.c:656 [inline]
- invoke_softirq kernel/softirq.c:496 [inline]
- __irq_exit_rcu+0x5f/0x150 kernel/softirq.c:723
- irq_exit_rcu+0x9/0x30 kernel/softirq.c:739
- instr_sysvec_apic_timer_interrupt arch/x86/kernel/apic/apic.c:1056 [inline]
- sysvec_apic_timer_interrupt+0xa6/0xc0 arch/x86/kernel/apic/apic.c:1056
- asm_sysvec_apic_timer_interrupt+0x1a/0x20 arch/x86/include/asm/idtentry.h:697
-
-The buggy address belongs to the object at ffff88803369f800
- which belongs to the cache kmalloc-512 of size 512
-The buggy address is located 24 bytes inside of
- freed 512-byte region [ffff88803369f800, ffff88803369fa00)
-
-The buggy address belongs to the physical page:
-page: refcount:0 mapcount:0 mapping:0000000000000000 index:0x0 pfn:0x3369c
-head: order:2 mapcount:0 entire_mapcount:0 nr_pages_mapped:0 pincount:0
-flags: 0xfff00000000040(head|node=0|zone=1|lastcpupid=0x7ff)
-page_type: f5(slab)
-raw: 00fff00000000040 ffff88813fe26c80 ffffea000161c300 dead000000000002
-raw: 0000000000000000 0000000000100010 00000000f5000000 0000000000000000
-head: 00fff00000000040 ffff88813fe26c80 ffffea000161c300 dead000000000002
-head: 0000000000000000 0000000000100010 00000000f5000000 0000000000000000
-head: 00fff00000000002 ffffea0000cda701 00000000ffffffff 00000000ffffffff
-head: ffffffffffffffff 0000000000000000 00000000ffffffff 0000000000000004
-page dumped because: kasan: bad access detected
-page_owner tracks the page as allocated
-page last allocated via order 2, migratetype Unmovable, gfp_mask 0x52820(GFP_ATOMIC|__GFP_NOWARN|__GFP_NORETRY|__GFP_COMP), pid 16116, tgid 16112 (syz.4.17690), ts 1033791837005, free_ts 1026914999440
- set_page_owner include/linux/page_owner.h:32 [inline]
- post_alloc_hook+0x228/0x280 mm/page_alloc.c:1884
- prep_new_page mm/page_alloc.c:1892 [inline]
- get_page_from_freelist+0x24dc/0x2580 mm/page_alloc.c:3945
- __alloc_frozen_pages_noprof+0x18d/0x380 mm/page_alloc.c:5240
- alloc_pages_mpol+0x232/0x4a0 mm/mempolicy.c:2486
- alloc_slab_page mm/slub.c:3075 [inline]
- allocate_slab+0x86/0x3a0 mm/slub.c:3248
- new_slab mm/slub.c:3302 [inline]
- ___slab_alloc+0xd82/0x1760 mm/slub.c:4656
- __slab_alloc+0x65/0x100 mm/slub.c:4779
- __slab_alloc_node mm/slub.c:4855 [inline]
- slab_alloc_node mm/slub.c:5251 [inline]
- __kmalloc_cache_noprof+0x40d/0x6e0 mm/slub.c:5775
- kmalloc_noprof include/linux/slab.h:957 [inline]
- kzalloc_noprof include/linux/slab.h:1094 [inline]
- cfcnfg_create+0x68/0x380 net/caif/cfcnfg.c:80
- caif_init_net+0x81/0xc0 net/caif/caif_dev.c:514
- ops_init+0x35c/0x5c0 net/core/net_namespace.c:137
- setup_net+0x118/0x340 net/core/net_namespace.c:446
- copy_net_ns+0x50e/0x730 net/core/net_namespace.c:581
- create_new_namespaces+0x3e7/0x6a0 kernel/nsproxy.c:130
- unshare_nsproxy_namespaces+0x11a/0x160 kernel/nsproxy.c:226
- ksys_unshare+0x4f4/0x900 kernel/fork.c:3171
-page last free pid 16021 tgid 16021 stack trace:
- reset_page_owner include/linux/page_owner.h:25 [inline]
- free_pages_prepare mm/page_alloc.c:1433 [inline]
- __free_frozen_pages+0xbf8/0xd70 mm/page_alloc.c:2973
- __slab_free+0x2ce/0x320 mm/slub.c:6008
- qlink_free mm/kasan/quarantine.c:163 [inline]
- qlist_free_all+0x97/0x100 mm/kasan/quarantine.c:179
- kasan_quarantine_reduce+0x148/0x160 mm/kasan/quarantine.c:286
- __kasan_slab_alloc+0x22/0x80 mm/kasan/common.c:350
- kasan_slab_alloc include/linux/kasan.h:253 [inline]
- slab_post_alloc_hook mm/slub.c:4953 [inline]
- slab_alloc_node mm/slub.c:5263 [inline]
- kmem_cache_alloc_noprof+0x370/0x6e0 mm/slub.c:5270
- vm_area_alloc+0x24/0x140 mm/vma_init.c:32
- __mmap_new_vma mm/vma.c:2510 [inline]
- __mmap_region mm/vma.c:2752 [inline]
- mmap_region+0xf85/0x1f40 mm/vma.c:2830
- do_mmap+0xc39/0x10c0 mm/mmap.c:558
- vm_mmap_pgoff+0x2c9/0x4f0 mm/util.c:581
- elf_map fs/binfmt_elf.c:399 [inline]
- elf_load+0x248/0x6a0 fs/binfmt_elf.c:422
- load_elf_interp+0x4ce/0xb60 fs/binfmt_elf.c:689
- load_elf_binary+0x1b2f/0x2980 fs/binfmt_elf.c:1254
- search_binary_handler fs/exec.c:1669 [inline]
- exec_binprm fs/exec.c:1701 [inline]
- bprm_execve+0x93d/0x1410 fs/exec.c:1753
- do_execveat_common+0x50f/0x690 fs/exec.c:1859
- do_execve fs/exec.c:1933 [inline]
- __do_sys_execve fs/exec.c:2009 [inline]
- __se_sys_execve fs/exec.c:2004 [inline]
- __x64_sys_execve+0x94/0xb0 fs/exec.c:2004
-
-Memory state around the buggy address:
- ffff88803369f700: fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc
- ffff88803369f780: fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc
->ffff88803369f800: fa fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb
-                            ^
- ffff88803369f880: fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb
- ffff88803369f900: fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb
-==================================================================
 ----------------
 Code disassembly (best guess):
-   0:	e5 18                	in     $0x18,%eax
-   2:	00 00                	add    %al,(%rax)
-   4:	49 8d 5e 35          	lea    0x35(%r14),%rbx
-   8:	48 89 d8             	mov    %rbx,%rax
-   b:	48 c1 e8 03          	shr    $0x3,%rax
-   f:	48 89 44 24 28       	mov    %rax,0x28(%rsp)
-  14:	0f b6 04 28          	movzbl (%rax,%rbp,1),%eax
-  18:	84 c0                	test   %al,%al
-  1a:	0f 85 45 1b 00 00    	jne    0x1b65
-  20:	4c 89 6c 24 48       	mov    %r13,0x48(%rsp)
-  25:	4c 89 64 24 20       	mov    %r12,0x20(%rsp)
-* 2a:	4c 89 7c 24 50       	mov    %r15,0x50(%rsp) <-- trapping instruction
-  2f:	48 89 5c 24 18       	mov    %rbx,0x18(%rsp)
-  34:	0f b6 1b             	movzbl (%rbx),%ebx
-  37:	48 8b 44 24 30       	mov    0x30(%rsp),%rax
-  3c:	80 3c 28 00          	cmpb   $0x0,(%rax,%rbp,1)
+   0:	b8 00 00 00 00       	mov    $0x0,%eax
+   5:	00 fc                	add    %bh,%ah
+   7:	ff                   	lcall  (bad)
+   8:	df 48 89             	fisttps -0x77(%rax)
+   b:	fa                   	cli
+   c:	48 c1 ea 03          	shr    $0x3,%rdx
+  10:	80 3c 02 00          	cmpb   $0x0,(%rdx,%rax,1)
+  14:	75 4f                	jne    0x65
+  16:	48 8d 3d 72 78 ee 0b 	lea    0xbee7872(%rip),%rdi        # 0xbee788f
+  1d:	41 56                	push   %r14
+  1f:	48 8b 14 dd 60 ec 1a 	mov    -0x73e513a0(,%rbx,8),%rdx
+  26:	8c
+  27:	4c 89 e6             	mov    %r12,%rsi
+* 2a:	67 48 0f b9 3a       	ud1    (%edx),%rdi <-- trapping instruction
+  2f:	58                   	pop    %rax
+  30:	83 05 9c 48 e4 0b 01 	addl   $0x1,0xbe4489c(%rip)        # 0xbe448d3
+  37:	48 83 c4 18          	add    $0x18,%rsp
+  3b:	5b                   	pop    %rbx
+  3c:	5d                   	pop    %rbp
+  3d:	41 5c                	pop    %r12
+  3f:	41                   	rex.B
 
 
 ---
-This report is generated by a bot. It may contain errors.
-See https://goo.gl/tpsmEJ for more information about syzbot.
-syzbot engineers can be reached at syzkaller@googlegroups.com.
-
-syzbot will keep track of this issue. See:
-https://goo.gl/tpsmEJ#status for how to communicate with syzbot.
-
-If the report is already addressed, let syzbot know by replying with:
-#syz fix: exact-commit-title
-
-If you want to overwrite report's subsystems, reply with:
-#syz set subsystems: new-subsystem
-(See the list of subsystem names on the web dashboard)
-
-If the report is a duplicate of another one, reply with:
-#syz dup: exact-subject-of-another-report
-
-If you want to undo deduplication, reply with:
-#syz undup
+If you want syzbot to run the reproducer, reply with:
+#syz test: git://repo/address.git branch-or-commit-hash
+If you attach or paste a git patch, syzbot will apply it before testing.
