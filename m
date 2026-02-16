@@ -1,162 +1,175 @@
-Received: from mail-oa1-f69.google.com (mail-oa1-f69.google.com [209.85.160.69])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from www11.qth.com (www11.qth.com [72.52.250.187])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E3F13093DF
-	for <linux-hams@vger.kernel.org>; Fri, 13 Feb 2026 22:17:35 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.69
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A36E1E1DE9
+	for <linux-hams@vger.kernel.org>; Mon, 16 Feb 2026 03:57:06 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=72.52.250.187
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771021056; cv=none; b=XTUMk6nlBilV0FGqwuVe/VyfiAOR/sv7ijVYqVTi8Js3tMdrnSjW/cxMvtsQnS8lMj0s5sckL/zzHAPbM2OFMGdueG5MQXCq1j5h3idsj1YMbDNsrSwANGAFhbnWvGlZuEtOHBPacq/UId8FsbZpbIxC5VaRUof7i6Ldu/QSrps=
+	t=1771214228; cv=none; b=Hr1mqDscdoeyDH/7MXbCGKyA8Nn8hK9M5hUmWpRTfYfbgRBXCu9ScfaHGdmfHFVVa1T1R60uYJ1AFB3mBegLMaSaXCkIi6LHmAl30s58pTfCk37le7otGg8OMMHv16F37sshMoNyFkKmpGXKOMOwZmW7NKRmDcWiFtNnJgu/QkU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771021056; c=relaxed/simple;
-	bh=1DDCj1TA2rW1TMXxauVPw3Us56ynp/7idGRVAz/CKh8=;
-	h=MIME-Version:Date:In-Reply-To:Message-ID:Subject:From:To:
-	 Content-Type; b=S3QE7OJjdGL+G0xHUR9QM02h1L2mzEap5WQcTvT5IfKwetk4amxUVLbTDaMyFBkHaevy4fPerbvadnpEqDkYlqldZeG7snlZ6vhE+rPwttnlRO9oDVPxynQnxEXcPdeBh3IS3nDhmNQbG+zF/txZHbUzYe9TdRuuCjkMmvnWyfY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=syzkaller.appspotmail.com; spf=pass smtp.mailfrom=M3KW2WVRGUFZ5GODRSRYTGD7.apphosting.bounces.google.com; arc=none smtp.client-ip=209.85.160.69
-Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=syzkaller.appspotmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=M3KW2WVRGUFZ5GODRSRYTGD7.apphosting.bounces.google.com
-Received: by mail-oa1-f69.google.com with SMTP id 586e51a60fabf-40ee506cf49so8701280fac.2
-        for <linux-hams@vger.kernel.org>; Fri, 13 Feb 2026 14:17:35 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1771021054; x=1771625854;
-        h=to:from:subject:message-id:in-reply-to:date:mime-version
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=k8HJ47+9p4PuTuc5TPH2mXar9WAAqXbe2n3lnWHS7dg=;
-        b=Sf8Nhr3MqDiekc5/BRe8XmfyZ9y3MJySCrf2jmbJAr++mH33qZ0oWrOjKbwDG9JzYM
-         pajBbRYcS+DML/rWRPXN/RwEz6/QFkXud6eVNfsmetPz1rf1dyvYVt7UkkMzAwLNn2tQ
-         nsOb4Utw7ytJjgRsLXvnARAm5aoLcZDUrGPuukRioTcREZtJjNwvbT9s2EB0EO0z89g1
-         TciWT+Pobtbh1NQAGIVk/SfSJd1jZAa3/whpA6ePJIV7miw4BPosZc7ws1rADk8sOg63
-         wdNwM5nYL4F4uqerBQJ5iJXQneUeY31WQwGV2T0Cx1pP2XtxbzVkwA1Fi+/dRWRKZ2uc
-         OKkw==
-X-Forwarded-Encrypted: i=1; AJvYcCWYvMZPmoLhiTk6GyN0wjat9Y8KKNpLcfVTfjS64nrw56S1416QZ2QDpswRuJLXcfSmSqu9xt2TSzJ9@vger.kernel.org
-X-Gm-Message-State: AOJu0YxFK9xepKPD4lPAE5ysZUrFfmVJ5nLd8jLJp9hBUNOJivLeE0jb
-	BFrATLCulInOLc7PSTdKFXtpIvf9e5Cpms8C4WsNhCaTDNQOGXHVe3hTf87nK8gVj9wPx86aEjG
-	yUizWlK2sx1ezRCj+WYwTaM96dobsx2RZsJgEv9UWGo3wb1DuCD1Ju4QV90A=
+	s=arc-20240116; t=1771214228; c=relaxed/simple;
+	bh=19eWW3In5/kv3syNB2r5r957DaHHWHTCeY27Q55ObuM=;
+	h=Date:From:To:Subject:Message-ID:MIME-Version:Content-Type:
+	 Content-Disposition; b=lA9kh03dikMJohuuBf8bpeqoU1ALF0BSarPMDlmtAsI/Cb3gpsA3z1qZfb0zp4xtzKZzuXBsoYdLB9awbd7oqXl+TQye8qtOwwqz63LMrKwVt3b95F1F0z+HWfoM8mfWhjiWAYXbBhXRYQHFTLhnFXa/sana4HwMUfhi7u+APBs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=n0nb.us; spf=pass smtp.mailfrom=n0nb.us; dkim=pass (2048-bit key) header.d=n0nb.us header.i=@n0nb.us header.b=eoD15Z4J; arc=none smtp.client-ip=72.52.250.187
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=n0nb.us
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=n0nb.us
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=n0nb.us header.i=@n0nb.us header.b="eoD15Z4J"
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=n0nb.us;
+	s=default; h=Content-Type:MIME-Version:Message-ID:Subject:To:From:Date:Sender
+	:Reply-To:Cc:Content-Transfer-Encoding:Content-ID:Content-Description:
+	Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:
+	In-Reply-To:References:List-Id:List-Help:List-Unsubscribe:List-Subscribe:
+	List-Post:List-Owner:List-Archive;
+	bh=xJDLeo/Qtv3N3qGnh9Rz5kGkD2jbOyJVMg6s6d92b2w=; b=eoD15Z4Js6WphmMwfD3Fkr2j04
+	U3SKhqNDFbb+kf36pH66plaXd8zjxbbjKilSWBEADQa9hLwRNDpTlaubVMzqmpW5vTJDuSK2Hq3ze
+	/cqyJuD9TYTxDmWYcyVGZEI+PkcZ4jaq2ElWdL4PvUwwl2LR9ftWRJnu8yCr8pmMsf9/T2NiTRQ6L
+	/bjEVEMJmSTM7xOS3EqBAOY6W3V1ZXVOw2l59D8k3q2PJhGwOOZo4s6eZd2C9GB3/o3SG39g4AnoH
+	CmE1HKcT0eCH9hOLe4XRHTYqh54opBKoP0XECVUnqkqmvR3gIDdjlp9jW8GZpU4HmZOgyLb0ixpI2
+	T60ckffg==;
+Received: from [68.234.117.130] (port=57488 helo=merlin.lan)
+	by www11.qth.com with esmtpsa  (TLS1.3) tls TLS_AES_256_GCM_SHA384
+	(Exim 4.99.1)
+	(envelope-from <n0nb@n0nb.us>)
+	id 1vrpTH-00000002sQR-31pp;
+	Sun, 15 Feb 2026 21:40:27 -0600
+Received: from nate by merlin.lan with local (Exim 4.96)
+	(envelope-from <n0nb@n0nb.us>)
+	id 1vrpTH-005vqh-0M;
+	Sun, 15 Feb 2026 21:40:27 -0600
+Date: Sun, 15 Feb 2026 21:40:27 -0600
+From: Nate Bargmann <n0nb@n0nb.us>
+To: Hamlib Developers <hamlib-developer@lists.sourceforge.net>, 
+	Debian Hams <debian-hams@lists.debian.org>, Linux Hams <linux-hams@vger.kernel.org>
+Subject: Hamlib 4.7.0 released
+Message-ID: <rv4w6l27edbwjmdw54mo5p37zfrqul7pfivh6qjpx2mxtkuchk@b3lciyhi763b>
+Mail-Followup-To: Hamlib Developers <hamlib-developer@lists.sourceforge.net>, 
+	Debian Hams <debian-hams@lists.debian.org>, Linux Hams <linux-hams@vger.kernel.org>
+X-Operating-System: Linux 6.1.0-43-amd64 x86_64
+Organization: Amateur Radio!
 Precedence: bulk
 X-Mailing-List: linux-hams@vger.kernel.org
 List-Id: <linux-hams.vger.kernel.org>
 List-Subscribe: <mailto:linux-hams+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-hams+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-Received: by 2002:a4a:ec46:0:b0:65d:33de:1c56 with SMTP id
- 006d021491bc7-6776978dc3fmr1329805eaf.64.1771021054419; Fri, 13 Feb 2026
- 14:17:34 -0800 (PST)
-Date: Fri, 13 Feb 2026 14:17:34 -0800
-In-Reply-To: <68b7284f.050a0220.3db4df.01d7.GAE@google.com>
-X-Google-Appengine-App-Id: s~syzkaller
-X-Google-Appengine-App-Id-Alias: syzkaller
-Message-ID: <698fa2fe.a70a0220.3c8f9c.0076.GAE@google.com>
-Subject: Re: [syzbot] [hams?] WARNING: ODEBUG bug in __run_timers (3)
-From: syzbot <syzbot+7287222a6d88bdb559a7@syzkaller.appspotmail.com>
-To: davem@davemloft.net, edumazet@google.com, horms@kernel.org, 
-	kuba@kernel.org, linux-hams@vger.kernel.org, linux-kernel@vger.kernel.org, 
-	netdev@vger.kernel.org, pabeni@redhat.com, syzkaller-bugs@googlegroups.com
-Content-Type: text/plain; charset="UTF-8"
-
-syzbot has found a reproducer for the following issue on:
-
-HEAD commit:    cee73b1e840c Merge tag 'riscv-for-linus-7.0-mw1' of git://..
-git tree:       upstream
-console output: https://syzkaller.appspot.com/x/log.txt?x=15eae15a580000
-kernel config:  https://syzkaller.appspot.com/x/.config?x=f71c66df48515cc1
-dashboard link: https://syzkaller.appspot.com/bug?extid=7287222a6d88bdb559a7
-compiler:       gcc (Debian 14.2.0-19) 14.2.0, GNU ld (GNU Binutils for Debian) 2.44
-syz repro:      https://syzkaller.appspot.com/x/repro.syz?x=12f68722580000
-C reproducer:   https://syzkaller.appspot.com/x/repro.c?x=114c6b3a580000
-
-Downloadable assets:
-disk image (non-bootable): https://storage.googleapis.com/syzbot-assets/d900f083ada3/non_bootable_disk-cee73b1e.raw.xz
-vmlinux: https://storage.googleapis.com/syzbot-assets/075d9080a7b6/vmlinux-cee73b1e.xz
-kernel image: https://storage.googleapis.com/syzbot-assets/98697e710988/bzImage-cee73b1e.xz
-
-IMPORTANT: if you fix the issue, please add the following tag to the commit:
-Reported-by: syzbot+7287222a6d88bdb559a7@syzkaller.appspotmail.com
-
-------------[ cut here ]------------
-ODEBUG: free active (active state 0) object: ffff8880375c4c90 object type: timer_list hint: rose_t0timer_expiry+0x0/0x150 include/linux/skbuff.h:2928
-WARNING: lib/debugobjects.c:612 at debug_print_object+0x18e/0x2a0 lib/debugobjects.c:612, CPU#3: swapper/3/0
-Modules linked in:
-CPU: 3 UID: 0 PID: 0 Comm: swapper/3 Not tainted syzkaller #0 PREEMPT(full) 
-Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS 1.16.3-debian-1.16.3-2 04/01/2014
-RIP: 0010:debug_print_object+0x19b/0x2a0 lib/debugobjects.c:612
-Code: b8 00 00 00 00 00 fc ff df 48 89 fa 48 c1 ea 03 80 3c 02 00 75 4f 48 8d 3d 72 78 ee 0b 41 56 48 8b 14 dd 60 ec 1a 8c 4c 89 e6 <67> 48 0f b9 3a 58 83 05 9c 48 e4 0b 01 48 83 c4 18 5b 5d 41 5c 41
-RSP: 0018:ffffc900006f8a38 EFLAGS: 00010246
-RAX: dffffc0000000000 RBX: 0000000000000003 RCX: 0000000000000000
-RDX: ffffffff8c1aeba0 RSI: ffffffff8c1ae7c0 RDI: ffffffff90e333c0
-RBP: 0000000000000001 R08: ffff8880375c4c90 R09: ffffffff8bb2c880
-R10: 0000000000000001 R11: 0000000000000000 R12: ffffffff8c1ae7c0
-R13: ffffffff8bb2c8c0 R14: ffffffff8a6eed50 R15: ffffc900006f8b38
-FS:  0000000000000000(0000) GS:ffff8880d668b000(0000) knlGS:0000000000000000
-CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-CR2: 00007f4962e00ff8 CR3: 000000003801e000 CR4: 0000000000352ef0
-Call Trace:
- <IRQ>
- __debug_check_no_obj_freed lib/debugobjects.c:1099 [inline]
- debug_check_no_obj_freed+0x4da/0x630 lib/debugobjects.c:1129
- slab_free_hook mm/slub.c:2601 [inline]
- slab_free mm/slub.c:6082 [inline]
- kfree+0x343/0x670 mm/slub.c:6399
- rose_neigh_put include/net/rose.h:166 [inline]
- rose_timer_expiry+0x53f/0x630 net/rose/rose_timer.c:183
- call_timer_fn+0x19a/0x590 kernel/time/timer.c:1748
- expire_timers kernel/time/timer.c:1799 [inline]
- __run_timers+0x757/0xac0 kernel/time/timer.c:2373
- __run_timer_base kernel/time/timer.c:2385 [inline]
- __run_timer_base kernel/time/timer.c:2377 [inline]
- run_timer_base+0x114/0x190 kernel/time/timer.c:2394
- run_timer_softirq+0x1a/0x50 kernel/time/timer.c:2404
- handle_softirqs+0x1ea/0x910 kernel/softirq.c:622
- __do_softirq kernel/softirq.c:656 [inline]
- invoke_softirq kernel/softirq.c:496 [inline]
- __irq_exit_rcu+0xef/0x150 kernel/softirq.c:723
- irq_exit_rcu+0x9/0x30 kernel/softirq.c:739
- instr_sysvec_apic_timer_interrupt arch/x86/kernel/apic/apic.c:1056 [inline]
- sysvec_apic_timer_interrupt+0xa3/0xc0 arch/x86/kernel/apic/apic.c:1056
- </IRQ>
- <TASK>
- asm_sysvec_apic_timer_interrupt+0x1a/0x20 arch/x86/include/asm/idtentry.h:697
-RIP: 0010:pv_native_safe_halt+0xf/0x20 arch/x86/kernel/paravirt.c:63
-Code: 0e 91 02 c3 cc cc cc cc 0f 1f 00 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90 f3 0f 1e fa eb 07 0f 00 2d 83 ed 2a 00 fb f4 <e9> 3c 34 03 00 66 2e 0f 1f 84 00 00 00 00 00 66 90 90 90 90 90 90
-RSP: 0018:ffffc90000197df0 EFLAGS: 00000202
-RAX: 0000000000128aa1 RBX: ffff88801ee8a480 RCX: ffffffff8b80ac75
-RDX: 0000000000000000 RSI: ffffffff8de6b9c0 RDI: ffffffff8c1adaa0
-RBP: 0000000000000003 R08: 0000000000000001 R09: ffffed100d4e6755
-R10: ffff88806a733aab R11: 0000000000000000 R12: ffffed1003dd1490
-R13: 0000000000000003 R14: ffffffff90d8d0d0 R15: 0000000000000000
- arch_safe_halt arch/x86/include/asm/paravirt.h:73 [inline]
- default_idle+0x9/0x10 arch/x86/kernel/process.c:767
- default_idle_call+0x6c/0xb0 kernel/sched/idle.c:122
- cpuidle_idle_call kernel/sched/idle.c:191 [inline]
- do_idle+0x35b/0x4b0 kernel/sched/idle.c:332
- cpu_startup_entry+0x4f/0x60 kernel/sched/idle.c:430
- start_secondary+0x21d/0x2d0 arch/x86/kernel/smpboot.c:312
- common_startup_64+0x13e/0x148
- </TASK>
-----------------
-Code disassembly (best guess):
-   0:	b8 00 00 00 00       	mov    $0x0,%eax
-   5:	00 fc                	add    %bh,%ah
-   7:	ff                   	lcall  (bad)
-   8:	df 48 89             	fisttps -0x77(%rax)
-   b:	fa                   	cli
-   c:	48 c1 ea 03          	shr    $0x3,%rdx
-  10:	80 3c 02 00          	cmpb   $0x0,(%rdx,%rax,1)
-  14:	75 4f                	jne    0x65
-  16:	48 8d 3d 72 78 ee 0b 	lea    0xbee7872(%rip),%rdi        # 0xbee788f
-  1d:	41 56                	push   %r14
-  1f:	48 8b 14 dd 60 ec 1a 	mov    -0x73e513a0(,%rbx,8),%rdx
-  26:	8c
-  27:	4c 89 e6             	mov    %r12,%rsi
-* 2a:	67 48 0f b9 3a       	ud1    (%edx),%rdi <-- trapping instruction
-  2f:	58                   	pop    %rax
-  30:	83 05 9c 48 e4 0b 01 	addl   $0x1,0xbe4489c(%rip)        # 0xbe448d3
-  37:	48 83 c4 18          	add    $0x18,%rsp
-  3b:	5b                   	pop    %rbx
-  3c:	5d                   	pop    %rbp
-  3d:	41 5c                	pop    %r12
-  3f:	41                   	rex.B
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="6pva3yqpfg3po6f6"
+Content-Disposition: inline
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - www11.qth.com
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - n0nb.us
+X-Get-Message-Sender-Via: www11.qth.com: authenticated_id: n0nb@n0nb.us
+X-Authenticated-Sender: www11.qth.com: n0nb@n0nb.us
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
 
 
----
-If you want syzbot to run the reproducer, reply with:
-#syz test: git://repo/address.git branch-or-commit-hash
-If you attach or paste a git patch, syzbot will apply it before testing.
+--6pva3yqpfg3po6f6
+Content-Type: text/plain; protected-headers=v1; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
+Subject: Hamlib 4.7.0 released
+MIME-Version: 1.0
+
+On behalf of all contributors and testers to the Hamlib project I am
+pleased to announce the release of Hamlib 4.7.0.  This release includes
+the following changes:
+
+Version 4.7.0
+        * 2026-02-15
+        * Revamp Kenwood voice memory handler - Fixes TS-890S & TS-990S (n3=
+gb)
+        * libusb is now detected using the pkg-config facility.
+        * Some internal functions change names to avoid conflicts with apps.
+        * POSIX threads are required to build and run Hamlib. Note that it =
+was
+          actually the case for 4.6.x, but now the configuration step will
+          fail instead of the compilation. (n3gb)
+        * Functions rig_get_conf, rot_get_conf, amp_get_conf deprecated;
+          use *_get_conf2() instead. Also rig_set_trn and rig_get_trn depre=
+cated.
+        * Reduce/repair excess output from cppcheck.sh - mostly cosmetic ch=
+anges (WIP)
+          Output from `wc -l cppcheck.log` - 4.6.2: 981  now: 581
+        * Remove dead getopt code.  GitHub PR #1709. (TNX Daniele Forsi)
+        * Move rig_cache to separate(calloc) storage. Prepare for other mov=
+es.
+          Issue #1420
+        * Many fixes for SWIG binding generation and improved Python support
+          and testing.  (TNX Daniele Forsi).
+        * Fix AGC for IC-R75, fix AGC for all Icom rigs.  (TNX Mark Fine).
+        * Separate PMR-171 and Q900 into new the GUOHETEC backend, add
+          additional support add clean up code.  (TNX FVsonar).
+        * New Drake R8 backend.  (TNX Mark Fine)
+        * New AF6SA WRC rotator backend.  (TNX Michael Morgan)
+        * New Yaesu FTX-1 model support (alpha).  (TNX Jeremy Miller).
+        * Update QRPLabs QMX backend for max serial rate of 230400 bps.  (T=
+NX Mooneer Salem)
+        * Updates to Icom IC-F8101.  (TNX Mitchell Winkle and George Baltz)
+        * New rig model Icom ID-52A/W Plus.  (TNX Martin Andrich)
+        * Fix memory leaks in rigctld and rigctltcp.  (TNX Geroge Baltz)
+        * Fix Skywatcher backend for firmware that doesn't echo commands.  =
+(TNX Daniel Forsi)
+        * Various manual page updates.  (TNX Daniel Forsi)
+        * Additional Yaesu FTX-1 capabilities.  (TNX KJ5HST)
+        * Refactor repeater offset and ANTIVOX with lookup tables in newcat=
+=2Ec (TNX KJ5HST)
+        * Fix unbounded string usage in tests/*ctl_parse.c. May cause crash=
+es or worse.
+          Reported by Vlatko Kosturjak with Marlink Cyber.  (TNX George Bal=
+tz for the fix)
+        * Add extended commands for the IC-7300MK2--closes GitHub #1985.  (=
+TNX George Baltz)
+        * Revert updating FLRig model name.  (TNX Peter Sumner & Philip Ros=
+e)
+        * Add manual pages for rigctltcp, rigtestlibusb, rigtestmcast, and =
+rigtestmcastrx.
+          Pause building rigfreqwalk as the code does not align with the re=
+quired
+          commandline parameters.
+
+The source tarball and binary releases for both 32 and 64 bit MS Windows
+systems can be found at:
+
+https://github.com/Hamlib/Hamlib/releases/tag/4.7.0
+https://sourceforge.net/projects/hamlib/files/hamlib/4.7.0/
+
+As many changes are planned for Hamlib in the future leading to 5.0.0
+(no planned release date at this time), the 4.7.x series is planned to
+be a sort of long term support release and will receive updates in the
+form of new models and backends as they are developed.  If all goes well
+such updates will be in parallel with 5.0.0 development.
+
+This will place a burden on contributors who are asked to submit such
+code to both the master and Hamlib-4.7 branches.  Hopefully this period
+will not last overly long and development can concentrate solely on the
+Hamlib 5 series at some point in the future.
+
+On behalf of the Hamlib project,
+
+73, Nate, N0NB
+
+--=20
+"The optimist proclaims that we live in the best of all
+possible worlds.  The pessimist fears this is true."
+Web: https://www.n0nb.us
+Projects: https://github.com/N0NB
+GPG fingerprint: 82D6 4F6B 0E67 CD41 F689 BBA6 FB2C 5130 D55A 8819
+
+
+--6pva3yqpfg3po6f6
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iF0EABECAB0WIQSC1k9rDmfNQfaJu6b7LFEw1VqIGQUCaZKRqgAKCRD7LFEw1VqI
+GcnYAJwKOmvvtkmKCgqf+DDmlXtXDwgjbgCeIL98pug6fsDJ5F2oL/gKWn9DlII=
+=O2y2
+-----END PGP SIGNATURE-----
+
+--6pva3yqpfg3po6f6--
