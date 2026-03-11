@@ -1,146 +1,109 @@
-Received: from out-186.mta1.migadu.com (out-186.mta1.migadu.com [95.215.58.186])
+Received: from out-179.mta0.migadu.com (out-179.mta0.migadu.com [91.218.175.179])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5CF5F38945A
-	for <linux-hams@vger.kernel.org>; Tue, 10 Mar 2026 11:28:40 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=95.215.58.186
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A2FAF3783CC
+	for <linux-hams@vger.kernel.org>; Wed, 11 Mar 2026 07:06:25 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.179
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773142121; cv=none; b=GZVZNR2NhQfudBDHQPwxAss8nP7djgey7ljUxcEhYPT27qO5V0U9GBfWSMhVmpGs3w+kFSNOnclDqeP0/bVqhD4zmORoZ6tZ4BlwaRw1rYPt73o9ZDK8WS8so/2JRA8SNqw3MLidAC2aVm/vyEHa8kwkxiz25ylPxBLWgZpzVF8=
+	t=1773212788; cv=none; b=g3IfgAgX/PlXhphFnP5iKz9F8p9zL+tVqLnqk7PzuXMc8tux55mOWlDA7ERVCel73i6+zSdCyGhJ2v6kvRSrYN2h9V5RE8WAqF/GH2wCdeiK15ZkKuYDvZ51DFv0VOdvMEibnA22R/3a3zyKcANZ4Cfg8YzY77vRa0LNDQdFeU0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773142121; c=relaxed/simple;
-	bh=KQqnhr6YlAa/gpy+sTU5GHwCZhZ6qW8rmLEx/uTsI6M=;
-	h=MIME-Version:Date:Content-Type:From:Message-ID:Subject:To:Cc:
-	 In-Reply-To:References; b=fxmqUmJ9fTZ1W6yEjEmjN6DmNlxx0EDbUoPSbrLBwqtBOt1jx+v7EaMEnSj5nGUwPXPIdOz2FMnnrDKmgYZ/b5owksXxBRO9I2QcmlR9G+IPJqwdTZXB0a73bj/FE3YCWgOUHWaA9TmbVneNxSHQ0xgFVIovORNLMjrobPVpO2A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=iaqdFc3R; arc=none smtp.client-ip=95.215.58.186
+	s=arc-20240116; t=1773212788; c=relaxed/simple;
+	bh=fDoXbQjgWEGw9tvqtPVdOHqQWf6S2QPStECJ9pYJGnM=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=KAHqTOVU9vEakUW7pHNDzKTB9AbLUlxaNaKObPxS3WSPw+9T/5su95C9Cd7dYkYZOjoSGlAX5kJoUdi/c+7eOCOvE9ZyrmSaLxJnz+aNRmOyXrgzZdYwQ1i/EBiXUFTC2ODRtv18zjLje+Wyiz5ln9lOsat/OyiKg//Z7jdjiNY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=eYDsJlyA; arc=none smtp.client-ip=91.218.175.179
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="iaqdFc3R"
+	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="eYDsJlyA"
+X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.dev; s=key1;
+	t=1773212783;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:
+	 content-transfer-encoding:content-transfer-encoding;
+	bh=0CXo0x7BiCEEpnzU+2Ow+NXjhaBWC/PdinzAYFVwnT4=;
+	b=eYDsJlyAQL5W9YiEJCWmAM0miLOaFxYlN6EA8vgkobqFWoM5Hf6U7hq/EPjdZBaO/oxRWv
+	tuTLvtBNIszAb22CuEUHpUJ680fdStt3f8/3/2MnOXaDqTK3cEoY6Jy3RzqUupUlOkJ0V+
+	XWrd1wgl15XdhwgnIrdmOws3hrfxc70=
+From: Jiayuan Chen <jiayuan.chen@linux.dev>
+To: netdev@vger.kernel.org
+Cc: Jiayuan Chen <jiayuan.chen@shopee.com>,
+	syzbot+d00f90e0af54102fb271@syzkaller.appspotmail.com,
+	Eric Dumazet <edumazet@google.com>,
+	Jiayuan Chen <jiayuan.chen@linux.dev>,
+	"David S. Miller" <davem@davemloft.net>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Paolo Abeni <pabeni@redhat.com>,
+	Simon Horman <horms@kernel.org>,
+	Kees Cook <kees@kernel.org>,
+	Takamitsu Iwai <takamitz@amazon.co.jp>,
+	Thomas Gleixner <tglx@kernel.org>,
+	Pwnverse <stanksal@purdue.edu>,
+	Ingo Molnar <mingo@kernel.org>,
+	linux-hams@vger.kernel.org,
+	linux-kernel@vger.kernel.org
+Subject: [PATCH net v2] net/rose: fix NULL pointer dereference in rose_transmit_link on reconnect
+Date: Wed, 11 Mar 2026 15:06:02 +0800
+Message-ID: <20260311070611.76913-1-jiayuan.chen@linux.dev>
 Precedence: bulk
 X-Mailing-List: linux-hams@vger.kernel.org
 List-Id: <linux-hams.vger.kernel.org>
 List-Subscribe: <mailto:linux-hams+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-hams+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.dev; s=key1;
-	t=1773142108;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=QEgXSRi8An7XY2t213VJlqkfT5N4BKHBSmPFM54cjbw=;
-	b=iaqdFc3RsLQKWQKQN/Dj5JCr7ZNoeWvtHZhT7DR5h1QYm2oa4XgZvbw4/kPBEWPd89jzwA
-	0gP34tz/uVYgVBFIgPMRmTV3V7rgQhBJ19wM5DjxuFlL1/L572bIg2VeFVMWWrBNrZQNMx
-	LClaA0J8SKfUHY/P7jBfYRlDUzZRa50=
-Date: Tue, 10 Mar 2026 11:28:25 +0000
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: quoted-printable
-X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
-From: "Jiayuan Chen" <jiayuan.chen@linux.dev>
-Message-ID: <215d34adafe389a6792b2ca111ac3ec7ccc079ca@linux.dev>
-TLS-Required: No
-Subject: Re: [PATCH net v1] net/rose: fix NULL pointer dereference in
- rose_transmit_link on reconnect
-To: "Eric Dumazet" <edumazet@google.com>
-Cc: netdev@vger.kernel.org, "Jiayuan Chen" <jiayuan.chen@shopee.com>,
- syzbot+d00f90e0af54102fb271@syzkaller.appspotmail.com, "David S. Miller"
- <davem@davemloft.net>, "Jakub Kicinski" <kuba@kernel.org>, "Paolo Abeni"
- <pabeni@redhat.com>, "Simon Horman" <horms@kernel.org>, "Kees Cook"
- <kees@kernel.org>, "Takamitsu Iwai" <takamitz@amazon.co.jp>, "Pwnverse"
- <stanksal@purdue.edu>, "Ingo Molnar" <mingo@kernel.org>,
- linux-hams@vger.kernel.org, linux-kernel@vger.kernel.org
-In-Reply-To: <CANn89iL3g7+MpkDrY8-v+Zswy5Woe_VvEMqbvHYRxQGpk_OSEQ@mail.gmail.com>
-References: <20260310101349.50993-1-jiayuan.chen@linux.dev>
- <CANn89iL3g7+MpkDrY8-v+Zswy5Woe_VvEMqbvHYRxQGpk_OSEQ@mail.gmail.com>
+Content-Transfer-Encoding: 8bit
 X-Migadu-Flow: FLOW_OUT
 
-March 10, 2026 at 18:24, "Eric Dumazet" <edumazet@google.com mailto:eduma=
-zet@google.com?to=3D%22Eric%20Dumazet%22%20%3Cedumazet%40google.com%3E > =
-wrote:
+From: Jiayuan Chen <jiayuan.chen@shopee.com>
 
+syzkaller reported a bug [1], and the reproducer is available at [2].
 
->=20
->=20On Tue, Mar 10, 2026 at 11:14 AM Jiayuan Chen <jiayuan.chen@linux.dev=
-> wrote:
->=20
->=20>=20
->=20> From: Jiayuan Chen <jiayuan.chen@shopee.com>
-> >=20
->=20>  syzkaller reported a bug [1], and the reproducer is available at [=
-2].
-> >=20
->=20>  When rose_connect() is called a second time on an already-connecti=
-ng
-> >  socket, it overwrites rose->neighbour with the result of rose_get_ne=
-igh()
-> >  without releasing the previous reference. If rose_get_neigh() return=
-s
-> >  NULL, the socket is left in an inconsistent state: rose->state remai=
-ns
-> >  ROSE_STATE_1 from the first connect while rose->neighbour is NULL.
-> >=20
->=20>  When the socket is subsequently closed, rose_release() sees ROSE_S=
-TATE_1
-> >  and calls rose_write_internal() -> rose_transmit_link(skb, NULL), ca=
-using
-> >  a NULL pointer dereference when accessing neigh->loopback.
-> >=20
->=20>  Fix this by:
-> >  1. Releasing the old neighbour reference before attempting a reconne=
-ct
-> >  2. Resetting rose->state to ROSE_STATE_0 before the new connect atte=
-mpt,
-> >  so a failure leaves the socket in a clean state
-> >  3. Setting rose->neighbour to NULL in all error paths after
-> >  rose_neigh_put() to prevent use-after-free on subsequent reconnects
-> >=20
->=20>  [1] https://syzkaller.appspot.com/bug?extid=3Dd00f90e0af54102fb271
-> >  [2] https://gist.github.com/mrpre/9e6779e0d13e2c66779b1653fef80516
-> >=20
->=20>  Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-> >  Reported-by: syzbot+d00f90e0af54102fb271@syzkaller.appspotmail.com
-> >  Closes: https://lore.kernel.org/all/69694d6f.050a0220.58bed.0027.GAE=
-@google.com/T/
-> >  Cc: Jiayuan Chen <jiayuan.chen@linux.dev>
-> >  Signed-off-by: Jiayuan Chen <jiayuan.chen@shopee.com>
-> >  ---
-> >  net/rose/af_rose.c | 11 +++++++++++
-> >  1 file changed, 11 insertions(+)
-> >=20
->=20Normally, a connect() on a socket already connected should return an =
-error.
->=20
->=20disconnect is a special operation involving AF_UNSPEC
->=20
->=20man connect
-> ...
->  Some protocol sockets (e.g., TCP sockets as well as datagram
-> sockets in the UNIX and Internet domains) may dissolve the association
-> by
->  connecting to an address with the sa_family member of sockaddr
-> set to AF_UNSPEC; thereafter, the socket can be connected to another
-> ad=E2=80=90
->  dress. (AF_UNSPEC is supported since Linux 2.2.)
->
+ROSE sockets use four sk->sk_state values: TCP_CLOSE, TCP_LISTEN,
+TCP_SYN_SENT, and TCP_ESTABLISHED. rose_connect() already rejects
+calls for TCP_ESTABLISHED (-EISCONN) and TCP_CLOSE with SS_CONNECTING
+(-ECONNREFUSED), but lacks a check for TCP_SYN_SENT.
 
-Thanks for pointing this out. I should have checked the man page earlier.
+When rose_connect() is called a second time while the first connection
+attempt is still in progress (TCP_SYN_SENT), it overwrites
+rose->neighbour via rose_get_neigh(). If that returns NULL, the socket
+is left with rose->state == ROSE_STATE_1 but rose->neighbour == NULL.
+When the socket is subsequently closed, rose_release() sees
+ROSE_STATE_1 and calls rose_write_internal() ->
+rose_transmit_link(skb, NULL), causing a NULL pointer dereference.
+
+Per connect(2), a second connect() while a connection is already in
+progress should return -EALREADY. Add this missing check for
+TCP_SYN_SENT to complete the state validation in rose_connect().
+
+[1] https://syzkaller.appspot.com/bug?extid=d00f90e0af54102fb271
+[2] https://gist.github.com/mrpre/9e6779e0d13e2c66779b1653fef80516
+
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Reported-by: syzbot+d00f90e0af54102fb271@syzkaller.appspotmail.com
+Closes: https://lore.kernel.org/all/69694d6f.050a0220.58bed.0027.GAE@google.com/T/
+Suggested-by: Eric Dumazet <edumazet@google.com>
+Cc: Jiayuan Chen <jiayuan.chen@linux.dev>
+Signed-off-by: Jiayuan Chen <jiayuan.chen@shopee.com>
+---
+ net/rose/af_rose.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
 diff --git a/net/rose/af_rose.c b/net/rose/af_rose.c
 index 841d62481048..ba56213e0a2a 100644
 --- a/net/rose/af_rose.c
 +++ b/net/rose/af_rose.c
-@@ -811,6 +811,11 @@ static int rose_connect(struct socket *sock, struct =
-sockaddr_unsized *uaddr, int
-                goto out_release;
-        }
-
-+       if (sk->sk_state =3D=3D TCP_SYN_SENT) {
-+               err =3D -EALREADY;
-+               goto out_release;
-+       }
+@@ -811,6 +811,11 @@ static int rose_connect(struct socket *sock, struct sockaddr_unsized *uaddr, int
+ 		goto out_release;
+ 	}
+ 
++	if (sk->sk_state == TCP_SYN_SENT) {
++		err = -EALREADY;
++		goto out_release;
++	}
 +
-        sk->sk_state   =3D TCP_CLOSE;
-        sock->state =3D SS_UNCONNECTED;
+ 	sk->sk_state   = TCP_CLOSE;
+ 	sock->state = SS_UNCONNECTED;
+ 
+-- 
+2.43.0
 
-
-Tested and the panic is gone. Will send v2 after the cool-down period.
