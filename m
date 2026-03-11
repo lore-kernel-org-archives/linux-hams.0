@@ -1,139 +1,230 @@
-Received: from mail-qt1-f177.google.com (mail-qt1-f177.google.com [209.85.160.177])
+Received: from mail-oo1-f71.google.com (mail-oo1-f71.google.com [209.85.161.71])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 07B172459EA
-	for <linux-hams@vger.kernel.org>; Wed, 11 Mar 2026 08:24:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.160.177
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773217502; cv=pass; b=rQyTSLe+b/uU/GreFZ3OuLsYCBMAsE9tq6A9yZxKjpq48hvMBpPdBTMhJTAMCceGqhW3q56xW1SBzyt3mykSw3sVvbhHC+bT0GofXk2Jtn06Q6YxA9lEhINLVemXcqaJE3o2Qx4YYDD+Zj8+sa+C+4Pn+0CaViKR36R0jWKSmqA=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773217502; c=relaxed/simple;
-	bh=bh6U49eCiCBbIvwEknUz7QsV9A4ESrZsJ/9XWVh19mc=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=jNEumYcwlzL4VPBuQROmkPRQWY1dg9QrSdW5S+gyL4nb/TGeHFHAxoTsWz3gw5zsZbVL27K0ADUTVn/9JQJdDyxFP3GUSNHCAP1AZ6cz+wVUYaSZV5tt9SI1j16+n+J1m+jm2LOgJHZlVTiHp8oZ8rEOKG7XJRZJNb3u+G/9U2U=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=pexCnYug; arc=pass smtp.client-ip=209.85.160.177
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="pexCnYug"
-Received: by mail-qt1-f177.google.com with SMTP id d75a77b69052e-50934b8ab60so7678421cf.0
-        for <linux-hams@vger.kernel.org>; Wed, 11 Mar 2026 01:24:59 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1773217499; cv=none;
-        d=google.com; s=arc-20240605;
-        b=gCIW01CoOqYwpXTnIRN9x55QIbf54emA8chk1Gr4SVkzy2rPt0qnryxsJAyL2XsXJp
-         Nfl6w2Kv4IHGe9AKS5rLG8z02a+rT0ddGD7V0KxteekUudQX4ULSI73OvFIY1IDoVzQ+
-         31oV40Itcaxb08xSZSFUn96fRAuDF55+vli9QgqTzpMsBjfDit2MyuymREWA+H3216z2
-         9fvEodJ3Z5rdESJgxheyNp7guCQSgA1g4h+a2vjao3se2FGTL0HW4ukpJbX128lnAa0+
-         kF9UAzylayiw3L86DDKKFvZmssrLmVkZp3L/N6i3JK6WAKyPPR85BoQY9BsSo/wAgFuE
-         aoQQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=bh6U49eCiCBbIvwEknUz7QsV9A4ESrZsJ/9XWVh19mc=;
-        fh=nC92Zc/9DbB5kPPLB9oUKjdYSFSBGey4jxPGjbBPg+0=;
-        b=OPC59116QcnomkoIEdFtd+ob8iy+p9oCw6LwzjwBU6L7sG4C1j4VFLpS+qDY6CE80E
-         GNRaYHfB12A9QVEJcf5VMYOR7jcjD6O+zVnb/3PYLZsQx/7PBEJ2QP3lqrxRxfVHFTDe
-         1/OgoBgeYGK2e/ZhIhRXNKdUF6A4TkX2PaWE6k5aXxzy0+XhVSsJs16XVCexIwoi/wfJ
-         lW/oM+0ox0qw3ca8YgqYUlxOX++piKQ/O9ox5bTxpS94ud8FC2+z1OHeXI5zkLbN39lb
-         +E+aqGcD76WwuxM6u4TzkY1ZTO3oiN2MQ979IjQCWSNZd1VlMgqxcRFJboFK3SgNKR27
-         GJxg==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20230601; t=1773217499; x=1773822299; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=bh6U49eCiCBbIvwEknUz7QsV9A4ESrZsJ/9XWVh19mc=;
-        b=pexCnYugPMRnQt3MsAuJ5g+koHlN/GxcIaJ4EZs20CzSu2b5bAoN8F8/Rfd6Pd7YYc
-         7NSkaaVRkIX/qvWhHQm60t7YTedMIhyeJtuUVJDiDb1MWcVLs0Gx8Z37u0gyAjloGs3j
-         iAxrG7dSdWu+S1sHEu0k277zq9zDOTqD0FFMc2dipY4lGDUqV/zi2qO2h5uTVI2V1wRX
-         Os0uSb+gKk2ATyWEiIYiVpoIe4luZ0qFgm/lewfgWG1MFrM6XGwwYegNEybZa0zaGNpP
-         bkf3hjoxD956x6GMKks3P53X0cmSkwmivsjLJ4bxbqNcCHqE67KT9An0YHNH4Ajx70c5
-         0SdQ==
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B96043C7E13
+	for <linux-hams@vger.kernel.org>; Wed, 11 Mar 2026 18:52:29 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.161.71
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1773255151; cv=none; b=sF5VljRNFY6umgyRDOa40jQRW8yg6izQtmXYq1Di+5Ufaz/kNKDsQ+4h/ry8s4x1dxdh3hIHRdsvBjJnyuiKfzLJ3c8iZPmuwEaFxh2rVVDl9rvl9ilv4mKZ8iDduKGpq8z8D1pw8zNT/wdBC/eVLOWiFurKhAuuB2ZTQWUq1Js=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1773255151; c=relaxed/simple;
+	bh=hGg4bDSnS8fumqrNyawZ+Z25dUME2Yjx6OiciJumink=;
+	h=MIME-Version:Date:Message-ID:Subject:From:To:Content-Type; b=T39ZUVY7VRA4AphtIEM/bUYfPjOwytvBclkn2APG8bl6Tj58kAfWIvp+Pkis2AfS8Stb4s7zDoIC9DujG3tNY9mkVdSfjrkQnuag0/0cTE5FxF16X8/lCogkqvrQaTLNDAJ1uDXS7bM6s79QDd1APS2N07y7cefO36jcp3Gk604=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=syzkaller.appspotmail.com; spf=pass smtp.mailfrom=M3KW2WVRGUFZ5GODRSRYTGD7.apphosting.bounces.google.com; arc=none smtp.client-ip=209.85.161.71
+Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=syzkaller.appspotmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=M3KW2WVRGUFZ5GODRSRYTGD7.apphosting.bounces.google.com
+Received: by mail-oo1-f71.google.com with SMTP id 006d021491bc7-67ba8269efaso1538472eaf.1
+        for <linux-hams@vger.kernel.org>; Wed, 11 Mar 2026 11:52:29 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1773217499; x=1773822299;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=bh6U49eCiCBbIvwEknUz7QsV9A4ESrZsJ/9XWVh19mc=;
-        b=uFGyHhm59jpEWUuAzSGywYVHLe+bMWpm4lS6rB5cJ8Lo+rC0vkXWruNdbbT1xHTsMh
-         m77aDEeCqBPQrDZOV9lfStMgOCozc5QMBqKJBMM+xxeikj6KBvTOutqgILYHNOhpG2uQ
-         KQZDr78/Ecl2/3WKCuR3K1lwRWswRvflhpwbY00RA8RVgkILOnyGH93J9v87z0dhg6Kc
-         QLs+pxH9HsYcEE+xJNLIFF5rQUQpfuQPpIhBoYKNz1qYz5FJtijdBnZkkjU6c89f7XDr
-         HvQiG83HUNrU+0D/Lnzv1Dy8yrMFBorRJ628rDRw+lh0xjbT04yMnOX/vELGuIMAnM0H
-         7TKw==
-X-Forwarded-Encrypted: i=1; AJvYcCVqj52CLF23aSiD1U18/GNGuHeiXX6L1kJGAsakOkaBJkjB9m6D5QroH4nnsBQhwfeT+Xy07Maq2rKz@vger.kernel.org
-X-Gm-Message-State: AOJu0YycV8imYFqTeqGToqv4ocMA1+osqO04ZzdISFlYunHsG1upNdoR
-	tWZPyAwAVzzJG9vGGqGd1fbrBC1R+39SzREdE/FjdoOJAPbGwUdoFdWoxZiMmhAxLaqU1KCYIsP
-	oMWsYuIbdkFNndQH4zOI197WNv46Sexn9QzFw9jJn
-X-Gm-Gg: ATEYQzzIGHSBn19jldfOCKoyRtIrOgYZ/T5L84+z+cXVi/BtqqvAFNOObKCME1Y/A5u
-	Hk5zQYnfgvYSvcIajJo2sNgWwhfoC05mjGkaCFxw2g1eaiXlX4Yj8ftUFnXVG+nOIm2oIuZkmQ5
-	ld0V9Dm2PYkibMexZAgcEEPgLYmomEZunLKZC0DN13Krnsyzc/jB/SLKbPPm6oWUfq8rE6N5V+T
-	EFsRMa3jPKSK/kg2KZMJIMfXbK4O4XVcUru3iPvPYwPzaYs9GdLckR48xzgvouVaRuRs9/GUxec
-	uuwfq/o6
-X-Received: by 2002:a05:622a:54:b0:509:f1e:41fb with SMTP id
- d75a77b69052e-50925fcd943mr73573621cf.6.1773217498516; Wed, 11 Mar 2026
- 01:24:58 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1773255149; x=1773859949;
+        h=to:from:subject:message-id:date:mime-version:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=ERlpPqdrLwTrDo597p9x5sFxQ164aUiiv1lN8OPvDYE=;
+        b=J+cpJltXnI8BVfWnNx08NQF/N9J+FEUZuPJNbgVRLCYoS7ObkzexLNle/UzeQmX6q/
+         oiZ7DQK5W1wpGFSxpDgcjQKWWPo/y87EoCkJtbBBq+GaaIdyBDzDYNkKMnQhc5CToK1b
+         fN7OdbqOMh6jNpDKFwgTEezhXIaACYZqjL10Q8Z8KbV5io2ViYOYCIMHzp2ofOfgdlrg
+         3pRfhjk/CZj+HxXFU2LHDOV46Og0IytVurOa0Jb8HO56gYU2R0z396uPXZvZWeOuqG64
+         mIC+gfduhx4EFKop2jmUOutWc7I4uwgsprEYOvtc9I+YHR3BZTu7YQwzoSqs5Z2cLvPS
+         ObGQ==
+X-Forwarded-Encrypted: i=1; AJvYcCWy3DWRhgBWFfpepPWoq6R2NTWEzk2gxejNDb/9OYmRUQr2Iabs1btLSrCHE7Z0t1ecw6/5iARI7a6A@vger.kernel.org
+X-Gm-Message-State: AOJu0Yw5YsN5Hwzp9SdozTVvbYGd2llDlP6dhDPCV6t2MHTLVoLQ4/9t
+	OvsUCMgP45FgSVwbtsF+eOVqtN1XYytstTHfDQ9PbfdTTvjQ/WyP0WFY/AfYjlR6mIW32oPjeiJ
+	xjGcuXlwwr0gLuHYw/Rokhkt6pytmoNNScDO+vi8sbIseGK4H+ZQrp8t63mU=
 Precedence: bulk
 X-Mailing-List: linux-hams@vger.kernel.org
 List-Id: <linux-hams.vger.kernel.org>
 List-Subscribe: <mailto:linux-hams+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-hams+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20260311070611.76913-1-jiayuan.chen@linux.dev>
-In-Reply-To: <20260311070611.76913-1-jiayuan.chen@linux.dev>
-From: Eric Dumazet <edumazet@google.com>
-Date: Wed, 11 Mar 2026 09:24:47 +0100
-X-Gm-Features: AaiRm52SdgCeU51Y-1e-Sk6l4P3zSL-DgLPLdP1cnJA8BQG1vPHxIiVp-Wp5uO4
-Message-ID: <CANn89i+MTAhm+T3dR9T45wOBU3xjiyKfsKXHen3bBLu2T8JD9Q@mail.gmail.com>
-Subject: Re: [PATCH net v2] net/rose: fix NULL pointer dereference in
- rose_transmit_link on reconnect
-To: Jiayuan Chen <jiayuan.chen@linux.dev>
-Cc: netdev@vger.kernel.org, Jiayuan Chen <jiayuan.chen@shopee.com>, 
-	syzbot+d00f90e0af54102fb271@syzkaller.appspotmail.com, 
-	"David S. Miller" <davem@davemloft.net>, Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>, 
-	Simon Horman <horms@kernel.org>, Kees Cook <kees@kernel.org>, 
-	Takamitsu Iwai <takamitz@amazon.co.jp>, Thomas Gleixner <tglx@kernel.org>, Pwnverse <stanksal@purdue.edu>, 
-	Ingo Molnar <mingo@kernel.org>, linux-hams@vger.kernel.org, linux-kernel@vger.kernel.org
+X-Received: by 2002:a05:6820:4d08:b0:679:96f:3f04 with SMTP id
+ 006d021491bc7-67bc89fb062mr2118614eaf.53.1773255148731; Wed, 11 Mar 2026
+ 11:52:28 -0700 (PDT)
+Date: Wed, 11 Mar 2026 11:52:28 -0700
+X-Google-Appengine-App-Id: s~syzkaller
+X-Google-Appengine-App-Id-Alias: syzkaller
+Message-ID: <69b1b9ec.a00a0220.94e15.001b.GAE@google.com>
+Subject: [syzbot] [hams?] KASAN: slab-use-after-free Read in ax25_disconnect
+From: syzbot <syzbot+41ebf587f04e2bcfa8e5@syzkaller.appspotmail.com>
+To: davem@davemloft.net, edumazet@google.com, horms@kernel.org, 
+	kuba@kernel.org, linux-hams@vger.kernel.org, linux-kernel@vger.kernel.org, 
+	netdev@vger.kernel.org, pabeni@redhat.com, syzkaller-bugs@googlegroups.com
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 
-On Wed, Mar 11, 2026 at 8:06=E2=80=AFAM Jiayuan Chen <jiayuan.chen@linux.de=
-v> wrote:
->
-> From: Jiayuan Chen <jiayuan.chen@shopee.com>
->
-> syzkaller reported a bug [1], and the reproducer is available at [2].
->
-> ROSE sockets use four sk->sk_state values: TCP_CLOSE, TCP_LISTEN,
-> TCP_SYN_SENT, and TCP_ESTABLISHED. rose_connect() already rejects
-> calls for TCP_ESTABLISHED (-EISCONN) and TCP_CLOSE with SS_CONNECTING
-> (-ECONNREFUSED), but lacks a check for TCP_SYN_SENT.
->
-> When rose_connect() is called a second time while the first connection
-> attempt is still in progress (TCP_SYN_SENT), it overwrites
-> rose->neighbour via rose_get_neigh(). If that returns NULL, the socket
-> is left with rose->state =3D=3D ROSE_STATE_1 but rose->neighbour =3D=3D N=
-ULL.
-> When the socket is subsequently closed, rose_release() sees
-> ROSE_STATE_1 and calls rose_write_internal() ->
-> rose_transmit_link(skb, NULL), causing a NULL pointer dereference.
->
-> Per connect(2), a second connect() while a connection is already in
-> progress should return -EALREADY. Add this missing check for
-> TCP_SYN_SENT to complete the state validation in rose_connect().
->
-> [1] https://syzkaller.appspot.com/bug?extid=3Dd00f90e0af54102fb271
-> [2] https://gist.github.com/mrpre/9e6779e0d13e2c66779b1653fef80516
->
-> Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-> Reported-by: syzbot+d00f90e0af54102fb271@syzkaller.appspotmail.com
-> Closes: https://lore.kernel.org/all/69694d6f.050a0220.58bed.0027.GAE@goog=
-le.com/T/
-> Suggested-by: Eric Dumazet <edumazet@google.com>
-> Cc: Jiayuan Chen <jiayuan.chen@linux.dev>
-> Signed-off-by: Jiayuan Chen <jiayuan.chen@shopee.com>
-> ---
+Hello,
 
-Reviewed-by: Eric Dumazet <edumazet@google.com>
+syzbot found the following issue on:
+
+HEAD commit:    1f318b96cc84 Linux 7.0-rc3
+git tree:       upstream
+console output: https://syzkaller.appspot.com/x/log.txt?x=13d41806580000
+kernel config:  https://syzkaller.appspot.com/x/.config?x=2a019678b1a3a692
+dashboard link: https://syzkaller.appspot.com/bug?extid=41ebf587f04e2bcfa8e5
+compiler:       Debian clang version 21.1.8 (++20251221033036+2078da43e25a-1~exp1~20251221153213.50), Debian LLD 21.1.8
+
+Unfortunately, I don't have any reproducer for this issue yet.
+
+Downloadable assets:
+disk image: https://storage.googleapis.com/syzbot-assets/9997eccd7489/disk-1f318b96.raw.xz
+vmlinux: https://storage.googleapis.com/syzbot-assets/092609f7d984/vmlinux-1f318b96.xz
+kernel image: https://storage.googleapis.com/syzbot-assets/822d2e7e40b1/bzImage-1f318b96.xz
+
+IMPORTANT: if you fix the issue, please add the following tag to the commit:
+Reported-by: syzbot+41ebf587f04e2bcfa8e5@syzkaller.appspotmail.com
+
+==================================================================
+BUG: KASAN: slab-use-after-free in ax25_disconnect+0x19c/0x3c0 net/ax25/ax25_subr.c:283
+Read of size 8 at addr ffff8880600774c0 by task ktimers/1/29
+
+CPU: 1 UID: 0 PID: 29 Comm: ktimers/1 Tainted: G             L      syzkaller #0 PREEMPT_{RT,(full)} 
+Tainted: [L]=SOFTLOCKUP
+Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 02/12/2026
+Call Trace:
+ <TASK>
+ dump_stack_lvl+0xe8/0x150 lib/dump_stack.c:120
+ print_address_description mm/kasan/report.c:378 [inline]
+ print_report+0xba/0x230 mm/kasan/report.c:482
+ kasan_report+0x117/0x150 mm/kasan/report.c:595
+ ax25_disconnect+0x19c/0x3c0 net/ax25/ax25_subr.c:283
+ call_timer_fn+0x192/0x640 kernel/time/timer.c:1748
+ expire_timers kernel/time/timer.c:1799 [inline]
+ __run_timers kernel/time/timer.c:2373 [inline]
+ __run_timer_base+0x6a3/0x9f0 kernel/time/timer.c:2385
+ run_timer_base kernel/time/timer.c:2394 [inline]
+ run_timer_softirq+0xb7/0x170 kernel/time/timer.c:2404
+ handle_softirqs+0x1de/0x6f0 kernel/softirq.c:622
+ __do_softirq kernel/softirq.c:656 [inline]
+ run_ktimerd+0x69/0x100 kernel/softirq.c:1138
+ smpboot_thread_fn+0x541/0xa50 kernel/smpboot.c:160
+ kthread+0x388/0x470 kernel/kthread.c:436
+ ret_from_fork+0x51e/0xb90 arch/x86/kernel/process.c:158
+ ret_from_fork_asm+0x1a/0x30 arch/x86/entry/entry_64.S:245
+ </TASK>
+
+Allocated by task 20813:
+ kasan_save_stack mm/kasan/common.c:57 [inline]
+ kasan_save_track+0x3e/0x80 mm/kasan/common.c:78
+ poison_kmalloc_redzone mm/kasan/common.c:398 [inline]
+ __kasan_kmalloc+0x93/0xb0 mm/kasan/common.c:415
+ kasan_kmalloc include/linux/kasan.h:263 [inline]
+ __kmalloc_cache_noprof+0x3a6/0x690 mm/slub.c:5383
+ kmalloc_noprof include/linux/slab.h:950 [inline]
+ kzalloc_noprof include/linux/slab.h:1188 [inline]
+ ax25_create_cb+0x50/0x5a0 net/ax25/af_ax25.c:531
+ ax25_send_frame+0x445/0x9f0 net/ax25/ax25_out.c:67
+ rose_send_frame net/rose/rose_link.c:106 [inline]
+ rose_transmit_restart_request net/rose/rose_link.c:198 [inline]
+ rose_transmit_link+0x729/0xac0 net/rose/rose_link.c:284
+ rose_write_internal+0x1256/0x1b60 net/rose/rose_subr.c:198
+ rose_connect+0x93b/0x1110 net/rose/af_rose.c:881
+ __sys_connect_file net/socket.c:2089 [inline]
+ __sys_connect+0x315/0x450 net/socket.c:2108
+ __do_sys_connect net/socket.c:2114 [inline]
+ __se_sys_connect net/socket.c:2111 [inline]
+ __x64_sys_connect+0x7a/0x90 net/socket.c:2111
+ do_syscall_x64 arch/x86/entry/syscall_64.c:63 [inline]
+ do_syscall_64+0x14d/0xf80 arch/x86/entry/syscall_64.c:94
+ entry_SYSCALL_64_after_hwframe+0x77/0x7f
+
+Freed by task 16:
+ kasan_save_stack mm/kasan/common.c:57 [inline]
+ kasan_save_track+0x3e/0x80 mm/kasan/common.c:78
+ kasan_save_free_info+0x46/0x50 mm/kasan/generic.c:584
+ poison_slab_object mm/kasan/common.c:253 [inline]
+ __kasan_slab_free+0x5c/0x80 mm/kasan/common.c:285
+ kasan_slab_free include/linux/kasan.h:235 [inline]
+ slab_free_hook mm/slub.c:2692 [inline]
+ slab_free mm/slub.c:6168 [inline]
+ kfree+0x1c1/0x6c0 mm/slub.c:6486
+ call_timer_fn+0x192/0x640 kernel/time/timer.c:1748
+ expire_timers kernel/time/timer.c:1799 [inline]
+ __run_timers kernel/time/timer.c:2373 [inline]
+ __run_timer_base+0x6a3/0x9f0 kernel/time/timer.c:2385
+ run_timer_base kernel/time/timer.c:2394 [inline]
+ run_timer_softirq+0xb7/0x170 kernel/time/timer.c:2404
+ handle_softirqs+0x1de/0x6f0 kernel/softirq.c:622
+ __do_softirq kernel/softirq.c:656 [inline]
+ run_ktimerd+0x69/0x100 kernel/softirq.c:1138
+ smpboot_thread_fn+0x541/0xa50 kernel/smpboot.c:160
+ kthread+0x388/0x470 kernel/kthread.c:436
+ ret_from_fork+0x51e/0xb90 arch/x86/kernel/process.c:158
+ ret_from_fork_asm+0x1a/0x30 arch/x86/entry/entry_64.S:245
+
+The buggy address belongs to the object at ffff888060077000
+ which belongs to the cache kmalloc-2k of size 2048
+The buggy address is located 1216 bytes inside of
+ freed 2048-byte region [ffff888060077000, ffff888060077800)
+
+The buggy address belongs to the physical page:
+page: refcount:0 mapcount:0 mapping:0000000000000000 index:0xffff888060070000 pfn:0x60070
+head: order:3 mapcount:0 entire_mapcount:0 nr_pages_mapped:0 pincount:0
+flags: 0x80000000000240(workingset|head|node=0|zone=1)
+page_type: f5(slab)
+raw: 0080000000000240 ffff88813fe1d000 ffff88813fe17c88 ffffea0001d8b810
+raw: ffff888060070000 0000000800080006 00000000f5000000 0000000000000000
+head: 0080000000000240 ffff88813fe1d000 ffff88813fe17c88 ffffea0001d8b810
+head: ffff888060070000 0000000800080006 00000000f5000000 0000000000000000
+head: 0080000000000003 ffffea0001801c01 00000000ffffffff 00000000ffffffff
+head: 0000000000000000 0000000000000000 00000000ffffffff 0000000000000008
+page dumped because: kasan: bad access detected
+page_owner tracks the page as allocated
+page last allocated via order 3, migratetype Unmovable, gfp_mask 0xd2820(GFP_ATOMIC|__GFP_NOWARN|__GFP_NORETRY|__GFP_COMP|__GFP_NOMEMALLOC), pid 5801, tgid 5801 (syz-executor), ts 82913456262, free_ts 0
+ set_page_owner include/linux/page_owner.h:32 [inline]
+ post_alloc_hook+0x231/0x280 mm/page_alloc.c:1889
+ prep_new_page mm/page_alloc.c:1897 [inline]
+ get_page_from_freelist+0x28bb/0x2950 mm/page_alloc.c:3962
+ __alloc_frozen_pages_noprof+0x18d/0x380 mm/page_alloc.c:5250
+ alloc_slab_page mm/slub.c:3296 [inline]
+ allocate_slab+0x77/0x660 mm/slub.c:3485
+ new_slab mm/slub.c:3543 [inline]
+ refill_objects+0x334/0x3c0 mm/slub.c:7178
+ __pcs_replace_empty_main+0x371/0x5c0 mm/slub.c:-1
+ alloc_from_pcs mm/slub.c:4720 [inline]
+ slab_alloc_node mm/slub.c:4854 [inline]
+ __do_kmalloc_node mm/slub.c:5262 [inline]
+ __kmalloc_node_track_caller_noprof+0x60b/0x7e0 mm/slub.c:5371
+ kmalloc_reserve net/core/skbuff.c:635 [inline]
+ pskb_expand_head+0x228/0x1320 net/core/skbuff.c:2315
+ netlink_trim+0x1b3/0x2c0 net/netlink/af_netlink.c:1299
+ netlink_broadcast_filtered+0xd6/0x1010 net/netlink/af_netlink.c:1512
+ nlmsg_multicast_filtered include/net/netlink.h:1165 [inline]
+ nlmsg_multicast include/net/netlink.h:1184 [inline]
+ nlmsg_notify+0xf0/0x1a0 net/netlink/af_netlink.c:2593
+ __dev_notify_flags+0xf2/0x310 net/core/dev.c:9799
+ netif_change_flags+0xe8/0x1a0 net/core/dev.c:9832
+ do_setlink+0xf82/0x4590 net/core/rtnetlink.c:3158
+ rtnl_changelink net/core/rtnetlink.c:3776 [inline]
+ __rtnl_newlink net/core/rtnetlink.c:3935 [inline]
+ rtnl_newlink+0x15a9/0x1be0 net/core/rtnetlink.c:4072
+ rtnetlink_rcv_msg+0x7d5/0xbe0 net/core/rtnetlink.c:6958
+page_owner free stack trace missing
+
+Memory state around the buggy address:
+ ffff888060077380: fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb
+ ffff888060077400: fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb
+>ffff888060077480: fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb
+                                           ^
+ ffff888060077500: fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb
+ ffff888060077580: fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb
+==================================================================
+
+
+---
+This report is generated by a bot. It may contain errors.
+See https://goo.gl/tpsmEJ for more information about syzbot.
+syzbot engineers can be reached at syzkaller@googlegroups.com.
+
+syzbot will keep track of this issue. See:
+https://goo.gl/tpsmEJ#status for how to communicate with syzbot.
+
+If the report is already addressed, let syzbot know by replying with:
+#syz fix: exact-commit-title
+
+If you want to overwrite report's subsystems, reply with:
+#syz set subsystems: new-subsystem
+(See the list of subsystem names on the web dashboard)
+
+If the report is a duplicate of another one, reply with:
+#syz dup: exact-subject-of-another-report
+
+If you want to undo deduplication, reply with:
+#syz undup
