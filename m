@@ -1,72 +1,90 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mout-y-209.mailbox.org (mout-y-209.mailbox.org [91.198.250.237])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ECCC137D13D;
-	Sun, 29 Mar 2026 17:35:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B2B42C11FE;
+	Sun, 29 Mar 2026 19:19:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.198.250.237
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774805710; cv=none; b=SGcsD/Xh5na7Nm2AqXzryXIK71RF5i7j/tEYTKnYwj1JgXpfuJ+vPsMitRobJjXK3I0U8ut6H1L26dYyDjPY7joL5ZR1YicNBIr1hgib6x/URyQBITm+7U7wa1rffB4CPPbVDMhmtpV0NLK3qvCgoZt/mTHMWduppN6ers19w+c=
+	t=1774811987; cv=none; b=emEwK9z/QAJno3MicI8jrWdLcR/gvpMbAQF8sKV08aK14FhJFCwAoqE9ZyMkb9sv4X2iG/EOQIuYb2HKLe5+jml+vH/paMRzxtZIF2Jw8KnqfEFEbHkU/U8bTZS0+9gnwMM4oQ4N2kcYS/IsGOtukj/WFxSDdQ5Vn/EjNlFkyYM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774805710; c=relaxed/simple;
-	bh=3iL3RlZmKYo5TwGusufQHV14YikV9j/wPb2l6HWvCro=;
-	h=Date:From:To:Cc:Subject:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=qP/gKsBMf0yLrtLlsseslUjbRA22YZv0YUwlXbIqKcmOJO51QZB+6sVEseStRBIYUeO4m+RIc44ykTAyV9xQIzZvDULhsS9Jv/mAqzW2EqO4b+xIvbJYgu5kgFhTLrjeHN25uoXNlI6Z07UOMCPbJeoTI17OlxFcJwdylbHqbZg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=UqJ1f1ca; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1774811987; c=relaxed/simple;
+	bh=zFBeQYVNC8x00m5+sFnrPZHbxYdH+e/c8dDnAvyzjjI=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=bvOaLSUc+JbMm8fnQSqJvDc/rVQRM5U4X745YEAiG+GXn90opBcf842AKo0XeygjeewZ83fGKQzG0RYyKNu36vxVqIzfwx6eDigq8vShaHp00HQMBoC7hix9nOChFepCmaatK11qxm805vqeqKdFrs3CWoCe43YkH8Yg9mexLiA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=mailbox.org; spf=pass smtp.mailfrom=mailbox.org; dkim=pass (2048-bit key) header.d=mailbox.org header.i=@mailbox.org header.b=Yzqi9vRd; dkim=pass (2048-bit key) header.d=mailbox.org header.i=@mailbox.org header.b=XKxdYa0f; arc=none smtp.client-ip=91.198.250.237
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=mailbox.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=mailbox.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="UqJ1f1ca"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 37F37C116C6;
-	Sun, 29 Mar 2026 17:35:09 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1774805709;
-	bh=3iL3RlZmKYo5TwGusufQHV14YikV9j/wPb2l6HWvCro=;
-	h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
-	b=UqJ1f1caBANTOH0w9MpM1yZY8r+MFjpghjqRv0DHKfWIo/WY22/oIyFo9s6eFeG4S
-	 8gNcIU9Du+ZCof5ZXov0PwiuzBEgpGqkCqBVkoUw4dZVSAQkztaZVDm/j+LRbpbTyG
-	 0MD3GoEseDhY4RUfa0dfe4ax8VYr5U1GGO5xXmZ5+qlVsrd/9S+82AyFfUUJk3N40C
-	 nlofk16qK6cIfpXXBUxX4G8tFuCxCUH46cMxagAIZoRCo8KANGj5wkFFWTHvWl/A/p
-	 wS3jfUjUjFvKDPwdSls/9tyTGOAjcSya1a60ZRXGSIVDNdkPjaG2qDywemLJLOzUk9
-	 aZ7MObTMmDA7A==
-Date: Sun, 29 Mar 2026 10:35:08 -0700
-From: Jakub Kicinski <kuba@kernel.org>
-To: Mashiro Chen <mashiro.chen@mailbox.org>
-Cc: andrew+netdev@lunn.ch, davem@davemloft.net, edumazet@google.com,
- pabeni@redhat.com, netdev@vger.kernel.org, linux-hams@vger.kernel.org,
- linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 0/5] hamradio: mkiss: modernize and clean up mkiss
- driver
-Message-ID: <20260329103508.4905cc09@kernel.org>
-In-Reply-To: <20260329143408.747197-1-mashiro.chen@mailbox.org>
-References: <20260329143408.747197-1-mashiro.chen@mailbox.org>
+	dkim=pass (2048-bit key) header.d=mailbox.org header.i=@mailbox.org header.b="Yzqi9vRd";
+	dkim=pass (2048-bit key) header.d=mailbox.org header.i=@mailbox.org header.b="XKxdYa0f"
+Received: from smtp202.mailbox.org (smtp202.mailbox.org [10.196.197.202])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	by mout-y-209.mailbox.org (Postfix) with ESMTPS id 4fkPMf5JcXzB13n;
+	Sun, 29 Mar 2026 21:19:42 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=mailbox.org; s=mail20150812;
+	t=1774811982;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=zFBeQYVNC8x00m5+sFnrPZHbxYdH+e/c8dDnAvyzjjI=;
+	b=Yzqi9vRdr3SzSz/PJxm9wPPE7JRSgQ/ZYEkbz/LeBREPvgbdEC7UFd9NxbEugUsljn4fYL
+	pOj6qkIAospxyMfvRo6kQNjdIUd4ftfSDEFVn+VUgCHqCtHS81zRAljYkf48SCC5PYgsmS
+	/ocNsBuAaZDzezDe7PppuXMBZJ252Hri5QoR8xz0SNVP9VmylqFEWC4bVFFHPob1ygkmJ9
+	bkX/SgvP5E7Q5DXRzlBlPAA2iEgulVwZ5oy6fZ95d2pZwfYmFuvCz/gavIzO7P/j6b1vby
+	O18mkLocKA3cGulov6qgxyl78VJlMVLmuG5y1OQbHoE8hXv75138BdZAGF+nEg==
+From: Mashiro Chen <mashiro.chen@mailbox.org>
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=mailbox.org; s=mail20150812;
+	t=1774811981;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=zFBeQYVNC8x00m5+sFnrPZHbxYdH+e/c8dDnAvyzjjI=;
+	b=XKxdYa0fOj9oVb2kHeHX50gd/ZweDUg0Yk2mZz3rDFqWbpC828eQRWM+tMvtHNJQgdnw2+
+	vV+HFhd5dzOumP1fIuRY/oVwb9Wnk62njaNYzf0IzsFhpvvennzcF/6NyDJ6Y+pKAH9ZIL
+	9BnJzy/ENYm7xAhpH0OLYRqk89qTaspYi4ML8dvIUJRAzzMT2sWL/p4XB9xb/RnT1HYm+Z
+	8g99vA2YkY53PTgUi39lnXtlpfVk5PlxojbK8JhxEoWYFbU4VaIv1rRC48dlb63aAPKfCo
+	Ptlat7eWIGDa12/0ZciZESoKzIfAfGld7SN7V+PVTCbgKQEXk++6sovSSaf9tg==
+To: kuba@kernel.org
+Cc: andrew+netdev@lunn.ch,
+	davem@davemloft.net,
+	edumazet@google.com,
+	linux-hams@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	mashiro.chen@mailbox.org,
+	netdev@vger.kernel.org,
+	pabeni@redhat.com
+Subject: Re: [PATCH 0/5] hamradio: mkiss: modernize and clean up mkiss driver
+Date: Mon, 30 Mar 2026 03:19:23 +0800
+Message-ID: <20260329191923.821284-1-mashiro.chen@mailbox.org>
+In-Reply-To: <20260329103508.4905cc09@kernel.org>
+References: <20260329103508.4905cc09@kernel.org>
 Precedence: bulk
 X-Mailing-List: linux-hams@vger.kernel.org
 List-Id: <linux-hams.vger.kernel.org>
 List-Subscribe: <mailto:linux-hams+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-hams+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
+X-MBO-RS-META: 18kjeg8guodyyrajkz9fgufneradckas
+X-MBO-RS-ID: cf6a7534abaa90038c8
 
-On Sun, 29 Mar 2026 22:34:03 +0800 Mashiro Chen wrote:
-> This patch series modernizes the mkiss driver, which is used for
-> AX.25 communication over serial lines.
+Hi Jakub,
 
-Quoting documentation:
+Thank you for the quick review and for pointing out the Netdev policy
+regarding clean-up patches. I apologize for the noise; I was not fully
+aware of the specific guidelines for the Netdev subsystem in this regard.
 
-  Clean-up patches
-  ~~~~~~~~~~~~~~~~
-  
-  Netdev discourages patches which perform simple clean-ups, which are not in
-  the context of other work. For example:
-  
-  * Addressing ``checkpatch.pl``, and other trivial coding style warnings
-  * Addressing :ref:`Local variable ordering<rcs>` issues
-  * Conversions to device-managed APIs (``devm_`` helpers)
-  
-  This is because it is felt that the churn that such changes produce comes
-  at a greater cost than the value of such clean-ups.
-  
-  Conversely, spelling and grammar fixes are not discouraged.
-  
-See: https://www.kernel.org/doc/html/next/process/maintainer-netdev.html#clean-up-patches
--- 
-pw-bot: reject
+I will respect these guidelines and focus my further contributions on
+functional improvements or bug fixes.
+
+Regarding the current series, I understand them do not meet the Netdev
+Standard for clean-up patches and I will drop these submissions.
+
+Thank you again for your time and guidance.
+
+Best Regards,
+Mashiro Chen
