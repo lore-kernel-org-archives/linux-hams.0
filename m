@@ -1,90 +1,95 @@
-Received: from mout-y-209.mailbox.org (mout-y-209.mailbox.org [91.198.250.237])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-oo1-f71.google.com (mail-oo1-f71.google.com [209.85.161.71])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B2B42C11FE;
-	Sun, 29 Mar 2026 19:19:44 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.198.250.237
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 79D163D891B
+	for <linux-hams@vger.kernel.org>; Tue, 31 Mar 2026 08:06:35 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.161.71
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774811987; cv=none; b=emEwK9z/QAJno3MicI8jrWdLcR/gvpMbAQF8sKV08aK14FhJFCwAoqE9ZyMkb9sv4X2iG/EOQIuYb2HKLe5+jml+vH/paMRzxtZIF2Jw8KnqfEFEbHkU/U8bTZS0+9gnwMM4oQ4N2kcYS/IsGOtukj/WFxSDdQ5Vn/EjNlFkyYM=
+	t=1774944402; cv=none; b=aj5PT0dntq6Xja+tndzprzXr8bb+bhWhzE2tHfpttbuA4d3ibUGjwE1UggTLCNj+ic1vuxyhgSQNFS7ufVCpjB+BsPwGKSpAj8cUaRWzxp34TfYMdS0vz7dFxNHtIPcOrY3aU4eNVbPXgjDxBZ4M8aL4PBYP2d5PR8xVjUGEqn4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774811987; c=relaxed/simple;
-	bh=zFBeQYVNC8x00m5+sFnrPZHbxYdH+e/c8dDnAvyzjjI=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bvOaLSUc+JbMm8fnQSqJvDc/rVQRM5U4X745YEAiG+GXn90opBcf842AKo0XeygjeewZ83fGKQzG0RYyKNu36vxVqIzfwx6eDigq8vShaHp00HQMBoC7hix9nOChFepCmaatK11qxm805vqeqKdFrs3CWoCe43YkH8Yg9mexLiA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=mailbox.org; spf=pass smtp.mailfrom=mailbox.org; dkim=pass (2048-bit key) header.d=mailbox.org header.i=@mailbox.org header.b=Yzqi9vRd; dkim=pass (2048-bit key) header.d=mailbox.org header.i=@mailbox.org header.b=XKxdYa0f; arc=none smtp.client-ip=91.198.250.237
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=mailbox.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=mailbox.org
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=mailbox.org header.i=@mailbox.org header.b="Yzqi9vRd";
-	dkim=pass (2048-bit key) header.d=mailbox.org header.i=@mailbox.org header.b="XKxdYa0f"
-Received: from smtp202.mailbox.org (smtp202.mailbox.org [10.196.197.202])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	by mout-y-209.mailbox.org (Postfix) with ESMTPS id 4fkPMf5JcXzB13n;
-	Sun, 29 Mar 2026 21:19:42 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=mailbox.org; s=mail20150812;
-	t=1774811982;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=zFBeQYVNC8x00m5+sFnrPZHbxYdH+e/c8dDnAvyzjjI=;
-	b=Yzqi9vRdr3SzSz/PJxm9wPPE7JRSgQ/ZYEkbz/LeBREPvgbdEC7UFd9NxbEugUsljn4fYL
-	pOj6qkIAospxyMfvRo6kQNjdIUd4ftfSDEFVn+VUgCHqCtHS81zRAljYkf48SCC5PYgsmS
-	/ocNsBuAaZDzezDe7PppuXMBZJ252Hri5QoR8xz0SNVP9VmylqFEWC4bVFFHPob1ygkmJ9
-	bkX/SgvP5E7Q5DXRzlBlPAA2iEgulVwZ5oy6fZ95d2pZwfYmFuvCz/gavIzO7P/j6b1vby
-	O18mkLocKA3cGulov6qgxyl78VJlMVLmuG5y1OQbHoE8hXv75138BdZAGF+nEg==
-From: Mashiro Chen <mashiro.chen@mailbox.org>
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=mailbox.org; s=mail20150812;
-	t=1774811981;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=zFBeQYVNC8x00m5+sFnrPZHbxYdH+e/c8dDnAvyzjjI=;
-	b=XKxdYa0fOj9oVb2kHeHX50gd/ZweDUg0Yk2mZz3rDFqWbpC828eQRWM+tMvtHNJQgdnw2+
-	vV+HFhd5dzOumP1fIuRY/oVwb9Wnk62njaNYzf0IzsFhpvvennzcF/6NyDJ6Y+pKAH9ZIL
-	9BnJzy/ENYm7xAhpH0OLYRqk89qTaspYi4ML8dvIUJRAzzMT2sWL/p4XB9xb/RnT1HYm+Z
-	8g99vA2YkY53PTgUi39lnXtlpfVk5PlxojbK8JhxEoWYFbU4VaIv1rRC48dlb63aAPKfCo
-	Ptlat7eWIGDa12/0ZciZESoKzIfAfGld7SN7V+PVTCbgKQEXk++6sovSSaf9tg==
-To: kuba@kernel.org
-Cc: andrew+netdev@lunn.ch,
-	davem@davemloft.net,
-	edumazet@google.com,
-	linux-hams@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	mashiro.chen@mailbox.org,
-	netdev@vger.kernel.org,
-	pabeni@redhat.com
-Subject: Re: [PATCH 0/5] hamradio: mkiss: modernize and clean up mkiss driver
-Date: Mon, 30 Mar 2026 03:19:23 +0800
-Message-ID: <20260329191923.821284-1-mashiro.chen@mailbox.org>
-In-Reply-To: <20260329103508.4905cc09@kernel.org>
-References: <20260329103508.4905cc09@kernel.org>
+	s=arc-20240116; t=1774944402; c=relaxed/simple;
+	bh=ZEOfx2P2tDjUoMAmpGpl9uqKVP/t0uKbYj/II9oLpto=;
+	h=MIME-Version:Date:Message-ID:Subject:From:To:Content-Type; b=Nf+/vznZEONYo4of5wlEDP/lC839qOphXCtBGaKFu5Qh52gVRd+mxDL/w8/pjYtWpESt2+JeL1q3chz68xkTkBhGFupgEDJaQ74Be7jNCOeC8kUKloxNrJ4Cfdznc+EVFKbRlC2at8mGeftCvJqEddQuqgRZnL7jN+Ot18b49b0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=syzkaller.appspotmail.com; spf=pass smtp.mailfrom=M3KW2WVRGUFZ5GODRSRYTGD7.apphosting.bounces.google.com; arc=none smtp.client-ip=209.85.161.71
+Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=syzkaller.appspotmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=M3KW2WVRGUFZ5GODRSRYTGD7.apphosting.bounces.google.com
+Received: by mail-oo1-f71.google.com with SMTP id 006d021491bc7-67e43c3c741so29449eaf.2
+        for <linux-hams@vger.kernel.org>; Tue, 31 Mar 2026 01:06:34 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1774944392; x=1775549192;
+        h=to:from:subject:message-id:date:mime-version:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=DFnKf8MiHQguXzk0RvM50fspz8lhbT4zdhO0NczJ0+4=;
+        b=PBBhiFe9c8J80fxtNpZuViasJBTiePY12XCqlku6Cl5lwguaaWYEFtom50ABEU4yeA
+         OkZyml3LKz5Y/sOGk4LOn3u2mdks1+tqgau8SpGDgU//JTirzZ4PpcBZirQmp58qMcv7
+         Eg9dCnRZ4tMZ8U4Vqu0caFHmO+7pz+5SmzfqIKp8QnXTs9VWz4bNXmmWE9W571IZ+94i
+         NTzk4/c1VOInLj4Yn0RqZM2/93+BNhatg8oA0A5mpE8DGkmJv7PJKbd9+95Rc7ShNtQD
+         uJyejAQSGk2/OUbGwB/oOOlEu9Y1oknBu05zbSY7qQYZn1m7G0EWa8yaiHScb+hkyUiC
+         5cIQ==
+X-Gm-Message-State: AOJu0Yy5vKl6ZGbJgK2Lx/rqm9tbAaCiJshLNJCJ9GGgAHG/gE5zcvar
+	iGEVCM5g99bofeienKcRo2uHBe8mh8qr288VICopuykU76hfkeQB1WddllByDwzi2Kf7zN/zD7g
+	EvyXV0ygNGUi/jP9/1TWuDg74PTpfkhDn8C6lEXhDNeXL1xIR2tMdbb7/eF8=
 Precedence: bulk
 X-Mailing-List: linux-hams@vger.kernel.org
 List-Id: <linux-hams.vger.kernel.org>
 List-Subscribe: <mailto:linux-hams+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-hams+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-MBO-RS-META: 18kjeg8guodyyrajkz9fgufneradckas
-X-MBO-RS-ID: cf6a7534abaa90038c8
+X-Received: by 2002:a05:6820:2290:b0:67e:212:8254 with SMTP id
+ 006d021491bc7-67e1870131amr7705094eaf.46.1774944392084; Tue, 31 Mar 2026
+ 01:06:32 -0700 (PDT)
+Date: Tue, 31 Mar 2026 01:06:32 -0700
+X-Google-Appengine-App-Id: s~syzkaller
+X-Google-Appengine-App-Id-Alias: syzkaller
+Message-ID: <69cb8088.a70a0220.128fd0.0048.GAE@google.com>
+Subject: [syzbot] Monthly hams report (Mar 2026)
+From: syzbot <syzbot+list434e3950c21d666d1105@syzkaller.appspotmail.com>
+To: linux-hams@vger.kernel.org, linux-kernel@vger.kernel.org, 
+	netdev@vger.kernel.org, syzkaller-bugs@googlegroups.com
+Content-Type: text/plain; charset="UTF-8"
 
-Hi Jakub,
+Hello hams maintainers/developers,
 
-Thank you for the quick review and for pointing out the Netdev policy
-regarding clean-up patches. I apologize for the noise; I was not fully
-aware of the specific guidelines for the Netdev subsystem in this regard.
+This is a 31-day syzbot report for the hams subsystem.
+All related reports/information can be found at:
+https://syzkaller.appspot.com/upstream/s/hams
 
-I will respect these guidelines and focus my further contributions on
-functional improvements or bug fixes.
+During the period, 1 new issues were detected and 1 were fixed.
+In total, 16 issues are still open and 47 have already been fixed.
 
-Regarding the current series, I understand them do not meet the Netdev
-Standard for clean-up patches and I will drop these submissions.
+Some of the still happening issues:
 
-Thank you again for your time and guidance.
+Ref  Crashes Repro Title
+<1>  15241   Yes   possible deadlock in nr_rt_device_down (3)
+                   https://syzkaller.appspot.com/bug?extid=ccdfb85a561b973219c7
+<2>  7582    Yes   possible deadlock in nr_rt_ioctl (2)
+                   https://syzkaller.appspot.com/bug?extid=14afda08dc3484d5db82
+<3>  3507    Yes   WARNING: ODEBUG bug in handle_softirqs
+                   https://syzkaller.appspot.com/bug?extid=60db000b8468baeddbb1
+<4>  1053    Yes   possible deadlock in nr_remove_neigh (2)
+                   https://syzkaller.appspot.com/bug?extid=8863ad36d31449b4dc17
+<5>  672     Yes   WARNING: ODEBUG bug in __run_timers (3)
+                   https://syzkaller.appspot.com/bug?extid=7287222a6d88bdb559a7
+<6>  169     Yes   possible deadlock in nr_del_node (2)
+                   https://syzkaller.appspot.com/bug?extid=6eb7834837cf6a8db75b
+<7>  25      Yes   WARNING: refcount bug in ax25_setsockopt
+                   https://syzkaller.appspot.com/bug?extid=0ee4da32f91ae2a3f015
+<8>  24      Yes   KASAN: slab-use-after-free Read in nr_rt_ioctl
+                   https://syzkaller.appspot.com/bug?extid=df52f4216bf7b4d768e7
+<9>  16      No    KASAN: slab-use-after-free Read in rose_t0timer_expiry
+                   https://syzkaller.appspot.com/bug?extid=44cccec2c6a4501f6a45
+<10> 12      Yes   KASAN: slab-use-after-free Read in ax25_find_cb
+                   https://syzkaller.appspot.com/bug?extid=caa052a0958a9146870d
 
-Best Regards,
-Mashiro Chen
+---
+This report is generated by a bot. It may contain errors.
+See https://goo.gl/tpsmEJ for more information about syzbot.
+syzbot engineers can be reached at syzkaller@googlegroups.com.
+
+To disable reminders for individual bugs, reply with the following command:
+#syz set <Ref> no-reminders
+
+To change bug's subsystems, reply with:
+#syz set <Ref> subsystems: new-subsystem
+
+You may send multiple commands in a single email message.
