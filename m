@@ -1,50 +1,68 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mout-y-111.mailbox.org (mout-y-111.mailbox.org [91.198.250.236])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 80AF12DB79C;
-	Sat,  4 Apr 2026 08:57:26 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7DAAA314B73;
+	Sat,  4 Apr 2026 10:04:19 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.198.250.236
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775293046; cv=none; b=pqVFJDt3FXSPwxF+6NYl1lLZggihbuuBBupWMIisvVy0f7/+bMP1mSYgD2zGJSIAL+WO3Y+cbVHdW4RJ8UP9YkOm7Qxsoo2AW1vgW0+MQKx3M3RoT7DDpnG8UluwAnRSzOZ+5sONpv9ySEeTvf+YwcUGyfwiXSphypN7ESYh1Mw=
+	t=1775297063; cv=none; b=nmVgKpFot7hr97rjwFFlumuI98W+L4U2tchcGF6Kv6vHJ1zY2+iVhO/JBSmNVP6oMqL8xBoaa3j4lDThdeaYyaUbb39Y3VHdQeXZsEM3Ci2a2WE85D/p8aKtkgzbFy6dhFD4Ro4CZi+6o1+NVHJKrmVBhWnXIHvZ3LqR14JCreE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775293046; c=relaxed/simple;
-	bh=kJyIeyK1oN6o7W5CGnDkKD1WeHBbFvIKSvB1gfGy7Yg=;
+	s=arc-20240116; t=1775297063; c=relaxed/simple;
+	bh=akSC11+Jl/JVpTPDb8EeZRsE5DcFdH1Imml/PTq/nZU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rD0gFAllcnsVIaqWdXXcf60Jm/OS76pIoSCQxT7kyMPNBL8cUC5RAmzFVsXTysYOL2HD2c3opgvr6ZsUvBX7ESbKs7xLHGfV0DYYOuRan3k6A/QhwwRvQB/Fqa/CketmCtxg9fealqq2U3r7dQMiotJuqIsKJantN2ptXgWulVE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=UyAcNIOU; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=sbY5lYjhKgdzQ24Px4XSAaOL4++F5kEhe+KMa9YHu+jGpUXIdcwyAg/MbS6wOBB36hbOpcyOJBMngaapeJDlcoPgN5/Lbarlj/+41PXTNVkNPMCO5xicPhGp1vYnRqvAlcm6cFCFMiXNUAVJX/Dcq+4CvpphPJClyVG+jVMxHxU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=mailbox.org; spf=pass smtp.mailfrom=mailbox.org; dkim=pass (2048-bit key) header.d=mailbox.org header.i=@mailbox.org header.b=ZF7PIAXr; dkim=pass (2048-bit key) header.d=mailbox.org header.i=@mailbox.org header.b=FX3XR9zc; arc=none smtp.client-ip=91.198.250.236
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=mailbox.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=mailbox.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="UyAcNIOU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0B657C19421;
-	Sat,  4 Apr 2026 08:57:23 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1775293046;
-	bh=kJyIeyK1oN6o7W5CGnDkKD1WeHBbFvIKSvB1gfGy7Yg=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UyAcNIOUkgseqxnEckpH8Op17MX9t1XeNFiElAfONv09eAiVukKB8AWofftefnHMT
-	 hjP0izs4XgC5aZ+W8LgRMklfbuseNYb13K3JEj3LFOuWh28t4sKMaa0/Q8+bnBgHvW
-	 nh21r0HTEqI0IPP505nheheHSGO7ADzNI5TmE5GFOhlOZw5wxoZdc/vPP/iPgAJ2e+
-	 GifNjM6+n6K9vyk+h+1c8eQxtx5+FMq1Htw0NJ/rh8EXy9JSvyvzGz7vhfFfDTtmLm
-	 XPn5FZkYB0O/zFTtaprAogDunO4LeFLuiQ1N/Pc5nHt1apTRTyH9gokrZzBdmD9a5z
-	 MDSyZ+DKBW6cw==
-From: Simon Horman <horms@kernel.org>
-To: mashiro.chen@mailbox.org
+	dkim=pass (2048-bit key) header.d=mailbox.org header.i=@mailbox.org header.b="ZF7PIAXr";
+	dkim=pass (2048-bit key) header.d=mailbox.org header.i=@mailbox.org header.b="FX3XR9zc"
+Received: from smtp2.mailbox.org (smtp2.mailbox.org [10.196.197.2])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	by mout-y-111.mailbox.org (Postfix) with ESMTPS id 4fnrlw0DTqz9ym0;
+	Sat,  4 Apr 2026 12:04:12 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=mailbox.org; s=mail20150812;
+	t=1775297052;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=2tnZAo9nhkdOyCCVh81c/tC4ddfASyzxv134xwFAgjM=;
+	b=ZF7PIAXrTAvPC88J1V67oim0k2+Ix7eqyjasRCJFt49cev+yN/mJ9B2bfRpAbWi4hxUDWh
+	iQpMvboS4Nphh0gs0ZjndEy7yfmZPeRYfeDIMGvSnmeJmEeappY3tlDV899j9/BnxR74tw
+	rR+oCiV73MU0tTDVfB9HR3shLLrGYH31KnDVVy4Gt750in58pnJTReOirQPfQCHbYRT4Db
+	UhWT93AQ3Nj/vP5VGvIHBJBsPEQ34+yxnGttcGVLnSJRcErBLqgM+Vd6HVYeOepsvjSPOg
+	1nWr5Vl/fVMWcj2ARYrmCPb9nz2qnnlUR08w3SBFNTln14zY9pffu22xUFGLRw==
+From: Mashiro Chen <mashiro.chen@mailbox.org>
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=mailbox.org; s=mail20150812;
+	t=1775297050;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=2tnZAo9nhkdOyCCVh81c/tC4ddfASyzxv134xwFAgjM=;
+	b=FX3XR9zc4OgLmIh8WAD9IeEDQHmS/tFdIwx+cPh0+xUcVRtI+kpk4veBWf0lQWeTOr8HH+
+	iSHiaFPZjzs9KgmXQ2KZiR1i6qD/1EyzmbbDKRIjJNQbxFpuV23jjITLr3iMyrBMY/dTSC
+	PxKOIa4TwwHYdo9luoBi4TUrLCt21Cw9y8wZWorUYCNr5cHnQXSMePoF7THuMDboWJRY/o
+	3FsqNCchONy/ymo9nz9vn9WK5RoGy7tRrpac+HOROOiKcGFxRIU/oDmuH8EaM/Chbk+f7D
+	6hJAFK/qi/KT63QyS+Z7Jju48uwfc4forPLn5Uqdod9sVGv7jND7aHowrz4xvQ==
+To: netdev@vger.kernel.org
 Cc: Simon Horman <horms@kernel.org>,
+	"David S . Miller" <davem@davemloft.net>,
+	Eric Dumazet <edumazet@google.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Paolo Abeni <pabeni@redhat.com>,
 	syzbot+ecdb8c9878a81eb21e54@syzkaller.appspotmail.com,
-	netdev@vger.kernel.org,
-	kuba@kernel.org,
-	linux-kernel@vger.kernel.org,
-	edumazet@google.com,
-	pabeni@redhat.com,
 	ajk@comnets.uni-bremen.de,
-	davem@davemloft.net,
 	linux-hams@vger.kernel.org,
-	andrew+netdev@lunn.ch
-Subject: Re: [PATCH net] net: hamradio: 6pack: fix uninit-value in sixpack_receive_buf
-Date: Sat,  4 Apr 2026 09:57:11 +0100
-Message-ID: <20260404085711.225665-1-horms@kernel.org>
-X-Mailer: git-send-email 2.53.0
-In-Reply-To: <20260402164525.134244-1-mashiro.chen@mailbox.org>
-References: <20260402164525.134244-1-mashiro.chen@mailbox.org>
+	Mashiro Chen <mashiro.chen@mailbox.org>
+Subject: [PATCH net v2] net: hamradio: 6pack: fix uninit-value in sixpack_receive_buf
+Date: Sat,  4 Apr 2026 18:03:50 +0800
+Message-ID: <20260404100350.299117-1-mashiro.chen@mailbox.org>
+In-Reply-To: <20260404085658.GR113102@horms.kernel.org>
+References: <20260404085658.GR113102@horms.kernel.org>
 Precedence: bulk
 X-Mailing-List: linux-hams@vger.kernel.org
 List-Id: <linux-hams.vger.kernel.org>
@@ -52,77 +70,62 @@ List-Subscribe: <mailto:linux-hams+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-hams+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
+X-MBO-RS-META: 7oxg5hwnnbw187wx4397pzr4zsst7gom
+X-MBO-RS-ID: 2a071e68c300f97d820
 
-This is an AI-generated review of your patch. The human sending this
-email has considered the AI review valid, or at least plausible.
+sixpack_receive_buf() does not properly skip bytes with TTY error flags.
+The while loop iterates through the flags buffer but never advances the
+data pointer (cp), and passes the original count including error bytes
+to sixpack_decode(). This causes sixpack_decode() to process bytes that
+should have been skipped due to TTY errors.
 
-For local reproduction steps see https://netdev-ai.bots.linux.dev/ai-local.html
----
-net: hamradio: 6pack: fix uninit-value in sixpack_receive_buf
+Fix this by processing bytes one at a time, advancing cp on each
+iteration, and only passing non-error bytes to sixpack_decode().
+This matches the pattern used by slip_receive_buf() and
+mkiss_receive_buf() for the same purpose.
 
-This commit fixes sixpack_receive_buf() to properly skip bytes with TTY
-error flags by processing bytes one at a time and only passing non-error
-bytes to sixpack_decode(). This matches the pattern used in slip_receive_buf()
-and mkiss_receive_buf().
-
+Reported-by: syzbot+ecdb8c9878a81eb21e54@syzkaller.appspotmail.com
 Closes: https://syzkaller.appspot.com/bug?extid=ecdb8c9878a81eb21e54
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Suggested-by: Simon Horman <horms@kernel.org>
+Signed-off-by: Mashiro Chen <mashiro.chen@mailbox.org>
+---
+ drivers/net/hamradio/6pack.c | 10 ++++------
+ 1 file changed, 4 insertions(+), 6 deletions(-)
 
-> diff --git a/drivers/net/hamradio/6pack.c b/drivers/net/hamradio/6pack.c
-> --- a/drivers/net/hamradio/6pack.c
-> +++ b/drivers/net/hamradio/6pack.c
-> @@ -391,7 +391,6 @@ static void sixpack_receive_buf(struct tty_struct *tty, const u8 *cp,
->  				const u8 *fp, size_t count)
->  {
->  	struct sixpack *sp;
-> -	size_t count1;
->
->  	if (!count)
->  		return;
-> @@ -401,16 +400,16 @@ static void sixpack_receive_buf(struct tty_struct *tty, const u8 *cp,
->  		return;
->
->  	/* Read the characters out of the buffer */
-> -	count1 = count;
-> -	while (count) {
-> -		count--;
-> +	while (count--) {
->  		if (fp && *fp++) {
->  			if (!test_and_set_bit(SIXPF_ERROR, &sp->flags))
->  				sp->dev->stats.rx_errors++;
-> +			cp++;
->  			continue;
->  		}
-> +		sixpack_decode(sp, cp, 1);
-> +		cp++;
->  	}
-> -	sixpack_decode(sp, cp, count1);
->
->  	tty_unthrottle(tty);
->  }
+diff --git a/drivers/net/hamradio/6pack.c b/drivers/net/hamradio/6pack.c
+index 885992951e8a6..9e5220ae98360 100644
+--- a/drivers/net/hamradio/6pack.c
++++ b/drivers/net/hamradio/6pack.c
+@@ -391,7 +391,6 @@ static void sixpack_receive_buf(struct tty_struct *tty, const u8 *cp,
+ 				const u8 *fp, size_t count)
+ {
+ 	struct sixpack *sp;
+-	size_t count1;
+ 
+ 	if (!count)
+ 		return;
+@@ -401,16 +400,15 @@ static void sixpack_receive_buf(struct tty_struct *tty, const u8 *cp,
+ 		return;
+ 
+ 	/* Read the characters out of the buffer */
+-	count1 = count;
+-	while (count) {
+-		count--;
++	while (count--) {
+ 		if (fp && *fp++) {
+ 			if (!test_and_set_bit(SIXPF_ERROR, &sp->flags))
+ 				sp->dev->stats.rx_errors++;
+-			continue;
++		} else {
++			sixpack_decode(sp, cp, 1);
+ 		}
++		cp++;
+ 	}
+-	sixpack_decode(sp, cp, count1);
+ 
+ 	tty_unthrottle(tty);
+ }
+-- 
+2.53.0
 
-The commit title states this fixes "uninit-value in sixpack_receive_buf", but
-is this the exact cause of the KMSAN report?
-
-The syzbot report confirms KMSAN detected uninit-value in sixpack_decode when
-reading pre_rbuff[count1]. The uninit memory originated from tty_buffer_alloc
-via kmalloc_flex (GFP_ATOMIC | __GFP_NOWARN, not zeroed).
-
-However, bytes in the tty buffer should be initialized after being written by
-serial8250_read_char -> uart_insert_char -> tty_insert_flip_char, which writes
-both the character (from inb() I/O port read) and the flag. KMSAN's
-__msan_instrument_asm_store() should unpoison inline asm outputs including
-inb results.
-
-The code fix addresses a genuine logic error where error-flagged bytes were
-not skipped (claims 1-5 are verified true). But the connection between this
-bug and the specific KMSAN uninit-value report is unclear, since the tty
-bytes should be initialized after UART driver processing.
-
-Could the KMSAN trigger involve subtle shadow tracking through tty buffer
-allocation and inline asm instrumentation rather than the described code bug?
-The syzbot report notes "Unfortunately, I don't have any reproducer for this
-issue yet," which makes verification difficult.
-
-The fix is correct regardless - it matches the established pattern in
-slip_receive_buf() and mkiss_receive_buf() for handling error-flagged bytes.
-Should the commit title more accurately describe what the fix addresses?
