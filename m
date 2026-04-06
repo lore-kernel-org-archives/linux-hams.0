@@ -1,68 +1,71 @@
 Received: from mout-y-111.mailbox.org (mout-y-111.mailbox.org [91.198.250.236])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 730741A285;
-	Sun,  5 Apr 2026 12:59:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 51570326D51;
+	Mon,  6 Apr 2026 11:07:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.198.250.236
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775393951; cv=none; b=jNHhdyw6Q/gEQHc0xj9ClNtXpuE8vpLrez13IPKBwUy2bi28dwnqGfZ6uuMYm2HEq2ivV6r1AfaK1bJzdO5OKrFnUHVfg64eKpbvaE7A8Wj4NqimLkIsqc2dN+U21ai7BbWKdM0aeReTWcegVQd7MvMtrnLFshm7uatoC0lAyg4=
+	t=1775473639; cv=none; b=tF+r7Mvs5IFbNTfLCCP1x7vrQi0qbgq03dGTnWygmEYSebLqO28QoGArIzS8eLoAbDvX0ljMvY9qZTgmDP0J3nQmncBplkI+vaOtb7BZ2vygVdbmKdDrm5UjiOJnTgOWCMlK4WQUha0zwISLZEEfeBvgTmdX5AIn9SQyilrm4kE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775393951; c=relaxed/simple;
-	bh=z5YtPAg8XuhKtTpTkGpA/ZcjkZXvjP1W36Qt/4mb4j4=;
+	s=arc-20240116; t=1775473639; c=relaxed/simple;
+	bh=Pl7psMzVLBWg6J7a9LAcR93gvmbHLeURT7l9qIIb13g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=eQwT1oZOOq5Xur0T4fNkVwRX8kgTXxdJVtBbdCoil44TOr/H0YXjnCBfniwlfnIzAwHfzOGaF9mzDcGQyqUgvZero82brFibnp5J8wGaHf6QtOZxjDpprVu9WmqeV2SO3FKRUDELzt+wANocPGug4hdyMNdMd2LEnkk+kBeKiLQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=mailbox.org; spf=pass smtp.mailfrom=mailbox.org; dkim=pass (2048-bit key) header.d=mailbox.org header.i=@mailbox.org header.b=eBVYId89; dkim=pass (2048-bit key) header.d=mailbox.org header.i=@mailbox.org header.b=fOUBVYS3; arc=none smtp.client-ip=91.198.250.236
+	 MIME-Version; b=dAoZCptqQjT62UxYl30UdOelYbosgAyBNRmbuwgiUcRSxsl63J/RDaOmd8pBt3lyvSO+0iLBH7BWaqqVR2h5mxWPcth2H03GHMJ7o5bs1zPGxt41IDLAP90x3J6K1LWVOQkx+Gfk+v0V549fGJ0jNQfwcYYJgjkRnZ6y9I7MTY8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=mailbox.org; spf=pass smtp.mailfrom=mailbox.org; dkim=pass (2048-bit key) header.d=mailbox.org header.i=@mailbox.org header.b=h6KH5i83; dkim=pass (2048-bit key) header.d=mailbox.org header.i=@mailbox.org header.b=lvUc7MNo; arc=none smtp.client-ip=91.198.250.236
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=mailbox.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=mailbox.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=mailbox.org header.i=@mailbox.org header.b="eBVYId89";
-	dkim=pass (2048-bit key) header.d=mailbox.org header.i=@mailbox.org header.b="fOUBVYS3"
-Received: from smtp1.mailbox.org (smtp1.mailbox.org [10.196.197.1])
+	dkim=pass (2048-bit key) header.d=mailbox.org header.i=@mailbox.org header.b="h6KH5i83";
+	dkim=pass (2048-bit key) header.d=mailbox.org header.i=@mailbox.org header.b="lvUc7MNo"
+Received: from smtp1.mailbox.org (smtp1.mailbox.org [IPv6:2001:67c:2050:b231:465::1])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
 	(No client certificate requested)
-	by mout-y-111.mailbox.org (Postfix) with ESMTPS id 4fpXb85VM2z9ysl;
-	Sun,  5 Apr 2026 14:59:00 +0200 (CEST)
+	by mout-y-111.mailbox.org (Postfix) with ESMTPS id 4fq63j0Nx5z9yYb;
+	Mon,  6 Apr 2026 13:07:13 +0200 (CEST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=mailbox.org; s=mail20150812;
-	t=1775393940;
+	t=1775473633;
 	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
 	 to:to:cc:cc:mime-version:mime-version:
 	 content-transfer-encoding:content-transfer-encoding:
 	 in-reply-to:in-reply-to:references:references;
-	bh=b4R/n7ZQ/NmN+wQpB0vnCOAyagNlgla6JkWniE2SC9E=;
-	b=eBVYId89CzGEmfVIpLzuEfmYgwJHTBCyHlzqlgBQwc166S5x3Q/dwHFR/0NryLN9EnBKNx
-	DIyOQRG4TVVBUbpx5dUtrswPATnRbSw56r0vsWsY5Lvl18UrDdvPeIkmrilZmHbQuHEKid
-	CotNVEcel5WuM6QluTxJYb2AGtaZ40XxjG5CDdlQAxd8Ptb7DNbbAo/t1sIDdGMLypUB91
-	1NVNS0NgfiWZw4T6zfxUvxKNOsHyeCrNvFXMbBWtZw2kEgkN1266kDn9cjgZzd4P4jdgpV
-	ftUXrreAdpzcJa+tvjQOH2191/IivgKpCAry28C9W2gP4x/NjPcWRE5m1KE3xA==
+	bh=MV9ewTCU8yA1OtyEEcEEBGefH6ug2nKUucYsk6u1mbo=;
+	b=h6KH5i835qrr17MQBvXpg5BnYeXZ5ZhigHTgL6Ab7Cdt7SGAKx3CEA22C+Tdbh5KcyKHHL
+	vstvvHeopOoNwWefYWUF321ueooKdSBzb6Gwuzw6qf9CLfLA5DrEg2zYIfMlNIKj3oTqtf
+	8F23Nd3ii1UGVxUxFqMPpMcJpZwBFcNf3CTitoryJNWwG8AxKeh+2f9ntr57PAyhZI+v4/
+	SipGsyST6Hd7aioqd7w9uGhKFQn0PYYCevg/lp8y/TXdgA7j657R3u+CJfY97Xk+z5yi7b
+	YdUrpdVI9C5+z7Z6sM86/qlooOgW+8ydSDSCRYafqn25VIQT3dCA7r/jdU8lCA==
+Authentication-Results: outgoing_mbo_mout;
+	dkim=pass header.d=mailbox.org header.s=mail20150812 header.b=lvUc7MNo;
+	spf=pass (outgoing_mbo_mout: domain of mashiro.chen@mailbox.org designates 2001:67c:2050:b231:465::1 as permitted sender) smtp.mailfrom=mashiro.chen@mailbox.org
 From: Mashiro Chen <mashiro.chen@mailbox.org>
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=mailbox.org; s=mail20150812;
-	t=1775393938;
+	t=1775473630;
 	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
 	 to:to:cc:cc:mime-version:mime-version:
 	 content-transfer-encoding:content-transfer-encoding:
 	 in-reply-to:in-reply-to:references:references;
-	bh=b4R/n7ZQ/NmN+wQpB0vnCOAyagNlgla6JkWniE2SC9E=;
-	b=fOUBVYS3xL7KIcm1t+4LoGOigr2BfUwWd+dqET7D2ODOWLAQy0qeualSsjDGN4ziPbo3tM
-	rhNdMgMySYQQyFKiMrx/fs7+eNhzkhqWxeX3EN4uwhetju3TQvw1WFA1WVFpC/XJhhBT5a
-	vkAPlK2o64smJ7PiYUg4HM7WchcTfaAwdijzm43u+FAYvclMFRSAEFXXtC9so1naM3C6/W
-	KT4s57XpkVpU+s1EALA13QVaK/zWoBZrpQCwYLT9YL5thBrI/tTmqYzPZ0qdKzdDYqiT2q
-	umfYJ4+P5rf5q0v3TCHnKaIcJuWw9VRmbjIUzC5ZwxreGk6WupwKh0/xuzvZ5g==
-To: davem@davemloft.net,
-	kuba@kernel.org
-Cc: edumazet@google.com,
-	horms@kernel.org,
+	bh=MV9ewTCU8yA1OtyEEcEEBGefH6ug2nKUucYsk6u1mbo=;
+	b=lvUc7MNoJyWeolEDDXir3bd6eO2l01ZmNnkVyq02pKPed3JKZzzvsaHrxwIUWipDv5jJr2
+	+PJFKJ5/daTAbgKyRu+A3ITJyT3ifL0Qdeji7VpaCzUFSJFKJEfwDOx4s/DW3qAPza9blC
+	m0GzxXS7U4IIporyItyxTcS1PTqfC2PY2bG1KCobJt+mkjmImzL3pco1Te8WdQy148pBm0
+	aAacIKVukB9Y6kvYJxwuRjiOyAjNujATKWu38fYHXp7gLfdRWD9jx5m0g0MMzWYGISgckV
+	g/pJbbx9szTgGbegCZ+ujoJqwjS0w5zbp9HmrZ4nr45E6kFRWlP2HO9vCj/I/Q==
+To: netdev@vger.kernel.org
+Cc: linux-hams@vger.kernel.org,
+	davem@davemloft.net,
+	edumazet@google.com,
+	kuba@kernel.org,
 	pabeni@redhat.com,
-	linux-hams@vger.kernel.org,
+	horms@kernel.org,
 	linux-kernel@vger.kernel.org,
-	netdev@vger.kernel.org,
-	syzbot+abd2b69348e2d9b107a1@syzkaller.appspotmail.com,
+	syzbot+6eb7834837cf6a8db75b@syzkaller.appspotmail.com,
 	Mashiro Chen <mashiro.chen@mailbox.org>
-Subject: [PATCH net v2] net: rose: stop timers before freeing neighbour in rose_neigh_put
-Date: Sun,  5 Apr 2026 20:58:30 +0800
-Message-ID: <20260405125830.89251-1-mashiro.chen@mailbox.org>
-In-Reply-To: <20260403204459.124812-1-mashiro.chen@mailbox.org>
-References: <20260403204459.124812-1-mashiro.chen@mailbox.org>
+Subject: [PATCH net] net: netrom: fix lock order inversion in nr_add_node, nr_del_node and nr_dec_obs
+Date: Mon,  6 Apr 2026 19:06:43 +0800
+Message-ID: <20260406110643.82577-1-mashiro.chen@mailbox.org>
+In-Reply-To: <69694d6f.050a0220.58bed.0028.GAE@google.com>
+References: <69694d6f.050a0220.58bed.0028.GAE@google.com>
 Precedence: bulk
 X-Mailing-List: linux-hams@vger.kernel.org
 List-Id: <linux-hams.vger.kernel.org>
@@ -70,72 +73,125 @@ List-Subscribe: <mailto:linux-hams+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-hams+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-MBO-RS-META: hcaqyrpieznhp65icxbjdkq5qg8a94k4
-X-MBO-RS-ID: 553ccaf378a87f060dc
+X-MBO-RS-META: 95idu45wsgpu49zizfifrho3rpyazy87
+X-MBO-RS-ID: e9666827e3739db0806
+X-Rspamd-Queue-Id: 4fq63j0Nx5z9yYb
 
-rose_neigh_put() frees the rose_neigh object when the reference count
-reaches zero, but does not stop the t0timer and ftimer beforehand.
-If a timer has been scheduled and fires after the object is freed,
-the callback will access already-freed memory, leading to a
-use-after-free.
+nr_del_node() and nr_dec_obs() acquire nr_node_list_lock first, then
+call nr_remove_neigh() which internally acquires nr_neigh_list_lock.
+nr_add_node() acquires node_lock first, then calls nr_remove_neigh()
+which acquires nr_neigh_list_lock.
 
-For example, this can happen when rose_timer_expiry() in ROSE_STATE_2
-calls rose_neigh_put() dropping the last reference while the
-neighbour's t0timer is still pending:
+Both are the reverse of the lock order used in nr_rt_device_down() and
+nr_rt_free(), which acquire nr_neigh_list_lock before nr_node_list_lock
+and node_lock.
 
-  rose_timer_expiry() (ROSE_STATE_2)
-    rose_neigh_put(rose->neighbour)   --> refcount drops to 0, kfree
-  ...
-  rose_t0timer_expiry()               --> UAF: accesses freed neigh
+The resulting lock order inversions can cause an ABBA deadlock when
+concurrently executing:
+  - SIOCDELRT or SIOCNRDECOBS ioctl (requires CAP_NET_ADMIN)
+  - bringing down a NET/ROM-attached network device
 
-Fix this by calling timer_delete_sync() for both t0timer and ftimer
-in rose_neigh_put() before freeing the object. This ensures any
-pending or running timer callback completes before the memory is
-released.
+Fix by acquiring nr_neigh_list_lock before nr_node_list_lock and
+node_lock in all three functions, following the canonical lock order,
+and replacing the internal-locking nr_remove_neigh() with
+nr_remove_neigh_locked() which assumes the caller already holds
+nr_neigh_list_lock.
 
-This is safe because rose_neigh_put() is never called from the
-neigh's own timer callbacks (t0timer_expiry / ftimer_expiry), so
-timer_delete_sync() cannot deadlock.
-
-The UAF can be triggered through the following sequence:
-
-1. rose_add_node() creates a rose_neigh with refcount=2
-   (initial neigh_list reference plus one held by the new node entry)
-2. A socket connects via rose_get_neigh(), rose_neigh_hold() raises
-   refcount to 3; rose_transmit_link() arms t0timer on the neigh
-3. The routing entry is deleted: rose_del_node() drops the node
-   reference (3->2), calls rose_remove_neigh() which stops both
-   timers, then drops the neigh_list reference (2->1); the socket
-   now holds the only reference with t0timer stopped
-4. T1 expires in ROSE_STATE_1: rose_timer_expiry() sends
-   CLEAR_REQUEST via rose_transmit_link(), which sees
-   neigh->restarted=0 and !rose_t0timer_running, and re-arms
-   t0timer on the neigh (refcount still 1)
-5. T3 expires in ROSE_STATE_2: rose_timer_expiry() calls
-   rose_neigh_put(), refcount drops to 0, kfree(neigh)
-6. t0timer fires, rose_t0timer_expiry() accesses freed neigh -> UAF
-
-Fixes: d860d1faa6b2 ("net: rose: convert 'use' field to refcount_t")
-Reported-by: syzbot+abd2b69348e2d9b107a1@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=abd2b69348e2d9b107a1
+Fixes: e03e7f20ebf7 ("netrom: fix possible dead-lock in nr_rt_ioctl()")
+Reported-by: syzbot+6eb7834837cf6a8db75b@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=6eb7834837cf6a8db75b
 Signed-off-by: Mashiro Chen <mashiro.chen@mailbox.org>
 ---
- include/net/rose.h | 2 ++
- 1 file changed, 2 insertions(+)
+ net/netrom/nr_route.c | 13 ++++++++++---
+ 1 file changed, 10 insertions(+), 3 deletions(-)
 
-diff --git a/include/net/rose.h b/include/net/rose.h
-index 2b5491bbf39ab..c69024e865456 100644
---- a/include/net/rose.h
-+++ b/include/net/rose.h
-@@ -160,6 +160,8 @@ static inline void rose_neigh_hold(struct rose_neigh *rose_neigh)
- static inline void rose_neigh_put(struct rose_neigh *rose_neigh)
- {
- 	if (refcount_dec_and_test(&rose_neigh->use)) {
-+		timer_delete_sync(&rose_neigh->t0timer);
-+		timer_delete_sync(&rose_neigh->ftimer);
- 		if (rose_neigh->ax25)
- 			ax25_cb_put(rose_neigh->ax25);
- 		kfree(rose_neigh->digipeat);
+diff --git a/net/netrom/nr_route.c b/net/netrom/nr_route.c
+index 9cc29ae85b06f..5bc24644ed544 100644
+--- a/net/netrom/nr_route.c
++++ b/net/netrom/nr_route.c
+@@ -211,6 +211,7 @@ static int __must_check nr_add_node(ax25_address *nr, const char *mnemonic,
+ 		nr_neigh_put(nr_neigh);
+ 		return 0;
+ 	}
++	spin_lock_bh(&nr_neigh_list_lock);
+ 	nr_node_lock(nr_node);
+ 
+ 	if (quality != 0)
+@@ -246,7 +247,7 @@ static int __must_check nr_add_node(ax25_address *nr, const char *mnemonic,
+ 				nr_neigh_put(nr_node->routes[2].neighbour);
+ 
+ 				if (nr_node->routes[2].neighbour->count == 0 && !nr_node->routes[2].neighbour->locked)
+-					nr_remove_neigh(nr_node->routes[2].neighbour);
++					nr_remove_neigh_locked(nr_node->routes[2].neighbour);
+ 
+ 				nr_node->routes[2].quality   = quality;
+ 				nr_node->routes[2].obs_count = obs_count;
+@@ -281,6 +282,7 @@ static int __must_check nr_add_node(ax25_address *nr, const char *mnemonic,
+ 
+ 	nr_neigh_put(nr_neigh);
+ 	nr_node_unlock(nr_node);
++	spin_unlock_bh(&nr_neigh_list_lock);
+ 	nr_node_put(nr_node);
+ 	return 0;
+ }
+@@ -331,6 +333,7 @@ static int nr_del_node(ax25_address *callsign, ax25_address *neighbour, struct n
+ 		return -EINVAL;
+ 	}
+ 
++	spin_lock_bh(&nr_neigh_list_lock);
+ 	spin_lock_bh(&nr_node_list_lock);
+ 	nr_node_lock(nr_node);
+ 	for (i = 0; i < nr_node->count; i++) {
+@@ -339,7 +342,7 @@ static int nr_del_node(ax25_address *callsign, ax25_address *neighbour, struct n
+ 			nr_neigh_put(nr_neigh);
+ 
+ 			if (nr_neigh->count == 0 && !nr_neigh->locked)
+-				nr_remove_neigh(nr_neigh);
++				nr_remove_neigh_locked(nr_neigh);
+ 			nr_neigh_put(nr_neigh);
+ 
+ 			nr_node->count--;
+@@ -361,6 +364,7 @@ static int nr_del_node(ax25_address *callsign, ax25_address *neighbour, struct n
+ 			}
+ 			nr_node_unlock(nr_node);
+ 			spin_unlock_bh(&nr_node_list_lock);
++			spin_unlock_bh(&nr_neigh_list_lock);
+ 
+ 			return 0;
+ 		}
+@@ -368,6 +372,7 @@ static int nr_del_node(ax25_address *callsign, ax25_address *neighbour, struct n
+ 	nr_neigh_put(nr_neigh);
+ 	nr_node_unlock(nr_node);
+ 	spin_unlock_bh(&nr_node_list_lock);
++	spin_unlock_bh(&nr_neigh_list_lock);
+ 	nr_node_put(nr_node);
+ 
+ 	return -EINVAL;
+@@ -454,6 +459,7 @@ static int nr_dec_obs(void)
+ 	struct hlist_node *nodet;
+ 	int i;
+ 
++	spin_lock_bh(&nr_neigh_list_lock);
+ 	spin_lock_bh(&nr_node_list_lock);
+ 	nr_node_for_each_safe(s, nodet, &nr_node_list) {
+ 		nr_node_lock(s);
+@@ -469,7 +475,7 @@ static int nr_dec_obs(void)
+ 				nr_neigh_put(nr_neigh);
+ 
+ 				if (nr_neigh->count == 0 && !nr_neigh->locked)
+-					nr_remove_neigh(nr_neigh);
++					nr_remove_neigh_locked(nr_neigh);
+ 
+ 				s->count--;
+ 
+@@ -497,6 +503,7 @@ static int nr_dec_obs(void)
+ 		nr_node_unlock(s);
+ 	}
+ 	spin_unlock_bh(&nr_node_list_lock);
++	spin_unlock_bh(&nr_neigh_list_lock);
+ 
+ 	return 0;
+ }
 -- 
 2.53.0
 
