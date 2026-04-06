@@ -1,56 +1,56 @@
-Received: from mout-y-111.mailbox.org (mout-y-111.mailbox.org [91.198.250.236])
+Received: from mout-y-209.mailbox.org (mout-y-209.mailbox.org [91.198.250.237])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 51570326D51;
-	Mon,  6 Apr 2026 11:07:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.198.250.236
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F801332ED0;
+	Mon,  6 Apr 2026 11:49:30 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.198.250.237
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775473639; cv=none; b=tF+r7Mvs5IFbNTfLCCP1x7vrQi0qbgq03dGTnWygmEYSebLqO28QoGArIzS8eLoAbDvX0ljMvY9qZTgmDP0J3nQmncBplkI+vaOtb7BZ2vygVdbmKdDrm5UjiOJnTgOWCMlK4WQUha0zwISLZEEfeBvgTmdX5AIn9SQyilrm4kE=
+	t=1775476172; cv=none; b=d6aDvW8zY7rdXKh6H4Jkmi/W0U3ppIQ003RwdOJEtif4UoKr2gh0y5KeQIybWbRD4d5FLjZbMf5a3ES4QvdKpBUfBoRLG0dpWEQUw1OYlRyh7766WwPJ++LjBjTrG32DePM35B6T6F2jUtYnXIZNopSm93amFAY4fWS0iZAA2DY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775473639; c=relaxed/simple;
-	bh=Pl7psMzVLBWg6J7a9LAcR93gvmbHLeURT7l9qIIb13g=;
+	s=arc-20240116; t=1775476172; c=relaxed/simple;
+	bh=ElTI4ch/q1PK6KaWKqQdkphlnnXPnWeo5BIRo5tQ/z8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dAoZCptqQjT62UxYl30UdOelYbosgAyBNRmbuwgiUcRSxsl63J/RDaOmd8pBt3lyvSO+0iLBH7BWaqqVR2h5mxWPcth2H03GHMJ7o5bs1zPGxt41IDLAP90x3J6K1LWVOQkx+Gfk+v0V549fGJ0jNQfwcYYJgjkRnZ6y9I7MTY8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=mailbox.org; spf=pass smtp.mailfrom=mailbox.org; dkim=pass (2048-bit key) header.d=mailbox.org header.i=@mailbox.org header.b=h6KH5i83; dkim=pass (2048-bit key) header.d=mailbox.org header.i=@mailbox.org header.b=lvUc7MNo; arc=none smtp.client-ip=91.198.250.236
+	 MIME-Version; b=ZrFsDyAhgpAfdctDTGjoR5R2HXKzSTfcNi7z3g5oNv2e6Qm46IAcKmVtQrn6+lXHSlI48LjvNJp1bqhGgZL5hx3Rqi/+WEXkb4By+Dayy+Ijm9y4zFQwLxklw9RAFEfFDQtG7Upj/aTJp4IZ4bIuOnKFvh38yX1CsLgJm2Pg8OM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=mailbox.org; spf=pass smtp.mailfrom=mailbox.org; dkim=pass (2048-bit key) header.d=mailbox.org header.i=@mailbox.org header.b=r1D49UlB; dkim=pass (2048-bit key) header.d=mailbox.org header.i=@mailbox.org header.b=BxwvLeEe; arc=none smtp.client-ip=91.198.250.237
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=mailbox.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=mailbox.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=mailbox.org header.i=@mailbox.org header.b="h6KH5i83";
-	dkim=pass (2048-bit key) header.d=mailbox.org header.i=@mailbox.org header.b="lvUc7MNo"
+	dkim=pass (2048-bit key) header.d=mailbox.org header.i=@mailbox.org header.b="r1D49UlB";
+	dkim=pass (2048-bit key) header.d=mailbox.org header.i=@mailbox.org header.b="BxwvLeEe"
 Received: from smtp1.mailbox.org (smtp1.mailbox.org [IPv6:2001:67c:2050:b231:465::1])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
 	(No client certificate requested)
-	by mout-y-111.mailbox.org (Postfix) with ESMTPS id 4fq63j0Nx5z9yYb;
-	Mon,  6 Apr 2026 13:07:13 +0200 (CEST)
+	by mout-y-209.mailbox.org (Postfix) with ESMTPS id 4fq70L5GxFzB1J0;
+	Mon,  6 Apr 2026 13:49:22 +0200 (CEST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=mailbox.org; s=mail20150812;
-	t=1775473633;
+	t=1775476162;
 	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
 	 to:to:cc:cc:mime-version:mime-version:
 	 content-transfer-encoding:content-transfer-encoding:
 	 in-reply-to:in-reply-to:references:references;
-	bh=MV9ewTCU8yA1OtyEEcEEBGefH6ug2nKUucYsk6u1mbo=;
-	b=h6KH5i835qrr17MQBvXpg5BnYeXZ5ZhigHTgL6Ab7Cdt7SGAKx3CEA22C+Tdbh5KcyKHHL
-	vstvvHeopOoNwWefYWUF321ueooKdSBzb6Gwuzw6qf9CLfLA5DrEg2zYIfMlNIKj3oTqtf
-	8F23Nd3ii1UGVxUxFqMPpMcJpZwBFcNf3CTitoryJNWwG8AxKeh+2f9ntr57PAyhZI+v4/
-	SipGsyST6Hd7aioqd7w9uGhKFQn0PYYCevg/lp8y/TXdgA7j657R3u+CJfY97Xk+z5yi7b
-	YdUrpdVI9C5+z7Z6sM86/qlooOgW+8ydSDSCRYafqn25VIQT3dCA7r/jdU8lCA==
+	bh=lviZr5OB/1BdIsAZAshFDCsCNodIEVkbyY4ofYDvk3o=;
+	b=r1D49UlBIEciX23eXKofB5bDknk2ewFx354ZgKZUN+zVHx80Ub6BH9VYG53Vif9JsftWKQ
+	nWLFZB/QYUrc5uOVPnV3wXCW+zuaR/hjXlTWODEicGpHHgbzGQYdIh2bBN0gycHUVs6hbc
+	Cn6ErOKdUUj3OiyydasXBmVL6w0ZAmyMsSMoJCDNlcdXhlcbLgrx5lUjvnSAmskt1esMZW
+	aGesd34LFJ/YLL7ypIYfg8D1hIza5sLNPBqJMjZ6TzhNjc7LFtKvEMShPg5AgAukGNWULJ
+	MgGkT7h4oExdN0sEbN6f55uT/gqmiv7mJGa/YQRCIz8xo/jO0QO0IxOMjLqAtg==
 Authentication-Results: outgoing_mbo_mout;
-	dkim=pass header.d=mailbox.org header.s=mail20150812 header.b=lvUc7MNo;
+	dkim=pass header.d=mailbox.org header.s=mail20150812 header.b=BxwvLeEe;
 	spf=pass (outgoing_mbo_mout: domain of mashiro.chen@mailbox.org designates 2001:67c:2050:b231:465::1 as permitted sender) smtp.mailfrom=mashiro.chen@mailbox.org
 From: Mashiro Chen <mashiro.chen@mailbox.org>
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=mailbox.org; s=mail20150812;
-	t=1775473630;
+	t=1775476161;
 	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
 	 to:to:cc:cc:mime-version:mime-version:
 	 content-transfer-encoding:content-transfer-encoding:
 	 in-reply-to:in-reply-to:references:references;
-	bh=MV9ewTCU8yA1OtyEEcEEBGefH6ug2nKUucYsk6u1mbo=;
-	b=lvUc7MNoJyWeolEDDXir3bd6eO2l01ZmNnkVyq02pKPed3JKZzzvsaHrxwIUWipDv5jJr2
-	+PJFKJ5/daTAbgKyRu+A3ITJyT3ifL0Qdeji7VpaCzUFSJFKJEfwDOx4s/DW3qAPza9blC
-	m0GzxXS7U4IIporyItyxTcS1PTqfC2PY2bG1KCobJt+mkjmImzL3pco1Te8WdQy148pBm0
-	aAacIKVukB9Y6kvYJxwuRjiOyAjNujATKWu38fYHXp7gLfdRWD9jx5m0g0MMzWYGISgckV
-	g/pJbbx9szTgGbegCZ+ujoJqwjS0w5zbp9HmrZ4nr45E6kFRWlP2HO9vCj/I/Q==
+	bh=lviZr5OB/1BdIsAZAshFDCsCNodIEVkbyY4ofYDvk3o=;
+	b=BxwvLeEe7uGCEmPqca+EYa6Qg890jmTQ4BMs93pMguhwRT8UbWbjFg1nodHE8fcVuUV+OI
+	cEXKJfYdrG5jXNtT3GEcywY1usTFA+mPERDOBVOkVgjZAnoysQHZ4i4SCxr7K1IykxALXc
+	kxzXqrekSsV6oQPqNwyqkUxs3k0I20zWCZIKalkFqSj2xjUq1Aw53vPlHpZBoIR2bA2y1c
+	MLHxxEXqOHsrFFmaK+UVisdHDKU2uFkZYu4XEHFMVTiWinAGM1wXvB7BnKtjZSEnQjDuPx
+	6qJ5AeebFafo3T+IIxvp+4nac3uW5nZW8JZWqkj5Dp5WDcrEgH+1Afha70/ZDQ==
 To: netdev@vger.kernel.org
 Cc: linux-hams@vger.kernel.org,
 	davem@davemloft.net,
@@ -61,11 +61,11 @@ Cc: linux-hams@vger.kernel.org,
 	linux-kernel@vger.kernel.org,
 	syzbot+6eb7834837cf6a8db75b@syzkaller.appspotmail.com,
 	Mashiro Chen <mashiro.chen@mailbox.org>
-Subject: [PATCH net] net: netrom: fix lock order inversion in nr_add_node, nr_del_node and nr_dec_obs
-Date: Mon,  6 Apr 2026 19:06:43 +0800
-Message-ID: <20260406110643.82577-1-mashiro.chen@mailbox.org>
-In-Reply-To: <69694d6f.050a0220.58bed.0028.GAE@google.com>
-References: <69694d6f.050a0220.58bed.0028.GAE@google.com>
+Subject: [PATCH net v2] net: netrom: fix lock order inversion in nr_add_node, nr_del_node and nr_dec_obs
+Date: Mon,  6 Apr 2026 19:49:04 +0800
+Message-ID: <20260406114904.89088-1-mashiro.chen@mailbox.org>
+In-Reply-To: <20260406110643.82577-1-mashiro.chen@mailbox.org>
+References: <20260406110643.82577-1-mashiro.chen@mailbox.org>
 Precedence: bulk
 X-Mailing-List: linux-hams@vger.kernel.org
 List-Id: <linux-hams.vger.kernel.org>
@@ -73,9 +73,9 @@ List-Subscribe: <mailto:linux-hams+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-hams+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-MBO-RS-META: 95idu45wsgpu49zizfifrho3rpyazy87
-X-MBO-RS-ID: e9666827e3739db0806
-X-Rspamd-Queue-Id: 4fq63j0Nx5z9yYb
+X-MBO-RS-META: 3i94t3xm3f8pj6gst8r1ke5dzqqc3rkm
+X-MBO-RS-ID: 8d1fc563d922d8c983b
+X-Rspamd-Queue-Id: 4fq70L5GxFzB1J0
 
 nr_del_node() and nr_dec_obs() acquire nr_node_list_lock first, then
 call nr_remove_neigh() which internally acquires nr_neigh_list_lock.
@@ -102,14 +102,41 @@ Reported-by: syzbot+6eb7834837cf6a8db75b@syzkaller.appspotmail.com
 Closes: https://syzkaller.appspot.com/bug?extid=6eb7834837cf6a8db75b
 Signed-off-by: Mashiro Chen <mashiro.chen@mailbox.org>
 ---
- net/netrom/nr_route.c | 13 ++++++++++---
- 1 file changed, 10 insertions(+), 3 deletions(-)
+Changes in v2:
+  - Move __nr_remove_neigh() and nr_remove_neigh_locked() macro definition
+    before nr_add_node() to fix implicit function declaration build error
+
+ net/netrom/nr_route.c | 45 ++++++++++++++++++++++++-------------------
+ 1 file changed, 25 insertions(+), 20 deletions(-)
 
 diff --git a/net/netrom/nr_route.c b/net/netrom/nr_route.c
-index 9cc29ae85b06f..5bc24644ed544 100644
+index 9cc29ae85b06f..c3cceee5a2284 100644
 --- a/net/netrom/nr_route.c
 +++ b/net/netrom/nr_route.c
-@@ -211,6 +211,7 @@ static int __must_check nr_add_node(ax25_address *nr, const char *mnemonic,
+@@ -75,7 +75,21 @@ static struct nr_neigh *nr_neigh_get_dev(ax25_address *callsign,
+ 	return found;
+ }
+ 
+-static void nr_remove_neigh(struct nr_neigh *);
++static inline void __nr_remove_neigh(struct nr_neigh *nr_neigh)
++{
++	hlist_del_init(&nr_neigh->neigh_node);
++	nr_neigh_put(nr_neigh);
++}
++
++#define nr_remove_neigh_locked(__neigh) \
++	__nr_remove_neigh(__neigh)
++
++static void nr_remove_neigh(struct nr_neigh *nr_neigh)
++{
++	spin_lock_bh(&nr_neigh_list_lock);
++	__nr_remove_neigh(nr_neigh);
++	spin_unlock_bh(&nr_neigh_list_lock);
++}
+ 
+ /*      re-sort the routes in quality order.    */
+ static void re_sort_routes(struct nr_node *nr_node, int x, int y)
+@@ -211,6 +225,7 @@ static int __must_check nr_add_node(ax25_address *nr, const char *mnemonic,
  		nr_neigh_put(nr_neigh);
  		return 0;
  	}
@@ -117,7 +144,7 @@ index 9cc29ae85b06f..5bc24644ed544 100644
  	nr_node_lock(nr_node);
  
  	if (quality != 0)
-@@ -246,7 +247,7 @@ static int __must_check nr_add_node(ax25_address *nr, const char *mnemonic,
+@@ -246,7 +261,7 @@ static int __must_check nr_add_node(ax25_address *nr, const char *mnemonic,
  				nr_neigh_put(nr_node->routes[2].neighbour);
  
  				if (nr_node->routes[2].neighbour->count == 0 && !nr_node->routes[2].neighbour->locked)
@@ -126,7 +153,7 @@ index 9cc29ae85b06f..5bc24644ed544 100644
  
  				nr_node->routes[2].quality   = quality;
  				nr_node->routes[2].obs_count = obs_count;
-@@ -281,6 +282,7 @@ static int __must_check nr_add_node(ax25_address *nr, const char *mnemonic,
+@@ -281,6 +296,7 @@ static int __must_check nr_add_node(ax25_address *nr, const char *mnemonic,
  
  	nr_neigh_put(nr_neigh);
  	nr_node_unlock(nr_node);
@@ -134,7 +161,30 @@ index 9cc29ae85b06f..5bc24644ed544 100644
  	nr_node_put(nr_node);
  	return 0;
  }
-@@ -331,6 +333,7 @@ static int nr_del_node(ax25_address *callsign, ax25_address *neighbour, struct n
+@@ -293,22 +309,6 @@ static void nr_remove_node_locked(struct nr_node *nr_node)
+ 	nr_node_put(nr_node);
+ }
+ 
+-static inline void __nr_remove_neigh(struct nr_neigh *nr_neigh)
+-{
+-	hlist_del_init(&nr_neigh->neigh_node);
+-	nr_neigh_put(nr_neigh);
+-}
+-
+-#define nr_remove_neigh_locked(__neigh) \
+-	__nr_remove_neigh(__neigh)
+-
+-static void nr_remove_neigh(struct nr_neigh *nr_neigh)
+-{
+-	spin_lock_bh(&nr_neigh_list_lock);
+-	__nr_remove_neigh(nr_neigh);
+-	spin_unlock_bh(&nr_neigh_list_lock);
+-}
+-
+ /*
+  *	"Delete" a node. Strictly speaking remove a route to a node. The node
+  *	is only deleted if no routes are left to it.
+@@ -331,6 +331,7 @@ static int nr_del_node(ax25_address *callsign, ax25_address *neighbour, struct n
  		return -EINVAL;
  	}
  
@@ -142,7 +192,7 @@ index 9cc29ae85b06f..5bc24644ed544 100644
  	spin_lock_bh(&nr_node_list_lock);
  	nr_node_lock(nr_node);
  	for (i = 0; i < nr_node->count; i++) {
-@@ -339,7 +342,7 @@ static int nr_del_node(ax25_address *callsign, ax25_address *neighbour, struct n
+@@ -339,7 +340,7 @@ static int nr_del_node(ax25_address *callsign, ax25_address *neighbour, struct n
  			nr_neigh_put(nr_neigh);
  
  			if (nr_neigh->count == 0 && !nr_neigh->locked)
@@ -151,7 +201,7 @@ index 9cc29ae85b06f..5bc24644ed544 100644
  			nr_neigh_put(nr_neigh);
  
  			nr_node->count--;
-@@ -361,6 +364,7 @@ static int nr_del_node(ax25_address *callsign, ax25_address *neighbour, struct n
+@@ -361,6 +362,7 @@ static int nr_del_node(ax25_address *callsign, ax25_address *neighbour, struct n
  			}
  			nr_node_unlock(nr_node);
  			spin_unlock_bh(&nr_node_list_lock);
@@ -159,7 +209,7 @@ index 9cc29ae85b06f..5bc24644ed544 100644
  
  			return 0;
  		}
-@@ -368,6 +372,7 @@ static int nr_del_node(ax25_address *callsign, ax25_address *neighbour, struct n
+@@ -368,6 +370,7 @@ static int nr_del_node(ax25_address *callsign, ax25_address *neighbour, struct n
  	nr_neigh_put(nr_neigh);
  	nr_node_unlock(nr_node);
  	spin_unlock_bh(&nr_node_list_lock);
@@ -167,7 +217,7 @@ index 9cc29ae85b06f..5bc24644ed544 100644
  	nr_node_put(nr_node);
  
  	return -EINVAL;
-@@ -454,6 +459,7 @@ static int nr_dec_obs(void)
+@@ -454,6 +457,7 @@ static int nr_dec_obs(void)
  	struct hlist_node *nodet;
  	int i;
  
@@ -175,7 +225,7 @@ index 9cc29ae85b06f..5bc24644ed544 100644
  	spin_lock_bh(&nr_node_list_lock);
  	nr_node_for_each_safe(s, nodet, &nr_node_list) {
  		nr_node_lock(s);
-@@ -469,7 +475,7 @@ static int nr_dec_obs(void)
+@@ -469,7 +473,7 @@ static int nr_dec_obs(void)
  				nr_neigh_put(nr_neigh);
  
  				if (nr_neigh->count == 0 && !nr_neigh->locked)
@@ -184,7 +234,7 @@ index 9cc29ae85b06f..5bc24644ed544 100644
  
  				s->count--;
  
-@@ -497,6 +503,7 @@ static int nr_dec_obs(void)
+@@ -497,6 +501,7 @@ static int nr_dec_obs(void)
  		nr_node_unlock(s);
  	}
  	spin_unlock_bh(&nr_node_list_lock);
