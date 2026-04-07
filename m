@@ -1,73 +1,48 @@
-Received: from mout-y-111.mailbox.org (mout-y-111.mailbox.org [91.198.250.236])
+Received: from mout-y-209.mailbox.org (mout-y-209.mailbox.org [91.198.250.237])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 537C529A32D;
-	Tue,  7 Apr 2026 17:16:54 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.198.250.236
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 882601F3B87;
+	Tue,  7 Apr 2026 17:30:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.198.250.237
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775582215; cv=none; b=f9rftv/5iKHPJ1NK9FCA1TzMPMBm+HSCTfpIDzCkSeVs10BXBgQUUmvqBVkZuGXM5j+sorOuv/tOdQLeMBNoepmY5fmm/aYRQ3NLYk9tH7o/td0ohrkYG8/uyh+gTMXGUz6wsvFb05SIQN7uHyqsZUEat2fdBlOP+hSiumKAr7I=
+	t=1775583051; cv=none; b=m1+/WOYPbcHp1roR4LTQhtxT8f7pZ4AjUlh7Yi1huQFgNjPsrEPb7QsBEEGCUKxDFJuSh6thFeOLvREshWbMswIkhLl/T6w2E+aPqIBpU+HmFagxrcqYgy/vge8QNrCbolHOBdk4agNcOc+Cw1PtZDkGaL3x0AJU3Z5HGET8cHI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775582215; c=relaxed/simple;
-	bh=JJVkIYc4QeMaXv0+jeeT3ZERGYORXGA//lejIPzfmHc=;
+	s=arc-20240116; t=1775583051; c=relaxed/simple;
+	bh=1NCS9gYTZrgbYxx9Fl3+Y5Fmo9ikKC3KhdLHIGn2jVQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DOzLhaxGIPILv5xm3MA6vKP1gCBjWYGJntB4wq9vM5yzdCbbUWzhN4RvBniVlC9KNdhK3uPacNIDz4otnC13ZGuBUnqN7ECELh1g0WYSbtYNfZkSXxoAxaTa2PZO3PXduyqfSA2S0EgjYiiYLF7mzYa9J4rzAseIyzo9gy/EjN0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=mailbox.org; spf=pass smtp.mailfrom=mailbox.org; dkim=pass (2048-bit key) header.d=mailbox.org header.i=@mailbox.org header.b=UKCo8w/U; dkim=pass (2048-bit key) header.d=mailbox.org header.i=@mailbox.org header.b=ETCKHEAG; arc=none smtp.client-ip=91.198.250.236
+	 MIME-Version; b=MmDX2xiw3pa0YmPcuJMxfky7W3R1so+wSDxVSvJq4TQsvJDkf4M9FwRqZFb1fREXFYuhOnUQJXPaYlkknx9V0UFtpoUVWvXqUNpySEALNBlof7d3cGip97fIIZWWFLY4o7aRDcWmmjaTKH5TIjVhRIVxKq1oEnbYbP5MhAttTMw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=mailbox.org; spf=pass smtp.mailfrom=mailbox.org; dkim=pass (2048-bit key) header.d=mailbox.org header.i=@mailbox.org header.b=RBp5aW1w; arc=none smtp.client-ip=91.198.250.237
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=mailbox.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=mailbox.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=mailbox.org header.i=@mailbox.org header.b="UKCo8w/U";
-	dkim=pass (2048-bit key) header.d=mailbox.org header.i=@mailbox.org header.b="ETCKHEAG"
-Received: from smtp1.mailbox.org (smtp1.mailbox.org [IPv6:2001:67c:2050:b231:465::1])
+	dkim=pass (2048-bit key) header.d=mailbox.org header.i=@mailbox.org header.b="RBp5aW1w"
+Received: from smtp202.mailbox.org (smtp202.mailbox.org [10.196.197.202])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
 	(No client certificate requested)
-	by mout-y-111.mailbox.org (Postfix) with ESMTPS id 4fqtCm4Zrvz9ygJ;
-	Tue,  7 Apr 2026 19:16:52 +0200 (CEST)
+	by mout-y-209.mailbox.org (Postfix) with ESMTPS id 4fqtWn6QWZzB14f;
+	Tue,  7 Apr 2026 19:30:45 +0200 (CEST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=mailbox.org; s=mail20150812;
-	t=1775582212;
+	t=1775583046;
 	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
 	 to:to:cc:cc:mime-version:mime-version:
 	 content-transfer-encoding:content-transfer-encoding:
 	 in-reply-to:in-reply-to:references:references;
-	bh=rgFVaIjlD4A8Cx+RdINvJRUtP4IuJzJROGNudSylLXY=;
-	b=UKCo8w/UztBcuC3mzhxmbsdpI+1n+HUx0vHoU+KIGk9m2I+JtJO9qR55UrijrJXJCWcWhT
-	D0Er0JsbCAyJkVFE4XAVMNBo5qfKsxOb1JJ/YDNfqH3WD04CRufZtRyZdzri75tL6z30P6
-	MWbxmaMdzsQKx1UYPpTDCzARa84f899ZL2I7VJm3H53grRkc7RQx3+pNpTaqHm8rC/jo5q
-	Zrg+IC/4wSEs/PmTxZmfnW8nulw1jKHHkVXZGBCVHSO88KA4+uSBknLscPvbEMq1ZYdcEk
-	blgudi2uNvGEefDbhUO9HpuT9uio2CWZV9OSDVQmc5RqgANoQbxasqL3Dr7Z/w==
-Authentication-Results: outgoing_mbo_mout;
-	dkim=pass header.d=mailbox.org header.s=mail20150812 header.b=ETCKHEAG;
-	spf=pass (outgoing_mbo_mout: domain of mashiro.chen@mailbox.org designates 2001:67c:2050:b231:465::1 as permitted sender) smtp.mailfrom=mashiro.chen@mailbox.org
+	bh=fJ7zM5V7ZzJ0suotcdnEmX2tSdOwa9vrNHy5SWQdhjc=;
+	b=RBp5aW1wHytr1Sq6QjueW2EIHrWjuQ5kE2VwYua1H03KM3S6Dvm2z/rjdhE/PE4lqKxeo+
+	BldZfmDuIwCMfvYy6y4Z8b+QKkp4Swyim5WoxcBxr3pJiU/UkYYhuynbphrFtUK4yhcgYg
+	Yx87bpj8z/vmCK1ds/8wpzduuuAS1l0mgGps68mkGCDQj6jfxtzm/RK5jDVjIhYWSQsRoU
+	/8NLg7YkD/S2MGOPreOZGoFuY4jXbfVuAH28MvZAY8RFIW6XXL2a6dMZF7fqMd3mEthm1q
+	Ub10DTRIkJ7lXGdNqwjcfppyDAwr0nKemVMU7vbu2C3OOlXmjLoJg6PC/Exhrg==
 From: Mashiro Chen <mashiro.chen@mailbox.org>
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=mailbox.org; s=mail20150812;
-	t=1775582211;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=rgFVaIjlD4A8Cx+RdINvJRUtP4IuJzJROGNudSylLXY=;
-	b=ETCKHEAGEx1/0K4Si+rx99YtXPh6gyHsGXF2b44aqYG7rMlsD3WcP+DRhvmqr6MRwfBCeO
-	lNKUoIZQeTERS5oJtAA7W0gSNOVrm2HynpoLNbk7BYWYhRgGjX8csuDxkD96LMF1Bc9j8i
-	r/B8m520w2IInxRNdeIs94bwBUnRdplCYVqUJR/x+oD6+UKmqBnO0DG8DrgxridVYq90KR
-	Q3ZM/JmufAqeMhoNYQ6/HLPNAQhpAcH8RpJqtR++h6V9C2Aba5s4LfszE0jELJSYpLv8DR
-	IRsoBUcOGk00mmTjDlqCfzq/PiR5ZjWr2VQfbarDusdWGzet5MtJVDfWnNjshQ==
-To: netdev@vger.kernel.org
-Cc: davem@davemloft.net,
-	edumazet@google.com,
-	kuba@kernel.org,
-	pabeni@redhat.com,
-	horms@kernel.org,
-	gregkh@linuxfoundation.org,
-	ben@decadent.org.uk,
-	linux-hams@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	stable@vger.kernel.org,
-	Mashiro Chen <mashiro.chen@mailbox.org>
-Subject: [PATCH 3/3] net: rose: fix out-of-bounds read in rose_parse_ccitt()
-Date: Wed,  8 Apr 2026 01:16:00 +0800
-Message-ID: <20260407171600.102988-4-mashiro.chen@mailbox.org>
-In-Reply-To: <20260407171600.102988-1-mashiro.chen@mailbox.org>
-References: <20260407171600.102988-1-mashiro.chen@mailbox.org>
+To: horms@kernel.org
+Cc: netdev@vger.kernel.org,
+	linux-hams@vger.kernel.org
+Subject: Re: [PATCH] net: hamradio: 6pack: fix uninit-value in sixpack_receive_buf
+Date: Wed,  8 Apr 2026 01:30:34 +0800
+Message-ID: <20260407173034.107268-1-mashiro.chen@mailbox.org>
+In-Reply-To: <20260407165007.GB469338@kernel.org>
+References: <20260407165007.GB469338@kernel.org>
 Precedence: bulk
 X-Mailing-List: linux-hams@vger.kernel.org
 List-Id: <linux-hams.vger.kernel.org>
@@ -75,46 +50,34 @@ List-Subscribe: <mailto:linux-hams+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-hams+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-MBO-RS-META: ji1yzs1c3jzcptsf51sujisbnqip7w8b
-X-MBO-RS-ID: 73475cd51da76a5cfc5
-X-Rspamd-Queue-Id: 4fqtCm4Zrvz9ygJ
+X-MBO-RS-META: 6c81e7fba9t8u9d8zwe568b4q54mh9i7
+X-MBO-RS-ID: 710b1589b8f0d540d6f
 
-rose_parse_ccitt() handles 0xC0-class facilities by reading l = p[1]
-and validating 10 <= l <= 20, but never checks whether the remaining
-buffer actually contains l + 2 bytes before accessing p + 7 and
-p + 12 via memcpy().
+On Wed, Apr 08, 2026, Simon Horman wrote:
+> Sorry for not noticing this earlier, but AI generated review flags
+> that while this change looks correct, it's not clear how it relates
+> to the sysbot report: IOW, how is it that bytes with TTY error flags
+> may be uninitialized?
 
-An attacker can send a ROSE_CALL_REQUEST frame with a crafted CCITT
-facility whose declared length fits the 10-20 range but whose actual
-data is truncated. This causes the kernel to read up to l + 2 bytes
-beyond the end of the facilities field, leaking adjacent skb data.
+Thanks for the question, and for the earlier review.
 
-By contrast, rose_parse_national() already performs the equivalent
-check (if (len < 2 + l) return -1) for all its 0xC0-class cases.
+The TTY receive_buf() contract is that for positions where fp[i] != 0
+(error flag set), the caller must discard cp[i] -- the TTY driver does
+not guarantee a meaningful value there.  In syzbot's fuzzing harness
+(pty/ldisc injection), the fuzzer allocates a tty_buffer, sets error
+flags on certain byte positions, but leaves the corresponding entries in
+the char buffer uninitialized.  KMSAN then detects that sixpack_decode()
+reads those uninitialized bytes.
 
-Add the same check to rose_parse_ccitt() before any data access.
+slip_receive_buf() and mkiss_receive_buf() already handle this correctly
+by advancing their char pointer past error-flagged bytes before calling
+their decode functions.  sixpack_receive_buf() had the same structure
+but cp was never advanced, so the full original buffer -- including the
+uninit error-flagged positions -- was forwarded to sixpack_decode().
 
-Fixes: e0bccd315db0 ("rose: Add length checks to CALL_REQUEST parsing")
-Cc: stable@vger.kernel.org
-Signed-off-by: Mashiro Chen <mashiro.chen@mailbox.org>
----
- net/rose/rose_subr.c | 3 +++
- 1 file changed, 3 insertions(+)
+I have also dropped the Suggested-by tag per your note, and submitted
+a v2 with the commit message expanded to explain the uninit-value
+connection more clearly.
 
-diff --git a/net/rose/rose_subr.c b/net/rose/rose_subr.c
-index 4dbc437a9e229..a902ddeddc5bd 100644
---- a/net/rose/rose_subr.c
-+++ b/net/rose/rose_subr.c
-@@ -370,6 +370,9 @@ static int rose_parse_ccitt(unsigned char *p, struct rose_facilities_struct *fac
- 			if (l < 10 || l > 20)
- 				return -1;
- 
-+			if (len < 2 + l)
-+				return -1;
-+
- 			if (*p == FAC_CCITT_DEST_NSAP) {
- 				memcpy(&facilities->source_addr, p + 7, ROSE_ADDR_LEN);
- 				memcpy(callsign, p + 12,   l - 10);
--- 
-2.53.0
-
+Thanks,
+Mashiro Chen
