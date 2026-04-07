@@ -1,219 +1,116 @@
-Received: from mout-y-111.mailbox.org (mout-y-111.mailbox.org [91.198.250.236])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F3BBB38C42E;
-	Mon,  6 Apr 2026 17:02:01 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.198.250.236
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 918B23019BA;
+	Tue,  7 Apr 2026 08:45:37 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775494926; cv=none; b=I2GvtilCGQLvEb0ShK5CeY320Kwg3LaWAFFvf9wzT0anK9iwTDO+5dxylOT0NveHzfdg+Hwb7c+IyC+LttYAe//CMctH9draV8fVesIPme1Lu9Ex/zBctPSDYqL/ELPbfXKK+HUJeuqQYUgz+VyhR+mHoeGRjug65MeWlNFXS9Y=
+	t=1775551537; cv=none; b=WgqGtZJsWQagBgXVCoJFV5o3vgBJowKJMiMb244q9Qyrw+1I7QWjl8puucL236tE3WMXLa7ezEYHSTKl04UQPImO542p1tjJQ2AYWDao/kAda/e/OQsK37Rihqzb1H/rY5z6g29+aamz6v6aFgn2R4WOd7G6U92ceQrw/DPtfig=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775494926; c=relaxed/simple;
-	bh=idElmEV9x1NEx5c7emHcqtmiAc/XCq1b9VzEMW+DVdQ=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SoOYlvj5ibvqEGvlTpD47h0e/ZIphwj42w9rAZHjkPrklTYYyQvG5yV/nlE7jkbDSJq7fipck4RyVcpAVXq8avztfCgbWdTiyijQGPC23TmvvPGkgeA9OW0jUqs6kjRg0GfKIMYhrQDl+w3N7vVKNjhJh44Ksf9ZLBiLFKsC3xk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=mailbox.org; spf=pass smtp.mailfrom=mailbox.org; dkim=pass (2048-bit key) header.d=mailbox.org header.i=@mailbox.org header.b=a0/WVFwx; dkim=pass (2048-bit key) header.d=mailbox.org header.i=@mailbox.org header.b=udBgIr8b; arc=none smtp.client-ip=91.198.250.236
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=mailbox.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=mailbox.org
+	s=arc-20240116; t=1775551537; c=relaxed/simple;
+	bh=oSSyq82gg4+z0T2Bj9hPcbh0EZYmNYhgRVeE/ZrjDi4=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=j1eLFEKYKj0kyihWZCsgAPDn9YLx/8kzATsGjkwiLHsG1ZTkPIjtn3HuI7OzOU6lHfKNbbYeWrknhgJ/ltepRGAbNyYeiHs30gAJATd+uUGsK0bWxqho9fQpiQDDdkhnrBtw6mi1ulpCRZEwxxPG/3leuvpNra2Tc/c6PnC15LI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CAOQQwad; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=mailbox.org header.i=@mailbox.org header.b="a0/WVFwx";
-	dkim=pass (2048-bit key) header.d=mailbox.org header.i=@mailbox.org header.b="udBgIr8b"
-Received: from smtp1.mailbox.org (smtp1.mailbox.org [10.196.197.1])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	by mout-y-111.mailbox.org (Postfix) with ESMTPS id 4fqFwx63S9z9yMV;
-	Mon,  6 Apr 2026 19:01:53 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=mailbox.org; s=mail20150812;
-	t=1775494913;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=ApxqaTleQecF8TgqGnNZO60kcLr6U1Ym6AbToNAUwYU=;
-	b=a0/WVFwxGaificscFo/EGgfoxFj8099QPUpc+l65WOphpdMOdrxd893kkYSfoeFuzutunk
-	ksB5HRYmttLDdLC0ZW/QjfiSBpHtIUtSuOncqjYRGVkn+QBhzNGaSU1kJJf2rWIRyk2RYC
-	m2P2XCr/+38BrmxDOLonai6jvJm184Z2rihzMgov80G08rWspvLiU8+qbZB9A5HbVepozX
-	L0IVytpWEF7HtmETHLQK5g865rvKtNmFAi3l5SgvMWAseHL0m9iHyIuCd7kaeqCD8odjIK
-	yImu7MSe7RFVBDaGi8T6GWvXQs6xfJlIxcVSvGQNesZKyXjgtQyLi1VKy0u5gA==
-From: Mashiro Chen <mashiro.chen@mailbox.org>
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=mailbox.org; s=mail20150812;
-	t=1775494911;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=ApxqaTleQecF8TgqGnNZO60kcLr6U1Ym6AbToNAUwYU=;
-	b=udBgIr8bDsS6xvk8ZNP8Ibrbq8nVVvIfvdEig8eVn8ilzTLqNs+uLs7tbqwDMllv5Y7dOQ
-	Wa4POy27YUenkP9ChemVgvlIny41wL40mdlr4tvDACaAedbSLDLnUmU94s41rQv/9hjUKF
-	Lh32Vl8VmwC5VCreGfsDC7cC9vh08UAiuBAk6X2z5nBXByYhRj7tR03OzQQTBXZhsu+jp1
-	IGxn842sT6FPtNKVDyMnMFPn+bsBsOPoP3phfJcaNh2yOqipPBvuAaxORUxJI4Awj0ykIJ
-	v0DlMBtsJ5nl/WHkZ7082q0c/A2Z/YqGg5VFtoOSRrxHB9vyIme9W28GLjm65A==
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CAOQQwad"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C1AADC2BCB2;
+	Tue,  7 Apr 2026 08:45:36 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
+	s=korg; t=1775551537;
+	bh=oSSyq82gg4+z0T2Bj9hPcbh0EZYmNYhgRVeE/ZrjDi4=;
+	h=From:To:Cc:Subject:Date:From;
+	b=CAOQQwad7n78Z3lS8pJeYaz+je0pxVkDDESU3pH+mXwVFpuWfLBPbG0r3D6N4Ywa2
+	 kcut2MBtiu4CaHYXnaWqlq3k0J688g86AEt15kBFaHU1fesFyAtpzdJe57T6WCnZ0F
+	 /owDW0+jMLigAcxnVku7GdnJqvMadIf6dCgW/GOs=
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: netdev@vger.kernel.org
-Cc: linux-hams@vger.kernel.org,
-	davem@davemloft.net,
-	edumazet@google.com,
-	kuba@kernel.org,
-	pabeni@redhat.com,
-	horms@kernel.org,
-	linux-kernel@vger.kernel.org,
-	syzbot+abd2b69348e2d9b107a1@syzkaller.appspotmail.com,
-	Mashiro Chen <mashiro.chen@mailbox.org>
-Subject: [PATCH net v3] net: rose: defer rose_neigh cleanup to workqueue to fix UAF
-Date: Tue,  7 Apr 2026 01:01:25 +0800
-Message-ID: <20260406170125.175258-1-mashiro.chen@mailbox.org>
-In-Reply-To: <20260405125830.89251-1-mashiro.chen@mailbox.org>
-References: <20260405125830.89251-1-mashiro.chen@mailbox.org>
+Cc: linux-kernel@vger.kernel.org,
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	"David S. Miller" <davem@davemloft.net>,
+	Eric Dumazet <edumazet@google.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Paolo Abeni <pabeni@redhat.com>,
+	Simon Horman <horms@kernel.org>,
+	linux-hams@vger.kernel.org,
+	Yizhe Zhuang <yizhe@darknavy.com>,
+	stable <stable@kernel.org>
+Subject: [PATCH net] netrom: do some basic forms of validation on incoming frames
+Date: Tue,  7 Apr 2026 10:45:31 +0200
+Message-ID: <2026040730-untagged-groin-bbb7@gregkh>
+X-Mailer: git-send-email 2.53.0
 Precedence: bulk
 X-Mailing-List: linux-hams@vger.kernel.org
 List-Id: <linux-hams.vger.kernel.org>
 List-Subscribe: <mailto:linux-hams+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-hams+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
+X-Developer-Signature: v=1; a=openpgp-sha256; l=2298; i=gregkh@linuxfoundation.org; h=from:subject:message-id; bh=oSSyq82gg4+z0T2Bj9hPcbh0EZYmNYhgRVeE/ZrjDi4=; b=owGbwMvMwCRo6H6F97bub03G02pJDJlXjmgd/PLvkeoUldTbvF8qOA4ceNG3eHPOfZ4k9tXKV 06Uf5h0uSOWhUGQiUFWTJHlyzaeo/srDil6GdqehpnDygQyhIGLUwAm4n2OYb7jye8bT0vt0JYI V2te8N8toGTJtj0M87RqP7o1thqJfqlMu7D71vcfuxwjJgEA
+X-Developer-Key: i=gregkh@linuxfoundation.org; a=openpgp; fpr=F4B60CC5BF78C2214A313DCB3147D40DDB2DFB29
 Content-Transfer-Encoding: 8bit
-X-MBO-RS-ID: 21d1c14604bfdb8fd27
-X-MBO-RS-META: g4e9ownz6mposspsqtdm8xkthyfpk6nf
 
-rose_neigh_put() frees the rose_neigh object when the reference count
-reaches zero, but does not stop the t0timer and ftimer beforehand.
-If a timer has been scheduled and fires after the object is freed,
-the callback will access already-freed memory, leading to a
-use-after-free.
+There is a lack of much validation of frame size coming from a
+netrom-based device.  While these devices are "trusted" doing some
+sanity checks is good to at least keep the fuzzing tools happy when they
+stumble across this ancient protocol and light up with a range of bug
+reports.
 
-The UAF can be triggered through the following sequence:
-
-1. rose_add_node() creates a rose_neigh with refcount=2
-   (initial neigh_list reference plus one held by the new node entry)
-2. A socket connects via rose_get_neigh(), rose_neigh_hold() raises
-   refcount to 3; rose_transmit_link() arms t0timer on the neigh
-3. The routing entry is deleted: rose_del_node() drops the node
-   reference (3->2), calls rose_remove_neigh() which stops both
-   timers, then drops the neigh_list reference (2->1); the socket
-   now holds the only reference with t0timer stopped
-4. T1 expires in ROSE_STATE_1: rose_timer_expiry() sends
-   CLEAR_REQUEST via rose_transmit_link(), which sees
-   neigh->restarted=0 and !rose_t0timer_running, and re-arms
-   t0timer on the neigh (refcount still 1)
-5. T3 expires in ROSE_STATE_2: rose_timer_expiry() calls
-   rose_neigh_put(), refcount drops to 0, kfree(neigh)
-6. t0timer fires, rose_t0timer_expiry() accesses freed neigh -> UAF
-
-Calling timer_delete_sync() directly in rose_neigh_put() would fix
-the UAF but is unsafe: rose_neigh_put() can be called while holding
-spinlocks (e.g. rose_route_frame() holds rose_neigh_list_lock and
-rose_route_list_lock), and timer_delete_sync() may block waiting for
-a running callback, which is illegal in atomic context.
-
-Fix this by deferring the final cleanup to a workqueue. When the
-refcount drops to zero, schedule rose_neigh_free_work() instead of
-freeing inline. The work function runs in process context where it
-is safe to call timer_shutdown_sync() before freeing the object.
-timer_shutdown_sync() is used instead of timer_delete_sync() to
-permanently prevent the self-rearming t0timer from firing again
-after the work function starts.
-
-Fixes: d860d1faa6b2 ("net: rose: convert 'use' field to refcount_t")
-Reported-by: syzbot+abd2b69348e2d9b107a1@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=abd2b69348e2d9b107a1
-Signed-off-by: Mashiro Chen <mashiro.chen@mailbox.org>
+Cc: "David S. Miller" <davem@davemloft.net>
+Cc: Eric Dumazet <edumazet@google.com>
+Cc: Jakub Kicinski <kuba@kernel.org>
+Cc: Paolo Abeni <pabeni@redhat.com>
+Cc: Simon Horman <horms@kernel.org>
+Cc: linux-hams@vger.kernel.org
+Assisted-by: gregkh_clanker_2000
+Reviewed-by: Yizhe Zhuang <yizhe@darknavy.com>
+Cc: stable <stable@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
-Changes in v3:
-  - Replaced timer_delete_sync() in rose_neigh_put() with a workqueue
-    to avoid calling a blocking function in atomic context
-  - Added rose_neigh_free_work() to handle cleanup in process context
-  - Added struct work_struct free_work to struct rose_neigh
-  - Used timer_shutdown_sync() to prevent the self-rearming t0timer
-    from firing again after cleanup begins
+ net/netrom/af_netrom.c | 6 ++++++
+ net/netrom/nr_route.c  | 6 +++---
+ 2 files changed, 9 insertions(+), 3 deletions(-)
 
-Changes in v2:
-  - Stop t0timer and ftimer before freeing the object
-
- include/net/rose.h    | 10 ++++------
- net/rose/rose_route.c | 16 ++++++++++++++++
- 2 files changed, 20 insertions(+), 6 deletions(-)
-
-diff --git a/include/net/rose.h b/include/net/rose.h
-index 2b5491bbf39ab..704214e38ef1d 100644
---- a/include/net/rose.h
-+++ b/include/net/rose.h
-@@ -9,6 +9,7 @@
- #define _ROSE_H 
+diff --git a/net/netrom/af_netrom.c b/net/netrom/af_netrom.c
+index b816c56124ab..b605891bf86e 100644
+--- a/net/netrom/af_netrom.c
++++ b/net/netrom/af_netrom.c
+@@ -885,6 +885,9 @@ int nr_rx_frame(struct sk_buff *skb, struct net_device *dev)
+ 	 *	skb->data points to the netrom frame start
+ 	 */
  
- #include <linux/refcount.h>
-+#include <linux/workqueue.h>
- #include <linux/rose.h>
- #include <net/ax25.h>
- #include <net/sock.h>
-@@ -105,6 +106,7 @@ struct rose_neigh {
- 	struct sk_buff_head	queue;
- 	struct timer_list	t0timer;
- 	struct timer_list	ftimer;
-+	struct work_struct	free_work;
- };
- 
- struct rose_node {
-@@ -159,12 +161,8 @@ static inline void rose_neigh_hold(struct rose_neigh *rose_neigh)
- 
- static inline void rose_neigh_put(struct rose_neigh *rose_neigh)
- {
--	if (refcount_dec_and_test(&rose_neigh->use)) {
--		if (rose_neigh->ax25)
--			ax25_cb_put(rose_neigh->ax25);
--		kfree(rose_neigh->digipeat);
--		kfree(rose_neigh);
--	}
-+	if (refcount_dec_and_test(&rose_neigh->use))
-+		schedule_work(&rose_neigh->free_work);
- }
- 
- /* af_rose.c */
-diff --git a/net/rose/rose_route.c b/net/rose/rose_route.c
-index e31842e6b3c8b..8c8e09793d442 100644
---- a/net/rose/rose_route.c
-+++ b/net/rose/rose_route.c
-@@ -28,6 +28,7 @@
- #include <linux/mm.h>
- #include <linux/interrupt.h>
- #include <linux/notifier.h>
-+#include <linux/workqueue.h>
- #include <linux/init.h>
- #include <net/rose.h>
- #include <linux/seq_file.h>
-@@ -44,6 +45,19 @@ static DEFINE_SPINLOCK(rose_route_list_lock);
- 
- struct rose_neigh *rose_loopback_neigh;
- 
-+static void rose_neigh_free_work(struct work_struct *work)
-+{
-+	struct rose_neigh *rose_neigh =
-+		container_of(work, struct rose_neigh, free_work);
++	if (skb->len < NR_NETWORK_LEN + NR_TRANSPORT_LEN)
++		return 0;
 +
-+	timer_shutdown_sync(&rose_neigh->t0timer);
-+	timer_shutdown_sync(&rose_neigh->ftimer);
-+	if (rose_neigh->ax25)
-+		ax25_cb_put(rose_neigh->ax25);
-+	kfree(rose_neigh->digipeat);
-+	kfree(rose_neigh);
-+}
+ 	src  = (ax25_address *)(skb->data + 0);
+ 	dest = (ax25_address *)(skb->data + 7);
+ 
+@@ -963,6 +966,9 @@ int nr_rx_frame(struct sk_buff *skb, struct net_device *dev)
+ 
+ 	sk = nr_find_listener(dest);
+ 
++	if (skb->len < NR_NETWORK_LEN + NR_TRANSPORT_LEN + 1 + AX25_ADDR_LEN)
++		return 0;
 +
- /*
-  *	Add a new route to a node, and in the process add the node and the
-  *	neighbour if it is new.
-@@ -103,6 +117,7 @@ static int __must_check rose_add_node(struct rose_route_struct *rose_route,
+ 	user = (ax25_address *)(skb->data + 21);
  
- 		timer_setup(&rose_neigh->ftimer, NULL, 0);
- 		timer_setup(&rose_neigh->t0timer, NULL, 0);
-+		INIT_WORK(&rose_neigh->free_work, rose_neigh_free_work);
+ 	if (sk == NULL || sk_acceptq_is_full(sk) ||
+diff --git a/net/netrom/nr_route.c b/net/netrom/nr_route.c
+index 9cc29ae85b06..bf60f5682a4f 100644
+--- a/net/netrom/nr_route.c
++++ b/net/netrom/nr_route.c
+@@ -755,10 +755,10 @@ int nr_route_frame(struct sk_buff *skb, ax25_cb *ax25)
+ 	struct sk_buff *nskb, *oskb;
  
- 		if (rose_route->ndigis != 0) {
- 			rose_neigh->digipeat =
-@@ -388,6 +403,7 @@ void rose_add_loopback_neigh(void)
+ 	/*
+-	 * Reject malformed packets early. Check that it contains at least 2
+-	 * addresses and 1 byte more for Time-To-Live
++	 * Reject malformed packets early. Check that it contains at least
++	 * the network and transport headers (20 bytes).
+ 	 */
+-	if (skb->len < 2 * sizeof(ax25_address) + 1)
++	if (skb->len < NR_NETWORK_LEN + NR_TRANSPORT_LEN)
+ 		return 0;
  
- 	timer_setup(&sn->ftimer, NULL, 0);
- 	timer_setup(&sn->t0timer, NULL, 0);
-+	INIT_WORK(&sn->free_work, rose_neigh_free_work);
- 
- 	spin_lock_bh(&rose_neigh_list_lock);
- 	sn->next = rose_neigh_list;
+ 	nr_src  = (ax25_address *)(skb->data + 0);
 -- 
 2.53.0
 
