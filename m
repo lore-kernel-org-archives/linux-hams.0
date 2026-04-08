@@ -1,51 +1,49 @@
 Received: from mail.yaina.de (yaina.de [95.216.117.176])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C2462F7478;
-	Wed,  8 Apr 2026 21:05:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A483BEED8;
+	Wed,  8 Apr 2026 21:31:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=95.216.117.176
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775682330; cv=none; b=C+1x46jkfZLJp4gzRDSgQ82QD8pDOrxbVJ63v+P16/V9QsrDDDBV0ol71svy3B3PWBaPONjGIvnRD1ADYviJAA2YiQFC5dp3dnuzbQN4oHqDOpSqRZl2Hdc7QO0Q6Q4gw/KjIuGNBRxD9UikuaFF4SdhtmbK/EzbKqRU67KELGA=
+	t=1775683893; cv=none; b=JQtOBXio2VyZRaO2T0nQCifDAZ73/H0rYqQ8ISyhS584wD1mcsAIpT542fziVsGWBo8kP7pV+bbn8j7iCMnYQoSAlATf8pXbYapfv3j+YMYEIa9zMFo9PKDmpQHIb4ojJksWpbbfVPAb0HFXOnS+T1mZ6ThDtU6Br2tu5T+tMnc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775682330; c=relaxed/simple;
-	bh=4WCg/ETMuwIk9WQula/mVorQiRkH0nGmB+WjIV8Frq0=;
+	s=arc-20240116; t=1775683893; c=relaxed/simple;
+	bh=h2wqvka6vwdFL8MxOXiZdeSdFhvhq08VkB7hE6JBivM=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=lVNq3Z/lQKBVfZmNOCkEehcQ6hoX6IJDEf+uIPcnyEdR00k5y24Chw33qDPbuLya/goM7l/9J7bss1eopaWTgo96VL/SNNR+7kGKjHGGy0vOOJsg+xHJeXSIdQhWE2ANOpPgPR0Z9msCocqyO+qtW2GHhwUQILf8BpQnBd7N+rs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=yaina.de; spf=pass smtp.mailfrom=yaina.de; dkim=pass (1024-bit key) header.d=yaina.de header.i=@yaina.de header.b=N2j4UfeW; arc=none smtp.client-ip=95.216.117.176
+	 Content-Type:Content-Disposition:In-Reply-To; b=Wm6p8wbEboms38CgPyYh8h5KaVzX8Gk964cxhvg7lg93zYxBClaAz3x4iwT15eJ+KLT9sIiRjd0niDu6DczhIYW3GGv0YXpK9lABDqVVFkl4sVaaBL2EnAML+IqhOrS05R8orxZOhpdIf3jkDnLBAotQ+hi+lu4WNZEQeX19lng=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=yaina.de; spf=pass smtp.mailfrom=yaina.de; dkim=pass (1024-bit key) header.d=yaina.de header.i=@yaina.de header.b=2eDip3fX; arc=none smtp.client-ip=95.216.117.176
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=yaina.de
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=yaina.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=yaina.de header.i=@yaina.de header.b="N2j4UfeW"
+	dkim=pass (1024-bit key) header.d=yaina.de header.i=@yaina.de header.b="2eDip3fX"
 Received: from lycaon.yaina.de (ip1f118239.dynamic.kabel-deutschland.de [31.17.130.57])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange x25519 server-signature ECDSA (prime256v1) server-digest SHA256
 	 client-signature RSA-PSS (4096 bits) client-digest SHA256)
 	(Client CN "lykos.yaina.de", Issuer "CAcert Class 3 Root" (not verified))
-	by mail.yaina.de (Postfix) with ESMTPSA id B93077CDEF0A;
-	Wed, 08 Apr 2026 23:05:25 +0200 (CEST)
+	by mail.yaina.de (Postfix) with ESMTPSA id B90AE7CDEF55;
+	Wed, 08 Apr 2026 23:31:27 +0200 (CEST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yaina.de; s=mail;
-	t=1775682325;
+	t=1775683887;
 	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
 	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
 	 in-reply-to:in-reply-to:references:references;
-	bh=zefjOB7yqJPmfzvG2WtGAjKoz/HAkvcpX+jjgaaV4RU=;
-	b=N2j4UfeWLTPuDjzJ0Ast94dRIX58RHKQztp4F0AEB568mqMKrENfFaTIe8PRMEDRjnXZR3
-	1999n2CU3eJwts/SpHjuwq3G/UQ+c3bocrtMMoDCWQMJgkmzULPfGr2CWIqdRxZnlyj+a0
-	/ZI0aXs7ItI1pYjmTla/LK27WrZQ95U=
+	bh=+qpp8Wxq49Fmlaf68pjkAMbJGmNpayJqChc8UNCM/Pw=;
+	b=2eDip3fX96WWKgdParCpOMUMYH5ebEygJdEFycMtmq+wxR+4Wx6FVpfWP0WJKHApW8hzp5
+	k9RdDF6luSv0i14IRsK0LqB3YUCap3TR4PFDSj7pxgVDR51q/xFKRNJbIETv0YMgbPN8dz
+	kaQ/sbwQDVlML4Elx75lXEyV6YwVE40=
 Received: by lycaon.yaina.de (Postfix, from userid 500)
-	id 0DF82300E49; Wed, 08 Apr 2026 23:05:25 +0200 (CEST)
-Date: Wed, 8 Apr 2026 23:05:25 +0200
+	id 2F916300E57; Wed, 08 Apr 2026 23:31:27 +0200 (CEST)
+Date: Wed, 8 Apr 2026 23:31:27 +0200
 From: Joerg Reuter <jreuter@yaina.de>
 To: Mashiro Chen <mashiro.chen@mailbox.org>
-Cc: netdev@vger.kernel.org, andrew+netdev@lunn.ch, davem@davemloft.net,
-	edumazet@google.com, kuba@kernel.org, pabeni@redhat.com,
+Cc: netdev@vger.kernel.org, davem@davemloft.net, edumazet@google.com,
+	kuba@kernel.org, pabeni@redhat.com, horms@kernel.org,
 	linux-hams@vger.kernel.org, linux-kernel@vger.kernel.org,
 	stable@vger.kernel.org
-Subject: Re: [PATCH net 1/2] net: hamradio: bpqether: validate frame length
- in bpq_rcv()
-Message-ID: <adbDFVlrqnldyBXz@yaina.de>
-References: <20260408172358.281186-1-mashiro.chen@mailbox.org>
- <20260408172358.281186-2-mashiro.chen@mailbox.org>
+Subject: Re: [PATCH net] net: ax25: fix integer overflow in ax25_rx_fragment()
+Message-ID: <adbJL14aPmcTLC62@yaina.de>
+References: <20260408172521.281365-1-mashiro.chen@mailbox.org>
 Precedence: bulk
 X-Mailing-List: linux-hams@vger.kernel.org
 List-Id: <linux-hams.vger.kernel.org>
@@ -54,53 +52,45 @@ List-Unsubscribe: <mailto:linux-hams+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20260408172358.281186-2-mashiro.chen@mailbox.org>
-X-Face: #DGJ)DCeau/h"w7G~n9r|/jxvQQrtU)nat27v-><7':==-=.mfnXc+8&qOj`*R|qPr14[|4
- E_BUo5T*NT\(+fE7wr3}QoN*!c7\.Z.DiA{ko;01^TCi$K}1TIV|bNO.$jm;i<A,|
+In-Reply-To: <20260408172521.281365-1-mashiro.chen@mailbox.org>
 
-Am Thu, Apr 09, 2026 at 01:23:57AM +0800 schrieb Mashiro Chen:
-> The BPQ length field is decoded as:
-> 
->   len = skb->data[0] + skb->data[1] * 256 - 5;
-> 
-> If the sender sets bytes [0..1] to values whose combined value is
-> less than 5, len becomes negative.  Passing a negative int to
-> skb_trim() silently converts to a huge unsigned value, causing the
-> function to be a no-op.  The frame is then passed up to AX.25 with
-> its original (untrimmed) payload, delivering garbage beyond the
-> declared frame boundary.
+Am Thu, Apr 09, 2026 at 01:25:21AM +0800 schrieb Mashiro Chen:
+> An attacker on an AX.25 link that supports multi-fragment I-frames
+> (AX25_SEG_FIRST / AX25_SEG_REM mechanism) can trigger this by
+> sending enough continuation fragments to wrap the 16-bit counter.
+> With AX.25 segment numbers limited to 6 bits (max 63 continuation
+> fragments), a fragment payload of ~1040 bytes per fragment is
+> sufficient to overflow.
 
-I don't even know why there is a length field in the first place, and John
-G8BPQ doesn't seem to remember either. 
+Even worse, it's 7 bits: https://www.ax25.net/AX25.2.2-Jul%2098-2.pdf
+Figure 6.2 "Segment Header Format". Sigh.
 
-There is nothing supposed to come after the payload, and there should be no
-need to skb_trim() at all. 
-
-However, since an obviously wrong length field indicates that something is
-indeed wrong with that frame, I'm in favor of dropping those frames.
+Thanks,
+     Joerg
 
 Acked-by: Joerg Reuter <jreuter@yaina.de>
-
 > Cc: stable@vger.kernel.org
 > Cc: linux-hams@vger.kernel.org
 > Signed-off-by: Mashiro Chen <mashiro.chen@mailbox.org>
 > ---
->  drivers/net/hamradio/bpqether.c | 3 +++
->  1 file changed, 3 insertions(+)
+>  net/ax25/ax25_in.c | 5 +++++
+>  1 file changed, 5 insertions(+)
 > 
-> diff --git a/drivers/net/hamradio/bpqether.c b/drivers/net/hamradio/bpqether.c
-> index 045c5177262eaf..214fd1f819a1bb 100644
-> --- a/drivers/net/hamradio/bpqether.c
-> +++ b/drivers/net/hamradio/bpqether.c
-> @@ -187,6 +187,9 @@ static int bpq_rcv(struct sk_buff *skb, struct net_device *dev, struct packet_ty
->  
->  	len = skb->data[0] + skb->data[1] * 256 - 5;
->  
-> +	if (len < 0 || len > skb->len - 2)
-> +		goto drop_unlock;
-> +
->  	skb_pull(skb, 2);	/* Remove the length bytes */
->  	skb_trim(skb, len);	/* Set the length of the data */
+> diff --git a/net/ax25/ax25_in.c b/net/ax25/ax25_in.c
+> index d75b3e9ed93de8..68202c19b19e3f 100644
+> --- a/net/ax25/ax25_in.c
+> +++ b/net/ax25/ax25_in.c
+> @@ -41,6 +41,11 @@ static int ax25_rx_fragment(ax25_cb *ax25, struct sk_buff *skb)
+>  				/* Enqueue fragment */
+>  				ax25->fragno = *skb->data & AX25_SEG_REM;
+>  				skb_pull(skb, 1);	/* skip fragno */
+> +				if ((unsigned int)ax25->fraglen + skb->len > USHRT_MAX) {
+> +					skb_queue_purge(&ax25->frag_queue);
+> +					ax25->fragno = 0;
+> +					return 1;
+> +				}
+>  				ax25->fraglen += skb->len;
+>  				skb_queue_tail(&ax25->frag_queue, skb);
 >  
 > -- 
 > 2.53.0
