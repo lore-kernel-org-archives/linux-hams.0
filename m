@@ -1,121 +1,89 @@
-Received: from mout-y-209.mailbox.org (mout-y-209.mailbox.org [91.198.250.237])
+Received: from mail.yaina.de (yaina.de [95.216.117.176])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 313D63D75B4;
-	Wed,  8 Apr 2026 17:26:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.198.250.237
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8EC0B3314C5;
+	Wed,  8 Apr 2026 20:59:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=95.216.117.176
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775669171; cv=none; b=ZAkmHiD3olWZkZccSRq0m7EaI6JFvuIMfsHhbe3r0A/DaQdKlHQesRY/E+B09KJLMOvPjEUBa9e0OjuY8AKhoUUKz3RMj5A4xVlgrp4poSDOvHxK6e9Fx6eAGUXsbq1QVw/18IaZAn+ICtBoOqt0EcHhVg1cR8jDr1W9TS/kWv0=
+	t=1775681958; cv=none; b=F9gIeOj88+FiYKwiI0iWJzEu7RRpbA3PSlEKpTZE8IvglITzG/2NyEHSQa5jQzy28IIhBdeT1RC+oMbMccPv7VGgrmiMWp5/eBNPtI9YiMl9AHR7cZS73xwJVB0KB9Zoub6YcwhNthIOjTDt09zddNIZP9I4fwmR3Fld901awJI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775669171; c=relaxed/simple;
-	bh=HXv6Qfyh/87ciXBdlWLxEEivSqZv3G8fmPWNM5DrNmk=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=DlkoEFXU0UvNbOypE+BIy8RPmZ94ik/geUD+Kl7LAe4a47394m93jCDgvsNFhD0Dxa36KTSb/ePZIEgV+7Xt4gpetLWF7qsJVtGbCY+x/5iqL/jXyX7oksA+ZumjLXZjUIsI4W5UW2iY3yIvTEpcpmaWfOIR9rZD+U6QAm+VeDo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=mailbox.org; spf=pass smtp.mailfrom=mailbox.org; dkim=pass (2048-bit key) header.d=mailbox.org header.i=@mailbox.org header.b=QkD+sc7Z; dkim=pass (2048-bit key) header.d=mailbox.org header.i=@mailbox.org header.b=u9V63QLt; arc=none smtp.client-ip=91.198.250.237
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=mailbox.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=mailbox.org
+	s=arc-20240116; t=1775681958; c=relaxed/simple;
+	bh=oGn7Kg1BTlvOaR2h07xr9FmAxNwd6XMBe9l3iunfQfw=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=rbdWE8/NJ0r/1gS56GPH9bx/KF+2VTTCsV1b87dUMNDNQK2vyyGEJ2hAK9Xct7CGoD+7fxNA+Dn7mMNCisU+vV3E2cWYsN6II9RrheM0FoCRGu2Ow49YJ/uF2EZQqYHIMt1sao7q9JqZf2XGX5k8EfKsrFN8wW2G8nh7Bozy678=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=yaina.de; spf=pass smtp.mailfrom=yaina.de; dkim=pass (1024-bit key) header.d=yaina.de header.i=@yaina.de header.b=wVIkMRK2; arc=none smtp.client-ip=95.216.117.176
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=yaina.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=yaina.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=mailbox.org header.i=@mailbox.org header.b="QkD+sc7Z";
-	dkim=pass (2048-bit key) header.d=mailbox.org header.i=@mailbox.org header.b="u9V63QLt"
-Received: from smtp102.mailbox.org (smtp102.mailbox.org [IPv6:2001:67c:2050:b231:465::102])
+	dkim=pass (1024-bit key) header.d=yaina.de header.i=@yaina.de header.b="wVIkMRK2"
+Received: from lycaon.yaina.de (ip1f118239.dynamic.kabel-deutschland.de [31.17.130.57])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	by mout-y-209.mailbox.org (Postfix) with ESMTPS id 4frVN04DktzB11B;
-	Wed,  8 Apr 2026 19:26:08 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=mailbox.org; s=mail20150812;
-	t=1775669168;
+	 key-exchange x25519 server-signature ECDSA (prime256v1) server-digest SHA256
+	 client-signature RSA-PSS (4096 bits) client-digest SHA256)
+	(Client CN "lykos.yaina.de", Issuer "CAcert Class 3 Root" (not verified))
+	by mail.yaina.de (Postfix) with ESMTPSA id 3EF1C7CDEEC7;
+	Wed, 08 Apr 2026 22:51:06 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yaina.de; s=mail;
+	t=1775681466;
 	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:
-	 content-transfer-encoding:content-transfer-encoding;
-	bh=kBwy39yOFjCmmlrsUB/j5yUVYN7ZkTMndF/TwEehldI=;
-	b=QkD+sc7ZPfXsS36W74FQWd9xekYqmT4AlQ4+57k2f+ajbhGKWKkW3jZH5pyEwC+U4SilR1
-	K4xkrrOq7xwN9+Qspk6KBn/nXPzOtYAOZOciXAvG4YZHa6ZiANkQkArika+Y1cEULUBIfh
-	hpasw8I0f56qnJAzbshWUQK85HQA3adANZqwegiERxUm6ZMcoyZhN9HtML3cUrXOQGln8n
-	H3KH3DDP1GKdtB0YOUCNxQJCMjpzG4TU3ap0EFnZZCBv4mYMrUhhuz3ifjWaGAYlaATrWu
-	iuTGCjOAI1/8+q0+uaUDsybcSZVA7lXyLhPcJKgxI2Zn/vkbMJ1KWP2+7knoyQ==
-Authentication-Results: outgoing_mbo_mout;
-	dkim=pass header.d=mailbox.org header.s=mail20150812 header.b=u9V63QLt;
-	spf=pass (outgoing_mbo_mout: domain of mashiro.chen@mailbox.org designates 2001:67c:2050:b231:465::102 as permitted sender) smtp.mailfrom=mashiro.chen@mailbox.org
-From: Mashiro Chen <mashiro.chen@mailbox.org>
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=mailbox.org; s=mail20150812;
-	t=1775669167;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:
-	 content-transfer-encoding:content-transfer-encoding;
-	bh=kBwy39yOFjCmmlrsUB/j5yUVYN7ZkTMndF/TwEehldI=;
-	b=u9V63QLtdxQwqYCy2NE0xeaUt2WxuDZalAFCnm1QY1k7XoBVfs+bYElhOLhEBnvq9EYLWT
-	wA5tkAUqmkb5AG083kBKYo6mssjiXak9FVlO3u+UB6NEBc3IjMq4tkXm1Qmw3/V9muUhLO
-	RKqdMYmmNAQT9oAgdA3jS/u8KpoAnfsdS65zpknG678Cazto37F9lxJc04d5U2i6Bz5Kze
-	2w5+Ro9T6YQxJO9yKsfwb3vJm9zGSey4AC5Di7ZRGdXKwvGp8pY03oxfGJxdx7MB5eV5PF
-	cMvdVTms8HbmobxqoYSl60G53OShdtE3l8LaWTnU02ucakcP+XJ4Kt1vkc6W3g==
-To: netdev@vger.kernel.org
-Cc: davem@davemloft.net,
-	edumazet@google.com,
-	kuba@kernel.org,
-	pabeni@redhat.com,
-	horms@kernel.org,
-	linux-hams@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	Mashiro Chen <mashiro.chen@mailbox.org>,
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=lVzdl6wAk2jhIhIak1BJv8WP6VL8FEB4gR39X/vx0Ws=;
+	b=wVIkMRK2VRy1EHYUzXyx/orrB2v37wCr62ea61LBtDR+gFni68Hnj763SBZhmfzoFCZx8M
+	xGxyS6NCijuxoYOLtARCMrlIwO0GTb6jPjit9dnLYYWzaF/g/heG6YlartTJptRTuPwupN
+	+S069Ec9JZmYRrJ7fr0mEikCX0xcoaE=
+Received: by lycaon.yaina.de (Postfix, from userid 500)
+	id 81CC4300E40; Wed, 08 Apr 2026 22:51:05 +0200 (CEST)
+Date: Wed, 8 Apr 2026 22:51:05 +0200
+From: Joerg Reuter <jreuter@yaina.de>
+To: Mashiro Chen <mashiro.chen@mailbox.org>
+Cc: netdev@vger.kernel.org, andrew+netdev@lunn.ch, davem@davemloft.net,
+	edumazet@google.com, kuba@kernel.org, pabeni@redhat.com,
+	linux-hams@vger.kernel.org, linux-kernel@vger.kernel.org,
 	stable@vger.kernel.org
-Subject: [PATCH net] net: rose: reject truncated CLEAR_REQUEST frames in state machines
-Date: Thu,  9 Apr 2026 01:25:51 +0800
-Message-ID: <20260408172551.281486-1-mashiro.chen@mailbox.org>
+Subject: Re: [PATCH net 2/2] net: hamradio: scc: validate bufsize in
+ SIOCSCCSMEM ioctl
+Message-ID: <ada_uT5lwgXA3nK9@yaina.de>
+References: <20260408172358.281186-1-mashiro.chen@mailbox.org>
+ <20260408172358.281186-3-mashiro.chen@mailbox.org>
 Precedence: bulk
 X-Mailing-List: linux-hams@vger.kernel.org
 List-Id: <linux-hams.vger.kernel.org>
 List-Subscribe: <mailto:linux-hams+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-hams+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-MBO-RS-META: p6d5zapacght43tfqwyp69uausasrq4s
-X-MBO-RS-ID: 46b22fe8c2e2875f4c0
-X-Rspamd-Queue-Id: 4frVN04DktzB11B
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20260408172358.281186-3-mashiro.chen@mailbox.org>
 
-All five ROSE state machines (states 1-5) handle ROSE_CLEAR_REQUEST
-by reading the cause and diagnostic bytes directly from skb->data[3]
-and skb->data[4] without verifying that the frame is long enough:
+Hi,
 
-  rose_disconnect(sk, ..., skb->data[3], skb->data[4]);
+Am Thu, Apr 09, 2026 at 01:23:58AM +0800 schrieb Mashiro Chen:
 
-The entry-point check in rose_route_frame() only enforces
-ROSE_MIN_LEN (3 bytes), so a remote peer on a ROSE network can
-send a syntactically valid but truncated CLEAR_REQUEST (3 or 4
-bytes) while a connection is open in any state.  Processing such a
-frame causes a one- or two-byte out-of-bounds read past the skb
-data, leaking uninitialized heap content as the cause/diagnostic
-values returned to user space via getsockopt(ROSE_GETCAUSE).
+> If a privileged user (CAP_SYS_RAWIO) sets bufsize to 0, the receive
+> interrupt handler later calls dev_alloc_skb(0) and immediately writes
+> a KISS type byte via skb_put_u8() into a zero-capacity socket buffer,
+> corrupting the adjacent skb_shared_info region.
 
-Add a single length check at the rose_process_rx_frame() dispatch
-point, before any state machine is entered, to drop frames that
-carry the CLEAR_REQUEST type code but are too short to contain the
-required cause and diagnostic fields.
+Oops, that's unfortunate.
 
-Cc: stable@vger.kernel.org
-Cc: linux-hams@vger.kernel.org
-Signed-off-by: Mashiro Chen <mashiro.chen@mailbox.org>
----
- net/rose/rose_in.c | 7 +++++++
- 1 file changed, 7 insertions(+)
+> The scc.c comment already states the buffer must not exceed 4096 bytes,
+> but this limit is never enforced.
 
-diff --git a/net/rose/rose_in.c b/net/rose/rose_in.c
-index 0276b393f0e530..e2680058196273 100644
---- a/net/rose/rose_in.c
-+++ b/net/rose/rose_in.c
-@@ -271,6 +271,13 @@ int rose_process_rx_frame(struct sock *sk, struct sk_buff *skb)
- 
- 	frametype = rose_decode(skb, &ns, &nr, &q, &d, &m);
- 
-+	/*
-+	 * ROSE_CLEAR_REQUEST carries cause and diagnostic in bytes 3..4.
-+	 * Reject a malformed frame that is too short to contain them.
-+	 */
-+	if (frametype == ROSE_CLEAR_REQUEST && skb->len < 5)
-+		return 0;
-+
- 	switch (rose->state) {
- 	case ROSE_STATE_1:
- 		queued = rose_state1_machine(sk, skb, frametype);
+That was a limit 30 years ago when we couldn't have skbs larger than one
+page.
+
+I'm not sure if anyone is actually using AX.25 jumbograms with a Zilog SCC
+controller, that doesn't make much sense to me. But maybe someone out there
+is indeed running IP over huge AX.25 UI frames, thus I'm not a fan of
+enforcing an upper limit either. It's hamradio, you're supposed to tinker.
+
+I'm okay with a mininum size of 16, of course.
+
+73,
+    Joerg
+
 -- 
-2.53.0
-
+Joerg Reuter                                    http://yaina.de/jreuter
+And I make my way to where the warm scent of soil fills the evening air. 
+Everything is waiting quietly out there....                 (Anne Clark)
