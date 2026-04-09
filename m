@@ -1,123 +1,122 @@
-Received: from mail-qv1-f44.google.com (mail-qv1-f44.google.com [209.85.219.44])
+Received: from mail-yw1-f181.google.com (mail-yw1-f181.google.com [209.85.128.181])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DDB613DEFFE
-	for <linux-hams@vger.kernel.org>; Thu,  9 Apr 2026 15:24:02 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.44
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775748244; cv=none; b=mMC5SHuayHGPfgUcDFEKPAFYQVNcQQe00tkgvYjX01Bvtmpdn6aMOqgJq4P2LdbSIkM9YkailqsCdk05s/0N1c6oaOoOHRT+J2T9GwpTb0pxqFAL9lJH8xs6VRnIuXpvDDV2Xe/efoYC4eQHz3N6Qd0UVNZjsB7BdOtVJlJkYRQ=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775748244; c=relaxed/simple;
-	bh=2neZ3Cba/z6x9Y8TtkiogWJSDFaSYQusxUMlV6UD0Hk=;
-	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=JEdUjlSBGsAxIl1UFtAOsopHlqnCXThQ4Ms6/MzekNdvQEJEJFlhjWF0SyvXhXRYChE4b+tz2HJy3xxQ3eoKQS4yaFvqqbqMJcfgyFPkOPWuuH9inmqiLfJc2st+0V2W2yfklgm1dE3XnVCIToV859I3ByxWDsKxmuwIjOS/2DA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=CYYCzbVr; arc=none smtp.client-ip=209.85.219.44
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 029213E022C
+	for <linux-hams@vger.kernel.org>; Thu,  9 Apr 2026 15:29:41 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.128.181
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1775748583; cv=pass; b=RtTo2C+C79H6sK0u16ioGyPkE0hknpEGdGDB2JCEmfPMl+q6nDMn5G/BdlDrhbqAOsq8ZVgYsgHP6Pq4ZFNFU/aY4mGRHobE8tkpVXQzS9copNy/J4okKhSgmijMaYGhSkrNCokw0PSD9bmv/MFm6XFvmrh7WKxJVzhjjEXZ0aY=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1775748583; c=relaxed/simple;
+	bh=x9GSh3Zm4OXtSq0jQU3rRGCdIRW1ZWbDoaw15nWkSWM=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=FoIw+K5CGDA+dNCBwmNcM0OBm/FPY2GJV8HJQNv7MIWC9aLsoqdQLzu57fAX92bzUgwTMdpq7H3r3QvUmUde8rbv5M5Nlw+ytXbGGUqCwPB01BbwKO9OhAPQ4WNMBC/nXZ0OKsu7PFjos4yiMX4FmtHE5FkPWQCX+rDTHGJPGeA=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=ILPY4gfn; arc=pass smtp.client-ip=209.85.128.181
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="CYYCzbVr"
-Received: by mail-qv1-f44.google.com with SMTP id 6a1803df08f44-8a3342d301aso10389686d6.2
-        for <linux-hams@vger.kernel.org>; Thu, 09 Apr 2026 08:24:02 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="ILPY4gfn"
+Received: by mail-yw1-f181.google.com with SMTP id 00721157ae682-79c20063a32so11516417b3.1
+        for <linux-hams@vger.kernel.org>; Thu, 09 Apr 2026 08:29:41 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1775748581; cv=none;
+        d=google.com; s=arc-20240605;
+        b=Zi95O7ZPAJ0RQ8dtT2BLAE28RSYyir1GTY76/4CH1dAoCLLU2Ft/pk+ZZfH3heXIgC
+         k0DkY3Z0rzcuu1THzb0kdAb8n3mc/wF3cJFiyQ+IW/wfU57F+reNH0GGnV8ThsUdVQBH
+         GhEmeiE0EXa1qZ97VTJvkpCSvKQapMm1akLkq1HA+JYUGXh+2VRNGqKYcKWwpOk2PzR0
+         al866t4tH8JVVt/9PKxHNA2pj5l7YtjZzwylhZh80ZmDXosyOZUX5CPvRBtYWvNd3mU0
+         ZK5xjJ+HHtEFTyeV3u83oQFtJvE3okL3XY6FVkqfjsNphevNCR19aV80awjsmHHMNh59
+         JLAw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=x9GSh3Zm4OXtSq0jQU3rRGCdIRW1ZWbDoaw15nWkSWM=;
+        fh=PiJl18J/fJ09Q4lTC2LBbC+Mv5ugN/rBqCcUBOkQR1c=;
+        b=h53ibvrDpOtPl5d1eIhqet/u/UIzH7yplN5Ra4U7H5E3kOgubRR6F9ZQXYU05Hj4Qy
+         +XoI6D71CTJtGuuhnPcqKxrXVRkUtDZ0VI9USzzdtoBCDCcPG3/Rd1REe7Cbk0lck4B7
+         2TwAclnLy4BoiXddKYP+NuoEQLWQjSEhA3QRq8BwjX3yyAFre/yi3jOytt8bMEq35oyW
+         wUzLu9oTDRmU5MB3Xu2z1Oa7t1+RlwNVzxsYUwVVg4q2wOWz8/eE3uzJ6l3Lt88ETL7x
+         g9vzs3nDaWkZOYejpuvOTtuQbWNaapQOYuSV+k9OQn6arr2NUKw2ipa5cT8cLxU2121F
+         wQdw==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1775748242; x=1776353042; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+        d=google.com; s=20251104; t=1775748581; x=1776353381; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=BoVMgFSg7TgoUkOzz8poiLNf0wihCgPQFidePPKr930=;
-        b=CYYCzbVrtm1xTziVup297Rmp3zw/sHVKzTVObORC9IisocqZYjq9W+1BatWcyHW34r
-         uloOZrl2Vs65A0chxFdwaJDEnjp9xrgedATnbbM6WurjOm4lrvpmF1G/Yy/ggsNUFQMo
-         /SSr7FW6SqYa7dvyQTAATy9gh4+KteE3R0K1g2tE0VQV6zCXINhxggjMvblbzIdJw3uv
-         B11nik8OTh4Q23ObqIzRqMlOycGp68ScytSSVFTd6nXPlpk4Kin0txywAwljwRhorYtz
-         v6pLz1DissAzLzcw/+dDvnykQ7Dbkb6lTJCDpVR0s+3tngFsbAOfiUKg2MPUjsqq8MtU
-         T61Q==
+        bh=x9GSh3Zm4OXtSq0jQU3rRGCdIRW1ZWbDoaw15nWkSWM=;
+        b=ILPY4gfnkD1neKTACXCPfDBy3nb003/b0VboMViRmHDVMI7BDA4VAbXfUZ6k32AzvQ
+         60asBlPnjaoP73hbMJgr8eO4bI7VcICPSDDKr2ctqm0T8n7Tz6UtTA4GakAL71jtl1S9
+         0sPAzgDFtom2PqZ5o6swsHALxnMOjMC5an1AoGxPKrwNTialFqIRU+LkeMigVbUBrric
+         v7GjlhDZIfrUncmk+E71ULb8SHaXKoMKPngvh1j6DWJZrnNc7pG517piXtk79ma23Bvu
+         dlz/fv+OeHpVgPdmpQ0N1ysvJcCYL2dBDcTmL0RFIMkDNpL7A5vwtZ0xtX1dac6GDS5c
+         T23w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1775748242; x=1776353042;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+        d=1e100.net; s=20251104; t=1775748581; x=1776353381;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=BoVMgFSg7TgoUkOzz8poiLNf0wihCgPQFidePPKr930=;
-        b=Xe3dyzODApg/y2zhqHrVIe7QlL1QUayXGT76loGiuFQvwFR12FKutb6b/9w78QQdO8
-         /EestAwtgc8ISAr3ZV5X1dFa6jWioqaGKgJ9cE1T/pZxht12KW7L+KPe/Mfu5zeBkY7V
-         dNQcvozjFvBiyzBun/Kgo/dZCNVY6Y/us2rsMdZ/vtslzWjMMOterruw0WTnofs/YENf
-         tjm1uX9Rnnw76Xw11SoNYyH0dKwCZKc+iMKlMaD30LZx4G/+PvJ9dnUa/KCtkhPk5NcU
-         vzKYJcAsKq1LkZpJAaBsUNX0nYsEMvqxQo0v6NP7gm1uuyIc2XlQ+jbguiRC+cGjt4yW
-         4odg==
-X-Forwarded-Encrypted: i=1; AJvYcCUtWCscCVg/KM3OVYwroJ2ADhs2LAIVrW7MvsZJMWap5+cBFGsAbKdkZy5CJUgcpMxmhvuICqaaB4gh@vger.kernel.org
-X-Gm-Message-State: AOJu0YxfyeHGdjn86temxUPtXYGkGx91kv2wZbwTdyAj4hyG0C/giU02
-	9NeRQ9cMCdccGznMF2jd5RUUDlT+2BOHsAGPhJ6pnPWN84l5K0wRsv/B
-X-Gm-Gg: AeBDietBDdfsDe/Eo4Z6oeWqliQkZFjAgcq2rytCL/nPS+eQSDolTZI4AeFhTnjDtM9
-	KL5Xanc82KVSYAcp3LZP+gYezsPuLdeuBF/HTyh4X17xJF+ITJt9+UVCfQ8SGJw4igqNL6cl8DR
-	BMHt+It65ak0M+cbdKB2uWAxmgT4ilEpuyIkNefURcjx9TPgMh3+0rkgkTdhY/8z+YGI3fDant0
-	JLjGTcX0SJJTPJRPTC9wMR47ea3ZUvFeEiT4Z3Ni5RK368CBglR1XJbdHEMux8fBZqsx5Qu6fVj
-	1wk+MDStxtF7+T/AIqQhDMR+R/JMr8JIn7+czp9QWx2txvSHzJAi7U3zpxfOgfjipohoZegJPnF
-	UW5k66z35RQqdj7v5HOAEd2zWwoepDWyN4azF1LEd8g5TzeKulxUO0elagMpTyDvGXe70sWrhtr
-	jn9w3ZProUqCcuPv1DYGdI7oabvNas6qPfMc9Z1gy+hC3DfeRDVQLZHblaMPydAOUvGKfRgrvq7
-	B1tl9i5AhA03lrDZj7NSh/AalLu
-X-Received: by 2002:a05:6214:4c8b:b0:896:cc24:138e with SMTP id 6a1803df08f44-8ac74287bfamr58007166d6.54.1775748241840;
-        Thu, 09 Apr 2026 08:24:01 -0700 (PDT)
-Received: from TDC4045031631.e0cglfehwr0e5gttmepj3hi3hf.ux.internal.cloudapp.net ([20.63.37.123])
-        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-8ac56e3a898sm72809956d6.38.2026.04.09.08.24.00
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 09 Apr 2026 08:24:01 -0700 (PDT)
-From: Ashutosh Desai <ashutoshdesai993@gmail.com>
-To: netdev@vger.kernel.org
-Cc: Eric Dumazet <edumazet@google.com>,
-	linux-hams@vger.kernel.org,
-	jreuter@yaina.de,
-	davem@davemloft.net,
-	kuba@kernel.org,
-	pabeni@redhat.com,
-	horms@kernel.org,
-	linux-kernel@vger.kernel.org,
-	Ashutosh Desai <ashutoshdesai993@gmail.com>
-Subject: [PATCH v2] ax25: fix OOB read after address header strip in ax25_rcv().
-Date: Thu,  9 Apr 2026 15:23:59 +0000
-Message-Id: <20260409152400.2219716-1-ashutoshdesai993@gmail.com>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <CANn89iK7bzV0VpPsP5nu0mV3GCsN5MOZJgc_s8a3B2X6Ui6mxg@mail.gmail.com>
-References: <CANn89iK7bzV0VpPsP5nu0mV3GCsN5MOZJgc_s8a3B2X6Ui6mxg@mail.gmail.com>
+        bh=x9GSh3Zm4OXtSq0jQU3rRGCdIRW1ZWbDoaw15nWkSWM=;
+        b=id6m6Qo6J83CETJoDF5m2VlI1FNuB8rzY8DsbdVsaA2QIPHpWe4oP2DlpovMQOm31r
+         hcOdhPH6HXX0PfGMJA/bdYVB8Qe8Qyv17xkUIrX3UhDWRvL+NWVW0ik+UmzdkvNZ7TwV
+         HE2sCcZ2AtdjHakWGMRDNtEc8gqh2XJRdIM2ucrmMmPvWeIYpsgb1tBA6Gq5P0VvSqY5
+         8YtgCqPPRqFW9/z8KbWwKvLS3q9EQ3Ypu9SZoGO/kPVgZnbhgN27+WoDDtCan1pXWU6i
+         VcMPH4/2NM+J9I9Czl2VRzdLqnt6yVZM6CpBDIwfvuEGXfBqrBuir+zaVN4W/mEFsQuM
+         UYYw==
+X-Forwarded-Encrypted: i=1; AJvYcCVelJDUSNfgoTouN4LRdfYD8GkY2n0YTVH21VJx6srp5zBRHWhN1/UyFTKBQwch3DuSYHeaMnipiaT+@vger.kernel.org
+X-Gm-Message-State: AOJu0YwlefpKHoOltvPjgBniIty0I3aHlMqRmQqT7bFurQPb96mliqnS
+	tQzdCxhb5W8To0LHIKFN/734urabGDAB94ghWeIeryByp0wdzxBcbI8qAPrJ9/cOyNASXmRBLfp
+	cSICvixnOJL5YcuemKagXvstWSVyV878HqlV92T2H
+X-Gm-Gg: AeBDievfInkmjNAjEq3GLjwcEpA/lj9iAUaz98DrZiB9ewSp8GoKrCx5Bq9+cf6jDN9
+	lGFPbpAcjV+jXuWsY0hpo1ENf5nNKeZUsl7PQS1YT2d/GJ2sz8tp99+eNMp8/DgMvLr07aiT2C+
+	HrTKmlt+TzDMb59RVm2rtCKLJ6gR5S7pffGdvqLTvFGe4XyVGYFZ6QVEfKpWkv/gc1VIRCDG+Mz
+	p5b27v6xlTlayPwcGXbE8dYuyRg0BAjs97eSHM9k02GA6dEN93czFfi8lfje4j9WvlStT9+C1Hr
+	jDKzPxlf1vgEOU3PoA==
+X-Received: by 2002:a05:690c:f16:b0:79a:c9c1:eb29 with SMTP id
+ 00721157ae682-7adeda869cemr37882417b3.19.1775748580519; Thu, 09 Apr 2026
+ 08:29:40 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-hams@vger.kernel.org
 List-Id: <linux-hams.vger.kernel.org>
 List-Subscribe: <mailto:linux-hams+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-hams+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <CANn89iK7bzV0VpPsP5nu0mV3GCsN5MOZJgc_s8a3B2X6Ui6mxg@mail.gmail.com>
+ <20260409152400.2219716-1-ashutoshdesai993@gmail.com>
+In-Reply-To: <20260409152400.2219716-1-ashutoshdesai993@gmail.com>
+From: Eric Dumazet <edumazet@google.com>
+Date: Thu, 9 Apr 2026 08:29:29 -0700
+X-Gm-Features: AQROBzCXDPlzFz1E_DesM4BAdot9Qun_7KfOdrYkd5ipizEicj7MBWk01jC-U3U
+Message-ID: <CANn89iJL9VNa=Rj579LZgD_TVuqR-hq77RS5hf0yaDzwgnUR0g@mail.gmail.com>
+Subject: Re: [PATCH v2] ax25: fix OOB read after address header strip in ax25_rcv().
+To: Ashutosh Desai <ashutoshdesai993@gmail.com>
+Cc: netdev@vger.kernel.org, linux-hams@vger.kernel.org, jreuter@yaina.de, 
+	davem@davemloft.net, kuba@kernel.org, pabeni@redhat.com, horms@kernel.org, 
+	linux-kernel@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-ax25_rcv() calls skb_pull(skb, ax25_addr_size(&dp)) to strip the
-address header, then reads skb->data[0] (control byte) and skb->data[1]
-(PID byte) without verifying those bytes are in the linear sk_buff area.
+On Thu, Apr 9, 2026 at 8:24=E2=80=AFAM Ashutosh Desai
+<ashutoshdesai993@gmail.com> wrote:
+>
+> ax25_rcv() calls skb_pull(skb, ax25_addr_size(&dp)) to strip the
+> address header, then reads skb->data[0] (control byte) and skb->data[1]
+> (PID byte) without verifying those bytes are in the linear sk_buff area.
+>
+> The original fix checked skb->len < 2, but as Eric Dumazet pointed out,
+> skb->len counts bytes across the linear head and any non-linear
+> fragments. If the two bytes needed sit in a fragment, the check passes
+> but the direct skb->data access is still out of bounds.
+>
+> Use pskb_may_pull(skb, 2) instead, which ensures both bytes are present
+> and pulls them into the linear area if needed before we read them.
+>
+> Suggested-by: Eric Dumazet <edumazet@google.com>
 
-The original fix checked skb->len < 2, but as Eric Dumazet pointed out,
-skb->len counts bytes across the linear head and any non-linear
-fragments. If the two bytes needed sit in a fragment, the check passes
-but the direct skb->data access is still out of bounds.
+I have not suggested to fix a bug in ax25.
+I added a comment on your initial version.
+A "Suggested-by" would imply I made the initial discovery.
 
-Use pskb_may_pull(skb, 2) instead, which ensures both bytes are present
-and pulls them into the linear area if needed before we read them.
+Please carefully read Documentation/process/maintainer-netdev.rst
 
-Suggested-by: Eric Dumazet <edumazet@google.com>
-Signed-off-by: Ashutosh Desai <ashutoshdesai993@gmail.com>
----
- net/ax25/ax25_in.c | 5 +++++
- 1 file changed, 5 insertions(+)
-
-diff --git a/net/ax25/ax25_in.c b/net/ax25/ax25_in.c
-index d75b3e9ed..6a71dea87 100644
---- a/net/ax25/ax25_in.c
-+++ b/net/ax25/ax25_in.c
-@@ -217,6 +217,11 @@ static int ax25_rcv(struct sk_buff *skb, struct net_device *dev,
- 	 */
- 	skb_pull(skb, ax25_addr_size(&dp));
- 
-+	if (!pskb_may_pull(skb, 2)) {
-+		kfree_skb(skb);
-+		return 0;
-+	}
-+
- 	/* For our port addresses ? */
- 	if (ax25cmp(&dest, dev_addr) == 0 && dp.lastrepeat + 1 == dp.ndigi)
- 		mine = 1;
--- 
-2.34.1
-
+We require a 24-hour delay between each version.
