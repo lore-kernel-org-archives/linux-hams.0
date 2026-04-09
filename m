@@ -1,130 +1,141 @@
-Received: from mout-y-209.mailbox.org (mout-y-209.mailbox.org [91.198.250.237])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qv1-f53.google.com (mail-qv1-f53.google.com [209.85.219.53])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D38EF28686;
-	Thu,  9 Apr 2026 02:50:47 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.198.250.237
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775703049; cv=none; b=WwNQgbkTI2OqKODtcSXOf8HBUZsz+IQP2zSMfN92Bv+SbTDjjy8udrNc7sr870+3pwPxTOWYlEO/sjxVoltMphZS1WQaHRIi7w3f9HQmjKKjig64P9bQxrRpEjCVi7ckf/eu0nVWuRZ/DpHuyVRoDIMt4CVznvsv14LuhhRtNTw=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775703049; c=relaxed/simple;
-	bh=5J5ZO6fBKGSx8kRLsewuIHgetXG4DNnuNKeDnEdeSL8=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=J6cQP3XWUQwNRVLusYwfmGIlf/BcYvv5h4qkf+dqVzCH72qBSFCsC4iNhvjTqACZLl5MuhcsUfMrQWP0jkNbcNNVwx4IY6b3cVEQvQdYfEvmEFBhc7wp7QrZA0+kNF3DcDEg1O8kk8wwDgxZALarAuXNzCI4nxjd01JMK5u1oCU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=mailbox.org; spf=pass smtp.mailfrom=mailbox.org; dkim=pass (2048-bit key) header.d=mailbox.org header.i=@mailbox.org header.b=G60PAVWB; dkim=pass (2048-bit key) header.d=mailbox.org header.i=@mailbox.org header.b=YaK8ZsWs; arc=none smtp.client-ip=91.198.250.237
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=mailbox.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=mailbox.org
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 49442370D41
+	for <linux-hams@vger.kernel.org>; Thu,  9 Apr 2026 07:08:43 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.219.53
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1775718525; cv=pass; b=GeWMUc8tzHAqDTHyw6Zo3cm+OWM9i8HwN+LwXh1oMhbRMiMSrkJgi9WsGWSfM4Kws3mtr1edZIblB272lTk3okaqAE9AwfhC74jmI8SYPMFBFi/Zh41/PtUnZYxTrlme/SHsHyh3uU1YlJkg8qf8JiFSASZ+UDgHPiYPtKm725U=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1775718525; c=relaxed/simple;
+	bh=PRFayrKxPdZ1mTEyp14s0b1w0yWwkt+Ou1Wuz12o2xg=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=Bs1lQrsuDiW5tQys04XXrDdGXGjfzpA4bisTSGcTpmqGKzUOOG5MrtNwMLFFsNDviREl1PLxKXAOZLuSiSSeAUF0rdXJAdnKNZD6vnBPvcpgxleWcNdlfuGE6FPmqaE1y0bOIQGegzpKJga4d2grDqQTO90SQwMC1sCR4uMBfCA=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=SkXwV87S; arc=pass smtp.client-ip=209.85.219.53
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=mailbox.org header.i=@mailbox.org header.b="G60PAVWB";
-	dkim=pass (2048-bit key) header.d=mailbox.org header.i=@mailbox.org header.b="YaK8ZsWs"
-Received: from smtp2.mailbox.org (smtp2.mailbox.org [IPv6:2001:67c:2050:b231:465::2])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	by mout-y-209.mailbox.org (Postfix) with ESMTPS id 4frkvV17YzzB12V;
-	Thu,  9 Apr 2026 04:50:46 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=mailbox.org; s=mail20150812;
-	t=1775703046;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:
-	 content-transfer-encoding:content-transfer-encoding;
-	bh=pffMbmSi5wWfzvmmZ19zBe3ASxdB2Pb24bLa/ZO63cc=;
-	b=G60PAVWB3rClMPUhUvDATFIeEh/6a7M2W3xxyTpXiSQRNtSedWXDdMALE93vjyzhgeFPqa
-	1ka/WBaO3K+Pra0mo62yblLLQyBRLHuFAG4hY85L1BovUvRh8RcxTRXta9XPRhmo7fJcEk
-	QHen7Hxb8WCfuqkPP7lJF2Ix+VsNkhmWzBihZccXHOa+JkQ3w0QRNLJ+wmEgvO82ej7N0x
-	X5wEndRXaMdNTIFauPbSeaUOVJWVfhjjGhUtDgT4aeq7O7ithWMemV73Weagsq+NuLyDsZ
-	UGavlouYcnhVFrTJrqaxLzN7u3N1uds/lAfoY/dShTeaRI+DtnCF3kBJB0IOLg==
-Authentication-Results: outgoing_mbo_mout;
-	dkim=pass header.d=mailbox.org header.s=mail20150812 header.b=YaK8ZsWs;
-	spf=pass (outgoing_mbo_mout: domain of mashiro.chen@mailbox.org designates 2001:67c:2050:b231:465::2 as permitted sender) smtp.mailfrom=mashiro.chen@mailbox.org
-From: Mashiro Chen <mashiro.chen@mailbox.org>
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=mailbox.org; s=mail20150812;
-	t=1775703044;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:
-	 content-transfer-encoding:content-transfer-encoding;
-	bh=pffMbmSi5wWfzvmmZ19zBe3ASxdB2Pb24bLa/ZO63cc=;
-	b=YaK8ZsWs+GlKI8nrLchTNB+pHwLAAgMMHDUP9oaM7X3I2WWwFT17fW3m7d9tp+Nl6YZbHh
-	mU0lETsHpZtbMTNfVoo7NI7QxdxO2tGRGfu5cJSqGzXZMatKEDvJHrA5ktpv0kcAddNR6G
-	w33mj9etJJEhaSYwxFW5Z4kdSE8Acrcs46P3mcm2YByVD2zoxB9URCtzmN1OjZainoeiOZ
-	56ga7f0bCpQeiRsLSiqV7P4e1VDZXkt9uVmg75C2iaGK0VFenftYF5knKbviY7JD400ZI1
-	MBRHUDnoiNzGqM0vFpgeguqO1NIw3vQ06ZIPPwPdYCzULeJQjhKnWonmEbdI4A==
-To: netdev@vger.kernel.org
-Cc: davem@davemloft.net,
-	edumazet@google.com,
-	kuba@kernel.org,
-	pabeni@redhat.com,
-	horms@kernel.org,
-	jreuter@yaina.de,
-	linux-hams@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	Mashiro Chen <mashiro.chen@mailbox.org>,
-	stable@vger.kernel.org
-Subject: [PATCH v2 net] net: ax25: fix integer overflow in ax25_rx_fragment()
-Date: Thu,  9 Apr 2026 10:50:26 +0800
-Message-ID: <20260409025026.24575-1-mashiro.chen@mailbox.org>
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="SkXwV87S"
+Received: by mail-qv1-f53.google.com with SMTP id 6a1803df08f44-8a016799d2cso8025136d6.1
+        for <linux-hams@vger.kernel.org>; Thu, 09 Apr 2026 00:08:43 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1775718522; cv=none;
+        d=google.com; s=arc-20240605;
+        b=T4VYcFs7Pxi0akF7KuuuuY1zR0zet+7ZqDw80ExS3ahHElxi+sixxUIJlY/bODVrlY
+         3DNDtX8J7fGUV8M95TMfN4zFVOXk4iAgIIYZPtOEmRvjT3a2j/oSD75VJlTeaz6E6AY5
+         NV8i+s7BH3Y/QsF5IHDPxb73rxa8tkBkuy70EBvFwJjjlYmL7Hgd8L4RBXtJcOeu6d8v
+         IaKrYhmybsosHMbo7LY1swScL4rLAuS3LIhQKJWnsPo23zWOwTPTxMTJ6EEArE7hkbEZ
+         fZp64wLw+qn8BWvq4w+KTV2tmAHGzlrqtDezh5FD9dRp/PT1mbo1c/lkY24AG/jGpuX0
+         qmrg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=G11Ctve6TNDq0sGTdIs3vggtNtTBmZS/FVmEfytylFI=;
+        fh=vWJiA0bHqT/YakO/vxu3t4SI/KQheo3s97V0ZmSfNCc=;
+        b=lp4TXUP3Ff0I+JlSmksZ0qvtIXHb67GyomeM1anVu9b+jhwOe0EUKwea/UNAHePcoB
+         HaZW/M67XDCKxAoZFA5nzZEBf/C8uD6n1g14jGJ07v0Lm6AlaJ2tmkSMMe5OJ3pC3cMb
+         HvIqYHm4KzVyFssYXZ5tlWaqnBoOLjzz7LQG2X6MoLo/1TE52025XhjEOT5d4XKHL5kf
+         IT9wWY0kCYeEUTz5oGOYT31toRKjL9idYydlNYjwqUG6Wlsf3Z5gaXoHDryujTPq6B8T
+         N0msgaAHYjEjxUaos+Etk4IsqIGOUfa/wu1euUg3oGFn+ULug14JQZaAOCSCmY7OBx2s
+         JWpA==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20251104; t=1775718522; x=1776323322; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=G11Ctve6TNDq0sGTdIs3vggtNtTBmZS/FVmEfytylFI=;
+        b=SkXwV87SzkRVc316HffeN6yld2hUkvgQIU1HS0s7U/PKLvBX3doCUIVCiE7avZATQP
+         rsBu8tsD72kB8jSXWGIBVVCTmoecZ/V+0/+ZBqw1Yo/B+ilFML8pqUuKR5sflqy/qtj5
+         dtYqNjDGQd9MD5suBpCgmtsirK/8wFWvIFoxW5jW/r19ZhL42rzBjKTnmjwEGI9of1wl
+         pVQStgEyYX2ZmDmyj4A0uA+XwRD9ziBDfdODSPbqyDqjeKS5HWEuzc6irrJXfnM504e6
+         5vhnRgKkQoYmNp/Cy2bJpDCZPKt4z0v8BGsxTq72ot5jVcR6ZASaKp760XXsMQ6Pf0i/
+         +BrQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1775718522; x=1776323322;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=G11Ctve6TNDq0sGTdIs3vggtNtTBmZS/FVmEfytylFI=;
+        b=fg1+49vvVKxFUFxctqB92bvTG1Lk9ySEXz1epMHD2TpHfBDSbYCcsFUefO9BNyncRg
+         23w+Q7HbcOeJeha7s++FzhvKzDjCtMyEY5zCk6BVu7SRLiqEL/wYtMbtNgeHoR/Fi3+z
+         cj6VS8axB4TGEp4tMoJ/2Ai+kYMmuKGUUv2cL2eA0sY2gM9NsPDiJUDJoC/YU9nqJa3O
+         QFsXVqIjQcvivTYonNq/s7wJEVnDFNYdOKIxtrHeuDmtkBHze3xOiROYtN0svHNaS5Qs
+         jHPgic1DB12F3dDJ3x1mBdUnSg7Ioz2o/mPHlW/zGoItNI8oznfj15eT3AxgWV5GnZ0e
+         YTvg==
+X-Forwarded-Encrypted: i=1; AJvYcCX9OA9Ebz4CC2w9mLVcbqWloz42b/p06khhnaAgTVw5GoqWrIA86YnWjWO1YV8BW1wzbNNDx28oL2fm@vger.kernel.org
+X-Gm-Message-State: AOJu0YzkUJERDf4JCbmnfp0DxDUemHvmBDJbJD6rMqFOgtepXFXP9q/a
+	/PmBFKmg0tXesTNe/1UhkE8e3kLbq6M4/uo+lczyhfmUvAS4FyUR25HGoyVxRmjzui0YBfdbLzJ
+	rkwKiCkBEgJ504SMlHi4QA8M7cIGQffpUrKEz+b/SMdAA6Nd/daKKpzmc
+X-Gm-Gg: AeBDiesRid5ePcjTKfaM0PihEYn8KpuL8a3XDkb8rxGDrMWwHuPjlS3iYRhVEMiQ/I1
+	PDlrvSoCjDLRUxVEUY7PL2Zk+yq68sW1TKWw+mVtXLrSLbAegvga4AqS/J3Ahse1BUScpwxH8S+
+	A1MVLHWxm5CN4LtfchMpJZvJt/8n0uiwzM8KSzJbmSPrdh0sB1DuvAVEzqX+1/V43IlQG61Qi5p
+	g68LXHHyNG2qLQ7I6vgMhZIVEBSTg1DMqkFK9wnUT255TQ1mFtPHSUX7aEelvXbI2O9tagfcOVe
+	4F8Jdxk=
+X-Received: by 2002:a05:6214:4985:b0:8a7:1745:c50a with SMTP id
+ 6a1803df08f44-8a71745c752mr399083816d6.41.1775718521778; Thu, 09 Apr 2026
+ 00:08:41 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-hams@vger.kernel.org
 List-Id: <linux-hams.vger.kernel.org>
 List-Subscribe: <mailto:linux-hams+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-hams+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-MBO-RS-META: 35ib8kudtt1jz7rqdyz1rkbsa6k8ye6u
-X-MBO-RS-ID: 5f4dc865e5cefd5ceb9
-X-Rspamd-Queue-Id: 4frkvV17YzzB12V
+References: <20260409012235.2049389-1-ashutoshdesai993@gmail.com>
+In-Reply-To: <20260409012235.2049389-1-ashutoshdesai993@gmail.com>
+From: Eric Dumazet <edumazet@google.com>
+Date: Thu, 9 Apr 2026 00:08:29 -0700
+X-Gm-Features: AQROBzCFLDmd8uWNsPBZtfGSuu8peKqgi5AWIUFx7ssHDeVE3xo0QX7B-xKT5B0
+Message-ID: <CANn89iK7bzV0VpPsP5nu0mV3GCsN5MOZJgc_s8a3B2X6Ui6mxg@mail.gmail.com>
+Subject: Re: [PATCH] ax25: fix OOB read after address header strip in ax25_rcv().
+To: Ashutosh Desai <ashutoshdesai993@gmail.com>
+Cc: netdev@vger.kernel.org, linux-hams@vger.kernel.org, jreuter@yaina.de, 
+	davem@davemloft.net, kuba@kernel.org, pabeni@redhat.com, horms@kernel.org, 
+	linux-kernel@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-The ax25_cb fragmentation reassembly accumulator:
+On Wed, Apr 8, 2026 at 6:22=E2=80=AFPM Ashutosh Desai
+<ashutoshdesai993@gmail.com> wrote:
+>
+> ax25_rcv() calls skb_pull(skb, ax25_addr_size(&dp)) to strip the
+> address header, then immediately reads skb->data[0] and skb->data[1]
+> without verifying the buffer still contains at least 2 bytes.
+>
+> A crafted 15-byte KISS frame (1 KISS byte + 14 address bytes with
+> EBIT set in the source address, no control/PID bytes) passes
+> ax25_addr_parse() which only requires len >=3D 14, and passes the KISS
+> byte check (low nibble =3D=3D 0). After skb_pull(1) in ax25_kiss_rcv()
+> and skb_pull(14) in ax25_rcv(), skb->len is 0 and the subsequent
+> reads of skb->data[0] (control byte) and skb->data[1] (PID byte)
+> are out of bounds.
+>
+> Add a check that at least 2 bytes remain after stripping the address
+> header, freeing the skb and returning on malformed input.
+>
+> Signed-off-by: Ashutosh Desai <ashutoshdesai993@gmail.com>
+> ---
+>  net/ax25/ax25_in.c | 5 +++++
+>  1 file changed, 5 insertions(+)
+>
+> diff --git a/net/ax25/ax25_in.c b/net/ax25/ax25_in.c
+> index d75b3e9ed..92baac77f 100644
+> --- a/net/ax25/ax25_in.c
+> +++ b/net/ax25/ax25_in.c
+> @@ -217,6 +217,11 @@ static int ax25_rcv(struct sk_buff *skb, struct net_=
+device *dev,
+>          */
+>         skb_pull(skb, ax25_addr_size(&dp));
+>
+> +       if (skb->len < 2) {
+> +               kfree_skb(skb);
+> +               return 0;
+> +       }
+> +
 
-  ax25->fraglen += skb->len;
+Are you aware of pskb_may_pull() ?
 
-operates on the unsigned short field 'fraglen' declared in ax25_cb:
+Testing skb->len is not enough.
 
-  unsigned short  paclen, fragno, fraglen;
-
-When fragments accumulate with a combined payload exceeding 65535
-bytes, fraglen wraps to near zero.  The subsequent allocation:
-
-  skb = alloc_skb(AX25_MAX_HEADER_LEN + ax25->fraglen, GFP_ATOMIC);
-
-then allocates a tiny buffer.  Every skb_put() call in the copy loop
-that follows writes far beyond the allocated headroom, corrupting
-the kernel heap.
-
-An attacker on an AX.25 link that supports multi-fragment I-frames
-(AX25_SEG_FIRST / AX25_SEG_REM mechanism) can trigger this by
-sending enough continuation fragments to wrap the 16-bit counter.
-With AX.25 segment numbers limited to 7 bits (max 127 continuation
-fragments), a fragment payload of ~516 bytes per fragment is
-sufficient to overflow.
-
-Fix mirrors the identical bug fixed in NET/ROM (nr_in.c): check for
-overflow before adding skb->len to fraglen, and abort fragment
-reassembly cleanly if the limit would be exceeded.
-
-Cc: stable@vger.kernel.org
-Cc: linux-hams@vger.kernel.org
-Acked-by: Joerg Reuter <jreuter@yaina.de>
-Signed-off-by: Mashiro Chen <mashiro.chen@mailbox.org>
----
- net/ax25/ax25_in.c | 5 +++++
- 1 file changed, 5 insertions(+)
-
-diff --git a/net/ax25/ax25_in.c b/net/ax25/ax25_in.c
-index d75b3e9ed93de8..68202c19b19e3f 100644
---- a/net/ax25/ax25_in.c
-+++ b/net/ax25/ax25_in.c
-@@ -41,6 +41,11 @@ static int ax25_rx_fragment(ax25_cb *ax25, struct sk_buff *skb)
- 				/* Enqueue fragment */
- 				ax25->fragno = *skb->data & AX25_SEG_REM;
- 				skb_pull(skb, 1);	/* skip fragno */
-+				if ((unsigned int)ax25->fraglen + skb->len > USHRT_MAX) {
-+					skb_queue_purge(&ax25->frag_queue);
-+					ax25->fragno = 0;
-+					return 1;
-+				}
- 				ax25->fraglen += skb->len;
- 				skb_queue_tail(&ax25->frag_queue, skb);
- 
--- 
-2.53.0
-
+I suspect all net/ax25 is expecting linear skbs and never considered fragme=
+nts.
