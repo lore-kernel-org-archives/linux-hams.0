@@ -1,89 +1,69 @@
-Received: from mout-y-111.mailbox.org (mout-y-111.mailbox.org [91.198.250.236])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 241EF1A9F87;
-	Fri, 10 Apr 2026 05:09:01 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.198.250.236
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 92B65331A56;
+	Fri, 10 Apr 2026 05:24:39 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775797744; cv=none; b=aX9ER6mYozSHq2J7Fyr6mhdp9fzrmnUAtV78asZDJJnMsy1DwMomiF7PXfsCTWUjI46ajtsZBAuUc/DzvbGImy5SBpAPKrvnmdTZKKphXYYjKrv0vAqi7d88FPz5Rcy/OYeszw9bqdqNDTccOadjiuv9YuOzpBuk+TU+pJ0xY48=
+	t=1775798679; cv=none; b=NlARJY6mE4r0oTsGarC6IxEgFDS6SevI7hKURxzM+6QoBJa5YoaTAvfLYnCQc05gSXFf/ZBLxQMTBcGbLIoi8bc1arqm+ytMMdbVnzpVJtadn225HxJhpWh/NxnZ6gxSytIQVF3kBUlfvxwSyntieTRJokdiTbQP1Ki5+jAtqdo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775797744; c=relaxed/simple;
-	bh=w1GSQUdk+ohCeNmshfJJ//72ky+g9gEaS/K7kEdQ6tw=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=RMwd7pQRdGLGsZ5TQXB2vjiA6DtaLAwKfGVHUTmpE0uelOUUtTyCWEujwuB5mbqabtIfl2egiJt6qO+FcAWziFy+CSY1Xj8wBKcOPogDBUK2S0KO01hLHdB8bKV4g0EV1EOlVn8s0ghnktmdJn8aBFhnu0tnVyGb3CeHcWlI4MM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=mailbox.org; spf=pass smtp.mailfrom=mailbox.org; dkim=pass (2048-bit key) header.d=mailbox.org header.i=@mailbox.org header.b=sSy+XtwU; arc=none smtp.client-ip=91.198.250.236
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=mailbox.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=mailbox.org
+	s=arc-20240116; t=1775798679; c=relaxed/simple;
+	bh=f3VDS2U4yNAj47bx0fM6G28chp8B29iQfXBTLcjw7OE=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=CwOA6eoecCC+gfH9cTfmm6BA9pXf4vXLZH7Q6EgUdSjh3V5YdG2koXPINQQgenV8qjRsDccqSW/6o09az3ZMNA1vWe5dHCbD1b7irJPBlI9uR0BflDipXqOhhtYTtjOS+yox+kkYEnB5h9Bxk6m9N1jjpvLVNJn9eNwwF1CkL1I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1zuOqIwZ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=mailbox.org header.i=@mailbox.org header.b="sSy+XtwU"
-Received: from smtp1.mailbox.org (smtp1.mailbox.org [IPv6:2001:67c:2050:b231:465::1])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	by mout-y-111.mailbox.org (Postfix) with ESMTPS id 4fsPwV6hsNz9ybx;
-	Fri, 10 Apr 2026 07:08:58 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=mailbox.org; s=mail20150812;
-	t=1775797739;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=zqZBQf8u48iamiCPb8jz8sKBQZqMz55AUf8Elg3OBk8=;
-	b=sSy+XtwUmKM/ozpOtvtViZLYCNw+k0DWM1XUWtcNptYC19LrllIcVVqy/27WY6VIHzSTHB
-	APGHjtoZSv+cpiISy6wDJHHlYB+59HLmIR+y774FT3csM5ou1nCHOIELSB1B75abe9mJi0
-	ZYTXZC5SVASTH7PqXo74NRcxaY3jK5KMeNlnYQE6k8xkEaRWa7YORkHanRro2bqggZao9S
-	jbAphdZRcrYdOx/3AieiLUkf5jv0vWKj1rANtGfrmXChKc5kwngm5klMb832+2xOoL+a/u
-	kbeXUeKHC/uI4c1FeGJPQmYlVAtpgrwcLolSIdZl3ZT9wE+9ySmZkRVa0WMiiQ==
-Message-ID: <2a5c79ab-423d-4900-a81f-e1e568962dad@mailbox.org>
-Date: Fri, 10 Apr 2026 13:08:47 +0800
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1zuOqIwZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B4349C19421;
+	Fri, 10 Apr 2026 05:24:38 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
+	s=korg; t=1775798679;
+	bh=f3VDS2U4yNAj47bx0fM6G28chp8B29iQfXBTLcjw7OE=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=1zuOqIwZMGxFBwP5E3e9xRW07VeSl10ozJn91q11PmfGghSQ/NyadgodrYOhzolzK
+	 QtnvisERt4tUw1pHpT8+/LZivmEabZ+f/DBhvEwpsCAooHWccHSlB1CRVMciRDaW4H
+	 1T8ShgtHwMLQX0ORnU954LPWYamBq0OA9p2+new0=
+Date: Fri, 10 Apr 2026 07:24:36 +0200
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To: Jakub Kicinski <kuba@kernel.org>
+Cc: Simon Horman <horms@kernel.org>, netdev@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	"David S. Miller" <davem@davemloft.net>,
+	Eric Dumazet <edumazet@google.com>, Paolo Abeni <pabeni@redhat.com>,
+	linux-hams@vger.kernel.org, Yizhe Zhuang <yizhe@darknavy.com>,
+	stable <stable@kernel.org>
+Subject: Re: [PATCH net] netrom: do some basic forms of validation on
+ incoming frames
+Message-ID: <2026041026-excuse-slashing-c4ee@gregkh>
+References: <2026040730-untagged-groin-bbb7@gregkh>
+ <20260409190328.GS469338@kernel.org>
+ <20260409203235.6b9329f0@kernel.org>
 Precedence: bulk
 X-Mailing-List: linux-hams@vger.kernel.org
 List-Id: <linux-hams.vger.kernel.org>
 List-Subscribe: <mailto:linux-hams+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-hams+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Subject: Re: [PATCH net v3] net: rose: defer rose_neigh cleanup to workqueue
- to fix UAF
-To: Jakub Kicinski <kuba@kernel.org>
-Cc: netdev@vger.kernel.org, linux-hams@vger.kernel.org, davem@davemloft.net,
- edumazet@google.com, pabeni@redhat.com, horms@kernel.org,
- linux-kernel@vger.kernel.org,
- syzbot+abd2b69348e2d9b107a1@syzkaller.appspotmail.com
-References: <20260405125830.89251-1-mashiro.chen@mailbox.org>
- <20260406170125.175258-1-mashiro.chen@mailbox.org>
- <20260409194957.5465e98b@kernel.org>
-Content-Language: en-US
-From: Mashiro Chen <mashiro.chen@mailbox.org>
-In-Reply-To: <20260409194957.5465e98b@kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-MBO-RS-META: j1dks63mkhowiy6dr9d37ocht8o7o4bg
-X-MBO-RS-ID: 3187a8e572b2cbf6a5f
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20260409203235.6b9329f0@kernel.org>
 
-On Tue, 7 Apr 2026 Jakub Kicinski wrote:
- > What if ROSE is built as a module and gets unloaded?
- > Please don't post the next version until next week
+On Thu, Apr 09, 2026 at 08:32:35PM -0700, Jakub Kicinski wrote:
+> On Thu, 9 Apr 2026 20:03:28 +0100 Simon Horman wrote:
+> > I expect that checking skb->len isn't sufficient here
+> > and pskb_may_pull needs to be used to ensure that
+> > the data is also available in the linear section of the skb.
+> 
+> Or for simplicity we could also be testing against skb_headlen()
+> since we don't expect any legit non-linear frames here? Dunno.
 
-Got it, I will not post any patches until next week.
+I'll be glad to change this either way, your call.  Given that this is
+an obsolete protocol that seems to only be a target for drive-by fuzzers
+to attack, whatever the simplest thing to do to quiet them up I'll be
+glad to implement.
 
-I've never thought about the module unload path, this is
-the point I missed in my previous patch. I will deep analysis
-if the timers are properly stopped before the module is
-removed. I will address this in v4 next week.
+Or can we just delete this stuff entirely?  :)
 
-Sorry for low quality and  simple analysis without auditing.
+thanks,
 
-73s,
-Mashiro Chen
-
-On 4/10/26 10:49, Jakub Kicinski wrote:
-> On Tue,  7 Apr 2026 01:01:25 +0800 Mashiro Chen wrote:
->> rose_neigh_put() frees the rose_neigh object when the reference count
->> reaches zero, but does not stop the t0timer and ftimer beforehand.
->> If a timer has been scheduled and fires after the object is freed,
->> the callback will access already-freed memory, leading to a
->> use-after-free.
-> What if ROSE is built as a module and gets unloaded?
->
-> Please don't post the next version until next week, we're drowning in
-> these AI generated patches.
+greg k-h
