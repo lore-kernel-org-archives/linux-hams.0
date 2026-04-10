@@ -1,58 +1,82 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mout-y-111.mailbox.org (mout-y-111.mailbox.org [91.198.250.236])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C5F01247280;
-	Fri, 10 Apr 2026 03:32:37 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C54A284690;
+	Fri, 10 Apr 2026 05:04:25 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.198.250.236
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775791957; cv=none; b=ROoBmWrI3aojf5scUbvkt3wQmn+YVbT5pS4fUDun2Lt2bWKJ5TQFuR2tOiBcNxqpIOJb+0tQr23LpFhUtm1DocFt/oHsE3xoMc9OMK2ULtr1JEvyAoArtIbdI3NiI5cCUv30K1LsiAGGz9lOcNBGuKXCB4yYKSh2qplR7Cwx7JI=
+	t=1775797468; cv=none; b=Hk0Qj/WfNADfyzk0DB6HgFBepZNvvzlplYApiyk5sheclSpyjNRUBFbcwHe8Xxp+IoW7bL/ngNvmkLLgEmWw+G+ShlILKBmE2v/AQwfS9C5/zQCE3vNp6rz/WWl81NWKJjJ3z1SQrOpEZcFOZCSTvj7ushwzSTSRF+37+7TthfQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775791957; c=relaxed/simple;
-	bh=GpakvOgwTza8dL+Os94zM7yKdqCnyPqtnqh8xzlXhIQ=;
-	h=Date:From:To:Cc:Subject:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=gL225LYdn85YB7IPqJuX0mNyupp8ulNmGT2RkXTvkmctUubDtkLsgmzvEE8zq9oPfFU0nL43TfWRBrnZRfkupLhkO5XTuQsYOiQO4s6iWeHgDbNPw8guL7CmMUy/S1BXTZ0r9gaTJyDc+MST9ABKw1PQPWO4bcaGr6XkW76yYf0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=IRq/dWoO; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1775797468; c=relaxed/simple;
+	bh=nI2y+gmhMd9L2l8Rp8X5IPN0SLWfRmr8q/4r9bbj3bM=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=ZaLKqdKSq48knxh1l787sdz1blX1hBlxl3yUuRQlUVWE8J2BDMaA+kR73ROOv05OX7lAAjTER3yV8I7NU1yoMlG/aMyMIm1IK61WFgN1E3Z/dJDqTK9BkrlPq6WxVEnNd9sUH/4ooVyVbmSS97L8ym5MgaV1xfvF7HU8zvJjW0w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=mailbox.org; spf=pass smtp.mailfrom=mailbox.org; dkim=pass (2048-bit key) header.d=mailbox.org header.i=@mailbox.org header.b=Y4WuR2jN; arc=none smtp.client-ip=91.198.250.236
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=mailbox.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=mailbox.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="IRq/dWoO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B0B01C2BC9E;
-	Fri, 10 Apr 2026 03:32:36 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1775791957;
-	bh=GpakvOgwTza8dL+Os94zM7yKdqCnyPqtnqh8xzlXhIQ=;
-	h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
-	b=IRq/dWoOIdP59UQxZ8pKvDeDwHc4vPT+1AF+vA3AYSI82Y1VCB6z58aKY/oaBx40g
-	 TbNiv5HEiAOpQNOHWHYQIDb/PEOOZalF0Duu10fcP9Z7pUbx4WWXNlzAL5p/p6LPBu
-	 ja/VPxyEVQONGcnHc4gayqDl+QSKfc0ea8pTS1VTivQ/Tl5iu9oljOhwLRgjIIG9JQ
-	 0ipwbRd/TTkJkezz7HUTfTFyl7fEg+Zr9DDyjr+rcqLLPUGeUWCGchGONl3DS5icYc
-	 CI8cpi8/dpO/Qg3kWTuKNOxBMJOE1pc6oukxMooViTBvnYQYH3rNu6fD4AYwSdUCtL
-	 NlM2Kbj8wcBPw==
-Date: Thu, 9 Apr 2026 20:32:35 -0700
-From: Jakub Kicinski <kuba@kernel.org>
-To: Simon Horman <horms@kernel.org>
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, netdev@vger.kernel.org,
- linux-kernel@vger.kernel.org, "David S. Miller" <davem@davemloft.net>, Eric
- Dumazet <edumazet@google.com>, Paolo Abeni <pabeni@redhat.com>,
- linux-hams@vger.kernel.org, Yizhe Zhuang <yizhe@darknavy.com>, stable
- <stable@kernel.org>
-Subject: Re: [PATCH net] netrom: do some basic forms of validation on
- incoming frames
-Message-ID: <20260409203235.6b9329f0@kernel.org>
-In-Reply-To: <20260409190328.GS469338@kernel.org>
-References: <2026040730-untagged-groin-bbb7@gregkh>
-	<20260409190328.GS469338@kernel.org>
+	dkim=pass (2048-bit key) header.d=mailbox.org header.i=@mailbox.org header.b="Y4WuR2jN"
+Received: from smtp102.mailbox.org (smtp102.mailbox.org [10.196.197.102])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	by mout-y-111.mailbox.org (Postfix) with ESMTPS id 4fsPq413B3z9ybx;
+	Fri, 10 Apr 2026 07:04:16 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=mailbox.org; s=mail20150812;
+	t=1775797456;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=dwM5jD6bjXoC1na/Qg0ZOQmP0AfF5uQjq2HMYHm1vZw=;
+	b=Y4WuR2jNaA3jkpHMESBElggzsazJkrFGNcRgDz1mn9RZGiNRkMTIf6I27n6oWlr0wqan0w
+	E90lnzVO6eARy+yGHcTaA37INautuwFfj8q8JCAxZ0kQBYTWL8phEf1Pok4mBAQkPdfkTD
+	4Qf9tGypM5NSkHOd79oebIrMNNABtINbEih0frSYr0sBdROELWC0k+kY3KRpqsGnD5bOcR
+	hD2/SUwZFxrOkmyHqfY3lNV9q52wwR+u/HGvufC7Ev1jnzVX4le1EcPpaJteIrtS85lNkr
+	84aTlywT8sq6LJNmb4woPiUCfNVCHoTbbfVG25n14nf68BBsd7rYP9Jhlbh/9g==
+Message-ID: <f09008fa-631b-4668-a883-1b9969f93751@mailbox.org>
+Date: Fri, 10 Apr 2026 13:04:00 +0800
 Precedence: bulk
 X-Mailing-List: linux-hams@vger.kernel.org
 List-Id: <linux-hams.vger.kernel.org>
 List-Subscribe: <mailto:linux-hams+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-hams+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
+Subject: Re: [PATCH net v2] net: netrom: fix lock order inversion in
+ nr_add_node, nr_del_node and nr_dec_obs
+To: Jakub Kicinski <kuba@kernel.org>
+Cc: netdev@vger.kernel.org, linux-hams@vger.kernel.org, davem@davemloft.net,
+ edumazet@google.com, pabeni@redhat.com, horms@kernel.org,
+ linux-kernel@vger.kernel.org,
+ syzbot+6eb7834837cf6a8db75b@syzkaller.appspotmail.com
+References: <20260406110643.82577-1-mashiro.chen@mailbox.org>
+ <20260406114904.89088-1-mashiro.chen@mailbox.org>
+ <20260409195436.3d021e7f@kernel.org>
+Content-Language: en-US
+From: Mashiro Chen <mashiro.chen@mailbox.org>
+In-Reply-To: <20260409195436.3d021e7f@kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
+X-MBO-RS-ID: 223c067f0a06e7a1996
+X-MBO-RS-META: zmkscbzbg8mcd7rib79sjqkjjxdtg1xa
 
-On Thu, 9 Apr 2026 20:03:28 +0100 Simon Horman wrote:
-> I expect that checking skb->len isn't sufficient here
-> and pskb_may_pull needs to be used to ensure that
-> the data is also available in the linear section of the skb.
+On Mon, 6 Apr 2026 Jakub Kicinski wrote:
+ > Can we please merge nr_node_list_lock and nr_neigh_list_lock
+ > into one instead?
 
-Or for simplicity we could also be testing against skb_headlen()
-since we don't expect any legit non-linear frames here? Dunno.
+This makes more sense, thanks for the suggestion.
+I'll rework the patch to merge the two locks into one and
+repost next week.
+
+On 4/10/26 10:54, Jakub Kicinski wrote:
+> On Mon,  6 Apr 2026 19:49:04 +0800 Mashiro Chen wrote:
+>> nr_del_node() and nr_dec_obs() acquire nr_node_list_lock first, then
+>> call nr_remove_neigh() which internally acquires nr_neigh_list_lock.
+>> nr_add_node() acquires node_lock first, then calls nr_remove_neigh()
+>> which acquires nr_neigh_list_lock.
+> Can we please merge nr_node_list_lock and nr_neigh_list_lock
+> into one instead?
+>
+> Lets try to simplify this code as much as possible.
+> It's a maintenance nightmare and has fewer users than syzbot reports
+> (i'm not joking).
