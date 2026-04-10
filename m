@@ -1,186 +1,83 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1EDCA3644D4;
-	Fri, 10 Apr 2026 20:56:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 192593DBD66;
+	Fri, 10 Apr 2026 21:30:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775854577; cv=none; b=bH7jc7dVXytGRnYXnh6WVrHbdsIUn4R8xe0iaJ44jH1+rjLc8a/Ixv8fHtRp16zTTbZB4AdPzfUZg5TvmwzB7Mj6pyjDiyFfnvMgIJwYSaYpA5YYJYmlRA6pgmGu5PF0hX5flRhx4wohLDI9uBH5Si2BKnF0zxvXT/SalN+7mEo=
+	t=1775856645; cv=none; b=gfOk3y4ZEUt3fDifAt/jAOwAHgCfcvX8HxPj/dfCBYLBkOhMgp4TdM3o05gX3sdkW4K1XzsXBL+EDs0rNjxs11na68P1G5qpZ8peaN5cOgrmA4R/5tPxnVutY42uHgRpaUwqdwKhRm5UXHHatPUvS3CDB6y1UlHbK1nzuwkCKGE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775854577; c=relaxed/simple;
-	bh=Pl/TPuj3MEjAUAkiR6iNGQuG7vTK4etd1CQHextbc1Q=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=snYqKMd6ugFPpv8gls2Q/sbKonkUybU3qcbylL0/pn7+OFvJwwrz+MrVvlCatzSPX86y3bVLHTwb3WVhyN7wuFfPHaBCOwkwskmmNg01qFSZn7H9en1cZnJZ4Lmn7hXgaiQGlgb/xoMbPoa2OnRA3PNpH8bk23qysvpy5GP0KoM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=GQ142PFW; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1775856645; c=relaxed/simple;
+	bh=G2dtzdVuZ0FFm6ylWyUaMhhph1il2Hr0GyFl+vJtWEA=;
+	h=Date:From:To:Cc:Subject:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=ZtNv7RzDwpFrATpFQS6ugS7eWyw3bl6K3JHiPmY5rFuYBhvdG8fvPUopgkl4oaL7yjfl2Be4nWuskc7wNzzhviMdCXFoYSKKCnktjdURZmUaE9T3BA99M/16S0vD3FQezUJJFnkKygpEnsFnRmxKIyMkhIJfT6zBO06kGZHqDoo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=dkL9qfeo; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="GQ142PFW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E2163C19421;
-	Fri, 10 Apr 2026 20:56:13 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="dkL9qfeo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0680EC19421;
+	Fri, 10 Apr 2026 21:30:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1775854576;
-	bh=Pl/TPuj3MEjAUAkiR6iNGQuG7vTK4etd1CQHextbc1Q=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:From;
-	b=GQ142PFWFm6CPGgxzIstxv+Opw0b8SXuQ9OyBP6RDGrB9wMYrgGJRlAIcXmjiMiJQ
-	 uvHLzYRX996/8mwPCxIT6HNprAxZjHfiZYVGdKL2zkx4tDdEJ1Qjhj23YsuYeVWZUk
-	 qB897HhG8G4RkSYw8g0MDIEY8t5mxlaTJQ0hQJRlVPLc72Bfpv47WYQcen6mmTC6UB
-	 IDYz08Lq5Ox+catFPgX2TnERo0NsyMmc6D+DEo5bfEi3Zb8CozxsaaIUnftUYBffz4
-	 eRJ2pErWPmB+XVojMvRq9gH2C+KSLENGTN6u78aH1Po3BWHW2gKcN/A+CamqsNtu9t
-	 mhyolj1ID3OUA==
-From: Thomas Gleixner <tglx@kernel.org>
-To: LKML <linux-kernel@vger.kernel.org>
-Cc: Arnd Bergmann <arnd@arndb.de>, x86@kernel.org, Lu Baolu
- <baolu.lu@linux.intel.com>, iommu@lists.linux.dev, Michael Grzeschik
- <m.grzeschik@pengutronix.de>, netdev@vger.kernel.org,
- linux-wireless@vger.kernel.org, Herbert Xu <herbert@gondor.apana.org.au>,
- linux-crypto@vger.kernel.org, Vlastimil Babka <vbabka@kernel.org>,
- linux-mm@kvack.org, David Woodhouse <dwmw2@infradead.org>, Bernie Thompson
- <bernie@plugable.com>, linux-fbdev@vger.kernel.org, Theodore Tso
- <tytso@mit.edu>, linux-ext4@vger.kernel.org, Andrew Morton
- <akpm@linux-foundation.org>, Uladzislau Rezki <urezki@gmail.com>, Marco
- Elver <elver@google.com>, Dmitry Vyukov <dvyukov@google.com>,
- kasan-dev@googlegroups.com, Andrey Ryabinin <ryabinin.a.a@gmail.com>,
- Thomas Sailer <t.sailer@alumni.ethz.ch>, linux-hams@vger.kernel.org,
- "Jason A. Donenfeld" <Jason@zx2c4.com>, Richard Henderson
- <richard.henderson@linaro.org>, linux-alpha@vger.kernel.org, Russell King
- <linux@armlinux.org.uk>, linux-arm-kernel@lists.infradead.org, Catalin
- Marinas <catalin.marinas@arm.com>, Huacai Chen <chenhuacai@kernel.org>,
- loongarch@lists.linux.dev, Geert Uytterhoeven <geert@linux-m68k.org>,
- linux-m68k@lists.linux-m68k.org, Dinh Nguyen <dinguyen@kernel.org>, Jonas
- Bonn <jonas@southpole.se>, linux-openrisc@vger.kernel.org, Helge Deller
- <deller@gmx.de>, linux-parisc@vger.kernel.org, Michael Ellerman
- <mpe@ellerman.id.au>, linuxppc-dev@lists.ozlabs.org, Paul Walmsley
- <pjw@kernel.org>, linux-riscv@lists.infradead.org, Heiko Carstens
- <hca@linux.ibm.com>, linux-s390@vger.kernel.org, "David S. Miller"
- <davem@davemloft.net>, sparclinux@vger.kernel.org
-Subject: [patch V1.1 11/38] misc: sgi-gru: Remove get_cycles() [ab]use
-In-Reply-To: <20260410120318.320727701@kernel.org>
-References: <20260410120044.031381086@kernel.org>
- <20260410120318.320727701@kernel.org>
-Date: Fri, 10 Apr 2026 22:56:11 +0200
-Message-ID: <87ik9yzg9g.ffs@tglx>
+	s=k20201202; t=1775856644;
+	bh=G2dtzdVuZ0FFm6ylWyUaMhhph1il2Hr0GyFl+vJtWEA=;
+	h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
+	b=dkL9qfeok2m3mrx4KQdDEonhwk1uQihgVpFPyXJZxOrqKcmq/6tLf3XYRMCbzcZ2K
+	 U3NYbfad0BEPJj2k2IY7306IYfocTvv1eMnmmFHCkkre5Jb9qDfEFT7D4wH++IEvXg
+	 LPbnjge77WoZ7qEPatEw1jdnA8jq2Drnr/18uEI7Hsp+RlvnyEHrTSRs1sC34MM1b0
+	 lYPzuKk9FrikoF2Kqtj2UdjXDVmfvhVp44O6WLJQ/OYwIRe3DouM7QiQZY6lndenEH
+	 gZlpQl2Iq7t7aSN6qP0rPh4agoolG9QT89JbOYF6knKSBFhC5Zuqzho2P983bUoA76
+	 s47NMBwiRr8hg==
+Date: Fri, 10 Apr 2026 14:30:42 -0700
+From: Jakub Kicinski <kuba@kernel.org>
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: Simon Horman <horms@kernel.org>, netdev@vger.kernel.org,
+ linux-kernel@vger.kernel.org, "David S. Miller" <davem@davemloft.net>, Eric
+ Dumazet <edumazet@google.com>, Paolo Abeni <pabeni@redhat.com>,
+ linux-hams@vger.kernel.org, Yizhe Zhuang <yizhe@darknavy.com>, stable
+ <stable@kernel.org>
+Subject: Re: [PATCH net] netrom: do some basic forms of validation on
+ incoming frames
+Message-ID: <20260410143042.1d4436de@kernel.org>
+In-Reply-To: <2026041026-excuse-slashing-c4ee@gregkh>
+References: <2026040730-untagged-groin-bbb7@gregkh>
+	<20260409190328.GS469338@kernel.org>
+	<20260409203235.6b9329f0@kernel.org>
+	<2026041026-excuse-slashing-c4ee@gregkh>
 Precedence: bulk
 X-Mailing-List: linux-hams@vger.kernel.org
 List-Id: <linux-hams.vger.kernel.org>
 List-Subscribe: <mailto:linux-hams+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-hams+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
 
-Calculating a timeout from get_cycles() is a historical leftover without
-any functional requirement.
+On Fri, 10 Apr 2026 07:24:36 +0200 Greg Kroah-Hartman wrote:
+> On Thu, Apr 09, 2026 at 08:32:35PM -0700, Jakub Kicinski wrote:
+> > On Thu, 9 Apr 2026 20:03:28 +0100 Simon Horman wrote:  
+> > > I expect that checking skb->len isn't sufficient here
+> > > and pskb_may_pull needs to be used to ensure that
+> > > the data is also available in the linear section of the skb.  
+> > 
+> > Or for simplicity we could also be testing against skb_headlen()
+> > since we don't expect any legit non-linear frames here? Dunno.  
+> 
+> I'll be glad to change this either way, your call.  Given that this is
+> an obsolete protocol that seems to only be a target for drive-by fuzzers
+> to attack, whatever the simplest thing to do to quiet them up I'll be
+> glad to implement.
+> 
+> Or can we just delete this stuff entirely?  :)
 
-Use ktime_get() instead.
+Yes.
 
-Signed-off-by: Thomas Gleixner <tglx@kernel.org>
----
-V2: Fix typo
----
- drivers/misc/sgi-gru/gruhandles.c   |   20 ++++++++------------
- drivers/misc/sgi-gru/grukservices.c |    3 ++-
- drivers/misc/sgi-gru/grutlbpurge.c  |    5 ++---
- 3 files changed, 12 insertions(+), 16 deletions(-)
+My thinking is to delete hamradio, nfc, atm, caif.. [more to come]
+Create GH repos which provide them as OOT modules.
+Hopefully we can convince any existing users to switch to that.
 
---- a/drivers/misc/sgi-gru/gruhandles.c
-+++ b/drivers/misc/sgi-gru/gruhandles.c
-@@ -6,26 +6,22 @@
-  */
- 
- #include <linux/kernel.h>
-+#include <linux/timekeeping.h>
- #include "gru.h"
- #include "grulib.h"
- #include "grutables.h"
- 
--/* 10 sec */
- #include <linux/sync_core.h>
--#include <asm/tsc.h>
--#define GRU_OPERATION_TIMEOUT	((cycles_t) tsc_khz*10*1000)
--#define CLKS2NSEC(c)		((c) * 1000000 / tsc_khz)
-+
-+#define GRU_OPERATION_TIMEOUT_NSEC	(((ktime_t)10 * NSEC_PER_SEC))
- 
- /* Extract the status field from a kernel handle */
- #define GET_MSEG_HANDLE_STATUS(h)	(((*(unsigned long *)(h)) >> 16) & 3)
- 
- struct mcs_op_statistic mcs_op_statistics[mcsop_last];
- 
--static void update_mcs_stats(enum mcs_op op, unsigned long clks)
-+static void update_mcs_stats(enum mcs_op op, unsigned long nsec)
- {
--	unsigned long nsec;
--
--	nsec = CLKS2NSEC(clks);
- 	atomic_long_inc(&mcs_op_statistics[op].count);
- 	atomic_long_add(nsec, &mcs_op_statistics[op].total);
- 	if (mcs_op_statistics[op].max < nsec)
-@@ -58,21 +54,21 @@ static void report_instruction_timeout(v
- 
- static int wait_instruction_complete(void *h, enum mcs_op opc)
- {
-+	ktime_t start_time = ktime_get();
- 	int status;
--	unsigned long start_time = get_cycles();
- 
- 	while (1) {
- 		cpu_relax();
- 		status = GET_MSEG_HANDLE_STATUS(h);
- 		if (status != CCHSTATUS_ACTIVE)
- 			break;
--		if (GRU_OPERATION_TIMEOUT < (get_cycles() - start_time)) {
-+		if (GRU_OPERATION_TIMEOUT_NSEC < (ktime_get() - start_time)) {
- 			report_instruction_timeout(h);
--			start_time = get_cycles();
-+			start_time = ktime_get();
- 		}
- 	}
- 	if (gru_options & OPT_STATS)
--		update_mcs_stats(opc, get_cycles() - start_time);
-+		update_mcs_stats(opc, (unsigned long)(ktime_get() - start_time));
- 	return status;
- }
- 
---- a/drivers/misc/sgi-gru/grukservices.c
-+++ b/drivers/misc/sgi-gru/grukservices.c
-@@ -20,6 +20,7 @@
- #include <linux/uaccess.h>
- #include <linux/delay.h>
- #include <linux/export.h>
-+#include <linux/random.h>
- #include <asm/io_apic.h>
- #include "gru.h"
- #include "grulib.h"
-@@ -1106,7 +1107,7 @@ static int quicktest3(unsigned long arg)
- 	int ret = 0;
- 
- 	memset(buf2, 0, sizeof(buf2));
--	memset(buf1, get_cycles() & 255, sizeof(buf1));
-+	memset(buf1, get_random_u32() & 255, sizeof(buf1));
- 	gru_copy_gpa(uv_gpa(buf2), uv_gpa(buf1), BUFSIZE);
- 	if (memcmp(buf1, buf2, BUFSIZE)) {
- 		printk(KERN_DEBUG "GRU:%d quicktest3 error\n", smp_processor_id());
---- a/drivers/misc/sgi-gru/grutlbpurge.c
-+++ b/drivers/misc/sgi-gru/grutlbpurge.c
-@@ -22,13 +22,12 @@
- #include <linux/delay.h>
- #include <linux/timex.h>
- #include <linux/srcu.h>
-+#include <linux/random.h>
- #include <asm/processor.h>
- #include "gru.h"
- #include "grutables.h"
- #include <asm/uv/uv_hub.h>
- 
--#define gru_random()	get_cycles()
--
- /* ---------------------------------- TLB Invalidation functions --------
-  * get_tgh_handle
-  *
-@@ -49,7 +48,7 @@ static inline int get_off_blade_tgh(stru
- 	int n;
- 
- 	n = GRU_NUM_TGH - gru->gs_tgh_first_remote;
--	n = gru_random() % n;
-+	n = get_random_u32() % n;
- 	n += gru->gs_tgh_first_remote;
- 	return n;
- }
+The only thing stopping me is the concern that this is just the softest
+target and the LLMs will find something else to focus on which we can't
+delete. I suspect any PCIe driver can be flooded with "aren't you
+trusting the HW to provide valid responses here?" bullshit.
+
+But hey, let's try. I'll post a patch nuking all of hamradio later
+today.
