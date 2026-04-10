@@ -1,73 +1,95 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5ED193DA7E4;
-	Fri, 10 Apr 2026 16:13:37 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+Received: from trinity3.trinnet.net (trinity.trinnet.net [96.78.144.185])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 81EB93E0C57;
+	Fri, 10 Apr 2026 17:15:21 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=96.78.144.185
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775837617; cv=none; b=Yxz867zB2LdT6BghJgSFzq6GujjDuXxY67DOoASgxDoEnHUuKixnq3OB8oLtsD8KbKNZmIgp0ChcazUaTNF72EbPWCkQlY37e4zTPy09rc6DbMxmxo5hFsYuAnYssVV5jddbT8hACjqq8r5ECGaGNixN3KcRrMsfBlftcxCmEVU=
+	t=1775841324; cv=none; b=kWzntigof6bsMqsytGZM8WDY/vMUuu1JGQNOzz9y/FDsIdAemkoAX1csnf78emyQJe1Xg6z4MEJiwLVYYc0k4JFHq4Z51SLJHCNRA0/Y7Xno2UtxASKeAqQHFWVEk/WB2OschRs/T7FcIj3bHFODNa7KlTImyZJLvRQqF8/Jf/Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775837617; c=relaxed/simple;
-	bh=G066Zd37ZHLXE4+Ls2TGlCqc1nfjgj0+SEVr6tbwsPw=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=UmtSBmv5pRnPtExqaa88ab5ZCwedB0rR6RCJWtY6IugNKqvn36r9UHCGI8pYfWvlXcyrJMFkm2ra2+xIIs+IuBV2MyB9adSpSBjhVyMYxbaW1s3Q7Qm30SFzaid47HiMh8EG9Yk1iLIL1WYv8IowkKl8wcpBG4irFeLS3mZyLZI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=PC5tPOFn; arc=none smtp.client-ip=10.30.226.201
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="PC5tPOFn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 22362C19421;
-	Fri, 10 Apr 2026 16:13:34 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1775837617;
-	bh=G066Zd37ZHLXE4+Ls2TGlCqc1nfjgj0+SEVr6tbwsPw=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=PC5tPOFnt+Zc+ZkK7NppQwMzWnkSkGZNvyM4rryZdBiMaYVyhKVEJwhFSoQqe/2io
-	 jJcZzTg2KwuOAmwycd1IwfaRlwpvvQCpwJa347S1CgnKbCJwoar4KdwjRoL1/y6T8v
-	 nEUyZqWlY6TY1merv3Usbo7Mjg80ZaruL7yw43mzmXaJo9fmG7raXOcGkiiHHeEHK1
-	 HxmUAoNjrj6sDV6leCHfyahnYOQpUrGUKWtz0ObqRe2HKRwV2bZ0sOw9t+UBf9oi3Z
-	 wfXYLSLxJ7TAReGPLexCYymN9pdN49S5DI/eoeX0Q+d3dVmBLCjzZPH5oCiTa5glcN
-	 6o4Br6NuOrJvw==
-Date: Fri, 10 Apr 2026 17:13:32 +0100
-From: Simon Horman <horms@kernel.org>
-To: Mashiro Chen <mashiro.chen@mailbox.org>
-Cc: netdev@vger.kernel.org, davem@davemloft.net, edumazet@google.com,
-	kuba@kernel.org, pabeni@redhat.com, linux-hams@vger.kernel.org,
-	stable@vger.kernel.org,
-	syzbot+ecdb8c9878a81eb21e54@syzkaller.appspotmail.com
-Subject: Re: [PATCH v2] net: hamradio: 6pack: fix uninit-value in
- sixpack_receive_buf
-Message-ID: <20260410161332.GA469338@kernel.org>
-References: <20260407165007.GB469338@kernel.org>
- <20260407173101.107352-1-mashiro.chen@mailbox.org>
+	s=arc-20240116; t=1775841324; c=relaxed/simple;
+	bh=jCIgsDRilv7KIqAd1L2z7WRRBTaNL4Em2+kHrNaLTG0=;
+	h=Subject:To:References:Cc:From:Message-ID:Date:MIME-Version:
+	 In-Reply-To:Content-Type; b=EyzxGgfC/fvKb4Hu+kd4G61nZttmGbSk+/yL82L5HR+3sXMyYt8eaOJ8p6via8Mh1abQ7OG5fbVGXyk+rRzkP1izc8NZhBByRZ4a3FDHViGbwN+gHV+6cHhy2r28Jm+ign8UDVBT9bvGPlAnVbdytjk4fhuGpTH9NVWJcmzFw7c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=trinnet.net; spf=pass smtp.mailfrom=trinnet.net; arc=none smtp.client-ip=96.78.144.185
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=trinnet.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=trinnet.net
+Received: from trinity4.trinnet.net (trinity4.trinnet.net [192.168.0.11])
+	by trinity3.trinnet.net (TrinityOS hardened/8.15.2) with ESMTP id 63AGcPw0019678;
+	Fri, 10 Apr 2026 09:38:25 -0700
+Subject: Re: [PATCH net] netrom: do some basic forms of validation on incoming
+ frames
+To: jj <ve1jot@eastlink.ca>, Simon Horman <horms@kernel.org>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+References: <2026040730-untagged-groin-bbb7@gregkh>
+ <20260409190328.GS469338@kernel.org> <20260409203235.6b9329f0@kernel.org>
+ <2026041026-excuse-slashing-c4ee@gregkh> <20260410102827.GT469338@kernel.org>
+ <18e3df62-34f9-4de0-903b-19919d7ae2ca@eastlink.ca>
+Cc: Jakub Kicinski <kuba@kernel.org>, netdev@vger.kernel.org,
+        linux-kernel@vger.kernel.org, "David S. Miller" <davem@davemloft.net>,
+        Eric Dumazet <edumazet@google.com>, Paolo Abeni <pabeni@redhat.com>,
+        linux-hams@vger.kernel.org, Yizhe Zhuang <yizhe@darknavy.com>,
+        stable <stable@kernel.org>, "Bernard, f6bvp" <f6bvp@free.fr>
+From: David Ranch <linux-hams@trinnet.net>
+Message-ID: <2e0f1dca-56dc-d6e6-f4d4-1de3160e0179@trinnet.net>
+Date: Fri, 10 Apr 2026 09:38:25 -0700
+User-Agent: Mozilla/5.0 (X11; Linux i686; rv:45.0) Gecko/20100101
+ Thunderbird/45.8.0
 Precedence: bulk
 X-Mailing-List: linux-hams@vger.kernel.org
 List-Id: <linux-hams.vger.kernel.org>
 List-Subscribe: <mailto:linux-hams+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-hams+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260407173101.107352-1-mashiro.chen@mailbox.org>
+In-Reply-To: <18e3df62-34f9-4de0-903b-19919d7ae2ca@eastlink.ca>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On Wed, Apr 08, 2026 at 01:31:01AM +0800, Mashiro Chen wrote:
-> sixpack_receive_buf() does not properly skip bytes with TTY error flags.
-> The while loop iterates through the flags buffer but never advances the
-> data pointer (cp), and passes the original count (including error bytes)
-> to sixpack_decode(). This causes sixpack_decode() to process bytes that
-> should have been skipped due to TTY errors.  The TTY layer does not
-> guarantee that cp[i] holds a meaningful value when fp[i] is set, so
-> passing those positions to sixpack_decode() results in KMSAN reporting
-> an uninit-value read.
-> 
-> Fix this by processing bytes one at a time, advancing cp on each
-> iteration, and only passing valid (non-error) bytes to sixpack_decode().
-> This matches the pattern used by slip_receive_buf() and
-> mkiss_receive_buf() for the same purpose.
-> 
-> Reported-by: syzbot+ecdb8c9878a81eb21e54@syzkaller.appspotmail.com
-> Closes: https://syzkaller.appspot.com/bug?extid=ecdb8c9878a81eb21e54
-> Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-> Signed-off-by: Mashiro Chen <mashiro.chen@mailbox.org>
 
-Thanks for the updates.
+I agree with John VE1JOT that amateur radio protocols such as AX25, 
+NETROM, and ROSE are still very active in the Linux kernel.  This 
+discussion makes me wonder how the Linux kernel community judges how 
+"active" a given feature / driver / etc is being used in the real world 
+before considering deprecation.  If there is an official mechanism to 
+get metrics sent from users back to the kernel developer community, 
+please let us know and we'll try to get you some one-off or periodic 
+metrics.
 
-Reviewed-by: Simon Horman <horms@kernel.org>
+--David
+KI6ZHD
+Avid AX.25 and NETROM packet radio on X86 and ARM-based Raspberry Pi
+https://www.trinityos.com/HAM/index-ham.html
+
+
+On 04/10/2026 08:12 AM, jj wrote:
+> This is NOT an obsolete protocol..this is in use by amateur radio 
+> operators world-wide...we use it for RF comms usually, because what 
+> happens if the internet goes "down", we can still provide comms over 
+> slower RF links....(plus it's a fun mode)please PLEASE do not 
+> drop...and sorry for the noise...
+>
+> de John VE1JOT
+>
+> On 2026-04-10 07:28, Simon Horman wrote:
+>> On Fri, Apr 10, 2026 at 07:24:36AM +0200, Greg Kroah-Hartman wrote:
+>>> On Thu, Apr 09, 2026 at 08:32:35PM -0700, Jakub Kicinski wrote:
+>>>> On Thu, 9 Apr 2026 20:03:28 +0100 Simon Horman wrote:
+>>>>> I expect that checking skb->len isn't sufficient here
+>>>>> and pskb_may_pull needs to be used to ensure that
+>>>>> the data is also available in the linear section of the skb.
+>>>> Or for simplicity we could also be testing against skb_headlen()
+>>>> since we don't expect any legit non-linear frames here? Dunno.
+>> Sure, that's find by me if it leads to simpler code than
+>> using pskb_may_pull(). Else I'd lean towards pskb_may_pull()
+>> as it is a more general approach that feels worth proliferating.
+>>
+>>> I'll be glad to change this either way, your call.  Given that this is
+>>> an obsolete protocol that seems to only be a target for drive-by 
+>>> fuzzers
+>>> to attack, whatever the simplest thing to do to quiet them up I'll be
+>>> glad to implement.
+>>>
+>>> Or can we just delete this stuff entirely?  :)
+>> Deleting sounds good to me.
+>> But we likely need a deprecation process.
+>> In which case fixing these bugs still makes sense for the short term.
+>>
+
