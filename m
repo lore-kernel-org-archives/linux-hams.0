@@ -1,110 +1,80 @@
-Received: from mail-pj1-f74.google.com (mail-pj1-f74.google.com [209.85.216.74])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 42FCC3DBD41
-	for <linux-hams@vger.kernel.org>; Fri, 10 Apr 2026 22:12:22 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.74
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9708C3D994;
+	Fri, 10 Apr 2026 22:30:31 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775859143; cv=none; b=gzpyp2r53a/+LpSSrl/d+aXCPdaiVvt7gCRh7rDBU4D37JhISOcffqobTEnyoLJWKR//f7M+jSGDKLgF7ujq0YGPUm7/jYivoyb3K2J1H8S05yEhUPZv8Ak2l+rloUzmgTToXnfaPd1El02DxCCZIUjj78fvQIvhuIV5lTnFQB4=
+	t=1775860231; cv=none; b=AOhLgwPXXfyPR3A+2rvnCkHPEVM/JQxJh+V4Xa8Gde2auZ1YZyuj3X5r+Fcvgq9I4B+MZfvF2jwkTgDVZCilF+ADm4r6c9F8/cL7TnLNFWH2tZsK2BW36w4v5q0/1FfrubLe9sDp28VDJv4zg/SAkAIMeGevNtZxEQBJipVLmAg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775859143; c=relaxed/simple;
-	bh=BYCH3vDBRAX3ehfhBG/Wmpxnwa8fywE0iX7ey0b+65E=;
-	h=Date:In-Reply-To:Mime-Version:References:Message-ID:Subject:From:
-	 To:Cc:Content-Type; b=JETbRIVntEb/BI7dTUebtlbkvJ4WebtcBT5MqEYgXLmXQSh/iblRmViEub13R++FQznKil9aSiEGU28rfGJAi8hXA271eS3JcqUege14uiGN0bLc4XrfY4P7QyYoDsxzwlk/b3kqL9o5tA8Ota60hg34LdYEVr1Xnpq25Tpv6RY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--kuniyu.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=tDUWTG2+; arc=none smtp.client-ip=209.85.216.74
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--kuniyu.bounces.google.com
+	s=arc-20240116; t=1775860231; c=relaxed/simple;
+	bh=YrKqoK6qqCE/JLOpjMngxrETrj2UNduX3S3PTQO3KmA=;
+	h=Content-Type:MIME-Version:Subject:From:Message-Id:Date:References:
+	 In-Reply-To:To:Cc; b=SnUAZU7BlE6hwVSSlWFIoKQyIh3i7YcTrNdShPQ0rTLen5zy/n8dyxwpK5Li6eSJd68tW5k41E3564MNWAu9BcsaGli4i4KqnqgurU7IPbg+D43mFBL2uPDgLlAiAaueBEu+5J2WYtAR0MnL8ocmnBvQgeK7W8DfDXN5wEPacJQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=uC5Z6E0a; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="tDUWTG2+"
-Received: by mail-pj1-f74.google.com with SMTP id 98e67ed59e1d1-35842aa350fso4982787a91.0
-        for <linux-hams@vger.kernel.org>; Fri, 10 Apr 2026 15:12:22 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20251104; t=1775859141; x=1776463941; darn=vger.kernel.org;
-        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
-         :date:from:to:cc:subject:date:message-id:reply-to;
-        bh=Lpw2bwte44HnZBACPA5pWBmsdEZ8HQTZb/ioIo17CDE=;
-        b=tDUWTG2+WyrEbBBikatFWNy30yAC0tj1UJZ0fIIJXc/KolLVBiYoS/zmM3ER+csSJF
-         aMdgMwOu9J+EYm9cDDDsGF7QDIy/Sfrp5YgTmpnskRT3UXRcckw4t/JOfuYKHN+Rcq09
-         Lvm9I2j/py36ajdIbW7M9cD1o5t3vkU9GyyzbfhpfKI1/wcJFFN+r1bMvjdGYQ9sTzv2
-         QxxlMaOroFDz2tBMS09d6u2DuvozDgypnYS5srV0cvmq2V2nzwIolYKLjdyzZmjPIA63
-         1SYCTbnbnP1xwmSFeHTrXl2N62cE2PysDMFOB+ipbb90cnVzvXVtdMZTsjoNGVBXGhOV
-         gATQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1775859141; x=1776463941;
-        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
-         :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=Lpw2bwte44HnZBACPA5pWBmsdEZ8HQTZb/ioIo17CDE=;
-        b=eQbS4hhxvfAbD5JCjo1qQk9oJUE07rK9ZcAsWgc76dA0c+bJmFTmgsTsCrzLUJlMlS
-         C1tSSJXtUvBtCIY8M0hAVNsy2TAQ/KKOuoevmPqqGoDQj0wcsXFotSDzdFQGy+UnsC6t
-         bxZzvwWvc4aJqA2QMLtj0ibYasq1MHEohihnDr0TQj4NmKTR27gltsml5mKp22Z1uu2k
-         flSmWI0rZ82IPLbrdIcIYEPOx08FsXIaxzqufmMnAefxic/rT4e6uhoF/npa0e0F45zw
-         V51l81sTtQ/ye4FAmL7khJLJ+LSbbBCX/ebVoZTNDNNk+fHrHIlyhPN5j6ir/sZexpjo
-         5Vng==
-X-Forwarded-Encrypted: i=1; AJvYcCU+xth/dPZkn7x/eelUHQm9KgIPeV/AECo+2qJPisTexd9Y+vesHtLQ4rAE8hBok3Y1VYGoKV66WREx@vger.kernel.org
-X-Gm-Message-State: AOJu0YxUI8VEre0EAqFDlPW4Dqr7Z4UE0Lpo3wIG7RwNzvmWHIJx5r2C
-	yAver3xlBj/30WEEW+QGfwj+EgfrFVyOf3Iyegjx7R663Cjp5fp/faYrA5CRL2idVQROuzYk7XY
-	0AFT24g==
-X-Received: from pjbgd11.prod.google.com ([2002:a17:90b:fcb:b0:35c:e06:8f50])
- (user=kuniyu job=prod-delivery.src-stubby-dispatcher) by 2002:a17:90b:270a:b0:359:8de8:1229
- with SMTP id 98e67ed59e1d1-35e428491b4mr5375577a91.21.1775859141438; Fri, 10
- Apr 2026 15:12:21 -0700 (PDT)
-Date: Fri, 10 Apr 2026 22:11:47 +0000
-In-Reply-To: <20260410145448.38253e3c@kernel.org>
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="uC5Z6E0a"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 37F04C19421;
+	Fri, 10 Apr 2026 22:30:31 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1775860231;
+	bh=YrKqoK6qqCE/JLOpjMngxrETrj2UNduX3S3PTQO3KmA=;
+	h=Subject:From:Date:References:In-Reply-To:To:Cc:From;
+	b=uC5Z6E0aqMuirsB39dRyDzsxQjpuySv+25dLDr3jXZ5TFK9R9aWHPjWEhK+LNRMnd
+	 zN/b18kNWsgHSBCF77kXnaI3uy/7iA55ZmhToziAjYCHtKXpAs2fDg0njeQOAcOCBJ
+	 bBGZUAmXtcRuTSbFcDDCtoMn1hWmkAZxyMQfpM2/mfgQHchx/mVsewGdeFVxkOEdqp
+	 Uw8BIECZzMJZQyJRnxsiV+O5wF9uOrxFyxSIp9vp4kxi5IHMBBAXn1sOn3hkNXo2Vi
+	 zM0ka0RYn83Kpr+f8gmMgUCWut1cg5Ro4wy59DYEH7XDetHZ4pjcKfdG1TKGq3yufK
+	 lp06rrPZBMT0w==
+Received: from [10.30.226.235] (localhost [IPv6:::1])
+	by aws-us-west-2-korg-oddjob-rhel9-1.codeaurora.org (Postfix) with ESMTP id B9EF53809A88;
+	Fri, 10 Apr 2026 22:30:06 +0000 (UTC)
+Content-Type: text/plain; charset="utf-8"
 Precedence: bulk
 X-Mailing-List: linux-hams@vger.kernel.org
 List-Id: <linux-hams.vger.kernel.org>
 List-Subscribe: <mailto:linux-hams+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-hams+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0
-References: <20260410145448.38253e3c@kernel.org>
-X-Mailer: git-send-email 2.53.0.1213.gd9a14994de-goog
-Message-ID: <20260410221220.1708137-1-kuniyu@google.com>
-Subject: Re: [PATCH net] netrom: do some basic forms of validation on incoming frames
-From: Kuniyuki Iwashima <kuniyu@google.com>
-To: kuba@kernel.org
-Cc: davem@davemloft.net, edumazet@google.com, gregkh@linuxfoundation.org, 
-	horms@kernel.org, linux-hams@vger.kernel.org, linux-kernel@vger.kernel.org, 
-	netdev@vger.kernel.org, pabeni@redhat.com, stable@kernel.org, 
-	workflows@vger.kernel.org, yizhe@darknavy.com
-Content-Type: text/plain; charset="UTF-8"
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+Subject: Re: [PATCH v2] net: hamradio: 6pack: fix uninit-value in
+ sixpack_receive_buf
+From: patchwork-bot+netdevbpf@kernel.org
+Message-Id: 
+ <177586020555.2666311.14018722379357062077.git-patchwork-notify@kernel.org>
+Date: Fri, 10 Apr 2026 22:30:05 +0000
+References: <20260407173101.107352-1-mashiro.chen@mailbox.org>
+In-Reply-To: <20260407173101.107352-1-mashiro.chen@mailbox.org>
+To: Mashiro Chen <mashiro.chen@mailbox.org>
+Cc: netdev@vger.kernel.org, horms@kernel.org, davem@davemloft.net,
+ edumazet@google.com, kuba@kernel.org, pabeni@redhat.com,
+ linux-hams@vger.kernel.org, stable@vger.kernel.org,
+ syzbot+ecdb8c9878a81eb21e54@syzkaller.appspotmail.com
 
-From: Jakub Kicinski <kuba@kernel.org>
-Date: Fri, 10 Apr 2026 14:54:48 -0700
-> On Fri, 10 Apr 2026 14:30:42 -0700 Jakub Kicinski wrote:
-> > On Fri, 10 Apr 2026 07:24:36 +0200 Greg Kroah-Hartman wrote:
-> > > On Thu, Apr 09, 2026 at 08:32:35PM -0700, Jakub Kicinski wrote:  
-> > > > Or for simplicity we could also be testing against skb_headlen()
-> > > > since we don't expect any legit non-linear frames here? Dunno.    
-> > > 
-> > > I'll be glad to change this either way, your call.  Given that this is
-> > > an obsolete protocol that seems to only be a target for drive-by fuzzers
-> > > to attack, whatever the simplest thing to do to quiet them up I'll be
-> > > glad to implement.
-> > > 
-> > > Or can we just delete this stuff entirely?  :)  
-> > 
-> > Yes.
-> > 
-> > My thinking is to delete hamradio, nfc, atm, caif.. [more to come]
-> > Create GH repos which provide them as OOT modules.
-> > Hopefully we can convince any existing users to switch to that.
-> > 
-> > The only thing stopping me is the concern that this is just the softest
-> > target and the LLMs will find something else to focus on which we can't
-> > delete. I suspect any PCIe driver can be flooded with "aren't you
-> > trusting the HW to provide valid responses here?" bullshit.
-> > 
-> > But hey, let's try. I'll post a patch nuking all of hamradio later
-> > today.
+Hello:
+
+This patch was applied to netdev/net.git (main)
+by Jakub Kicinski <kuba@kernel.org>:
+
+On Wed,  8 Apr 2026 01:31:01 +0800 you wrote:
+> sixpack_receive_buf() does not properly skip bytes with TTY error flags.
+> The while loop iterates through the flags buffer but never advances the
+> data pointer (cp), and passes the original count (including error bytes)
+> to sixpack_decode(). This causes sixpack_decode() to process bytes that
+> should have been skipped due to TTY errors.  The TTY layer does not
+> guarantee that cp[i] holds a meaningful value when fp[i] is set, so
+> passing those positions to sixpack_decode() results in KMSAN reporting
+> an uninit-value read.
 > 
-> Well, either we "expunge" this code to OOT repos, or we mark it 
-> as broken and tell everyone that we don't take security fixes
-> for anything that depends on BROKEN. I'd personally rather expunge.
+> [...]
 
-+1 for "expunge" to prevent LLM-based patch flood.
+Here is the summary with links:
+  - [v2] net: hamradio: 6pack: fix uninit-value in sixpack_receive_buf
+    https://git.kernel.org/netdev/net/c/bf9a38803b26
 
-IIRC, we did that recently for one driver only used by OpenWRT ?
+You are awesome, thank you!
+-- 
+Deet-doot-dot, I am a bot.
+https://korg.docs.kernel.org/patchwork/pwbot.html
 
 
-> 
-> cc: workflows, we can't be the only ones still nursing Linux 2.2 code
