@@ -1,104 +1,165 @@
-Received: from mta04.eastlink.ca (mta04.eastlink.ca [24.224.136.10])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 19AE83CC9FE
-	for <linux-hams@vger.kernel.org>; Fri, 10 Apr 2026 15:42:25 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=24.224.136.10
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F31F3A453B;
+	Fri, 10 Apr 2026 16:08:21 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775835746; cv=none; b=QDmLWKzAF8iTI0kMe58ib6dRASr+teMlugYjQJCSFKv8eLJny0+J1ki5Oa3E+CKwnH7a3d7CK/uf+iGaVfz4HNQJezropccM2Axs1VJ4Yf7Lp2QYO3jbBNeWgdFEG/olOA/n/L9DzND+eFiEWMiIrk088XkMJ3aIINrXOxqiafc=
+	t=1775837301; cv=none; b=Iq8NtrJxdpTght09Pe2meXk5R95sbYIIgsMeNrTJAIjup14GUavjvNDNUhRmchVGcDn1dniY2loFQWX82Cvap2E0sm0Il7vNb2+TOwb+Ogvyw9vOGtQ/vZl7oY8O9ybI5aru6izLAMC4GvAoe7dvU4JcxMlTnHhNorGvX9CWH4A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775835746; c=relaxed/simple;
-	bh=ys2qIIDim0m/Ax57bmDxe1wwI+RnRcMDUobY+/LAZUI=;
-	h=Message-id:Date:MIME-version:Subject:To:Cc:References:From:
-	 In-reply-to:Content-type; b=tAsaUUH8TIvVH0ilxOVeut8N4Js7IS2AHJqwZBc/53iq/njC0/xlb5Rlj+N1oVBCD0peLZBmXP2s2VP2GDb0R0oomTgPBfwwM++FsmDw0lh/vbg9Y70Aw2eBHdNSVIACMGt/B2BPZR7NC2GeU8pgTNAdO7EdsHjbcyFRSgseIeg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=eastlink.ca; spf=pass smtp.mailfrom=eastlink.ca; dkim=pass (2048-bit key) header.d=eastlink.ca header.i=@eastlink.ca header.b=v25u0Dct; arc=none smtp.client-ip=24.224.136.10
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=eastlink.ca
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=eastlink.ca
+	s=arc-20240116; t=1775837301; c=relaxed/simple;
+	bh=1AumQo2ei88qRXMSnuX1xeEdx8pnbyFH9BQfPPiSsBs=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=GMhWDidONq/nVHT1VoM5RfZ9xnvwtB16UyOEwapbykoeH19NASkS+5a8sHy299+rb3x5SgPBglqXDT150jIkMlHj5te0PwnEYAE72uWR1uzaKeSL6T1Kuc2JV0w25JO/+8I/GCvjsj6uNfxDEKrOO9yXlDVyWKibAHpjA2KLQqc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Szit41X4; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=eastlink.ca header.i=@eastlink.ca header.b="v25u0Dct"
-Received: from mail-cms03.eastlink.ca ([71.7.199.167])
- by mta04.eastlink.ca ([24.224.136.10])
- with ESMTPS id <0TDA0F46CA8HFFH0@mta04.eastlink.ca> for
- linux-hams@vger.kernel.org; Fri, 10 Apr 2026 12:12:17 -0300 (ADT)
-Sun-Java-System-SMTP-Warning: Lines longer than SMTP allows found and wrapped.
-Received: from [192.168.1.239] ([24.222.238.48])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 256/256 bits)
- (Client did not present a certificate) by mail-cms03.eastlink.ca
- ([71.7.199.167]) with ESMTPSA id BDWpw66Glkg7aBDWpwNj31; Fri,
- 10 Apr 2026 12:12:16 -0300
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=eastlink.ca;
-	s=elelff16; t=1775833936;	bh=I61OpNNSxa7QfezN65BTggmQKaC1Ej3sLTFHrfX+cUw=;
-	h=Date:Subject:To:From:From:To:Subject:Date:Sender:Reply-to;
-	b=v25u0DctURMmtCg5wwJ3G0L8bhfCZeIkhepPK6zNTOhef52hNMloTvu+sy+C8Z2rO
- RzmaDBR59RcpSde58d4nxxt0r3BJHkH40ZK5rQPZDcpUD6pITkEZ1YLkuEYx5w9GUf
- eM59M/EgIh0+cZk5oO5Tn4c0L54Y7A39NRpHEbSeQhVGr+bYEf4fjHwPxlE0j5e48L
- mxuYdRpLfpMdmbWTwmK5m9LN8jga/4/NBaq5jVh4qJbIrdvZHcXoKljt+blRJR0JFA
- rbbmdp585VXLEMekdNO5ddDvUSoaSYESA76wwM1pTgF8NIao+0aVOoRQXwz4GOFm/0
- qZMby6wU97w4Q==
-X-Authority-Analysis: v=2.4 cv=e6xUSrp/ c=1 sm=1 tr=0 ts=69d91350 cx=c_est
- a=ien09DawV0SQ461Yvz+7bQ==:117 a=ien09DawV0SQ461Yvz+7bQ==:17 a=IkcTkHD0fZMA:10
- a=21JHI6EMHx3ttOpXyVYA:9 a=QEXdDO2ut3YA:10
-X-Vade-Cause:
- gggruggvucftvghtrhhoucdtuddrgeefhedrtddtgddvleejgecutefuodetggdotefrodftvfcurfhrohhfihhlvgemucfgtefuvffnkffpmfenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujfgurhepkfffgggfuffvvehfhfgjtgfgsehtjeertddtvdejnecuhfhrohhmpehjjhcuoehvvgdujhhothesvggrshhtlhhinhhkrdgtrgeqnecuggftrfgrthhtvghrnhepheduffejhfehkedvfeeikeegvefhjefgffdvffdtudekteehiefggefhieeuvdeinecukfhppedvgedrvddvvddrvdefkedrgeeknecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehinhgvthepvdegrddvvddvrddvfeekrdegkedphhgvlhhopegludelvddrudeikedruddrvdeflegnpdhmrghilhhfrhhomhepvhgvudhjohhtsegvrghsthhlihhnkhdrtggrpdhnsggprhgtphhtthhopeduvddprhgtphhtthhopeerredprhgtphhtthhopehhohhrmhhssehkvghrnhgvlhdrohhrghdprhgtphhtthhopehgrhgvghhkhheslhhinhhugihfohhunhgurghtihhonhdrohhrghdprhgtphhtthhopehkuhgsrgeskhgvrhhnvghlrdhorhhgpdhrtghpthhtohepnhgvthguvghvsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtoheplhhinhhugidqkhgvrhhnvghlsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepuggrvhgvmhesuggrvhgvmhhlohhfthdrnhgvthdprhgtp
- hhtthhopegvughumhgriigvthesghhoohhglhgvrdgtohhm
-X-Vade-Score: -100
-X-Vade-State: 0
-X-EL-AUTH: ve1jot@eastlink.ca
-Message-id: <18e3df62-34f9-4de0-903b-19919d7ae2ca@eastlink.ca>
-Date: Fri, 10 Apr 2026 12:12:16 -0300
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Szit41X4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B5619C19421;
+	Fri, 10 Apr 2026 16:08:18 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1775837301;
+	bh=1AumQo2ei88qRXMSnuX1xeEdx8pnbyFH9BQfPPiSsBs=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=Szit41X4LJOLgsFY8HncJVwgFM5x+6rV8r3DPg6TonnJYf7ogaInjJBk6MFhZYC7w
+	 ix2agFcxjVSLYd+N3fY/iuKraVLN+U1rkDuIksS0StrGjLczYv59abJPynCpFPv+Db
+	 DdnkZ63XnoZ1fhpCINUBzgNq+Jzb0jE9as6gh9zcEg23td2+vccBon42kTymt/jPBP
+	 eg8Qumt3mk/kY4Oo52v6hvs0UVcT2O47iRBokmtSPGjMtTpsann0oUWumKYgCtLCES
+	 Q5zIyo3XOh6yTzUQ0xzy+U+4RrMF6Y09EmU9kdtj7RyKnH21R2EpuxD5YH5cUaQhXG
+	 6ekAmLJBTLULA==
+From: Simon Horman <horms@kernel.org>
+To: mashiro.chen@mailbox.org
+Cc: 'Simon Horman' <horms@kernel.org>,
+	netdev@vger.kernel.org,
+	davem@davemloft.net,
+	edumazet@google.com,
+	kuba@kernel.org,
+	pabeni@redhat.com,
+	gregkh@linuxfoundation.org,
+	ben@decadent.org.uk,
+	linux-hams@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	stable@vger.kernel.org
+Subject: Re: [PATCH 1/3] net: netrom: fix integer overflow in nr_queue_rx_frame()
+Date: Fri, 10 Apr 2026 17:04:33 +0100
+Message-ID: <20260410160431.641061-3-horms@kernel.org>
+X-Mailer: git-send-email 2.53.0
+In-Reply-To: <20260407171600.102988-2-mashiro.chen@mailbox.org>
+References: <20260407171600.102988-2-mashiro.chen@mailbox.org>
 Precedence: bulk
 X-Mailing-List: linux-hams@vger.kernel.org
 List-Id: <linux-hams.vger.kernel.org>
 List-Subscribe: <mailto:linux-hams+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-hams+unsubscribe@vger.kernel.org>
-MIME-version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH net] netrom: do some basic forms of validation on incoming
- frames
-To: Simon Horman <horms@kernel.org>,
- Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: Jakub Kicinski <kuba@kernel.org>, netdev@vger.kernel.org,
- linux-kernel@vger.kernel.org, "David S. Miller" <davem@davemloft.net>,
- Eric Dumazet <edumazet@google.com>, Paolo Abeni <pabeni@redhat.com>,
- linux-hams@vger.kernel.org, Yizhe Zhuang <yizhe@darknavy.com>,
- stable <stable@kernel.org>
-References: <2026040730-untagged-groin-bbb7@gregkh>
- <20260409190328.GS469338@kernel.org> <20260409203235.6b9329f0@kernel.org>
- <2026041026-excuse-slashing-c4ee@gregkh> <20260410102827.GT469338@kernel.org>
-Content-language: en-US
-From: jj <ve1jot@eastlink.ca>
-In-reply-to: <20260410102827.GT469338@kernel.org>
-Content-type: text/plain; charset=UTF-8; format=flowed
-Content-transfer-encoding: 7bit
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 
-This is NOT an obsolete protocol..this is in use by amateur radio 
-operators world-wide...we use it for RF comms usually, because what 
-happens if the internet goes "down", we can still provide comms over 
-slower RF links....(plus it's a fun mode)please PLEASE do not drop...and 
-sorry for the noise...
+From: 'Simon Horman' <horms@kernel.org>
 
-de John VE1JOT
+This is an AI-generated review of your patch. The human sending this
+email has considered the AI review valid, or at least plausible.
+Full review at: https://sashiko.dev
 
-On 2026-04-10 07:28, Simon Horman wrote:
-> On Fri, Apr 10, 2026 at 07:24:36AM +0200, Greg Kroah-Hartman wrote:
->> On Thu, Apr 09, 2026 at 08:32:35PM -0700, Jakub Kicinski wrote:
->>> On Thu, 9 Apr 2026 20:03:28 +0100 Simon Horman wrote:
->>>> I expect that checking skb->len isn't sufficient here
->>>> and pskb_may_pull needs to be used to ensure that
->>>> the data is also available in the linear section of the skb.
->>> Or for simplicity we could also be testing against skb_headlen()
->>> since we don't expect any legit non-linear frames here? Dunno.
-> Sure, that's find by me if it leads to simpler code than
-> using pskb_may_pull(). Else I'd lean towards pskb_may_pull()
-> as it is a more general approach that feels worth proliferating.
->
->> I'll be glad to change this either way, your call.  Given that this is
->> an obsolete protocol that seems to only be a target for drive-by fuzzers
->> to attack, whatever the simplest thing to do to quiet them up I'll be
->> glad to implement.
->>
->> Or can we just delete this stuff entirely?  :)
-> Deleting sounds good to me.
-> But we likely need a deprecation process.
-> In which case fixing these bugs still makes sense for the short term.
->
+Simon says: This review combines a review of the patch with a report
+of an existing problem. And you will see a similar pattern in
+the AI generated reviews I am forwarding for the other patches in this
+series.
+
+I would suggest not growing the scope of this series too much.
+But rather noting (other) existing problems as areas for further work.
+
+Frankly, I suspect fixing all such problems is a significant body of work.
+
+---
+    net: netrom: fix integer overflow in nr_queue_rx_frame()
+
+This commit addresses an integer overflow in nr_queue_rx_frame() where
+accumulating fragment lengths could wrap around a 16-bit integer. It attempts
+to fix this by checking if adding the incoming skb length to the accumulated
+fraglen exceeds USHRT_MAX, purging the queue and returning an error if so.
+
+> diff --git a/net/netrom/nr_in.c b/net/netrom/nr_in.c
+> index 97944db6b5ac6..0b7cdb99ae501 100644
+> --- a/net/netrom/nr_in.c
+> +++ b/net/netrom/nr_in.c
+> @@ -36,12 +36,22 @@ static int nr_queue_rx_frame(struct sock *sk, struct sk_buff *skb, int more)
+>  	nr_start_idletimer(sk);
+>  
+>  	if (more) {
+> +		if ((unsigned int)nr->fraglen + skb->len > USHRT_MAX) {
+> +			skb_queue_purge(&nr->frag_queue);
+> +			nr->fraglen = 0;
+> +			return 1;
+> +		}
+
+If we return 1 here, does the caller (nr_state3_machine) treat it as a
+transient busy condition?
+
+If the caller retries the skb later, the skb will have already been modified
+by the unconditional skb_pull() at the start of nr_queue_rx_frame(). Does
+this mean the next time it is processed, it will read from the wrong offset
+and potentially process attacker-controlled payload?
+
+Furthermore, since nr->fraglen is reset to 0, wouldn't the oversized fragment
+now pass the USHRT_MAX check on retry, bypassing the overflow mitigation
+entirely?
+
+When we purge the fragment queue here, are we also silently dropping
+fragments that the protocol stack has already acknowledged to the sender?
+
+Since nr_queue_rx_frame() previously returned 0 for those earlier fragments,
+the expected sequence number has already advanced. If the sender never
+retransmits them and fraglen is reset, will the receiver accept the next
+fragment as the start of a new sequence, leading to a truncated message being
+delivered to the application?
+
+[ ... ]
+
+While reviewing this patch, I also noticed a few pre-existing issues in
+nr_queue_rx_frame() that might be worth addressing.
+
+Looking at the start of the function:
+
+static int nr_queue_rx_frame(struct sock *sk, struct sk_buff *skb, int more)
+{
+	struct sk_buff *skbo, *skbn = skb;
+	struct nr_sock *nr = nr_sk(sk);
+
+	skb_pull(skb, NR_NETWORK_LEN + NR_TRANSPORT_LEN);
+
+Is it possible for skb_pull() to be called on a malformed packet where the
+total length is sufficient but the linear region is too small? If so, would
+this trigger a BUG_ON() panic inside __skb_pull()? Should there be a length
+validation check using pskb_may_pull() beforehand?
+
+Further down, during fragment reassembly:
+
+	while ((skbo = skb_dequeue(&nr->frag_queue)) != NULL) {
+		skb_copy_from_linear_data(skbo,
+					  skb_put(skbn, skbo->len),
+					  skbo->len);
+		kfree_skb(skbo);
+	}
+
+If skbo is a non-linear (paged) skb, skbo->len includes the paged data length.
+Since skb_copy_from_linear_data() acts as a direct memory copy, does this
+result in reading past the end of the linear allocation (skb_headlen()) into
+adjacent kernel memory?
+
+Finally, looking at the error paths:
+
+	if ((skbn = alloc_skb(nr->fraglen, GFP_ATOMIC)) == NULL)
+		return 1;
+	...
+	return sock_queue_rcv_skb(sk, skbn);
+
+If sock_queue_rcv_skb() fails, it returns a non-zero error which propagates
+to the caller. Does the caller then try to re-enqueue the original fragment
+pointer into a retry queue?
+
+Since the original fragments were already dequeued from frag_queue and freed
+via kfree_skb() in the loop above, could enqueuing the freed skb lead to a
+use-after-free?
+
+Additionally, if alloc_skb() fails and returns 1, does the caller enqueue the
+original skb while it is still linked in frag_queue, potentially corrupting
+the doubly-linked list?
