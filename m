@@ -1,233 +1,145 @@
-Received: from mail-qv1-f47.google.com (mail-qv1-f47.google.com [209.85.219.47])
+Received: from mail-ed1-f43.google.com (mail-ed1-f43.google.com [209.85.208.43])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7CCFA241686
-	for <linux-hams@vger.kernel.org>; Sun, 12 Apr 2026 12:57:02 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.219.47
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2FF7E37C923
+	for <linux-hams@vger.kernel.org>; Sun, 12 Apr 2026 13:23:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.208.43
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775998623; cv=pass; b=ohuZtbSUI9rkaCrTONAySPlMYtGgNNyWwLC9YrVgPlhXg6yUXONMTvUkH/1wNibENTCVDLxdrk620rFz/WMHJEDbeKlGP5WS44+aG6PHcDY9GsFYpq17fqqbvvBCl7EQnCeGrz+Wa79VYSDf27Gf7VjmIZkGAPeIX3ufFMcombk=
+	t=1776000188; cv=pass; b=ZaC4c9iUDmoHGzoQXDpgYtdYwj7CIHgFkKbHuP+v9yi86V93Z78BXASHv3/cQkqmgLLDPcFyB9IXE/Z0SFRwoYRL5h89cayQHPtwlgMD1FPw8dyNV5jvYwEOxMHfofSnKvlJ3u6q7N4xr3lPbJG9Qr63aW+N8heUh6WYMwI6yh4=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775998623; c=relaxed/simple;
-	bh=qfPYmJHnxmRT9cVmnzYs/e4B/gEH62x/Gcw0W4+P+18=;
+	s=arc-20240116; t=1776000188; c=relaxed/simple;
+	bh=1p6x7PvyQL+5PGqdAnx23TY8v0cVXdqCOnUZdmPD2Po=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=LRxXL+0SaLhighbG2yM6rvZlVrj87R5DJV9RVBYvxMpB/raijLZq/Cr0PQRNC4cMh0OJy2s4bJrdHhtZE7/uobiEJ/5uiJCo+H4G9c49QnKDGQ7bXSLvUNNlH0u2iM5ZvarBUtLXXreVtzA3pMNbocQ3sbol+nfL8zASjOyRlN4=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=JkaSk7Ou; arc=pass smtp.client-ip=209.85.219.47
+	 To:Cc:Content-Type; b=K3G1bkxJCBx6Jzb5/KUJVDWxGskEy49ReyW5OARjycUHa9TI+PRt+rVvwFGsDxrvbZgS59LspWYDk/aKxaBwsZqxUvCTT8TCDoY7Pq36P2OmcP+RrWmDqyDxYz72spiDMJYXbhu777txFnUsdbkqdDRC6QRHrJh1TvRqg1W35pw=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=dccArJm9; arc=pass smtp.client-ip=209.85.208.43
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="JkaSk7Ou"
-Received: by mail-qv1-f47.google.com with SMTP id 6a1803df08f44-8a4b8c3a30bso40807996d6.3
-        for <linux-hams@vger.kernel.org>; Sun, 12 Apr 2026 05:57:02 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1775998621; cv=none;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="dccArJm9"
+Received: by mail-ed1-f43.google.com with SMTP id 4fb4d7f45d1cf-66b2d49ffb0so4495937a12.3
+        for <linux-hams@vger.kernel.org>; Sun, 12 Apr 2026 06:23:04 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1776000183; cv=none;
         d=google.com; s=arc-20240605;
-        b=koALl6TK7/L2dNxZ72FkTfU6qkrLi5x5/7HfPSbhJk5Ihzbh971kGk8vsHcLC+JAYB
-         MffhbENKgczuL4pjf5xeQFivI9vH7LnstIXEjyvv9MBYiHQWj9Tj+IeHBUs2jAbXmjP1
-         VfZwmNI5X86/EfAJOa82KfT8w1hyCYgoDP+cVcKuqJOAUs05KJthGzxnmvV8Yp2V128z
-         0RUfOex/ghoo+/jiPxX9Qe7/O1P0XZrkJjmhDavrUdeTJiiR3VPQf4xY79ziO24wNNok
-         BzAFdp9G8EMsEmhqpUvTT9dbkBouYlXRtLRDYDPveo5UAHy+wFlk8m6+4kW0CNhSZq7B
-         iDCA==
+        b=G9G5OrKkqvPnWkjk3iR/+tCtqEsvJ0PHqhKkPPHderbCx6rQ1cIVnegMs0DYHM9U6y
+         NkzLebp0n8ksM5jzxeWUDexJDxzVpAKBgWPTh2maazI5vVpTEwKIwFaK+jFMUxUsp4H6
+         2n3nizn12ukMUsqbtT0zPujgUp3WlV5kanx/MSn9pvLc1NjtH2too6wvrP44BnPozKIt
+         YG3YA+VUAYOXnSM1MAC+KIlZjHWEnihLKI6b9HNJIozvAodrYYXyoDZz/wAvhUPpPPqK
+         7mfFWGXlqPzbWYzFzzssip3+VBKS7/yFPmgDVhp8Qtgl0Ai71giVOxx44cuu9EB+VULJ
+         6DVg==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:dkim-signature;
-        bh=nB3JPzZ6SNvkIS006IVQjbVnUi19aOB/TCAFicSog9A=;
-        fh=Zp1Z0nUmxAzBCZm7yDMbwq0Ziwdy4+NRDLShtlMvjzU=;
-        b=ZP7pfAccz1JMQwGWLhA5TaLteOTeIacLkWfFl0HYXBjrPY2QRfQhqFWCywLLupmbRc
-         Al2U70diJ8kvCAOpfWd25KKfTcgloHXhv73L6FCv8s41YEY8KFV82nEbt5Y5YGZebLMf
-         TqXqgQASwvNUH+y7sknmu3WUO7G9uxejaLld9ldDs2xNbDyr44wIH48XqFmNftT8yMAB
-         3Z9CXOwK4uqOYd4F4s6O4zTcvkjntcBTV12E7zf5tX7RV20U25YZaJApkWpLU0BDVOZa
-         +fEthmCJw8WqzK0CCNzitHWdpCUX5Jq4QPsPnrqWVB37uAlh9eOO8vXa6zn7OFzyT/p3
-         z/MA==;
+        bh=gDdA9vu4Fz00bgurrj0mXlyC2hJ8rRfiuCUxuR8xwe8=;
+        fh=+E3KZj8bLK3sgf/cMhh3PKkXvBdzWAPQZoCnPnoceDY=;
+        b=bW888FhNitRo5G3U2YgzwMkJ0NoYAL0OJPAv/ZasjyR+BQZ5mVz5PIr+QTUYBr5LfD
+         /HPBjmXauSlg2yxHL92Dz0OT5lA0F3BH/6hbVxP3L0zst1hXkSyGCv1BtcNSzI4Nninc
+         rzq2WU3LQ0YwjPoS74uIwluDdjFzPC0q9lUrZG9csqy+5ED8gkJ9zLQ1kCqd2llLYmhm
+         3792FR1GAOoMa9cQcza3IJ3IoY1LYg/fp9G9m6BOsMc1jxHJPBP7JzodyDvrUZsw9WR0
+         +2Pb3R8IfIupNGDTtZ1NCfU6YiBSEpIx9eOR2hz0MiYmotXIVMcEUg/s07bUb4EIGE9q
+         8trw==;
         darn=vger.kernel.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1775998621; x=1776603421; darn=vger.kernel.org;
+        d=gmail.com; s=20251104; t=1776000183; x=1776604983; darn=vger.kernel.org;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=nB3JPzZ6SNvkIS006IVQjbVnUi19aOB/TCAFicSog9A=;
-        b=JkaSk7OuU5V+5LiaR6nvJ2eOkJU+OnNuHRudi2M+ggaVIpLl1+tQPkRgRyBmdvKNtJ
-         q7631Z4SsgbOwwWpLTy5Iv6szb2loRiDr34BX4dQXfeG/YyxJ5PeiaP6s2862tpU2mXt
-         zr8CybNMMA2KFhKcwrAQBGo8yPe0oAc7JkNvKX2lt/yo3QzXJlkiwYEwAvvcnoOsMe9z
-         wm/DFi62LK+CNmgKoea41Y1v81F1BggxQXUkZHah/90ephJ0guRyfnvl6W5pRx1nNNLC
-         QBLFBfFbulR/aYcRwJxG+nWVW0mM5jwwP7J24+d097gErfM9M7uiwLlEPJwJsJVGCgOY
-         yGXA==
+        bh=gDdA9vu4Fz00bgurrj0mXlyC2hJ8rRfiuCUxuR8xwe8=;
+        b=dccArJm9v6h9Fdk8lDGNWZnQG14AQ9ZokHDnv7DAL1GW0R6BDoMR0waR0wHnO++sNY
+         YJPJSDf/Eo4Jqw4GQ8Gz/T/rsLkNap5uTZ+EpwANfeQ1dFGXyG88+fN/49+h4JvC9C7c
+         2+asFn0yzVsL4n2hJqrH+GINWtCINsNrMCDz6yHqeLWKks0EsNy7ssNes4vhdFLCd+tg
+         k2Ys2/EuxonOOeyCkSNs/L20e6zSdmHhXIY25hzHxXat+VjZowRiCo0VNk9bdjlPvxYt
+         DV9owUMCQ8VWv/4Ldm8HtUCj9QQlhYJyZr8JnJBv87EbzYIfO7KpnQu2sRPezsHrfV9J
+         1U2Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1775998621; x=1776603421;
+        d=1e100.net; s=20251104; t=1776000183; x=1776604983;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=nB3JPzZ6SNvkIS006IVQjbVnUi19aOB/TCAFicSog9A=;
-        b=YTJrzNALe8MIzvjGN0lckwyS+95brq9lI3f7RlKf/i7xjkh7iXBfK5JjZkCM49/hFr
-         IvDi/zdn7BRMRPzrorITSE4+tWhhc6J4pG9UcKxqJ5Na17BSs1yE49aD/Hbur4gFrZMq
-         XRe5v+iktIpuMIVTeBrzTzzRf6jjiPEoUZnis4wUi+lHa94/9AoBa2+3csXjMFJSF4HG
-         NeUpumFNGvSXUwIzT+4mgSE27NJt3y3oIYsczXaNlSWcCppiYg8w8sUT75QrfPE1OLxS
-         Q0L1BeOvG3fEvMGfsRbsO+pYCP8m80ILJAycuCLjGn8gI2gGZn4Q92Yiyq9GnGJqYUGC
-         WHpA==
-X-Forwarded-Encrypted: i=1; AFNElJ8iiNhVjM+UlalkwW5rv0uUAFrsPzTOjw7TCKG2b2/l4S5btZMfX0uAFfpOozq9o9MPCiTpYYA/+rks@vger.kernel.org
-X-Gm-Message-State: AOJu0YxH7gnj4ghymQvaO9R5OjDi5hGh4WvPB//QCTSfx/+h299H26na
-	aRs7GNN9lA2nGdGwc+ZfIZRlZ7bWwKDvZSuiCaYavZkxFWAiLbRQ4ilqdDJZ6BtFm0luWbGPD1u
-	geBC48CAR6mAsFepHXRVS9Km5DkLbTpA=
-X-Gm-Gg: AeBDiesBkaUk9CeBe+eXqA1Cj99Ocnvlv59P//7ZncOhlcmpePQS/DraUWah0hlCerR
-	t16cvR7OzE+em/gsQD+pNHQZXTQumz5ajT3H1Y4bye8j10irhHoQwtHWyYT2vRzJz8anJNa9ie/
-	jwou3KvRLUyRLHIrMyTd+m0SJDg3X6yUU7YrnmQo69ZK3AfEO7EL2uDuSnF1i6QLm2BWLgVgoKS
-	q65ranRML+r8yuvM/JreIxoYfMUptlDr7nkv6anZeAoTTuS4SKYt/HuvQF5SvFMS7n036ohUsyc
-	2z9s2g4=
-X-Received: by 2002:ad4:4ea1:0:b0:8a0:44bd:57d8 with SMTP id
- 6a1803df08f44-8ac8623d429mr167289366d6.50.1775998621324; Sun, 12 Apr 2026
- 05:57:01 -0700 (PDT)
+        bh=gDdA9vu4Fz00bgurrj0mXlyC2hJ8rRfiuCUxuR8xwe8=;
+        b=WHxFyPByFMg5YgpjNmzDEyXW4rKNrTtDNgvBmK3c4RUWVGk9Rb9duMz6enUvMYNSlx
+         buDxqnhYoRM9aVlqIaFLjdPMHbeEbOhIyVKGueHsIj2rfSr+9u+jtP9KPvrsw+zuhaPa
+         k4T0EKwkINb2SpdJwwcZiWHb2zfViYztiXP5d1sl/eqKSmz2aNNDOebSIgJC3fSVVIDu
+         F8CC5FSxFRpfX0pqPNhSn7QUf63RXPyiDBM7wxLG92bpk9ecnn+1vAYtWBV5O6KG7AU+
+         IxljkY5t8M1yafbNm6iwBIWw0mhNtxIdllC9eqTBNVuVpMH6FEm/WhvplC4gQ/VgPh4P
+         RMgQ==
+X-Forwarded-Encrypted: i=1; AJvYcCXoF1NkXy0drX8+4eLM45mJK04ZCrdTyrg5GJDPG+W5KsrBkUxS+GUt0twib6KqJUKWM9IZkRVoEo7Q@vger.kernel.org
+X-Gm-Message-State: AOJu0YzxzgSGeLikhipClaB2JzTEGAMANayh4ZvnVuZ7xPl/vXpJjuE7
+	i9GJR8PsfFKi49r8sCgE0Xo4Eb4onpvADW7baKUHYp04NXUiJD7S++Rf5WRNAz5QzCNETdvv+t7
+	jo+Sqr4iLjhmxDftIKsNnc0aH4tyXIH4=
+X-Gm-Gg: AeBDievTBGxtR9biP01F+6s3jpOtWPYexWn2pcD+sllgNCsFiB2wVewtEDL2X+PA36l
+	tfhk6hWvDbyIRdIWdYaNfoInp/EcOU2J+BzY9YNFBMZ+zz3yUt4iFlJDxm6zhOZDpSatL7AR4Gx
+	WLzU/Xx9CsufkaWczKxyfNBmg0vjxwvGENIZVe5uP/YD+yTKqxNFEUVbsqSNXmIi8SjsNI94IWb
+	eiBE4jaDEF3w4abb2DfUR/chFy0uXDhfI+p0iD5DqZHN+wPQt2SZFLIXuxUc23Ph+du1DXPN6iZ
+	yQ4qqyEUbFjyRKbeMXlOJkUiWLNsbmvIJEVHJm7K
+X-Received: by 2002:a17:907:e113:b0:b9c:6ef1:ed18 with SMTP id
+ a640c23a62f3a-b9d727aa4fdmr352963766b.25.1776000183133; Sun, 12 Apr 2026
+ 06:23:03 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-hams@vger.kernel.org
 List-Id: <linux-hams.vger.kernel.org>
 List-Subscribe: <mailto:linux-hams+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-hams+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20260410145448.38253e3c@kernel.org> <20260410221220.1708137-1-kuniyu@google.com>
- <4f5810a7-c792-4d6b-9f7c-6c6b289def19@blemings.org> <2026041135-shindig-trekker-5d06@gregkh>
- <b9355e3c-9252-4dd7-b7ed-dff13e3b2c8b@blemings.org> <2026041124-hyphen-circulate-34ae@gregkh>
- <3cd91fbc-d3a9-431e-b915-58e851c7df9f@blemings.org>
-In-Reply-To: <3cd91fbc-d3a9-431e-b915-58e851c7df9f@blemings.org>
-From: Chris Maness <christopher.maness@gmail.com>
-Date: Sun, 12 Apr 2026 05:56:50 -0700
-X-Gm-Features: AQROBzDu5TKgVs83Z1LWXJRlNPDBrABRy3VOJf1yI4YJC2vIIt_n8WeMz8OO5kU
-Message-ID: <CANnsUMFVg9nZnJ_He38O9Ui1YUM_Je7MGO-y_J+oW=TG3jV1bA@mail.gmail.com>
-Subject: Re: [PATCH net] netrom: do some basic forms of validation on incoming frames
-To: hugh@blemings.id.au
-Cc: Greg KH <gregkh@linuxfoundation.org>, Kuniyuki Iwashima <kuniyu@google.com>, kuba@kernel.org, 
-	davem@davemloft.net, edumazet@google.com, horms@kernel.org, 
-	linux-hams@vger.kernel.org, linux-kernel@vger.kernel.org, 
-	netdev@vger.kernel.org, pabeni@redhat.com, stable@kernel.org, 
-	workflows@vger.kernel.org, yizhe@darknavy.com
+References: <20260410120044.031381086@kernel.org> <20260410120319.131582521@kernel.org>
+In-Reply-To: <20260410120319.131582521@kernel.org>
+From: Magnus Lindholm <linmag7@gmail.com>
+Date: Sun, 12 Apr 2026 15:22:51 +0200
+X-Gm-Features: AQROBzAeMsaeSVePCJ__tEd4f2rWAY6MixXzp_fii2b8vyUpLt4xjSbtYzENFaw
+Message-ID: <CA+=Fv5S68wZQapeaYTspOfsuGk=nBj60sx-ojHBSqrxV59Q+ZA@mail.gmail.com>
+Subject: Re: [patch 23/38] alpha: Select ARCH_HAS_RANDOM_ENTROPY
+To: Thomas Gleixner <tglx@kernel.org>
+Cc: LKML <linux-kernel@vger.kernel.org>, 
+	Richard Henderson <richard.henderson@linaro.org>, linux-alpha@vger.kernel.org, 
+	Arnd Bergmann <arnd@arndb.de>, x86@kernel.org, Lu Baolu <baolu.lu@linux.intel.com>, 
+	iommu@lists.linux.dev, Michael Grzeschik <m.grzeschik@pengutronix.de>, netdev@vger.kernel.org, 
+	linux-wireless@vger.kernel.org, Herbert Xu <herbert@gondor.apana.org.au>, 
+	linux-crypto@vger.kernel.org, Vlastimil Babka <vbabka@kernel.org>, linux-mm@kvack.org, 
+	David Woodhouse <dwmw2@infradead.org>, Bernie Thompson <bernie@plugable.com>, linux-fbdev@vger.kernel.org, 
+	Theodore Tso <tytso@mit.edu>, linux-ext4@vger.kernel.org, 
+	Andrew Morton <akpm@linux-foundation.org>, Uladzislau Rezki <urezki@gmail.com>, 
+	Marco Elver <elver@google.com>, Dmitry Vyukov <dvyukov@google.com>, kasan-dev@googlegroups.com, 
+	Andrey Ryabinin <ryabinin.a.a@gmail.com>, Thomas Sailer <t.sailer@alumni.ethz.ch>, 
+	linux-hams@vger.kernel.org, "Jason A. Donenfeld" <Jason@zx2c4.com>, 
+	Russell King <linux@armlinux.org.uk>, linux-arm-kernel@lists.infradead.org, 
+	Catalin Marinas <catalin.marinas@arm.com>, Huacai Chen <chenhuacai@kernel.org>, 
+	loongarch@lists.linux.dev, Geert Uytterhoeven <geert@linux-m68k.org>, 
+	linux-m68k@lists.linux-m68k.org, Dinh Nguyen <dinguyen@kernel.org>, 
+	Jonas Bonn <jonas@southpole.se>, linux-openrisc@vger.kernel.org, 
+	Helge Deller <deller@gmx.de>, linux-parisc@vger.kernel.org, 
+	Michael Ellerman <mpe@ellerman.id.au>, linuxppc-dev@lists.ozlabs.org, 
+	Paul Walmsley <pjw@kernel.org>, linux-riscv@lists.infradead.org, 
+	Heiko Carstens <hca@linux.ibm.com>, linux-s390@vger.kernel.org, 
+	"David S. Miller" <davem@davemloft.net>, sparclinux@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-Thanks for your work, Hugh.
-
--73 de Chris KQ6UP
-
-On Sat, Apr 11, 2026 at 7:33=E2=80=AFPM Hugh Blemings <hugh@blemings.org> w=
+On Fri, Apr 10, 2026 at 2:36=E2=80=AFPM Thomas Gleixner <tglx@kernel.org> w=
 rote:
 >
+> The only remaining usage of get_cycles() is to provide
+> random_get_entropy().
 >
-> On 11/4/2026 18:58, Greg KH wrote:
-> > On Sat, Apr 11, 2026 at 05:24:17PM +1000, Hugh Blemings wrote:
-> >> On 11/4/2026 15:50, Greg KH wrote:
-> >>> On Sat, Apr 11, 2026 at 08:25:19AM +1000, Hugh Blemings wrote:
-> >>>> On 11/4/2026 08:11, Kuniyuki Iwashima wrote:
-> >>>>> From: Jakub Kicinski <kuba@kernel.org>
-> >>>>> Date: Fri, 10 Apr 2026 14:54:48 -0700
-> >>>>>> On Fri, 10 Apr 2026 14:30:42 -0700 Jakub Kicinski wrote:
-> >>>>>>> On Fri, 10 Apr 2026 07:24:36 +0200 Greg Kroah-Hartman wrote:
-> >>>>>>>> On Thu, Apr 09, 2026 at 08:32:35PM -0700, Jakub Kicinski wrote:
-> >>>>>>>>> Or for simplicity we could also be testing against skb_headlen(=
-)
-> >>>>>>>>> since we don't expect any legit non-linear frames here? Dunno.
-> >>>>>>>> I'll be glad to change this either way, your call.  Given that t=
-his is
-> >>>>>>>> an obsolete protocol that seems to only be a target for drive-by=
- fuzzers
-> >>>>>>>> to attack, whatever the simplest thing to do to quiet them up I'=
-ll be
-> >>>>>>>> glad to implement.
-> >>>>>>>>
-> >>>>>>>> Or can we just delete this stuff entirely?  :)
-> >>>>>>> Yes.
-> >>>>>>>
-> >>>>>>> My thinking is to delete hamradio, nfc, atm, caif.. [more to come=
-]
-> >>>>>>> Create GH repos which provide them as OOT modules.
-> >>>>>>> Hopefully we can convince any existing users to switch to that.
-> >>>>>>>
-> >>>>>>> The only thing stopping me is the concern that this is just the s=
-oftest
-> >>>>>>> target and the LLMs will find something else to focus on which we=
- can't
-> >>>>>>> delete. I suspect any PCIe driver can be flooded with "aren't you
-> >>>>>>> trusting the HW to provide valid responses here?" bullshit.
-> >>>>>>>
-> >>>>>>> But hey, let's try. I'll post a patch nuking all of hamradio late=
-r
-> >>>>>>> today.
-> >>>>>> Well, either we "expunge" this code to OOT repos, or we mark it
-> >>>>>> as broken and tell everyone that we don't take security fixes
-> >>>>>> for anything that depends on BROKEN. I'd personally rather expunge=
-.
-> >>>>> +1 for "expunge" to prevent LLM-based patch flood.
-> >>>>>
-> >>>>> IIRC, we did that recently for one driver only used by OpenWRT ?
-> >>>>>
-> >>>>>
-> >>>> If the main concern here is ongoing maintenance of these Ham Radio r=
-elated
-> >>>> protocols/drivers, can we pause for a moment on anything as dramatic=
- as
-> >>>> removing from the tree entirely ?
-> >>> Sure, but:
-> >>>
-> >>>> There is a good cohort of capable kernel folks that either are or we=
-re ham
-> >>>> radio operators who I believe, upon realising that things have got t=
-o this
-> >>>> point, will be happy to redouble efforts to ensure this code maintai=
-ned and
-> >>>> tested to a satisfactory standard.
-> >>> We need this code to be maintained, because as is being shown, there =
-are
-> >>> reported problems with it that will affect these devices/networks tha=
-t
-> >>> you all are using.  So all we need is a maintainer for this to be abl=
-e
-> >>> to take reports that we get and fix things up as needed.  I know you
-> >>> have that experience, want to come back to kernel development, we've
-> >>> missed you :)
-> >> That's most kind Greg, thank you, have missed all you cool kids too :)
-> >>
-> >> More seriously though - I'd be up for doing it, but I think there may =
-be
-> >> others better placed than I who haven't yet realised we have this conu=
-ndrum.
-> >> I'm nudging a few folks offline on this front.
-> > The main "conundrum" is, is that this protocol completly trusts the
-> > hardware to give the kernel the "correct" data.  So if you trust the
-> > hardware to work properly, it will be fine, but as the fuzzing tools ar=
-e
-> > finding, if the data from the hardware modems is a bit out-of-spec,
-> > "bad" things can happen.
-> >
-> > I don't know how well controlled the data is from these devices, if it'=
-s
-> > just a "pass through" from what they get off the "wire" or if the
-> > devices always ensure the protocol packets are sane before passing them
-> > off to the kernel.  That's going to be something you all with the
-> > hardware is going to have to determine in order to keep this a working
-> > system over time.  Especially given that this is a wireless protcol
-> > where you "have" to trust the remote end.
+> Switch alpha over to the new scheme of selecting ARCH_HAS_RANDOM_ENTROPY
+> and providing random_get_entropy() in asm/random.h.
 >
-> Thanks for the thoughts Greg - and ya, I guess on balance I come back to
-> being generally skeptical of both hardware and software to Do The Right
-> Thing (TM)
+> Remove asm/timex.h as it has no functionality anymore.
 >
-> So bounds checking and the like seems prudent irrespective of whether
-> the kernel is getting the data from real hardware, software modems etc.
->
-> I've done some initial digging around that confirms my suspicion that
-> this in kernel code remains quite widely used, if somewhat out of view.
-> Accordingly I lean then towards working to get these various mitigations
-> in place with some revised patches etc. as needed and into the main tree.
->
-> Once this done I think that'll give me a good sense of whether I or
-> someone else is well positioned to keep the code maintained longer term
-> and thus justify it remaining in tree or not.
->
-> More to follow once I finish remembering this kernel thing!
->
-> Cheers,
-> Hugh
->
->
->
->
+> Signed-off-by: Thomas Gleixner <tglx@kernel.org>
+> Cc: Richard Henderson <richard.henderson@linaro.org>
+> Cc: linux-alpha@vger.kernel.org
+> ---
+>  arch/alpha/Kconfig              |    1 +
+>  arch/alpha/include/asm/random.h |   14 ++++++++++++++
+>  arch/alpha/include/asm/timex.h  |   26 --------------------------
+>  3 files changed, 15 insertions(+), 26 deletions(-)
 
+Hi,
 
---=20
-Thanks,
-Chris Maness
+The Alpha side looks fine to me.
+
+I've applied this patch on top of v7.0-rc7, built a kernel successfully,
+boot-tested it on an Alpha UP2000+ (SMP) without issues.
+
+Acked-by: Magnus Lindholm <linmag7@gmail.com>
+Tested-by: Magnus Lindholm <linmag7@gmail.com>
