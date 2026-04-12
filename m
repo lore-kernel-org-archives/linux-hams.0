@@ -1,47 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E46384503B;
-	Sun, 12 Apr 2026 14:41:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 55212364028;
+	Sun, 12 Apr 2026 20:17:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776004915; cv=none; b=X3PnoJBzIF/HeJNCmk/0alPxphSgLgzLO6+CUlTVCFCfR8rO6NSciPZ9iCDYiKvFgMwatrJ/op7/xfImgzLfYY0J1xf4P8c6uFIgzrBhTxDGmyBts7pTlIADX67NHDFJLHsUtRafzITJjEBbm2MzNdvsWKnQmPylZksz2UCoibc=
+	t=1776025073; cv=none; b=eimkVsiVGEV98ryefWMNDE5Y3D7qe/2TGDX7K3oaJOjpXioZxRn67M/AFplCbtFEcHrJ4Lo4s/Sh/ixLW/ER9jbqb9erRal4wEF9tFii+q4fhdTRz9aJJfaWETNuY/UOw7NBeZE256+21ffzfkUZQkDorPXq2LPsx1xDfUQwqoU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776004915; c=relaxed/simple;
-	bh=vU8qocTBhF2Eu+LHdZXNCVDARpzm7EZ8Y8vqQGXu39M=;
+	s=arc-20240116; t=1776025073; c=relaxed/simple;
+	bh=+GQ2w14XZKFOtmHTRbBaPgP6q1+SXe9xjwyp5/qjVzk=;
 	h=Date:From:To:Cc:Subject:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=OzAjroEiBLnj1a8233sh3haDn4vrk0O8HoAfiYtVAGwB3gWYUvK4lYayEaqTfyxPNDPlVhWFINqdB24z4GKBiBbc2lRdIh1Gf0oFgDUUtaeRY9rtFFRpVi2/iw+VSCk6KRNjd4sshjwnpbY7siNFl0xKjgpMXeRh7aOCcoFGrjo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=bUUNKd8I; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=s5w5aQ7NB6FFm5Ll7aKFTuWUQ8Z9dUFVJefc+lbGGID3aDVuye8ygnZa84WL3MLHdqwo0tXBdAu6FmzyMiqYPZSR9n7idoIqvn/O0vaH7ShyFXeDHdWs9ep2jIJh4x37UYvfmon6/KO6yWbPCatuif5HHLhH2Glab9NREwL4HME=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ooUifqCP; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="bUUNKd8I"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DD503C19424;
-	Sun, 12 Apr 2026 14:41:53 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ooUifqCP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B8AAAC19424;
+	Sun, 12 Apr 2026 20:17:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1776004914;
-	bh=vU8qocTBhF2Eu+LHdZXNCVDARpzm7EZ8Y8vqQGXu39M=;
+	s=k20201202; t=1776025073;
+	bh=+GQ2w14XZKFOtmHTRbBaPgP6q1+SXe9xjwyp5/qjVzk=;
 	h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
-	b=bUUNKd8Imz8oj+3j+KPEIjO9PzKntTuzwp7tZGykge2m9Ieriht60B5WH44PdSr7D
-	 W2CpGSWZ09SokZlQu4jV/pRv5Bm2Yklmod1IhL0fYUxBwVHxBdx4WZT6Q4cTLGBCzd
-	 OAJdjw8w50xurMGemJdg9oUCLJbJQj7QHLScJeGF4yZy8JVvlo4wG4Uwb9zFAxV362
-	 TqeHaKFV+NYZK4/MfsdjTVOi93LQQPhSJ167b6UfTH8LRj9xNTIK5+mc1mhYJqPtKT
-	 KVdpts6xKTnrv412ShvaBIibc8crLukjkucPSXGvckQpAth3/Qq8w0ulMwl5RNjhBT
-	 Jf4BgBU5ZQuuQ==
-Date: Sun, 12 Apr 2026 07:41:53 -0700
+	b=ooUifqCPoVPQ4RAl4uE1Go3evrVTnRZ+OrSXMGEvOdabVYx7YKdbkuwrVE7b/CrWv
+	 /4d+fbV3g53P0UqcW8EIgWbDSoVssmgGaoFtec42HGEk7Ih17mr48a3cPH1UVtbe7L
+	 GX9LbDZcP86dzHnBrE2Ttm6S/zKhjF8FXfvENlL3lHgtN0X1lE5iDMLFR/C+bgCNKZ
+	 HtzCNbp5AjXhVuo9G+gAA0HM6UZcvysb7MCGgmChscyEqdiv0//HDBi5Q65l9pzTHm
+	 mxyvVNyKOhVK5/UpAfzP2lINlmoAAGGgp/u6Ao1RdrqNF5nn+8ytMMF+P1iVxo8gDv
+	 KROYlGRHOA9VA==
+Date: Sun, 12 Apr 2026 13:17:51 -0700
 From: Jakub Kicinski <kuba@kernel.org>
-To: Craig <edfardos@gmail.com>
-Cc: hugh@blemings.id.au, Kuniyuki Iwashima <kuniyu@google.com>,
- davem@davemloft.net, edumazet@google.com, gregkh@linuxfoundation.org,
- horms@kernel.org, linux-hams@vger.kernel.org, linux-kernel@vger.kernel.org,
- netdev@vger.kernel.org, pabeni@redhat.com, stable@kernel.org,
- workflows@vger.kernel.org, yizhe@darknavy.com
-Subject: Re: [PATCH net] netrom: do some basic forms of validation on
- incoming frames
-Message-ID: <20260412074153.07636ebf@kernel.org>
-In-Reply-To: <761f83cc-58eb-4b4a-ba91-d11412e7b2a6@gmail.com>
-References: <20260410145448.38253e3c@kernel.org>
-	<20260410221220.1708137-1-kuniyu@google.com>
-	<4f5810a7-c792-4d6b-9f7c-6c6b289def19@blemings.org>
-	<761f83cc-58eb-4b4a-ba91-d11412e7b2a6@gmail.com>
+To: Mashiro Chen <mashiro.chen@mailbox.org>
+Cc: netdev@vger.kernel.org, davem@davemloft.net, edumazet@google.com,
+ pabeni@redhat.com, horms@kernel.org, jreuter@yaina.de,
+ linux-hams@vger.kernel.org, linux-kernel@vger.kernel.org,
+ stable@vger.kernel.org
+Subject: Re: [PATCH v2 net] net: ax25: fix integer overflow in
+ ax25_rx_fragment()
+Message-ID: <20260412131751.0e90a053@kernel.org>
+In-Reply-To: <20260409025026.24575-1-mashiro.chen@mailbox.org>
+References: <20260409025026.24575-1-mashiro.chen@mailbox.org>
 Precedence: bulk
 X-Mailing-List: linux-hams@vger.kernel.org
 List-Id: <linux-hams.vger.kernel.org>
@@ -51,9 +47,15 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
 Content-Transfer-Encoding: 7bit
 
-On Fri, 10 Apr 2026 15:51:39 -0700 Craig wrote:
-> If you're sure the Internet will never fail, I guess it makes 
-> sense removing all of this since it's inconvenient to maintain.
+On Thu,  9 Apr 2026 10:50:26 +0800 Mashiro Chen wrote:
+> Fix mirrors the identical bug fixed in NET/ROM (nr_in.c): check for
+> overflow before adding skb->len to fraglen, and abort fragment
+> reassembly cleanly if the limit would be exceeded.
 
-I did a sweep thru the fixes on Friday, there are 4 more patches
-for ham radio pending review. Go ahead and review those.
+Same problem as reported by Simon on the netrom patch applies here.
+
+nit: I don't think you need to cast ax25->fraglen to unsigned int
+in the comparison. since it's added with skb->len it should get
+auto-prompted to unsigned int.
+-- 
+pw-bot: cr
