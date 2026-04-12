@@ -1,192 +1,233 @@
-Received: from mail-wm1-f43.google.com (mail-wm1-f43.google.com [209.85.128.43])
+Received: from mail-qv1-f47.google.com (mail-qv1-f47.google.com [209.85.219.47])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 53CD4313527
-	for <linux-hams@vger.kernel.org>; Sun, 12 Apr 2026 08:56:37 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.43
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775984200; cv=none; b=sXhSEZZlrH+Cq9SWxdX1bL92h5WB2jZJ52y1TbYzAZzSK04EGbKzLwI37UGfVDfArbpOchq4jeVIFfBNnsW305iwRWb5vzeeNe3jLU/+IPrrDUz/CoP7E1eTHRHxZOmsGjqE6qcev0B5SwZuDK5ZundIbnINdq1rvgZ7iG8k9Kw=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775984200; c=relaxed/simple;
-	bh=XZtsBYJ+xUzK/w66hhh7L4ep5/Nv3d9zyXSTiNiHtzQ=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=QqOKKrdxXX8+ondkBAecm7WpaeiDAkILRpWWTr6Z4rb/47qDP6dMhc15J5HFkungSp7YDEIsyE4JLJkIUesp8Fk9qjQ91sU9TTklDmcYngVMXIHY6vvKvilhLZbYyI7Wn/CLsCS+DbdMmjqjQP1ot+lXjLXt+7J9S1Oc8NHfdO4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=rmk25eS0; arc=none smtp.client-ip=209.85.128.43
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7CCFA241686
+	for <linux-hams@vger.kernel.org>; Sun, 12 Apr 2026 12:57:02 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.219.47
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1775998623; cv=pass; b=ohuZtbSUI9rkaCrTONAySPlMYtGgNNyWwLC9YrVgPlhXg6yUXONMTvUkH/1wNibENTCVDLxdrk620rFz/WMHJEDbeKlGP5WS44+aG6PHcDY9GsFYpq17fqqbvvBCl7EQnCeGrz+Wa79VYSDf27Gf7VjmIZkGAPeIX3ufFMcombk=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1775998623; c=relaxed/simple;
+	bh=qfPYmJHnxmRT9cVmnzYs/e4B/gEH62x/Gcw0W4+P+18=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=LRxXL+0SaLhighbG2yM6rvZlVrj87R5DJV9RVBYvxMpB/raijLZq/Cr0PQRNC4cMh0OJy2s4bJrdHhtZE7/uobiEJ/5uiJCo+H4G9c49QnKDGQ7bXSLvUNNlH0u2iM5ZvarBUtLXXreVtzA3pMNbocQ3sbol+nfL8zASjOyRlN4=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=JkaSk7Ou; arc=pass smtp.client-ip=209.85.219.47
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="rmk25eS0"
-Received: by mail-wm1-f43.google.com with SMTP id 5b1f17b1804b1-488b3f8fa2bso37509565e9.1
-        for <linux-hams@vger.kernel.org>; Sun, 12 Apr 2026 01:56:37 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="JkaSk7Ou"
+Received: by mail-qv1-f47.google.com with SMTP id 6a1803df08f44-8a4b8c3a30bso40807996d6.3
+        for <linux-hams@vger.kernel.org>; Sun, 12 Apr 2026 05:57:02 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1775998621; cv=none;
+        d=google.com; s=arc-20240605;
+        b=koALl6TK7/L2dNxZ72FkTfU6qkrLi5x5/7HfPSbhJk5Ihzbh971kGk8vsHcLC+JAYB
+         MffhbENKgczuL4pjf5xeQFivI9vH7LnstIXEjyvv9MBYiHQWj9Tj+IeHBUs2jAbXmjP1
+         VfZwmNI5X86/EfAJOa82KfT8w1hyCYgoDP+cVcKuqJOAUs05KJthGzxnmvV8Yp2V128z
+         0RUfOex/ghoo+/jiPxX9Qe7/O1P0XZrkJjmhDavrUdeTJiiR3VPQf4xY79ziO24wNNok
+         BzAFdp9G8EMsEmhqpUvTT9dbkBouYlXRtLRDYDPveo5UAHy+wFlk8m6+4kW0CNhSZq7B
+         iDCA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=nB3JPzZ6SNvkIS006IVQjbVnUi19aOB/TCAFicSog9A=;
+        fh=Zp1Z0nUmxAzBCZm7yDMbwq0Ziwdy4+NRDLShtlMvjzU=;
+        b=ZP7pfAccz1JMQwGWLhA5TaLteOTeIacLkWfFl0HYXBjrPY2QRfQhqFWCywLLupmbRc
+         Al2U70diJ8kvCAOpfWd25KKfTcgloHXhv73L6FCv8s41YEY8KFV82nEbt5Y5YGZebLMf
+         TqXqgQASwvNUH+y7sknmu3WUO7G9uxejaLld9ldDs2xNbDyr44wIH48XqFmNftT8yMAB
+         3Z9CXOwK4uqOYd4F4s6O4zTcvkjntcBTV12E7zf5tX7RV20U25YZaJApkWpLU0BDVOZa
+         +fEthmCJw8WqzK0CCNzitHWdpCUX5Jq4QPsPnrqWVB37uAlh9eOO8vXa6zn7OFzyT/p3
+         z/MA==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1775984196; x=1776588996; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=EbDgrbrkQIZIzHMqS4zyFwb8jbE/7QCDRz8zhtNheE4=;
-        b=rmk25eS0pD3r1W6fBjCHCIGG+xosVecWiNg/3nfNyAKaxOqHC0aIxIp+bwKvPu9+1j
-         fAU2vugkDHatrG3Fzq7V9jewKzPcvw41odvofwZkis7b1Y4DeW1IWegwg5QbXQj7kCio
-         L+ztGdtDUlhH+iJPC48SIdv4mbiVxmA7Be8JQhGglK1VOqWIq1YR4dry10OotSVrXztE
-         o4/62vmfM6KQrUkxwd24yP/lrxDf8HyZquUshVzt2ycEVPZUv3y2nMTj7GvueTw7R7E/
-         WKG3HtUgcwPCHxCI4T+H5u0NML0HalT4/vA4x/F5vuumDuC+b3YDtjggzfClJhOrbI7r
-         R2bg==
+        d=gmail.com; s=20251104; t=1775998621; x=1776603421; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=nB3JPzZ6SNvkIS006IVQjbVnUi19aOB/TCAFicSog9A=;
+        b=JkaSk7OuU5V+5LiaR6nvJ2eOkJU+OnNuHRudi2M+ggaVIpLl1+tQPkRgRyBmdvKNtJ
+         q7631Z4SsgbOwwWpLTy5Iv6szb2loRiDr34BX4dQXfeG/YyxJ5PeiaP6s2862tpU2mXt
+         zr8CybNMMA2KFhKcwrAQBGo8yPe0oAc7JkNvKX2lt/yo3QzXJlkiwYEwAvvcnoOsMe9z
+         wm/DFi62LK+CNmgKoea41Y1v81F1BggxQXUkZHah/90ephJ0guRyfnvl6W5pRx1nNNLC
+         QBLFBfFbulR/aYcRwJxG+nWVW0mM5jwwP7J24+d097gErfM9M7uiwLlEPJwJsJVGCgOY
+         yGXA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1775984196; x=1776588996;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=EbDgrbrkQIZIzHMqS4zyFwb8jbE/7QCDRz8zhtNheE4=;
-        b=aigiUTeDHBSeqKR5gpr7JMacWW7gu5QokxzKYgfZDeiQXWkQC4NG8NdYvZzW7jwmHI
-         I2+73mb8cLUbMGNWTOZt2X66c+Ae2lXYvyzUus+yLBEHTT5OAx7/F+IWwNPDX1N3SurR
-         OxBKvURLccDffuI1Voc3aWCK32Ivg4r4//873NyM55QPX+VBH+gJ8VV1pFbB3m+BEp+2
-         9OkVa+GIDzuRB85YAkbojUikYqQCnieMOZ0TWA7SHGxKhvpPttehNwZvyjcCtjeAk1ke
-         7O/EoBrWM/FUUifcLwao3f+7CiU2pgNjKA2+3kC/FqJLXMZv/J2i0Njq7EqjA2SaWGzq
-         MBIw==
-X-Forwarded-Encrypted: i=1; AJvYcCWoGxiloul/KkOTxhEnVQoN9MSZOxlgut439X1/H4kjRDbgbUvfW0IcE0pqpnq0TEt8UJW8SyxbPyhX@vger.kernel.org
-X-Gm-Message-State: AOJu0YyQmI8w9QIMH/tLJCjqYpIF+awHqmaZY6nt6XzkgMU7JMF3+5km
-	xJ51g/PIEvYuXjQTpPFz3jY0T53P+PtF+UVxZYbuxOk18XOhnpcJvyQ1
-X-Gm-Gg: AeBDiesijiSmPuYqXAHtHF7oxbhXxeZxCMyzh5tFV7oDRbuWj0VkFVFyzCJ/pl8MT0f
-	CIqWPO8wUSaMDoVrXwO2oZTBcgVZ2+13Ax7HgClT+CoDE7HkZI6/7LeHOtDKnPnUdDmTvsFrTKj
-	eD86eKrbOXuX468a5gQwAtPmUf0A2ignze14zB1HTKHPxJAuLNVpKDCAtZp6dvUnvh/dKR8yWaK
-	IcByQZaZGF5B0AO10ot1somL+Ie4qJiuVH/M57zUlv+VwLSCpUp5eEMxxppWqN3zseiXNCX7bI/
-	PdeBGmTkU9rgsFVII4GHKqN2iL56+tBE4CUrvhK8f5w3cTpZLNAUmSpOBhHAqW/ApYVx9nftlts
-	kSIV5AxCVaAqeWeY2eYSk04RwjR0PYp4no99UHbcatgQ/MyDjYbmdAc/Z+AVV8XAaYX9SZNg5KU
-	gKXFSVUQ2Tkw/1m/C9j4mpRvH4Z6P3wIJRkxT4XoU2BLDQeVl/HIPl/IfxydxUOm1dQJ2N9PLek
-	kmoJA==
-X-Received: by 2002:a05:600c:698d:b0:487:22ad:403e with SMTP id 5b1f17b1804b1-488d6ac9ce5mr126951995e9.14.1775984195334;
-        Sun, 12 Apr 2026 01:56:35 -0700 (PDT)
-Received: from localhost (brnt-04-b2-v4wan-170138-cust2432.vm7.cable.virginm.net. [94.175.9.129])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-488d532ed4dsm197923925e9.4.2026.04.12.01.56.33
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 12 Apr 2026 01:56:34 -0700 (PDT)
-Date: Sun, 12 Apr 2026 09:56:33 +0100
-From: Stafford Horne <shorne@gmail.com>
-To: Thomas Gleixner <tglx@kernel.org>
-Cc: LKML <linux-kernel@vger.kernel.org>, Jonas Bonn <jonas@southpole.se>,
-	linux-openrisc@vger.kernel.org, Arnd Bergmann <arnd@arndb.de>,
-	x86@kernel.org, Lu Baolu <baolu.lu@linux.intel.com>,
-	iommu@lists.linux.dev,
-	Michael Grzeschik <m.grzeschik@pengutronix.de>,
-	netdev@vger.kernel.org, linux-wireless@vger.kernel.org,
-	Herbert Xu <herbert@gondor.apana.org.au>,
-	linux-crypto@vger.kernel.org, Vlastimil Babka <vbabka@kernel.org>,
-	linux-mm@kvack.org, David Woodhouse <dwmw2@infradead.org>,
-	Bernie Thompson <bernie@plugable.com>, linux-fbdev@vger.kernel.org,
-	Theodore Tso <tytso@mit.edu>, linux-ext4@vger.kernel.org,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Uladzislau Rezki <urezki@gmail.com>, Marco Elver <elver@google.com>,
-	Dmitry Vyukov <dvyukov@google.com>, kasan-dev@googlegroups.com,
-	Andrey Ryabinin <ryabinin.a.a@gmail.com>,
-	Thomas Sailer <t.sailer@alumni.ethz.ch>, linux-hams@vger.kernel.org,
-	"Jason A. Donenfeld" <Jason@zx2c4.com>,
-	Richard Henderson <richard.henderson@linaro.org>,
-	linux-alpha@vger.kernel.org, Russell King <linux@armlinux.org.uk>,
-	linux-arm-kernel@lists.infradead.org,
-	Catalin Marinas <catalin.marinas@arm.com>,
-	Huacai Chen <chenhuacai@kernel.org>, loongarch@lists.linux.dev,
-	Geert Uytterhoeven <geert@linux-m68k.org>,
-	linux-m68k@lists.linux-m68k.org, Dinh Nguyen <dinguyen@kernel.org>,
-	Helge Deller <deller@gmx.de>, linux-parisc@vger.kernel.org,
-	Michael Ellerman <mpe@ellerman.id.au>,
-	linuxppc-dev@lists.ozlabs.org, Paul Walmsley <pjw@kernel.org>,
-	linux-riscv@lists.infradead.org, Heiko Carstens <hca@linux.ibm.com>,
-	linux-s390@vger.kernel.org, "David S. Miller" <davem@davemloft.net>,
-	sparclinux@vger.kernel.org
-Subject: Re: [patch 30/38] openrisc: Select ARCH_HAS_RANDOM_ENTROPY
-Message-ID: <adteQSw8c65MtX5l@antec>
-References: <20260410120044.031381086@kernel.org>
- <20260410120319.593798781@kernel.org>
+        d=1e100.net; s=20251104; t=1775998621; x=1776603421;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=nB3JPzZ6SNvkIS006IVQjbVnUi19aOB/TCAFicSog9A=;
+        b=YTJrzNALe8MIzvjGN0lckwyS+95brq9lI3f7RlKf/i7xjkh7iXBfK5JjZkCM49/hFr
+         IvDi/zdn7BRMRPzrorITSE4+tWhhc6J4pG9UcKxqJ5Na17BSs1yE49aD/Hbur4gFrZMq
+         XRe5v+iktIpuMIVTeBrzTzzRf6jjiPEoUZnis4wUi+lHa94/9AoBa2+3csXjMFJSF4HG
+         NeUpumFNGvSXUwIzT+4mgSE27NJt3y3oIYsczXaNlSWcCppiYg8w8sUT75QrfPE1OLxS
+         Q0L1BeOvG3fEvMGfsRbsO+pYCP8m80ILJAycuCLjGn8gI2gGZn4Q92Yiyq9GnGJqYUGC
+         WHpA==
+X-Forwarded-Encrypted: i=1; AFNElJ8iiNhVjM+UlalkwW5rv0uUAFrsPzTOjw7TCKG2b2/l4S5btZMfX0uAFfpOozq9o9MPCiTpYYA/+rks@vger.kernel.org
+X-Gm-Message-State: AOJu0YxH7gnj4ghymQvaO9R5OjDi5hGh4WvPB//QCTSfx/+h299H26na
+	aRs7GNN9lA2nGdGwc+ZfIZRlZ7bWwKDvZSuiCaYavZkxFWAiLbRQ4ilqdDJZ6BtFm0luWbGPD1u
+	geBC48CAR6mAsFepHXRVS9Km5DkLbTpA=
+X-Gm-Gg: AeBDiesBkaUk9CeBe+eXqA1Cj99Ocnvlv59P//7ZncOhlcmpePQS/DraUWah0hlCerR
+	t16cvR7OzE+em/gsQD+pNHQZXTQumz5ajT3H1Y4bye8j10irhHoQwtHWyYT2vRzJz8anJNa9ie/
+	jwou3KvRLUyRLHIrMyTd+m0SJDg3X6yUU7YrnmQo69ZK3AfEO7EL2uDuSnF1i6QLm2BWLgVgoKS
+	q65ranRML+r8yuvM/JreIxoYfMUptlDr7nkv6anZeAoTTuS4SKYt/HuvQF5SvFMS7n036ohUsyc
+	2z9s2g4=
+X-Received: by 2002:ad4:4ea1:0:b0:8a0:44bd:57d8 with SMTP id
+ 6a1803df08f44-8ac8623d429mr167289366d6.50.1775998621324; Sun, 12 Apr 2026
+ 05:57:01 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-hams@vger.kernel.org
 List-Id: <linux-hams.vger.kernel.org>
 List-Subscribe: <mailto:linux-hams+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-hams+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260410120319.593798781@kernel.org>
+References: <20260410145448.38253e3c@kernel.org> <20260410221220.1708137-1-kuniyu@google.com>
+ <4f5810a7-c792-4d6b-9f7c-6c6b289def19@blemings.org> <2026041135-shindig-trekker-5d06@gregkh>
+ <b9355e3c-9252-4dd7-b7ed-dff13e3b2c8b@blemings.org> <2026041124-hyphen-circulate-34ae@gregkh>
+ <3cd91fbc-d3a9-431e-b915-58e851c7df9f@blemings.org>
+In-Reply-To: <3cd91fbc-d3a9-431e-b915-58e851c7df9f@blemings.org>
+From: Chris Maness <christopher.maness@gmail.com>
+Date: Sun, 12 Apr 2026 05:56:50 -0700
+X-Gm-Features: AQROBzDu5TKgVs83Z1LWXJRlNPDBrABRy3VOJf1yI4YJC2vIIt_n8WeMz8OO5kU
+Message-ID: <CANnsUMFVg9nZnJ_He38O9Ui1YUM_Je7MGO-y_J+oW=TG3jV1bA@mail.gmail.com>
+Subject: Re: [PATCH net] netrom: do some basic forms of validation on incoming frames
+To: hugh@blemings.id.au
+Cc: Greg KH <gregkh@linuxfoundation.org>, Kuniyuki Iwashima <kuniyu@google.com>, kuba@kernel.org, 
+	davem@davemloft.net, edumazet@google.com, horms@kernel.org, 
+	linux-hams@vger.kernel.org, linux-kernel@vger.kernel.org, 
+	netdev@vger.kernel.org, pabeni@redhat.com, stable@kernel.org, 
+	workflows@vger.kernel.org, yizhe@darknavy.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Fri, Apr 10, 2026 at 02:20:55PM +0200, Thomas Gleixner wrote:
-> The only remaining non-architecture usage of get_cycles() is to provide
-> random_get_entropy().
-> 
-> Switch openrisc over to the new scheme of selecting ARCH_HAS_RANDOM_ENTROPY
-> and providing random_get_entropy() in asm/random.h.
-> 
-> Add 'asm/timex.h' includes to the relevant files, so the global include can
-> be removed once all architectures are converted over.
-> 
-> Signed-off-by: Thomas Gleixner <tglx@kernel.org>
-> Cc: Jonas Bonn <jonas@southpole.se>
-> Cc: linux-openrisc@vger.kernel.org
+Thanks for your work, Hugh.
 
-This looks good to me.
+-73 de Chris KQ6UP
 
-Acked-by: Stafford Horne <shorne@gmail.com>
+On Sat, Apr 11, 2026 at 7:33=E2=80=AFPM Hugh Blemings <hugh@blemings.org> w=
+rote:
+>
+>
+> On 11/4/2026 18:58, Greg KH wrote:
+> > On Sat, Apr 11, 2026 at 05:24:17PM +1000, Hugh Blemings wrote:
+> >> On 11/4/2026 15:50, Greg KH wrote:
+> >>> On Sat, Apr 11, 2026 at 08:25:19AM +1000, Hugh Blemings wrote:
+> >>>> On 11/4/2026 08:11, Kuniyuki Iwashima wrote:
+> >>>>> From: Jakub Kicinski <kuba@kernel.org>
+> >>>>> Date: Fri, 10 Apr 2026 14:54:48 -0700
+> >>>>>> On Fri, 10 Apr 2026 14:30:42 -0700 Jakub Kicinski wrote:
+> >>>>>>> On Fri, 10 Apr 2026 07:24:36 +0200 Greg Kroah-Hartman wrote:
+> >>>>>>>> On Thu, Apr 09, 2026 at 08:32:35PM -0700, Jakub Kicinski wrote:
+> >>>>>>>>> Or for simplicity we could also be testing against skb_headlen(=
+)
+> >>>>>>>>> since we don't expect any legit non-linear frames here? Dunno.
+> >>>>>>>> I'll be glad to change this either way, your call.  Given that t=
+his is
+> >>>>>>>> an obsolete protocol that seems to only be a target for drive-by=
+ fuzzers
+> >>>>>>>> to attack, whatever the simplest thing to do to quiet them up I'=
+ll be
+> >>>>>>>> glad to implement.
+> >>>>>>>>
+> >>>>>>>> Or can we just delete this stuff entirely?  :)
+> >>>>>>> Yes.
+> >>>>>>>
+> >>>>>>> My thinking is to delete hamradio, nfc, atm, caif.. [more to come=
+]
+> >>>>>>> Create GH repos which provide them as OOT modules.
+> >>>>>>> Hopefully we can convince any existing users to switch to that.
+> >>>>>>>
+> >>>>>>> The only thing stopping me is the concern that this is just the s=
+oftest
+> >>>>>>> target and the LLMs will find something else to focus on which we=
+ can't
+> >>>>>>> delete. I suspect any PCIe driver can be flooded with "aren't you
+> >>>>>>> trusting the HW to provide valid responses here?" bullshit.
+> >>>>>>>
+> >>>>>>> But hey, let's try. I'll post a patch nuking all of hamradio late=
+r
+> >>>>>>> today.
+> >>>>>> Well, either we "expunge" this code to OOT repos, or we mark it
+> >>>>>> as broken and tell everyone that we don't take security fixes
+> >>>>>> for anything that depends on BROKEN. I'd personally rather expunge=
+.
+> >>>>> +1 for "expunge" to prevent LLM-based patch flood.
+> >>>>>
+> >>>>> IIRC, we did that recently for one driver only used by OpenWRT ?
+> >>>>>
+> >>>>>
+> >>>> If the main concern here is ongoing maintenance of these Ham Radio r=
+elated
+> >>>> protocols/drivers, can we pause for a moment on anything as dramatic=
+ as
+> >>>> removing from the tree entirely ?
+> >>> Sure, but:
+> >>>
+> >>>> There is a good cohort of capable kernel folks that either are or we=
+re ham
+> >>>> radio operators who I believe, upon realising that things have got t=
+o this
+> >>>> point, will be happy to redouble efforts to ensure this code maintai=
+ned and
+> >>>> tested to a satisfactory standard.
+> >>> We need this code to be maintained, because as is being shown, there =
+are
+> >>> reported problems with it that will affect these devices/networks tha=
+t
+> >>> you all are using.  So all we need is a maintainer for this to be abl=
+e
+> >>> to take reports that we get and fix things up as needed.  I know you
+> >>> have that experience, want to come back to kernel development, we've
+> >>> missed you :)
+> >> That's most kind Greg, thank you, have missed all you cool kids too :)
+> >>
+> >> More seriously though - I'd be up for doing it, but I think there may =
+be
+> >> others better placed than I who haven't yet realised we have this conu=
+ndrum.
+> >> I'm nudging a few folks offline on this front.
+> > The main "conundrum" is, is that this protocol completly trusts the
+> > hardware to give the kernel the "correct" data.  So if you trust the
+> > hardware to work properly, it will be fine, but as the fuzzing tools ar=
+e
+> > finding, if the data from the hardware modems is a bit out-of-spec,
+> > "bad" things can happen.
+> >
+> > I don't know how well controlled the data is from these devices, if it'=
+s
+> > just a "pass through" from what they get off the "wire" or if the
+> > devices always ensure the protocol packets are sane before passing them
+> > off to the kernel.  That's going to be something you all with the
+> > hardware is going to have to determine in order to keep this a working
+> > system over time.  Especially given that this is a wireless protcol
+> > where you "have" to trust the remote end.
+>
+> Thanks for the thoughts Greg - and ya, I guess on balance I come back to
+> being generally skeptical of both hardware and software to Do The Right
+> Thing (TM)
+>
+> So bounds checking and the like seems prudent irrespective of whether
+> the kernel is getting the data from real hardware, software modems etc.
+>
+> I've done some initial digging around that confirms my suspicion that
+> this in kernel code remains quite widely used, if somewhat out of view.
+> Accordingly I lean then towards working to get these various mitigations
+> in place with some revised patches etc. as needed and into the main tree.
+>
+> Once this done I think that'll give me a good sense of whether I or
+> someone else is well positioned to keep the code maintained longer term
+> and thus justify it remaining in tree or not.
+>
+> More to follow once I finish remembering this kernel thing!
+>
+> Cheers,
+> Hugh
+>
+>
+>
+>
 
-> ---
->  arch/openrisc/Kconfig              |    1 +
->  arch/openrisc/include/asm/random.h |   12 ++++++++++++
->  arch/openrisc/include/asm/timex.h  |    5 -----
->  arch/openrisc/lib/delay.c          |    1 +
->  4 files changed, 14 insertions(+), 5 deletions(-)
-> 
-> --- a/arch/openrisc/Kconfig
-> +++ b/arch/openrisc/Kconfig
-> @@ -10,6 +10,7 @@ config OPENRISC
->  	select ARCH_HAS_DELAY_TIMER
->  	select ARCH_HAS_DMA_SET_UNCACHED
->  	select ARCH_HAS_DMA_CLEAR_UNCACHED
-> +	select ARCH_HAS_RANDOM_ENTROPY
->  	select ARCH_HAS_SYNC_DMA_FOR_DEVICE
->  	select GENERIC_BUILTIN_DTB
->  	select COMMON_CLK
-> --- /dev/null
-> +++ b/arch/openrisc/include/asm/random.h
-> @@ -0,0 +1,12 @@
-> +/* SPDX-License-Identifier: GPL-2.0-or-later */
-> +#ifndef __ASM_OPENRISC_RANDOM_H
-> +#define __ASM_OPENRISC_RANDOM_H
-> +
-> +#include <asm/timex.h>
-> +
-> +static inline unsigned long random_get_entropy(void)
-> +{
-> +	return get_cycles();
-> +}
-> +
-> +#endif
-> --- a/arch/openrisc/include/asm/timex.h
-> +++ b/arch/openrisc/include/asm/timex.h
-> @@ -9,13 +9,9 @@
->   * OpenRISC implementation:
->   * Copyright (C) 2010-2011 Jonas Bonn <jonas@southpole.se>
->   */
-> -
->  #ifndef __ASM_OPENRISC_TIMEX_H
->  #define __ASM_OPENRISC_TIMEX_H
->  
-> -#define get_cycles get_cycles
-> -
-> -#include <asm-generic/timex.h>
->  #include <asm/spr.h>
->  #include <asm/spr_defs.h>
->  
-> @@ -23,6 +19,5 @@ static inline cycles_t get_cycles(void)
->  {
->  	return mfspr(SPR_TTCR);
->  }
-> -#define get_cycles get_cycles
->  
->  #endif
-> --- a/arch/openrisc/lib/delay.c
-> +++ b/arch/openrisc/lib/delay.c
-> @@ -18,6 +18,7 @@
->  #include <linux/init.h>
->  
->  #include <asm/param.h>
-> +#include <asm/timex.h>
->  #include <asm/processor.h>
->  
->  bool delay_read_timer(unsigned long *timer_value)
-> 
-> 
+
+--=20
+Thanks,
+Chris Maness
