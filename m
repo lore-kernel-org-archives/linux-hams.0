@@ -1,160 +1,130 @@
-Received: from flow-a4-smtp.messagingengine.com (flow-a4-smtp.messagingengine.com [103.168.172.139])
+Received: from mout-y-209.mailbox.org (mout-y-209.mailbox.org [91.198.250.237])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8FD1F3537FA;
-	Mon, 13 Apr 2026 19:31:39 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.139
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F032D37D13B;
+	Mon, 13 Apr 2026 20:49:41 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.198.250.237
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776108701; cv=none; b=Wwv7ysAI3pZa7lDmJhUWwipeGdvAQG/VIJHrVKio0YixISKcp4kFNSwJuI+cF04dMmLnjN1bNEPjAkhySfUuWAhcnMaTFdQW1GsQGiGI9UDDxNJUYgMSU4d/m+xnPPgy4QL812kozcop5wedzTQxfknEW7TYLwA7uUfBdYGk1b0=
+	t=1776113383; cv=none; b=PHPpG0hdL8h08I3H7zeMberhVxwJUcjrujzYSwMxjG9XtzJPLb/FNOIypwkIVcX6LAd5I1GUlFUQW4DgHZiaix7OLZEKG1MroenMpmk4ngOE4IgHae2oNt8e8QzTkfaEdYpp41hq/4TiEcec4/0ZPqRQ20ZBwe32++F64rAvpR0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776108701; c=relaxed/simple;
-	bh=WrrLF4ZuZDSSPdaipSZzrKXRH2qtrS74BAAAonCIRps=;
-	h=MIME-Version:Date:From:To:Cc:Message-Id:In-Reply-To:References:
-	 Subject:Content-Type; b=n7g1Yx5W6plpXKy+rkozQ6xEgTTaO1xCblNw3ix8fDOKnFfVL16O7SZh497soJj3f4zqp/zSWU+KxfR5iG2eT19N4YiEsFirX1mWgV9neXuPLaq+B1XzLfWKQzwRina3cMiqA4CdgmYDmme3QAv4sOaeHSA6ZSdvV11+Z0V8qUM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arndb.de; spf=pass smtp.mailfrom=arndb.de; dkim=pass (2048-bit key) header.d=arndb.de header.i=@arndb.de header.b=eBEb3+z4; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=fK2XbJ97; arc=none smtp.client-ip=103.168.172.139
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arndb.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arndb.de
+	s=arc-20240116; t=1776113383; c=relaxed/simple;
+	bh=thEdE0AX0jq70kB6cY35yXTDsolWS1aASokLMnGXxvo=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=s2nHB6bybZyOymXY3E8SXfaAo5gNgCfAUFQsavsUhpQGX6grYED88JBIsf36/j7cXrDOJ6wcu1M6kASxMVahrkE8ZHGKt9JGdVaSG4UlIkAnYTrV9WG/c5Cw3cFSDLg3SJqDwml9l74gj18jlxLTpzJJ20i7SR+k9QLT+ooNR70=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=mailbox.org; spf=pass smtp.mailfrom=mailbox.org; dkim=pass (2048-bit key) header.d=mailbox.org header.i=@mailbox.org header.b=R5NPeSwW; dkim=pass (2048-bit key) header.d=mailbox.org header.i=@mailbox.org header.b=PapF0tXU; arc=none smtp.client-ip=91.198.250.237
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=mailbox.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=mailbox.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=arndb.de header.i=@arndb.de header.b="eBEb3+z4";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="fK2XbJ97"
-Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
-	by mailflow.phl.internal (Postfix) with ESMTP id 9BAA81380415;
-	Mon, 13 Apr 2026 15:31:38 -0400 (EDT)
-Received: from phl-imap-02 ([10.202.2.81])
-  by phl-compute-04.internal (MEProxy); Mon, 13 Apr 2026 15:31:38 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=arndb.de; h=cc
-	:cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm1; t=1776108698;
-	 x=1776115898; bh=oF7+4SGRAImH9WMGSId2dJm+4RdrBt2YGrt25aFUZUA=; b=
-	eBEb3+z4uCJ5XpVJfmMDtd+Hz4pTmn4rIKoszU8vf+435LUmCEc3EJdi4K0/oVv8
-	C+yjXVYuraejFdA/rcQOSN6Zfi5pNlS43GslApllsudgHnK44npvkIwaUHWVTtuh
-	Dw/4I/j/UNeqyr1LQlKmH5vdXZciz/2GPqFtFHFDNoaInKEsvm7hwh9DYdVnGoah
-	lMAIbVhEjH95sryDmrUzci3AfaiCDHHYDZH3oXJ/R4+VlvsfKJPopXWx0JE7CxaE
-	ognvTjwa06PAMT31z/DBGKMGBcoGUsjb6Y3k+6cm618rMbyQ7yCpT6T6pE5XH3Hf
-	w2SGXNdq7Abx7TrcOF+CrA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1776108698; x=
-	1776115898; bh=oF7+4SGRAImH9WMGSId2dJm+4RdrBt2YGrt25aFUZUA=; b=f
-	K2XbJ97Y0jsbU1s6LswXOEcaT2AuIJQsZKTCiqB2bsDjsavXFxXjXN24HUjqmHPV
-	30lUfZzPVJ0GZrRSLZsyTrPlhAwj+oOp7rzHIcW4Q+ggBxcGWjNT+roTWJQkS80p
-	muhmPfZao8pyrAslQS6xE9YgbnnrpBmxpEViK0VuBn5kyHZfCSLFSApLiy8hZEkj
-	X3o7U4xt3roWjYEf/0QsKGiNqeP3myXk/e3+BEa4KYIE59wmYsrhudiDwV46CB5d
-	E8K4OFv0fHuOdK14nnUUxfff3rCPKj8vJw3X7p6M4i0BpN1E8RSwySIEaUf5sCqK
-	alHtK1Rc5jgsKIF8k3s0A==
-X-ME-Sender: <xms:l0TdaRMQ1ovC5UjXw9wB_riUJbJZBZQ47VcEC4ozPMlWVwTWyL-hPg>
-    <xme:l0Tdaey9qAPkMkkSsq5ZowyLiVSaVZg3Aabqq1QUbhdAX-Y8VC29U600TE9HTIGWj
-    W-h6ka_l-N0bKYGG_W-3bzXlHGY0ZcjcSbZR_zuoL-6Ds0X7Q55CQ>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefhedrtddtgdefledtkecutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
-    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
-    hrpefoggffhffvvefkjghfufgtgfesthhqredtredtjeenucfhrhhomhepfdetrhhnugcu
-    uegvrhhgmhgrnhhnfdcuoegrrhhnugesrghrnhgusgdruggvqeenucggtffrrghtthgvrh
-    hnpedvhfdvkeeuudevfffftefgvdevfedvleehvddvgeejvdefhedtgeegveehfeeljeen
-    ucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpegrrhhnug
-    esrghrnhgusgdruggvpdhnsggprhgtphhtthhopeegkedpmhhouggvpehsmhhtphhouhht
-    pdhrtghpthhtohepthdrshgrihhlvghrsegrlhhumhhnihdrvghthhiirdgthhdprhgtph
-    htthhopegtrghtrghlihhnrdhmrghrihhnrghssegrrhhmrdgtohhmpdhrtghpthhtohep
-    lhhinhhugiesrghrmhhlihhnuhigrdhorhhgrdhukhdprhgtphhtthhopegurghvvghmse
-    gurghvvghmlhhofhhtrdhnvghtpdhrtghpthhtohepmhhpvgesvghllhgvrhhmrghnrdhi
-    ugdrrghupdhrtghpthhtoheprhihrggsihhnihhnrdgrrdgrsehgmhgrihhlrdgtohhmpd
-    hrtghpthhtohepuhhrvgiikhhisehgmhgrihhlrdgtohhmpdhrtghpthhtohepuggvlhhl
-    vghrsehgmhigrdguvgdprhgtphhtthhopehhvghrsggvrhhtsehgohhnughorhdrrghprg
-    hnrgdrohhrghdrrghu
-X-ME-Proxy: <xmx:l0TdaTelOssYXt15-FK9p6saYLM_nmrvIO6c-_F3ZyF6_xfZywmCYA>
-    <xmx:l0TdaUxOkh6ozfKMIVT4v_qdW_i5Tss0CLMqkf2F01TBmahdCnZo_w>
-    <xmx:l0TdaUWn-LdWx2_7oUHRu6zzNshE3wCLw-aFKzbUUXN26D6Q-_6vLw>
-    <xmx:l0TdacTwYVtUWJnf_Fdh14nt-sYvlNq7AaQbOTvOw2Uu221fQyzEjQ>
-    <xmx:mkTdaTH5uGiAlbaAI17-uSN6CKxYeQsdeWCm3ruscf_j0l2LK_Chakad>
-Feedback-ID: i56a14606:Fastmail
-Received: by mailuser.phl.internal (Postfix, from userid 501)
-	id 04818700069; Mon, 13 Apr 2026 15:31:35 -0400 (EDT)
-X-Mailer: MessagingEngine.com Webmail Interface
+	dkim=pass (2048-bit key) header.d=mailbox.org header.i=@mailbox.org header.b="R5NPeSwW";
+	dkim=pass (2048-bit key) header.d=mailbox.org header.i=@mailbox.org header.b="PapF0tXU"
+Received: from smtp102.mailbox.org (smtp102.mailbox.org [IPv6:2001:67c:2050:b231:465::102])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	by mout-y-209.mailbox.org (Postfix) with ESMTPS id 4fvffW3nFrzB10l;
+	Mon, 13 Apr 2026 22:49:39 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=mailbox.org; s=mail20150812;
+	t=1776113379;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=cPzDNs20YHy6md5qVjMdfVhTcw1yGtolflwE5KLDaek=;
+	b=R5NPeSwWQzjm5SwQQ39jAI8yc96Q27z7K0URKCCfEvYw0cl0RLWqendf57chq+P9mUed3v
+	xc8I2IkE4woQZ0/tkc6Qu3XUs3KnsIilrs93q+VZ0aW5SwAt9yvcNgrzXZXUcSF2JOikSk
+	X+lwLzGGj7iD5ezCeUwGqe11nt2U+ozqmiIRbKutjlSnZ7kLw3xI6VRkZ7zhESQc/hMa92
+	yE0K6WiBY3jB459upImfwuGAhN3rEN+XU/jO8MiRSz2kfew6CRYeEQEFAN33N9gwiDSdc+
+	kG8Ska3QprWDWiwroiDPuGD1qRigvAvfoejk70hyvdRUK8O/67Bdoa9Gon2DXA==
+Authentication-Results: outgoing_mbo_mout;
+	dkim=pass header.d=mailbox.org header.s=mail20150812 header.b=PapF0tXU;
+	spf=pass (outgoing_mbo_mout: domain of mashiro.chen@mailbox.org designates 2001:67c:2050:b231:465::102 as permitted sender) smtp.mailfrom=mashiro.chen@mailbox.org
+From: Mashiro Chen <mashiro.chen@mailbox.org>
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=mailbox.org; s=mail20150812;
+	t=1776113378;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=cPzDNs20YHy6md5qVjMdfVhTcw1yGtolflwE5KLDaek=;
+	b=PapF0tXUaFZLbo9Fa+wwww6TAFaWjvxEgRE1/NoTWpZzz/gxmJ9xEOCXUA34KQ6SmsmFHv
+	O5TJMmFWpQcjS2i1feRM08bFbq3jvHwTG70mbnMIvr9memvD8bFSJy//impNymsoLm8oBs
+	1W1iRejTu1nZ8AjcrgRs29QjhNBYQ++yl55ORbNH3hlHwr5mEazRsI7is9h2vFAbh3zLFH
+	s9T7YQM8D85az5EcTUlVWac3e/whgd4M4844+2la3jHSoO4NuKX57Lv5c4r8ez3lML10EF
+	5V35KQ9haYyOv2PAcSrMg7dobfqRmk+4HNeWiZkTed938nNjhiI+nuICXfjGAA==
+To: netdev@vger.kernel.org
+Cc: linux-hams@vger.kernel.org,
+	kuba@kernel.org,
+	horms@kernel.org,
+	davem@davemloft.net,
+	pabeni@redhat.com,
+	edumazet@google.com,
+	Mashiro Chen <mashiro.chen@mailbox.org>
+Subject: [PATCH v4 net] net: ax25: fix integer overflow in ax25_rx_fragment()
+Date: Tue, 14 Apr 2026 04:49:21 +0800
+Message-ID: <20260413204921.70463-1-mashiro.chen@mailbox.org>
+In-Reply-To: <20260409025026.24575-1-mashiro.chen@mailbox.org>
+References: <20260409025026.24575-1-mashiro.chen@mailbox.org>
 Precedence: bulk
 X-Mailing-List: linux-hams@vger.kernel.org
 List-Id: <linux-hams.vger.kernel.org>
 List-Subscribe: <mailto:linux-hams+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-hams+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-ThreadId: AMdy4yCH1GcR
-Date: Mon, 13 Apr 2026 21:30:11 +0200
-From: "Arnd Bergmann" <arnd@arndb.de>
-To: "David Woodhouse" <dwmw2@infradead.org>,
- "Thomas Gleixner" <tglx@kernel.org>, LKML <linux-kernel@vger.kernel.org>
-Cc: x86@kernel.org, "Baolu Lu" <baolu.lu@linux.intel.com>,
- iommu@lists.linux.dev, "Michael Grzeschik" <m.grzeschik@pengutronix.de>,
- Netdev <netdev@vger.kernel.org>, linux-wireless@vger.kernel.org,
- "Herbert Xu" <herbert@gondor.apana.org.au>, linux-crypto@vger.kernel.org,
- "Vlastimil Babka (SUSE)" <vbabka@kernel.org>, linux-mm@kvack.org,
- "Bernie Thompson" <bernie@plugable.com>, linux-fbdev@vger.kernel.org,
- "Theodore Ts'o" <tytso@mit.edu>, linux-ext4@vger.kernel.org,
- "Andrew Morton" <akpm@linux-foundation.org>,
- "Uladzislau Rezki (Sony)" <urezki@gmail.com>,
- "Marco Elver" <elver@google.com>, "Dmitry Vyukov" <dvyukov@google.com>,
- kasan-dev@googlegroups.com, "Andrey Ryabinin" <ryabinin.a.a@gmail.com>,
- "Thomas Sailer" <t.sailer@alumni.ethz.ch>, linux-hams@vger.kernel.org,
- "Jason A . Donenfeld" <Jason@zx2c4.com>,
- "Richard Henderson" <richard.henderson@linaro.org>,
- linux-alpha@vger.kernel.org, "Russell King" <linux@armlinux.org.uk>,
- linux-arm-kernel@lists.infradead.org,
- "Catalin Marinas" <catalin.marinas@arm.com>,
- "Huacai Chen" <chenhuacai@kernel.org>, loongarch@lists.linux.dev,
- "Geert Uytterhoeven" <geert@linux-m68k.org>,
- linux-m68k@lists.linux-m68k.org, "Dinh Nguyen" <dinguyen@kernel.org>,
- "Jonas Bonn" <jonas@southpole.se>,
- "linux-openrisc@vger.kernel.org" <linux-openrisc@vger.kernel.org>,
- "Helge Deller" <deller@gmx.de>, linux-parisc@vger.kernel.org,
- "Michael Ellerman" <mpe@ellerman.id.au>, linuxppc-dev@lists.ozlabs.org,
- "Paul Walmsley" <pjw@kernel.org>, linux-riscv@lists.infradead.org,
- "Heiko Carstens" <hca@linux.ibm.com>, linux-s390@vger.kernel.org,
- "David S . Miller" <davem@davemloft.net>, sparclinux@vger.kernel.org
-Message-Id: <07df88e5-208d-4aac-9668-a3b0c65ae529@app.fastmail.com>
-In-Reply-To: <7a48b636cb3146f4f7134c6d4fe42070ac2edb43.camel@infradead.org>
-References: <20260410120044.031381086@kernel.org>
- <20260410120318.592237447@kernel.org>
- <7a48b636cb3146f4f7134c6d4fe42070ac2edb43.camel@infradead.org>
-Subject: Re: [patch 15/38] ptp: ptp_vmclock: Replace get_cycles() usage
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
+X-MBO-RS-ID: 0a4014a6af2aafea67d
+X-MBO-RS-META: xe3pi1esh84mjy5n7zpm3hrnafiq6g1g
+X-Rspamd-Queue-Id: 4fvffW3nFrzB10l
 
-On Mon, Apr 13, 2026, at 17:33, David Woodhouse wrote:
-> On Fri, 2026-04-10 at 14:19 +0200, Thomas Gleixner wrote:
->
-> ... depend on TSC_RELIABLE=C2=B9, since if the guest doesn't believe t=
-hat it
-> is, then the guest shouldn't be trying to use it as the basis for
-> precise timing.
->
-> =C2=B9 (Or... one of the other zoo of TSC flags for the gradually redu=
-cing
-> brokenness over the years...)
+ax25_rx_fragment() accumulates fragment lengths into ax25_cb->fraglen,
+which is an unsigned short. When the total exceeds 65535, fraglen wraps
+around to a small value. The subsequent alloc_skb(fraglen) allocates a
+too-small buffer, and skb_put() in the copy loop triggers skb_over_panic().
 
-It looks like this is sufficiently handled in the caller:
+Add pskb_may_pull(skb, 1) at function entry to ensure the segmentation
+header byte is in the linear data area before dereferencing skb->data.
+This also rejects zero-length skbs, which the original code did not
+check for.
 
-static int vmclock_get_crosststamp(struct vmclock_state *st,
-                                   struct ptp_system_timestamp *sts,
-                                   struct system_counterval_t *system_co=
-unter,
-                                   struct timespec64 *tspec)
-{
-....
-#ifdef CONFIG_X86
-        /*
-         * We'd expect the hypervisor to know this and to report the clo=
-ck
-         * status as VMCLOCK_STATUS_UNRELIABLE. But be paranoid.
-         */
-        if (check_tsc_unstable())
-                return -EINVAL;
-#endif
+Two issues in the overflow error path are also fixed:
+First, the current skb, after skb_pull(skb, 1), is neither enqueued
+nor freed before returning 1, leaking it. Add kfree_skb(skb) before
+the return.
+Second, ax25->fraglen is not reset after skb_queue_purge(). Add
+ax25->fraglen = 0 to restore a consistent state.
 
-With 486 and ELAN out of the way, Winchip6 seems to be the only
-one without X86_FEATURE_TSC, so I think the next logical step would
-be to turn off Winchip6 as well and remove all X86_FEATURE_TSC
-and CONFIG_X86_TSC checks.
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Signed-off-by: Mashiro Chen <mashiro.chen@mailbox.org>
+---
+ net/ax25/ax25_in.c | 10 ++++++++++
+ 1 file changed, 10 insertions(+)
 
-      Arnd
+diff --git a/net/ax25/ax25_in.c b/net/ax25/ax25_in.c
+index d75b3e9ed93de8..e1834e11bb0b6a 100644
+--- a/net/ax25/ax25_in.c
++++ b/net/ax25/ax25_in.c
+@@ -35,12 +35,22 @@ static int ax25_rx_fragment(ax25_cb *ax25, struct sk_buff *skb)
+ {
+ 	struct sk_buff *skbn, *skbo;
+ 
++	if (!pskb_may_pull(skb, 1))
++		return 0;
++
+ 	if (ax25->fragno != 0) {
+ 		if (!(*skb->data & AX25_SEG_FIRST)) {
+ 			if ((ax25->fragno - 1) == (*skb->data & AX25_SEG_REM)) {
+ 				/* Enqueue fragment */
+ 				ax25->fragno = *skb->data & AX25_SEG_REM;
+ 				skb_pull(skb, 1);	/* skip fragno */
++				if (ax25->fraglen + skb->len > USHRT_MAX) {
++					kfree_skb(skb);
++					skb_queue_purge(&ax25->frag_queue);
++					ax25->fragno = 0;
++					ax25->fraglen = 0;
++					return 1;
++				}
+ 				ax25->fraglen += skb->len;
+ 				skb_queue_tail(&ax25->frag_queue, skb);
+ 
+-- 
+2.53.0
+
