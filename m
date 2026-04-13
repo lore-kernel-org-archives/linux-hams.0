@@ -1,210 +1,216 @@
-Received: from desiato.infradead.org (desiato.infradead.org [90.155.92.199])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f45.google.com (mail-wm1-f45.google.com [209.85.128.45])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D17E1A680E;
-	Mon, 13 Apr 2026 15:33:16 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=90.155.92.199
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 371D7375ACB
+	for <linux-hams@vger.kernel.org>; Mon, 13 Apr 2026 17:42:42 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.45
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776094399; cv=none; b=kBx3rId8VtVCRtnPhw7b49MUtY/cu5V6qOuT5L6lFriPd8wNwNsOjb/CvvO3/+1Sq5ROW9DoEE0GVbYXm7HEGIyKNgG/nLFnCQtF+4NUgxtBlLRKGxrC5fKat18k6u88h4yMBV0sHCFgsvZwnxl/hLf6squt+fihnQjO2VugmDg=
+	t=1776102163; cv=none; b=rJsjf3/9x1iSOT+OdzJZ7snDQqNJkeyONVTzfyNq0QDMIsQmPdU0BMlBvhd5JU8+A+SHHYYl6oNuXGgiko3MnrzgoZEr1R2kp0rE1YlrfK0BEPqCOk0jxCuMyXbpTr2DcCvBIBKjp8vla6hXvOihdoO7andoxVnLQYjPM9B6esY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776094399; c=relaxed/simple;
-	bh=NQ57pLTyv1RobAbU0dr2msaGqFcjF8MGivOACrwgK2Y=;
-	h=Message-ID:Subject:From:To:Cc:Date:In-Reply-To:References:
-	 Content-Type:MIME-Version; b=o/5znYLr9xR7IFRD+Su5vxwUQ9jz0N3g8Rsltb5Reog85EC93zxUrq37HgB3DDZUu5axmm39yQo/xfdnhnTTqwd/AogutIW9dJ7BtypbgAUh8PbzjW2+i1Cb38WJwXyaXZbhTdr88+PRBx3hJlpG+/H0KpkfAK7ZvprbmSPyQRE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=infradead.org; spf=none smtp.mailfrom=desiato.srs.infradead.org; dkim=pass (2048-bit key) header.d=infradead.org header.i=@infradead.org header.b=gvEodDXy; arc=none smtp.client-ip=90.155.92.199
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=infradead.org
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=desiato.srs.infradead.org
+	s=arc-20240116; t=1776102163; c=relaxed/simple;
+	bh=OTz0X3yh+ntiuIihHVw3kNQYGzp/Ed0/a9WAqmWEkGw=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=Gbq+ZzWyTWdUSJvBed1fxKnqfM5Lcdmb3+bw3NcCPZhELmvp3NJztTCy13v36ksA5EFYavuhcJBzC5HG/2DFNR4XLofU6P6OVEu7ie48S75pVjqGhACbZy59nxPt8oA6iAMBXlyd6HvZWs6xAPHVPye0kr0ORisYqCojbf4Ofiw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=GzvH8hlA; arc=none smtp.client-ip=209.85.128.45
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=infradead.org header.i=@infradead.org header.b="gvEodDXy"
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-	d=infradead.org; s=desiato.20200630; h=MIME-Version:Content-Type:References:
-	In-Reply-To:Date:Cc:To:From:Subject:Message-ID:Sender:Reply-To:
-	Content-Transfer-Encoding:Content-ID:Content-Description;
-	bh=pMyc546A8Vk0VhSxh5jSMOtHszp9PyQiNzOlGW+Tlac=; b=gvEodDXyVRhr3ht5KLvvYUHruq
-	Vr6/Nk8hYRocARm5fuOZlMoKF+85eiOOvk45UWaJEUhV71TuTffj9ccPPnvJsusON6fJc5Grsy5jI
-	iNNAvdI28ex09hHo60SsASOsHG9j1//cpT5bdeKExgSUokyNtM/888qR2IIJJJn5k0YY4ZHvZ/iUY
-	JYS9o9fm8cesNcUDQtQkHs5oojlgzNoY+sKaw+Kqth7jk3I7NtkAAk1lZIJtE46y3HsqbFIeXRzUn
-	UNa7OJ6p8M3XCoCofzGj4msg6NLCmsGATi2zcxDsbslkmxZrkCEEoEdgUxSWU6wiTsaySOA61u8BB
-	0y1VEngg==;
-Received: from [213.122.4.78] (helo=u09cd745991455d.ant.amazon.com)
-	by desiato.infradead.org with esmtpsa (Exim 4.98.2 #2 (Red Hat Linux))
-	id 1wCJHl-0000000H2um-3OE9;
-	Mon, 13 Apr 2026 15:33:13 +0000
-Message-ID: <7a48b636cb3146f4f7134c6d4fe42070ac2edb43.camel@infradead.org>
-Subject: Re: [patch 15/38] ptp: ptp_vmclock: Replace get_cycles() usage
-From: David Woodhouse <dwmw2@infradead.org>
-To: Thomas Gleixner <tglx@kernel.org>, LKML <linux-kernel@vger.kernel.org>
-Cc: Arnd Bergmann <arnd@arndb.de>, x86@kernel.org, Lu Baolu
- <baolu.lu@linux.intel.com>, iommu@lists.linux.dev, Michael Grzeschik
- <m.grzeschik@pengutronix.de>, netdev@vger.kernel.org, 
- linux-wireless@vger.kernel.org, Herbert Xu <herbert@gondor.apana.org.au>, 
- linux-crypto@vger.kernel.org, Vlastimil Babka <vbabka@kernel.org>, 
- linux-mm@kvack.org, Bernie Thompson <bernie@plugable.com>, 
- linux-fbdev@vger.kernel.org, Theodore Tso <tytso@mit.edu>, 
- linux-ext4@vger.kernel.org, Andrew Morton <akpm@linux-foundation.org>, 
- Uladzislau Rezki <urezki@gmail.com>, Marco Elver <elver@google.com>, Dmitry
- Vyukov <dvyukov@google.com>, kasan-dev@googlegroups.com, Andrey Ryabinin
- <ryabinin.a.a@gmail.com>, Thomas Sailer <t.sailer@alumni.ethz.ch>, 
- linux-hams@vger.kernel.org, "Jason A. Donenfeld" <Jason@zx2c4.com>, Richard
- Henderson <richard.henderson@linaro.org>, linux-alpha@vger.kernel.org,
- Russell King <linux@armlinux.org.uk>, linux-arm-kernel@lists.infradead.org,
- Catalin Marinas <catalin.marinas@arm.com>, Huacai Chen
- <chenhuacai@kernel.org>,  loongarch@lists.linux.dev, Geert Uytterhoeven
- <geert@linux-m68k.org>,  linux-m68k@lists.linux-m68k.org, Dinh Nguyen
- <dinguyen@kernel.org>, Jonas Bonn <jonas@southpole.se>,
- linux-openrisc@vger.kernel.org, Helge Deller <deller@gmx.de>, 
- linux-parisc@vger.kernel.org, Michael Ellerman <mpe@ellerman.id.au>, 
- linuxppc-dev@lists.ozlabs.org, Paul Walmsley <pjw@kernel.org>, 
- linux-riscv@lists.infradead.org, Heiko Carstens <hca@linux.ibm.com>, 
- linux-s390@vger.kernel.org, "David S. Miller" <davem@davemloft.net>, 
- sparclinux@vger.kernel.org
-Date: Mon, 13 Apr 2026 16:33:12 +0100
-In-Reply-To: <20260410120318.592237447@kernel.org>
-References: <20260410120044.031381086@kernel.org>
-	 <20260410120318.592237447@kernel.org>
-Content-Type: multipart/signed; micalg="sha-256"; protocol="application/pkcs7-signature";
-	boundary="=-vt+GQ8cE1r98bSrQsw7r"
-User-Agent: Evolution 3.52.3-0ubuntu1.1 
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="GzvH8hlA"
+Received: by mail-wm1-f45.google.com with SMTP id 5b1f17b1804b1-48897fd88ebso50729875e9.2
+        for <linux-hams@vger.kernel.org>; Mon, 13 Apr 2026 10:42:42 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1776102160; x=1776706960; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=cxhJ1B20uW8HHCurINx4/ryiANFYybUwN6IVfjVrf9U=;
+        b=GzvH8hlAu4DnccEt3Ocw5XDfItG3MMADJn/GDUYnKhV8BVcXe/r4Oca0kRmjJjVvOC
+         auHusLU6cINhHXDSx0YQgIkOD1GlJBEcr0NUDcobyP+X370zpEZl1dmqkTNVNXdgbGhB
+         8sC9F9vmKwlYRKj46HjJNqMyll/uE2B8rsrQPLFkCdS9ZfUriI88pFrdwFhtubARS5J6
+         SMs/i4SR85sqdLzfjWPB+LuysKwv1mqYN9E2woFcA3B98AZ5Knyz2XGeXwDs2Jh4k6TQ
+         XiZO87Mgm5GjHfrTywLvohIt3dz14f/hifCWDdR8HE0JZhTvyCsAswaj9agUDKAm8jvM
+         pGWQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1776102160; x=1776706960;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=cxhJ1B20uW8HHCurINx4/ryiANFYybUwN6IVfjVrf9U=;
+        b=ZvFgdsSsqe49ygpscXGKDJaaJz+vJMObdOLow1UqK6Avk8PHqUqsD1vk4n9SUIJH5+
+         RX5B8PKCh4gQMfofPBGq+9XNuDAzGcHYSD5lFTsqdtZaUSWnkTQozG2Eh0LQtJzodiz4
+         mlvpGrPpjJhnRd018SKwZba4SQAkCt8mP5yoCzFq5atwnu38a52nLfXkAmHpAx389XH4
+         hxq0dDPSX530vNMSPqzTcOn9jzIkidGRkpkC/FOej86J5afXqbCgA0CtGLpBMAT+PKlj
+         tGF0anme6sLyKH2maRhlk1g1oPI7zMxbW8mYnV2T7fe109bddPBXtUqMUbnhpejYzfR6
+         ryjg==
+X-Gm-Message-State: AOJu0Yxtga9cgzGXurRmh6zs1+SCZ7fIjYPoB2+JcqQf8UF5pLSHw8Qn
+	MN2Co+aX8A2XHaHpyLZCR0nHMz7kG5LeHdIlso7udWxakhJn6jBivVcY4oavPsg3
+X-Gm-Gg: AeBDiesYBlgZiiMpSEtDXQ9AihgB01g5EZAXByaxh2VG6LeeKRallsPJqRIyzlTqo1E
+	49+/IX6Q3UB8hlfsMDNiFbxj0z85qfexgPlVnV3KhyD6uz75GSkcBzWtx778x0GBh432bgwoCyU
+	YPDoP9Y8GL+XdJYnoCKqKo85yp323ZTgy6WMOkIwAduhfMejoFHcATuatLXUP3oHTUAfzdZLbAW
+	oDQMxZVir7LHqxpUwY5QZmndU0Hfrufh6vcFwZlnBtMmWyuFakY9gfSIAcANGTJk1p2+OSRVBOs
+	7YaxOskLpqsDjrp5G4jXUfrBnHDMZYAKRn8y6lMvuTTdFRdxnmH3Xen0LXPCtB/DMGAopd2rPoM
+	2+UyLPabL87w+s3C9e9zfFDXKMpT5wtOjCYYR+RTUS2VQPTtbzbVWtehgElJ0ZkoHRdjMGFQBdm
+	PxyoPXul53dSMz+m5K13kREFA8SfCPgEY9uGQyQxjZXn08JyjVtlnfl/Z8fU2niQYl1dXBG7rp7
+	mGk
+X-Received: by 2002:a05:600d:1:b0:488:8bdd:cfcc with SMTP id 5b1f17b1804b1-488d6772785mr176197175e9.0.1776102160196;
+        Mon, 13 Apr 2026 10:42:40 -0700 (PDT)
+Received: from ubuntu-f6bvp (lfbn-idf1-1-366-193.w86-195.abo.wanadoo.fr. [86.195.82.193])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-43d63e50200sm34922778f8f.29.2026.04.13.10.42.39
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 13 Apr 2026 10:42:39 -0700 (PDT)
+From: f6bvp <bernard.f6bvp@gmail.com>
+To: linux-hams@vger.kernel.org
+Cc: netdev@vger.kernel.org,
+	edumazet@google.com,
+	pabeni@redhat.com,
+	f6bvp <bernard.f6bvp@gmail.com>
+Subject: [PATCH net-next 1/3] rose: fix race between loopback timer and module removal
+Date: Mon, 13 Apr 2026 19:42:36 +0200
+Message-ID: <20260413174238.112418-1-bernard.f6bvp@gmail.com>
+X-Mailer: git-send-email 2.51.0
+In-Reply-To: <5a88b747-bb06-4ebd-99de-80ceb574cf22@free.fr>
+References: <5a88b747-bb06-4ebd-99de-80ceb574cf22@free.fr>
 Precedence: bulk
 X-Mailing-List: linux-hams@vger.kernel.org
 List-Id: <linux-hams.vger.kernel.org>
 List-Subscribe: <mailto:linux-hams+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-hams+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-SRS-Rewrite: SMTP reverse-path rewritten from <dwmw2@infradead.org> by desiato.infradead.org. See http://www.infradead.org/rpr.html
+Content-Transfer-Encoding: 8bit
 
+rose_loopback_clear() used timer_delete() which returns immediately
+without waiting for any running callback to complete.  If the timer
+fired concurrently with module removal, rose_loopback_timer() would
+access rose_loopback_neigh after it was freed, causing a use-after-free.
 
---=-vt+GQ8cE1r98bSrQsw7r
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Three changes fix the race:
 
-On Fri, 2026-04-10 at 14:19 +0200, Thomas Gleixner wrote:
-> get_cycles() is not really well defined and similar to other usaage of th=
-e
-> underlying hardware CPU counters the PTP vmclock should use an explicit
-> interface as well.
->=20
-> Implement ptp_vmclock_read_cpu_counter() in arm64 and x86 and simplify th=
-e
-> Kconfig selection while at it.
->=20
-> No functional change.
->=20
-> Signed-off-by: Thomas Gleixner <tglx@kernel.org>
-> Cc: David Woodhouse <dwmw2@infradead.org>
+1. Add a loopback_stopping atomic flag.  rose_loopback_timer() checks
+   this at entry and mid-loop; when set it drains the queue and bails
+   out without re-arming the timer.
 
-Acked-by: David Woodhouse <dwmw@amazon.co.uk>
+2. Switch rose_loopback_clear() to timer_delete_sync() so it blocks
+   until any in-flight callback has returned.
 
-Although I might follow up with a change to make this...
+3. Wrap the timer body with rose_neigh_hold()/rose_neigh_put() so the
+   loopback neighbour cannot be freed while the callback is running.
 
-> +static inline u64 ptp_vmclock_read_cpu_counter(void)
-> +{
-> +	return cpu_feature_enabled(X86_FEATURE_TSC) ? rdtsc() : 0;
-> +}
-> +
+Also fix a pre-existing bug: dev_put(dev) was only called on the
+failure path of rose_rx_call_request(); it is now called unconditionally
+so the device reference is always released.
 
-... depend on TSC_RELIABLE=C2=B9, since if the guest doesn't believe that i=
-t
-is, then the guest shouldn't be trying to use it as the basis for
-precise timing.
+Remove a dead check (!neigh->dev && !neigh->loopback) that can never
+be true for the loopback neighbour, which always has loopback=1.
 
-=C2=B9 (Or... one of the other zoo of TSC flags for the gradually reducing
-brokenness over the years...)
+Signed-off-by: f6bvp <bernard.f6bvp@gmail.com>
+---
+ net/rose/rose_loopback.c | 53 +++++++++++++++++++++++++++-------------
+ 1 file changed, 36 insertions(+), 17 deletions(-)
 
---=-vt+GQ8cE1r98bSrQsw7r
-Content-Type: application/pkcs7-signature; name="smime.p7s"
-Content-Disposition: attachment; filename="smime.p7s"
-Content-Transfer-Encoding: base64
+diff --git a/net/rose/rose_loopback.c b/net/rose/rose_loopback.c
+index b538e39b3df5..80d7879ef36a 100644
+--- a/net/rose/rose_loopback.c
++++ b/net/rose/rose_loopback.c
+@@ -12,13 +12,15 @@
+ #include <net/rose.h>
+ #include <linux/init.h>
+ 
+-static struct sk_buff_head loopback_queue;
+ #define ROSE_LOOPBACK_LIMIT 1000
+-static struct timer_list loopback_timer;
+ 
++static struct timer_list loopback_timer;
++static struct sk_buff_head loopback_queue;
+ static void rose_set_loopback_timer(void);
+ static void rose_loopback_timer(struct timer_list *unused);
+ 
++static atomic_t loopback_stopping = ATOMIC_INIT(0);
++
+ void rose_loopback_init(void)
+ {
+ 	skb_queue_head_init(&loopback_queue);
+@@ -66,10 +68,25 @@ static void rose_loopback_timer(struct timer_list *unused)
+ 	unsigned int lci_i, lci_o;
+ 	int count;
+ 
++	if (atomic_read(&loopback_stopping))
++		return;
++
++	if (rose_loopback_neigh)
++		rose_neigh_hold(rose_loopback_neigh);
++	else
++		return;
++
+ 	for (count = 0; count < ROSE_LOOPBACK_LIMIT; count++) {
+ 		skb = skb_dequeue(&loopback_queue);
+ 		if (!skb)
+-			return;
++			goto out;
++
++		if (atomic_read(&loopback_stopping)) {
++			kfree_skb(skb);
++			skb_queue_purge(&loopback_queue);
++			goto out;
++		}
++
+ 		if (skb->len < ROSE_MIN_LEN) {
+ 			kfree_skb(skb);
+ 			continue;
+@@ -96,27 +113,24 @@ static void rose_loopback_timer(struct timer_list *unused)
+ 		}
+ 
+ 		if (frametype == ROSE_CALL_REQUEST) {
+-			if (!rose_loopback_neigh->dev &&
+-			    !rose_loopback_neigh->loopback) {
+-				kfree_skb(skb);
+-				continue;
+-			}
+-
+ 			dev = rose_dev_get(dest);
+ 			if (!dev) {
+ 				kfree_skb(skb);
+ 				continue;
+ 			}
+ 
+-			if (rose_rx_call_request(skb, dev, rose_loopback_neigh, lci_o) == 0) {
+-				dev_put(dev);
++			if (rose_rx_call_request(skb, dev, rose_loopback_neigh, lci_o) == 0)
+ 				kfree_skb(skb);
+-			}
++			dev_put(dev);
+ 		} else {
+ 			kfree_skb(skb);
+ 		}
+ 	}
+-	if (!skb_queue_empty(&loopback_queue))
++
++out:
++	rose_neigh_put(rose_loopback_neigh);
++
++	if (!atomic_read(&loopback_stopping) && !skb_queue_empty(&loopback_queue))
+ 		mod_timer(&loopback_timer, jiffies + 1);
+ }
+ 
+@@ -124,10 +138,15 @@ void __exit rose_loopback_clear(void)
+ {
+ 	struct sk_buff *skb;
+ 
+-	timer_delete(&loopback_timer);
++	atomic_set(&loopback_stopping, 1);
++	/* Pairs with atomic_read() in rose_loopback_timer(): ensure the
++	 * stopping flag is visible before we cancel, so a concurrent
++	 * callback aborts its loop early rather than re-arming the timer.
++	 */
++	smp_mb();
+ 
+-	while ((skb = skb_dequeue(&loopback_queue)) != NULL) {
+-		skb->sk = NULL;
++	timer_delete_sync(&loopback_timer);
++
++	while ((skb = skb_dequeue(&loopback_queue)) != NULL)
+ 		kfree_skb(skb);
+-	}
+ }
+-- 
+2.51.0
 
-MIAGCSqGSIb3DQEHAqCAMIACAQExDzANBglghkgBZQMEAgEFADCABgkqhkiG9w0BBwEAAKCCD9Aw
-ggSOMIIDdqADAgECAhAOmiw0ECVD4cWj5DqVrT9PMA0GCSqGSIb3DQEBCwUAMGUxCzAJBgNVBAYT
-AlVTMRUwEwYDVQQKEwxEaWdpQ2VydCBJbmMxGTAXBgNVBAsTEHd3dy5kaWdpY2VydC5jb20xJDAi
-BgNVBAMTG0RpZ2lDZXJ0IEFzc3VyZWQgSUQgUm9vdCBDQTAeFw0yNDAxMzAwMDAwMDBaFw0zMTEx
-MDkyMzU5NTlaMEExCzAJBgNVBAYTAkFVMRAwDgYDVQQKEwdWZXJva2V5MSAwHgYDVQQDExdWZXJv
-a2V5IFNlY3VyZSBFbWFpbCBHMjCCASIwDQYJKoZIhvcNAQEBBQADggEPADCCAQoCggEBAMjvgLKj
-jfhCFqxYyRiW8g3cNFAvltDbK5AzcOaR7yVzVGadr4YcCVxjKrEJOgi7WEOH8rUgCNB5cTD8N/Et
-GfZI+LGqSv0YtNa54T9D1AWJy08ZKkWvfGGIXN9UFAPMJ6OLLH/UUEgFa+7KlrEvMUupDFGnnR06
-aDJAwtycb8yXtILj+TvfhLFhafxroXrflspavejQkEiHjNjtHnwbZ+o43g0/yxjwnarGI3kgcak7
-nnI9/8Lqpq79tLHYwLajotwLiGTB71AGN5xK+tzB+D4eN9lXayrjcszgbOv2ZCgzExQUAIt98mre
-8EggKs9mwtEuKAhYBIP/0K6WsoMnQCcCAwEAAaOCAVwwggFYMBIGA1UdEwEB/wQIMAYBAf8CAQAw
-HQYDVR0OBBYEFIlICOogTndrhuWByNfhjWSEf/xwMB8GA1UdIwQYMBaAFEXroq/0ksuCMS1Ri6en
-IZ3zbcgPMA4GA1UdDwEB/wQEAwIBhjAdBgNVHSUEFjAUBggrBgEFBQcDBAYIKwYBBQUHAwIweQYI
-KwYBBQUHAQEEbTBrMCQGCCsGAQUFBzABhhhodHRwOi8vb2NzcC5kaWdpY2VydC5jb20wQwYIKwYB
-BQUHMAKGN2h0dHA6Ly9jYWNlcnRzLmRpZ2ljZXJ0LmNvbS9EaWdpQ2VydEFzc3VyZWRJRFJvb3RD
-QS5jcnQwRQYDVR0fBD4wPDA6oDigNoY0aHR0cDovL2NybDMuZGlnaWNlcnQuY29tL0RpZ2lDZXJ0
-QXNzdXJlZElEUm9vdENBLmNybDARBgNVHSAECjAIMAYGBFUdIAAwDQYJKoZIhvcNAQELBQADggEB
-ACiagCqvNVxOfSd0uYfJMiZsOEBXAKIR/kpqRp2YCfrP4Tz7fJogYN4fxNAw7iy/bPZcvpVCfe/H
-/CCcp3alXL0I8M/rnEnRlv8ItY4MEF+2T/MkdXI3u1vHy3ua8SxBM8eT9LBQokHZxGUX51cE0kwa
-uEOZ+PonVIOnMjuLp29kcNOVnzf8DGKiek+cT51FvGRjV6LbaxXOm2P47/aiaXrDD5O0RF5SiPo6
-xD1/ClkCETyyEAE5LRJlXtx288R598koyFcwCSXijeVcRvBB1cNOLEbg7RMSw1AGq14fNe2cH1HG
-W7xyduY/ydQt6gv5r21mDOQ5SaZSWC/ZRfLDuEYwggWbMIIEg6ADAgECAhAH5JEPagNRXYDiRPdl
-c1vgMA0GCSqGSIb3DQEBCwUAMEExCzAJBgNVBAYTAkFVMRAwDgYDVQQKEwdWZXJva2V5MSAwHgYD
-VQQDExdWZXJva2V5IFNlY3VyZSBFbWFpbCBHMjAeFw0yNDEyMzAwMDAwMDBaFw0yODAxMDQyMzU5
-NTlaMB4xHDAaBgNVBAMME2R3bXcyQGluZnJhZGVhZC5vcmcwggIiMA0GCSqGSIb3DQEBAQUAA4IC
-DwAwggIKAoICAQDali7HveR1thexYXx/W7oMk/3Wpyppl62zJ8+RmTQH4yZeYAS/SRV6zmfXlXaZ
-sNOE6emg8WXLRS6BA70liot+u0O0oPnIvnx+CsMH0PD4tCKSCsdp+XphIJ2zkC9S7/yHDYnqegqt
-w4smkqUqf0WX/ggH1Dckh0vHlpoS1OoxqUg+ocU6WCsnuz5q5rzFsHxhD1qGpgFdZEk2/c//ZvUN
-i12vPWipk8TcJwHw9zoZ/ZrVNybpMCC0THsJ/UEVyuyszPtNYeYZAhOJ41vav1RhZJzYan4a1gU0
-kKBPQklcpQEhq48woEu15isvwWh9/+5jjh0L+YNaN0I//nHSp6U9COUG9Z0cvnO8FM6PTqsnSbcc
-0j+GchwOHRC7aP2t5v2stVx3KbptaYEzi4MQHxm/0+HQpMEVLLUiizJqS4PWPU6zfQTOMZ9uLQRR
-ci+c5xhtMEBszlQDOvEQcyEG+hc++fH47K+MmZz21bFNfoBxLP6bjR6xtPXtREF5lLXxp+CJ6KKS
-blPKeVRg/UtyJHeFKAZXO8Zeco7TZUMVHmK0ZZ1EpnZbnAhKE19Z+FJrQPQrlR0gO3lBzuyPPArV
-hvWxjlO7S4DmaEhLzarWi/ze7EGwWSuI2eEa/8zU0INUsGI4ywe7vepQz7IqaAovAX0d+f1YjbmC
-VsAwjhLmveFjNwIDAQABo4IBsDCCAawwHwYDVR0jBBgwFoAUiUgI6iBOd2uG5YHI1+GNZIR//HAw
-HQYDVR0OBBYEFFxiGptwbOfWOtMk5loHw7uqWUOnMDAGA1UdEQQpMCeBE2R3bXcyQGluZnJhZGVh
-ZC5vcmeBEGRhdmlkQHdvb2Rob3Uuc2UwFAYDVR0gBA0wCzAJBgdngQwBBQEBMA4GA1UdDwEB/wQE
-AwIF4DAdBgNVHSUEFjAUBggrBgEFBQcDAgYIKwYBBQUHAwQwewYDVR0fBHQwcjA3oDWgM4YxaHR0
-cDovL2NybDMuZGlnaWNlcnQuY29tL1Zlcm9rZXlTZWN1cmVFbWFpbEcyLmNybDA3oDWgM4YxaHR0
-cDovL2NybDQuZGlnaWNlcnQuY29tL1Zlcm9rZXlTZWN1cmVFbWFpbEcyLmNybDB2BggrBgEFBQcB
-AQRqMGgwJAYIKwYBBQUHMAGGGGh0dHA6Ly9vY3NwLmRpZ2ljZXJ0LmNvbTBABggrBgEFBQcwAoY0
-aHR0cDovL2NhY2VydHMuZGlnaWNlcnQuY29tL1Zlcm9rZXlTZWN1cmVFbWFpbEcyLmNydDANBgkq
-hkiG9w0BAQsFAAOCAQEAQXc4FPiPLRnTDvmOABEzkIumojfZAe5SlnuQoeFUfi+LsWCKiB8Uextv
-iBAvboKhLuN6eG/NC6WOzOCppn4mkQxRkOdLNThwMHW0d19jrZFEKtEG/epZ/hw/DdScTuZ2m7im
-8ppItAT6GXD3aPhXkXnJpC/zTs85uNSQR64cEcBFjjoQDuSsTeJ5DAWf8EMyhMuD8pcbqx5kRvyt
-JPsWBQzv1Dsdv2LDPLNd/JUKhHSgr7nbUr4+aAP2PHTXGcEBh8lTeYea9p4d5k969pe0OHYMV5aL
-xERqTagmSetuIwolkAuBCzA9vulg8Y49Nz2zrpUGfKGOD0FMqenYxdJHgDCCBZswggSDoAMCAQIC
-EAfkkQ9qA1FdgOJE92VzW+AwDQYJKoZIhvcNAQELBQAwQTELMAkGA1UEBhMCQVUxEDAOBgNVBAoT
-B1Zlcm9rZXkxIDAeBgNVBAMTF1Zlcm9rZXkgU2VjdXJlIEVtYWlsIEcyMB4XDTI0MTIzMDAwMDAw
-MFoXDTI4MDEwNDIzNTk1OVowHjEcMBoGA1UEAwwTZHdtdzJAaW5mcmFkZWFkLm9yZzCCAiIwDQYJ
-KoZIhvcNAQEBBQADggIPADCCAgoCggIBANqWLse95HW2F7FhfH9bugyT/danKmmXrbMnz5GZNAfj
-Jl5gBL9JFXrOZ9eVdpmw04Tp6aDxZctFLoEDvSWKi367Q7Sg+ci+fH4KwwfQ8Pi0IpIKx2n5emEg
-nbOQL1Lv/IcNiep6Cq3DiyaSpSp/RZf+CAfUNySHS8eWmhLU6jGpSD6hxTpYKye7PmrmvMWwfGEP
-WoamAV1kSTb9z/9m9Q2LXa89aKmTxNwnAfD3Ohn9mtU3JukwILRMewn9QRXK7KzM+01h5hkCE4nj
-W9q/VGFknNhqfhrWBTSQoE9CSVylASGrjzCgS7XmKy/BaH3/7mOOHQv5g1o3Qj/+cdKnpT0I5Qb1
-nRy+c7wUzo9OqydJtxzSP4ZyHA4dELto/a3m/ay1XHcpum1pgTOLgxAfGb/T4dCkwRUstSKLMmpL
-g9Y9TrN9BM4xn24tBFFyL5znGG0wQGzOVAM68RBzIQb6Fz758fjsr4yZnPbVsU1+gHEs/puNHrG0
-9e1EQXmUtfGn4InoopJuU8p5VGD9S3Ikd4UoBlc7xl5yjtNlQxUeYrRlnUSmdlucCEoTX1n4UmtA
-9CuVHSA7eUHO7I88CtWG9bGOU7tLgOZoSEvNqtaL/N7sQbBZK4jZ4Rr/zNTQg1SwYjjLB7u96lDP
-sipoCi8BfR35/ViNuYJWwDCOEua94WM3AgMBAAGjggGwMIIBrDAfBgNVHSMEGDAWgBSJSAjqIE53
-a4blgcjX4Y1khH/8cDAdBgNVHQ4EFgQUXGIam3Bs59Y60yTmWgfDu6pZQ6cwMAYDVR0RBCkwJ4ET
-ZHdtdzJAaW5mcmFkZWFkLm9yZ4EQZGF2aWRAd29vZGhvdS5zZTAUBgNVHSAEDTALMAkGB2eBDAEF
-AQEwDgYDVR0PAQH/BAQDAgXgMB0GA1UdJQQWMBQGCCsGAQUFBwMCBggrBgEFBQcDBDB7BgNVHR8E
-dDByMDegNaAzhjFodHRwOi8vY3JsMy5kaWdpY2VydC5jb20vVmVyb2tleVNlY3VyZUVtYWlsRzIu
-Y3JsMDegNaAzhjFodHRwOi8vY3JsNC5kaWdpY2VydC5jb20vVmVyb2tleVNlY3VyZUVtYWlsRzIu
-Y3JsMHYGCCsGAQUFBwEBBGowaDAkBggrBgEFBQcwAYYYaHR0cDovL29jc3AuZGlnaWNlcnQuY29t
-MEAGCCsGAQUFBzAChjRodHRwOi8vY2FjZXJ0cy5kaWdpY2VydC5jb20vVmVyb2tleVNlY3VyZUVt
-YWlsRzIuY3J0MA0GCSqGSIb3DQEBCwUAA4IBAQBBdzgU+I8tGdMO+Y4AETOQi6aiN9kB7lKWe5Ch
-4VR+L4uxYIqIHxR7G2+IEC9ugqEu43p4b80LpY7M4KmmfiaRDFGQ50s1OHAwdbR3X2OtkUQq0Qb9
-6ln+HD8N1JxO5nabuKbymki0BPoZcPdo+FeRecmkL/NOzzm41JBHrhwRwEWOOhAO5KxN4nkMBZ/w
-QzKEy4PylxurHmRG/K0k+xYFDO/UOx2/YsM8s138lQqEdKCvudtSvj5oA/Y8dNcZwQGHyVN5h5r2
-nh3mT3r2l7Q4dgxXlovERGpNqCZJ624jCiWQC4ELMD2+6WDxjj03PbOulQZ8oY4PQUyp6djF0keA
-MYIDuzCCA7cCAQEwVTBBMQswCQYDVQQGEwJBVTEQMA4GA1UEChMHVmVyb2tleTEgMB4GA1UEAxMX
-VmVyb2tleSBTZWN1cmUgRW1haWwgRzICEAfkkQ9qA1FdgOJE92VzW+AwDQYJYIZIAWUDBAIBBQCg
-ggE3MBgGCSqGSIb3DQEJAzELBgkqhkiG9w0BBwEwHAYJKoZIhvcNAQkFMQ8XDTI2MDQxMzE1MzMx
-MlowLwYJKoZIhvcNAQkEMSIEINhM0B01ygaCz6Xe0qE2NJYaKBfHsATydjMA4/6Wd4kYMGQGCSsG
-AQQBgjcQBDFXMFUwQTELMAkGA1UEBhMCQVUxEDAOBgNVBAoTB1Zlcm9rZXkxIDAeBgNVBAMTF1Zl
-cm9rZXkgU2VjdXJlIEVtYWlsIEcyAhAH5JEPagNRXYDiRPdlc1vgMGYGCyqGSIb3DQEJEAILMVeg
-VTBBMQswCQYDVQQGEwJBVTEQMA4GA1UEChMHVmVyb2tleTEgMB4GA1UEAxMXVmVyb2tleSBTZWN1
-cmUgRW1haWwgRzICEAfkkQ9qA1FdgOJE92VzW+AwDQYJKoZIhvcNAQEBBQAEggIAPYfq/9mmd2s1
-SP00p3hmk+X0WHZfkinMkii2h4lyVacxXwjoSGz8t80VTtFXokPrNGmGsYArmww2/rp2kj+/Tv5G
-XXj04By7oFvcWZcv2ehQjgcnWXEG18Dafmh1E3ex6fNQlKS01kTelj7gzlUuq5WHZWL3834SA80P
-ycGZ1cFYLKrMHDHiR1ojUZbK226biYdF+3CITBRUH+85ncmQSJgKEB0hg76bNY+FrcuOqK4r9z2/
-PiptBoGJP4Q3UiXzXL4HpKBjHw7gx2nunSkEUUNyz9jLn+KcfUI5YmtecSlY8WbD17I+qPOlgJL9
-YHgpFL0zB0tzC9LuYFhVj9avlC4wi9Lcy7vcq8FKbQlepK7K3T9INa2xGQ6MKaOFRX7TgfnMARbl
-bRhvZ825233jpAPSdlet42tjpXXxw0D1JNWWCFZq3ittr5uj23ozIePJ6uBH0omp2DEM5kBhFAGC
-DNsqsmx7AKJ3NlZGmvR/IESk+AAvXHPXRjS/accB3/y56R7/gYbjv7gLhOXxr4INAnrsrb5w7z0d
-97lJiQhmYkR0+QRzLN66f6R0pYPixVACLMzcASk8IUr3sgtALCeoVmXWe0UzNbqhx8r6WCBVaHgO
-OygxmWQEtvOdDNB9gmza2s3JOTNNKHDHGJPsXwq64B3ty5nq7n89MMET0ooGW5sAAAAAAAA=
-
-
---=-vt+GQ8cE1r98bSrQsw7r--
