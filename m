@@ -1,131 +1,107 @@
-Received: from mout-y-209.mailbox.org (mout-y-209.mailbox.org [91.198.250.237])
+Received: from mout-y-111.mailbox.org (mout-y-111.mailbox.org [91.198.250.236])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB5853BF682;
-	Mon, 13 Apr 2026 11:15:25 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.198.250.237
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 093E730FF05;
+	Mon, 13 Apr 2026 11:22:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.198.250.236
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776078927; cv=none; b=i7kvi75zmKWcGtBrR6WZCSvDlyaPRveDtCJrO/et6KULHsCCW1M5TPm7V50s0/TNaTThtzC87XS8VtB4Je9IKaqgITnkuT11y94UUU7NqItbk+ohc7rj10qswgpeZw5CcWPHYg1EpHh5WxOT19s2sjk4XiC2ub/lzmJ5o+ODlqs=
+	t=1776079327; cv=none; b=Yqj8l0qqSD/hEYmMcvXoqqOxGso0JzzHTBvRtZuLFyGsnPqz7kkbU+e/H2Pv0HwqeBzCBYgzw+I/A+VVNn+T39ZKcQj7gG9w8T/w9ynorKmUgQMhZXU3OW4fXe1OKC5rzZESNPJNMuw6K59tzl2BQNFDCyDbaobC5u0DThlUQKM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776078927; c=relaxed/simple;
-	bh=n1bzbaf2oE+WcxyZxGuiHyoT2wDBeth4b7RSGHZ5ilc=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LszKNjE/H92z0xEvOutEfroYvOjm+eqtBCDabLm+qr5FEQCb2JBwNl+aucXqUBT7YUC8JdMM0w6nnZGS/g6mUmHblQsBauZS1nVXMqZYeOl7gp+ptYcXnqe4mS6wV4F5lfk+h1kvlV2Kd+kS6oT2orRh7/8QHST01vWYkv3z85E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=mailbox.org; spf=pass smtp.mailfrom=mailbox.org; dkim=pass (2048-bit key) header.d=mailbox.org header.i=@mailbox.org header.b=uz2XcsZQ; dkim=pass (2048-bit key) header.d=mailbox.org header.i=@mailbox.org header.b=xNyi3Z38; arc=none smtp.client-ip=91.198.250.237
+	s=arc-20240116; t=1776079327; c=relaxed/simple;
+	bh=aD6WW45e+NRp9O5rCvJhTmH0sTsR1ClEPzUe3gzQylo=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=QNNTJT/TXDamv6DRW3ev2gpB9aTtMld97Ark3+8Yv5ugjmayaU6KgJgQtAA0D6vsSeY3eU/pE3Q9fQK1HGnn6iM+GnQZ0nCN4vdcA8jNWbbrwr/C0K/71tGDR+4zsHstMkSeeeWIagr5TrivTbRUCJR/sJyfzvgNxoPvDq8cET8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=mailbox.org; spf=pass smtp.mailfrom=mailbox.org; dkim=pass (2048-bit key) header.d=mailbox.org header.i=@mailbox.org header.b=ba49pVzo; arc=none smtp.client-ip=91.198.250.236
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=mailbox.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=mailbox.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=mailbox.org header.i=@mailbox.org header.b="uz2XcsZQ";
-	dkim=pass (2048-bit key) header.d=mailbox.org header.i=@mailbox.org header.b="xNyi3Z38"
-Received: from smtp102.mailbox.org (smtp102.mailbox.org [IPv6:2001:67c:2050:b231:465::102])
+	dkim=pass (2048-bit key) header.d=mailbox.org header.i=@mailbox.org header.b="ba49pVzo"
+Received: from smtp102.mailbox.org (smtp102.mailbox.org [10.196.197.102])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
 	(No client certificate requested)
-	by mout-y-209.mailbox.org (Postfix) with ESMTPS id 4fvPvp1tTRzB0df;
-	Mon, 13 Apr 2026 13:15:18 +0200 (CEST)
+	by mout-y-111.mailbox.org (Postfix) with ESMTPS id 4fvQ3S5QYkz9yR3;
+	Mon, 13 Apr 2026 13:21:56 +0200 (CEST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=mailbox.org; s=mail20150812;
-	t=1776078918;
+	t=1776079316;
 	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
 	 content-transfer-encoding:content-transfer-encoding:
 	 in-reply-to:in-reply-to:references:references;
-	bh=0xEbpfYUwB8/DzHPZ5IQma7S1iSPSS7KmZHqtTedekU=;
-	b=uz2XcsZQIQXO5jylhiNVNB1X1PBwo1gUb9Db0xN3UHwK40wBKl+OVbSr8qNCAxKQKT3jb3
-	sRC+YG24VSJz+GApcf4AQbLEujdaUwkQg/jSDLmsfooh0TKZhhzZdZ5ijFNzafyh6JdCaV
-	MnFz3O34Z8O2py0Ls2NM/NrD9nOwIDojTtpxaPzMW1Xugo0efsEcxbuG0pED2i+WXr4Ux6
-	MJB4t0hcJoZbqyL7gNCSgwCk/JlrC0AqBgzSvHkMpq/XMad/zFr7KWU48wmJP4R3Dnli9t
-	u2F4+qjVJxOzrbNXDsd6RQnL2ymGOgnuMtfxZxs7taYhp3PsjOhVOmwAdjlZJw==
-Authentication-Results: outgoing_mbo_mout;
-	dkim=pass header.d=mailbox.org header.s=mail20150812 header.b=xNyi3Z38;
-	spf=pass (outgoing_mbo_mout: domain of mashiro.chen@mailbox.org designates 2001:67c:2050:b231:465::102 as permitted sender) smtp.mailfrom=mashiro.chen@mailbox.org
-From: Mashiro Chen <mashiro.chen@mailbox.org>
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=mailbox.org; s=mail20150812;
-	t=1776078916;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=0xEbpfYUwB8/DzHPZ5IQma7S1iSPSS7KmZHqtTedekU=;
-	b=xNyi3Z38nzUr+Z9UDLYs/OQFrlLgXZHWkN3Tu80KUWO1jBMvm3zh1b5UEw3YtVOvUPRRmn
-	KL9x01ordaE5XgIeeORwBQVuj4SLEPwM2bq+pJsKMXLzOd0Pw5AcUemCBKHudAWG2MC1C4
-	4SSW3rp3b2wyULi1nOoYeKeSvsXCNnOwBy+ag8pa9+wEyyizmButBeCJmKExonz2D/d4HU
-	16kcsjQ0YwMbZstK0yVfzk0sKvw6H2+gqE5r1KCo0dHj7VjEQKpfXxuTG7NTxqf36rvsaN
-	rC0RUmp/oCjaQvM2ufcX/3SUlXvdwLWN8/UpiZlXwmIVTtWBJqOdU5mV0DAxiQ==
-To: netdev@vger.kernel.org
-Cc: linux-hams@vger.kernel.org,
-	kuba@kernel.org,
-	horms@kernel.org,
-	davem@davemloft.net,
-	pabeni@redhat.com,
-	edumazet@google.com,
-	Mashiro Chen <mashiro.chen@mailbox.org>
-Subject: [PATCH v3 net] net: ax25: fix integer overflow in ax25_rx_fragment()
-Date: Mon, 13 Apr 2026 19:14:56 +0800
-Message-ID: <20260413111456.936572-1-mashiro.chen@mailbox.org>
-In-Reply-To: <20260409025026.24575-1-mashiro.chen@mailbox.org>
-References: <20260409025026.24575-1-mashiro.chen@mailbox.org>
+	bh=4ujTFig8ng/0GP5w6u02e5j7gKiyai90e+dKLtJdkFs=;
+	b=ba49pVzoT+DpLoet5qXdX9pNRN6h4LcmnxIpQ67+Y07iStql2BIbTgr24jgSLhC60nYbYT
+	+VCZomXUnIX7A+6QOhU8G9awgtVFQGZ4riMM5ZIYN6a3nREuDYA0JJhSnIW5Ww4p0Rn890
+	BrLDhFC6XwSd71XzSenjH3N2iOOVEzCRWw8G2QTQYK0Yt5QEj3rPrklKOeuwJLjJaQTJIs
+	Cuj3m+g/9b7hcxPZoAsG8qVytFmNLpsVCygUj7LKX2eWpLPW5gcO/eqaajNKAN4sGEHFM0
+	J3zRqxnuA2c7grmcgR7Fm+I1lbhiSIUW/4Qj5QzqA5PQKyX0wUF2rkUh064c3g==
+Message-ID: <22da778a-a622-46b9-be7c-948f9178e77e@mailbox.org>
+Date: Mon, 13 Apr 2026 19:21:43 +0800
 Precedence: bulk
 X-Mailing-List: linux-hams@vger.kernel.org
 List-Id: <linux-hams.vger.kernel.org>
 List-Subscribe: <mailto:linux-hams+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-hams+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-MBO-RS-META: g8i9tmzc6px3j95ff6ijy3k8zwsmosy7
-X-MBO-RS-ID: e541de843c4ea1dcdd6
-X-Rspamd-Queue-Id: 4fvPvp1tTRzB0df
+Subject: Re: [PATCH v2 net] net: ax25: fix integer overflow in
+ ax25_rx_fragment()
+To: David Laight <david.laight.linux@gmail.com>,
+ Jakub Kicinski <kuba@kernel.org>
+Cc: netdev@vger.kernel.org, davem@davemloft.net, edumazet@google.com,
+ pabeni@redhat.com, horms@kernel.org, jreuter@yaina.de,
+ linux-hams@vger.kernel.org, linux-kernel@vger.kernel.org,
+ stable@vger.kernel.org
+References: <20260409025026.24575-1-mashiro.chen@mailbox.org>
+ <20260412131751.0e90a053@kernel.org> <20260412220550.0f35f5ef@pumpkin>
+Content-Language: en-US
+From: Mashiro Chen <mashiro.chen@mailbox.org>
+In-Reply-To: <20260412220550.0f35f5ef@pumpkin>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-MBO-RS-ID: 9888fca2716acfe2476
+X-MBO-RS-META: igou1zj3j1uosk8uu1wz6rf3fon9giwe
 
-ax25_rx_fragment() accumulates fragment lengths into ax25_cb->fraglen,
-which is an unsigned short. When the total exceeds 65535, fraglen wraps
-around to a small value. The subsequent alloc_skb(fraglen) allocates a
-too-small buffer, and skb_put() in the copy loop triggers skb_over_panic().
+Hi Jakub, Simon
 
-Add pskb_may_pull(skb, 1) at function entry to ensure the segmentation
-header byte is in the linear data area before dereferencing skb->data.
-This also rejects zero-length skbs, which the original code did not
-check for.
+v3 has addressed the review comments on v2:
+1. Add pskb_may_pull(skb, 1) before dereferencing skb->data
+2. Remove the unnecessary (unsigned int) cast on fraglen
+3. Fix skb leak in overflow path that kfree_skb(skb) before return 1
+4. Reset ax25->fraglen = 0 after purge
 
-Three issues in the overflow error path are also fixed:
-First, the current skb, after skb_pull(skb, 1), is neither enqueued
-nor freed before returning 1, leaking it. Add kfree_skb(skb) before
-the return.
-Second, ax25->fraglen is not reset after skb_queue_purge(). Add
-ax25->fraglen = 0 to restore a consistent state.
-Third, the explicit (unsigned int) cast on fraglen is unnecessary: the
-addition with skb->len (unsigned int) promotes fraglen automatically.
 
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Signed-off-by: Mashiro Chen <mashiro.chen@mailbox.org>
----
- net/ax25/ax25_in.c | 7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+P.S.:
+the reassembly copy loop at ax25_in.c:75 uses 
+skb_copy_from_linear_data(skbo, dst, skbo->len), which is equivalent to 
+memcpy(skbo->data, dst, skbo->len).
+If a queued skbo contains non-linear data, which means data_len > 0, 
+this silently reads only the linear head and copies stale data for the 
+remainder.
+In practice, all AX.25 lower-layer drivers like mkiss and 6pack allocate 
+fully linear skbs via dev_alloc_skb(), so this is not currently 
+reachable, I think there should be a separated patch to fix this.
 
-diff --git a/net/ax25/ax25_in.c b/net/ax25/ax25_in.c
-index 68202c19b19e3f..e1834e11bb0b6a 100644
---- a/net/ax25/ax25_in.c
-+++ b/net/ax25/ax25_in.c
-@@ -35,15 +35,20 @@ static int ax25_rx_fragment(ax25_cb *ax25, struct sk_buff *skb)
- {
- 	struct sk_buff *skbn, *skbo;
- 
-+	if (!pskb_may_pull(skb, 1))
-+		return 0;
-+
- 	if (ax25->fragno != 0) {
- 		if (!(*skb->data & AX25_SEG_FIRST)) {
- 			if ((ax25->fragno - 1) == (*skb->data & AX25_SEG_REM)) {
- 				/* Enqueue fragment */
- 				ax25->fragno = *skb->data & AX25_SEG_REM;
- 				skb_pull(skb, 1);	/* skip fragno */
--				if ((unsigned int)ax25->fraglen + skb->len > USHRT_MAX) {
-+				if (ax25->fraglen + skb->len > USHRT_MAX) {
-+					kfree_skb(skb);
- 					skb_queue_purge(&ax25->frag_queue);
- 					ax25->fragno = 0;
-+					ax25->fraglen = 0;
- 					return 1;
- 				}
- 				ax25->fraglen += skb->len;
--- 
-2.53.0
+73s,
+Mashiro Chen
 
+On 4/13/26 05:05, David Laight wrote:
+> On Sun, 12 Apr 2026 13:17:51 -0700
+> Jakub Kicinski <kuba@kernel.org> wrote:
+>
+>> On Thu,  9 Apr 2026 10:50:26 +0800 Mashiro Chen wrote:
+>>> Fix mirrors the identical bug fixed in NET/ROM (nr_in.c): check for
+>>> overflow before adding skb->len to fraglen, and abort fragment
+>>> reassembly cleanly if the limit would be exceeded.
+>> Same problem as reported by Simon on the netrom patch applies here.
+>>
+>> nit: I don't think you need to cast ax25->fraglen to unsigned int
+>> in the comparison. since it's added with skb->len it should get
+>> auto-prompted to unsigned int.
+> It wouldn't matter if that comparison were signed.
+>
+> Or change the type of ax25->fraglen to be 32bits and do the
+> sanity check for overlong packets later in the code.
+> I had a quick look at the header and the structure hasn't
+> been size-optimised...
+>
+> 	David
+>
