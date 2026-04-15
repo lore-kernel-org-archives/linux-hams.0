@@ -1,149 +1,106 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wr1-f48.google.com (mail-wr1-f48.google.com [209.85.221.48])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EBA1B7261C;
-	Wed, 15 Apr 2026 06:48:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 642FC3CAE8A
+	for <linux-hams@vger.kernel.org>; Wed, 15 Apr 2026 07:59:26 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.48
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776235688; cv=none; b=VC0HeiIeyPbFiMPlht12nkmj1sOzpLciXiWZzrfVe3CdzIDzMfGMaDd4M9L7dXoPu3Xn17ZUfQcJCs35e/vkLuPElTADpam7hW9ZdfalSZYuAhmiQqdJ7c/HhXIdK+9QX8sAGO4oLasX4Xd8bYeefuH1BEsNhE7tRPAWAVjp08w=
+	t=1776239969; cv=none; b=Y2YFIsY9m1bho30LxTMCVIJnzsTax3nUR3WMriWvchFq+xe88P/NTt9DuCB6zQ6KW0UkbLiwM6WryBZIoGVvQ7WJ4fFHq92u7Xq/Pil1UVJEIUFrl0EDuBrn3EEoCgxTbDmD0N5OqZ0XHcy5zA1K+He+5+6ttBtzzXvUvouBv44=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776235688; c=relaxed/simple;
-	bh=uO1fFgRaYkEaX03uIGSllbIp0KmN4e8uhrxbiL7j6JA=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=b0DifANz9TAza/g0YGWlyJzT5cmj1b9jAXrEuvQudqCfl5mh8pMN2VV1x2+/jiRPgx0WazlQLhgh7ibkcQI/dZwKq6QLErIeBGUQOPa+o9gTiX1e30B7xxARW4oG5XxFubH77edrD36djPekrUkEd9FvBvlIzw0rcZJWWysSLkk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Wn6Hr/rv; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1776239969; c=relaxed/simple;
+	bh=v4txLFrjF8x+4vhEHg9wpHXC7HaZVp8pc1Zv6dPSMoQ=;
+	h=Date:From:To:Cc:Subject:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=AduhSLRH4Kqej/O9F9IuAfORlCiUHYS+0uRyqlLhysLPZFE6dwFovBYgKl1ZdsZl01Fuw+paY0nbBE2bP4fLC7b0SmdetsNiZxvZCLcGgUdg21tOCHvCNbGDIp2AUe05PbksolKqazrr2cuD/OyBToaFdo3tckEwiTj43pv++Sc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=iNAaI6x2; arc=none smtp.client-ip=209.85.221.48
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Wn6Hr/rv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0E1D1C19424;
-	Wed, 15 Apr 2026 06:47:56 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1776235687;
-	bh=uO1fFgRaYkEaX03uIGSllbIp0KmN4e8uhrxbiL7j6JA=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=Wn6Hr/rv7RQ0mjmBpBGnHzSLGoawtRWrJKf8Yulby+TTpp7z1W2m+/e3q+cBeZYn8
-	 9EULstKmB1P1aIGBA/hM7NfdL90zPADnWSMrSZUOJgfBI2Y0gYKo15ZH/8SN+3BCpi
-	 LFdpD3kIOkfmc5kLWHOPn/7qJv2G9rdoWFZcqmWwEJGa7DK0r7DBeorJlYNCKX5hcM
-	 Q22Qw/tg/rR1esDPVyaYxqkxnFQnTVF5/bVWUROMriQiIMAWyo9xVZRAIqfM9NCvMV
-	 JvPvhMbjPkTiWVz5ZUzK2DMWWd8bbim3aFcilo4uxvNCEcTYhNnaiu0tF2t4jRv/Q5
-	 DezCa9n7clYBA==
-Message-ID: <9c33afea-7a64-456e-aa2f-bdcf7459b567@kernel.org>
-Date: Wed, 15 Apr 2026 08:47:55 +0200
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="iNAaI6x2"
+Received: by mail-wr1-f48.google.com with SMTP id ffacd0b85a97d-43d77f6092eso2159976f8f.2
+        for <linux-hams@vger.kernel.org>; Wed, 15 Apr 2026 00:59:25 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1776239964; x=1776844764; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:subject:cc:to:from:date:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=fnGUNqAPhun2LmWwo++iWXcTG1XwZ7/9oz20GAfV1pE=;
+        b=iNAaI6x2O2Q2sQ6cBd+EgthxSPzePJ4VMMIbt//6SVP06nN7PFtF0nLkXyEEM4tS8M
+         wwcfAP/y0OZXX5TAnrqJmKRy5wkQGI7JLSHkz/8G5+HaH8bBIRfDmzMYO7ly9TnxUULP
+         UTMVQ2kjylYfcyHkGBXk9fpIZEQkZhvHNw4jh7l/4sl6+37RsYDM7YkSGm6aWfqnxy0l
+         YCTge2axoOKL3yeqTfGfAGg2ZNNeE1cRZmAxMjiwyVZ232xhM1+m1VmfX/1LpEFxiube
+         oP3KMWTLuia2iEPzZk5+k9Oyij35EGQuNXuoIlAtkRRyg4Sm36r7XTMgZAq16DCwFi8H
+         RcYQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1776239964; x=1776844764;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=fnGUNqAPhun2LmWwo++iWXcTG1XwZ7/9oz20GAfV1pE=;
+        b=aUoeWejA3JzhxbciUxLphiyVSbCeJL5FNZwGmDhjxIiDwEORYdqXQpWt/AYIpZ5aII
+         SX/ej1ge84aIRSs7K+idrh40pLwOT9NWp3zCgxmu6OZ07DzDrlW8xAlULNUNBdw88te0
+         AePNrp/C4r39b5lQz9EdS3cOOKMhG763hETezBYj7oA4zjd/YkFJoinXkWzf6Nvx399r
+         lSea19OwEI2RwfvxmRWattoGH8ZJXM8qnDF7zg+/vHAvGI3Uzili0alIHc5oNtpkUP2X
+         giwGg2xNgh/GOMm2ab3BSXwxq8lqkHl/5mJSa2koDWgLHaTGOK5A9Vf+PxNDFPRI9puQ
+         tXnQ==
+X-Forwarded-Encrypted: i=1; AFNElJ/uyRMy/KjhrYqyum9UbmVhXWQOfkT1s8B76s2+351c3gleiSB3Owtjid/E0pA9bnfZAc5xTJt3kZj1@vger.kernel.org
+X-Gm-Message-State: AOJu0Yz91DqoV0UX4bWaNj9xk7A06HN313MAte522+Q3rm81xXCs47v0
+	aSOUNjBIqrwwhezxakEzoGTZT+tkEAIuDtXAlVLlgtOaZb+TTye8JgM9
+X-Gm-Gg: AeBDieuzND+yJ8wuo4XNI/mZBsqlfrGCQ9VrZUZiORoeF4wm1vS7JKjfzjbSwaJsNr+
+	lb4PT6rf9wdblXPZ0L8e0BrtLzj2LMtAH2miE0MB66ItLcLp4/n7VnblomYRLBZg4INyM3NhR04
+	Z9ZvrS0dNNX5Ce6obaDqihuY6pNkbpbuco/kE8DcYfopNAUAjPREVCdNizmtjigwy3KhCgu/IP6
+	qCgji+3UyDIULGXKpor3yMi6FDtxGzbV1c0oZ3wysHZd2FhjFAe/dp5EnHUACbjT0kCwFUAed9T
+	aJIE//2NUGRUBTWs3aSaGUlm2PCY0iIULjLlkaE+/Zofcyza+3+6vaiABdl6nC7/ZOHgoqgWfOk
+	K3W6XoAx0aZOUYiCMqBvAs2TR/OwmFDj/G/PrAXLVbZXK08Xyw/LbR02SSbzExAVyYRUxTShCFq
+	1W4Efdsn83C6+l4bQD/RbrspR/3fG6QWjYglWl8jU2huzBqh6rYHFilpmEPV4CuKnt
+X-Received: by 2002:a05:6000:22c6:b0:43d:7e11:1b72 with SMTP id ffacd0b85a97d-43d7e111c1emr12453323f8f.9.1776239963143;
+        Wed, 15 Apr 2026 00:59:23 -0700 (PDT)
+Received: from pumpkin (82-69-66-36.dsl.in-addr.zen.co.uk. [82.69.66.36])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-43ead3ebaf1sm2843108f8f.33.2026.04.15.00.59.22
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 15 Apr 2026 00:59:22 -0700 (PDT)
+Date: Wed, 15 Apr 2026 08:59:21 +0100
+From: David Laight <david.laight.linux@gmail.com>
+To: Ashutosh Desai <ashutoshdesai993@gmail.com>
+Cc: netdev@vger.kernel.org, linux-hams@vger.kernel.org, jreuter@yaina.de,
+ davem@davemloft.net, edumazet@google.com, kuba@kernel.org,
+ pabeni@redhat.com, horms@kernel.org, stable@vger.kernel.org,
+ linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v3 net] ax25: fix OOB read after address header strip in
+ ax25_rcv()
+Message-ID: <20260415085921.757b48a0@pumpkin>
+In-Reply-To: <20260415063654.3831353-1-ashutoshdesai993@gmail.com>
+References: <20260415063654.3831353-1-ashutoshdesai993@gmail.com>
+X-Mailer: Claws Mail 4.1.1 (GTK 3.24.38; arm-unknown-linux-gnueabihf)
 Precedence: bulk
 X-Mailing-List: linux-hams@vger.kernel.org
 List-Id: <linux-hams.vger.kernel.org>
 List-Subscribe: <mailto:linux-hams+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-hams+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [patch 33/38] powerpc: Select ARCH_HAS_RANDOM_ENTROPY
-To: Thomas Gleixner <tglx@kernel.org>, LKML <linux-kernel@vger.kernel.org>
-Cc: Michael Ellerman <mpe@ellerman.id.au>, linuxppc-dev@lists.ozlabs.org,
- Arnd Bergmann <arnd@arndb.de>, x86@kernel.org,
- Lu Baolu <baolu.lu@linux.intel.com>, iommu@lists.linux.dev,
- Michael Grzeschik <m.grzeschik@pengutronix.de>, netdev@vger.kernel.org,
- linux-wireless@vger.kernel.org, Herbert Xu <herbert@gondor.apana.org.au>,
- linux-crypto@vger.kernel.org, Vlastimil Babka <vbabka@kernel.org>,
- linux-mm@kvack.org, David Woodhouse <dwmw2@infradead.org>,
- Bernie Thompson <bernie@plugable.com>, linux-fbdev@vger.kernel.org,
- Theodore Tso <tytso@mit.edu>, linux-ext4@vger.kernel.org,
- Andrew Morton <akpm@linux-foundation.org>,
- Uladzislau Rezki <urezki@gmail.com>, Marco Elver <elver@google.com>,
- Dmitry Vyukov <dvyukov@google.com>, kasan-dev@googlegroups.com,
- Andrey Ryabinin <ryabinin.a.a@gmail.com>,
- Thomas Sailer <t.sailer@alumni.ethz.ch>, linux-hams@vger.kernel.org,
- "Jason A. Donenfeld" <Jason@zx2c4.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- linux-alpha@vger.kernel.org, Russell King <linux@armlinux.org.uk>,
- linux-arm-kernel@lists.infradead.org,
- Catalin Marinas <catalin.marinas@arm.com>,
- Huacai Chen <chenhuacai@kernel.org>, loongarch@lists.linux.dev,
- Geert Uytterhoeven <geert@linux-m68k.org>, linux-m68k@lists.linux-m68k.org,
- Dinh Nguyen <dinguyen@kernel.org>, Jonas Bonn <jonas@southpole.se>,
- linux-openrisc@vger.kernel.org, Helge Deller <deller@gmx.de>,
- linux-parisc@vger.kernel.org, Paul Walmsley <pjw@kernel.org>,
- linux-riscv@lists.infradead.org, Heiko Carstens <hca@linux.ibm.com>,
- linux-s390@vger.kernel.org, "David S. Miller" <davem@davemloft.net>,
- sparclinux@vger.kernel.org
-References: <20260410120044.031381086@kernel.org>
- <20260410120319.789114053@kernel.org>
-Content-Language: fr-FR
-From: "Christophe Leroy (CS GROUP)" <chleroy@kernel.org>
-In-Reply-To: <20260410120319.789114053@kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
 
+On Wed, 15 Apr 2026 06:36:54 +0000
+Ashutosh Desai <ashutoshdesai993@gmail.com> wrote:
 
+> A remote station can send a crafted KISS frame that is just long enough
+> to pass ax25_addr_parse() (minimum 14 address bytes) but carries no
+> control or PID bytes. After ax25_kiss_rcv() strips the KISS framing
+> byte and ax25_rcv() strips the address header with skb_pull(), skb->len
+> drops to zero. The subsequent reads of skb->data[0] (control byte) and
+> skb->data[1] (PID byte) are then out of bounds, which can crash the
+> kernel or leak heap memory to a remote attacker.
+> 
+> Use pskb_may_pull(skb, 2) after the skb_pull() to ensure both bytes
+> are in the linear area before reading them. Discard malformed frames
+> that carry no control/PID pair.
 
-Le 10/04/2026 à 14:21, Thomas Gleixner a écrit :
-> The only remaining usage of get_cycles() is to provide random_get_entropy().
-> 
-> Switch powerpc over to the new scheme of selecting ARCH_HAS_RANDOM_ENTROPY
-> and providing random_get_entropy() in asm/random.h.
-> 
-> Remove asm/timex.h as it has no functionality anymore.
-> 
-> Signed-off-by: Thomas Gleixner <tglx@kernel.org>
-> Cc: Michael Ellerman <mpe@ellerman.id.au>
-> Cc: linuxppc-dev@lists.ozlabs.org
+Is it just worth linearising the skb on entry to all this code?
+I believe all the frames are relatively short and low frequency.
+So the actual overhead is insignificant, but it makes all the sanity
+checks trivial.
+It is even likely (hand waving) that the extra copy for non-linear data
+is faster than all the checks for non-linear data.
 
-Reviewed-by: Christophe Leroy (CS GROUP) <chleroy@kernel.org>
-
-> ---
->   arch/powerpc/Kconfig              |    1 +
->   arch/powerpc/include/asm/random.h |   13 +++++++++++++
->   arch/powerpc/include/asm/timex.h  |   21 ---------------------
->   3 files changed, 14 insertions(+), 21 deletions(-)
-> 
-> --- a/arch/powerpc/Kconfig
-> +++ b/arch/powerpc/Kconfig
-> @@ -150,6 +150,7 @@ config PPC
->   	select ARCH_HAS_PREEMPT_LAZY
->   	select ARCH_HAS_PTDUMP
->   	select ARCH_HAS_PTE_SPECIAL
-> +	select ARCH_HAS_RANDOM_ENTROPY
->   	select ARCH_HAS_SCALED_CPUTIME		if VIRT_CPU_ACCOUNTING_NATIVE && PPC_BOOK3S_64
->   	select ARCH_HAS_SET_MEMORY
->   	select ARCH_HAS_STRICT_KERNEL_RWX	if (PPC_BOOK3S || PPC_8xx) && !HIBERNATION
-> --- /dev/null
-> +++ b/arch/powerpc/include/asm/random.h
-> @@ -0,0 +1,13 @@
-> +/* SPDX-License-Identifier: GPL-2.0 */
-> +#ifndef _ASM_POWERPC_RANDOM_H
-> +#define _ASM_POWERPC_RANDOM_H
-> +
-> +#include <asm/cputable.h>
-> +#include <asm/vdso/timebase.h>
-> +
-> +static inline unsigned long random_get_entropy(void)
-> +{
-> +	return mftb();
-> +}
-> +
-> +#endif	/* _ASM_POWERPC_RANDOM_H */
-> --- a/arch/powerpc/include/asm/timex.h
-> +++ b/arch/powerpc/include/asm/timex.h
-> @@ -1,21 +0,0 @@
-> -/* SPDX-License-Identifier: GPL-2.0 */
-> -#ifndef _ASM_POWERPC_TIMEX_H
-> -#define _ASM_POWERPC_TIMEX_H
-> -
-> -#ifdef __KERNEL__
-> -
-> -/*
-> - * PowerPC architecture timex specifications
-> - */
-> -
-> -#include <asm/cputable.h>
-> -#include <asm/vdso/timebase.h>
-> -
-> -ostatic inline cycles_t get_cycles(void)
-> -{
-> -	return mftb();
-> -}
-> -#define get_cycles get_cycles
-> -
-> -#endif	/* __KERNEL__ */
-> -#endif	/* _ASM_POWERPC_TIMEX_H */
-> 
-> 
+	David
 
