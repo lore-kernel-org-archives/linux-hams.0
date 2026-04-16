@@ -1,134 +1,92 @@
-Received: from www11.qth.com (www11.qth.com [72.52.250.187])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qt1-f182.google.com (mail-qt1-f182.google.com [209.85.160.182])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2614B1A0BF1
-	for <linux-hams@vger.kernel.org>; Thu, 16 Apr 2026 02:54:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=72.52.250.187
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A2A243783D8
+	for <linux-hams@vger.kernel.org>; Thu, 16 Apr 2026 05:39:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.182
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776308060; cv=none; b=OEAW6n2zCTK+f1KfvXMPf84KSRt+nuPkAiZnkMrWPy161eBRsVLpzkfLA35TG4k8NAMWusBA582ZN8rjLfG5vPaquy35Ouuyz3hLis1iq7u628KcZ2jFc9baYeojEDuBrCE2cVp0BhzeebtgYAq5/z7KIV+OAaktDSlnyKzLoGI=
+	t=1776317956; cv=none; b=tapB1dCOn+EqzlpLyGIXp6BvKmMCENN4oIx1/EqWjvmk9r1pBWTGPtc1+9yVfl7mIZJQMTb1hbL/53qduTcy0dZoZIZwhYDCcakAayDMqHxHoyxHxq2OWD2hYrNAnBs4Sy2WrJleopqPYsrHU+KLuOmbsvckFk2mITw3KlgvVFI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776308060; c=relaxed/simple;
-	bh=OGXCnE9nCoZgiUiALOPDoI00W8CWeJkq/s1gh5Wt1/0=;
-	h=Date:From:To:Subject:Message-ID:MIME-Version:Content-Type:
-	 Content-Disposition; b=rR2FRScdfp+NgtzIU5fFglDX6JkCDmM89HQo/wZGaEFTJPSjslWqh2YwTjY0qoKg13KTCpjvGQWESC9wlnNTfuByKEinN6sIZnBo6x9f/Mh5c5WkcW5zDnGENJwpHnK26pxC///x5L3l8Mj5qSglb7B0FnMzGA4GjqhtT3ZqLBU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=n0nb.us; spf=pass smtp.mailfrom=n0nb.us; dkim=pass (2048-bit key) header.d=n0nb.us header.i=@n0nb.us header.b=lOn3rEox; arc=none smtp.client-ip=72.52.250.187
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=n0nb.us
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=n0nb.us
+	s=arc-20240116; t=1776317956; c=relaxed/simple;
+	bh=N0T590H9heaCHgH2KW+HuYix7auOVSrFYd7ngm6UIiY=;
+	h=Message-ID:Date:Content-Type:MIME-Version:From:To:Cc:Subject:
+	 In-Reply-To:References; b=RJj9HEFnR0LHZYTOZNJ/rbpaNkEII+STRro8yKdndYiJEoq55D7wIp11fDTNccZlbYuobQ+MQ9eygPLI45G7h0c3JKGm1NwmG2ud/syUk6sXy4/MB8cLnebUgL2IEVwGrZsOvsdLF9xPZZhLpIWoc1oNK3ceiCvBxVnbAGRJ5KU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=gyAxBYNG; arc=none smtp.client-ip=209.85.160.182
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=n0nb.us header.i=@n0nb.us header.b="lOn3rEox"
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=n0nb.us;
-	s=default; h=Content-Type:MIME-Version:Message-ID:Subject:To:From:Date:Sender
-	:Reply-To:Cc:Content-Transfer-Encoding:Content-ID:Content-Description:
-	Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:
-	In-Reply-To:References:List-Id:List-Help:List-Unsubscribe:List-Subscribe:
-	List-Post:List-Owner:List-Archive;
-	bh=+ZEOXIoiTLwFeJLiKBhS8coc14reJtM9fdG2r+PIjKc=; b=lOn3rEoxiWxRuDMprWLvLVFW7B
-	mIjqkcLO9ftkNSHo+MHKsQ92XRroOogpqWYE3s+XzV9dGnl2Amc0yAuS+2149XIBkQExlj+11rSjF
-	ZegbU9P7YIBSW9uol64No4bqBOEW+1iZpmwCh8R+TQi2+dgIP4j0BSn7DwVIcyiPacp2IbtM3/fcx
-	/5VtTWrJx3qV133HxgBji8jSXYSzFXelhO6bgvJPKYXmO5VroUKsuU67cW6ZL/I/iQdfwlgy1mRMI
-	eSGpflD7Dx12pa1LUHzDPUL0+2Yz9lN9Ev8KBTHlT6PRRcR+rV5R+ARBqbU81WTNS6T56jsX5XiEX
-	5Keg1UXw==;
-Received: from [68.234.117.163] (port=52658 helo=merlin.lan)
-	by www11.qth.com with esmtpsa  (TLS1.3) tls TLS_AES_256_GCM_SHA384
-	(Exim 4.99.1)
-	(envelope-from <n0nb@n0nb.us>)
-	id 1wDCZA-00000001b7F-1lFo;
-	Wed, 15 Apr 2026 21:34:51 -0500
-Received: from nate by merlin.lan with local (Exim 4.98.2)
-	(envelope-from <n0nb@n0nb.us>)
-	id 1wDCZ9-0000000ABvp-0QEq;
-	Wed, 15 Apr 2026 21:34:51 -0500
-Date: Wed, 15 Apr 2026 21:34:51 -0500
-From: Nate Bargmann <n0nb@n0nb.us>
-To: Hamlib Developers <hamlib-developer@lists.sourceforge.net>, 
-	Linux Hams <linux-hams@vger.kernel.org>, Debian Hams <debian-hams@lists.debian.org>
-Subject: Hamlib 4.7.1 released
-Message-ID: <znr2vbix26xkiru7turlnpy2yrvdbssv5ctqjvamy7mw3atbyy@5bdcjqg3iroq>
-Mail-Followup-To: Hamlib Developers <hamlib-developer@lists.sourceforge.net>, 
-	Linux Hams <linux-hams@vger.kernel.org>, Debian Hams <debian-hams@lists.debian.org>
-X-Operating-System: Linux 6.12.74+deb13+1-amd64 x86_64
-Organization: Amateur Radio!
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="gyAxBYNG"
+Received: by mail-qt1-f182.google.com with SMTP id d75a77b69052e-50b69bf5638so82009841cf.1
+        for <linux-hams@vger.kernel.org>; Wed, 15 Apr 2026 22:39:15 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1776317955; x=1776922755; darn=vger.kernel.org;
+        h=references:in-reply-to:subject:cc:to:from:content-transfer-encoding
+         :mime-version:date:message-id:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=N0T590H9heaCHgH2KW+HuYix7auOVSrFYd7ngm6UIiY=;
+        b=gyAxBYNGO0944S9MKltImXjBJfUVrj2z22Kf4X/6PQ8oRHX98V+ApLFx7XHh7HrUaN
+         lRooy+ms32oAXcHmeDQuZGdHdaQkyLiSGiR5L5hAjAMXcvTmTAZbCuuZjKkej0z477id
+         1Zwb4gNFbX144sCb1LlNdpJHMQ9Y2kNsKQ/TOfaDRZEojYqBI6Jsj762nfPelHKWA/EF
+         hxBVECjqr3whsNf969/qvCXdGng0azx64lcs0RuOAxXGBLcPSozryAq6JuU6NoLfZaPN
+         qmpQWEZNh45nKABKnF2QdP9g4duwk6J0K0+YDLnf2FWqI6FiivS6lC71pse9QL3+Pi+E
+         fDuA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1776317955; x=1776922755;
+        h=references:in-reply-to:subject:cc:to:from:content-transfer-encoding
+         :mime-version:date:message-id:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=N0T590H9heaCHgH2KW+HuYix7auOVSrFYd7ngm6UIiY=;
+        b=odqILK5daJ8Kq982gLIlD4UcQmzYPWr7cp4EGS5xvq0W1XGarHu2XizUr35/tZzguv
+         u4IGg91q96F8vBMj9ZfPFbwBLCLRKavJawvC5OmlTP3BBG5Viz0o5f1kGdcbqAoFCvVG
+         rz/b5TYyu5DfKSvkvJyqvbIvqcDf1FYWv03CeIJIuu5pMFPT4i9RRlbWgVvgvqHz2jv8
+         ylDJPbt21aMdgCmB2rOfff6J9mknlAFeI2AVGba1d34aorlDTwspTJh4Sv3wREYa7TG+
+         u1EkybDv6t3BuKaGoCACi2jEYkwHgDXjjHz0SQss5hZr+51s0KhxCX0dh2sCt15wMWcy
+         O0uQ==
+X-Forwarded-Encrypted: i=1; AFNElJ8mvCocONA2WoojzbL4inEZu1YAo64TSDwsPmvw7JtoYVEKfrVLQ2y/f1PL2yg3MGjy13F80T5JAEQy@vger.kernel.org
+X-Gm-Message-State: AOJu0YypqdbgTPza5ezRHao1Y1QZux24xwkAM6WIAiLsU050LwWzZceo
+	5a/C4G5ZlwsfK3nyVh0nLHjrq0LBrCplS33NoC5ik5o6Id7kocsTQ6vJ
+X-Gm-Gg: AeBDietA46x5iWNWXiaVcEktmeHZ7l2Cf/YI4c/aj8AcH/yJ+yzSVAfTxmUv7hDruAe
+	oM2VI2LrstDjW9TFmNxcylumy6p7/wWaqVa4zWu7h2rOQAzHXGcSoAsVJFx4RRccbKie+iHkYiV
+	fIGpdU1wqlnyoGhMYzm+Aex36VOSOMcp1kU2HvlO3tC+1u72DrRptEh3AnkbACtpadGweakkAmQ
+	DJ1PTHs7Jf4nzDmUnmJdH7AuNnE2wKyWM9UM8d4Yyv3AeT2y8vTThF4r6WSY5UxCusJOBw6Rtyf
+	ipJIv3KY8jxN8/vQSaSENy+MrvtDNyUH83+xgScsxCG+RSwNLVU+kiEza02VNNcbyi2haH89XYh
+	g8VFE6haqc/Zp13YiPvgkkhRkT3jpjjdvgpzIi1LKAyTg4YCBQRXqBaTqssBTQhHUIo7XSjwIg/
+	LgSKE5IYCly7Kmc53bwJu1+cTHc605zAHrgoKCioMfO+JcMpRn+rk1qM/7FsxgWcLdza4W+WSsy
+	gm6Nq0kFg==
+X-Received: by 2002:a05:622a:1493:b0:509:68c:634d with SMTP id d75a77b69052e-50dd5b95a14mr387417291cf.10.1776317954583;
+        Wed, 15 Apr 2026 22:39:14 -0700 (PDT)
+Received: from tdc4045031631.internal.cloudapp.net ([20.63.37.123])
+        by smtp.gmail.com with ESMTPSA id d75a77b69052e-50e1afc597fsm30185571cf.24.2026.04.15.22.39.13
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 15 Apr 2026 22:39:13 -0700 (PDT)
+Message-ID: <69e07601.c80a0220.2f9024.1e0b@mx.google.com>
+Date: Wed, 15 Apr 2026 22:39:13 -0700 (PDT)
+Content-Type: text/plain; charset="us-ascii"
 Precedence: bulk
 X-Mailing-List: linux-hams@vger.kernel.org
 List-Id: <linux-hams.vger.kernel.org>
 List-Subscribe: <mailto:linux-hams+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-hams+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="cozekd5walgh7trq"
-Content-Disposition: inline
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - www11.qth.com
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - n0nb.us
-X-Get-Message-Sender-Via: www11.qth.com: authenticated_id: n0nb@n0nb.us
-X-Authenticated-Sender: www11.qth.com: n0nb@n0nb.us
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
+Content-Transfer-Encoding: 7bit
+From: Ashutosh Desai <ashutoshdesai993@gmail.com>
+To: David Laight <david.laight.linux@gmail.com>
+Cc: netdev@vger.kernel.org, linux-hams@vger.kernel.org, jreuter@yaina.de, davem@davemloft.net, edumazet@google.com, kuba@kernel.org, pabeni@redhat.com, horms@kernel.org, stable@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v3 net] ax25: fix OOB read after address header strip in ax25_rcv()
+In-Reply-To: <20260415085921.757b48a0@pumpkin>
+References: <20260415063654.3831353-1-ashutoshdesai993@gmail.com> <20260415085921.757b48a0@pumpkin>
 
+On Wed, 15 Apr 2026 08:59:21 +0100, David Laight wrote:
+> Is it just worth linearising the skb on entry to all this code?
 
---cozekd5walgh7trq
-Content-Type: text/plain; protected-headers=v1; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
-Subject: Hamlib 4.7.1 released
-MIME-Version: 1.0
+Thanks for the feedback, David.
 
-The Hamlib Project is pleased to announce the release of Hamlib 4.7.1.
+skb_linearize() on entry is a nice idea for simplifying sanity checks
+overall, but it wouldn't fix this particular bug on its own - the issue
+is skb->len dropping to zero after skb_pull(), not non-linear data. We'd
+still need a length check regardless. pskb_may_pull(skb, 2) handles both
+in one call.
 
-This release includes two new radio models, many fixes and improvements to
-various radio models.
-
-Here is a short changelog for this release:
-
-Version 4.7.1
- * 2026-04-15
- * Fix unknown type compilation errors on Alpine Linux.  (TNX Bradfor Boyle)
- * Fix rig port timeout.  (TNX Matthias Moelller)
- * Update ReleaseNotes*.md.  (TNX George Baltz)
- * Fix various FTX-1 meter, level and CTCSS table.  (TNX KJ5HST)
- * Add power off capability to Flrig backend.  (TNX Philip Rose)
- * Replace strncpy with memcpy to quell GCC 16 warning.  (TNX George Baltz)
- * Add SWR to supported 'get levels' for K3/K4.  (TNX Tom Crayner (reporter=
-))
- * Add get_split_vfo to TS-850 backend.  (TNX Elisamuel Resto)
- * New simplecat backend.  Supports Bunzee Labs DDX.  (TNX Dhiru Kholia)
- * Fix and generalize clock handling for Icom radios.  (TNX George Baltz)
- * Fix Yaesu attenuator levels and LVL_KEYSPD reinitialization.  (TNX Georg=
-e Baltz)
- * Add new rig model Harris PRC-138.  (TNX Antonio Regazzoni)
- * Various FT-710 fixes, especially handling SH format and RX bandwidth.
-   Ensure FT-710 simulator rejects RF command.  (TNX George Baltz)
- * Fix low power calculation for K3/K3S.  (N0NB)
- * Fix FTX-1 SH bandwidth command in set/get_mode.  (TNX Terrell Deppe)
- * Quell initializer overrides prior initialzation clang warning in ftx1.c
-   and fix compiler warning in hd1780.c.  (TNX George Baltz)
-
-Source archive and MS Windows binaries may be downloaded from:
-
-https://github.com/Hamlib/Hamlib/releases/tag/4.7.1
-https://sourceforge.net/projects/hamlib/files/hamlib/4.7.1/
-
-73, Nate
-
---=20
-"The optimist proclaims that we live in the best of all
-possible worlds.  The pessimist fears this is true."
-Web: https://www.n0nb.us
-Projects: https://github.com/N0NB
-GPG fingerprint: 82D6 4F6B 0E67 CD41 F689 BBA6 FB2C 5130 D55A 8819
-
-
---cozekd5walgh7trq
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iF0EABECAB0WIQSC1k9rDmfNQfaJu6b7LFEw1VqIGQUCaeBKygAKCRD7LFEw1VqI
-GaEbAJ9i3eZISu80fmNHuoxF1Off4cdriACggTay5D9pV43RJGT4hHEz6WC+jqc=
-=4OMy
------END PGP SIGNATURE-----
-
---cozekd5walgh7trq--
+That said, linearizing on entry to ax25_rcv() as a cleanup to simplify
+future checks sounds worthwhile - happy to send that as a separate
+net-next patch.
