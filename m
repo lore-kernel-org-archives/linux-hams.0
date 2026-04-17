@@ -1,78 +1,47 @@
-Received: from mail-qk1-f177.google.com (mail-qk1-f177.google.com [209.85.222.177])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ADCC83624A6
-	for <linux-hams@vger.kernel.org>; Fri, 17 Apr 2026 06:54:37 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.177
+Received: from azure-sdnproxy.icoremail.net (azure-sdnproxy.icoremail.net [52.175.55.52])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4A76A3BADB8;
+	Fri, 17 Apr 2026 11:06:19 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=52.175.55.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776408879; cv=none; b=nEF5m0wCMAtudTrpxfaV+hJDCrweHoWhdesaIxVs8wmnoluJHBmW2LczUiluTsml+M5IY2h803Kc6Pfa4kbQ7XazJ6i6kVnCViApDlOJBRUT57Ozqj4TosZdRSDyIAkgbf4VWMBy0aY5/ItUDALp8gVuzICKFUlMWL5JlPVVekY=
+	t=1776423985; cv=none; b=GmracWzNb2q+GSDyySUshw3i3bsVq297z2QXyb1oEPVmmeYRjErKqK3wqp7RmjFLXDi32rNdlJpB6sL3w6Bg8gbexiAJFPezEu4ljulBVRXjjEv8admE3owyTfzMLr67fRMkXNgti5dK1YksaiMS56jKVWO1FusDzzpqobZ7k6s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776408879; c=relaxed/simple;
-	bh=UdyI0MLqzaqJUekJ8644S6ZTpHQmBZWss+KW7Oq1u9c=;
-	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=fZgXAxbRl//PNzCmiRJS7EiovXqf06EJTZecM4y/Qpq6MbRYGykusSC7gxe84ThpW4Paxk8tjHiV3SS1fIwVSI979UL4qfa5utjB0Fbdr7CXJsj94JLv9ZQypeinObsrJGHCZXCmAf7a3QKwRXpdKfLp8HNf0uiBim4Vg7A8ttI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=HLOwRKbP; arc=none smtp.client-ip=209.85.222.177
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="HLOwRKbP"
-Received: by mail-qk1-f177.google.com with SMTP id af79cd13be357-8cfc085395fso32097785a.2
-        for <linux-hams@vger.kernel.org>; Thu, 16 Apr 2026 23:54:37 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1776408876; x=1777013676; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=l+U16PxstDR4L4OQVQNTIksMWdGsxQeNQ1RCa7J7x8Y=;
-        b=HLOwRKbP7AwKrJeApv3KVfsLN6J5FEOZH9nJKLKZCuTjD8jugIK2a/Y2zHP/11kiHv
-         Ile1yPrE6kMl49epVH/HnTLEx2N5x5AhD+eW7QCgQ9NjZA9j1/e+Z8mDFsukkvvMpyl7
-         UEOn4cIExCzdes+iBHiBOCSwtYONLBAOvFLPBu0ioobdfeBIyAWFti+pakXy7XeILgB7
-         6VjS28+Qa1VUe+igbM5ahtsnvh7nQOtyv9P8uXYIDWe++Zfe9jDrqrLF0XSaj80KS+Ns
-         NPu3R/1pBKbXYLw79/cFoxoQAknGRJeSjM0bRnG5e07W+Jakwx3CYEH8PtbdKCMF6sPn
-         m6/g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1776408876; x=1777013676;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=l+U16PxstDR4L4OQVQNTIksMWdGsxQeNQ1RCa7J7x8Y=;
-        b=F8+Dqnmk+GNj1vLTzNOxYN7+hyjMPbcrJHlazLVodHC/cM97zM8tO8IVyoKTUOEIeG
-         Gs8nHeqQt5XTloCALtBaY+LfmSE69/fy4E9HCK4FtmvJ87PVrwt7FliczaLO53ZCi1li
-         gKIPfnGOxStCiqujHnOkWdaOzHtpE8ENecJyJUSz2nyuNAvtWvD6aZ7mCp+fDtaQwo9q
-         9UefsfhDBcxNT4e3BRT7lwawrTe1wDZjO1Ko7pf/3AdQtXTP7Fj5Z8H8ooLaLyUrVfZD
-         eVm1ULpj8mgAY2T+eT7V39qAwR58YzxCQIqIniY1TUNaHsoeP7a2T7Ly7v0h7+3BKOPZ
-         no4w==
-X-Gm-Message-State: AOJu0YymhYpAe6DrPWzMPHwenqgj8WMzKW7pN86AWFf/Z5B4RQ3VUIVR
-	RZ2vVbYAqA3qOkbC37SbNWMfp+C6uAqvfG+y1VLKHS/ENpca0jHsdeos
-X-Gm-Gg: AeBDievLFbLoFg2TO/DhLv4ivInx0VrKOAuSH06zzyBduhdThFQ4dq4l/VZPglvKzan
-	64knDRYE2OGtIcypXjZmi0Bo9wW21IAWEz98OYmeSZDCXiRNvEI995hYDrwdKqRfqwu4WniX0H7
-	hdL7F024x54qsQeM0aw5qS/Ug6PQi7xl5fITeLv9GIuhslQclhL3YkQU7OJYCrDtN/d1yP6c6nk
-	ZWpluh5wxsclVBDFSOjyBekGvJFdI/gdRUhl9yliQQKLhTGAVcXpEnfRTgRl2MPCo43N+gvuTuY
-	Wb2qs1HVWgkkMUSAu2FJwJUwMoTPDKZtnrdUmavBoEHVHGLTIouLOijBuM7fqA0XDlFbujD+OSy
-	AmQQDpB64vbLNVSpMy2GKEr3oBPP7eR/7XHnY5LF7sO2FqopwXjlhuaucg6nxef1VceV7mLtSOL
-	FPhKrAyOEekmQF380pMhVySngC9CLuxDhNqWI1Tkh0prE1UrLrS+aNnAAVFYpngm7UgYnbscZGu
-	Y0JLQXhbMJcUsc2fRInE6iJ3IUCo6OaJV7HbtI=
-X-Received: by 2002:a05:620a:28d1:b0:8d7:3f45:b95f with SMTP id af79cd13be357-8e78fb18dc2mr206676185a.16.1776408876364;
-        Thu, 16 Apr 2026 23:54:36 -0700 (PDT)
-Received: from TDC4045031631.e0cglfehwr0e5gttmepj3hi3hf.ux.internal.cloudapp.net ([20.63.37.123])
-        by smtp.gmail.com with ESMTPSA id af79cd13be357-8e7d6ba19c3sm46771285a.21.2026.04.16.23.54.35
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 16 Apr 2026 23:54:35 -0700 (PDT)
-From: Ashutosh Desai <ashutoshdesai993@gmail.com>
-To: netdev@vger.kernel.org
-Cc: linux-hams@vger.kernel.org,
-	jreuter@yaina.de,
-	davem@davemloft.net,
+	s=arc-20240116; t=1776423985; c=relaxed/simple;
+	bh=HkLSyeiNCmaZ/eTzP/RNGQFO3wuTTAdkzPbmhyHUJKU=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=YJVo/A2k5wxJaPK6pwDZkGC5Ld7qx2uLGe/d83JnwOBdoz/9HJzlpgoHN2LVvmQgVgwmBGhqSi/VymBOc2jV8k+xLHnsZv8+Kt9PdoYnl1i34jrbMNS9Zv2yC6uvjh9zZj1aThnO0eOLGvkPCLILEwrdeusDgD52wID/bHENh3I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=lzu.edu.cn; spf=pass smtp.mailfrom=lzu.edu.cn; arc=none smtp.client-ip=52.175.55.52
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=lzu.edu.cn
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=lzu.edu.cn
+Received: from enjou-Legion-Y7000P-2019.coin-barley.ts.net (unknown [172.23.56.36])
+	by app2 (Coremail) with SMTP id zQmowACHHoX4E+Jp+bk+AA--.31247S3;
+	Fri, 17 Apr 2026 19:05:36 +0800 (CST)
+From: Ren Wei <n05ec@lzu.edu.cn>
+To: linux-hams@vger.kernel.org,
+	netdev@vger.kernel.org
+Cc: davem@davemloft.net,
 	edumazet@google.com,
 	kuba@kernel.org,
 	pabeni@redhat.com,
 	horms@kernel.org,
-	stable@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	david.laight.linux@gmail.com,
-	Ashutosh Desai <ashutoshdesai993@gmail.com>
-Subject: [PATCH v4 net] ax25: fix OOB read after address header strip in ax25_rcv()
-Date: Fri, 17 Apr 2026 06:54:07 +0000
-Message-Id: <20260417065407.206499-1-ashutoshdesai993@gmail.com>
-X-Mailer: git-send-email 2.34.1
+	kees@kernel.org,
+	takamitz@amazon.co.jp,
+	kuniyu@google.com,
+	jiayuan.chen@shopee.com,
+	mingo@kernel.org,
+	stanksal@purdue.edu,
+	jlayton@kernel.org,
+	yifanwucs@gmail.com,
+	tomapufckgml@gmail.com,
+	bird@lzu.edu.cn,
+	yuantan098@gmail.com,
+	tonanli66@gmail.com,
+	n05ec@lzu.edu.cn
+Subject: [PATCH net 1/1] net/rose: hold listener socket during call request handling
+Date: Fri, 17 Apr 2026 19:01:51 +0800
+Message-ID: <52776256bf0fc38de92fe3edf39434538b672b69.1776327338.git.tonanli66@gmail.com>
+X-Mailer: git-send-email 2.51.0
+In-Reply-To: <cover.1776327338.git.tonanli66@gmail.com>
+References: <cover.1776327338.git.tonanli66@gmail.com>
 Precedence: bulk
 X-Mailing-List: linux-hams@vger.kernel.org
 List-Id: <linux-hams.vger.kernel.org>
@@ -80,56 +49,108 @@ List-Subscribe: <mailto:linux-hams+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-hams+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
+X-CM-TRANSID:zQmowACHHoX4E+Jp+bk+AA--.31247S3
+X-Coremail-Antispam: 1UD129KBjvJXoWxWryruF43tr13WF4rWryDZFb_yoW5Xr45pF
+	Wakay3Jry8Xw1v9Fs3tryUZrnxA3Z7J39rGrW5G3Z3CrnFqrZ3Aa4jqa4DXrnxAFWkWFW5
+	tr1DZFW09rsrurDanT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
+	9KBjDU0xBIdaVrnRJUUUBY1xkIjI8I6I8E6xAIw20EY4v20xvaj40_Wr0E3s1l1IIY67AE
+	w4v_Jr0_Jr4l8cAvFVAK0II2c7xJM28CjxkF64kEwVA0rcxSw2x7M28EF7xvwVC0I7IYx2
+	IY67AKxVW7JVWDJwA2z4x0Y4vE2Ix0cI8IcVCY1x0267AKxVW8Jr0_Cr1UM28EF7xvwVC2
+	z280aVAFwI0_GcCE3s1l84ACjcxK6I8E87Iv6xkF7I0E14v26rxl6s0DM2AIxVAIcxkEcV
+	Aq07x20xvEncxIr21l5I8CrVACY4xI64kE6c02F40Ex7xfMcIj6xIIjxv20xvE14v26r1j
+	6r18McIj6I8E87Iv67AKxVWUJVW8JwAm72CE4IkC6x0Yz7v_Jr0_Gr1lF7xvr2IYc2Ij64
+	vIr41lF7I21c0EjII2zVCS5cI20VAGYxC7M4IIrI8v6xkF7I0E8cxan2IY04v7MxkF7I0E
+	n4kS14v26r4a6rW5MxkIecxEwVCm-wCF04k20xvY0x0EwIxGrwCF04k20xvE74AGY7Cv6c
+	x26r48MxC20s026xCaFVCjc4AY6r1j6r4UMI8I3I0E5I8CrVAFwI0_Jr0_Jr4lx2IqxVCj
+	r7xvwVAFwI0_JrI_JrWlx4CE17CEb7AF67AKxVW8ZVWrXwCIc40Y0x0EwIxGrwCI42IY6x
+	IIjxv20xvE14v26r1j6r1xMIIF0xvE2Ix0cI8IcVCY1x0267AKxVW8JVWxJwCI42IY6xAI
+	w20EY4v20xvaj40_Jr0_JF4lIxAIcVC2z280aVAFwI0_Jr0_Gr1lIxAIcVC2z280aVCY1x
+	0267AKxVW8JVW8JrUvcSsGvfC2KfnxnUUI43ZEXa7sRi_HU3UUUUU==
+X-CM-SenderInfo: zqqvvuo6o23hxhgxhubq/1tbiAQAACWnh8+ADoQAAsx
 
-A crafted AX.25 frame with a valid address header but no control or PID
-bytes causes skb->len to drop to zero after skb_pull() strips the
-address header. The subsequent reads of skb->data[0] and skb->data[1]
-are then out of bounds.
+From: Nan Li <tonanli66@gmail.com>
 
-Linearize the skb at entry to ax25_rcv() so all subsequent accesses to
-skb->data are safe. Then check skb->len before reading the control and
-PID bytes, discarding frames that are too short.
+The call request receive path keeps using the listener socket after the
+lookup lock has been dropped. Keep the listener alive across the
+remaining validation and child socket setup by taking a reference in the
+lookup path and releasing it once request handling is finished.
+
+This makes listener lifetime handling explicit and avoids races with
+concurrent socket teardown.
 
 Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Cc: stable@vger.kernel.org
-Signed-off-by: Ashutosh Desai <ashutoshdesai993@gmail.com>
+Cc: stable@kernel.org
+Reported-by: Yifan Wu <yifanwucs@gmail.com>
+Reported-by: Juefei Pu <tomapufckgml@gmail.com>
+Reported-by: Xin Liu <bird@lzu.edu.cn>
+Co-developed-by: Yuan Tan <yuantan098@gmail.com>
+Signed-off-by: Yuan Tan <yuantan098@gmail.com>
+Signed-off-by: Nan Li <tonanli66@gmail.com>
+Signed-off-by: Ren Wei <n05ec@lzu.edu.cn>
 ---
-v4: linearize skb at entry to ax25_rcv(); replace pskb_may_pull() with
-    skb->len check
-v3: remove incorrect Suggested-by; add symptom, Fixes, Cc stable
-v2: use pskb_may_pull(skb, 2) instead of skb->len < 2
+ net/rose/af_rose.c | 24 +++++++++++++++++++-----
+ 1 file changed, 19 insertions(+), 5 deletions(-)
 
-Link to v3: https://lore.kernel.org/netdev/20260415063654.3831353-1-ashutoshdesai993@gmail.com/
-Link to v2: https://lore.kernel.org/netdev/20260409152400.2219716-1-ashutoshdesai993@gmail.com/
-Link to v1: https://lore.kernel.org/netdev/20260409012235.2049389-1-ashutoshdesai993@gmail.com/
-
- net/ax25/ax25_in.c | 6 ++++++
- 1 file changed, 6 insertions(+)
-
-diff --git a/net/ax25/ax25_in.c b/net/ax25/ax25_in.c
-index d75b3e9ed93d..d14ccebf9cdd 100644
---- a/net/ax25/ax25_in.c
-+++ b/net/ax25/ax25_in.c
-@@ -190,6 +190,9 @@ static int ax25_rcv(struct sk_buff *skb, struct net_device *dev,
- 	ax25_cb *ax25;
- 	ax25_dev *ax25_dev;
+diff --git a/net/rose/af_rose.c b/net/rose/af_rose.c
+index d5032840ee48..c96325e54a86 100644
+--- a/net/rose/af_rose.c
++++ b/net/rose/af_rose.c
+@@ -277,8 +277,10 @@ static struct sock *rose_find_listener(rose_address *addr, ax25_address *call)
  
-+	if (skb_linearize(skb))
-+		goto free;
-+
+ 		if (!rosecmp(&rose->source_addr, addr) &&
+ 		    !ax25cmp(&rose->source_call, call) &&
+-		    !rose->source_ndigis && s->sk_state == TCP_LISTEN)
++		    !rose->source_ndigis && s->sk_state == TCP_LISTEN) {
++			sock_hold(s);
+ 			goto found;
++		}
+ 	}
+ 
+ 	sk_for_each(s, &rose_list) {
+@@ -286,8 +288,10 @@ static struct sock *rose_find_listener(rose_address *addr, ax25_address *call)
+ 
+ 		if (!rosecmp(&rose->source_addr, addr) &&
+ 		    !ax25cmp(&rose->source_call, &null_ax25_address) &&
+-		    s->sk_state == TCP_LISTEN)
++		    s->sk_state == TCP_LISTEN) {
++			sock_hold(s);
+ 			goto found;
++		}
+ 	}
+ 	s = NULL;
+ found:
+@@ -1056,10 +1060,13 @@ int rose_rx_call_request(struct sk_buff *skb, struct net_device *dev, struct ros
  	/*
- 	 *	Process the AX.25/LAPB frame.
+ 	 * We can't accept the Call Request.
  	 */
-@@ -217,6 +220,9 @@ static int ax25_rcv(struct sk_buff *skb, struct net_device *dev,
- 	 */
- 	skb_pull(skb, ax25_addr_size(&dp));
- 
-+	if (skb->len < 2)
-+		goto free;
+-	if (sk == NULL || sk_acceptq_is_full(sk) ||
++	if (sk == NULL)
++		goto out_clear_request;
 +
- 	/* For our port addresses ? */
- 	if (ax25cmp(&dest, dev_addr) == 0 && dp.lastrepeat + 1 == dp.ndigi)
- 		mine = 1;
++	if (sk_acceptq_is_full(sk) ||
+ 	    (make = rose_make_new(sk)) == NULL) {
+-		rose_transmit_clear_request(neigh, lci, ROSE_NETWORK_CONGESTION, 120);
+-		return 0;
++		sock_put(sk);
++		goto out_clear_request;
+ 	}
+ 
+ 	skb->sk     = make;
+@@ -1110,7 +1117,14 @@ int rose_rx_call_request(struct sk_buff *skb, struct net_device *dev, struct ros
+ 	if (!sock_flag(sk, SOCK_DEAD))
+ 		sk->sk_data_ready(sk);
+ 
++	sock_put(sk);
++
+ 	return 1;
++
++out_clear_request:
++	rose_transmit_clear_request(neigh, lci, ROSE_NETWORK_CONGESTION, 120);
++
++	return 0;
+ }
+ 
+ static int rose_sendmsg(struct socket *sock, struct msghdr *msg, size_t len)
 -- 
-2.34.1
+2.43.0
 
