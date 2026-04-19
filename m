@@ -1,129 +1,104 @@
-Received: from www11.qth.com (www11.qth.com [72.52.250.187])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ot1-f54.google.com (mail-ot1-f54.google.com [209.85.210.54])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F22728850E
-	for <linux-hams@vger.kernel.org>; Sat, 18 Apr 2026 23:24:13 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=72.52.250.187
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D89E62A1B2
+	for <linux-hams@vger.kernel.org>; Sun, 19 Apr 2026 01:31:13 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.54
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776554654; cv=none; b=H0qBwvtCecz/Fn4Cg3eVXzsEGEpNTH4v33p32xOlU6FUJ4/g13cFrfy7aqAX2z0CG+BZQjQXBQNDntOrO1sw7nvDgypdgVCBEhZqlxQIyPz7sjKH8o6OrVFaAJ5JoxJJq+jWXNMzH3CoKQ9wawirvMaGKL5HQVxKkX/375QuW44=
+	t=1776562275; cv=none; b=Eb3a9Vr+sSJGx+XVwem3V58QBVmqJidJxUSQQiVaXsHuJKvI6JcNGJFEkaX6+aZCEGVjEHxihxfPauj+lKkkdXYDXSe4SS0g34oH80lC072VvcYAM8GSAfoTGXeJuRvd8Qp+Ze5m3IuzYsZm6aSjd/pIOKC8EaRVuODf5Rmcf9A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776554654; c=relaxed/simple;
-	bh=d2SYD5kX6BK7I3OxSeMm+a0hro0NfDpWdubTMf90/PY=;
-	h=Date:From:To:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=BH10DxU2INPxMU3yOZFzEi7ZXNqutJPoOXYLOmyWslELDjWfuoI1J8fcW+G80mHZhthodupE0VQF5lKmSNlHhLzlyzueq/Jq37NMkcXgQ7AbxHXEYMpVHd7ycohANDieQ221pr8ZucBfl45R/Lb0+mWHSBj8DqVkDtdthV2+DRo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=n0nb.us; spf=pass smtp.mailfrom=n0nb.us; dkim=pass (2048-bit key) header.d=n0nb.us header.i=@n0nb.us header.b=m6Y3mpfJ; arc=none smtp.client-ip=72.52.250.187
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=n0nb.us
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=n0nb.us
+	s=arc-20240116; t=1776562275; c=relaxed/simple;
+	bh=QEXfZQIfHcPPOmt9oDgATr86yvXY7E/X0oKgOwyVooc=;
+	h=Content-Type:Mime-Version:Subject:From:In-Reply-To:Date:Cc:
+	 Message-Id:References:To; b=CcUTwDZMrnOkMT3SJX+MgImCw0pEVWCjhUSFxtptTC2qoviZHsfTfZb7imInuiax88uOj2ahXu1Gec6+8Bi/jNYT9CE8fTGQmhc0tY2jTyVTKO3lDX/meiwy0QySP3rWS9tqfxqXQY0XBWTGwoWx1KDLTs9KAxSPk2D469alJlQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=pcsBcIgX; arc=none smtp.client-ip=209.85.210.54
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=n0nb.us header.i=@n0nb.us header.b="m6Y3mpfJ"
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=n0nb.us;
-	s=default; h=In-Reply-To:Content-Type:MIME-Version:References:Message-ID:
-	Subject:To:From:Date:Sender:Reply-To:Cc:Content-Transfer-Encoding:Content-ID:
-	Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
-	:Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:List-Subscribe:
-	List-Post:List-Owner:List-Archive;
-	bh=RooRHBphKHOPOMJrSf3h9UpO6Fx0AuimNQ+wzWLpXt0=; b=m6Y3mpfJGeTDPc2qreuz2ozZqs
-	1hftDDAEYQ3Cb/nToj01YocsvHADFkL0vRyCpHb2kLUA5eWwRLG1pWQgKvqreREVANUt6r8g4PJTJ
-	wrYhZwWYhx4a9DULl+tU9k5ZDfjJFBMmqr2zumvzpxnJKFw9SMfhr2oNVQb44ivBcSyuZ0nAXMmip
-	IvlQtG1RqZSEd43Y+YoSIiiM+lqqo2XVpcB+JgLdcsbj0A4YHhc4vrRHEpu+5cPfzLpMRMSR4277W
-	TzE8FQ8q2RwWMUk+djoJMQut7SFFqtg/KYzsoNSB65x7o65aKSpgU3VDXchYLIZ+qOv2hJzJ+NOLn
-	I9aYUMdQ==;
-Received: from [68.234.117.163] (port=48990 helo=merlin.lan)
-	by www11.qth.com with esmtpsa  (TLS1.3) tls TLS_AES_256_GCM_SHA384
-	(Exim 4.99.1)
-	(envelope-from <n0nb@n0nb.us>)
-	id 1wEF1C-00000001MCJ-0zXr
-	for linux-hams@vger.kernel.org;
-	Sat, 18 Apr 2026 18:24:06 -0500
-Received: from nate by merlin.lan with local (Exim 4.98.2)
-	(envelope-from <n0nb@n0nb.us>)
-	id 1wEF1B-0000000Cd2C-2fad
-	for linux-hams@vger.kernel.org;
-	Sat, 18 Apr 2026 18:24:05 -0500
-Date: Sat, 18 Apr 2026 18:24:05 -0500
-From: Nate Bargmann <n0nb@n0nb.us>
-To: linux-hams@vger.kernel.org
-Subject: Re: Discuss: Future of AX25, NETROM and ROSE in the kernel ?
-Message-ID: <hsdnwdq2o2g26gbvm3wvychl5rp3eri7ggj7kkmple7yzm3kgz@u2pbkjyacqyw>
-Mail-Followup-To: linux-hams@vger.kernel.org
-X-Operating-System: Linux 6.12.74+deb13+1-amd64 x86_64
-Organization: Amateur Radio!
-References: <54da3df9-6c91-4df0-87ff-1975d536761d@blemings.org>
- <CAEoi9W5o_twDPYMZDqajqz+UYJm5wOvAx+hUFefXmU=vUbOgtg@mail.gmail.com>
- <CAEoi9W6vTPPHh-NBKZcgmo7GKTecQw1UuZ4HjwNTzqvNXWC43g@mail.gmail.com>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="pcsBcIgX"
+Received: by mail-ot1-f54.google.com with SMTP id 46e09a7af769-7dc51aa8926so863442a34.3
+        for <linux-hams@vger.kernel.org>; Sat, 18 Apr 2026 18:31:13 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1776562273; x=1777167073; darn=vger.kernel.org;
+        h=to:references:message-id:content-transfer-encoding:cc:date
+         :in-reply-to:from:subject:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=QEXfZQIfHcPPOmt9oDgATr86yvXY7E/X0oKgOwyVooc=;
+        b=pcsBcIgXAafVBoZOUVjT8bFMVy8KVrSRiKLLtnqysPlwwz7Sfw+vS2/ZM1V7sIuWfD
+         /O5ckO765rSpOZHcX6vxDAH2QUNknK16X6mPFaONHZ7qr0xTSw0H9i1KowxmIO7Dfhs/
+         +jPodQcTeUdHKKETYHM8s6CquXzVaYQnhz6ndDdBl5F0Pm5iGzv0weRH9QplSpVKoN5C
+         fO1DvqKTllIg4Raqvoz6UzcI7swOrOkT04gOJDgt3VPvApDq0lTqCTSEQbLpmTaz3nxF
+         VjdsTELAdCoedRJ8vfuscD6PzPm/YcHOARaoi7irbb6wzFuE07p5//Rundgf7gFkCbtl
+         xEMQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1776562273; x=1777167073;
+        h=to:references:message-id:content-transfer-encoding:cc:date
+         :in-reply-to:from:subject:mime-version:x-gm-gg:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=QEXfZQIfHcPPOmt9oDgATr86yvXY7E/X0oKgOwyVooc=;
+        b=okdCP4gT1iKXWbOgeQXOb9Yb/N8WmVQCEfXuQ4BE3GPCL+EW2osd6hk62KmBKl4xO+
+         9kPboMlTLVwDMZHZFbkZGPB0n2fG7Tb8agjMRsoF1G6SV6DCi2uvX1lSxiA7/49p3zXR
+         SNvokVnHW4BphscWBUysSs6zFAzcZE3hFQaNH8xzjWDMkxjBv/Ia0FAfa0vp7d3hVqg7
+         kx0AqNOLFjUK32LzlCuhKiQwgoDBD0Brr06rz5IrNtA0Z0n2y1h3LEMO/zBwdW23FSxn
+         tKh9ULLJVgtmDnyUBCBqsufsICksi54Z2gJa9YOpMO/DPPodCRXrOCvAMRLKa85o5ETt
+         hl3g==
+X-Gm-Message-State: AOJu0Yz8y13KOsSJBOlh+d2DH2y/yTyTrxkgxGpDd8exHUpVY0mfVdm0
+	psjoZZ2I8UNn2Jfbnzbr93T0QUdK7RHjGVHiyMfKnEp7CTAXxx7ksBD94Bg7yg==
+X-Gm-Gg: AeBDieurEVSkOopKMt+xzYlK0aGoGc9RCCqScNm0iKyO3Tcf/TEW7v2WmZa8oOO2hGX
+	ASf2QVRSwTYeFfHnPA9Wb3KlebvZaQ5Y45JCyFwJUbV05XX0ulg9o6W2XG+6ImVlR34APmPrhKW
+	e6iXkRFQXXfmmJcHu/45fOXv0zI9eSmuGPUmoSf16EQPHUHZDap8w8dtCIbR7YjUZExpH1LDeMV
+	IMa0E9bbsZZKnxZbJDCbvvDiGFnr4UYIwuCKsjOGU+3blN1uDZTb5Pg0SYpnRrZF8giBQ+npBNX
+	7PtSM0hh1l4VkRO1g09MTOTaGmmVBi6UxIPwSyAMEhFDuiHmSIZFMPoMupkEZz2sZKF7c7lgItW
+	8sDfmU2YXjpqS0YFQ3XYvb/q7KIcsN/klLx4eS1viiyQi/wYu9QTyo1jNMFNbDbrTffIDZ/KaBe
+	t5dHXwvaJm9+ic3v1+PA9fhg5C/f+7CFtdCTIP5UVYs8mBG0o4VYOaqDuUsNruqZsGyOakVazaZ
+	qdiddVk7w==
+X-Received: by 2002:a05:6830:2b08:b0:7d7:fcac:6374 with SMTP id 46e09a7af769-7dc9514f073mr5046437a34.8.1776562272840;
+        Sat, 18 Apr 2026 18:31:12 -0700 (PDT)
+Received: from smtpclient.apple ([173.175.80.24])
+        by smtp.gmail.com with ESMTPSA id 46e09a7af769-7dc9a7102b0sm4355914a34.0.2026.04.18.18.31.11
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Sat, 18 Apr 2026 18:31:12 -0700 (PDT)
+Content-Type: text/plain;
+	charset=utf-8
 Precedence: bulk
 X-Mailing-List: linux-hams@vger.kernel.org
 List-Id: <linux-hams.vger.kernel.org>
 List-Subscribe: <mailto:linux-hams+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-hams+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="ctmyeapxocso36u3"
-Content-Disposition: inline
-In-Reply-To: <CAEoi9W6vTPPHh-NBKZcgmo7GKTecQw1UuZ4HjwNTzqvNXWC43g@mail.gmail.com>
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - www11.qth.com
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - n0nb.us
-X-Get-Message-Sender-Via: www11.qth.com: authenticated_id: n0nb@n0nb.us
-X-Authenticated-Sender: www11.qth.com: n0nb@n0nb.us
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
-
-
---ctmyeapxocso36u3
-Content-Type: text/plain; protected-headers=v1; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3864.500.181\))
 Subject: Re: Discuss: Future of AX25, NETROM and ROSE in the kernel ?
-MIME-Version: 1.0
+From: "Steven R. Loomis" <srl295@gmail.com>
+In-Reply-To: <hsdnwdq2o2g26gbvm3wvychl5rp3eri7ggj7kkmple7yzm3kgz@u2pbkjyacqyw>
+Date: Sat, 18 Apr 2026 20:31:01 -0500
+Cc: linux-hams@vger.kernel.org
+Content-Transfer-Encoding: quoted-printable
+Message-Id: <BBE715A7-E261-4A6D-A9CD-6B0D3CF72F1F@gmail.com>
+References: <54da3df9-6c91-4df0-87ff-1975d536761d@blemings.org>
+ <CAEoi9W5o_twDPYMZDqajqz+UYJm5wOvAx+hUFefXmU=vUbOgtg@mail.gmail.com>
+ <CAEoi9W6vTPPHh-NBKZcgmo7GKTecQw1UuZ4HjwNTzqvNXWC43g@mail.gmail.com>
+ <hsdnwdq2o2g26gbvm3wvychl5rp3eri7ggj7kkmple7yzm3kgz@u2pbkjyacqyw>
+To: Nate Bargmann <n0nb@n0nb.us>
+X-Mailer: Apple Mail (2.3864.500.181)
 
-* On 2026 18 Apr 14:29 -0500, Dan Cross wrote:
-> [Top-posting to make meta-commendary]
->=20
-> I wonder if other folks have thoughts, here? It doesn't bode well that
-> the discussion hasn't progressed. :-(
+I have a dormant project [1] to add Node.js bindings for AX25 to be able =
+to write Node.js apps directly on AX25.
+My AX25 use is also dormant, but I would love to bring it back up =
+someday.
 
-Your reply was so comprehensive, there isn't much to add!
+User space makes a lot of sense for the reasons given.
+Since maintenance is a question though, perhaps it=E2=80=99s a question =
+of who would volunteer for making any change (beyond no change)?=20
 
-A few years ago I had in mind to give using the kernel AX25 stack a go
-but reading various reports kind of turned me away.  I had last done so
-in the late '90s or so as I recall.  I did do some testing with Direwolf
-at the time instead.
+> what could the AX25 stack in user space do that Direwolf cannot? =20
 
-As a potential user it really makes no difference whether support is in
-the kernel proper or user space.  From a maintainer's view, it's likely
-that putting the AX25 code entirely in user space (option 3) is the best
-practice these days.
+The AX25 stack would still attach to Direwolf so that connected AX25 =
+apps could run.
 
-Let's face it.  The kernel is no longer a niche hobby project but is
-very much an enterprise project.  It makes sense to move the AX25 stack
-entirely into user space.  Before doing so, what could the AX25 stack in
-user space do that Direwolf cannot?  I know no one is suggesting this,
-but should an option four be considered where the AX25 code is dropped
-entirely from the kernel and potential users are directed to Direwolf or
-some such existing project?
+[1]: =
+https://github.com/srl295/node-ax25-seqpacket/blob/add-actual-stuff/lib/ax=
+25-seqpacket.js
 
-73, Nate, N0NB
+--
+Steven R. Loomis
+K6SPI
 
---=20
-"The optimist proclaims that we live in the best of all
-possible worlds.  The pessimist fears this is true."
-Web: https://www.n0nb.us
-Projects: https://github.com/N0NB
-GPG fingerprint: 82D6 4F6B 0E67 CD41 F689 BBA6 FB2C 5130 D55A 8819
-
-
---ctmyeapxocso36u3
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iF0EABECAB0WIQSC1k9rDmfNQfaJu6b7LFEw1VqIGQUCaeQSlQAKCRD7LFEw1VqI
-GQlJAJ9yWS3RH+5qkXRlVzHLgaRxChbpDQCffVT78yFnuf8jhkJAIJTt6kLG5wk=
-=yh5C
------END PGP SIGNATURE-----
-
---ctmyeapxocso36u3--
