@@ -1,138 +1,85 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 331762C11D9;
-	Mon, 20 Apr 2026 14:48:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A6E7341ADF;
+	Mon, 20 Apr 2026 16:26:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776696523; cv=none; b=H2cB9WhVF8ctkC5fmBDwApX0/GZ7M0X7boJmcCelpPvTBowC+IT6fbYiqMbTPQTIzQ76ZTEvQYdD+686pGMp2dCZcAfFwmkLWy14cUBtQvVSrXT4znyqNVrrkVIxJOUFiDnnaF6RuxQftdwxdlWvLtDseJ7cozaHW0qFzBp6O3I=
+	t=1776702372; cv=none; b=Xf2kLBZrSSXbMeOMb5czMtlSnC1WjycEt8L9yqUc9MszlYYkEp8pGQMVpUafZnT6CnRYTB8fnP+sKZa+wlNAyryWTrQy943xOutk1yjHhf0A7fTpJJ6AXQuA717M4N8gCwRSgmPdtH1dGPnMmejJvDh+41Dbm9hUR6sS04JceGY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776696523; c=relaxed/simple;
-	bh=00lttEm2yNSCLaaJ8HV0cNziy+CMymLYRCkfifHVXt4=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=N+/KSZ8wsi2KtYge4K53g/l4yiFz2Plo4GpWnQPGOIUWzj4n+6xaSYSmkHytbNi5sLgmUqVkZj7/6YXkLez33pVOYUVPY4QP/MuyoMlAEzNgPWe3RMgMhmXwGLggLLXKPezhvfzeoIST5RmGRzk3c6IvbcGKITF21bFDAmbjFGg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=kM3jkTWP; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1776702372; c=relaxed/simple;
+	bh=8TBBzd4psxVantp6vJky0hd1cE0JzmC/OkNgHSc7h3U=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=g9JiKjZS6KaCs2bY/A+r5+GbtonEJ3qmpGIQWBj+2u8/Q9OMQXRWNCOzGvNam89Skut8awWBLm412xK9tYGWfaqJRL0GiqTopgQ4gshuFjrklksfq8grai+8+iHGXQdkAL056wargaTnlGnx6wSLRgGyIPqeJh6psqeEIXFo+eA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=mhHhWNK1; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="kM3jkTWP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5322BC19425;
-	Mon, 20 Apr 2026 14:48:40 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="mhHhWNK1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 65939C19425;
+	Mon, 20 Apr 2026 16:26:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1776696522;
-	bh=00lttEm2yNSCLaaJ8HV0cNziy+CMymLYRCkfifHVXt4=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kM3jkTWPV3Q8HCVBAxHNmFZK9cH3tU0uIg5DKX+c+gMrfA2OU1BvZiBa69sy0M/bj
-	 Cq9J7X+AIQYVPeSUCYbgS+azA/f8fURibttQRs0c8d2hBlczjnSKhy4Tmpvc7RRZS+
-	 E8OCaydFmFGIWC+P8/1TKO794wXt43L/meWdcpoP1adw0+oJZbVCUYO1a7eNuX9pAL
-	 M67J/00G/YzAKktbTDQOxRtSmzO8yXSoMWxkWC+VT2OVTJ7fA0ZHYxnfV+ltdIoNYz
-	 b0fxGRRm3bb+H+GA+hSv2ApeaOZ0DWVxPvm7ODM7zJ6s1MST3M6ApG2RNtkmTcC4Cd
-	 nmlfYOHhk2Cdg==
+	s=k20201202; t=1776702372;
+	bh=8TBBzd4psxVantp6vJky0hd1cE0JzmC/OkNgHSc7h3U=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=mhHhWNK17NbXRtEYL0MtVmVmvG2WDmHxMoDQM6w9Ymk2NSohHlUXwXF/LKArB9KJK
+	 oyvQCXfP1JtlS32ve7SWCIu2getR8+NDhWry91zMDD+HJeop4nW1/z3dx8mHSN+ql5
+	 QVvP5eEC07X+oH1X8gPrptIirATS4E/Nfre4S0d3RO6u7RMXSwzIvXKLaUcat/2y5q
+	 5kl5O6UpFXiCj8EssJXZawdtq3be2k9+7JYXrPQH+1MV0xROA/1BL/dWUL18wRu2cD
+	 +DelkLVSWPE0azL3hNlYAyyp95c0xGha/3W7M5W5Ao6sibqzkQDd2YSWf8sqWF1LrY
+	 KjfNiCtGoTYzw==
+Date: Mon, 20 Apr 2026 17:26:05 +0100
 From: Simon Horman <horms@kernel.org>
-To: ashutoshdesai993@gmail.com
-Cc: 'Simon Horman' <horms@kernel.org>,
-	netdev@vger.kernel.org,
-	linux-hams@vger.kernel.org,
-	jreuter@yaina.de,
-	davem@davemloft.net,
-	edumazet@google.com,
-	kuba@kernel.org,
-	pabeni@redhat.com,
-	stable@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	david.laight.linux@gmail.com
-Subject: Re: [PATCH v4 net] ax25: fix OOB read after address header strip in ax25_rcv()
-Date: Mon, 20 Apr 2026 15:30:02 +0100
-Message-ID: <20260420143001.537302-2-horms@kernel.org>
-X-Mailer: git-send-email 2.53.0
-In-Reply-To: <20260417065407.206499-1-ashutoshdesai993@gmail.com>
-References: <20260417065407.206499-1-ashutoshdesai993@gmail.com>
+To: Ren Wei <n05ec@lzu.edu.cn>
+Cc: linux-hams@vger.kernel.org, netdev@vger.kernel.org, davem@davemloft.net,
+	edumazet@google.com, kuba@kernel.org, pabeni@redhat.com,
+	kees@kernel.org, takamitz@amazon.co.jp, kuniyu@google.com,
+	jiayuan.chen@shopee.com, mingo@kernel.org, stanksal@purdue.edu,
+	jlayton@kernel.org, yifanwucs@gmail.com, tomapufckgml@gmail.com,
+	bird@lzu.edu.cn, yuantan098@gmail.com, tonanli66@gmail.com
+Subject: Re: [PATCH net 1/1] net/rose: hold listener socket during call
+ request handling
+Message-ID: <20260420162605.GV280379@horms.kernel.org>
+References: <cover.1776327338.git.tonanli66@gmail.com>
+ <52776256bf0fc38de92fe3edf39434538b672b69.1776327338.git.tonanli66@gmail.com>
 Precedence: bulk
 X-Mailing-List: linux-hams@vger.kernel.org
 List-Id: <linux-hams.vger.kernel.org>
 List-Subscribe: <mailto:linux-hams+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-hams+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <52776256bf0fc38de92fe3edf39434538b672b69.1776327338.git.tonanli66@gmail.com>
 
-From: 'Simon Horman' <horms@kernel.org>
+On Fri, Apr 17, 2026 at 07:01:51PM +0800, Ren Wei wrote:
+> From: Nan Li <tonanli66@gmail.com>
+> 
+> The call request receive path keeps using the listener socket after the
+> lookup lock has been dropped. Keep the listener alive across the
+> remaining validation and child socket setup by taking a reference in the
+> lookup path and releasing it once request handling is finished.
+> 
+> This makes listener lifetime handling explicit and avoids races with
+> concurrent socket teardown.
+> 
+> Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+> Cc: stable@kernel.org
+> Reported-by: Yifan Wu <yifanwucs@gmail.com>
+> Reported-by: Juefei Pu <tomapufckgml@gmail.com>
+> Reported-by: Xin Liu <bird@lzu.edu.cn>
+> Co-developed-by: Yuan Tan <yuantan098@gmail.com>
+> Signed-off-by: Yuan Tan <yuantan098@gmail.com>
+> Signed-off-by: Nan Li <tonanli66@gmail.com>
+> Signed-off-by: Ren Wei <n05ec@lzu.edu.cn>
+> ---
+>  net/rose/af_rose.c | 24 +++++++++++++++++++-----
+>  1 file changed, 19 insertions(+), 5 deletions(-)
 
-This is an AI-generated review of your patch. The human sending this
-email has considered the AI review valid, or at least plausible.
-Full review at: https://sashiko.dev
----
-ax25: fix OOB read after address header strip in ax25_rcv()
-    
-A crafted AX.25 frame with a valid address header but no control or PID
-bytes causes skb->len to drop to zero after skb_pull() strips the
-address header. The subsequent reads of skb->data[0] and skb->data[1]
-are then out of bounds.
+Reviewed-by: Simon Horman <horms@kernel.org>
 
-> diff --git a/net/ax25/ax25_in.c b/net/ax25/ax25_in.c
-> index d75b3e9ed93de..d14ccebf9cdd5 100644
-> --- a/net/ax25/ax25_in.c
-> +++ b/net/ax25/ax25_in.c
-> @@ -190,6 +190,9 @@ static int ax25_rcv(struct sk_buff *skb, struct net_device *dev,
->  	ax25_cb *ax25;
->  	ax25_dev *ax25_dev;
->  
-> +	if (skb_linearize(skb))
-> +		goto free;
+Sachiko has provided some feedback on this patch.
+I do not believe they relate to shortcomings in this patch,
+and I do not believe they should block progress of this patch.
+You may want to look over them for areas to investigate as follow-up
+(maybe you already did :)
 
-Could calling skb_linearize() before verifying if the device is configured for
-AX.25 introduce a regression?
-
-Since ax25_packet_type is registered globally, ax25_rcv() receives all
-ETH_P_AX25 packets from any network interface. skb_linearize() performs
-memory allocations to coalesce fragmented packets. By performing this before
-checking if ax25_dev is NULL, could an attacker send fragmented ETH_P_AX25
-packets to an unconfigured interface to force unnecessary memory allocation
-and CPU cycles?
-
-Should the skb_linearize() call be moved after the device configuration check?
-
-> +
->  	/*
->  	 *	Process the AX.25/LAPB frame.
->  	 */
-[ ... ]
-> @@ -217,6 +220,9 @@ static int ax25_rcv(struct sk_buff *skb, struct net_device *dev,
->  	 */
->  	skb_pull(skb, ax25_addr_size(&dp));
->  
-> +	if (skb->len < 2)
-> +		goto free;
-
-Does this unconditionally drop all AX.25 LAPB control frames?
-
-Standard AX.25 LAPB control frames (such as SABM, DISC, UA, DM, and RR)
-consist solely of a 1-byte Control field and no PID byte. For these connection
-management frames, skb->len is exactly 1 after the address header is pulled.
-By discarding all frames shorter than 2 bytes, could this break the ability
-to establish, acknowledge, or disconnect AX.25 connections?
-
-Should the initial check only verify skb->len >= 1, and any requirement for
-skb->len >= 2 be strictly scoped to the code paths that actually parse a PID
-byte?
-
-Also, if this skb->len < 2 check is relaxed, there is a pre-existing
-out-of-bounds read in ax25_decode() for extended modulus frames.
-
-If a malformed 1-byte frame is received on an extended modulus (AX25_EMODULUS)
-connection, ax25_decode() unconditionally reads skb->data[1] for I-frames and
-S-frames. It then calls skb_pull(skb, 2) but ignores the return value. Should
-ax25_decode() validate that skb->len >= 2 before parsing the second control
-byte for extended modulus frames?
-
-Finally, there appears to be a pre-existing use-after-free and list corruption
-in the ax25_rcv() error path when allocating memory for ax25->digipeat.
-
-When handling an incoming connection request for a listener socket, the code
-physically links the skb into the listener socket's receive queue via
-skb_queue_head(&sk->sk_receive_queue, skb). Shortly after, it attempts to
-allocate memory. If this allocation fails, the error path explicitly calls
-kfree_skb(skb).
-
-However, it fails to unlink the skb from sk->sk_receive_queue. (The subsequent
-call to ax25_destroy_socket() flushes the newly created socket's queue, not
-the listener socket's queue). This leaves a freed skb in the listener socket's
-queue. When a user process later calls accept(), will it dequeue and
-dereference the freed skb, resulting in a use-after-free?
+...
