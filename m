@@ -1,118 +1,175 @@
-Received: from mail.ozlabs.org (gandalf.ozlabs.org [150.107.74.76])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pf1-f170.google.com (mail-pf1-f170.google.com [209.85.210.170])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E80E386C16;
-	Tue, 21 Apr 2026 08:45:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=150.107.74.76
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8CB273B776E
+	for <linux-hams@vger.kernel.org>; Tue, 21 Apr 2026 11:22:54 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.170
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776761146; cv=none; b=WtU5HGvDX1GDzjCXD6TLjY7yv0TnphEZOsNHMU4kfq5wWpHBmlnWqm551aNm+qNYAbu8tyh5XNrI/PiSTvsIknOwyRgKh0QoHvTqw+bg4nykSYz09Gk2dgVPWxcqySEJRjoodWVE8idSGww/BX9xJ9HON0tTiJgGGPlgQLiqJhk=
+	t=1776770577; cv=none; b=UQcE+kkOhGm2tmcEcX79XDOge2d6oImJ3949P7yHyJ44mQ0EwPrcN5+slzOkOeQj0vswUblOucnQp5Tfnz0g5mXeW97IrG8Yj7GuMxsMywDvH6J1iS99Ebkz+8SbYU6wh94DpNMqIiRVgyI2Zy6Vuc92sjuZ5RPzDKocLQ28zns=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776761146; c=relaxed/simple;
-	bh=uWqpLpPUA/2U0n151BqflvB2GHsTuKdtVqfkcnL93iU=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=uxgRm4PS7zcL8MGCjH6Pg56Lkaq4fm07/s2fcHhKXzklrBgCVnt7aQ7cfDOGAOMuEB2+wt2K+OcScsFAH9TKiXI44YB80x4hcNCwFRBtUzUoD0gW66IlxIwQ93XymEK35S3TW2EyTbliIbumejHFnqRsjxbxIOPA8FXtuosp3ZI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=blemings.org; spf=pass smtp.mailfrom=blemings.org; dkim=pass (2048-bit key) header.d=blemings.org header.i=@blemings.org header.b=JsO4HJzW; arc=none smtp.client-ip=150.107.74.76
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=blemings.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=blemings.org
+	s=arc-20240116; t=1776770577; c=relaxed/simple;
+	bh=7J5sLUyTcEtZ5b/o54KJz2TjlXrWGH0W+oigsdVGJYY=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=AUgGYf8bFOxHA9Eb/ampr15QFqEmWhSb8pURCrmCmkH/AU7I2IByR3Of9HvBTB+/3/VMFcBHphsCvfk8HUtt4l1xzFT7eGwZiohA4OqmRcrJdLZaJhc9gj0fYyUrUddDSFYyYb3/8w8e4+hVpIZsXjWP67QLsJU4vt5xc4wWzBg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=lU9jm6kG; arc=none smtp.client-ip=209.85.210.170
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=blemings.org header.i=@blemings.org header.b="JsO4HJzW"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=blemings.org;
-	s=202501; t=1776761141;
-	bh=GQG6DCViS5FYxjhXoEZRxdgMX4C5Mt5Vy2R9R5ylsvI=;
-	h=Date:Reply-To:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=JsO4HJzWzMzasrWoHmvRW/sJVrDh/cUGM4IZ323J4/7h3kAd8Z9S+1MamCBrwl5mN
-	 C5oLqBODDSz9cm+4ohI8s/vPm+UU23jadlrrbARovDdbTA4wmJuUjWf9yW62+tP+Sc
-	 Kzd+FVY4Ir76Swbtm2mefDr+Y0JWzFnfIAkaO18NXeR43AmWHLsg1uahUoJK9pnXl4
-	 XV30R7KD/Laqsse5shuyiUp3WbosLmOVtjINrZrAUAC1P0LrbFkjirT/VfWIaSXTyq
-	 HqfpMBbRGHNBz29IwykdxJmHXNjPyaSDaRb2gOFh81Q+yd20OSqfAvUDJosHqNANBx
-	 ly624mAUs2gIw==
-Received: from authenticated.ozlabs.org (localhost [127.0.0.1])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange x25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(Client did not present a certificate)
-	by mail.ozlabs.org (Postfix) with ESMTPSA id 4g0GCS1h8hz4w1X;
-	Tue, 21 Apr 2026 18:45:40 +1000 (AEST)
-Message-ID: <e2a47378-9008-45a2-92e3-d1f374b5e766@blemings.org>
-Date: Tue, 21 Apr 2026 18:45:39 +1000
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="lU9jm6kG"
+Received: by mail-pf1-f170.google.com with SMTP id d2e1a72fcca58-82f431c0ab6so1868998b3a.0
+        for <linux-hams@vger.kernel.org>; Tue, 21 Apr 2026 04:22:54 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1776770574; x=1777375374; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=pbepvZoiaQHnY8ojgGndHUN0tqRJnJo2KRx8HLgDgUI=;
+        b=lU9jm6kGqDjqxIjkWxGDeqDvr17UMQYeVNP9rS5P3UWd7+VE4cpTrRwlYKSpCHI1KD
+         zZA4+dsX0fyXlhWGoGhioT7GlAk6Cad2+kFgyXXf+ZkLjXgYuVSOk6W9JhbsksRhS+cn
+         JjoUEw79Nz86BTgOmxYEMCIS5sQKYiwZ5dfniI9hbARcbUXmygsWFT4/6ZYrU7er4B5b
+         AF39CTz+lEumwPTp8qh8DUlpS3e4Z+amiPfglYGt2PS3FjwfgzzvqXLqKOW/KsOHooqZ
+         aJdiZQCu+ux924UJHp8L48osT1cgJGdd6A/cCTA6wbL1kWXsoMldHo20OThek5XInH4F
+         NHfw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1776770574; x=1777375374;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=pbepvZoiaQHnY8ojgGndHUN0tqRJnJo2KRx8HLgDgUI=;
+        b=fvq4ruKEXQAZkoznbX/pX+ap1OnB1SXtpPNANOQpgpuhH0JEh0RihW5qYIoSVZ+6rS
+         piA/xeOaLxmQHZaUx0AY0EOOxFKgIdD9aJ6QLqpzvfq4HcVQhXiSYpFRSvygHMWSS2hN
+         ylnNxGJzsJC/wQrqVvk+2tvt6oYQ8ceqdoTMoevTnHjoWnX1jaJfPjxQBz+GMevSq1aa
+         tIrbtZnA/eyZtl+hfKyz2q6NuPxBLr4PvJCRFn+10d8btUDSUif9vwY9TPcuAKinPs2Q
+         +CVEpyEDdsEdHogtTBCTzLfRYY53uDShIhsxpDe07X59jkn1Vfb1EWyH/APtCBHR/23L
+         xbqQ==
+X-Forwarded-Encrypted: i=1; AFNElJ+e2Rov4GdsxBlm2+a/8w7bMpDyD+ssb+vqDyKwpRlWl853HAu0JmnxKy6QZIEiGRkL0X5oU9u2esr0@vger.kernel.org
+X-Gm-Message-State: AOJu0YwhJhPkF1aKH+IZqisRfoCRbgAX7z9x/QEtgIiOGBKAUryyvBY5
+	yAjOwWxkKs6NWWhvxkkNFkZ2FJeQzIIS6MXOdT5LjeThURBZBW4W2c5r
+X-Gm-Gg: AeBDietB90LtF1eQone77HtAAdIqEp7ctNVBblmx3fk9CPgAPoxfy/bYCIIAztzCgPy
+	AVtkd66RglgE703MtQx6SM375ROcY3arkH0++eKUafR6sJdBKrgt04/iVYyeW4DxxBGouQePv/4
+	2y127HLWJgb1zwD1B3OysTAwt7hG3e6amqq0AunqSXkLCN1KVA3UWf1BDgfaVUvKT6Z0YoRYmai
+	KViD5aPyWNv2aJsr8uAtyAZT7eXaXC/w4EIzK/nmNp+7PcDElS5VFFvVVXr3m9l0tg2Q7HGqvty
+	rjGKvxODIbZKzjxPJ2tzHIdnZncHi3oTNu0bghs2DSXyi7mSA5AQfhQcz2xK7DO+4yMB42Y7M23
+	zdiV3SUBiEQ9mnhlm+xuKxwQkoq0hQUxkvnEzlV5CSCF2zbkzjGRroJ3NDwZ6OkFfZCVh95xTl3
+	RD6qSBeJ95ltiwziNDf2Gzfr0e8KzPDIHKG++h5dY3fDBWGczdcA4fwOTZpWfOMkGvjqT7i7cxM
+	fZ/CQ==
+X-Received: by 2002:a05:6a00:6988:b0:82f:aae5:c7a9 with SMTP id d2e1a72fcca58-82faae5d438mr7228492b3a.27.1776770573719;
+        Tue, 21 Apr 2026 04:22:53 -0700 (PDT)
+Received: from li-1a3e774c-28e4-11b2-a85c-acc9f2883e29.ibm.com ([129.41.58.4])
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-82f8e981a0asm14155014b3a.3.2026.04.21.04.22.39
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 21 Apr 2026 04:22:53 -0700 (PDT)
+Date: Tue, 21 Apr 2026 16:52:37 +0530
+From: Mukesh Kumar Chaurasiya <mkchauras@gmail.com>
+To: Thomas Gleixner <tglx@kernel.org>
+Cc: LKML <linux-kernel@vger.kernel.org>, 
+	Michael Ellerman <mpe@ellerman.id.au>, linuxppc-dev@lists.ozlabs.org, Arnd Bergmann <arnd@arndb.de>, 
+	x86@kernel.org, Lu Baolu <baolu.lu@linux.intel.com>, iommu@lists.linux.dev, 
+	Michael Grzeschik <m.grzeschik@pengutronix.de>, netdev@vger.kernel.org, linux-wireless@vger.kernel.org, 
+	Herbert Xu <herbert@gondor.apana.org.au>, linux-crypto@vger.kernel.org, 
+	Vlastimil Babka <vbabka@kernel.org>, linux-mm@kvack.org, David Woodhouse <dwmw2@infradead.org>, 
+	Bernie Thompson <bernie@plugable.com>, linux-fbdev@vger.kernel.org, Theodore Tso <tytso@mit.edu>, 
+	linux-ext4@vger.kernel.org, Andrew Morton <akpm@linux-foundation.org>, 
+	Uladzislau Rezki <urezki@gmail.com>, Marco Elver <elver@google.com>, 
+	Dmitry Vyukov <dvyukov@google.com>, kasan-dev@googlegroups.com, 
+	Andrey Ryabinin <ryabinin.a.a@gmail.com>, Thomas Sailer <t.sailer@alumni.ethz.ch>, 
+	linux-hams@vger.kernel.org, "Jason A. Donenfeld" <Jason@zx2c4.com>, 
+	Richard Henderson <richard.henderson@linaro.org>, linux-alpha@vger.kernel.org, 
+	Russell King <linux@armlinux.org.uk>, linux-arm-kernel@lists.infradead.org, 
+	Catalin Marinas <catalin.marinas@arm.com>, Huacai Chen <chenhuacai@kernel.org>, loongarch@lists.linux.dev, 
+	Geert Uytterhoeven <geert@linux-m68k.org>, linux-m68k@lists.linux-m68k.org, 
+	Dinh Nguyen <dinguyen@kernel.org>, Jonas Bonn <jonas@southpole.se>, linux-openrisc@vger.kernel.org, 
+	Helge Deller <deller@gmx.de>, linux-parisc@vger.kernel.org, Paul Walmsley <pjw@kernel.org>, 
+	linux-riscv@lists.infradead.org, Heiko Carstens <hca@linux.ibm.com>, linux-s390@vger.kernel.org, 
+	"David S. Miller" <davem@davemloft.net>, sparclinux@vger.kernel.org
+Subject: Re: [patch 33/38] powerpc: Select ARCH_HAS_RANDOM_ENTROPY
+Message-ID: <aedc9UddBSYXzrAj@li-1a3e774c-28e4-11b2-a85c-acc9f2883e29.ibm.com>
+References: <20260410120044.031381086@kernel.org>
+ <20260410120319.789114053@kernel.org>
 Precedence: bulk
 X-Mailing-List: linux-hams@vger.kernel.org
 List-Id: <linux-hams.vger.kernel.org>
 List-Subscribe: <mailto:linux-hams+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-hams+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Reply-To: hugh@blemings.id.au
-Subject: Re: [PATCH v4 net] net: ax25: fix integer overflow in
- ax25_rx_fragment()
-To: Paolo Abeni <pabeni@redhat.com>, Mashiro Chen <mashiro.chen@mailbox.org>,
- netdev@vger.kernel.org
-Cc: linux-hams@vger.kernel.org, kuba@kernel.org, horms@kernel.org,
- davem@davemloft.net, edumazet@google.com, Jakub Kicinski <kuba@kernel.org>,
- Greg KH <gregkh@linuxfoundation.org>
-References: <20260409025026.24575-1-mashiro.chen@mailbox.org>
- <20260413204921.70463-1-mashiro.chen@mailbox.org>
- <805a8583-6a84-4dfb-a4d4-53f80f50effc@redhat.com>
-Content-Language: en-US
-From: Hugh Blemings <hugh@blemings.org>
-In-Reply-To: <805a8583-6a84-4dfb-a4d4-53f80f50effc@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20260410120319.789114053@kernel.org>
 
-Hi Paolo, All,
+On Fri, Apr 10, 2026 at 02:21:09PM +0200, Thomas Gleixner wrote:
+> The only remaining usage of get_cycles() is to provide random_get_entropy().
+> 
+> Switch powerpc over to the new scheme of selecting ARCH_HAS_RANDOM_ENTROPY
+> and providing random_get_entropy() in asm/random.h.
+> 
+> Remove asm/timex.h as it has no functionality anymore.
+> 
+> Signed-off-by: Thomas Gleixner <tglx@kernel.org>
+> Cc: Michael Ellerman <mpe@ellerman.id.au>
+> Cc: linuxppc-dev@lists.ozlabs.org
+> ---
+>  arch/powerpc/Kconfig              |    1 +
+>  arch/powerpc/include/asm/random.h |   13 +++++++++++++
+>  arch/powerpc/include/asm/timex.h  |   21 ---------------------
+>  3 files changed, 14 insertions(+), 21 deletions(-)
+> 
+> --- a/arch/powerpc/Kconfig
+> +++ b/arch/powerpc/Kconfig
+> @@ -150,6 +150,7 @@ config PPC
+>  	select ARCH_HAS_PREEMPT_LAZY
+>  	select ARCH_HAS_PTDUMP
+>  	select ARCH_HAS_PTE_SPECIAL
+> +	select ARCH_HAS_RANDOM_ENTROPY
+>  	select ARCH_HAS_SCALED_CPUTIME		if VIRT_CPU_ACCOUNTING_NATIVE && PPC_BOOK3S_64
+>  	select ARCH_HAS_SET_MEMORY
+>  	select ARCH_HAS_STRICT_KERNEL_RWX	if (PPC_BOOK3S || PPC_8xx) && !HIBERNATION
+> --- /dev/null
+> +++ b/arch/powerpc/include/asm/random.h
+> @@ -0,0 +1,13 @@
+> +/* SPDX-License-Identifier: GPL-2.0 */
+> +#ifndef _ASM_POWERPC_RANDOM_H
+> +#define _ASM_POWERPC_RANDOM_H
+> +
+> +#include <asm/cputable.h>
+> +#include <asm/vdso/timebase.h>
+> +
+> +static inline unsigned long random_get_entropy(void)
+> +{
+> +	return mftb();
+> +}
+> +
+> +#endif	/* _ASM_POWERPC_RANDOM_H */
+> --- a/arch/powerpc/include/asm/timex.h
+> +++ b/arch/powerpc/include/asm/timex.h
+> @@ -1,21 +0,0 @@
+> -/* SPDX-License-Identifier: GPL-2.0 */
+> -#ifndef _ASM_POWERPC_TIMEX_H
+> -#define _ASM_POWERPC_TIMEX_H
+> -
+> -#ifdef __KERNEL__
+> -
+> -/*
+> - * PowerPC architecture timex specifications
+> - */
+> -
+> -#include <asm/cputable.h>
+> -#include <asm/vdso/timebase.h>
+> -
+> -ostatic inline cycles_t get_cycles(void)
+> -{
+R> -	return mftb();
+> -}
+> -#define get_cycles get_cycles
+> -
+> -#endif	/* __KERNEL__ */
+> -#endif	/* _ASM_POWERPC_TIMEX_H */
+> 
+Build tested for this series with allmodconfig and allyesconfig on ppc64le
+machine for ppc64le.
+tree: git://git.kernel.org/pub/scm/linux/kernel/git/tglx/devel.git getcycles-v1
 
-On 21/4/2026 17:29, Paolo Abeni wrote:
-> On 4/13/26 10:49 PM, Mashiro Chen wrote:
->> ax25_rx_fragment() accumulates fragment lengths into ax25_cb->fraglen,
->> which is an unsigned short. When the total exceeds 65535, fraglen wraps
->> around to a small value. The subsequent alloc_skb(fraglen) allocates a
->> too-small buffer, and skb_put() in the copy loop triggers skb_over_panic().
->>
->> Add pskb_may_pull(skb, 1) at function entry to ensure the segmentation
->> header byte is in the linear data area before dereferencing skb->data.
->> This also rejects zero-length skbs, which the original code did not
->> check for.
->>
->> Two issues in the overflow error path are also fixed:
->> First, the current skb, after skb_pull(skb, 1), is neither enqueued
->> nor freed before returning 1, leaking it. Add kfree_skb(skb) before
->> the return.
->> Second, ax25->fraglen is not reset after skb_queue_purge(). Add
->> ax25->fraglen = 0 to restore a consistent state.
->>
->> Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
->> Signed-off-by: Mashiro Chen <mashiro.chen@mailbox.org>
-> we are moving ax25 out of tree:
->
-> https://lore.kernel.org/netdev/20260421021824.1293976-1-kuba@kernel.org/
->
-> please hold off until Thursday (after that our net PR will land into
-> mainline), and eventually resend if the code still exists in Linus's
-> tree at that point.
+Boot tested for this series on powernv9 qemu, powernv10 qemu and pSeries
+power11 hardware.
 
-Is there any flexibility here ?
-
-Jakubs (CC'd) patches to remove unfortunately weren't cross posted to 
-linux-hams and so I'm not able to directly reply in netdev
-
-We've had a thread ongoing in linux-hams around the future of 
-AX25/ROSE/NETROM for the last week or so and believe we've a path 
-towards an orderly exit from the mainline tree, probably towards a 
-userspace implementation. This includes a couple of folks who have 
-indicated they would be open to overseeing the maintenance of the code 
-in the meantime.
-
-We'd hoped to have a period of a few months to do an orderly exit from 
-the tree to minimise the impact on the (admittedly small, but non-zero) 
-users that build trees/make use of the in kernel support.
-
-Apologies for my lack of familiarity with the process here to deprecate etc.
-
-Cheers/73
-Hugh
-
-
--- 
-I am slowly moving to hugh@blemings.id.au as my main email address.
-If you're using hugh@blemings.org please update your address book accordingly.
-Thank you :)
+Tested-by: Mukesh Kumar Chaurasiya (IBM) <mkchauras@gmail.com>
+Reviewed-by: Mukesh Kumar Chaurasiya (IBM) <mkchauras@gmail.com>
 
