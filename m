@@ -1,215 +1,140 @@
-Received: from mail.ozlabs.org (gandalf.ozlabs.org [150.107.74.76])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pj1-f47.google.com (mail-pj1-f47.google.com [209.85.216.47])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A016337F748;
-	Tue, 21 Apr 2026 06:28:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=150.107.74.76
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 13B3E1925BC
+	for <linux-hams@vger.kernel.org>; Tue, 21 Apr 2026 06:49:14 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.47
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776752890; cv=none; b=PG0QYFbCL/GDSKca11tpkYVBoBKCDToO9w2gnr9iMWhAwS9/yxOdxr4+oENt2aIsSiV6jSgq2O5bizj/A/fUoDANEoOUPluALn8CSix3E6LlQv/dFVBhF79L6pW4qr2Hk+43jvxSLi2l3EKLyRpNoDeoS5gFMATv3ES5V0SPKb0=
+	t=1776754156; cv=none; b=aZukuIE+VqQ48v2Gnw4lHwlHh3QZ2G3f/BlQYYxWYfEBFWuTz4C7YUeObmFQgxFQsmY3SBX0TpSp1vPZVScX4160ot0tAh4BBhKMRZ9I0rSAuPGJdI97rEfXy5go7sIKHCidDLp32+zz6cl6VAUEm3xXv7SmSaHFLRnJwLGWVIc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776752890; c=relaxed/simple;
-	bh=sAyhpimh2UuA5S8MdVBJhno8mFAfNRluJN57KjVdous=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=ITDQaaFQA6z9dNvhQ8z/TKzbrbkblz3DVIyH4IsMRfzqbURfw5Mcgm3twq2DDKGwXg7yGRxzg2duGODk48t4kngbma+FwxB3gIeNtswgYyV36OinZg9uapycG71ds9uz0U5i68calUJ8E/0Q+z1UXSXG2geP/gjAg/3ltL4YnVQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=blemings.org; spf=pass smtp.mailfrom=blemings.org; dkim=pass (2048-bit key) header.d=blemings.org header.i=@blemings.org header.b=hCo60zFS; arc=none smtp.client-ip=150.107.74.76
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=blemings.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=blemings.org
+	s=arc-20240116; t=1776754156; c=relaxed/simple;
+	bh=am3smhs96M1Iz0Y0JDciE1ZjrAK1dDbEC7UccjVq/eg=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=fM1ODxoP6B9w3OWRJofvwsB6JAxmetUtBF6t/Kgwg5mOFDmzrcyLHj+C9qcberyJ84qvogcqKVU4bNpf+B2YRvPMOQafyU9TD7PniTUsqG1NVyx9a9Ja5KFQ94QD1/b3ly9RMf9Y/ZTs6wDQaYG/8pvFm1f+U2zh8QjAKjVIqaE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=J4HdCsEQ; arc=none smtp.client-ip=209.85.216.47
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=blemings.org header.i=@blemings.org header.b="hCo60zFS"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=blemings.org;
-	s=202501; t=1776752887;
-	bh=33DB2Llj0G90vqCtW7jD8C0oCdawVsqRQy/5Y7Jzt3s=;
-	h=Date:Reply-To:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=hCo60zFSP0qioo9QveFBiJQ6D98hflsntH6zEALhLKw0ViMvPwkul4feY8Pd6eWyp
-	 qNhvg0ixzRMUjgg/1Lzwc4ssmEqyfQa1i0IuA2ORYbKfOHISbveekMY2kqte3MbeD7
-	 wTqt9xEYFJnDhREdUQVYwEDIBLmM6g1n/vOR9uUP+L9rU5TOsJyCHuS/dLqkuF0jc1
-	 xTvEKGRxtivnqWD3PPCKfye5jRWWL529Cnwc0SyAx6mzsG4Rr+EwzSnZMV7wk+lU3g
-	 wlNq6mlHD/vevDG38F96OdjiciW44jOYmZtorprGFcIx+PLno9i0m+89ZBp4Lvxj1B
-	 oc4olcmwRvy+w==
-Received: from authenticated.ozlabs.org (localhost [127.0.0.1])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange x25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(Client did not present a certificate)
-	by mail.ozlabs.org (Postfix) with ESMTPSA id 4g0C8k0nHqz4wC3;
-	Tue, 21 Apr 2026 16:28:05 +1000 (AEST)
-Message-ID: <5549733f-c9d6-4bae-84e3-285a317ee334@blemings.org>
-Date: Tue, 21 Apr 2026 16:28:05 +1000
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="J4HdCsEQ"
+Received: by mail-pj1-f47.google.com with SMTP id 98e67ed59e1d1-354bc7c2c46so2304248a91.0
+        for <linux-hams@vger.kernel.org>; Mon, 20 Apr 2026 23:49:14 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1776754153; x=1777358953; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=VdNywBu7apdyTFV9cnt3GZxXLndr1pBULjY0WptzCm8=;
+        b=J4HdCsEQzBF52HS7kv/2N9GJ8av6ANJwagpeEgdEx1yRdELMEGjQ4U1u/N87NO4FNi
+         O6KdpnQd2wlsQteyBgo3JKT5dhLZvpI1wyEsq4drfOlNwbEJ6WcOJKua2hfbgUn7f/qO
+         TzEOq5j4q1kIqn9Y+uIFyo3FhWMNPvAyfGSeTx2OrK0/Srjf3V26Ep8QZ8qfFqhXNK/n
+         ZxjbuMVDQk5kg1icO+a9j//B79M0Kg9jntS58arF/1IdYz8rvP1GqYJvmDueJh+a2H6V
+         AcrX5EqwWq4kixz6oUFeG2btwWnpqWtN0xGCez+9Lm3iTdeVYKxGHu2/uM273h/aIkCV
+         n8bQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1776754153; x=1777358953;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=VdNywBu7apdyTFV9cnt3GZxXLndr1pBULjY0WptzCm8=;
+        b=Dj7fn/z6yYNkQgnKJEGcsy1cKnoP5xcr/tzivoao4J9B+/k4hJE6iguOLHL8FYw4v7
+         RcDE2xB0oh7hkh89Z6fyaRTsd4C5HsQXHM+4wBi4TPGs5APJZ5cwHpe4ZmLi1T/nq+dJ
+         2lhBM+Ny0qgLhWTDIH/OA036/gQNF4v3qvScWKuvysTMUXRk6Z/zR9n65gy92vUD792e
+         Dz3WnF0NoyOVUB6l/es3grcsDzra8733a3kLVreQHFII+LEj5vQnDp4iEg4NQWgthRkj
+         h3epyrP1ABi5m4yOySnfVzt4azKm5I4bk2fTPapdVBFErgSKojEt/CF9YGAhZ7MYIRYn
+         Pyow==
+X-Forwarded-Encrypted: i=1; AFNElJ+2U4jnKAfWgRQT4efszuFzlyOXjL6H/GDNk+3XeXjecCLfqHkHSBPIor77QHEOhHJQPI5FW+NjQtMq@vger.kernel.org
+X-Gm-Message-State: AOJu0YxfoF5ydKQ0XuWeaiGGFIZ4V+cPKM4H928VDBCoKWRTnLn9J8C7
+	Cm/hOD9f64v5HKgFJhA6EpE4JSnqVh/kFJokSbuM25Ki8zyAlnB45/jI
+X-Gm-Gg: AeBDiev7HAPFZEtQZxeAsU+fts0K5RgMFpQTGM7dZDxah4jsPDpeKFzLoKlgewiuOAW
+	OK9+p/cb9hcvZ60SCmFCf3N6sh2FOveVw0SA383lrT3Ql7NJLYGCEayRuG0Nt6L8B8RUzW/ygIm
+	WGK5ardM4UkXL8tubTnxXcR/bcb9Z/4E5fs1Aw98eUXMjzAfX+MEcbVuBZ64Dva8XL/+8gZLyUh
+	Bzn9zgSjOxeqT/HXW4QF22rTfmxI3jmSQK/qTVIXtPDkkc1sZQBCWbamUPWrJ25K89ESk0TrYRO
+	bL2QLxr7xHk2N5SUaUER7/nEBvL2zjQ6pMKKAkYdEUfMGrVl6W8gxaM/aw1pBPnaZZgaZLAjXC1
+	nqbK100+lcSdEwAeNpUw4Zr0QZbTJRsTlZ9/UWFCBDchOHVs+ap4eBfBczO5A1VD3t/b926LsP3
+	eb1TMbxStdBlcasw4xO2ofpBoPE7tq3CqirsuV20odrk1ojQefCqJwinA1XsgPJi09twL2uFHZb
+	c8l0MdkcA57/LtP
+X-Received: by 2002:a17:90a:dfd0:b0:35e:30bc:96ed with SMTP id 98e67ed59e1d1-36140402361mr16891174a91.10.1776754153374;
+        Mon, 20 Apr 2026 23:49:13 -0700 (PDT)
+Received: from li-1a3e774c-28e4-11b2-a85c-acc9f2883e29.ibm.com ([129.41.58.4])
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-3614195a8f0sm12278674a91.12.2026.04.20.23.48.57
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 20 Apr 2026 23:49:13 -0700 (PDT)
+Date: Tue, 21 Apr 2026 12:18:55 +0530
+From: Mukesh Kumar Chaurasiya <mkchauras@gmail.com>
+To: Thomas Gleixner <tglx@kernel.org>
+Cc: LKML <linux-kernel@vger.kernel.org>, 
+	Michael Ellerman <mpe@ellerman.id.au>, linuxppc-dev@lists.ozlabs.org, Arnd Bergmann <arnd@arndb.de>, 
+	x86@kernel.org, Lu Baolu <baolu.lu@linux.intel.com>, iommu@lists.linux.dev, 
+	Michael Grzeschik <m.grzeschik@pengutronix.de>, netdev@vger.kernel.org, linux-wireless@vger.kernel.org, 
+	Herbert Xu <herbert@gondor.apana.org.au>, linux-crypto@vger.kernel.org, 
+	Vlastimil Babka <vbabka@kernel.org>, linux-mm@kvack.org, David Woodhouse <dwmw2@infradead.org>, 
+	Bernie Thompson <bernie@plugable.com>, linux-fbdev@vger.kernel.org, Theodore Tso <tytso@mit.edu>, 
+	linux-ext4@vger.kernel.org, Andrew Morton <akpm@linux-foundation.org>, 
+	Uladzislau Rezki <urezki@gmail.com>, Marco Elver <elver@google.com>, 
+	Dmitry Vyukov <dvyukov@google.com>, kasan-dev@googlegroups.com, 
+	Andrey Ryabinin <ryabinin.a.a@gmail.com>, Thomas Sailer <t.sailer@alumni.ethz.ch>, 
+	linux-hams@vger.kernel.org, "Jason A. Donenfeld" <Jason@zx2c4.com>, 
+	Richard Henderson <richard.henderson@linaro.org>, linux-alpha@vger.kernel.org, 
+	Russell King <linux@armlinux.org.uk>, linux-arm-kernel@lists.infradead.org, 
+	Catalin Marinas <catalin.marinas@arm.com>, Huacai Chen <chenhuacai@kernel.org>, loongarch@lists.linux.dev, 
+	Geert Uytterhoeven <geert@linux-m68k.org>, linux-m68k@lists.linux-m68k.org, 
+	Dinh Nguyen <dinguyen@kernel.org>, Jonas Bonn <jonas@southpole.se>, linux-openrisc@vger.kernel.org, 
+	Helge Deller <deller@gmx.de>, linux-parisc@vger.kernel.org, Paul Walmsley <pjw@kernel.org>, 
+	linux-riscv@lists.infradead.org, Heiko Carstens <hca@linux.ibm.com>, linux-s390@vger.kernel.org, 
+	"David S. Miller" <davem@davemloft.net>, sparclinux@vger.kernel.org
+Subject: Re: [patch 32/38] powerpc/spufs: Use mftb() directly
+Message-ID: <aecdpyvTLJOjCdFp@li-1a3e774c-28e4-11b2-a85c-acc9f2883e29.ibm.com>
+References: <20260410120044.031381086@kernel.org>
+ <20260410120319.723429844@kernel.org>
 Precedence: bulk
 X-Mailing-List: linux-hams@vger.kernel.org
 List-Id: <linux-hams.vger.kernel.org>
 List-Subscribe: <mailto:linux-hams+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-hams+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Reply-To: hugh@blemings.id.au
-Subject: Re: Discuss: Future of AX25, NETROM and ROSE in the kernel ?
-To: Steve Conklin <steve@conklinhouse.com>
-Cc: Stuart Longland VK4MSL <me@vk4msl.com>, Dan Cross <crossd@gmail.com>,
- linux-hams@vger.kernel.org, netdev@vger.kernel.org
-References: <54da3df9-6c91-4df0-87ff-1975d536761d@blemings.org>
- <CAEoi9W5o_twDPYMZDqajqz+UYJm5wOvAx+hUFefXmU=vUbOgtg@mail.gmail.com>
- <CAEoi9W6vTPPHh-NBKZcgmo7GKTecQw1UuZ4HjwNTzqvNXWC43g@mail.gmail.com>
- <7a9547e1-9958-4bce-8547-71a93153a0d6@vk4msl.com>
- <c412bf83-e8cf-4a3d-8619-63f68e108399@blemings.org>
- <CALJxBtX_T8sv11ank-arLfoVqJqXegi3D_ZT9ZFbMHkuf-2RAg@mail.gmail.com>
-Content-Language: en-US
-From: Hugh Blemings <hugh@blemings.org>
-In-Reply-To: <CALJxBtX_T8sv11ank-arLfoVqJqXegi3D_ZT9ZFbMHkuf-2RAg@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20260410120319.723429844@kernel.org>
 
-Hi All,
-
-Just to note in this thread (top posting as it's a bit orthogonal to the 
-rest of this discussion) that events have preceeded us somewhat here
-
-A patch just recently submitted removes the AX25, NETROM and ROSE code 
-from the kernel moving it to the mod-orphan sub tree of netdev
-
-https://lore.kernel.org/netdev/20260421021824.1293976-1-kuba@kernel.org/T/#u
-
-A shame but perhaps inevitable - but I think we have a good plan 
-unfolding to both take care of medium term maintenance of the kernel 
-code (in tree or out as it may be) as well as a move to userspace in the 
-longer term.
-
-For the benefit of the netdev readership - we had a thread over in 
-linux-hams on this but that may not have been visible to folks in 
-netdev.  TL;DR: we think we have a way forward but appreciate this may 
-not be quick enough to meet the requirements/concerns put forward
-
-If we can delay removal, that'd be grand, but appreciate that moment may 
-have passed.
-
-Cheers/73
-Hugh
-VK3YYZ/AD5RV
-
-
-On 20/4/2026 02:18, Steve Conklin wrote:
-> On Sun, Apr 19, 2026 at 4:36 AM Hugh Blemings <hugh@blemings.org> wrote:
->> HI All,
->>
->> On 19/4/2026 14:01, Stuart Longland VK4MSL wrote:
->>> On 19/4/26 05:28, Dan Cross wrote:
->>>> [Top-posting to make meta-commendary]
->>>>
->>>> I wonder if other folks have thoughts, here? It doesn't bode well that
->>>> the discussion hasn't progressed. 🙁
->>> I haven't had a chance to fully review what you've posted… there was a
->>> lot of historical information in there including detail on the
->>> protocols in question.  I've earmarked it to go through closely
->>> however. (e.g. I had heard of "ROSE" but never seen a spec for it.)
->>>
->>> My situation was wanting a library that I could use to do AX.25
->>> networking from userspace without having applications having to
->>> elevate to `root` to achieve it.  There was also a maintenance
->>> concern.  Rather than try and work out the AX.25 kernel stack, I opted
->>> to instead build my own.
->>>
->>> Instructive, but difficult as the documentation is sketchy in places.
->>>
->>> My implementation was written in Python 3.5+ for ease of development.
->>> Probably not the best option, but it got the job done.  `aioax25`
->>> allowed me to deliver a project for an emergency comms group and
->>> provides a reasonable foundation for simple tasks.  The stack is also
->>> portable to other platforms.  (I mostly only care about Linux and
->>> *BSD, but well written software should work elsewhere too.  Apparently
->>> it works fine on Apple MacOS X.)
->>>
->>> A userspace AX.25 daemon which implements the stack would seem to be
->>> the best course of action, but the elephant in the room is what the
->>> API would look like.
->>>
->>> The only thing I've seen close to achieving something like that would
->>> be the AGWPE protocol, however the author of that AX.25 stack has
->>> categorically stated that he "owns" that protocol.  I don't feel like
->>> going to court to argue copyright of interfaces for the sake of a hobby.
->>>
->>> The AGWPE protocol is also very limiting: a lot of fields in the AX.25
->>> frame are not accessible via this protocol, either for reading or
->>> setting.  Want to use the two reserved bits to signal something in a
->>> custom protocol?  Too bad.
->>>
->>> I was therefore pondering a "stream"-like protocol using KISS-style
->>> framing (to re-use existing code).  The frames would serve as an RPC
->>> mechanism for implementing something like the `libax25` API, exposing
->>> the same functionality and allowing an application to interact with
->>> the AX.25 stack without having to implement the whole protocol (as
->>> they'd have to do with KISS).
->>>
->>> Client applications could connect either via Unix domain sockets or TCP.
->>>
->>> You mention the performance hit of crossing the kernel/user-space
->>> boundary… I think Direwolf experimentally can work as high as
->>> 38400bps. A turn-of-the-century desktop PC was easily able to keep up
->>> with that for PPP links (with `pppd` running in userspace). ARMv7
->>> single board computers made 15 years later can deliver similar
->>> performance.  I don't think this will be much of a bottleneck in
->>> practice.
->>>
->>> I think userspace is the right way forward given the niche use case here.
->> Apologies, I kicked off this thread and life intervened a bit and have
->> only now had a chance to get back to read through the excellent
->> discourse since.
->>
->> I did have one off list conversation about this which was similarly
->> leaning towards a well managed/discussed shift to a userspace approach.
->> The individual in question has had quite a lot of both ham radio and
->> FOSS experience - I'll give them a nudge and see if they would be
->> willing to weigh in here too as I think they'd add a lot to the thread.
->>
->> I wonder if anyone on list feels they have the right skills to put
->> together the shim/compatibility library that would be needed to allow
->> the kernel code to be removed?  Seems like that might be the next thing
->> to explore ?
->>
->> Hoping things settle down a bit and will be able to contribute more to
->> ongoing discussion
->>
->> vy 73
->> Hugh
->> VK1YYZ/AD5RV
->>
->>
->>
->> --
->> I am slowly moving to hugh@blemings.id.au as my main email address.
->> If you're using hugh@blemings.org please update your address book accordingly.
->> Thank you :)
->>
->>
-> Hi all,
->
-> I'm another former maintainer who has been less active in the FOSS
-> hamm community for a while. Thanks for all the history, and it's been
-> great to see familiar names and callsigns again.
-> /wave
->
-> My personal take is that moving to userspace is the right long-term
-> goal. As for deciding the exact form that takes, this thread is a good
-> start.
->
-> I'd like to make an offer for a long-term home for these components.
->
-> I'm a director at ORI (Open Research Institute), and  ORI could be a
-> home for these. We're a project-based, completely open and volunteer
-> nonprofit focused on ham radio and communications. We have volunteers
-> with FOSS and ham radio experience, and we're already set up with a
-> GitHub org, slack chat, and the infrastructure to manage projects.
->
-> https://www.openresearch.institute/
-> https://www.openresearch.institute/your-project-is-welcome/
->
-> Anyone who currently maintains or has an interest in this is welcome
-> to participate there.
-> I personally volunteer to help move development infrastructure to ORI,
-> if that's the wish of the community.
->
-> Steve Conklin AI4QR
->
--- 
-I am slowly moving to hugh@blemings.id.au as my main email address.
-If you're using hugh@blemings.org please update your address book accordingly.
-Thank you :)
-
+On Fri, Apr 10, 2026 at 02:21:04PM +0200, Thomas Gleixner wrote:
+> There is no reason to indirect via get_cycles(), which is about to be
+> removed.
+> 
+> Use mftb() directly.
+> 
+> Signed-off-by: Thomas Gleixner <tglx@kernel.org>
+> Cc: Michael Ellerman <mpe@ellerman.id.au>
+> Cc: linuxppc-dev@lists.ozlabs.org
+> ---
+>  arch/powerpc/platforms/cell/spufs/switch.c |    5 +++--
+>  1 file changed, 3 insertions(+), 2 deletions(-)
+> 
+> --- a/arch/powerpc/platforms/cell/spufs/switch.c
+> +++ b/arch/powerpc/platforms/cell/spufs/switch.c
+> @@ -34,6 +34,7 @@
+>  #include <asm/spu_priv1.h>
+>  #include <asm/spu_csa.h>
+>  #include <asm/mmu_context.h>
+> +#include <asm/time.h>
+>  
+>  #include "spufs.h"
+>  
+> @@ -279,7 +280,7 @@ static inline void save_timebase(struct
+>  	 *    Read PPE Timebase High and Timebase low registers
+>  	 *    and save in CSA.  TBD.
+>  	 */
+> -	csa->suspend_time = get_cycles();
+> +	csa->suspend_time = mftb();
+>  }
+>  
+>  static inline void remove_other_spu_access(struct spu_state *csa,
+> @@ -1261,7 +1262,7 @@ static inline void setup_decr(struct spu
+>  	 *     in LSCSA.
+>  	 */
+>  	if (csa->priv2.mfc_control_RW & MFC_CNTL_DECREMENTER_RUNNING) {
+> -		cycles_t resume_time = get_cycles();
+> +		cycles_t resume_time = mftb();
+>  		cycles_t delta_time = resume_time - csa->suspend_time;
+>  
+>  		csa->lscsa->decr_status.slot[0] = SPU_DECR_STATUS_RUNNING;
+> 
+Reviewed-by: Mukesh Kumar Chaurasiya (IBM) <mkchauras@gmail.com>
