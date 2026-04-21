@@ -1,175 +1,139 @@
-Received: from mail-pf1-f170.google.com (mail-pf1-f170.google.com [209.85.210.170])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.133.124])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8CB273B776E
-	for <linux-hams@vger.kernel.org>; Tue, 21 Apr 2026 11:22:54 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.170
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 66DC43BE632
+	for <linux-hams@vger.kernel.org>; Tue, 21 Apr 2026 11:23:52 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=170.10.133.124
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776770577; cv=none; b=UQcE+kkOhGm2tmcEcX79XDOge2d6oImJ3949P7yHyJ44mQ0EwPrcN5+slzOkOeQj0vswUblOucnQp5Tfnz0g5mXeW97IrG8Yj7GuMxsMywDvH6J1iS99Ebkz+8SbYU6wh94DpNMqIiRVgyI2Zy6Vuc92sjuZ5RPzDKocLQ28zns=
+	t=1776770633; cv=none; b=ko332fwSTkP6e+Bx0KX64P1ip66yHro0OhtLewdZIE4OuYETVbrI8/D8QkbJM4Zes9BZLgBOMen7otXjJcddgR9hyEpkQEpj7FHkjJu/fR2JyOs4OmDRTWKi/oXHXifI89SlmcM8aOnY/svZ4a8nblfR5wL8xjo4oJd2HHhMkRo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776770577; c=relaxed/simple;
-	bh=7J5sLUyTcEtZ5b/o54KJz2TjlXrWGH0W+oigsdVGJYY=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=AUgGYf8bFOxHA9Eb/ampr15QFqEmWhSb8pURCrmCmkH/AU7I2IByR3Of9HvBTB+/3/VMFcBHphsCvfk8HUtt4l1xzFT7eGwZiohA4OqmRcrJdLZaJhc9gj0fYyUrUddDSFYyYb3/8w8e4+hVpIZsXjWP67QLsJU4vt5xc4wWzBg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=lU9jm6kG; arc=none smtp.client-ip=209.85.210.170
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1776770633; c=relaxed/simple;
+	bh=bvsNNhXjDuCqvJ4f2MCP+3c83kbaeMjS6Knbdq69M94=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=DnF8/6XRcJjkQuk8cs9lRCrzDfIU0+LsTMJxxjwqZLoxiRdfM14NxDUL2YZ7wsQ5KLCDu7mw8XN7lc6NwUViz1jWBDSBodQkOrXx9rez1biJ/+EGEWo/ZyKLRYCLW0DhW74PNUxALimhotHQyn2TVZ/+bNKfYE5fTzhjmjtP+ng=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com; spf=pass smtp.mailfrom=redhat.com; dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b=gSdMAc+8; dkim=pass (2048-bit key) header.d=redhat.com header.i=@redhat.com header.b=Xa7G/RrY; arc=none smtp.client-ip=170.10.133.124
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=redhat.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="lU9jm6kG"
-Received: by mail-pf1-f170.google.com with SMTP id d2e1a72fcca58-82f431c0ab6so1868998b3a.0
-        for <linux-hams@vger.kernel.org>; Tue, 21 Apr 2026 04:22:54 -0700 (PDT)
+	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="gSdMAc+8";
+	dkim=pass (2048-bit key) header.d=redhat.com header.i=@redhat.com header.b="Xa7G/RrY"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+	s=mimecast20190719; t=1776770631;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=xxVa+EsHT5PrcBeK2zG20jzylvTADEVkR1ky4LvMTjE=;
+	b=gSdMAc+8tLcg1LcoFGY1beEaLS52G9iABpRlJveCqLD/fVuKexJFjOT150gqh9gumAlHK+
+	xljPPlX41niWgtvdaKt3mZxVpnBhxZ6bscrnR286zNuWOJEeLpRve4LH9Y4XMpDVFEbBT8
+	7mKXfgSJ94Seebe+qKmYJQUcpeoiDPs=
+Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
+ [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-640-xDgXxkTUOMCZbts088bN0A-1; Tue, 21 Apr 2026 07:23:48 -0400
+X-MC-Unique: xDgXxkTUOMCZbts088bN0A-1
+X-Mimecast-MFC-AGG-ID: xDgXxkTUOMCZbts088bN0A_1776770627
+Received: by mail-wm1-f72.google.com with SMTP id 5b1f17b1804b1-488c2aa6becso39682315e9.2
+        for <linux-hams@vger.kernel.org>; Tue, 21 Apr 2026 04:23:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1776770574; x=1777375374; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=pbepvZoiaQHnY8ojgGndHUN0tqRJnJo2KRx8HLgDgUI=;
-        b=lU9jm6kGqDjqxIjkWxGDeqDvr17UMQYeVNP9rS5P3UWd7+VE4cpTrRwlYKSpCHI1KD
-         zZA4+dsX0fyXlhWGoGhioT7GlAk6Cad2+kFgyXXf+ZkLjXgYuVSOk6W9JhbsksRhS+cn
-         JjoUEw79Nz86BTgOmxYEMCIS5sQKYiwZ5dfniI9hbARcbUXmygsWFT4/6ZYrU7er4B5b
-         AF39CTz+lEumwPTp8qh8DUlpS3e4Z+amiPfglYGt2PS3FjwfgzzvqXLqKOW/KsOHooqZ
-         aJdiZQCu+ux924UJHp8L48osT1cgJGdd6A/cCTA6wbL1kWXsoMldHo20OThek5XInH4F
-         NHfw==
+        d=redhat.com; s=google; t=1776770627; x=1777375427; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=xxVa+EsHT5PrcBeK2zG20jzylvTADEVkR1ky4LvMTjE=;
+        b=Xa7G/RrYXOxuXt3XH2HtStzF4g6Fc+WN3RTovNSX19L9TAfC6lupaQjLyEOhnLxh2Q
+         xviTHulK4JQ9AuMLR5gFRiKtRjF788rMUtJPMNHeAdlbI4WyWKZ6fZUtl+SxLdwolx7d
+         d64GFjC+xDkdbY58fFtm3ejuKqN/GxPFJc0lqbT5AVJPw3DRyS2q4qF4wbW5WrEXHDJ/
+         cJ06j3hMiALZal0bh7E6gfog3z2LbCgwmYBS5xvQe/PUYn2huaOxjtg4EYnmWXTa7cX+
+         W4eBUU3iyToLVj6D9BJa4ruhkUTmDkdCoi2zeYfqAtpnA6Eb+GtLtz+T3zuKQMdvhX1S
+         psOw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1776770574; x=1777375374;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=pbepvZoiaQHnY8ojgGndHUN0tqRJnJo2KRx8HLgDgUI=;
-        b=fvq4ruKEXQAZkoznbX/pX+ap1OnB1SXtpPNANOQpgpuhH0JEh0RihW5qYIoSVZ+6rS
-         piA/xeOaLxmQHZaUx0AY0EOOxFKgIdD9aJ6QLqpzvfq4HcVQhXiSYpFRSvygHMWSS2hN
-         ylnNxGJzsJC/wQrqVvk+2tvt6oYQ8ceqdoTMoevTnHjoWnX1jaJfPjxQBz+GMevSq1aa
-         tIrbtZnA/eyZtl+hfKyz2q6NuPxBLr4PvJCRFn+10d8btUDSUif9vwY9TPcuAKinPs2Q
-         +CVEpyEDdsEdHogtTBCTzLfRYY53uDShIhsxpDe07X59jkn1Vfb1EWyH/APtCBHR/23L
-         xbqQ==
-X-Forwarded-Encrypted: i=1; AFNElJ+e2Rov4GdsxBlm2+a/8w7bMpDyD+ssb+vqDyKwpRlWl853HAu0JmnxKy6QZIEiGRkL0X5oU9u2esr0@vger.kernel.org
-X-Gm-Message-State: AOJu0YwhJhPkF1aKH+IZqisRfoCRbgAX7z9x/QEtgIiOGBKAUryyvBY5
-	yAjOwWxkKs6NWWhvxkkNFkZ2FJeQzIIS6MXOdT5LjeThURBZBW4W2c5r
-X-Gm-Gg: AeBDietB90LtF1eQone77HtAAdIqEp7ctNVBblmx3fk9CPgAPoxfy/bYCIIAztzCgPy
-	AVtkd66RglgE703MtQx6SM375ROcY3arkH0++eKUafR6sJdBKrgt04/iVYyeW4DxxBGouQePv/4
-	2y127HLWJgb1zwD1B3OysTAwt7hG3e6amqq0AunqSXkLCN1KVA3UWf1BDgfaVUvKT6Z0YoRYmai
-	KViD5aPyWNv2aJsr8uAtyAZT7eXaXC/w4EIzK/nmNp+7PcDElS5VFFvVVXr3m9l0tg2Q7HGqvty
-	rjGKvxODIbZKzjxPJ2tzHIdnZncHi3oTNu0bghs2DSXyi7mSA5AQfhQcz2xK7DO+4yMB42Y7M23
-	zdiV3SUBiEQ9mnhlm+xuKxwQkoq0hQUxkvnEzlV5CSCF2zbkzjGRroJ3NDwZ6OkFfZCVh95xTl3
-	RD6qSBeJ95ltiwziNDf2Gzfr0e8KzPDIHKG++h5dY3fDBWGczdcA4fwOTZpWfOMkGvjqT7i7cxM
-	fZ/CQ==
-X-Received: by 2002:a05:6a00:6988:b0:82f:aae5:c7a9 with SMTP id d2e1a72fcca58-82faae5d438mr7228492b3a.27.1776770573719;
-        Tue, 21 Apr 2026 04:22:53 -0700 (PDT)
-Received: from li-1a3e774c-28e4-11b2-a85c-acc9f2883e29.ibm.com ([129.41.58.4])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-82f8e981a0asm14155014b3a.3.2026.04.21.04.22.39
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 21 Apr 2026 04:22:53 -0700 (PDT)
-Date: Tue, 21 Apr 2026 16:52:37 +0530
-From: Mukesh Kumar Chaurasiya <mkchauras@gmail.com>
-To: Thomas Gleixner <tglx@kernel.org>
-Cc: LKML <linux-kernel@vger.kernel.org>, 
-	Michael Ellerman <mpe@ellerman.id.au>, linuxppc-dev@lists.ozlabs.org, Arnd Bergmann <arnd@arndb.de>, 
-	x86@kernel.org, Lu Baolu <baolu.lu@linux.intel.com>, iommu@lists.linux.dev, 
-	Michael Grzeschik <m.grzeschik@pengutronix.de>, netdev@vger.kernel.org, linux-wireless@vger.kernel.org, 
-	Herbert Xu <herbert@gondor.apana.org.au>, linux-crypto@vger.kernel.org, 
-	Vlastimil Babka <vbabka@kernel.org>, linux-mm@kvack.org, David Woodhouse <dwmw2@infradead.org>, 
-	Bernie Thompson <bernie@plugable.com>, linux-fbdev@vger.kernel.org, Theodore Tso <tytso@mit.edu>, 
-	linux-ext4@vger.kernel.org, Andrew Morton <akpm@linux-foundation.org>, 
-	Uladzislau Rezki <urezki@gmail.com>, Marco Elver <elver@google.com>, 
-	Dmitry Vyukov <dvyukov@google.com>, kasan-dev@googlegroups.com, 
-	Andrey Ryabinin <ryabinin.a.a@gmail.com>, Thomas Sailer <t.sailer@alumni.ethz.ch>, 
-	linux-hams@vger.kernel.org, "Jason A. Donenfeld" <Jason@zx2c4.com>, 
-	Richard Henderson <richard.henderson@linaro.org>, linux-alpha@vger.kernel.org, 
-	Russell King <linux@armlinux.org.uk>, linux-arm-kernel@lists.infradead.org, 
-	Catalin Marinas <catalin.marinas@arm.com>, Huacai Chen <chenhuacai@kernel.org>, loongarch@lists.linux.dev, 
-	Geert Uytterhoeven <geert@linux-m68k.org>, linux-m68k@lists.linux-m68k.org, 
-	Dinh Nguyen <dinguyen@kernel.org>, Jonas Bonn <jonas@southpole.se>, linux-openrisc@vger.kernel.org, 
-	Helge Deller <deller@gmx.de>, linux-parisc@vger.kernel.org, Paul Walmsley <pjw@kernel.org>, 
-	linux-riscv@lists.infradead.org, Heiko Carstens <hca@linux.ibm.com>, linux-s390@vger.kernel.org, 
-	"David S. Miller" <davem@davemloft.net>, sparclinux@vger.kernel.org
-Subject: Re: [patch 33/38] powerpc: Select ARCH_HAS_RANDOM_ENTROPY
-Message-ID: <aedc9UddBSYXzrAj@li-1a3e774c-28e4-11b2-a85c-acc9f2883e29.ibm.com>
-References: <20260410120044.031381086@kernel.org>
- <20260410120319.789114053@kernel.org>
+        d=1e100.net; s=20251104; t=1776770627; x=1777375427;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=xxVa+EsHT5PrcBeK2zG20jzylvTADEVkR1ky4LvMTjE=;
+        b=lYyrTfjg4FvmOsP3JzK6PIg4PYSI5iv8E+JoNuoj+qN0D8y5qsCNUV7CMn/XW9eE98
+         xvyTcLr6i8pszvDD+MN0XMwwlnvIkA7tVsJ2bYVuKrhNaDR+8UXuautuXlWsQ881W7td
+         vmWFxZj1feVet8qmQBC1uJ1lISO/YWitVOCSYxt11eYUyi/022FD2vSPcbhV9eACeM58
+         B1x6Vb7HEV30LViLWcfzbfaklWNTFOCrgCa8ZGAiR31S92W1ZcbfMR1JD2FzOtk5mBsY
+         HWM2ggIQkZ/d6fX0W1zkq6iSWBlo/8HwgZc04GfWHFU8WylOfh9KLNPXnrvhWYBjD0n3
+         VKOA==
+X-Forwarded-Encrypted: i=1; AFNElJ9Qqv1zIoekfcbqwpR2yAtHbkt6okjnc0rxORNE812BO1fUg1pMzDHcAGJ7AvTehtnpH301PoPjYy6O@vger.kernel.org
+X-Gm-Message-State: AOJu0Yz/GUR7RuxkXXhaKBHp2gOtNxBvRHf/rn4CDF+MMGO7qckaeAsM
+	E/Kce09xWaS5XkCY5xEd3wcds7Y4bWa/0Ie3qwRXU4VDuye2qJ2WeYCi+kqEj53Y8LXeOMKGb/K
+	wRZRcOUrvxAuloT8AcQ+oW9nMEfF7/B0vAVvZw6+4t3rmyIVM3LkazRSh1pzeAZM=
+X-Gm-Gg: AeBDietzHlZeCSnwzUCbhwCXFCM4+ZnUfY9EHXDUJ3TxUpQjCplC6LY7tZMqx8I6kr1
+	706EA907DzsgeP8Gyqb8DfJ+x89WOlT640TXub60HZknzfBYJYfYWMbP+9DiirM5M4rRx2rX4ao
+	H9hRg32oCwys6xAONjvt60Hn7R7Dv69gsoWNugQmALcSrH2lOTnNoOE7adOwwc3VT9zU9qDrBK1
+	eS3Twh9sFj3yHG0HCwFvKph6f0VkRJ6cVPngoqiKSzXJW/ItVc3dQfRji8OjjBjdtQvlIo2s95z
+	HPO5zv5QgamCioEKBEwqz/ZrKKN+tQbC0SEfzVXDpVNUTAHAsUb2SaZIG24AfqzQqTb+vHEwtmD
+	AXAIOM5NcwlaSvniO+jnGTpGonJwv8YicMQ33xaFwso8IA4lSIVy+9pzgDFcJMJb2XvU=
+X-Received: by 2002:a05:600c:3150:b0:488:9fb7:376d with SMTP id 5b1f17b1804b1-488fb792ce4mr260922825e9.28.1776770626889;
+        Tue, 21 Apr 2026 04:23:46 -0700 (PDT)
+X-Received: by 2002:a05:600c:3150:b0:488:9fb7:376d with SMTP id 5b1f17b1804b1-488fb792ce4mr260922425e9.28.1776770626440;
+        Tue, 21 Apr 2026 04:23:46 -0700 (PDT)
+Received: from [192.168.88.32] ([150.228.25.104])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-488fc14a61asm334535805e9.15.2026.04.21.04.23.44
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 21 Apr 2026 04:23:46 -0700 (PDT)
+Message-ID: <807622bd-1001-4202-b612-c8504fc7c67f@redhat.com>
+Date: Tue, 21 Apr 2026 13:23:44 +0200
 Precedence: bulk
 X-Mailing-List: linux-hams@vger.kernel.org
 List-Id: <linux-hams.vger.kernel.org>
 List-Subscribe: <mailto:linux-hams+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-hams+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260410120319.789114053@kernel.org>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH net 1/1] net/rose: hold listener socket during call
+ request handling
+To: Ren Wei <n05ec@lzu.edu.cn>, linux-hams@vger.kernel.org,
+ netdev@vger.kernel.org
+Cc: davem@davemloft.net, edumazet@google.com, kuba@kernel.org,
+ horms@kernel.org, kees@kernel.org, takamitz@amazon.co.jp, kuniyu@google.com,
+ jiayuan.chen@shopee.com, mingo@kernel.org, stanksal@purdue.edu,
+ jlayton@kernel.org, yifanwucs@gmail.com, tomapufckgml@gmail.com,
+ bird@lzu.edu.cn, yuantan098@gmail.com, tonanli66@gmail.com
+References: <cover.1776327338.git.tonanli66@gmail.com>
+ <52776256bf0fc38de92fe3edf39434538b672b69.1776327338.git.tonanli66@gmail.com>
+Content-Language: en-US
+From: Paolo Abeni <pabeni@redhat.com>
+In-Reply-To: <52776256bf0fc38de92fe3edf39434538b672b69.1776327338.git.tonanli66@gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-On Fri, Apr 10, 2026 at 02:21:09PM +0200, Thomas Gleixner wrote:
-> The only remaining usage of get_cycles() is to provide random_get_entropy().
+On 4/17/26 1:01 PM, Ren Wei wrote:
+> From: Nan Li <tonanli66@gmail.com>
 > 
-> Switch powerpc over to the new scheme of selecting ARCH_HAS_RANDOM_ENTROPY
-> and providing random_get_entropy() in asm/random.h.
+> The call request receive path keeps using the listener socket after the
+> lookup lock has been dropped. Keep the listener alive across the
+> remaining validation and child socket setup by taking a reference in the
+> lookup path and releasing it once request handling is finished.
 > 
-> Remove asm/timex.h as it has no functionality anymore.
+> This makes listener lifetime handling explicit and avoids races with
+> concurrent socket teardown.
 > 
-> Signed-off-by: Thomas Gleixner <tglx@kernel.org>
-> Cc: Michael Ellerman <mpe@ellerman.id.au>
-> Cc: linuxppc-dev@lists.ozlabs.org
-> ---
->  arch/powerpc/Kconfig              |    1 +
->  arch/powerpc/include/asm/random.h |   13 +++++++++++++
->  arch/powerpc/include/asm/timex.h  |   21 ---------------------
->  3 files changed, 14 insertions(+), 21 deletions(-)
-> 
-> --- a/arch/powerpc/Kconfig
-> +++ b/arch/powerpc/Kconfig
-> @@ -150,6 +150,7 @@ config PPC
->  	select ARCH_HAS_PREEMPT_LAZY
->  	select ARCH_HAS_PTDUMP
->  	select ARCH_HAS_PTE_SPECIAL
-> +	select ARCH_HAS_RANDOM_ENTROPY
->  	select ARCH_HAS_SCALED_CPUTIME		if VIRT_CPU_ACCOUNTING_NATIVE && PPC_BOOK3S_64
->  	select ARCH_HAS_SET_MEMORY
->  	select ARCH_HAS_STRICT_KERNEL_RWX	if (PPC_BOOK3S || PPC_8xx) && !HIBERNATION
-> --- /dev/null
-> +++ b/arch/powerpc/include/asm/random.h
-> @@ -0,0 +1,13 @@
-> +/* SPDX-License-Identifier: GPL-2.0 */
-> +#ifndef _ASM_POWERPC_RANDOM_H
-> +#define _ASM_POWERPC_RANDOM_H
-> +
-> +#include <asm/cputable.h>
-> +#include <asm/vdso/timebase.h>
-> +
-> +static inline unsigned long random_get_entropy(void)
-> +{
-> +	return mftb();
-> +}
-> +
-> +#endif	/* _ASM_POWERPC_RANDOM_H */
-> --- a/arch/powerpc/include/asm/timex.h
-> +++ b/arch/powerpc/include/asm/timex.h
-> @@ -1,21 +0,0 @@
-> -/* SPDX-License-Identifier: GPL-2.0 */
-> -#ifndef _ASM_POWERPC_TIMEX_H
-> -#define _ASM_POWERPC_TIMEX_H
-> -
-> -#ifdef __KERNEL__
-> -
-> -/*
-> - * PowerPC architecture timex specifications
-> - */
-> -
-> -#include <asm/cputable.h>
-> -#include <asm/vdso/timebase.h>
-> -
-> -ostatic inline cycles_t get_cycles(void)
-> -{
-R> -	return mftb();
-> -}
-> -#define get_cycles get_cycles
-> -
-> -#endif	/* __KERNEL__ */
-> -#endif	/* _ASM_POWERPC_TIMEX_H */
-> 
-Build tested for this series with allmodconfig and allyesconfig on ppc64le
-machine for ppc64le.
-tree: git://git.kernel.org/pub/scm/linux/kernel/git/tglx/devel.git getcycles-v1
+> Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+> Cc: stable@kernel.org
+> Reported-by: Yifan Wu <yifanwucs@gmail.com>
+> Reported-by: Juefei Pu <tomapufckgml@gmail.com>
+> Reported-by: Xin Liu <bird@lzu.edu.cn>
+> Co-developed-by: Yuan Tan <yuantan098@gmail.com>
+> Signed-off-by: Yuan Tan <yuantan098@gmail.com>
+> Signed-off-by: Nan Li <tonanli66@gmail.com>
+> Signed-off-by: Ren Wei <n05ec@lzu.edu.cn>
 
-Boot tested for this series on powernv9 qemu, powernv10 qemu and pSeries
-power11 hardware.
+we are moving rose out of tree:
 
-Tested-by: Mukesh Kumar Chaurasiya (IBM) <mkchauras@gmail.com>
-Reviewed-by: Mukesh Kumar Chaurasiya (IBM) <mkchauras@gmail.com>
+https://lore.kernel.org/netdev/20260421021824.1293976-1-kuba@kernel.org/
+
+please hold off until Thursday (after that our net PR will land into
+mainline), and eventually resend if the code still exists in Linus's
+tree at that point.
+
+Thanks,
+
+Paolo
 
