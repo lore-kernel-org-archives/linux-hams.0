@@ -1,139 +1,142 @@
-Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.133.124])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yw1-f175.google.com (mail-yw1-f175.google.com [209.85.128.175])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 66DC43BE632
-	for <linux-hams@vger.kernel.org>; Tue, 21 Apr 2026 11:23:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=170.10.133.124
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776770633; cv=none; b=ko332fwSTkP6e+Bx0KX64P1ip66yHro0OhtLewdZIE4OuYETVbrI8/D8QkbJM4Zes9BZLgBOMen7otXjJcddgR9hyEpkQEpj7FHkjJu/fR2JyOs4OmDRTWKi/oXHXifI89SlmcM8aOnY/svZ4a8nblfR5wL8xjo4oJd2HHhMkRo=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776770633; c=relaxed/simple;
-	bh=bvsNNhXjDuCqvJ4f2MCP+3c83kbaeMjS6Knbdq69M94=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=DnF8/6XRcJjkQuk8cs9lRCrzDfIU0+LsTMJxxjwqZLoxiRdfM14NxDUL2YZ7wsQ5KLCDu7mw8XN7lc6NwUViz1jWBDSBodQkOrXx9rez1biJ/+EGEWo/ZyKLRYCLW0DhW74PNUxALimhotHQyn2TVZ/+bNKfYE5fTzhjmjtP+ng=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com; spf=pass smtp.mailfrom=redhat.com; dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b=gSdMAc+8; dkim=pass (2048-bit key) header.d=redhat.com header.i=@redhat.com header.b=Xa7G/RrY; arc=none smtp.client-ip=170.10.133.124
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=redhat.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7DD843A7825
+	for <linux-hams@vger.kernel.org>; Tue, 21 Apr 2026 12:07:19 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.128.175
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1776773240; cv=pass; b=jZ2fq4nojpdx6DLd6nMzGHXIpNkSyQlLwLgbZkeLpf6zfrVFy0Ahd6vudcAK/F30ZPuUFECPg7e5tYp+4q009GUkdl78WbsIn5ZtGdgGhmuew66lc4WmN8Y0KkC6pjZCXV0WYDRGVDIRXDHJFTXJ5yHtJcTHdlNT7h+3+AsuwiA=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1776773240; c=relaxed/simple;
+	bh=/4xlXlgr5gHhEx7hkQ+MHrDMIugb+AXYYNkM+Z3m22s=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=DM0Ijv4fVQCdcDaI7qczAhsJmbWMolpEG5BiJRRLLtBXAMDp6No5bZMC2hOw//6vkBzMevub6QPhClMfpL6gYdoQBDnqwq9nIY/N5jJ/lIfO+moX62NCjmzvyNZJztDpaU3/Um9R0cNRg4jVvLq7aUTe/zN/P/EgExiFxdjXcYY=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=UpMfWFqi; arc=pass smtp.client-ip=209.85.128.175
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="gSdMAc+8";
-	dkim=pass (2048-bit key) header.d=redhat.com header.i=@redhat.com header.b="Xa7G/RrY"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-	s=mimecast20190719; t=1776770631;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=xxVa+EsHT5PrcBeK2zG20jzylvTADEVkR1ky4LvMTjE=;
-	b=gSdMAc+8tLcg1LcoFGY1beEaLS52G9iABpRlJveCqLD/fVuKexJFjOT150gqh9gumAlHK+
-	xljPPlX41niWgtvdaKt3mZxVpnBhxZ6bscrnR286zNuWOJEeLpRve4LH9Y4XMpDVFEbBT8
-	7mKXfgSJ94Seebe+qKmYJQUcpeoiDPs=
-Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
- [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-640-xDgXxkTUOMCZbts088bN0A-1; Tue, 21 Apr 2026 07:23:48 -0400
-X-MC-Unique: xDgXxkTUOMCZbts088bN0A-1
-X-Mimecast-MFC-AGG-ID: xDgXxkTUOMCZbts088bN0A_1776770627
-Received: by mail-wm1-f72.google.com with SMTP id 5b1f17b1804b1-488c2aa6becso39682315e9.2
-        for <linux-hams@vger.kernel.org>; Tue, 21 Apr 2026 04:23:48 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="UpMfWFqi"
+Received: by mail-yw1-f175.google.com with SMTP id 00721157ae682-79a535e7c00so45924687b3.3
+        for <linux-hams@vger.kernel.org>; Tue, 21 Apr 2026 05:07:19 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1776773238; cv=none;
+        d=google.com; s=arc-20240605;
+        b=jZeI7b1tK0dBZ/0WBUU/aTfo1MmoRk+J2WM/sfxlZ5nTrHe+TtrAoGQ6LHJTf5lJ9R
+         mBtP/a0IXFWMaEbygrETEe51mzsAbQtGI37YIGiBJ/5gsRwjBcbyD36XrMU8dkj3v3wD
+         naN0KfRwAvLrB/zaEZzvrXDn0zbyqMQ3t3RNUMxNjaSGOUvJrjXV35GeATh4iRM6A5xu
+         mo2uw7Bup6scAbuLnmOwSwbaKHTQ6FdchaT7MIuAqkjZDXwj1tdQ1vqNI6pvKLNsi/JR
+         xziod/OxBhZs9QgYCJxueEqECvCHmwIjCEQdr65VNfuMKS2tba6MtEbzg23csk0fHbzb
+         6BXg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=dpkR/kk9mZLrEXxtkG1ZvoW6WEbgKq8NtjJV67sNSZg=;
+        fh=gT0kdAOM921gFqU1bVt2NAWY++3uZDXCgdt50cydG3M=;
+        b=EFby5g1IF+UTKtp+5WYhCRX/xmH/EvF7/0z9ej/1UXYCfNnPZ8yFkYpMbw+NCqW6t1
+         xvqRO8OTD7fygFhu9GrbgMrRLw9JB79CDXzzTBSwpg3QFG+d/E+9wSVVin6Y//HhwEI1
+         1jhEmhix0gXAwgArVJHi+51W8WBTlmzlfmvq8F/i9mFdFe1KMtVUZeYEkEzeCJOiBJwx
+         z38tf7Q7+/FJ6yEGnAJ7Es3v0Z9KqXeSoH99eh0/hQSTk3N+f7+U1d9gh/f4EHXOdMgn
+         SWypZHm71uNwFqdc9/5ZwXktPIFpZso2ZpowtzrNZQozFbY7vvaqTWT6h+P8TTLXl7P/
+         hkKQ==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=redhat.com; s=google; t=1776770627; x=1777375427; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=xxVa+EsHT5PrcBeK2zG20jzylvTADEVkR1ky4LvMTjE=;
-        b=Xa7G/RrYXOxuXt3XH2HtStzF4g6Fc+WN3RTovNSX19L9TAfC6lupaQjLyEOhnLxh2Q
-         xviTHulK4JQ9AuMLR5gFRiKtRjF788rMUtJPMNHeAdlbI4WyWKZ6fZUtl+SxLdwolx7d
-         d64GFjC+xDkdbY58fFtm3ejuKqN/GxPFJc0lqbT5AVJPw3DRyS2q4qF4wbW5WrEXHDJ/
-         cJ06j3hMiALZal0bh7E6gfog3z2LbCgwmYBS5xvQe/PUYn2huaOxjtg4EYnmWXTa7cX+
-         W4eBUU3iyToLVj6D9BJa4ruhkUTmDkdCoi2zeYfqAtpnA6Eb+GtLtz+T3zuKQMdvhX1S
-         psOw==
+        d=gmail.com; s=20251104; t=1776773238; x=1777378038; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=dpkR/kk9mZLrEXxtkG1ZvoW6WEbgKq8NtjJV67sNSZg=;
+        b=UpMfWFqiNGTufhiBe3zlzyDkiOLop55WB7RrqrbYGKkSdQvEBsYwgaBKbFBmkxsbAR
+         7BqMRz456e2OhtDnhJne0pI0QzLHPzsTWsH41LqcgOWsnNsKff5+0eyCjn/IE/PMvP4M
+         l4OVLtuLWOvlZEONEEP/3qI5nMKidV5jce3fRmdM9D6rZJrngzxJcF0oK0boVFV525HD
+         GD7B4mWQju1WezwICT7/v6QgCZ2GjYmg8FOEgO5MV5h1u+6T6Zk/v9lVLrShyeAPBXhs
+         yy2O4Qf+XWjx/J0vcwmLa8xZioN+hmuzygUaDJhORiOBvNgpqbi0bp8tkHo6UOhFbmC9
+         axjA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1776770627; x=1777375427;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=xxVa+EsHT5PrcBeK2zG20jzylvTADEVkR1ky4LvMTjE=;
-        b=lYyrTfjg4FvmOsP3JzK6PIg4PYSI5iv8E+JoNuoj+qN0D8y5qsCNUV7CMn/XW9eE98
-         xvyTcLr6i8pszvDD+MN0XMwwlnvIkA7tVsJ2bYVuKrhNaDR+8UXuautuXlWsQ881W7td
-         vmWFxZj1feVet8qmQBC1uJ1lISO/YWitVOCSYxt11eYUyi/022FD2vSPcbhV9eACeM58
-         B1x6Vb7HEV30LViLWcfzbfaklWNTFOCrgCa8ZGAiR31S92W1ZcbfMR1JD2FzOtk5mBsY
-         HWM2ggIQkZ/d6fX0W1zkq6iSWBlo/8HwgZc04GfWHFU8WylOfh9KLNPXnrvhWYBjD0n3
-         VKOA==
-X-Forwarded-Encrypted: i=1; AFNElJ9Qqv1zIoekfcbqwpR2yAtHbkt6okjnc0rxORNE812BO1fUg1pMzDHcAGJ7AvTehtnpH301PoPjYy6O@vger.kernel.org
-X-Gm-Message-State: AOJu0Yz/GUR7RuxkXXhaKBHp2gOtNxBvRHf/rn4CDF+MMGO7qckaeAsM
-	E/Kce09xWaS5XkCY5xEd3wcds7Y4bWa/0Ie3qwRXU4VDuye2qJ2WeYCi+kqEj53Y8LXeOMKGb/K
-	wRZRcOUrvxAuloT8AcQ+oW9nMEfF7/B0vAVvZw6+4t3rmyIVM3LkazRSh1pzeAZM=
-X-Gm-Gg: AeBDietzHlZeCSnwzUCbhwCXFCM4+ZnUfY9EHXDUJ3TxUpQjCplC6LY7tZMqx8I6kr1
-	706EA907DzsgeP8Gyqb8DfJ+x89WOlT640TXub60HZknzfBYJYfYWMbP+9DiirM5M4rRx2rX4ao
-	H9hRg32oCwys6xAONjvt60Hn7R7Dv69gsoWNugQmALcSrH2lOTnNoOE7adOwwc3VT9zU9qDrBK1
-	eS3Twh9sFj3yHG0HCwFvKph6f0VkRJ6cVPngoqiKSzXJW/ItVc3dQfRji8OjjBjdtQvlIo2s95z
-	HPO5zv5QgamCioEKBEwqz/ZrKKN+tQbC0SEfzVXDpVNUTAHAsUb2SaZIG24AfqzQqTb+vHEwtmD
-	AXAIOM5NcwlaSvniO+jnGTpGonJwv8YicMQ33xaFwso8IA4lSIVy+9pzgDFcJMJb2XvU=
-X-Received: by 2002:a05:600c:3150:b0:488:9fb7:376d with SMTP id 5b1f17b1804b1-488fb792ce4mr260922825e9.28.1776770626889;
-        Tue, 21 Apr 2026 04:23:46 -0700 (PDT)
-X-Received: by 2002:a05:600c:3150:b0:488:9fb7:376d with SMTP id 5b1f17b1804b1-488fb792ce4mr260922425e9.28.1776770626440;
-        Tue, 21 Apr 2026 04:23:46 -0700 (PDT)
-Received: from [192.168.88.32] ([150.228.25.104])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-488fc14a61asm334535805e9.15.2026.04.21.04.23.44
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 21 Apr 2026 04:23:46 -0700 (PDT)
-Message-ID: <807622bd-1001-4202-b612-c8504fc7c67f@redhat.com>
-Date: Tue, 21 Apr 2026 13:23:44 +0200
+        d=1e100.net; s=20251104; t=1776773238; x=1777378038;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=dpkR/kk9mZLrEXxtkG1ZvoW6WEbgKq8NtjJV67sNSZg=;
+        b=nCzlambWYGmPmp+GyTwCtA+JPtHZbMlEhILNYXmKPnCuNCL3tWmuH6hJCca42cNDAJ
+         g7pMWqSzrm/r3tgtgweBrngI5MupuYO0kghZk3KQ61FwSwdZsjtulhX1lO64iMxEBJh+
+         8PJoTGOoYPNdqJy/LCDgMya/Pa8TMyqglDFhDbTmPrhREYkBt0DEjUCNn8tUiIuBoSSK
+         BhGYnl/3XPIGUEFaYwrSzkHI9oAMoh3CVHrzDEDHG1s+iTKSRpFs+CCZfLF6oCDbFLjb
+         ZLtqrkuv398TJ6YHV+6Cxd7iuJrztdl5TDiERCq1lghPdRqDJ8rRftTVN1hO0pXBTgEy
+         ij0g==
+X-Forwarded-Encrypted: i=1; AFNElJ/AjnJTj4bb3CBSKbTEhGYTpnhVZ6Nk0D0F1h5Divcy1gZPYh3OxkhRPQvSwPGnx3kSiRZpduYpRy4A@vger.kernel.org
+X-Gm-Message-State: AOJu0YxOd7qbLLeINBSoGo2Q+AQoNEe6SqY6vK3RfcrBjM64WIeBnqtJ
+	HE4UakD6S1qBAAZRl4s7zrLOaSokG5Md2my+CJELBQul3B1T/Uw+triesRoy6yVfViADJ8XCU2g
+	mFLoUao8YGmG86+JKl0+SeTMI6XI/e2M=
+X-Gm-Gg: AeBDieuklizTSsC5Si2jk2gxktn3M5zb3za3Nn6Lf2/n9plWxaEXy+M5481ddOgBKhP
+	TWye1EOG3OEoJ8AcKc/sNM0X7gjfjBbQ7dwQhl/VCsut34XOGTEwRrnyXhEpIGpYyhSxPPVgbUF
+	BAq9K5XFme7w3XUqGJ3TBXE9f92C8oJsvOOB0mmzAOsIIoFz3oB0ro+WJy5r5JWzSx9R8rp3IjW
+	gi1VO77bU6dN8g61syKho1+CuzLRAP5y1OHBsJjGzv14MPaUAPYUz0PK0Cfvb3GJsUNYIUYwQZd
+	wFQKaAvt+aJh6zZApfYjgU9QRqVlJWBdph2uYgi4Lb/yCVHn4r2SBt6IBWLj4+Bt7GzjhR8Nfu+
+	gDYQMX5LVbpoj+aGdXXyFpJ+T7WQDBtHFlXTr
+X-Received: by 2002:a05:690c:6287:b0:7b7:c5a2:fa49 with SMTP id
+ 00721157ae682-7b9eced6930mr181294537b3.18.1776773238303; Tue, 21 Apr 2026
+ 05:07:18 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-hams@vger.kernel.org
 List-Id: <linux-hams.vger.kernel.org>
 List-Subscribe: <mailto:linux-hams+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-hams+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH net 1/1] net/rose: hold listener socket during call
- request handling
-To: Ren Wei <n05ec@lzu.edu.cn>, linux-hams@vger.kernel.org,
- netdev@vger.kernel.org
-Cc: davem@davemloft.net, edumazet@google.com, kuba@kernel.org,
- horms@kernel.org, kees@kernel.org, takamitz@amazon.co.jp, kuniyu@google.com,
- jiayuan.chen@shopee.com, mingo@kernel.org, stanksal@purdue.edu,
- jlayton@kernel.org, yifanwucs@gmail.com, tomapufckgml@gmail.com,
- bird@lzu.edu.cn, yuantan098@gmail.com, tonanli66@gmail.com
-References: <cover.1776327338.git.tonanli66@gmail.com>
- <52776256bf0fc38de92fe3edf39434538b672b69.1776327338.git.tonanli66@gmail.com>
-Content-Language: en-US
-From: Paolo Abeni <pabeni@redhat.com>
-In-Reply-To: <52776256bf0fc38de92fe3edf39434538b672b69.1776327338.git.tonanli66@gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+References: <54da3df9-6c91-4df0-87ff-1975d536761d@blemings.org>
+ <CAEoi9W5o_twDPYMZDqajqz+UYJm5wOvAx+hUFefXmU=vUbOgtg@mail.gmail.com>
+ <CAEoi9W6vTPPHh-NBKZcgmo7GKTecQw1UuZ4HjwNTzqvNXWC43g@mail.gmail.com>
+ <7a9547e1-9958-4bce-8547-71a93153a0d6@vk4msl.com> <c412bf83-e8cf-4a3d-8619-63f68e108399@blemings.org>
+ <CALJxBtX_T8sv11ank-arLfoVqJqXegi3D_ZT9ZFbMHkuf-2RAg@mail.gmail.com> <5549733f-c9d6-4bae-84e3-285a317ee334@blemings.org>
+In-Reply-To: <5549733f-c9d6-4bae-84e3-285a317ee334@blemings.org>
+From: Dan Cross <crossd@gmail.com>
+Date: Tue, 21 Apr 2026 08:06:40 -0400
+X-Gm-Features: AQROBzAzZ0GRugiuEw5UqkQyvcGzt_cc-9lr5ym2yuO6kTF9x3niAKkyk3PvjW4
+Message-ID: <CAEoi9W4L3WTVv5Hhiec8D8J=654h-p+Mh_Nd9bbm_cDyardsVA@mail.gmail.com>
+Subject: Re: Discuss: Future of AX25, NETROM and ROSE in the kernel ?
+To: hugh@blemings.id.au
+Cc: Steve Conklin <steve@conklinhouse.com>, Stuart Longland VK4MSL <me@vk4msl.com>, linux-hams@vger.kernel.org, 
+	netdev@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On 4/17/26 1:01 PM, Ren Wei wrote:
-> From: Nan Li <tonanli66@gmail.com>
-> 
-> The call request receive path keeps using the listener socket after the
-> lookup lock has been dropped. Keep the listener alive across the
-> remaining validation and child socket setup by taking a reference in the
-> lookup path and releasing it once request handling is finished.
-> 
-> This makes listener lifetime handling explicit and avoids races with
-> concurrent socket teardown.
-> 
-> Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-> Cc: stable@kernel.org
-> Reported-by: Yifan Wu <yifanwucs@gmail.com>
-> Reported-by: Juefei Pu <tomapufckgml@gmail.com>
-> Reported-by: Xin Liu <bird@lzu.edu.cn>
-> Co-developed-by: Yuan Tan <yuantan098@gmail.com>
-> Signed-off-by: Yuan Tan <yuantan098@gmail.com>
-> Signed-off-by: Nan Li <tonanli66@gmail.com>
-> Signed-off-by: Ren Wei <n05ec@lzu.edu.cn>
+On Tue, Apr 21, 2026 at 2:28=E2=80=AFAM Hugh Blemings <hugh@blemings.org> w=
+rote:
+> Hi All,
+>
+> Just to note in this thread (top posting as it's a bit orthogonal to the
+> rest of this discussion) that events have preceeded us somewhat here
+>
+> A patch just recently submitted removes the AX25, NETROM and ROSE code
+> from the kernel moving it to the mod-orphan sub tree of netdev
+>
+> https://lore.kernel.org/netdev/20260421021824.1293976-1-kuba@kernel.org/T=
+/#u
 
-we are moving rose out of tree:
+Wow, that happened much faster than I had anticipated.
 
-https://lore.kernel.org/netdev/20260421021824.1293976-1-kuba@kernel.org/
+> A shame but perhaps inevitable - but I think we have a good plan
+> unfolding to both take care of medium term maintenance of the kernel
+> code (in tree or out as it may be) as well as a move to userspace in the
+> longer term.
+>
+> For the benefit of the netdev readership - we had a thread over in
+> linux-hams on this but that may not have been visible to folks in
+> netdev.  TL;DR: we think we have a way forward but appreciate this may
+> not be quick enough to meet the requirements/concerns put forward
+>
+> If we can delay removal, that'd be grand, but appreciate that moment may
+> have passed.
 
-please hold off until Thursday (after that our net PR will land into
-mainline), and eventually resend if the code still exists in Linus's
-tree at that point.
+Personally, I think this may actually turn out to be a good thing.  If
+nothing else, it's a forcing function for the ham community to get
+serious about providing an implementation that works well, and in the
+short term, an out-of-tree module can keep things working for folks
+while alternatives are investigated and prepared.
 
-Thanks,
+I appreciate that folks want to discuss timing, but it doesn't appear
+that there is much else to be done at this point. It would make sense
+to continue discussion of alternatives over on linux-hams, sparing the
+already-overloaded readers of the netdev list from the sordid details.
 
-Paolo
-
+        - Dan C.
+          (KZ2X)
