@@ -1,171 +1,147 @@
-Received: from mail-oa1-f77.google.com (mail-oa1-f77.google.com [209.85.160.77])
+Received: from mail-ot1-f43.google.com (mail-ot1-f43.google.com [209.85.210.43])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 98FEC3F0760
-	for <linux-hams@vger.kernel.org>; Thu, 23 Apr 2026 13:23:33 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.77
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776950615; cv=none; b=RUVwjb2RUSuySH8ckirJso0VEls8/mPZjPcgLnw+1mLSNjFBNYRaPwrGnypBG0d8MNxFXqyDeR5qlARHDxOES2oSeVvnQQ0DEGnxtWAdSLBAahovmjfualWnOXslcBiDsObBWl3+48O1H9GMd/sCKtIJ7MieZBgxvImwTLx0FTo=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776950615; c=relaxed/simple;
-	bh=63ShA8NK9kpnaJH+jLi3Lq4me0eshFWuqt1ONUPqAFQ=;
-	h=MIME-Version:Date:Message-ID:Subject:From:To:Content-Type; b=Yir5r7XzkJTswq4VkLGT5SUEjmWS/7eGD5c+2CaYw353lgS89uMAjnhEhi7HzE9JAa2vq0K/8YG/O7Ye9jF6dgP4hN1budI4SLbVOjlxfxZ6tGxQ97s0dVftDJD9eTp/WzzLfRPHs5VTq3bH5MaLyTnNFx3zhoklzoOImPOxadE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=syzkaller.appspotmail.com; spf=pass smtp.mailfrom=M3KW2WVRGUFZ5GODRSRYTGD7.apphosting.bounces.google.com; arc=none smtp.client-ip=209.85.160.77
-Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=syzkaller.appspotmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=M3KW2WVRGUFZ5GODRSRYTGD7.apphosting.bounces.google.com
-Received: by mail-oa1-f77.google.com with SMTP id 586e51a60fabf-40f192cf4b6so4331343fac.1
-        for <linux-hams@vger.kernel.org>; Thu, 23 Apr 2026 06:23:33 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C1610BA34
+	for <linux-hams@vger.kernel.org>; Sun, 26 Apr 2026 03:17:21 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.210.43
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1777173443; cv=pass; b=SYCIojaekHJ3SOPzo6O8Q0td9VKJgQ3psp9R7x60C95uo8qBh5X8crDJoGO9DpT2WEJrHNWJLZ5lUndG65ZK1KMwYgE052VEsFWlaVorq7yFY9dy0kQierjrJ89RAT5zIXR9RWUIxJvp8SMVGQ2BFoCAWxKZWUkSYoVtnKWeG9Y=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1777173443; c=relaxed/simple;
+	bh=wwuVSUUgRfBW6KLCvPs1eEFWu/ju0MkJUy7bxg2YYNM=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Content-Type; b=iDKQB64VytF15yhLWdbWgvVpLQPr8JLqbr/vysX+wbvg3xGNxHgDNPVWIdOr9fnzqByy0vi9i1ZeHlAgJqlggZAOGziE4U0fPdcIDGn+Bikh+XWNQWSeaJk9vgkpvoLL4sTZqN9wsXK4LIuqwbrGFiBH4SVu3rfpuBii0u2CHlE=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=tlmtech.com; spf=pass smtp.mailfrom=tlmtech.com; dkim=pass (1024-bit key) header.d=tlmtech.com header.i=@tlmtech.com header.b=Uy4Vowvy; arc=pass smtp.client-ip=209.85.210.43
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=tlmtech.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=tlmtech.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (1024-bit key) header.d=tlmtech.com header.i=@tlmtech.com header.b="Uy4Vowvy"
+Received: by mail-ot1-f43.google.com with SMTP id 46e09a7af769-7dd73b7c757so2295944a34.0
+        for <linux-hams@vger.kernel.org>; Sat, 25 Apr 2026 20:17:21 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1777173440; cv=none;
+        d=google.com; s=arc-20240605;
+        b=iLFbjZoKlLalqUu+V3ez+a55e0q+uumZ1bWKem+fMa8+otqlKx2+I50dUz4xGsaGEZ
+         k5BmqoaaT6g/L7vi/GFBvowIa7ACAZxyYB7lH4u1mTYGDiIcX2dIbEhOBMqizM+ykJjR
+         hMLtS0f0wi9477SyRWjbTggXmgAH40JTZXxKJyOIBdB4ECI7DYavQGd1H9qUNrs/Ir97
+         smIgj9VuIpSvg4Vj5oHZISkZUfSECtmaMDD/BEe3b85H7uDsWiEJqa+r87fQi2SByMLF
+         TER/MPhQxis9DqikbmGlHReNbVdqZimQap4Ka8qfRS+9msoOqKmeBHvfThnXR+wuyXia
+         2QvQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+        h=content-transfer-encoding:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=4tgfO+0e423OtwkMM5X9xZUhG2iqqB4OoSZYjltwl7Q=;
+        fh=yvyQ0fNR7evt9jL2wClrmYYCzRjxmggS8kmKCqDY7Yw=;
+        b=ONDqVjI/P7i40sLdNtXfQSRWvKzWwqxxDX5BgIfiVB+U3TkjzVfgMkwkLTXHuGW5hS
+         0mf1s8K51S6ln9vn/NThUYAsJUs6NTQDjG/OmgV+6ZLf8XB/hweVTKgcPZM7Opv6SfJy
+         d+VcbP3rv4OBQ/C1udaRRnMUNvZ8mLZO2AlO5uq5YGzYFuTzcjRgd7X+e2DbBHheBvLc
+         eFk4y+2e9YpDhlJxUU+FRdIhUYDsSXNcwdp2/aWcLEZgrUc9+/+/1JNbKP9hGhzWw3JW
+         XgGc4qE413EPuvZ7eSk87No3/pLOgFM7StxBLTYdLelK9KJ0tBdVKpst8gabdesjYN0Z
+         HTdg==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=tlmtech.com; s=google; t=1777173440; x=1777778240; darn=vger.kernel.org;
+        h=content-transfer-encoding:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=4tgfO+0e423OtwkMM5X9xZUhG2iqqB4OoSZYjltwl7Q=;
+        b=Uy4Vowvy1uJL1oWQoLwHkwz9fuikZYuIYwumWhXRMbZNqxT07H+AGIt2D5Wm2G+7/9
+         3FybHW1KGbH7JJVrDFj7rU5TLvB4bniThdV+Vjxmo5Vx/s7omggzFezB4JODL6FOSy3I
+         A6tEHKdWaOCjOv5dTfNHB45fQfvT5Au17RQak=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1776950612; x=1777555412;
-        h=to:from:subject:message-id:date:mime-version:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=P3RxVIZmQIvR1MLx6j1nb0GzLH5yhyU+E4PLS8iiTg4=;
-        b=CcNaQpEnZPNQX9whIwlMfN6xm5BUtdIjzNs1c5zf1BsK883HtWc2WzP1OX8FfhWyDw
-         RNNyI/2uvsiB2m1PAqkbuySEW54FrTDdGV5mZEtHLIQeqUZKoQ+Y3sfHtC46cBfk23KP
-         HVbzFltcNS7W9NBofNQlbSH5+gaiWLBIhLt3UBrCEyQnv3RKzBFa6VFYMy4onbFZor/z
-         vhAWZyKcPdS1Qx9m3hVJtdi+6/kQ+wfWoeAA3Y6IZB5+ojevoHuaNULnYZLF8pgHfDjB
-         jlsBP7iWWySEqkrqrFwoTrLMoFFddgRmx3WS5wXhlIrrXZ6Vd2BW7qvL5lkKX2w886mS
-         VvLA==
-X-Forwarded-Encrypted: i=1; AFNElJ9BImDE/LI2mlmxpZspUCQzX37ord9Z3ovcPEl5Jiay/q8tCxnguNSdM4lC44MT2oAQtKpvnjWW4W8y@vger.kernel.org
-X-Gm-Message-State: AOJu0YxJ3r6mLx8/ZWkRgQ88yEe6Nx1wla8RsIJNCpTJDKtilGD8NfYM
-	Ns3wiSShGUotaANQxml3razw4iwaQW1NcpHvukk288mtMJOQr0UO0wCes0bhmb1GNxTRmqf9VtV
-	fn1VxQiIyT1kv8lYhIjCatYLtGWXI3C5MjnekmY5T1kLmpoLDFi38RZpyX8g=
+        d=1e100.net; s=20251104; t=1777173440; x=1777778240;
+        h=content-transfer-encoding:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=4tgfO+0e423OtwkMM5X9xZUhG2iqqB4OoSZYjltwl7Q=;
+        b=g1saryJjqULRZJpI+Ub4bGF7RhL2dHKBY4TCPCRNnob/b4RmB5xfrjRv7NeaBFZczh
+         VCMddP+UNH3+RFt7KIkzb2oYKok2AmteijQWgwJIwNLGMqP1blAJAy1SOzbQ/vtwBn7/
+         4B7Rkqxbkg9K0BR74/uZOO4+6R6YLDeMNxNPiBvrgoTxbijqZz7HeLkEkBdMe51c2jEm
+         VABnUiIFu1pKfYB99Cj82OS6XR2uV70hmpew4kCA+XjbQmOY7DSZsfOJZa1WK0rBZt/A
+         eBLLq6emIHcWuz94P0eMlrNKNOp8PYjC/ZWco+MED35cmABYyph+ODouBLvQ96g6/t+I
+         eLoA==
+X-Gm-Message-State: AOJu0YwBsprMdnBWHh2dmsqMKca0Mrb8rFhZPc57BQs//uH4bNjFlViI
+	55envNQEufLzyoi/j8w8Y1N5q3BS+PgkklQMTaA+3CDFEovOy99t8fXF2w8z551XxyKunRjIN/A
+	R98R5l8sKYZowC7u75t10LZVUbsrjOww2IM3Dh5/Bo4ovCMax0uwqnSc=
+X-Gm-Gg: AeBDievSA7/JTxRbK0bgohmigJHJ/elWhXgPiSZd/uhktMruwT7kiqHReRVSNW/CCI6
+	4NEwEifZfEpAr0EkdUO1FETzQIeS+LNlttFhAEd1Z2eZfzO9PSk30a9ytTFtX1REqefybAYa4Se
+	zONgLJhHlvylqpIuQmqe8lykT34Fdyp0r4h7gKcpGHGufr8uc9H3VakPFqAYLLpyBAELQcrmvFU
+	yyLktwKDhPudtEpY7/Kh7CCSC8nbJoGOmJtctEPeSlvJryxN5EurJHXZeMp/dAAReyvJOUnEnnl
+	UA2cQWk3gYHXZUvAMQ==
+X-Received: by 2002:a05:6820:2103:b0:694:9b71:3743 with SMTP id
+ 006d021491bc7-6949b713b79mr13869886eaf.51.1777173440545; Sat, 25 Apr 2026
+ 20:17:20 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-hams@vger.kernel.org
 List-Id: <linux-hams.vger.kernel.org>
 List-Subscribe: <mailto:linux-hams+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-hams+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-Received: by 2002:a4a:e90c:0:b0:694:8b4d:5f8f with SMTP id
- 006d021491bc7-6948b4d61b9mr9352920eaf.57.1776950612565; Thu, 23 Apr 2026
- 06:23:32 -0700 (PDT)
-Date: Thu, 23 Apr 2026 06:23:32 -0700
-X-Google-Appengine-App-Id: s~syzkaller
-X-Google-Appengine-App-Id-Alias: syzkaller
-Message-ID: <69ea1d54.a00a0220.9259.0026.GAE@google.com>
-Subject: [syzbot] [hams?] WARNING: ODEBUG bug in rose_release
-From: syzbot <syzbot+b091c5774423d1319a22@syzkaller.appspotmail.com>
-To: davem@davemloft.net, edumazet@google.com, horms@kernel.org, 
-	kuba@kernel.org, linux-hams@vger.kernel.org, linux-kernel@vger.kernel.org, 
-	netdev@vger.kernel.org, pabeni@redhat.com, syzkaller-bugs@googlegroups.com
+References: <54da3df9-6c91-4df0-87ff-1975d536761d@blemings.org>
+ <07d8ced7-fda8-9471-351d-6416f089d3db@trinnet.net> <CAEoi9W5su6bssb9hELQkfAs7-xicCrrS7A4_Oo9K8but-jav5g@mail.gmail.com>
+In-Reply-To: <CAEoi9W5su6bssb9hELQkfAs7-xicCrrS7A4_Oo9K8but-jav5g@mail.gmail.com>
+From: Joshua McAdam <josh@tlmtech.com>
+Date: Sun, 26 Apr 2026 13:17:09 +1000
+X-Gm-Features: AQROBzCVRnINd2Tk9AJRRZLpKgutcauJuqEP13cUNc1Izh0TuGvm1Xo-zHAk3k8
+Message-ID: <CAPmVDN4+A2JNGO_j-8mYK2zGSfY+Fg-3Cbq66Qqxca4uOjBS6Q@mail.gmail.com>
+Subject: Re: Discuss: Future of AX25, NETROM and ROSE in the kernel ?
+To: linux-hams@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Hello,
+On Wed, Apr 22, 2026 at 5:30=E2=80=AFAM Dan Cross <crossd@gmail.com> wrote:
 
-syzbot found the following issue on:
+>
+> Multiple userspace programs handling one or more logical connections,
+> coordinating with a server of some kind implementing the lower-layers
+> of a protocol, follows a pretty well-understood implementation
+> pattern.  The same techniques the kernel uses to map file descriptors
+> to such connections can be used in userspace: each connection is
+> represented by some token that maps to an identifier that uniquely
+> identifies the protocol-level connection in the server; the actual
+> mapping from identifier to such connection is just a some kind of
+> associative container maintained by the server. As events occur (data
+> sent, data received, timers expire or are reset, control operations of
+> various kinds) those connections are looked up, logic to handle the
+> events is run, the connections might transition into new states, and
+> side-effects (e.g., actual transmission of data, or re-arming a timer)
+> are emitted and acted upon.
+>
+>         - Dan C.
 
-HEAD commit:    2a4c0c11c019 Merge tag 's390-7.1-1' of git://git.kernel.or..
-git tree:       upstream
-console output: https://syzkaller.appspot.com/x/log.txt?x=12df3702580000
-kernel config:  https://syzkaller.appspot.com/x/.config?x=3e19fa1907a3dfda
-dashboard link: https://syzkaller.appspot.com/bug?extid=b091c5774423d1319a22
-compiler:       gcc (Debian 14.2.0-19) 14.2.0, GNU ld (GNU Binutils for Debian) 2.44
+Hi All,
 
-Unfortunately, I don't have any reproducer for this issue yet.
+Like Hugh I have also been lurking here for a long time but this is
+also my first post,
 
-Downloadable assets:
-disk image (non-bootable): https://storage.googleapis.com/syzbot-assets/d900f083ada3/non_bootable_disk-2a4c0c11.raw.xz
-vmlinux: https://storage.googleapis.com/syzbot-assets/2702dddfd186/vmlinux-2a4c0c11.xz
-kernel image: https://storage.googleapis.com/syzbot-assets/51878be8732c/bzImage-2a4c0c11.xz
+As a fairly active user of the Kernel Ham stack for decades, seeing
+this discussion start is timely because I have been wondering how I
+could help, as I could see things seemed to be slowing down and
+approaching a turning point where action is necessary.
 
-IMPORTANT: if you fix the issue, please add the following tag to the commit:
-Reported-by: syzbot+b091c5774423d1319a22@syzkaller.appspotmail.com
+I believe many people still rely on the kernel stack for BBS's,
+Digipeaters, I-Gates, Winlink Gateways and nodes out there running IP
+over AX25 - even things like PAT for Winlink which has no native KISS
+support, so it relies on Kernel KISS interfaces (i use this
+personally).
 
-------------[ cut here ]------------
-ODEBUG: free active (active state 0) object: ffff88803f4d2090 object type: timer_list hint: rose_t0timer_expiry+0x0/0x150 include/linux/skbuff.h:2942
-WARNING: lib/debugobjects.c:629 at debug_print_object+0x18e/0x2a0 lib/debugobjects.c:629, CPU#2: syz.1.11287/7248
-Modules linked in:
-CPU: 2 UID: 0 PID: 7248 Comm: syz.1.11287 Tainted: G             L      syzkaller #0 PREEMPT(full) 
-Tainted: [L]=SOFTLOCKUP
-Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS 1.16.3-debian-1.16.3-2 04/01/2014
-RIP: 0010:debug_print_object+0x19b/0x2a0 lib/debugobjects.c:629
-Code: b8 00 00 00 00 00 fc ff df 48 89 fa 48 c1 ea 03 80 3c 02 00 75 4f 48 8d 3d f2 18 e4 0b 41 56 48 8b 14 dd c0 33 1c 8c 4c 89 e6 <67> 48 0f b9 3a 58 83 05 0c c5 d9 0b 01 48 83 c4 18 5b 5d 41 5c 41
-RSP: 0018:ffffc90005ba7808 EFLAGS: 00010246
-RAX: dffffc0000000000 RBX: 0000000000000003 RCX: 0000000000000000
-RDX: ffffffff8c1c3300 RSI: ffffffff8c1c2f20 RDI: ffffffff90e6aac0
-RBP: 0000000000000001 R08: ffff88803f4d2090 R09: ffffffff8bb2c6e0
-R10: 0000000000000001 R11: 0000000000000000 R12: ffffffff8c1c2f20
-R13: ffffffff8bb2c720 R14: ffffffff8a84b230 R15: ffffc90005ba7908
-FS:  0000000000000000(0000) GS:ffff8880d64db000(0000) knlGS:0000000000000000
-CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-CR2: 0000555594c2f9e8 CR3: 0000000039419000 CR4: 0000000000352ef0
-Call Trace:
- <TASK>
- __debug_check_no_obj_freed lib/debugobjects.c:1116 [inline]
- debug_check_no_obj_freed+0x4da/0x630 lib/debugobjects.c:1146
- slab_free_hook mm/slub.c:2620 [inline]
- slab_free mm/slub.c:6246 [inline]
- kfree+0x3d0/0x6c0 mm/slub.c:6561
- rose_neigh_put include/net/rose.h:166 [inline]
- rose_neigh_put include/net/rose.h:160 [inline]
- rose_release+0x60b/0x740 net/rose/af_rose.c:658
- __sock_release+0xb3/0x260 net/socket.c:722
- sock_close+0x1c/0x30 net/socket.c:1514
- __fput+0x3ff/0xb50 fs/file_table.c:510
- task_work_run+0x150/0x240 kernel/task_work.c:233
- exit_task_work include/linux/task_work.h:40 [inline]
- do_exit+0x8d2/0x2a60 kernel/exit.c:975
- do_group_exit+0xd5/0x2a0 kernel/exit.c:1117
- get_signal+0x1ec7/0x21e0 kernel/signal.c:3037
- arch_do_signal_or_restart+0x91/0x7a0 arch/x86/kernel/signal.c:337
- __exit_to_user_mode_loop kernel/entry/common.c:64 [inline]
- exit_to_user_mode_loop+0x86/0x4a0 kernel/entry/common.c:98
- __exit_to_user_mode_prepare include/linux/irq-entry-common.h:207 [inline]
- syscall_exit_to_user_mode_prepare include/linux/irq-entry-common.h:238 [inline]
- syscall_exit_to_user_mode include/linux/entry-common.h:318 [inline]
- do_syscall_64+0x706/0xf80 arch/x86/entry/syscall_64.c:100
- entry_SYSCALL_64_after_hwframe+0x77/0x7f
-RIP: eccb:0xe4a421182f13d611
-Code: Unable to access opcode bytes at 0xe4a421182f13d5e7.
-RSP: 002b:00007fb92f11ff58 EFLAGS: 00000756 ORIG_RAX: d1d66dbfed01019b
-RAX: 2bf9e1987c1988ee RBX: 6f67a894836fe1f3 RCX: ed0b474b2b46640f
-RDX: fb381f0b5e12d2ce RSI: 401aaa756d8c34aa RDI: 30b9ec15aecde911
-RBP: 532828f82bbb556c R08: dbce39d105fdbf88 R09: ae9ea378b9c9fbc7
-R10: 33740f3b8630618c R11: 2450ade207355af5 R12: 0a61688f027fb1a4
-R13: 339c71c774e61334 R14: 28baed4a0483d193 R15: 7c1f9cf2b758efdc
- </TASK>
-----------------
-Code disassembly (best guess):
-   0:	b8 00 00 00 00       	mov    $0x0,%eax
-   5:	00 fc                	add    %bh,%ah
-   7:	ff                   	lcall  (bad)
-   8:	df 48 89             	fisttps -0x77(%rax)
-   b:	fa                   	cli
-   c:	48 c1 ea 03          	shr    $0x3,%rdx
-  10:	80 3c 02 00          	cmpb   $0x0,(%rdx,%rax,1)
-  14:	75 4f                	jne    0x65
-  16:	48 8d 3d f2 18 e4 0b 	lea    0xbe418f2(%rip),%rdi        # 0xbe4190f
-  1d:	41 56                	push   %r14
-  1f:	48 8b 14 dd c0 33 1c 	mov    -0x73e3cc40(,%rbx,8),%rdx
-  26:	8c
-  27:	4c 89 e6             	mov    %r12,%rsi
-* 2a:	67 48 0f b9 3a       	ud1    (%edx),%rdi <-- trapping instruction
-  2f:	58                   	pop    %rax
-  30:	83 05 0c c5 d9 0b 01 	addl   $0x1,0xbd9c50c(%rip)        # 0xbd9c543
-  37:	48 83 c4 18          	add    $0x18,%rsp
-  3b:	5b                   	pop    %rbx
-  3c:	5d                   	pop    %rbp
-  3d:	41 5c                	pop    %r12
-  3f:	41                   	rex.B
+If there is a way I can help with maintenance or even become a
+co-maintainer, I'd be interested to learn more as I've written kernel
+drivers before and patched things - but never gotten involved in the
+mainline kernel to date.
 
+While I am still fairly proficient in C and have written AX25
+implementations for Arduino projects among other things, I wonder (and
+hope I don't unintentionally upset anyone by suggesting this) if there
+is an opportunity to look at new options like using the recently
+introduced kernel rust support to rewrite / tidy things up along the
+way to resolve many of the memory safety and many other issues that
+have been coming to light lately.
 
----
-This report is generated by a bot. It may contain errors.
-See https://goo.gl/tpsmEJ for more information about syzbot.
-syzbot engineers can be reached at syzkaller@googlegroups.com.
+It would be a shame to let this "die on the vine" in both the kernel
+and linuxax25 given all the work put in over the years.....
 
-syzbot will keep track of this issue. See:
-https://goo.gl/tpsmEJ#status for how to communicate with syzbot.
+Regards,
 
-If the report is already addressed, let syzbot know by replying with:
-#syz fix: exact-commit-title
-
-If you want to overwrite report's subsystems, reply with:
-#syz set subsystems: new-subsystem
-(See the list of subsystem names on the web dashboard)
-
-If the report is a duplicate of another one, reply with:
-#syz dup: exact-subject-of-another-report
-
-If you want to undo deduplication, reply with:
-#syz undup
+Josh M
+VK4JLM
