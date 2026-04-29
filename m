@@ -1,221 +1,95 @@
-Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.16])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-oa1-f72.google.com (mail-oa1-f72.google.com [209.85.160.72])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C0871317165;
-	Mon, 27 Apr 2026 15:24:37 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.16
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B133D40DFA4
+	for <linux-hams@vger.kernel.org>; Wed, 29 Apr 2026 20:32:37 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.72
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777303479; cv=none; b=fgHxRSUkeln8ThU3vgQoxdC+dkw+7YoD8WDAX5q8JS9hUNZgkOqFUqnEVtFFQ4z6OCNKxy8r0S4r2EBQGVZc92wxq0dujIAd11SKc+hZgH6uYr3zCPJb4s1gNRgX9y264izRO5Jv6XbjYcRNwleAJ66ap6QyY3d4/bQPU7nD3kc=
+	t=1777494759; cv=none; b=OUj0G8i+jypNsAgPC/CxOb0IkYvznw5X/xHZNtz+LfvK0/ZDKLhYZMjeoKzmT8vNiJz8BHy2lEyPCMWkXMkWC9qUP/DNgGBjnOsXHtUWqkvXlm/we1pjEBX54vUyUDCgEIW3RGuoG1pIsfwnz+HhaGN91dcEMep8Hyyio8lp0RU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777303479; c=relaxed/simple;
-	bh=R5DLnmIxW2S4tSZP6THD6UB5dpyAV7DU4ODVzkQz070=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=p/Dapjt811E3D8Bq4eybMOeVPdPyTz0NxjKZqPgZhZyiPfx6BUQMz7e5DIh11nZC4OvYa+SndT0bINuWd/4zp0/pXUJfpobRk7dYCwVOqbXBrrYJ9krvTIOuktSAsn5lWoimQqv8hNnT6C+/os8xkth5eBKlAE5kWBhG4NyF7VA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=pass smtp.mailfrom=linux.intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=PWOMyz9o; arc=none smtp.client-ip=198.175.65.16
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.intel.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="PWOMyz9o"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1777303478; x=1808839478;
-  h=from:to:cc:subject:date:message-id:in-reply-to:
-   references:mime-version:content-transfer-encoding;
-  bh=R5DLnmIxW2S4tSZP6THD6UB5dpyAV7DU4ODVzkQz070=;
-  b=PWOMyz9od8dZl5eFNiMQVG7Y9X6cpZNqkg5Ani30+Ae4Tdgq6Bj3gOAt
-   2/oO4ETXgnUgHxqP4rS3nvUUzZK34tszuj+JZs9LEOMncdMY2HUcfDJ4F
-   PlcIhxDVTCXf0hIzHqf/R9tE0gUBIul4OmdCoBfQiRWIiBxXV4qD1VEww
-   42frVP7AUdeAsnQm4px8v6sj4xVEyrunxzlgfysh+BJc5u9h0TIkCI+ji
-   x0q1s17gnDmTwIpHg18600bV4j4hCcLV7uSH3J5c3cGz+8tAXhWmEt5iq
-   Lhk+UWKQSipmzlPTFWAN0o7FQc/km4BSaTLkuppn6xbil3dvZGFMIe2el
-   Q==;
-X-CSE-ConnectionGUID: ITWC6WHtQIiN76owQy97ug==
-X-CSE-MsgGUID: pWSkZpWGS+aVC6B9she2EQ==
-X-IronPort-AV: E=McAfee;i="6800,10657,11769"; a="78383764"
-X-IronPort-AV: E=Sophos;i="6.23,202,1770624000"; 
-   d="scan'208";a="78383764"
-Received: from orviesa009.jf.intel.com ([10.64.159.149])
-  by orvoesa108.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 27 Apr 2026 08:24:37 -0700
-X-CSE-ConnectionGUID: PwEIYR3NQcS8qjf/f3QjSw==
-X-CSE-MsgGUID: hAM213QHTt2xPLJ5JbvL1w==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.23,202,1770624000"; 
-   d="scan'208";a="233500399"
-Received: from arjan-box.jf.intel.com ([10.88.27.153])
-  by orviesa009-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 27 Apr 2026 08:24:37 -0700
-From: Arjan van de Ven <arjan@linux.intel.com>
-To: netdev@vger.kernel.org
-Cc: davem@davemloft.net,
-	edumazet@google.com,
-	horms@kernel.org,
-	jreuter@yaina.de,
-	kuba@kernel.org,
-	linux-hams@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	pabeni@redhat.com,
-	syzkaller-bugs@googlegroups.com,
-	syzbot+9c8999af06ca7df15fc6@syzkaller.appspotmail.com
-Subject: Re: [syzbot] [hams?] KASAN: slab-use-after-free Read in ax25_send_frame (3)
-Date: Mon, 27 Apr 2026 08:25:26 -0700
-Message-ID: <20260427152555.500903-1-arjan@linux.intel.com>
-X-Mailer: git-send-email 2.53.0
-In-Reply-To: <69ef2847.170a0220.11de9.001a.GAE@google.com>
-References: <69ef2847.170a0220.11de9.001a.GAE@google.com>
+	s=arc-20240116; t=1777494759; c=relaxed/simple;
+	bh=T7uCuNOAogKBgl0xkoImLPWCwsELhH6WDqd5AWGGc8g=;
+	h=MIME-Version:Date:Message-ID:Subject:From:To:Content-Type; b=dTT8iRxmVHf5uCq9Sx15c+8Jud55jzxsbu5iXnt93+oAVi42XCeNBx42WsXYTYX319qFrcQt5dAFlweg1sE7U0+Cc0fDlMUSiUTe24F4y/vCJXUeW5mLIwTlKHuUvGSlj1jjTH5AV+AHBs+GngH0wgRMpq8iC2pqj6V6brd7ec8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=syzkaller.appspotmail.com; spf=pass smtp.mailfrom=M3KW2WVRGUFZ5GODRSRYTGD7.apphosting.bounces.google.com; arc=none smtp.client-ip=209.85.160.72
+Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=syzkaller.appspotmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=M3KW2WVRGUFZ5GODRSRYTGD7.apphosting.bounces.google.com
+Received: by mail-oa1-f72.google.com with SMTP id 586e51a60fabf-42fb0f12b10so352016fac.2
+        for <linux-hams@vger.kernel.org>; Wed, 29 Apr 2026 13:32:37 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1777494757; x=1778099557;
+        h=to:from:subject:message-id:date:mime-version:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=QFLXSf0MhhT3Nv6MnzhC1U2ntLwmkSQrplCJ27OaT98=;
+        b=jeGCxl9HouHbkh0Z1iOAnPvcwqJbMaSzb+o0Pv4zGew35hM1lHb0RWoYbguxATtox9
+         uGbB2K0h9vpVcRYczw4LkD8UMu3nsHr+N0VswvOw6J8vQEnCyqP4fMIgDfT4Bj2iBpAu
+         nHksLmyjeN102uKPrzOoQrqnkWMRZZ5xwrjPMWbTwrC+KzcYIcURQokE5hRj7VPCOZbu
+         YHD6lGsXEde95scd7v7re3QSVoxjjG8eiUgS6ArWJeNoGZCggcY2LYn1EakzyeBA43JC
+         1Mp4GtyY/JD7pSojcEtXo6ZehiwJ0SrwWyJactr394jyNhR88TTV7YYocfhUZdamm1+I
+         bNSw==
+X-Gm-Message-State: AOJu0YzCgVLKknON7AxEz4gUO/q2WAvI6jifmeyVwGN+ONlc3yNQZNq5
+	jv6lAC3lo6bU/QXxrV9nJRYuQEmGPJiE5DbHx8EmzQbbJ9342WoVBP+BxsUf7D+g+OV17D37bJb
+	0b98bLNkDRnCFwb/scu/6pH5wCrCGj/g+l9w912M35n40zaGrPsQ4zvQPPLM=
 Precedence: bulk
 X-Mailing-List: linux-hams@vger.kernel.org
 List-Id: <linux-hams.vger.kernel.org>
 List-Subscribe: <mailto:linux-hams+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-hams+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+X-Received: by 2002:a05:6820:134b:b0:696:7697:6469 with SMTP id
+ 006d021491bc7-6967a510533mr103473eaf.17.1777494756761; Wed, 29 Apr 2026
+ 13:32:36 -0700 (PDT)
+Date: Wed, 29 Apr 2026 13:32:36 -0700
+X-Google-Appengine-App-Id: s~syzkaller
+X-Google-Appengine-App-Id-Alias: syzkaller
+Message-ID: <69f26ae4.170a0220.3c4978.0007.GAE@google.com>
+Subject: [syzbot] Monthly hams report (Apr 2026)
+From: syzbot <syzbot+listb0e725a1df57c9e37f56@syzkaller.appspotmail.com>
+To: linux-hams@vger.kernel.org, linux-kernel@vger.kernel.org, 
+	netdev@vger.kernel.org, syzkaller-bugs@googlegroups.com
+Content-Type: text/plain; charset="UTF-8"
 
-This email is created by automation to help kernel developers
-deal with a large volume of AI generated bug reports by decoding
-oopses into more actionable information.
+Hello hams maintainers/developers,
 
-Decoded Backtrace
+This is a 31-day syzbot report for the hams subsystem.
+All related reports/information can be found at:
+https://syzkaller.appspot.com/upstream/s/hams
 
-net/ax25/ax25_out.c (crash site, UAF read)
+During the period, 3 new issues were detected and 1 were fixed.
+In total, 20 issues are still open and 48 have already been fixed.
 
-  32  ax25_cb *ax25_send_frame(struct sk_buff *skb, int paclen,
-  32      const ax25_address *src, ax25_address *dest,
-  32      ax25_digi *digi, struct net_device *dev)
-  33  {
-  34      ax25_dev *ax25_dev;
-  35      ax25_cb *ax25;
-       ...
-  77      if (digi != NULL) {
-->78          ax25->digipeat = kmemdup(digi, sizeof(*digi), GFP_ATOMIC);
-              // <- digi = neigh->digipeat; freed ax25_digi; 66-byte UAF read
-  79          if (ax25->digipeat == NULL) {
-       ...
- 115      return ax25;
- 116  }
+Some of the still happening issues:
 
-net/rose/rose_link.c (caller, t0timer callback)
+Ref  Crashes Repro Title
+<1>  16483   Yes   possible deadlock in nr_rt_device_down (3)
+                   https://syzkaller.appspot.com/bug?extid=ccdfb85a561b973219c7
+<2>  8461    Yes   possible deadlock in nr_rt_ioctl (2)
+                   https://syzkaller.appspot.com/bug?extid=14afda08dc3484d5db82
+<3>  4371    Yes   WARNING: ODEBUG bug in handle_softirqs
+                   https://syzkaller.appspot.com/bug?extid=60db000b8468baeddbb1
+<4>  1122    Yes   possible deadlock in nr_remove_neigh (2)
+                   https://syzkaller.appspot.com/bug?extid=8863ad36d31449b4dc17
+<5>  803     Yes   WARNING: ODEBUG bug in __run_timers (3)
+                   https://syzkaller.appspot.com/bug?extid=7287222a6d88bdb559a7
+<6>  188     Yes   possible deadlock in nr_del_node (2)
+                   https://syzkaller.appspot.com/bug?extid=6eb7834837cf6a8db75b
+<7>  32      Yes   WARNING: refcount bug in ax25_setsockopt
+                   https://syzkaller.appspot.com/bug?extid=0ee4da32f91ae2a3f015
+<8>  26      No    KASAN: slab-use-after-free Write in rose_send_frame
+                   https://syzkaller.appspot.com/bug?extid=9cc08d5dcb1fc8feee76
+<9>  24      Yes   KASAN: slab-use-after-free Read in nr_rt_ioctl
+                   https://syzkaller.appspot.com/bug?extid=df52f4216bf7b4d768e7
+<10> 23      No    KASAN: slab-use-after-free Read in rose_t0timer_expiry
+                   https://syzkaller.appspot.com/bug?extid=44cccec2c6a4501f6a45
 
-  79  static void rose_t0timer_expiry(struct timer_list *t)
-  80  {
-  81      struct rose_neigh *neigh = timer_container_of(neigh, t, t0timer);
-  82
-->83      rose_transmit_restart_request(neigh);
-         // <- inlined; calls rose_send_frame -> ax25_send_frame
-         //    with neigh->digipeat as the digi argument
-  84
-  85      neigh->dce_mode = 0;
-  86
-  87      rose_start_t0timer(neigh);
-  88  }
+---
+This report is generated by a bot. It may contain errors.
+See https://goo.gl/tpsmEJ for more information about syzbot.
+syzbot engineers can be reached at syzkaller@googlegroups.com.
 
-rose_send_frame() inlined at rose_link.c:106:
+To disable reminders for individual bugs, reply with the following command:
+#syz set <Ref> no-reminders
 
-  95  static int rose_send_frame(struct sk_buff *skb, struct rose_neigh *neigh)
-  96  {
-       ...
- 105      ax25s = neigh->ax25;
-->106     neigh->ax25 = ax25_send_frame(skb, 260, rose_call,
-             &neigh->callsign, neigh->digipeat, neigh->dev);
-         // <- neigh->digipeat passed as digi; freed by rose_timer_expiry
- 107      if (ax25s)
- 108          ax25_cb_put(ax25s);
- 109      return neigh->ax25 != NULL;
- 110  }
+To change bug's subsystems, reply with:
+#syz set <Ref> subsystems: new-subsystem
 
-net/rose/rose_timer.c (free site)
-
- 164  static void rose_timer_expiry(struct timer_list *t)
- 165  {
- 166      struct rose_sock *rose = timer_container_of(rose, t, timer);
- 167      struct sock *sk = &rose->sock;
-       ...
- 174      switch (rose->state) {
-       ...
- 182      case ROSE_STATE_2:  /* T3 */
-->183          rose_neigh_put(rose->neighbour);
-              // <- drops refcount to 0; frees neigh->digipeat (ax25_digi)
-              //    and neigh itself; t0timer still pending
- 184          rose_disconnect(sk, ETIMEDOUT, -1, -1);
- 185          break;
-       ...
- 197  }
-
-include/net/rose.h (rose_neigh_put, inline free function)
-
- 160  static inline void rose_neigh_put(struct rose_neigh *rose_neigh)
- 161  {
- 162      if (refcount_dec_and_test(&rose_neigh->use)) {
- 163          if (rose_neigh->ax25)
- 164              ax25_cb_put(rose_neigh->ax25);
-->165          kfree(rose_neigh->digipeat);
-              // <- frees the ax25_digi (66 bytes); t0timer not cancelled
- 166          kfree(rose_neigh);
- 167      }
- 168  }
-
-net/rose/rose_route.c (allocation site)
-
-  84      if (rose_neigh == NULL) {
-  85          rose_neigh = kmalloc_obj(*rose_neigh, GFP_ATOMIC);
-       ...
- 100          refcount_set(&rose_neigh->use, 1);
-       ...
- 107          if (rose_route->ndigis != 0) {
- 108              rose_neigh->digipeat =
-->109                  kmalloc_obj(ax25_digi, GFP_ATOMIC);
-                  // <- allocates the 66-byte ax25_digi later freed and read
-       ...
- 124          }
- 125      }
-
-
-Tentative Analysis
-
-The crash is a KASAN slab-use-after-free: rose_t0timer_expiry() reads
-the freed rose_neigh->digipeat (an ax25_digi struct, 66 bytes) via
-ax25_send_frame() -> kmemdup().
-
-Commit d860d1faa6b2 ("net: rose: convert 'use' field to refcount_t")
-changed rose_timer_expiry() from merely decrementing the plain 'use'
-counter to calling rose_neigh_put(), which now frees rose_neigh (and
-its digipeat) when the refcount hits zero. The new rose_neigh_put()
-omits timer cancellation, so after it returns the t0timer embedded in
-the (now-freed) rose_neigh can still fire in the same TIMER_SOFTIRQ
-batch.
-
-The race on a single-CPU machine (the syzbot scenario) is purely
-sequential: rose_timer_expiry() fires first, frees the neigh; then
-rose_t0timer_expiry() fires next in the same run_timer_base batch with
-a dangling neigh pointer, passes neigh->digipeat to ax25_send_frame,
-and kmemdup triggers the KASAN report.
-
-Before d860d1faa6b2, rose_timer_expiry() never freed the neigh; the
-free was always performed by rose_remove_neigh() which called
-timer_delete_sync() on both timers before freeing. The refcount
-conversion introduced a new free path that missed this cancellation.
-
-
-Potential Solution
-
-Add timer_delete() calls for both ftimer and t0timer inside
-rose_neigh_put() before the kfree calls, mirroring what
-rose_remove_neigh() already does via timer_delete_sync(). The
-non-synchronous variant is required because rose_neigh_put() may be
-called from softirq context.
-
-   static inline void rose_neigh_put(struct rose_neigh *rose_neigh)
-   {
-       if (refcount_dec_and_test(&rose_neigh->use)) {
-           timer_delete(&rose_neigh->ftimer);
-           timer_delete(&rose_neigh->t0timer);
-           if (rose_neigh->ax25)
-               ax25_cb_put(rose_neigh->ax25);
-           kfree(rose_neigh->digipeat);
-           kfree(rose_neigh);
-       }
-   }
-
-
-More information
-
-Oops-Analysis: http://oops.fenrus.org/reports/lkml/69ef2847.170a0220.11de9.001a.GAE_google.com/
-Assisted-by: Copilot:claude-sonnet-4.6 linux-kernel-oops-x86.
+You may send multiple commands in a single email message.
