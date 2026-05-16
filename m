@@ -1,100 +1,82 @@
-Received: from mail-yw1-f177.google.com (mail-yw1-f177.google.com [209.85.128.177])
+Received: from mail-wm1-f46.google.com (mail-wm1-f46.google.com [209.85.128.46])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 55E2A23183C
-	for <linux-hams@vger.kernel.org>; Sat, 16 May 2026 10:55:39 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.128.177
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778928940; cv=pass; b=VyZ6X9+uYPOEcFLHyLt4HQ9d3G09WLiTVmLkTvhMgRFd5weDKmzXCkuOX9T9SngwcwD3sq65r0d4ltqZ1fiSxrqTdvxgvri1x0SvA8zO8woiUTv56MDdRQR6umOsSd89PfFMQEAUnbLIkNMlLbFVvpaErxxkZVMahYoJSAjDfvc=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778928940; c=relaxed/simple;
-	bh=UJm0Vha4QgPi+LutZgf6PJHq7Sc8qU5QzD/hNhrZv3Y=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=JwVIpOiaiNRa/2M+pN2VT+8Xw7EBjFNOpm1iAwPZR6UYHsjQmDtzDbf5nwrNVyJQ4X2kLzmyvxsnGMPLxHN+QQotfYhYtO5oFtUzmn+hZBQJmVUTmSegvHTMpPCO4XzoOPw68tMe6ZqHZFJzScTltIjQcMSdrHHq6+P6EH4HRF4=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=GsZq6v7d; arc=pass smtp.client-ip=209.85.128.177
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9CA3F3D47C4
+	for <linux-hams@vger.kernel.org>; Sat, 16 May 2026 11:34:03 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.46
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1778931245; cv=none; b=S1qad9TjP8g5UYpQ/J+rKNTQ3DKiOPlhBxQ2xv/Cxq1W3Q4sr10JiazjAfhUmyoc520xa1IUn46apwbmUJgqbAWAJsN57mU1925szprqXElAMziVSl3Ny0vn4Fn5J/A072ojjzOiFWbkwt864o5enKJGvIO8vWMMwHS/d+YjtTw=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1778931245; c=relaxed/simple;
+	bh=kS9Q1v0jE50HuL+kLJLERVYaxzIqhv2g23wbEVDAAK4=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=nmrKxxAawBRVMuISRlMcQaKRBNFNQpfVgo0rJQYBi74a4azjoK8jUsoLPOSc7fHA6u102968/DaD69LMOslgFlB+dPhqdEZWtBI9ExZG5KFYraRYhU/6RkFCkaLa8sxFixsZAHDz2DGQ8npVu44HwCK2813yM8CWIosi+4YqCkc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=BX0ylpmC; arc=none smtp.client-ip=209.85.128.46
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="GsZq6v7d"
-Received: by mail-yw1-f177.google.com with SMTP id 00721157ae682-7c58e6eb3edso2340457b3.2
-        for <linux-hams@vger.kernel.org>; Sat, 16 May 2026 03:55:39 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1778928938; cv=none;
-        d=google.com; s=arc-20240605;
-        b=NtfM/byfGAqY3YPbYwcZ6kybmhFKVESDu4t6uIl5+nxC+eYhn3+Jc9Tk2WqhZ2ilSX
-         aeDLFy4WNYgvjpUpnldz1M8llXNeXEN6DutRJNhJcKbZgPdPTPqbkd/vopTFFUBEoDla
-         2uyMwYujf58zGL42o5+pm+enPdwCuHp84kEOqTVRrq9+wXlFogOBrMm1yZNczEVGHrUk
-         S8NYqBI5vEWkf9FRR35TrBpnfPk3+H4EBUxX8ctvGqhSV8ncnLnxFcaF7k3CUkx8t3Vd
-         m3z+uh3wHOXzx0qE59Uy/dp9fod50shahTaLdGUvE3RWxqC35Z2zJY+z/oQL3v/fVgOS
-         40Rg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:dkim-signature;
-        bh=UJm0Vha4QgPi+LutZgf6PJHq7Sc8qU5QzD/hNhrZv3Y=;
-        fh=TMg8UGov4ng62JUTbfrSE8oWRYbKRqJ6m5I8tGpAss0=;
-        b=Xx4M2upQefWrxqCBt2mNFwdbs5mzeh8kWmto9NqCUMdfUN8cb19cmrqQPow4UUhPtl
-         Ls2CIXqahPWGaehBppjdwNLmOlpXl3DIG/CdVVdsedm6b+ZObfG4RzRXBs8yVuFWKUuh
-         WVKqMOKid5DG4BjS8WzskFNGI2opYxNtzhrwWwQodHjpOgPZ+JzJUe+AxoFTLj5+yDAq
-         eoEtAXVK8mOc3FLT3msmUT33Td7wLKeqygzTsfL85AcaxMH8znBVl3iH9dz4NOmc7Mqt
-         VV66lm9OtcdKoqAl+iBfGP0R2iDx9T+m+yM4glQ3RuYvRcgo3v/KjJCtaxcd0xYsX6+2
-         tAnw==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="BX0ylpmC"
+Received: by mail-wm1-f46.google.com with SMTP id 5b1f17b1804b1-488b0046078so5617325e9.1
+        for <linux-hams@vger.kernel.org>; Sat, 16 May 2026 04:34:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1778928938; x=1779533738; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=UJm0Vha4QgPi+LutZgf6PJHq7Sc8qU5QzD/hNhrZv3Y=;
-        b=GsZq6v7dZDcbSi8fd9eExCz0xZgbsKrPjDRcniLyr2qYMIeOc/shZVvAEaTFUeU9bG
-         6dElielVZdZcfxecQYfz1D8rqKLXz2jLZB26AYnzRBY2TgrIjqDaAC8Y8I41Ggb3CQtq
-         c9GWpK/8R/ywGIJ+QyLh/ttGTtOVLQA6fBghH/lXJzSrJP/rNDwyoDnULRuswKer3EOU
-         rSXUHhEFMPeSdic6k0ivYqclBmNruqWfQU31rfq0QmZ6CcGCWSx1fNC4HBUmJtZfkvM2
-         xrG1ihBNZot52uy8gaTwCLV6cHPPk92oBuW370lnEY9OVtHc4DpMNBIfvnhUfBCekTXR
-         P4qA==
+        d=gmail.com; s=20251104; t=1778931242; x=1779536042; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=wXRm8wHLMvu7h8cKS/PMy3rIET0MllJuf9jGLxBvpQs=;
+        b=BX0ylpmCyBrPOKvAE7i+QMm+Opwg8fyoDDQ27gqJTSpOL1QAyRqFdnevY2CWhRwiJL
+         RdQTw09kFSD41jbtBDbGRjA0lsVrkjKSe+yXkbYfEyWV4rc4E7ryeEXeP8iliccxMRBZ
+         kMuUhui0lVxR6NYzRiaZoFE2ZCrZcc9cIZyPFvyP0A9s/iHLsK/WS3gqsK63i5UoPewa
+         P4Ytg89XML1rQZ6Q8XnsdlOpJTwcrb3nwYz8/XlgTwCHbhCUZnm3TIQSeO54IpuTWpId
+         tqTYKjxs3jBXvHJXmUDJCz4GcZ/fUdfUyarmHv64M+DQPmejP5Pzn3YY55qZejDwnlor
+         +dew==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1778928938; x=1779533738;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+        d=1e100.net; s=20251104; t=1778931242; x=1779536042;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=UJm0Vha4QgPi+LutZgf6PJHq7Sc8qU5QzD/hNhrZv3Y=;
-        b=Xq5ryDKKdZnyYSiWlpSRKLDkTFBJwGtW750ouUfjz3O4k1WcwweRNIbTmgGQjzREPz
-         4F9r8mLXOYJEAMgv8qJe/0QlUHp3QZiIrcnfp4b2tA8bfGzUtes6ZvISbRFifz7dr5Xx
-         zCScOaABWMB3EeQEyemA4w1sw/8kMebOQJ5ZVOthZHkSIW4AzijlTWBr/NDK3n4CaaT6
-         nuWZWdoZVILOS+/ZJDO7hliH8CIVieOa/iePd9P10S49eVGNMit4JUdORbR/BLiZCmol
-         EWRkvhUdSjEEIVfdebhvjFBKiozk397N/ZuHgGQa0UX9LiDHbbKt65EKmtv4k1Zfrxlv
-         gnSw==
-X-Forwarded-Encrypted: i=1; AFNElJ8wT5mgpaVodu+yw6EiRYPT9G3fEmyu+3/KS6oWRfEbePyvZbeKsiykTfHpJ8MgjTBAEXhSLC3wBLqF@vger.kernel.org
-X-Gm-Message-State: AOJu0YyXgeiQYrPX6a+7m2NOK41RZw6p0wpAQENv7d6dN/ZJSkacPnZ4
-	leBquPwpGu94a44gmjgWkv49Ey1AnfymIXaQvz6+B78LXwHpooPA8UcHYzVKZWbcYEMdCB81eOz
-	WmGrk6P/lTkxQ15zC+gvaUfSQSONAZe7O2v2h
-X-Gm-Gg: Acq92OFw3RqI00PDkWeiVZOtS7QCjM+TBwmQZPxrUzMnu6N9eBzq6PboLzmfa9ML5NC
-	YqyyFEVJsvX3sM3QSsNFB8AsKNM+xyPQpwja8gP6S5Bm8spbMZrodTPTIkqOgy7K98swWtTvH3g
-	Pbrv09onwSBMxMe7+sk4v7BGhChI88R3E+qbuDcGtmpVNqRCWqOj57V6KXcT5f52TD3zLTQkb4Q
-	NuWXprW8r146TnrwuH80SrNi8vvin2ypBtfT0CXoymmlU3XQz/mVz/rxjubFCvZE7P0mjbMsRmj
-	5EhEqbg=
-X-Received: by 2002:a05:690c:22c1:b0:7bd:95d1:ed51 with SMTP id
- 00721157ae682-7c95b829b37mr88157687b3.28.1778928938365; Sat, 16 May 2026
- 03:55:38 -0700 (PDT)
+        bh=wXRm8wHLMvu7h8cKS/PMy3rIET0MllJuf9jGLxBvpQs=;
+        b=Gkw6aVXq/ABcJ7FLh9lv4klvH9wL1U4Sje3OAiUrY8LjnMnpCjRsoNxISrVDUXDd5S
+         5vzCHxsj3AKl8CwlFDT32u12pyP6HvNYw01Q8QgwY61rJWX/zcbtKF+jQ48O5qCZ2Ozt
+         XwCuOCOSdjHdhlqpbyRvyWynDzCgH0WZujQzPr1A6eLCmbuBUJunRspyKB3s2aol3hlO
+         3KYzIdszmb21y1bfsdqGOJio5wWrIZQKVXSPunO+hq89toK3K2vm7hI0zdOEoqQDcZTu
+         M4db6CBf43/7RkLcEKbhlZWUq4Smd4OwMZxUkROP9bBg9aJwcdm7z1petGOqFDjTN19O
+         /xTA==
+X-Forwarded-Encrypted: i=1; AFNElJ9fgQ62q6dfI7sgZbvuE4bFSbES641hy5+0+UKXKd+P8GDO38ml/AQ5pGKzdrfBBonZjRjEYGjtHPR0@vger.kernel.org
+X-Gm-Message-State: AOJu0Yw8GTGEy3CvC8VEn7oK986uz9TWuSISPwywmCZ6bkuzn43xO7Fs
+	oVA9UZrsg5vF6e3OY92KYmoQHQWa+ztgGhEFgvfCDXtIxClcrssA+czO
+X-Gm-Gg: Acq92OGYJTeV8iHfTO03asBLz6fH1UNE0COtqw4R65REolsYUOdGjwpxG8hYRoBHv9e
+	GEkqpBmm+ZogvCiRjynUb5QfRbc/wXJSFKbxUfSCWRpIrEuvkU9j97Jd6cPM44X1CXwOQVyuVkb
+	1vDAXDLu+O3wCaazxToKPV534OaimKkapegicPdsz5qY7wfEXGhZtms4M/K7FHYIyZocHs0YOu7
+	btucoZIuCsSlM5ESDqfDsoNq0ZVC2kn5eY9GXSrKywFzYrwYX9hY5F0ivuofUve5Bj2WTpclYdz
+	RcKDd0Tjjvr8NuWPYUPV8ir0SkvXrIoummswTuIOsVhV23651KE3IQqDWWaXo3P4aEEc++lZq2P
+	l2wYo93okRmcDgLVpP7REUgDi7b0iJpmCDzpecc6q7ur1eeJnxgF/CuhND3kfsT7Q8qTba0kMQk
+	wsH5Vl1cnzGp89rnBRx7aRTWpGLAd6kGy1hC+xBRSRjVIjfr3XyXKj6Pdd/8GklheEEaNbW6aMV
+	V0+
+X-Received: by 2002:a05:6000:2dc2:b0:43d:1c4a:37c with SMTP id ffacd0b85a97d-45e5c5b39admr10857244f8f.4.1778931241865;
+        Sat, 16 May 2026 04:34:01 -0700 (PDT)
+Received: from ubuntu-f6bvp (lfbn-idf1-1-304-238.w86-195.abo.wanadoo.fr. [86.195.26.238])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-45d9e768acesm22686198f8f.7.2026.05.16.04.34.01
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sat, 16 May 2026 04:34:01 -0700 (PDT)
+From: Bernard Pidoux F6BVP <bernard.f6bvp@gmail.com>
+To: kuba@kernel.org
+Cc: toke@toke.dk,
+	stable@vger.kernel.org,
+	davem@davemloft.net,
+	netdev@vger.kernel.org,
+	pabeni@redhat.com,
+	gregkh@linuxfoundation.org,
+	linux-hams@vger.kernel.org
+Subject: Re: [PATCH net-deletions] net: remove ax25 and amateur radio (hamradio) subsystem
+Date: Sat, 16 May 2026 13:33:55 +0200
+Message-ID: <20260516113355.24110-1-bernard.f6bvp@gmail.com>
+X-Mailer: git-send-email 2.51.0
 Precedence: bulk
 X-Mailing-List: linux-hams@vger.kernel.org
 List-Id: <linux-hams.vger.kernel.org>
 List-Subscribe: <mailto:linux-hams+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-hams+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <87se8mytvv.fsf@toke.dk> <20260512144512.9960-1-bernard.f6bvp@gmail.com>
- <20260512163648.7367a640@kernel.org> <CAFAa3YDcBsCnEJ1t+a3iHhzxW65HX+QNkZWPKHvDYp_V+UwZYQ@mail.gmail.com>
- <20260515181411.28af7ffc@kernel.org>
-In-Reply-To: <20260515181411.28af7ffc@kernel.org>
-From: Bernard Pidoux <bernard.f6bvp@gmail.com>
-Date: Sat, 16 May 2026 12:55:27 +0200
-X-Gm-Features: AVHnY4LM44c5zj8zy_QkFpcfHYCBiRpHUh4S3nKYrYR_oB3folOtDOnJ-b_4rwg
-Message-ID: <CAFAa3YCx0schCKn8k-nPfQPSaQ_5PKYFzt-5j-ZyEZbKr2DyuA@mail.gmail.com>
-Subject: Re: [PATCH net-deletions] net: remove ax25 and amateur radio
- (hamradio) subsystem
-To: kuba@kernel.org
-Cc: toke@toke.dk, stable@vger.kernel.org, davem@davemloft.net, 
-	netdev@vger.kernel.org, pabeni@redhat.com, gregkh@linuxfoundation.org, 
-	linux-hams@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
 
 On Fri, 16 May 2026 Jakub Kicinski wrote:
 > It's a GitHub repo so PR is probably appropriate there.
@@ -102,28 +84,20 @@ On Fri, 16 May 2026 Jakub Kicinski wrote:
 Done. I have submitted the five rose fixes as a pull request to the
 mod-orphan repository:
 
-https://github.com/linux-netdev/mod-orphan/pull/1
+  https://github.com/linux-netdev/mod-orphan/pull/1
 
 The PR contains six commits:
 
-1. rose: build with hamradio_compat.h on pre-7.0 kernels
-(compat shim for struct sockaddr_unsized, required by af_rose.c)
-2. rose: fix dev_put() leak in rose_loopback_timer()
-3. rose: hold loopback neighbour reference across timer callback
-4. rose: fix race between loopback timer and module removal
-5. rose: clear neighbour pointer after rose_neigh_put() in state machines
-6. rose: guard rose_neigh_put() against NULL in timer expiry
+  1. rose: build with hamradio_compat.h on pre-7.0 kernels
+     (compat shim for struct sockaddr_unsized, required by af_rose.c)
+  2. rose: fix dev_put() leak in rose_loopback_timer()
+  3. rose: hold loopback neighbour reference across timer callback
+  4. rose: fix race between loopback timer and module removal
+  5. rose: clear neighbour pointer after rose_neigh_put() in state machines
+  6. rose: guard rose_neigh_put() against NULL in timer expiry
 
 All five fixes have been built and tested successfully against kernel
 6.17.0-23-generic (pre-7.0): insmod, functional operation, and rmmod
 all completed cleanly with no crash or leak detected.
 
 73 de Bernard Pidoux F6BVP
-
-On Sat, May 16, 2026 03:14 AM, Jakub Kicinski <kuba@kernel.org> wrote:
->
-> On Fri, 15 May 2026 16:52:43 +0200 Bernard Pidoux wrote:
-> > I am happy to submit these two fixes as patches to mod-orphan if that
-> > is the right approach. Please let me know.
->
-> It's a GitHub repo so PR is probably appropriate there.
