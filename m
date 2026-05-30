@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E5CF318ED6;
-	Wed, 20 May 2026 18:31:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 93300395AEA;
+	Sat, 30 May 2026 17:08:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779301907; cv=none; b=PFrWyfrGEe6+6prKphUbAs4WHsQ05TjJD2CPuAKOwf5JDEpqLgI9h7m6ncmzvKEAjbMVFmH2HrKago23lYRGFz/kwAYQPXvZU+1MKeQIsW7RV+grz4DDPHjXPWWy7cNV5QQCoMnikkHMNGQY+1nKwLH21po5sgpKagymriOFMGA=
+	t=1780160935; cv=none; b=MO0W21eFVSp+cA9ucV4J8BJxZJAXBCBO7H9EZzvW4UZ6kh5E+if8bjSC+GJ8Y9Yzamg3t3+u7piVbX/eGB9vMCbhZej9QWwY9HAmIgcGWFvjMl4FnX1JZlJDJKskg5atLpZdFn0j8Oy7EPstc4NJGj3ed4Fr6KAWwkS3uV+6S5g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779301907; c=relaxed/simple;
-	bh=x8ODrcFRJpPWW0AmntKyCE+GeYzTDuYA/Fum6IDYVw4=;
+	s=arc-20240116; t=1780160935; c=relaxed/simple;
+	bh=3C1hhorlhb13mtLj4IF6TSg3nTQ0aq+YLlOP3lAjpUI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SbOMBaSPWv5Q18IhEdncFAanTFAfBK3QgYKH0pw2UdtsexOjheVRY2aoxNgy8rBl/Zi6EtyEHcr47fDNcfDlZnSztqQAIgjBr+G4hIpcLbpKzbGGIyChYlMFGuhsTz0byxIrvjFzSYiWIZVeygfzkNNdwO095dM0ntIvKYvRTn4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NS6u5YM+; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=c+EsLqfhALkUlsT8jk9+AXcrpIuKumAv8UaAOQ1aecNS7xLp1H7ZQRj4oZfBgCrkjUluX7pxRDIXuJMTHEU6YlZxV0RHIp64P+nwVGgSOj4AGLTTypFP3eCcW2Q8Tyi5JNK6agGEmFIcEIWKEOrcNZ8MYw5HuZjvXfYMpPkz5LI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DB5YJL/w; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NS6u5YM+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9F9191F00893;
-	Wed, 20 May 2026 18:31:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DB5YJL/w"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DAFAC1F00893;
+	Sat, 30 May 2026 17:08:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779301906;
-	bh=QFtGyxI0PWu4tXwdxGZje4x8SNvM4OpJK5zwPtDxDrk=;
+	s=korg; t=1780160934;
+	bh=0qSdK7WBQISit5ApePwTYMq9CjqLh8G79AedJ+s050g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=NS6u5YM+z6HflPHgCAhmpBG/nkelf5VhIQQI8/CyS1xci4wwSUpGsWWWphTt9TJZj
-	 wq2DUjXYU7KubVnfwbF5MZRhexfaEbyJXy+o3FZps4pZnTGaudIYBy/AuUd5WWo7xM
-	 groKA2uUFbcqE1ET+NoxMxiHCTm2KKpkCgxywuXM=
+	b=DB5YJL/wOCwo15HWUH00J0yrHxeUAJc2VOPpLGDPX3/JEURfJ+343PLl9uy+h0LV7
+	 Zqyr1M//LGSDSE+jHsr+3xs7gx/t8vx8JutwHZmvwZuove/EwXz0fG31g+i4aD5AyM
+	 QJUdHg0HeGnm61N/kV85PFgIuuvr1UfV1xmLx1ug=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -37,12 +37,12 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	netdev@vger.kernel.org,
 	Jeremy Kerr <jk@codeconstruct.com.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 064/508] 6pack: propagage new tty types
-Date: Wed, 20 May 2026 18:18:07 +0200
-Message-ID: <20260520162059.988640570@linuxfoundation.org>
-X-Mailer: git-send-email 2.54.0
-In-Reply-To: <20260520162058.573354582@linuxfoundation.org>
-References: <20260520162058.573354582@linuxfoundation.org>
+Subject: [PATCH 6.1 478/969] 6pack: propagage new tty types
+Date: Sat, 30 May 2026 18:00:02 +0200
+Message-ID: <20260530160313.498423975@linuxfoundation.org>
+X-Mailer: git-send-email 2.53.0
+In-Reply-To: <20260530160300.485627683@linuxfoundation.org>
+References: <20260530160300.485627683@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -54,7 +54,7 @@ List-Unsubscribe: <mailto:linux-hams+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
@@ -84,7 +84,7 @@ Signed-off-by: Sasha Levin <sashal@kernel.org>
  1 file changed, 16 insertions(+), 16 deletions(-)
 
 diff --git a/drivers/net/hamradio/6pack.c b/drivers/net/hamradio/6pack.c
-index 6cecdfa8631d7..3145dadf99290 100644
+index 1b007dd174794..fe85cffa4f945 100644
 --- a/drivers/net/hamradio/6pack.c
 +++ b/drivers/net/hamradio/6pack.c
 @@ -94,8 +94,8 @@ struct sixpack {
@@ -127,8 +127,8 @@ index 6cecdfa8631d7..3145dadf99290 100644
  
  	count = sp->rcount + 1;
  
-@@ -397,7 +397,7 @@ static void sixpack_receive_buf(struct tty_struct *tty, const u8 *cp,
- 				const u8 *fp, size_t count)
+@@ -397,7 +397,7 @@ static void sixpack_receive_buf(struct tty_struct *tty,
+ 	const unsigned char *cp, const char *fp, int count)
  {
  	struct sixpack *sp;
 -	int count1;
