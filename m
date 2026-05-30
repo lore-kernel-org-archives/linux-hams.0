@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 93300395AEA;
-	Sat, 30 May 2026 17:08:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 699D1320CAD;
+	Sat, 30 May 2026 17:59:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780160935; cv=none; b=MO0W21eFVSp+cA9ucV4J8BJxZJAXBCBO7H9EZzvW4UZ6kh5E+if8bjSC+GJ8Y9Yzamg3t3+u7piVbX/eGB9vMCbhZej9QWwY9HAmIgcGWFvjMl4FnX1JZlJDJKskg5atLpZdFn0j8Oy7EPstc4NJGj3ed4Fr6KAWwkS3uV+6S5g=
+	t=1780163971; cv=none; b=q+KHVY0CDU1cYEtnr8KS3uF/5Nd3vz6/Wn8pZ2Cp87DII0P2UoLsYIvajzmxQXmwBTRCOCpFyOL4uTgpt2D9S+Arjs9GPv6y1E7DxThjOrjE8iMWkkxHgI3hTPO2G3aivIqkRq4tvH0fMMRrs63RgZdZtLu7TpZ5PHfCRw+aJ3k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780160935; c=relaxed/simple;
-	bh=3C1hhorlhb13mtLj4IF6TSg3nTQ0aq+YLlOP3lAjpUI=;
+	s=arc-20240116; t=1780163971; c=relaxed/simple;
+	bh=hCG+OIRnaalrgvox5qxUnmKarMAoNkiizvztOdxVyOE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=c+EsLqfhALkUlsT8jk9+AXcrpIuKumAv8UaAOQ1aecNS7xLp1H7ZQRj4oZfBgCrkjUluX7pxRDIXuJMTHEU6YlZxV0RHIp64P+nwVGgSOj4AGLTTypFP3eCcW2Q8Tyi5JNK6agGEmFIcEIWKEOrcNZ8MYw5HuZjvXfYMpPkz5LI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DB5YJL/w; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Kjs+/3FhQK8fEtFuuZbCoFBmwD/jagO4NEzK0r5X/Ujz6FZsM3S8SzQlDPNoxQD0qhpm7V2q74Jpw050+BMa5AtsC1c5GbHG59kAsfhkm0DQd2T+gYl+mUW1s1UDtzBxTgmeSa9OLBkR8cJzl7olrW/dMqetz7hb1TFJxHSWrHg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aWW9r8K/; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DB5YJL/w"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DAFAC1F00893;
-	Sat, 30 May 2026 17:08:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aWW9r8K/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7FC921F00893;
+	Sat, 30 May 2026 17:59:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780160934;
-	bh=0qSdK7WBQISit5ApePwTYMq9CjqLh8G79AedJ+s050g=;
+	s=korg; t=1780163970;
+	bh=3yetR+r2N+u+1MYJrfeFDpiLwk3zQ5nbQn/Bif/B7+k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=DB5YJL/wOCwo15HWUH00J0yrHxeUAJc2VOPpLGDPX3/JEURfJ+343PLl9uy+h0LV7
-	 Zqyr1M//LGSDSE+jHsr+3xs7gx/t8vx8JutwHZmvwZuove/EwXz0fG31g+i4aD5AyM
-	 QJUdHg0HeGnm61N/kV85PFgIuuvr1UfV1xmLx1ug=
+	b=aWW9r8K//BPDhf8tMyRuFbEdnAL/eQKwAyI4bFY3i0dEHixifCVPgn3GwJTXrSic0
+	 XrxFo3jYDDuYMkYmc2OYHjTgkJCBtBqsSe1V5wcVoGi2sfThn70kiqf/YPu18weaWM
+	 IJwmNe7hGGPutdNqnIRGgLjQR/TV/kle2IzsQGL0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -37,12 +37,12 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	netdev@vger.kernel.org,
 	Jeremy Kerr <jk@codeconstruct.com.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 478/969] 6pack: propagage new tty types
-Date: Sat, 30 May 2026 18:00:02 +0200
-Message-ID: <20260530160313.498423975@linuxfoundation.org>
+Subject: [PATCH 5.15 416/776] 6pack: propagage new tty types
+Date: Sat, 30 May 2026 18:02:10 +0200
+Message-ID: <20260530160251.226092026@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
-In-Reply-To: <20260530160300.485627683@linuxfoundation.org>
-References: <20260530160300.485627683@linuxfoundation.org>
+In-Reply-To: <20260530160240.228940103@linuxfoundation.org>
+References: <20260530160240.228940103@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -54,7 +54,7 @@ List-Unsubscribe: <mailto:linux-hams+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
@@ -84,7 +84,7 @@ Signed-off-by: Sasha Levin <sashal@kernel.org>
  1 file changed, 16 insertions(+), 16 deletions(-)
 
 diff --git a/drivers/net/hamradio/6pack.c b/drivers/net/hamradio/6pack.c
-index 1b007dd174794..fe85cffa4f945 100644
+index 36a9fbb704029..7ccf56a7f0e0c 100644
 --- a/drivers/net/hamradio/6pack.c
 +++ b/drivers/net/hamradio/6pack.c
 @@ -94,8 +94,8 @@ struct sixpack {
@@ -98,7 +98,7 @@ index 1b007dd174794..fe85cffa4f945 100644
  
  	unsigned int		rx_count;
  	unsigned int		rx_count_cooked;
-@@ -113,8 +113,8 @@ struct sixpack {
+@@ -112,8 +112,8 @@ struct sixpack {
  	unsigned char		slottime;
  	unsigned char		duplex;
  	unsigned char		led_state;
@@ -109,7 +109,7 @@ index 1b007dd174794..fe85cffa4f945 100644
  	unsigned char		status2;
  	unsigned char		tx_enable;
  	unsigned char		tnc_state;
-@@ -126,7 +126,7 @@ struct sixpack {
+@@ -127,7 +127,7 @@ struct sixpack {
  
  #define AX25_6PACK_HEADER_LEN 0
  
@@ -118,7 +118,7 @@ index 1b007dd174794..fe85cffa4f945 100644
  static int encode_sixpack(unsigned char *, unsigned char *, int, unsigned char);
  
  /*
-@@ -331,7 +331,7 @@ static void sp_bump(struct sixpack *sp, char cmd)
+@@ -332,7 +332,7 @@ static void sp_bump(struct sixpack *sp, char cmd)
  {
  	struct sk_buff *skb;
  	int count;
@@ -127,7 +127,7 @@ index 1b007dd174794..fe85cffa4f945 100644
  
  	count = sp->rcount + 1;
  
-@@ -397,7 +397,7 @@ static void sixpack_receive_buf(struct tty_struct *tty,
+@@ -430,7 +430,7 @@ static void sixpack_receive_buf(struct tty_struct *tty,
  	const unsigned char *cp, const char *fp, int count)
  {
  	struct sixpack *sp;
@@ -136,7 +136,7 @@ index 1b007dd174794..fe85cffa4f945 100644
  
  	if (!count)
  		return;
-@@ -773,9 +773,9 @@ static int encode_sixpack(unsigned char *tx_buf, unsigned char *tx_buf_raw,
+@@ -818,9 +818,9 @@ static int encode_sixpack(unsigned char *tx_buf, unsigned char *tx_buf_raw,
  
  /* decode 4 sixpack-encoded bytes into 3 data bytes */
  
@@ -148,7 +148,7 @@ index 1b007dd174794..fe85cffa4f945 100644
  
  	if (sp->rx_count != 3) {
  		sp->raw_buf[sp->rx_count++] = inbyte;
-@@ -801,9 +801,9 @@ static void decode_data(struct sixpack *sp, unsigned char inbyte)
+@@ -846,9 +846,9 @@ static void decode_data(struct sixpack *sp, unsigned char inbyte)
  
  /* identify and execute a 6pack priority command byte */
  
@@ -160,7 +160,7 @@ index 1b007dd174794..fe85cffa4f945 100644
  
  	if ((cmd & SIXP_PRIO_DATA_MASK) != 0) {     /* idle ? */
  
-@@ -851,9 +851,9 @@ static void decode_prio_command(struct sixpack *sp, unsigned char cmd)
+@@ -896,9 +896,9 @@ static void decode_prio_command(struct sixpack *sp, unsigned char cmd)
  
  /* identify and execute a standard 6pack command byte */
  
@@ -172,7 +172,7 @@ index 1b007dd174794..fe85cffa4f945 100644
  	short i;
  
  	switch (cmd & SIXP_CMD_MASK) {     /* normal command */
-@@ -901,10 +901,10 @@ static void decode_std_command(struct sixpack *sp, unsigned char cmd)
+@@ -944,10 +944,10 @@ static void decode_std_command(struct sixpack *sp, unsigned char cmd)
  /* decode a 6pack packet */
  
  static void
