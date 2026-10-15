@@ -1,154 +1,194 @@
-Received: from mail-yx1-f48.google.com (mail-yx1-f48.google.com [74.125.224.48])
+Received: from mail-yx1-f49.google.com (mail-yx1-f49.google.com [74.125.224.49])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7887F3A9619
-	for <linux-hams@vger.kernel.org>; Thu, 15 Oct 2026 17:28:01 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.224.48
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A8965632A5
+	for <linux-hams@vger.kernel.org>; Thu, 15 Oct 2026 17:33:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.224.49
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792085290; cv=pass; b=N0M1E6Y5KDAGfCZ3bR0R3N5K2npaaHkxaT+ScVU398bJEjBjJjyir0QXSBFkakwplleGrFX3rItXE+Rpb5eIi51Ezrt4BFi59Q2lC9f6Lx3K1LAghwLHdZdqY5/EUwjIWbH4T4BjVRxZCamAwWQxM1tliW5z7KPqCrC5Gf9d7CM=
+	t=1792085648; cv=pass; b=EB08IygayX4mGafqgPkUr08Ww2/dErzn5fD08Jk+uwGSVC3YG9PKTgMUq0YC/sRa6ubaTi/MhZBgFPlyFaWSNZEuj8uAbWG42uMHaRS/6GO09Tw36vcn/On/7C8pR62d9wJZFTidKfzJBZgQK81D7EZnxbUm9juoII1XHAFOeu0=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792085290; c=relaxed/simple;
-	bh=tG5n/4fzDIMmNVnGLdCedJF83kiCKie7Y54doRWAiNA=;
-	h=MIME-Version:From:Date:Message-ID:Subject:To:Content-Type; b=rr3ih642FfO7gAh5qq5hEbkYos70wUTafwMscLjdnTaoSg/0hlIFeHvNaX1EK8uN19Gom4yOgtinXBY9DeNgKMlFQF5n1jHDxptBus4sFIlv5he6I33zZpmuqBK6gvlLupZX5fbrOkU4QaYdXRayZ33DBi5T8E37+7tr5KOsGZ4=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=VCCfyjHe; arc=pass smtp.client-ip=74.125.224.48
+	s=arc-20240116; t=1792085648; c=relaxed/simple;
+	bh=hgb/DydVm5Rx00wMLCs8yXgb8W+5ugoswduqnuvvWDQ=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Content-Type; b=NFn+NsXjh2j1gw/BS9m5TjJOd8UDPZiI2W8CH+uNXcKq56Y6LgYnnQcVJv1Hh9e65lFBQo2k11+JbTgC1Eb15csdzLWov0Em9O8FxgsV5jWiml2OYUtsTwJRiAqaZxZagvWLXCPPfPPRLS/xM5X3Yo99TZe4QPaWpcfSGYWr1ss=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=SgVR8E4r; arc=pass smtp.client-ip=74.125.224.49
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="VCCfyjHe"
-Received: by mail-yx1-f48.google.com with SMTP id 956f58d0204a3-6756a01fa01so5514604d50.0
-        for <linux-hams@vger.kernel.org>; Thu, 15 Oct 2026 10:28:01 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1792085280; cv=none;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="SgVR8E4r"
+Received: by mail-yx1-f49.google.com with SMTP id 956f58d0204a3-67921b515a7so5655700d50.2
+        for <linux-hams@vger.kernel.org>; Thu, 15 Oct 2026 10:33:59 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1792085638; cv=none;
         d=google.com; s=arc-20260327;
-        b=X0jbFxClZy7cMMbTGMna05CnXEMqFQXCg1AC6EIwXr1YG18xWYQh7OQZrhtunoZ4iD
-         CiIhR6yulXKofVdnW8wP2FDsQXx1Cq9UcrhOaG2cE1JTzWg5//LoAnHBcMZbZ2RdNE6f
-         XhzkYSHboCieFGx/hqTqmlH+xADdOvqf/gYq1cvgrLgks97uRahFXVDOK7m56CXs96su
-         VxMaUerEkh54jdvvscAojLR9P8J1Dz5EnxT+dgu2QAl3DRB37+Kg9GTI/koq6VHC/WCH
-         Xa1SKqPW0PoD3Ga9FPzUkXNBoDqIR2ihFfO7AzwiL1MGzZL5VVt1zs5aufqsVUPHivEK
-         rZJA==
+        b=rIYLDIPHDJueiRWZVVGmLqvC4Zp6BUwXcV+swTnT5hhlLyYoFO8no5Ft+fkER00YPe
+         t7tJKdp4FvEf9sijosUXz6zn9K1X7tbZT87lhnKgXayVIv+UmZOmNS6008tBxe/PObQd
+         8IGm/hiQRZCLtKEbpVHFUj3QAKw3z7O6utiNAIB1EBTepb6EqEsu7lO3F7WUmKxYrks4
+         LEAzjs+U1VLM5a4ZsMYh6WTIQlyd+2zrSujSqi9GrudItkrcqqv8iSwINZKEPeMtuTvo
+         M66goo5oaLV+/nP2PJZQWEcPD4eiW9X3u/eQVKybi28TLOeGRgN53B2oa5SmjcgHddxq
+         5VtQ==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=to:subject:message-id:date:from:mime-version:dkim-signature;
-        bh=tG5n/4fzDIMmNVnGLdCedJF83kiCKie7Y54doRWAiNA=;
+        h=content-transfer-encoding:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=hgb/DydVm5Rx00wMLCs8yXgb8W+5ugoswduqnuvvWDQ=;
         fh=yvyQ0fNR7evt9jL2wClrmYYCzRjxmggS8kmKCqDY7Yw=;
-        b=jowlw7xzFTG6mf6b3LzQXkD6pt3dUJlqfLYfjghykzDtcrURXDDS6qxr2SF+5eNwVq
-         tvrREG6RRQHNqqxdVcOiAU/ZgK/Nb2aP0FhAGDAcwqiwPn875hOJ5W2QF0uRSF7Y0/WF
-         cm/Jagcc4yPnSdT4IO2IRV9aFczBsN0qCJqpmFl6D0kNbo2uE6tRiHTdD9qHTrx1z502
-         Po9T3H8WwSt64YHPe+lFVG5xRJlKRtMLSoDmAtL/QPTNu7CZrk6QXb3PG3KYrDyAVqg4
-         bWA1S87vRdtpHIIfOgXHF3dwagt/T57L0A1K6JiJT1XfKyAAbxwQ5IqBZYAiTOdio0jr
-         JHxw==;
+        b=O+rjarHZRBBPt1sgkrz207TSbTcd9ROMCyVrJWKhpJfYibTc3NF6zrVKj8jexuk+p0
+         +Ru3MB3pr3F0z6UvEX5wHvK8phk4r6TLI3lKJhr7emShG8h4tPj8vSDt5oNqfF/5k8ps
+         mGN1KVRBv9v3wwsOhkUs7zCYlVeL7YgAViApUlo8IlGV6SrrDr+1poMsvDHFSXYWaEXY
+         qnKyekwcvfN+HbB+J4qQxdbvANboGeXYib3wc1XLQnntsnT59vSqJVn6jyqic6inoG2J
+         e/XtdJOd9Cu2+78F5f9hb+g6YuUAbTqBBgJ76hGmOyc73sF6Ynx259/Vv2Nu76QyLiXn
+         tjQw==;
         darn=vger.kernel.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1792085280; x=1792690080; darn=vger.kernel.org;
-        h=content-type:to:subject:message-id:date:from:mime-version:from:to
-         :cc:subject:date:message-id:reply-to:content-type;
-        bh=tG5n/4fzDIMmNVnGLdCedJF83kiCKie7Y54doRWAiNA=;
-        b=VCCfyjHeo5091HIjvkKcxkQanwXkLtpn2hqF5F3ZD2eRpikYy3IPAmOqJfj45tKRjn
-         EbQhSDb3kismbPCZhRNKSZH61Yr3uEvWx36RIfXcXpuO0DozwCbsz2Nv0bJAd4VSJ/TL
-         rU8zsVv7J913/BFbK9Id76MzvAiZMyP1l1lkrMxZ8xFPEejWcK8IkGyn8caaMyq3bsdQ
-         oJj7kAb3ni0FtrU3fYuUUzj45kYwf4/otI408O5IOtXA4Vn8RboTJ17cCHET+qhUWZW0
-         1EjG1k2VbFwYJp/ryO8y3J9V1/0gW6/o6qxlVuj+hDK4JuzH9jjrEzXOuAePIk66fmBz
-         CNtg==
+        d=gmail.com; s=20251104; t=1792085638; x=1792690438; darn=vger.kernel.org;
+        h=content-transfer-encoding:content-type:to:subject:message-id:date
+         :from:in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=hgb/DydVm5Rx00wMLCs8yXgb8W+5ugoswduqnuvvWDQ=;
+        b=SgVR8E4rjaVw9Nw1AKAjMCioibQj2WDMVjEgsdF8so4YhIY/Qy9Z/4l9vWm1Z56r+7
+         NM23DgUFYxf0HjjAtmCXol0NDQzQMxbmb0sXoFfnZWQnXBUGElRSqsKLMfr0zpiPzNTD
+         wEZXJTaFTG1WqzLUPD7O5Wx8cv0+ktQx3epohIuAMI/A1bQo+d2h8vGt8EyIYFE9GaSD
+         MZCBLvXy3kr1rWf2Y2uicD3Sk2zMD25SCP96oiZbEU8SrkMWOxQX9f5FM05MMzy5bRf4
+         wuqTpCM+NK+Z9RIGqBCCXbCqvyaNuHCZdWvWknRa+m9Ccbi10DjaxSAYa3PMv8oJ4/35
+         /j8A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1792085280; x=1792690080;
-        h=content-type:to:subject:message-id:date:from:mime-version:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=tG5n/4fzDIMmNVnGLdCedJF83kiCKie7Y54doRWAiNA=;
-        b=u8l8qiHNgfeH9TZw040WnlwQOjSvbQNQxqoFMPpVETEi4AdfUS+3Pc/2PHvLR2P4Zr
-         SDhkAtkoXsGa7oApepxe8R/kLV+Mz25U6nul1DC/5UNL7UAcCx75/+Y/wVGkDJl0YnjT
-         R7NXLp3C3y5bpmCUsoaz2Ah5acR5UXOBktnEJmRRDcPoTJGxT/xBi8NiQZcLrZI/yDKJ
-         Bd/4BC+x/eLvcZw6mmNMbCLmcAvxl23yUCriuuBaBYiXs76NnKvTez89LPSFFgd4//oI
-         3Jj3bAb0NpuEzv1rJpQxxgUT/03lJ41YWvnhh5SgkmhAPoIVamn7zk3MItEsm72r6PNr
-         pT1Q==
-X-Gm-Message-State: AFq9FYLdatd7EUAsyEVLdZM9s9hCE8NB4ZElvXxQKL3x6n98f6c4Rzzh
-	8TbrVnrKkvHn3m9y/Zwaw5BX+peQABhjX2mesbmLTxD2OLCMKimeXxvTWzycPcy1MQK4MMXM6im
-	dSnuj2gPFtj2mdINVSsYDmXg6WIIyzuF/NiZ6
-X-Gm-Gg: AYBFou135OeCSzdKjABCxa0p7Wf92SwdU0hGSdKOXmOEWfsbTVmcnYycd7W5DlE0y0b
-	VA2TGRTLM+ug5pCtDfrJxwiYGjGMD4WNr/tZtIGDYhVEu3aJt6OVVPne+P2Phnzw0DSSCvrnuIZ
-	bE/Pp5QLOq0x1PHsviaJ9SZoNdXUQERuWOTRKgxUbIgfJXkouJFvDuxY53suMqDgUT8XC8lLmYm
-	vsgHbd7fwD+SN6oU8MlMgdX7+JBJQV/DCZj+oz6rommcR/AjEsQeWEiLh//Z4D/Av6u5QY20cVa
-	S7e6660842tGLTxdcQu74XC0lfv2uBlA5Xvs7Y5C9Zq45bxXZCJtJoc=
-X-Received: by 2002:a05:690e:1914:b0:676:97e6:d7ac with SMTP id
- 956f58d0204a3-679369b7774mr7664006d50.43.1792085279931; Thu, 15 Oct 2026
- 10:27:59 -0700 (PDT)
+        d=1e100.net; s=20260707; t=1792085638; x=1792690438;
+        h=content-transfer-encoding:content-type:to:subject:message-id:date
+         :from:in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to:content-type;
+        bh=hgb/DydVm5Rx00wMLCs8yXgb8W+5ugoswduqnuvvWDQ=;
+        b=KFIF5285JION+Y23aGgaWp4de0/4Tieyr9hbv3/Rmty8gyw0/gZsRHyM8TQGCoeS+5
+         DScfRLrqNOoKeMu7Of6VbqTEgc2Fcdg0wr19agxgd2zoF8PNGVfijspKu/jxeeSr4d1R
+         zZTsntrM66ohdSquPWxV2wWKK+EWM80uG9A0NcWDcjyxauiOQQ/bGWjlv0m8miw6oDey
+         Or9aVwj4a46bPYnnluOMf8yS+Z3oUu2g5SHxecq2NpPDBjtYR4h+VvO4hqLp161DK0Tn
+         85dDbA3y0gkorDaYEUeE6T6Ddx58OezdDBApeCCAQZpbW3bE69F69NsWz/Agn15nPzRc
+         DO6A==
+X-Gm-Message-State: AFq9FYJSWU9QafZEy0zYo28dkTlgdlw6IcC+ZEzInMT/bRWDEVa1qKBy
+	B5B0aDnmvUs1q1a7ZmU9MQrFVEnXsWKI2TPAgNCNeIa9eAbgcYCrhFtPHyhoJ7wlNxbthwIWN00
+	v3UhFu+5JacXo7lYGw7nDKoLnXzboa3O3Kh/6
+X-Gm-Gg: AYBFou3XLboWiEi4z7a3ejwmPSir6RnMCFpNCSOVQo12xIxgGKGfnNLM4bqNr92YG6L
+	8MJrSd7cbBDYbEewbVsWNyol5poA8MvEsuR6OQ7JbxBu3cYXZ343moKj1+w0GOD6KJUUeckOND/
+	xNkqN3qbVwxUFaMEnFgyFpsd0Nv9fcyCaU/4fIPYzjkHpMXirVz6i0VzwavvS3AAMgR/DpXcphT
+	dUstPY1GCQYzbVUTY2j67fGcn3puAk6kLiC3mHG8OGZZcTzt21GCRxv7UkSJrSUSTcIsiGTswow
+	9933z9UQ7A73J7cukoCcHcNb17FMiv/gkbgGGasD8zPH/B1U5WjYxn8=
+X-Received: by 2002:a05:690e:806:20b0:673:2e60:9eee with SMTP id
+ 956f58d0204a3-6793629ee49mr4624484d50.63.1792085638098; Thu, 15 Oct 2026
+ 10:33:58 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-hams@vger.kernel.org
 List-Id: <linux-hams.vger.kernel.org>
 List-Subscribe: <mailto:linux-hams+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-hams+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
+References: <CAFAa3YA-RPyiDpT7-A+f0W2T8OBY8Ltgc=nR=BYUc-chXWb-pg@mail.gmail.com>
+In-Reply-To: <CAFAa3YA-RPyiDpT7-A+f0W2T8OBY8Ltgc=nR=BYUc-chXWb-pg@mail.gmail.com>
 From: Bernard Pidoux <bernard.f6bvp@gmail.com>
-Date: Thu, 15 Oct 2026 19:27:47 +0200
-X-Gm-Features: AclHuK8LWgaQhTHGYIrsB6gOrafMctDR5hoQGlQTA04Pj0NpTjvSQv1FL-EUkcg
-Message-ID: <CAFAa3YA-RPyiDpT7-A+f0W2T8OBY8Ltgc=nR=BYUc-chXWb-pg@mail.gmail.com>
-Subject: [ax25-tools/ax25-apps] security and robustness fixes for the
+Date: Thu, 15 Oct 2026 19:33:46 +0200
+X-Gm-Features: AclHuK8cg1Me59u0JLPHx9uD5tiK4WdcWE3F_JC61SlWpcfSkKtiA-5wzQua9vM
+Message-ID: <CAFAa3YAuAUutR-h-gMFCOOSFMJqf30R_p=Kv_BaMWQGpkbBdwA@mail.gmail.com>
+Subject: Re: [ax25-tools/ax25-apps] security and robustness fixes for the
  user-space AX.25 utilities
 To: linux-hams@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
 Hello,
 
-Over the past weeks I have been reviewing the user-space AX.25 utilities
-(libax25 / ax25-apps / ax25-tools, ve7fet tree) for robustness, and in the
-process found a number of memory-safety bugs. Several of them are reachable
-from a remote peer, or simply from any station on the air, without any
-authentication, so I think they are worth flagging here beyond the pull
-requests themselves.
+Two updates to my message above, which was written this morning and
+reached the list only now:
 
-Each defect below was reproduced with an AddressSanitizer test harness that
-reuses the upstream parsing logic verbatim, in isolation, before being fixed;
-none of the fixes changes behaviour on well-formed traffic.
+* listen: the unbounded digipeater walk in ax25dump.c is now fixed in
+pull request #33 against ve7fet/linuxax25. A second commit in the
+same PR hardens the other listen decoders along the same lines.
+Random-input testing under AddressSanitizer and UBSan (about 26
+million inputs) showed no error.
 
-Pull requests opened against ve7fet/linuxax25:
-
-#28 ax25ipd - unbounded address-field walk, detached DNS thread leak,
-SIGHUP handling, signal-safe main loop
-#30 ax25d - single-instance lock, signal-safe reload, safer argument
-and virtual-circuit handling
-#31 ax25apps - ax25mond, ax25rtd, call/yapp
-#32 ax25tools - axspawn, mheardd, axgetput
-
-The security-relevant items, by how exposed they are:
-
-* mheardd (unauthenticated, any station on the air)
-mheardd listens to all AX.25 traffic via PF_PACKET and copies the
-digipeater addresses of each frame into a fixed digis[AX25_MAX_DIGIS]
-array. The copy loop had no bound - it ran as long as the HDLC
-address-extension bit was clear - so a frame whose address field never
-sets that bit overruns the array and reads past the receive buffer.
-ASan: global-buffer-overflow. (The same unbounded-digipeater pattern
-exists in the listen/monitor decoders in ax25dump.c, which I am fixing
-separately.)
-
-* axspawn (runs as root, reachable by a connecting user)
-axspawn is started as root by ax25d and, after a "//COMP ON" handshake,
-decompresses the frames a peer sends. The decoder read the claimed length
-from the first byte as a signed char; where char is unsigned (ARM, i.e.
-the Raspberry Pi nodes a lot of us run) a first byte of 0xFF selected a
-"no compression" path that memcpy()s the peer-controlled frame length into
-a 260-byte stack buffer. ASan (built -funsigned-char to model ARM) shows a
-~2 KiB stack overflow. As a side effect the same path was simply dead on
-signed-char platforms, so "no compression" never worked there.
-
-* call / yapp (reachable by the connected peer)
-The AutoBin / 7plus / YAPP receivers are driven by peer-supplied data and
-had several unbounded parses: a YAPP SOH header with four or more fields
-overran a 3-element pointer array; Send_HD() overran a 257-byte buffer with
-a long filename; the 7plus header parser read past its buffer; and an
-unterminated command line longer than the compare buffer overran a static
-buffer. All confirmed with ASan.
-
-* ax25mond (reachable over the network if a TCP socket is configured)
-The accept() loop wrote into the connection tables without checking the
-MAX_CONNECTS bound; the 51st simultaneous client overran them
-(global-buffer-overflow).
-
-* axgetput, ax25rtd, netromd - smaller length/strcpy/sprintf hardening along
-the same lines (details in the PRs).
-
-I would appreciate review, and of course correction if I got any of the
-protocol details wrong. I have been running the ax25ipd fix in service on a
-32-bit Pi node without regression; the rest is not yet deployed.
+* Deployment: the fixes from #30 (ax25d, since 14 October) and from
+#31, #32 and #33 (since today) are now installed on the eight nodes
+of our network: Debian 11, 12 and 13, Raspberry Pi OS and Ubuntu, on
+x86_64, i386, armhf and arm64. Each was built on the node itself. It
+is too early for a verdict on the most recent ones; I will report
+back after a reasonable period in service.
 
 73,
 Bernard, F6BVP
+
+
+Le jeu. 15 oct. 2026 =C3=A0 19:27, Bernard Pidoux <bernard.f6bvp@gmail.com>=
+ a =C3=A9crit :
+>
+> Hello,
+>
+> Over the past weeks I have been reviewing the user-space AX.25 utilities
+> (libax25 / ax25-apps / ax25-tools, ve7fet tree) for robustness, and in th=
+e
+> process found a number of memory-safety bugs. Several of them are reachab=
+le
+> from a remote peer, or simply from any station on the air, without any
+> authentication, so I think they are worth flagging here beyond the pull
+> requests themselves.
+>
+> Each defect below was reproduced with an AddressSanitizer test harness th=
+at
+> reuses the upstream parsing logic verbatim, in isolation, before being fi=
+xed;
+> none of the fixes changes behaviour on well-formed traffic.
+>
+> Pull requests opened against ve7fet/linuxax25:
+>
+> #28 ax25ipd - unbounded address-field walk, detached DNS thread leak,
+> SIGHUP handling, signal-safe main loop
+> #30 ax25d - single-instance lock, signal-safe reload, safer argument
+> and virtual-circuit handling
+> #31 ax25apps - ax25mond, ax25rtd, call/yapp
+> #32 ax25tools - axspawn, mheardd, axgetput
+>
+> The security-relevant items, by how exposed they are:
+>
+> * mheardd (unauthenticated, any station on the air)
+> mheardd listens to all AX.25 traffic via PF_PACKET and copies the
+> digipeater addresses of each frame into a fixed digis[AX25_MAX_DIGIS]
+> array. The copy loop had no bound - it ran as long as the HDLC
+> address-extension bit was clear - so a frame whose address field never
+> sets that bit overruns the array and reads past the receive buffer.
+> ASan: global-buffer-overflow. (The same unbounded-digipeater pattern
+> exists in the listen/monitor decoders in ax25dump.c, which I am fixing
+> separately.)
+>
+> * axspawn (runs as root, reachable by a connecting user)
+> axspawn is started as root by ax25d and, after a "//COMP ON" handshake,
+> decompresses the frames a peer sends. The decoder read the claimed length
+> from the first byte as a signed char; where char is unsigned (ARM, i.e.
+> the Raspberry Pi nodes a lot of us run) a first byte of 0xFF selected a
+> "no compression" path that memcpy()s the peer-controlled frame length int=
+o
+> a 260-byte stack buffer. ASan (built -funsigned-char to model ARM) shows =
+a
+> ~2 KiB stack overflow. As a side effect the same path was simply dead on
+> signed-char platforms, so "no compression" never worked there.
+>
+> * call / yapp (reachable by the connected peer)
+> The AutoBin / 7plus / YAPP receivers are driven by peer-supplied data and
+> had several unbounded parses: a YAPP SOH header with four or more fields
+> overran a 3-element pointer array; Send_HD() overran a 257-byte buffer wi=
+th
+> a long filename; the 7plus header parser read past its buffer; and an
+> unterminated command line longer than the compare buffer overran a static
+> buffer. All confirmed with ASan.
+>
+> * ax25mond (reachable over the network if a TCP socket is configured)
+> The accept() loop wrote into the connection tables without checking the
+> MAX_CONNECTS bound; the 51st simultaneous client overran them
+> (global-buffer-overflow).
+>
+> * axgetput, ax25rtd, netromd - smaller length/strcpy/sprintf hardening al=
+ong
+> the same lines (details in the PRs).
+>
+> I would appreciate review, and of course correction if I got any of the
+> protocol details wrong. I have been running the ax25ipd fix in service on=
+ a
+> 32-bit Pi node without regression; the rest is not yet deployed.
+>
+> 73,
+> Bernard, F6BVP
