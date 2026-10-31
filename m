@@ -1,95 +1,95 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.128.174
+Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=74.125.224.49
 ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
-	t=1793444836;
-	b=fPfHAh7TsOxu3Bufx/F6sQKio8V3v04SQTTqKwdLYIl3lFBwjwBH4Y5iSpQkTMXdPqsc
-	 U3cB0sp5bpYzWwo8mX/tBtF6KUw1F8QGPtok6AYZOX4yNQxN/Dpi5QhvA2tI7HEb/8yKX
-	 Mo8nM/Yf4wEB0a3vs82FXcRH2QLc//QchGxiGD13kPVU0wYison7tp2ssI5n4CMvup98u
-	 z9Wg3HNhQAqjdnIGoGjFcoS64rmyrYObZEJ8RaXgn1p0G7bQerESmHz/BruP8WD7CXth6
-	 kP08xn+xQRZOWKLVCWdpyfZMG6BhVjfq7ksxsMULU2yaNbD9XOLcXiY4WlHgqAKqcBA==
+	t=1793456273;
+	b=0uFIvOJI+Xc9xc9sh4Pu22LkyB1TN177ZNxxFa8r4oAor7j18UiU+daqh8CROvXPIdnw
+	 qhD42+wM9khhrw9aeiNIdAfrEesh+lVtSoA63XBwqqv/FZ+lPr1LNe53A6c/HdyLOYSsL
+	 laNPpn2+V0/Y0xek3K40+0lmVFDIEyFQ4shvgdhec4j6j6S1PE2+hJwr1cbQN0ZySvsS5
+	 dYu5FNwpZsTwlO5y5JbYYTzfQjwqRir2/cZpH+y1X09j2XF3eSwy8CafwkWUi8j+zxItG
+	 RsCbqnSRTC68WAs6FEB8+Jw6Ak521E2Whc3dN1Kufc+uuLa/5DAV0Y5Gt5xdMFsemcw==
 ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793444836;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793456273;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
 	 X-Gm-Message-State:X-Gm-Gg:X-Received:MIME-Version:From:Date:
 	 X-Gm-Features:Message-ID:Subject:To:Content-Type;
-	bh=eKG3J4cYPROuxSWRzc4xtE+tKlgb5DFhK7OK955DScA=;
-	b=DXTNIoROagdZlu1mXgHNNqCo4nouSUoJkgMexA77iwscEjg/sGrrDAoefMIOiVvmTLHl
-	 R97XvZiZb6DlGb7VZxZyxVpG/6Oi4Vgm9+xWdz53YCC/YCFYgUVJHyEtFz4Vic7qYL/sU
-	 ineuKKBzD8za27X2BqfoD0nHddfLg+ctF59uvDqjp2HV/kDoPWRB3VGY2vkStwhpArLIS
-	 genY9t+8bDiNxneUeUdj5f+7sTlM0wMGNYgj2E5FQBVtP2vy2oR5j7AMnt3m2aMxj2DaU
-	 rBoACsl3+uxYl1BjI5AUFvjxyJ2PlGzsm3ZEW8Tm3EGjk/4iP94godMqrxJn2wWXclw==
+	bh=g93j0K95MKrklMibhMY+zm0Z8pcVRWk2EReTDSVnajQ=;
+	b=yFg8AD79rZW4aHb0klbK3f1U+PPqXajHqpwbOYoVo0PqwP3IsrExBRNIhGNv4zmZ+TEw
+	 lrpmYw7YNr8ImjU2mfpbgA7cr4i5SJLAPSACOoRBk5xtRcnUGnyCxdAUuq9AJayvQGCRT
+	 LptBoIK3uRw44H7ZKDHnjPHDP2UgezA0qlbvRvY6no7wovRT/f80dN884WOV2ahWZP3sY
+	 2glyk2oDNr/eC8npRwlfGyT5UZBWOcNM5kA/cshvQWE2m5OWgdB53WSFBgAlB7m3FJbIq
+	 KtC4MrmB5CW5okRGoq77IVlF0OJEUEKk7W04/kN4wUfsrKSnSA5WOkz1jkOcsaDaaig==
 ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=gmail.com;
 	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=OQi0c9sQ;
-	arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.128.174
-Received: from mail-yw1-f174.google.com (mail-yw1-f174.google.com [209.85.128.174])
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=RoXn9W9j;
+	arc=pass header.oldest-pass=0 smtp.remote-ip=74.125.224.49
+Received: from mail-yx1-f49.google.com (mail-yx1-f49.google.com [74.125.224.49])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CCBD4606A31A
-	for <linux-hams@vger.kernel.org>; Sat, 31 Oct 2026 11:07:15 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org CCBD4606A31A
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D61DC606A31E
+	for <linux-hams@vger.kernel.org>; Sat, 31 Oct 2026 14:17:52 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org D61DC606A31E
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=OQi0c9sQ
-Received: by mail-yw1-f174.google.com with SMTP id 00721157ae682-8acda240937so12278117b3.3
-        for <linux-hams@vger.kernel.org>; Sat, 31 Oct 2026 04:07:15 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1793444835; cv=none;
+	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=RoXn9W9j
+Received: by mail-yx1-f49.google.com with SMTP id 956f58d0204a3-67a2efec15cso1549282d50.0
+        for <linux-hams@vger.kernel.org>; Sat, 31 Oct 2026 07:17:52 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1793456272; cv=none;
         d=google.com; s=arc-20260327;
-        b=hrc69KOR067sbmWsg/4uOzktMf3Rvx642nr4iRbzyTICh3CFRXE9um7a1gv0HtVmOC
-         WFQYi4ctDxrZlwFkDfxqhVklaS6IG5AXgaI855sR1gBbUg0WshC+KP9Xg3hiVg9BvOm9
-         3qnWhGSye5xnadUuoEVlNtp9uj1/6nMvM3IYbHItzIa0IDJcHzIERW3yJtBGBog0HJQY
-         m37hTDDi7u9HArSSJdmKGfjH6aItcsjSOP64Cf8VBEm7lpRm91DtcSZvVN1z5vNlF3zE
-         IsbRwYzPqLA7mTi2vS6ZmsP/mYGWtX2mY15iW3XEV3A2qKS3txgdYK4TvCao/upzcu/D
-         ML0g==
+        b=Kb/CSzIeqNmIbhCaX+ahNG4oxIBuQalTYK/N+Ow4VAnz32XlVdmcg2Y4G1hnqnEe7x
+         2/A+a0NA/k5LjVo8Fz+8grQwFS06ZqrCFg5EF1YY2Oa/G1JReIq92fgzskusxn2O+7uS
+         ao5O7QzvnlUJH/kiTeyeSB6jMDlHNIs261bPgqCNpVRfp3L5076aE2i9/6dMmCElhwI2
+         9rG1DtBFFPOWvcp/VE5zfSHkO4AwJRSyoUR0EQa8R3JOvNd7xsbgvkmzkrgPDDVs3wxe
+         FCOauZUM/HOP5HC4/F4162wt5EumUlATAiB4j06I8fLMHxV1JtfUIzOzNXMlyt3AeuXP
+         gXDQ==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
         h=to:subject:message-id:date:from:mime-version:dkim-signature;
-        bh=eKG3J4cYPROuxSWRzc4xtE+tKlgb5DFhK7OK955DScA=;
+        bh=g93j0K95MKrklMibhMY+zm0Z8pcVRWk2EReTDSVnajQ=;
         fh=yvyQ0fNR7evt9jL2wClrmYYCzRjxmggS8kmKCqDY7Yw=;
-        b=iCvvq+nIw/Bp6+oK8zz4I10Glpzj/lgYzjCtednFg/2/fufFOp/AXX/3Db2QhLST/E
-         cLOBRXDNA4T+Isiy5ame1cAEq2Vh0Wms/dhFu1UWAJsgw7EV1tPDGJNRfiFILAoV+Csv
-         fEscW30g8fz4D9yHMH8b+r6JpqaXOu7iUowZ0yGSHO3M7wImVd2Nkz1RtkZz1uqnCwGQ
-         sfYxYmBfiODbAIKCx6oEQgaEaf0JlWYPjDLgZ2TGm687rekgnxa6jC5jz0rMtKYzJw2J
-         NvwgdpCT92HF/xcFZDRyHGMT3flX28OvCWDBHxQkIaDdfWtTw/8FHCckzJv+Z9sjaHAH
-         FeoQ==;
+        b=CIfCU+Pnez7VxMjjtsPRwnR+BDTKsBuurdv1njHpqoyEpSkkPf6ci9SnJnF4ZoqLHP
+         yAyPGBiUHSZ44xvrAY7V1qupnRz5TqDvWOwoKGx0r9Kr4wCRxrdyW9ZfmDbJxbz/x1fc
+         +FVUVG8fMns+r65kN0y0yd9s436xavm2r2QOsUv3/QjGnCIRDVxAJBdCXI19cLZQNAK4
+         RFiiXgLWVoxi+BKvFrNNLoIlVp2Dn/ndTmyHCXhBzK6RrG0hTBsKT94tfGgpDcf96Hug
+         lRFKdyhRSO7uAfyJ7NZSCNsXLh2uaMJc5Qlkr1uECNVe/nfoWfuqDCp4TreXIZ+amgOf
+         bdeg==;
         darn=vger.kernel.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1793444835; x=1794049635; darn=vger.kernel.org;
+        d=gmail.com; s=20260707; t=1793456272; x=1794061072; darn=vger.kernel.org;
         h=content-type:to:subject:message-id:date:from:mime-version:from:to
          :cc:subject:date:message-id:reply-to:content-type;
-        bh=eKG3J4cYPROuxSWRzc4xtE+tKlgb5DFhK7OK955DScA=;
-        b=OQi0c9sQ5mfxwq+v5z1neFJUjQn+kLppfpntIb2yexcfI4absi1b6dnEz4moJ7FgRY
-         WLd6N2KsjJmDBxuZcyip75biWLHKn52JHFwpKUgAIUvylrRoTe82mLeS6QPgt+ZFcffo
-         MZT8VUTDXXSCn9nu0FRI+oVWqzR+f8OCDn2pG6i1KnLvsh5MQZNFxdRsIO02wD4YnchJ
-         chh/o/H48ajROvSJSIiFaYhX5aJTS3fNMTBvMbS/L7bJ1ApezzBsN/Ic2ml/gF706fta
-         uamTBoqCiYmobx0DzMyWRiugjYp5YlfcJTPGh4yxujlGF8FAKvf/0MIBdRNcBpfELobb
-         w1/g==
+        bh=g93j0K95MKrklMibhMY+zm0Z8pcVRWk2EReTDSVnajQ=;
+        b=RoXn9W9jO3fpLKq31WRGH0YIcLtYhDG7eLtb704bczA80VhsEiR/3YII6diqkWr7va
+         JCO56pHfMPskr7Qc+PbvLyoVvYoHUxbCOZUOpsa1j2VWaylSyzxwgS42cpHtdMXPtZJv
+         QlQwG2jz8ACxC3/XnPP07VYbnbyvhIbrQ6d0hR130Q/wH8P1hrv3dBPDZ7g0E8DMhwJA
+         zn5Fu26BTzZp5riOAhCwj3Zl1fsQQGGdww+9KMkD/ORWNRMd3d29OTtBFiiyXiOt4ymD
+         40RLIn2nZYANnhTEqxglzY1bzlVKy2ur/3my5x/BwreW/+FJhArfUjh3okSyg7O4KEsY
+         MtaQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1793444835; x=1794049635;
+        d=1e100.net; s=20260707; t=1793456272; x=1794061072;
         h=content-type:to:subject:message-id:date:from:mime-version:x-gm-gg
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=eKG3J4cYPROuxSWRzc4xtE+tKlgb5DFhK7OK955DScA=;
-        b=mn7OIiYL6MrQDivDqFgr1BmI1tfbqPzfF6J/uoVqkti39VNTqomhYCdbdCj1RUu8I3
-         nSS0UA/2/RFkEZ34JSDVwvEWSxWOq3JubWtEHsqTMPQz1BeyJJIbr1MQXjgWJwH8T9VP
-         6CXcA/7U3eTfY+glJb3+6v5OKUdVSIq24ZzoY765n864DgCJIhSipu+RKASmUSSLn+aH
-         tVe96DSRGfpEIjn7EOYkXQocvg5pL0g19eWK43jYB3Y0Iua3QhPq6p75G0jjbtQJo/JD
-         LBXEB+IWiB8u/M8MOThddsPhxV2mwWIcUxX65BdQqd2IZZtzQWDVF5ajZW2uHwoMkXl4
-         NBPA==
-X-Gm-Message-State: AFq9FYKIrkM/WrPC4nhiQtfSnUuHA2qNMa6o81qIdxDLJvxRy8EAloFh
-	PgSawvJeb3elEXh6R4nYIMVvW9LILkmAvmx3HBH/HCJq0sqNEzWTn9+WepYa+D9VmLpgDvC4oa+
-	sF5u7R8nsVikN5nkk4aVquwCij5sd9ILXOO8O
-X-Gm-Gg: AYBFou31cxu/qz2OUMuYUJWluMw4Hh8Wvj++3VisA7G+pByjU/AB3cEsTG0sgze+irL
-	u/BPHjtYMjmRGEJqtdrUymE8zz+C/EeBwbNhR8DX3kxhLPYxhiviOzvqtUvZok4Q9rRhmVQdE1A
-	FRexQ9rWzFZ2xsP3VEzg5YPacXeG6QXYSq81Led2gkCutiL7Q6koK0l5sIGBG3i8tweqwvHm1bL
-	Qk8q+7r9Glo76h3NdWDHIv9izm4oOcxStPHZ39S3BK9uXvn7Bg618Za1UBmsXdqeOyWLCpWVtjj
-	HDMxb8pmg4hD/RNAGu2QM9wio7e6IAdkV1TD2zC/XcvxQHEiIavZq+fx96UftfDRKRvH46Y5r0p
-	AQESafMaxHqC6z6MiNPH87u3yz3Fx7U7e3oRj
-X-Received: by 2002:a05:690e:1915:b0:679:c8c1:3e96 with SMTP id
- 956f58d0204a3-67ba4c90a7dmr2574776d50.17.1793444834620; Sat, 31 Oct 2026
- 04:07:14 -0700 (PDT)
+        bh=g93j0K95MKrklMibhMY+zm0Z8pcVRWk2EReTDSVnajQ=;
+        b=hq76Q1c6mTFbK0sOr0agiTT8SdPw8aj+goYk89d1Nkrn7TtZzhzyiNj2jiDx7y84yP
+         P8O+qX1c7X78WMweDIMRTR89R0yBq4W2mtnOLa4Ifey/FXret9OHZ0/np5+vP5O0XVKC
+         cU7VkKsKmn9+nrUwKRcpaTEqr7B7mgWMGEH7rlarLVyy6JCv+Mx7a/mRtRgdjYYqx6zq
+         4ko1Z4Jf8S18+ZfeMWzzFUPAF/yoFuNy+1NXT6wsWvdThvqDtwnFqjNvZV5ciKhT9/Vx
+         JypHVOP1halpn8VOW3991t3mAsXewjWh5qglIyhjxTb3Ys2rk8AEqaPlCrrs9Tx/y3S9
+         O6Uw==
+X-Gm-Message-State: AFq9FYL6GxO2iWs/7Q7tpyc4uITNIijOPVjRsdEIieMVxnrfv9QPNBLv
+	IYK018gO8gdno5nzoaIxvJ+k10r8iY+pTe95m92szb1GRm8RMPrWhtD6qkRK5DAn6X4wQBR+of7
+	Ps0b+fYfLntKvGucbqQIV9QanpmBMDQ+mv/xT
+X-Gm-Gg: AYBFou1dlwVaBNKdPQ7MDFdQczfHq2Q4QnAWs0NwxtJCqd3LlTIs2kskliMjYiJf39h
+	VxZF1Vscs30oAx8uEXz0DYksl/xTvICm3hgGskAVIsrwutE7epcw5rPy/KJA5BjVlgJ3YBhF2wf
+	+wtiFptrCdGS52oHyjIfFFDkvh6peinAxjPW1uFSHHualaJ0u1UlR1owe2ckB5V5Xnnnf0+TWgH
+	Z8vaIJvOM2KetFJ0TbUwC5cLzITb5AifRZYPxWGqbjfVoBYxuzE7Kyyxni2K9NFxN9TGNtOkjOi
+	3z8Y4+I6r2S8MtdIzbywsJeBKyQqPOpM+CheR/XcLPybakmMpnhsawnJJpDhXbYA1ub414vnYBl
+	lG/+yf6TLgEzyigfCNE1uc9Gk5MSaRxCy1urovUAUxkzddyN0q6ZPYvekOA==
+X-Received: by 2002:a05:690e:191a:b0:679:ac65:487b with SMTP id
+ 956f58d0204a3-67a8d396d2dmr6072439d50.15.1793456271842; Sat, 31 Oct 2026
+ 07:17:51 -0700 (PDT)
 X-Mailing-List: linux-hams@vger.kernel.org
 List-Id: <linux-hams.vger.kernel.org>
 List-Post: <mailto:linux-hams@vger.kernel.org>
@@ -100,62 +100,59 @@ List-Owner: <mailto:linux-hams+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
 From: Bernard Pidoux <bernard.f6bvp@gmail.com>
-Date: Sat, 31 Oct 2026 12:07:03 +0100
-X-Gm-Features: AclHuK-yWViQogk8yBlefJPRqsw-BFRHOJCA-mn_fbc7d1WYpBxj9VeaOVMJlzE
-Message-ID: <CAFAa3YB_FCtSZThMs5vYpDJWVXEvsiWEQZMwSqhAp7TX5cdzDA@mail.gmail.com>
-Subject: mod-orphan: mkiss, NET/ROM and AX.25 fixes merged after field testing
+Date: Sat, 31 Oct 2026 15:17:39 +0100
+X-Gm-Features: AclHuK9WrV5HDVOYWM0ML2HvYLl4S1ySWKsLimDSJtqM2XW4NTi_W9luTOAHXOw
+Message-ID: <CAFAa3YBcnxco2MZGr0_zsWpNZJV85K6FSWNQeMvKFV012pkp5g@mail.gmail.com>
+Subject: mod-orphan: mkiss and 6pack stop transmitting after link down/up (PR #48)
 To: linux-hams@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
 
 Hello,
 
-Three pull requests were merged today in the linux-netdev/mod-orphan
+I have opened pull request #48 in the linux-netdev/mod-orphan
 repository on GitHub.
-Each one ran on live nodes before the merge.
+It fixes an old problem in mkiss and 6pack.
 
-1. mkiss (pull request #40, two commits)
+The problem
 
-- The transmit buffer is now sized for worst-case KISS escaping, and
-the MTU has an upper bound.
-Before, a maximum length frame made of END or ESC bytes could write
-past the end of the buffer with an MTU above 502.
-- A negative return from the tty write() is no longer used as a byte count.
+After "ip link set ax0 down" followed by "ip link set ax0 up", a mkiss
+interface is up but does not transmit a single frame any more.
+Connections time out and the tx_packets counter stays where it was.
+Only restarting kissattach (detaching and attaching the line
+discipline again) brings it back.
+6pack has the same pattern.
 
-In service since 21-25 October on six nodes (kernel 7.0 on x86_64,
-6.18 on Raspberry Pi in 32 and 64 bit), one mkiss port each to
-ax25ipd.
-About 272,000 frames sent and 625,000 received, with no error and no
-kernel message.
-A station in Hobart also ran it from 24 October on a real VHF port, a
-TNC-Pi on a serial line, with no error.
+The cause
 
-2. NET/ROM (pull request #41)
+The ndo_stop handler (ax_close, sp_close) stops the transmit queue,
+but the ndo_open handler (ax_open_dev, sp_open_dev) never starts it
+again.
+With the queue stopped, ax_xmit() is never called, so its 20 second
+transmit timeout recovery is never reached.
+The tty write wakeup cannot restart it either, since ax_close()
+cleared that flag.
 
-- nr_rx_frame() no longer drops a connect acknowledgement that carries
-the CHOKE flag.
+The fix
 
-3. AX.25 (pull request #42)
+One netif_start_queue() call in ax_open_dev() and in sp_open_dev(), as
+network drivers do in ndo_open.
+One commit per driver.
 
-- ax25_frames_acked() no longer queues a NULL skb.
+Test
 
-These two have run together since 25 October on seven live AX.25,
-NET/ROM and ROSE nodes, six nights without a kernel warning.
-Sasha Levin had already queued the matching stable fixes for 6.18.y and 6.12.y.
+QEMU bench, kernel 6.12.94 with KASAN and lockdep, two guests over a
+KISS serial link.
+Without the fix, every connection after a down/up timed out.
+With the fix, connections and echoes worked after one and after two
+down/up cycles.
+Four runs of each, no kernel report.
 
-How to get them
+6pack was not tested: I have no 6pack TNC.
+If you run a 6pack port, a test would be very welcome: set the
+interface down and up, then check that it still transmits.
 
-If you build the modules from mod-orphan, pull the main branch, then
-rebuild and reinstall as usual:
-
-git pull
-make
-sudo make install
-sudo depmod -a
-
-Build on the machine that will load the modules.
-
-Still open and still looking for testers: bpqether (#38) and hdlcdrv (#39).
-I will follow up on them in the "testers wanted" thread of 23 October.
+If you use mkiss and sometimes set a port down and up by hand or from
+a script, this one is for you.
 
 73,
 Bernard F6BVP
